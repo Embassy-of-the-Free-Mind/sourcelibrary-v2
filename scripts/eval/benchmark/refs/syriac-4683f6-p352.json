@@ -1,0 +1,14 @@
+{
+  "slug": "syriac-4683f6-p352",
+  "substratum": "print",
+  "title": "Great Oktoechos",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "kraken-sophro-mhiro-defaultseg",
+    "kraken-sophro-mhiro-rtl",
+    "surya2",
+    "tesseract-syr"
+  ],
+  "reason": "best text 520 overlap 0.03 < 0.25"
+}

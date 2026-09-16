@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-c0c30a-p30",
+  "substratum": "other",
+  "title": "詩故·卷一~卷六 (vol 1)",
+  "probe_chars": 148,
+  "source": "Kanripo",
+  "work": "KR1c0038",
+  "work_title": "詩故-明-朱謀㙔",
+  "juan": "1,2,3,4,5,6",
+  "url": "https://github.com/kanripo/KR1c0038",
+  "etext_chars": 21590,
+  "window_chars": 159,
+  "overlap": 0.844
+}

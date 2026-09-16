@@ -1,0 +1,6694 @@
+{
+  "summary": {
+    "stratum": "ref-pinned",
+    "date": "2026-09-16",
+    "n_pages": 55,
+    "ref_engine": "gemini-3.1-flash-lite",
+    "languages": {
+      "Armenian": {
+        "n": 9,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 9,
+            "aligned": 8,
+            "median_cer_windowed": 0.021,
+            "mean_acc_windowed": 0.98,
+            "mean_acc_upper": 0.984,
+            "catastrophic": 1,
+            "paired_vs_ref": {
+              "n": 8,
+              "wins": 8,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": 0.007,
+              "p_sign": 0.008,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 9,
+            "aligned": 9,
+            "median_cer_windowed": 0.034,
+            "mean_acc_windowed": 0.961,
+            "mean_acc_upper": 0.97,
+            "catastrophic": 0
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "surya2": {
+            "pages_run": 9,
+            "aligned": 5,
+            "median_cer_windowed": 0.038,
+            "mean_acc_windowed": 0.947,
+            "mean_acc_upper": 0.943,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 5,
+              "wins": 1,
+              "losses": 4,
+              "ties": 0,
+              "median_delta_cer": -0.023,
+              "p_sign": 0.375,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 9,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 9,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 9,
+            "aligned": 9,
+            "median_cer_windowed": 0.039,
+            "mean_acc_windowed": 0.874,
+            "mean_acc_upper": 0.944,
+            "catastrophic": 1,
+            "paired_vs_ref": {
+              "n": 9,
+              "wins": 2,
+              "losses": 7,
+              "ties": 0,
+              "median_delta_cer": -0.017,
+              "p_sign": 0.18,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "Chinese": {
+        "n": 6,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 6,
+            "aligned": 3,
+            "median_cer_windowed": 0.016,
+            "mean_acc_windowed": 0.989,
+            "mean_acc_upper": 0.989,
+            "catastrophic": 3,
+            "paired_vs_ref": {
+              "n": 3,
+              "wins": 1,
+              "losses": 0,
+              "ties": 2,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 3
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 6,
+            "aligned": 3,
+            "median_cer_windowed": 0.017,
+            "mean_acc_windowed": 0.852,
+            "mean_acc_upper": 0.947,
+            "catastrophic": 3
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 5,
+            "aligned": 1,
+            "median_cer_windowed": 0.102,
+            "mean_acc_windowed": 0.898,
+            "mean_acc_upper": 0.898,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 1,
+              "wins": 0,
+              "losses": 1,
+              "ties": 0,
+              "median_delta_cer": -0.085,
+              "p_sign": 1,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 2
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 6,
+            "aligned": 3,
+            "median_cer_windowed": 0.016,
+            "mean_acc_windowed": 0.816,
+            "mean_acc_upper": 0.978,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 3,
+              "wins": 1,
+              "losses": 1,
+              "ties": 1,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 3
+            }
+          },
+          "surya2": {
+            "pages_run": 6,
+            "aligned": 3,
+            "median_cer_windowed": 0.066,
+            "mean_acc_windowed": 0.918,
+            "mean_acc_upper": 0.935,
+            "catastrophic": 3,
+            "paired_vs_ref": {
+              "n": 3,
+              "wins": 1,
+              "losses": 1,
+              "ties": 1,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 3
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 6,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 6,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 3
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 3,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "German": {
+        "n": 7,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 7,
+            "aligned": 6,
+            "median_cer_windowed": 0,
+            "mean_acc_windowed": 0.999,
+            "mean_acc_upper": 0.999,
+            "catastrophic": 1,
+            "paired_vs_ref": {
+              "n": 6,
+              "wins": 2,
+              "losses": 0,
+              "ties": 4,
+              "median_delta_cer": 0,
+              "p_sign": 0.5,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 7,
+            "aligned": 7,
+            "median_cer_windowed": 0,
+            "mean_acc_windowed": 0.996,
+            "mean_acc_upper": 0.998,
+            "catastrophic": 0
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 6,
+            "aligned": 3,
+            "median_cer_windowed": 0.022,
+            "mean_acc_windowed": 0.982,
+            "mean_acc_upper": 0.99,
+            "catastrophic": 3,
+            "paired_vs_ref": {
+              "n": 3,
+              "wins": 0,
+              "losses": 3,
+              "ties": 0,
+              "median_delta_cer": -0.022,
+              "p_sign": 0.25,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 6,
+            "aligned": 1,
+            "median_cer_windowed": 0,
+            "mean_acc_windowed": 1,
+            "mean_acc_upper": 1,
+            "catastrophic": 5,
+            "paired_vs_ref": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "surya2": {
+            "pages_run": 7,
+            "aligned": 7,
+            "median_cer_windowed": 0.016,
+            "mean_acc_windowed": 0.988,
+            "mean_acc_upper": 0.992,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 7,
+              "wins": 0,
+              "losses": 6,
+              "ties": 1,
+              "median_delta_cer": -0.006,
+              "p_sign": 0.031,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 7,
+            "aligned": 2,
+            "median_cer_windowed": 0.039,
+            "mean_acc_windowed": 0.961,
+            "mean_acc_upper": 0.965,
+            "catastrophic": 5,
+            "paired_vs_ref": {
+              "n": 2,
+              "wins": 0,
+              "losses": 1,
+              "ties": 1,
+              "median_delta_cer": -0.039,
+              "p_sign": 1,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 7,
+            "aligned": 6,
+            "median_cer_windowed": 0.025,
+            "mean_acc_windowed": 0.966,
+            "mean_acc_upper": 0.976,
+            "catastrophic": 1,
+            "paired_vs_ref": {
+              "n": 6,
+              "wins": 0,
+              "losses": 6,
+              "ties": 0,
+              "median_delta_cer": -0.022,
+              "p_sign": 0.031,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 7,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "Greek": {
+        "n": 17,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 15,
+            "aligned": 11,
+            "median_cer_windowed": 0.033,
+            "mean_acc_windowed": 0.954,
+            "mean_acc_upper": 0.962,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 11,
+              "wins": 0,
+              "losses": 10,
+              "ties": 1,
+              "median_delta_cer": -0.03,
+              "p_sign": 0.002,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 17,
+            "aligned": 16,
+            "median_cer_windowed": 0.001,
+            "mean_acc_windowed": 0.983,
+            "mean_acc_upper": 0.992,
+            "catastrophic": 1,
+            "paired_vs_ref": {
+              "n": 16,
+              "wins": 10,
+              "losses": 1,
+              "ties": 5,
+              "median_delta_cer": 0.002,
+              "p_sign": 0.012,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 17,
+            "aligned": 17,
+            "median_cer_windowed": 0.004,
+            "mean_acc_windowed": 0.974,
+            "mean_acc_upper": 0.983,
+            "catastrophic": 0
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 17,
+            "aligned": 14,
+            "median_cer_windowed": 0.005,
+            "mean_acc_windowed": 0.951,
+            "mean_acc_upper": 0.994,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 14,
+              "wins": 6,
+              "losses": 7,
+              "ties": 1,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "surya2": {
+            "pages_run": 17,
+            "aligned": 13,
+            "median_cer_windowed": 0.007,
+            "mean_acc_windowed": 0.975,
+            "mean_acc_upper": 0.991,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 13,
+              "wins": 4,
+              "losses": 7,
+              "ties": 2,
+              "median_delta_cer": -0.001,
+              "p_sign": 0.549,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 17,
+            "aligned": 11,
+            "median_cer_windowed": 0.071,
+            "mean_acc_windowed": 0.897,
+            "mean_acc_upper": 0.953,
+            "catastrophic": 6,
+            "paired_vs_ref": {
+              "n": 11,
+              "wins": 0,
+              "losses": 11,
+              "ties": 0,
+              "median_delta_cer": -0.068,
+              "p_sign": 0.001,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 17,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "Hebrew": {
+        "n": 4,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 4,
+            "aligned": 4,
+            "median_cer_windowed": 0.029,
+            "mean_acc_windowed": 0.922,
+            "mean_acc_upper": 0.98,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 4,
+              "wins": 3,
+              "losses": 1,
+              "ties": 0,
+              "median_delta_cer": 0.016,
+              "p_sign": 0.625,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 4,
+            "aligned": 4,
+            "median_cer_windowed": 0.055,
+            "mean_acc_windowed": 0.907,
+            "mean_acc_upper": 0.964,
+            "catastrophic": 0
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "surya2": {
+            "pages_run": 4,
+            "aligned": 4,
+            "median_cer_windowed": 0.11,
+            "mean_acc_windowed": 0.869,
+            "mean_acc_upper": 0.938,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 4,
+              "wins": 1,
+              "losses": 2,
+              "ties": 1,
+              "median_delta_cer": -0.011,
+              "p_sign": 1,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "Latin": {
+        "n": 12,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3-flash-preview": {
+            "pages_run": 12,
+            "aligned": 10,
+            "median_cer_windowed": 0.018,
+            "mean_acc_windowed": 0.96,
+            "mean_acc_upper": 0.972,
+            "catastrophic": 2,
+            "paired_vs_ref": {
+              "n": 9,
+              "wins": 9,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": 0.008,
+              "p_sign": 0.004,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 2
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 12,
+            "aligned": 9,
+            "median_cer_windowed": 0.029,
+            "mean_acc_windowed": 0.841,
+            "mean_acc_upper": 0.985,
+            "catastrophic": 4
+          },
+          "kraken-austriannewspapers": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "kraken-catmus": {
+            "pages_run": 12,
+            "aligned": 10,
+            "median_cer_windowed": 0.085,
+            "mean_acc_windowed": 0.847,
+            "mean_acc_upper": 0.976,
+            "catastrophic": 3,
+            "paired_vs_ref": {
+              "n": 9,
+              "wins": 3,
+              "losses": 6,
+              "ties": 0,
+              "median_delta_cer": -0.015,
+              "p_sign": 0.508,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 2
+            }
+          },
+          "kraken-greek-cllg": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "ndlkotenocr-v3": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "paddleocr-vl-1.6": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "surya2": {
+            "pages_run": 12,
+            "aligned": 8,
+            "median_cer_windowed": 0.013,
+            "mean_acc_windowed": 0.976,
+            "mean_acc_upper": 0.987,
+            "catastrophic": 4,
+            "paired_vs_ref": {
+              "n": 7,
+              "wins": 6,
+              "losses": 1,
+              "ties": 0,
+              "median_delta_cer": 0.006,
+              "p_sign": 0.125,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 2
+            }
+          },
+          "tesseract-chi_tra_vert": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-deu": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-frk": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-grc": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-hye_calfa": {
+            "pages_run": 0,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 0
+            }
+          },
+          "tesseract-lat": {
+            "pages_run": 12,
+            "aligned": 0,
+            "median_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "catastrophic": 12,
+            "paired_vs_ref": {
+              "n": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 9,
+              "both_unaligned": 3
+            }
+          }
+        }
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "armenian-eznik-elc-alandoc-109",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.123,
+          "acc_upper": 0.965,
+          "acc_windowed": 0.961,
+          "cer": 0.039,
+          "span_dispersion": 1,
+          "chars": 772
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.14,
+          "acc_upper": 0.963,
+          "acc_windowed": 0.958,
+          "cer": 0.042,
+          "span_dispersion": 1,
+          "chars": 783
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.342,
+          "acc_upper": 0.896,
+          "acc_windowed": 0.889,
+          "cer": 0.111,
+          "span_dispersion": 1,
+          "chars": 803
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.737,
+          "acc_upper": 0.68,
+          "acc_windowed": 0.605,
+          "cer": 0.395,
+          "span_dispersion": null,
+          "chars": 816
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.237,
+          "acc_upper": 0.908,
+          "acc_windowed": 0.894,
+          "cer": 0.106,
+          "span_dispersion": 1.25,
+          "chars": 744
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-157",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.105,
+          "acc_upper": 0.976,
+          "acc_windowed": 0.971,
+          "cer": 0.029,
+          "span_dispersion": 1,
+          "chars": 780
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.193,
+          "acc_upper": 0.97,
+          "acc_windowed": 0.966,
+          "cer": 0.034,
+          "span_dispersion": 1,
+          "chars": 745
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.281,
+          "acc_upper": 0.943,
+          "acc_windowed": 0.933,
+          "cer": 0.067,
+          "span_dispersion": null,
+          "chars": 897
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.763,
+          "acc_upper": 0.712,
+          "acc_windowed": 0.655,
+          "cer": 0.345,
+          "span_dispersion": null,
+          "chars": 807
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.167,
+          "acc_upper": 0.97,
+          "acc_windowed": 0.961,
+          "cer": 0.039,
+          "span_dispersion": 1,
+          "chars": 759
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-203",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.142,
+          "acc_upper": 0.988,
+          "acc_windowed": 0.986,
+          "cer": 0.014,
+          "span_dispersion": 1,
+          "chars": 764
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.066,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 743
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.387,
+          "acc_upper": 0.899,
+          "acc_windowed": 0.865,
+          "cer": 0.135,
+          "span_dispersion": null,
+          "chars": 792
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.764,
+          "acc_upper": 0.707,
+          "acc_windowed": 0.644,
+          "cer": 0.356,
+          "span_dispersion": 1,
+          "chars": 801
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.132,
+          "acc_upper": 0.973,
+          "acc_windowed": 0.968,
+          "cer": 0.032,
+          "span_dispersion": 1,
+          "chars": 740
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-70",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.173,
+          "acc_upper": 0.973,
+          "acc_windowed": 0.968,
+          "cer": 0.032,
+          "span_dispersion": 1,
+          "chars": 778
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.184,
+          "acc_upper": 0.965,
+          "acc_windowed": 0.958,
+          "cer": 0.042,
+          "span_dispersion": 1,
+          "chars": 759
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.5,
+          "acc_upper": 0.905,
+          "acc_windowed": 0.898,
+          "cer": 0.102,
+          "span_dispersion": 1,
+          "chars": 910
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.878,
+          "acc_upper": 0.661,
+          "acc_windowed": 0.582,
+          "cer": 0.418,
+          "span_dispersion": null,
+          "chars": 787
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.265,
+          "acc_upper": 0.92,
+          "acc_windowed": 0.913,
+          "cer": 0.087,
+          "span_dispersion": 1,
+          "chars": 724
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-2-13",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.04,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 2457
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.151,
+          "acc_upper": 0.975,
+          "acc_windowed": 0.971,
+          "cer": 0.029,
+          "span_dispersion": null,
+          "chars": 2460
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.119,
+          "acc_upper": 0.98,
+          "acc_windowed": 0.977,
+          "cer": 0.023,
+          "span_dispersion": 1,
+          "chars": 2551
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.667,
+          "acc_upper": 0.779,
+          "acc_windowed": 0.743,
+          "cer": 0.257,
+          "span_dispersion": null,
+          "chars": 2477
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.103,
+          "acc_upper": 0.985,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": null,
+          "chars": 2384
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-2-60",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.025,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2169
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.044,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 2192
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.144,
+          "acc_upper": 0.934,
+          "acc_windowed": 0.973,
+          "cer": 0.027,
+          "span_dispersion": 1,
+          "chars": 2231
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.644,
+          "acc_upper": 0.819,
+          "acc_windowed": 0.783,
+          "cer": 0.217,
+          "span_dispersion": 1,
+          "chars": 2236
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.131,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 4,
+          "chars": 2169
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-3-35",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.035,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 2462
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.076,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 2563
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.182,
+          "acc_upper": 0.963,
+          "acc_windowed": 0.962,
+          "cer": 0.038,
+          "span_dispersion": 1,
+          "chars": 2471
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.794,
+          "acc_upper": 0.654,
+          "acc_windowed": 0.614,
+          "cer": 0.386,
+          "span_dispersion": null,
+          "chars": 2308
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.253,
+          "acc_upper": 0.837,
+          "acc_windowed": 0.835,
+          "cer": 0.165,
+          "span_dispersion": 15.5,
+          "chars": 2250
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-zohrab-1chronicles-1",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.145,
+          "acc_upper": 0.981,
+          "acc_windowed": 0.972,
+          "cer": 0.028,
+          "span_dispersion": null,
+          "chars": 6050
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.242,
+          "acc_upper": 0.956,
+          "acc_windowed": 0.93,
+          "cer": 0.07,
+          "span_dispersion": null,
+          "chars": 6173
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.691,
+          "acc_upper": 0.95,
+          "acc_windowed": 0.933,
+          "cer": 0.067,
+          "span_dispersion": null,
+          "chars": 9529
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.932,
+          "acc_upper": 0.7,
+          "acc_windowed": 0.538,
+          "cer": 0.462,
+          "span_dispersion": 1,
+          "chars": 6200
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.106,
+          "acc_upper": 0.984,
+          "acc_windowed": 0.978,
+          "cer": 0.022,
+          "span_dispersion": null,
+          "chars": 5868
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "armenian-zohrab-john-1",
+      "language": "Armenian",
+      "script": "armenian",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.974,
+          "acc_upper": 0.127,
+          "acc_windowed": 0.126,
+          "cer": 0.874,
+          "span_dispersion": null,
+          "chars": 31921
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.135,
+          "acc_upper": 0.935,
+          "acc_windowed": 0.905,
+          "cer": 0.095,
+          "span_dispersion": null,
+          "chars": 4258
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.755,
+          "acc_upper": 0.653,
+          "acc_windowed": 0.331,
+          "cer": 0.669,
+          "span_dispersion": null,
+          "chars": 3945
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "aligned": false,
+          "guard": 0.794,
+          "acc_upper": 0.704,
+          "acc_windowed": 0.286,
+          "cer": 0.714,
+          "span_dispersion": null,
+          "chars": 5196
+        },
+        "tesseract-hye_calfa": {
+          "aligned": true,
+          "guard": 0.187,
+          "acc_upper": 0.928,
+          "acc_windowed": 0.351,
+          "cer": 0.649,
+          "span_dispersion": null,
+          "chars": 5131
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-analects-xue-er",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.567,
+          "acc_upper": 0.433,
+          "acc_windowed": 0.167,
+          "cer": 0.833,
+          "span_dispersion": 6,
+          "chars": 3782
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.567,
+          "acc_upper": 0.433,
+          "acc_windowed": 0.167,
+          "cer": 0.833,
+          "span_dispersion": 6,
+          "chars": 3776
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "aligned": false,
+          "guard": 0.733,
+          "acc_upper": 0.267,
+          "acc_windowed": 0.1,
+          "cer": 0.9,
+          "span_dispersion": 1,
+          "chars": 180
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": false,
+          "guard": 0.567,
+          "acc_upper": 0.433,
+          "acc_windowed": 0.167,
+          "cer": 0.833,
+          "span_dispersion": 6,
+          "chars": 3768
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.567,
+          "acc_upper": 0.433,
+          "acc_windowed": 0.167,
+          "cer": 0.833,
+          "span_dispersion": 6,
+          "chars": 3713
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.867,
+          "acc_upper": 0.133,
+          "acc_windowed": 0.1,
+          "cer": 0.9,
+          "span_dispersion": null,
+          "chars": 1026
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-daodejing-1",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.983,
+          "cer": 0.017,
+          "span_dispersion": 1.745,
+          "chars": 587
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.983,
+          "cer": 0.017,
+          "span_dispersion": 1.727,
+          "chars": 488
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "aligned": true,
+          "guard": 0.102,
+          "acc_upper": 0.898,
+          "acc_windowed": 0.898,
+          "cer": 0.102,
+          "span_dispersion": 5.737,
+          "chars": 549
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.695,
+          "chars": 586
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.983,
+          "cer": 0.017,
+          "span_dispersion": 2.079,
+          "chars": 455
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.627,
+          "acc_upper": 0.373,
+          "acc_windowed": 0.136,
+          "cer": 0.864,
+          "span_dispersion": 44.5,
+          "chars": 1299
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-hanfeizi-nan-yan",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.016,
+          "acc_upper": 0.984,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 9.22,
+          "chars": 491
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.016,
+          "acc_upper": 0.984,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 5.293,
+          "chars": 329
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "aligned": false,
+          "guard": 0.311,
+          "acc_upper": 0.689,
+          "acc_windowed": 0.607,
+          "cer": 0.393,
+          "span_dispersion": 1,
+          "chars": 342
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": true,
+          "guard": 0.016,
+          "acc_upper": 0.984,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 5.659,
+          "chars": 326
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.066,
+          "acc_upper": 0.934,
+          "acc_windowed": 0.934,
+          "cer": 0.066,
+          "span_dispersion": 11.611,
+          "chars": 348
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.328,
+          "acc_upper": 0.672,
+          "acc_windowed": 0.426,
+          "cer": 0.574,
+          "span_dispersion": 1.5,
+          "chars": 682
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-shijing-guan-ju",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1420
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.125,
+          "acc_upper": 0.875,
+          "acc_windowed": 0.588,
+          "cer": 0.413,
+          "span_dispersion": 32.571,
+          "chars": 909
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "aligned": false,
+          "guard": 0.388,
+          "acc_upper": 0.613,
+          "acc_windowed": 0.275,
+          "cer": 0.725,
+          "span_dispersion": null,
+          "chars": 867
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": true,
+          "guard": 0.05,
+          "acc_upper": 0.95,
+          "acc_windowed": 0.463,
+          "cer": 0.538,
+          "span_dispersion": 1,
+          "chars": 961
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.113,
+          "acc_upper": 0.888,
+          "acc_windowed": 0.838,
+          "cer": 0.162,
+          "span_dispersion": 1,
+          "chars": 1038
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.5,
+          "acc_upper": 0.5,
+          "acc_windowed": 0.137,
+          "cer": 0.863,
+          "span_dispersion": 1,
+          "chars": 1692
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-xunzi-quan-xue",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.7,
+          "acc_upper": 0.3,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 25.75,
+          "chars": 355
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.7,
+          "acc_upper": 0.3,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 24.5,
+          "chars": 341
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "aligned": false,
+          "guard": 0.7,
+          "acc_upper": 0.3,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 25.5,
+          "chars": 306
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": false,
+          "guard": 0.7,
+          "acc_upper": 0.3,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 25.25,
+          "chars": 332
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.7,
+          "acc_upper": 0.3,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 25.5,
+          "chars": 419
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.72,
+          "acc_upper": 0.28,
+          "acc_windowed": 0.14,
+          "cer": 0.86,
+          "span_dispersion": 1,
+          "chars": 657
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "chinese-zhuangzi-xiaoyaoyou",
+      "language": "Chinese",
+      "script": "cjk",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.725,
+          "acc_upper": 0.275,
+          "acc_windowed": 0.118,
+          "cer": 0.882,
+          "span_dispersion": null,
+          "chars": 214
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.745,
+          "acc_upper": 0.255,
+          "acc_windowed": 0.118,
+          "cer": 0.882,
+          "span_dispersion": null,
+          "chars": 200
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "aligned": false,
+          "guard": 0.725,
+          "acc_upper": 0.275,
+          "acc_windowed": 0.118,
+          "cer": 0.882,
+          "span_dispersion": null,
+          "chars": 235
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.725,
+          "acc_upper": 0.275,
+          "acc_windowed": 0.118,
+          "cer": 0.882,
+          "span_dispersion": null,
+          "chars": 247
+        },
+        "tesseract-chi_tra_vert": {
+          "aligned": false,
+          "guard": 0.824,
+          "acc_upper": 0.176,
+          "acc_windowed": 0.098,
+          "cer": 0.902,
+          "span_dispersion": null,
+          "chars": 470
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-boltzmann-gastheorie2-p128",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2170
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2186
+        },
+        "kraken-austriannewspapers": {
+          "aligned": true,
+          "guard": 0.01,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2182
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2220
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2166
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2191
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.113,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.977,
+          "cer": 0.023,
+          "span_dispersion": 38,
+          "chars": 2195
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-de-weigel-gnothi2-p40",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.009,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 3167
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.111,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 3140
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.115,
+          "acc_upper": 0.981,
+          "acc_windowed": 0.972,
+          "cer": 0.028,
+          "span_dispersion": 46.833,
+          "chars": 3158
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": false,
+          "guard": 0.617,
+          "acc_upper": 0.863,
+          "acc_windowed": 0.829,
+          "cer": 0.171,
+          "span_dispersion": null,
+          "chars": 2984
+        },
+        "tesseract-frk": {
+          "aligned": false,
+          "guard": 0.421,
+          "acc_upper": 0.94,
+          "acc_windowed": 0.926,
+          "cer": 0.074,
+          "span_dispersion": null,
+          "chars": 3036
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-de-zesen-rosemund-p100",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.045,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 1516
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.203,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": 1,
+          "chars": 1634
+        },
+        "kraken-austriannewspapers": {
+          "aligned": false,
+          "guard": 0.36,
+          "acc_upper": 0.946,
+          "acc_windowed": 0.931,
+          "cer": 0.069,
+          "span_dispersion": 1,
+          "chars": 1560
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.671,
+          "acc_upper": 0.79,
+          "acc_windowed": 0.751,
+          "cer": 0.249,
+          "span_dispersion": 1,
+          "chars": 1633
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.077,
+          "acc_upper": 0.99,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 1,
+          "chars": 1631
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": false,
+          "guard": 0.518,
+          "acc_upper": 0.843,
+          "acc_windowed": 0.796,
+          "cer": 0.204,
+          "span_dispersion": 1,
+          "chars": 1665
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.315,
+          "acc_upper": 0.934,
+          "acc_windowed": 0.902,
+          "cer": 0.098,
+          "span_dispersion": 1,
+          "chars": 1698
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-hegel-logik-p148",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.013,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.547,
+          "chars": 1710
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.539,
+          "chars": 1708
+        },
+        "kraken-austriannewspapers": {
+          "aligned": true,
+          "guard": 0.132,
+          "acc_upper": 0.99,
+          "acc_windowed": 0.97,
+          "cer": 0.03,
+          "span_dispersion": 37.6,
+          "chars": 1706
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.513,
+          "acc_upper": 0.891,
+          "acc_windowed": 0.854,
+          "cer": 0.146,
+          "span_dispersion": 24.333,
+          "chars": 1722
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 3.278,
+          "chars": 1692
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": false,
+          "guard": 0.355,
+          "acc_upper": 0.926,
+          "acc_windowed": 0.906,
+          "cer": 0.094,
+          "span_dispersion": 21,
+          "chars": 1741
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.105,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.98,
+          "cer": 0.02,
+          "span_dispersion": 6.25,
+          "chars": 1785
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-hegel-phaenomenologie-p351",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 5.148,
+          "chars": 2050
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 5.148,
+          "chars": 2048
+        },
+        "kraken-austriannewspapers": {
+          "aligned": false,
+          "guard": 0.426,
+          "acc_upper": 0.876,
+          "acc_windowed": 0.859,
+          "cer": 0.141,
+          "span_dispersion": 58.75,
+          "chars": 2024
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.778,
+          "acc_upper": 0.837,
+          "acc_windowed": 0.752,
+          "cer": 0.248,
+          "span_dispersion": null,
+          "chars": 2055
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.037,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": 12.2,
+          "chars": 2039
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": false,
+          "guard": 0.37,
+          "acc_upper": 0.944,
+          "acc_windowed": 0.892,
+          "cer": 0.108,
+          "span_dispersion": null,
+          "chars": 2030
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.13,
+          "acc_upper": 0.98,
+          "acc_windowed": 0.974,
+          "cer": 0.026,
+          "span_dispersion": 1,
+          "chars": 2046
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-herder-sprache-p44",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.088,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 1127
+        },
+        "kraken-austriannewspapers": {
+          "aligned": false,
+          "guard": 0.519,
+          "acc_upper": 0.842,
+          "acc_windowed": 0.826,
+          "cer": 0.174,
+          "span_dispersion": null,
+          "chars": 1121
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.731,
+          "acc_upper": 0.74,
+          "acc_windowed": 0.728,
+          "cer": 0.272,
+          "span_dispersion": null,
+          "chars": 1153
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.075,
+          "acc_upper": 0.987,
+          "acc_windowed": 0.982,
+          "cer": 0.018,
+          "span_dispersion": 1,
+          "chars": 1110
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": false,
+          "guard": 0.413,
+          "acc_upper": 0.895,
+          "acc_windowed": 0.885,
+          "cer": 0.115,
+          "span_dispersion": 1,
+          "chars": 1132
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.163,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.97,
+          "cer": 0.03,
+          "span_dispersion": 1,
+          "chars": 1189
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "german-humboldt-kosmos1-p150",
+      "language": "German",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.106,
+          "chars": 1715
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.106,
+          "chars": 1715
+        },
+        "kraken-austriannewspapers": {
+          "aligned": true,
+          "guard": 0.148,
+          "acc_upper": 0.981,
+          "acc_windowed": 0.978,
+          "cer": 0.022,
+          "span_dispersion": 4,
+          "chars": 1705
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.704,
+          "acc_upper": 0.796,
+          "acc_windowed": 0.78,
+          "cer": 0.22,
+          "span_dispersion": 1,
+          "chars": 1689
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.028,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1.242,
+          "chars": 1702
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "aligned": true,
+          "guard": 0.345,
+          "acc_upper": 0.929,
+          "acc_windowed": 0.922,
+          "cer": 0.078,
+          "span_dispersion": 1,
+          "chars": 1715
+        },
+        "tesseract-frk": {
+          "aligned": true,
+          "guard": 0.042,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 2.875,
+          "chars": 1721
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-dioscorides-ruel-106",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": false,
+          "guard": 0.494,
+          "acc_upper": 0.802,
+          "acc_windowed": 0.686,
+          "cer": 0.314,
+          "span_dispersion": 1,
+          "chars": 1905
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.217,
+          "acc_upper": 0.945,
+          "acc_windowed": 0.827,
+          "cer": 0.173,
+          "span_dispersion": 1,
+          "chars": 2005
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.349,
+          "acc_upper": 0.889,
+          "acc_windowed": 0.761,
+          "cer": 0.239,
+          "span_dispersion": 1,
+          "chars": 1982
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": false,
+          "guard": 0.422,
+          "acc_upper": 0.884,
+          "acc_windowed": 0.807,
+          "cer": 0.193,
+          "span_dispersion": 1,
+          "chars": 1270
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.434,
+          "acc_upper": 0.859,
+          "acc_windowed": 0.741,
+          "cer": 0.259,
+          "span_dispersion": null,
+          "chars": 2162
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 0.699,
+          "acc_upper": 0.75,
+          "acc_windowed": 0.545,
+          "cer": 0.455,
+          "span_dispersion": 1,
+          "chars": 1984
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-el-aristotle-bekker1-p17",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.105,
+          "acc_upper": 0.933,
+          "acc_windowed": 0.907,
+          "cer": 0.093,
+          "span_dispersion": 2.083,
+          "chars": 2325
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.007,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 3657
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 3630
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.448,
+          "cer": 0.552,
+          "span_dispersion": 3.9,
+          "chars": 4208
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.294,
+          "acc_upper": 0.937,
+          "acc_windowed": 0.744,
+          "cer": 0.256,
+          "span_dispersion": 1,
+          "chars": 3389
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 0.359,
+          "acc_upper": 0.89,
+          "acc_windowed": 0.827,
+          "cer": 0.173,
+          "span_dispersion": null,
+          "chars": 3853
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-el-marinus-procli-p60",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.053,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1733
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1741
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1762
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.03,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 2113
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.036,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 1734
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.207,
+          "acc_upper": 0.947,
+          "acc_windowed": 0.937,
+          "cer": 0.063,
+          "span_dispersion": 1,
+          "chars": 1807
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-el-orphica-abel-p17",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.129,
+          "acc_upper": 0.982,
+          "acc_windowed": 0.973,
+          "cer": 0.027,
+          "span_dispersion": 1,
+          "chars": 1240
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.069,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.988,
+          "cer": 0.012,
+          "span_dispersion": 1,
+          "chars": 1219
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.089,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 1233
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.069,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": null,
+          "chars": 1214
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.119,
+          "acc_upper": 0.987,
+          "acc_windowed": 0.982,
+          "cer": 0.018,
+          "span_dispersion": null,
+          "chars": 1310
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-el-parthey-poemander-p33",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": false,
+          "guard": 0.6,
+          "acc_upper": 0.741,
+          "acc_windowed": 0.707,
+          "cer": 0.293,
+          "span_dispersion": 1,
+          "chars": 1260
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.104,
+          "acc_upper": 0.936,
+          "acc_windowed": 0.932,
+          "cer": 0.068,
+          "span_dispersion": 6.5,
+          "chars": 1300
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.157,
+          "acc_upper": 0.904,
+          "acc_windowed": 0.898,
+          "cer": 0.102,
+          "span_dispersion": 1,
+          "chars": 1272
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.165,
+          "acc_upper": 0.943,
+          "acc_windowed": 0.93,
+          "cer": 0.07,
+          "span_dispersion": 1,
+          "chars": 1568
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.513,
+          "acc_upper": 0.796,
+          "acc_windowed": 0.762,
+          "cer": 0.238,
+          "span_dispersion": 1,
+          "chars": 1324
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 0.713,
+          "acc_upper": 0.684,
+          "acc_windowed": 0.62,
+          "cer": 0.38,
+          "span_dispersion": 1,
+          "chars": 1407
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-hero-pneumatica-178",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.084,
+          "acc_upper": 0.954,
+          "acc_windowed": 0.954,
+          "cer": 0.046,
+          "span_dispersion": 1,
+          "chars": 1298
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.989,
+          "cer": 0.011,
+          "span_dispersion": 1,
+          "chars": 1397
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.037,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.988,
+          "cer": 0.012,
+          "span_dispersion": 1,
+          "chars": 1614
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.989,
+          "cer": 0.011,
+          "span_dispersion": 1,
+          "chars": 1384
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.162,
+          "acc_upper": 0.962,
+          "acc_windowed": 0.959,
+          "cer": 0.041,
+          "span_dispersion": 1,
+          "chars": 1408
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-hero-pneumatica-266",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.063,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.967,
+          "cer": 0.033,
+          "span_dispersion": 1,
+          "chars": 1510
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.021,
+          "acc_upper": 1,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 1592
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.021,
+          "acc_upper": 1,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 1591
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.047,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 1,
+          "chars": 1776
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.042,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 1579
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.158,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.959,
+          "cer": 0.041,
+          "span_dispersion": 1,
+          "chars": 1615
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-hero-pneumatica-306",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.122,
+          "acc_upper": 0.91,
+          "acc_windowed": 0.881,
+          "cer": 0.119,
+          "span_dispersion": 1,
+          "chars": 1429
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.02,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1530
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.02,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1530
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.025,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 1684
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.046,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1528
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.117,
+          "acc_upper": 0.981,
+          "acc_windowed": 0.94,
+          "cer": 0.06,
+          "span_dispersion": 1,
+          "chars": 1705
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-hero-pneumatica-60",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 1,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1.5,
+          "chars": 1387
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1.034,
+          "chars": 1440
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1.034,
+          "chars": 1438
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1.5,
+          "chars": 1515
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1.034,
+          "chars": 1425
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.147,
+          "acc_upper": 0.974,
+          "acc_windowed": 0.953,
+          "cer": 0.047,
+          "span_dispersion": 1.071,
+          "chars": 1539
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-iliad-1",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": false,
+          "guard": 0.683,
+          "acc_upper": 0.738,
+          "acc_windowed": 0.602,
+          "cer": 0.398,
+          "span_dispersion": null,
+          "chars": 1084
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1133
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1157
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": false,
+          "guard": 0.488,
+          "acc_upper": 0.919,
+          "acc_windowed": 0.86,
+          "cer": 0.14,
+          "span_dispersion": null,
+          "chars": 1130
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.659,
+          "acc_upper": 0.805,
+          "acc_windowed": 0.738,
+          "cer": 0.262,
+          "span_dispersion": null,
+          "chars": 1126
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 0.927,
+          "acc_upper": 0.597,
+          "acc_windowed": 0.285,
+          "cer": 0.715,
+          "span_dispersion": null,
+          "chars": 1024
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-iliad-13-idomeneus",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": false,
+          "guard": 0.687,
+          "acc_upper": 0.671,
+          "acc_windowed": 0.638,
+          "cer": 0.362,
+          "span_dispersion": null,
+          "chars": 1088
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.042,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": null,
+          "chars": 1374
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.157,
+          "acc_upper": 0.958,
+          "acc_windowed": 0.953,
+          "cer": 0.047,
+          "span_dispersion": null,
+          "chars": 1192
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": false,
+          "guard": 0.518,
+          "acc_upper": 0.896,
+          "acc_windowed": 0.881,
+          "cer": 0.119,
+          "span_dispersion": null,
+          "chars": 1283
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.602,
+          "acc_upper": 0.82,
+          "acc_windowed": 0.787,
+          "cer": 0.213,
+          "span_dispersion": null,
+          "chars": 1468
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": false,
+          "guard": 0.964,
+          "acc_upper": 0.416,
+          "acc_windowed": 0.3,
+          "cer": 0.7,
+          "span_dispersion": null,
+          "chars": 1173
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-philo-opificio-38",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.08,
+          "acc_upper": 0.957,
+          "acc_windowed": 0.949,
+          "cer": 0.051,
+          "span_dispersion": 1,
+          "chars": 2270
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2603
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.009,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2601
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.005,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 2683
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.038,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 2724
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.221,
+          "acc_upper": 0.942,
+          "acc_windowed": 0.887,
+          "cer": 0.113,
+          "span_dispersion": null,
+          "chars": 2846
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-philo-opificio-45",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.02,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 2334
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2523
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.02,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 2514
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.01,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2649
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.01,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2444
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.327,
+          "acc_upper": 0.935,
+          "acc_windowed": 0.775,
+          "cer": 0.225,
+          "span_dispersion": 32.25,
+          "chars": 2869
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-philo-opificio-55",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.128,
+          "acc_upper": 0.888,
+          "acc_windowed": 0.888,
+          "cer": 0.112,
+          "span_dispersion": 1,
+          "chars": 2184
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2703
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.023,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 2742
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.006,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2760
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2775
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.302,
+          "acc_upper": 0.948,
+          "acc_windowed": 0.929,
+          "cer": 0.071,
+          "span_dispersion": null,
+          "chars": 2935
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-simplicius-in-phys-150",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "aligned": true,
+          "guard": 0.05,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 2174
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.006,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 3067
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.006,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 3070
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.011,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 3223
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.006,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3109
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.261,
+          "acc_upper": 0.947,
+          "acc_windowed": 0.854,
+          "cer": 0.146,
+          "span_dispersion": 1,
+          "chars": 3363
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-simplicius-in-phys-300",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.009,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2959
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.014,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2960
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.009,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2969
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.014,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 3068
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.264,
+          "acc_upper": 0.936,
+          "acc_windowed": 0.77,
+          "cer": 0.23,
+          "span_dispersion": null,
+          "chars": 3463
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-simplicius-in-phys-500",
+      "language": "Greek",
+      "script": "greek",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2903
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.036,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2903
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 3171
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.026,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3010
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "aligned": true,
+          "guard": 0.24,
+          "acc_upper": 0.938,
+          "acc_windowed": 0.903,
+          "cer": 0.097,
+          "span_dispersion": null,
+          "chars": 3146
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "hebrew-genesis-1",
+      "language": "Hebrew",
+      "script": "hebrew",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1.019,
+          "chars": 3826
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.019,
+          "acc_upper": 0.985,
+          "acc_windowed": 0.98,
+          "cer": 0.02,
+          "span_dispersion": 2.292,
+          "chars": 3812
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.98,
+          "cer": 0.02,
+          "span_dispersion": 1.731,
+          "chars": 4302
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "hebrew-psalms-1",
+      "language": "Hebrew",
+      "script": "hebrew",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 655
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 639
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.313,
+          "acc_upper": 0.887,
+          "acc_windowed": 0.863,
+          "cer": 0.137,
+          "span_dispersion": null,
+          "chars": 639
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "hebrew-sefer-hayirah-blessings",
+      "language": "Hebrew",
+      "script": "hebrew",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.181,
+          "acc_upper": 0.963,
+          "acc_windowed": 0.747,
+          "cer": 0.253,
+          "span_dispersion": null,
+          "chars": 1135
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.193,
+          "acc_upper": 0.941,
+          "acc_windowed": 0.735,
+          "cer": 0.265,
+          "span_dispersion": null,
+          "chars": 1087
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.289,
+          "acc_upper": 0.923,
+          "acc_windowed": 0.713,
+          "cer": 0.287,
+          "span_dispersion": 1,
+          "chars": 704
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "hebrew-shaarei-orah-gate2-yovel",
+      "language": "Hebrew",
+      "script": "hebrew",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.123,
+          "acc_upper": 0.957,
+          "acc_windowed": 0.95,
+          "cer": 0.05,
+          "span_dispersion": null,
+          "chars": 2932
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.185,
+          "acc_upper": 0.931,
+          "acc_windowed": 0.911,
+          "cer": 0.089,
+          "span_dispersion": null,
+          "chars": 2799
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "missing": true
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.264,
+          "acc_upper": 0.943,
+          "acc_windowed": 0.918,
+          "cer": 0.082,
+          "span_dispersion": null,
+          "chars": 4842
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "latin-aeneid-1",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.107,
+          "acc_upper": 0.833,
+          "acc_windowed": 0.861,
+          "cer": 0.139,
+          "span_dispersion": 1,
+          "chars": 2289
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.286,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.625,
+          "cer": 0.375,
+          "span_dispersion": 1,
+          "chars": 2282
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.214,
+          "acc_upper": 0.958,
+          "acc_windowed": 0.84,
+          "cer": 0.16,
+          "span_dispersion": 1,
+          "chars": 2294
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.464,
+          "acc_upper": 0.965,
+          "acc_windowed": 0.854,
+          "cer": 0.146,
+          "span_dispersion": 1,
+          "chars": 2434
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.536,
+          "acc_upper": 0.958,
+          "acc_windowed": 0.729,
+          "cer": 0.271,
+          "span_dispersion": null,
+          "chars": 2354
+        }
+      }
+    },
+    {
+      "slug": "latin-aeneid-10-pallas",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.119,
+          "acc_upper": 0.974,
+          "acc_windowed": 0.944,
+          "cer": 0.056,
+          "span_dispersion": 1,
+          "chars": 2055
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.175,
+          "acc_upper": 0.97,
+          "acc_windowed": 0.727,
+          "cer": 0.273,
+          "span_dispersion": 1,
+          "chars": 2046
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.14,
+          "acc_upper": 0.975,
+          "acc_windowed": 0.811,
+          "cer": 0.189,
+          "span_dispersion": 1,
+          "chars": 2050
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.93,
+          "acc_upper": 0.464,
+          "acc_windowed": 0.298,
+          "cer": 0.702,
+          "span_dispersion": null,
+          "chars": 1207
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.413,
+          "acc_upper": 0.89,
+          "acc_windowed": 0.862,
+          "cer": 0.138,
+          "span_dispersion": null,
+          "chars": 2187
+        }
+      }
+    },
+    {
+      "slug": "latin-hieronymus-epistola-ad-paulinum",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.041,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 6671
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.2,
+          "acc_upper": 0.991,
+          "acc_windowed": 0.984,
+          "cer": 0.016,
+          "span_dispersion": null,
+          "chars": 6418
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.09,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.905,
+          "cer": 0.095,
+          "span_dispersion": null,
+          "chars": 6683
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.055,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": null,
+          "chars": 6680
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.593,
+          "acc_upper": 0.91,
+          "acc_windowed": 0.871,
+          "cer": 0.129,
+          "span_dispersion": null,
+          "chars": 6768
+        }
+      }
+    },
+    {
+      "slug": "latin-hieronymus-prologus-galeatus",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.051,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 5336
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.16,
+          "acc_upper": 0.979,
+          "acc_windowed": 0.971,
+          "cer": 0.029,
+          "span_dispersion": 9.5,
+          "chars": 5381
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.096,
+          "acc_upper": 0.984,
+          "acc_windowed": 0.954,
+          "cer": 0.046,
+          "span_dispersion": 9.5,
+          "chars": 5347
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.083,
+          "acc_upper": 0.99,
+          "acc_windowed": 0.988,
+          "cer": 0.012,
+          "span_dispersion": 1,
+          "chars": 5340
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.577,
+          "acc_upper": 0.914,
+          "acc_windowed": 0.88,
+          "cer": 0.12,
+          "span_dispersion": 32,
+          "chars": 5423
+        }
+      }
+    },
+    {
+      "slug": "latin-la-agricola-metallica-p406",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.011,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1.035,
+          "chars": 1660
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.023,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1.158,
+          "chars": 1656
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.057,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 3.226,
+          "chars": 1653
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.017,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1.035,
+          "chars": 1626
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.56,
+          "acc_upper": 0.899,
+          "acc_windowed": 0.889,
+          "cer": 0.111,
+          "span_dispersion": 1,
+          "chars": 1684
+        }
+      }
+    },
+    {
+      "slug": "latin-la-copernicus-derev-p142",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.1,
+          "acc_upper": 0.99,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": 1,
+          "chars": 3072
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.25,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.982,
+          "cer": 0.018,
+          "span_dispersion": 1,
+          "chars": 2097
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.156,
+          "acc_upper": 0.987,
+          "acc_windowed": 0.966,
+          "cer": 0.034,
+          "span_dispersion": 1,
+          "chars": 2612
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.117,
+          "acc_upper": 0.991,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": 1,
+          "chars": 2996
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.711,
+          "acc_upper": 0.859,
+          "acc_windowed": 0.777,
+          "cer": 0.223,
+          "span_dispersion": 1,
+          "chars": 2668
+        }
+      }
+    },
+    {
+      "slug": "latin-la-linnaeus-systema1735-p5",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 3733
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.044,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 3755
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.1,
+          "acc_upper": 0.982,
+          "acc_windowed": 0.978,
+          "cer": 0.022,
+          "span_dispersion": 1,
+          "chars": 3737
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.063,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": 1,
+          "chars": 3798
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.413,
+          "acc_upper": 0.894,
+          "acc_windowed": 0.864,
+          "cer": 0.136,
+          "span_dispersion": null,
+          "chars": 3719
+        }
+      }
+    },
+    {
+      "slug": "latin-la-malleus-ed2-p30",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.551,
+          "acc_upper": 0.77,
+          "acc_windowed": 0.762,
+          "cer": 0.238,
+          "span_dispersion": 1,
+          "chars": 1645
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.626,
+          "acc_upper": 0.765,
+          "acc_windowed": 0.758,
+          "cer": 0.242,
+          "span_dispersion": 1,
+          "chars": 1591
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.707,
+          "acc_upper": 0.725,
+          "acc_windowed": 0.713,
+          "cer": 0.287,
+          "span_dispersion": 1,
+          "chars": 1681
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.605,
+          "acc_upper": 0.764,
+          "acc_windowed": 0.751,
+          "cer": 0.249,
+          "span_dispersion": 1,
+          "chars": 1618
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.912,
+          "acc_upper": 0.626,
+          "acc_windowed": 0.601,
+          "cer": 0.399,
+          "span_dispersion": null,
+          "chars": 1605
+        }
+      }
+    },
+    {
+      "slug": "latin-la-praetorius-syntagma1-p120",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": false,
+          "guard": 0.903,
+          "acc_upper": 0.577,
+          "acc_windowed": 0.297,
+          "cer": 0.703,
+          "span_dispersion": 1,
+          "chars": 1859
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.885,
+          "acc_upper": 0.593,
+          "acc_windowed": 0.307,
+          "cer": 0.693,
+          "span_dispersion": 1,
+          "chars": 1857
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": false,
+          "guard": 0.894,
+          "acc_upper": 0.591,
+          "acc_windowed": 0.307,
+          "cer": 0.693,
+          "span_dispersion": 1,
+          "chars": 1868
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": false,
+          "guard": 0.885,
+          "acc_upper": 0.601,
+          "acc_windowed": 0.309,
+          "cer": 0.691,
+          "span_dispersion": 1,
+          "chars": 1835
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.92,
+          "acc_upper": 0.574,
+          "acc_windowed": 0.3,
+          "cer": 0.7,
+          "span_dispersion": null,
+          "chars": 2006
+        }
+      }
+    },
+    {
+      "slug": "latin-vita-vergilii-donatus-auctus",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.128,
+          "acc_upper": 0.959,
+          "acc_windowed": 0.927,
+          "cer": 0.073,
+          "span_dispersion": 1,
+          "chars": 2047
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": false,
+          "guard": 0.396,
+          "acc_upper": 0.918,
+          "acc_windowed": 0.885,
+          "cer": 0.115,
+          "span_dispersion": 1,
+          "chars": 2041
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.154,
+          "acc_upper": 0.956,
+          "acc_windowed": 0.924,
+          "cer": 0.076,
+          "span_dispersion": 1,
+          "chars": 2049
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.101,
+          "acc_upper": 0.962,
+          "acc_windowed": 0.93,
+          "cer": 0.07,
+          "span_dispersion": 1,
+          "chars": 2428
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.503,
+          "acc_upper": 0.879,
+          "acc_windowed": 0.838,
+          "cer": 0.162,
+          "span_dispersion": 1,
+          "chars": 2117
+        }
+      }
+    },
+    {
+      "slug": "latin-vulgate-genesis-1",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": false,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.105,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.929,
+          "cer": 0.071,
+          "span_dispersion": 5.176,
+          "chars": 2144
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.123,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.926,
+          "cer": 0.074,
+          "span_dispersion": 1,
+          "chars": 1991
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.333,
+          "acc_upper": 0.954,
+          "acc_windowed": 0.681,
+          "cer": 0.319,
+          "span_dispersion": 1,
+          "chars": 2103
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.193,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.954,
+          "cer": 0.046,
+          "span_dispersion": 1,
+          "chars": 2065
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.526,
+          "acc_upper": 0.943,
+          "acc_windowed": 0.578,
+          "cer": 0.422,
+          "span_dispersion": 1,
+          "chars": 2157
+        }
+      }
+    },
+    {
+      "slug": "latin-vulgate-genesis-5-genealogy",
+      "language": "Latin",
+      "script": "latin",
+      "year": null,
+      "tier": "pinned",
+      "non_canonical": true,
+      "engines": {
+        "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "gemini-3-flash-preview": {
+          "aligned": true,
+          "guard": 0.053,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.977,
+          "cer": 0.023,
+          "span_dispersion": 72.5,
+          "chars": 3849
+        },
+        "gemini-3.1-flash-lite": {
+          "aligned": true,
+          "guard": 0.107,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.368,
+          "cer": 0.632,
+          "span_dispersion": 86,
+          "chars": 3897
+        },
+        "kraken-austriannewspapers": {
+          "missing": true
+        },
+        "kraken-catmus": {
+          "aligned": true,
+          "guard": 0.112,
+          "acc_upper": 0.982,
+          "acc_windowed": 0.422,
+          "cer": 0.578,
+          "span_dispersion": 79.5,
+          "chars": 4023
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        },
+        "ndlkotenocr-v3": {
+          "missing": true
+        },
+        "paddleocr-vl-1.6": {
+          "missing": true
+        },
+        "surya2": {
+          "aligned": true,
+          "guard": 0.053,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.977,
+          "cer": 0.023,
+          "span_dispersion": 72.5,
+          "chars": 3920
+        },
+        "tesseract-chi_tra_vert": {
+          "missing": true
+        },
+        "tesseract-deu": {
+          "missing": true
+        },
+        "tesseract-frk": {
+          "missing": true
+        },
+        "tesseract-grc": {
+          "missing": true
+        },
+        "tesseract-hye": {
+          "missing": true
+        },
+        "tesseract-hye_calfa": {
+          "missing": true
+        },
+        "tesseract-lat": {
+          "aligned": false,
+          "guard": 0.39,
+          "acc_upper": 0.933,
+          "acc_windowed": 0.871,
+          "cer": 0.129,
+          "span_dispersion": 67,
+          "chars": 4018
+        }
+      }
+    }
+  ]
+}

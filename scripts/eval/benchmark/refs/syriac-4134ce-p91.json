@@ -1,0 +1,14 @@
+{
+  "slug": "syriac-4134ce-p91",
+  "substratum": "manuscript",
+  "title": "Syriac Theological Anthology",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "kraken-sophro-mhiro-defaultseg",
+    "kraken-sophro-mhiro-rtl",
+    "surya2",
+    "tesseract-syr"
+  ],
+  "reason": "best text 388 overlap 0.03 < 0.25"
+}

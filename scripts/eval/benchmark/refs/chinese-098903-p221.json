@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-098903-p221",
+  "substratum": "buddhist-canon",
+  "title": "楞嚴經要解 (Shurangama Sutra with Essential Commentary)",
+  "probe_chars": 363,
+  "source": "CBETA",
+  "work": "G2334",
+  "work_title": null,
+  "juan": 1,
+  "url": "https://cbetaonline.dila.edu.tw/G2334_001",
+  "etext_chars": 38588,
+  "window_chars": 553,
+  "overlap": 0.147,
+  "reason": "overlap 0.15 < 0.35: page is not (cleanly) in this e-text"
+}

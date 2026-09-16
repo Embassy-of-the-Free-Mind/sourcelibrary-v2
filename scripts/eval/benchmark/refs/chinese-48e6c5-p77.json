@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-48e6c5-p77",
+  "substratum": "other",
+  "title": "大戴禮記·卷一~卷三 (vol 1)",
+  "probe_chars": 156,
+  "source": "Kanripo",
+  "work": "KR1d0076",
+  "work_title": "大戴禮記-漢-戴德",
+  "juan": "1,2,3",
+  "url": "https://github.com/kanripo/KR1d0076",
+  "etext_chars": 17553,
+  "window_chars": 244,
+  "overlap": 0.664
+}

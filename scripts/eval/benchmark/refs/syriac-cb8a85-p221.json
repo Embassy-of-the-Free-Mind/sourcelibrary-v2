@@ -1,0 +1,14 @@
+{
+  "slug": "syriac-cb8a85-p221",
+  "substratum": "manuscript",
+  "title": "Theological and Philosophical Anthology",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "kraken-sophro-mhiro-defaultseg",
+    "kraken-sophro-mhiro-rtl",
+    "surya2",
+    "tesseract-syr"
+  ],
+  "reason": "best text 548 overlap 0.02 < 0.25"
+}

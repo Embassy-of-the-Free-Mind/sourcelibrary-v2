@@ -1,0 +1,4376 @@
+{
+  "summary": {
+    "stratum": "armenian",
+    "issue": 4746,
+    "date": "2026-09-16",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "dots-mocr": {
+        "pages_run": 20,
+        "empty": 1,
+        "loop": 4,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.159,
+          "catastrophic": 7,
+          "median_gap": 0,
+          "median_bow": 0.521
+        },
+        "invention": {
+          "median": 0.278,
+          "mean": 0.421,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "armenian-2f197e-p449",
+            "title": "Elements of Theology",
+            "year": 1648,
+            "cer": 7.666,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ապրան",
+              "ազգայի",
+              "մարուքի",
+              "մարո"
+            ]
+          },
+          {
+            "slug": "armenian-654a89-p172",
+            "title": "Armenian Gospels (15th century)",
+            "year": 1450,
+            "cer": 6.957,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "գլխա"
+            ]
+          },
+          {
+            "slug": "armenian-2f1e75-p421",
+            "title": "Works of Gregory of Narek (1374 MS)",
+            "year": null,
+            "cer": 4.601,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "armenian-2f2365-p132",
+            "title": "Treatise on Fevers",
+            "year": 1636,
+            "cer": 3.614,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "1000",
+              "1001",
+              "1002",
+              "1003",
+              "1004",
+              "1005",
+              "1006",
+              "1007"
+            ]
+          },
+          {
+            "slug": "armenian-bd0aad-p66",
+            "title": "Commentary on the Apocalypse of John (Armenian)",
+            "year": null,
+            "cer": 1.362,
+            "gap": 0,
+            "invention": 0.909,
+            "has_ref": false,
+            "unsupported": [
+              "անդամ",
+              "որդեն",
+              "մասներ",
+              "յուրաքան",
+              "դարան",
+              "ներեն",
+              "մելալ",
+              "յորժու"
+            ]
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.044,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.807
+        },
+        "invention": {
+          "median": 0.09,
+          "mean": 0.233,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "armenian-bd0aad-p66",
+            "title": "Commentary on the Apocalypse of John (Armenian)",
+            "year": null,
+            "cer": 0.765,
+            "gap": 0.031,
+            "invention": 0.927,
+            "has_ref": false,
+            "unsupported": [
+              "տերունաւորքն",
+              "իջանել",
+              "ոգեւորեալ",
+              "յորժամ",
+              "հրաշս",
+              "սեալ",
+              "զսուրբսն",
+              "հանջանիսր"
+            ]
+          },
+          {
+            "slug": "armenian-bd0bc5-p207",
+            "title": "New Testament (Armenian-Greek-Italian trilingual)",
+            "year": null,
+            "cer": 0.506,
+            "gap": 0.082,
+            "invention": 0.65,
+            "has_ref": false,
+            "unsupported": [
+              "maledictioe",
+              "scripto",
+              "maledic",
+              "fact",
+              "delegno",
+              "accio",
+              "labenedictio",
+              "abraa"
+            ]
+          },
+          {
+            "slug": "armenian-bd14b4-p176",
+            "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+            "year": 1607,
+            "cer": 0.258,
+            "gap": 0,
+            "invention": 0.195,
+            "has_ref": false,
+            "unsupported": [
+              "հեթանոսացեմ",
+              "սպրդողաց",
+              "ցուսցեն",
+              "հնազանդութեանն",
+              "իցեն",
+              "պիսիոք",
+              "փոյթ",
+              "զնորին"
+            ]
+          },
+          {
+            "slug": "armenian-2f2365-p132",
+            "title": "Treatise on Fevers",
+            "year": 1636,
+            "cer": 0.249,
+            "gap": 0.015,
+            "invention": 0.625,
+            "has_ref": false,
+            "unsupported": [
+              "ստծն",
+              "բժկութե",
+              "սորա",
+              "այրեցող",
+              "ջերմանն",
+              "անապական",
+              "մաղձն",
+              "հոտումն"
+            ]
+          },
+          {
+            "slug": "armenian-2f197e-p449",
+            "title": "Elements of Theology",
+            "year": 1648,
+            "cer": 0.237,
+            "gap": 0,
+            "invention": 0.433,
+            "has_ref": false,
+            "unsupported": [
+              "իվերամենայն",
+              "զկար",
+              "եանցն",
+              "ներգործի",
+              "ցբոյսս",
+              "քարինս",
+              "ինախնի",
+              "ինիւկի"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 2,
+        "loop": 1,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.159,
+          "mean": 0.265,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "armenian-bd0aad-p66",
+            "title": "Commentary on the Apocalypse of John (Armenian)",
+            "year": null,
+            "invention": 0.832,
+            "has_ref": false,
+            "unsupported": [
+              "երկնաւորք",
+              "ըայց",
+              "ինքեալ",
+              "յորում",
+              "ոռոմն",
+              "զառաջինն",
+              "հանելով",
+              "չորրորդէ"
+            ]
+          },
+          {
+            "slug": "armenian-bd0bc5-p207",
+            "title": "New Testament (Armenian-Greek-Italian trilingual)",
+            "year": null,
+            "invention": 0.673,
+            "has_ref": false,
+            "unsupported": [
+              "funs",
+              "malediciõe",
+              "hoch",
+              "egle",
+              "nelegne",
+              "labenedi",
+              "tiõe",
+              "abua"
+            ]
+          },
+          {
+            "slug": "armenian-2f2365-p132",
+            "title": "Treatise on Fevers",
+            "year": 1636,
+            "invention": 0.653,
+            "has_ref": false,
+            "unsupported": [
+              "վասն",
+              "ծննդեան",
+              "եղջերուի",
+              "հայեցողութեանն",
+              "մաշկն",
+              "հասումն",
+              "տեսիս",
+              "ետեւ"
+            ]
+          },
+          {
+            "slug": "armenian-2f1e75-p421",
+            "title": "Works of Gregory of Narek (1374 MS)",
+            "year": null,
+            "invention": 0.634,
+            "has_ref": false,
+            "unsupported": [
+              "աղօթ",
+              "անաւարտին",
+              "ընծա",
+              "վաստականութբք",
+              "բանականդրութաղե",
+              "րսից",
+              "ծայրագամբ",
+              "զինորոգս"
+            ]
+          },
+          {
+            "slug": "armenian-2f197e-p449",
+            "title": "Elements of Theology",
+            "year": 1648,
+            "invention": 0.413,
+            "has_ref": false,
+            "unsupported": [
+              "վերամնցն",
+              "զիւր",
+              "ներգծի",
+              "ցրոյսս",
+              "եքարինս",
+              "ինախկի",
+              "նիկի",
+              "սկզբանթեն"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 2,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.12,
+          "catastrophic": 4,
+          "median_gap": 0.008,
+          "median_bow": 0.569
+        },
+        "invention": {
+          "median": 0.327,
+          "mean": 0.434,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "armenian-bd0bc5-p207",
+            "title": "New Testament (Armenian-Greek-Italian trilingual)",
+            "year": null,
+            "cer": 1.197,
+            "gap": 0.022,
+            "invention": 0.814,
+            "has_ref": false,
+            "unsupported": [
+              "fanto",
+              "maledierido",
+              "eglie",
+              "feripro",
+              "malette",
+              "chie",
+              "doio",
+              "xpis"
+            ]
+          },
+          {
+            "slug": "armenian-bd0aad-p66",
+            "title": "Commentary on the Apocalypse of John (Armenian)",
+            "year": null,
+            "cer": 1.026,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "იორგი",
+              "სიონის",
+              "საკითხას",
+              "გადაიხადა",
+              "არასა",
+              "ადის",
+              "ძოლი",
+              "საკვებ"
+            ]
+          },
+          {
+            "slug": "armenian-bd14b4-p176",
+            "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+            "year": 1607,
+            "cer": 0.645,
+            "gap": 0.025,
+            "invention": 0.471,
+            "has_ref": false,
+            "unsupported": [
+              "անաձայցեմ",
+              "երուն",
+              "բնիքի",
+              "մահու",
+              "բրոնա",
+              "դատել",
+              "բարչ",
+              "որոյ"
+            ]
+          },
+          {
+            "slug": "armenian-2f197e-p449",
+            "title": "Elements of Theology",
+            "year": 1648,
+            "cer": 0.564,
+            "gap": 0.026,
+            "invention": 0.778,
+            "has_ref": false,
+            "unsupported": [
+              "գերազումին",
+              "ամենց",
+              "սկսեցած",
+              "գիրք",
+              "կում",
+              "սիմին",
+              "գրադաս",
+              "կրարին"
+            ]
+          },
+          {
+            "slug": "armenian-2f2365-p132",
+            "title": "Treatise on Fevers",
+            "year": 1636,
+            "cer": 0.427,
+            "gap": 0.02,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ատծմն",
+              "բեմի",
+              "մահն",
+              "ապակ"
+            ]
+          }
+        ]
+      },
+      "tesseract-hye": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.685,
+          "catastrophic": 11,
+          "median_gap": 0.004,
+          "median_bow": 0.059
+        },
+        "invention": {
+          "median": 0.929,
+          "mean": 0.878,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "armenian-53c6cb-p198",
+            "title": "Collection des historiens de l'Arménie, Vol. 1",
+            "year": 1867,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "յ10իտ",
+              "1շոբ",
+              "1ճշօոէ6ի",
+              "տւօռ",
+              "մշոճշ",
+              "տաուշճոճոէ",
+              "շէյ6",
+              "իոըշօոլշ1"
+            ]
+          },
+          {
+            "slug": "armenian-ee39f6-p112",
+            "title": "Deux historiens arméniens: Kiracos de Gantzac, XIIIe s., Histoire d'Arménie; Oukhtanes d'Ourha, Xe s.",
+            "year": 1870,
+            "cer": 0.95,
+            "gap": 0.002,
+            "invention": 0.996,
+            "has_ref": false,
+            "unsupported": [
+              "օթճռատուռ",
+              "տեճոէ",
+              "յստզո4",
+              "թոծտծոէ",
+              "շօօբծոմճու",
+              "էծիզաօտ",
+              "9ճլոէ",
+              "օօքծծոէ"
+            ]
+          },
+          {
+            "slug": "armenian-bd0bc5-p207",
+            "title": "New Testament (Armenian-Greek-Italian trilingual)",
+            "year": null,
+            "cer": 0.92,
+            "gap": 0.015,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "գաոճ",
+              "քռչիո",
+              "թանգ",
+              "ոեւժբ",
+              "տոշք",
+              "լ2ե65նի",
+              "դոլշջ",
+              "ոջհի"
+            ]
+          },
+          {
+            "slug": "armenian-bd14b4-p176",
+            "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+            "year": 1607,
+            "cer": 0.898,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "աաաա",
+              "հարի",
+              "ճրռւտրոնլ",
+              "հանր",
+              "դայա",
+              "հեմը",
+              "շօթյոցհէ",
+              "ելօէ568"
+            ]
+          },
+          {
+            "slug": "armenian-42e2e5-p263",
+            "title": "Vasn Vardanay ew Hayotsʿ paterazmin (On Vardan and the Armenian War)",
+            "year": 1903,
+            "cer": 0.889,
+            "gap": 0,
+            "invention": 0.871,
+            "has_ref": false,
+            "unsupported": [
+              "էեխչմեալ",
+              "մեալ",
+              "զլաւութ",
+              "րորեալ",
+              "թչոա",
+              "բաղոար",
+              "աեգոր",
+              "վերաց"
+            ]
+          }
+        ]
+      },
+      "tesseract-hye_calfa": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.429,
+          "catastrophic": 7,
+          "median_gap": 0.006,
+          "median_bow": 0.234
+        },
+        "invention": {
+          "median": 0.492,
+          "mean": 0.532,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "armenian-53c6cb-p198",
+            "title": "Collection des historiens de l'Arménie, Vol. 1",
+            "year": 1867,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "able",
+              "ծոաե",
+              "xαтανά",
+              "νυϰτι",
+              "μαβρτ",
+              "προς",
+              "ρoντ",
+              "νντтων"
+            ]
+          },
+          {
+            "slug": "armenian-bd14b4-p176",
+            "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+            "year": 1607,
+            "cer": 0.957,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "աւետարաւիք",
+              "հաստւո"
+            ]
+          },
+          {
+            "slug": "armenian-ee39f6-p112",
+            "title": "Deux historiens arméniens: Kiracos de Gantzac, XIIIe s., Histoire d'Arménie; Oukhtanes d'Ourha, Xe s.",
+            "year": 1870,
+            "cer": 0.949,
+            "gap": 0.017,
+            "invention": 0.75,
+            "has_ref": false,
+            "unsupported": [
+              "1901",
+              "1611",
+              "2943"
+            ]
+          },
+          {
+            "slug": "armenian-bd0aad-p66",
+            "title": "Commentary on the Apocalypse of John (Armenian)",
+            "year": null,
+            "cer": 0.875,
+            "gap": 0.013,
+            "invention": 0.992,
+            "has_ref": false,
+            "unsupported": [
+              "մէհենյւանմատանթաեսն",
+              "եւոջ",
+              "արչաւաւացաեարանաանիո",
+              "խոլաեզիիջոներյգց",
+              "ևուներզժնն",
+              "հատոա",
+              "մուոց",
+              "անուվնաւոռքն"
+            ]
+          },
+          {
+            "slug": "armenian-bd0bc5-p207",
+            "title": "New Testament (Armenian-Greek-Italian trilingual)",
+            "year": null,
+            "cer": 0.864,
+            "gap": 0.047,
+            "invention": 0.927,
+            "has_ref": false,
+            "unsupported": [
+              "բոռօը",
+              "4աւս",
+              "տռարր",
+              "ըլռոտւ",
+              "դատօ",
+              "այարուխ",
+              "զագրց",
+              "աոսոռոստ"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "armenian-2f197e-p449",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Elements of Theology",
+      "year": 1648,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 5249,
+          "empty": false,
+          "loop": true,
+          "cer": 7.666,
+          "acc": 0,
+          "seq": 0.003,
+          "bow": 0.003,
+          "gap": 0,
+          "len_ratio": 8.088,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ապրան",
+            "ազգայի",
+            "մարուքի",
+            "մարո"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.003,
+            "gemini-3.1-flash-lite": 0.003,
+            "surya2": 0.002,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 748,
+          "empty": false,
+          "loop": false,
+          "cer": 0.237,
+          "acc": 0.763,
+          "seq": 0.565,
+          "bow": 0.565,
+          "gap": 0,
+          "len_ratio": 1.153,
+          "invention": 0.433,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "իվերամենայն",
+            "զկար",
+            "եանցն",
+            "ներգործի",
+            "ցբոյսս",
+            "քարինս",
+            "ինախնի",
+            "ինիւկի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.003,
+            "gemini-3.1-flash-lite": 0.565,
+            "surya2": 0.185,
+            "tesseract-hye": 0.008,
+            "tesseract-hye_calfa": 0.058
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 649,
+          "empty": false,
+          "loop": false,
+          "invention": 0.413,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "վերամնցն",
+            "զիւր",
+            "ներգծի",
+            "ցրոյսս",
+            "եքարինս",
+            "ինախկի",
+            "նիկի",
+            "սկզբանթեն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.003,
+            "gemini-3-flash-preview": 0.565,
+            "surya2": 0.185,
+            "tesseract-hye": 0.008,
+            "tesseract-hye_calfa": 0.087
+          }
+        },
+        "surya2": {
+          "n_content": 791,
+          "empty": false,
+          "loop": false,
+          "cer": 0.564,
+          "acc": 0.436,
+          "seq": 0.158,
+          "bow": 0.185,
+          "gap": 0.026,
+          "len_ratio": 1.219,
+          "invention": 0.778,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "գերազումին",
+            "ամենց",
+            "սկսեցած",
+            "գիրք",
+            "կում",
+            "սիմին",
+            "գրադաս",
+            "կրարին"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.002,
+            "gemini-3-flash-preview": 0.185,
+            "gemini-3.1-flash-lite": 0.185,
+            "tesseract-hye": 0.045,
+            "tesseract-hye_calfa": 0.03
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 434,
+          "empty": false,
+          "loop": false,
+          "cer": 0.755,
+          "acc": 0.245,
+          "seq": 0.008,
+          "bow": 0.008,
+          "gap": 0,
+          "len_ratio": 0.669,
+          "invention": 0.981,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "թաանջար",
+            "ապոր",
+            "աաաա",
+            "արգածքն",
+            "զորու",
+            "աաաաիգեաբթա",
+            "անակ",
+            "թիոյ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.008,
+            "gemini-3.1-flash-lite": 0.008,
+            "surya2": 0.045,
+            "tesseract-hye_calfa": 0.067
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 533,
+          "empty": false,
+          "loop": false,
+          "cer": 0.475,
+          "acc": 0.525,
+          "seq": 0.087,
+          "bow": 0.087,
+          "gap": 0,
+          "len_ratio": 0.821,
+          "invention": 0.923,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ազոյւիս",
+            "ևինչև",
+            "իթամացան",
+            "աոձազիր",
+            "նէրգծւի",
+            "զիմիեչէրւաս",
+            "կքարինա",
+            "նէրանցածեէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.058,
+            "gemini-3.1-flash-lite": 0.087,
+            "surya2": 0.03,
+            "tesseract-hye": 0.067
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-2f1e75-p421",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Works of Gregory of Narek (1374 MS)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1500,
+          "empty": false,
+          "loop": true,
+          "cer": 4.601,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 4.601,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 340,
+          "empty": false,
+          "loop": false,
+          "cer": 0.199,
+          "acc": 0.801,
+          "seq": 0.466,
+          "bow": 0.466,
+          "gap": 0,
+          "len_ratio": 1.043,
+          "invention": 0.579,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մաղթ",
+            "անաւք",
+            "արիւնընծավաստականուն",
+            "րանակնդրութեամբ",
+            "բակիցն",
+            "յարգմամբ",
+            "նորոգըս",
+            "տնոսին"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.466,
+            "surya2": 0.14,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0.114
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 326,
+          "empty": false,
+          "loop": false,
+          "invention": 0.634,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աղօթ",
+            "անաւարտին",
+            "ընծա",
+            "վաստականութբք",
+            "բանականդրութաղե",
+            "րսից",
+            "ծայրագամբ",
+            "զինորոգս"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.466,
+            "surya2": 0.118,
+            "tesseract-hye": 0.018,
+            "tesseract-hye_calfa": 0.068
+          }
+        },
+        "surya2": {
+          "n_content": 334,
+          "empty": false,
+          "loop": false,
+          "cer": 0.319,
+          "acc": 0.681,
+          "seq": 0.086,
+          "bow": 0.118,
+          "gap": 0.032,
+          "len_ratio": 1.025,
+          "invention": 0.923,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հաճախական",
+            "ընդունական",
+            "մետրե",
+            "անաբար",
+            "իւնը",
+            "վաստականու",
+            "բանակ",
+            "նորու"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.14,
+            "gemini-3.1-flash-lite": 0.118,
+            "tesseract-hye": 0.043,
+            "tesseract-hye_calfa": 0.038
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 220,
+          "empty": false,
+          "loop": false,
+          "cer": 0.724,
+          "acc": 0.276,
+          "seq": 0.018,
+          "bow": 0.018,
+          "gap": 0,
+          "len_ratio": 0.675,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աարամբոււֆ",
+            "նաւնառք",
+            "որին",
+            "կիսառովվոնում",
+            "եշրուք",
+            "ֆորո",
+            "ուշը",
+            "ճղնասգննամնոայեն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0.018,
+            "surya2": 0.043,
+            "tesseract-hye_calfa": 0.023
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 261,
+          "empty": false,
+          "loop": false,
+          "cer": 0.457,
+          "acc": 0.543,
+          "seq": 0.068,
+          "bow": 0.068,
+          "gap": 0,
+          "len_ratio": 0.801,
+          "invention": 0.913,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "խորոցհ",
+            "առայականև",
+            "անաոք",
+            "արիւնընծավատասկանումք",
+            "րտնակնդրուքաղե",
+            "ընկալցիսնորոգըստ",
+            "տձտաիենանաին",
+            "ջփրկութբիքեզա"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.114,
+            "gemini-3.1-flash-lite": 0.068,
+            "surya2": 0.038,
+            "tesseract-hye": 0.023
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-2f2365-p132",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Treatise on Fevers",
+      "year": 1636,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 3047,
+          "empty": false,
+          "loop": true,
+          "cer": 3.614,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 3.614,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "1000",
+            "1001",
+            "1002",
+            "1003",
+            "1004",
+            "1005",
+            "1006",
+            "1007"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0,
+            "tesseract-hye": 0.012,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 835,
+          "empty": false,
+          "loop": false,
+          "cer": 0.249,
+          "acc": 0.751,
+          "seq": 0.45,
+          "bow": 0.465,
+          "gap": 0.015,
+          "len_ratio": 0.991,
+          "invention": 0.625,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ստծն",
+            "բժկութե",
+            "սորա",
+            "այրեցող",
+            "ջերմանն",
+            "անապական",
+            "մաղձն",
+            "հոտումն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.465,
+            "surya2": 0.081,
+            "tesseract-hye": 0.06,
+            "tesseract-hye_calfa": 0.131
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 843,
+          "empty": false,
+          "loop": false,
+          "invention": 0.653,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "վասն",
+            "ծննդեան",
+            "եղջերուի",
+            "հայեցողութեանն",
+            "մաշկն",
+            "հասումն",
+            "տեսիս",
+            "ետեւ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.465,
+            "surya2": 0.068,
+            "tesseract-hye": 0.043,
+            "tesseract-hye_calfa": 0.114
+          }
+        },
+        "surya2": {
+          "n_content": 839,
+          "empty": false,
+          "loop": false,
+          "cer": 0.427,
+          "acc": 0.573,
+          "seq": 0.048,
+          "bow": 0.068,
+          "gap": 0.02,
+          "len_ratio": 0.995,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ատծմն",
+            "բեմի",
+            "մահն",
+            "ապակ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.081,
+            "gemini-3.1-flash-lite": 0.068,
+            "tesseract-hye": 0.134,
+            "tesseract-hye_calfa": 0.03
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 529,
+          "empty": false,
+          "loop": false,
+          "cer": 0.749,
+          "acc": 0.251,
+          "seq": 0.034,
+          "bow": 0.043,
+          "gap": 0.01,
+          "len_ratio": 0.628,
+          "invention": 0.975,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աճքյն",
+            "խարի",
+            "աաաա",
+            "ցուանյի",
+            "ձրիղայո",
+            "21855",
+            "շասգակ",
+            "եյիստոակ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.012,
+            "gemini-3-flash-preview": 0.06,
+            "gemini-3.1-flash-lite": 0.043,
+            "surya2": 0.134,
+            "tesseract-hye_calfa": 0.073
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 749,
+          "empty": false,
+          "loop": false,
+          "cer": 0.4,
+          "acc": 0.6,
+          "seq": 0.108,
+          "bow": 0.114,
+          "gap": 0.006,
+          "len_ratio": 0.888,
+          "invention": 0.904,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ևբժկութե",
+            "ուրևւյրէցողջէմահչ",
+            "էիւրատձան",
+            "նւակխարտէշմածն",
+            "լիհի",
+            "ուտւեակաւղոն",
+            "յունայի",
+            "մուհրիզայասէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.131,
+            "gemini-3.1-flash-lite": 0.114,
+            "surya2": 0.03,
+            "tesseract-hye": 0.073
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-42e2e5-p263",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Vasn Vardanay ew Hayotsʿ paterazmin (On Vardan and the Armenian War)",
+      "year": 1903,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1872,
+          "empty": false,
+          "loop": false,
+          "cer": 0.06,
+          "acc": 0.94,
+          "seq": 0.714,
+          "bow": 0.714,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.249,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ալստուած",
+            "ժեան",
+            "պարդեւք",
+            "աժողդ",
+            "դնոյն",
+            "ժերես",
+            "ժեանցն",
+            "զինուրու"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.782,
+            "gemini-3.1-flash-lite": 0.714,
+            "surya2": 0.662,
+            "tesseract-hye": 0.036,
+            "tesseract-hye_calfa": 0.17
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1882,
+          "empty": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.865,
+          "bow": 0.865,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.09,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "թեան",
+            "պարգևք",
+            "թեանցն",
+            "զինուորու",
+            "զտակից",
+            "ազատ²",
+            "քուշա",
+            "թէքէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.782,
+            "gemini-3.1-flash-lite": 0.865,
+            "surya2": 0.711,
+            "tesseract-hye": 0.04,
+            "tesseract-hye_calfa": 0.192
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1876,
+          "empty": false,
+          "loop": false,
+          "invention": 0.075,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մեծապարգեւք",
+            "ծառայեցաք",
+            "արութեանցն",
+            "զինուորութեան",
+            "փուշանաց",
+            "թիւրքմէնք",
+            "մարփատ",
+            "քաջասրտութիւն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.714,
+            "gemini-3-flash-preview": 0.865,
+            "surya2": 0.781,
+            "tesseract-hye": 0.042,
+            "tesseract-hye_calfa": 0.193
+          }
+        },
+        "surya2": {
+          "n_content": 1846,
+          "empty": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.781,
+          "bow": 0.781,
+          "gap": 0,
+          "len_ratio": 0.984,
+          "invention": 0.288,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "օրինաբ",
+            "վարիվք",
+            "վաստակա",
+            "կատարեին",
+            "մեծապարդեւք",
+            "աթոռու",
+            "զնդն",
+            "ծառայեցաբ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.662,
+            "gemini-3-flash-preview": 0.711,
+            "gemini-3.1-flash-lite": 0.781,
+            "tesseract-hye": 0.028,
+            "tesseract-hye_calfa": 0.166
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 268,
+          "empty": false,
+          "loop": false,
+          "cer": 0.889,
+          "acc": 0.111,
+          "seq": 0.042,
+          "bow": 0.042,
+          "gap": 0,
+          "len_ratio": 0.143,
+          "invention": 0.871,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "էեխչմեալ",
+            "մեալ",
+            "զլաւութ",
+            "րորեալ",
+            "թչոա",
+            "բաղոար",
+            "աեգոր",
+            "վերաց"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.036,
+            "gemini-3-flash-preview": 0.04,
+            "gemini-3.1-flash-lite": 0.042,
+            "surya2": 0.028,
+            "tesseract-hye_calfa": 0.141
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 324,
+          "empty": false,
+          "loop": false,
+          "cer": 0.837,
+          "acc": 0.163,
+          "seq": 0.189,
+          "bow": 0.193,
+          "gap": 0.005,
+          "len_ratio": 0.173,
+          "invention": 0.256,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "փարզ",
+            "արաամն",
+            "վամնգիանել",
+            "աանէք",
+            "կորուուք",
+            "եղեաւ",
+            "երհետևցնել",
+            "գանատո"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.17,
+            "gemini-3-flash-preview": 0.192,
+            "gemini-3.1-flash-lite": 0.193,
+            "surya2": 0.166,
+            "tesseract-hye": 0.141
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-42e730-p239",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Girkʿ Endhanrakan (The Encyclical)",
+      "year": 1788,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1216,
+          "empty": false,
+          "loop": false,
+          "cer": 0.181,
+          "acc": 0.819,
+          "seq": 0.45,
+          "bow": 0.468,
+          "gap": 0.018,
+          "len_ratio": 0.985,
+          "invention": 0.51,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "իրանզի",
+            "առելք",
+            "ակամյ",
+            "կալք",
+            "ազելք",
+            "զականաւ",
+            "ազեան",
+            "ընտակի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.471,
+            "gemini-3.1-flash-lite": 0.468,
+            "surya2": 0.409,
+            "tesseract-hye": 0.198,
+            "tesseract-hye_calfa": 0.496
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1257,
+          "empty": false,
+          "loop": false,
+          "cer": 0.047,
+          "acc": 0.953,
+          "seq": 0.781,
+          "bow": 0.803,
+          "gap": 0.022,
+          "len_ratio": 1.018,
+          "invention": 0.063,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ազելի",
+            "պականութէ",
+            "խոստա",
+            "միացեալ",
+            "հաւատացոյ",
+            "պարսաւելի",
+            "ընտրուե",
+            "յղուե"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.471,
+            "gemini-3.1-flash-lite": 0.803,
+            "surya2": 0.613,
+            "tesseract-hye": 0.216,
+            "tesseract-hye_calfa": 0.7
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1235,
+          "empty": false,
+          "loop": false,
+          "invention": 0.101,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "առողջին",
+            "ազդելք",
+            "յապականութէ",
+            "զփութիւնն",
+            "յարտաքւոցն",
+            "զնոսին",
+            "փտցեալ",
+            "իմուրովք"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.468,
+            "gemini-3-flash-preview": 0.803,
+            "surya2": 0.563,
+            "tesseract-hye": 0.199,
+            "tesseract-hye_calfa": 0.662
+          }
+        },
+        "surya2": {
+          "n_content": 1266,
+          "empty": false,
+          "loop": false,
+          "cer": 0.124,
+          "acc": 0.876,
+          "seq": 0.549,
+          "bow": 0.563,
+          "gap": 0.014,
+          "len_ratio": 1.025,
+          "invention": 0.295,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "քանդի",
+            "զմարժինն",
+            "ձաշակել",
+            "'ինոցանէ",
+            "ունք",
+            "ազեմք",
+            "արականութէ",
+            "որոշեալ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.409,
+            "gemini-3-flash-preview": 0.613,
+            "gemini-3.1-flash-lite": 0.563,
+            "tesseract-hye": 0.142,
+            "tesseract-hye_calfa": 0.543
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1205,
+          "empty": false,
+          "loop": false,
+          "cer": 0.392,
+          "acc": 0.608,
+          "seq": 0.181,
+          "bow": 0.199,
+          "gap": 0.017,
+          "len_ratio": 0.976,
+          "invention": 0.786,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "քանց",
+            "չարչաբագան",
+            "իվենն'",
+            "մահմանոււ",
+            "12էլ",
+            "ակամալ",
+            "վքբումս",
+            "ոլրթան"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.198,
+            "gemini-3-flash-preview": 0.216,
+            "gemini-3.1-flash-lite": 0.199,
+            "surya2": 0.142,
+            "tesseract-hye_calfa": 0.224
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1244,
+          "empty": false,
+          "loop": false,
+          "cer": 0.093,
+          "acc": 0.907,
+          "seq": 0.636,
+          "bow": 0.662,
+          "gap": 0.026,
+          "len_ratio": 1.007,
+          "invention": 0.231,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "բանզի",
+            "մահկանա",
+            "պականութէք",
+            "մեզաց",
+            "բոցց",
+            "խնդրդ",
+            "զ9զի",
+            "յանք"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.496,
+            "gemini-3-flash-preview": 0.7,
+            "gemini-3.1-flash-lite": 0.662,
+            "surya2": 0.543,
+            "tesseract-hye": 0.224
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-52cc52-p492",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Nerses Shnorhali: Banki Chapʻaw (Collected Verses)",
+      "year": 1830,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 421,
+          "empty": false,
+          "loop": false,
+          "cer": 0.142,
+          "acc": 0.858,
+          "seq": 0.573,
+          "bow": 0.573,
+          "gap": 0,
+          "len_ratio": 0.979,
+          "invention": 0.356,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ծառքրն",
+            "տետոն",
+            "ըմզեն",
+            "յամալոյն",
+            "զանձրեւրն",
+            "բազանն",
+            "երկնառոր",
+            "արբեաց"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.573,
+            "gemini-3.1-flash-lite": 0.573,
+            "surya2": 0.481,
+            "tesseract-hye": 0.115,
+            "tesseract-hye_calfa": 0.456
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 436,
+          "empty": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.868,
+          "bow": 0.868,
+          "gap": 0,
+          "len_ratio": 1.014,
+          "invention": 0.033,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "պըտղաբեր",
+            "զլանջօքն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.573,
+            "gemini-3.1-flash-lite": 0.868,
+            "surya2": 0.577,
+            "tesseract-hye": 0.164,
+            "tesseract-hye_calfa": 0.689
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 430,
+          "empty": false,
+          "loop": false,
+          "invention": 0.098,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ծառքն",
+            "պտղաբեր",
+            "մկրտել",
+            "շօչափեցին",
+            "զլանջքըն",
+            "թմրեցան"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.573,
+            "gemini-3-flash-preview": 0.868,
+            "surya2": 0.577,
+            "tesseract-hye": 0.151,
+            "tesseract-hye_calfa": 0.596
+          }
+        },
+        "surya2": {
+          "n_content": 456,
+          "empty": false,
+          "loop": false,
+          "cer": 0.153,
+          "acc": 0.847,
+          "seq": 0.564,
+          "bow": 0.577,
+          "gap": 0.013,
+          "len_ratio": 1.06,
+          "invention": 0.365,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ծառաբըն",
+            "տեստն",
+            "բարտանն",
+            "ջուտ",
+            "տրբեաց",
+            "զտիրոյն",
+            "ըմպելիոս",
+            "տացան"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.481,
+            "gemini-3-flash-preview": 0.577,
+            "gemini-3.1-flash-lite": 0.577,
+            "tesseract-hye": 0.147,
+            "tesseract-hye_calfa": 0.477
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 383,
+          "empty": false,
+          "loop": false,
+          "cer": 0.456,
+          "acc": 0.544,
+          "seq": 0.151,
+          "bow": 0.151,
+          "gap": 0,
+          "len_ratio": 0.891,
+          "invention": 0.827,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "սոաոաւբըն",
+            "տնաուն",
+            "բոնպեն",
+            "յամոյն",
+            "ծոզեւոր",
+            "ջչուու",
+            "իրշյն",
+            "ւթեա"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.115,
+            "gemini-3-flash-preview": 0.164,
+            "gemini-3.1-flash-lite": 0.151,
+            "surya2": 0.147,
+            "tesseract-hye_calfa": 0.165
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 389,
+          "empty": false,
+          "loop": false,
+          "cer": 0.186,
+          "acc": 0.814,
+          "seq": 0.596,
+          "bow": 0.596,
+          "gap": 0,
+          "len_ratio": 0.905,
+          "invention": 0.273,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "զուռ",
+            "սորբեաց",
+            "արելեք",
+            "աէրցն",
+            "յէէէն",
+            "քարողք",
+            "շափեցին",
+            "զլանջոքն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.456,
+            "gemini-3-flash-preview": 0.689,
+            "gemini-3.1-flash-lite": 0.596,
+            "surya2": 0.477,
+            "tesseract-hye": 0.165
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-53c6cb-p198",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Collection des historiens de l'Arménie, Vol. 1",
+      "year": 1867,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 3987,
+          "empty": false,
+          "loop": false,
+          "invention": 0.113,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "raconte",
+            "vifiantes",
+            "misé",
+            "ricorde",
+            "προσ",
+            "έταξεν",
+            "ἁγίους",
+            "βασιλείᾳ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.932,
+            "tesseract-hye": 0.005,
+            "tesseract-hye_calfa": 0.01
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "surya2": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "surya2": {
+          "n_content": 3999,
+          "empty": false,
+          "loop": false,
+          "invention": 0.097,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "agathange",
+            "raconterai",
+            "vivifiantes",
+            "miséricorde",
+            "roulement",
+            "merveilles",
+            "προσέταξεν",
+            "ἄγίους"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.932,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "tesseract-hye": 0.005,
+            "tesseract-hye_calfa": 0.015
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 3655,
+          "empty": false,
+          "loop": false,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "յ10իտ",
+            "1շոբ",
+            "1ճշօոէ6ի",
+            "տւօռ",
+            "մշոճշ",
+            "տաուշճոճոէ",
+            "շէյ6",
+            "իոըշօոլշ1"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.005,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.005,
+            "tesseract-hye_calfa": 0.066
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 335,
+          "empty": false,
+          "loop": false,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "able",
+            "ծոաե",
+            "xαтανά",
+            "νυϰτι",
+            "μαβρτ",
+            "προς",
+            "ρoντ",
+            "νντтων"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.01,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.015,
+            "tesseract-hye": 0.066
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-57a187-p111",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Girkh patmoutheanc /, šaradreal vardapetin Aṙakheloj Davrēžacuoj : saks dipoûatsoc Hajastaneajc' eu eus gauaṙin Araratoj",
+      "year": 1669,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2015,
+          "empty": false,
+          "loop": false,
+          "cer": 0.072,
+          "acc": 0.928,
+          "seq": 0.663,
+          "bow": 0.663,
+          "gap": 0,
+          "len_ratio": 0.988,
+          "invention": 0.299,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "կայր'ի",
+            "կոչեին",
+            "այնձ",
+            "կթիղկսն",
+            "մնաց'ի",
+            "արքունի'ի",
+            "չուեալ'ի",
+            "նախչո"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.702,
+            "gemini-3.1-flash-lite": 0.663,
+            "surya2": 0.533,
+            "tesseract-hye": 0.104,
+            "tesseract-hye_calfa": 0.579
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2033,
+          "empty": false,
+          "loop": false,
+          "cer": 0.041,
+          "acc": 0.959,
+          "seq": 0.817,
+          "bow": 0.819,
+          "gap": 0.002,
+          "len_ratio": 0.997,
+          "invention": 0.077,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մէլքիսէթ",
+            "մէլքի",
+            "նախչուանայ",
+            "սոյնպ",
+            "զմէլքիսէթ",
+            "մէլքիսէթի",
+            "յէջմիածին",
+            "կթղկսութեն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.702,
+            "gemini-3.1-flash-lite": 0.819,
+            "surya2": 0.619,
+            "tesseract-hye": 0.116,
+            "tesseract-hye_calfa": 0.679
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2040,
+          "empty": false,
+          "loop": false,
+          "invention": 0.151,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մելիքսեթ",
+            "լուելայն",
+            "ջղախու",
+            "քնդիկան",
+            "այնդ",
+            "մելիքի",
+            "կթղիկսն",
+            "նախջուանայ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.663,
+            "gemini-3-flash-preview": 0.819,
+            "surya2": 0.662,
+            "tesseract-hye": 0.102,
+            "tesseract-hye_calfa": 0.622
+          }
+        },
+        "surya2": {
+          "n_content": 2032,
+          "empty": false,
+          "loop": false,
+          "cer": 0.11,
+          "acc": 0.89,
+          "seq": 0.662,
+          "bow": 0.662,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.3,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ահրթիակ",
+            "լուելեայն",
+            "չահն",
+            "գեւեաց",
+            "կենսաց",
+            "ջրախոռ",
+            "կոչեն",
+            "կերիցե"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.533,
+            "gemini-3-flash-preview": 0.619,
+            "gemini-3.1-flash-lite": 0.662,
+            "tesseract-hye": 0.105,
+            "tesseract-hye_calfa": 0.496
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1955,
+          "empty": false,
+          "loop": false,
+          "cer": 0.495,
+          "acc": 0.505,
+          "seq": 0.089,
+          "bow": 0.102,
+          "gap": 0.013,
+          "len_ratio": 0.958,
+          "invention": 0.898,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աաաա",
+            "հոռն",
+            "հայը",
+            "ելեայն",
+            "չաջն",
+            "2227",
+            "տարմեն",
+            "գճճոց"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.104,
+            "gemini-3-flash-preview": 0.116,
+            "gemini-3.1-flash-lite": 0.102,
+            "surya2": 0.105,
+            "tesseract-hye_calfa": 0.15
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1952,
+          "empty": false,
+          "loop": false,
+          "cer": 0.136,
+          "acc": 0.864,
+          "seq": 0.613,
+          "bow": 0.622,
+          "gap": 0.01,
+          "len_ratio": 0.957,
+          "invention": 0.261,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ս'էլքիսէթ",
+            "կենայ",
+            "յասպահ",
+            "այնօ",
+            "քունի",
+            "շղթայի",
+            "խարէ",
+            "լեալ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.579,
+            "gemini-3-flash-preview": 0.679,
+            "gemini-3.1-flash-lite": 0.622,
+            "surya2": 0.496,
+            "tesseract-hye": 0.15
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-57af1d-p64",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Girkh Thōmaji Gembecuoj kanonounaki krōnauori 'i kargē srbojn Ōgostinosi :, jaghags hamaheteumann Khristosi. tharkhmanec",
+      "year": 1691,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1453,
+          "empty": false,
+          "loop": false,
+          "cer": 0.053,
+          "acc": 0.947,
+          "seq": 0.792,
+          "bow": 0.795,
+          "gap": 0.003,
+          "len_ratio": 1.001,
+          "invention": 0.158,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մեղահոր",
+            "պորահանդեցեալ",
+            "ճկտիս",
+            "պարծել",
+            "առահելքան",
+            "պատույ",
+            "երկնչեցիս",
+            "փաթիչի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.831,
+            "gemini-3.1-flash-lite": 0.795,
+            "surya2": 0.692,
+            "tesseract-hye": 0.211,
+            "tesseract-hye_calfa": 0.736
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1457,
+          "empty": false,
+          "loop": false,
+          "cer": 0.025,
+          "acc": 0.975,
+          "seq": 0.858,
+          "bow": 0.858,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.06,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "պարահանդեցեալ",
+            "զխորհուրդիմ",
+            "գիրգ",
+            "խոտունգանեն",
+            "վասն",
+            "երկեր",
+            "զորքանիսք",
+            "խոտունգանեցեր"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.831,
+            "gemini-3.1-flash-lite": 0.858,
+            "surya2": 0.74,
+            "tesseract-hye": 0.205,
+            "tesseract-hye_calfa": 0.786
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1452,
+          "empty": false,
+          "loop": false,
+          "invention": 0.079,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "համահետեմանն",
+            "պարսանդեցեալ",
+            "չփոթիս",
+            "տրհաճոյք",
+            "իւրիք",
+            "զխորհուրդս",
+            "խոտնեգանեն",
+            "յրկեր"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.795,
+            "gemini-3-flash-preview": 0.858,
+            "surya2": 0.762,
+            "tesseract-hye": 0.182,
+            "tesseract-hye_calfa": 0.738
+          }
+        },
+        "surya2": {
+          "n_content": 1458,
+          "empty": false,
+          "loop": false,
+          "cer": 0.054,
+          "acc": 0.946,
+          "seq": 0.762,
+          "bow": 0.762,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.178,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "համահետևման",
+            "արդարե",
+            "մեղանոր",
+            "ախտեւք",
+            "պարանանդեցեալ",
+            "պարսանել",
+            "առանձը",
+            "իսկապես"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.692,
+            "gemini-3-flash-preview": 0.74,
+            "gemini-3.1-flash-lite": 0.762,
+            "tesseract-hye": 0.175,
+            "tesseract-hye_calfa": 0.664
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1391,
+          "empty": false,
+          "loop": false,
+          "cer": 0.381,
+          "acc": 0.619,
+          "seq": 0.161,
+          "bow": 0.182,
+          "gap": 0.021,
+          "len_ratio": 0.958,
+          "invention": 0.837,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հպամածֆետեւմանն",
+            "բծզործ",
+            "ութեանց",
+            "աշնե",
+            "ջաշոր",
+            "բղզմռբ",
+            "եցեուլ",
+            "պսրածշանդեցեալ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.211,
+            "gemini-3-flash-preview": 0.205,
+            "gemini-3.1-flash-lite": 0.182,
+            "surya2": 0.175,
+            "tesseract-hye_calfa": 0.223
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1416,
+          "empty": false,
+          "loop": false,
+          "cer": 0.108,
+          "acc": 0.892,
+          "seq": 0.725,
+          "bow": 0.738,
+          "gap": 0.013,
+          "len_ratio": 0.975,
+          "invention": 0.166,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "րեգործութեանց",
+            "պարաւանդեցեալ",
+            "հկտիս",
+            "առառել",
+            "ամում",
+            "յուիտէնական",
+            "ցիես",
+            "անչիւրս"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.736,
+            "gemini-3-flash-preview": 0.786,
+            "gemini-3.1-flash-lite": 0.738,
+            "surya2": 0.664,
+            "tesseract-hye": 0.223
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-5abdcd-p332",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Movsisi Xorenatswoy Patmutiwn ew Ashxarhagrutiwn (1736 bilingual)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2450,
+          "empty": false,
+          "loop": false,
+          "cer": 0.047,
+          "acc": 0.953,
+          "seq": 0.718,
+          "bow": 0.72,
+          "gap": 0.002,
+          "len_ratio": 1.002,
+          "invention": 0.096,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ղեալ'ի",
+            "իջանել'ի",
+            "կարգեսցէ'",
+            "երակաքանչիւրոցն",
+            "իջեալնել",
+            "չոք'ի",
+            "ձարատարաց",
+            "դանիելէ'"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.847,
+            "gemini-3.1-flash-lite": 0.72,
+            "surya2": 0.816,
+            "tesseract-hye": 0.129,
+            "tesseract-hye_calfa": 0.376
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2467,
+          "empty": false,
+          "loop": false,
+          "cer": 0.043,
+          "acc": 0.957,
+          "seq": 0.837,
+          "bow": 0.837,
+          "gap": 0,
+          "len_ratio": 1.009,
+          "invention": 0.01,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "այնոքիկ",
+            "nobilissimum",
+            "eóque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.847,
+            "gemini-3.1-flash-lite": 0.837,
+            "surya2": 0.878,
+            "tesseract-hye": 0.143,
+            "tesseract-hye_calfa": 0.492
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2444,
+          "empty": false,
+          "loop": true,
+          "invention": 0.166,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "պարսից",
+            "շապուհայ",
+            "շապուհոյ",
+            "մեսրոբ",
+            "գտանէր",
+            "չարագիր",
+            "զտէգենայ",
+            "հագնեցաբար"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.72,
+            "gemini-3-flash-preview": 0.837,
+            "surya2": 0.759,
+            "tesseract-hye": 0.142,
+            "tesseract-hye_calfa": 0.458
+          }
+        },
+        "surya2": {
+          "n_content": 2474,
+          "empty": false,
+          "loop": false,
+          "cer": 0.057,
+          "acc": 0.943,
+          "seq": 0.759,
+          "bow": 0.759,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.105,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "լիներ",
+            "զօրբն",
+            "վոամ",
+            "հապհոյ",
+            "երկաբանչիւրոցն",
+            "զա'յս",
+            "փորբ",
+            "բարտուղարի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.816,
+            "gemini-3-flash-preview": 0.878,
+            "gemini-3.1-flash-lite": 0.759,
+            "tesseract-hye": 0.139,
+            "tesseract-hye_calfa": 0.41
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 2316,
+          "empty": false,
+          "loop": false,
+          "cer": 0.646,
+          "acc": 0.354,
+          "seq": 0.135,
+          "bow": 0.142,
+          "gap": 0.006,
+          "len_ratio": 0.948,
+          "invention": 0.823,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "նոռոռ",
+            "թոժաննու",
+            "չփոթետը",
+            "լենքը",
+            "զաւորութիւնն",
+            "յունացյ",
+            "ընդմիմմանս",
+            "հրամա"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.129,
+            "gemini-3-flash-preview": 0.143,
+            "gemini-3.1-flash-lite": 0.142,
+            "surya2": 0.139,
+            "tesseract-hye_calfa": 0.22
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1187,
+          "empty": false,
+          "loop": false,
+          "cer": 0.551,
+          "acc": 0.449,
+          "seq": 0.452,
+          "bow": 0.458,
+          "gap": 0.006,
+          "len_ratio": 0.486,
+          "invention": 0.14,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մեին",
+            "մէին",
+            "ապհոյ",
+            "իջագէտս",
+            "սատութիւն",
+            "աղագս",
+            "եսրօբ",
+            "իանիելէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.376,
+            "gemini-3-flash-preview": 0.492,
+            "gemini-3.1-flash-lite": 0.458,
+            "surya2": 0.41,
+            "tesseract-hye": 0.22
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-654a89-p172",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Armenian Gospels (15th century)",
+      "year": 1450,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 3858,
+          "empty": false,
+          "loop": true,
+          "cer": 6.957,
+          "acc": 0,
+          "seq": 0.003,
+          "bow": 0.003,
+          "gap": 0,
+          "len_ratio": 7.293,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "գլխա"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.005,
+            "gemini-3.1-flash-lite": 0.003,
+            "surya2": 0.007,
+            "tesseract-hye": 0.003,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 531,
+          "empty": false,
+          "loop": false,
+          "cer": 0.025,
+          "acc": 0.975,
+          "seq": 0.757,
+          "bow": 0.77,
+          "gap": 0.014,
+          "len_ratio": 1.004,
+          "invention": 0.2,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "թագաւորութիւնս",
+            "վայր",
+            "զփառս",
+            "երկիրպագան",
+            "առաջի",
+            "երբեք",
+            "արցես",
+            "զտէր"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.005,
+            "gemini-3.1-flash-lite": 0.77,
+            "surya2": 0.485,
+            "tesseract-hye": 0.045,
+            "tesseract-hye_calfa": 0.219
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 529,
+          "empty": false,
+          "loop": false,
+          "invention": 0.241,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "թագաւորութիս",
+            "իվայր",
+            "եզփառս",
+            "ինձտո",
+            "ումկա",
+            "երկրպագան",
+            "ետնմա",
+            "տնայ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.003,
+            "gemini-3-flash-preview": 0.77,
+            "surya2": 0.437,
+            "tesseract-hye": 0.023,
+            "tesseract-hye_calfa": 0.213
+          }
+        },
+        "surya2": {
+          "n_content": 514,
+          "empty": false,
+          "loop": false,
+          "cer": 0.115,
+          "acc": 0.885,
+          "seq": 0.414,
+          "bow": 0.437,
+          "gap": 0.023,
+          "len_ratio": 0.972,
+          "invention": 0.444,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "արձր",
+            "թագա",
+            "ենայն",
+            "զփառա",
+            "կնալ",
+            "պապան",
+            "ատաս",
+            "ետնմ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.007,
+            "gemini-3-flash-preview": 0.485,
+            "gemini-3.1-flash-lite": 0.437,
+            "tesseract-hye": 0.063,
+            "tesseract-hye_calfa": 0.211
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 276,
+          "empty": false,
+          "loop": false,
+          "cer": 0.851,
+          "acc": 0.149,
+          "seq": 0.023,
+          "bow": 0.023,
+          "gap": 0,
+          "len_ratio": 0.522,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աաաիայա",
+            "ջշորոլթիտ",
+            "աշնո",
+            "մեճոառ",
+            "բճշճշ626",
+            "8ոաճ",
+            "2222",
+            "հաւյ2"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.003,
+            "gemini-3-flash-preview": 0.045,
+            "gemini-3.1-flash-lite": 0.023,
+            "surya2": 0.063,
+            "tesseract-hye_calfa": 0.065
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 374,
+          "empty": false,
+          "loop": false,
+          "cer": 0.66,
+          "acc": 0.34,
+          "seq": 0.164,
+          "bow": 0.213,
+          "gap": 0.049,
+          "len_ratio": 0.707,
+          "invention": 0.75,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "բարհր",
+            "զեաւ",
+            "թագառողռթիւնա",
+            "աշիսաղ",
+            "ջեաոռա",
+            "ամըցյա",
+            "ինտո",
+            "ճալէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.219,
+            "gemini-3.1-flash-lite": 0.213,
+            "surya2": 0.211,
+            "tesseract-hye": 0.065
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-90ed8a-p157",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Girk' Vastakots' (Armenian Geoponica)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1292,
+          "empty": false,
+          "loop": false,
+          "cer": 0.042,
+          "acc": 0.958,
+          "seq": 0.829,
+          "bow": 0.832,
+          "gap": 0.003,
+          "len_ratio": 0.997,
+          "invention": 0.076,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հանատրոզ",
+            "պատրոյմն",
+            "գայիկոնով",
+            "կենտ",
+            "կեղեն",
+            "հողովե",
+            "զծայրմն",
+            "հօտեղյն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.823,
+            "gemini-3.1-flash-lite": 0.832,
+            "surya2": 0.863,
+            "tesseract-hye": 0.314,
+            "tesseract-hye_calfa": 0.876
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1299,
+          "empty": false,
+          "loop": false,
+          "cer": 0.022,
+          "acc": 0.978,
+          "seq": 0.814,
+          "bow": 0.814,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.051,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "տուղ",
+            "հօտե",
+            "լոյն",
+            "րոցն",
+            "զորդ",
+            "տելոյն",
+            "պտղին",
+            "տնկերն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.823,
+            "gemini-3.1-flash-lite": 0.814,
+            "surya2": 0.84,
+            "tesseract-hye": 0.327,
+            "tesseract-hye_calfa": 0.878
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1296,
+          "empty": false,
+          "loop": false,
+          "invention": 0.09,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "պատրուել",
+            "զողոցին",
+            "զպատրոյտն",
+            "պատրուելն",
+            "պատրոյտն",
+            "զպատրուելն",
+            "մրջիւն",
+            "նարք"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.832,
+            "gemini-3-flash-preview": 0.814,
+            "surya2": 0.84,
+            "tesseract-hye": 0.318,
+            "tesseract-hye_calfa": 0.851
+          }
+        },
+        "surya2": {
+          "n_content": 1319,
+          "empty": false,
+          "loop": false,
+          "cer": 0.049,
+          "acc": 0.951,
+          "seq": 0.837,
+          "bow": 0.84,
+          "gap": 0.003,
+          "len_ratio": 1.018,
+          "invention": 0.075,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "գիմն",
+            "կոձերն",
+            "ձեղքեա",
+            "կեզևն",
+            "չմաանէ",
+            "ուուին",
+            "ուուերդ",
+            "հեոի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.863,
+            "gemini-3-flash-preview": 0.84,
+            "gemini-3.1-flash-lite": 0.84,
+            "tesseract-hye": 0.322,
+            "tesseract-hye_calfa": 0.884
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1287,
+          "empty": false,
+          "loop": false,
+          "cer": 0.27,
+          "acc": 0.73,
+          "seq": 0.285,
+          "bow": 0.318,
+          "gap": 0.033,
+          "len_ratio": 0.993,
+          "invention": 0.642,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "քոշք",
+            "չատանայ",
+            "բարձրա",
+            "զոցուի",
+            "կտրե",
+            "երճու",
+            "ալաւ",
+            "ծանապազ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.314,
+            "gemini-3-flash-preview": 0.327,
+            "gemini-3.1-flash-lite": 0.318,
+            "surya2": 0.322,
+            "tesseract-hye_calfa": 0.33
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1301,
+          "empty": false,
+          "loop": false,
+          "cer": 0.032,
+          "acc": 0.968,
+          "seq": 0.847,
+          "bow": 0.851,
+          "gap": 0.003,
+          "len_ratio": 1.004,
+          "invention": 0.044,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "գիսն",
+            "եղքեա",
+            "կենաշ",
+            "հօտելոն",
+            "յլազգ",
+            "ըվտնկերն",
+            "յիքն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.876,
+            "gemini-3-flash-preview": 0.878,
+            "gemini-3.1-flash-lite": 0.851,
+            "surya2": 0.884,
+            "tesseract-hye": 0.33
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-ae4132-p216",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Eražštakan ergecmounkh hogeuorakankh, at̃s̃ajnoc eu erdžankac, srboc vardapetac, Hajoc thargmančac zkargaûorouthĩs Ekegh",
+      "year": 1664,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1203,
+          "empty": false,
+          "loop": false,
+          "cer": 0.176,
+          "acc": 0.824,
+          "seq": 0.274,
+          "bow": 0.298,
+          "gap": 0.024,
+          "len_ratio": 1.018,
+          "invention": 0.57,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "իանօն",
+            "արբոյն",
+            "ընդունի",
+            "ըւռյաւորչե",
+            "արմբ",
+            "սրբու",
+            "առաջնորդբանաւոր",
+            "ունիմըք"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.416,
+            "gemini-3.1-flash-lite": 0.298,
+            "surya2": 0.21,
+            "tesseract-hye": 0.096,
+            "tesseract-hye_calfa": 0.172
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1192,
+          "empty": false,
+          "loop": false,
+          "cer": 0.045,
+          "acc": 0.955,
+          "seq": 0.715,
+          "bow": 0.724,
+          "gap": 0.009,
+          "len_ratio": 1.008,
+          "invention": 0.153,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "երջանիկ",
+            "սբբու",
+            "բըռնաւորին",
+            "դասս",
+            "օրինացն",
+            "ընտրեալ",
+            "քահանայապետ",
+            "քսանուէր"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.416,
+            "gemini-3.1-flash-lite": 0.724,
+            "surya2": 0.125,
+            "tesseract-hye": 0.048,
+            "tesseract-hye_calfa": 0.277
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1182,
+          "empty": false,
+          "loop": false,
+          "invention": 0.221,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "սրբութեանցն",
+            "լուծ",
+            "բռնաւորին",
+            "զանգիտեցեր",
+            "անմարմնոցն",
+            "ընդասս",
+            "ճշմարիտ",
+            "օրիծնացն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.298,
+            "gemini-3-flash-preview": 0.724,
+            "surya2": 0.11,
+            "tesseract-hye": 0.03,
+            "tesseract-hye_calfa": 0.255
+          }
+        },
+        "surya2": {
+          "n_content": 1226,
+          "empty": false,
+          "loop": false,
+          "cer": 0.201,
+          "acc": 0.799,
+          "seq": 0.093,
+          "bow": 0.11,
+          "gap": 0.017,
+          "len_ratio": 1.037,
+          "invention": 0.753,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "պրիգորի",
+            "ընտանիքի",
+            "ավերջանիկ",
+            "սըրբոն",
+            "անցն",
+            "պաշտօնե",
+            "աջնորդ",
+            "նիմը"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.21,
+            "gemini-3-flash-preview": 0.125,
+            "gemini-3.1-flash-lite": 0.11,
+            "tesseract-hye": 0.099,
+            "tesseract-hye_calfa": 0.147
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 993,
+          "empty": false,
+          "loop": false,
+          "cer": 0.64,
+          "acc": 0.36,
+          "seq": 0.03,
+          "bow": 0.03,
+          "gap": 0,
+          "len_ratio": 0.84,
+          "invention": 0.96,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "շոան",
+            "գբխչոջի",
+            "լոշռոււոլչի",
+            "երջոնին",
+            "հաաա",
+            "ըշուացնորղբոնեաե",
+            "հոռի",
+            "պբելու"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.096,
+            "gemini-3-flash-preview": 0.048,
+            "gemini-3.1-flash-lite": 0.03,
+            "surya2": 0.099,
+            "tesseract-hye_calfa": 0.106
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1147,
+          "empty": false,
+          "loop": false,
+          "cer": 0.228,
+          "acc": 0.772,
+          "seq": 0.231,
+          "bow": 0.255,
+          "gap": 0.023,
+          "len_ratio": 0.97,
+          "invention": 0.669,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "դրիգորի",
+            "լուսաւորշի",
+            "վերքանիկ",
+            "տրօբ",
+            "սըրբու",
+            "թեաայն",
+            "պրաշտանեայ",
+            "հոտի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.172,
+            "gemini-3-flash-preview": 0.277,
+            "gemini-3.1-flash-lite": 0.255,
+            "surya2": 0.147,
+            "tesseract-hye": 0.106
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-bd0aad-p66",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Commentary on the Apocalypse of John (Armenian)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 4716,
+          "empty": false,
+          "loop": false,
+          "cer": 1.362,
+          "acc": 0,
+          "seq": 0.005,
+          "bow": 0.005,
+          "gap": 0,
+          "len_ratio": 1.627,
+          "invention": 0.909,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "անդամ",
+            "որդեն",
+            "մասներ",
+            "յուրաքան",
+            "դարան",
+            "ներեն",
+            "մելալ",
+            "յորժու"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.007,
+            "gemini-3.1-flash-lite": 0.005,
+            "surya2": 0,
+            "tesseract-hye": 0.002,
+            "tesseract-hye_calfa": 0.008
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2446,
+          "empty": false,
+          "loop": false,
+          "cer": 0.765,
+          "acc": 0.235,
+          "seq": 0.117,
+          "bow": 0.148,
+          "gap": 0.031,
+          "len_ratio": 0.844,
+          "invention": 0.927,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "տերունաւորքն",
+            "իջանել",
+            "ոգեւորեալ",
+            "յորժամ",
+            "հրաշս",
+            "սեալ",
+            "զսուրբսն",
+            "հանջանիսր"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.007,
+            "gemini-3.1-flash-lite": 0.148,
+            "surya2": 0,
+            "tesseract-hye": 0.04,
+            "tesseract-hye_calfa": 0.055
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2898,
+          "empty": false,
+          "loop": false,
+          "invention": 0.832,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "երկնաւորք",
+            "ըայց",
+            "ինքեալ",
+            "յորում",
+            "ոռոմն",
+            "զառաջինն",
+            "հանելով",
+            "չորրորդէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.005,
+            "gemini-3-flash-preview": 0.148,
+            "surya2": 0,
+            "tesseract-hye": 0.025,
+            "tesseract-hye_calfa": 0.059
+          }
+        },
+        "surya2": {
+          "n_content": 2974,
+          "empty": false,
+          "loop": true,
+          "cer": 1.026,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.026,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "იორგი",
+            "სიონის",
+            "საკითხას",
+            "გადაიხადა",
+            "არასა",
+            "ადის",
+            "ძოლი",
+            "საკვებ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1188,
+          "empty": false,
+          "loop": false,
+          "cer": 0.887,
+          "acc": 0.113,
+          "seq": 0.019,
+          "bow": 0.025,
+          "gap": 0.007,
+          "len_ratio": 0.41,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աաաա",
+            "սասան",
+            "ոբու",
+            "հոոմ",
+            "արաաեթոն",
+            "բ214",
+            "211148",
+            "իյաոշ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.002,
+            "gemini-3-flash-preview": 0.04,
+            "gemini-3.1-flash-lite": 0.025,
+            "surya2": 0,
+            "tesseract-hye_calfa": 0.071
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1295,
+          "empty": false,
+          "loop": false,
+          "cer": 0.875,
+          "acc": 0.125,
+          "seq": 0.046,
+          "bow": 0.059,
+          "gap": 0.013,
+          "len_ratio": 0.447,
+          "invention": 0.992,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "մէհենյւանմատանթաեսն",
+            "եւոջ",
+            "արչաւաւացաեարանաանիո",
+            "խոլաեզիիջոներյգց",
+            "ևուներզժնն",
+            "հատոա",
+            "մուոց",
+            "անուվնաւոռքն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.008,
+            "gemini-3-flash-preview": 0.055,
+            "gemini-3.1-flash-lite": 0.059,
+            "surya2": 0,
+            "tesseract-hye": 0.071
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-bd0bc5-p207",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "New Testament (Armenian-Greek-Italian trilingual)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 4048,
+          "empty": false,
+          "loop": false,
+          "cer": 1.208,
+          "acc": 0,
+          "seq": 0.082,
+          "bow": 0.097,
+          "gap": 0.015,
+          "len_ratio": 1.42,
+          "invention": 0.732,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "male",
+            "dierioe",
+            "eghe",
+            "seipre",
+            "etro",
+            "ielo",
+            "fastra",
+            "labenedis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.108,
+            "gemini-3.1-flash-lite": 0.097,
+            "surya2": 0.092,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 3271,
+          "empty": false,
+          "loop": false,
+          "cer": 0.506,
+          "acc": 0.494,
+          "seq": 0.288,
+          "bow": 0.37,
+          "gap": 0.082,
+          "len_ratio": 1.148,
+          "invention": 0.65,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "maledictioe",
+            "scripto",
+            "maledic",
+            "fact",
+            "delegno",
+            "accio",
+            "labenedictio",
+            "abraa"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.108,
+            "gemini-3.1-flash-lite": 0.37,
+            "surya2": 0.148,
+            "tesseract-hye": 0.032,
+            "tesseract-hye_calfa": 0.125
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2850,
+          "empty": false,
+          "loop": false,
+          "invention": 0.673,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "funs",
+            "malediciõe",
+            "hoch",
+            "egle",
+            "nelegne",
+            "labenedi",
+            "tiõe",
+            "abua"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.097,
+            "gemini-3-flash-preview": 0.37,
+            "surya2": 0.13,
+            "tesseract-hye": 0.042,
+            "tesseract-hye_calfa": 0.106
+          }
+        },
+        "surya2": {
+          "n_content": 4394,
+          "empty": false,
+          "loop": true,
+          "cer": 1.197,
+          "acc": 0,
+          "seq": 0.108,
+          "bow": 0.13,
+          "gap": 0.022,
+          "len_ratio": 1.542,
+          "invention": 0.814,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fanto",
+            "maledierido",
+            "eglie",
+            "feripro",
+            "malette",
+            "chie",
+            "doio",
+            "xpis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.092,
+            "gemini-3-flash-preview": 0.148,
+            "gemini-3.1-flash-lite": 0.13,
+            "tesseract-hye": 0.093,
+            "tesseract-hye_calfa": 0.079
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1786,
+          "empty": false,
+          "loop": false,
+          "cer": 0.92,
+          "acc": 0.08,
+          "seq": 0.027,
+          "bow": 0.042,
+          "gap": 0.015,
+          "len_ratio": 0.627,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "գաոճ",
+            "քռչիո",
+            "թանգ",
+            "ոեւժբ",
+            "տոշք",
+            "լ2ե65նի",
+            "դոլշջ",
+            "ոջհի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.032,
+            "gemini-3.1-flash-lite": 0.042,
+            "surya2": 0.093,
+            "tesseract-hye_calfa": 0.172
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1622,
+          "empty": false,
+          "loop": false,
+          "cer": 0.864,
+          "acc": 0.136,
+          "seq": 0.059,
+          "bow": 0.106,
+          "gap": 0.047,
+          "len_ratio": 0.569,
+          "invention": 0.927,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "բոռօը",
+            "4աւս",
+            "տռարր",
+            "ըլռոտւ",
+            "դատօ",
+            "այարուխ",
+            "զագրց",
+            "աոսոռոստ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.125,
+            "gemini-3.1-flash-lite": 0.106,
+            "surya2": 0.079,
+            "tesseract-hye": 0.172
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-bd14b4-p176",
+      "substratum": "17th-18th-c-print",
+      "script_class": null,
+      "title": "Pauline Epistles and Apocalypse (Vatican Armenian MS 19)",
+      "year": 1607,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 758,
+          "empty": false,
+          "loop": false,
+          "cer": 0.258,
+          "acc": 0.742,
+          "seq": 0.787,
+          "bow": 0.787,
+          "gap": 0,
+          "len_ratio": 1.205,
+          "invention": 0.195,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հեթանոսացեմ",
+            "սպրդողաց",
+            "ցուսցեն",
+            "հնազանդութեանն",
+            "իցեն",
+            "պիսիոք",
+            "փոյթ",
+            "զնորին"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.787,
+            "surya2": 0.147,
+            "tesseract-hye": 0.01,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 629,
+          "empty": false,
+          "loop": false,
+          "invention": 0.169,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հնազանդեմ",
+            "տիտոսն",
+            "ընդիս",
+            "ապրդողաց",
+            "ցուցցեն",
+            "հնազանդութեամբն",
+            "եկեալիցն",
+            "պիսի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.787,
+            "surya2": 0.116,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "surya2": {
+          "n_content": 530,
+          "empty": false,
+          "loop": false,
+          "cer": 0.645,
+          "acc": 0.355,
+          "seq": 0.091,
+          "bow": 0.116,
+          "gap": 0.025,
+          "len_ratio": 0.843,
+          "invention": 0.471,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "անաձայցեմ",
+            "երուն",
+            "բնիքի",
+            "մահու",
+            "բրոնա",
+            "դատել",
+            "բարչ",
+            "որոյ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.147,
+            "gemini-3.1-flash-lite": 0.116,
+            "tesseract-hye": 0.027,
+            "tesseract-hye_calfa": 0.017
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 110,
+          "empty": false,
+          "loop": false,
+          "cer": 0.898,
+          "acc": 0.102,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.175,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աաաա",
+            "հարի",
+            "ճրռւտրոնլ",
+            "հանր",
+            "դայա",
+            "հեմը",
+            "շօթյոցհէ",
+            "ելօէ568"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.01,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.027,
+            "tesseract-hye_calfa": 0.043
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 35,
+          "empty": false,
+          "loop": false,
+          "cer": 0.957,
+          "acc": 0.043,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.056,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "աւետարաւիք",
+            "հաստւո"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.017,
+            "tesseract-hye": 0.043
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-bd506c-p225",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Vasn Vardanay ew Hayots Paterazmin",
+      "year": 1957,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2391,
+          "empty": false,
+          "loop": false,
+          "invention": 0.258,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "կրտերս",
+            "դթացեալ",
+            "դայս",
+            "զրերանն",
+            "վաղվադակի",
+            "զարանոց",
+            "ոսկաւ",
+            "գտարի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.729,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.685,
+            "tesseract-hye": 0.389,
+            "tesseract-hye_calfa": 0.667
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2379,
+          "empty": false,
+          "loop": false,
+          "invention": 0.19,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "զելարանին",
+            "զպարանոց",
+            "նոյն",
+            "եդեալ",
+            "դէժլխհ",
+            "դըժլխհտ2",
+            "դէըխհտ2",
+            "գդըժխհտ1տ3"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.729,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.726,
+            "tesseract-hye": 0.418,
+            "tesseract-hye_calfa": 0.676
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "surya2": 0,
+            "tesseract-hye": 0,
+            "tesseract-hye_calfa": 0
+          }
+        },
+        "surya2": {
+          "n_content": 2413,
+          "empty": false,
+          "loop": false,
+          "invention": 0.327,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "բերանույ",
+            "իմույ",
+            "ողորմումիւն",
+            "դիացեալ",
+            "յառաջեցույց",
+            "դրերանն",
+            "զայարանոց",
+            "երանելույն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.685,
+            "gemini-3-flash-preview": 0.726,
+            "gemini-3.1-flash-lite": 0,
+            "tesseract-hye": 0.393,
+            "tesseract-hye_calfa": 0.618
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 2316,
+          "empty": false,
+          "loop": false,
+          "invention": 0.64,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "բերանոլ",
+            "իմոլ",
+            "դողի",
+            "երննցաւ",
+            "դառտակերտին",
+            "կրտսեր",
+            "լամենեսնան",
+            "ղքաղեալ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.389,
+            "gemini-3-flash-preview": 0.418,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.393,
+            "tesseract-hye_calfa": 0.415
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 2320,
+          "empty": false,
+          "loop": false,
+          "invention": 0.314,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "դոգի",
+            "գայս",
+            "րաման",
+            "գպարանոց",
+            "երաներւոյն",
+            "ընկետին",
+            "յաշխարեն",
+            "այոց"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.667,
+            "gemini-3-flash-preview": 0.676,
+            "gemini-3.1-flash-lite": 0,
+            "surya2": 0.618,
+            "tesseract-hye": 0.415
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-eb57d2-p504",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Ekeghetsakan Patmutiwn (Ecclesiastical History - Armenian)",
+      "year": 1897,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1066,
+          "empty": false,
+          "loop": false,
+          "cer": 0.036,
+          "acc": 0.964,
+          "seq": 0.789,
+          "bow": 0.789,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.144,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "նոքաւք",
+            "փոյթ",
+            "աճեցուցա",
+            "տերազմացն",
+            "կացն",
+            "րականացն",
+            "րականի",
+            "հարկսն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.818,
+            "gemini-3.1-flash-lite": 0.789,
+            "surya2": 0.808,
+            "tesseract-hye": 0.422,
+            "tesseract-hye_calfa": 0.814
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1083,
+          "empty": false,
+          "loop": false,
+          "cer": 0.025,
+          "acc": 0.975,
+          "seq": 0.905,
+          "bow": 0.905,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.048,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "եդեալ",
+            "զհարկատունսն",
+            "վատթարաստանալ",
+            "առնոյր",
+            "զթրակիայ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.818,
+            "gemini-3.1-flash-lite": 0.905,
+            "surya2": 0.889,
+            "tesseract-hye": 0.434,
+            "tesseract-hye_calfa": 0.902
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1070,
+          "empty": false,
+          "loop": false,
+          "invention": 0.115,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "զթրացեալ",
+            "թրակայ",
+            "զուր",
+            "զհարկատունն",
+            "վատթարանալ",
+            "զթրակ",
+            "թրակն",
+            "սողոմ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.789,
+            "gemini-3-flash-preview": 0.905,
+            "surya2": 0.864,
+            "tesseract-hye": 0.414,
+            "tesseract-hye_calfa": 0.856
+          }
+        },
+        "surya2": {
+          "n_content": 1092,
+          "empty": false,
+          "loop": false,
+          "cer": 0.042,
+          "acc": 0.958,
+          "seq": 0.864,
+          "bow": 0.864,
+          "gap": 0,
+          "len_ratio": 1.021,
+          "invention": 0.093,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "զմացեալ",
+            "զկողմունան",
+            "առնոբաւք",
+            "ութեսուն",
+            "ըզհարկան",
+            "աւայ",
+            "զխիրակի",
+            "ինքկան"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.808,
+            "gemini-3-flash-preview": 0.889,
+            "gemini-3.1-flash-lite": 0.864,
+            "tesseract-hye": 0.416,
+            "tesseract-hye_calfa": 0.87
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 1041,
+          "empty": false,
+          "loop": false,
+          "cer": 0.237,
+          "acc": 0.763,
+          "seq": 0.399,
+          "bow": 0.414,
+          "gap": 0.015,
+          "len_ratio": 0.973,
+          "invention": 0.622,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ֆանգիպիր",
+            "զլթայնալ",
+            "փայչ",
+            "բարնրախաոիլ",
+            "մեճամբճա",
+            "փարծեյջնալ",
+            "տուֆոքաւք",
+            "քանցի"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.422,
+            "gemini-3-flash-preview": 0.434,
+            "gemini-3.1-flash-lite": 0.414,
+            "surya2": 0.416,
+            "tesseract-hye_calfa": 0.429
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 1035,
+          "empty": false,
+          "loop": false,
+          "cer": 0.07,
+          "acc": 0.93,
+          "seq": 0.856,
+          "bow": 0.856,
+          "gap": 0,
+          "len_ratio": 0.967,
+          "invention": 0.067,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "9391",
+            "կիզբն",
+            "ռուփֆ",
+            "կասո",
+            "պատերազժունս",
+            "զթւակիայ",
+            "ինքհան"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.814,
+            "gemini-3-flash-preview": 0.902,
+            "gemini-3.1-flash-lite": 0.856,
+            "surya2": 0.87,
+            "tesseract-hye": 0.429
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-eb5b9f-p36",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Tughtk (Letters)",
+      "year": 1838,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 317,
+          "empty": false,
+          "loop": false,
+          "cer": 0.031,
+          "acc": 0.969,
+          "seq": 0.696,
+          "bow": 0.696,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.093,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "իշխանո",
+            "յիրաւունո",
+            "զնրբորդու",
+            "յաւիտեանո"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.81,
+            "gemini-3.1-flash-lite": 0.696,
+            "surya2": 0.598,
+            "tesseract-hye": 0.203,
+            "tesseract-hye_calfa": 0.741
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 336,
+          "empty": false,
+          "loop": false,
+          "cer": 0.057,
+          "acc": 0.943,
+          "seq": 0.81,
+          "bow": 0.81,
+          "gap": 0,
+          "len_ratio": 1.057,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.81,
+            "gemini-3.1-flash-lite": 0.81,
+            "surya2": 0.594,
+            "tesseract-hye": 0.217,
+            "tesseract-hye_calfa": 0.855
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 318,
+          "empty": false,
+          "loop": false,
+          "invention": 0.05,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "հաստատեալս",
+            "զարկութեանն"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.696,
+            "gemini-3-flash-preview": 0.81,
+            "surya2": 0.574,
+            "tesseract-hye": 0.179,
+            "tesseract-hye_calfa": 0.847
+          }
+        },
+        "surya2": {
+          "n_content": 335,
+          "empty": false,
+          "loop": false,
+          "cer": 0.107,
+          "acc": 0.893,
+          "seq": 0.574,
+          "bow": 0.574,
+          "gap": 0,
+          "len_ratio": 1.053,
+          "invention": 0.326,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "չօրաբաբելի",
+            "զորգիան",
+            "իշխանա",
+            "յիրաւունա",
+            "տաաեալս",
+            "խատացն",
+            "յապատամբացն",
+            "արբաթ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.598,
+            "gemini-3-flash-preview": 0.594,
+            "gemini-3.1-flash-lite": 0.574,
+            "tesseract-hye": 0.193,
+            "tesseract-hye_calfa": 0.504
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 314,
+          "empty": false,
+          "loop": false,
+          "cer": 0.283,
+          "acc": 0.717,
+          "seq": 0.179,
+          "bow": 0.179,
+          "gap": 0,
+          "len_ratio": 0.987,
+          "invention": 0.711,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "սշրաբասբելի",
+            "իսրբայելի",
+            "ժարուցանել",
+            "թագզաշոթ",
+            "էչըաշնա",
+            "հոէնս",
+            "տատնալա",
+            "ոբգես"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.203,
+            "gemini-3-flash-preview": 0.217,
+            "gemini-3.1-flash-lite": 0.179,
+            "surya2": 0.193,
+            "tesseract-hye_calfa": 0.21
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 319,
+          "empty": false,
+          "loop": false,
+          "cer": 0.019,
+          "acc": 0.981,
+          "seq": 0.847,
+          "bow": 0.847,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.05,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "խխանս",
+            "հատտատեալս"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.741,
+            "gemini-3-flash-preview": 0.855,
+            "gemini-3.1-flash-lite": 0.847,
+            "surya2": 0.504,
+            "tesseract-hye": 0.21
+          }
+        }
+      }
+    },
+    {
+      "slug": "armenian-ee39f6-p112",
+      "substratum": "19th-20th-c-print",
+      "script_class": null,
+      "title": "Deux historiens arméniens: Kiracos de Gantzac, XIIIe s., Histoire d'Arménie; Oukhtanes d'Ourha, Xe s.",
+      "year": 1870,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2653,
+          "empty": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.977,
+          "bow": 0.977,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.012,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "solleil",
+            "ibudoc",
+            "text"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.952,
+            "gemini-3.1-flash-lite": 0.977,
+            "surya2": 0.947,
+            "tesseract-hye": 0.082,
+            "tesseract-hye_calfa": 0.15
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2682,
+          "empty": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.953,
+          "bow": 0.953,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.049,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "l'autre¹",
+            "d'eghapatrouch²",
+            "communauté³",
+            "docl⁴",
+            "ioab⁵",
+            "srbouc⁷",
+            "hoseph⁸",
+            "passa⁹"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.952,
+            "gemini-3.1-flash-lite": 0.953,
+            "surya2": 0.96,
+            "tesseract-hye": 0.087,
+            "tesseract-hye_calfa": 0.164
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2666,
+          "empty": false,
+          "loop": false,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "hoseph",
+            "martirol"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.977,
+            "gemini-3-flash-preview": 0.953,
+            "surya2": 0.937,
+            "tesseract-hye": 0.075,
+            "tesseract-hye_calfa": 0.144
+          }
+        },
+        "surya2": {
+          "n_content": 2673,
+          "empty": false,
+          "loop": false,
+          "cer": 0.02,
+          "acc": 0.98,
+          "seq": 0.935,
+          "bow": 0.937,
+          "gap": 0.002,
+          "len_ratio": 1.003,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "l'autre1",
+            "d'eghapatrouch2",
+            "communauté3",
+            "docl4",
+            "ioab5",
+            "srbouc7",
+            "hoseph8",
+            "passa9"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.947,
+            "gemini-3-flash-preview": 0.96,
+            "gemini-3.1-flash-lite": 0.937,
+            "tesseract-hye": 0.087,
+            "tesseract-hye_calfa": 0.164
+          }
+        },
+        "tesseract-hye": {
+          "n_content": 2516,
+          "empty": false,
+          "loop": false,
+          "cer": 0.95,
+          "acc": 0.05,
+          "seq": 0.073,
+          "bow": 0.075,
+          "gap": 0.002,
+          "len_ratio": 0.944,
+          "invention": 0.996,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "օթճռատուռ",
+            "տեճոէ",
+            "յստզո4",
+            "թոծտծոէ",
+            "շօօբծոմճու",
+            "էծիզաօտ",
+            "9ճլոէ",
+            "օօքծծոէ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.082,
+            "gemini-3-flash-preview": 0.087,
+            "gemini-3.1-flash-lite": 0.075,
+            "surya2": 0.087,
+            "tesseract-hye_calfa": 0.164
+          }
+        },
+        "tesseract-hye_calfa": {
+          "n_content": 175,
+          "empty": false,
+          "loop": false,
+          "cer": 0.949,
+          "acc": 0.051,
+          "seq": 0.127,
+          "bow": 0.144,
+          "gap": 0.017,
+          "len_ratio": 0.066,
+          "invention": 0.75,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "1901",
+            "1611",
+            "2943"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.15,
+            "gemini-3-flash-preview": 0.164,
+            "gemini-3.1-flash-lite": 0.144,
+            "surya2": 0.164,
+            "tesseract-hye": 0.164
+          }
+        }
+      }
+    }
+  ]
+}

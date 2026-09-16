@@ -1,0 +1,14 @@
+{
+  "slug": "syriac-dc867e-p63",
+  "substratum": "manuscript",
+  "title": "Commentary on Genesis",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "kraken-sophro-mhiro-defaultseg",
+    "kraken-sophro-mhiro-rtl",
+    "surya2",
+    "tesseract-syr"
+  ],
+  "reason": "best text 373 overlap 0.06 < 0.25"
+}

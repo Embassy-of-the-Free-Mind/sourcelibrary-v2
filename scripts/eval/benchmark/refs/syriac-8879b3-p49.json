@@ -1,0 +1,14 @@
+{
+  "slug": "syriac-8879b3-p49",
+  "substratum": "print",
+  "title": "Das Johannesbuch der Mandäer",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "kraken-sophro-mhiro-defaultseg",
+    "kraken-sophro-mhiro-rtl",
+    "surya2",
+    "tesseract-syr"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}

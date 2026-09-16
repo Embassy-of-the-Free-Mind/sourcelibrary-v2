@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-0db3cb-p118",
+  "substratum": "other",
+  "title": "玉海·卷一百十八~卷一百十九 (vol 64)",
+  "probe_chars": 144,
+  "source": "Kanripo",
+  "work": "KR3k0032",
+  "work_title": "玉海-宋-王應麟",
+  "juan": "118,119",
+  "url": "https://github.com/kanripo/KR3k0032",
+  "etext_chars": 22685,
+  "window_chars": 156,
+  "overlap": 0.825
+}

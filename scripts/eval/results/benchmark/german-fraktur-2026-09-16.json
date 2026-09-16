@@ -1,0 +1,6174 @@
+{
+  "summary": {
+    "stratum": "german-fraktur",
+    "issue": 4800,
+    "date": "2026-09-16",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "dots-mocr": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.031,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.893
+        },
+        "invention": {
+          "median": 0.046,
+          "mean": 0.083,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.801,
+            "gap": 0.398,
+            "invention": 0.056,
+            "has_ref": false,
+            "unsupported": [
+              "waßenh",
+              "neßt",
+              "niemeyerische",
+              "waßenhäusern",
+              "proteß",
+              "zweckmäßs",
+              "volkschulen",
+              "geßang"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.451,
+            "gap": 0.21,
+            "invention": 0.101,
+            "has_ref": false,
+            "unsupported": [
+              "senem",
+              "sieghaft",
+              "betrübie",
+              "gesührt",
+              "ländrrn",
+              "nigliche",
+              "union",
+              "nohte"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.394,
+            "gap": 0.036,
+            "invention": 0.708,
+            "has_ref": false,
+            "unsupported": [
+              "weißer",
+              "stich",
+              "vorschafer",
+              "entnimmt",
+              "langen",
+              "leider",
+              "gescheit",
+              "lage"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.15,
+            "gap": 0.021,
+            "invention": 0.049,
+            "has_ref": false,
+            "unsupported": [
+              "skehe",
+              "gnugthüng",
+              "hern",
+              "zuerret",
+              "barmhertzigkait",
+              "versünet"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "cer": 0.085,
+            "gap": 0.064,
+            "invention": 0.074,
+            "has_ref": false,
+            "unsupported": [
+              "gefängniss",
+              "ishre",
+              "völkeri",
+              "onvorstendiges",
+              "wirn",
+              "helke",
+              "vsern",
+              "außchütten"
+            ]
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.015,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.935
+        },
+        "invention": {
+          "median": 0.026,
+          "mean": 0.043,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.787,
+            "gap": 0.388,
+            "invention": 0.015,
+            "has_ref": false,
+            "unsupported": [
+              "insonderh",
+              "niemeyersche",
+              "zweckmäß"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.433,
+            "gap": 0.232,
+            "invention": 0.009,
+            "has_ref": false,
+            "unsupported": [
+              "stats"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.244,
+            "gap": 0.104,
+            "invention": 0.065,
+            "has_ref": false,
+            "unsupported": [
+              "zůstande",
+              "unterschaiden",
+              "gelittē",
+              "göttliche",
+              "dreyfal",
+              "tigkeit",
+              "schlagendē",
+              "sich"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "cer": 0.13,
+            "gap": 0.103,
+            "invention": 0.144,
+            "has_ref": false,
+            "unsupported": [
+              "gefängnuß",
+              "jhre",
+              "alle",
+              "völckern",
+              "jesus",
+              "jhren",
+              "sondern",
+              "jhrem"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.085,
+            "gap": 0.004,
+            "invention": 0.219,
+            "has_ref": false,
+            "unsupported": [
+              "sehr",
+              "ehrwürdiger",
+              "thut",
+              "davon",
+              "nachricht",
+              "drey",
+              "beyden",
+              "alsdann"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.035,
+          "mean": 0.048,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "invention": 0.196,
+            "has_ref": false,
+            "unsupported": [
+              "hochwürdiger",
+              "erfüll",
+              "bescheid",
+              "beiden",
+              "sodann",
+              "ehrenmeisters",
+              "orden",
+              "unermüdeten"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "invention": 0.146,
+            "has_ref": false,
+            "unsupported": [
+              "zubrzy",
+              "lipka",
+              "lübau",
+              "lybau",
+              "martinik",
+              "millesund",
+              "nostiz",
+              "palsy"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "invention": 0.11,
+            "has_ref": false,
+            "unsupported": [
+              "päda",
+              "gogium",
+              "burger",
+              "unauch",
+              "deutfehe",
+              "jüberlin",
+              "licher",
+              "frey"
+            ]
+          },
+          {
+            "slug": "german-fraktur-1d3ad7-p25",
+            "title": "Sendtschreiben an einen guten Freundt in Welschlandt",
+            "year": 1618,
+            "invention": 0.053,
+            "has_ref": false,
+            "unsupported": [
+              "durch",
+              "zogen",
+              "jrthumb",
+              "buendtlichkeit",
+              "verdunkelung",
+              "vorers",
+              "kantnuß",
+              "samosatenische"
+            ]
+          },
+          {
+            "slug": "german-fraktur-5fa9a3-p39",
+            "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+            "year": 1627,
+            "invention": 0.053,
+            "has_ref": false,
+            "unsupported": [
+              "aberglaubigen",
+              "glaube",
+              "erscheis",
+              "köns",
+              "löwen",
+              "löwe",
+              "stalt"
+            ]
+          }
+        ]
+      },
+      "kraken-austriannewspapers": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.208,
+          "catastrophic": 4,
+          "median_gap": 0.02,
+          "median_bow": 0.581
+        },
+        "invention": {
+          "median": 0.387,
+          "mean": 0.466,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.966,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "erip",
+              "1a4z",
+              "attrt"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.671,
+            "gap": 0.237,
+            "invention": 0.451,
+            "has_ref": false,
+            "unsupported": [
+              "abtb",
+              "pänacperz",
+              "inlonderh",
+              "köntea'e",
+              "belehr",
+              "hali",
+              "nebh",
+              "zise"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.602,
+            "gap": 0.027,
+            "invention": 0.817,
+            "has_ref": false,
+            "unsupported": [
+              "prognosticirreimser",
+              "galendario",
+              "aufftdan",
+              "ghriftt",
+              "sdibe",
+              "wüdscher",
+              "crstlichr",
+              "aufnebcht"
+            ]
+          },
+          {
+            "slug": "german-fraktur-64c667-p75",
+            "title": "Allgemeines Adelsarchiv der österreichischen Monarchie : welches in alphabetischer Ordnung alle reichsfürstliche Häuser,",
+            "year": 1789,
+            "cer": 0.513,
+            "gap": 0.086,
+            "invention": 0.591,
+            "has_ref": false,
+            "unsupported": [
+              "atteme",
+              "gttat",
+              "marchlfats",
+              "attenms",
+              "ipfas",
+              "aeleme",
+              "junt",
+              "1aab"
+            ]
+          },
+          {
+            "slug": "german-fraktur-85655d-p18",
+            "title": "Ein altes, sehr schönes und herrliches Tractätlein von dem Gebenedeyeten Stein",
+            "year": 1682,
+            "cer": 0.329,
+            "gap": 0.101,
+            "invention": 0.377,
+            "has_ref": false,
+            "unsupported": [
+              "jungftan",
+              "aller",
+              "liebste",
+              "hensso",
+              "sohnder",
+              "gleicht",
+              "ches",
+              "schwarel"
+            ]
+          }
+        ]
+      },
+      "kraken-catmus": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.214,
+          "catastrophic": 3,
+          "median_gap": 0.01,
+          "median_bow": 0.419
+        },
+        "invention": {
+          "median": 0.63,
+          "mean": 0.588,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.767,
+            "gap": 0,
+            "invention": 0.992,
+            "has_ref": false,
+            "unsupported": [
+              "fanuohp",
+              "abhe",
+              "poritin",
+              "adosafioroue",
+              "decptf",
+              "maislare",
+              "pmeisi",
+              "ahstisoartautt"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.605,
+            "gap": 0.302,
+            "invention": 0.125,
+            "has_ref": false,
+            "unsupported": [
+              "padagogix",
+              "padagogium",
+              "eratur",
+              "funxe's",
+              "chulehrer",
+              "reinroln's",
+              "bautz",
+              "ttel"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.543,
+            "gap": 0.043,
+            "invention": 0.742,
+            "has_ref": false,
+            "unsupported": [
+              "gcorg",
+              "halbmaner",
+              "sabr",
+              "ghrini",
+              "seget",
+              "sonbere",
+              "renmett",
+              "pett"
+            ]
+          },
+          {
+            "slug": "german-fraktur-64c667-p75",
+            "title": "Allgemeines Adelsarchiv der österreichischen Monarchie : welches in alphabetischer Ordnung alle reichsfürstliche Häuser,",
+            "year": 1789,
+            "cer": 0.481,
+            "gap": 0.169,
+            "invention": 0.388,
+            "has_ref": false,
+            "unsupported": [
+              "ottat",
+              "derru",
+              "marchifate",
+              "ttteuts",
+              "iparen",
+              "entsprosfen",
+              "ivelde",
+              "gunt"
+            ]
+          },
+          {
+            "slug": "german-fraktur-85655d-p18",
+            "title": "Ein altes, sehr schönes und herrliches Tractätlein von dem Gebenedeyeten Stein",
+            "year": 1682,
+            "cer": 0.458,
+            "gap": 0.031,
+            "invention": 0.722,
+            "has_ref": false,
+            "unsupported": [
+              "melces",
+              "gater",
+              "sungfrau",
+              "stom",
+              "mollen",
+              "anber",
+              "umbfabenlto",
+              "merben"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.032,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_bow": 0.865
+        },
+        "invention": {
+          "median": 0.103,
+          "mean": 0.138,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.78,
+            "gap": 0.407,
+            "invention": 0.02,
+            "has_ref": false,
+            "unsupported": [
+              "nehft",
+              "justr",
+              "hatman",
+              "seminariften"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "cer": 0.704,
+            "gap": 0.258,
+            "invention": 0.284,
+            "has_ref": false,
+            "unsupported": [
+              "staatsverfassung",
+              "keiferscheitz",
+              "belash",
+              "lesslie",
+              "losh",
+              "lüssau",
+              "lyssau",
+              "martinis"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.637,
+            "gap": 0.023,
+            "invention": 0.909,
+            "has_ref": false,
+            "unsupported": [
+              "pufur",
+              "fuscicoligas",
+              "linneas",
+              "zenuitus",
+              "abustafer",
+              "fflicht",
+              "mincht",
+              "maistab"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.466,
+            "gap": 0.186,
+            "invention": 0.198,
+            "has_ref": false,
+            "unsupported": [
+              "ghrifti",
+              "keymen",
+              "herz",
+              "färt",
+              "beträbte",
+              "dismal",
+              "sewrig",
+              "gesährt"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "cer": 0.155,
+            "gap": 0.097,
+            "invention": 0.094,
+            "has_ref": false,
+            "unsupported": [
+              "gesängnis",
+              "nachformmenen",
+              "belt",
+              "stitter",
+              "stittage",
+              "gesezes",
+              "schüss",
+              "feindsell"
+            ]
+          }
+        ]
+      },
+      "tesseract-deu": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.193,
+          "catastrophic": 4,
+          "median_gap": 0.016,
+          "median_bow": 0.47
+        },
+        "invention": {
+          "median": 0.572,
+          "mean": 0.526,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.861,
+            "gap": 0.006,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "asbach",
+              "mebache",
+              "flag",
+              "senat",
+              "legal",
+              "nncen",
+              "becf",
+              "munflrpan"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.78,
+            "gap": 0.358,
+            "invention": 0.227,
+            "has_ref": false,
+            "unsupported": [
+              "pävasocık",
+              "könzer's",
+              "gelch",
+              "justt",
+              "wacner",
+              "reınmorn's",
+              "belchr",
+              "genıcke"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "cer": 0.746,
+            "gap": 0.03,
+            "invention": 0.754,
+            "has_ref": false,
+            "unsupported": [
+              "abfchnitt",
+              "vetfaflung",
+              "stubigt",
+              "lüsan",
+              "stürgd",
+              "toßau",
+              "smweerts",
+              "shirt"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.633,
+            "gap": 0.034,
+            "invention": 0.726,
+            "has_ref": false,
+            "unsupported": [
+              "saltınaper",
+              "drognoßkereti",
+              "xxxll",
+              "trofiac",
+              "neymn",
+              "aufpden",
+              "tanariur",
+              "pingrofferpersonterdem"
+            ]
+          },
+          {
+            "slug": "german-fraktur-18398f-p26",
+            "title": "... Theil Der Bücher vnd Schrifften, deß Edlen, Hochgelehrten vnnd Bewehrten Philosophi vnnd Medici, Philippi Theophrast",
+            "year": 1603,
+            "cer": 0.474,
+            "gap": 0.007,
+            "invention": 0.632,
+            "has_ref": false,
+            "unsupported": [
+              "dummaden",
+              "foltemwiedas",
+              "ferwergeha",
+              "seadunzfeten",
+              "deabını",
+              "fich",
+              "philofophey",
+              "vielmehr"
+            ]
+          }
+        ]
+      },
+      "tesseract-frk": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.162,
+          "catastrophic": 7,
+          "median_gap": 0.019,
+          "median_bow": 0.626
+        },
+        "invention": {
+          "median": 0.307,
+          "mean": 0.329,
+          "n_engines": 8,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.868,
+            "gap": 0.006,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "fhas",
+              "serif",
+              "bgfund",
+              "3004",
+              "wage",
+              "wirke",
+              "grau",
+              "panna"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.796,
+            "gap": 0.343,
+            "invention": 0.176,
+            "has_ref": false,
+            "unsupported": [
+              "könren's",
+              "ersche",
+              "pädagoginm",
+              "jvsriu",
+              "reinnoly's",
+              "gbesond",
+              "ren1",
+              "fri15sc1"
+            ]
+          },
+          {
+            "slug": "german-fraktur-5fa9a3-p39",
+            "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+            "year": 1627,
+            "cer": 0.77,
+            "gap": 0,
+            "invention": 0.357,
+            "has_ref": false,
+            "unsupported": [
+              "abergläublgen",
+              "htifbraucd",
+              "müftenu",
+              "geftalf",
+              "exrempel",
+              "ernichtals",
+              "leininder",
+              "befrieglich"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "cer": 0.737,
+            "gap": 0.164,
+            "invention": 0.409,
+            "has_ref": false,
+            "unsupported": [
+              "veifassung",
+              "opaifus",
+              "kecd",
+              "2847",
+              "königge",
+              "schäfgotsch",
+              "korzensfi",
+              "schellard'"
+            ]
+          },
+          {
+            "slug": "german-fraktur-18398f-p26",
+            "title": "... Theil Der Bücher vnd Schrifften, deß Edlen, Hochgelehrten vnnd Bewehrten Philosophi vnnd Medici, Philippi Theophrast",
+            "year": 1603,
+            "cer": 0.63,
+            "gap": 0.023,
+            "invention": 0.603,
+            "has_ref": false,
+            "unsupported": [
+              "eßgltichdem",
+              "vnugestalt",
+              "oderjmpedimerk",
+              "mögli",
+              "elementoruit",
+              "artvs",
+              "paracelli",
+              "9726"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "german-fraktur-18398f-p26",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "... Theil Der Bücher vnd Schrifften, deß Edlen, Hochgelehrten vnnd Bewehrten Philosophi vnnd Medici, Philippi Theophrast",
+      "year": 1603,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2805,
+          "empty": false,
+          "loop": false,
+          "cer": 0.037,
+          "acc": 0.963,
+          "seq": 0.908,
+          "bow": 0.909,
+          "gap": 0.002,
+          "len_ratio": 1.001,
+          "invention": 0.113,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prozeß",
+            "distillaz",
+            "scheidunz",
+            "tiefen",
+            "gennugsam",
+            "noturfft",
+            "bercitung",
+            "unsauberkeit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.894,
+            "gemini-3.1-flash-lite": 0.909,
+            "kraken-austriannewspapers": 0.291,
+            "kraken-catmus": 0.356,
+            "surya2": 0.882,
+            "tesseract-deu": 0.243,
+            "tesseract-frk": 0.236
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2835,
+          "empty": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.932,
+          "bow": 0.932,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.031,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "distillatio",
+            "setzen",
+            "fürtreffentlich",
+            "bereitung",
+            "artzney",
+            "tödtlich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.894,
+            "gemini-3.1-flash-lite": 0.932,
+            "kraken-austriannewspapers": 0.293,
+            "kraken-catmus": 0.365,
+            "surya2": 0.887,
+            "tesseract-deu": 0.238,
+            "tesseract-frk": 0.231
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2802,
+          "empty": false,
+          "loop": false,
+          "invention": 0.036,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "jefes",
+            "bereittung",
+            "reinigete",
+            "gesondert",
+            "dich",
+            "spiritam",
+            "sire"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.909,
+            "gemini-3-flash-preview": 0.932,
+            "kraken-austriannewspapers": 0.296,
+            "kraken-catmus": 0.364,
+            "surya2": 0.896,
+            "tesseract-deu": 0.232,
+            "tesseract-frk": 0.242
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 2803,
+          "empty": false,
+          "loop": false,
+          "cer": 0.321,
+          "acc": 0.679,
+          "seq": 0.267,
+          "bow": 0.296,
+          "gap": 0.028,
+          "len_ratio": 1,
+          "invention": 0.755,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sroirich",
+            "zeser",
+            "prweiß",
+            "g'stich",
+            "deim",
+            "juver",
+            "vtehen",
+            "dinn"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.291,
+            "gemini-3-flash-preview": 0.293,
+            "gemini-3.1-flash-lite": 0.296,
+            "kraken-catmus": 0.192,
+            "surya2": 0.287,
+            "tesseract-deu": 0.21,
+            "tesseract-frk": 0.181
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2812,
+          "empty": false,
+          "loop": false,
+          "cer": 0.365,
+          "acc": 0.635,
+          "seq": 0.324,
+          "bow": 0.364,
+          "gap": 0.04,
+          "len_ratio": 1.004,
+          "invention": 0.705,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "grbtrich",
+            "aeser",
+            "prorcb",
+            "slcic",
+            "masser",
+            "iupersteben",
+            "moie",
+            "server"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.356,
+            "gemini-3-flash-preview": 0.365,
+            "gemini-3.1-flash-lite": 0.364,
+            "kraken-austriannewspapers": 0.192,
+            "surya2": 0.363,
+            "tesseract-deu": 0.22,
+            "tesseract-frk": 0.164
+          }
+        },
+        "surya2": {
+          "n_content": 2840,
+          "empty": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.896,
+          "bow": 0.896,
+          "gap": 0,
+          "len_ratio": 1.014,
+          "invention": 0.104,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "process",
+            "distillass",
+            "bestalt",
+            "segen",
+            "vorturfft",
+            "dium",
+            "vereiterung",
+            "vnsauberteit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.882,
+            "gemini-3-flash-preview": 0.887,
+            "gemini-3.1-flash-lite": 0.896,
+            "kraken-austriannewspapers": 0.287,
+            "kraken-catmus": 0.363,
+            "tesseract-deu": 0.23,
+            "tesseract-frk": 0.227
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1881,
+          "empty": false,
+          "loop": false,
+          "cer": 0.474,
+          "acc": 0.526,
+          "seq": 0.225,
+          "bow": 0.232,
+          "gap": 0.007,
+          "len_ratio": 0.671,
+          "invention": 0.632,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dummaden",
+            "foltemwiedas",
+            "ferwergeha",
+            "seadunzfeten",
+            "deabını",
+            "fich",
+            "philofophey",
+            "vielmehr"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.243,
+            "gemini-3-flash-preview": 0.238,
+            "gemini-3.1-flash-lite": 0.232,
+            "kraken-austriannewspapers": 0.21,
+            "kraken-catmus": 0.22,
+            "surya2": 0.23,
+            "tesseract-frk": 0.278
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1194,
+          "empty": false,
+          "loop": false,
+          "cer": 0.63,
+          "acc": 0.37,
+          "seq": 0.219,
+          "bow": 0.242,
+          "gap": 0.023,
+          "len_ratio": 0.426,
+          "invention": 0.603,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eßgltichdem",
+            "vnugestalt",
+            "oderjmpedimerk",
+            "mögli",
+            "elementoruit",
+            "artvs",
+            "paracelli",
+            "9726"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.236,
+            "gemini-3-flash-preview": 0.231,
+            "gemini-3.1-flash-lite": 0.242,
+            "kraken-austriannewspapers": 0.181,
+            "kraken-catmus": 0.164,
+            "surya2": 0.227,
+            "tesseract-deu": 0.278
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-1d3ad7-p25",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Sendtschreiben an einen guten Freundt in Welschlandt",
+      "year": 1618,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1528,
+          "empty": false,
+          "loop": false,
+          "cer": 0.041,
+          "acc": 0.959,
+          "seq": 0.902,
+          "bow": 0.902,
+          "gap": 0,
+          "len_ratio": 0.974,
+          "invention": 0.049,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "irzthumb",
+            "jhme",
+            "buendlichkeit",
+            "vorerkaninß",
+            "seyv",
+            "practiken",
+            "socinianiische"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.82,
+            "gemini-3.1-flash-lite": 0.902,
+            "kraken-austriannewspapers": 0.436,
+            "kraken-catmus": 0.401,
+            "surya2": 0.856,
+            "tesseract-deu": 0.291,
+            "tesseract-frk": 0.53
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1572,
+          "empty": false,
+          "loop": false,
+          "cer": 0.032,
+          "acc": 0.968,
+          "seq": 0.821,
+          "bow": 0.821,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.075,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ursachen",
+            "irrthumb",
+            "unendtlichkeit",
+            "unterworffen",
+            "unterfange",
+            "darfür",
+            "gestellt",
+            "zugeygnct"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.82,
+            "gemini-3.1-flash-lite": 0.821,
+            "kraken-austriannewspapers": 0.439,
+            "kraken-catmus": 0.386,
+            "surya2": 0.766,
+            "tesseract-deu": 0.3,
+            "tesseract-frk": 0.492
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1568,
+          "empty": false,
+          "loop": false,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "durch",
+            "zogen",
+            "jrthumb",
+            "buendtlichkeit",
+            "verdunkelung",
+            "vorers",
+            "kantnuß",
+            "samosatenische"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.902,
+            "gemini-3-flash-preview": 0.821,
+            "kraken-austriannewspapers": 0.444,
+            "kraken-catmus": 0.415,
+            "surya2": 0.857,
+            "tesseract-deu": 0.302,
+            "tesseract-frk": 0.521
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1562,
+          "empty": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.44,
+          "bow": 0.444,
+          "gap": 0.004,
+          "len_ratio": 0.996,
+          "invention": 0.388,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "drsachen",
+            "verflagungwarenviersderen",
+            "majestdt",
+            "fürnemblichdurchzo",
+            "genspund",
+            "frichumbsowiderdie",
+            "wiedaß",
+            "vuendtlich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.436,
+            "gemini-3-flash-preview": 0.439,
+            "gemini-3.1-flash-lite": 0.444,
+            "kraken-catmus": 0.261,
+            "surya2": 0.444,
+            "tesseract-deu": 0.299,
+            "tesseract-frk": 0.483
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1578,
+          "empty": false,
+          "loop": false,
+          "cer": 0.152,
+          "acc": 0.848,
+          "seq": 0.412,
+          "bow": 0.415,
+          "gap": 0.003,
+          "len_ratio": 1.006,
+          "invention": 0.686,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "protestir",
+            "enbten",
+            "mollanbt",
+            "grsachen",
+            "ertlagung",
+            "maren",
+            "viers",
+            "beren"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.401,
+            "gemini-3-flash-preview": 0.386,
+            "gemini-3.1-flash-lite": 0.415,
+            "kraken-austriannewspapers": 0.261,
+            "surya2": 0.406,
+            "tesseract-deu": 0.202,
+            "tesseract-frk": 0.272
+          }
+        },
+        "surya2": {
+          "n_content": 1573,
+          "empty": false,
+          "loop": false,
+          "cer": 0.029,
+          "acc": 0.971,
+          "seq": 0.857,
+          "bow": 0.857,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.114,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "verslagung",
+            "rezerven",
+            "irrehumb",
+            "symae",
+            "vuendtlichs",
+            "verduncklung",
+            "boss",
+            "weis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.856,
+            "gemini-3-flash-preview": 0.766,
+            "gemini-3.1-flash-lite": 0.857,
+            "kraken-austriannewspapers": 0.444,
+            "kraken-catmus": 0.406,
+            "tesseract-deu": 0.28,
+            "tesseract-frk": 0.485
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1597,
+          "empty": false,
+          "loop": false,
+          "cer": 0.147,
+          "acc": 0.853,
+          "seq": 0.286,
+          "bow": 0.302,
+          "gap": 0.016,
+          "len_ratio": 1.018,
+          "invention": 0.641,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "droteftirendtenin",
+            "vrfachen",
+            "erftevon",
+            "majeftdt",
+            "durchzos",
+            "genjonnd",
+            "kegereyenond",
+            "rıehumb"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.291,
+            "gemini-3-flash-preview": 0.3,
+            "gemini-3.1-flash-lite": 0.302,
+            "kraken-austriannewspapers": 0.299,
+            "kraken-catmus": 0.202,
+            "surya2": 0.28,
+            "tesseract-frk": 0.351
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1572,
+          "empty": false,
+          "loop": false,
+          "cer": 0.047,
+          "acc": 0.953,
+          "seq": 0.509,
+          "bow": 0.521,
+          "gap": 0.012,
+          "len_ratio": 1.003,
+          "invention": 0.304,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "protesftirendten",
+            "erstevon",
+            "kekereyen",
+            "ir2thumb",
+            "xeineond",
+            "wiiedaß",
+            "vuendtlichfeit",
+            "vnndeygene"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.53,
+            "gemini-3-flash-preview": 0.492,
+            "gemini-3.1-flash-lite": 0.521,
+            "kraken-austriannewspapers": 0.483,
+            "kraken-catmus": 0.272,
+            "surya2": 0.485,
+            "tesseract-deu": 0.351
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-316a06-p13",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Ain schöner christlicher sendbrieff und bericht",
+      "year": 1547,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1326,
+          "empty": false,
+          "loop": false,
+          "cer": 0.15,
+          "acc": 0.85,
+          "seq": 0.854,
+          "bow": 0.875,
+          "gap": 0.021,
+          "len_ratio": 0.898,
+          "invention": 0.049,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "skehe",
+            "gnugthüng",
+            "hern",
+            "zuerret",
+            "barmhertzigkait",
+            "versünet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.851,
+            "gemini-3.1-flash-lite": 0.875,
+            "kraken-austriannewspapers": 0.531,
+            "kraken-catmus": 0.554,
+            "surya2": 0.829,
+            "tesseract-deu": 0.347,
+            "tesseract-frk": 0.618
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1477,
+          "empty": false,
+          "loop": false,
+          "cer": 0.244,
+          "acc": 0.756,
+          "seq": 0.834,
+          "bow": 0.938,
+          "gap": 0.104,
+          "len_ratio": 1,
+          "invention": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zůstande",
+            "unterschaiden",
+            "gelittē",
+            "göttliche",
+            "dreyfal",
+            "tigkeit",
+            "schlagendē",
+            "sich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.851,
+            "gemini-3.1-flash-lite": 0.938,
+            "kraken-austriannewspapers": 0.555,
+            "kraken-catmus": 0.548,
+            "surya2": 0.851,
+            "tesseract-deu": 0.343,
+            "tesseract-frk": 0.615
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1477,
+          "empty": false,
+          "loop": false,
+          "invention": 0.036,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "erzette",
+            "nigkeit",
+            "dreyfals",
+            "züerzet",
+            "grundlosen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.875,
+            "gemini-3-flash-preview": 0.938,
+            "kraken-austriannewspapers": 0.567,
+            "kraken-catmus": 0.55,
+            "surya2": 0.853,
+            "tesseract-deu": 0.347,
+            "tesseract-frk": 0.631
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1479,
+          "empty": false,
+          "loop": false,
+          "cer": 0.28,
+          "acc": 0.72,
+          "seq": 0.522,
+          "bow": 0.567,
+          "gap": 0.045,
+          "len_ratio": 1.001,
+          "invention": 0.467,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "züstandevnaigenschaffe",
+            "patter",
+            "pucerschaiden",
+            "denmniche",
+            "vatcerzson",
+            "gelircésist",
+            "erenne",
+            "geskoben"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.531,
+            "gemini-3-flash-preview": 0.555,
+            "gemini-3.1-flash-lite": 0.567,
+            "kraken-catmus": 0.412,
+            "surya2": 0.535,
+            "tesseract-deu": 0.316,
+            "tesseract-frk": 0.472
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1472,
+          "empty": false,
+          "loop": false,
+          "cer": 0.29,
+          "acc": 0.71,
+          "seq": 0.514,
+          "bow": 0.55,
+          "gap": 0.036,
+          "len_ratio": 0.997,
+          "invention": 0.52,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sonlicen",
+            "zũstande",
+            "aigenscafft",
+            "virt",
+            "gelitrẽsist",
+            "vorden",
+            "verchren",
+            "vnnò"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.554,
+            "gemini-3-flash-preview": 0.548,
+            "gemini-3.1-flash-lite": 0.55,
+            "kraken-austriannewspapers": 0.412,
+            "surya2": 0.54,
+            "tesseract-deu": 0.252,
+            "tesseract-frk": 0.436
+          }
+        },
+        "surya2": {
+          "n_content": 1468,
+          "empty": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.847,
+          "bow": 0.853,
+          "gap": 0.007,
+          "len_ratio": 0.994,
+          "invention": 0.104,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sonlichen",
+            "ihnen",
+            "creuz",
+            "gnügthüning",
+            "creuzes",
+            "ainigkait",
+            "dreysaltigkeitdurch",
+            "sonen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.829,
+            "gemini-3-flash-preview": 0.851,
+            "gemini-3.1-flash-lite": 0.853,
+            "kraken-austriannewspapers": 0.535,
+            "kraken-catmus": 0.54,
+            "tesseract-deu": 0.334,
+            "tesseract-frk": 0.597
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1408,
+          "empty": false,
+          "loop": false,
+          "cer": 0.338,
+          "acc": 0.662,
+          "seq": 0.326,
+          "bow": 0.347,
+          "gap": 0.021,
+          "len_ratio": 0.953,
+          "invention": 0.682,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "feinem",
+            "perfonlichen",
+            "süftande",
+            "aigenfchaffe",
+            "varcer",
+            "wire",
+            "onterfchaiden",
+            "dennnichtder"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.347,
+            "gemini-3-flash-preview": 0.343,
+            "gemini-3.1-flash-lite": 0.347,
+            "kraken-austriannewspapers": 0.316,
+            "kraken-catmus": 0.252,
+            "surya2": 0.334,
+            "tesseract-frk": 0.341
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1426,
+          "empty": false,
+          "loop": false,
+          "cer": 0.257,
+          "acc": 0.743,
+          "seq": 0.61,
+          "bow": 0.631,
+          "gap": 0.02,
+          "len_ratio": 0.965,
+          "invention": 0.347,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gesteins",
+            "hach",
+            "seinempersonlichen",
+            "dennnicht",
+            "gelitre",
+            "woeden",
+            "suse",
+            "kuch"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.618,
+            "gemini-3-flash-preview": 0.615,
+            "gemini-3.1-flash-lite": 0.631,
+            "kraken-austriannewspapers": 0.472,
+            "kraken-catmus": 0.436,
+            "surya2": 0.597,
+            "tesseract-deu": 0.341
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-3b1f2c-p176",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+      "year": 1812,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2693,
+          "empty": false,
+          "loop": false,
+          "cer": 0.801,
+          "acc": 0.199,
+          "seq": 0.398,
+          "bow": 0.797,
+          "gap": 0.398,
+          "len_ratio": 0.982,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "waßenh",
+            "neßt",
+            "niemeyerische",
+            "waßenhäusern",
+            "proteß",
+            "zweckmäßs",
+            "volkschulen",
+            "geßang"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.957,
+            "gemini-3.1-flash-lite": 0.797,
+            "kraken-austriannewspapers": 0.57,
+            "kraken-catmus": 0.79,
+            "surya2": 0.933,
+            "tesseract-deu": 0.77,
+            "tesseract-frk": 0.825
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2741,
+          "empty": false,
+          "loop": false,
+          "cer": 0.787,
+          "acc": 0.213,
+          "seq": 0.405,
+          "bow": 0.793,
+          "gap": 0.388,
+          "len_ratio": 1,
+          "invention": 0.015,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "insonderh",
+            "niemeyersche",
+            "zweckmäß"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.957,
+            "gemini-3.1-flash-lite": 0.793,
+            "kraken-austriannewspapers": 0.573,
+            "kraken-catmus": 0.798,
+            "surya2": 0.938,
+            "tesseract-deu": 0.773,
+            "tesseract-frk": 0.86
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2741,
+          "empty": false,
+          "loop": false,
+          "invention": 0.11,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "päda",
+            "gogium",
+            "burger",
+            "unauch",
+            "deutfehe",
+            "jüberlin",
+            "licher",
+            "frey"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.797,
+            "gemini-3-flash-preview": 0.793,
+            "kraken-austriannewspapers": 0.622,
+            "kraken-catmus": 0.858,
+            "surya2": 0.838,
+            "tesseract-deu": 0.715,
+            "tesseract-frk": 0.712
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 2726,
+          "empty": false,
+          "loop": false,
+          "cer": 0.671,
+          "acc": 0.329,
+          "seq": 0.385,
+          "bow": 0.622,
+          "gap": 0.237,
+          "len_ratio": 0.995,
+          "invention": 0.451,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abtb",
+            "pänacperz",
+            "inlonderh",
+            "köntea'e",
+            "belehr",
+            "hali",
+            "nebh",
+            "zise"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.57,
+            "gemini-3-flash-preview": 0.573,
+            "gemini-3.1-flash-lite": 0.622,
+            "kraken-catmus": 0.62,
+            "surya2": 0.583,
+            "tesseract-deu": 0.577,
+            "tesseract-frk": 0.555
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2742,
+          "empty": false,
+          "loop": false,
+          "cer": 0.605,
+          "acc": 0.395,
+          "seq": 0.557,
+          "bow": 0.858,
+          "gap": 0.302,
+          "len_ratio": 1,
+          "invention": 0.125,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "padagogix",
+            "padagogium",
+            "eratur",
+            "funxe's",
+            "chulehrer",
+            "reinroln's",
+            "bautz",
+            "ttel"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.79,
+            "gemini-3-flash-preview": 0.798,
+            "gemini-3.1-flash-lite": 0.858,
+            "kraken-austriannewspapers": 0.62,
+            "surya2": 0.815,
+            "tesseract-deu": 0.718,
+            "tesseract-frk": 0.723
+          }
+        },
+        "surya2": {
+          "n_content": 2741,
+          "empty": false,
+          "loop": false,
+          "cer": 0.78,
+          "acc": 0.22,
+          "seq": 0.432,
+          "bow": 0.838,
+          "gap": 0.407,
+          "len_ratio": 1,
+          "invention": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "nehft",
+            "justr",
+            "hatman",
+            "seminariften"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.933,
+            "gemini-3-flash-preview": 0.938,
+            "gemini-3.1-flash-lite": 0.838,
+            "kraken-austriannewspapers": 0.583,
+            "kraken-catmus": 0.815,
+            "tesseract-deu": 0.803,
+            "tesseract-frk": 0.815
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 2716,
+          "empty": false,
+          "loop": false,
+          "cer": 0.78,
+          "acc": 0.22,
+          "seq": 0.357,
+          "bow": 0.715,
+          "gap": 0.358,
+          "len_ratio": 0.991,
+          "invention": 0.227,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pävasocık",
+            "könzer's",
+            "gelch",
+            "justt",
+            "wacner",
+            "reınmorn's",
+            "belchr",
+            "genıcke"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.77,
+            "gemini-3-flash-preview": 0.773,
+            "gemini-3.1-flash-lite": 0.715,
+            "kraken-austriannewspapers": 0.577,
+            "kraken-catmus": 0.718,
+            "surya2": 0.803,
+            "tesseract-frk": 0.763
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 2752,
+          "empty": false,
+          "loop": false,
+          "cer": 0.796,
+          "acc": 0.204,
+          "seq": 0.368,
+          "bow": 0.712,
+          "gap": 0.343,
+          "len_ratio": 1.004,
+          "invention": 0.176,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "könren's",
+            "ersche",
+            "pädagoginm",
+            "jvsriu",
+            "reinnoly's",
+            "gbesond",
+            "ren1",
+            "fri15sc1"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.825,
+            "gemini-3-flash-preview": 0.86,
+            "gemini-3.1-flash-lite": 0.712,
+            "kraken-austriannewspapers": 0.555,
+            "kraken-catmus": 0.723,
+            "surya2": 0.815,
+            "tesseract-deu": 0.763
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-5fa9a3-p39",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+      "year": 1627,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1499,
+          "empty": false,
+          "loop": false,
+          "cer": 0.049,
+          "acc": 0.951,
+          "seq": 0.851,
+          "bow": 0.851,
+          "gap": 0,
+          "len_ratio": 0.976,
+          "invention": 0.082,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dass",
+            "goffes",
+            "gesagef",
+            "egosum",
+            "geankwortet",
+            "oagegen",
+            "goffe",
+            "lawen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.887,
+            "gemini-3.1-flash-lite": 0.851,
+            "kraken-austriannewspapers": 0.635,
+            "kraken-catmus": 0.423,
+            "surya2": 0.837,
+            "tesseract-deu": 0.425,
+            "tesseract-frk": 0.214
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1530,
+          "empty": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zuwidern"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.887,
+            "gemini-3.1-flash-lite": 0.934,
+            "kraken-austriannewspapers": 0.658,
+            "kraken-catmus": 0.453,
+            "surya2": 0.901,
+            "tesseract-deu": 0.447,
+            "tesseract-frk": 0.216
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1536,
+          "empty": false,
+          "loop": false,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aberglaubigen",
+            "glaube",
+            "erscheis",
+            "köns",
+            "löwen",
+            "löwe",
+            "stalt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.851,
+            "gemini-3-flash-preview": 0.934,
+            "kraken-austriannewspapers": 0.663,
+            "kraken-catmus": 0.451,
+            "surya2": 0.869,
+            "tesseract-deu": 0.455,
+            "tesseract-frk": 0.222
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1532,
+          "empty": false,
+          "loop": false,
+          "cer": 0.059,
+          "acc": 0.941,
+          "seq": 0.653,
+          "bow": 0.663,
+          "gap": 0.01,
+          "len_ratio": 0.997,
+          "invention": 0.342,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "2bergläublgen",
+            "1tißbrauch",
+            "somöstenn",
+            "gestale",
+            "exempeldaßer",
+            "christt",
+            "errenerschienen",
+            "exempellesen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.635,
+            "gemini-3-flash-preview": 0.658,
+            "gemini-3.1-flash-lite": 0.663,
+            "kraken-catmus": 0.345,
+            "surya2": 0.616,
+            "tesseract-deu": 0.408,
+            "tesseract-frk": 0.184
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1531,
+          "empty": false,
+          "loop": false,
+          "cer": 0.161,
+          "acc": 0.839,
+          "seq": 0.439,
+          "bow": 0.451,
+          "gap": 0.012,
+          "len_ratio": 0.997,
+          "invention": 0.612,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aberglaub",
+            "sgen",
+            "iifbraud",
+            "mũste",
+            "euffel",
+            "solcper",
+            "gestast",
+            "cricpeinen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.423,
+            "gemini-3-flash-preview": 0.453,
+            "gemini-3.1-flash-lite": 0.451,
+            "kraken-austriannewspapers": 0.345,
+            "surya2": 0.414,
+            "tesseract-deu": 0.263,
+            "tesseract-frk": 0.131
+          }
+        },
+        "surya2": {
+          "n_content": 1540,
+          "empty": false,
+          "loop": false,
+          "cer": 0.03,
+          "acc": 0.97,
+          "seq": 0.866,
+          "bow": 0.869,
+          "gap": 0.003,
+          "len_ratio": 1.003,
+          "invention": 0.097,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "missbrauch",
+            "leuffel",
+            "wenschen",
+            "wannes",
+            "eder",
+            "gelaget",
+            "semand",
+            "wärde"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.837,
+            "gemini-3-flash-preview": 0.901,
+            "gemini-3.1-flash-lite": 0.869,
+            "kraken-austriannewspapers": 0.616,
+            "kraken-catmus": 0.414,
+            "tesseract-deu": 0.426,
+            "tesseract-frk": 0.199
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1531,
+          "empty": false,
+          "loop": false,
+          "cer": 0.14,
+          "acc": 0.86,
+          "seq": 0.455,
+          "bow": 0.455,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.583,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aberaliubigen",
+            "mifbraud",
+            "ephel",
+            "müflenu",
+            "teufel",
+            "folcher",
+            "geftalt",
+            "fcheinen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.425,
+            "gemini-3-flash-preview": 0.447,
+            "gemini-3.1-flash-lite": 0.455,
+            "kraken-austriannewspapers": 0.408,
+            "kraken-catmus": 0.263,
+            "surya2": 0.426,
+            "tesseract-frk": 0.176
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 378,
+          "empty": false,
+          "loop": false,
+          "cer": 0.77,
+          "acc": 0.23,
+          "seq": 0.222,
+          "bow": 0.222,
+          "gap": 0,
+          "len_ratio": 0.246,
+          "invention": 0.357,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abergläublgen",
+            "htifbraucd",
+            "müftenu",
+            "geftalf",
+            "exrempel",
+            "ernichtals",
+            "leininder",
+            "befrieglich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.214,
+            "gemini-3-flash-preview": 0.216,
+            "gemini-3.1-flash-lite": 0.222,
+            "kraken-austriannewspapers": 0.184,
+            "kraken-catmus": 0.131,
+            "surya2": 0.199,
+            "tesseract-deu": 0.176
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-63274c-p28",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+      "year": 1757,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 705,
+          "empty": false,
+          "loop": false,
+          "cer": 0.084,
+          "acc": 0.916,
+          "seq": 0.781,
+          "bow": 0.781,
+          "gap": 0,
+          "len_ratio": 0.954,
+          "invention": 0.07,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "leßlie",
+            "poztaßki",
+            "sisza",
+            "valsasins",
+            "uhlesfeld",
+            "windischgrat"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.876,
+            "gemini-3.1-flash-lite": 0.781,
+            "kraken-austriannewspapers": 0.507,
+            "kraken-catmus": 0.103,
+            "surya2": 0.689,
+            "tesseract-deu": 0.174,
+            "tesseract-frk": 0.5
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 745,
+          "empty": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.862,
+          "bow": 0.862,
+          "gap": 0,
+          "len_ratio": 1.008,
+          "invention": 0.045,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "millesimo",
+            "poztatzki",
+            "sissa",
+            "windischgrätz"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.876,
+            "gemini-3.1-flash-lite": 0.862,
+            "kraken-austriannewspapers": 0.516,
+            "kraken-catmus": 0.127,
+            "surya2": 0.7,
+            "tesseract-deu": 0.197,
+            "tesseract-frk": 0.525
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 739,
+          "empty": false,
+          "loop": false,
+          "invention": 0.146,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zubrzy",
+            "lipka",
+            "lübau",
+            "lybau",
+            "martinik",
+            "millesund",
+            "nostiz",
+            "palsy"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.781,
+            "gemini-3-flash-preview": 0.862,
+            "kraken-austriannewspapers": 0.48,
+            "kraken-catmus": 0.127,
+            "surya2": 0.673,
+            "tesseract-deu": 0.197,
+            "tesseract-frk": 0.492
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 744,
+          "empty": false,
+          "loop": false,
+          "cer": 0.219,
+          "acc": 0.781,
+          "seq": 0.462,
+          "bow": 0.48,
+          "gap": 0.018,
+          "len_ratio": 1.007,
+          "invention": 0.511,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "künigt",
+            "königsseld",
+            "abschnist",
+            "staate",
+            "kottulinsk",
+            "belast",
+            "grasen",
+            "küstesch"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.507,
+            "gemini-3-flash-preview": 0.516,
+            "gemini-3.1-flash-lite": 0.48,
+            "kraken-catmus": 0.08,
+            "surya2": 0.418,
+            "tesseract-deu": 0.155,
+            "tesseract-frk": 0.283
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 722,
+          "empty": false,
+          "loop": false,
+          "cer": 0.38,
+          "acc": 0.62,
+          "seq": 0.109,
+          "bow": 0.127,
+          "gap": 0.018,
+          "len_ratio": 0.977,
+          "invention": 0.945,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "rúnigi",
+            "ronigsed",
+            "rónigsfelb",
+            "rorjensti",
+            "abscbnitt",
+            "gtaate",
+            "derfassung",
+            "rottulinsti"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.103,
+            "gemini-3-flash-preview": 0.127,
+            "gemini-3.1-flash-lite": 0.127,
+            "kraken-austriannewspapers": 0.08,
+            "surya2": 0.118,
+            "tesseract-deu": 0.068,
+            "tesseract-frk": 0.105
+          }
+        },
+        "surya2": {
+          "n_content": 745,
+          "empty": false,
+          "loop": false,
+          "cer": 0.704,
+          "acc": 0.296,
+          "seq": 0.415,
+          "bow": 0.673,
+          "gap": 0.258,
+          "len_ratio": 1.008,
+          "invention": 0.284,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "staatsverfassung",
+            "keiferscheitz",
+            "belash",
+            "lesslie",
+            "losh",
+            "lüssau",
+            "lyssau",
+            "martinis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.689,
+            "gemini-3-flash-preview": 0.7,
+            "gemini-3.1-flash-lite": 0.673,
+            "kraken-austriannewspapers": 0.418,
+            "kraken-catmus": 0.118,
+            "tesseract-deu": 0.178,
+            "tesseract-frk": 0.395
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 502,
+          "empty": false,
+          "loop": false,
+          "cer": 0.746,
+          "acc": 0.254,
+          "seq": 0.167,
+          "bow": 0.197,
+          "gap": 0.03,
+          "len_ratio": 0.679,
+          "invention": 0.754,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abfchnitt",
+            "vetfaflung",
+            "stubigt",
+            "lüsan",
+            "stürgd",
+            "toßau",
+            "smweerts",
+            "shirt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.174,
+            "gemini-3-flash-preview": 0.197,
+            "gemini-3.1-flash-lite": 0.197,
+            "kraken-austriannewspapers": 0.155,
+            "kraken-catmus": 0.068,
+            "surya2": 0.178,
+            "tesseract-frk": 0.218
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 719,
+          "empty": false,
+          "loop": false,
+          "cer": 0.737,
+          "acc": 0.263,
+          "seq": 0.328,
+          "bow": 0.492,
+          "gap": 0.164,
+          "len_ratio": 0.973,
+          "invention": 0.409,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "veifassung",
+            "opaifus",
+            "kecd",
+            "2847",
+            "königge",
+            "schäfgotsch",
+            "korzensfi",
+            "schellard'"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.5,
+            "gemini-3-flash-preview": 0.525,
+            "gemini-3.1-flash-lite": 0.492,
+            "kraken-austriannewspapers": 0.283,
+            "kraken-catmus": 0.105,
+            "surya2": 0.395,
+            "tesseract-deu": 0.218
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-64c667-p75",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Allgemeines Adelsarchiv der österreichischen Monarchie : welches in alphabetischer Ordnung alle reichsfürstliche Häuser,",
+      "year": 1789,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2854,
+          "empty": false,
+          "loop": false,
+          "cer": 0.016,
+          "acc": 0.984,
+          "seq": 0.933,
+          "bow": 0.938,
+          "gap": 0.006,
+          "len_ratio": 0.997,
+          "invention": 0.019,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "deuen",
+            "præsentibus",
+            "ansehlichen",
+            "stamnvater",
+            "phuda"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.934,
+            "gemini-3.1-flash-lite": 0.938,
+            "kraken-austriannewspapers": 0.482,
+            "kraken-catmus": 0.605,
+            "surya2": 0.938,
+            "tesseract-deu": 0.516,
+            "tesseract-frk": 0.62
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2880,
+          "empty": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.931,
+          "bow": 0.935,
+          "gap": 0.004,
+          "len_ratio": 1.006,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "advocationis",
+            "armaniae",
+            "praesentibus",
+            "advocatiae",
+            "villae",
+            "cuccius",
+            "quae",
+            "monetae"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.934,
+            "gemini-3.1-flash-lite": 0.935,
+            "kraken-austriannewspapers": 0.472,
+            "kraken-catmus": 0.602,
+            "surya2": 0.932,
+            "tesseract-deu": 0.515,
+            "tesseract-frk": 0.621
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2864,
+          "empty": false,
+          "loop": false,
+          "invention": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "kaufinstrumenten",
+            "präsentibus",
+            "bubalio",
+            "euceius",
+            "ottacuecius",
+            "elisadeten",
+            "rekti",
+            "tolmafino"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.938,
+            "gemini-3-flash-preview": 0.935,
+            "kraken-austriannewspapers": 0.477,
+            "kraken-catmus": 0.608,
+            "surya2": 0.916,
+            "tesseract-deu": 0.524,
+            "tesseract-frk": 0.621
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 2772,
+          "empty": false,
+          "loop": false,
+          "cer": 0.513,
+          "acc": 0.487,
+          "seq": 0.391,
+          "bow": 0.477,
+          "gap": 0.086,
+          "len_ratio": 0.968,
+          "invention": 0.591,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atteme",
+            "gttat",
+            "marchlfats",
+            "attenms",
+            "ipfas",
+            "aeleme",
+            "junt",
+            "1aab"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.482,
+            "gemini-3-flash-preview": 0.472,
+            "gemini-3.1-flash-lite": 0.477,
+            "kraken-catmus": 0.304,
+            "surya2": 0.478,
+            "tesseract-deu": 0.371,
+            "tesseract-frk": 0.437
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2844,
+          "empty": false,
+          "loop": false,
+          "cer": 0.481,
+          "acc": 0.519,
+          "seq": 0.438,
+          "bow": 0.608,
+          "gap": 0.169,
+          "len_ratio": 0.993,
+          "invention": 0.388,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ottat",
+            "derru",
+            "marchifate",
+            "ttteuts",
+            "iparen",
+            "entsprosfen",
+            "ivelde",
+            "gunt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.605,
+            "gemini-3-flash-preview": 0.602,
+            "gemini-3.1-flash-lite": 0.608,
+            "kraken-austriannewspapers": 0.304,
+            "surya2": 0.611,
+            "tesseract-deu": 0.44,
+            "tesseract-frk": 0.437
+          }
+        },
+        "surya2": {
+          "n_content": 2870,
+          "empty": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.916,
+          "bow": 0.916,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.038,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ottae",
+            "advocatie",
+            "presentibus",
+            "lehensrefognision",
+            "ansehulichen",
+            "vesizzungen",
+            "dono",
+            "außer"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.938,
+            "gemini-3-flash-preview": 0.932,
+            "gemini-3.1-flash-lite": 0.916,
+            "kraken-austriannewspapers": 0.478,
+            "kraken-catmus": 0.611,
+            "tesseract-deu": 0.524,
+            "tesseract-frk": 0.614
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 2623,
+          "empty": false,
+          "loop": false,
+          "cer": 0.228,
+          "acc": 0.772,
+          "seq": 0.505,
+          "bow": 0.524,
+          "gap": 0.018,
+          "len_ratio": 0.916,
+          "invention": 0.431,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "artem",
+            "ahtteuns",
+            "blunste",
+            "meiden",
+            "arüs",
+            "wore",
+            "doerich",
+            "debte"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.516,
+            "gemini-3-flash-preview": 0.515,
+            "gemini-3.1-flash-lite": 0.524,
+            "kraken-austriannewspapers": 0.371,
+            "kraken-catmus": 0.44,
+            "surya2": 0.524,
+            "tesseract-frk": 0.524
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 2664,
+          "empty": false,
+          "loop": false,
+          "cer": 0.193,
+          "acc": 0.807,
+          "seq": 0.598,
+          "bow": 0.621,
+          "gap": 0.024,
+          "len_ratio": 0.93,
+          "invention": 0.312,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "syne",
+            "atteuts",
+            "dlameta",
+            "aräs",
+            "debt",
+            "instrumenten",
+            "mati",
+            "gldaiiiee"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.62,
+            "gemini-3-flash-preview": 0.621,
+            "gemini-3.1-flash-lite": 0.621,
+            "kraken-austriannewspapers": 0.437,
+            "kraken-catmus": 0.437,
+            "surya2": 0.614,
+            "tesseract-deu": 0.524
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-6ca8d2-p237",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Sprichwörter der germanischen und romanischen Sprachen",
+      "year": 1872,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2713,
+          "empty": false,
+          "loop": false,
+          "cer": 0.011,
+          "acc": 0.989,
+          "seq": 0.98,
+          "bow": 0.98,
+          "gap": 0,
+          "len_ratio": 0.992,
+          "invention": 0.005,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "veûl"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.978,
+            "gemini-3.1-flash-lite": 0.98,
+            "kraken-austriannewspapers": 0.577,
+            "kraken-catmus": 0.952,
+            "surya2": 0.978,
+            "tesseract-deu": 0.91,
+            "tesseract-frk": 0.833
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2735,
+          "empty": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.983,
+          "bow": 0.983,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.018,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "veūl",
+            "sůht",
+            "gėner",
+            "lėkt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.978,
+            "gemini-3.1-flash-lite": 0.983,
+            "kraken-austriannewspapers": 0.578,
+            "kraken-catmus": 0.95,
+            "surya2": 0.985,
+            "tesseract-deu": 0.912,
+            "tesseract-frk": 0.842
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2734,
+          "empty": false,
+          "loop": false,
+          "invention": 0.009,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "d'ëgo",
+            "lèkt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.98,
+            "gemini-3-flash-preview": 0.983,
+            "kraken-austriannewspapers": 0.578,
+            "kraken-catmus": 0.953,
+            "surya2": 0.982,
+            "tesseract-deu": 0.912,
+            "tesseract-frk": 0.842
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 2710,
+          "empty": false,
+          "loop": false,
+          "cer": 0.226,
+          "acc": 0.774,
+          "seq": 0.55,
+          "bow": 0.578,
+          "gap": 0.028,
+          "len_ratio": 0.991,
+          "invention": 0.582,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ander",
+            "eöntra",
+            "eureint",
+            "jalren",
+            "tundd",
+            "eoner",
+            "agna",
+            "andé"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.577,
+            "gemini-3-flash-preview": 0.578,
+            "gemini-3.1-flash-lite": 0.578,
+            "kraken-catmus": 0.587,
+            "surya2": 0.578,
+            "tesseract-deu": 0.608,
+            "tesseract-frk": 0.597
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2743,
+          "empty": false,
+          "loop": false,
+          "cer": 0.045,
+          "acc": 0.955,
+          "seq": 0.94,
+          "bow": 0.953,
+          "gap": 0.013,
+          "len_ratio": 1.003,
+          "invention": 0.041,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "curéint",
+            "reinen",
+            "ésel",
+            "géner",
+            "lékt",
+            "rôtt",
+            "seïd",
+            "uber"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.952,
+            "gemini-3-flash-preview": 0.95,
+            "gemini-3.1-flash-lite": 0.953,
+            "kraken-austriannewspapers": 0.587,
+            "surya2": 0.948,
+            "tesseract-deu": 0.902,
+            "tesseract-frk": 0.825
+          }
+        },
+        "surya2": {
+          "n_content": 2736,
+          "empty": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.982,
+          "bow": 0.982,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.014,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "n'estroupié",
+            "suht",
+            "gèner"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.978,
+            "gemini-3-flash-preview": 0.985,
+            "gemini-3.1-flash-lite": 0.982,
+            "kraken-austriannewspapers": 0.578,
+            "kraken-catmus": 0.948,
+            "tesseract-deu": 0.912,
+            "tesseract-frk": 0.842
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 2724,
+          "empty": false,
+          "loop": false,
+          "cer": 0.057,
+          "acc": 0.943,
+          "seq": 0.888,
+          "bow": 0.912,
+          "gap": 0.023,
+          "len_ratio": 0.996,
+          "invention": 0.059,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "d'and",
+            "fuhren",
+            "alsde",
+            "d'ögo",
+            "n'östroupie",
+            "npıv",
+            "roecim",
+            "aufn"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.91,
+            "gemini-3-flash-preview": 0.912,
+            "gemini-3.1-flash-lite": 0.912,
+            "kraken-austriannewspapers": 0.608,
+            "kraken-catmus": 0.902,
+            "surya2": 0.912,
+            "tesseract-frk": 0.867
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 2744,
+          "empty": false,
+          "loop": false,
+          "cer": 0.084,
+          "acc": 0.916,
+          "seq": 0.82,
+          "bow": 0.842,
+          "gap": 0.022,
+          "len_ratio": 1.004,
+          "invention": 0.159,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "cure",
+            "d'anda",
+            "8laat",
+            "micht",
+            "n'ästroupie",
+            "rouggin",
+            "rousgin",
+            "ammazzd"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.833,
+            "gemini-3-flash-preview": 0.842,
+            "gemini-3.1-flash-lite": 0.842,
+            "kraken-austriannewspapers": 0.597,
+            "kraken-catmus": 0.825,
+            "surya2": 0.842,
+            "tesseract-deu": 0.867
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-7c6332-p6",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+      "year": 1631,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 998,
+          "empty": false,
+          "loop": false,
+          "cer": 0.451,
+          "acc": 0.549,
+          "seq": 0.645,
+          "bow": 0.855,
+          "gap": 0.21,
+          "len_ratio": 0.983,
+          "invention": 0.101,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "senem",
+            "sieghaft",
+            "betrübie",
+            "gesührt",
+            "ländrrn",
+            "nigliche",
+            "union",
+            "nohte"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.876,
+            "gemini-3.1-flash-lite": 0.855,
+            "kraken-austriannewspapers": 0.144,
+            "kraken-catmus": 0.309,
+            "surya2": 0.778,
+            "tesseract-deu": 0.176,
+            "tesseract-frk": 0.327
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1013,
+          "empty": false,
+          "loop": false,
+          "cer": 0.433,
+          "acc": 0.567,
+          "seq": 0.71,
+          "bow": 0.942,
+          "gap": 0.232,
+          "len_ratio": 0.998,
+          "invention": 0.009,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "stats"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.876,
+            "gemini-3.1-flash-lite": 0.942,
+            "kraken-austriannewspapers": 0.142,
+            "kraken-catmus": 0.311,
+            "surya2": 0.767,
+            "tesseract-deu": 0.194,
+            "tesseract-frk": 0.348
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1015,
+          "empty": false,
+          "loop": false,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ståts",
+            "endy",
+            "scorpionisten",
+            "fecht",
+            "förcht",
+            "vnverschwinglich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.855,
+            "gemini-3-flash-preview": 0.942,
+            "kraken-austriannewspapers": 0.143,
+            "kraken-catmus": 0.307,
+            "surya2": 0.751,
+            "tesseract-deu": 0.194,
+            "tesseract-frk": 0.349
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1050,
+          "empty": false,
+          "loop": false,
+          "cer": 0.602,
+          "acc": 0.398,
+          "seq": 0.115,
+          "bow": 0.143,
+          "gap": 0.027,
+          "len_ratio": 1.034,
+          "invention": 0.817,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prognosticirreimser",
+            "galendario",
+            "aufftdan",
+            "ghriftt",
+            "sdibe",
+            "wüdscher",
+            "crstlichr",
+            "aufnebcht"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.144,
+            "gemini-3-flash-preview": 0.142,
+            "gemini-3.1-flash-lite": 0.143,
+            "kraken-catmus": 0.123,
+            "surya2": 0.154,
+            "tesseract-deu": 0.11,
+            "tesseract-frk": 0.125
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1031,
+          "empty": false,
+          "loop": false,
+          "cer": 0.543,
+          "acc": 0.457,
+          "seq": 0.265,
+          "bow": 0.307,
+          "gap": 0.043,
+          "len_ratio": 1.016,
+          "invention": 0.742,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gcorg",
+            "halbmaner",
+            "sabr",
+            "ghrini",
+            "seget",
+            "sonbere",
+            "renmett",
+            "pett"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.309,
+            "gemini-3-flash-preview": 0.311,
+            "gemini-3.1-flash-lite": 0.307,
+            "kraken-austriannewspapers": 0.123,
+            "surya2": 0.308,
+            "tesseract-deu": 0.123,
+            "tesseract-frk": 0.18
+          }
+        },
+        "surya2": {
+          "n_content": 1000,
+          "empty": false,
+          "loop": false,
+          "cer": 0.466,
+          "acc": 0.534,
+          "seq": 0.564,
+          "bow": 0.751,
+          "gap": 0.186,
+          "len_ratio": 0.985,
+          "invention": 0.198,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ghrifti",
+            "keymen",
+            "herz",
+            "färt",
+            "beträbte",
+            "dismal",
+            "sewrig",
+            "gesährt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.778,
+            "gemini-3-flash-preview": 0.767,
+            "gemini-3.1-flash-lite": 0.751,
+            "kraken-austriannewspapers": 0.154,
+            "kraken-catmus": 0.308,
+            "tesseract-deu": 0.19,
+            "tesseract-frk": 0.321
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 935,
+          "empty": false,
+          "loop": false,
+          "cer": 0.633,
+          "acc": 0.367,
+          "seq": 0.16,
+          "bow": 0.194,
+          "gap": 0.034,
+          "len_ratio": 0.921,
+          "invention": 0.726,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "saltınaper",
+            "drognoßkereti",
+            "xxxll",
+            "trofiac",
+            "neymn",
+            "aufpden",
+            "tanariur",
+            "pingrofferpersonterdem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.176,
+            "gemini-3-flash-preview": 0.194,
+            "gemini-3.1-flash-lite": 0.194,
+            "kraken-austriannewspapers": 0.11,
+            "kraken-catmus": 0.123,
+            "surya2": 0.19,
+            "tesseract-frk": 0.275
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 930,
+          "empty": false,
+          "loop": false,
+          "cer": 0.579,
+          "acc": 0.421,
+          "seq": 0.273,
+          "bow": 0.349,
+          "gap": 0.077,
+          "len_ratio": 0.916,
+          "invention": 0.495,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prognostleirett",
+            "xxkxil",
+            "vudseger",
+            "rstlich",
+            "ryme",
+            "erge",
+            "auffdem",
+            "kinzgrofser"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.327,
+            "gemini-3-flash-preview": 0.348,
+            "gemini-3.1-flash-lite": 0.349,
+            "kraken-austriannewspapers": 0.125,
+            "kraken-catmus": 0.18,
+            "surya2": 0.321,
+            "tesseract-deu": 0.275
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-7d6c62-p74",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Zwiefache Apologia, und Christliche Verantwortung auf die fünf lästerlichen Hauptpuncte Davids Gilberti von Utrecht, ins",
+      "year": 1676,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1025,
+          "empty": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.912,
+          "bow": 0.912,
+          "gap": 0,
+          "len_ratio": 0.984,
+          "invention": 0.038,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geslossen",
+            "schriften",
+            "irddischen",
+            "sieht"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.955,
+            "gemini-3.1-flash-lite": 0.912,
+            "kraken-austriannewspapers": 0.798,
+            "kraken-catmus": 0.379,
+            "surya2": 0.911,
+            "tesseract-deu": 0.491,
+            "tesseract-frk": 0.775
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1042,
+          "empty": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 0.957,
+          "bow": 0.957,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.955,
+            "gemini-3.1-flash-lite": 0.957,
+            "kraken-austriannewspapers": 0.81,
+            "kraken-catmus": 0.389,
+            "surya2": 0.922,
+            "tesseract-deu": 0.491,
+            "tesseract-frk": 0.797
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1042,
+          "empty": false,
+          "loop": false,
+          "invention": 0.009,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "verdorbe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.912,
+            "gemini-3-flash-preview": 0.957,
+            "kraken-austriannewspapers": 0.851,
+            "kraken-catmus": 0.393,
+            "surya2": 0.879,
+            "tesseract-deu": 0.508,
+            "tesseract-frk": 0.78
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1050,
+          "empty": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.851,
+          "bow": 0.851,
+          "gap": 0,
+          "len_ratio": 1.008,
+          "invention": 0.207,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "blindhett",
+            "augenschetnlich",
+            "zacob",
+            "böhinens",
+            "wienschen",
+            "tridischen",
+            "hummlischen",
+            "weuen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.798,
+            "gemini-3-flash-preview": 0.81,
+            "gemini-3.1-flash-lite": 0.851,
+            "kraken-catmus": 0.373,
+            "surya2": 0.761,
+            "tesseract-deu": 0.484,
+            "tesseract-frk": 0.704
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1046,
+          "empty": false,
+          "loop": false,
+          "cer": 0.159,
+          "acc": 0.841,
+          "seq": 0.384,
+          "bow": 0.393,
+          "gap": 0.009,
+          "len_ratio": 1.004,
+          "invention": 0.64,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ntcht",
+            "tõnnen",
+            "lindheit",
+            "darmiber",
+            "porbringet",
+            "sost",
+            "srte",
+            "falsih"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.379,
+            "gemini-3-flash-preview": 0.389,
+            "gemini-3.1-flash-lite": 0.393,
+            "kraken-austriannewspapers": 0.373,
+            "surya2": 0.394,
+            "tesseract-deu": 0.296,
+            "tesseract-frk": 0.369
+          }
+        },
+        "surya2": {
+          "n_content": 1043,
+          "empty": false,
+          "loop": false,
+          "cer": 0.019,
+          "acc": 0.981,
+          "seq": 0.879,
+          "bow": 0.879,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.094,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "drte",
+            "gewiss",
+            "schriffen",
+            "tredischen",
+            "aufwarts",
+            "thristo",
+            "thristus",
+            "drten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.911,
+            "gemini-3-flash-preview": 0.922,
+            "gemini-3.1-flash-lite": 0.879,
+            "kraken-austriannewspapers": 0.761,
+            "kraken-catmus": 0.394,
+            "tesseract-deu": 0.482,
+            "tesseract-frk": 0.743
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1051,
+          "empty": false,
+          "loop": false,
+          "cer": 0.158,
+          "acc": 0.842,
+          "seq": 0.494,
+          "bow": 0.508,
+          "gap": 0.014,
+          "len_ratio": 1.009,
+          "invention": 0.575,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "beinget",
+            "blindheitwarwider",
+            "vors",
+            "foll",
+            "feinem",
+            "dorte",
+            "falfch",
+            "vers"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.491,
+            "gemini-3-flash-preview": 0.491,
+            "gemini-3.1-flash-lite": 0.508,
+            "kraken-austriannewspapers": 0.484,
+            "kraken-catmus": 0.296,
+            "surya2": 0.482,
+            "tesseract-frk": 0.482
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1047,
+          "empty": false,
+          "loop": false,
+          "cer": 0.067,
+          "acc": 0.933,
+          "seq": 0.766,
+          "bow": 0.78,
+          "gap": 0.015,
+          "len_ratio": 1.005,
+          "invention": 0.191,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "hatkönnen",
+            "blindheitdarwider",
+            "undverkehrt",
+            "soanenklar",
+            "voovon",
+            "oing",
+            "sehet",
+            "lleuen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.775,
+            "gemini-3-flash-preview": 0.797,
+            "gemini-3.1-flash-lite": 0.78,
+            "kraken-austriannewspapers": 0.704,
+            "kraken-catmus": 0.369,
+            "surya2": 0.743,
+            "tesseract-deu": 0.482
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-84e53b-p41",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+      "year": 1613,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1036,
+          "empty": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.771,
+          "bow": 0.835,
+          "gap": 0.064,
+          "len_ratio": 0.996,
+          "invention": 0.074,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gefängniss",
+            "ishre",
+            "völkeri",
+            "onvorstendiges",
+            "wirn",
+            "helke",
+            "vsern",
+            "außchütten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.783,
+            "gemini-3.1-flash-lite": 0.835,
+            "kraken-austriannewspapers": 0.423,
+            "kraken-catmus": 0.388,
+            "surya2": 0.831,
+            "tesseract-deu": 0.335,
+            "tesseract-frk": 0.605
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1053,
+          "empty": false,
+          "loop": false,
+          "cer": 0.13,
+          "acc": 0.87,
+          "seq": 0.714,
+          "bow": 0.817,
+          "gap": 0.103,
+          "len_ratio": 1.013,
+          "invention": 0.144,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gefängnuß",
+            "jhre",
+            "alle",
+            "völckern",
+            "jesus",
+            "jhren",
+            "sondern",
+            "jhrem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.783,
+            "gemini-3.1-flash-lite": 0.817,
+            "kraken-austriannewspapers": 0.408,
+            "kraken-catmus": 0.36,
+            "surya2": 0.739,
+            "tesseract-deu": 0.308,
+            "tesseract-frk": 0.54
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1040,
+          "empty": false,
+          "loop": false,
+          "invention": 0.037,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geiftlich",
+            "gefängniß",
+            "ihre",
+            "widerfahren"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.835,
+            "gemini-3-flash-preview": 0.817,
+            "kraken-austriannewspapers": 0.411,
+            "kraken-catmus": 0.372,
+            "surya2": 0.823,
+            "tesseract-deu": 0.342,
+            "tesseract-frk": 0.592
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1012,
+          "empty": false,
+          "loop": false,
+          "cer": 0.136,
+          "acc": 0.864,
+          "seq": 0.391,
+          "bow": 0.411,
+          "gap": 0.021,
+          "len_ratio": 0.973,
+          "invention": 0.382,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prognonicon",
+            "heut",
+            "siedurchmancherlcy",
+            "plagenhingerichtet",
+            "dieübrigen",
+            "gefängnäß",
+            "zursirewet",
+            "bölck"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.423,
+            "gemini-3-flash-preview": 0.408,
+            "gemini-3.1-flash-lite": 0.411,
+            "kraken-catmus": 0.306,
+            "surya2": 0.419,
+            "tesseract-deu": 0.282,
+            "tesseract-frk": 0.408
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1034,
+          "empty": false,
+          "loop": false,
+          "cer": 0.225,
+          "acc": 0.775,
+          "seq": 0.353,
+          "bow": 0.372,
+          "gap": 0.019,
+          "len_ratio": 0.994,
+          "invention": 0.611,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geistlith",
+            "ourch",
+            "mancher",
+            "pourde",
+            "ubrigen",
+            "gefangnus",
+            "manberten",
+            "bbre"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.388,
+            "gemini-3-flash-preview": 0.36,
+            "gemini-3.1-flash-lite": 0.372,
+            "kraken-austriannewspapers": 0.306,
+            "surya2": 0.38,
+            "tesseract-deu": 0.234,
+            "tesseract-frk": 0.277
+          }
+        },
+        "surya2": {
+          "n_content": 1047,
+          "empty": false,
+          "loop": false,
+          "cer": 0.155,
+          "acc": 0.845,
+          "seq": 0.726,
+          "bow": 0.823,
+          "gap": 0.097,
+          "len_ratio": 1.007,
+          "invention": 0.094,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gesängnis",
+            "nachformmenen",
+            "belt",
+            "stitter",
+            "stittage",
+            "gesezes",
+            "schüss",
+            "feindsell"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.831,
+            "gemini-3-flash-preview": 0.739,
+            "gemini-3.1-flash-lite": 0.823,
+            "kraken-austriannewspapers": 0.419,
+            "kraken-catmus": 0.38,
+            "tesseract-deu": 0.331,
+            "tesseract-frk": 0.582
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1003,
+          "empty": false,
+          "loop": false,
+          "cer": 0.192,
+          "acc": 0.808,
+          "seq": 0.321,
+          "bow": 0.342,
+          "gap": 0.02,
+          "len_ratio": 0.964,
+          "invention": 0.569,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gheiftlich",
+            "ficdurch",
+            "mancherlcy",
+            "dieäbrigen",
+            "negefängnäß",
+            "winekeldiefer",
+            "ißele",
+            "zurfirewer"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.335,
+            "gemini-3-flash-preview": 0.308,
+            "gemini-3.1-flash-lite": 0.342,
+            "kraken-austriannewspapers": 0.282,
+            "kraken-catmus": 0.234,
+            "surya2": 0.331,
+            "tesseract-frk": 0.372
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1011,
+          "empty": false,
+          "loop": false,
+          "cer": 0.107,
+          "acc": 0.893,
+          "seq": 0.567,
+          "bow": 0.592,
+          "gap": 0.025,
+          "len_ratio": 0.972,
+          "invention": 0.311,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "greistlich",
+            "prognolticon",
+            "sicdurch",
+            "wurde",
+            "insgefängnüß",
+            "jfype",
+            "winkel",
+            "vndschivur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.605,
+            "gemini-3-flash-preview": 0.54,
+            "gemini-3.1-flash-lite": 0.592,
+            "kraken-austriannewspapers": 0.408,
+            "kraken-catmus": 0.277,
+            "surya2": 0.582,
+            "tesseract-deu": 0.372
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-85655d-p18",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Ein altes, sehr schönes und herrliches Tractätlein von dem Gebenedeyeten Stein",
+      "year": 1682,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1047,
+          "empty": false,
+          "loop": false,
+          "cer": 0.013,
+          "acc": 0.987,
+          "seq": 0.948,
+          "bow": 0.948,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.043,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "jungfrar",
+            "snhlisch",
+            "nims",
+            "unfers",
+            "cogultet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.946,
+            "gemini-3.1-flash-lite": 0.948,
+            "kraken-austriannewspapers": 0.587,
+            "kraken-catmus": 0.356,
+            "surya2": 0.898,
+            "tesseract-deu": 0.489,
+            "tesseract-frk": 0.379
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1056,
+          "empty": false,
+          "loop": false,
+          "cer": 0.016,
+          "acc": 0.984,
+          "seq": 0.953,
+          "bow": 0.953,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "snhlische",
+            "grün",
+            "unvollkomenen",
+            "vollkomenes"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.946,
+            "gemini-3.1-flash-lite": 0.953,
+            "kraken-austriannewspapers": 0.589,
+            "kraken-catmus": 0.359,
+            "surya2": 0.899,
+            "tesseract-deu": 0.486,
+            "tesseract-frk": 0.377
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1050,
+          "empty": false,
+          "loop": false,
+          "invention": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "füße",
+            "enlische",
+            "empfahen",
+            "schnöbeste"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.948,
+            "gemini-3-flash-preview": 0.953,
+            "kraken-austriannewspapers": 0.585,
+            "kraken-catmus": 0.355,
+            "surya2": 0.896,
+            "tesseract-deu": 0.483,
+            "tesseract-frk": 0.378
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1066,
+          "empty": false,
+          "loop": false,
+          "cer": 0.329,
+          "acc": 0.671,
+          "seq": 0.484,
+          "bow": 0.585,
+          "gap": 0.101,
+          "len_ratio": 1.015,
+          "invention": 0.377,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "jungftan",
+            "aller",
+            "liebste",
+            "hensso",
+            "sohnder",
+            "gleicht",
+            "ches",
+            "schwarel"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.587,
+            "gemini-3-flash-preview": 0.589,
+            "gemini-3.1-flash-lite": 0.585,
+            "kraken-catmus": 0.268,
+            "surya2": 0.59,
+            "tesseract-deu": 0.404,
+            "tesseract-frk": 0.399
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1062,
+          "empty": false,
+          "loop": false,
+          "cer": 0.458,
+          "acc": 0.542,
+          "seq": 0.324,
+          "bow": 0.355,
+          "gap": 0.031,
+          "len_ratio": 1.011,
+          "invention": 0.722,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "melces",
+            "gater",
+            "sungfrau",
+            "stom",
+            "mollen",
+            "anber",
+            "umbfabenlto",
+            "merben"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.356,
+            "gemini-3-flash-preview": 0.359,
+            "gemini-3.1-flash-lite": 0.355,
+            "kraken-austriannewspapers": 0.268,
+            "surya2": 0.355,
+            "tesseract-deu": 0.248,
+            "tesseract-frk": 0.182
+          }
+        },
+        "surya2": {
+          "n_content": 1052,
+          "empty": false,
+          "loop": false,
+          "cer": 0.024,
+          "acc": 0.976,
+          "seq": 0.896,
+          "bow": 0.896,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.101,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "junafran",
+            "umbsahen",
+            "küsse",
+            "empfängnis",
+            "enhlische",
+            "diekes",
+            "magistu",
+            "dies"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.898,
+            "gemini-3-flash-preview": 0.899,
+            "gemini-3.1-flash-lite": 0.896,
+            "kraken-austriannewspapers": 0.59,
+            "kraken-catmus": 0.355,
+            "tesseract-deu": 0.483,
+            "tesseract-frk": 0.378
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1065,
+          "empty": false,
+          "loop": false,
+          "cer": 0.385,
+          "acc": 0.615,
+          "seq": 0.451,
+          "bow": 0.483,
+          "gap": 0.032,
+          "len_ratio": 1.014,
+          "invention": 0.484,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "reiches",
+            "water",
+            "sunafcar",
+            "allerfiebftei",
+            "benito",
+            "gesähren",
+            "soht",
+            "feinem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.489,
+            "gemini-3-flash-preview": 0.486,
+            "gemini-3.1-flash-lite": 0.483,
+            "kraken-austriannewspapers": 0.404,
+            "kraken-catmus": 0.248,
+            "surya2": 0.483,
+            "tesseract-frk": 0.324
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 503,
+          "empty": false,
+          "loop": false,
+          "cer": 0.61,
+          "acc": 0.39,
+          "seq": 0.36,
+          "bow": 0.378,
+          "gap": 0.018,
+          "len_ratio": 0.479,
+          "invention": 0.255,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "jungfra",
+            "allerfiebste",
+            "sohtt",
+            "hicht",
+            "diereichen",
+            "hnödeste",
+            "wachst",
+            "ausfleiscyund"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.379,
+            "gemini-3-flash-preview": 0.377,
+            "gemini-3.1-flash-lite": 0.378,
+            "kraken-austriannewspapers": 0.399,
+            "kraken-catmus": 0.182,
+            "surya2": 0.378,
+            "tesseract-deu": 0.324
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-98a276-p134",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Elvcidarivs Major. oder Erleuchtung über die Reformation der ganzen weiten Welt : F.C.R. auß ihrer Chymischen Hochzeit, ",
+      "year": 1751,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 882,
+          "empty": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.963,
+          "bow": 0.963,
+          "gap": 0,
+          "len_ratio": 0.979,
+          "invention": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "körper",
+            "werve"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.958,
+            "gemini-3.1-flash-lite": 0.963,
+            "kraken-austriannewspapers": 0.806,
+            "kraken-catmus": 0.403,
+            "surya2": 0.946,
+            "tesseract-deu": 0.537,
+            "tesseract-frk": 0.765
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 901,
+          "empty": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.961,
+          "bow": 0.961,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.958,
+            "gemini-3.1-flash-lite": 0.961,
+            "kraken-austriannewspapers": 0.804,
+            "kraken-catmus": 0.394,
+            "surya2": 0.938,
+            "tesseract-deu": 0.522,
+            "tesseract-frk": 0.764
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 901,
+          "empty": false,
+          "loop": false,
+          "invention": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vertreiben",
+            "irdischen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.963,
+            "gemini-3-flash-preview": 0.961,
+            "kraken-austriannewspapers": 0.804,
+            "kraken-catmus": 0.423,
+            "surya2": 0.955,
+            "tesseract-deu": 0.544,
+            "tesseract-frk": 0.764
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 902,
+          "empty": false,
+          "loop": false,
+          "cer": 0.046,
+          "acc": 0.954,
+          "seq": 0.804,
+          "bow": 0.804,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.204,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "elutidigriut",
+            "msor",
+            "chut",
+            "gloriticintem",
+            "geineine",
+            "ibres",
+            "fruche",
+            "theopirastus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.806,
+            "gemini-3-flash-preview": 0.804,
+            "gemini-3.1-flash-lite": 0.804,
+            "kraken-catmus": 0.375,
+            "surya2": 0.793,
+            "tesseract-deu": 0.497,
+            "tesseract-frk": 0.685
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 894,
+          "empty": false,
+          "loop": false,
+          "cer": 0.16,
+          "acc": 0.84,
+          "seq": 0.423,
+          "bow": 0.423,
+          "gap": 0,
+          "len_ratio": 0.992,
+          "invention": 0.594,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gürtt",
+            "miradel",
+            "bunber",
+            "xsle",
+            "rrantbeit",
+            "pertreibn",
+            "menscen",
+            "seiben"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.403,
+            "gemini-3-flash-preview": 0.394,
+            "gemini-3.1-flash-lite": 0.423,
+            "kraken-austriannewspapers": 0.375,
+            "surya2": 0.417,
+            "tesseract-deu": 0.314,
+            "tesseract-frk": 0.337
+          }
+        },
+        "surya2": {
+          "n_content": 899,
+          "empty": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.051,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "miracel",
+            "glorificivtem",
+            "gleisch",
+            "glüchtig",
+            "eigenschaften"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.946,
+            "gemini-3-flash-preview": 0.938,
+            "gemini-3.1-flash-lite": 0.955,
+            "kraken-austriannewspapers": 0.793,
+            "kraken-catmus": 0.417,
+            "tesseract-deu": 0.549,
+            "tesseract-frk": 0.748
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 860,
+          "empty": false,
+          "loop": false,
+          "cer": 0.166,
+          "acc": 0.834,
+          "seq": 0.544,
+          "bow": 0.544,
+          "gap": 0,
+          "len_ratio": 0.954,
+          "invention": 0.474,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eiweidariis",
+            "würfe",
+            "'groffe",
+            "krankheic",
+            "thue",
+            "menfchen",
+            "metallifchen",
+            "teiben"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.537,
+            "gemini-3-flash-preview": 0.522,
+            "gemini-3.1-flash-lite": 0.544,
+            "kraken-austriannewspapers": 0.497,
+            "kraken-catmus": 0.314,
+            "surya2": 0.549,
+            "tesseract-frk": 0.499
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 889,
+          "empty": false,
+          "loop": false,
+          "cer": 0.098,
+          "acc": 0.902,
+          "seq": 0.764,
+          "bow": 0.764,
+          "gap": 0,
+          "len_ratio": 0.987,
+          "invention": 0.202,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "elweidyrius",
+            "mirakel",
+            "metällischen",
+            "freie",
+            "thür",
+            "höch",
+            "femeine",
+            "göld"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.765,
+            "gemini-3-flash-preview": 0.764,
+            "gemini-3.1-flash-lite": 0.764,
+            "kraken-austriannewspapers": 0.685,
+            "kraken-catmus": 0.337,
+            "surya2": 0.748,
+            "tesseract-deu": 0.499
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-a6c2ba-p17",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Tractatus De Medicina Universali. Das ist: Von der Universal-Medicin: Wie nemlich dieselbe in denen dreyen Reichen der M",
+      "year": 1678,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1360,
+          "empty": false,
+          "loop": false,
+          "cer": 0.015,
+          "acc": 0.985,
+          "seq": 0.943,
+          "bow": 0.943,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.022,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "erystall",
+            "purpurfarben",
+            "überköstliches"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.928,
+            "gemini-3.1-flash-lite": 0.943,
+            "kraken-austriannewspapers": 0.665,
+            "kraken-catmus": 0.474,
+            "surya2": 0.823,
+            "tesseract-deu": 0.479,
+            "tesseract-frk": 0.636
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1367,
+          "empty": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.967,
+          "bow": 0.967,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.036,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "natu",
+            "rlich",
+            "trockenheit",
+            "essentificatus",
+            "lebendige"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.928,
+            "gemini-3.1-flash-lite": 0.967,
+            "kraken-austriannewspapers": 0.659,
+            "kraken-catmus": 0.47,
+            "surya2": 0.829,
+            "tesseract-deu": 0.471,
+            "tesseract-frk": 0.613
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1366,
+          "empty": false,
+          "loop": false,
+          "invention": 0.014,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effen",
+            "fificatus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.943,
+            "gemini-3-flash-preview": 0.967,
+            "kraken-austriannewspapers": 0.668,
+            "kraken-catmus": 0.47,
+            "surya2": 0.829,
+            "tesseract-deu": 0.471,
+            "tesseract-frk": 0.621
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1384,
+          "empty": false,
+          "loop": false,
+          "cer": 0.197,
+          "acc": 0.803,
+          "seq": 0.613,
+          "bow": 0.668,
+          "gap": 0.055,
+          "len_ratio": 1.013,
+          "invention": 0.315,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "spagprischen",
+            "pliilösophioriimi",
+            "kima",
+            "materis",
+            "proima",
+            "luns",
+            "ulniverlal",
+            "characker"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.665,
+            "gemini-3-flash-preview": 0.659,
+            "gemini-3.1-flash-lite": 0.668,
+            "kraken-catmus": 0.314,
+            "surya2": 0.599,
+            "tesseract-deu": 0.401,
+            "tesseract-frk": 0.546
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1374,
+          "empty": false,
+          "loop": false,
+          "cer": 0.235,
+          "acc": 0.765,
+          "seq": 0.47,
+          "bow": 0.47,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.592,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zafel",
+            "statuirlich",
+            "gpagprischen",
+            "beis",
+            "beit",
+            "philosophoruim",
+            "drima",
+            "lunx"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.474,
+            "gemini-3-flash-preview": 0.47,
+            "gemini-3.1-flash-lite": 0.47,
+            "kraken-austriannewspapers": 0.314,
+            "surya2": 0.466,
+            "tesseract-deu": 0.317,
+            "tesseract-frk": 0.35
+          }
+        },
+        "surya2": {
+          "n_content": 1349,
+          "empty": false,
+          "loop": false,
+          "cer": 0.127,
+          "acc": 0.873,
+          "seq": 0.793,
+          "bow": 0.829,
+          "gap": 0.036,
+          "len_ratio": 0.988,
+          "invention": 0.109,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "spagnischen",
+            "weisheit",
+            "luna",
+            "dreyköpfigte",
+            "dracche",
+            "morruum",
+            "ernstall",
+            "große"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.823,
+            "gemini-3-flash-preview": 0.829,
+            "gemini-3.1-flash-lite": 0.829,
+            "kraken-austriannewspapers": 0.599,
+            "kraken-catmus": 0.466,
+            "tesseract-deu": 0.458,
+            "tesseract-frk": 0.565
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1355,
+          "empty": false,
+          "loop": false,
+          "cer": 0.269,
+          "acc": 0.731,
+          "seq": 0.434,
+          "bow": 0.471,
+          "gap": 0.036,
+          "len_ratio": 0.992,
+          "invention": 0.523,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aerpr",
+            "aber",
+            "rafel",
+            "natiirlih",
+            "spagyriihen",
+            "weipbeit",
+            "univerfalcharadter",
+            "burf"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.479,
+            "gemini-3-flash-preview": 0.471,
+            "gemini-3.1-flash-lite": 0.471,
+            "kraken-austriannewspapers": 0.401,
+            "kraken-catmus": 0.317,
+            "surya2": 0.458,
+            "tesseract-frk": 0.465
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1414,
+          "empty": false,
+          "loop": false,
+          "cer": 0.251,
+          "acc": 0.749,
+          "seq": 0.569,
+          "bow": 0.621,
+          "gap": 0.053,
+          "len_ratio": 1.035,
+          "invention": 0.309,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "send",
+            "ierereeeene",
+            "epen",
+            "diesen",
+            "214208",
+            "lz244",
+            "cafeb",
+            "spagyrischenweißheit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.636,
+            "gemini-3-flash-preview": 0.613,
+            "gemini-3.1-flash-lite": 0.621,
+            "kraken-austriannewspapers": 0.546,
+            "kraken-catmus": 0.35,
+            "surya2": 0.565,
+            "tesseract-deu": 0.465
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-cf5272-p326",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Georg Ernst Stahls, Königl. Preußischen Hoff-Raths und Leib-Medici, Chymia Rationalis Et Experimentalis; Oder: Gründlich",
+      "year": 1729,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1171,
+          "empty": false,
+          "loop": false,
+          "cer": 0.029,
+          "acc": 0.971,
+          "seq": 0.881,
+          "bow": 0.881,
+          "gap": 0,
+          "len_ratio": 0.984,
+          "invention": 0.042,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gummatolische",
+            "grosseren",
+            "ausserli",
+            "übersüßig",
+            "heis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.95,
+            "gemini-3.1-flash-lite": 0.881,
+            "kraken-austriannewspapers": 0.788,
+            "kraken-catmus": 0.376,
+            "surya2": 0.829,
+            "tesseract-deu": 0.548,
+            "tesseract-frk": 0.706
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1193,
+          "empty": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.905,
+          "bow": 0.905,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "saltzes"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.95,
+            "gemini-3.1-flash-lite": 0.905,
+            "kraken-austriannewspapers": 0.814,
+            "kraken-catmus": 0.391,
+            "surya2": 0.858,
+            "tesseract-deu": 0.553,
+            "tesseract-frk": 0.723
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1190,
+          "empty": false,
+          "loop": false,
+          "invention": 0.024,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gieset",
+            "gummatofische",
+            "äusserliche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.881,
+            "gemini-3-flash-preview": 0.905,
+            "kraken-austriannewspapers": 0.753,
+            "kraken-catmus": 0.432,
+            "surya2": 0.911,
+            "tesseract-deu": 0.535,
+            "tesseract-frk": 0.714
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1195,
+          "empty": false,
+          "loop": false,
+          "cer": 0.024,
+          "acc": 0.976,
+          "seq": 0.753,
+          "bow": 0.753,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.203,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "einleltung",
+            "deßist",
+            "zumercken",
+            "gummatoßsche",
+            "ktantien",
+            "salhzes",
+            "sieeben",
+            "seifenhafftige"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.788,
+            "gemini-3-flash-preview": 0.814,
+            "gemini-3.1-flash-lite": 0.753,
+            "kraken-catmus": 0.341,
+            "surya2": 0.71,
+            "tesseract-deu": 0.552,
+            "tesseract-frk": 0.67
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1180,
+          "empty": false,
+          "loop": false,
+          "cer": 0.149,
+          "acc": 0.851,
+          "seq": 0.432,
+          "bow": 0.432,
+          "gap": 0,
+          "len_ratio": 0.992,
+          "invention": 0.667,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "rinleitung",
+            "menigen",
+            "sabero",
+            "menn",
+            "menig",
+            "mebr",
+            "dasu",
+            "merden"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.376,
+            "gemini-3-flash-preview": 0.391,
+            "gemini-3.1-flash-lite": 0.432,
+            "kraken-austriannewspapers": 0.341,
+            "surya2": 0.428,
+            "tesseract-deu": 0.254,
+            "tesseract-frk": 0.333
+          }
+        },
+        "surya2": {
+          "n_content": 1203,
+          "empty": false,
+          "loop": false,
+          "cer": 0.034,
+          "acc": 0.966,
+          "seq": 0.911,
+          "bow": 0.911,
+          "gap": 0,
+          "len_ratio": 1.011,
+          "invention": 0.113,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "nabla",
+            "daherd",
+            "substanzien",
+            "zhieren",
+            "größeren",
+            "seistenhaftige",
+            "vegerabilischen",
+            "äußerliche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.829,
+            "gemini-3-flash-preview": 0.858,
+            "gemini-3.1-flash-lite": 0.911,
+            "kraken-austriannewspapers": 0.71,
+            "kraken-catmus": 0.428,
+            "tesseract-deu": 0.509,
+            "tesseract-frk": 0.673
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1199,
+          "empty": false,
+          "loop": false,
+          "cer": 0.141,
+          "acc": 0.859,
+          "seq": 0.535,
+          "bow": 0.535,
+          "gap": 0,
+          "len_ratio": 1.008,
+          "invention": 0.433,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dahers",
+            "twenig",
+            "diefen",
+            "iftzumercken",
+            "diefe",
+            "gummatofifchesubftantien",
+            "gröfferen",
+            "alcalinifchen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.548,
+            "gemini-3-flash-preview": 0.553,
+            "gemini-3.1-flash-lite": 0.535,
+            "kraken-austriannewspapers": 0.552,
+            "kraken-catmus": 0.254,
+            "surya2": 0.509,
+            "tesseract-frk": 0.549
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1183,
+          "empty": false,
+          "loop": false,
+          "cer": 0.082,
+          "acc": 0.918,
+          "seq": 0.71,
+          "bow": 0.714,
+          "gap": 0.004,
+          "len_ratio": 0.994,
+          "invention": 0.215,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "3056",
+            "dabherv",
+            "indeßistzu",
+            "gummatolischesubkantienbey",
+            "seissenhasftige",
+            "nßenz",
+            "scheiduag",
+            "gemerc"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.706,
+            "gemini-3-flash-preview": 0.723,
+            "gemini-3.1-flash-lite": 0.714,
+            "kraken-austriannewspapers": 0.67,
+            "kraken-catmus": 0.333,
+            "surya2": 0.673,
+            "tesseract-deu": 0.549
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-cf8300-p110",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Bedencken uber Esaiæ Stiefels Büchlein: Von dreyerley Zustandt des Menschen, unnd dessen newen Geburt",
+      "year": 1639,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 898,
+          "empty": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.886,
+          "bow": 0.886,
+          "gap": 0,
+          "len_ratio": 0.975,
+          "invention": 0.033,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gnadenverheissung",
+            "unverständiges",
+            "aufzeführet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.875,
+            "gemini-3.1-flash-lite": 0.886,
+            "kraken-austriannewspapers": 0.635,
+            "kraken-catmus": 0.395,
+            "surya2": 0.855,
+            "tesseract-deu": 0.443,
+            "tesseract-frk": 0.665
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 922,
+          "empty": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.984,
+          "bow": 0.984,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "concordantz",
+            "außgeführt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.875,
+            "gemini-3.1-flash-lite": 0.984,
+            "kraken-austriannewspapers": 0.683,
+            "kraken-catmus": 0.376,
+            "surya2": 0.804,
+            "tesseract-deu": 0.444,
+            "tesseract-frk": 0.663
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 921,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.886,
+            "gemini-3-flash-preview": 0.984,
+            "kraken-austriannewspapers": 0.689,
+            "kraken-catmus": 0.376,
+            "surya2": 0.815,
+            "tesseract-deu": 0.444,
+            "tesseract-frk": 0.668
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 936,
+          "empty": false,
+          "loop": false,
+          "cer": 0.09,
+          "acc": 0.91,
+          "seq": 0.689,
+          "bow": 0.689,
+          "gap": 0,
+          "len_ratio": 1.016,
+          "invention": 0.314,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "teusfen",
+            "gnadenvch",
+            "ergreiffenspnd",
+            "priegsman",
+            "dats",
+            "teid",
+            "teben",
+            "gise"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.635,
+            "gemini-3-flash-preview": 0.683,
+            "gemini-3.1-flash-lite": 0.689,
+            "kraken-catmus": 0.338,
+            "surya2": 0.581,
+            "tesseract-deu": 0.401,
+            "tesseract-frk": 0.602
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 940,
+          "empty": false,
+          "loop": false,
+          "cer": 0.185,
+          "acc": 0.815,
+          "seq": 0.376,
+          "bow": 0.376,
+          "gap": 0,
+          "len_ratio": 1.021,
+          "invention": 0.664,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "genbschreiben",
+            "teuffenl",
+            "geelen",
+            "gnadenperbeissung",
+            "steben",
+            "rriegsman",
+            "seinbe",
+            "ober"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.395,
+            "gemini-3-flash-preview": 0.376,
+            "gemini-3.1-flash-lite": 0.376,
+            "kraken-austriannewspapers": 0.338,
+            "surya2": 0.381,
+            "tesseract-deu": 0.311,
+            "tesseract-frk": 0.353
+          }
+        },
+        "surya2": {
+          "n_content": 950,
+          "empty": false,
+          "loop": false,
+          "cer": 0.054,
+          "acc": 0.946,
+          "seq": 0.815,
+          "bow": 0.815,
+          "gap": 0,
+          "len_ratio": 1.031,
+          "invention": 0.108,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gendschreiben",
+            "gnadenberheissung",
+            "anti",
+            "ehrist",
+            "ehristi",
+            "vnberständiges",
+            "anzustehen",
+            "vmbtehren"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.855,
+            "gemini-3-flash-preview": 0.804,
+            "gemini-3.1-flash-lite": 0.815,
+            "kraken-austriannewspapers": 0.581,
+            "kraken-catmus": 0.381,
+            "tesseract-deu": 0.431,
+            "tesseract-frk": 0.62
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 967,
+          "empty": false,
+          "loop": false,
+          "cer": 0.194,
+          "acc": 0.806,
+          "seq": 0.444,
+          "bow": 0.444,
+          "gap": 0,
+          "len_ratio": 1.05,
+          "invention": 0.598,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sendfereiben",
+            "inder",
+            "gnadenverheiffung",
+            "ergreiffenond",
+            "ftehen",
+            "arriegsman",
+            "feinem",
+            "seinde7"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.443,
+            "gemini-3-flash-preview": 0.444,
+            "gemini-3.1-flash-lite": 0.444,
+            "kraken-austriannewspapers": 0.401,
+            "kraken-catmus": 0.311,
+            "surya2": 0.431,
+            "tesseract-frk": 0.432
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 962,
+          "empty": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.668,
+          "bow": 0.668,
+          "gap": 0,
+          "len_ratio": 1.045,
+          "invention": 0.295,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "2637",
+            "gyädenverheissung",
+            "ariegsman",
+            "daes",
+            "antichrist'",
+            "itewesvnverständiges",
+            "itatürli",
+            "ehen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.665,
+            "gemini-3-flash-preview": 0.663,
+            "gemini-3.1-flash-lite": 0.668,
+            "kraken-austriannewspapers": 0.602,
+            "kraken-catmus": 0.353,
+            "surya2": 0.62,
+            "tesseract-deu": 0.432
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-d95833-p8",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+      "year": 1784,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1262,
+          "empty": false,
+          "loop": false,
+          "cer": 0.394,
+          "acc": 0.606,
+          "seq": 0.41,
+          "bow": 0.445,
+          "gap": 0.036,
+          "len_ratio": 0.938,
+          "invention": 0.708,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "weißer",
+            "stich",
+            "vorschafer",
+            "entnimmt",
+            "langen",
+            "leider",
+            "gescheit",
+            "lage"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.439,
+            "gemini-3.1-flash-lite": 0.445,
+            "kraken-austriannewspapers": 0.007,
+            "kraken-catmus": 0.008,
+            "surya2": 0.188,
+            "tesseract-deu": 0.006,
+            "tesseract-frk": 0.006
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1358,
+          "empty": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.881,
+          "bow": 0.885,
+          "gap": 0.004,
+          "len_ratio": 1.009,
+          "invention": 0.219,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sehr",
+            "ehrwürdiger",
+            "thut",
+            "davon",
+            "nachricht",
+            "drey",
+            "beyden",
+            "alsdann"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.439,
+            "gemini-3.1-flash-lite": 0.885,
+            "kraken-austriannewspapers": 0.014,
+            "kraken-catmus": 0.012,
+            "surya2": 0.177,
+            "tesseract-deu": 0.012,
+            "tesseract-frk": 0.006
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1346,
+          "empty": false,
+          "loop": false,
+          "invention": 0.196,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "hochwürdiger",
+            "erfüll",
+            "bescheid",
+            "beiden",
+            "sodann",
+            "ehrenmeisters",
+            "orden",
+            "unermüdeten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.445,
+            "gemini-3-flash-preview": 0.885,
+            "kraken-austriannewspapers": 0.007,
+            "kraken-catmus": 0.008,
+            "surya2": 0.186,
+            "tesseract-deu": 0.012,
+            "tesseract-frk": 0.011
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 56,
+          "empty": false,
+          "loop": false,
+          "cer": 0.966,
+          "acc": 0.034,
+          "seq": 0.007,
+          "bow": 0.007,
+          "gap": 0,
+          "len_ratio": 0.042,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "erip",
+            "1a4z",
+            "attrt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.007,
+            "gemini-3-flash-preview": 0.014,
+            "gemini-3.1-flash-lite": 0.007,
+            "kraken-catmus": 0.107,
+            "surya2": 0.007,
+            "tesseract-deu": 0.051,
+            "tesseract-frk": 0.092
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 946,
+          "empty": false,
+          "loop": false,
+          "cer": 0.767,
+          "acc": 0.233,
+          "seq": 0.008,
+          "bow": 0.008,
+          "gap": 0,
+          "len_ratio": 0.703,
+          "invention": 0.992,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fanuohp",
+            "abhe",
+            "poritin",
+            "adosafioroue",
+            "decptf",
+            "maislare",
+            "pmeisi",
+            "ahstisoartautt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.008,
+            "gemini-3-flash-preview": 0.012,
+            "gemini-3.1-flash-lite": 0.008,
+            "kraken-austriannewspapers": 0.107,
+            "surya2": 0.008,
+            "tesseract-deu": 0.071,
+            "tesseract-frk": 0.068
+          }
+        },
+        "surya2": {
+          "n_content": 1438,
+          "empty": false,
+          "loop": false,
+          "cer": 0.637,
+          "acc": 0.363,
+          "seq": 0.162,
+          "bow": 0.186,
+          "gap": 0.023,
+          "len_ratio": 1.068,
+          "invention": 0.909,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pufur",
+            "fuscicoligas",
+            "linneas",
+            "zenuitus",
+            "abustafer",
+            "fflicht",
+            "mincht",
+            "maistab"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.188,
+            "gemini-3-flash-preview": 0.177,
+            "gemini-3.1-flash-lite": 0.186,
+            "kraken-austriannewspapers": 0.007,
+            "kraken-catmus": 0.008,
+            "tesseract-deu": 0.006,
+            "tesseract-frk": 0.006
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 267,
+          "empty": false,
+          "loop": false,
+          "cer": 0.861,
+          "acc": 0.139,
+          "seq": 0.006,
+          "bow": 0.012,
+          "gap": 0.006,
+          "len_ratio": 0.198,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "asbach",
+            "mebache",
+            "flag",
+            "senat",
+            "legal",
+            "nncen",
+            "becf",
+            "munflrpan"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.006,
+            "gemini-3-flash-preview": 0.012,
+            "gemini-3.1-flash-lite": 0.012,
+            "kraken-austriannewspapers": 0.051,
+            "kraken-catmus": 0.071,
+            "surya2": 0.006,
+            "tesseract-frk": 0.122
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 271,
+          "empty": false,
+          "loop": false,
+          "cer": 0.868,
+          "acc": 0.132,
+          "seq": 0.006,
+          "bow": 0.011,
+          "gap": 0.006,
+          "len_ratio": 0.201,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fhas",
+            "serif",
+            "bgfund",
+            "3004",
+            "wage",
+            "wirke",
+            "grau",
+            "panna"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.006,
+            "gemini-3-flash-preview": 0.006,
+            "gemini-3.1-flash-lite": 0.011,
+            "kraken-austriannewspapers": 0.092,
+            "kraken-catmus": 0.068,
+            "surya2": 0.006,
+            "tesseract-deu": 0.122
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-da46af-p53",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "drei ältesten Kunsturkunden der Freimaurer-Bruderschaft, mitgetheilt, bearbeitet und in einem Lehrfragstuck urvergeistig",
+      "year": 1820,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1825,
+          "empty": false,
+          "loop": false,
+          "cer": 0.015,
+          "acc": 0.985,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.029,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "mehreren",
+            "aufnahmgebraüchen",
+            "bauzüften",
+            "täuber",
+            "neapolitani"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.933,
+            "gemini-3.1-flash-lite": 0.926,
+            "kraken-austriannewspapers": 0.396,
+            "kraken-catmus": 0.831,
+            "surya2": 0.945,
+            "tesseract-deu": 0.78,
+            "tesseract-frk": 0.676
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1828,
+          "empty": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.006,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "erstwesentliche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.933,
+            "gemini-3.1-flash-lite": 0.978,
+            "kraken-austriannewspapers": 0.398,
+            "kraken-catmus": 0.82,
+            "surya2": 0.934,
+            "tesseract-deu": 0.788,
+            "tesseract-frk": 0.684
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1827,
+          "empty": false,
+          "loop": false,
+          "invention": 0.024,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "così",
+            "città",
+            "hofpitalariorum",
+            "inftitutus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.926,
+            "gemini-3-flash-preview": 0.978,
+            "kraken-austriannewspapers": 0.396,
+            "kraken-catmus": 0.823,
+            "surya2": 0.931,
+            "tesseract-deu": 0.79,
+            "tesseract-frk": 0.683
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1796,
+          "empty": false,
+          "loop": false,
+          "cer": 0.244,
+          "acc": 0.756,
+          "seq": 0.371,
+          "bow": 0.396,
+          "gap": 0.025,
+          "len_ratio": 0.983,
+          "invention": 0.768,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fumene",
+            "patrig",
+            "servicono",
+            "probobilmente",
+            "baschi",
+            "nola",
+            "edditur",
+            "roge"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.396,
+            "gemini-3-flash-preview": 0.398,
+            "gemini-3.1-flash-lite": 0.396,
+            "kraken-catmus": 0.383,
+            "surya2": 0.392,
+            "tesseract-deu": 0.381,
+            "tesseract-frk": 0.363
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1825,
+          "empty": false,
+          "loop": false,
+          "cer": 0.042,
+          "acc": 0.958,
+          "seq": 0.816,
+          "bow": 0.823,
+          "gap": 0.006,
+          "len_ratio": 0.999,
+          "invention": 0.199,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "libere",
+            "1298",
+            "ruter",
+            "maronischen",
+            "statutenbuchern",
+            "dierex",
+            "schrist",
+            "aufnalimegebraüche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.831,
+            "gemini-3-flash-preview": 0.82,
+            "gemini-3.1-flash-lite": 0.823,
+            "kraken-austriannewspapers": 0.383,
+            "surya2": 0.823,
+            "tesseract-deu": 0.732,
+            "tesseract-frk": 0.645
+          }
+        },
+        "surya2": {
+          "n_content": 1827,
+          "empty": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.931,
+          "bow": 0.931,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.042,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prohabilmente",
+            "aufnahmegebrauchen",
+            "taulter",
+            "schloß",
+            "infitiatus",
+            "terrā",
+            "sanctā"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.945,
+            "gemini-3-flash-preview": 0.934,
+            "gemini-3.1-flash-lite": 0.931,
+            "kraken-austriannewspapers": 0.392,
+            "kraken-catmus": 0.823,
+            "tesseract-deu": 0.772,
+            "tesseract-frk": 0.672
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1729,
+          "empty": false,
+          "loop": false,
+          "cer": 0.101,
+          "acc": 0.899,
+          "seq": 0.775,
+          "bow": 0.79,
+          "gap": 0.016,
+          "len_ratio": 0.946,
+          "invention": 0.137,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gumene",
+            "raschi",
+            "babeat",
+            "onini",
+            "intyoitum",
+            "dieunt",
+            "intröitus",
+            "seritto"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.78,
+            "gemini-3-flash-preview": 0.788,
+            "gemini-3.1-flash-lite": 0.79,
+            "kraken-austriannewspapers": 0.381,
+            "kraken-catmus": 0.732,
+            "surya2": 0.772,
+            "tesseract-frk": 0.703
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1744,
+          "empty": false,
+          "loop": false,
+          "cer": 0.13,
+          "acc": 0.87,
+          "seq": 0.658,
+          "bow": 0.683,
+          "gap": 0.025,
+          "len_ratio": 0.955,
+          "invention": 0.289,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eamene",
+            "zervirovo",
+            "daschi",
+            "yino",
+            "2103",
+            "r0g9",
+            "onmi",
+            "intpoitum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.676,
+            "gemini-3-flash-preview": 0.684,
+            "gemini-3.1-flash-lite": 0.683,
+            "kraken-austriannewspapers": 0.363,
+            "kraken-catmus": 0.645,
+            "surya2": 0.672,
+            "tesseract-deu": 0.703
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-e30c70-p138",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Briefe an einen Freund in der Schweiz",
+      "year": 1786,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1048,
+          "empty": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.899,
+          "bow": 0.899,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.018,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "bleibt",
+            "wizelnden"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.962,
+            "gemini-3.1-flash-lite": 0.899,
+            "kraken-austriannewspapers": 0.727,
+            "kraken-catmus": 0.299,
+            "surya2": 0.965,
+            "tesseract-deu": 0.635,
+            "tesseract-frk": 0.884
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1053,
+          "empty": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.921,
+          "bow": 0.921,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.009,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "witzelnden"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.962,
+            "gemini-3.1-flash-lite": 0.921,
+            "kraken-austriannewspapers": 0.74,
+            "kraken-catmus": 0.298,
+            "surya2": 0.962,
+            "tesseract-deu": 0.658,
+            "tesseract-frk": 0.882
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1053,
+          "empty": false,
+          "loop": false,
+          "invention": 0.017,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geplau",
+            "vernunft"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.899,
+            "gemini-3-flash-preview": 0.921,
+            "kraken-austriannewspapers": 0.785,
+            "kraken-catmus": 0.305,
+            "surya2": 0.904,
+            "tesseract-deu": 0.691,
+            "tesseract-frk": 0.928
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 1052,
+          "empty": false,
+          "loop": false,
+          "cer": 0.057,
+          "acc": 0.943,
+          "seq": 0.78,
+          "bow": 0.785,
+          "gap": 0.005,
+          "len_ratio": 0.999,
+          "invention": 0.265,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "schristausleger",
+            "commentater",
+            "seichen",
+            "micteln",
+            "eguptlschen",
+            "ordenemeister",
+            "sesuttischen",
+            "drdenemeistern"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.727,
+            "gemini-3-flash-preview": 0.74,
+            "gemini-3.1-flash-lite": 0.785,
+            "kraken-catmus": 0.26,
+            "surya2": 0.724,
+            "tesseract-deu": 0.587,
+            "tesseract-frk": 0.737
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1043,
+          "empty": false,
+          "loop": false,
+          "cer": 0.203,
+          "acc": 0.797,
+          "seq": 0.305,
+          "bow": 0.305,
+          "gap": 0,
+          "len_ratio": 0.991,
+          "invention": 0.706,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ocriftaueleget",
+            "sebret",
+            "commentatot",
+            "sevn",
+            "tassen",
+            "fino",
+            "frepfico",
+            "fren"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.299,
+            "gemini-3-flash-preview": 0.298,
+            "gemini-3.1-flash-lite": 0.305,
+            "kraken-austriannewspapers": 0.26,
+            "surya2": 0.292,
+            "tesseract-deu": 0.258,
+            "tesseract-frk": 0.3
+          }
+        },
+        "surya2": {
+          "n_content": 1051,
+          "empty": false,
+          "loop": false,
+          "cer": 0.007,
+          "acc": 0.993,
+          "seq": 0.904,
+          "bow": 0.904,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.018,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "einsangen",
+            "gehört"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.965,
+            "gemini-3-flash-preview": 0.962,
+            "gemini-3.1-flash-lite": 0.904,
+            "kraken-austriannewspapers": 0.724,
+            "kraken-catmus": 0.292,
+            "tesseract-deu": 0.647,
+            "tesseract-frk": 0.88
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 1053,
+          "empty": false,
+          "loop": false,
+          "cer": 0.079,
+          "acc": 0.921,
+          "seq": 0.691,
+          "bow": 0.691,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.376,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ferz",
+            "feyn",
+            "laflen",
+            "find",
+            "freyfich",
+            "foichen",
+            "egyptifchen",
+            "ordensmeifter"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.635,
+            "gemini-3-flash-preview": 0.658,
+            "gemini-3.1-flash-lite": 0.691,
+            "kraken-austriannewspapers": 0.587,
+            "kraken-catmus": 0.258,
+            "surya2": 0.647,
+            "tesseract-frk": 0.662
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 1056,
+          "empty": false,
+          "loop": false,
+          "cer": 0.019,
+          "acc": 0.981,
+          "seq": 0.928,
+          "bow": 0.928,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.043,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "umme",
+            "ristlich",
+            "antnerkunaen",
+            "vielniehr",
+            "geplaue"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.884,
+            "gemini-3-flash-preview": 0.882,
+            "gemini-3.1-flash-lite": 0.928,
+            "kraken-austriannewspapers": 0.737,
+            "kraken-catmus": 0.3,
+            "surya2": 0.88,
+            "tesseract-deu": 0.662
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-f3879c-p65",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "title": "Die Entlarffte Alchymia, Worinnen gründlich die bißherige, unter so vielen Rätzeln, gleich unter einer Larffen, verborge",
+      "year": 1713,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 773,
+          "empty": false,
+          "loop": false,
+          "cer": 0.015,
+          "acc": 0.985,
+          "seq": 0.815,
+          "bow": 0.815,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.09,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "flůch",
+            "verspůret",
+            "sposition",
+            "sistentz",
+            "hars",
+            "extre",
+            "mitæt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.807,
+            "gemini-3.1-flash-lite": 0.815,
+            "kraken-austriannewspapers": 0.698,
+            "kraken-catmus": 0.453,
+            "surya2": 0.774,
+            "tesseract-deu": 0.476,
+            "tesseract-frk": 0.656
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 774,
+          "empty": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.916,
+          "bow": 0.916,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quecksilber",
+            "adæquata",
+            "dadurch",
+            "extremitæt",
+            "queck"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.807,
+            "gemini-3.1-flash-lite": 0.916,
+            "kraken-austriannewspapers": 0.658,
+            "kraken-catmus": 0.468,
+            "surya2": 0.848,
+            "tesseract-deu": 0.465,
+            "tesseract-frk": 0.641
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 775,
+          "empty": false,
+          "loop": false,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fixitet",
+            "adæquatæ",
+            "causæ",
+            "extremitet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.815,
+            "gemini-3-flash-preview": 0.916,
+            "kraken-austriannewspapers": 0.654,
+            "kraken-catmus": 0.458,
+            "surya2": 0.862,
+            "tesseract-deu": 0.469,
+            "tesseract-frk": 0.656
+          }
+        },
+        "kraken-austriannewspapers": {
+          "n_content": 773,
+          "empty": false,
+          "loop": false,
+          "cer": 0.101,
+          "acc": 0.899,
+          "seq": 0.654,
+          "bow": 0.654,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.386,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sübtil",
+            "weltyals",
+            "thunkan",
+            "bekant",
+            "oveck",
+            "flüch",
+            "ovecksilber",
+            "tgesttton"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.698,
+            "gemini-3-flash-preview": 0.658,
+            "gemini-3.1-flash-lite": 0.654,
+            "kraken-catmus": 0.361,
+            "surya2": 0.624,
+            "tesseract-deu": 0.416,
+            "tesseract-frk": 0.573
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 785,
+          "empty": false,
+          "loop": false,
+          "cer": 0.175,
+          "acc": 0.825,
+          "seq": 0.458,
+          "bow": 0.458,
+          "gap": 0,
+          "len_ratio": 1.013,
+          "invention": 0.619,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "beltrals",
+            "mill",
+            "prittens",
+            "betannti",
+            "quectsilber",
+            "geuer",
+            "flũchtig",
+            "giertens"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.453,
+            "gemini-3-flash-preview": 0.468,
+            "gemini-3.1-flash-lite": 0.458,
+            "kraken-austriannewspapers": 0.361,
+            "surya2": 0.46,
+            "tesseract-deu": 0.299,
+            "tesseract-frk": 0.372
+          }
+        },
+        "surya2": {
+          "n_content": 784,
+          "empty": false,
+          "loop": false,
+          "cer": 0.039,
+          "acc": 0.961,
+          "seq": 0.862,
+          "bow": 0.862,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.153,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dvecksilber",
+            "diertens",
+            "fixitat",
+            "flächtigkeit",
+            "fixerwerdet",
+            "urfachen",
+            "dicket",
+            "seucht"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.774,
+            "gemini-3-flash-preview": 0.848,
+            "gemini-3.1-flash-lite": 0.862,
+            "kraken-austriannewspapers": 0.624,
+            "kraken-catmus": 0.46,
+            "tesseract-deu": 0.457,
+            "tesseract-frk": 0.626
+          }
+        },
+        "tesseract-deu": {
+          "n_content": 776,
+          "empty": false,
+          "loop": false,
+          "cer": 0.174,
+          "acc": 0.826,
+          "seq": 0.462,
+          "bow": 0.469,
+          "gap": 0.007,
+          "len_ratio": 1.001,
+          "invention": 0.614,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "führt",
+            "auffper",
+            "wseityals",
+            "befannt",
+            "dvedis",
+            "filber",
+            "gebei",
+            "tiggenug"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.476,
+            "gemini-3-flash-preview": 0.465,
+            "gemini-3.1-flash-lite": 0.469,
+            "kraken-austriannewspapers": 0.416,
+            "kraken-catmus": 0.299,
+            "surya2": 0.457,
+            "tesseract-frk": 0.479
+          }
+        },
+        "tesseract-frk": {
+          "n_content": 766,
+          "empty": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.656,
+          "bow": 0.656,
+          "gap": 0,
+          "len_ratio": 0.988,
+          "invention": 0.309,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fubril",
+            "vosil",
+            "wiertens",
+            "oqvecksilber",
+            "svostionzu",
+            "fxiter",
+            "berveiset",
+            "qvefsilber"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.656,
+            "gemini-3-flash-preview": 0.641,
+            "gemini-3.1-flash-lite": 0.656,
+            "kraken-austriannewspapers": 0.573,
+            "kraken-catmus": 0.372,
+            "surya2": 0.626,
+            "tesseract-deu": 0.479
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-17296e-p92",
+  "substratum": "other",
+  "title": "五燈會元·卷十五 (vol 15)",
+  "probe_chars": 148,
+  "source": "Kanripo",
+  "work": "KR6q0012",
+  "work_title": "五燈會元-宋-普濟",
+  "juan": "15",
+  "url": "https://github.com/kanripo/KR6q0012",
+  "etext_chars": 33580,
+  "window_chars": 229,
+  "overlap": 0.949
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-1ba275-p97",
+  "substratum": "other",
+  "title": "禮記纂言·卷四~卷五 (vol 4)",
+  "probe_chars": 233,
+  "source": "Kanripo",
+  "work": "KR1d0058",
+  "work_title": "禮記纂言-元-吳澄",
+  "juan": "4,5",
+  "url": "https://github.com/kanripo/KR1d0058",
+  "etext_chars": 57252,
+  "window_chars": 313,
+  "overlap": 0.67
+}

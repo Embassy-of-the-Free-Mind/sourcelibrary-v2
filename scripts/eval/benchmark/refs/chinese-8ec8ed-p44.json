@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-8ec8ed-p44",
+  "substratum": "other",
+  "title": "御定駢字類編·卷九十六 — Imperial Parallel Characters (vol 278)",
+  "probe_chars": 260,
+  "source": "Kanripo",
+  "work": "KR3k0056",
+  "work_title": "御定駢字類編-清-吳士玉",
+  "juan": "96",
+  "url": "https://github.com/kanripo/KR3k0056",
+  "etext_chars": 35580,
+  "window_chars": 337,
+  "overlap": 0.541
+}

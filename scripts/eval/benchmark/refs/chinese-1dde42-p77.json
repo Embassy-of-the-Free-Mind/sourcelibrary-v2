@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-1dde42-p77",
+  "substratum": "other",
+  "title": "周官集注·卷九~卷十 (vol 9)",
+  "probe_chars": 155,
+  "source": "Kanripo",
+  "work": "KR1d0021",
+  "work_title": "周官集注-清-方苞",
+  "juan": "9,10",
+  "url": "https://github.com/kanripo/KR1d0021",
+  "etext_chars": 29054,
+  "window_chars": 163,
+  "overlap": 0.894
+}
