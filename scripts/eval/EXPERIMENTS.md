@@ -101,14 +101,17 @@ score against. TongGuOCR is vapour.**
   greek-cllg≈Gemini on 4 Greek pages: yes on 14 pinned (6/7). Everything else k=1 per engine;
   Gemini k=1 (temperature 0).
 - **Cost.** Gemini $3.98 metered (1,680 calls; ≈ $1.5 of it on a first draw re-sealed after a
-  determinism bug) + ≈ $0.10 unmetered classifier calls. Hetzner CPU free. Scaleway L4 ≈ 50 h
-  ≈ €40: ≈ 2 h work + **43 h idle** after the first Paddle run hung (2026-09-13 → 09-15; the
-  session was not woken), then ≈ 4.5 h for round 2 under a dead-man `shutdown -h` and per-arm
-  `timeout`. Total ≈ $47 against the $35 approved / $40 hard stop (the overrun is the idle
-  GPU; round 2 was separately approved at €5, then up to €100 for the Japanese extension — used
-  ≈ €4). Scratch volume deleted at the end.
+  determinism bug) + ≈ $0.10 unmetered classifier calls. Hetzner CPU free. Scaleway L4 ≈ 57 h
+  ≈ €45: ≈ 2 h work + **43 h idle** after the first Paddle run hung (2026-09-13 → 09-15; the
+  session was not woken), then ≈ 6 h of round-2 arms under a dead-man `shutdown -h` and per-arm
+  `timeout`, then **≈ 5 h "stopped in place"** — on Scaleway a guest `shutdown -h` keeps the
+  instance reserved and billed until the API `server stop`; the session slept through it. Total
+  ≈ $52 against the $35 approved / $40 hard stop (the overrun is the idle GPU, twice; round 2
+  was separately approved at €5, then up to €100 for the Japanese extension — used ≈ €4 of
+  arms). Scratch volume deleted 2026-09-16. Lesson: the dead-man must call the provider's stop
+  API, not the guest's poweroff.
 - **Artifacts.** `scripts/eval/benchmark/` (10 registries + refs), `scripts/eval/benchmark-{seal,run-api,refs,score}.mjs`,
-  `scripts/eval/results/benchmark/*-2026-09-15.json` (per-page rows incl. script class, loop flag,
+  `scripts/eval/results/benchmark/*-2026-09-16.json` (per-page rows incl. script class, loop flag,
   agreement matrix), `results/scorecard-outputs-2026-09-13.jsonl` (Gemini arms on both tiers).
   Raw engine outputs: `hetzner:/root/ocr-bench/images/*/out/` (mirror of the L4's before it was
   powered off).

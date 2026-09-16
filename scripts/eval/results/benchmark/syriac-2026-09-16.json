@@ -1,0 +1,5160 @@
+{
+  "summary": {
+    "stratum": "syriac",
+    "issue": 4746,
+    "date": "2026-09-16",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "dots-mocr": {
+        "pages_run": 20,
+        "empty": 8,
+        "loop": 3,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 1,
+          "catastrophic": 17,
+          "median_gap": 0,
+          "median_bow": 0
+        },
+        "invention": {
+          "median": 0.055,
+          "mean": 0.303,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 3.819,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "syriac-146d10-p81",
+            "title": "Acta Martyrum et Sanctorum, Tomus III",
+            "year": 1892,
+            "cer": 3.468,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "syriac-4134ce-p91",
+            "title": "Syriac Theological Anthology",
+            "year": null,
+            "cer": 1.14,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "syriac-4683f6-p352",
+            "title": "Great Oktoechos",
+            "year": 1760,
+            "cer": 1.099,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "لحدا",
+              "بهما",
+              "لودا",
+              "الدها",
+              "حملا",
+              "المبا",
+              "حذذا",
+              "اعللک"
+            ]
+          },
+          {
+            "slug": "syriac-6a7c29-p220",
+            "title": "Acta Martyrum et Sanctorum, Tomus I",
+            "year": 1890,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 4,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.773,
+          "catastrophic": 16,
+          "median_gap": 0.012,
+          "median_bow": 0.087
+        },
+        "invention": {
+          "median": 0.723,
+          "mean": 0.632,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 5.614,
+            "gap": 0.044,
+            "invention": 0.877,
+            "has_ref": false,
+            "unsupported": [
+              "ܒܕܝܪܐ",
+              "ܕܡܪܝ",
+              "ܐܢܛܘܢܝܣ",
+              "ܕܝܪܐ",
+              "ܠܐܬܪܐ",
+              "ܦܪܝܫܐ",
+              "ܘܝܬܒ",
+              "ܒܡܥܪܬܐ"
+            ]
+          },
+          {
+            "slug": "syriac-dc8750-p155",
+            "title": "Hymns on the Church (Madrashe d-Idta)",
+            "year": null,
+            "cer": 2.802,
+            "gap": 0.003,
+            "invention": 0.991,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܘܕܝܬܗ",
+              "ܠܡܪܝܐ",
+              "ܘܠܡܙܡܪ",
+              "ܠܫܡܟ",
+              "ܡܪܝܡܐ",
+              "ܠܡܚܘܝܘ",
+              "ܒܨܦܪܐ",
+              "ܛܝܒܘܬܟ"
+            ]
+          },
+          {
+            "slug": "syriac-dc867e-p63",
+            "title": "Commentary on Genesis",
+            "year": null,
+            "cer": 1.778,
+            "gap": 0.026,
+            "invention": 0.774,
+            "has_ref": false,
+            "unsupported": [
+              "ܕܢܗܘܐ",
+              "ܕܡܛܠܬܗ",
+              "ܐܬܟܬܒܘ",
+              "ܘܐܝܠܝܢ",
+              "ܕܩܪܝܢ",
+              "ܢܬܒܝܢܘܢ",
+              "ܘܢܕܥܘܢ",
+              "ܛܟܣܐ"
+            ]
+          },
+          {
+            "slug": "syriac-6a7c29-p220",
+            "title": "Acta Martyrum et Sanctorum, Tomus I",
+            "year": 1890,
+            "cer": 0.97,
+            "gap": 0.005,
+            "invention": 0.614,
+            "has_ref": false,
+            "unsupported": [
+              "ܫܠܝܚܘܬܗ",
+              "ܕܦܝܠܝܦܘܣ",
+              "ܕܢܚܘܬܘܢ",
+              "ܡܕܝܢܬܐ",
+              "ܘܐܝܬܝܒܘ",
+              "ܒܚܕܘܬܐ",
+              "ܘܓܕܘ",
+              "ܚܕܒܫܒܐ"
+            ]
+          },
+          {
+            "slug": "syriac-4683f6-p352",
+            "title": "Great Oktoechos",
+            "year": 1760,
+            "cer": 0.907,
+            "gap": 0.005,
+            "invention": 0.874,
+            "has_ref": false,
+            "unsupported": [
+              "ܠܫܒܐ",
+              "ܒܪܣܒܐ",
+              "ܘܐܬܝܕܥ",
+              "ܕܒܟܠܗ",
+              "ܐܬܝܕܥ",
+              "ܘܡܘܬ",
+              "ܫܠܝܛܐ",
+              "ܠܐܕܡ"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 3,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.831,
+          "mean": 0.653,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "syriac-8879b3-p49",
+            "title": "Das Johannesbuch der Mandäer",
+            "year": 1905,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ܠܡܢܘ",
+              "ܢܬܡܛܐ",
+              "ܢܠܡܗܘ",
+              "ܢܗܘܐ",
+              "ܝܬܝܪ",
+              "ܢܠܚܘܪ",
+              "ܠܕܡܘܬ",
+              "ܬܚܝܬ"
+            ]
+          },
+          {
+            "slug": "syriac-dc89ba-p137",
+            "title": "Selected Memre; Commentary on the Psalms",
+            "year": null,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ܕܒܠܝ"
+            ]
+          },
+          {
+            "slug": "syriac-cb8a85-p221",
+            "title": "Theological and Philosophical Anthology",
+            "year": null,
+            "invention": 0.965,
+            "has_ref": false,
+            "unsupported": [
+              "ܢܫܬܘܐ",
+              "ܕܢܗܘܐ",
+              "ܕܘܟܬܐ",
+              "ܒܡܠܟܘܬܐ",
+              "ܕܫܡܝܐ",
+              "ܕܐܡܪ",
+              "ܐܢܬܘܢ",
+              "ܕܐܬܝܬܘܢ"
+            ]
+          },
+          {
+            "slug": "syriac-cb88c5-p185",
+            "title": "Ecclesiastical History (Chronicle)",
+            "year": null,
+            "invention": 0.922,
+            "has_ref": false,
+            "unsupported": [
+              "ܟܠܗܝܢ",
+              "ܠܬܠܡܝ",
+              "ܕܘܗܝ",
+              "ܝܕܥܝܢ",
+              "ܐܢܬܘܢ",
+              "ܕܒܬܪ",
+              "ܦܨܚܐ",
+              "ܘܒܪܗ"
+            ]
+          },
+          {
+            "slug": "syriac-dc867e-p63",
+            "title": "Commentary on Genesis",
+            "year": null,
+            "invention": 0.921,
+            "has_ref": false,
+            "unsupported": [
+              "ܘܐܡܪ",
+              "ܝܫܘܥ",
+              "ܐܡܝܢ",
+              "ܠܟܘܢ",
+              "ܡܘܫܐ",
+              "ܠܚܡܐ",
+              "ܫܡܝܐ",
+              "ܕܩܘܫܬܐ"
+            ]
+          }
+        ]
+      },
+      "kraken-sophro-mhiro-defaultseg": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.868,
+          "catastrophic": 20,
+          "median_gap": 0,
+          "median_bow": 0.014
+        },
+        "invention": {
+          "median": 1,
+          "mean": 0.99,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-dc8d8f-p42",
+            "title": "Mystical Discourses",
+            "year": null,
+            "cer": 1.125,
+            "gap": 0,
+            "invention": 0.923,
+            "has_ref": false,
+            "unsupported": [
+              "ܬܘܘܗܘܦ",
+              "ܙܘܬܙ",
+              "ܐܦܙܐܘܐܙܘ",
+              "ܐܬܘܘܗܐܘ",
+              "ܐܙܘܘ",
+              "ܐܘܙܙܘܩܗܘ",
+              "ܐܬܙܐܘ",
+              "ܐܐܘܙܦܙ"
+            ]
+          },
+          {
+            "slug": "syriac-b89aa5-p213",
+            "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+            "year": 1400,
+            "cer": 1.118,
+            "gap": 0,
+            "invention": 0.977,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܬܘܬܘ",
+              "ܘܐܘܘܗ",
+              "ܗܘܘܘ",
+              "ܐܨܘܗ",
+              "ܙܐܘܘܗܘ",
+              "ܢܘܘܗܗܕ",
+              "ܟܪܢܙ",
+              "ܬܡܘܗ"
+            ]
+          },
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 1.06,
+            "gap": 0.01,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܬܪܘܡܥ",
+              "ܗܫܦܢ",
+              "ܐܝܪܡ",
+              "ܪܡܐܘ",
+              "ܪܟܐܘ",
+              "ܐܕܘܬܝ",
+              "ܐܬܪܩܫ",
+              "ܠܝܪܣܢܕ"
+            ]
+          },
+          {
+            "slug": "syriac-42e92d-p15",
+            "title": "Chronicle of Edessa (Chronicon Edessenum)",
+            "year": 1719,
+            "cer": 1.046,
+            "gap": 0,
+            "invention": 0.967,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܦܙܘ",
+              "ܫܩܘܬ",
+              "ܦܘܢܩ",
+              "ܗܬܫܐܘ",
+              "ܐܝܢܡܬܒܘ",
+              "ܫܝܥܪܦ",
+              "ܐܥܝܛܝܬܗܪܘܥ",
+              "ܘܝܪܗ"
+            ]
+          },
+          {
+            "slug": "syriac-9f535f-p265",
+            "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+            "year": 1859,
+            "cer": 1,
+            "gap": 0,
+            "invention": 0.987,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܐܠܐ",
+              "ܐܪܒܕ",
+              "ܕܙܪܒܢܕ",
+              "ܐܕܒܕܟ",
+              "ܐܕܒܕ",
+              "ܐܕܙܕ",
+              "ܘܙܐܕ",
+              "ܪܙܘܡ"
+            ]
+          }
+        ]
+      },
+      "kraken-sophro-mhiro-rtl": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.824,
+          "catastrophic": 20,
+          "median_gap": 0.012,
+          "median_bow": 0.053
+        },
+        "invention": {
+          "median": 0.916,
+          "mean": 0.874,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-dc8d8f-p42",
+            "title": "Mystical Discourses",
+            "year": null,
+            "cer": 1.125,
+            "gap": 0,
+            "invention": 0.923,
+            "has_ref": false,
+            "unsupported": [
+              "ܦܘܗܘܘܬ",
+              "ܘܗܩܘܙܙܘܐ",
+              "ܘܘܙܐ",
+              "ܘܐܗܘܘܬܐ",
+              "ܘܙܐܘܐܙܦܐ",
+              "ܙܬܘܙ",
+              "ܦܦܐܐ",
+              "ܘܙܐܙܩܝ"
+            ]
+          },
+          {
+            "slug": "syriac-b89aa5-p213",
+            "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+            "year": 1400,
+            "cer": 1.118,
+            "gap": 0,
+            "invention": 0.977,
+            "has_ref": false,
+            "unsupported": [
+              "ܘܬܘܬܐ",
+              "ܗܘܘܐܘ",
+              "ܘܘܘܗ",
+              "ܕܗܗܘܘܢ",
+              "ܘܗܘܘܐܙ",
+              "ܗܘܨܐ",
+              "ܘܘܡܡ",
+              "ܗܢܘܟ"
+            ]
+          },
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 1.055,
+            "gap": 0.078,
+            "invention": 0.907,
+            "has_ref": false,
+            "unsupported": [
+              "ܡܪܝܐ",
+              "ܢܦܫܗ",
+              "ܕܢܣܪܝܠ",
+              "ܫܩܪܬܐ",
+              "ܝܬܘܕܐ",
+              "ܘܐܟܪ",
+              "ܦܬܓܡܝ",
+              "ܗܠܝܢ"
+            ]
+          },
+          {
+            "slug": "syriac-42e92d-p15",
+            "title": "Chronicle of Edessa (Chronicon Edessenum)",
+            "year": 1719,
+            "cer": 1.045,
+            "gap": 0,
+            "invention": 0.905,
+            "has_ref": false,
+            "unsupported": [
+              "ܘܐܫܬܗ",
+              "ܩܢܘܦ",
+              "ܬܘܩܫ",
+              "ܘܙܦܐ",
+              "ܗܘܘܕܢ",
+              "ܗܘܘܫܟ",
+              "ܢܬܘܘܘܘܗ",
+              "ܗܪܝܘ"
+            ]
+          },
+          {
+            "slug": "syriac-9f535f-p265",
+            "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+            "year": 1859,
+            "cer": 1,
+            "gap": 0,
+            "invention": 0.987,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܠܐܐ",
+              "ܕܒܪܐ",
+              "ܕܒܕܐ",
+              "ܟܕܒܕܐ",
+              "ܕܢܒܪܙܕ",
+              "ܕܐܙܘ",
+              "ܕܙܕܐ",
+              "ܡܪܪܘܪ"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 5,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 1,
+          "catastrophic": 16,
+          "median_gap": 0,
+          "median_bow": 0.003
+        },
+        "invention": {
+          "median": 1,
+          "mean": 0.733,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-8879b3-p49",
+            "title": "Das Johannesbuch der Mandäer",
+            "year": 1905,
+            "cer": 9.502,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "لہری"
+            ]
+          },
+          {
+            "slug": "syriac-b89aa5-p213",
+            "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+            "year": 1400,
+            "cer": 2.157,
+            "gap": 0.026,
+            "invention": 0.973,
+            "has_ref": false,
+            "unsupported": [
+              "inches",
+              "ἀγῶπροσ",
+              "προσί",
+              "ὑπροστυχή",
+              "προφθ",
+              "ἀσεισε",
+              "ιρατί",
+              "ἀποχείσ"
+            ]
+          },
+          {
+            "slug": "syriac-4683f6-p352",
+            "title": "Great Oktoechos",
+            "year": 1760,
+            "cer": 1.631,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "اسما",
+              "حيوض",
+              "اهليوم",
+              "السماء",
+              "وصلوا",
+              "منها",
+              "حيوزا",
+              "مسما"
+            ]
+          },
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 1.259,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "scribble",
+              "scrib"
+            ]
+          },
+          {
+            "slug": "syriac-146d10-p81",
+            "title": "Acta Martyrum et Sanctorum, Tomus III",
+            "year": 1892,
+            "cer": 1.14,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "خليج",
+              "محمد",
+              "الله",
+              "عليه",
+              "وآله",
+              "وسلم"
+            ]
+          }
+        ]
+      },
+      "tesseract-syr": {
+        "pages_run": 20,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.966,
+          "catastrophic": 20,
+          "median_gap": 0.012,
+          "median_bow": 0.042
+        },
+        "invention": {
+          "median": 0.978,
+          "mean": 0.9,
+          "n_engines": 7,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "syriac-46821a-p128",
+            "title": "Old Testament",
+            "year": 1725,
+            "cer": 1.06,
+            "gap": 0.023,
+            "invention": 0.902,
+            "has_ref": false,
+            "unsupported": [
+              "ܘܐܕܫܕܠ",
+              "ܡܫܝܐ",
+              "ܢܘܫܗ",
+              "ܝܗܘܪ",
+              "ܦܬܓܒ",
+              "ܒܓܫܒܭܨ",
+              "ܒܐܝܥܡܘ",
+              "ܪܐܙܢ"
+            ]
+          },
+          {
+            "slug": "syriac-b899e7-p169",
+            "title": "Mingana-Lewis Palimpsest (Syriac/Arabic/Quranic)",
+            "year": null,
+            "cer": 1,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ܐܦܐܐܬ",
+              "ܬܪܨܢ",
+              "ܙܙܥܘܧܦܕ"
+            ]
+          },
+          {
+            "slug": "syriac-b89aa5-p213",
+            "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+            "year": 1400,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "syriac-dc867e-p63",
+            "title": "Commentary on Genesis",
+            "year": null,
+            "cer": 0.997,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "05101",
+              "1011",
+              "1111"
+            ]
+          },
+          {
+            "slug": "syriac-cb9324-p377",
+            "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+            "year": 1899,
+            "cer": 0.995,
+            "gap": 0.004,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "1016",
+              "0611",
+              "00808",
+              "1610",
+              "18066",
+              "8110",
+              "11010",
+              "6814"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 2,
+        "engines": {
+          "dots-mocr": {
+            "n": 2,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 2.459,
+            "catastrophic": 2,
+            "median_unsupported": 1
+          },
+          "gemini-3-flash-preview": {
+            "n": 2,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 3.261,
+            "catastrophic": 2,
+            "median_unsupported": 0.876
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0.868
+          },
+          "kraken-sophro-mhiro-defaultseg": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.943,
+            "catastrophic": 2,
+            "median_unsupported": 1
+          },
+          "kraken-sophro-mhiro-rtl": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.929,
+            "catastrophic": 2,
+            "median_unsupported": 0.886
+          },
+          "surya2": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 1.445,
+            "catastrophic": 2,
+            "median_unsupported": 1
+          },
+          "tesseract-syr": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.92,
+            "catastrophic": 2,
+            "median_unsupported": 0.919
+          }
+        }
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "syriac-146d10-p81",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Acta Martyrum et Sanctorum, Tomus III",
+      "year": 1892,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2150,
+          "empty": false,
+          "loop": true,
+          "cer": 3.468,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 3.468,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.223,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 747,
+          "empty": false,
+          "loop": false,
+          "cer": 0.753,
+          "acc": 0.247,
+          "seq": 0.053,
+          "bow": 0.067,
+          "gap": 0.015,
+          "len_ratio": 1.205,
+          "invention": 0.707,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܝܫܘܦ",
+            "ܚܝܕܪܐ",
+            "ܥܕܝܠܝܐ",
+            "ܡܠܬܗܝ",
+            "ܕܐܙܠܝܢ",
+            "ܠܦܠܢܐ",
+            "ܡܕܡܕ",
+            "ܐܟܠܩܪܨܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.067,
+            "kraken-sophro-mhiro-defaultseg": 0.033,
+            "kraken-sophro-mhiro-rtl": 0.352,
+            "surya2": 0.003,
+            "tesseract-syr": 0.079
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 620,
+          "empty": false,
+          "loop": false,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.067,
+            "kraken-sophro-mhiro-defaultseg": 0.029,
+            "kraken-sophro-mhiro-rtl": 0.047,
+            "surya2": 0.002,
+            "tesseract-syr": 0.633
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 718,
+          "empty": false,
+          "loop": false,
+          "cer": 0.86,
+          "acc": 0.14,
+          "seq": 0.029,
+          "bow": 0.029,
+          "gap": 0,
+          "len_ratio": 1.158,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܝܪܝܚ",
+            "ܝܘܫܝܒ",
+            "ܢܝܡܪܩ",
+            "ܢܝܗܠ",
+            "ܪܡܐܕ",
+            "ܬܝܢܡܠܥ",
+            "ܢܢܝܫܝܓܢ",
+            "ܒܥܫܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.033,
+            "gemini-3.1-flash-lite": 0.029,
+            "kraken-sophro-mhiro-rtl": 0.039,
+            "surya2": 0,
+            "tesseract-syr": 0.041
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 718,
+          "empty": false,
+          "loop": false,
+          "cer": 0.777,
+          "acc": 0.223,
+          "seq": 0.036,
+          "bow": 0.047,
+          "gap": 0.012,
+          "len_ratio": 1.158,
+          "invention": 0.697,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܝܫܘܝ",
+            "ܚܝܪܝܐ",
+            "ܡܠܘܗ",
+            "ܥܠܡܢܝܬ",
+            "ܩܪܡܝܢ",
+            "ܢܓܝܫܝܢܢ",
+            "ܕܐܕܠܝܢܢ",
+            "ܡܢܗܕ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.352,
+            "gemini-3.1-flash-lite": 0.047,
+            "kraken-sophro-mhiro-defaultseg": 0.039,
+            "surya2": 0,
+            "tesseract-syr": 0.066
+          }
+        },
+        "surya2": {
+          "n_content": 710,
+          "empty": false,
+          "loop": false,
+          "cer": 1.14,
+          "acc": 0,
+          "seq": 0.002,
+          "bow": 0.002,
+          "gap": 0,
+          "len_ratio": 1.145,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "خليج",
+            "محمد",
+            "الله",
+            "عليه",
+            "وآله",
+            "وسلم"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.223,
+            "gemini-3-flash-preview": 0.003,
+            "gemini-3.1-flash-lite": 0.002,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.002
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 768,
+          "empty": false,
+          "loop": false,
+          "cer": 0.826,
+          "acc": 0.174,
+          "seq": 0.311,
+          "bow": 0.633,
+          "gap": 0.322,
+          "len_ratio": 1.239,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܥܗܕܘ",
+            "ܫܡܥܘ",
+            "ܘܚܩܝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.079,
+            "gemini-3.1-flash-lite": 0.633,
+            "kraken-sophro-mhiro-defaultseg": 0.041,
+            "kraken-sophro-mhiro-rtl": 0.066,
+            "surya2": 0.002
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-4134ce-p91",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Syriac Theological Anthology",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2527,
+          "empty": false,
+          "loop": false,
+          "cer": 1.14,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.14,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2330,
+          "empty": false,
+          "loop": false,
+          "cer": 0.737,
+          "acc": 0.263,
+          "seq": 0.075,
+          "bow": 0.118,
+          "gap": 0.042,
+          "len_ratio": 1.051,
+          "invention": 0.853,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܫܡܐ",
+            "ܝܕܝܥܐ",
+            "ܒܝܕܥܬܐ",
+            "ܒܦܓܪܐ",
+            "ܐܠܦܝܬܐ",
+            "ܫܡܝܢܝܬܐ",
+            "ܚܙܐܬ",
+            "ܕܒܚܝܘܗܝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.118,
+            "kraken-sophro-mhiro-defaultseg": 0.05,
+            "kraken-sophro-mhiro-rtl": 0.314,
+            "surya2": 0,
+            "tesseract-syr": 0.131
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2217,
+          "empty": false,
+          "loop": false,
+          "invention": 0.899,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܢܨܒܬ",
+            "ܟܗܢܘܬܐ",
+            "ܢܗܘܐ",
+            "ܚܠܝܦ",
+            "ܕܟܗܢܘܬܐ",
+            "ܡܟܣܢ",
+            "ܠܟܠܗܘܢ",
+            "ܘܢܝܚܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.118,
+            "kraken-sophro-mhiro-defaultseg": 0.021,
+            "kraken-sophro-mhiro-rtl": 0.113,
+            "surya2": 0,
+            "tesseract-syr": 0.055
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 2358,
+          "empty": false,
+          "loop": false,
+          "cer": 0.815,
+          "acc": 0.185,
+          "seq": 0.015,
+          "bow": 0.021,
+          "gap": 0.006,
+          "len_ratio": 1.064,
+          "invention": 0.993,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܪܒܩܕ",
+            "ܐܒܘܥ",
+            "ܐܝܠܘܬܒ",
+            "ܐܡܓܬܦ",
+            "ܝܢܘܦܒܘ",
+            "ܘܗܝܕ",
+            "ܐܬܘܢܣܝܦܬܡ",
+            "ܢܘܢܗ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.05,
+            "gemini-3.1-flash-lite": 0.021,
+            "kraken-sophro-mhiro-rtl": 0.07,
+            "surya2": 0,
+            "tesseract-syr": 0.073
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 2358,
+          "empty": false,
+          "loop": false,
+          "cer": 0.802,
+          "acc": 0.198,
+          "seq": 0.049,
+          "bow": 0.113,
+          "gap": 0.064,
+          "len_ratio": 1.064,
+          "invention": 0.732,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܥܘܒܐ",
+            "ܒܬܘܠܝܐ",
+            "ܕܩܒܪܐ",
+            "ܡܬܦܝܣܢܘܬܐ",
+            "ܕܝܗܘܕ",
+            "ܘܒܦܘܢܝ",
+            "ܦܬܓܡܐ",
+            "ܦܪܨܘܦ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.314,
+            "gemini-3.1-flash-lite": 0.113,
+            "kraken-sophro-mhiro-defaultseg": 0.07,
+            "surya2": 0,
+            "tesseract-syr": 0.221
+          }
+        },
+        "surya2": {
+          "n_content": 1429,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.645,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "انها",
+            "حديثا",
+            "تركها",
+            "جملا",
+            "حجمها",
+            "الاحكام",
+            "منها",
+            "وجهته"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 2046,
+          "empty": false,
+          "loop": false,
+          "cer": 0.748,
+          "acc": 0.252,
+          "seq": 0.042,
+          "bow": 0.055,
+          "gap": 0.013,
+          "len_ratio": 0.923,
+          "invention": 0.742,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܠܘܓܔܝܪ",
+            "ܒܝܢܘܗܝ",
+            "ܬܬܡܣܩ",
+            "ܐܠܐܘ",
+            "ܢܠܒܕ",
+            "ܙܘܟܢܐ",
+            "ܙܦܝܦܗ",
+            "ܘܦܘܦܫܢܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.131,
+            "gemini-3.1-flash-lite": 0.055,
+            "kraken-sophro-mhiro-defaultseg": 0.073,
+            "kraken-sophro-mhiro-rtl": 0.221,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-42e92d-p15",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Chronicle of Edessa (Chronicon Edessenum)",
+      "year": 1719,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1509,
+          "empty": false,
+          "loop": false,
+          "cer": 0.13,
+          "acc": 0.87,
+          "seq": 0.709,
+          "bow": 0.713,
+          "gap": 0.004,
+          "len_ratio": 0.959,
+          "invention": 0.031,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sæculo",
+            "chrysostonius",
+            "susiùs",
+            "fuitse"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.77,
+            "gemini-3.1-flash-lite": 0.713,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.738,
+            "tesseract-syr": 0.046
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1973,
+          "empty": false,
+          "loop": false,
+          "cer": 0.332,
+          "acc": 0.668,
+          "seq": 0.606,
+          "bow": 0.606,
+          "gap": 0,
+          "len_ratio": 1.254,
+          "invention": 0.225,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܦܓܪܗ",
+            "ܕܬܝܘܕܘܣܝܘܣ",
+            "ܡܕܝܢܬܐ",
+            "ܠܕܐܬܪ",
+            "ܘܒܙܘ",
+            "ܐܢܘܢ",
+            "ܘܚܪܒܘ",
+            "ܘܬܪܝܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.77,
+            "gemini-3.1-flash-lite": 0.606,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0.086,
+            "surya2": 0.639,
+            "tesseract-syr": 0.042
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1573,
+          "empty": false,
+          "loop": false,
+          "invention": 0.318,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܝܕܘܣܝܘܣ",
+            "ܐܬܝܬ",
+            "ܩܪܝܬܐ",
+            "ܕܝܘܡܢ",
+            "ܐܣܬܪܝܬ",
+            "ܘܐܬܘ",
+            "ܘܟܠܗ",
+            "menfe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.713,
+            "gemini-3-flash-preview": 0.606,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.55,
+            "tesseract-syr": 0.036
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 1707,
+          "empty": false,
+          "loop": false,
+          "cer": 1.046,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.085,
+          "invention": 0.967,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܦܙܘ",
+            "ܫܩܘܬ",
+            "ܦܘܢܩ",
+            "ܗܬܫܐܘ",
+            "ܐܝܢܡܬܒܘ",
+            "ܫܝܥܪܦ",
+            "ܐܥܝܛܝܬܗܪܘܥ",
+            "ܘܝܪܗ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.084,
+            "surya2": 0,
+            "tesseract-syr": 0.03
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 1707,
+          "empty": false,
+          "loop": false,
+          "cer": 1.045,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.085,
+          "invention": 0.905,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܐܫܬܗ",
+            "ܩܢܘܦ",
+            "ܬܘܩܫ",
+            "ܘܙܦܐ",
+            "ܗܘܘܕܢ",
+            "ܗܘܘܫܟ",
+            "ܢܬܘܘܘܘܗ",
+            "ܗܪܝܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.086,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.084,
+            "surya2": 0,
+            "tesseract-syr": 0.053
+          }
+        },
+        "surya2": {
+          "n_content": 2074,
+          "empty": false,
+          "loop": false,
+          "cer": 0.799,
+          "acc": 0.201,
+          "seq": 0.389,
+          "bow": 0.55,
+          "gap": 0.161,
+          "len_ratio": 1.318,
+          "invention": 0.247,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "حقيقة",
+            "مخططي",
+            "الالمين",
+            "محمد",
+            "فضلا",
+            "حتما",
+            "سناء",
+            "كلاه"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.738,
+            "gemini-3-flash-preview": 0.639,
+            "gemini-3.1-flash-lite": 0.55,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.038
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 1399,
+          "empty": false,
+          "loop": false,
+          "cer": 0.986,
+          "acc": 0.014,
+          "seq": 0.023,
+          "bow": 0.036,
+          "gap": 0.014,
+          "len_ratio": 0.889,
+          "invention": 0.978,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "4375",
+            "600111",
+            "62110601",
+            "1111",
+            "11001",
+            "80110",
+            "0060",
+            "11111"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.046,
+            "gemini-3-flash-preview": 0.042,
+            "gemini-3.1-flash-lite": 0.036,
+            "kraken-sophro-mhiro-defaultseg": 0.03,
+            "kraken-sophro-mhiro-rtl": 0.053,
+            "surya2": 0.038
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-46821a-p128",
+      "substratum": "print",
+      "script_class": "manuscript",
+      "title": "Old Testament",
+      "year": 1725,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2658,
+          "empty": false,
+          "loop": true,
+          "cer": 3.819,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 3.819,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 4519,
+          "empty": false,
+          "loop": true,
+          "cer": 5.614,
+          "acc": 0,
+          "seq": 0.041,
+          "bow": 0.085,
+          "gap": 0.044,
+          "len_ratio": 6.493,
+          "invention": 0.877,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܕܝܪܐ",
+            "ܕܡܪܝ",
+            "ܐܢܛܘܢܝܣ",
+            "ܕܝܪܐ",
+            "ܠܐܬܪܐ",
+            "ܦܪܝܫܐ",
+            "ܘܝܬܒ",
+            "ܒܡܥܪܬܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.085,
+            "kraken-sophro-mhiro-defaultseg": 0.002,
+            "kraken-sophro-mhiro-rtl": 0.036,
+            "surya2": 0,
+            "tesseract-syr": 0.023
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 696,
+          "empty": false,
+          "loop": false,
+          "invention": 0.831,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܝܫܘܥ",
+            "ܐܡܝܢ",
+            "ܡܘܫܐ",
+            "ܠܚܡܐ",
+            "ܫܡܝܐ",
+            "ܕܩܘܫܬܐ",
+            "ܠܚܡܗ",
+            "ܕܐܠܗܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.085,
+            "kraken-sophro-mhiro-defaultseg": 0.029,
+            "kraken-sophro-mhiro-rtl": 0.141,
+            "surya2": 0,
+            "tesseract-syr": 0.053
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 1005,
+          "empty": false,
+          "loop": false,
+          "cer": 1.06,
+          "acc": 0,
+          "seq": 0.019,
+          "bow": 0.029,
+          "gap": 0.01,
+          "len_ratio": 1.444,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܬܪܘܡܥ",
+            "ܗܫܦܢ",
+            "ܐܝܪܡ",
+            "ܪܡܐܘ",
+            "ܪܟܐܘ",
+            "ܐܕܘܬܝ",
+            "ܐܬܪܩܫ",
+            "ܠܝܪܣܢܕ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.002,
+            "gemini-3.1-flash-lite": 0.029,
+            "kraken-sophro-mhiro-rtl": 0.022,
+            "surya2": 0,
+            "tesseract-syr": 0.041
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 1005,
+          "empty": false,
+          "loop": false,
+          "cer": 1.055,
+          "acc": 0,
+          "seq": 0.063,
+          "bow": 0.141,
+          "gap": 0.078,
+          "len_ratio": 1.444,
+          "invention": 0.907,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܡܪܝܐ",
+            "ܢܦܫܗ",
+            "ܕܢܣܪܝܠ",
+            "ܫܩܪܬܐ",
+            "ܝܬܘܕܐ",
+            "ܘܐܟܪ",
+            "ܦܬܓܡܝ",
+            "ܗܠܝܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.036,
+            "gemini-3.1-flash-lite": 0.141,
+            "kraken-sophro-mhiro-defaultseg": 0.022,
+            "surya2": 0,
+            "tesseract-syr": 0.117
+          }
+        },
+        "surya2": {
+          "n_content": 876,
+          "empty": false,
+          "loop": false,
+          "cer": 1.259,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.259,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "scribble",
+            "scrib"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.004
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 1001,
+          "empty": false,
+          "loop": false,
+          "cer": 1.06,
+          "acc": 0,
+          "seq": 0.03,
+          "bow": 0.053,
+          "gap": 0.023,
+          "len_ratio": 1.438,
+          "invention": 0.902,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܐܕܫܕܠ",
+            "ܡܫܝܐ",
+            "ܢܘܫܗ",
+            "ܝܗܘܪ",
+            "ܦܬܓܒ",
+            "ܒܓܫܒܭܨ",
+            "ܒܐܝܥܡܘ",
+            "ܪܐܙܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.023,
+            "gemini-3.1-flash-lite": 0.053,
+            "kraken-sophro-mhiro-defaultseg": 0.041,
+            "kraken-sophro-mhiro-rtl": 0.117,
+            "surya2": 0.004
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-4683f6-p352",
+      "substratum": "print",
+      "script_class": "manuscript",
+      "title": "Great Oktoechos",
+      "year": 1760,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 711,
+          "empty": false,
+          "loop": false,
+          "cer": 1.099,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.099,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "لحدا",
+            "بهما",
+            "لودا",
+            "الدها",
+            "حملا",
+            "المبا",
+            "حذذا",
+            "اعللک"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.019,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 785,
+          "empty": false,
+          "loop": false,
+          "cer": 0.907,
+          "acc": 0.093,
+          "seq": 0.037,
+          "bow": 0.042,
+          "gap": 0.005,
+          "len_ratio": 1.213,
+          "invention": 0.874,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܫܒܐ",
+            "ܒܪܣܒܐ",
+            "ܘܐܬܝܕܥ",
+            "ܕܒܟܠܗ",
+            "ܐܬܝܕܥ",
+            "ܘܡܘܬ",
+            "ܫܠܝܛܐ",
+            "ܠܐܕܡ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.042,
+            "kraken-sophro-mhiro-defaultseg": 0.016,
+            "kraken-sophro-mhiro-rtl": 0.137,
+            "surya2": 0,
+            "tesseract-syr": 0.057
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 647,
+          "empty": false,
+          "loop": false,
+          "invention": 0.905,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܟܠܗܘܢ",
+            "ܐܘܠܨ",
+            "ܕܒܗܘܢ",
+            "ܐܬܢܣܝܘ",
+            "ܟܠܗܘܢ",
+            "ܐܬܡܠܝܘ",
+            "ܫܘܒܚܐ",
+            "ܣܡܝܟ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.042,
+            "kraken-sophro-mhiro-defaultseg": 0.028,
+            "kraken-sophro-mhiro-rtl": 0.098,
+            "surya2": 0,
+            "tesseract-syr": 0.051
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 661,
+          "empty": false,
+          "loop": false,
+          "cer": 0.825,
+          "acc": 0.175,
+          "seq": 0.028,
+          "bow": 0.028,
+          "gap": 0,
+          "len_ratio": 1.022,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܗܠܐ",
+            "ܐܬܝܟܕ",
+            "ܬܕܠܝܘܐ",
+            "ܝܟܣܪܟ",
+            "ܙܫܒܠ",
+            "ܢܘܬܫܐܘ",
+            "ܗܬܘܗܠܐ",
+            "ܦܠܚܬܫܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.016,
+            "gemini-3.1-flash-lite": 0.028,
+            "kraken-sophro-mhiro-rtl": 0.057,
+            "surya2": 0,
+            "tesseract-syr": 0.084
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 661,
+          "empty": false,
+          "loop": false,
+          "cer": 0.802,
+          "acc": 0.198,
+          "seq": 0.069,
+          "bow": 0.098,
+          "gap": 0.029,
+          "len_ratio": 1.022,
+          "invention": 0.865,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܒܫܙ",
+            "ܟܪܣܟܝ",
+            "ܐܘܝܠܕܬ",
+            "ܘܗܘܐ",
+            "ܐܫܬܚܠܦ",
+            "ܐܠܗܘܬܗ",
+            "ܘܐܫܬܘܢ",
+            "ܬܩܒܕܟ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.137,
+            "gemini-3.1-flash-lite": 0.098,
+            "kraken-sophro-mhiro-defaultseg": 0.057,
+            "surya2": 0,
+            "tesseract-syr": 0.074
+          }
+        },
+        "surya2": {
+          "n_content": 1055,
+          "empty": false,
+          "loop": false,
+          "cer": 1.631,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.631,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "اسما",
+            "حيوض",
+            "اهليوم",
+            "السماء",
+            "وصلوا",
+            "منها",
+            "حيوزا",
+            "مسما"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.019,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 519,
+          "empty": false,
+          "loop": false,
+          "cer": 0.779,
+          "acc": 0.221,
+          "seq": 0.04,
+          "bow": 0.051,
+          "gap": 0.011,
+          "len_ratio": 0.802,
+          "invention": 0.936,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܦܙܨܘܐ",
+            "ܟܙܟܪܣܟܝ",
+            "ܠܙܬܐܠܗܐ",
+            "ܠܝܢܐ",
+            "ܓܦܪܪܐ",
+            "ܠܝܦܘܠ",
+            "ܮܐܝܦܦܬܟܙܥ",
+            "ܗܘܒܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.057,
+            "gemini-3.1-flash-lite": 0.051,
+            "kraken-sophro-mhiro-defaultseg": 0.084,
+            "kraken-sophro-mhiro-rtl": 0.074,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-6a7c29-p220",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Acta Martyrum et Sanctorum, Tomus I",
+      "year": 1890,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2405,
+          "empty": false,
+          "loop": true,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.8,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.21,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 748,
+          "empty": false,
+          "loop": false,
+          "cer": 0.97,
+          "acc": 0.03,
+          "seq": 0.018,
+          "bow": 0.023,
+          "gap": 0.005,
+          "len_ratio": 0.249,
+          "invention": 0.614,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܫܠܝܚܘܬܗ",
+            "ܕܦܝܠܝܦܘܣ",
+            "ܕܢܚܘܬܘܢ",
+            "ܡܕܝܢܬܐ",
+            "ܘܐܝܬܝܒܘ",
+            "ܒܚܕܘܬܐ",
+            "ܘܓܕܘ",
+            "ܚܕܒܫܒܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.023,
+            "kraken-sophro-mhiro-defaultseg": 0.037,
+            "kraken-sophro-mhiro-rtl": 0.452,
+            "surya2": 0.003,
+            "tesseract-syr": 0.077
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3008,
+          "empty": false,
+          "loop": true,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.023,
+            "kraken-sophro-mhiro-defaultseg": 0.018,
+            "kraken-sophro-mhiro-rtl": 0.005,
+            "surya2": 0.002,
+            "tesseract-syr": 0.106
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 715,
+          "empty": false,
+          "loop": false,
+          "cer": 0.97,
+          "acc": 0.03,
+          "seq": 0.01,
+          "bow": 0.018,
+          "gap": 0.008,
+          "len_ratio": 0.238,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܒܝܠܨܪ",
+            "ܗܕܚܟܫ",
+            "ܘܩܦܢ",
+            "ܢܘܢܗ",
+            "ܐܝܥܒܕ",
+            "ܢܘܘܚܢܪ",
+            "ܐܪܡܫܡܚ",
+            "ܘܒܓܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.037,
+            "gemini-3.1-flash-lite": 0.018,
+            "kraken-sophro-mhiro-rtl": 0.043,
+            "surya2": 0,
+            "tesseract-syr": 0.052
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 715,
+          "empty": false,
+          "loop": false,
+          "cer": 0.969,
+          "acc": 0.031,
+          "seq": 0.005,
+          "bow": 0.005,
+          "gap": 0,
+          "len_ratio": 0.238,
+          "invention": 0.632,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܫܟܚܕܗ",
+            "ܪܨܠܝܒܐ",
+            "ܪܢܚܘܘܢ",
+            "ܚܡܫܡܪܐ",
+            "ܩܕܡܝܗ",
+            "ܘܬܬܚܫܒܘ",
+            "ܒܝܢܬ",
+            "ܘܓܒܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.452,
+            "gemini-3.1-flash-lite": 0.005,
+            "kraken-sophro-mhiro-defaultseg": 0.043,
+            "surya2": 0,
+            "tesseract-syr": 0.061
+          }
+        },
+        "surya2": {
+          "n_content": 705,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0.002,
+          "bow": 0.002,
+          "gap": 0,
+          "len_ratio": 0.234,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.21,
+            "gemini-3-flash-preview": 0.003,
+            "gemini-3.1-flash-lite": 0.002,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 720,
+          "empty": false,
+          "loop": false,
+          "cer": 0.971,
+          "acc": 0.029,
+          "seq": 0.072,
+          "bow": 0.106,
+          "gap": 0.033,
+          "len_ratio": 0.239,
+          "invention": 0.5,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܕܚܠܬ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.077,
+            "gemini-3.1-flash-lite": 0.106,
+            "kraken-sophro-mhiro-defaultseg": 0.052,
+            "kraken-sophro-mhiro-rtl": 0.061,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-75771a-p235",
+      "substratum": "print",
+      "script_class": null,
+      "title": "The Book of the Bee",
+      "year": 1886,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 289,
+          "empty": false,
+          "loop": false,
+          "cer": 0.933,
+          "acc": 0.067,
+          "seq": 0.179,
+          "bow": 0.179,
+          "gap": 0,
+          "len_ratio": 0.385,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.165,
+            "gemini-3.1-flash-lite": 0.179,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.131,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 895,
+          "empty": false,
+          "loop": false,
+          "cer": 0.707,
+          "acc": 0.293,
+          "seq": 0.313,
+          "bow": 0.338,
+          "gap": 0.025,
+          "len_ratio": 1.193,
+          "invention": 0.739,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܬܪܝܬܐ",
+            "ܨܠܘܬܐ",
+            "ܗܝܕܝܢ",
+            "ܢܨܠܘܢܝܗܝ",
+            "ܘܐܦܢ",
+            "ܕܠܝܬ",
+            "ܢܨܠܘܢ",
+            "ܘܢܣܚܘܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.165,
+            "gemini-3.1-flash-lite": 0.338,
+            "kraken-sophro-mhiro-defaultseg": 0.026,
+            "kraken-sophro-mhiro-rtl": 0.203,
+            "surya2": 0.163,
+            "tesseract-syr": 0.204
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 750,
+          "empty": false,
+          "loop": false,
+          "invention": 0.561,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܕܬܫܥܝܬܐ",
+            "ܢܦܩܘ",
+            "ܘܐܬܘ",
+            "ܕܝܗܘܕܐ",
+            "ܘܦܣܩܘ",
+            "ܕܗܝܟܠܐ",
+            "ܠܘܬܗ",
+            "ܕܝܫܘܥ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.179,
+            "gemini-3-flash-preview": 0.338,
+            "kraken-sophro-mhiro-defaultseg": 0.009,
+            "kraken-sophro-mhiro-rtl": 0.103,
+            "surya2": 0.174,
+            "tesseract-syr": 0.111
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 874,
+          "empty": false,
+          "loop": false,
+          "cer": 0.876,
+          "acc": 0.124,
+          "seq": 0.005,
+          "bow": 0.009,
+          "gap": 0.005,
+          "len_ratio": 1.165,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܬܝܪܘܒܕܕ",
+            "ܐܒܬܟ",
+            "ܓܣܢܘ",
+            "ܐܝܢܝܪܚ",
+            "ܐܘܗܢ",
+            "ܟܝܐܘ",
+            "ܢܘܝܠܓܢܘܐ",
+            "ܒܬܟܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.026,
+            "gemini-3.1-flash-lite": 0.009,
+            "kraken-sophro-mhiro-rtl": 0.019,
+            "surya2": 0,
+            "tesseract-syr": 0.034
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 874,
+          "empty": false,
+          "loop": false,
+          "cer": 0.801,
+          "acc": 0.199,
+          "seq": 0.075,
+          "bow": 0.103,
+          "gap": 0.028,
+          "len_ratio": 1.165,
+          "invention": 0.558,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܘܢܓܠܝܘܢ",
+            "ܚܪܝܢܝܐ",
+            "ܣܘܬܐ",
+            "ܣܓܝܐ",
+            "ܐܬܦܪܣܘ",
+            "ܫܠܝܚܐ",
+            "ܘܓܒܘ",
+            "ܠܘܘܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.203,
+            "gemini-3.1-flash-lite": 0.103,
+            "kraken-sophro-mhiro-defaultseg": 0.019,
+            "surya2": 0,
+            "tesseract-syr": 0.345
+          }
+        },
+        "surya2": {
+          "n_content": 425,
+          "empty": false,
+          "loop": true,
+          "cer": 0.869,
+          "acc": 0.131,
+          "seq": 0.174,
+          "bow": 0.174,
+          "gap": 0,
+          "len_ratio": 0.567,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.131,
+            "gemini-3-flash-preview": 0.163,
+            "gemini-3.1-flash-lite": 0.174,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.03
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 862,
+          "empty": false,
+          "loop": false,
+          "cer": 0.801,
+          "acc": 0.199,
+          "seq": 0.063,
+          "bow": 0.111,
+          "gap": 0.048,
+          "len_ratio": 1.149,
+          "invention": 0.425,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܘܢܓ",
+            "ܪܝܢܝܐ",
+            "ܦܣܘܬܐ",
+            "ܐܝܬܝܗܘ",
+            "ܕܫܠܝܚ",
+            "ܦܝܠܝܦܘ",
+            "ܒܪܢܐ",
+            "ܝܥܩܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.204,
+            "gemini-3.1-flash-lite": 0.111,
+            "kraken-sophro-mhiro-defaultseg": 0.034,
+            "kraken-sophro-mhiro-rtl": 0.345,
+            "surya2": 0.03
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-883e43-p413",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Old Testament in Syriac (Peshitta)",
+      "year": 1913,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 2472,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.535,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.002,
+            "tesseract-syr": 0.002
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 2782,
+          "empty": false,
+          "loop": false,
+          "cer": 0.72,
+          "acc": 0.28,
+          "seq": 0.068,
+          "bow": 0.083,
+          "gap": 0.015,
+          "len_ratio": 0.602,
+          "invention": 0.677,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܫܥܝܐ",
+            "ܬܠܬܐ",
+            "ܕܡܬܚܝ",
+            "ܐܝܕܝܗܘܢ",
+            "ܢܡܣܟܘܢ",
+            "ܘܢܬܟܪܟܘܢ",
+            "ܕܓܘܙܐ",
+            "ܒܚܠܝܦܘܬ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.083,
+            "kraken-sophro-mhiro-defaultseg": 0.033,
+            "kraken-sophro-mhiro-rtl": 0.402,
+            "surya2": 0.002,
+            "tesseract-syr": 0.075
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 4619,
+          "empty": false,
+          "loop": true,
+          "invention": 0.828,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܪܝܫܝܬ",
+            "ܣܗܕܐ",
+            "ܡܢܗܘܢ",
+            "ܣܗܕܘܬܐ",
+            "ܕܩܘܕܫܐ",
+            "ܘܐܬܢܒܝܘ",
+            "ܡܫܝܚܐ",
+            "ܘܐܡܪܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.083,
+            "kraken-sophro-mhiro-defaultseg": 0.015,
+            "kraken-sophro-mhiro-rtl": 0.06,
+            "surya2": 0.002,
+            "tesseract-syr": 0.043
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 2797,
+          "empty": false,
+          "loop": false,
+          "cer": 0.733,
+          "acc": 0.267,
+          "seq": 0.015,
+          "bow": 0.015,
+          "gap": 0,
+          "len_ratio": 0.606,
+          "invention": 0.995,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܙܐܝܥܫܬ",
+            "ܟܟܟܟܟܟܬܘܫܘܫܘܫܘܫܬܫܫܐܫ",
+            "ܟܝܫܫܫܝܫܬܫܫܫ",
+            "ܝܝܬܝܬܬܝܬܬܘܬܬܬܬܝܬܬܬܬܬܬܬܝܫܘܐܝ",
+            "ܢܝܪܨܡܕ",
+            "ܗܠܠܛܒ",
+            "ܢܘܘܬܬܣܢܘ",
+            "ܢܘܥܪܦܕ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.033,
+            "gemini-3.1-flash-lite": 0.015,
+            "kraken-sophro-mhiro-rtl": 0.033,
+            "surya2": 0,
+            "tesseract-syr": 0.058
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 2797,
+          "empty": false,
+          "loop": false,
+          "cer": 0.725,
+          "acc": 0.275,
+          "seq": 0.047,
+          "bow": 0.06,
+          "gap": 0.013,
+          "len_ratio": 0.606,
+          "invention": 0.71,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܫܥܝܐܙ",
+            "ܝܐܘܫܝܬܬܬܬܬܬܬܝܬܬܬܬܘܬܬܝܬܬܝܬܝܝ",
+            "ܫܫܫܬܫܝܫܫܫܝܟ",
+            "ܫܐܫܫܬܫܘܫܘܫܘܫܘܬܟܟܟܟܟܟ",
+            "ܕܠܠܝܐ",
+            "ܣܘܓܠܐ",
+            "ܥܡܡܐ",
+            "ܕܡܬܚܝܠܝܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.402,
+            "gemini-3.1-flash-lite": 0.06,
+            "kraken-sophro-mhiro-defaultseg": 0.033,
+            "surya2": 0,
+            "tesseract-syr": 0.067
+          }
+        },
+        "surya2": {
+          "n_content": 4819,
+          "empty": false,
+          "loop": false,
+          "cer": 1.043,
+          "acc": 0,
+          "seq": 0.002,
+          "bow": 0.002,
+          "gap": 0,
+          "len_ratio": 1.043,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "الخليل",
+            "تحصين",
+            "وقدم",
+            "الامام",
+            "الخلافة",
+            "الاما"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.002,
+            "gemini-3-flash-preview": 0.002,
+            "gemini-3.1-flash-lite": 0.002,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.002
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 2651,
+          "empty": false,
+          "loop": false,
+          "cer": 0.738,
+          "acc": 0.262,
+          "seq": 0.043,
+          "bow": 0.043,
+          "gap": 0,
+          "len_ratio": 0.574,
+          "invention": 0.912,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܨܗܝܩ",
+            "ܕܛܠܠܗ",
+            "ܠܬܚܠܝ",
+            "ܨܗܝܘ",
+            "ܒܦܬܘܡܗ",
+            "ܗܡܝܢ",
+            "ܒܚܩܘܟܐ",
+            "03430"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.002,
+            "gemini-3-flash-preview": 0.075,
+            "gemini-3.1-flash-lite": 0.043,
+            "kraken-sophro-mhiro-defaultseg": 0.058,
+            "kraken-sophro-mhiro-rtl": 0.067,
+            "surya2": 0.002
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-8879b3-p49",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Das Johannesbuch der Mandäer",
+      "year": 1905,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 129,
+          "empty": false,
+          "loop": false,
+          "cer": 0.842,
+          "acc": 0.158,
+          "seq": 0.456,
+          "bow": 0.456,
+          "gap": 0,
+          "len_ratio": 0.261,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.374,
+            "gemini-3.1-flash-lite": 0.456,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.033,
+            "tesseract-syr": 0.111
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 619,
+          "empty": false,
+          "loop": false,
+          "cer": 0.854,
+          "acc": 0.146,
+          "seq": 0.311,
+          "bow": 0.311,
+          "gap": 0,
+          "len_ratio": 1.253,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܢܦܫܗ",
+            "ܠܡܦܩܕܢܘܗܝ",
+            "ܢܢܘܩܘܦܝܣܛܘܣ",
+            "ܠܡܕܒܚܐ",
+            "ܕܡܪܝܐ",
+            "ܒܢܝܢܝܘܣ",
+            "ܠܕܡܘܬܐ",
+            "ܕܚܝܘܬܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.374,
+            "gemini-3.1-flash-lite": 0.311,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.032,
+            "tesseract-syr": 0.052
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 494,
+          "empty": false,
+          "loop": false,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܠܡܢܘ",
+            "ܢܬܡܛܐ",
+            "ܢܠܡܗܘ",
+            "ܢܗܘܐ",
+            "ܝܬܝܪ",
+            "ܢܠܚܘܪ",
+            "ܠܕܡܘܬ",
+            "ܬܚܝܬ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.456,
+            "gemini-3-flash-preview": 0.311,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.032,
+            "tesseract-syr": 0.078
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 556,
+          "empty": false,
+          "loop": false,
+          "cer": 0.905,
+          "acc": 0.095,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.126,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܫܢܡ",
+            "ܬܠܡܫܘܘܘܢ",
+            "ܘܫܒܘܡܘܐ",
+            "ܐܡܘܢܐ",
+            "ܒܘܬܘܐ",
+            "ܡܘܝܘ",
+            "ܛܨܘܨܝܠܢܒ",
+            "ܐܠܢܒܘܡܘܠܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.067,
+            "surya2": 0,
+            "tesseract-syr": 0.008
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 556,
+          "empty": false,
+          "loop": false,
+          "cer": 0.899,
+          "acc": 0.101,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.126,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܢܘܡܐ",
+            "ܐܘܡܘܒܫܘ",
+            "ܢܘܘܘܫܡܠܬ",
+            "ܡܢܫܘ",
+            "ܢܠܘܡܘܒܢܠܐ",
+            "ܒܢܠܝܨܘܨܛ",
+            "ܘܝܘܡ",
+            "ܐܘܬܘܒ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.067,
+            "surya2": 0,
+            "tesseract-syr": 0.016
+          }
+        },
+        "surya2": {
+          "n_content": 4752,
+          "empty": false,
+          "loop": true,
+          "cer": 9.502,
+          "acc": 0,
+          "seq": 0.032,
+          "bow": 0.032,
+          "gap": 0,
+          "len_ratio": 9.619,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "لہری"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.033,
+            "gemini-3-flash-preview": 0.032,
+            "gemini-3.1-flash-lite": 0.032,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.028
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 225,
+          "empty": false,
+          "loop": false,
+          "cer": 0.834,
+          "acc": 0.166,
+          "seq": 0.064,
+          "bow": 0.078,
+          "gap": 0.014,
+          "len_ratio": 0.455,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܚܝܘܧܫܘ",
+            "ܐܬܟܘ",
+            "ܫܡܘܬ",
+            "ܩܘܘܐܡܘ",
+            "ܐܡܘܤ",
+            "ܝܢܬܘ",
+            "ܣܬܘܝܫܡܒ",
+            "ܦܘܩܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.111,
+            "gemini-3-flash-preview": 0.052,
+            "gemini-3.1-flash-lite": 0.078,
+            "kraken-sophro-mhiro-defaultseg": 0.008,
+            "kraken-sophro-mhiro-rtl": 0.016,
+            "surya2": 0.028
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-9f535f-p265",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+      "year": 1859,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 752,
+          "empty": false,
+          "loop": false,
+          "cer": 0.083,
+          "acc": 0.917,
+          "seq": 0.563,
+          "bow": 0.602,
+          "gap": 0.039,
+          "len_ratio": 0.995,
+          "invention": 0.078,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "punktieren",
+            "unserer",
+            "onject",
+            "תשתלחף",
+            "דתשתחלף"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.944,
+            "gemini-3.1-flash-lite": 0.602,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.611,
+            "tesseract-syr": 0.029
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 751,
+          "empty": false,
+          "loop": false,
+          "cer": 0.078,
+          "acc": 0.922,
+          "seq": 0.598,
+          "bow": 0.624,
+          "gap": 0.026,
+          "len_ratio": 0.993,
+          "invention": 0.016,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "השתלחף"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.944,
+            "gemini-3.1-flash-lite": 0.624,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.62,
+            "tesseract-syr": 0.028
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 756,
+          "empty": false,
+          "loop": false,
+          "invention": 0.114,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "הנרואה",
+            "חזי¹",
+            "במיא",
+            "מדלחו²",
+            "דתחוור",
+            "דמן³",
+            "השתחלף⁴",
+            "מדלחו"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.602,
+            "gemini-3-flash-preview": 0.624,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.858,
+            "tesseract-syr": 0.01
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 596,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.788,
+          "invention": 0.987,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܐܠܐ",
+            "ܐܪܒܕ",
+            "ܕܙܪܒܢܕ",
+            "ܐܕܒܕܟ",
+            "ܐܕܒܕ",
+            "ܐܕܙܕ",
+            "ܘܙܐܕ",
+            "ܪܙܘܡ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.078,
+            "surya2": 0,
+            "tesseract-syr": 0.042
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 596,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.788,
+          "invention": 0.987,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܠܐܐ",
+            "ܕܒܪܐ",
+            "ܕܒܕܐ",
+            "ܟܕܒܕܐ",
+            "ܕܢܒܪܙܕ",
+            "ܕܐܙܘ",
+            "ܕܙܕܐ",
+            "ܡܪܪܘܪ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.078,
+            "surya2": 0,
+            "tesseract-syr": 0.021
+          }
+        },
+        "surya2": {
+          "n_content": 758,
+          "empty": false,
+          "loop": false,
+          "cer": 0.083,
+          "acc": 0.917,
+          "seq": 0.837,
+          "bow": 0.858,
+          "gap": 0.021,
+          "len_ratio": 1.003,
+          "invention": 0.152,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "הנדואה",
+            "חיי1",
+            "במיא2",
+            "מדלחי3",
+            "דהחיוור",
+            "דמן4",
+            "פיינא",
+            "השתחלף5"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.611,
+            "gemini-3-flash-preview": 0.62,
+            "gemini-3.1-flash-lite": 0.858,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.035
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 604,
+          "empty": false,
+          "loop": false,
+          "cer": 0.991,
+          "acc": 0.009,
+          "seq": 0.01,
+          "bow": 0.01,
+          "gap": 0,
+          "len_ratio": 0.799,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܥܠܐܐ",
+            "5998",
+            "54099",
+            "90953",
+            "3339",
+            "5585",
+            "38506",
+            "11111"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.029,
+            "gemini-3-flash-preview": 0.028,
+            "gemini-3.1-flash-lite": 0.01,
+            "kraken-sophro-mhiro-defaultseg": 0.042,
+            "kraken-sophro-mhiro-rtl": 0.021,
+            "surya2": 0.035
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-b899e7-p169",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Mingana-Lewis Palimpsest (Syriac/Arabic/Quranic)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1181,
+          "empty": false,
+          "loop": false,
+          "cer": 0.83,
+          "acc": 0.17,
+          "seq": 0.085,
+          "bow": 0.177,
+          "gap": 0.092,
+          "len_ratio": 1.045,
+          "invention": 0.711,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "المجهود",
+            "خيروسيه",
+            "للثور",
+            "تقتول",
+            "تنظري",
+            "اهرب",
+            "حاجب",
+            "اكمل"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.191,
+            "gemini-3.1-flash-lite": 0.177,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.3,
+            "tesseract-syr": 0.035
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1199,
+          "empty": false,
+          "loop": false,
+          "cer": 0.305,
+          "acc": 0.695,
+          "seq": 0.348,
+          "bow": 0.38,
+          "gap": 0.033,
+          "len_ratio": 1.061,
+          "invention": 0.527,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "تسبيحك",
+            "ملات",
+            "فاني",
+            "ينفتح",
+            "فبغير",
+            "فاتح",
+            "الافواه",
+            "المسدوده"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.191,
+            "gemini-3.1-flash-lite": 0.38,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.358,
+            "tesseract-syr": 0.006
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1130,
+          "empty": false,
+          "loop": false,
+          "invention": 0.595,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "سجدت",
+            "وأنت",
+            "مدته",
+            "فإنه",
+            "يفلح",
+            "الأفواه",
+            "المسدودة",
+            "رفيق"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.177,
+            "gemini-3-flash-preview": 0.38,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.304,
+            "tesseract-syr": 0
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 840,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.743,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܛܙܚܢܡ",
+            "ܘܫܢܬܒ",
+            "ܕܣܢܝܦܐܘ",
+            "ܕܥܐܕ",
+            "ܐܚܢܪ",
+            "ܐܢܪܘܦܢܢܐ",
+            "ܢܩܚܬܕ",
+            "ܐܝܦܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.146,
+            "surya2": 0,
+            "tesseract-syr": 0.081
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 840,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.743,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܡܢܚܙܛ",
+            "ܒܬܢܫܘ",
+            "ܐܢܢܦܘܪܢܐ",
+            "ܪܢܚܐ",
+            "ܕܐܥܕ",
+            "ܘܐܦܝܢܣܕ",
+            "ܐܦܝܐ",
+            "ܕܬܚܩܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.146,
+            "surya2": 0,
+            "tesseract-syr": 0.075
+          }
+        },
+        "surya2": {
+          "n_content": 1231,
+          "empty": false,
+          "loop": false,
+          "cer": 0.397,
+          "acc": 0.603,
+          "seq": 0.273,
+          "bow": 0.304,
+          "gap": 0.031,
+          "len_ratio": 1.089,
+          "invention": 0.539,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "تسجينه",
+            "والحيت",
+            "فانفيه",
+            "ينفع",
+            "فيعبر",
+            "يحيى",
+            "التحق",
+            "يفكر"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.3,
+            "gemini-3-flash-preview": 0.358,
+            "gemini-3.1-flash-lite": 0.304,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.038
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 99,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.088,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܦܐܐܬ",
+            "ܬܪܨܢ",
+            "ܙܙܥܘܧܦܕ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.035,
+            "gemini-3-flash-preview": 0.006,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.081,
+            "kraken-sophro-mhiro-rtl": 0.075,
+            "surya2": 0.038
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-b89aa5-p213",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+      "year": 1400,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1260,
+          "empty": false,
+          "loop": false,
+          "cer": 0.561,
+          "acc": 0.439,
+          "seq": 0.356,
+          "bow": 0.359,
+          "gap": 0.003,
+          "len_ratio": 1.486,
+          "invention": 0.358,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "πρὸς",
+            "ἐκέκραξα",
+            "πρωῒ",
+            "προφθά",
+            "σωπόν",
+            "πτωχός",
+            "τητός",
+            "πεινώθην"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.359,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.091,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 848,
+          "empty": false,
+          "loop": false,
+          "invention": 0.325,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "προσώπου",
+            "κέκραγα",
+            "προσίτω",
+            "προφθάσει",
+            "πρόσωπόν",
+            "πτωχὸς",
+            "νεότητός",
+            "ἐταπεινώθην"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.359,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.111,
+            "tesseract-syr": 0
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 948,
+          "empty": false,
+          "loop": false,
+          "cer": 1.118,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.118,
+          "invention": 0.977,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܬܘܬܘ",
+            "ܘܐܘܘܗ",
+            "ܗܘܘܘ",
+            "ܐܨܘܗ",
+            "ܙܐܘܘܗܘ",
+            "ܢܘܘܗܗܕ",
+            "ܟܪܢܙ",
+            "ܬܡܘܗ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.107,
+            "surya2": 0,
+            "tesseract-syr": 0.008
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 948,
+          "empty": false,
+          "loop": false,
+          "cer": 1.118,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.118,
+          "invention": 0.977,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܬܘܬܐ",
+            "ܗܘܘܐܘ",
+            "ܘܘܘܗ",
+            "ܕܗܗܘܘܢ",
+            "ܘܗܘܘܐܙ",
+            "ܗܘܨܐ",
+            "ܘܘܡܡ",
+            "ܗܢܘܟ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.107,
+            "surya2": 0,
+            "tesseract-syr": 0.008
+          }
+        },
+        "surya2": {
+          "n_content": 2317,
+          "empty": false,
+          "loop": true,
+          "cer": 2.157,
+          "acc": 0,
+          "seq": 0.085,
+          "bow": 0.111,
+          "gap": 0.026,
+          "len_ratio": 2.732,
+          "invention": 0.973,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "inches",
+            "ἀγῶπροσ",
+            "προσί",
+            "ὑπροστυχή",
+            "προφθ",
+            "ἀσεισε",
+            "ιρατί",
+            "ἀποχείσ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.091,
+            "gemini-3.1-flash-lite": 0.111,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.003
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 10,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.012,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.008,
+            "kraken-sophro-mhiro-rtl": 0.008,
+            "surya2": 0.003
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-cb88c5-p185",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Ecclesiastical History (Chronicle)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1265,
+          "empty": false,
+          "loop": false,
+          "cer": 0.801,
+          "acc": 0.199,
+          "seq": 0.035,
+          "bow": 0.073,
+          "gap": 0.038,
+          "len_ratio": 1.05,
+          "invention": 0.898,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܡܫܬܡܥܐ",
+            "ܕܕܝܠܗܘܢ",
+            "ܕܕܘܝܕ",
+            "ܕܡܠܠ",
+            "ܡܫܪܝܢܢ",
+            "ܕܥܒܕܐ",
+            "ܕܨܒܝܢܐ",
+            "ܐܬܢܣܒܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.073,
+            "kraken-sophro-mhiro-defaultseg": 0.008,
+            "kraken-sophro-mhiro-rtl": 0.108,
+            "surya2": 0,
+            "tesseract-syr": 0.017
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1205,
+          "empty": false,
+          "loop": false,
+          "invention": 0.922,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܟܠܗܝܢ",
+            "ܠܬܠܡܝ",
+            "ܕܘܗܝ",
+            "ܝܕܥܝܢ",
+            "ܐܢܬܘܢ",
+            "ܕܒܬܪ",
+            "ܦܨܚܐ",
+            "ܘܒܪܗ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.073,
+            "kraken-sophro-mhiro-defaultseg": 0.014,
+            "kraken-sophro-mhiro-rtl": 0.155,
+            "surya2": 0,
+            "tesseract-syr": 0.042
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 1120,
+          "empty": false,
+          "loop": false,
+          "cer": 0.776,
+          "acc": 0.224,
+          "seq": 0.014,
+          "bow": 0.014,
+          "gap": 0,
+          "len_ratio": 0.929,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܕܪܘ",
+            "ܐܫܝܕܩܕ",
+            "ܝܗܘܡܕܗ",
+            "ܘܩܡܣܕ",
+            "ܐܡܕܥ",
+            "ܢܝܘܗܓܬܐ",
+            "ܗܬܘܠ",
+            "ܢܝܒܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.008,
+            "gemini-3.1-flash-lite": 0.014,
+            "kraken-sophro-mhiro-rtl": 0.031,
+            "surya2": 0,
+            "tesseract-syr": 0.036
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 1120,
+          "empty": false,
+          "loop": false,
+          "cer": 0.767,
+          "acc": 0.233,
+          "seq": 0.072,
+          "bow": 0.155,
+          "gap": 0.083,
+          "len_ratio": 0.929,
+          "invention": 0.921,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܥܕܡܐ",
+            "ܕܣܡܩܘ",
+            "ܗܕܡܘܗܝ",
+            "ܕܩܕܝܫܐ",
+            "ܢܘܪܐ",
+            "ܘܪܕܐ",
+            "ܒܫܝܠܐ",
+            "ܣܒܪܝܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.108,
+            "gemini-3.1-flash-lite": 0.155,
+            "kraken-sophro-mhiro-defaultseg": 0.031,
+            "surya2": 0,
+            "tesseract-syr": 0.089
+          }
+        },
+        "surya2": {
+          "n_content": 1321,
+          "empty": false,
+          "loop": false,
+          "cer": 1.096,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.096,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "biblioteca",
+            "state",
+            "united",
+            "states",
+            "community",
+            "common",
+            "languages",
+            "cultures"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.047
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 976,
+          "empty": false,
+          "loop": false,
+          "cer": 0.773,
+          "acc": 0.227,
+          "seq": 0.024,
+          "bow": 0.042,
+          "gap": 0.018,
+          "len_ratio": 0.81,
+          "invention": 0.967,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܪܩܢ",
+            "ܕܩܘܡ",
+            "ܓܢܪܝܫ",
+            "ܠܢܝܬܘܢ",
+            "ܐܫܫܠܘܝܥ",
+            "ܠܝܕܐ",
+            "ܐܝܟܪܛܝܒܘܬܗ",
+            "ܘܢܗܒܬܠܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.017,
+            "gemini-3.1-flash-lite": 0.042,
+            "kraken-sophro-mhiro-defaultseg": 0.036,
+            "kraken-sophro-mhiro-rtl": 0.089,
+            "surya2": 0.047
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-cb8a85-p221",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Theological and Philosophical Anthology",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 331,
+          "empty": false,
+          "loop": false,
+          "cer": 0.793,
+          "acc": 0.207,
+          "seq": 0.058,
+          "bow": 0.082,
+          "gap": 0.023,
+          "len_ratio": 0.323,
+          "invention": 0.938,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܕܢܫܡܥܝܟܘܢ",
+            "ܕܡܬܬܠܡܕܝܢ",
+            "ܐܝܟܢܐ",
+            "ܚܡܘܗܝ",
+            "ܙܕܩܐ",
+            "ܕܢܫܡܥܘܢ",
+            "ܢܦܫܝ",
+            "ܠܬܘܒܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.082,
+            "kraken-sophro-mhiro-defaultseg": 0.009,
+            "kraken-sophro-mhiro-rtl": 0.117,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1026,
+          "empty": false,
+          "loop": false,
+          "invention": 0.965,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܢܫܬܘܐ",
+            "ܕܢܗܘܐ",
+            "ܕܘܟܬܐ",
+            "ܒܡܠܟܘܬܐ",
+            "ܕܫܡܝܐ",
+            "ܕܐܡܪ",
+            "ܐܢܬܘܢ",
+            "ܕܐܬܝܬܘܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.082,
+            "kraken-sophro-mhiro-defaultseg": 0.01,
+            "kraken-sophro-mhiro-rtl": 0.059,
+            "surya2": 0.006,
+            "tesseract-syr": 0
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 487,
+          "empty": false,
+          "loop": false,
+          "cer": 0.763,
+          "acc": 0.237,
+          "seq": 0.01,
+          "bow": 0.01,
+          "gap": 0,
+          "len_ratio": 0.475,
+          "invention": 0.982,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܘܘܗܘ",
+            "ܢܝܥܡܬܫܡ",
+            "ܢܘܥܡܕ",
+            "ܗܪܥܨܒ",
+            "ܐܠܫܢܕ",
+            "ܗܡܢܕ",
+            "ܐܬܐܕ",
+            "ܐܩܘܪܦ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.009,
+            "gemini-3.1-flash-lite": 0.01,
+            "kraken-sophro-mhiro-rtl": 0.11,
+            "surya2": 0,
+            "tesseract-syr": 0.05
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 487,
+          "empty": false,
+          "loop": false,
+          "cer": 0.756,
+          "acc": 0.244,
+          "seq": 0.039,
+          "bow": 0.059,
+          "gap": 0.02,
+          "len_ratio": 0.475,
+          "invention": 0.946,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܗܘܘܬ",
+            "ܡܫܬܡܥܝܢ",
+            "ܕܡܥܘܢ",
+            "ܒܨܥܪܗ",
+            "ܕܢܫܠܐ",
+            "ܦܪܘܩܐ",
+            "ܕܐܬܐ",
+            "ܕܢܡܗ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.117,
+            "gemini-3.1-flash-lite": 0.059,
+            "kraken-sophro-mhiro-defaultseg": 0.11,
+            "surya2": 0,
+            "tesseract-syr": 0.04
+          }
+        },
+        "surya2": {
+          "n_content": 426,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0.006,
+          "bow": 0.006,
+          "gap": 0,
+          "len_ratio": 0.415,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "יעדיש",
+            "following",
+            "text",
+            "continuation",
+            "page",
+            "from",
+            "previous",
+            "series"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0.006,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 96,
+          "empty": false,
+          "loop": false,
+          "cer": 0.962,
+          "acc": 0.038,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.094,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܦܡܕܡܣ",
+            "ܡܡܣܡܢ",
+            "ܢܕܒܐ",
+            "51010",
+            "1011",
+            "0101",
+            "31110"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.05,
+            "kraken-sophro-mhiro-rtl": 0.04,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-cb9324-p377",
+      "substratum": "print",
+      "script_class": null,
+      "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+      "year": 1899,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 1805,
+          "empty": false,
+          "loop": false,
+          "cer": 0.001,
+          "acc": 0.999,
+          "seq": 0.999,
+          "bow": 0.999,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.999,
+            "gemini-3.1-flash-lite": 0.999,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.991,
+            "tesseract-syr": 0.023
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1807,
+          "empty": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.999,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.992,
+            "tesseract-syr": 0.023
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1807,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.999,
+            "gemini-3-flash-preview": 1,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.992,
+            "tesseract-syr": 0.023
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 1484,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.821,
+          "invention": 0.99,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܡܙܢܐܘ",
+            "ܟܘܙܢ",
+            "ܪܘܘܐ",
+            "ܪܩܘܢܘܘ",
+            "ܬܩܘܫܘ",
+            "ܐܘܩܘܘܘ",
+            "ܘܘܗܘ",
+            "ܣܪܩܢܬܡܩ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.16,
+            "surya2": 0,
+            "tesseract-syr": 0.042
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 1484,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.821,
+          "invention": 0.99,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܗܘܘ",
+            "ܘܘܘܩܘܐ",
+            "ܘܫܘܩܬ",
+            "ܘܘܢܘܩܪ",
+            "ܐܘܘܪܐ",
+            "ܢܙܘܟ",
+            "ܘܐܢܙܡ",
+            "ܘܫܩܘܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.16,
+            "surya2": 0,
+            "tesseract-syr": 0.019
+          }
+        },
+        "surya2": {
+          "n_content": 1823,
+          "empty": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.992,
+          "bow": 0.992,
+          "gap": 0,
+          "len_ratio": 1.009,
+          "invention": 0.01,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "circ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.991,
+            "gemini-3-flash-preview": 0.992,
+            "gemini-3.1-flash-lite": 0.992,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.023
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 384,
+          "empty": false,
+          "loop": false,
+          "cer": 0.995,
+          "acc": 0.005,
+          "seq": 0.019,
+          "bow": 0.023,
+          "gap": 0.004,
+          "len_ratio": 0.213,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "1016",
+            "0611",
+            "00808",
+            "1610",
+            "18066",
+            "8110",
+            "11010",
+            "6814"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0.023,
+            "gemini-3-flash-preview": 0.023,
+            "gemini-3.1-flash-lite": 0.023,
+            "kraken-sophro-mhiro-defaultseg": 0.042,
+            "kraken-sophro-mhiro-rtl": 0.019,
+            "surya2": 0.023
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-dc867e-p63",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Commentary on Genesis",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 4866,
+          "empty": false,
+          "loop": true,
+          "cer": 1.778,
+          "acc": 0,
+          "seq": 0.062,
+          "bow": 0.088,
+          "gap": 0.026,
+          "len_ratio": 2.378,
+          "invention": 0.774,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܕܢܗܘܐ",
+            "ܕܡܛܠܬܗ",
+            "ܐܬܟܬܒܘ",
+            "ܘܐܝܠܝܢ",
+            "ܕܩܪܝܢ",
+            "ܢܬܒܝܢܘܢ",
+            "ܘܢܕܥܘܢ",
+            "ܛܟܣܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.088,
+            "kraken-sophro-mhiro-defaultseg": 0.002,
+            "kraken-sophro-mhiro-rtl": 0.044,
+            "surya2": 0.003,
+            "tesseract-syr": 0.003
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2046,
+          "empty": false,
+          "loop": false,
+          "invention": 0.921,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܐܡܪ",
+            "ܝܫܘܥ",
+            "ܐܡܝܢ",
+            "ܠܟܘܢ",
+            "ܡܘܫܐ",
+            "ܠܚܡܐ",
+            "ܫܡܝܐ",
+            "ܕܩܘܫܬܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.088,
+            "kraken-sophro-mhiro-defaultseg": 0.019,
+            "kraken-sophro-mhiro-rtl": 0.123,
+            "surya2": 0.003,
+            "tesseract-syr": 0.004
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 811,
+          "empty": false,
+          "loop": false,
+          "cer": 0.771,
+          "acc": 0.229,
+          "seq": 0.016,
+          "bow": 0.019,
+          "gap": 0.003,
+          "len_ratio": 0.396,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܘܘܕܘܙܦ",
+            "ܢܘܗܠ",
+            "ܘܥܕܝܐ",
+            "ܢܝܗܝܬ",
+            "ܬܝܒܕ",
+            "ܐܪܐܦܕ",
+            "ܗܬܠܘܟܐܡ",
+            "ܐܪܐܦ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.002,
+            "gemini-3.1-flash-lite": 0.019,
+            "kraken-sophro-mhiro-rtl": 0.056,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 811,
+          "empty": false,
+          "loop": false,
+          "cer": 0.764,
+          "acc": 0.236,
+          "seq": 0.067,
+          "bow": 0.123,
+          "gap": 0.056,
+          "len_ratio": 0.396,
+          "invention": 0.895,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܦܙܘܕܘܘܬ",
+            "ܐܝܕܥܘ",
+            "ܕܒܝܬ",
+            "ܝܗܝܢ",
+            "ܡܐܟܘܠܬܗ",
+            "ܕܦܐܪܐ",
+            "ܦܐܪܐ",
+            "ܛܒܬܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.044,
+            "gemini-3.1-flash-lite": 0.123,
+            "kraken-sophro-mhiro-defaultseg": 0.056,
+            "surya2": 0,
+            "tesseract-syr": 0.017
+          }
+        },
+        "surya2": {
+          "n_content": 599,
+          "empty": false,
+          "loop": false,
+          "cer": 0.999,
+          "acc": 0.001,
+          "seq": 0.003,
+          "bow": 0.003,
+          "gap": 0,
+          "len_ratio": 0.293,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "handwritten",
+            "script",
+            "text",
+            "serif",
+            "font",
+            "blank",
+            "page",
+            "animation"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.003,
+            "gemini-3.1-flash-lite": 0.003,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 56,
+          "empty": false,
+          "loop": false,
+          "cer": 0.997,
+          "acc": 0.003,
+          "seq": 0.004,
+          "bow": 0.004,
+          "gap": 0,
+          "len_ratio": 0.027,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "05101",
+            "1011",
+            "1111"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.003,
+            "gemini-3.1-flash-lite": 0.004,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0.017,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-dc8750-p155",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Hymns on the Church (Madrashe d-Idta)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 4682,
+          "empty": false,
+          "loop": true,
+          "cer": 2.802,
+          "acc": 0,
+          "seq": 0.012,
+          "bow": 0.015,
+          "gap": 0.003,
+          "len_ratio": 3.491,
+          "invention": 0.991,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܐܘܕܝܬܗ",
+            "ܠܡܪܝܐ",
+            "ܘܠܡܙܡܪ",
+            "ܠܫܡܟ",
+            "ܡܪܝܡܐ",
+            "ܠܡܚܘܝܘ",
+            "ܒܨܦܪܐ",
+            "ܛܝܒܘܬܟ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.015,
+            "kraken-sophro-mhiro-defaultseg": 0.009,
+            "kraken-sophro-mhiro-rtl": 0.062,
+            "surya2": 0.006,
+            "tesseract-syr": 0.015
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1341,
+          "empty": false,
+          "loop": false,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.015,
+            "kraken-sophro-mhiro-defaultseg": 0.062,
+            "kraken-sophro-mhiro-rtl": 0.071,
+            "surya2": 0,
+            "tesseract-syr": 0.251
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 1310,
+          "empty": false,
+          "loop": false,
+          "cer": 0.805,
+          "acc": 0.195,
+          "seq": 0.045,
+          "bow": 0.062,
+          "gap": 0.017,
+          "len_ratio": 0.977,
+          "invention": 0.989,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܢܕܐܦܢ",
+            "ܬܘܘܗܘܦ",
+            "ܗܦܐܐܪܡ",
+            "ܐܝܪܢܡܠ",
+            "ܢܪܓܕ",
+            "ܢܘܘܚܪܦ",
+            "ܒܘܝܠ",
+            "ܢܝܒܓ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.009,
+            "gemini-3.1-flash-lite": 0.062,
+            "kraken-sophro-mhiro-rtl": 0.071,
+            "surya2": 0,
+            "tesseract-syr": 0.081
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 1310,
+          "empty": false,
+          "loop": false,
+          "cer": 0.805,
+          "acc": 0.195,
+          "seq": 0.06,
+          "bow": 0.071,
+          "gap": 0.011,
+          "len_ratio": 0.977,
+          "invention": 0.95,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܢܦܐܕܢ",
+            "ܦܘܗܘܘܬ",
+            "ܡܪܐܐܦܗ",
+            "ܠܡܢܪܝܐ",
+            "ܦܪܚܘܘܢ",
+            "ܕܓܪܢ",
+            "ܢܒܝܐ",
+            "ܠܝܘܒ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.062,
+            "gemini-3.1-flash-lite": 0.071,
+            "kraken-sophro-mhiro-defaultseg": 0.071,
+            "surya2": 0,
+            "tesseract-syr": 0.102
+          }
+        },
+        "surya2": {
+          "n_content": 613,
+          "empty": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.457,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "הראשון",
+            "הארץ",
+            "השנייה",
+            "quarem",
+            "minist",
+            "ciuis",
+            "patris",
+            "misericordia"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.006,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 721,
+          "empty": false,
+          "loop": false,
+          "cer": 0.782,
+          "acc": 0.218,
+          "seq": 0.145,
+          "bow": 0.251,
+          "gap": 0.105,
+          "len_ratio": 0.538,
+          "invention": 0.902,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܡܡܐܕܒܘܗ",
+            "ܢܕܐܢܝܕܗ",
+            "ܣܢܝܙܝ",
+            "ܕܢܝܝܘ",
+            "ܝܡܠܡ",
+            "ܒܦܘܢܝ",
+            "ܝܣܘܡ",
+            "ܘܕܢܡܧܫܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.015,
+            "gemini-3.1-flash-lite": 0.251,
+            "kraken-sophro-mhiro-defaultseg": 0.081,
+            "kraken-sophro-mhiro-rtl": 0.102,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-dc89ba-p137",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Selected Memre; Commentary on the Psalms",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 643,
+          "empty": false,
+          "loop": false,
+          "cer": 0.853,
+          "acc": 0.147,
+          "seq": 0.003,
+          "bow": 0.003,
+          "gap": 0,
+          "len_ratio": 0.218,
+          "invention": 0.921,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܗܘܢ",
+            "ܠܗܘܢ",
+            "ܡܢܟܘܢ",
+            "ܙܕܝܩܐ",
+            "ܐܝܬܘܗܝ",
+            "ܡܫܬܒܗܪܝܢ",
+            "ܡܫܝܚܐ",
+            "ܕܬܒܪܘܢ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.003,
+            "kraken-sophro-mhiro-defaultseg": 0.006,
+            "kraken-sophro-mhiro-rtl": 0.112,
+            "surya2": 0.008,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2951,
+          "empty": false,
+          "loop": true,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܕܒܠܝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.003,
+            "kraken-sophro-mhiro-defaultseg": 0.013,
+            "kraken-sophro-mhiro-rtl": 0.016,
+            "surya2": 0.003,
+            "tesseract-syr": 0.019
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 699,
+          "empty": false,
+          "loop": false,
+          "cer": 0.841,
+          "acc": 0.159,
+          "seq": 0.013,
+          "bow": 0.013,
+          "gap": 0,
+          "len_ratio": 0.237,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܘܘܕܗܘ",
+            "ܚܝܠܫܕ",
+            "ܡܝܢܫ",
+            "ܝܗܘܝܪܛܬܕ",
+            "ܟܝܣܝܦܒ",
+            "ܐܢܪܬܘܝ",
+            "ܗܢܪܬܘܝ",
+            "ܐܚܘܪ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.006,
+            "gemini-3.1-flash-lite": 0.013,
+            "kraken-sophro-mhiro-rtl": 0.058,
+            "surya2": 0,
+            "tesseract-syr": 0.009
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 699,
+          "empty": false,
+          "loop": false,
+          "cer": 0.842,
+          "acc": 0.158,
+          "seq": 0.013,
+          "bow": 0.016,
+          "gap": 0.003,
+          "len_ratio": 0.237,
+          "invention": 0.968,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܘܗܕܘܘܬ",
+            "ܕܫܠܝܚܐ",
+            "ܫܢܝܡ",
+            "ܒܦܝܣܝܟ",
+            "ܕܬܛܪܝܘܗܝ",
+            "ܝܘܬܪܢܐ",
+            "ܝܘܬܪܢܗ",
+            "ܐܝܢܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.112,
+            "gemini-3.1-flash-lite": 0.016,
+            "kraken-sophro-mhiro-defaultseg": 0.058,
+            "surya2": 0,
+            "tesseract-syr": 0.009
+          }
+        },
+        "surya2": {
+          "n_content": 383,
+          "empty": false,
+          "loop": true,
+          "cer": 0.999,
+          "acc": 0.001,
+          "seq": 0.003,
+          "bow": 0.003,
+          "gap": 0,
+          "len_ratio": 0.13,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ליטווית",
+            "מפותק",
+            "ביתי",
+            "אפותי",
+            "אותי",
+            "מאות",
+            "איתי",
+            "מאותי"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.008,
+            "gemini-3.1-flash-lite": 0.003,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 79,
+          "empty": false,
+          "loop": false,
+          "cer": 0.995,
+          "acc": 0.005,
+          "seq": 0.019,
+          "bow": 0.019,
+          "gap": 0,
+          "len_ratio": 0.027,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "0ܘ105",
+            "1011",
+            "8117",
+            "11117",
+            "0414"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0.019,
+            "kraken-sophro-mhiro-defaultseg": 0.009,
+            "kraken-sophro-mhiro-rtl": 0.009,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-dc8d8f-p42",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Mystical Discourses",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 152,
+          "empty": false,
+          "loop": false,
+          "cer": 0.583,
+          "acc": 0.417,
+          "seq": 0.87,
+          "bow": 0.87,
+          "gap": 0,
+          "len_ratio": 1.583,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.87,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.844,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 96,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.87,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0.974,
+            "tesseract-syr": 0
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 108,
+          "empty": false,
+          "loop": false,
+          "cer": 1.125,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.125,
+          "invention": 0.923,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܬܘܘܗܘܦ",
+            "ܙܘܬܙ",
+            "ܐܦܙܐܘܐܙܘ",
+            "ܐܬܘܘܗܐܘ",
+            "ܐܙܘܘ",
+            "ܐܘܙܙܘܩܗܘ",
+            "ܐܬܙܐܘ",
+            "ܐܐܘܙܦܙ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-rtl": 0.154,
+            "surya2": 0,
+            "tesseract-syr": 0.036
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 108,
+          "empty": false,
+          "loop": false,
+          "cer": 1.125,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 1.125,
+          "invention": 0.923,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܦܘܗܘܘܬ",
+            "ܘܗܩܘܙܙܘܐ",
+            "ܘܘܙܐ",
+            "ܘܐܗܘܘܬܐ",
+            "ܘܙܐܘܐܙܦܐ",
+            "ܙܬܘܙ",
+            "ܦܦܐܐ",
+            "ܘܙܐܙܩܝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.154,
+            "surya2": 0,
+            "tesseract-syr": 0.036
+          }
+        },
+        "surya2": {
+          "n_content": 94,
+          "empty": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.974,
+          "bow": 0.974,
+          "gap": 0,
+          "len_ratio": 0.979,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.844,
+            "gemini-3.1-flash-lite": 0.974,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 62,
+          "empty": false,
+          "loop": false,
+          "cer": 0.979,
+          "acc": 0.021,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.646,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "0510110",
+            "1011",
+            "0101",
+            "31110",
+            "ܘܘܗܘ",
+            "1111",
+            "ܐܢܗܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0.036,
+            "kraken-sophro-mhiro-rtl": 0.036,
+            "surya2": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "syriac-dc9416-p448",
+      "substratum": "manuscript",
+      "script_class": null,
+      "title": "Syriac Bible of Paris (Peshitta, illuminated)",
+      "year": null,
+      "has_ref": false,
+      "engines": {
+        "dots-mocr": {
+          "n_content": 0,
+          "empty": true,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "surya2": 0,
+            "tesseract-syr": 0
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 4600,
+          "empty": false,
+          "loop": true,
+          "cer": 0.879,
+          "acc": 0.121,
+          "seq": 0.01,
+          "bow": 0.018,
+          "gap": 0.008,
+          "len_ratio": 1.19,
+          "invention": 0.643,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܕܐܝܟܢܐ",
+            "ܕܐܝܬܝܗܘܢ",
+            "ܦܪܨܘܦ",
+            "ܘܐܬܡܠܝܬ",
+            "ܘܐܬܝܠܕܘ",
+            "ܘܐܬܟܪܗܘ",
+            "ܕܐܢܫܐ",
+            "ܘܐܬܚܒܠܘ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3.1-flash-lite": 0.018,
+            "kraken-sophro-mhiro-defaultseg": 0.013,
+            "kraken-sophro-mhiro-rtl": 0.033,
+            "surya2": 0,
+            "tesseract-syr": 0.037
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3867,
+          "empty": false,
+          "loop": false,
+          "invention": 0.918,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܝܫܘܥ",
+            "ܠܬܠܡܝ",
+            "ܕܘܗܝ",
+            "ܝܕܥܝܢ",
+            "ܐܢܬܘܢ",
+            "ܕܒܬܪ",
+            "ܦܨܚܐ",
+            "ܡܫܬܠܡ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.018,
+            "kraken-sophro-mhiro-defaultseg": 0.032,
+            "kraken-sophro-mhiro-rtl": 0.182,
+            "surya2": 0,
+            "tesseract-syr": 0.079
+          }
+        },
+        "kraken-sophro-mhiro-defaultseg": {
+          "n_content": 3093,
+          "empty": false,
+          "loop": false,
+          "cer": 0.744,
+          "acc": 0.256,
+          "seq": 0.017,
+          "bow": 0.032,
+          "gap": 0.015,
+          "len_ratio": 0.8,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܝܓܣܐ",
+            "ܐܫܝܒ",
+            "ܐܫܢܐ",
+            "ܢܘܗܢܩܒܘܫ",
+            "ܗܘܡܚ",
+            "ܗܪܣܒ",
+            "ܒܝܪܕ",
+            "ܝܗܘܕ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.013,
+            "gemini-3.1-flash-lite": 0.032,
+            "kraken-sophro-mhiro-rtl": 0.037,
+            "surya2": 0,
+            "tesseract-syr": 0.087
+          }
+        },
+        "kraken-sophro-mhiro-rtl": {
+          "n_content": 3093,
+          "empty": false,
+          "loop": false,
+          "cer": 0.739,
+          "acc": 0.261,
+          "seq": 0.065,
+          "bow": 0.182,
+          "gap": 0.117,
+          "len_ratio": 0.8,
+          "invention": 0.91,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܒܝܫܐ",
+            "ܐܣܓܝ",
+            "ܕܪܝܒ",
+            "ܒܣܪܗ",
+            "ܡܚܟܡ",
+            "ܘܪܕܐ",
+            "ܘܡܗܦܟ",
+            "ܪܥܝܐ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.033,
+            "gemini-3.1-flash-lite": 0.182,
+            "kraken-sophro-mhiro-defaultseg": 0.037,
+            "surya2": 0,
+            "tesseract-syr": 0.124
+          }
+        },
+        "surya2": {
+          "n_content": 879,
+          "empty": false,
+          "loop": true,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0.227,
+          "invention": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "consultatione",
+            "servicibus",
+            "proprietatis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "kraken-sophro-mhiro-defaultseg": 0,
+            "kraken-sophro-mhiro-rtl": 0,
+            "tesseract-syr": 0.005
+          }
+        },
+        "tesseract-syr": {
+          "n_content": 829,
+          "empty": false,
+          "loop": false,
+          "cer": 0.839,
+          "acc": 0.161,
+          "seq": 0.046,
+          "bow": 0.079,
+          "gap": 0.033,
+          "len_ratio": 0.214,
+          "invention": 0.841,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ܪܬܢܪܬ",
+            "ܝܢܐܕ",
+            "ܐܒܪܘ",
+            "ܕܢܪܐ",
+            "ܒܠܥܒ",
+            "ܕܢܙܗܘܘ",
+            "ܡܟܠܘܒܐܐ",
+            "ܘܠܫܡܬ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "dots-mocr": 0,
+            "gemini-3-flash-preview": 0.037,
+            "gemini-3.1-flash-lite": 0.079,
+            "kraken-sophro-mhiro-defaultseg": 0.087,
+            "kraken-sophro-mhiro-rtl": 0.124,
+            "surya2": 0.005
+          }
+        }
+      }
+    }
+  ]
+}

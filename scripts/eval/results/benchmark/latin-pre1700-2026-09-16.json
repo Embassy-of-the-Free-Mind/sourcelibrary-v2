@@ -1,0 +1,3539 @@
+{
+  "summary": {
+    "stratum": "latin-pre1700",
+    "issue": 4800,
+    "date": "2026-09-16",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.045,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.831
+        },
+        "invention": {
+          "median": 0.028,
+          "mean": 0.039,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.146,
+            "gap": 0.043,
+            "invention": 0.017,
+            "has_ref": false,
+            "unsupported": [
+              "lychnũ",
+              "καρπασίῳ",
+              "usquequaq"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "cer": 0.092,
+            "gap": 0.013,
+            "invention": 0.121,
+            "has_ref": false,
+            "unsupported": [
+              "haec",
+              "sobria",
+              "manichaeum",
+              "haeretici",
+              "terrae",
+              "abstinet",
+              "gesimam",
+              "dominicae"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "cer": 0.075,
+            "gap": 0.01,
+            "invention": 0.043,
+            "has_ref": false,
+            "unsupported": [
+              "pissimis",
+              "impissima",
+              "uerborꝝ"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-767838-p246",
+            "title": "Phrases Latinae linguae, tabulis delineatæ",
+            "year": 1636,
+            "cer": 0.068,
+            "gap": 0,
+            "invention": 0.035,
+            "has_ref": false,
+            "unsupported": [
+              "tuorúmque",
+              "tuísque",
+              "servetia",
+              "titi"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.059,
+            "has_ref": false,
+            "unsupported": [
+              "atqꝫ",
+              "tantí",
+              "eoqꝫ",
+              "utraqꝫ",
+              "neqꝫ",
+              "populi",
+              "heluetiǫ",
+              "colloquíũ"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.103,
+          "mean": 0.103,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "invention": 0.261,
+            "has_ref": false,
+            "unsupported": [
+              "effet",
+              "sophiftica",
+              "funt",
+              "cœleftia",
+              "ecclefiæ",
+              "ftitutus",
+              "ecclefia",
+              "rafu"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "invention": 0.257,
+            "has_ref": false,
+            "unsupported": [
+              "feueritatẽ",
+              "iuftũ",
+              "conclufionibus",
+              "chriftiano",
+              "poft",
+              "præfenti",
+              "cõpreffione",
+              "abfterreret"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-f0c975-p8",
+            "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort",
+            "year": 1635,
+            "invention": 0.204,
+            "has_ref": false,
+            "unsupported": [
+              "adaucta",
+              "contveverunt",
+              "ufuræ",
+              "fortis",
+              "accelforium",
+              "diffolvitur",
+              "accefforium",
+              "depofitione"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "invention": 0.191,
+            "has_ref": false,
+            "unsupported": [
+              "quadragefima",
+              "nufquam",
+              "hodiè",
+              "honeftam",
+              "chriftiani",
+              "folùm",
+              "quibufdã",
+              "abftinet"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "invention": 0.179,
+            "has_ref": false,
+            "unsupported": [
+              "effe",
+              "lychnū",
+              "infequentis",
+              "affiduè",
+              "inπαπυρίς",
+              "ellychniū",
+              "abfumi",
+              "poteft"
+            ]
+          }
+        ]
+      },
+      "kraken-catmus": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.067,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.718
+        },
+        "invention": {
+          "median": 0.069,
+          "mean": 0.132,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-0b0df1-p100",
+            "title": "Summa de virtutibus et vitiis",
+            "year": 1497,
+            "cer": 0.709,
+            "gap": 0.223,
+            "invention": 0.426,
+            "has_ref": false,
+            "unsupported": [
+              "postet",
+              "este",
+              "spũs",
+              "creatꝯ",
+              "oens",
+              "apliis",
+              "sctũm",
+              "spũm"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.146,
+            "gap": 0.039,
+            "invention": 0.068,
+            "has_ref": false,
+            "unsupported": [
+              "aegragíz",
+              "nineruæ",
+              "sychnũ",
+              "noctu",
+              "linoxcarbasino",
+              "porest",
+              "uaporemdissipat",
+              "marmor"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-2ffaf6-p66",
+            "title": "Das Buch Paragranvm Avreoli Theophrasti Paracelsi : Darinn die vier Columnae, als da ist, Philosophia, Astronomia, Alchi",
+            "year": 1565,
+            "cer": 0.125,
+            "gap": 0,
+            "invention": 0.432,
+            "has_ref": false,
+            "unsupported": [
+              "paragrantini",
+              "bolg",
+              "jeglicbs",
+              "seinò",
+              "5wet",
+              "oing",
+              "gespro",
+              "riròt"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c139bb-p260",
+            "title": "Mechanicorum libri octo",
+            "year": 1684,
+            "cer": 0.104,
+            "gap": 0,
+            "invention": 0.015,
+            "has_ref": false,
+            "unsupported": [
+              "uneiâ",
+              "obñoxiæ",
+              "sæpiùs"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-58b2bd-p44",
+            "title": "Ordo missas celebrandi iuxta missale Romanum ...",
+            "year": 1597,
+            "cer": 0.098,
+            "gap": 0,
+            "invention": 0.154,
+            "has_ref": false,
+            "unsupported": [
+              "ytennmxe",
+              "exntxz",
+              "adhxreat",
+              "iungẽs",
+              "lintelligibili",
+              "cula",
+              "iæculoram",
+              "nonei"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.053,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.757
+        },
+        "invention": {
+          "median": 0.08,
+          "mean": 0.094,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.153,
+            "gap": 0.042,
+            "invention": 0.056,
+            "has_ref": false,
+            "unsupported": [
+              "coelo",
+              "noctum",
+              "assidue",
+              "ellychnium",
+              "marmorium",
+              "ipolia",
+              "quoque",
+              "usquequaque"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-5464dc-p46",
+            "title": "Buccolica",
+            "year": 1510,
+            "cer": 0.109,
+            "gap": 0,
+            "invention": 0.261,
+            "has_ref": false,
+            "unsupported": [
+              "exustumque",
+              "spectem",
+              "quam",
+              "vilem",
+              "locum",
+              "absescet",
+              "temerabo",
+              "panesque"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "cer": 0.081,
+            "gap": 0,
+            "invention": 0.228,
+            "has_ref": false,
+            "unsupported": [
+              "seueritatē",
+              "iustū",
+              "uerū",
+              "partū",
+              "etiā",
+              "incognitū",
+              "zwingliū",
+              "cōpressione"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "cer": 0.075,
+            "gap": 0.01,
+            "invention": 0.116,
+            "has_ref": false,
+            "unsupported": [
+              "rasuras",
+              "sacellitio",
+              "testificetur",
+              "piissimis",
+              "pessima",
+              "impiissima",
+              "uerborum",
+              "religionis"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "cer": 0.068,
+            "gap": 0.013,
+            "invention": 0.101,
+            "has_ref": false,
+            "unsupported": [
+              "clamor",
+              "carnum",
+              "cuitas",
+              "sobriam",
+              "matrem",
+              "familias",
+              "abstinent",
+              "quadragesimam"
+            ]
+          }
+        ]
+      },
+      "tesseract-lat": {
+        "pages_run": 20,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.126,
+          "catastrophic": 2,
+          "median_gap": 0.002,
+          "median_bow": 0.506
+        },
+        "invention": {
+          "median": 0.481,
+          "mean": 0.516,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-85d458-p480",
+            "title": "Fabularum Aesopiarum. Libri V. Phoenix. Psalmi XVII. Erotopaegnion. Satira In Bavium. Alcaeus Latinus. Elegiarum Lib. IV",
+            "year": 1623,
+            "cer": 0.723,
+            "gap": 0.013,
+            "invention": 0.538,
+            "has_ref": false,
+            "unsupported": [
+              "meti",
+              "miarus",
+              "finita",
+              "rtcolere",
+              "tesn",
+              "penitis",
+              "phila",
+              "maritus"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-42915a-p15",
+            "title": "Epistolae ad titum expositio, in qua pleraque tractantur per quaestiones, ut à pueris facilius percipi, et retineri poss",
+            "year": 1552,
+            "cer": 0.577,
+            "gap": 0.007,
+            "invention": 0.743,
+            "has_ref": false,
+            "unsupported": [
+              "pistol",
+              "preterinferip",
+              "triptionem",
+              "poft",
+              "infpetiónm",
+              "dofine",
+              "burg",
+              "minifirorini"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-2ffaf6-p66",
+            "title": "Das Buch Paragranvm Avreoli Theophrasti Paracelsi : Darinn die vier Columnae, als da ist, Philosophia, Astronomia, Alchi",
+            "year": 1565,
+            "cer": 0.355,
+            "gap": 0,
+            "invention": 0.8,
+            "has_ref": false,
+            "unsupported": [
+              "ppasudpatadranum",
+              "jeglicbe",
+              "einen",
+              "verlíée",
+              "5woeí",
+              "gefprocben",
+              "voirbt",
+              "egritudo"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-0b0df1-p100",
+            "title": "Summa de virtutibus et vitiis",
+            "year": 1497,
+            "cer": 0.309,
+            "gap": 0.012,
+            "invention": 0.826,
+            "has_ref": false,
+            "unsupported": [
+              "i5cfide",
+              "pofíct",
+              "efie",
+              "tdem",
+              "fpáe",
+              "crcat",
+              "oibtrg",
+              "farictío"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-f0c975-p8",
+            "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort",
+            "year": 1635,
+            "cer": 0.261,
+            "gap": 0.06,
+            "invention": 0.594,
+            "has_ref": false,
+            "unsupported": [
+              "ees3",
+              "quodhecromanis",
+              "tmperánte",
+              "displidí",
+              "4754",
+              "plum",
+              "prediis",
+              "tridit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "latin-pre1700-0b0df1-p100",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Summa de virtutibus et vitiis",
+      "year": 1497,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 3336,
+          "empty": false,
+          "loop": false,
+          "cer": 0.06,
+          "acc": 0.94,
+          "seq": 0.84,
+          "bow": 0.84,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.159,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqꝫ",
+            "scđo",
+            "coꝛdibus",
+            "eiūs",
+            "spēs",
+            "viij",
+            "coꝛda",
+            "vnde"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.84,
+            "kraken-catmus": 0.518,
+            "surya2": 0.77,
+            "tesseract-lat": 0.233
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3328,
+          "empty": false,
+          "loop": false,
+          "invention": 0.133,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqz",
+            "scdo",
+            "inueniatu",
+            "sanc",
+            "postqz",
+            "producitur",
+            "appzopriatur",
+            "appzopriat"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.84,
+            "kraken-catmus": 0.543,
+            "surya2": 0.743,
+            "tesseract-lat": 0.25
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 3340,
+          "empty": false,
+          "loop": false,
+          "cer": 0.709,
+          "acc": 0.291,
+          "seq": 0.32,
+          "bow": 0.543,
+          "gap": 0.223,
+          "len_ratio": 1.004,
+          "invention": 0.426,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "postet",
+            "este",
+            "spũs",
+            "creatꝯ",
+            "oens",
+            "apliis",
+            "sctũm",
+            "spũm"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.518,
+            "gemini-3.1-flash-lite": 0.543,
+            "surya2": 0.522,
+            "tesseract-lat": 0.25
+          }
+        },
+        "surya2": {
+          "n_content": 3351,
+          "empty": false,
+          "loop": false,
+          "cer": 0.06,
+          "acc": 0.94,
+          "seq": 0.742,
+          "bow": 0.743,
+          "gap": 0.002,
+          "len_ratio": 1.007,
+          "invention": 0.202,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "creatr",
+            "osidit",
+            "aplus",
+            "sectūm",
+            "atqr",
+            "sedo",
+            "bicunt",
+            "bicitur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.77,
+            "gemini-3.1-flash-lite": 0.743,
+            "kraken-catmus": 0.522,
+            "tesseract-lat": 0.197
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 3328,
+          "empty": false,
+          "loop": false,
+          "cer": 0.309,
+          "acc": 0.691,
+          "seq": 0.238,
+          "bow": 0.25,
+          "gap": 0.012,
+          "len_ratio": 1,
+          "invention": 0.826,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "i5cfide",
+            "pofíct",
+            "efie",
+            "tdem",
+            "fpáe",
+            "crcat",
+            "oibtrg",
+            "farictío"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.233,
+            "gemini-3.1-flash-lite": 0.25,
+            "kraken-catmus": 0.25,
+            "surya2": 0.197
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-217b93-p10",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "... Disputationem inauguralem de concursu actionum",
+      "year": 1620,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1327,
+          "empty": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.976,
+          "bow": 0.976,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "superfuum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.976,
+            "kraken-catmus": 0.964,
+            "surya2": 0.925,
+            "tesseract-lat": 0.604
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1328,
+          "empty": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "raptoru",
+            "supereft",
+            "consequēdum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.976,
+            "kraken-catmus": 0.947,
+            "surya2": 0.919,
+            "tesseract-lat": 0.611
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1336,
+          "empty": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.947,
+          "bow": 0.947,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prator2"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.964,
+            "gemini-3.1-flash-lite": 0.947,
+            "surya2": 0.911,
+            "tesseract-lat": 0.6
+          }
+        },
+        "surya2": {
+          "n_content": 1330,
+          "empty": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.919,
+          "bow": 0.919,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.078,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "peret",
+            "consequendum",
+            "situm",
+            "prius",
+            "quam",
+            "queritur",
+            "opera",
+            "pænales"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.925,
+            "gemini-3.1-flash-lite": 0.919,
+            "kraken-catmus": 0.911,
+            "tesseract-lat": 0.603
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1301,
+          "empty": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.611,
+          "bow": 0.611,
+          "gap": 0,
+          "len_ratio": 0.98,
+          "invention": 0.461,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ritcommodator",
+            "cüim",
+            "füperfluum",
+            "ampliüs",
+            "fervum",
+            "ation",
+            "diverfum",
+            "perrapinamres"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.604,
+            "gemini-3.1-flash-lite": 0.611,
+            "kraken-catmus": 0.6,
+            "surya2": 0.603
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-2ffaf6-p66",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Das Buch Paragranvm Avreoli Theophrasti Paracelsi : Darinn die vier Columnae, als da ist, Philosophia, Astronomia, Alchi",
+      "year": 1565,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 819,
+          "empty": false,
+          "loop": false,
+          "cer": 0.018,
+          "acc": 0.982,
+          "seq": 0.82,
+          "bow": 0.82,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.012,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "bestaten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.82,
+            "kraken-catmus": 0.586,
+            "surya2": 0.864,
+            "tesseract-lat": 0.165
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 822,
+          "empty": false,
+          "loop": false,
+          "invention": 0.126,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "klei",
+            "neren",
+            "eingea",
+            "wisse",
+            "passio",
+            "genom",
+            "eigen",
+            "schafft"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.82,
+            "kraken-catmus": 0.515,
+            "surya2": 0.818,
+            "tesseract-lat": 0.187
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 821,
+          "empty": false,
+          "loop": false,
+          "cer": 0.125,
+          "acc": 0.875,
+          "seq": 0.515,
+          "bow": 0.515,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.432,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "paragrantini",
+            "bolg",
+            "jeglicbs",
+            "seinò",
+            "5wet",
+            "oing",
+            "gespro",
+            "riròt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.586,
+            "gemini-3.1-flash-lite": 0.515,
+            "surya2": 0.555,
+            "tesseract-lat": 0.193
+          }
+        },
+        "surya2": {
+          "n_content": 819,
+          "empty": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.818,
+          "bow": 0.818,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.081,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "such",
+            "paragramm",
+            "arzet",
+            "anatomiei",
+            "zusammen",
+            "ihrer",
+            "bestäten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.864,
+            "gemini-3.1-flash-lite": 0.818,
+            "kraken-catmus": 0.555,
+            "tesseract-lat": 0.17
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 821,
+          "empty": false,
+          "loop": false,
+          "cer": 0.355,
+          "acc": 0.645,
+          "seq": 0.187,
+          "bow": 0.187,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.8,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ppasudpatadranum",
+            "jeglicbe",
+            "einen",
+            "verlíée",
+            "5woeí",
+            "gefprocben",
+            "voirbt",
+            "egritudo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.165,
+            "gemini-3.1-flash-lite": 0.187,
+            "kraken-catmus": 0.193,
+            "surya2": 0.17
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-3b3ace-p140",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+      "year": 1579,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 860,
+          "empty": false,
+          "loop": false,
+          "cer": 0.092,
+          "acc": 0.908,
+          "seq": 0.649,
+          "bow": 0.662,
+          "gap": 0.013,
+          "len_ratio": 1.013,
+          "invention": 0.121,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "haec",
+            "sobria",
+            "manichaeum",
+            "haeretici",
+            "terrae",
+            "abstinet",
+            "gesimam",
+            "dominicae"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.662,
+            "kraken-catmus": 0.768,
+            "surya2": 0.8,
+            "tesseract-lat": 0.406
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 849,
+          "empty": false,
+          "loop": false,
+          "invention": 0.191,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quadragefima",
+            "nufquam",
+            "hodiè",
+            "honeftam",
+            "chriftiani",
+            "folùm",
+            "quibufdã",
+            "abftinet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.662,
+            "kraken-catmus": 0.689,
+            "surya2": 0.68,
+            "tesseract-lat": 0.497
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 844,
+          "empty": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.682,
+          "bow": 0.689,
+          "gap": 0.007,
+          "len_ratio": 0.994,
+          "invention": 0.156,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "difcursus",
+            "sobriã",
+            "matremfamiliàs",
+            "hœretici",
+            "solùm",
+            "quibusdã",
+            "abstinẽt",
+            "quaara"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.768,
+            "gemini-3.1-flash-lite": 0.689,
+            "surya2": 0.787,
+            "tesseract-lat": 0.413
+          }
+        },
+        "surya2": {
+          "n_content": 851,
+          "empty": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.667,
+          "bow": 0.68,
+          "gap": 0.013,
+          "len_ratio": 1.002,
+          "invention": 0.101,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "clamor",
+            "carnum",
+            "cuitas",
+            "sobriam",
+            "matrem",
+            "familias",
+            "abstinent",
+            "quadragesimam"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.8,
+            "gemini-3.1-flash-lite": 0.68,
+            "kraken-catmus": 0.787,
+            "tesseract-lat": 0.409
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 849,
+          "empty": false,
+          "loop": false,
+          "cer": 0.137,
+          "acc": 0.863,
+          "seq": 0.497,
+          "bow": 0.497,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.5,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quadrage",
+            "gaam",
+            "bodie",
+            "velcarnium",
+            "omuia",
+            "imiratur",
+            "foneflam",
+            "matremf"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.406,
+            "gemini-3.1-flash-lite": 0.497,
+            "kraken-catmus": 0.413,
+            "surya2": 0.409
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-42915a-p15",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Epistolae ad titum expositio, in qua pleraque tractantur per quaestiones, ut à pueris facilius percipi, et retineri poss",
+      "year": 1552,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1060,
+          "empty": false,
+          "loop": false,
+          "cer": 0.007,
+          "acc": 0.993,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "propriè"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.926,
+            "kraken-catmus": 0.938,
+            "surya2": 0.912,
+            "tesseract-lat": 0.19
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1064,
+          "empty": false,
+          "loop": false,
+          "invention": 0.091,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "timet",
+            "quoque",
+            "quæcunque",
+            "vult",
+            "novam",
+            "cate",
+            "chismum",
+            "prædicato"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.926,
+            "kraken-catmus": 0.891,
+            "surya2": 0.853,
+            "tesseract-lat": 0.193
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1055,
+          "empty": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.891,
+          "bow": 0.891,
+          "gap": 0,
+          "len_ratio": 0.992,
+          "invention": 0.068,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quæcun",
+            "iußit",
+            "utra",
+            "inciptt",
+            "spse",
+            "concionelegis",
+            "eeclestam",
+            "pertment"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.938,
+            "gemini-3.1-flash-lite": 0.891,
+            "surya2": 0.87,
+            "tesseract-lat": 0.19
+          }
+        },
+        "surya2": {
+          "n_content": 1061,
+          "empty": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.853,
+          "bow": 0.853,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.07,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "authoritate",
+            "fecerunt",
+            "monachi",
+            "prohibent",
+            "occonomia",
+            "iuuenculas",
+            "occonomica",
+            "uidelicet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.912,
+            "gemini-3.1-flash-lite": 0.853,
+            "kraken-catmus": 0.87,
+            "tesseract-lat": 0.195
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 570,
+          "empty": false,
+          "loop": false,
+          "cer": 0.577,
+          "acc": 0.423,
+          "seq": 0.186,
+          "bow": 0.193,
+          "gap": 0.007,
+          "len_ratio": 0.536,
+          "invention": 0.743,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pistol",
+            "preterinferip",
+            "triptionem",
+            "poft",
+            "infpetiónm",
+            "dofine",
+            "burg",
+            "minifirorini"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.19,
+            "gemini-3.1-flash-lite": 0.193,
+            "kraken-catmus": 0.19,
+            "surya2": 0.195
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-517be1-p4",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "De transactionibus theses LXIV",
+      "year": 1582,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 827,
+          "empty": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.704,
+          "bow": 0.704,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.011,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "præpositus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.704,
+            "kraken-catmus": 0.957,
+            "surya2": 0.934,
+            "tesseract-lat": 0.414
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 825,
+          "empty": false,
+          "loop": false,
+          "invention": 0.135,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "caufæ",
+            "reftitutio",
+            "præftet",
+            "infcis",
+            "collufio",
+            "præpofitus",
+            "ecclefiæ",
+            "conftitutis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.704,
+            "kraken-catmus": 0.675,
+            "surya2": 0.651,
+            "tesseract-lat": 0.612
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 825,
+          "empty": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.675,
+          "bow": 0.675,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.033,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "uerô",
+            "prępositus",
+            "recté"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.957,
+            "gemini-3.1-flash-lite": 0.675,
+            "surya2": 0.911,
+            "tesseract-lat": 0.42
+          }
+        },
+        "surya2": {
+          "n_content": 827,
+          "empty": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.651,
+          "bow": 0.651,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adeo",
+            "prepositus",
+            "recte",
+            "liteincerta",
+            "efse"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.934,
+            "gemini-3.1-flash-lite": 0.651,
+            "kraken-catmus": 0.911,
+            "tesseract-lat": 0.414
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 836,
+          "empty": false,
+          "loop": false,
+          "cer": 0.082,
+          "acc": 0.918,
+          "seq": 0.605,
+          "bow": 0.612,
+          "gap": 0.007,
+          "len_ratio": 1.013,
+          "invention": 0.436,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "caufz",
+            "adeó",
+            "necín",
+            "íntegrum",
+            "reftítutío",
+            "requi",
+            "ratur",
+            "obligationís"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.414,
+            "gemini-3.1-flash-lite": 0.612,
+            "kraken-catmus": 0.42,
+            "surya2": 0.414
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-5464dc-p46",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Buccolica",
+      "year": 1510,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 779,
+          "empty": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.027,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "iuuentas",
+            "panesq",
+            "īgressi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.955,
+            "kraken-catmus": 0.697,
+            "surya2": 0.708,
+            "tesseract-lat": 0.187
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 778,
+          "empty": false,
+          "loop": false,
+          "invention": 0.027,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "panelq",
+            "quidnā",
+            "nōdū"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.955,
+            "kraken-catmus": 0.718,
+            "surya2": 0.721,
+            "tesseract-lat": 0.189
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 770,
+          "empty": false,
+          "loop": false,
+          "cer": 0.054,
+          "acc": 0.946,
+          "seq": 0.718,
+          "bow": 0.718,
+          "gap": 0,
+          "len_ratio": 0.99,
+          "invention": 0.268,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "exustũ",
+            "spectẽ",
+            "tãvilẽ",
+            "locũ",
+            "tẽtabo",
+            "panes",
+            "recẽtes",
+            "rubra"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.697,
+            "gemini-3.1-flash-lite": 0.718,
+            "surya2": 0.694,
+            "tesseract-lat": 0.192
+          }
+        },
+        "surya2": {
+          "n_content": 826,
+          "empty": false,
+          "loop": false,
+          "cer": 0.109,
+          "acc": 0.891,
+          "seq": 0.721,
+          "bow": 0.721,
+          "gap": 0,
+          "len_ratio": 1.062,
+          "invention": 0.261,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "exustumque",
+            "spectem",
+            "quam",
+            "vilem",
+            "locum",
+            "absescet",
+            "temerabo",
+            "panesque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.708,
+            "gemini-3.1-flash-lite": 0.721,
+            "kraken-catmus": 0.694,
+            "tesseract-lat": 0.178
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 800,
+          "empty": false,
+          "loop": false,
+          "cer": 0.213,
+          "acc": 0.787,
+          "seq": 0.189,
+          "bow": 0.189,
+          "gap": 0,
+          "len_ratio": 1.028,
+          "invention": 0.77,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "exuftüggtiemus",
+            "fpecie",
+            "gnáua",
+            "íuutehta",
+            "tàvilefortitalocü",
+            "contentaquíefcat",
+            "luxalbefcetéallo",
+            "pradíctacánenté"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.187,
+            "gemini-3.1-flash-lite": 0.189,
+            "kraken-catmus": 0.192,
+            "surya2": 0.178
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-58b2bd-p44",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Ordo missas celebrandi iuxta missale Romanum ...",
+      "year": 1597,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 965,
+          "empty": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.93,
+          "bow": 0.93,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.045,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "usque",
+            "usquead",
+            "oremus",
+            "usquè",
+            "pacē"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.93,
+            "kraken-catmus": 0.749,
+            "surya2": 0.825,
+            "tesseract-lat": 0.497
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 965,
+          "empty": false,
+          "loop": false,
+          "invention": 0.018,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "diiunctis",
+            "stris"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.93,
+            "kraken-catmus": 0.771,
+            "surya2": 0.855,
+            "tesseract-lat": 0.515
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1035,
+          "empty": false,
+          "loop": false,
+          "cer": 0.098,
+          "acc": 0.902,
+          "seq": 0.771,
+          "bow": 0.771,
+          "gap": 0,
+          "len_ratio": 1.073,
+          "invention": 0.154,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ytennmxe",
+            "exntxz",
+            "adhxreat",
+            "iungẽs",
+            "lintelligibili",
+            "cula",
+            "iæculoram",
+            "nonei"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.749,
+            "gemini-3.1-flash-lite": 0.771,
+            "surya2": 0.734,
+            "tesseract-lat": 0.514
+          }
+        },
+        "surya2": {
+          "n_content": 969,
+          "empty": false,
+          "loop": false,
+          "cer": 0.03,
+          "acc": 0.97,
+          "seq": 0.855,
+          "bow": 0.855,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.119,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adhareat",
+            "testigit",
+            "iunges",
+            "veneratus",
+            "adoratoque",
+            "sacrula",
+            "iaculoram",
+            "maio"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.825,
+            "gemini-3.1-flash-lite": 0.855,
+            "kraken-catmus": 0.734,
+            "tesseract-lat": 0.49
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 999,
+          "empty": false,
+          "loop": false,
+          "cer": 0.235,
+          "acc": 0.765,
+          "seq": 0.495,
+          "bow": 0.515,
+          "gap": 0.021,
+          "len_ratio": 1.035,
+          "invention": 0.431,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tgsge",
+            "miffam",
+            "adliz",
+            "reat",
+            "femper",
+            "hoftiam",
+            "facram",
+            "iungés"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.497,
+            "gemini-3.1-flash-lite": 0.515,
+            "kraken-catmus": 0.514,
+            "surya2": 0.49
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-598444-p7",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "De unico et aeterno dei foedere theses inaugurales",
+      "year": 1599,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1291,
+          "empty": false,
+          "loop": false,
+          "cer": 0.051,
+          "acc": 0.949,
+          "seq": 0.802,
+          "bow": 0.802,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.033,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "genes",
+            "dissipabitur",
+            "disrumpentur",
+            "christ9",
+            "cælũ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.802,
+            "kraken-catmus": 0.901,
+            "surya2": 0.903,
+            "tesseract-lat": 0.506
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1289,
+          "empty": false,
+          "loop": false,
+          "invention": 0.146,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "chriftus",
+            "pfal",
+            "fubijcere",
+            "fignificata",
+            "difcernere",
+            "difcrimen",
+            "uniuerfam",
+            "terreftri"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.802,
+            "kraken-catmus": 0.735,
+            "surya2": 0.754,
+            "tesseract-lat": 0.576
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1290,
+          "empty": false,
+          "loop": false,
+          "cer": 0.064,
+          "acc": 0.936,
+          "seq": 0.735,
+          "bow": 0.735,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.059,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "rminis",
+            "sadducais",
+            "lacob",
+            "figurã",
+            "lesa",
+            "edisr",
+            "christy",
+            "calũ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.901,
+            "gemini-3.1-flash-lite": 0.735,
+            "surya2": 0.881,
+            "tesseract-lat": 0.505
+          }
+        },
+        "surya2": {
+          "n_content": 1300,
+          "empty": false,
+          "loop": false,
+          "cer": 0.066,
+          "acc": 0.934,
+          "seq": 0.754,
+          "bow": 0.754,
+          "gap": 0,
+          "len_ratio": 1.009,
+          "invention": 0.086,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "conclusum",
+            "ichoua",
+            "figura",
+            "terre",
+            "estri",
+            "discipuabitur",
+            "paxillorum",
+            "unquam"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.903,
+            "gemini-3.1-flash-lite": 0.754,
+            "kraken-catmus": 0.881,
+            "tesseract-lat": 0.504
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1284,
+          "empty": false,
+          "loop": false,
+          "cer": 0.102,
+          "acc": 0.898,
+          "seq": 0.576,
+          "bow": 0.576,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.442,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zonne",
+            "eterno",
+            "ieboua",
+            "sancfus",
+            "chríftus",
+            "sadducaiís",
+            "veró",
+            "felícítas"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.506,
+            "gemini-3.1-flash-lite": 0.576,
+            "kraken-catmus": 0.505,
+            "surya2": 0.504
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-767838-p246",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Phrases Latinae linguae, tabulis delineatæ",
+      "year": 1636,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1116,
+          "empty": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.821,
+          "bow": 0.821,
+          "gap": 0,
+          "len_ratio": 1.032,
+          "invention": 0.035,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tuorúmque",
+            "tuísque",
+            "servetia",
+            "titi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.821,
+            "kraken-catmus": 0.903,
+            "surya2": 0.867,
+            "tesseract-lat": 0.639
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1081,
+          "empty": false,
+          "loop": false,
+          "invention": 0.097,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "poftulat",
+            "adeft",
+            "fententiæ",
+            "obftinate",
+            "prorfus",
+            "conftat",
+            "amicifque",
+            "folùm"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.821,
+            "kraken-catmus": 0.772,
+            "surya2": 0.779,
+            "tesseract-lat": 0.726
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1108,
+          "empty": false,
+          "loop": false,
+          "cer": 0.069,
+          "acc": 0.931,
+          "seq": 0.772,
+          "bow": 0.772,
+          "gap": 0,
+          "len_ratio": 1.025,
+          "invention": 0.051,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "etinor",
+            "tbat",
+            "poisum",
+            "mill",
+            "caus",
+            "yeurs"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.903,
+            "gemini-3.1-flash-lite": 0.772,
+            "surya2": 0.847,
+            "tesseract-lat": 0.637
+          }
+        },
+        "surya2": {
+          "n_content": 1081,
+          "empty": false,
+          "loop": false,
+          "cer": 0.05,
+          "acc": 0.95,
+          "seq": 0.779,
+          "bow": 0.779,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.053,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "plane",
+            "ægre",
+            "nulla",
+            "solum",
+            "verum",
+            "causā"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.867,
+            "gemini-3.1-flash-lite": 0.779,
+            "kraken-catmus": 0.847,
+            "tesseract-lat": 0.663
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1081,
+          "empty": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.721,
+          "bow": 0.726,
+          "gap": 0.005,
+          "len_ratio": 1,
+          "invention": 0.297,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "latinae",
+            "potis",
+            "plané",
+            "poftula",
+            "adcfl",
+            "cumre",
+            "fententiz",
+            "obffinate"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.639,
+            "gemini-3.1-flash-lite": 0.726,
+            "kraken-catmus": 0.637,
+            "surya2": 0.663
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-8454e4-p310",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+      "year": 1528,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1500,
+          "empty": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.65,
+          "bow": 0.65,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.059,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqꝫ",
+            "tantí",
+            "eoqꝫ",
+            "utraqꝫ",
+            "neqꝫ",
+            "populi",
+            "heluetiǫ",
+            "colloquíũ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.65,
+            "kraken-catmus": 0.898,
+            "surya2": 0.809,
+            "tesseract-lat": 0.296
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1501,
+          "empty": false,
+          "loop": false,
+          "invention": 0.257,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "feueritatẽ",
+            "iuftũ",
+            "conclufionibus",
+            "chriftiano",
+            "poft",
+            "præfenti",
+            "cõpreffione",
+            "abfterreret"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.65,
+            "kraken-catmus": 0.63,
+            "surya2": 0.6,
+            "tesseract-lat": 0.394
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1494,
+          "empty": false,
+          "loop": false,
+          "cer": 0.063,
+          "acc": 0.937,
+          "seq": 0.63,
+          "bow": 0.63,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.07,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "mvrneri",
+            "christ",
+            "iano",
+            "zvingliũ",
+            "legibꝯ",
+            "utra",
+            "uinispeciẽ",
+            "lhesu"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.898,
+            "gemini-3.1-flash-lite": 0.63,
+            "surya2": 0.768,
+            "tesseract-lat": 0.301
+          }
+        },
+        "surya2": {
+          "n_content": 1500,
+          "empty": false,
+          "loop": false,
+          "cer": 0.081,
+          "acc": 0.919,
+          "seq": 0.6,
+          "bow": 0.6,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.228,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "seueritatē",
+            "iustū",
+            "uerū",
+            "partū",
+            "etiā",
+            "incognitū",
+            "zwingliū",
+            "cōpressione"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.809,
+            "gemini-3.1-flash-lite": 0.6,
+            "kraken-catmus": 0.768,
+            "tesseract-lat": 0.282
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1512,
+          "empty": false,
+          "loop": false,
+          "cer": 0.115,
+          "acc": 0.885,
+          "seq": 0.39,
+          "bow": 0.394,
+          "gap": 0.004,
+          "len_ratio": 1.007,
+          "invention": 0.63,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "muvcrun",
+            "esrut",
+            "legumfeueritaté",
+            "mínus",
+            "effeceroiuft",
+            "atqj",
+            "proe",
+            "meís"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.296,
+            "gemini-3.1-flash-lite": 0.394,
+            "kraken-catmus": 0.301,
+            "surya2": 0.282
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-85d458-p480",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Fabularum Aesopiarum. Libri V. Phoenix. Psalmi XVII. Erotopaegnion. Satira In Bavium. Alcaeus Latinus. Elegiarum Lib. IV",
+      "year": 1623,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 564,
+          "empty": false,
+          "loop": false,
+          "cer": 0.044,
+          "acc": 0.956,
+          "seq": 0.952,
+          "bow": 0.961,
+          "gap": 0.009,
+          "len_ratio": 1.033,
+          "invention": 0.012,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vitulus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.961,
+            "kraken-catmus": 0.848,
+            "surya2": 0.974,
+            "tesseract-lat": 0.188
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 546,
+          "empty": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "finit",
+            "facmora"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.961,
+            "kraken-catmus": 0.851,
+            "surya2": 0.952,
+            "tesseract-lat": 0.191
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 535,
+          "empty": false,
+          "loop": false,
+          "cer": 0.048,
+          "acc": 0.952,
+          "seq": 0.851,
+          "bow": 0.851,
+          "gap": 0,
+          "len_ratio": 0.98,
+          "invention": 0.103,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "yricorum",
+            "sanctißimus",
+            "mediciferá",
+            "rona",
+            "mibi",
+            "trabere",
+            "equie",
+            "mdlifera"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.848,
+            "gemini-3.1-flash-lite": 0.851,
+            "surya2": 0.848,
+            "tesseract-lat": 0.204
+          }
+        },
+        "surya2": {
+          "n_content": 564,
+          "empty": false,
+          "loop": false,
+          "cer": 0.046,
+          "acc": 0.954,
+          "seq": 0.944,
+          "bow": 0.952,
+          "gap": 0.009,
+          "len_ratio": 1.033,
+          "invention": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vita",
+            "medicifera"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.974,
+            "gemini-3.1-flash-lite": 0.952,
+            "kraken-catmus": 0.848,
+            "tesseract-lat": 0.188
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 178,
+          "empty": false,
+          "loop": false,
+          "cer": 0.723,
+          "acc": 0.277,
+          "seq": 0.178,
+          "bow": 0.191,
+          "gap": 0.013,
+          "len_ratio": 0.326,
+          "invention": 0.538,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "meti",
+            "miarus",
+            "finita",
+            "rtcolere",
+            "tesn",
+            "penitis",
+            "phila",
+            "maritus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.188,
+            "gemini-3.1-flash-lite": 0.191,
+            "kraken-catmus": 0.204,
+            "surya2": 0.188
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c139bb-p260",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Mechanicorum libri octo",
+      "year": 1684,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1954,
+          "empty": false,
+          "loop": false,
+          "cer": 0.001,
+          "acc": 0.999,
+          "seq": 0.997,
+          "bow": 0.997,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.997,
+            "kraken-catmus": 0.767,
+            "surya2": 0.763,
+            "tesseract-lat": 0.845
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1954,
+          "empty": false,
+          "loop": false,
+          "invention": 0.005,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "obnoxia"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.997,
+            "kraken-catmus": 0.767,
+            "surya2": 0.76,
+            "tesseract-lat": 0.845
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1834,
+          "empty": false,
+          "loop": false,
+          "cer": 0.104,
+          "acc": 0.896,
+          "seq": 0.767,
+          "bow": 0.767,
+          "gap": 0,
+          "len_ratio": 0.939,
+          "invention": 0.015,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "uneiâ",
+            "obñoxiæ",
+            "sæpiùs"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.767,
+            "gemini-3.1-flash-lite": 0.767,
+            "surya2": 0.891,
+            "tesseract-lat": 0.658
+          }
+        },
+        "surya2": {
+          "n_content": 1952,
+          "empty": false,
+          "loop": false,
+          "cer": 0.051,
+          "acc": 0.949,
+          "seq": 0.76,
+          "bow": 0.76,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.04,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "minuta",
+            "singularis",
+            "sæpius",
+            "dupla",
+            "tripla",
+            "sibimet",
+            "multaveris",
+            "multato"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.763,
+            "gemini-3.1-flash-lite": 0.76,
+            "kraken-catmus": 0.891,
+            "tesseract-lat": 0.693
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1950,
+          "empty": false,
+          "loop": false,
+          "cer": 0.031,
+          "acc": 0.969,
+          "seq": 0.845,
+          "bow": 0.845,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.144,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "áciem",
+            "unciá",
+            "romane",
+            "uneiá",
+            "cífet",
+            "fere",
+            "librá",
+            "confpe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.845,
+            "gemini-3.1-flash-lite": 0.845,
+            "kraken-catmus": 0.658,
+            "surya2": 0.693
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c30bd1-p25",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+      "year": 1553,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 587,
+          "empty": false,
+          "loop": false,
+          "cer": 0.075,
+          "acc": 0.925,
+          "seq": 0.586,
+          "bow": 0.596,
+          "gap": 0.01,
+          "len_ratio": 1,
+          "invention": 0.043,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pissimis",
+            "impissima",
+            "uerborꝝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.596,
+            "kraken-catmus": 0.964,
+            "surya2": 0.834,
+            "tesseract-lat": 0.426
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 587,
+          "empty": false,
+          "loop": false,
+          "invention": 0.261,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effet",
+            "sophiftica",
+            "funt",
+            "cœleftia",
+            "ecclefiæ",
+            "ftitutus",
+            "ecclefia",
+            "rafu"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.596,
+            "kraken-catmus": 0.599,
+            "surya2": 0.545,
+            "tesseract-lat": 0.637
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 585,
+          "empty": false,
+          "loop": false,
+          "cer": 0.078,
+          "acc": 0.922,
+          "seq": 0.589,
+          "bow": 0.599,
+          "gap": 0.01,
+          "len_ratio": 0.997,
+          "invention": 0.043,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pijssimis",
+            "impnssima",
+            "uerbo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.964,
+            "gemini-3.1-flash-lite": 0.599,
+            "surya2": 0.839,
+            "tesseract-lat": 0.429
+          }
+        },
+        "surya2": {
+          "n_content": 589,
+          "empty": false,
+          "loop": false,
+          "cer": 0.075,
+          "acc": 0.925,
+          "seq": 0.534,
+          "bow": 0.545,
+          "gap": 0.01,
+          "len_ratio": 1.003,
+          "invention": 0.116,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "rasuras",
+            "sacellitio",
+            "testificetur",
+            "piissimis",
+            "pessima",
+            "impiissima",
+            "uerborum",
+            "religionis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.834,
+            "gemini-3.1-flash-lite": 0.545,
+            "kraken-catmus": 0.839,
+            "tesseract-lat": 0.411
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 592,
+          "empty": false,
+          "loop": false,
+          "cer": 0.077,
+          "acc": 0.923,
+          "seq": 0.637,
+          "bow": 0.637,
+          "gap": 0,
+          "len_ratio": 1.009,
+          "invention": 0.42,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eftet",
+            "ersophiftica",
+            "coeleftía",
+            "ecclefiíae",
+            "füitutus",
+            "damnareac",
+            "ecclefía",
+            "clerícorum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.426,
+            "gemini-3.1-flash-lite": 0.637,
+            "kraken-catmus": 0.429,
+            "surya2": 0.411
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c4f178-p93",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Exercitium puerorum grammaticale",
+      "year": 1491,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1547,
+          "empty": false,
+          "loop": false,
+          "cer": 0.046,
+          "acc": 0.954,
+          "seq": 0.812,
+          "bow": 0.815,
+          "gap": 0.003,
+          "len_ratio": 1.004,
+          "invention": 0.052,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prime",
+            "cōstituo",
+            "vechtē",
+            "exuo",
+            "cōgruo",
+            "stno",
+            "vßblasen",
+            "egreiffen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.815,
+            "kraken-catmus": 0.597,
+            "surya2": 0.857,
+            "tesseract-lat": 0.218
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1541,
+          "empty": false,
+          "loop": false,
+          "invention": 0.109,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "loncutio",
+            "scelre",
+            "cotribuo",
+            "mindere",
+            "cominuo",
+            "setze",
+            "lostruo",
+            "istruo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.815,
+            "kraken-catmus": 0.641,
+            "surya2": 0.807,
+            "tesseract-lat": 0.254
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1550,
+          "empty": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.635,
+          "bow": 0.641,
+          "gap": 0.006,
+          "len_ratio": 1.006,
+          "invention": 0.356,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "oiscussi",
+            "oiscussum",
+            "sceltẽ",
+            "tlon",
+            "tertic",
+            "quorte",
+            "ouas",
+            "oebet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.597,
+            "gemini-3.1-flash-lite": 0.641,
+            "surya2": 0.626,
+            "tesseract-lat": 0.244
+          }
+        },
+        "surya2": {
+          "n_content": 1544,
+          "empty": false,
+          "loop": false,
+          "cer": 0.043,
+          "acc": 0.957,
+          "seq": 0.804,
+          "bow": 0.807,
+          "gap": 0.003,
+          "len_ratio": 1.002,
+          "invention": 0.083,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "terrie",
+            "lōstituo",
+            "straffē",
+            "vechē",
+            "lōgruo",
+            "effiuo",
+            "pzeterita",
+            "eccomposita"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.857,
+            "gemini-3.1-flash-lite": 0.807,
+            "kraken-catmus": 0.626,
+            "tesseract-lat": 0.233
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1556,
+          "empty": false,
+          "loop": false,
+          "cer": 0.255,
+          "acc": 0.745,
+          "seq": 0.247,
+          "bow": 0.254,
+          "gap": 0.006,
+          "len_ratio": 1.01,
+          "invention": 0.776,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "33ietàriona",
+            "oncutío",
+            "concuffi",
+            "concuffüm",
+            "fsercutio",
+            "fcblaben",
+            "iífcutio",
+            "oifcuffi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.218,
+            "gemini-3.1-flash-lite": 0.254,
+            "kraken-catmus": 0.244,
+            "surya2": 0.233
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c79f6d-p67",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+      "year": 1541,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1452,
+          "empty": false,
+          "loop": false,
+          "cer": 0.146,
+          "acc": 0.854,
+          "seq": 0.694,
+          "bow": 0.736,
+          "gap": 0.043,
+          "len_ratio": 1,
+          "invention": 0.017,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "lychnũ",
+            "καρπασίῳ",
+            "usquequaq"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.736,
+            "kraken-catmus": 0.919,
+            "surya2": 0.903,
+            "tesseract-lat": 0.356
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1452,
+          "empty": false,
+          "loop": false,
+          "invention": 0.179,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effe",
+            "lychnū",
+            "infequentis",
+            "affiduè",
+            "inπαπυρίς",
+            "ellychniū",
+            "abfumi",
+            "poteft"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.736,
+            "kraken-catmus": 0.695,
+            "surya2": 0.714,
+            "tesseract-lat": 0.46
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1448,
+          "empty": false,
+          "loop": false,
+          "cer": 0.146,
+          "acc": 0.854,
+          "seq": 0.656,
+          "bow": 0.695,
+          "gap": 0.039,
+          "len_ratio": 0.997,
+          "invention": 0.068,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aegragíz",
+            "nineruæ",
+            "sychnũ",
+            "noctu",
+            "linoxcarbasino",
+            "porest",
+            "uaporemdissipat",
+            "marmor"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.919,
+            "gemini-3.1-flash-lite": 0.695,
+            "surya2": 0.87,
+            "tesseract-lat": 0.353
+          }
+        },
+        "surya2": {
+          "n_content": 1463,
+          "empty": false,
+          "loop": false,
+          "cer": 0.153,
+          "acc": 0.847,
+          "seq": 0.672,
+          "bow": 0.714,
+          "gap": 0.042,
+          "len_ratio": 1.008,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "coelo",
+            "noctum",
+            "assidue",
+            "ellychnium",
+            "marmorium",
+            "ipolia",
+            "quoque",
+            "usquequaque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.903,
+            "gemini-3.1-flash-lite": 0.714,
+            "kraken-catmus": 0.87,
+            "tesseract-lat": 0.355
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1467,
+          "empty": false,
+          "loop": false,
+          "cer": 0.184,
+          "acc": 0.816,
+          "seq": 0.429,
+          "bow": 0.46,
+          "gap": 0.031,
+          "len_ratio": 1.01,
+          "invention": 0.55,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "napmavis",
+            "vitruuiuslib",
+            "biafiftius",
+            "mardotiius",
+            "nünerue",
+            "decorlo",
+            "decíderít",
+            "míhí"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.356,
+            "gemini-3.1-flash-lite": 0.46,
+            "kraken-catmus": 0.353,
+            "surya2": 0.355
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cb2d8a-p7",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Epithalamion, Scriptvm Pio Ac Ervdito Ivveni Antonio Reuchlino Argentoratensi, Pastori in pago Luxheim, &amp; castæ atqu",
+      "year": 1563,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 481,
+          "empty": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.933,
+          "bow": 0.933,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.03,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fanitas",
+            "foli"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.933,
+            "kraken-catmus": 0.785,
+            "surya2": 0.843,
+            "tesseract-lat": 0.594
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 481,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.933,
+            "kraken-catmus": 0.851,
+            "surya2": 0.91,
+            "tesseract-lat": 0.549
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 487,
+          "empty": false,
+          "loop": false,
+          "cer": 0.035,
+          "acc": 0.965,
+          "seq": 0.851,
+          "bow": 0.851,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.074,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vdit",
+            "plasmatà",
+            "vsscis",
+            "coniugtm",
+            "biti"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.785,
+            "gemini-3.1-flash-lite": 0.851,
+            "surya2": 0.917,
+            "tesseract-lat": 0.494
+          }
+        },
+        "surya2": {
+          "n_content": 481,
+          "empty": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.91,
+          "bow": 0.91,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.015,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tobie"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.843,
+            "gemini-3.1-flash-lite": 0.91,
+            "kraken-catmus": 0.917,
+            "tesseract-lat": 0.48
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 487,
+          "empty": false,
+          "loop": false,
+          "cer": 0.096,
+          "acc": 0.904,
+          "seq": 0.549,
+          "bow": 0.549,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.381,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "obige",
+            "fclicitatemà",
+            "tobíasad",
+            "v'tfanitas",
+            "sara",
+            "omníum",
+            "patrís",
+            "cunctafecifti"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.594,
+            "gemini-3.1-flash-lite": 0.549,
+            "kraken-catmus": 0.494,
+            "surya2": 0.48
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cd81db-p5",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Theses theologicae de peccato originali",
+      "year": 1625,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1718,
+          "empty": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "foediffimam",
+            "anabaptiftæ",
+            "effentiã",
+            "ipfã"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.978,
+            "kraken-catmus": 0.724,
+            "surya2": 0.727,
+            "tesseract-lat": 0.742
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1717,
+          "empty": false,
+          "loop": false,
+          "invention": 0.015,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fœdiffimam",
+            "effentia",
+            "tantú"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.978,
+            "kraken-catmus": 0.718,
+            "surya2": 0.725,
+            "tesseract-lat": 0.75
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1734,
+          "empty": false,
+          "loop": false,
+          "cer": 0.064,
+          "acc": 0.936,
+          "seq": 0.715,
+          "bow": 0.718,
+          "gap": 0.003,
+          "len_ratio": 1.01,
+          "invention": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adamijam",
+            "voluntatis",
+            "asserentes",
+            "secundùm",
+            "essentiã",
+            "similitudmem",
+            "deni",
+            "necessariò"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.724,
+            "gemini-3.1-flash-lite": 0.718,
+            "surya2": 0.891,
+            "tesseract-lat": 0.578
+          }
+        },
+        "surya2": {
+          "n_content": 1719,
+          "empty": false,
+          "loop": false,
+          "cer": 0.054,
+          "acc": 0.946,
+          "seq": 0.725,
+          "bow": 0.725,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.061,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ideo",
+            "proprie",
+            "tantum",
+            "verum",
+            "certe",
+            "secundum",
+            "essentiam",
+            "similitudinem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.727,
+            "gemini-3.1-flash-lite": 0.725,
+            "kraken-catmus": 0.891,
+            "tesseract-lat": 0.603
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1743,
+          "empty": false,
+          "loop": false,
+          "cer": 0.066,
+          "acc": 0.934,
+          "seq": 0.75,
+          "bow": 0.75,
+          "gap": 0,
+          "len_ratio": 1.015,
+          "invention": 0.236,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "idcó",
+            "fceditlimam",
+            "gaoftici",
+            "manichzi",
+            "voluntatisd",
+            "accer",
+            "itam",
+            "fedà"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.742,
+            "gemini-3.1-flash-lite": 0.75,
+            "kraken-catmus": 0.578,
+            "surya2": 0.603
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cec219-p215",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "De imperio Magni Mogolis sive India vera commentarius : e variis auctoribus congestus",
+      "year": 1631,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 912,
+          "empty": false,
+          "loop": false,
+          "cer": 0.013,
+          "acc": 0.987,
+          "seq": 0.938,
+          "bow": 0.938,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "praeerat",
+            "autẽ",
+            "regionẽ",
+            "aemularetur",
+            "haesissent",
+            "militiaeque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.938,
+            "kraken-catmus": 0.944,
+            "surya2": 0.92,
+            "tesseract-lat": 0.639
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 908,
+          "empty": false,
+          "loop": false,
+          "invention": 0.019,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "praerat",
+            "t'fander"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.938,
+            "kraken-catmus": 0.951,
+            "surya2": 0.927,
+            "tesseract-lat": 0.66
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 908,
+          "empty": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.951,
+          "bow": 0.951,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.028,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "obnixe",
+            "lautissime",
+            "militiaque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.944,
+            "gemini-3.1-flash-lite": 0.951,
+            "surya2": 0.934,
+            "tesseract-lat": 0.653
+          }
+        },
+        "surya2": {
+          "n_content": 907,
+          "empty": false,
+          "loop": false,
+          "cer": 0.011,
+          "acc": 0.989,
+          "seq": 0.927,
+          "bow": 0.927,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.056,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "achabarise",
+            "autē",
+            "regionē",
+            "obnixē",
+            "lautissimē",
+            "hæsitent"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.92,
+            "gemini-3.1-flash-lite": 0.927,
+            "kraken-catmus": 0.934,
+            "tesseract-lat": 0.642
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 898,
+          "empty": false,
+          "loop": false,
+          "cer": 0.075,
+          "acc": 0.925,
+          "seq": 0.66,
+          "bow": 0.66,
+          "gap": 0,
+          "len_ratio": 0.989,
+          "invention": 0.342,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "yerae",
+            "difceffione",
+            "fada",
+            "übmittere",
+            "occaíionem",
+            "nens",
+            "adjun",
+            "gendi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.639,
+            "gemini-3.1-flash-lite": 0.66,
+            "kraken-catmus": 0.653,
+            "surya2": 0.642
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-f0c975-p8",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort",
+      "year": 1635,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1259,
+          "empty": false,
+          "loop": false,
+          "cer": 0.05,
+          "acc": 0.95,
+          "seq": 0.793,
+          "bow": 0.793,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.022,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adauctâ",
+            "quæst",
+            "helmst"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.793,
+            "kraken-catmus": 0.78,
+            "surya2": 0.889,
+            "tesseract-lat": 0.372
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1259,
+          "empty": false,
+          "loop": false,
+          "invention": 0.204,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adaucta",
+            "contveverunt",
+            "ufuræ",
+            "fortis",
+            "accelforium",
+            "diffolvitur",
+            "accefforium",
+            "depofitione"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.793,
+            "kraken-catmus": 0.631,
+            "surya2": 0.754,
+            "tesseract-lat": 0.425
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1258,
+          "empty": false,
+          "loop": false,
+          "cer": 0.098,
+          "acc": 0.902,
+          "seq": 0.631,
+          "bow": 0.631,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.169,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "uodnec",
+            "displieuit",
+            "aunal",
+            "populoin",
+            "sieut",
+            "reformarc",
+            "rævard",
+            "legitimà"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.78,
+            "gemini-3.1-flash-lite": 0.631,
+            "surya2": 0.755,
+            "tesseract-lat": 0.369
+          }
+        },
+        "surya2": {
+          "n_content": 1261,
+          "empty": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.754,
+          "bow": 0.754,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.101,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adauet",
+            "alias",
+            "uluræ",
+            "soreis",
+            "legitima",
+            "expresse",
+            "exquasse",
+            "solum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.889,
+            "gemini-3.1-flash-lite": 0.754,
+            "kraken-catmus": 0.755,
+            "tesseract-lat": 0.385
+          }
+        },
+        "tesseract-lat": {
+          "n_content": 1237,
+          "empty": false,
+          "loop": false,
+          "cer": 0.261,
+          "acc": 0.739,
+          "seq": 0.366,
+          "bow": 0.425,
+          "gap": 0.06,
+          "len_ratio": 0.983,
+          "invention": 0.594,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ees3",
+            "quodhecromanis",
+            "tmperánte",
+            "displidí",
+            "4754",
+            "plum",
+            "prediis",
+            "tridit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.372,
+            "gemini-3.1-flash-lite": 0.425,
+            "kraken-catmus": 0.369,
+            "surya2": 0.385
+          }
+        }
+      }
+    }
+  ]
+}
