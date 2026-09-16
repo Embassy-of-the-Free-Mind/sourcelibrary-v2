@@ -42,6 +42,8 @@ import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
+import CollectionCoverEditor from '@/components/collections/CollectionCoverEditor';
+import { cardFramingStyle, COVER_EVENT, type CardFraming, type CoverEventDetail } from '@/lib/collection-card-image';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -149,7 +151,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
-  const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string }[]>([]);
+  const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string; card_framing?: CardFraming }[]>([]);
 
   // Semantic results (parallel search agent)
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
@@ -2157,26 +2159,44 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
   );
 }
 
-function SearchCollectionCard({ col }: { col: { slug: string; name: string; book_count: number; hero_image?: string } }) {
+function SearchCollectionCard({ col }: { col: { slug: string; name: string; book_count: number; hero_image?: string; card_framing?: CardFraming } }) {
   const lang = useLocale();
   const t = SEARCH_STRINGS[lang];
   const lp = useLocalePath();
   const [imgError, setImgError] = useState(false);
+  // A cover saved from the editor on this page replaces the API's, in place.
+  const [live, setLive] = useState<CoverEventDetail | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => {
+      const d = (e as CustomEvent<CoverEventDetail>).detail;
+      if (d?.slug === col.slug) { setLive(d); setImgError(false); }
+    };
+    window.addEventListener(COVER_EVENT, h);
+    return () => window.removeEventListener(COVER_EVENT, h);
+  }, [col.slug]);
+  const src = live ? live.url : col.hero_image;
+  const framing = live ? live.framing : col.card_framing;
   return (
+    // The editor-only cover control is a sibling of the link (a button inside
+    // an anchor navigates); the wrapper's `group` shows it on hover.
+    <div className="relative group">
     <Link
       href={lp(`/collections/${col.slug}`)}
       className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
     >
-      {col.hero_image && !imgError ? (
-        <Image
-          src={col.hero_image}
-          alt={t.illustrationFromCollection(col.name)}
-          fill
-          sizes="(max-width: 640px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
-          onError={() => setImgError(true)}
-        />
+      {src && !imgError ? (
+        <div className="absolute inset-0 overflow-hidden transition-transform duration-500 ease-out group-hover:scale-105">
+          <Image
+            src={src}
+            alt={t.illustrationFromCollection(col.name)}
+            fill
+            sizes="(max-width: 640px) 50vw, 33vw"
+            className="object-cover"
+            style={cardFramingStyle(framing)}
+            unoptimized
+            onError={() => setImgError(true)}
+          />
+        </div>
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
@@ -2190,6 +2210,8 @@ function SearchCollectionCard({ col }: { col: { slug: string; name: string; book
         </h3>
       </div>
     </Link>
+    <CollectionCoverEditor slug={col.slug} name={col.name} aspect="4/3" />
+    </div>
   );
 }
 
