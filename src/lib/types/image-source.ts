@@ -43,6 +43,7 @@ export type ImageSourceProvider =
   | 'qdl'            // Qatar Digital Library / British Library
   | 'escorial'       // Real Biblioteca del Monasterio de El Escorial
   | 'bnp'            // Biblioteca Nacional de Portugal
+  | 'claremont'      // Claremont Colleges Library, Special Collections (Nag Hammadi Archive, CONTENTdm)
   | 'marciana'       // Biblioteca Nazionale Marciana, Venice
   | 'irht'           // IRHT (CNRS)
   | 'bdrc'           // Buddhist Digital Resource Center

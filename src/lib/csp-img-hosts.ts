@@ -37,6 +37,7 @@ export const CSP_IMG_HOSTS = [
   'https://diglib.hab.de',
   'https://iiif.hab.de',
   'https://iiif.wellcomecollection.org',
+  'https://ccdl.claremont.edu',     // Claremont Colleges Digital Library (Nag Hammadi Archive IIIF)
   'https://upload.wikimedia.org',
   'https://*.loc.gov',
   'https://babel.hathitrust.org',

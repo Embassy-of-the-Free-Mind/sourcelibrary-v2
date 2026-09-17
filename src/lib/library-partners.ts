@@ -576,6 +576,15 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Morgan Library & Museum in New York, built on Pierpont Morgan\'s private collection, holds medieval and Renaissance illuminated manuscripts, old master drawings, and rare printed books.',
     color: 'gold',
   },
+  'claremont': {
+    slug: 'claremont',
+    name: 'Claremont Colleges Library, Special Collections',
+    shortName: 'Claremont',
+    providerKey: 'claremont',
+    url: 'https://ccdl.claremont.edu/digital/collection/nha',
+    description: 'Special Collections at the Claremont Colleges Library in California holds the Nag Hammadi Archive: the photographic record made by James M. Robinson\'s UNESCO project of the thirteen fourth-century Coptic codices found near Nag Hammadi in 1945. The codices themselves are kept by the Coptic Museum in Cairo; these are the project\'s own negatives of every papyrus page.',
+    color: 'sage',
+  },
   'cdli': {
     slug: 'cdli',
     kind: 'platform',
