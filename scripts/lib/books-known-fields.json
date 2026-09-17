@@ -15,7 +15,7 @@
   ],
   "generated_from": "full-scan enumeration of bookstore.books; language family consolidated 2026-09-10",
   "generated_at": "2026-09-10",
-  "count": 417,
+  "count": 419,
   "retired": [
     "_language_backfill",
     "acquisition_priority",
@@ -253,6 +253,8 @@
     "harvested_at",
     "held_by",
     "hero_mosaic_at",
+    "hero_mosaic_built_from",
+    "hero_mosaic_source",
     "hero_mosaic_url",
     "hero_mosaic_version",
     "hidden",

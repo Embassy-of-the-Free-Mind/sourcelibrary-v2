@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { collectionCountLabel, coverOverride } from '@/lib/collections-utils';
+import { cardFramingStyle, readCardFraming, type CardFraming } from '@/lib/collection-card-image';
+import CollectionCoverEditor from '@/components/collections/CollectionCoverEditor';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -30,6 +32,7 @@ interface SubCollection {
   visible: boolean;
   type?: string;
   image?: string;
+  framing?: CardFraming;
 }
 
 interface Wing {
@@ -40,6 +43,7 @@ interface Wing {
   total_book_count?: number;
   artwork_count?: number;
   image?: string;
+  framing?: CardFraming;
   children: SubCollection[];
 }
 
@@ -58,7 +62,7 @@ async function fetchWings(): Promise<Wing[]> {
     type: { $ne: 'curated' },
     collection_type: { $ne: 'visual_art' },
     visible: true,
-  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, total_book_count: 1, artwork_count: 1, hero_image: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
+  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, total_book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
   // Get all subcollections with their first featured image. Only explicit
   // visible:false is excluded — hidden collections (e.g. takedowns) must not
@@ -68,7 +72,7 @@ async function fetchWings(): Promise<Wing[]> {
     visible: { $ne: false },
   }).project({
     slug: 1, tenantId: 1, name: 1, book_count: 1, total_book_count: 1, artwork_count: 1, collection_type: 1, parent: 1, visible: 1, type: 1,
-    hero_image: 1, featured_images: { $slice: 1 }, _id: 0,
+    hero_image: 1, card_framing: 1, featured_images: { $slice: 1 }, _id: 0,
   }).toArray();
 
   const tenantIds = [...new Set([
@@ -100,6 +104,7 @@ async function fetchWings(): Promise<Wing[]> {
         visible: sub.visible !== false,
         type: sub.type,
         image: coverOverride(sub.slug) || sub.hero_image || pickImage(sub.featured_images),
+        framing: readCardFraming(sub.card_framing),
       });
     }
   }
@@ -121,26 +126,33 @@ async function fetchWings(): Promise<Wing[]> {
     total_book_count: w.total_book_count,
     artwork_count: w.artwork_count || 0,
     image: coverOverride(w.slug) || w.hero_image || pickImage(w.featured_images),
+    framing: readCardFraming(w.card_framing),
     children: childMap.get(w.slug) || [],
   }));
 }
 
 function CollectionCard({ col }: { col: SubCollection }) {
   return (
+    // Editor-only cover control as a sibling of the link (a button inside an
+    // anchor navigates); the wrapper's `group` shows it on hover.
+    <div className="relative group">
     <Link
       href={`/collections/${col.slug}`}
-      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${!col.visible ? 'opacity-40' : ''
+      className={`group relative block overflow-hidden rounded-lg aspect-square ${!col.visible ? 'opacity-40' : ''
         }`}
     >
       {col.image ? (
-        <Image
-          src={col.image}
-          alt={col.name}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
-        />
+        <div className="absolute inset-0 overflow-hidden transition-transform duration-500 ease-out group-hover:scale-105">
+          <Image
+            src={col.image}
+            alt={col.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+            className="object-cover"
+            style={cardFramingStyle(col.framing)}
+            unoptimized
+          />
+        </div>
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
@@ -154,6 +166,8 @@ function CollectionCard({ col }: { col: SubCollection }) {
         </h3>
       </div>
     </Link>
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
+    </div>
   );
 }
 
