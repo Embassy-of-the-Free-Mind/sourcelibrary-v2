@@ -583,12 +583,21 @@ function readerText(t) {
 }
 
 function phaseJudgePacket() {
+  // The left/right flips come from ONE seeded stream walked book by book, so WHICH PAIRS DRAW
+  // TOGETHER decides every flip. Re-emitting AB and AC alongside a new pair silently moves their
+  // flips, and the key stops matching what the judge read (caught here on 2026-09-17, before any
+  // verdict was scored). So: `--pairs` says which pairs draw, `--only` which of them are written,
+  // and key entries for pairs not written are kept. As judged: AB and AC came from
+  // `--pairs AB,AC`; AD from `--pairs AB,AC,AD --only AD`.
+  const PAIRS = String(arg('pairs', 'AB,AC')).split(',');
+  const ONLY = String(arg('only', PAIRS.join(','))).split(',');
   const { usable } = loadBoundaries();
   resetSeed();
   const packet = { AB: [], AC: [], AD: [] }, key = [];
   for (const { s, rows } of usable) {
     const preceding = readerText(rows.prev.pages[s.prev[BLOCK - 1].page_number]);
     for (const other of ['B', 'C', 'D']) {
+      if (!PAIRS.includes(`A${other}`)) continue;
       if (!rows[other]?.pages?.[s.next[0].page_number]) continue;
       const pair = `A${other}`, id = `${pair}:${s.bookId}`;
       const flip = seededRand() < 0.5;
@@ -597,13 +606,14 @@ function phaseJudgePacket() {
       key.push({ id, pair, left: flip ? other : 'A', right: flip ? 'A' : other });
     }
   }
-  for (const pair of ['AB', 'AC', 'AD']) {
-    if (!packet[pair].length) continue;
+  for (const pair of ONLY) {
+    if (!packet[pair]?.length) continue;
     const f = path.join(RESULTS, `translation-batch-continuity-judge-packet-${pair}.jsonl`);
     fs.writeFileSync(f, packet[pair].map((p) => JSON.stringify(p)).join('\n') + '\n');
     console.log(`wrote ${packet[pair].length} blinded junctions to ${f}`);
   }
-  fs.writeFileSync(KEY_FILE, JSON.stringify(key, null, 1));
+  const kept = fs.existsSync(KEY_FILE) ? JSON.parse(fs.readFileSync(KEY_FILE, 'utf8')).filter((k) => !ONLY.includes(k.pair)) : [];
+  fs.writeFileSync(KEY_FILE, JSON.stringify([...kept, ...key.filter((k) => ONLY.includes(k.pair))], null, 1));
   console.log(`key (do NOT give this to the judge): ${KEY_FILE}`);
   console.log('\nJudge question, per junction:');
   console.log('  "PRECEDING_PAGE is the end of a translated passage. LEFT and RIGHT are two translations of');
