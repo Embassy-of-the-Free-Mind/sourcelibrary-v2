@@ -1,0 +1,29 @@
+slug                   drawn      eye        title                        print-cons sophro~omni flash~omni lite~flash | chars omni/sophro/flash
+syriac-146d10-p81      print      None       Acta Martyrum et Sanctorum,  0.82       0.51        0.50       0.14      | 901/888/917 *
+syriac-4134ce-p91      manuscript None       Syriac Theological Anthology 0.25       0.29        0.11       0.09      | 2755/2905/2823 *
+syriac-4138c1-p623     print      None       Patrologia Syriaca, Pars I.3 0.54       0.35        0.28       0.47      | 1048/1967/2093 
+syriac-42e92d-p15      print      None       Chronicle of Edessa (Chronic 0.16       0.13        0.11       0.53      | 1562/2094/2245 *
+syriac-42e95b-p84      print      None       Le Livre des Lois des Pays ( 0.61       0.59        0.28       0.22      | 1027/1010/1050 
+syriac-46821a-p128     print      manuscript Old Testament                0.13       0.10        0.05       0.22      | 1319/1222/19740 *
+syriac-4683f6-p352     print      manuscript Great Oktoechos              0.07       0.02        0.02       0.04      | 760/824/987 *
+syriac-468b5e-p183     print      manuscript Penitential canons of Dionys 0.31       0.36        0.22       0.09      | 851/858/880 
+syriac-56aae6-p595     print      None       Anecdota Syriaca vols. 3-4   0.21       0.00        0.03       0.96      | 284/2057/2461 
+syriac-6a7c29-p220     print      None       Acta Martyrum et Sanctorum,  0.81       0.55        0.53       0.04      | 898/894/920 *
+syriac-75771a-p235     print      None       The Book of the Bee          0.85       0.78        0.27       0.24      | 1035/1062/1066 *
+syriac-883e43-p413     print      None       Old Testament in Syriac (Pes 0.64       0.48        0.39       0.06      | 3455/3404/3462 *
+syriac-8879b3-p49      print      None       Das Johannesbuch der Mandäer 0.09       0.06        0.02       0.21      | 602/674/733 *
+syriac-9f535f-p265     print      None       Die Fabeln des Sophos (Syria 0.09       0.01        0.03       0.75      | 166/758/1043 *
+syriac-b899e7-p169     manuscript None       Mingana-Lewis Palimpsest (Sy 0.02       0.03        0.00       0.35      | 411/1065/1479 *
+syriac-b89aa5-p213     manuscript None       Psalterium Quadrilingue (Heb 0.01       0.02        0.00       0.45      | 516/1198/1902 *
+syriac-cb80e3-p369     manuscript None       New Testament (Peshitta, 7th 0.07       0.03        0.02       0.04      | 365/1262/1291 
+syriac-cb88c5-p185     manuscript None       Ecclesiastical History (Chro 0.12       0.07        0.06       0.09      | 429/1360/1522 *
+syriac-cb8a85-p221     manuscript None       Theological and Philosophica 0.02       0.05        0.00       0.08      | 239/627/406 *
+syriac-cb9324-p377     print      None       Le Livre de lAscension de lE 0.04       0.01        0.04       0.97      | 438/1847/2192 *
+syriac-dc867e-p63      manuscript None       Commentary on Genesis        0.08       0.06        0.01       0.11      | 837/1010/18439 *
+syriac-dc8750-p155     manuscript None       Hymns on the Church (Madrash 0.12       0.07        0.01       0.08      | 1366/1624/8848 *
+syriac-dc89ba-p137     manuscript None       Selected Memre; Commentary o 0.07       0.02        0.03       0.04      | 810/865/783 *
+syriac-dc8d25-p49      manuscript None       Corpus Dionysiacum (Syriac t 0.00       0.06        0.00       0.00      | 22/129/19856 
+syriac-dc8d8f-p42      manuscript None       Mystical Discourses          0.00       0.00        0.00       0.82      | 8/133/171 *
+syriac-dc8e20-p730     manuscript None       Anthology: Memre and Homilie 0.00       0.00        0.00       0.11      | 41/1196/1901 
+syriac-dc9416-p448     manuscript None       Syriac Bible of Paris (Peshi 0.12       0.06        0.01       0.02      | 2279/3815/16005 *
+syriac-dc961e-p171     manuscript None       New Testament (Peshitta)     0.10       0.04        0.01       0.18      | 1009/1042/18472 
