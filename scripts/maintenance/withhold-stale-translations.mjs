@@ -48,6 +48,8 @@
  *   node --env-file=.env.production.local scripts/maintenance/withhold-stale-translations.mjs --apply
  *   … --book=<id>        one book only
  *   … --books-file=PATH   newline-separated book ids
+ *   … --loop-arm          also withhold translations made from a LOOPING transcription
+ *                         (#4765/#4850); needs --book/--books-file, see LOOP_ARM below
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
@@ -58,7 +60,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import {
-  STALE_CANDIDATE_FILTER, WITHHOLD_REVISION_SOURCE,
+  STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER, WITHHOLD_REVISION_SOURCE,
   staleTranslationReason, withholdUpdate, translationText,
 } from '../lib/stale-translation.mjs';
 
@@ -69,6 +71,21 @@ const BOOKS_FILE = ARG('--books-file', null);
 const LIMIT = Number(ARG('--limit', '0')) || 0;
 const REPORT = ARG('--report', `scripts/output/withhold-stale-translations-${new Date().toISOString().slice(0, 10)}.jsonl`);
 const SKIP_MIRROR = process.argv.includes('--skip-supabase-mirror');
+/**
+ * Arm 3 (#4765/#4850): also consider pages whose TRANSCRIPTION is a degeneration
+ * loop. Opt-in and book-scoped, because unlike arms 1 and 2 the candidate set is
+ * "every translated page" — see LOOP_CANDIDATE_FILTER. Drive the book list from
+ * `scripts/audit/ocr-loop-corpus.mjs` output, e.g.
+ *   jq -r 'select(.band=="loop" and .translated) | .book_id' loops.jsonl | sort -u > books.txt
+ */
+const LOOP_ARM = process.argv.includes('--loop-arm');
+const CANDIDATE_FILTER = LOOP_ARM
+  ? { $or: [STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER] }
+  : STALE_CANDIDATE_FILTER;
+if (LOOP_ARM && !ONLY_BOOK && !BOOKS_FILE) {
+  console.error('--loop-arm needs --book or --books-file: its candidate set is every translated page (see LOOP_CANDIDATE_FILTER).');
+  process.exit(2);
+}
 const BATCH = 250;
 
 const mongo = new MongoClient(process.env.MONGODB_URI);
@@ -196,7 +213,7 @@ const T = {
 for (const bookId of bookIds) {
   T.books++;
   const candidates = await pages.find(
-    { book_id: bookId, ...STALE_CANDIDATE_FILTER },
+    { book_id: bookId, ...CANDIDATE_FILTER },
     { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, translation: 1, translation_withheld: 1 } },
   ).toArray();
   T.candidates += candidates.length;

@@ -54,10 +54,18 @@
  * stays countable and studyable in its own right.
  */
 
+import { loopVerdict } from './ocr-loop-guard.mjs';
+
+/** Is this page's transcription a degeneration loop? The #4850 gate's own verdict. */
+function isDegenerateSource(ocrText) {
+  return loopVerdict(ocrText || '').refuse;
+}
+
 /** Written into `translation_withheld.reason` and the `page_revisions` row. */
 export const WITHHOLD_REASONS = {
   STALE_AFTER_REOCR: 'stale_after_reocr',
   OCR_UNREADABLE: 'ocr_unreadable',
+  SOURCE_LOOP: 'source_loop',
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */
@@ -71,6 +79,10 @@ export const WITHHOLD_REVISION_SOURCE = 'withhold-stale-translation-4523';
  */
 export const STALE_PREDICATE_PROJECTION = {
   id: 1, book_id: 1, page_number: 1,
+  // `ocr.data` is the one big body this projection carries, and arm 3 is why: a
+  // degeneration loop is only visible in the transcription itself. Leaving it out
+  // would not make arm 3 cheap — it would make it silently never fire.
+  'ocr.data': 1,
   'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
   'translation.updated_at': 1, 'translation.edited_at': 1,
   translation_withheld: 1,
@@ -92,6 +104,22 @@ export const STALE_CANDIDATE_FILTER = {
 };
 
 /**
+ * Arm 3's candidate filter, kept SEPARATE from `STALE_CANDIDATE_FILTER` above.
+ *
+ * Arms 1 and 2 are indexed and narrow (`ocr.pipeline`, `ocr.unreadable`); a looping
+ * transcription carries neither marker, so nothing in the page document distinguishes
+ * it until the text is read. The honest filter is therefore "every page with both a
+ * transcription and a translation" — which is most of the corpus, and why this is
+ * opt-in and book-scoped (`withhold-stale-translations.mjs --loop-arm`, driven by the
+ * book list from `scripts/audit/ocr-loop-corpus.mjs`) rather than folded into the
+ * sweep's default selection.
+ */
+export const LOOP_CANDIDATE_FILTER = {
+  'ocr.data': { $exists: true, $nin: [null, ''] },
+  'translation.data': { $exists: true, $nin: [null, ''] },
+};
+
+/**
  * Why this page's translation is stale, or null if it is not.
  *
  * Takes a page document (or the projection above). A page with no stored
@@ -100,13 +128,20 @@ export const STALE_CANDIDATE_FILTER = {
  * be judged on is gone, which is the point.
  *
  * @param {object} page
- * @returns {'stale_after_reocr'|'ocr_unreadable'|null}
+ * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|null}
  */
 export function staleTranslationReason(page) {
   const tr = page?.translation;
   if (!translationText(tr)) return null;
 
   if (page?.ocr?.unreadable === true) return WITHHOLD_REASONS.OCR_UNREADABLE;
+
+  // Arm 3 (#4765/#4850): the transcription this English was made from is a
+  // degeneration loop — one unit repeated to the output cap. Handed that, the model
+  // does not decline; it writes fluent connected prose with no basis in the page, and
+  // 53,628 pages corpus-wide are in exactly that state (measured 2026-09-15).
+  // Self-healing like the other two arms: re-OCR the page and it stops holding.
+  if (isDegenerateSource(page?.ocr?.data)) return WITHHOLD_REASONS.SOURCE_LOOP;
 
   if (page?.ocr?.pipeline) {
     const ocrAt = toTime(page.ocr.updated_at);
