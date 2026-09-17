@@ -168,3 +168,12 @@ open, so that it cannot be chosen after seeing numbers either.
 9. **The spend is logged to the usage meter** under `eval/translation-batch-continuity`.
    The daily dial sums every row, so this run counts against that day's dial like any
    other spend.
+
+### 2026-09-17, after the draw and before any paid call — n is 58, not 60
+
+The Chinese stratum gave 4 of its 6 boundaries after six rounds and was not padded from
+another language. 209 candidate seams were rejected, by reason, in the pinned sample
+file: 103 had an untranslatable page inside the 16-page window, 44 had a block over
+20,000 OCR chars, 38 had a seam page under 400 chars of prose, 12 opened block k on a
+heading, 7 ran off the book, 4 had a non-prose seam page, 1 had a page under 200 chars.
+40 of the 58 seams end mid-sentence. Estimated spend from the drawn text: $1.98.
