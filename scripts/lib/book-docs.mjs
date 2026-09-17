@@ -133,6 +133,10 @@ export const PAGE_FIELDS = Object.freeze([
   'ocr', 'summary', 'translation', 'transliteration',
   // pipeline
   'status', 'archive_metadata',
+  // host record: the source's own catalogue entry for THIS page, verbatim, as
+  // received (CONTENTdm item record, IIIF canvas metadata). Same field as on
+  // books; a fact about the page, not a job's action (#4896, #3471).
+  'catalog_metadata',
   // timestamps
   'created_at', 'updated_at',
 ]);
