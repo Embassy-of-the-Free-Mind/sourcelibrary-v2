@@ -83,8 +83,13 @@ const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.o
 const CDM = 'https://ccdl.claremont.edu/digital/bl/dmwebservices/index.php?q=';
 const COLLECTION_URL = 'https://ccdl.claremont.edu/digital/collection/nha';
 const IIIF_HOST = 'ccdl.claremont.edu';
-const iiifPhoto = (pointer) => `https://${IIIF_HOST}/iiif/2/nha:${pointer}/full/full/0/default.jpg`;
-const iiifThumb = (pointer) => `https://${IIIF_HOST}/iiif/2/nha:${pointer}/full/200,/0/default.jpg`;
+// CONTENTdm exposes two IIIF Image paths. `/iiif/2/nha:<ptr>/` — the form the
+// March 2026 import stored on 853 pages — answers 403 for every image (probed
+// from Hetzner and the laptop, 2026-09-17). `/digital/iiif/nha/<ptr>/` serves
+// the 4.4 MB master. Build every URL in the working form.
+const iiifPhoto = (pointer) => `https://${IIIF_HOST}/digital/iiif/nha/${pointer}/full/full/0/default.jpg`;
+const iiifThumb = (pointer) => `https://${IIIF_HOST}/digital/iiif/nha/${pointer}/full/200,/0/default.jpg`;
+const DEAD_IIIF_FORM = /^https:\/\/ccdl\.claremont\.edu\/iiif\/2\/nha:(\d+)\//;
 const R2_PUBLIC = (process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org').trim();
 const isR2 = (u) => typeof u === 'string' && u.startsWith(`${R2_PUBLIC}/`);
 
@@ -372,11 +377,18 @@ async function archivePage(book, p) {
     storagePut(paths.display, display, { contentType: 'image/jpeg', access: 'public' }),
     storagePut(paths.thumb, thumb, { contentType: 'image/jpeg', access: 'public' }),
   ]);
+  // The March pages store the dead `/iiif/2/nha:` form as their source URL;
+  // record the form that actually resolves, so `photo` stays a usable
+  // pointer at the host (lesson_page_image_fields_r2_vs_source).
+  const fixSource = DEAD_IIIF_FORM.test(p.photo || '') || DEAD_IIIF_FORM.test(p.photo_original || '')
+    ? { photo: src, photo_original: src }
+    : {};
   return {
     $set: {
       archived_photo: full.url,
       display_photo: disp.url,
       thumbnail_blob: th.url,
+      ...fixSource,
       ...dimensionFields(stored, { nativeWidth: info?.width ?? null, nativeHeight: info?.height ?? null, stitchedTiles }),
       updated_at: new Date(),
     },
@@ -467,11 +479,14 @@ async function main() {
           // A book row with no page rows is the shell an aborted run leaves
           // behind (the first --apply died in makePageDoc after insertBookIfNew,
           // 2026-09-17). Adopt it and finish it rather than refusing.
+          // A Claremont book this script created on an earlier run (the four
+          // new codices are not in EXISTING by design — that map is the March
+          // nine). Adopt it: with page rows it takes the existing-book path
+          // (stamp + archive); with none it takes the create-pages path.
           const pageRows = await pages.countDocuments({ book_id: clash.id });
-          if (pageRows > 0) throw new Error(`Codex ${codex}: a Claremont book already exists (${clash.id}) but is not in EXISTING — update the map`);
           book = await books.findOne({ id: clash.id });
-          resumeEmpty = true;
-          log(`Codex ${codex}: adopting empty book ${clash.id} left by an aborted run`);
+          resumeEmpty = pageRows === 0;
+          log(`Codex ${codex}: adopting ${clash.id} from an earlier run (${pageRows} page rows)`);
         }
       }
       const isNew = !book || resumeEmpty;
