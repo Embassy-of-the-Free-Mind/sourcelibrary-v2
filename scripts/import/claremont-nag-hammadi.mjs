@@ -479,11 +479,14 @@ async function main() {
           // A book row with no page rows is the shell an aborted run leaves
           // behind (the first --apply died in makePageDoc after insertBookIfNew,
           // 2026-09-17). Adopt it and finish it rather than refusing.
+          // A Claremont book this script created on an earlier run (the four
+          // new codices are not in EXISTING by design — that map is the March
+          // nine). Adopt it: with page rows it takes the existing-book path
+          // (stamp + archive); with none it takes the create-pages path.
           const pageRows = await pages.countDocuments({ book_id: clash.id });
-          if (pageRows > 0) throw new Error(`Codex ${codex}: a Claremont book already exists (${clash.id}) but is not in EXISTING — update the map`);
           book = await books.findOne({ id: clash.id });
-          resumeEmpty = true;
-          log(`Codex ${codex}: adopting empty book ${clash.id} left by an aborted run`);
+          resumeEmpty = pageRows === 0;
+          log(`Codex ${codex}: adopting ${clash.id} from an earlier run (${pageRows} page rows)`);
         }
       }
       const isNew = !book || resumeEmpty;
