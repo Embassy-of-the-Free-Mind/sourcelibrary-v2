@@ -187,6 +187,19 @@ read or scored. It adds rungs D and E beneath C and leaves A, B, C, their margin
 run order untouched, so it changes nothing about the run it arrived during. If D is ever
 needed it reuses the same 58 boundaries and the same shared block k−1.
 
+### 2026-09-17, during the run, before any output was read — a harness control
+
+Not an outcome. 72% of block-k pages already carry a stored translation, but from eight
+prompt generations, so they are **not** a scoring reference and no arm is scored against
+them. On the subset written by the *current* prompt (matched on prompt hash) and model,
+arm A should reproduce production's stored text about as closely as two runs of this
+harness reproduce each other. Similarity is word-bigram Dice over reader text. **Pass:**
+median sim(A, stored) ≥ 0.75 × median sim(A, B) on the same pages, and above the 95th
+percentile of sim(A, another page's stored text). Fewer than 5 such pages is reported as
+unmeasurable, not as a pass. A failure invalidates the run. Comparison against *published*
+translations was considered and excluded: it is a different estimand (absolute quality,
+not production-vs-batch), covered by #4883 and the Tibetan benchmark.
+
 ---
 
 ## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last

@@ -42,6 +42,7 @@
  *   --run           block k-1 once, then block k under A, B and C              PAID
  *   --score         H1, H3, shuffled control, H2 if verdicts exist, the rule   FREE
  *   --judge-packet  blinded junction pairs (A/B and A/C) for the H2 judge      FREE
+ *   --harness-control  does arm A reproduce production's stored output?     FREE
  *
  * NOTHING here writes to `pages`. The translate worker's write path is not
  * imported. The only writes are files under scripts/eval/results/ and usage rows
@@ -592,6 +593,64 @@ function phaseJudgePacket() {
   console.log(`Verdicts go to ${VERDICTS_FILE} as [{ id, verdict, why }].`);
 }
 
+// ── phase: harness control (FREE, read-only) ────────────────────────────────
+/** Word-bigram Dice similarity over reader text: 1 = same wording, ~0 = unrelated. */
+export function similarity(x, y) {
+  const grams = (t) => { const w = fold(readerText(t)).split(' ').filter(Boolean); const g = new Map(); for (let i = 0; i + 1 < w.length; i++) { const k = `${w[i]} ${w[i + 1]}`; g.set(k, (g.get(k) || 0) + 1); } return g; };
+  const a = grams(x), b = grams(y);
+  let inter = 0, na = 0, nb = 0;
+  for (const [k, n] of a) { na += n; inter += Math.min(n, b.get(k) || 0); }
+  for (const n of b.values()) nb += n;
+  return na + nb ? (2 * inter) / (na + nb) : null;
+}
+
+/**
+ * A HARNESS CONTROL, not an outcome. Where a block-k page already carries a stored
+ * translation written by the CURRENT production prompt (matched on prompt hash) and
+ * model, arm A should reproduce it about as closely as two runs of this harness
+ * reproduce each other. Stored translations from older prompts are ignored: eight
+ * prompt generations sit in these pages and that confound dwarfs a seam effect.
+ *
+ * Scale, fixed before looking: sim(A, stored) is compared with sim(A, B) on the SAME
+ * pages (two samples of the same configuration, differing only in the seed) and with
+ * sim(A, stored-of-another-page) as the floor. PASS when the median sim(A, stored) is
+ * at least 0.75 of the median sim(A, B) AND above the 95th percentile of the floor.
+ */
+async function phaseHarnessControl() {
+  const { usable } = loadBoundaries();
+  const { db } = await connect();
+  const prompts = await loadTranslationPrompts(db);
+  const rows = [];
+  for (const { s, rows: r } of usable) {
+    const ref = (isEnglishBook(bookOf(s)) ? prompts.english : prompts.translation).ref;
+    const stored = await db.collection('pages').find(
+      { id: { $in: s.next.map((p) => p.id) }, 'translation.prompt_hash': ref.content_hash, 'translation.model': MODEL, 'translation.source': 'ai' },
+      { projection: { id: 1, page_number: 1, 'translation.data': 1 } }).toArray();
+    for (const d of stored) {
+      const a = r.A.pages[d.page_number], b = r.B.pages[d.page_number];
+      if (!a || !b || typeof d.translation?.data !== 'string') continue;
+      rows.push({ bookId: s.bookId, page: d.page_number, language: s.language, stored: d.translation.data, a, b });
+    }
+  }
+  if (rows.length < 5) { console.log(`HARNESS CONTROL: UNMEASURABLE — only ${rows.length} block-k pages carry a stored translation from the current prompt+model. Not a pass.`); return; }
+  const med = (xs) => { const v = xs.filter((x) => x != null).sort((p, q) => p - q); return v.length ? v[Math.floor(v.length / 2)] : null; };
+  const q = (xs, f) => { const v = xs.filter((x) => x != null).sort((p, q2) => p - q2); return v[Math.min(v.length - 1, Math.floor(v.length * f))]; };
+  const aStored = rows.map((x) => similarity(x.a, x.stored));
+  const aB = rows.map((x) => similarity(x.a, x.b));
+  const floor = rows.map((x, i) => similarity(x.a, rows[(i + Math.ceil(rows.length / 2)) % rows.length].stored));
+  const pass = med(aStored) >= 0.75 * med(aB) && med(aStored) > q(floor, 0.95);
+  const out = {
+    at: new Date().toISOString(), label: 'HARNESS CONTROL — not an outcome', n_pages: rows.length, n_books: new Set(rows.map((x) => x.bookId)).size,
+    sim_A_vs_stored: { median: med(aStored), p10: q(aStored, 0.10), p90: q(aStored, 0.90) },
+    sim_A_vs_B_same_pages: { median: med(aB), p10: q(aB, 0.10), p90: q(aB, 0.90) },
+    floor_A_vs_other_pages_stored: { median: med(floor), p95: q(floor, 0.95) },
+    criterion: 'median sim(A,stored) >= 0.75 x median sim(A,B) AND > p95 of the floor', pass,
+  };
+  console.log(JSON.stringify(out, null, 1));
+  console.log(`\nHARNESS CONTROL: ${pass ? 'PASS — arm A reproduces what production wrote' : 'FAIL — arm A does NOT reproduce production; the run is not measuring production-vs-batch'}`);
+  fs.writeFileSync(path.join(RESULTS, 'translation-batch-continuity-harness-control.json'), JSON.stringify(out, null, 1));
+}
+
 // ── main ────────────────────────────────────────────────────────────────────
 const invokedDirectly = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
 if (invokedDirectly) {
@@ -600,7 +659,8 @@ if (invokedDirectly) {
     else if (has('run')) await phaseRun();
     else if (has('score')) phaseScore();
     else if (has('judge-packet')) phaseJudgePacket();
-    else console.log('one of --draw | --run | --score | --judge-packet (see the header)');
+    else if (has('harness-control')) await phaseHarnessControl();
+    else console.log('one of --draw | --run | --score | --judge-packet | --harness-control (see the header)');
   } finally {
     await disconnect().catch(() => {});
   }
