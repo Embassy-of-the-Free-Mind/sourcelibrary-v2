@@ -338,6 +338,12 @@ async function phaseRun() {
     console.error(`REFUSING TO SPEND. Estimate $${est.usd.toFixed(2)}; --approved-usd is ${approved || 'absent'}; preregistered ceiling $${CEILING_USD}.`);
     process.exit(2);
   }
+  if (has('with-d')) {
+    const already = readRows().reduce((t, x) => t + (x.cost_usd || 0), 0);
+    const dEst = est.usd / 4 * 1.125;
+    console.log(`arm D: ~$${dEst.toFixed(2)} more on top of $${already.toFixed(2)} already spent`);
+    if (already + dEst > CEILING_USD) { console.error('REFUSING: arm D would pass the ceiling.'); process.exit(2); }
+  }
   const { db } = await connect();
   const prompts = await loadTranslationPrompts(db);
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; english: ${prompts.english.ref.name} v${prompts.english.ref.version}; model ${MODEL}`);
@@ -363,7 +369,7 @@ async function phaseRun() {
     }, db).catch((e) => console.warn(`usage log failed: ${e.message}`));
     await log(res, cost, parsed.size);
     // One retry when the seam page itself did not come back: without it the boundary is unusable.
-    const seamPage = which === 'prev' ? pages[pages.length - 1].page_number : pages[0].page_number;
+    const seamPage = which === 'prev' ? pages[pages.length - 1].page_number : which === 'D' ? pages[1].page_number : pages[0].page_number;
     let retried = false;
     if (!parsed.has(seamPage) && spent + cost < approved) {
       retried = true;
@@ -375,10 +381,11 @@ async function phaseRun() {
       if (parsed2.size > parsed.size) { res = res2; parsed = parsed2; }
     }
     spent += cost;
+    if (which === 'D') parsed.delete(pages[0].page_number);   // the overlap page is translated and thrown away
     const row = {
       bookId: r.bookId, language: r.language, which, seamPage: r.seamPage, model: MODEL,
       seedKind: seed?.text ? seed.kind : null, seedChars: seed?.text ? Math.min(SEED_CHARS, seed.text.length) : 0,
-      pages: Object.fromEntries(parsed), pagesParsed: parsed.size, pagesSent: pages.length, retried,
+      pages: Object.fromEntries(parsed), pagesParsed: parsed.size, pagesSent: which === 'D' ? pages.length - 1 : pages.length, overlapPages: which === 'D' ? 1 : 0, retried,
       error: res.error || null, finish: res.finish || null, inTok: res.inTok || 0, outTok: res.outTok || 0,
       cost_usd: cost, at: new Date().toISOString(),
     };
@@ -403,6 +410,9 @@ async function phaseRun() {
         if (have.has(`${r.bookId}:${arm}`)) continue;
         await callBlock(r, arm, r.next, seeds[arm]);
       }
+      // Arm D (Amendment 1, run only with --with-d once B and C have failed): block k-1's last
+      // page rides along as the first page of the prompt, unseeded, and its duplicate is discarded.
+      if (has('with-d') && !have.has(`${r.bookId}:D`)) await callBlock(r, 'D', [r.prev[BLOCK - 1], ...r.next], null);
     } else if (!prev?.skipped) {
       console.log(`  ${r.bookId}: block k-1 did not return its last page — boundary unusable, arms NOT run (recorded, not padded)`);
     }
@@ -469,7 +479,8 @@ function phaseScore() {
 
   const scored = usable.map(({ s, rows }) => {
     const terms = committedTerms(s.prev.map((p) => rows.prev.pages[p.page_number] || ''));
-    return { s, rows, terms, arms: Object.fromEntries(ARMS.map((a) => [a, scoreArm(s, rows[a], terms)])) };
+    const present = [...ARMS, 'D'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
+    return { s, rows, terms, arms: Object.fromEntries(present.map((a) => [a, scoreArm(s, rows[a], terms)])) };
   });
 
   // Shuffled control: the same block k, scored against ANOTHER same-language book's committed terms.
@@ -490,9 +501,11 @@ function phaseScore() {
   const control = bootstrapRatioCI(shuffled.map((x) => x.num), shuffled.map((x) => x.den));
 
   const withTerms = scored.filter((b) => b.arms.A.h1.eligible > 0);
-  const pooled = (arm, f = (x) => x.h1) => { resetSeed(); return bootstrapRatioCI(withTerms.map((b) => f(b.arms[arm]).consistent), withTerms.map((b) => f(b.arms[arm]).eligible)); };
+  const hasD = scored.some((b) => b.arms.D);
+  const pooled = (arm, f = (x) => x.h1) => { const w = withTerms.filter((b) => b.arms[arm]); resetSeed(); return bootstrapRatioCI(w.map((b) => f(b.arms[arm]).consistent), w.map((b) => f(b.arms[arm]).eligible)); };
   const compare = (arm) => {
-    const a = withTerms.map((b) => b.arms.A.h1.rate), x = withTerms.map((b) => b.arms[arm].h1.rate);
+    const w = withTerms.filter((b) => b.arms[arm]);
+    const a = w.map((b) => b.arms.A.h1.rate), x = w.map((b) => b.arms[arm].h1.rate);
     resetSeed(); const unpaired = diffCI(a, x);
     resetSeed(); const pairedCI = bootstrapCI(x.map((v, i) => v - a[i]));
     const better = x.filter((v, i) => v > a[i]).length, worse = x.filter((v, i) => v < a[i]).length;
@@ -500,10 +513,11 @@ function phaseScore() {
   };
   const MARGIN = -0.05;
   const h3 = (arm) => {
-    const rel = (mean(scored.map((b) => b.arms[arm].body_chars)) - mean(scored.map((b) => b.arms.A.body_chars))) / mean(scored.map((b) => b.arms.A.body_chars));
-    const tagGate = (f) => { resetSeed(); const d = diffCI(scored.map((b) => f(b.arms.A)), scored.map((b) => f(b.arms[arm]))); return { a: mean(scored.map((b) => f(b.arms.A))), x: mean(scored.map((b) => f(b.arms[arm]))), ci: d?.ci, regressed: !!(d?.decisive && d.delta > 0) }; };
+    const have = scored.filter((b) => b.arms[arm]);
+    const rel = (mean(have.map((b) => b.arms[arm].body_chars)) - mean(have.map((b) => b.arms.A.body_chars))) / mean(have.map((b) => b.arms.A.body_chars));
+    const tagGate = (f) => { resetSeed(); const d = diffCI(have.map((b) => f(b.arms.A)), have.map((b) => f(b.arms[arm]))); return { a: mean(have.map((b) => f(b.arms.A))), x: mean(have.map((b) => f(b.arms[arm]))), ci: d?.ci, regressed: !!(d?.decisive && d.delta > 0) }; };
     const invented = tagGate((x) => x.invented_tags), housekeeping = tagGate((x) => x.housekeeping_tags);
-    return { body_relative: rel, invented, housekeeping, pages_parsed: mean(scored.map((b) => b.arms[arm].pages_parsed)), pass: rel >= -0.10 && !invented.regressed && !housekeeping.regressed };
+    return { body_relative: rel, invented, housekeeping, pages_parsed: mean(have.map((b) => b.arms[arm].pages_parsed)), pass: rel >= -0.10 && !invented.regressed && !housekeeping.regressed };
   };
 
   const report = {
@@ -512,8 +526,9 @@ function phaseScore() {
     h1: { boundaries_with_eligible_terms: withTerms.length, eligible_terms: withTerms.reduce((n, b) => n + b.arms.A.h1.eligible, 0), margin_pp: 5 },
     control_shuffled: control, arms: {},
   };
-  for (const arm of ARMS) report.arms[arm] = { h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.map((b) => b.arms[arm].body_chars)) };
-  for (const arm of ['B', 'C']) {
+  const SHOWN = hasD ? [...ARMS, 'D'] : ARMS;
+  for (const arm of SHOWN) report.arms[arm] = { n: scored.filter((b) => b.arms[arm]).length, h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.filter((b) => b.arms[arm]).map((b) => b.arms[arm].body_chars)) };
+  for (const arm of SHOWN.slice(1)) {
     const c = compare(arm), g = h3(arm), j = judgeShare(`A${arm}`);
     report.arms[arm].vs_A = {
       h1: { ...c, pass: !!(c.paired_ci && c.paired_ci[0] > MARGIN) },
@@ -523,30 +538,33 @@ function phaseScore() {
   }
   // Mid-sentence seams are where a seed should matter most; descriptive, not part of the rule.
   const ms = withTerms.filter((b) => b.s.midSentence);
-  if (ms.length >= 2) report.mid_sentence_subgroup = { n: ms.length, A: mean(ms.map((b) => b.arms.A.h1.rate)), B: mean(ms.map((b) => b.arms.B.h1.rate)), C: mean(ms.map((b) => b.arms.C.h1.rate)) };
+  if (ms.length >= 2) report.mid_sentence_subgroup = { n: ms.length, A: mean(ms.map((b) => b.arms.A.h1.rate)), B: mean(ms.map((b) => b.arms.B.h1.rate)), C: mean(ms.map((b) => b.arms.C.h1.rate)), ...(hasD ? { D: mean(ms.filter((b) => b.arms.D).map((b) => b.arms.D.h1.rate)) } : {}) };
 
   const verdict = (arm) => { const v = report.arms[arm].vs_A; return v.h2 == null ? null : v.h1.pass && v.h2.pass && v.h3.pass; };
-  const bPass = verdict('B'), cPass = verdict('C');
+  const bPass = verdict('B'), cPass = verdict('C'), dPass = hasD ? verdict('D') : undefined;
   report.decision = bPass === null ? 'PENDING — H2 judge verdicts for A/B not in yet'
-    : bPass ? 'BRANCH 1 — B passes H1, H2 and H3: migrate to the Batch API with no continuity seed'
+    : bPass ? 'RUNG 1 — B passes H1, H2 and H3: migrate to the Batch API with no continuity seed'
     : cPass === null ? 'PENDING — B failed; H2 judge verdicts for A/C not in yet'
-    : cPass ? 'BRANCH 2 — B fails, C passes: migrate to batch with the source-text seed'
-    : 'BRANCH 3 — both fail: do not migrate; report the measured cost';
+    : cPass ? 'RUNG 2 — B fails, C passes: migrate to batch with the source-text seed'
+    : dPass === undefined ? 'B and C fail — Amendment 1 sends this to arm D (overlap), not yet run'
+    : dPass === null ? 'PENDING — B and C failed; H2 judge verdicts for A/D not in yet'
+    : dPass ? 'RUNG 3 — B and C fail, D passes: migrate to batch with a one-page overlap'
+    : 'RUNG 4 — B, C and D all fail: E (seam-repair pass) is the only remaining way to keep the discount; not run here';
 
   const pct = (x) => (x == null ? '  —  ' : (x * 100).toFixed(1) + '%');
   console.log('═══ H1: cross-boundary terminology consistency (pooled, bootstrap clustered on boundary) ═══');
   console.log(`  ${withTerms.length} of ${scored.length} boundaries carry at least one eligible term; ${report.h1.eligible_terms} eligible terms in all`);
-  for (const arm of ARMS) { const p = report.arms[arm].h1_pooled, f = report.arms[arm].h1_first_page_pooled; console.log(`  ${arm}: ${pct(p.rate)}  [${pct(p.ci?.[0])}, ${pct(p.ci?.[1])}]    first page of block k only: ${pct(f.rate)} over ${f.denom}`); }
+  for (const arm of SHOWN) { const p = report.arms[arm].h1_pooled, f = report.arms[arm].h1_first_page_pooled; console.log(`  ${arm}: ${pct(p.rate)}  [${pct(p.ci?.[0])}, ${pct(p.ci?.[1])}]    first page of block k only: ${pct(f.rate)} over ${f.denom}`); }
   console.log(`  SHUFFLED CONTROL (another book's terms, same language): ${pct(control.rate)}  [${pct(control.ci?.[0])}, ${pct(control.ci?.[1])}] over ${control.denom} terms`);
   console.log(`  ${control.rate != null && report.arms.A.h1_pooled.rate > (control.ci?.[1] ?? 1) ? 'the probe fires: real consistency sits above the chance band' : 'WARNING: real consistency is NOT above the chance band — the probe may be inert'}`);
-  for (const arm of ['B', 'C']) {
+  for (const arm of SHOWN.slice(1)) {
     const v = report.arms[arm].vs_A;
     console.log(`\n═══ ${arm} vs A ═══`);
     console.log(`  H1  Δ=${pct(v.h1.delta)}  paired 95% CI [${pct(v.h1.paired_ci?.[0])}, ${pct(v.h1.paired_ci?.[1])}]  (unpaired diffCI [${pct(v.h1.diffCI?.ci?.[0])}, ${pct(v.h1.diffCI?.ci?.[1])}])  better ${v.h1.better} / worse ${v.h1.worse} / same ${v.h1.same}  → ${v.h1.pass ? 'PASS' : 'FAIL'} (lower bound must exceed −5pp)`);
     console.log(`  H3  body ${pct(v.h3.body_relative)} vs A; invented tags ${v.h3.invented.a.toFixed(2)}→${v.h3.invented.x.toFixed(2)}; housekeeping ${v.h3.housekeeping.a.toFixed(2)}→${v.h3.housekeeping.x.toFixed(2)}; pages parsed ${v.h3.pages_parsed.toFixed(2)}/8  → ${v.h3.pass ? 'PASS' : 'FAIL'}`);
     console.log(v.h2 ? `  H2  judge: A preferred ${v.h2.a_wins}, ${arm} preferred ${v.h2.other_wins}, no preference ${v.h2.ties}; A share ${pct(v.h2.a_share)} (limit 60%)  → ${v.h2.pass ? 'PASS' : 'FAIL'}` : '  H2  judge verdicts not in yet');
   }
-  if (report.mid_sentence_subgroup) console.log(`\n  (descriptive) seams that end mid-sentence, n=${report.mid_sentence_subgroup.n}: A ${pct(report.mid_sentence_subgroup.A)}  B ${pct(report.mid_sentence_subgroup.B)}  C ${pct(report.mid_sentence_subgroup.C)}`);
+  if (report.mid_sentence_subgroup) console.log(`\n  (descriptive) seams that end mid-sentence, n=${report.mid_sentence_subgroup.n}: A ${pct(report.mid_sentence_subgroup.A)}  B ${pct(report.mid_sentence_subgroup.B)}  C ${pct(report.mid_sentence_subgroup.C)}${hasD ? `  D ${pct(report.mid_sentence_subgroup.D)}` : ''}`);
   console.log(`\n═══ DECISION RULE (pre-registered) ═══\n  ⇒ ${report.decision}`);
   const out = path.join(RESULTS, `translation-batch-continuity-report-${new Date().toISOString().slice(0, 10)}.json`);
   fs.writeFileSync(out, JSON.stringify(report, null, 1));
@@ -567,10 +585,11 @@ function readerText(t) {
 function phaseJudgePacket() {
   const { usable } = loadBoundaries();
   resetSeed();
-  const packet = { AB: [], AC: [] }, key = [];
+  const packet = { AB: [], AC: [], AD: [] }, key = [];
   for (const { s, rows } of usable) {
     const preceding = readerText(rows.prev.pages[s.prev[BLOCK - 1].page_number]);
-    for (const other of ['B', 'C']) {
+    for (const other of ['B', 'C', 'D']) {
+      if (!rows[other]?.pages?.[s.next[0].page_number]) continue;
       const pair = `A${other}`, id = `${pair}:${s.bookId}`;
       const flip = seededRand() < 0.5;
       const a = readerText(rows.A.pages[s.next[0].page_number]), x = readerText(rows[other].pages[s.next[0].page_number]);
@@ -578,7 +597,8 @@ function phaseJudgePacket() {
       key.push({ id, pair, left: flip ? other : 'A', right: flip ? 'A' : other });
     }
   }
-  for (const pair of ['AB', 'AC']) {
+  for (const pair of ['AB', 'AC', 'AD']) {
+    if (!packet[pair].length) continue;
     const f = path.join(RESULTS, `translation-batch-continuity-judge-packet-${pair}.jsonl`);
     fs.writeFileSync(f, packet[pair].map((p) => JSON.stringify(p)).join('\n') + '\n');
     console.log(`wrote ${packet[pair].length} blinded junctions to ${f}`);
@@ -624,7 +644,10 @@ async function phaseHarnessControl() {
   for (const { s, rows: r } of usable) {
     const ref = (isEnglishBook(bookOf(s)) ? prompts.english : prompts.translation).ref;
     const stored = await db.collection('pages').find(
-      { id: { $in: s.next.map((p) => p.id) }, 'translation.prompt_hash': ref.content_hash, 'translation.model': MODEL, 'translation.source': 'ai' },
+      // --loose (descriptive only): match on the prompt VERSION label instead of hash+model.
+      has('loose')
+        ? { id: { $in: s.next.map((p) => p.id) }, 'translation.prompt_version': { $in: [ref.version, String(ref.version), `v${ref.version}`] }, 'translation.source': 'ai', 'translation.updated_at': { $gte: new Date('2026-08-01') } }
+        : { id: { $in: s.next.map((p) => p.id) }, 'translation.prompt_hash': ref.content_hash, 'translation.model': MODEL, 'translation.source': 'ai' },
       { projection: { id: 1, page_number: 1, 'translation.data': 1 } }).toArray();
     for (const d of stored) {
       const a = r.A.pages[d.page_number], b = r.B.pages[d.page_number];
@@ -644,11 +667,12 @@ async function phaseHarnessControl() {
     sim_A_vs_stored: { median: med(aStored), p10: q(aStored, 0.10), p90: q(aStored, 0.90) },
     sim_A_vs_B_same_pages: { median: med(aB), p10: q(aB, 0.10), p90: q(aB, 0.90) },
     floor_A_vs_other_pages_stored: { median: med(floor), p95: q(floor, 0.95) },
+    by_language: Object.fromEntries([...new Set(rows.map((x) => x.language))].map((l) => [l, { pages: rows.filter((x) => x.language === l).length, median_A_vs_stored: med(rows.filter((x) => x.language === l).map((x) => similarity(x.a, x.stored))), median_A_vs_B: med(rows.filter((x) => x.language === l).map((x) => similarity(x.a, x.b))) }])),
     criterion: 'median sim(A,stored) >= 0.75 x median sim(A,B) AND > p95 of the floor', pass,
   };
   console.log(JSON.stringify(out, null, 1));
   console.log(`\nHARNESS CONTROL: ${pass ? 'PASS — arm A reproduces what production wrote' : 'FAIL — arm A does NOT reproduce production; the run is not measuring production-vs-batch'}`);
-  fs.writeFileSync(path.join(RESULTS, 'translation-batch-continuity-harness-control.json'), JSON.stringify(out, null, 1));
+  fs.writeFileSync(path.join(RESULTS, `translation-batch-continuity-harness-control${has('loose') ? '-loose' : ''}.json`), JSON.stringify(out, null, 1));
 }
 
 // ── main ────────────────────────────────────────────────────────────────────

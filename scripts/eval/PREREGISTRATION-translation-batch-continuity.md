@@ -200,6 +200,17 @@ unmeasurable, not as a pass. A failure invalidates the run. Comparison against *
 translations was considered and excluded: it is a different estimand (absolute quality,
 not production-vs-batch), covered by #4883 and the Tibetan benchmark.
 
+### 2026-09-17, after A/B/C were scored on H1 and H3 — rung D is triggered
+
+B and C both **fail H1** on the pre-registered bound (paired lower bounds −13.9pp and
+−10.0pp against a −5pp margin; 17 of 57 boundaries carry an eligible term), so under
+Amendment 1 (below) arm D runs on the same 58 boundaries and the same shared block k−1.
+Spend so far $1.74; D is estimated at about $0.55, total inside the $5 ceiling. **D,
+operationally:** block k−1's last page is sent as the first page of block k's prompt (nine
+pages, no seed), its duplicate translation is discarded before scoring, and D is compared
+with A on H1, H2 and H3 exactly as B and C are. The H2 judge is still run for A/B and A/C,
+because both were pre-registered outcomes and are reported whatever H1 said.
+
 ---
 
 ## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last
