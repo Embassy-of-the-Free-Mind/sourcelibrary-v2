@@ -456,15 +456,25 @@ async function main() {
     for (const codex of CODICES) {
       if (CODEX_FILTER && !CODEX_FILTER.has(codex)) continue;
       const plan = planCodex(plates, codex);
+      let resumeEmpty = false;
       let book = EXISTING[codex] ? await books.findOne({ id: EXISTING[codex] }) : null;
       if (EXISTING[codex] && !book) throw new Error(`Codex ${codex}: expected book ${EXISTING[codex]} is missing — refusing to create a second one`);
       if (!book) {
         // Belt and braces: never create a second Codex N even if EXISTING drifts.
         const clash = await books.findOne({ source: PROVIDER, title: title(codex) }, { projection: { id: 1 } })
           || await books.findOne({ 'image_source.provider': PROVIDER, title: title(codex) }, { projection: { id: 1 } });
-        if (clash) throw new Error(`Codex ${codex}: a Claremont book already exists (${clash.id}) but is not in EXISTING — update the map`);
+        if (clash) {
+          // A book row with no page rows is the shell an aborted run leaves
+          // behind (the first --apply died in makePageDoc after insertBookIfNew,
+          // 2026-09-17). Adopt it and finish it rather than refusing.
+          const pageRows = await pages.countDocuments({ book_id: clash.id });
+          if (pageRows > 0) throw new Error(`Codex ${codex}: a Claremont book already exists (${clash.id}) but is not in EXISTING — update the map`);
+          book = await books.findOne({ id: clash.id });
+          resumeEmpty = true;
+          log(`Codex ${codex}: adopting empty book ${clash.id} left by an aborted run`);
+        }
       }
-      const isNew = !book;
+      const isNew = !book || resumeEmpty;
       const row = { codex, status: isNew ? 'NEW' : 'existing', plateRecords: plan.plateRecords, primary: plan.primary, series: plan.series.map((s) => `${s.series.replace('Black and white negative, ', '').replace(': Institute for Antiquity and Christianity', ' IAC').replace(': Honnold/Mudd Library, Special Collections', ' Honnold')}=${s.numeric}`).join('; ') };
 
       if (isNew) {
@@ -477,9 +487,9 @@ async function main() {
         }
         if (VERIFY) { row.pages = 0; row.onR2 = 0; rows.push(row); continue; }
         if (ARCHIVE_ONLY) { rows.push(row); continue; }
-        const bookId = randomUUID();
+        const bookId = resumeEmpty ? book.id : randomUUID();
         const firstPtr = plan.pages[0]?.pointer;
-        const acquired = await insertBookIfNew(db, {
+        const acquired = resumeEmpty ? { inserted: true } : await insertBookIfNew(db, {
           _id: new ObjectId(), id: bookId, slug: slug(codex),
           title: title(codex), display_title: title(codex), author: AUTHOR,
           language: 'Coptic', original_language: 'Coptic', languages: ['Coptic'], language_multi: false,
