@@ -462,6 +462,10 @@ async function phaseRun() {
       // Arm D (Amendment 1, run only with --with-d once B and C have failed): block k-1's last
       // page rides along as the first page of the prompt, unseeded, and its duplicate is discarded.
       if (has('with-d') && !have.has(`${r.bookId}:D`)) await callBlock(r, 'D', [r.prev[BLOCK - 1], ...r.next], null);
+      // A2: arm A run a second time, identically. NOT an arm and NOT in the decision rule — it is the
+      // noise floor: how far two runs of the SAME configuration sit apart on H1. Descriptive, added
+      // after the arms were scored, and labelled so wherever it is printed.
+      if (has('with-a2') && !have.has(`${r.bookId}:A2`)) await callBlock(r, 'A2', r.next, seeds.A);
       // Arm E (Amendment 1, last rung, run only with --with-e once B, C and D have failed): a second
       // pass over B's FIRST page only. It is never shown pages 2-8, so it cannot edit outside the seam.
       if (has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
@@ -531,7 +535,7 @@ function phaseScore() {
 
   const scored = usable.map(({ s, rows }) => {
     const terms = committedTerms(s.prev.map((p) => rows.prev.pages[p.page_number] || ''));
-    const present = [...ARMS, 'D', 'E'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
+    const present = [...ARMS, 'D', 'E', 'A2'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
     return { s, rows, terms, arms: Object.fromEntries(present.map((a) => [a, scoreArm(s, rows[a], terms)])) };
   });
 
@@ -579,7 +583,7 @@ function phaseScore() {
     control_shuffled: control, arms: {},
   };
   const hasE = scored.some((b) => b.arms.E);
-  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : [])];
+  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : []), ...(scored.some((b) => b.arms.A2) ? ['A2'] : [])];
   for (const arm of SHOWN) report.arms[arm] = { n: scored.filter((b) => b.arms[arm]).length, h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.filter((b) => b.arms[arm]).map((b) => b.arms[arm].body_chars)) };
   for (const arm of SHOWN.slice(1)) {
     const c = compare(arm), g = h3(arm), j = judgeShare(`A${arm}`);
@@ -615,7 +619,7 @@ function phaseScore() {
   console.log(`  ${control.rate != null && report.arms.A.h1_pooled.rate > (control.ci?.[1] ?? 1) ? 'the probe fires: real consistency sits above the chance band' : 'WARNING: real consistency is NOT above the chance band — the probe may be inert'}`);
   for (const arm of SHOWN.slice(1)) {
     const v = report.arms[arm].vs_A;
-    console.log(`\n═══ ${arm} vs A ═══`);
+    console.log(`\n═══ ${arm} vs A ═══${arm === 'A2' ? '   (NOISE FLOOR: arm A run twice. Descriptive, post hoc, not in the decision rule)' : ''}`);
     console.log(`  H1  Δ=${pct(v.h1.delta)}  paired 95% CI [${pct(v.h1.paired_ci?.[0])}, ${pct(v.h1.paired_ci?.[1])}]  (unpaired diffCI [${pct(v.h1.diffCI?.ci?.[0])}, ${pct(v.h1.diffCI?.ci?.[1])}])  better ${v.h1.better} / worse ${v.h1.worse} / same ${v.h1.same}  → ${v.h1.pass ? 'PASS' : 'FAIL'} (lower bound must exceed −5pp)`);
     console.log(`  H3  body ${pct(v.h3.body_relative)} vs A; invented tags ${v.h3.invented.a.toFixed(2)}→${v.h3.invented.x.toFixed(2)}; housekeeping ${v.h3.housekeeping.a.toFixed(2)}→${v.h3.housekeeping.x.toFixed(2)}; pages parsed ${v.h3.pages_parsed.toFixed(2)}/8  → ${v.h3.pass ? 'PASS' : 'FAIL'}`);
     console.log(v.h2 ? `  H2  judge: A preferred ${v.h2.a_wins}, ${arm} preferred ${v.h2.other_wins}, no preference ${v.h2.ties}; A share ${pct(v.h2.a_share)} (limit 60%)  → ${v.h2.pass ? 'PASS' : 'FAIL'}` : '  H2  judge verdicts not in yet');

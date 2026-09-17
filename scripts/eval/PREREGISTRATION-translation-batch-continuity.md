@@ -236,6 +236,18 @@ Spend so far $2.21; E is one small call per boundary, estimated under $0.25.
 - E is compared with A on H1, H2 and H3 with the same margins. H2's A/E packet is emitted
   on its own (`--judge-packet --pairs AE`) so no earlier pair's blinding key moves.
 
+### 2026-09-17, after E's H1 was scored — a noise-floor replicate of arm A (descriptive)
+
+E restores the seam page's terminology to A's level (72% on the first page of block k,
+against B's 40%) and still fails H1's bound, because two of 17 boundaries are worse. Every
+arm has failed H1 with zero or one boundary better and two or three worse. That raises the
+question of whether H1's −5pp bound is reachable at this n by **anything**, including
+production itself. So arm A is run a second time, identically ("A2"), about $0.45. **A2 is
+not an arm and is not in the decision rule.** It is post hoc, labelled so wherever printed,
+and answers one thing: how far apart two runs of the same configuration sit on H1. If A2
+also "fails", H1 cannot discriminate at n = 17 and the decision rests on H2 and H3; the
+rule is reported as written either way.
+
 ---
 
 ## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last
