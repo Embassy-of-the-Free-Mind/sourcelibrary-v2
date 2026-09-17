@@ -132,8 +132,10 @@ export default function CollectionAnchorBar({ sections, slug, tone = 'light' }: 
     ? 'inline-flex items-center gap-1.5 h-9 text-sm text-white/85 border border-white/25 rounded-full px-3 hover:bg-white/10 transition-colors'
     : 'inline-flex items-center gap-1.5 h-9 text-sm text-secondary border border-border-light rounded-full px-3 hover:bg-warm transition-colors';
 
+  // Dark tone: no top hairline, so the bar continues the hero's dark ground
+  // instead of ruling a line under it.
   return (
-    <nav ref={navRef} aria-label="Sections" className={`sticky top-0 z-30 ${dark ? 'border-y border-white/10 bg-dark' : 'border-y border-border-light bg-cream'}`}>
+    <nav ref={navRef} aria-label="Sections" className={`sticky top-0 z-30 ${dark ? 'border-b border-white/10 bg-dark' : 'border-y border-border-light bg-cream'}`}>
       <div ref={rootRef} className="max-w-[1500px] mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
         {/* Jump links — inline on desktop */}
         <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
