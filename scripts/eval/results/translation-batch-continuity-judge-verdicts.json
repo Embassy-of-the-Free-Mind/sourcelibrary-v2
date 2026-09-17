@@ -1024,5 +1024,347 @@
   "verdict": "LEFT",
   "why": "LEFT retains numerous untranslated Malay terms, consistent with the heavy code-switching convention on the preceding page; RIGHT translates nearly all of them into English.",
   "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:699259763d2d40d1b058f2da",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the archaic semicolon-chained register matching the preceding pages long clause style; LEFT modernizes it.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69e13af90dae29249d20bcf4",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps consistent third-person he pronoun matching the preceding verses; LEFT mixes one/they/he.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6990540938e1fdee57b366e9",
+  "verdict": "RIGHT",
+  "why": "RIGHT repeats the preceding pages exact running head OF AN ENSEMBLE OF SYSTEMS and American spelling center; LEFT invents a new head and uses British centre.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69d5ac3dd0bd3547a5655c53",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the preceding pages convention of quoting Another reading in Arabic script; RIGHT switches to bare romanization.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b525972379d2fed6c29590",
+  "verdict": "LEFT",
+  "why": "LEFT continues the preceding pages modernized you/your pronouns; RIGHT switches abruptly to archaic thee/thou.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6953ce6577f38f6761be4124",
+  "verdict": "RIGHT",
+  "why": "RIGHTs confidential matters with his own hand reads as the direct object of precedings sent many..., while LEFT breaks that grammatical link.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6aa35e80e213def30d6cb97f",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves the period Victorian diction and phrasing register of the preceding page; LEFT paraphrases into modern English.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:699068ed2e4efe910676a6a3",
+  "verdict": "LEFT",
+  "why": "RIGHT misspells the works own title JATAKACHUNDRILA vs precedings JATAKACHUNDRIKA, a name-consistency break LEFT avoids.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69ef2f8e72c1376fdf2afb08",
+  "verdict": "LEFT",
+  "why": "RIGHT inserts an OCR-artifact banner good English printed text and adds footnote symbols not used on the preceding page; LEFT stays clean and consistent.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69907cd85f855ec553e77a81",
+  "verdict": "LEFT",
+  "why": "LEFT keeps British spelling favour matching Frazers own usage; RIGHT americanizes to favor.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6953efda1479a63c1108830b",
+  "verdict": "LEFT",
+  "why": "LEFT completes the cut sentence smoothly apprehended as absolutely good; RIGHT creates an awkward redundancy apprehended considered.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a3535f9c8ce407afbe05377",
+  "verdict": "LEFT",
+  "why": "LEFT correctly finishes the preceding pages unfinished sentence with escaped.; RIGHT skips that word and jumps ahead, breaking the sentence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a088b0cbd8fc3beee8aab1c",
+  "verdict": "LEFT",
+  "why": "LEFT uses palanquins cleanly matching the preceding pages practice of using foreign/period terms without added glosses; RIGHT inserts a redundant explanatory aside.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a089bfc2b703903f58e82a6",
+  "verdict": "RIGHT",
+  "why": "RIGHTs parallel hatred of life and by fear of death echoes the preceding pages own parallel construction more closely than LEFTs asyndeton.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a58f53fc6cd8f9871069e3d",
+  "verdict": "LEFT",
+  "why": "LEFT continues the cut clause cleanly to the said consecrated interest...; RIGHT restates content already given on the preceding page, producing redundancy.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6955962b7bd6d2cd1d620ef7",
+  "verdict": "RIGHT",
+  "why": "RIGHTs opening particular will feel... completes the preceding pages cut phrase the occult student in directly; LEFT restates it with different wording, breaking the exact continuation.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69a552f30aade5c1d01fe6c0",
+  "verdict": "TIE",
+  "why": "LEFT and RIGHT are nearly word-for-word identical continuations of the preceding page with no meaningful stylistic divergence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69ee646e7b983848aff573c6",
+  "verdict": "RIGHT",
+  "why": "RIGHTs marginal notes read coherently and its diction (e.g. dwell vs live) is more careful, matching the preceding pages precise register; LEFTs margin notes are garbled.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:695934b6b282844d7b27845f",
+  "verdict": "LEFT",
+  "why": "LEFT completes the Latin word fragment cut at the page break (Uni- + tatem); RIGHT skips the Latin completion entirely.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6991d6648c1030b12444b0ec",
+  "verdict": "LEFT",
+  "why": "LEFT matches the preceding pages clean modern-paragraph prose; RIGHT reverts to reproducing archaic line-break/hyphenation artifacts inconsistent with the preceding pages presentation.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6991bd4f70254d38471e438c",
+  "verdict": "LEFT",
+  "why": "LEFT continues the preceding pages habit of adding parenthetical glosses for technical terms (e.g. somnambulism (sleepwalking)); RIGHT drops this convention.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69e419cb8a8dae1074c518e6",
+  "verdict": "LEFT",
+  "why": "LEFT correctly completes the cut word The from the preceding page without repeating it; RIGHT duplicates The The double doors.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69906a4dd69de0e6980706cf",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves the preceding pages running head COCK LANE AND COMMON-SENSE; LEFT changes it to INTRODUCTION, breaking header continuity.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b302efb7250b3103276cfd",
+  "verdict": "RIGHT",
+  "why": "RIGHT consistently uses matrix for the uterus, matching the preceding pages established terminology; LEFT switches to uterus.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a4e5b0300c1250433dc29c9",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the preceding pages convention of leaving Latin citation phrases (de pactis, de asse, etc.) untranslated; RIGHT systematically translates them into English, breaking that convention.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:65c7583f-4866-4f74-8903-a37bd8f1de33",
+  "verdict": "LEFT",
+  "why": "LEFT continues in full English translation matching the preceding page; RIGHT reverts to untranslated Latin after only the first line.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a905cc05c1f3f2e1b8c2663",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the preceding pages heavy literal colon-based punctuation register; LEFT smooths it into looser comma-based prose.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b6306e1c1c21a373801cad",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the Greek term pyrousthai untranslated throughout, matching the preceding pages consistent practice of leaving Greek terms in the original script; RIGHT translates it as to burn partway through.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b2f4160e2f024dfbfbb030",
+  "verdict": "RIGHT",
+  "why": "RIGHTs more literal, Latin-mirroring word order matches the preceding pages markedly literal translation register better than LEFTs smoother phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b51dd647b06ecd5818525b",
+  "verdict": "RIGHT",
+  "why": "RIGHTs the matter surpassed it cleanly echoes back to the preceding sentences exceed the powers of nature; LEFTs the matter exceeded leaves the reference vaguer.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b00f96e485bbb15c6b3357",
+  "verdict": "RIGHT",
+  "why": "RIGHT translates plant names into English common names (Heather, Date palm) matching the preceding page's convention (Fig, Pomegranate, Myrtle), while LEFT switches to untranslated Latin/Greek terms.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a4ad54802f968641aca25ac",
+  "verdict": "LEFT",
+  "why": "LEFT keeps 'tender' and 'God's blessing' matching the preceding page's exact wording more closely than RIGHT's 'youthful'/'divine blessing'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b62fd91c1c21a3737fb4fb",
+  "verdict": "LEFT",
+  "why": "LEFT repeats the preceding page's exact phrase 'illustrious topic' repeatedly, while RIGHT switches to 'notable topic'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a492394a45b99e46af94e29",
+  "verdict": "RIGHT",
+  "why": "RIGHT correctly reintroduces 'Phoebus' as apposition, completing the preceding page's cut-off phrase, while LEFT drops the antecedent entirely.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a4b0f667622bb5aba1286a3",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the preceding page's title convention 'most Serene King' exactly, while RIGHT drops 'most'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b51e9d9a81ef7feb3d8157",
+  "verdict": "LEFT",
+  "why": "LEFT keeps 'science' and 'powers' matching the preceding page's vocabulary, while RIGHT substitutes 'knowledge' and 'faculties'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a085b0349638a50931caa99",
+  "verdict": "LEFT",
+  "why": "LEFT reuses the preceding page's exact phrase 'most learned', while RIGHT switches to 'most erudite'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a42efe106e6ead3ac54b579",
+  "verdict": "LEFT",
+  "why": "LEFT completes the preceding page's parallel 'with this body, with this soul, with...' grammatically, while RIGHT's phrasing breaks the parallelism and grammar.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a45cdca98e9f852e61cbce4",
+  "verdict": "LEFT",
+  "why": "LEFT directly completes the preceding page's cut-off phrase with 'divine will', while RIGHT ignores the cut-off and starts an unrelated clause.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a3c64e739b4508b04e2b091",
+  "verdict": "LEFT",
+  "why": "LEFT's fragment picks up a word split across the page boundary, showing direct textual continuity that RIGHT's clean restart lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a3c632d879008ba7e166967",
+  "verdict": "LEFT",
+  "why": "LEFT continues the preceding page's bilingual pinyin+gloss header convention, while RIGHT drops to English-only headers.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6992f405c8c6ac61574e73ce",
+  "verdict": "LEFT",
+  "why": "LEFT continues the dialogue immediately and naturally from the preceding page's cut-off conversation, while RIGHT inserts an unrelated editorial aside first.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a3c645739b4508b04e26377",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps book-title citations in the preceding page's plain untranslated form, while LEFT adds parenthetical English glosses not used before.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a08c0d69b57265ed7f10cb5",
+  "verdict": "LEFT",
+  "why": "LEFT maintains the preceding page's established bilingual convention of repeating Arabic terms alongside English, while RIGHT drops the Arabic glosses entirely.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69c1b8c38522835be844b11b",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves the preceding page's careful gap/lacuna marking and its footnote-glossary convention, more consistent with its scholarly rigor.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a2032e518654bf8e1903b96",
+  "verdict": "LEFT",
+  "why": "LEFT continues the preceding page's distinctive agent-noun coinage ('reliers') with 'trusters', while RIGHT normalizes to plain phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a2032f718654bf8e1903f05",
+  "verdict": "RIGHT",
+  "why": "RIGHT translates the quoted Arabic example sentences into English, matching the preceding page's practice, while LEFT leaves examples in transliterated Arabic.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69c271a8b82ba5d5beda2ea0",
+  "verdict": "TIE",
+  "why": "Both continue the ritual dialogue almost identically with no clear distinguishing continuity marker.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a100911f717292950967898",
+  "verdict": "TIE",
+  "why": "Both render the Typhon passage as near-identical paraphrases with no decisive continuity signal favoring either.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b3e675304c1c6b3950b1fa",
+  "verdict": "LEFT",
+  "why": "LEFT stays closer to the preceding page's plain, unglossed English style, while RIGHT introduces new Hebrew-gloss terms not used before.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69c1bad18522835be845aabc",
+  "verdict": "LEFT",
+  "why": "LEFT reflows the text into standard paragraph prose matching the preceding page's flowing narrative style, while RIGHT switches to a line-wrapped facsimile layout.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a26d0aef5273a8d9079a45d",
+  "verdict": "LEFT",
+  "why": "LEFT translates the section header into English, consistent with the preceding page's fully-English convention, while RIGHT leaves the header untranslated in German.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a26d296f5273a8d907a56c7",
+  "verdict": "LEFT",
+  "why": "LEFT's leftover German fragment aligns exactly with the parenthetical closing on the preceding page, showing direct textual continuity that RIGHT's clean restart lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69f8c1030c0c281d4bd321fd",
+  "verdict": "RIGHT",
+  "why": "RIGHT retains the preceding page's untranslated title 'Fray' throughout, while LEFT switches it to 'Friar'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:69b525ca6be6046083032514",
+  "verdict": "LEFT",
+  "why": "LEFT retains original Dutch terms (Kapiteyn, Keyser) untranslated as the preceding page does, while RIGHT translates them to English.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6990592aaaa7f10ed4cfaa42",
+  "verdict": "LEFT",
+  "why": "LEFT translates headers and quoted inscriptions into English, matching the preceding page's fully-English apparatus, while RIGHT leaves them in untranslated Latin and Greek.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "AE:6a20333118654bf8e1904805",
+  "verdict": "RIGHT",
+  "why": "RIGHT retains many rare Malay terms untranslated, matching the preceding page's dense convention of leaving obscure vocabulary transliterated, while LEFT translates most into English.",
+  "judge": "claude-sonnet subagent, blind"
  }
 ]
