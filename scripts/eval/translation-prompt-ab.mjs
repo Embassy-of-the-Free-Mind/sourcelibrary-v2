@@ -271,7 +271,7 @@ function estimate(sample, chooser = modelFor, promptChars = 11200) {
 // ── phase: run (PAID) ───────────────────────────────────────────────────────
 const BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
-async function gemini(promptText, maxOutputTokens, model = MODEL) {
+export async function gemini(promptText, maxOutputTokens, model = MODEL) {
   const key = process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY_2;
   if (!key) throw new Error('no GEMINI_API_KEY');
   for (let attempt = 0; attempt < 4; attempt++) {
@@ -303,7 +303,7 @@ async function gemini(promptText, maxOutputTokens, model = MODEL) {
   return { error: 'retries exhausted' };
 }
 
-async function pool(items, n, fn) {
+export async function pool(items, n, fn) {
   const out = new Array(items.length);
   let i = 0;
   await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => {
