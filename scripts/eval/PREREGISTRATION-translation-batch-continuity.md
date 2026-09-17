@@ -177,3 +177,64 @@ file: 103 had an untranslatable page inside the 16-page window, 44 had a block o
 20,000 OCR chars, 38 had a seam page under 400 chars of prose, 12 opened block k on a
 heading, 7 ran off the book, 4 had a non-prose seam page, 1 had a page under 200 chars.
 40 of the 58 seams end mid-sentence. Estimated spend from the drawn text: $1.98.
+||||||| f90cbd83
+
+### 2026-09-17 — ordering note on Amendment 1 (below)
+
+Amendment 1 was written on the preregistration branch while the A/B/C run was already in
+progress on the pinned sample above, and was merged here before any arm output had been
+read or scored. It adds rungs D and E beneath C and leaves A, B, C, their margins and their
+run order untouched, so it changes nothing about the run it arrived during. If D is ever
+needed it reuses the same 58 boundaries and the same shared block k−1.
+
+---
+
+## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last
+
+Derek asked whether a second LLM pass could blend the seams and still come out cheaper.
+It can. It is still the worst of the four options, and the arithmetic says so before any
+judgement is applied.
+
+Measured from `gemini_usage`, September, translation successes with pages and output
+(n = 17,308 calls, 110,136 pages): **1,237 input tokens and 757 output tokens per page**,
+modelled $0.001445/page against $0.001486 logged — so **output is 79% of the cost**, and
+anything that adds output tokens is expensive while anything that adds only input tokens
+is nearly free. At the September run rate of ~206,500 pages/month:
+
+| option | $/page | $/mo | vs today | rewrites text? |
+|---|---|---|---|---|
+| today — realtime, chained | $0.001445 | $298 | — | no |
+| **B** plain batch, no seam handling | $0.000723 | $149 | −$149 | no |
+| **C** source-seeded (input only) | ~$0.000742 | ~$153 | −$145 | no |
+| **D** overlap: re-translate 1 page per 8, discard the duplicate | $0.000813 | $168 | −$131 | no |
+| **E** second LLM pass blending seams | $0.000832 | $172 | −$127 | **yes** |
+
+**E is dominated by D.** Overlap costs less *and* gives stronger continuity than a repair
+pass: the model sees genuinely adjacent source text inside one prompt and writes the
+transition itself, rather than being handed a previous translation and asked to match it.
+Nothing already-good gets rewritten.
+
+**And there is a measured prior against E's shape on this stack.** A text-only flash-lite
+cleanup pass over OCR was run on 60 pages for $0.076 (`scripts/eval/ia-ocr-cleanup-exp.mjs`,
+EXPERIMENTS.md 2026-09-12): it gained +0.02–0.09 agreement, no rejected band reached 0.85,
+and **it invented on input it could not read** — an ink-blotted "Toparch" became "Lord of",
+and 7 of 8 index author names were fabricated. A seam-blender is the same shape: text in,
+text out, flash-lite, rewriting content it cannot verify against a source. The difference
+is that here it would be rewriting text that is *already correct*, so every fabrication is
+a pure loss with no offsetting gain.
+
+**Therefore the decision ladder is extended, not replaced:**
+
+1. B passes → plain batch. (unchanged)
+2. B fails, C passes → source-seeded batch. (unchanged)
+3. **C fails, D passes → overlap.** D is added as the third rung because it is cheaper
+   than E and carries no rewrite risk. Test D against A on H1 and H2 with the same margins.
+4. **All of B, C and D fail → E is the only remaining way to keep the discount**, and it
+   is then tested with an added pre-registered outcome: **E must not change text outside
+   the seam.** Measure the edit distance between E's output and B's output on pages that
+   are not the first page of a block; a pass that edits elsewhere is rejected regardless
+   of how the seam reads.
+5. Nothing passes → do not migrate; report the cost of the quality.
+
+**Run order is unchanged — A, B, C first.** D and E are contingencies and are only paid
+for if the rung above them fails. If B passes, none of this is ever spent.
