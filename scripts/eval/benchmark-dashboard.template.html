@@ -1,7 +1,8 @@
 <title>OCR Evidence Ledger</title>
 <!-- Template for the private evidence dashboard (#4735). Built by:
        node scripts/eval/benchmark-dashboard-data.mjs --html=<out.html>
-     which replaces the DATA placeholder below with results/benchmark/dashboard-data.json.
+     which replaces the DATA placeholder below with the evidence table. The same table feeds
+     /platform/admin/ocr-evidence; this standalone page is for sharing outside the admin login.
      PRIOR ART: none — `git grep -i dashboard -- scripts src/app/platform` finds the admin
      line/metrics/system-map pages (pipeline and traffic, Mongo-backed) and no view over
      scripts/eval/results; benchmark-score.mjs prints a per-stratum markdown table only. -->
@@ -111,7 +112,7 @@ const DATA = /*__DATA__*/null;
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const f3 = (x) => (x == null ? "–" : x.toFixed(3));
-const FACTORS = { stratum: "sealed stratum", substratum: "stratum and period", script_class: "observed script class", language: "reference tier and language" };
+const FACTORS = { script: "script", language: "language", period: "period (catalogue year)", script_period: "script × period", language_period: "language × period", stratum: "sealed stratum", substratum: "stratum and draw", script_class: "observed script class" };
 
 function chip(g) { return `<span class="chip ${g}"><i></i>${g}</span>`; }
 
@@ -166,7 +167,8 @@ function boot() {
     [g["decision-grade"] || 0, "decision-grade cells"], [g["directional"] || 0, "directional"], [g["exploratory"] || 0, "exploratory"],
     [DATA.totals.pages, "sealed books, one page each"], [DATA.totals.page_engine_rows, "engine readings scored"],
   ].map(([n, l]) => `<div><b>${n.toLocaleString("en-US")}</b><span>${l}</span></div>`).join("");
-  const present = [...new Set(DATA.cells.map((c) => c.factor))];
+  const have = new Set(DATA.cells.map((c) => c.factor));
+  const present = [...Object.keys(FACTORS).filter((f) => have.has(f)), ...[...have].filter((f) => !FACTORS[f])];
   $("f-factor").innerHTML = present.map((f) => `<option value="${f}">${FACTORS[f] || f}</option>`).join("");
   const ids = ["f-factor", "f-grade", "f-sort"];
   try { const s = JSON.parse(localStorage.getItem("ocr-ledger") || "{}"); for (const k of ids) if (s[k] && [...$(k).options].some((o) => o.value === s[k])) $(k).value = s[k]; } catch (e) {}

@@ -12,7 +12,9 @@
  * numbers. Hoisting all three into scripts/eval/lib is a separate, one-concern PR.
  *
  * Who runs it: anyone, on a laptop, after benchmark-score.mjs has written new results.
- *   node scripts/eval/benchmark-dashboard-data.mjs            # writes results/benchmark/dashboard-data.json
+ *   node scripts/eval/benchmark-dashboard-data.mjs            # writes src/data/ocr-benchmark-evidence.json
+ * Slices: sealed stratum, period substratum, observed script class, and — pooled across strata
+ * and reference tiers — script, language, period (catalogue year), script × period, language × period.
  * How it fails: loudly. A results file it cannot parse, or a cell whose recomputed numbers
  * disagree with the scorer's own summary, is an error — never a silently thinner table.
  *
@@ -28,7 +30,10 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIR = path.join(__dirname, 'results', 'benchmark');
-const OUT = path.join(DIR, 'dashboard-data.json');
+// Written under src/ on purpose: /platform/admin/ocr-evidence imports it, and the Vercel
+// ignored-build step skips commits that touch only scripts/ — a table kept under results/
+// would update in git and never reach the page.
+const OUT = path.join(__dirname, '..', '..', 'src', 'data', 'ocr-benchmark-evidence.json');
 const PRODUCTION_ENGINE = 'gemini-3.1-flash-lite';
 const CATASTROPHIC_CER = 0.5;
 const N_DIRECTIONAL = 30, N_DECISION = 50, N_RATE = 150;
@@ -65,6 +70,22 @@ if (!files.length) throw new Error(`no scored benchmark files in ${DIR}`);
 const latest = new Map();
 for (const f of files) latest.set(f.replace(/-\d{4}-\d{2}-\d{2}\.json$/, ''), f);
 
+// The sealed registry (scripts/eval/benchmark/<stratum>.json) carries what the result files drop:
+// catalogue year, language, provider. Joined by slug.
+const REGISTRY_DIR = path.join(__dirname, 'benchmark');
+const registry = new Map();
+for (const f of fs.readdirSync(REGISTRY_DIR).filter(f => f.endsWith('.json'))) {
+  for (const p of JSON.parse(fs.readFileSync(path.join(REGISTRY_DIR, f), 'utf8')).pages || []) registry.set(p.slug, p);
+}
+// First named language only: "Japanese; Chinese" → Japanese, "Ancient Greek" → Greek.
+const cleanLanguage = l => { if (!l) return null; const first = String(l).split(/[;,]/)[0].trim().replace(/^Ancient /, ''); return first || null; };
+const SCRIPT_OF = { Latin: 'Latin', English: 'Latin', French: 'Latin', Italian: 'Latin', Spanish: 'Latin', Dutch: 'Latin', German: 'Latin', Greek: 'Greek', Hebrew: 'Hebrew', Armenian: 'Armenian', Syriac: 'Syriac', Chinese: 'Han', Japanese: 'Japanese (kana + kanji)' };
+// German is Latin SCRIPT; the Fraktur stratum is a typeface class within it, kept visible as its own level.
+const scriptOf = (language, stratum) => (stratum === 'german-fraktur' ? 'Latin (Fraktur)' : SCRIPT_OF[language] || null);
+// CATALOGUE year: for a reprint or a modern edition this is the WORK's date, not the scan's
+// (#4884 — a "1716" Hagakure was a typeset reprint). Read period cells with that in mind.
+const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
+
 const rows = [];
 const sources = [];
 for (const [stratum, file] of latest) {
@@ -79,12 +100,16 @@ for (const [stratum, file] of latest) {
       // In a reference tier an unaligned page has no CER: the engine ran and could not be placed
       // against the reference. That is COVERAGE, and it must not vanish into a smaller n.
       const aligned = isTier ? !!e.aligned : true;
+      const reg = registry.get(p.slug) || {};
+      const language = cleanLanguage(p.language ?? reg.language);
+      const year = p.year ?? reg.year ?? null;
       rows.push({
         stratum, slug: p.slug, engine, referenced, aligned,
         substratum: p.substratum ?? null,
         script_class: p.script_class ?? null,
-        language: p.language ?? null,
-        year: p.year ?? null,
+        language, year,
+        script: scriptOf(language, stratum),
+        period: periodOf(year),
         cer: aligned && typeof e.cer === 'number' ? e.cer : null, // vs reference if `referenced`, else vs the proxy engine
         loop: e.loop === true, empty: e.empty === true,
         invention: typeof e.invention_ref === 'number' ? e.invention_ref : (typeof e.invention === 'number' ? e.invention : null),
@@ -100,7 +125,12 @@ const cellKeys = r => {
   const k = [['stratum', r.stratum]];
   if (r.substratum) k.push(['substratum', `${r.stratum} / ${r.substratum}`]);
   if (r.script_class) k.push(['script_class', `${r.stratum} / ${r.script_class}`]);
-  if (r.language && r.stratum.startsWith('ref-')) k.push(['language', `${r.stratum} / ${r.language}`]);
+  // Pooled ACROSS strata and reference tiers (each book is drawn once, so pooling adds books):
+  if (r.script) k.push(['script', r.script]);
+  if (r.language) k.push(['language', r.language]);
+  if (r.period) k.push(['period', r.period]);
+  if (r.script && r.period) k.push(['script_period', `${r.script} · ${r.period}`]);
+  if (r.language && r.period) k.push(['language_period', `${r.language} · ${r.period}`]);
   return k;
 };
 const groups = new Map();
@@ -158,7 +188,22 @@ for (const g of groups.values()) {
     referenced_pages_needed: Math.max(0, N_DECISION - refCer.length),
   });
 }
-cells.sort((a, b) => a.factor.localeCompare(b.factor) || a.level.localeCompare(b.level) || a.engine.localeCompare(b.engine));
+// Periods read in time order, not alphabetically ("before 1500" would otherwise sort last).
+const PERIODS = ['before 1500', '1500–1599', '1600–1699', '1700–1799', '1800–1899', '1900 on'];
+const levelKey = l => { const parts = l.split(' · '); const pi = PERIODS.indexOf(parts[parts.length - 1]); return pi < 0 ? l : `${parts.length > 1 ? parts[0] : ''}|${pi}`; };
+cells.sort((a, b) => a.factor.localeCompare(b.factor) || levelKey(a.level).localeCompare(levelKey(b.level)) || a.engine.localeCompare(b.engine));
+
+// ── "do we have enough?" — one line per factor level, read off the PRODUCTION engine ──────
+// (the engine every comparison is against; if it has no referenced pages, nothing in the level
+// can be decided). `books` counts sealed pages any engine was run on.
+const sufficiency = [];
+for (const key of [...new Set(cells.map(c => `${c.factor}|${c.level}`))]) {
+  const [factor, level] = key.split('|');
+  const inLevel = cells.filter(c => c.factor === factor && c.level === level);
+  const prod = inLevel.find(c => c.engine === PRODUCTION_ENGINE);
+  const referenced = prod?.cer_vs_reference?.n ?? 0;
+  sufficiency.push({ factor, level, books: Math.max(...inLevel.map(c => c.n_run)), referenced, grade: referenced ? grade(referenced) : 'exploratory', referenced_books_needed: Math.max(0, N_DECISION - referenced) });
+}
 
 // ── self-check against the scorer's own summary ──────────────────────────────
 // If the two disagree, one of them misreads the files, and a dashboard built on it is wrong.
@@ -183,9 +228,10 @@ const out = {
   production_engine: PRODUCTION_ENGINE,
   thresholds: { catastrophic_cer: CATASTROPHIC_CER, directional_n: N_DIRECTIONAL, decision_n: N_DECISION, rate_n: N_RATE },
   totals: { page_engine_rows: rows.length, pages: new Set(rows.map(r => `${r.stratum}|${r.slug}`)).size, cells: cells.length, cells_by_grade: gradeCount },
+  sufficiency,
   cells,
 };
-fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
+fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
 console.log(`rows ${rows.length} · pages ${out.totals.pages} · cells ${cells.length} · ${JSON.stringify(gradeCount)}`);
 console.log(`self-check vs scorer summary: OK · wrote ${path.relative(process.cwd(), OUT)}`);
 
