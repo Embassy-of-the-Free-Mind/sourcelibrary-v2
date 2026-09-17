@@ -211,6 +211,31 @@ pages, no seed), its duplicate translation is discarded before scoring, and D is
 with A on H1, H2 and H3 exactly as B and C are. The H2 judge is still run for A/B and A/C,
 because both were pre-registered outcomes and are reported whatever H1 said.
 
+### 2026-09-17, after B, C and D were scored and judged — rung E is triggered, and defined
+
+Results so far, on 57 usable boundaries (one dropped: arm C lost its seam page). H2, blind
+judge, A's share with ties split: **B 76.3%, C 64.0%, D 57.9%** against a 60% limit — B
+and C fail, D passes. H1: B, C and D all fail the −5pp bound (paired lower bounds −13.9,
+−10.0 and −23.5pp), on only 17 boundaries that carry an eligible term. H3 passes for all
+three. So B, C and D each fail at least one co-primary and Amendment 1 sends this to E.
+Spend so far $2.21; E is one small call per boundary, estimated under $0.25.
+
+**E, operationally** — fixed here, before any E output exists:
+
+- E is a second pass over **the first page of block k only**, starting from arm B's
+  output. It is shown the same 2,000-char slice of block k−1's last-page translation that
+  arm A is seeded with, the **source OCR** of the seam page (so it has something to verify
+  against — the prior against E is a text-only pass that invented), and B's translation of
+  that page. It is told to change only what continuity requires and to return the page
+  unchanged otherwise. Same model, thinking off. Prompt: `seamRepairPrompt()` in the harness.
+- **E's block k = E's page 1 + B's pages 2–8, untouched.** Amendment 1's added outcome,
+  "E must not change text outside the seam", therefore holds by construction: E is never
+  shown those pages. What is measured instead, and reported, is how much of the seam page
+  E rewrote (word-bigram similarity to B's page) and H3 on the repaired page, since
+  invention there is the live risk.
+- E is compared with A on H1, H2 and H3 with the same margins. H2's A/E packet is emitted
+  on its own (`--judge-packet --pairs AE`) so no earlier pair's blinding key moves.
+
 ---
 
 ## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last

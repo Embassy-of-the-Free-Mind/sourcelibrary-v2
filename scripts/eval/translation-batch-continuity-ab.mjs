@@ -172,6 +172,28 @@ export function blockPrompt(prompts, book, pages, seed) {
   return { prompt, ref };
 }
 
+/**
+ * Arm E's prompt. The pass sees the previous page's translation (the same 2,000-char slice arm A
+ * is seeded with), the SOURCE of the seam page so that it has something to verify against, and
+ * the unseeded translation it is to repair. It is told to change as little as possible.
+ */
+export function seamRepairPrompt(book, prevTranslation, ocr, draft) {
+  return `You are revising one page of an English translation of a ${book.language || 'Latin'} book so that it continues seamlessly from the page before it. The page was translated without sight of the previous page.
+
+Change ONLY what continuity requires: a sentence carried over the page break that was picked up wrongly, a name or technical term rendered differently from the previous page, a formatting convention (headers, notes, markup) that differs from the previous page. Change NOTHING else. Do not improve, shorten or expand the translation. Do not add anything that is not in the source text. Keep all markup tags exactly as they are. If nothing needs changing, return the page unchanged.
+
+Return the full revised page and nothing else.
+
+**Previous page translation:**
+${prevTranslation.slice(0, SEED_CHARS)}...
+
+**Source text of this page:**
+${ocr}
+
+**Translation of this page, to revise:**
+${draft}`;
+}
+
 /** Mirrors the worker's response parse, including the 15%-length reject and the positional fallback. */
 export function parseBlock(responseText, pages) {
   const out = new Map();
@@ -393,6 +415,33 @@ async function phaseRun() {
     return row;
   };
 
+  /** Arm E: repair B's seam page against the previous page's translation. One small call. */
+  const callRepair = async (r, lastPrev, bRow) => {
+    const first = r.next[0];
+    const bFirst = bRow?.pages?.[first.page_number];
+    if (!bFirst || spent >= approved) return null;
+    const prompt = seamRepairPrompt(bookOf(r), lastPrev, first.ocr, bFirst);
+    const t0 = Date.now();
+    const res = await gemini(prompt, maxOutFor([first]), MODEL);
+    const cost = res.error ? 0 : (res.inTok / 1e6) * price.input + (res.outTok / 1e6) * price.output;
+    await logUsage({
+      type: 'translation', mode: 'realtime', model: MODEL, book_id: r.bookId, page_count: 1,
+      input_tokens: res.inTok || 0, output_tokens: res.outTok || 0, cost_usd: cost, status: res.error ? 'error' : 'success',
+      error_message: res.error || null, duration_ms: Date.now() - t0, prompt_version: 'seam-repair-e1', endpoint: ENDPOINT, triggered_by: 'manual',
+    }, db).catch((e) => console.warn(`usage log failed: ${e.message}`));
+    spent += cost;
+    const repaired = res.error ? null : sanitizeTranslationTags((res.text || '').replace(/^```[a-z]*\n?|```\s*$/g, '').trim());
+    const pages = { ...bRow.pages };
+    if (repaired) pages[first.page_number] = repaired; else delete pages[first.page_number];
+    const row = {
+      bookId: r.bookId, language: r.language, which: 'E', seamPage: r.seamPage, model: MODEL, seedKind: 'repair-pass', seedChars: Math.min(SEED_CHARS, lastPrev.length),
+      pages, pagesParsed: Object.keys(pages).length, pagesSent: 1, retried: false, error: res.error || null, finish: res.finish || null,
+      inTok: res.inTok || 0, outTok: res.outTok || 0, cost_usd: cost, at: new Date().toISOString(),
+    };
+    stream.write(JSON.stringify(row) + '\n');
+    return row;
+  };
+
   const have = new Map(readRows().map((x) => [`${x.bookId}:${x.which}`, x]));
   let n = 0;
   await pool(payload.sample, CONCURRENCY, async (r) => {
@@ -413,6 +462,9 @@ async function phaseRun() {
       // Arm D (Amendment 1, run only with --with-d once B and C have failed): block k-1's last
       // page rides along as the first page of the prompt, unseeded, and its duplicate is discarded.
       if (has('with-d') && !have.has(`${r.bookId}:D`)) await callBlock(r, 'D', [r.prev[BLOCK - 1], ...r.next], null);
+      // Arm E (Amendment 1, last rung, run only with --with-e once B, C and D have failed): a second
+      // pass over B's FIRST page only. It is never shown pages 2-8, so it cannot edit outside the seam.
+      if (has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
     } else if (!prev?.skipped) {
       console.log(`  ${r.bookId}: block k-1 did not return its last page — boundary unusable, arms NOT run (recorded, not padded)`);
     }
@@ -479,7 +531,7 @@ function phaseScore() {
 
   const scored = usable.map(({ s, rows }) => {
     const terms = committedTerms(s.prev.map((p) => rows.prev.pages[p.page_number] || ''));
-    const present = [...ARMS, 'D'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
+    const present = [...ARMS, 'D', 'E'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
     return { s, rows, terms, arms: Object.fromEntries(present.map((a) => [a, scoreArm(s, rows[a], terms)])) };
   });
 
@@ -526,7 +578,8 @@ function phaseScore() {
     h1: { boundaries_with_eligible_terms: withTerms.length, eligible_terms: withTerms.reduce((n, b) => n + b.arms.A.h1.eligible, 0), margin_pp: 5 },
     control_shuffled: control, arms: {},
   };
-  const SHOWN = hasD ? [...ARMS, 'D'] : ARMS;
+  const hasE = scored.some((b) => b.arms.E);
+  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : [])];
   for (const arm of SHOWN) report.arms[arm] = { n: scored.filter((b) => b.arms[arm]).length, h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.filter((b) => b.arms[arm]).map((b) => b.arms[arm].body_chars)) };
   for (const arm of SHOWN.slice(1)) {
     const c = compare(arm), g = h3(arm), j = judgeShare(`A${arm}`);
@@ -549,7 +602,10 @@ function phaseScore() {
     : dPass === undefined ? 'B and C fail — Amendment 1 sends this to arm D (overlap), not yet run'
     : dPass === null ? 'PENDING — B and C failed; H2 judge verdicts for A/D not in yet'
     : dPass ? 'RUNG 3 — B and C fail, D passes: migrate to batch with a one-page overlap'
-    : 'RUNG 4 — B, C and D all fail: E (seam-repair pass) is the only remaining way to keep the discount; not run here';
+    : !hasE ? 'B, C and D all fail — Amendment 1 sends this to arm E (seam-repair pass), not yet run'
+    : verdict('E') === null ? 'PENDING — B, C and D failed; H2 judge verdicts for A/E not in yet'
+    : verdict('E') ? 'RUNG 4 — B, C and D fail, E passes: migrate to batch with a seam-repair second pass'
+    : 'RUNG 5 — nothing passes: do not migrate; report the cost of the quality';
 
   const pct = (x) => (x == null ? '  —  ' : (x * 100).toFixed(1) + '%');
   console.log('═══ H1: cross-boundary terminology consistency (pooled, bootstrap clustered on boundary) ═══');
@@ -588,15 +644,15 @@ function phaseJudgePacket() {
   // flips, and the key stops matching what the judge read (caught here on 2026-09-17, before any
   // verdict was scored). So: `--pairs` says which pairs draw, `--only` which of them are written,
   // and key entries for pairs not written are kept. As judged: AB and AC came from
-  // `--pairs AB,AC`; AD from `--pairs AB,AC,AD --only AD`.
+  // `--pairs AB,AC`; AD from `--pairs AB,AC,AD --only AD`; AE from `--pairs AE`.
   const PAIRS = String(arg('pairs', 'AB,AC')).split(',');
   const ONLY = String(arg('only', PAIRS.join(','))).split(',');
   const { usable } = loadBoundaries();
   resetSeed();
-  const packet = { AB: [], AC: [], AD: [] }, key = [];
+  const packet = { AB: [], AC: [], AD: [], AE: [] }, key = [];
   for (const { s, rows } of usable) {
     const preceding = readerText(rows.prev.pages[s.prev[BLOCK - 1].page_number]);
-    for (const other of ['B', 'C', 'D']) {
+    for (const other of ['B', 'C', 'D', 'E']) {
       if (!PAIRS.includes(`A${other}`)) continue;
       if (!rows[other]?.pages?.[s.next[0].page_number]) continue;
       const pair = `A${other}`, id = `${pair}:${s.bookId}`;
