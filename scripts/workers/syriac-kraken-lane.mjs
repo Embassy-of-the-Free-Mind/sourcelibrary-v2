@@ -55,6 +55,7 @@ import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, ENGINES, KRAKEN,
   routeBook, scriptTagCounts, pagePolicy, envelope, letterCount, ocrSetFields,
   STALE_OCR_FIELDS, reenrolDecision, isHumanEdited, hasRealTranslation, markTranslationsStale,
+  findGutter, cutAtGutter,
 } from '../lib/syriac-kraken-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -240,24 +241,50 @@ async function work() {
           fs.rmSync(img, { force: true }); skipped++; continue;
         }
       }
-      pairs.push([img, outTxt(r.bid, r.pn), r]);
+      // Two columns, or two leaves in one photograph: cut at the gutter and read the
+      // right part first (a right-to-left book reads right column / right leaf first).
+      let gutter = null;
+      try { gutter = await findGutter(img); } catch (e) { log(`gutter detection failed on ${r.bid}/${r.pn}: ${e?.message}`); }
+      if (gutter) {
+        const base = path.join(imgDir(r.bid), String(r.pn));
+        const { R, L } = await cutAtGutter(img, gutter.x, base);
+        pairs.push({ r, gutter, parts: [[R, `${base}.R.txt`], [L, `${base}.L.txt`]], img });
+      } else {
+        pairs.push({ r, gutter: null, parts: [[img, outTxt(r.bid, r.pn)]], img });
+      }
     }
     if (!pairs.length) continue;
-    const res = runKraken(engine, pairs.map(([i, o]) => [i, o]), 240_000 * pairs.length);
-    // pages the batch did not produce are retried alone, so one bad image cannot take
+    const allParts = pairs.flatMap((p) => p.parts);
+    const res = runKraken(engine, allParts, 240_000 * allParts.length);
+    // parts the batch did not produce are retried alone, so one bad image cannot take
     // the batch down with it (the retest driver's rule: a failed page is a row, never a wait)
-    const missing = pairs.filter(([, o]) => !fs.existsSync(o));
-    for (const [img, out, r] of missing) {
-      const one = runKraken(engine, [[img, out]], 600_000);
-      if (!fs.existsSync(out)) { append(F.fail, { bid: r.bid, pn: r.pn, stage: 'kraken', rc: one.rc, signal: one.signal, secs: one.secs, err: one.err.slice(-300) }); fails++; }
-      else append(F.runs, { bid: r.bid, pn: r.pn, engine, secs: one.secs, rc: one.rc, chars: fs.statSync(out).size, retry: true });
+    let retried = 0;
+    for (const p of pairs) {
+      for (const [pi, po] of p.parts) {
+        if (fs.existsSync(po)) continue;
+        retried++;
+        const one = runKraken(engine, [[pi, po]], 600_000);
+        p.retry = one;
+      }
+      const out = outTxt(p.r.bid, p.r.pn);
+      if (p.gutter) {
+        const [[, rTxt], [, lTxt]] = p.parts;
+        if (fs.existsSync(rTxt) && fs.existsSync(lTxt)) {
+          fs.writeFileSync(out, `${fs.readFileSync(rTxt, 'utf8').replace(/\s+$/, '')}\n\n${fs.readFileSync(lTxt, 'utf8')}`);
+          for (const [, t] of p.parts) fs.rmSync(t, { force: true });
+        }
+      }
+      if (fs.existsSync(out)) {
+        done++;
+        append(F.runs, { bid: p.r.bid, pn: p.r.pn, engine, secs: p.retry ? p.retry.secs : +(res.secs / allParts.length * p.parts.length).toFixed(1), rc: p.retry ? p.retry.rc : res.rc, chars: fs.statSync(out).size, split: p.gutter ? p.gutter.x : null, retry: !!p.retry });
+      } else {
+        fails++;
+        append(F.fail, { bid: p.r.bid, pn: p.r.pn, stage: 'kraken', rc: p.retry?.rc ?? res.rc, signal: p.retry?.signal ?? res.signal, secs: p.retry?.secs ?? res.secs, err: (p.retry?.err || res.err || '').slice(-300), split: p.gutter ? p.gutter.x : null });
+      }
+      for (const [pi] of p.parts) fs.rmSync(pi, { force: true });
+      fs.rmSync(p.img, { force: true });
     }
-    for (const [img, out, r] of pairs) {
-      if (fs.existsSync(out) && !missing.some(([, o]) => o === out)) append(F.runs, { bid: r.bid, pn: r.pn, engine, secs: +(res.secs / pairs.length).toFixed(1), rc: res.rc, chars: fs.statSync(out).size });
-      if (fs.existsSync(out)) done++;
-      fs.rmSync(img, { force: true });
-    }
-    log(`batch ${engine} ${pairs.length} pages in ${res.secs}s (rc ${res.rc}${missing.length ? `, ${missing.length} retried alone` : ''}) — read ${done}, skipped ${skipped}, failed ${fails}, left ${todo.length}`);
+    log(`batch ${engine} ${pairs.length} pages (${allParts.length} parts) in ${res.secs}s (rc ${res.rc}${retried ? `, ${retried} retried alone` : ''}) — read ${done}, skipped ${skipped}, failed ${fails}, left ${todo.length}`);
   }
   log(`shard done: read ${done}, skipped ${skipped}, failed ${fails}`);
 }

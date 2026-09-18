@@ -216,6 +216,60 @@ export function envelope(rawText, route) {
   return `<language>Syriac</language>\n<script>${script}</script>\n\n${lines.join('\n')}`;
 }
 
+/**
+ * Where to cut a two-column page or a two-leaf spread, or null for a single column.
+ *
+ * Measured 2026-09-18 by eye: Kraken's default segmenter sometimes JOINS a line across the
+ * gutter of a two-column page (Peshitta OT p142: verse 8 of the left column fused with
+ * verse 26 of the right), and the Vatican manuscripts are photographed as unsplit spreads
+ * (two leaves per image). 14,388 planned pages carry the model's `<columns>2+` tag. Cutting
+ * at the gutter and reading right half then left (the reading order of a right-to-left
+ * book, for columns and for leaves alike) removes the failure at the segmentation step.
+ *
+ * Method: greyscale, 600px wide, ink threshold from the page ground (95th-percentile
+ * brightness − 60, as blank-page-guard does), per-column ink share, a 5-px windowed
+ * minimum so a printed column RULE does not break the blank band, then the widest run of
+ * near-inkless columns inside the middle 30–70% of the width. A text column has ink in
+ * nearly every pixel column, so a single-column page yields no band and is not cut.
+ * Returns `{ x, band }` as fractions of the width.
+ */
+export async function findGutter(imgPath, { lo = 0.3, hi = 0.7, minBand = 0.015, maxInk = 0.02, sampleWidth = 600 } = {}) {
+  const sharp = (await import('sharp')).default;
+  const { data, info } = await sharp(imgPath).greyscale().resize(sampleWidth, null, { fit: 'inside', withoutEnlargement: true }).raw().toBuffer({ resolveWithObject: true });
+  const { width, height } = info;
+  if (!width || !height) return null;
+  const hist = new Uint32Array(256);
+  for (let i = 0; i < data.length; i++) hist[data[i]]++;
+  let seen = 0, ground = 255;
+  for (let v = 255; v >= 0; v--) { seen += hist[v]; if (seen >= data.length * 0.05) { ground = v; break; } }
+  const thr = Math.max(0, ground - 60);
+  const ink = new Float64Array(width);
+  for (let y = 0; y < height; y++) { const row = y * width; for (let x = 0; x < width; x++) if (data[row + x] < thr) ink[x]++; }
+  for (let x = 0; x < width; x++) ink[x] /= height;
+  const smooth = new Float64Array(width);
+  for (let x = 0; x < width; x++) { let m = 1; for (let k = -2; k <= 2; k++) { const v = ink[Math.min(width - 1, Math.max(0, x + k))]; if (v < m) m = v; } smooth[x] = m; }
+  const from = Math.floor(width * lo), to = Math.ceil(width * hi);
+  let best = null, start = -1;
+  for (let x = from; x <= to + 1; x++) {
+    const blank = x <= to && smooth[x] <= maxInk;
+    if (blank && start < 0) start = x;
+    if (!blank && start >= 0) { const w = x - start; if (!best || w > best.w) best = { start, w }; start = -1; }
+  }
+  if (!best || best.w < width * minBand) return null;
+  return { x: +((best.start + best.w / 2) / width).toFixed(4), band: +(best.w / width).toFixed(4) };
+}
+
+/** Cut `imgPath` at fraction `x` into `<base>.R.jpg` and `<base>.L.jpg`; returns their paths. */
+export async function cutAtGutter(imgPath, x, base) {
+  const sharp = (await import('sharp')).default;
+  const meta = await sharp(imgPath).metadata();
+  const W = meta.width, H = meta.height, cut = Math.round(W * x);
+  const R = `${base}.R.jpg`, L = `${base}.L.jpg`;
+  await sharp(imgPath).extract({ left: cut, top: 0, width: W - cut, height: H }).jpeg({ quality: 92 }).toFile(R);
+  await sharp(imgPath).extract({ left: 0, top: 0, width: cut, height: H }).jpeg({ quality: 92 }).toFile(L);
+  return { R, L };
+}
+
 /** Letters (not tags, not whitespace) in a reading — the lane's "did it read anything" count. */
 export function letterCount(text) {
   let n = 0;

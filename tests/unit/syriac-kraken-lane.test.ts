@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest';
+import os from 'node:os';
+import path from 'node:path';
 // @ts-expect-error — plain .mjs module
 import {
   LANE, ENGINES, routeBook, classifyScript, pagePolicy, envelope, letterCount, ocrSetFields,
-  reenrolDecision, scriptTagCounts, editionYear, STALE_OCR_FIELDS, hasRealTranslation, staleMarker,
+  reenrolDecision, scriptTagCounts, editionYear, STALE_OCR_FIELDS, hasRealTranslation, staleMarker, findGutter,
 } from '../../scripts/lib/syriac-kraken-lane.mjs';
 
 const SYR = 'ܘܰܐܝܟܰܢܳܐ ܟܰܕ ܕܰܢܚܶܠ ܢܶܫܶܐ ܚܰܝ̈ܶܐ ܐܶܡܰܪܠܶܗ ܕܶܝܢ ܕܰܪ̈ܗܶܣܘܳܣ ܩܰܠܺܝܠ ܝܰܬܺܝܪ ܡܶܢܳܟܝ ܟܰܗܢܳܐ ܐܰܢ̱ܬ';
@@ -83,6 +85,39 @@ describe('syriac-kraken-lane: what is written', () => {
     }
     expect((ENGINES as any)['omnisyr'].route).toBe('print');
     expect((ENGINES as any)['sophro-mhiro'].route).toBe('manuscript');
+  });
+});
+
+describe('syriac-kraken-lane: gutter detection', () => {
+  const tmp = os.tmpdir();
+  async function page(file: string, blocks: Array<[number, number]>) {
+    const sharp = (await import('sharp')).default;
+    const W = 900, H = 1200;
+    const composites = [] as any[];
+    for (const [x0, x1] of blocks) {
+      // a "column" of text: 40 dark lines, each a 2px-tall bar broken by small word gaps
+      for (let y = 100; y < 1100; y += 25) composites.push({ input: { create: { width: x1 - x0, height: 6, channels: 3, background: '#000' } }, left: x0, top: y });
+    }
+    const p = path.join(tmp, file);
+    await sharp({ create: { width: W, height: H, channels: 3, background: '#f4efe4' } }).composite(composites).jpeg().toFile(p);
+    return p;
+  }
+  it('finds the gap between two columns and ignores a single column', async () => {
+    const two = await page('two-col.jpg', [[80, 420], [480, 820]]);
+    const g = await findGutter(two);
+    expect(g).not.toBeNull();
+    expect(g!.x).toBeGreaterThan(0.47); expect(g!.x).toBeLessThan(0.53);
+    const one = await page('one-col.jpg', [[80, 820]]);
+    expect(await findGutter(one)).toBeNull();
+  });
+  it('a thin printed rule down the middle does not hide the gutter', async () => {
+    const sharp = (await import('sharp')).default;
+    const two = await page('two-col-rule.jpg', [[80, 420], [480, 820]]);
+    const ruled = path.join(tmp, 'two-col-ruled.jpg');
+    await sharp(two).composite([{ input: { create: { width: 3, height: 1200, channels: 3, background: '#000' } }, left: 449, top: 0 }]).jpeg().toFile(ruled);
+    const g = await findGutter(ruled);
+    expect(g).not.toBeNull();
+    expect(Math.abs(g!.x - 0.5)).toBeLessThan(0.03);
   });
 });
 
