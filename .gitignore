@@ -63,6 +63,8 @@ src/data/*
 !src/data/ocr-benchmark-evidence.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
+!src/data/cite/
+!src/data/cite/*.json
 !src/data/shwep-bibliographies.ts
 !src/data/shwep-linked-bibliographies.ts
 !src/data/shwep-supplementary-works.ts
