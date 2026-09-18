@@ -112,15 +112,20 @@ async function plan() {
       'image_source.provider': 1, 'image_source.identifier': 1, ia_identifier: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1,
     } }).toArray();
     log(`${books.length} book(s) with language: Syriac`);
+    // books.json carries two hand-kept maps that survive a --refresh: `__overrides`
+    // (book id → route) and `__exclude` (book id → why this book is not Syriac at all,
+    // e.g. a Mandaic or Hebrew text mislabelled `language: Syriac` — report it, don't read it)
     const prior = fs.existsSync(F.books) ? JSON.parse(fs.readFileSync(F.books, 'utf8')) : {};
     const overrides = prior.__overrides || {};
-    const bookOut = BOOK ? prior : { __overrides: overrides };
+    const exclude = prior.__exclude || {};
+    const bookOut = BOOK ? prior : { __overrides: overrides, __exclude: exclude };
     const rows = [];
     const tally = { books: 0, skipped_books: [], pages: 0, loop: 0, syriac: 0, first_write: 0, short: 0, keep: {} };
     for (const b of books) {
       const bid = bookId(b);
       const hr = String(b.hidden_reason || '');
       if (hr && !/^(unprocessed|launch_curation)$/.test(hr)) { tally.skipped_books.push({ bid, why: `hidden_reason: ${hr.slice(0, 60)}` }); continue; }
+      if (exclude[bid]) { tally.skipped_books.push({ bid, why: `excluded: ${exclude[bid]}` }); continue; }
       const pages = await db.collection('pages').find({ book_id: bid, page_number: { $gt: 0 } }, { projection: {
         id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1, 'ocr.pipeline': 1,
         photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
