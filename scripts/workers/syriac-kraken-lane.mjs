@@ -17,7 +17,10 @@
  *   work     one shard: fetch page images, run Kraken in batches, one .txt per page —
  *            the output file IS the checkpoint; a restart re-scans and never redoes a page
  *   apply    per book: revisions first, loop-guard the new text, write with provenance,
- *            resync counters, sweep_log + book_events, re-enrol the book for translation
+ *            resync counters, sweep_log + book_events
+ *   reenrol  (paid, separate, dry by default) send re-transcribed books back to
+ *            `ocr_complete` so translate-worker re-translates the pages whose OCR is now
+ *            newer than their English; prints the page count and a price first
  *   release  lift the `syriac-ocr-lane-trial` hold on a held book whose pages are all done
  *   status   what the files say (planned / read / applied / failed / refused, loop rate)
  *
@@ -271,7 +274,7 @@ async function apply() {
   let bids = [...byBook.keys()];
   if (LIMIT) bids = bids.slice(0, LIMIT);
   log(`${pending.length} read pages pending apply across ${byBook.size} books${APPLY ? '' : '  [DRY RUN]'}`);
-  const totals = { books: 0, written: 0, textless_kept: 0, refused: 0, human_edited: 0, unchanged: 0, reenrolled: 0 };
+  const totals = { books: 0, written: 0, textless_kept: 0, refused: 0, human_edited: 0, unchanged: 0 };
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const bid of bids) {
@@ -345,23 +348,56 @@ async function apply() {
           $inc: { 'details.pages_written': modified, 'details.loops_replaced': loopsFixed } },
         { upsert: true },
       );
-      // hand the book back to the pipeline: translate-worker re-selects every page whose
-      // OCR is now newer than its English (and the hourly withhold sweep takes the stale
-      // English off the page in the meantime — `ocr.pipeline` is what it keys on)
-      const dec = reenrolDecision(book, counts);
-      let status = book.pipeline_auto?.status || null;
-      if (dec.ok && status !== 'ocr_complete') {
-        const r = await B.updateOne({ _id: book._id, 'pipeline_auto.status': status, ...NOT_HELD }, { $set: { 'pipeline_auto.status': 'ocr_complete', 'pipeline_auto.last_updated': now, updated_at: now } });
-        if (r.modifiedCount === 1) {
-          totals.reenrolled++;
-          await db.collection('audit_log').insertOne({ action: 'pipeline_status_changed', book_id: bid, book_title: book.title, metadata: { from: status, to: 'ocr_complete', source: 'syriac-kraken-lane', reason: `re-transcribed ${modified} pages (#${LANE_ISSUE}); re-enrolled for translation` }, timestamp: now }).catch(() => {});
-          status = 'ocr_complete';
-        }
-      }
-      log(`${bid} wrote ${modified}/${writes.length} (loops replaced ${loopsFixed}, revisions ${nRev}) → pages_ocr ${counts?.with_ocr}/${counts?.total}; ${dec.ok ? `re-enrolled (${dec.why})` : `not re-enrolled: ${dec.why}`} | ${String(book.title || '').slice(0, 50)}`);
+      log(`${bid} wrote ${modified}/${writes.length} (loops replaced ${loopsFixed}, revisions ${nRev}) → pages_ocr ${counts?.with_ocr}/${counts?.total} | ${String(book.title || '').slice(0, 50)}`);
     }
   }, { timeoutMs: 4 * 3600 * 1000 });
   log(`APPLY ${JSON.stringify(totals)}`);
+}
+
+// ── reenrol ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Hand re-transcribed books back to the pipeline for RE-TRANSLATION. Every page this lane
+ * rewrote carries `ocr.updated_at` newer than its `translation.updated_at`; translate-worker
+ * already re-selects exactly those pages — but only for books at `ocr_complete`, so the
+ * book's status has to go back there. That is a paid step (every re-translated page is a
+ * Gemini call at the dial's pace), so it is separate from `apply`, dry by default, and
+ * prints the page count and a price first (`feedback_ask_before_spending`). Between apply
+ * and this step the page serves its old English — found by the timestamp comparison, and
+ * by `ocr.pipeline`, which the stale-translation rule keys on (#4927 generalises this).
+ */
+async function reenrol() {
+  const applied = readJsonl(F.applied).filter((r) => r.modified === 1);
+  const byBook = new Map();
+  for (const r of applied) byBook.set(r.bid, (byBook.get(r.bid) || 0) + 1);
+  const PRICE_PER_PAGE = 0.001; // flash-lite, ~2.5K in + 1.5K out per page — an estimate, say so
+  const totals = { books: 0, pages_stale: 0, pages_untranslated: 0, reenrolled: 0, skipped: {} };
+  await withMongo(async (db) => {
+    const P = db.collection('pages'), B = db.collection('books');
+    for (const [bid, n] of byBook) {
+      if (BOOK && bid !== BOOK) continue;
+      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, hidden_reason: 1, pipeline_auto: 1 } });
+      if (!book) continue;
+      const [counts] = await P.aggregate(buildVisiblePageCountPipeline(bid)).toArray();
+      const dec = reenrolDecision(book, counts);
+      const stale = await P.countDocuments({ book_id: bid, 'ocr.pipeline': LANE, 'translation.data': { $exists: true, $nin: [null, ''] }, $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } });
+      const untranslated = await P.countDocuments({ book_id: bid, 'ocr.pipeline': LANE, $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }] });
+      const status = book.pipeline_auto?.status || null;
+      if (!dec.ok) { totals.skipped[dec.why] = (totals.skipped[dec.why] || 0) + 1; log(`${bid} skip (${dec.why}) — ${stale} stale + ${untranslated} untranslated lane pages | ${String(book.title || '').slice(0, 50)}`); continue; }
+      totals.books++; totals.pages_stale += stale; totals.pages_untranslated += untranslated;
+      log(`${bid} ${status} → ocr_complete: ${stale} stale + ${untranslated} untranslated of ${n} lane pages${APPLY ? '' : '  [DRY RUN]'} | ${String(book.title || '').slice(0, 50)}`);
+      if (!APPLY || status === 'ocr_complete') continue;
+      const now = new Date();
+      const r = await B.updateOne({ _id: book._id, 'pipeline_auto.status': status, ...NOT_HELD }, { $set: { 'pipeline_auto.status': 'ocr_complete', 'pipeline_auto.last_updated': now, updated_at: now } });
+      if (r.modifiedCount === 1) {
+        totals.reenrolled++;
+        await db.collection('audit_log').insertOne({ action: 'pipeline_status_changed', book_id: bid, book_title: book.title, metadata: { from: status, to: 'ocr_complete', source: 'syriac-kraken-lane', reason: `re-transcribed ${n} pages (#${LANE_ISSUE}); re-enrolled so translate-worker re-translates ${stale} stale + ${untranslated} untranslated pages` }, timestamp: now }).catch(() => {});
+        await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'reenrolled-for-translation', detail: { from: status, stale, untranslated } });
+      }
+    }
+  }, { timeoutMs: 3600 * 1000 });
+  const pages = totals.pages_stale + totals.pages_untranslated;
+  log(`REENROL ${JSON.stringify(totals)} — ${pages} pages to translate ≈ $${(pages * PRICE_PER_PAGE).toFixed(2)} at flash-lite rates (estimate)${APPLY ? '' : '  [DRY RUN — nothing changed]'}`);
 }
 
 // ── release ────────────────────────────────────────────────────────────────────────────
@@ -408,6 +444,6 @@ function status() {
   console.log(JSON.stringify(out, null, 1));
 }
 
-const cmds = { plan, work, apply, release, status };
+const cmds = { plan, work, apply, reenrol, release, status };
 if (!cmds[CMD]) { console.error(`usage: syriac-kraken-lane.mjs <${Object.keys(cmds).join('|')}> [options]`); process.exit(2); }
 cmds[CMD]().then(() => process.exit(0)).catch((e) => { log(`FATAL ${e?.stack || e}`); process.exit(1); });
