@@ -128,6 +128,14 @@ async function run() {
       'translation.updated_at': { $gte: oneDayAgo },
     });
 
+    // Translations made from a transcription the page no longer holds (#4927).
+    // Served by pages_translation_stale_partial; the number should FALL as the
+    // re-translate consumer drains it, and a number that only rises means the
+    // consumer is not running.
+    const staleTranslations = await db.collection('pages').countDocuments({
+      'translation_stale.reason': { $exists: true },
+    });
+
     // ── 3. Batch outcomes ──
     const [batchSaved, batchFailed] = await Promise.all([
       db.collection('batch_jobs').countDocuments({
@@ -294,6 +302,7 @@ async function run() {
     lines.push('📚 Library');
     lines.push(`  Books: ${fmt(totalBooks)} total, ${fmt(fullyComplete)} fully done`);
     lines.push(`  Pages: ${fmt(ocrPages)} OCR'd, ${fmt(translatedPages)} translated`);
+    lines.push(`  Stale translations: ${fmt(staleTranslations)} (OCR replaced since; #4927)`);
     if (analytics?.coverage) {
       lines.push(`  Coverage: ${analytics.coverage.ocr_percent}% OCR, ${analytics.coverage.translated_percent}% translated`);
     }

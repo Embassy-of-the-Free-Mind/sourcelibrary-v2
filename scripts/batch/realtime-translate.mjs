@@ -14,7 +14,14 @@
  *   --book-id=ID          Single book only
  *   --status=STATUS       Filter by pipeline_auto.status (e.g. ocr_complete)
  *   --provider=NAME       Filter by image_source.provider
- *   --stale               Re-translate pages where OCR is newer than translation
+ *   --stale               Drain the stale-translation marker (#4927): pages whose
+ *                         `translation_stale.reason` is set — the transcription the
+ *                         English was made from is no longer the one the page holds.
+ *                         Books come from the partial index, pages are re-verified by
+ *                         hash before any paid call, and a page that healed in the
+ *                         meantime has its marker cleared instead of being re-billed.
+ *                         This is THE consumer of the marker; without --dry-run it is a
+ *                         paid run behind the daily spend dial (spend-guard).
  *   --offset=N            Skip first N eligible books (for splitting across machines)
  *
  * Control options:
@@ -35,6 +42,9 @@ import {
   SKIP_TRANSLATION_PAGE_TYPES,
   isDegenerateSource,
 } from '../lib/translate-core.mjs';
+import { translationStaleness, STALE_FIELD } from '../lib/translation-source.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
 // --- Config ---
 // Model + prompt come from translate-core (issue #3725). This script used to
@@ -328,7 +338,7 @@ async function main() {
   if (AUTHOR) console.log(`  author=${AUTHOR}`);
   if (PIPELINE_STATUS) console.log(`  status=${PIPELINE_STATUS}`);
   if (PROVIDER) console.log(`  provider=${PROVIDER}`);
-  if (STALE_MODE) console.log(`  mode=stale (OCR newer than translation)`);
+  if (STALE_MODE) console.log(`  mode=stale (draining translation_stale, #4927)`);
   if (DRY_RUN) console.log(`  DRY RUN`);
   console.log('');
 
@@ -343,6 +353,15 @@ async function main() {
       if (AUTHOR) bookFilter.author = { $regex: AUTHOR, $options: 'i' };
       // Only books with some OCR done
       bookFilter.pages_ocr = { $gt: 0 };
+      if (STALE_MODE) {
+        // The marker's partial index answers "which books" in one round trip;
+        // without it this used to walk every page of the 100 most-read books.
+        const staleBookIds = await db.collection('pages').distinct('book_id', { [`${STALE_FIELD}.reason`]: { $exists: true } });
+        console.log(`Books carrying stale translations: ${staleBookIds.length}`);
+        bookFilter.id = { $in: staleBookIds };
+        // A held book is out of every lane (pipeline-hold.mjs), this one included.
+        Object.assign(bookFilter, NOT_HELD);
+      }
     }
 
     const books = await db.collection('books')
@@ -368,13 +387,14 @@ async function main() {
 
       const pages = await db.collection('pages')
         .find(
-          { book_id: book.id },
+          STALE_MODE ? { book_id: book.id, [`${STALE_FIELD}.reason`]: { $exists: true } } : { book_id: book.id },
           {
             projection: {
               id: 1, _id: 0, book_id: 1, page_number: 1,
               'ocr.data': 1, 'ocr.updated_at': 1,
               'translation.data': 1, 'translation.updated_at': 1,
               'translation.source': 1, 'translation.edited_by': 1,
+              'translation.source_hash': 1,
               page_type: 1,
             },
           }
@@ -383,15 +403,24 @@ async function main() {
         .toArray();
 
       // Filter in JS — much faster than unindexed MongoDB queries
+      const healed = [];
       const eligible = pages.filter(p => {
         const hasOcr = p.ocr?.data && p.ocr.data.length > 0;
         if (!hasOcr) return false;
         if (STALE_MODE) {
-          return p.ocr?.updated_at && p.translation?.updated_at &&
-            new Date(p.ocr.updated_at) > new Date(p.translation.updated_at);
+          // Re-verify by hash before paying: the marker is a materialised
+          // verdict, and a page retranslated by a writer that forgot to clear
+          // it must be healed here, not billed again.
+          if (translationStaleness(p).stale) return true;
+          healed.push(p.id);
+          return false;
         }
         return !p.translation?.data;
       });
+      if (healed.length > 0 && !DRY_RUN) {
+        await db.collection('pages').updateMany({ id: { $in: healed } }, { $unset: { [STALE_FIELD]: '' } });
+        console.log(`  ${book.id}: cleared ${healed.length} marker(s) whose translation already matches the transcription`);
+      }
 
       if (eligible.length > 0) {
         const take = eligible.slice(0, MAX_PAGES - totalPages);
@@ -430,6 +459,16 @@ async function main() {
       const estMinutes = Math.round(totalPages / (BOOK_CONCURRENCY * 10) / 60);
       console.log(`Estimated time: ~${estMinutes} minutes at ${BOOK_CONCURRENCY} books parallel`);
 
+      await client.close();
+      return;
+    }
+
+    // The dial (#3826): every path that turns pages into Gemini calls asks the
+    // budget first. A --book-id run is an operator at the wheel and bypasses,
+    // exactly as the orchestrator's --book does.
+    const allowed = await budgetAllowsDispatch(db, 'realtime-translate', { bypass: !!SINGLE_BOOK });
+    if (!allowed) {
+      console.log('spend-guard refused paid dispatch — nothing translated. Set the dial or pass --book-id for a single book.');
       await client.close();
       return;
     }
