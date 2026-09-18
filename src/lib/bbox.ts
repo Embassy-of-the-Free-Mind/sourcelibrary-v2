@@ -22,6 +22,16 @@ function num(v: unknown): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/** Upper bound of the tenfold scale: a non-integer raw value in (1, 10] is 0–10, not 0–1000. */
+export const TENFOLD_MAX = 10;
+const isInteger = (v: number): boolean => Math.abs(v - Math.round(v)) < 1e-9;
+/** One out-of-range field of a MIXED box: integer → permille (÷1000); non-integer ≤ 10 → tenfold (÷10). */
+export function rescaleOutOfRange(v: number): number {
+  if (!(v > 1)) return v;
+  if (v <= TENFOLD_MAX && !isInteger(v)) return v / 10;
+  return v / 1000;
+}
+
 export function normalizeBbox(raw: unknown): Bbox | null {
   if (!raw || typeof raw !== 'object') return null;
   const r = raw as Record<string, unknown>;
@@ -33,11 +43,14 @@ export function normalizeBbox(raw: unknown): Bbox | null {
     const scale = Math.max(x + width, y + height, 1000);
     x /= scale; y /= scale; width /= scale; height /= scale;
   } else if (large > 0) {
-    // Mixed units in one box: only the out-of-range fields are on the 0–1000 scale.
-    if (x > 1) x /= 1000;
-    if (y > 1) y /= 1000;
-    if (width > 1) width /= 1000;
-    if (height > 1) height /= 1000;
+    // Mixed units in one box: only the out-of-range fields are rescaled. A permille value is
+    // an INTEGER; a non-integer between 1 and 10 (`y: 1.33` beside `x: 0.068`) is the model
+    // writing that one coordinate on a tenfold scale, and ÷1000 would leave 0.00133 — a box
+    // "flush against the page edge" that no later check can tell from a real one. Measured
+    // 2026-09-17 (#4780 day 4): 62 of the 725 rows the #4838 repair touched (contact-sheet
+    // verified, ×100 was the illustration every time). See `rescaleOutOfRange`.
+    x = rescaleOutOfRange(x); y = rescaleOutOfRange(y);
+    width = rescaleOutOfRange(width); height = rescaleOutOfRange(height);
   }
 
   const out: Bbox = {
