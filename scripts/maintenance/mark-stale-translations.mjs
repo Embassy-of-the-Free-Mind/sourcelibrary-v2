@@ -25,6 +25,10 @@
  * `--full` walks every translated page instead (the backfill's job; hours).
  * `--book=<id>` scopes to one book.
  *
+ * Each arm is walked in ITS OWN INDEX'S order. The first version sorted an
+ * `ocr.updated_at` range by `_id`, which is a blocking sort of every
+ * candidate's ocr.data — it stalled for five minutes on a six-hour window.
+ *
  * Never bumps `pages.updated_at`: `embed-gemini --incremental` selects on it and
  * would re-embed every marked page at cost. Placeholders are never marked (the
  * rule excludes them). Text is never touched.
@@ -72,15 +76,6 @@ const now = new Date();
 const since = new Date(now.getTime() - SINCE_HOURS * 3_600_000);
 const scope = ONLY_BOOK ? { book_id: ONLY_BOOK } : {};
 
-// Two candidate arms, each served by its own index; run separately rather than
-// as an $or so the planner never falls back to a collection scan.
-const arms = FULL
-  ? [{ label: 'full', filter: { ...scope, ...REAL_TRANSLATION_FILTER } }]
-  : [
-      { label: `ocr-updated-since-${SINCE_HOURS}h`, filter: { ...scope, 'ocr.updated_at': { $gte: since }, ...REAL_TRANSLATION_FILTER } },
-      { label: 'already-marked', filter: { ...scope, [`${STALE_FIELD}.reason`]: { $exists: true } } },
-    ];
-
 console.log(`mark-stale-translations ${APPLY ? 'APPLY' : 'DRY RUN'} — ${FULL ? 'full walk' : `since ${since.toISOString()}`}${ONLY_BOOK ? ` book=${ONLY_BOOK}` : ''}`);
 
 const totals = { scanned: 0, stale: 0, fresh: 0, newlyMarked: 0, cleared: 0, kept: 0, modified: 0 };
@@ -99,39 +94,87 @@ async function flush() {
   ops = [];
 }
 
-for (const arm of arms) {
+/** Judge one batch of page docs; returns how many were new to this run. */
+function judge(docs) {
+  let fresh = 0;
+  for (const p of docs) {
+    if (seen.has(p.id)) continue; // a page can match both arms
+    seen.add(p.id);
+    fresh++;
+    totals.scanned++;
+    const v = translationStaleness(p);
+    const marked = !!p[STALE_FIELD]?.reason;
+    if (v.stale) {
+      totals.stale++;
+      byReason[v.reason] = (byReason[v.reason] || 0) + 1;
+      if (marked) { totals.kept++; continue; }
+      totals.newlyMarked++;
+      if (APPLY) ops.push({ updateOne: { filter: { _id: p._id }, update: { $set: { [STALE_FIELD]: staleMarker(v.reason, { now }) } } } });
+    } else {
+      totals.fresh++;
+      if (!marked) continue;
+      totals.cleared++;
+      if (APPLY) ops.push({ updateOne: { filter: { _id: p._id }, update: { $unset: { [STALE_FIELD]: '' } } } });
+    }
+  }
+  return fresh;
+}
+
+const limitHit = () => LIMIT && totals.scanned >= LIMIT;
+
+if (FULL) {
+  // Whole-corpus walk in _id order (an index scan with the filter applied per
+  // document — the same shape as the backfill). Hours; use it deliberately.
   let lastId = null;
-  let armScanned = 0;
   for (;;) {
-    const filter = lastId ? { ...arm.filter, _id: { $gt: lastId } } : arm.filter;
+    const filter = { ...scope, ...REAL_TRANSLATION_FILTER, ...(lastId ? { _id: { $gt: lastId } } : {}) };
     const docs = await pages.find(filter, { projection: PROJECTION }).sort({ _id: 1 }).limit(BATCH).toArray();
     if (docs.length === 0) break;
     lastId = docs[docs.length - 1]._id;
-    for (const p of docs) {
-      if (seen.has(p.id)) continue; // a page can match both arms
-      seen.add(p.id);
-      totals.scanned++; armScanned++;
-      const v = translationStaleness(p);
-      const marked = !!p[STALE_FIELD]?.reason;
-      if (v.stale) {
-        totals.stale++;
-        byReason[v.reason] = (byReason[v.reason] || 0) + 1;
-        if (marked) { totals.kept++; continue; }
-        totals.newlyMarked++;
-        if (APPLY) ops.push({ updateOne: { filter: { _id: p._id }, update: { $set: { [STALE_FIELD]: staleMarker(v.reason, { now }) } } } });
-      } else {
-        totals.fresh++;
-        if (!marked) continue;
-        totals.cleared++;
-        if (APPLY) ops.push({ updateOne: { filter: { _id: p._id }, update: { $unset: { [STALE_FIELD]: '' } } } });
-      }
-    }
+    judge(docs);
     if (ops.length >= WRITE_CHUNK * 5) await flush();
-    if (armScanned % 20000 < BATCH) process.stdout.write(`  [${arm.label}] scanned ${armScanned}…\n`);
-    if (LIMIT && totals.scanned >= LIMIT) break;
+    if (totals.scanned % 50_000 < BATCH) console.log(`  [full] scanned ${totals.scanned}…`);
+    if (limitHit()) break;
   }
   await flush();
-  console.log(`  [${arm.label}] done: ${armScanned} scanned`);
+} else {
+  // Arm 1: OCR rewritten in the window — walked in pages_ocr_updated_idx order,
+  // paginated by timestamp ($gte + dedupe, so a batch collector's shared `now`
+  // across a whole job cannot drop pages at a page boundary).
+  let lastAt = since;
+  for (;;) {
+    const filter = { ...scope, 'ocr.updated_at': { $gte: lastAt }, ...REAL_TRANSLATION_FILTER };
+    const docs = await pages.find(filter, { projection: PROJECTION }).sort({ 'ocr.updated_at': 1 }).limit(BATCH).toArray();
+    if (docs.length === 0) break;
+    const fresh = judge(docs);
+    lastAt = docs[docs.length - 1].ocr.updated_at;
+    if (ops.length >= WRITE_CHUNK * 5) await flush();
+    if (fresh === 0) {
+      // Every doc at this timestamp was already seen — more than BATCH pages
+      // share one ocr.updated_at. Step past it rather than spin.
+      lastAt = new Date(new Date(lastAt).getTime() + 1);
+    }
+    if (totals.scanned % 20_000 < BATCH) console.log(`  [ocr-updated] scanned ${totals.scanned}… (at ${new Date(lastAt).toISOString()})`);
+    if (limitHit()) break;
+  }
+  await flush();
+  console.log(`  [ocr-updated-since-${SINCE_HOURS}h] done: ${totals.scanned} scanned`);
+
+  // Arm 2: pages already carrying the marker — book list from the partial
+  // index, then one indexed query per book (a page can only be cleared here).
+  if (!limitHit()) {
+    const markedFilter = { ...scope, [`${STALE_FIELD}.reason`]: { $exists: true } };
+    const bookIds = await pages.distinct('book_id', markedFilter);
+    const before = totals.scanned;
+    for (const bookId of bookIds) {
+      const docs = await pages.find({ book_id: bookId, [`${STALE_FIELD}.reason`]: { $exists: true } }, { projection: PROJECTION }).toArray();
+      judge(docs);
+      if (ops.length >= WRITE_CHUNK * 5) await flush();
+      if (limitHit()) break;
+    }
+    await flush();
+    console.log(`  [already-marked] done: ${bookIds.length} books, ${totals.scanned - before} pages judged`);
+  }
 }
 
 console.log(JSON.stringify({ ...totals, byReason, apply: APPLY }, null, 2));
