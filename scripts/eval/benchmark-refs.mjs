@@ -33,6 +33,8 @@ const ONLY = argOf('only'); const DRY = process.argv.includes('--dry');
 const REFS = path.join(__dirname, 'benchmark', 'refs'); fs.mkdirSync(REFS, { recursive: true });
 const CATALOG = argOf('kanripo-catalog', '/Users/dereklomas/.claude/jobs/417569c5/tmp/refs/kanripo');
 const MIN_OVERLAP = 0.35;
+// Same title test as benchmark-seal.mjs's buddhist-canon draw.
+const BUDDHIST_RE = /佛|般若|菩薩|陀羅尼|華嚴|法華|楞嚴|楞伽|金剛|阿含|大藏|禪|涅槃|起信|淨土|地藏|藥師|觀音|sutra|sūtra/;
 
 const han = s => [...String(s || '').normalize('NFC')].filter(c => /\p{Script=Han}/u.test(c)).join('');
 const grams = (s, n = 4) => { const g = new Map(); for (let i = 0; i + n <= s.length; i++) { const k = s.slice(i, i + n); if (!g.has(k)) g.set(k, []); g.get(k).push(i); } return g; };
@@ -193,7 +195,10 @@ for (const p of pages) {
   const note = { slug: p.slug, substratum: p.substratum, title: p.title, probe_chars: probe.length };
   if (probe.length < 40) { note.reason = 'probe too short (page read as textless by the probe engines)'; fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason}`); continue; }
   let src = null;
-  try { src = p.substratum === 'buddhist-canon' ? await cbetaLookup(probe) : await kanripoLookup(p.title || ''); if (!src && p.substratum !== 'buddhist-canon') src = await cbetaLookup(probe); }
+  // CBETA first for Buddhist titles (the `buddhist-canon` sub-stratum, and the Buddhist share of
+  // chinese-ext's `woodblock-canon`), Kanripo-by-title first for everything else, the other as fallback.
+  const buddhist = p.substratum === 'buddhist-canon' || BUDDHIST_RE.test(p.title || '');
+  try { src = buddhist ? await cbetaLookup(probe) : await kanripoLookup(p.title || ''); if (!src) src = buddhist ? await kanripoLookup(p.title || '') : await cbetaLookup(probe); }
   catch (e) { note.error = e.message.slice(0, 120); }
   if (!src) { note.reason = note.reason || 'no work identified (CBETA search / Kanripo catalogue)'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
   const w = bestWindow(src.etext, probe);
