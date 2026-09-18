@@ -9,6 +9,7 @@ import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, p
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
+import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
 import { contentHash } from '@/lib/steganographia';
 import { nanoid } from 'nanoid';
@@ -659,13 +660,15 @@ export const GET = withAuth(async (request, session, context) => {
 
         // Build flat list of { pageId, ocrText } from responses
         const pageResults: Array<{ pageId: string; text: string }> = [];
+        let truncatedCount = 0;
 
         if (isMultiPage) {
           // Multi-page mode: parse <page id="...">...</page> blocks
           console.log(`[batch-ocr] Collecting multi-page results: ${responses.length} responses for ${pageIds.length} pages (${jobDoc.pages_per_request} pages/request)`);
           for (let ri = 0; ri < responses.length; ri++) {
             const response = responses[ri];
-            const responseText = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+            const candidate = response.response?.candidates?.[0];
+            const responseText = candidate?.content?.parts?.[0]?.text;
             if (!responseText) {
               console.warn(`[batch-ocr] Response ${ri}: empty (no text in candidate)`);
               failCount++;
@@ -677,7 +680,17 @@ export const GET = withAuth(async (request, session, context) => {
               console.warn(`[batch-ocr] Response ${ri}: no <page> tags found. First 500 chars: ${responseText.slice(0, 500)}`);
               failCount++;
             }
-            for (const [pageId, ocrText] of parsed) {
+            const entries = [...parsed];
+            // A truncated generation cuts the LAST page mid-word; every page
+            // before it is complete (#4890). Drop only the tail — the dropped
+            // page keeps no `ocr.data`, so it is re-selected on the next pass.
+            if (isTruncatedCandidate(candidate) && entries.length > 0) {
+              const [droppedId] = entries.pop()!;
+              console.warn(`[batch-ocr] TRUNCATED (${candidate?.finishReason}): dropping partial tail page ${droppedId}`);
+              truncatedCount++;
+              failCount++;
+            }
+            for (const [pageId, ocrText] of entries) {
               pageResults.push({ pageId, text: ocrText });
             }
           }
@@ -702,12 +715,24 @@ export const GET = withAuth(async (request, session, context) => {
               continue;
             }
 
-            const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (text) {
-              pageResults.push({ pageId, text });
-            } else {
+            const candidate = response.response?.candidates?.[0];
+            const text = candidate?.content?.parts?.[0]?.text;
+            if (!text) {
               failCount++;
+              continue;
             }
+            // The provider says this answer was cut off. Partial text has text
+            // and a non-refusal finishReason, so it matched no branch here and
+            // was stored as a finished page — a stub transcription that is then
+            // served, translated and quoted (#4890). Refuse it; the page is
+            // re-read next pass.
+            if (isTruncatedCandidate(candidate)) {
+              console.warn(`[batch-ocr] TRUNCATED (${candidate?.finishReason}): refusing page ${pageId} (${text.length} chars)`);
+              truncatedCount++;
+              failCount++;
+              continue;
+            }
+            pageResults.push({ pageId, text });
           }
         }
 
@@ -771,6 +796,16 @@ export const GET = withAuth(async (request, session, context) => {
                   ...(columns && { columns }),
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
                   updated_at: new Date()
+                },
+                // A page that reads clears its failure history — the same
+                // contract as batch-collector.mjs, which this route had drifted
+                // from. Without it a page could hold BOTH stored text and a
+                // marker saying the read failed, and nothing downstream could
+                // tell which was the later truth: `pages_ocr` counted the text,
+                // so every completeness check passed over a stub (#4890).
+                $unset: {
+                  'ocr.fail_count': '', 'ocr.fail_reason': '', 'ocr.fail_blocked': '',
+                  'ocr.fail_blocked_at': '', 'ocr.fail_blocked_model': '',
                 }
               }
             );
@@ -790,6 +825,7 @@ export const GET = withAuth(async (request, session, context) => {
               results_collected: true,
               success_count: successCount,
               fail_count: failCount,
+              ...(truncatedCount > 0 && { truncated_count: truncatedCount }),
               completed_at: new Date()
             }
           }
@@ -832,6 +868,7 @@ export const GET = withAuth(async (request, session, context) => {
           resultsCollected: true,
           successCount,
           failCount,
+          ...(truncatedCount > 0 && { truncatedCount }),
           message: `Collected ${successCount} OCR results`
         });
       }

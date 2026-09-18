@@ -91,6 +91,16 @@
 # Pipeline health alert: every 4h (catches translation stalls, orphan states)
 0 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
+# Status-output drift: books whose pipeline_auto.status claims work that was never
+# done (daily 4:30am). The population has existed since #3740 and has never been
+# observed on a schedule — the audit was written, run once, and left unscheduled, so
+# the number only ever moved when someone went looking. Read the log by TREND: each
+# line is a count, and a count that grows means a phase is writing its status ahead of
+# its output again. The guard that would prevent it (statusOutputViolation in
+# pipeline-orchestrator.mjs) is still in observe mode; this is the instrument that
+# says whether it can be switched to enforce.
+30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-status-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/status-output-drift.mjs" >> /var/log/sourcelibrary/status-output-drift.log 2>&1
+
 # Warm author pages: regenerate ISR cache (daily 5am)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
 

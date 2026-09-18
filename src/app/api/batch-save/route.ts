@@ -4,6 +4,7 @@ import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
+import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
@@ -100,8 +101,18 @@ export const POST = withAuth(async (request, session) => {
             continue;
           }
 
-          const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+          const candidate = result.response?.candidates?.[0];
+          const text = candidate?.content?.parts?.[0]?.text;
           if (!text) {
+            failed++;
+            continue;
+          }
+
+          // Truncation guard (#4890): the provider says this answer was cut off.
+          // Partial text has text and a non-refusal finishReason, so it matched
+          // no branch here and was stored as a finished page or translation.
+          if (isTruncatedCandidate(candidate)) {
+            console.warn(`[batch-save] TRUNCATED (${candidate?.finishReason}): refusing page ${pageId} (${text.length} chars)`);
             failed++;
             continue;
           }
