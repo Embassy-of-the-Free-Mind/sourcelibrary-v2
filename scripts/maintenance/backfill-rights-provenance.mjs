@@ -154,7 +154,7 @@ async function fetchManifest(plan) {
       }
       hostStrikes.set(host, 0);
       if (status !== 200) return { http_status: status, error: `HTTP ${status}` };
-      if (plan.kind === 'mets') return { http_status: 200, mets: text };
+      if (plan.kind === 'mets') { const oaiErr = text.match(/<error code="([^"]+)"/); return oaiErr ? { http_status: 200, error: `oai-error:${oaiErr[1]}` } : { http_status: 200, mets: text }; } // an OAI error page is HTTP 200
       try { return { http_status: 200, manifest: JSON.parse(text) }; }
       catch { return { http_status: 200, error: 'not-json' }; }
     } catch (e) { last = { http_status: null, error: e.name === 'TimeoutError' ? 'timeout' : (e.cause?.code || e.message).slice(0, 120) }; await sleep(3000); }
