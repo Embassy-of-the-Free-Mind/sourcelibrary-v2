@@ -167,3 +167,10 @@
 # usage rows over the trailing 7 days; exit 3 + one email/day above 10%. Gated on the
 # read-only service-account key so the line is inert wherever the key is absent.
 30 8 * * * cd /root/sourcelibrary && [ -f /root/.gcp/spend-reconcile.json ] && flock -n /tmp/sl-spend-gap.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-reconcile.mjs --days=7 --check-gap --alert" >> /var/log/sourcelibrary/spend-gap.log 2>&1
+
+# GPU lease watchdog (#4909): stops rented Scaleway GPUs whose lease-until tag has passed, via the
+# provider API (a guest poweroff is "stopped in place" and still billed); nags on untagged running GPUs.
+# The Scaleway key lives in /root/.scaleway.env and is sourced by these two lines only.
+*/10 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
+# Monday 08:10 — volumes that bill while their instance is stopped/archived, with approximate cost
+10 8 * * 1 cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply --weekly" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
