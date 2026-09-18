@@ -43,6 +43,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
+import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 import { GoogleGenAI } from '@google/genai';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -187,6 +188,7 @@ for (const book of books) {
           'ocr.corrected_from': 'mineru',
           'ocr.updated_at': new Date(),
         }});
+        await markStaleAfterOcrWrite(db, [{ id: p.id, text: v.text }], { lane: 'grounded_correction' }); // #4927
       }
       written++; totals.written++;
       if (written <= 2) {

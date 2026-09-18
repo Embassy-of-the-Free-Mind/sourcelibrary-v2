@@ -47,6 +47,7 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { bucketByLeafDriftClass } from '../lib/ia-leaf-drift-class.mjs';
+import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 
 const arg = (k, d) => { const eq = process.argv.find((a) => a.startsWith(`${k}=`)); if (eq) return eq.slice(k.length + 1); const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply'), CLEAR_EMPTY = process.argv.includes('--clear-empty');
@@ -101,6 +102,8 @@ await withMongo(async (db) => {
         update: { $set: { 'ocr.data': c.target, 'ocr.source_url': `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${c.k}`, 'ocr.agreement_ref.offset': 0, 'ocr.agreement_ref.repaired_from_offset': fromOffset, 'ocr.agreement_ref.repaired_at': now, 'ocr.updated_at': now, updated_at: now } },
       } })), { ordered: false });
       modified = res.modifiedCount;
+      // #4927: the English on a shifted leaf was made from another leaf's text.
+      await markStaleAfterOcrWrite(db, changes.map((c) => ({ _id: c.p._id, text: c.target })), { lane: 'repair-ia-ocr-leaf-offset' });
     }
     let cleared = 0;
     if (CLEAR_EMPTY && empties.length) {

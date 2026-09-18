@@ -51,6 +51,7 @@ import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 
 // --- Config ---
 // Statuses a fully-OCR'd book may be ADVANCED from — the ones where OCR is the
@@ -415,6 +416,8 @@ async function processPage(page, promptText, db) {
         },
       }
     );
+    // #4927: the translation (if any) was made from the reading just replaced.
+    await markStaleAfterOcrWrite(db, [{ id: page.id, text: result.text }], { lane: 'reocr_realtime' });
 
     // Non-blocking usage log
     db.collection('gemini_usage').insertOne({

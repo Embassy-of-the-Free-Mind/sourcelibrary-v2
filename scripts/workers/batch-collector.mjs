@@ -32,6 +32,7 @@ import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { translationSourceFields, markStaleAfterOcrWrite, CLEAR_STALE_UNSET } from '../lib/translation-source.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 
@@ -450,6 +451,13 @@ async function processOneJob(db, job) {
     }
 
     const bulkOps = [];
+    // #4927: a translation records the transcription it was made from. The
+    // submitter may have stamped page_source_hashes at submit time (the exact
+    // text sent); otherwise hash the page's CURRENT ocr.data — the generation
+    // guard above has already dropped pages whose OCR was reset in flight.
+    const sourceByPage = job.type === 'translation' && !DRY_RUN
+      ? await loadTranslationSources(db, job, pageResults.map(r => r.pageId))
+      : new Map();
     let galleryDocs = null; // Populated by image_extraction jobs
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
@@ -704,6 +712,7 @@ async function processOneJob(db, job) {
             update: {
               $set: {
                 'translation.data': text,
+                ...sourceFieldsFor(sourceByPage, pageId),
                 'translation.updated_at': now,
                 'translation.model': job.model,
                 'translation.source_language': job.language,
@@ -718,6 +727,7 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokens,
                 updated_at: now,
               },
+              $unset: CLEAR_STALE_UNSET,
             },
           },
         });
@@ -740,6 +750,14 @@ async function processOneJob(db, job) {
         pageId: op.updateOne.filter.id,
         mongoSet: op.updateOne.update.$set,
       })));
+      // #4927: text replaced under an existing translation → mark it stale now,
+      // not at the next sweep. Only pages whose source hash differs are marked.
+      if (job.type === 'ocr') {
+        const marked = await markStaleAfterOcrWrite(db,
+          bulkOps.map(op => ({ id: op.updateOne.filter.id, text: op.updateOne.update.$set?.['ocr.data'] })),
+          { lane: job.ocr_source || 'batch_api', now });
+        if (marked > 0) console.log(`  ${marked} translation(s) marked stale by this re-OCR (#4927)`);
+      }
     }
 
     // Insert gallery_images for image extraction jobs (upsert to avoid dupes on re-collection)
@@ -1696,3 +1714,30 @@ async function cleanupStaleFiles() {
 }
 
 run().then(() => cleanupStaleFiles()).catch(err => { console.error(err); process.exit(1); });
+
+// ── #4927: which transcription a batch translation was made from ────────────
+/**
+ * Map pageId → { hash } or { text, updatedAt } for stamping translation.source_hash.
+ * Prefers the submitter's `page_source_hashes` (hash of the exact text sent);
+ * otherwise reads the page's current ocr.data. One query per job, ids only.
+ */
+async function loadTranslationSources(db, job, pageIds) {
+  const out = new Map();
+  const pre = job.page_source_hashes && typeof job.page_source_hashes === 'object' ? job.page_source_hashes : null;
+  const need = pageIds.filter(id => !(pre && typeof pre[id] === 'string'));
+  if (pre) for (const id of pageIds) if (typeof pre[id] === 'string') out.set(id, { hash: pre[id] });
+  if (need.length > 0) {
+    const docs = await db.collection('pages')
+      .find({ id: { $in: need } }, { projection: { id: 1, 'ocr.data': 1, 'ocr.updated_at': 1 } })
+      .toArray();
+    for (const d of docs) out.set(d.id, { text: d.ocr?.data, updatedAt: d.ocr?.updated_at });
+  }
+  return out;
+}
+
+function sourceFieldsFor(sourceByPage, pageId) {
+  const s = sourceByPage.get(pageId);
+  if (!s) return {};
+  if (s.hash) return { 'translation.source_hash': s.hash };
+  return translationSourceFields(s.text, s.updatedAt, { dotted: true });
+}

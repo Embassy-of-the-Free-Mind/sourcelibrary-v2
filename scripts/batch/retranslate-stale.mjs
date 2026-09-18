@@ -15,6 +15,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { SKIP_TRANSLATION_PAGE_TYPES, isDegenerateSource } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { sourceHash } from '../lib/translation-source.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT_ARG = process.argv.find(a => a.startsWith('--limit='));
@@ -220,6 +221,7 @@ async function main() {
 
         batchRequests.push({
           key: page.id,
+          source_hash: sourceHash(ocrText), // #4927: hash of the exact text sent
           request: {
             contents: [{
               parts: [{ text: prompt }],
@@ -256,6 +258,7 @@ async function main() {
           prompt_name: promptInfo.promptRef.name,
           page_ids: batchRequests.map(r => r.key),
           page_count: batchRequests.length,
+          page_source_hashes: Object.fromEntries(batchRequests.map(r => [r.key, r.source_hash])), // #4927
           status: job.state,
           initiated_by: INITIATED_BY,
           ...initiatedReasonFields(REASON),

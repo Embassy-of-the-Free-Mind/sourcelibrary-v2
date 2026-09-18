@@ -12,6 +12,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
 import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
+import { translationSourceFields, markStaleAfterOcrWrite, CLEAR_STALE_UNSET } from '@/lib/translation-source';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -242,6 +243,7 @@ export async function POST(request: NextRequest) {
                   },
                 }
               );
+              await markStaleAfterOcrWrite(db.collection('pages'), [{ _id: page._id, text: result.text }], { lane: 'contributor' }); // #4927
 
               // Log AI usage to gemini_usage so contributor work shows up in
               // analytics (cost is on the contributor's key, but the call still
@@ -293,6 +295,7 @@ export async function POST(request: NextRequest) {
                     translation: {
                       data: result.text,
                       content_hash: contentHash(result.text),
+                      ...translationSourceFields(ocrText, (page.ocr as { updated_at?: Date } | undefined)?.updated_at), // #4927
                       model: DEFAULT_MODEL,
                       prompt_version: String(result.promptRef.version),
                       prompt_id: result.promptRef.id,
@@ -304,6 +307,7 @@ export async function POST(request: NextRequest) {
                     },
                     ...translationMeta,
                   },
+                  $unset: CLEAR_STALE_UNSET,
                 }
               );
 

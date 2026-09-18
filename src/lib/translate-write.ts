@@ -28,6 +28,7 @@ import type { Db } from 'mongodb';
 import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
 import { contentHash } from './steganographia';
+import { translationSourceFields, CLEAR_STALE_UNSET } from './translation-source';
 
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
 export interface HumanEditableField {
@@ -134,7 +135,7 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1, 'ocr.data': 1, 'ocr.updated_at': 1 } }
   );
   const existing = current?.translation as HumanEditableField | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
@@ -154,6 +155,9 @@ export async function writePageTranslation(
         translation: {
           data: text,
           content_hash: contentHash(text),
+          // Which transcription this English was made from (#4927): the page as
+          // it stands NOW, which is what the stale sweep will hash it against.
+          ...translationSourceFields(current?.ocr?.data, current?.ocr?.updated_at),
           language,
           ...(model && { model }),
           updated_at: now,
@@ -169,6 +173,7 @@ export async function writePageTranslation(
         ...(extraSet || {}),
         updated_at: now,
       },
+      $unset: CLEAR_STALE_UNSET,
     }
   );
   return { written: true, protected: false, text };

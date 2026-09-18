@@ -30,6 +30,7 @@ import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { dehyphenateLineBreaks, countLineBreakHyphens } from '../lib/dehyphenate.mjs';
+import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
@@ -88,6 +89,8 @@ await withMongo(async (db) => {
         filter: { _id: c.p._id, 'ocr.source': SOURCE, 'ocr.data': c.old },
         update: { $set: { 'ocr.data': c.neu, 'ocr.updated_at': now, updated_at: now } },
       } })), { ordered: false });
+      // #4927: a translation made from the hyphenated text is now of text the page no longer holds.
+      await markStaleAfterOcrWrite(db, changes.map((c) => ({ _id: c.p._id, text: c.neu })), { lane: 'dehyphenate-ia-ocr', now });
       const modified = r.modifiedCount;
       row.pages_changed = modified; row.not_matched = changes.length - modified; row.revisions = rev;
       totals.pages_changed += modified; totals.not_matched += changes.length - modified;

@@ -19,6 +19,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { makePageDoc } from '../lib/book-docs.mjs';
+import { translationSourceFields } from '../lib/translation-source.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
@@ -157,6 +158,7 @@ async function processBook(db, bookId) {
       },
       translation: {
         data: englishChunk,
+        ...translationSourceFields(ocrChunk), // #4927
         model: 'gemini-2.0-flash',
         language: 'en',
         updated_at: new Date(),

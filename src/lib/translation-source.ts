@@ -7,6 +7,7 @@
  * reasoning; this file carries none of it on purpose.
  */
 import { createHash } from 'crypto';
+import type { AnyBulkWriteOperation, Collection, Document } from 'mongodb';
 
 export function sourceHash(text: unknown): string {
   return createHash('sha256').update(typeof text === 'string' ? text : '').digest('hex').slice(0, 16);
@@ -124,20 +125,15 @@ export function staleMarkerOps(entries: StaleEntry[] | null | undefined, { lane,
   return ops;
 }
 
-/** Minimal shape of the collection the app passes in — keeps this file free of driver types. */
-interface PagesLike {
-  bulkWrite(ops: unknown[], opts: { ordered: boolean }): Promise<{ modifiedCount?: number }>;
-}
-
 export async function markStaleAfterOcrWrite(
-  pages: PagesLike,
+  pages: Collection<Document>,
   entries: StaleEntry[],
   { lane, now }: { lane?: string; now?: Date } = {},
 ): Promise<number> {
   const ops = staleMarkerOps(entries, { lane, now });
   if (ops.length === 0) return 0;
   try {
-    const r = await pages.bulkWrite(ops, { ordered: false });
+    const r = await pages.bulkWrite(ops as AnyBulkWriteOperation<Document>[], { ordered: false });
     return r.modifiedCount ?? 0;
   } catch (err) {
     console.warn(`[translation-source] stale marker write failed (${ops.length} ops): ${(err as Error).message}`);

@@ -33,6 +33,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
+import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=')[1] ?? d;
@@ -132,6 +133,8 @@ for (const [bookId, verdicts] of byBook) {
       },
       $unset: { 'ocr.unreadable': '', 'ocr.unreadable_reason': '' },
     });
+    // #4927: the English on this page was made from the reading just replaced.
+    await markStaleAfterOcrWrite(db, [{ id: page.id, text }], { lane: REASON });
     totals.serve++;
   }
 

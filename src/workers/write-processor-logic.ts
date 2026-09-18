@@ -30,6 +30,7 @@ import type {
   ImageExtractionWriteResult,
   GeminiUsagePayload,
 } from '@/lib/types/sqs';
+import { markStaleAfterOcrWrite } from '@/lib/translation-source';
 
 const LOG_PREFIX = '[WRITER]';
 
@@ -119,6 +120,8 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     ), `save OCR for page ${pageId}`, 3, LOG_PREFIX);
     // Dual-write to Supabase (fire-and-forget)
     syncPageUpdate(pageId, ocrSetPayload);
+    // #4927: an existing translation was made from the reading just replaced.
+    await markStaleAfterOcrWrite(db.collection('pages'), [{ id: pageId, text }], { lane: 'sqs_ocr' });
   }
 
   // Log Gemini usage (non-blocking)
