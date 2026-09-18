@@ -119,11 +119,18 @@ export const STALE_REASONS = Object.freeze({
 });
 
 /**
- * Same-run ordering is not staleness. A batch collector writes the reading and
- * the translation in one pass, and the orchestrator's OCR phase and translate
- * phase run minutes apart on the same book. The margin excludes that band and
- * nothing more — set from a read of the sample pages in each band (#4929), not
- * from a round number.
+ * A write-ordering tolerance, not a staleness threshold. Measured 2026-09-19
+ * over the 15,951 pages whose OCR clock is newer than their translation's
+ * (PR #4929): the only band where both fields come from ONE writer pass is
+ * under a second — a collector tick writing a translation job's result and an
+ * OCR job's result for the same book 96 ms apart (20 pages). From 3 s upward
+ * every sampled page was a second read landing over the first by a different
+ * lane (a realtime read translated, then a batch read collected; a lite read
+ * translated, then a full-model re-read; a Gemini read, then IA's text), and
+ * those re-reads can differ materially, so no wider band is excluded — the
+ * clock is the rule, and the consumer prices the set before draining. 60 s is
+ * that tolerance plus clock skew between hosts (Lambda, Hetzner, Vercel all
+ * write these fields); it excludes 47 of the 15,951 pages.
  */
 export const STALE_MARGIN_MS = 60_000;
 
