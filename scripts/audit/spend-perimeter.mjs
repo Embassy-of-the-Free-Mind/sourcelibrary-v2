@@ -75,6 +75,8 @@ const UNATTENDED = [
   { match: 'suggest-vocabulary-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'stage-coverage-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'pipeline-health-alert.mjs', spends: false, gated: false, note: 'reads control, alerts' },
+  { match: 'status-output-drift.mjs', spends: false, gated: false,
+    note: 'read-only counts over books; no model call, no write (#4890)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
