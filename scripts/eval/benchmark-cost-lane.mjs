@@ -67,12 +67,20 @@ for (const st of STRATA) {
   for (const p of j.pages) pages.push({ ...p, stratum: st });
 }
 
-const classes = CLASSES || [...new Set(pages.map(p => p.script_class).filter(Boolean))].sort();
+// --by=period: group by the catalogue century of the page's book instead of the observed script
+// class (#4925 step 2: the Greek decision is per PERIOD of print; the by-eye leaf filter --leaf=grc
+// still applies). The period is the edition's catalogue year — read with #4884 in mind.
+const BY = argOf('by', 'script_class');
+const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
+const PERIOD_GROUPS = { '1450–1699': ['before 1500', '1500–1599', '1600–1699'], '1700–1799': ['1700–1799'], '1800–1899': ['1800–1899'] };
+const groupOf = p => BY === 'period' ? (Object.entries(PERIOD_GROUPS).find(([, ps]) => ps.includes(periodOf(p.year)))?.[0] || null) : p.script_class;
+for (const p of pages) p._group = groupOf(p);
+const classes = CLASSES || [...new Set(pages.map(p => p._group).filter(Boolean))].sort();
 const result = { engine: ENGINE, ref: REF, repeat: REPEAT, min_n: MIN_N, rule: { margin: MARGIN, ci_max: CI_MAX, noise: NOISE }, sources, classes: {} };
 const cerOf = (p, e) => (p.engines?.[e] && !p.engines[e].missing && typeof p.engines[e].cer === 'number') ? p.engines[e].cer : null;
 
 for (const c of classes) {
-  const inClass = pages.filter(p => p.script_class === c && (!LEAF || !p.leaf_language || p.leaf_language === LEAF));
+  const inClass = pages.filter(p => p._group === c && (!LEAF || !p.leaf_language || p.leaf_language === LEAF));
   const referenced = inClass.filter(p => p.has_ref && !p.ref_mismatch);
   const paired = referenced.filter(p => cerOf(p, ENGINE) != null && cerOf(p, REF) != null);
   const deltas = paired.map(p => cerOf(p, ENGINE) - cerOf(p, REF));

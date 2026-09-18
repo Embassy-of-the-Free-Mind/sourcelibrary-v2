@@ -94,10 +94,19 @@ const median = xs => { const s = xs.filter(x => x != null).sort((a, b) => a - b)
 const mean = xs => { const s = xs.filter(x => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
 const CAP = 6000;
 
-function prep(text, cjk) {
+// GREEK strata score the GREEK letters only (#4925 step 2, preregistered): a Greek cell's reference
+// is the Greek e-text, while 42 of the 80 drawn 1700–1799 leaves are Greek–Latin parallel pages.
+// With the whole output in the Levenshtein, the Latin half is charged as insertions to EVERY engine
+// (CER ≥ 0.5 → the mismatch guard demotes the page) — the metric would measure layout, not reading.
+// Tokens are kept if they contain a Greek letter; Latin words are neither counted nor credited.
+const GREEK_STRATA = new Set(['greek', 'greek-ext']);
+const greekOnly = s => s.replace(/[^\p{Script=Greek}]+/gu, '');
+const hasGreek = t => /\p{Script=Greek}/u.test(t);
+function prep(text, cjk, greek = false) {
   if (cjk) { const n = normCJK(text).slice(0, CAP); return { chars: n, tokens: cjkTokens(n), content: cjkGrams(n, 3), nContent: n.length }; }
-  const n = normAlpha(text).slice(0, CAP); const toks = tokensAlpha(n);
-  return { chars: lettersOnly(n), tokens: toks, content: toks.filter(t => lettersOnly(t).length >= 4), nContent: lettersOnly(n).length };
+  const n = normAlpha(text).slice(0, CAP); const toks = greek ? tokensAlpha(n).filter(hasGreek) : tokensAlpha(n);
+  const letters = greek ? greekOnly(n) : lettersOnly(n);
+  return { chars: letters, tokens: toks, content: toks.filter(t => lettersOnly(t).length >= 4), nContent: letters.length };
 }
 function compare(h, r) {
   // h, r prepared. CER on letters/chars (symmetric Levenshtein over the reference length).
@@ -166,7 +175,7 @@ const date = new Date().toISOString().slice(0, 10);
 const summaryAll = {};
 for (const stratum of strata) {
   if (stratum.startsWith('ref-')) { summaryAll[stratum] = scoreRefTier(stratum); continue; }
-  const cjk = CJK_STRATA.has(stratum);
+  const cjk = CJK_STRATA.has(stratum), greek = GREEK_STRATA.has(stratum);
   const regPath = path.join(__dirname, 'benchmark', `${stratum}.json`);
   const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : null;
   const meta = new Map((reg?.pages || []).map(p => [p.slug, p]));
@@ -191,11 +200,11 @@ for (const stratum of strata) {
   const pages = [];
   const textless = [];
   for (const s of slugs) {
-    const prepped = {}; for (const e of engines) prepped[e] = texts[s][e] == null ? null : prep(texts[s][e], cjk);
+    const prepped = {}; for (const e of engines) prepped[e] = texts[s][e] == null ? null : prep(texts[s][e], cjk, greek);
     const maxContent = Math.max(0, ...engines.map(e => prepped[e]?.nContent || 0));
     if (maxContent < 30) { textless.push(s); continue; }
     const hasRef = !!refText[s];
-    const ref = hasRef ? prep(refText[s], cjk) : prepped[REF_ENGINE];
+    const ref = hasRef ? prep(refText[s], cjk, greek) : prepped[REF_ENGINE];
     const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, leaf_language: leafOf.get(s) || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
     // LOOP: the failure kind a CER against a proxy cannot see (both arms loop on kuzushiji; flash-preview
     // wrote 448 lines for a 35-line Serto page). Repeated non-blank lines ≥ 30 % with ≥ 5 lines, or an
