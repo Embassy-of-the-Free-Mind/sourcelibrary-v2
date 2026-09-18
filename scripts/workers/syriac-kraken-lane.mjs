@@ -341,9 +341,11 @@ async function apply() {
       const loopsFixed = writes.filter((w) => w.oldLoop).length;
       await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'retranscribed', detail: { issue: LANE_ISSUE, engine: writes[0].r.engine, route: writes[0].r.route, pages_written: modified, loops_replaced: loopsFixed, first_writes: writes.filter((w) => !w.p.ocr?.data).length, run: RUN, pages_ocr_after: counts?.with_ocr ?? null } });
       // one book_events row per book, advanced in place as the lane works through it
+      // (every operator addresses a LEAF under `details` — a `$setOnInsert` of the whole
+      // `details` object beside a `$set` of `details.x` is a path conflict, Mongo error 40)
       await db.collection('book_events').updateOne(
         { book_id: bid, type: BOOK_EVENT },
-        { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: 'syriac-kraken-lane', details: { issue: LANE_ISSUE, engine: writes[0].r.engine, route: writes[0].r.route, model_doi: ENGINES[writes[0].r.engine].model_doi } },
+        { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: 'syriac-kraken-lane', 'details.issue': LANE_ISSUE, 'details.engine': writes[0].r.engine, 'details.route': writes[0].r.route, 'details.model_doi': ENGINES[writes[0].r.engine].model_doi },
           $set: { 'details.last_apply_at': now, 'details.pages_ocr_after': counts?.with_ocr ?? null, 'details.planned': rec.planned ?? null },
           $inc: { 'details.pages_written': modified, 'details.loops_replaced': loopsFixed } },
         { upsert: true },
