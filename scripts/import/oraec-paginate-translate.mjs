@@ -42,12 +42,14 @@ if (!BOOK_ID && !ALL) {
 }
 
 const genAI = new GoogleGenerativeAI(GEMINI_KEY);
+// Lite for translation (project rule); thinking off, it is billed at the output rate and adds nothing here.
+const TRANSLATE_MODEL = 'gemini-3.1-flash-lite';
 
 /**
  * Translate German Egyptological translation to English using Gemini.
  */
 async function translateToEnglish(germanText, title) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: TRANSLATE_MODEL, generationConfig: { thinkingConfig: { thinkingBudget: 0 } } });
 
   const prompt = `You are translating scholarly German Egyptological translations into English.
 The source text is a German translation of an ancient Egyptian text: "${title}".
@@ -129,7 +131,7 @@ async function processBook(db, bookId) {
     const germanChunk = transBlocks.slice(start, end).join('\n\n');
 
     // Translate German → English
-    let englishChunk;
+    let englishChunk, trModel = TRANSLATE_MODEL, trLang = 'en';
     try {
       englishChunk = await translateToEnglish(germanChunk, book.title);
       totalTranslated += (end - start);
@@ -137,7 +139,7 @@ async function processBook(db, bookId) {
       await sleep(1000);
     } catch (err) {
       console.error(`  Translation failed for page ${pageNum}: ${err.message}`);
-      englishChunk = germanChunk; // Fallback to German
+      englishChunk = germanChunk; trModel = 'oraec-corpus-de'; trLang = 'de'; // keep the German, and say so
     }
 
     const pageId = new ObjectId();
@@ -157,8 +159,8 @@ async function processBook(db, bookId) {
       },
       translation: {
         data: englishChunk,
-        model: 'gemini-2.0-flash',
-        language: 'en',
+        model: trModel,
+        language: trLang,
         updated_at: new Date(),
       },
       created_at: new Date(),
