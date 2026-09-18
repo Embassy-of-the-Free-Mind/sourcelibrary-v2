@@ -27,7 +27,10 @@ LANE="$REPO/scripts/workers/syriac-kraken-lane.mjs"
 cd "$REPO" || exit 1
 for ((s = 0; s < SHARDS; s++)); do
   if ! pgrep -f "syriac-kraken-lane.mjs work --shard $s --shards $SHARDS" > /dev/null; then
-    nohup node --env-file="$ENV" "$LANE" work --shard "$s" --shards "$SHARDS" --dir "$DIR" >> "$DIR/work-$s.log" 2>&1 &
+    # --retry-failed: a shard restarts only at end of plan or after a crash, so re-trying the
+    # fetch/kraken failures then is cheap — measured 2026-09-18, 14 of 14 early failures were
+    # transient HTTP 500s from the image host, all of which fetched fine minutes later.
+    nohup node --env-file="$ENV" "$LANE" work --shard "$s" --shards "$SHARDS" --dir "$DIR" --retry-failed >> "$DIR/work-$s.log" 2>&1 &
     disown
     echo "$(date -Is) started shard $s/$SHARDS (pid $!)"
   fi
