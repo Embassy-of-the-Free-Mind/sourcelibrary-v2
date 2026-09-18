@@ -6,10 +6,16 @@ different, narrower paper, already drafted at `paper/reading-or-reciting-chr2027
 papers). None of them is the corpus-certification paper #4916 describes, and none carries
 a claim-by-claim evidence table with verification status — that table is this file's point.
 
-**Workspace for the collaborator (outline, this table, the data bundle, a feedback form):
-https://ocr-quality-paper.vercel.app** — source repo `github.com/JDerekLomas/ocr-quality-paper`
-(private), checked out at `sidequests/ocr-quality-paper/`. Feedback from the site lands in
-the `feedback` collection tagged `[paper #4916 · …]`.
+**Dataset portal for the collaborator: https://ocr-quality-paper.vercel.app** — nine
+datasets, each with a datasheet-style README (schema, provenance, caveats, licence): the
+sealed September benchmark with every engine's raw transcript, the OCR repeat-transcription
+pairs with texts, the free-lane gate calibration (742 books), the translation A/B corpora
+with blinded judge packets and verdicts, the Reading-or-Reciting eval dataset, the
+detector/reference-quality sets, a catalogue census, and the first-translation
+verification corpus — plus this outline and table. Source repo
+`github.com/JDerekLomas/ocr-quality-paper` (private), checked out at
+`sidequests/ocr-quality-paper/`; `build-datasets.sh` rebuilds `data/` from the committed
+result files, the Hetzner engine outputs and Mongo exports.
 
 **How to read the table.** Every row was re-checked on 2026-09-18 against the named
 committed file (four read-only verification passes) or a fresh production query.
