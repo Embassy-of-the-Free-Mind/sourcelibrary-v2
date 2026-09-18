@@ -131,12 +131,24 @@ async function fetchOnce(url, kind) {
   const text = await r.text();
   return { status: r.status, text };
 }
+// Per-host circuit breaker: after 3 consecutive 429/403 answers a host is not asked again this run —
+// every remaining book on it goes straight to fetch-failed / stated-from-import (Harvard 429s every
+// path from every IP today; without this each of its 757 books would burn two 30 s waits).
+const hostStrikes = new Map();
+const BREAKER_AT = 3;
 async function fetchManifest(plan) {
+  const host = new URL(plan.url).host;
+  if ((hostStrikes.get(host) || 0) >= BREAKER_AT) return { http_status: null, error: `host-tripped (${BREAKER_AT}× 429/403 earlier this run)` };
   let last = null;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const { status, text } = await fetchOnce(plan.url, plan.kind);
-      if (status === 429 || status >= 500) { last = { http_status: status, error: `HTTP ${status}` }; await sleep(status === 429 ? 30000 : 5000); continue; }
+      if (status === 429 || status === 403 || status >= 500) {
+        last = { http_status: status, error: `HTTP ${status}` };
+        if (status === 429 || status === 403) { hostStrikes.set(host, (hostStrikes.get(host) || 0) + 1); if (hostStrikes.get(host) >= BREAKER_AT) { console.log(`  ${host}: breaker tripped after ${BREAKER_AT} ${status}s`); return last; } }
+        await sleep(status === 429 ? 15000 : 5000); continue;
+      }
+      hostStrikes.set(host, 0);
       if (status !== 200) return { http_status: status, error: `HTTP ${status}` };
       if (plan.kind === 'mets') return { http_status: 200, mets: text };
       try { return { http_status: 200, manifest: JSON.parse(text) }; }
