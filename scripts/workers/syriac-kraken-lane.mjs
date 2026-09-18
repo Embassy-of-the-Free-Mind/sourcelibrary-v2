@@ -17,7 +17,9 @@
  *   work     one shard: fetch page images, run Kraken in batches, one .txt per page —
  *            the output file IS the checkpoint; a restart re-scans and never redoes a page
  *   apply    per book: revisions first, loop-guard the new text, write with provenance,
- *            resync counters, sweep_log + book_events
+ *            resync counters, sweep_log + book_events, and stamp `translation_stale` on
+ *            every rewritten page that still carries a real translation (#4927's fact)
+ *   stale    re-run that stamp over everything applied (idempotent)
  *   reenrol  (paid, separate, dry by default) send re-transcribed books back to
  *            `ocr_complete` so translate-worker re-translates the pages whose OCR is now
  *            newer than their English; prints the page count and a price first
@@ -52,7 +54,7 @@ import { NOT_HELD, releaseBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, ENGINES, KRAKEN,
   routeBook, scriptTagCounts, pagePolicy, envelope, letterCount, ocrSetFields,
-  STALE_OCR_FIELDS, reenrolDecision, isHumanEdited,
+  STALE_OCR_FIELDS, reenrolDecision, isHumanEdited, hasRealTranslation, markTranslationsStale,
 } from '../lib/syriac-kraken-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -274,7 +276,7 @@ async function apply() {
   let bids = [...byBook.keys()];
   if (LIMIT) bids = bids.slice(0, LIMIT);
   log(`${pending.length} read pages pending apply across ${byBook.size} books${APPLY ? '' : '  [DRY RUN]'}`);
-  const totals = { books: 0, written: 0, textless_kept: 0, refused: 0, human_edited: 0, unchanged: 0 };
+  const totals = { books: 0, written: 0, stale_marked: 0, textless_kept: 0, refused: 0, human_edited: 0, unchanged: 0 };
   await withMongo(async (db) => {
     const P = db.collection('pages'), B = db.collection('books');
     for (const bid of bids) {
@@ -336,6 +338,11 @@ async function apply() {
         append(F.applied, { bid, pn: w.r.pn, pid: w.p.id, why: w.r.why, engine: w.r.engine, letters: w.letters, old_letters: w.oldLetters, old_loop: w.oldLoop, modified: res.modifiedCount });
       }
       totals.written += modified; totals.books++;
+      // Every rewritten page that still carries a real translation now serves English made
+      // from text that is gone. Say so ON THE PAGE (#4927's `translation_stale`), so the
+      // re-translate consumer finds it — never hide the English (Derek, 2026-09-18).
+      const stale = await markTranslationsStale(db, writes.map((w) => ({ id: w.p.id, text: w.text })), now);
+      totals.stale_marked += stale;
       const [counts] = await P.aggregate(buildVisiblePageCountPipeline(bid)).toArray();
       await B.updateOne({ _id: book._id }, { $set: { pages_ocr: counts?.with_ocr ?? 0, pages_translated: counts?.with_translation ?? 0, updated_at: now } });
       const loopsFixed = writes.filter((w) => w.oldLoop).length;
@@ -350,10 +357,29 @@ async function apply() {
           $inc: { 'details.pages_written': modified, 'details.loops_replaced': loopsFixed } },
         { upsert: true },
       );
-      log(`${bid} wrote ${modified}/${writes.length} (loops replaced ${loopsFixed}, revisions ${nRev}) → pages_ocr ${counts?.with_ocr}/${counts?.total} | ${String(book.title || '').slice(0, 50)}`);
+      log(`${bid} wrote ${modified}/${writes.length} (loops replaced ${loopsFixed}, revisions ${nRev}, translations marked stale ${stale}) → pages_ocr ${counts?.with_ocr}/${counts?.total} | ${String(book.title || '').slice(0, 50)}`);
     }
   }, { timeoutMs: 4 * 3600 * 1000 });
   log(`APPLY ${JSON.stringify(totals)}`);
+}
+
+// ── stale ──────────────────────────────────────────────────────────────────────────────
+
+/** Re-run the staleness stamp over every page this lane has applied (idempotent) — for
+ *  pages applied before the marker existed, or after a consumer cleared it and the OCR
+ *  changed again. Reads the stored text back so the hash guard is exact. */
+async function stale() {
+  const applied = readJsonl(F.applied).filter((r) => r.modified === 1 && (!BOOK || r.bid === BOOK));
+  let marked = 0;
+  await withMongo(async (db) => {
+    for (let i = 0; i < applied.length; i += 200) {
+      const chunk = applied.slice(i, i + 200);
+      const pages = await db.collection('pages').find({ id: { $in: chunk.map((r) => r.pid) }, 'ocr.pipeline': LANE }, { projection: { id: 1, 'ocr.data': 1 } }).toArray();
+      if (APPLY) marked += await markTranslationsStale(db, pages.map((p) => ({ id: p.id, text: p.ocr?.data })));
+      else marked += await db.collection('pages').countDocuments({ id: { $in: pages.map((p) => p.id) }, 'translation.data': { $type: 'string', $nin: ['', null] }, translation_stale: { $exists: false } });
+    }
+  }, { timeoutMs: 3600 * 1000 });
+  log(`STALE ${APPLY ? 'marked' : 'would mark'} ${marked} of ${applied.length} applied pages${APPLY ? '' : '  [DRY RUN]'}`);
 }
 
 // ── reenrol ────────────────────────────────────────────────────────────────────────────
@@ -446,6 +472,6 @@ function status() {
   console.log(JSON.stringify(out, null, 1));
 }
 
-const cmds = { plan, work, apply, reenrol, release, status };
+const cmds = { plan, work, apply, stale, reenrol, release, status };
 if (!cmds[CMD]) { console.error(`usage: syriac-kraken-lane.mjs <${Object.keys(cmds).join('|')}> [options]`); process.exit(2); }
 cmds[CMD]().then(() => process.exit(0)).catch((e) => { log(`FATAL ${e?.stack || e}`); process.exit(1); });

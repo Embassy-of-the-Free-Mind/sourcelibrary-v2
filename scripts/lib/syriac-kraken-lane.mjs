@@ -256,6 +256,55 @@ export function ocrSetFields(text, engineKey, route, { run, now = new Date(), se
   };
 }
 
+/**
+ * Does this page carry a REAL translation — one that a re-transcription orphans? A bare
+ * bracketed placeholder (`[Blank page]`, `[This page could not be translated …]`) and a
+ * `skip`/`system` source are not translations of the page text. Shape agreed with #4927
+ * (2026-09-18); its helper `markStaleAfterOcrWrite` in scripts/lib/translation-source.mjs
+ * supersedes this once it merges.
+ */
+export function hasRealTranslation(tr) {
+  const d = tr?.data;
+  if (typeof d !== 'string' || !d.trim()) return false;
+  if (/^\s*\[[^\]]*\]\s*$/.test(d)) return false;
+  if (['skip', 'system'].includes(tr?.source)) return false;
+  return true;
+}
+
+/** The staleness marker #4927 consumes: a fact on the page, never a hidden translation. */
+export function staleMarker(now = new Date()) {
+  return { reason: 'ocr_rewritten', since: now, lane: LANE };
+}
+
+/**
+ * Stamp `translation_stale` on the pages this lane rewrote that still carry a real
+ * translation — the fact that lets the #4927 consumer (and translate-worker) find them for
+ * RE-TRANSLATION. Idempotent: the filter refuses a page already flagged by any lane or
+ * whose translation was made from this very text (`translation.source_hash`). Does not
+ * touch `translation.*` and does not bump `updated_at` (the OCR write already did).
+ * `pages` = [{ id, text }] where `text` is the stored (enveloped) transcription.
+ */
+export async function markTranslationsStale(db, pages, now = new Date()) {
+  const { createHash } = await import('node:crypto');
+  const ops = [];
+  for (const { id, text } of pages) {
+    const hash = createHash('sha256').update(String(text || ''), 'utf8').digest('hex').slice(0, 16);
+    ops.push({ updateOne: {
+      filter: {
+        id,
+        'translation.data': { $type: 'string', $nin: ['', null], $not: /^\s*\[[^\]]*\]\s*$/ },
+        'translation.source': { $nin: ['skip', 'system'] },
+        translation_stale: { $exists: false },
+        $or: [{ 'translation.source_hash': { $exists: false } }, { 'translation.source_hash': { $ne: hash } }],
+      },
+      update: { $set: { translation_stale: staleMarker(now) } },
+    } });
+  }
+  if (!ops.length) return 0;
+  const r = await db.collection('pages').bulkWrite(ops, { ordered: false });
+  return r.modifiedCount;
+}
+
 /** Statuses from which a fully-transcribed book may re-enter translation (`ocr_complete`). */
 export const REENROL_FROM = new Set([
   'complete', 'translate_complete', 'translate_partial', 'loop_quarantine_hold', 'parked',

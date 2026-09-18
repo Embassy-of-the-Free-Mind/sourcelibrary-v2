@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs module
 import {
   LANE, ENGINES, routeBook, classifyScript, pagePolicy, envelope, letterCount, ocrSetFields,
-  reenrolDecision, scriptTagCounts, editionYear, STALE_OCR_FIELDS,
+  reenrolDecision, scriptTagCounts, editionYear, STALE_OCR_FIELDS, hasRealTranslation, staleMarker,
 } from '../../scripts/lib/syriac-kraken-lane.mjs';
 
 const SYR = 'ܘܰܐܝܟܰܢܳܐ ܟܰܕ ܕܰܢܚܶܠ ܢܶܫܶܐ ܚܰܝ̈ܶܐ ܐܶܡܰܪܠܶܗ ܕܶܝܢ ܕܰܪ̈ܗܶܣܘܳܣ ܩܰܠܺܝܠ ܝܰܬܺܝܪ ܡܶܢܳܟܝ ܟܰܗܢܳܐ ܐܰܢ̱ܬ';
@@ -83,6 +83,21 @@ describe('syriac-kraken-lane: what is written', () => {
     }
     expect((ENGINES as any)['omnisyr'].route).toBe('print');
     expect((ENGINES as any)['sophro-mhiro'].route).toBe('manuscript');
+  });
+});
+
+describe('syriac-kraken-lane: a rewritten page says its translation is stale (#4927 shape)', () => {
+  it('only a real translation is orphaned — placeholders and skip/system sources are not', () => {
+    expect(hasRealTranslation({ data: 'And how, when he had…', source: 'ai' })).toBe(true);
+    expect(hasRealTranslation({ data: '[Blank page]', source: 'skip' })).toBe(false);
+    expect(hasRealTranslation({ data: '[This page could not be translated due to content restrictions]' })).toBe(false);
+    expect(hasRealTranslation({ data: 'text', source: 'system' })).toBe(false);
+    expect(hasRealTranslation({ data: '' })).toBe(false);
+    expect(hasRealTranslation(undefined)).toBe(false);
+  });
+  it('the marker is the agreed fact, keyed to this lane', () => {
+    const at = new Date('2026-09-18T00:00:00Z');
+    expect(staleMarker(at)).toEqual({ reason: 'ocr_rewritten', since: at, lane: LANE });
   });
 });
 
