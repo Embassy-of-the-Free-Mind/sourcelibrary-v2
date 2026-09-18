@@ -153,3 +153,8 @@ scripts/eval/results/revision-agreement-corpus-*.jsonl
 
 # Per-run import ledgers (progress state, not source)
 scripts/import/*-ledger.jsonl
+
+# Sidequests: independent nested repos kept beside the main project for organisation
+# (see sidequests/README.md). Never part of sourcelibrary; only the README is tracked.
+/sidequests/*
+!/sidequests/README.md
