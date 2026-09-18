@@ -93,7 +93,8 @@ const now = () => new Date().toISOString();
 if (LANE === 'stored' || LANE === 'all') {
   const q = { ...scope };
   // --force re-folds only what THIS lane wrote; it never clobbers a manifest read
-  q[FORCE ? 'image_source.rights_normalized.source' : 'image_source.rights_normalized'] = FORCE ? { $in: ['importer-license-field', null] } : { $exists: false };
+  if (FORCE) { q['image_source.rights_normalized.source'] = 'importer-license-field'; q['image_source.rights_normalized.status'] = { $ne: 'no-manifest' }; } // no-manifest is a manifest-lane verdict
+  else q['image_source.rights_normalized'] = { $exists: false };
   const cursor = books.find(q, { projection: { id: 1, image_source: 1 } });
   let n = 0, written = 0;
   const ops = [];
