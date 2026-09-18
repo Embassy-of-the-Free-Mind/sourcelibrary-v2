@@ -27,7 +27,6 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
-import { translationSourceFields } from '../lib/translation-source.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -321,7 +320,6 @@ async function main() {
         ocr: { data: ocrText, model: 'oraec-corpus', updated_at: new Date() },
         translation: {
           data: translationText,
-          ...translationSourceFields(ocrText), // #4927
           model: 'oraec-corpus-de',
           language: 'de',
           updated_at: new Date(),

@@ -5,7 +5,7 @@
  * WITHHOLD_LANES; this sweep's disposition is a marker that a paid lane drains
  * (re-translation), for the whole corpus. `scripts/batch/retranslate-stale.mjs`
  * selects by model vintage, not by source text. The rule itself lives in
- * `scripts/lib/translation-source.mjs` — read its header first.
+ * `scripts/lib/stale-translation.mjs` — read its header first.
  *
  * Materialise the stale-translation verdict (#4927).
  *
@@ -19,10 +19,10 @@
  *
  * Candidates, by default (`--since-hours=26`, the daily run):
  *   • pages whose `ocr.updated_at` is within the window (pages_ocr_updated_idx) —
- *     an OCR writer that forgot `markStaleAfterOcrWrite` is caught here;
+ *     every re-OCR of a translated page in the last day is judged here;
  *   • pages already carrying the marker (pages_translation_stale_partial) — so
  *     a page retranslated by a writer that forgot `CLEAR_STALE_UNSET` is cleared.
- * `--full` walks every translated page instead (the backfill's job; hours).
+ * `--full` walks every translated page instead (the first flagging pass; hours).
  * `--book=<id>` scopes to one book.
  *
  * Each arm is walked in ITS OWN INDEX'S order. The first version sorted an
@@ -46,7 +46,7 @@
 import { MongoClient } from 'mongodb';
 import {
   translationStaleness, staleMarker, STALE_FIELD, REAL_TRANSLATION_FILTER,
-} from '../lib/translation-source.mjs';
+} from '../lib/stale-translation.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const APPLY = process.argv.includes('--apply');
@@ -58,10 +58,11 @@ const BATCH = 1000;
 const WRITE_CHUNK = 200;
 const WRITE_DELAY_MS = 50; // Atlas M30: keep the sweep under the IOPS ceiling
 
+// No text bodies: the rule reads two clocks and the translation's shape only.
 const PROJECTION = {
   id: 1, book_id: 1,
-  'ocr.data': 1, 'ocr.updated_at': 1,
-  'translation.data': 1, 'translation.source': 1, 'translation.source_hash': 1,
+  'ocr.updated_at': 1,
+  'translation.data': 1, 'translation.source': 1,
   'translation.updated_at': 1, 'translation.edited_at': 1,
   [STALE_FIELD]: 1,
 };

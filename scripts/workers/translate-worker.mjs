@@ -42,7 +42,7 @@ import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
-import { translationSourceFields, CLEAR_STALE_UNSET } from '../lib/translation-source.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -462,9 +462,6 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     translation: {
       data: text,
       content_hash: contentHash(text),
-      // Which transcription this English was made from (#4927) — the exact
-      // text handed to the model, so a later re-OCR is detectable as a fact.
-      ...translationSourceFields(page.ocr?.data, page.ocr?.updated_at),
       language: 'English',
       model: getModelForBook(book),
       updated_at: new Date(),
@@ -519,7 +516,6 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
           translation: {
             data: text,
             content_hash: contentHash(text),
-            ...translationSourceFields(page.ocr?.data, page.ocr?.updated_at), // #4927
             language: 'English',
             model,
             updated_at: now,

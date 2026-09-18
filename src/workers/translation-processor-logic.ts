@@ -14,7 +14,7 @@ import { contentHash } from '@/lib/steganographia';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
-import { translationSourceFields, CLEAR_STALE_UNSET } from '@/lib/translation-source';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 // Git SHA of the producing code, for translation provenance (#2297). Translation's
 // *input* is the page's OCR text (not an image), so there is no image source_url to
@@ -262,7 +262,6 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       translation: {
         data: finalTranslation,
         content_hash: contentHash(finalTranslation),
-        ...translationSourceFields(page.ocr.data, page.ocr?.updated_at), // #4927
         language: 'English',
         model: modelId,
         updated_at: new Date(),

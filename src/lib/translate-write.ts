@@ -28,7 +28,16 @@ import type { Db } from 'mongodb';
 import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
 import { contentHash } from './steganographia';
-import { translationSourceFields, CLEAR_STALE_UNSET } from './translation-source';
+
+/**
+ * `$unset` fragment every translation writer includes (#4927). `translation_stale`
+ * is the materialised verdict that the stored translation was made from a
+ * transcription the page no longer holds (`ocr.updated_at` newer than
+ * `translation.updated_at`); a new translation is the exit, so every writer
+ * clears it in the same update. Twin of `CLEAR_STALE_UNSET` in
+ * `scripts/lib/stale-translation.mjs`.
+ */
+export const CLEAR_STALE_UNSET = Object.freeze({ translation_stale: '' } as const);
 
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
 export interface HumanEditableField {
@@ -135,7 +144,7 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1, 'ocr.data': 1, 'ocr.updated_at': 1 } }
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation as HumanEditableField | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
@@ -155,9 +164,6 @@ export async function writePageTranslation(
         translation: {
           data: text,
           content_hash: contentHash(text),
-          // Which transcription this English was made from (#4927): the page as
-          // it stands NOW, which is what the stale sweep will hash it against.
-          ...translationSourceFields(current?.ocr?.data, current?.ocr?.updated_at),
           language,
           ...(model && { model }),
           updated_at: now,

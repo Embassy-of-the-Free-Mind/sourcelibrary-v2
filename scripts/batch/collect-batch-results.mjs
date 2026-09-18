@@ -18,7 +18,7 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { translationSourceFields, markStaleAfterOcrWrite, CLEAR_STALE_UNSET } from '../lib/translation-source.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -207,10 +207,6 @@ async function processOneJob(db, job) {
 
     // Second pass: save results
     const bulkOps = [];
-    // #4927: which transcription each translation was made from (see helper below).
-    const sourceByPage = job.type === 'translation'
-      ? await loadTranslationSources(db, job, pageResults.map(r => r.pageId))
-      : new Map();
     for (const { pageId, text, usage } of pageResults) {
       if (humanEditedIds.has(pageId)) {
         console.log(`  PROTECTED: page ${pageId} has a human-edited ${guardField} — skipping (#3749)`);
@@ -269,7 +265,6 @@ async function processOneJob(db, job) {
             update: {
               $set: {
                 'translation.data': text,
-                ...sourceFieldsFor(sourceByPage, pageId),
                 'translation.updated_at': now,
                 'translation.model': job.model,
                 'translation.source_language': job.language,
@@ -300,13 +295,6 @@ async function processOneJob(db, job) {
       const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
       successCount = bulkResult.matchedCount;
       failCount += (bulkOps.length - bulkResult.matchedCount);
-      // #4927: text replaced under an existing translation → mark it stale now.
-      if (job.type === 'ocr') {
-        const marked = await markStaleAfterOcrWrite(db,
-          bulkOps.map(op => ({ id: op.updateOne.filter.id, text: op.updateOne.update.$set?.['ocr.data'] })),
-          { lane: 'batch_api', now });
-        if (marked > 0) console.log(`  ${marked} translation(s) marked stale by this re-OCR (#4927)`);
-      }
     }
 
     // Update job status using _id (not id — pipeline cron creates records with only _id)
@@ -567,29 +555,3 @@ async function updateBookCounts(db, bookId) {
 
 run().catch(err => { console.error(err); process.exit(1); });
 
-// ── #4927: which transcription a batch translation was made from ────────────
-/**
- * Map pageId → { hash } or { text, updatedAt } for stamping translation.source_hash.
- * Prefers the submitter's `page_source_hashes` (hash of the exact text sent);
- * otherwise reads the page's current ocr.data. One query per job, ids only.
- */
-async function loadTranslationSources(db, job, pageIds) {
-  const out = new Map();
-  const pre = job.page_source_hashes && typeof job.page_source_hashes === 'object' ? job.page_source_hashes : null;
-  const need = pageIds.filter(id => !(pre && typeof pre[id] === 'string'));
-  if (pre) for (const id of pageIds) if (typeof pre[id] === 'string') out.set(id, { hash: pre[id] });
-  if (need.length > 0) {
-    const docs = await db.collection('pages')
-      .find({ id: { $in: need } }, { projection: { id: 1, 'ocr.data': 1, 'ocr.updated_at': 1 } })
-      .toArray();
-    for (const d of docs) out.set(d.id, { text: d.ocr?.data, updatedAt: d.ocr?.updated_at });
-  }
-  return out;
-}
-
-function sourceFieldsFor(sourceByPage, pageId) {
-  const s = sourceByPage.get(pageId);
-  if (!s) return {};
-  if (s.hash) return { 'translation.source_hash': s.hash };
-  return translationSourceFields(s.text, s.updatedAt, { dotted: true });
-}

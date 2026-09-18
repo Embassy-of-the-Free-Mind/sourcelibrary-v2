@@ -13,7 +13,6 @@ import { findPendingBatchJob } from '@/lib/translate-write';
 import { contentHash } from '@/lib/steganographia';
 import { nanoid } from 'nanoid';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { markStaleAfterOcrWrite } from '@/lib/translation-source';
 
 export const maxDuration = 300;
 
@@ -794,7 +793,6 @@ export const GET = withAuth(async (request, session, context) => {
               failCount++;
               continue;
             }
-            await markStaleAfterOcrWrite(db.collection('pages'), [{ id: pageId, text }], { lane: 'batch_api' }); // #4927
             successCount++;
         }
 

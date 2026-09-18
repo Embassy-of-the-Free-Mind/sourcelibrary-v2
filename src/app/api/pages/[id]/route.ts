@@ -10,7 +10,7 @@ import { contentHash } from '@/lib/steganographia';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
-import { translationSourceFields, markStaleAfterOcrWrite, CLEAR_STALE_UNSET } from '@/lib/translation-source';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const preferredRegion = 'fra1';
 
@@ -214,31 +214,16 @@ export const PATCH = withAuth(async (request, session, context) => {
       updateData['summary.edited_at'] = now;
     }
 
-    // #4927: a translation records the transcription it was made from. A
-    // hand-edited translation is made against the OCR as it stands after this
-    // request; a hand-edited OCR marks an existing translation stale (below).
-    if (body.translation) {
-      const cur = body.ocr ? null : await db.collection('pages').findOne(scope, { projection: { 'ocr.data': 1, 'ocr.updated_at': 1 } });
-      Object.assign(updateData, translationSourceFields(
-        body.ocr ? body.ocr.data : cur?.ocr?.data,
-        body.ocr ? now : cur?.ocr?.updated_at,
-        { dotted: true },
-      ));
-    }
-
     // Use findOneAndUpdate to get updated document in a single query
     const updatedPage = await db.collection('pages').findOneAndUpdate(
       scope,
+      // A hand-edited translation is a new translation: it clears the stale marker (#4927).
       { $set: updateData, $inc: { edit_count: 1 }, ...(body.translation ? { $unset: CLEAR_STALE_UNSET } : {}) },
       { returnDocument: 'after' }
     );
 
     if (!updatedPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
-    }
-
-    if (body.ocr && !body.translation) {
-      await markStaleAfterOcrWrite(db.collection('pages'), [{ id, text: body.ocr.data }], { lane: 'manual_edit', now }); // #4927
     }
 
     // Capture the correction as a labeled model error (#3241) — fire and forget

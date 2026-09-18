@@ -5,7 +5,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { outputTokensFrom } from '@/lib/gemini-logger';
-import { translationSourceFields, markStaleAfterOcrWrite, CLEAR_STALE_UNSET } from '@/lib/translation-source';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const maxDuration = 300;
 
@@ -134,18 +134,14 @@ export const POST = withAuth(async (request, session) => {
                 },
               }
             );
-            await markStaleAfterOcrWrite(db.collection('pages'), [{ id: pageId, text }], { lane: 'batch_api', now }); // #4927
           } else {
             await createRevision(pageId!, 'translation', job.id);
-            // #4927: which transcription this translation was made from.
-            const cur = await db.collection('pages').findOne({ id: pageId }, { projection: { 'ocr.data': 1, 'ocr.updated_at': 1 } });
             await db.collection('pages').updateOne(
               { id: pageId },
               {
                 $set: {
                   translation: {
                     data: text,
-                    ...translationSourceFields(cur?.ocr?.data, cur?.ocr?.updated_at),
                     updated_at: now,
                     model: job.model,
                     source_language: job.language,

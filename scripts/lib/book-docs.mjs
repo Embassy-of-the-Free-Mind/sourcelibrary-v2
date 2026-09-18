@@ -133,8 +133,9 @@ export const PAGE_FIELDS = Object.freeze([
   'ocr', 'summary', 'translation', 'transliteration',
   // #4927: the materialised verdict that `translation` was made from a
   // transcription the page no longer holds — { reason, since, lane? }. Written
-  // by OCR writers and the daily sweep, cleared by every translation writer,
-  // never by a list. A fact about the page's current state, not a job's action.
+  // by the daily sweep (and by a re-OCR lane that stamps it itself), cleared by
+  // every translation writer, never by a list. A fact about the page's current
+  // state, not a job's action.
   'translation_stale',
   // pipeline
   'status', 'archive_metadata',

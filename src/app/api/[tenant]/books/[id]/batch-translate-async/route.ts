@@ -7,11 +7,10 @@ import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
-import { findHumanEditedPageIds, findPendingBatchJob } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { VISIBLE_PAGE_MATCH } from '@/lib/page-counts';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { sourceHash, translationSourceFields, CLEAR_STALE_UNSET } from '@/lib/translation-source';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -170,7 +169,6 @@ export const POST = withAuth(async (request, session, context) => {
 
       batchRequests.push({
         key: page.id,
-        source_hash: sourceHash(page.ocr?.data), // #4927: hash of the exact text sent
         request: {
           contents: [{
             parts: [{ text: prompt }],
@@ -237,8 +235,6 @@ export const POST = withAuth(async (request, session, context) => {
       ...promptProvenance,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
-      // #4927: the collector stamps translation.source_hash from this map.
-      page_source_hashes: Object.fromEntries(batchRequests.map(r => [r.key, r.source_hash])),
       status: batchJob.state,
       created_at: new Date(),
       updated_at: new Date(),
@@ -378,17 +374,12 @@ export const GET = withAuth(async (request, session, context) => {
             await createRevision(pageId, 'translation', jobName);
 
             // Set the full translation object (not nested fields) to handle cases where translation is null
-            // #4927: which transcription this translation was made from — the hash
-            // stamped at submit time, else the page's current OCR.
-            const preHash = (jobDoc.page_source_hashes as Record<string, string> | undefined)?.[pageId];
-            const cur = preHash ? null : await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { 'ocr.data': 1, 'ocr.updated_at': 1 } });
             await db.collection('pages').updateOne(
               { id: pageId, tenantId },
               {
                 $set: {
                   translation: {
                     data: text,
-                    ...(preHash ? { source_hash: preHash } : translationSourceFields(cur?.ocr?.data, cur?.ocr?.updated_at)),
                     updated_at: now,
                     model: jobDoc.model,
                     source_language: jobDoc.source_language,

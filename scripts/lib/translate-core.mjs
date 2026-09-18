@@ -26,7 +26,7 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
-import { translationSourceFields, CLEAR_STALE_UNSET } from './translation-source.mjs';
+import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -461,7 +461,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1, 'ocr.data': 1, 'ocr.updated_at': 1 } }
+    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -480,11 +480,6 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
         translation: {
           data: clean,
           content_hash: contentHash(clean),
-          // Which transcription this English was made from (#4927). Read from
-          // the page as it is NOW rather than from the caller's copy: the door
-          // is the one place every writer passes through, so the hash it
-          // stamps is the hash the stale sweep will check.
-          ...translationSourceFields(current?.ocr?.data ?? page?.ocr?.data, current?.ocr?.updated_at ?? page?.ocr?.updated_at),
           language: 'English',
           model: model || getTranslateModelForBook(book),
           updated_at: new Date(),
@@ -497,6 +492,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
         ...(extraSet || {}),
         updated_at: new Date(),
       },
+      // A new translation is the exit from the stale marker (#4927).
       $unset: CLEAR_STALE_UNSET,
     }
   );

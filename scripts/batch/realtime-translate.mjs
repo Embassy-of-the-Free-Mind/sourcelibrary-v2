@@ -18,7 +18,7 @@
  *                         `translation_stale.reason` is set — the transcription the
  *                         English was made from is no longer the one the page holds.
  *                         Books come from the partial index, pages are re-verified by
- *                         hash before any paid call, and a page that healed in the
+ *                         the timestamp rule before any paid call, and a page that healed in the
  *                         meantime has its marker cleared instead of being re-billed.
  *                         This is THE consumer of the marker; without --dry-run it is a
  *                         paid run behind the daily spend dial (spend-guard).
@@ -42,7 +42,7 @@ import {
   SKIP_TRANSLATION_PAGE_TYPES,
   isDegenerateSource,
 } from '../lib/translate-core.mjs';
-import { translationStaleness, STALE_FIELD } from '../lib/translation-source.mjs';
+import { translationStaleness, STALE_FIELD } from '../lib/stale-translation.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
@@ -394,7 +394,6 @@ async function main() {
               'ocr.data': 1, 'ocr.updated_at': 1,
               'translation.data': 1, 'translation.updated_at': 1,
               'translation.source': 1, 'translation.edited_by': 1,
-              'translation.source_hash': 1,
               page_type: 1,
             },
           }
@@ -408,7 +407,7 @@ async function main() {
         const hasOcr = p.ocr?.data && p.ocr.data.length > 0;
         if (!hasOcr) return false;
         if (STALE_MODE) {
-          // Re-verify by hash before paying: the marker is a materialised
+          // Re-verify by the rule before paying: the marker is a materialised
           // verdict, and a page retranslated by a writer that forgot to clear
           // it must be healed here, not billed again.
           if (translationStaleness(p).stale) return true;

@@ -15,7 +15,6 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { markStaleAfterOcrWrite } from '../lib/translation-source.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -214,7 +213,6 @@ async function main() {
           console.warn(`  Page ${pageId} not found in DB!`);
           failCount++;
         } else {
-          await markStaleAfterOcrWrite(db, [{ id: pageId, text: ocrText }], { lane: 'batch_api', now }); // #4927
           successCount++;
         }
       }

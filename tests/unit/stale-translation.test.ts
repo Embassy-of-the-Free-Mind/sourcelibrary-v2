@@ -21,9 +21,10 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — scripts-side module, no types
-import { staleTranslationReason, withholdUpdate, restoreUpdate, WITHHOLD_REASONS, WITHHOLD_LANES, STALE_CANDIDATE_FILTER } from '../../scripts/lib/stale-translation.mjs';
-// @ts-expect-error — scripts-side module, no types
-import { sourceHash } from '../../scripts/lib/translation-source.mjs';
+import {
+  staleTranslationReason, translationStaleness, withholdUpdate, restoreUpdate,
+  WITHHOLD_REASONS, WITHHOLD_LANES, STALE_CANDIDATE_FILTER, STALE_MARGIN_MS, STALE_REASONS,
+} from '../../scripts/lib/stale-translation.mjs';
 
 const OCR_AT = new Date('2026-09-10T07:25:47Z');
 const BEFORE = new Date('2026-04-22T02:56:19Z');
@@ -46,22 +47,16 @@ describe('staleTranslationReason', () => {
     expect(staleTranslationReason(page({ translation: { data: 'New', updated_at: AFTER } }))).toBeNull();
   });
 
-  it('treats a translation written within the 60s margin of its OCR as fresh, and one 61s older as stale', () => {
+  it('treats a translation written within the margin of its OCR as fresh, and one just past it as stale', () => {
     // Same-run ordering (#4927): the collector writes ocr.updated_at and the
-    // translation lands seconds later in the same pass. Before the source hash
-    // existed a tie was read as stale; with the hash carrying the exact answer
-    // for every new write, the date arm only serves hash-less legacy pages and
-    // must not report ordinary pipeline ordering as staleness.
+    // translation lands seconds later in the same pass; the orchestrator's OCR
+    // and translate phases run minutes apart on the same book. That band is
+    // not staleness. The margin itself was set by reading the pages in each
+    // band (PR #4929), so this pins the constant's EDGE, not its value.
     expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: OCR_AT } }))).toBeNull();
-    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: new Date(OCR_AT.getTime() - 61_000) } })))
+    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: new Date(OCR_AT.getTime() - STALE_MARGIN_MS) } }))).toBeNull();
+    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: new Date(OCR_AT.getTime() - STALE_MARGIN_MS - 1) } })))
       .toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
-  });
-
-  it('decides by the source hash when the translation carries one — dates are then irrelevant', () => {
-    const fresh = page({ translation: { data: 'x', updated_at: BEFORE, source_hash: sourceHash('བོད་ཡིག') } });
-    expect(staleTranslationReason(fresh)).toBeNull();
-    const stale = page({ translation: { data: 'x', updated_at: AFTER, source_hash: sourceHash('older reading') } });
-    expect(staleTranslationReason(stale)).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
   });
 
   it('treats a MISSING translation date as stale, never as fresh', () => {
@@ -70,22 +65,39 @@ describe('staleTranslationReason', () => {
     // English.
     expect(staleTranslationReason(page({ translation: { data: 'x' } })))
       .toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    expect(translationStaleness(page({ translation: { data: 'x' } }))).toEqual({ stale: true, reason: STALE_REASONS.UNDATED });
   });
 
   it('falls back to edited_at when updated_at is absent', () => {
     expect(staleTranslationReason(page({ translation: { data: 'x', edited_at: AFTER } }))).toBeNull();
   });
 
-  it('no longer needs ocr.pipeline: any newer transcription makes the translation stale (#4927)', () => {
+  it('the staleness RULE is not gated on ocr.pipeline: any newer transcription makes the translation stale (#4927)', () => {
     // The `ocr.pipeline` gate made the rule blind to every lane but one — it
     // caught 0 of the 16,026 pages measured stale corpus-wide on 2026-09-18.
-    expect(staleTranslationReason(page({ ocr: { updated_at: OCR_AT, data: 'x' } })))
-      .toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    const noLane = page({ ocr: { updated_at: OCR_AT, data: 'x' } });
+    expect(translationStaleness(noLane)).toEqual({ stale: true, reason: STALE_REASONS.OCR_NEWER });
+    // …and a transcription with no date is older than anything made from it.
+    expect(translationStaleness(page({ ocr: { data: 'x' } }))).toEqual({ stale: false });
+    // A placeholder is not a translation, so it is never stale (never billed).
+    expect(translationStaleness(page({ translation: { data: '[Blank page]', source: 'skip', updated_at: BEFORE } }))).toEqual({ stale: false });
+    expect(translationStaleness(page({ translation: { data: '[Illustration page — no translatable content]', updated_at: BEFORE } }))).toEqual({ stale: false });
   });
 
-  it('withholding is per lane: the candidate filter names the lanes, the rule does not', () => {
+  it('withholding is per lane: stale + a lane in WITHHOLD_LANES withholds; stale alone only flags (Derek 2026-09-18: "don\'t withhold individual pages though")', () => {
     expect(WITHHOLD_LANES).toContain('reocr_bdrc_4523');
     expect(WITHHOLD_LANES).not.toContain('syriac-kraken-2026-09');
+    // The lane check lives in the VERDICT, not only in the candidate query, so a
+    // caller that reaches the verdict by another route (--loop-arm, the restore
+    // script, a book-scoped run) cannot widen what gets withheld.
+    const noLane = page({ ocr: { updated_at: OCR_AT, data: 'x' } });
+    expect(translationStaleness(noLane).stale).toBe(true);
+    expect(staleTranslationReason(noLane)).toBeNull();
+    const syriac = page({ ocr: { pipeline: 'syriac-kraken-2026-09', updated_at: OCR_AT, data: 'ܣܘܪܝܝܐ' } });
+    expect(translationStaleness(syriac).stale).toBe(true);
+    expect(staleTranslationReason(syriac)).toBeNull();
+    expect(staleTranslationReason(page())).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    // And the hourly sweep's candidate query is scoped to the same list.
     expect(STALE_CANDIDATE_FILTER.$or[0]).toEqual({ 'ocr.pipeline': { $in: [...WITHHOLD_LANES] } });
   });
 

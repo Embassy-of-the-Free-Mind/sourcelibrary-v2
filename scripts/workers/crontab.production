@@ -157,12 +157,12 @@
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
-# Stale-translation marker (#4927). OCR writers stamp `translation_stale` the
-# moment they replace text under a translation; this daily sweep re-derives the
-# verdict (translation.source_hash vs sha256(ocr.data)) for every page whose OCR
-# changed in the last 26h and for every page already carrying the marker, so a
-# writer that missed the stamp is caught within a day and a healed page is
-# cleared. Runs before the 08:00 health snapshot, which reports the count.
+# Stale-translation marker (#4927). This daily sweep re-derives the verdict
+# (ocr.updated_at newer than translation.updated_at beyond the margin) for every
+# page whose OCR changed in the last 26h and for every page already carrying the
+# marker, so a re-OCR'd page is flagged within a day and a retranslated page is
+# cleared. Flagging only — it never withholds; the hourly withhold sweep above
+# is scoped to WITHHOLD_LANES. Runs before the 08:00 health snapshot.
 # ACTUATION: the marker is read by translate-worker's page selection and by
 # realtime-translate.mjs --stale — both paid lanes behind the daily spend dial.
 30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
