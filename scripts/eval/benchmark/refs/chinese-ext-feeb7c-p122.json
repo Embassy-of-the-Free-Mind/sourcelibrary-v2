@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-feeb7c-p122",
+  "substratum": "woodblock-canon",
+  "title": "抱朴子內篇 (Baopuzi Neipian: Inner Chapters of the Master Who Embraces Simplicity) Vol 1",
+  "probe_chars": 170,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR5f0019",
+  "work_title": "抱朴子內篇--葛洪",
+  "juan": 6,
+  "url": "https://github.com/kanripo/KR5f0019/blob/master/KR5f0019_006.txt",
+  "etext_chars": 3484,
+  "window_chars": 184,
+  "overlap": 0.823
+}

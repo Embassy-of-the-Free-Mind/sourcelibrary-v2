@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-0e588a-p21",
+  "substratum": "skqs-manuscript",
+  "title": "御定淵鑑類函·卷一百四十一~卷一百四十三 (vol 81)",
+  "probe_chars": 273,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0055",
+  "work_title": "御定淵鑑類函-清-張英",
+  "juan": 146,
+  "url": "https://github.com/kanripo/KR3k0055/blob/WYG/KR3k0055_146.txt",
+  "etext_chars": 9524,
+  "window_chars": 282,
+  "overlap": 0.764
+}

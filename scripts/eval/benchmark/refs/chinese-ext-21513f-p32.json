@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-21513f-p32",
+  "substratum": "skqs-manuscript",
+  "title": "御定分類字錦·卷二十七 (vol 89)",
+  "probe_chars": 240,
+  "source": "Kanripo",
+  "work": "KR3k0057",
+  "work_title": "御定分類字錦-清-何焯",
+  "juan": "27",
+  "url": "https://github.com/kanripo/KR3k0057",
+  "etext_chars": 38160,
+  "window_chars": 255,
+  "overlap": 0.502
+}

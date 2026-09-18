@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-321834-p145",
+  "substratum": "woodblock-canon",
+  "title": "御纂醫宗金鑑",
+  "probe_chars": 141,
+  "source": "Kanripo",
+  "work": "KR3e0090",
+  "work_title": "御纂醫宗金鑑-清-吳謙",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR3e0090",
+  "etext_chars": 45236,
+  "window_chars": 198,
+  "overlap": 0.89
+}

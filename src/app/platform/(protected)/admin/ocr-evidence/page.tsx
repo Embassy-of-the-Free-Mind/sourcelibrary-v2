@@ -64,6 +64,7 @@ const SLICES: [string, string][] = [
   ['stratum', 'Sealed stratum'],
   ['substratum', 'Stratum × draw'],
   ['script_class', 'Observed script class'],
+  ['script_class_pooled', 'Script × observed class'],
 ];
 
 const GRADE_STYLE: Record<Grade, { color: string; background: string; mark: string }> = {

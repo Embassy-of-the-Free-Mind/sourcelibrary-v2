@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-8e4639-p82",
+  "substratum": "skqs-manuscript",
+  "title": "御定康熙字典·卷二十一 (vol 56)",
+  "probe_chars": 355,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1j0048",
+  "work_title": "御定康熙字典-清-張玉書",
+  "juan": 22,
+  "url": "https://github.com/kanripo/KR1j0048/blob/WYG/KR1j0048_022.txt",
+  "etext_chars": 70720,
+  "window_chars": 542,
+  "overlap": 0.799
+}

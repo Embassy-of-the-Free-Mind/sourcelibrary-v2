@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-0f0237-p77",
+  "substratum": "skqs-manuscript",
+  "title": "御定淵鑑類函·卷四十八 (vol 423)",
+  "probe_chars": 169,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0055",
+  "work_title": "御定淵鑑類函-清-張英",
+  "juan": 53,
+  "url": "https://github.com/kanripo/KR3k0055/blob/WYG/KR3k0055_053.txt",
+  "etext_chars": 16490,
+  "window_chars": 178,
+  "overlap": 0.723
+}

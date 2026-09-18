@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-ext-287ca6-p146",
+  "substratum": "woodblock-canon",
+  "title": "真誥 (卷一~卷四) — Zhen'gao (Declarations of the Perfected), vol.1",
+  "probe_chars": 493,
+  "source": "Kanripo",
+  "work": "KR5d0036",
+  "work_title": "真誥--陶弘景",
+  "juan": "1,2,3,4",
+  "url": "https://github.com/kanripo/KR5d0036",
+  "etext_chars": 22294,
+  "window_chars": 20,
+  "overlap": 0.002,
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

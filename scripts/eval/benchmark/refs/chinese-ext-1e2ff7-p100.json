@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1e2ff7-p100",
+  "substratum": "skqs-manuscript",
+  "title": "春秋左傳屬事·卷十五~卷十六 (vol 9)",
+  "probe_chars": 181,
+  "source": "Kanripo",
+  "work": "KR1e0084",
+  "work_title": "春秋左傳屬事-明-傅遜",
+  "juan": "15,16",
+  "url": "https://github.com/kanripo/KR1e0084",
+  "etext_chars": 36936,
+  "window_chars": 210,
+  "overlap": 0.87
+}

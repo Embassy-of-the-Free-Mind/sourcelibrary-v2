@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-49260b-p43",
+  "substratum": "skqs-manuscript",
+  "title": "春秋集傳纂例·卷五~卷六 (vol 3)",
+  "probe_chars": 146,
+  "source": "Kanripo",
+  "work": "KR1e0013",
+  "work_title": "春秋集傳纂例-唐-陸淳",
+  "juan": "5,6",
+  "url": "https://github.com/kanripo/KR1e0013",
+  "etext_chars": 18502,
+  "window_chars": 181,
+  "overlap": 0.944
+}

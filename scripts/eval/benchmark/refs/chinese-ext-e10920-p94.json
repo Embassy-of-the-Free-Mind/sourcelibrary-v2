@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-e10920-p94",
+  "substratum": "skqs-manuscript",
+  "title": "胡氏尚書詳解·卷三~卷五 (vol 2)",
+  "probe_chars": 161,
+  "source": "Kanripo",
+  "work": "KR1b0024",
+  "work_title": "胡氏尚書詳解-宋-胡士行",
+  "juan": "3,4,5",
+  "url": "https://github.com/kanripo/KR1b0024",
+  "etext_chars": 21031,
+  "window_chars": 176,
+  "overlap": 0.796
+}

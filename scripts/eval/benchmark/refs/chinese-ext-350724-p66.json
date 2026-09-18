@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-350724-p66",
+  "substratum": "skqs-manuscript",
+  "title": "御定佩文韻府·卷二之二 (vol 297)",
+  "probe_chars": 363,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0059",
+  "work_title": "御定佩文韻府-清-張玉書",
+  "juan": 14,
+  "url": "https://github.com/kanripo/KR3k0059/blob/master/KR3k0059_014.txt",
+  "etext_chars": 33057,
+  "window_chars": 368,
+  "overlap": 0.409
+}

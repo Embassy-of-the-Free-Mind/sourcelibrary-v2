@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-15e88e-p63",
+  "substratum": "skqs-manuscript",
+  "title": "御定淵鑑類函·卷一百九十三 (vol 247)",
+  "probe_chars": 176,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0055",
+  "work_title": "御定淵鑑類函-清-張英",
+  "juan": 198,
+  "url": "https://github.com/kanripo/KR3k0055/blob/WYG/KR3k0055_198.txt",
+  "etext_chars": 26833,
+  "window_chars": 183,
+  "overlap": 0.832
+}

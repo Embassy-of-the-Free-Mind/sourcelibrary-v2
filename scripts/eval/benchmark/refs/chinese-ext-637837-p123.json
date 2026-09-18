@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-637837-p123",
+  "substratum": "woodblock-canon",
+  "title": "本草綱目·卷十四",
+  "probe_chars": 327,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0079",
+  "work_title": "本草綱目-明-李時珍",
+  "juan": 41,
+  "url": "https://github.com/kanripo/KR3e0079/blob/WYG/KR3e0079_041.txt",
+  "etext_chars": 52727,
+  "window_chars": 425,
+  "overlap": 0.817
+}

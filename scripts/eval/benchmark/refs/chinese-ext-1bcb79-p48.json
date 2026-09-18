@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1bcb79-p48",
+  "substratum": "woodblock-canon",
+  "title": "營造法式 (Yingzao Fashi) · 卷五~卷九",
+  "probe_chars": 171,
+  "source": "Kanripo",
+  "work": "KR2m0056",
+  "work_title": "營造法式-宋-李誡",
+  "juan": "5,6,7,8,9",
+  "url": "https://github.com/kanripo/KR2m0056",
+  "etext_chars": 20627,
+  "window_chars": 204,
+  "overlap": 0.829
+}

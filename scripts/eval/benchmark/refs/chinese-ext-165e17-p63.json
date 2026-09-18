@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-ext-165e17-p63",
+  "substratum": "skqs-manuscript",
+  "title": "欽定叶韻彙輯·卷五~卷九 (vol 3)",
+  "probe_chars": 323,
+  "source": "Kanripo",
+  "work": "KR1j0076",
+  "work_title": "欽定叶韻彙輯-清-梁詩正",
+  "juan": "5,6,7,8,9",
+  "url": "https://github.com/kanripo/KR1j0076",
+  "etext_chars": 55181,
+  "window_chars": 483,
+  "overlap": 0,
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

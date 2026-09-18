@@ -563,7 +563,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Kanripo (SKQS witness, catalogue title + juan)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-482748-p102"
     },
     {
       "slug": "chinese-ext-9090c0-p123",
@@ -675,7 +677,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Kanripo (SKQS witness, catalogue title + juan)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-1d973a-p76"
     },
     {
       "slug": "chinese-ext-218e51-p32",
@@ -803,7 +807,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-f49c02-p62"
     },
     {
       "slug": "chinese-ext-e6c5d5-p580",
@@ -899,7 +905,9 @@
       "stored_ocr_chars": 645,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-db5e4a-p15"
     },
     {
       "slug": "chinese-ext-dbbedb-p66",
@@ -947,7 +955,9 @@
       "stored_ocr_chars": 355,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-db839c-p377"
     },
     {
       "slug": "chinese-ext-54c4ae-p83",
@@ -995,7 +1005,9 @@
       "stored_ocr_chars": 411,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-dbda81-p11"
     },
     {
       "slug": "chinese-ext-499e74-p14",
@@ -1059,7 +1071,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-4d10d9-p170"
     },
     {
       "slug": "chinese-ext-f49f20-p89",
@@ -1139,7 +1153,9 @@
       "stored_ocr_chars": 1046,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-1b5581-p24"
     },
     {
       "slug": "chinese-ext-db5ac3-p566",
@@ -1299,7 +1315,9 @@
       "stored_ocr_chars": 1020,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": false
+      "spare": false,
+      "retired": "textless",
+      "replaced_by": "chinese-ext-6384a8-p75"
     },
     {
       "slug": "chinese-ext-4d129c-p66",
@@ -1443,7 +1461,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-db6b4b-p46"
     },
     {
       "slug": "chinese-ext-db5e4a-p15",
@@ -1459,7 +1479,9 @@
       "stored_ocr_chars": 444,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-635d14-p18"
     },
     {
       "slug": "chinese-ext-db839c-p377",
@@ -1475,7 +1497,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-db9b22-p8"
     },
     {
       "slug": "chinese-ext-4d10d9-p170",
@@ -1491,7 +1515,9 @@
       "stored_ocr_chars": 493,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-63641a-p96"
     },
     {
       "slug": "chinese-ext-1b5581-p24",
@@ -1507,7 +1533,9 @@
       "stored_ocr_chars": 453,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-8f0fc6-p11"
     },
     {
       "slug": "chinese-ext-dbda81-p11",
@@ -1523,7 +1551,9 @@
       "stored_ocr_chars": 747,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-cf8ff4-p12"
     },
     {
       "slug": "chinese-ext-6384a8-p75",
@@ -1539,7 +1569,9 @@
       "stored_ocr_chars": 559,
       "multi_column_tag": false,
       "reference_plan": "CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)",
-      "spare": true
+      "spare": true,
+      "promoted": true,
+      "replaces": "chinese-ext-287ca6-p146"
     },
     {
       "slug": "chinese-ext-db824d-p44",

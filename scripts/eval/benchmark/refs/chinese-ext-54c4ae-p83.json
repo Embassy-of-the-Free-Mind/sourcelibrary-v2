@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-54c4ae-p83",
+  "substratum": "woodblock-canon",
+  "title": "夢溪筆談 (Mengxi Bitan: Dream Pool Essays) Vols 12-18",
+  "probe_chars": 124,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3j0092",
+  "work_title": "夢溪筆談-宋-沈括",
+  "juan": 17,
+  "url": "https://github.com/kanripo/KR3j0092/blob/master/KR3j0092_017.txt",
+  "etext_chars": 2862,
+  "window_chars": 123,
+  "overlap": 0.55
+}

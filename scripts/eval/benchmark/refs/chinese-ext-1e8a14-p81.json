@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1e8a14-p81",
+  "substratum": "skqs-manuscript",
+  "title": "聖濟總錄纂要·卷一 (vol 1)",
+  "probe_chars": 131,
+  "source": "Kanripo",
+  "work": "KR3e0027",
+  "work_title": "聖濟總錄纂要-宋-徽宗",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR3e0027",
+  "etext_chars": 14769,
+  "window_chars": 136,
+  "overlap": 0.695
+}

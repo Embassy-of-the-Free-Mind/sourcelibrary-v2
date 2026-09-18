@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-0f39db-p54",
+  "substratum": "woodblock-canon",
+  "title": "易象意言",
+  "probe_chars": 161,
+  "source": "Kanripo",
+  "work": "KR1a0053",
+  "work_title": "易象意言-宋-蔡淵",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1a0053",
+  "etext_chars": 8714,
+  "window_chars": 177,
+  "overlap": 0.769
+}
