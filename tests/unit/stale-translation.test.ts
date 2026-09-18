@@ -21,7 +21,9 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — scripts-side module, no types
-import { staleTranslationReason, withholdUpdate, restoreUpdate, WITHHOLD_REASONS } from '../../scripts/lib/stale-translation.mjs';
+import { staleTranslationReason, withholdUpdate, restoreUpdate, WITHHOLD_REASONS, WITHHOLD_LANES, STALE_CANDIDATE_FILTER } from '../../scripts/lib/stale-translation.mjs';
+// @ts-expect-error — scripts-side module, no types
+import { sourceHash } from '../../scripts/lib/translation-source.mjs';
 
 const OCR_AT = new Date('2026-09-10T07:25:47Z');
 const BEFORE = new Date('2026-04-22T02:56:19Z');
@@ -44,13 +46,22 @@ describe('staleTranslationReason', () => {
     expect(staleTranslationReason(page({ translation: { data: 'New', updated_at: AFTER } }))).toBeNull();
   });
 
-  it('treats an EQUAL timestamp as stale', () => {
-    // The applier writes ocr.updated_at and the translation worker writes
-    // translation.updated_at; a tie means the translation did not come after
-    // the new reading. Reading a tie as fresh keeps serving the fabrication,
-    // which is the failure this whole mechanism exists to stop.
-    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: OCR_AT } })))
+  it('treats a translation written within the 60s margin of its OCR as fresh, and one 61s older as stale', () => {
+    // Same-run ordering (#4927): the collector writes ocr.updated_at and the
+    // translation lands seconds later in the same pass. Before the source hash
+    // existed a tie was read as stale; with the hash carrying the exact answer
+    // for every new write, the date arm only serves hash-less legacy pages and
+    // must not report ordinary pipeline ordering as staleness.
+    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: OCR_AT } }))).toBeNull();
+    expect(staleTranslationReason(page({ translation: { data: 'x', updated_at: new Date(OCR_AT.getTime() - 61_000) } })))
       .toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+  });
+
+  it('decides by the source hash when the translation carries one — dates are then irrelevant', () => {
+    const fresh = page({ translation: { data: 'x', updated_at: BEFORE, source_hash: sourceHash('བོད་ཡིག') } });
+    expect(staleTranslationReason(fresh)).toBeNull();
+    const stale = page({ translation: { data: 'x', updated_at: AFTER, source_hash: sourceHash('older reading') } });
+    expect(staleTranslationReason(stale)).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
   });
 
   it('treats a MISSING translation date as stale, never as fresh', () => {
@@ -65,8 +76,17 @@ describe('staleTranslationReason', () => {
     expect(staleTranslationReason(page({ translation: { data: 'x', edited_at: AFTER } }))).toBeNull();
   });
 
-  it('leaves a page whose OCR no re-OCR lane touched alone', () => {
-    expect(staleTranslationReason(page({ ocr: { updated_at: OCR_AT, data: 'x' } }))).toBeNull();
+  it('no longer needs ocr.pipeline: any newer transcription makes the translation stale (#4927)', () => {
+    // The `ocr.pipeline` gate made the rule blind to every lane but one — it
+    // caught 0 of the 16,026 pages measured stale corpus-wide on 2026-09-18.
+    expect(staleTranslationReason(page({ ocr: { updated_at: OCR_AT, data: 'x' } })))
+      .toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+  });
+
+  it('withholding is per lane: the candidate filter names the lanes, the rule does not', () => {
+    expect(WITHHOLD_LANES).toContain('reocr_bdrc_4523');
+    expect(WITHHOLD_LANES).not.toContain('syriac-kraken-2026-09');
+    expect(STALE_CANDIDATE_FILTER.$or[0]).toEqual({ 'ocr.pipeline': { $in: [...WITHHOLD_LANES] } });
   });
 
   it('flags a translation of a transcription flagged unreadable', () => {
@@ -119,7 +139,7 @@ describe('withholdUpdate / restoreUpdate', () => {
     // by any test. This is that test.
     const now = new Date('2026-09-12T10:00:00Z');
     const u = withholdUpdate(page(), WITHHOLD_REASONS.STALE_AFTER_REOCR, now);
-    expect(u.$unset).toEqual({ translation: '' });
+    expect(u.$unset).toEqual({ translation: '', translation_stale: '' });
     expect(u.$set.translation_withheld).toMatchObject({
       model: 'gemini-3.1-flash-lite-preview',
       updated_at: BEFORE,

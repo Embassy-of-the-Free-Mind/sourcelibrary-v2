@@ -16,10 +16,15 @@
  * A page's stored translation is STALE when it was made from a transcription
  * the page no longer serves. Two arms, and a page is stale if either holds:
  *
- *   1. `stale_after_reocr` — the OCR was rewritten by a re-OCR lane
- *      (`ocr.pipeline` is set) and `translation.updated_at` is not newer than
- *      `ocr.updated_at`. The English on screen is a translation of text that
- *      was deleted; #4523 put 65,129 pages into this state on 2026-09-10.
+ *   1. `stale_after_reocr` — the transcription the translation was made from
+ *      is no longer the one the page holds. Decided by
+ *      `translationStaleness()` (`translation-source.mjs`, #4927): the stored
+ *      `translation.source_hash` against sha256(`ocr.data`) when the hash is
+ *      present, the timestamps with a 60s margin when it is not. The English
+ *      on screen is a translation of text that was deleted; #4523 put 65,129
+ *      pages into this state on 2026-09-10. (Until #4927 this arm was gated on
+ *      `ocr.pipeline`, which only one lane ever stamps — it caught 0 of the
+ *      16,026 pages measured stale corpus-wide.)
  *   2. `ocr_unreadable` — the transcription is flagged `ocr.unreadable`, so the
  *      reader already withholds it as untrustworthy, but a translation OF that
  *      untrustworthy text is still stored. The reader withholds both panes;
@@ -55,6 +60,7 @@
  */
 
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { translationStaleness, STALE_FIELD } from './translation-source.mjs';
 
 /** Is this page's transcription a degeneration loop? The #4850 gate's own verdict. */
 function isDegenerateSource(ocrText) {
@@ -85,8 +91,19 @@ export const STALE_PREDICATE_PROJECTION = {
   'ocr.data': 1,
   'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
   'translation.updated_at': 1, 'translation.edited_at': 1,
+  'translation.source_hash': 1, 'translation.source': 1,
   translation_withheld: 1,
 };
+
+/**
+ * Re-OCR lanes whose stale translations are WITHHELD by the hourly sweep.
+ * Withholding is a per-lane decision, not a property of staleness: Derek,
+ * 2026-09-18, on the Syriac Kraken lane (#4883) — "don't withhold individual
+ * pages though". Its disposition is re-translation (#4927), so it stamps
+ * `ocr.pipeline` for provenance and is deliberately NOT in this list. Add a
+ * lane here only when its pages should go dark until retranslated.
+ */
+export const WITHHOLD_LANES = Object.freeze(['reocr_bdrc_4523']);
 
 /**
  * A Mongo filter that is a SUPERSET of the stale set — it selects every page
@@ -98,7 +115,7 @@ export const STALE_PREDICATE_PROJECTION = {
  */
 export const STALE_CANDIDATE_FILTER = {
   $or: [
-    { 'ocr.pipeline': { $exists: true } },
+    { 'ocr.pipeline': { $in: [...WITHHOLD_LANES] } },
     { 'ocr.unreadable': true },
   ],
 };
@@ -143,16 +160,12 @@ export function staleTranslationReason(page) {
   // Self-healing like the other two arms: re-OCR the page and it stops holding.
   if (isDegenerateSource(page?.ocr?.data)) return WITHHOLD_REASONS.SOURCE_LOOP;
 
-  if (page?.ocr?.pipeline) {
-    const ocrAt = toTime(page.ocr.updated_at);
-    const trAt = toTime(tr?.updated_at ?? tr?.edited_at);
-    // No translation date at all means it predates date-stamping, which puts it
-    // years before any re-OCR lane. Treat missing as old, never as fresh — the
-    // failure we are guarding is serving invented English, and guessing "fresh"
-    // is the guess that keeps serving it.
-    if (trAt === null) return WITHHOLD_REASONS.STALE_AFTER_REOCR;
-    if (ocrAt !== null && trAt <= ocrAt) return WITHHOLD_REASONS.STALE_AFTER_REOCR;
-  }
+  // Arm 1 (#4927): hash when present, timestamps with a margin when not. A
+  // missing translation date still counts as old, never as fresh — the failure
+  // we are guarding is serving invented English, and guessing "fresh" is the
+  // guess that keeps serving it. Not gated on `ocr.pipeline` any more: which
+  // lanes get WITHHELD is `STALE_CANDIDATE_FILTER`'s business, not the rule's.
+  if (translationStaleness(page).stale) return WITHHOLD_REASONS.STALE_AFTER_REOCR;
   return null;
 }
 
@@ -169,12 +182,6 @@ export function staleTranslationReason(page) {
 export function translationText(tr) {
   if (typeof tr === 'string') return tr;
   return typeof tr?.data === 'string' ? tr.data : '';
-}
-
-function toTime(v) {
-  if (!v) return null;
-  const t = v instanceof Date ? v.getTime() : new Date(v).getTime();
-  return Number.isFinite(t) ? t : null;
 }
 
 /**
@@ -197,7 +204,8 @@ export function withholdUpdate(page, reason, now = new Date()) {
       translation_withheld: { ...obj, reason, withheld_at: now, chars: text.length },
       updated_at: now,
     },
-    $unset: { translation: '' },
+    // The stale marker (#4927) describes a translation that is no longer here.
+    $unset: { translation: '', [STALE_FIELD]: '' },
   };
 }
 
