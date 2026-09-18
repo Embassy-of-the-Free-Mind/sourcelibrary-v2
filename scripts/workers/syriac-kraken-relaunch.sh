@@ -33,6 +33,11 @@ for ((s = 0; s < SHARDS; s++)); do
   fi
 done
 
+# Reading and writing are separable: SYRIAC_KRAKEN_NO_APPLY=1 (or a NO_APPLY file in DIR)
+# keeps the shards reading while the apply pass waits — e.g. for the translation-staleness
+# writer (#4927) to land, so re-read pages are flagged for re-translation the moment they land.
+if [ -n "${SYRIAC_KRAKEN_NO_APPLY:-}" ] || [ -f "$DIR/NO_APPLY" ]; then echo "$(date -Is) apply held (NO_APPLY)"; exit 0; fi
+
 # apply + release under their own lock so two cron ticks never apply the same book twice
 flock -n "$DIR/apply.lock" bash -c "
   node --env-file=$ENV $LANE apply --apply --dir $DIR >> $DIR/apply.log 2>&1
