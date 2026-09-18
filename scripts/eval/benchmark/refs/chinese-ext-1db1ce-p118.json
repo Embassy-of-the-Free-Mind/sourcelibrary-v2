@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1db1ce-p118",
+  "substratum": "skqs-manuscript",
+  "title": "三家詩拾遺·卷三~卷七 (vol 2)",
+  "probe_chars": 120,
+  "source": "Kanripo",
+  "work": "KR1c0062",
+  "work_title": "三家詩拾遺-清-范家相",
+  "juan": "3,4,5,6,7",
+  "url": "https://github.com/kanripo/KR1c0062",
+  "etext_chars": 16691,
+  "window_chars": 160,
+  "overlap": 0.635
+}

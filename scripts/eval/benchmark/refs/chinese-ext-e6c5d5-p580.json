@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-e6c5d5-p580",
+  "substratum": "woodblock-canon",
+  "title": "雲笈七籤 (全122卷) — Yunji qiqian, complete 122 juan",
+  "probe_chars": 303,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR5d0055",
+  "work_title": "雲笈七籤-唐-張君房",
+  "juan": 22,
+  "url": "https://github.com/kanripo/KR5d0055/blob/master/KR5d0055_022.txt",
+  "etext_chars": 6321,
+  "window_chars": 319,
+  "overlap": 0.816
+}

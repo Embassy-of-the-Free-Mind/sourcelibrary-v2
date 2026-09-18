@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-d9f7a0-p109",
+  "substratum": "woodblock-canon",
+  "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2",
+  "probe_chars": 230,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0090",
+  "work_title": "御纂醫宗金鑑-清-吳謙",
+  "juan": 19,
+  "url": "https://github.com/kanripo/KR3e0090/blob/WYG/KR3e0090_019.txt",
+  "etext_chars": 37500,
+  "window_chars": 302,
+  "overlap": 0.7
+}

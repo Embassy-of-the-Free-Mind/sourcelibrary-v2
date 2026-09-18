@@ -1,0 +1,17 @@
+{
+  "slug": "chinese-ext-4d0d40-p61",
+  "substratum": "woodblock-canon",
+  "title": "本草綱目·卷四十七~卷四十八",
+  "probe_chars": 43,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0079",
+  "work_title": "本草綱目-明-李時珍",
+  "juan": 27,
+  "url": "https://github.com/kanripo/KR3e0079/blob/WYG/KR3e0079_027.txt",
+  "etext_chars": 793,
+  "window_chars": 20,
+  "overlap": 0.075,
+  "reason": "overlap 0.07 < 0.35: page is not (cleanly) in this e-text"
+}

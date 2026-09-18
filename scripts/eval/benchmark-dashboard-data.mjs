@@ -125,6 +125,8 @@ const cellKeys = r => {
   const k = [['stratum', r.stratum]];
   if (r.substratum) k.push(['substratum', `${r.stratum} / ${r.substratum}`]);
   if (r.script_class) k.push(['script_class', `${r.stratum} / ${r.script_class}`]);
+  // Pooled across strata by OBSERVED class (#4925: chinese + chinese-ext both hold Siku Quanshu manuscript).
+  if (r.script && r.script_class) k.push(['script_class_pooled', `${r.script} / ${r.script_class}`]);
   // Pooled ACROSS strata and reference tiers (each book is drawn once, so pooling adds books):
   if (r.script) k.push(['script', r.script]);
   if (r.language) k.push(['language', r.language]);

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1bccbb-p76",
+  "substratum": "woodblock-canon",
+  "title": "營造法式 (Yingzao Fashi) · 卷十五~卷十九",
+  "probe_chars": 116,
+  "source": "Kanripo",
+  "work": "KR2m0056",
+  "work_title": "營造法式-宋-李誡",
+  "juan": "15,16,17,18,19",
+  "url": "https://github.com/kanripo/KR2m0056",
+  "etext_chars": 14882,
+  "window_chars": 170,
+  "overlap": 0.5
+}

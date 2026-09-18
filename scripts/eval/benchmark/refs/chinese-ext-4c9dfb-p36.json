@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-4c9dfb-p36",
+  "substratum": "woodblock-canon",
+  "title": "神仙傳",
+  "probe_chars": 174,
+  "source": "Kanripo",
+  "work": "KR5c0317",
+  "work_title": "神仙傳-晉-葛洪",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR5c0317",
+  "etext_chars": 2669,
+  "window_chars": 183,
+  "overlap": 0.906
+}

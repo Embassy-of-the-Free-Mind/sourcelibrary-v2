@@ -62,6 +62,26 @@ const MS_RE = /manuscript|\bMS\b|codex|palimpsest|lectionary|\bmss\b/i;
 // multi-column tag (#4800 asks for ≥5 multi-column pages per Latin stratum).
 const ZH = { language: /^(Chinese|Classical Chinese|Literary Chinese)$/i, pages_count: { $gt: 5 } };
 const BUDDHIST_RE = /佛|般若|菩薩|陀羅尼|華嚴|法華|楞嚴|楞伽|金剛|阿含|大藏|禪|涅槃|起信|淨土|地藏|藥師|觀音|sutra|sūtra/;
+// Wenyuange Siku Quanshu volumes as imported: no contributing library and a "(vol N)" title
+// suffix (13,117 Chinese books on 2026-09-18, 11,980 of them this shape). They are regular-script
+// BRUSH MANUSCRIPT, not woodblock print — a different class for any engine decision.
+const isSkqs = b => !b.contributing_library && /\(vol \d+\)/.test(b.title || '');
+// Exact Kanripo catalogue title (KR-Catalog, fetched by the specialist run into
+// ~/.claude/jobs/417569c5/tmp/refs/kanripo; --kanripo-catalog=<dir> to point elsewhere). Without
+// the catalogue the woodblock-canon draw falls back to Buddhist titles only, and says so.
+const KANRIPO_DIR = args['kanripo-catalog'] || path.join(process.env.HOME || '', '.claude/jobs/417569c5/tmp/refs/kanripo');
+let kanripoTitles = null;
+function kanripoExact(title) {
+  if (kanripoTitles === null) {
+    kanripoTitles = new Set();
+    if (fs.existsSync(KANRIPO_DIR)) {
+      for (const f of fs.readdirSync(KANRIPO_DIR).filter(f => /^KR\d[a-z]\.txt$/.test(f))) for (const line of fs.readFileSync(path.join(KANRIPO_DIR, f), 'utf8').split('\n')) { const m = line.match(/^\*\*\* (KR\w+) (.+)$/); if (m) kanripoTitles.add(m[2].split('-')[0].trim()); }
+      console.log(`  kanripo catalogue: ${kanripoTitles.size} titles`);
+    } else console.log(`  ! kanripo catalogue not found at ${KANRIPO_DIR} — woodblock-canon draws Buddhist titles only`);
+  }
+  const base = String(title || '').split('·')[0].split('(')[0].split(' ')[0].replace(/[（(].*$/, '').trim();
+  return base.length >= 2 && kanripoTitles.has(base);
+}
 // Book ids already sealed in another stratum's registry (so an extension never re-draws them).
 const sealedBooks = (name) => { const f = path.join(__dirname, 'benchmark', `${name}.json`); return new Set(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).pages.map(p => p.book_id) : []); };
 export const STRATA = {
@@ -82,6 +102,18 @@ export const STRATA = {
   // routing decision. Same rule, its own seed, books already in japanese.json excluded.
   'japanese-ext': { issue: 4745, seed: 47451, subs: [
     { name: 'pre-1868-ext', n: 120, spares: 10, filter: { language: /^Japanese/i, pages_count: { $gt: 3 } }, pick: b => inRange(1500, 1868)(b) && !sealedBooks('japanese').has(b.id), reference: 'agreement + invention (no aligned e-text); NDL v3 vs both Gemini arms' },
+  ] },
+  // Extension (2026-09-18, #4925 step 1): the 40-page Chinese cell has 28 referenced books; the
+  // Paddle cost-lane decision (#4743) needs ≥ 50 per CLASS, and the sealed cell mixes two classes
+  // the catalogue does not separate — Siku Quanshu volumes are brush manuscript (≈ 90 % of our
+  // Chinese books by count), the Buddhist-canon and library scans are woodblock print. Two
+  // sub-strata, each drawn only from books a canon e-text can reference (Kanripo's SKQS witness;
+  // CBETA for Buddhist titles; Kanripo exact catalogue title otherwise), because a page without a
+  // reference cannot enter the cell (#4925 rule). Classified by eye after export
+  // (observed_class: manuscript | woodblock | movable-type | modern-typeset).
+  'chinese-ext': { issue: 4925, seed: 47431, subs: [
+    { name: 'skqs-manuscript', n: 40, spares: 8, filter: ZH, pick: b => isSkqs(b) && !sealedBooks('chinese').has(b.id), reference: 'Kanripo (SKQS witness, catalogue title + juan)' },
+    { name: 'woodblock-canon', n: 40, spares: 8, filter: ZH, pick: b => !isSkqs(b) && !sealedBooks('chinese').has(b.id) && (BUDDHIST_RE.test(b.title || '') || kanripoExact(b.title)), reference: 'CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)' },
   ] },
   syriac: { issue: 4746, seed: 4746, subs: [
     { name: 'manuscript', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: b => { const y = yearOf(b.published); return y == null || y < 1500; }, reference: 'agreement + invention' },

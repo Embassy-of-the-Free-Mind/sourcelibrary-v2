@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-0eb8aa-p52",
+  "substratum": "skqs-manuscript",
+  "title": "御定淵鑑類函·卷四百二十三~卷四百二十四 (vol 231)",
+  "probe_chars": 150,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0055",
+  "work_title": "御定淵鑑類函-清-張英",
+  "juan": 428,
+  "url": "https://github.com/kanripo/KR3k0055/blob/WYG/KR3k0055_428.txt",
+  "etext_chars": 13225,
+  "window_chars": 161,
+  "overlap": 0.612
+}

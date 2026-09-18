@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-dbd9c7-p155",
+  "substratum": "woodblock-canon",
+  "title": "鬳齋考工記解",
+  "probe_chars": 237,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1d0011",
+  "work_title": "鬳齋考工記解-宋-林希逸",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR1d0011/blob/WYG/KR1d0011_002.txt",
+  "etext_chars": 21653,
+  "window_chars": 249,
+  "overlap": 0.667
+}

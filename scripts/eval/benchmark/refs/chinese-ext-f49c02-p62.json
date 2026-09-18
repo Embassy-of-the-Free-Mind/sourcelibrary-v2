@@ -1,0 +1,17 @@
+{
+  "slug": "chinese-ext-f49c02-p62",
+  "substratum": "woodblock-canon",
+  "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 13 of 24) — Shao Yong Neo-Confucian cosmic numerology, Siku Quanshu",
+  "probe_chars": 90,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3g0005",
+  "work_title": "皇極經世書-宋-邵雍",
+  "juan": 4,
+  "url": "https://github.com/kanripo/KR3g0005/blob/WYG/KR3g0005_004.txt",
+  "etext_chars": 19645,
+  "window_chars": 21,
+  "overlap": 0.023,
+  "reason": "overlap 0.02 < 0.35: page is not (cleanly) in this e-text"
+}

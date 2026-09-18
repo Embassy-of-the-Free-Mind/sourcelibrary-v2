@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1daf5d-p62",
+  "substratum": "woodblock-canon",
+  "title": "三因極一病證方論·卷一~卷三",
+  "probe_chars": 158,
+  "source": "Kanripo",
+  "work": "KR3e0041",
+  "work_title": "三因極一病證方論-宋-陳言",
+  "juan": "1,2,3",
+  "url": "https://github.com/kanripo/KR3e0041",
+  "etext_chars": 24753,
+  "window_chars": 198,
+  "overlap": 0.71
+}

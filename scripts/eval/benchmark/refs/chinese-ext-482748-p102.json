@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-482748-p102",
+  "substratum": "skqs-manuscript",
+  "title": "周易觀彖·卷九~卷十 (vol 5)",
+  "probe_chars": 162,
+  "source": "Kanripo",
+  "work": "KR1a0133",
+  "work_title": "周易觀彖-清-李光地",
+  "juan": "9,10",
+  "url": "https://github.com/kanripo/KR1a0133",
+  "etext_chars": 16060,
+  "window_chars": 206,
+  "overlap": 0.838
+}

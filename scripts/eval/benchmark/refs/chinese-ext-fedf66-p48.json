@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-ext-fedf66-p48",
+  "substratum": "woodblock-canon",
+  "title": "欽定儀象考成 (Imperial Astronomical Instruments Survey) Vols 1-3",
+  "probe_chars": 126,
+  "source": "Kanripo",
+  "work": "KR3f0020",
+  "work_title": "欽定儀象考成-清-允祿",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR3f0020",
+  "etext_chars": 13541,
+  "window_chars": 20,
+  "overlap": 0.031,
+  "reason": "overlap 0.03 < 0.35: page is not (cleanly) in this e-text"
+}

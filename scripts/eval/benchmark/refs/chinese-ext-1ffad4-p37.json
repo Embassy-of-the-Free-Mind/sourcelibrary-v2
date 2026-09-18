@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1ffad4-p37",
+  "substratum": "skqs-manuscript",
+  "title": "易纂言外翼·卷四~卷六 (vol 2)",
+  "probe_chars": 162,
+  "source": "Kanripo",
+  "work": "KR1a0072",
+  "work_title": "易纂言外翼-元-吳澄",
+  "juan": "4,5,6",
+  "url": "https://github.com/kanripo/KR1a0072",
+  "etext_chars": 18881,
+  "window_chars": 175,
+  "overlap": 0.919
+}

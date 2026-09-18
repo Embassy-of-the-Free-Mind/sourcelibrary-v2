@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-4d10d9-p170",
+  "substratum": "woodblock-canon",
+  "title": "本草綱目·卷五十一上~卷五十一下",
+  "probe_chars": 225,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0079",
+  "work_title": "本草綱目-明-李時珍",
+  "juan": 120,
+  "url": "https://github.com/kanripo/KR3e0079/blob/WYG/KR3e0079_120.txt",
+  "etext_chars": 19156,
+  "window_chars": 245,
+  "overlap": 0.73
+}
