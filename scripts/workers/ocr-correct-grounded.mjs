@@ -48,6 +48,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { normalizeLongS, isCorrectionAcceptable, detectLongSArtefacts } from '../lib/early-modern-text.mjs';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 
 const argv = process.argv.slice(2);
 const flag = k => argv.includes(k);
@@ -137,6 +138,12 @@ async function correctPage(page, bookId) {
   const finish = r.candidates?.[0]?.finishReason;
   let text = (r.text || '').trim();
   if (!text) return { skip: `empty output (${finish})`, finish };
+  // A correction the provider cut off is half a page, and this lane OVERWRITES
+  // the MinerU text it was correcting — so a truncation here does not merely
+  // store a stub, it destroys the reading it replaced (#4890).
+  if (isTruncatedCandidate({ finishReason: finish })) {
+    return { skip: `${truncationFailReason({ finishReason: finish })} (${text.length} chars)`, finish };
+  }
   // The model does not reliably honour the ſ instruction — normalise deterministically.
   text = normalizeLongS(text);
   const verdict = isCorrectionAcceptable(text, before);

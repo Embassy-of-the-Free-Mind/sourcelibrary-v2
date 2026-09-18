@@ -34,6 +34,7 @@
 import { MongoClient } from 'mongodb';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 import {
   getTranslateModelForBook,
   loadTranslationPrompts,
@@ -121,10 +122,14 @@ async function callGemini(promptText, apiKey, model) {
   }
 
   const result = await response.json();
-  const text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const candidate = result.candidates?.[0];
+  const text = candidate?.content?.parts?.[0]?.text || '';
   const usage = result.usageMetadata || {};
   return {
     text,
+    // Returned so the caller can tell a finished translation from a cut-off one.
+    // Discarding it is how a half-page reached readers as the whole page (#4890).
+    finishReason: candidate?.finishReason || null,
     usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: outputTokensFrom(usage) },
   };
 }
@@ -215,6 +220,17 @@ async function processBook(book, pages, prompts, db, globalStats) {
       const durationMs = Date.now() - startTime;
 
       if (!result.text || result.text.length < 5) {
+        bookSkipped++;
+        globalStats.skipped++;
+        previousTranslation = null;
+        continue;
+      }
+
+      // Truncation guard (#4890): the provider says this answer was cut off.
+      // A partial translation is a failed one — storing it publishes half a page
+      // as the whole of it, and nothing downstream can tell the difference.
+      if (isTruncatedCandidate({ finishReason: result.finishReason })) {
+        console.warn(`  page ${page.page_number}: ${truncationFailReason({ finishReason: result.finishReason })} — refusing (${result.text.length} chars)`);
         bookSkipped++;
         globalStats.skipped++;
         previousTranslation = null;

@@ -13,6 +13,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
@@ -146,15 +147,23 @@ async function main() {
         failCount++;
         continue;
       }
-      const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const candidate = result.response?.candidates?.[0];
+      const text = candidate?.content?.parts?.[0]?.text;
       if (!text) {
         console.warn(`  Response ${ri}: empty`);
         failCount++;
         continue;
       }
       const usage = result.response?.usageMetadata;
-      const parsed = parseMultiPageOcr(text, { lenient: true });
-      console.log(`  Response ${ri}: ${parsed.size} pages`);
+      const parsed = [...parseMultiPageOcr(text, { lenient: true })];
+      console.log(`  Response ${ri}: ${parsed.length} pages`);
+      // A truncated generation cuts the LAST page mid-word; the pages before it
+      // are complete. Drop only the tail (#4890).
+      if (isTruncatedCandidate(candidate) && parsed.length > 0) {
+        const [droppedId] = parsed.pop();
+        console.warn(`  Response ${ri}: TRUNCATED (${candidate.finishReason}) — dropping partial tail page ${droppedId}`);
+        failCount++;
+      }
 
       for (const [pageId, ocrText] of parsed) {
         if (ocrText.length > 25000) {
