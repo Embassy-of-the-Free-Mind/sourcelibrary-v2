@@ -321,7 +321,12 @@ async function main() {
         advanceSkipped++;
       }
     }
-    await db.collection('books').updateOne({ id: bookId }, { $set: set });
+    // A page arriving is proof the source was reachable, so any archive_stall on this
+    // book is now false. Nothing else clears that flag: the watchdog only ever SETS it,
+    // and 4,048 books were parked behind it (#4872), 618 of them already fully archived.
+    // A flag no writer can clear records history and is read as state.
+    const update = { $set: set, $unset: { 'pipeline_auto.archive_stall': '' } };
+    await db.collection('books').updateOne({ id: bookId }, update);
     synced++;
   }
   console.log(`[archive-iiif] synced ${synced} books, advanced ${advanced} to archive_complete` +
