@@ -92,7 +92,8 @@ const now = () => new Date().toISOString();
 // ── Lane 1: stored value → canonical class ──────────────────────────────────
 if (LANE === 'stored' || LANE === 'all') {
   const q = { ...scope };
-  if (!FORCE) q['image_source.rights_normalized'] = { $exists: false };
+  // --force re-folds only what THIS lane wrote; it never clobbers a manifest read
+  q[FORCE ? 'image_source.rights_normalized.source' : 'image_source.rights_normalized'] = FORCE ? { $in: ['importer-license-field', null] } : { $exists: false };
   const cursor = books.find(q, { projection: { id: 1, image_source: 1 } });
   let n = 0, written = 0;
   const ops = [];

@@ -62,6 +62,9 @@ const URI_RULES = [
   [/rightsstatements\.org\/vocab\/NoC-OKLR\//i, 'public-domain'],
   [/rightsstatements\.org\/vocab\/NoC-NC\//i, 'noc-nc'],
   [/rightsstatements\.org\/vocab\/(InC|InC-EDU|InC-NC|InC-OW-EU|InC-RUU)\//i, 'in-copyright'],
+  // "Copyright Not Evaluated" / "Undetermined" are STATED unknowns — a class of unknown, never in-copyright
+  // (18 IA items carried CNE and the copyright-only prose rule would have read them as InC).
+  [/rightsstatements\.org\/vocab\/(CNE|UND)\//i, 'unknown'],
   [/creativecommons\.org\/licenses\/by-nc-sa\//i, 'cc-by-nc-sa'],
   [/creativecommons\.org\/licenses\/by-nc-nd\//i, 'cc-by-nc-nd'],
   [/creativecommons\.org\/licenses\/by-nc\//i, 'cc-by-nc'],
