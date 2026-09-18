@@ -232,7 +232,17 @@ async function main() {
   let idx = 0, archived = 0, failed = 0, totalBytes = 0, consecutiveFails = 0;
   const touchedBookIds = new Set();
   const BOOK_404_THRESHOLD = 5;
-  const bookFails = new Map();
+  // Any other error, BOOK_FAIL_THRESHOLD times in a row on one book, skips that book for
+  // the rest of THIS run only (nothing is written — a tile-stitch refusal or a slow host
+  // may succeed next time). Without this, pages are queued book by book with the
+  // nearly-finished books first, so one poison book at the head of the queue trips the
+  // global breaker every cycle and the whole lane archives nothing, forever. Measured
+  // 2026-09-18: the iiif lane had 20,000 pages across 77 books queued and archived 0 per
+  // cycle for days, because three books whose server returns 1045-px tiles when asked for
+  // 1024 sorted first. The breaker is for a host or network going down; one book is not that.
+  const BOOK_FAIL_THRESHOLD = 5;
+  const bookFails = new Map();   // consecutive failures of any kind, per book
+  const book404s = new Map();    // consecutive 404s, per book — the persisted skip, unchanged
   const skippedBooks = new Set();
 
   async function worker() {
@@ -264,15 +274,24 @@ async function main() {
           },
         });
         archived++; totalBytes += master.buffer.byteLength; touchedBookIds.add(page.book_id);
-        consecutiveFails = 0; bookFails.delete(page.book_id);
+        consecutiveFails = 0; bookFails.delete(page.book_id); book404s.delete(page.book_id);
       } catch (err) {
         failed++; consecutiveFails++;
         if (failed <= 8) console.log(`  FAIL ${page.book_id}/${page.page_number}: ${(err.message || '').slice(0, 80)}`);
+        const n = (bookFails.get(page.book_id) || 0) + 1;
+        bookFails.set(page.book_id, n);
+        if (!(err.message || '').includes('HTTP 404') && n >= BOOK_FAIL_THRESHOLD && !skippedBooks.has(page.book_id)) {
+          skippedBooks.add(page.book_id);
+          // Credit the breaker back: these failures were one book's, not the host's.
+          consecutiveFails = Math.max(0, consecutiveFails - n);
+          console.log(`  [BOOK-SKIP-RUN] ${page.book_id}: ${n} consecutive failures (${(err.message || '').slice(0, 60)}) — skipped for this run, pages left untouched`);
+        }
         if ((err.message || '').includes('HTTP 404')) {
-          const n = (bookFails.get(page.book_id) || 0) + 1;
-          bookFails.set(page.book_id, n);
-          if (n >= BOOK_404_THRESHOLD && !skippedBooks.has(page.book_id)) {
+          const n404 = (book404s.get(page.book_id) || 0) + 1;
+          book404s.set(page.book_id, n404);
+          if (n404 >= BOOK_404_THRESHOLD && !skippedBooks.has(page.book_id)) {
             skippedBooks.add(page.book_id);
+            consecutiveFails = Math.max(0, consecutiveFails - n404);   // one book's 404s, not the host's
             const res = await db.collection('pages').updateMany(
               { book_id: page.book_id, $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }] },
               { $set: { archived_photo: 'failed:source-not-found (5+ consecutive 404s)', updated_at: new Date() } }
