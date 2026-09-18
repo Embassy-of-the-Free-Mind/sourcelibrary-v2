@@ -18,6 +18,7 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -275,6 +276,7 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokensFrom(usage),
                 updated_at: now,
               },
+              $unset: CLEAR_STALE_UNSET,
             },
           }
         });
@@ -552,3 +554,4 @@ async function updateBookCounts(db, bookId) {
 }
 
 run().catch(err => { console.error(err); process.exit(1); });
+

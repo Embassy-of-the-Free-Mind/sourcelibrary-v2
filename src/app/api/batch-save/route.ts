@@ -5,6 +5,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const maxDuration = 300;
 
@@ -152,6 +153,7 @@ export const POST = withAuth(async (request, session) => {
                   },
                   updated_at: now,
                 },
+                $unset: CLEAR_STALE_UNSET,
               }
             );
           }

@@ -12,6 +12,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
 import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -235,6 +236,10 @@ export async function POST(request: NextRequest) {
                     'ocr.prompt_hash': result.promptRef.content_hash,
                     'ocr.prompt_name': result.promptRef.name,
                     'ocr.processed_at': new Date(),
+                    // The clock translation staleness is decided from (#4927). This
+                    // was the one live writer that replaced the text without it —
+                    // found by tests/unit/ocr-write-stamps-updated-at.test.ts.
+                    'ocr.updated_at': new Date(),
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
                     ...(pageType && { page_type: pageType }),
@@ -304,6 +309,7 @@ export async function POST(request: NextRequest) {
                     },
                     ...translationMeta,
                   },
+                  $unset: CLEAR_STALE_UNSET,
                 }
               );
 

@@ -103,6 +103,7 @@ export const POST = withAuth(async (request, session, context) => {
     }
     if (clearTranslation) {
       unsetFields['translation.data'] = '';
+      unsetFields['translation_stale'] = ''; // #4927: nothing left to be stale
       unsetFields['translation.updated_at'] = '';
       unsetFields['translation.model'] = '';
       unsetFields['translation.prompt'] = '';

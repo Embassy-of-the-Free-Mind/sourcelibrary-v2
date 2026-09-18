@@ -32,6 +32,7 @@ import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 
@@ -718,6 +719,7 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokens,
                 updated_at: now,
               },
+              $unset: CLEAR_STALE_UNSET,
             },
           },
         });
@@ -1696,3 +1698,4 @@ async function cleanupStaleFiles() {
 }
 
 run().then(() => cleanupStaleFiles()).catch(err => { console.error(err); process.exit(1); });
+
