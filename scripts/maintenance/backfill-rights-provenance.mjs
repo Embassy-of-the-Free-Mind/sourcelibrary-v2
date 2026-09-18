@@ -93,7 +93,7 @@ const now = () => new Date().toISOString();
 if (LANE === 'stored' || LANE === 'all') {
   const q = { ...scope };
   // --force re-folds only what THIS lane wrote; it never clobbers a manifest read
-  if (FORCE) { q['image_source.rights_normalized.source'] = 'importer-license-field'; q['image_source.rights_normalized.status'] = { $ne: 'no-manifest' }; } // no-manifest is a manifest-lane verdict
+  if (FORCE) q['image_source.rights_normalized.source'] = 'importer-license-field'; // never a manifest read
   else q['image_source.rights_normalized'] = { $exists: false };
   const cursor = books.find(q, { projection: { id: 1, image_source: 1 } });
   let n = 0, written = 0;
@@ -104,6 +104,8 @@ if (LANE === 'stored' || LANE === 'all') {
     n++;
     const s = b.image_source || {};
     const r = classifyStored({ license: s.license, license_url: s.license_url, attribution: s.attribution, rights: s.rights, provider: s.provider });
+    // a no-manifest verdict (manifest lane) stands unless the stored value actually classifies
+    if (s.rights_normalized?.status === 'no-manifest' && r.class === 'unknown') continue;
     const doc = { ...r, source: 'importer-license-field', manifest_url: null, read_at: now() };
     count(s.provider || 'null', `stored:${r.status}`, r.class);
     if (WRITE) { ops.push({ updateOne: { filter: { _id: b._id }, update: { $set: { 'image_source.rights_normalized': doc } } } }); if (ops.length >= 500) await flush(); }
@@ -187,6 +189,9 @@ if (LANE === 'manifest' || LANE === 'all') {
     const prov = s.provider || 'null';
     let doc, row;
     if (!plan) {
+      // no manifest: never downgrade a stored value that classifies (BPH 'publicdomain' books have no manifest)
+      const stored = classifyStored({ license: s.license, license_url: s.license_url, attribution: s.attribution, rights: s.rights, provider: s.provider });
+      if (stored.class !== 'unknown') { emit({ id: b.id, provider: prov, status: 'kept-stored', class: stored.class }); count(prov, 'kept-stored', stored.class); return; }
       doc = { class: 'unknown', statement_uri: null, class_from: null, attribution_required: s.attribution ? String(s.attribution) : null, attribution_from: s.attribution ? 'image_source.attribution' : null, terms_text: null, raw: { license: s.license, license_url: s.license_url || undefined, attribution: s.attribution || undefined }, status: 'no-manifest', source: 'importer-license-field', manifest_url: null, read_at: now() };
     } else {
       const res = await fetchManifest(plan);
