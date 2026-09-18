@@ -22,8 +22,11 @@
  * Never writes to Mongo. CBETA is credited as the source and not re-hosted beyond the window.
  */
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { foldGreekWord } from './build-greek-corpus.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -36,6 +39,10 @@ const ONLY = argOf('only'); const DRY = process.argv.includes('--dry');
 // best window over all of them. Same acceptance threshold; a real reference or none.
 // --retry-missing: re-attempt pages whose earlier run wrote a JSON without a reference.
 const WIDE = process.argv.includes('--wide'); const RETRY = process.argv.includes('--retry-missing');
+// --force: rebuild every reference even where a JSON exists (the Greek branch cuts its window with
+// the best probe available — a free Tesseract screen read in phase A, the Gemini read in phase B —
+// and the phase-B rebuild must replace the phase-A window, not skip it).
+const FORCE = process.argv.includes('--force');
 const GH_HEADERS = process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {};
 const REFS = path.join(__dirname, 'benchmark', 'refs'); fs.mkdirSync(REFS, { recursive: true });
 const CATALOG = argOf('kanripo-catalog', '/Users/dereklomas/.claude/jobs/417569c5/tmp/refs/kanripo');
@@ -185,7 +192,12 @@ function loadCorpus() {
   const index = JSON.parse(fs.readFileSync(path.join(CORPUS_DIR, 'index.json'), 'utf8'));
   corpusIdx = { texts, inv, index }; return corpusIdx;
 }
-function wordWindow(words, probeWords) {
+// `contentMin`: when set, the window is TRIMMED only on bigrams whose words both have ≥ contentMin
+// letters. The scorer's CER for a benchmark page is Levenshtein over the WHOLE reference, so an
+// over-long window charges every engine for text the page never printed; with the trim on all
+// bigrams, Greek windows ran to 1.7× the probe because και/δε/τα bigrams occur everywhere in the
+// e-text around the page (measured on the sealed greek stratum, 2026-09-19).
+function wordWindow(words, probeWords, contentMin = 0) {
   const P = new Set(); for (let i = 0; i + 1 < probeWords.length; i++) P.add(probeWords[i] + ' ' + probeWords[i + 1]);
   const L = Math.max(40, Math.round(probeWords.length * 1.3));
   const votes = new Float64Array(words.length + 1);
@@ -193,9 +205,99 @@ function wordWindow(words, probeWords) {
   let best = 0, at = 0, run = 0;
   for (let i = 0; i < votes.length; i++) { run += votes[i]; if (i >= L) run -= votes[i - L]; if (run > best) { best = run; at = Math.max(0, i - L + 1); } }
   const s = Math.max(0, at - Math.round(L * 0.15)), e = Math.min(words.length, at + L + Math.round(L * 0.15));
-  let first = -1, last = -1; for (let i = s; i + 1 < e; i++) if (P.has(words[i] + ' ' + words[i + 1])) { if (first < 0) first = i; last = i + 2; }
-  const win = first < 0 ? words.slice(s, e) : words.slice(Math.max(s, first - 5), Math.min(e, last + 5));
-  return { window: win.join(' '), overlap: P.size ? best / P.size : 0, shared: best };
+  const content = i => words[i].length >= contentMin && words[i + 1].length >= contentMin;
+  let first = -1, last = -1; for (let i = s; i + 1 < e; i++) if (P.has(words[i] + ' ' + words[i + 1]) && content(i)) { if (first < 0) first = i; last = i + 2; }
+  const from = first < 0 ? s : Math.max(s, first - 3), to = first < 0 ? e : Math.min(e, last + 3);
+  return { window: words.slice(from, to).join(' '), from, to, overlap: P.size ? Math.min(1, best / P.size) : 0, shared: best };
+}
+
+// ── Greek (greek, greek-ext; #4925 step 2, #4744): local First1KGreek + Perseus corpus flattened by
+// build-greek-corpus.mjs (<id>.txt accented, <id>.fold.txt diacritic-folded), then el.wikisource ──
+// The work is identified by a phrase vote: folded word TRIGRAMS of the probe searched with ripgrep
+// over every .fold.txt; the file with the most DISTINCT phrase hits wins (≥ 3, and ahead of the
+// runner-up). The window is then cut on the folded words by the Syriac word-bigram vote and mapped
+// back to the ACCENTED text, which is what the reference is — the fold exists only for matching. An
+// edition of the work is not our edition (a 1550 Aldine and a 1908 OCT differ in accents, breathings
+// and readings), so the scorer's mismatch demotion is expected to fire on some pages; overlap and
+// edition are recorded on every row. Wikisource's search folds diacritics too, so the same phrases
+// serve there.
+const GREEK_DIR = argOf('greek-corpus', '/Users/dereklomas/.claude/jobs/417569c5/tmp/refs/greek');
+const WS_EL = 'https://el.wikisource.org/w/api.php';
+const HTML_ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+const htmlDecode = s => s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e) => e[0] === '#' ? String.fromCodePoint(parseInt(/^#x/i.test(e) ? e.slice(2) : e.slice(1), /^#x/i.test(e) ? 16 : 10)) : (HTML_ENT[e.toLowerCase()] ?? m));
+const GREEK_LETTERS = s => (String(s || '').match(/\p{Script=Greek}/gu) || []).length;
+// Tokenise an accented text into words with offsets, folded alongside (empty folds — Latin words,
+// numerals — are dropped from BOTH sequences so window indices stay aligned).
+function greekWords(text) {
+  const words = [], offs = [];
+  for (const m of text.matchAll(/[\p{L}\p{M}]+/gu)) { const f = foldGreekWord(m[0]); if (f.length >= 2) { words.push(f); offs.push([m.index, m.index + m[0].length]); } }
+  return { words, offs };
+}
+function greekPhrases(words, max) {
+  const tri = [];
+  for (let i = 0; i + 2 < words.length; i++) if (words[i].length >= 4 && words[i + 1].length >= 3 && words[i + 2].length >= 4) tri.push(`${words[i]} ${words[i + 1]} ${words[i + 2]}`);
+  const uniq = [...new Set(tri)]; if (uniq.length <= max) return uniq;
+  const step = uniq.length / max; return Array.from({ length: max }, (_, k) => uniq[Math.floor(k * step)]);
+}
+let greekIndex = null;
+function rgVote(phrases) {
+  if (!phrases.length) return [];
+  const pf = path.join(os.tmpdir(), `greek-pats-${process.pid}.txt`); fs.writeFileSync(pf, phrases.join('\n') + '\n');
+  let out = '';
+  try { out = execFileSync('rg', ['-F', '-f', pf, '-o', '--no-line-number', '--with-filename', '--no-heading', '-g', '*.fold.txt', GREEK_DIR], { maxBuffer: 256e6 }).toString(); }
+  catch (e) { out = e.stdout ? e.stdout.toString() : ''; }   // rg exits 1 when nothing matches
+  const byFile = new Map();
+  for (const line of out.split('\n')) { const i = line.indexOf(':'); if (i < 0) continue; const id = path.basename(line.slice(0, i), '.fold.txt'); let s = byFile.get(id); if (!s) { s = new Set(); byFile.set(id, s); } s.add(line.slice(i + 1)); }
+  return [...byFile.entries()].map(([id, s]) => ({ id, hits: s.size })).sort((a, b) => b.hits - a.hits);
+}
+function corpusWindow(id, probeWords) {
+  const raw = fs.readFileSync(path.join(GREEK_DIR, `${id}.txt`), 'utf8');
+  const { words, offs } = greekWords(raw);
+  const w = wordWindow(words, probeWords, 4);
+  return { ...w, text: raw.slice(offs[w.from][0], offs[w.to - 1][1]), etext_chars: raw.length };
+}
+// Wikimedia asks for a descriptive User-Agent and answers anonymous bursts with 429; one retry after a pause.
+const WS_HEADERS = { 'User-Agent': 'SourceLibrary-OCR-benchmark/1.0 (https://sourcelibrary.org; team@sourcelibrary.org)' };
+async function wsJson(url) { try { return await getJson(url, WS_HEADERS); } catch (e) { if (!/^429/.test(e.message)) throw e; await sleep(3000); return getJson(url, WS_HEADERS); } }
+async function greekCorpusLookup(probeWords, log) {
+  if (!greekIndex) greekIndex = JSON.parse(fs.readFileSync(path.join(GREEK_DIR, 'index.json'), 'utf8'));
+  const phrases = greekPhrases(probeWords, 40);
+  const votes = rgVote(phrases);
+  if (!votes.length || votes[0].hits < 3 || (votes[1] && votes[1].hits >= votes[0].hits)) return { phrases: phrases.length, votes: votes.slice(0, 3) };
+  const top = votes[0], meta = greekIndex[top.id] || {};
+  const w = corpusWindow(top.id, probeWords);
+  log(`    corpus: ${top.id} (${meta.author} — ${meta.title}) ${top.hits}/${phrases.length} phrases, window overlap ${w.overlap.toFixed(2)}`);
+  return { phrases: phrases.length, votes: votes.slice(0, 3), src: { source: meta.source || 'local Greek corpus', work: top.id, work_title: [meta.author, meta.title].filter(Boolean).join(' — '), edition: meta.edition || null, url: meta.url || null, phrase_hits: top.hits, etext_chars: w.etext_chars, window: w.text, overlap: w.overlap, window_words: w.to - w.from } };
+}
+async function wikisourceLookup(probeWords, log) {
+  const phrases = greekPhrases(probeWords, 6);
+  const counts = new Map();
+  for (const ph of phrases) {
+    try { const j = await wsJson(`${WS_EL}?action=query&list=search&srsearch=${encodeURIComponent(`"${ph}"`)}&srlimit=5&format=json&utf8=1`); for (const r of j.query?.search || []) counts.set(r.title, (counts.get(r.title) || 0) + 1); }
+    catch (e) { log(`    wikisource search error: ${e.message.slice(0, 80)}`); }
+    await sleep(600);
+  }
+  const best = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (!best || best[1] < 2) return null;
+  const j = await wsJson(`${WS_EL}?action=parse&page=${encodeURIComponent(best[0])}&prop=text&format=json&utf8=1&disabletoc=1`);
+  const raw = htmlDecode((j.parse?.text?.['*'] || '').replace(/<(style|script)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').trim();
+  const { words, offs } = greekWords(raw);
+  if (words.length < 20) return null;
+  const w = wordWindow(words, probeWords, 4);
+  log(`    el.wikisource: ${best[0]} ${best[1]}/${phrases.length} phrases, window overlap ${w.overlap.toFixed(2)}`);
+  return { source: 'el.wikisource', work: best[0], work_title: best[0], edition: null, url: `https://el.wikisource.org/wiki/${encodeURIComponent(best[0])}`, phrase_hits: best[1], etext_chars: raw.length, window: raw.slice(offs[w.from][0], offs[w.to - 1][1]), overlap: w.overlap, window_words: w.to - w.from };
+}
+// Probe order for a Greek page: the longer Gemini read (the #4744 convention), else any other
+// engine's, else the free Tesseract screen read the seal step cached (phase A only — noisy on
+// ligatured type, so its hit rate is a LOWER bound on what the Gemini probe will find).
+function greekProbe(p) {
+  const outRoot = path.join(ROOT, STRATUM, 'out'); const cands = [];
+  if (fs.existsSync(outRoot)) for (const e of fs.readdirSync(outRoot)) { const f = path.join(outRoot, e, `${p.slug}.txt`); if (fs.existsSync(f)) cands.push({ engine: e, text: fs.readFileSync(f, 'utf8') }); }
+  const scr = path.join(ROOT, STRATUM, 'screen', `${p.book_id}-p${p.page_number}.txt`);
+  if (fs.existsSync(scr)) cands.push({ engine: 'tesseract-screen', text: fs.readFileSync(scr, 'utf8') });
+  const rank = c => (c.engine.startsWith('gemini') ? 2 : c.engine === 'tesseract-screen' ? 0 : 1) * 1e6 + GREEK_LETTERS(c.text);
+  cands.sort((a, b) => rank(b) - rank(a));
+  return cands[0] || null;
 }
 async function corpusLookup(probeByEngine) {
   const { texts, inv, index } = loadCorpus();
@@ -229,6 +331,33 @@ if (STRATUM === 'syriac') {
     built++; console.log(`  ✓ ${p.slug}: ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} via ${src.probe_engine}`);
   }
   console.log(`\nsyriac: ${built} references, ${none} without`);
+  process.exit(0);
+}
+if (STRATUM.startsWith('greek')) {
+  const pages = reg.pages.filter(p => (!p.spare || p.promoted) && !p.retired && (!ONLY || p.slug === ONLY));
+  const tally = { built: 0, none: 0, work_only: 0, no_probe: 0, by_source: {}, by_sub: {} };
+  for (const p of pages) {
+    const outTxt = path.join(REFS, `${p.slug}.txt`), outJson = path.join(REFS, `${p.slug}.json`);
+    if (fs.existsSync(outJson) && !ONLY && !FORCE && !(RETRY && !fs.existsSync(outTxt))) { if (fs.existsSync(outTxt)) tally.built++; else tally.none++; continue; }
+    const probe = greekProbe(p);
+    const note = { slug: p.slug, substratum: p.substratum, title: p.title, year: p.year, probe_engine: probe?.engine || null, probe_greek_letters: probe ? GREEK_LETTERS(probe.text) : 0 };
+    const words = probe ? greekWords(probe.text).words : [];
+    if (words.length < 15) { note.reason = probe ? 'probe has < 15 Greek words (Latin leaf, plate or blank as read)' : 'no probe read for this page yet'; tally.no_probe++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason}`); continue; }
+    let src = null;
+    try {
+      const c = await greekCorpusLookup(words, m => console.log(m));
+      note.corpus_votes = c.votes; note.phrases = c.phrases;
+      if (c.src) src = c.src;
+      if (!src || src.overlap < MIN_OVERLAP) { const ws = await wikisourceLookup(words, m => console.log(m)); if (ws && (!src || ws.overlap > src.overlap)) src = ws; }
+    } catch (e) { note.error = e.message.slice(0, 120); }
+    if (!src) { note.reason = 'no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)'; tally.none++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
+    Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, edition: src.edition, url: src.url, phrase_hits: src.phrase_hits, etext_chars: src.etext_chars, window_words: src.window_words, window_chars: src.window.length, overlap: +src.overlap.toFixed(3) });
+    if (src.overlap < MIN_OVERLAP) { note.reason = `work identified but window overlap ${src.overlap.toFixed(2)} < ${MIN_OVERLAP} (probe too noisy, or the page is commentary/paratext around the work)`; tally.work_only++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  ~ ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
+    if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
+    tally.built++; tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.by_sub[p.substratum] = (tally.by_sub[p.substratum] || 0) + 1;
+    console.log(`  ✓ ${p.slug}: ${src.source} ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} window ${src.window_words} words / probe ${words.length} via ${probe.engine}`);
+  }
+  console.log(`\n${STRATUM}: ${tally.built} references, ${tally.work_only} work-identified-but-no-window, ${tally.none} no work, ${tally.no_probe} no/too-short probe; by source ${JSON.stringify(tally.by_source)}; by sub-stratum ${JSON.stringify(tally.by_sub)}`);
   process.exit(0);
 }
 const pages = reg.pages.filter(p => (!p.spare || p.promoted) && !p.retired && (!ONLY || p.slug === ONLY));
