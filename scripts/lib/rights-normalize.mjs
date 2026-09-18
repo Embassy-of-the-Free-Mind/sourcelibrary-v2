@@ -128,6 +128,9 @@ const COPYRIGHT_RULES = [
 
 // Access-status vocabulary that must never be read as a licence.
 const NOT_A_LICENCE = /^(pubblico|public|open access|full access|free|open|available|master)\.?$/i;
+// Platform boilerplate that lands in `attribution` and is not a credit line (Goobi viewer instances at
+// uvaerfgoed.nl and viewer.cbl.ie emit the software name; BNP emits its export profile).
+const NOT_A_CREDIT = /^(goobi viewer|bnp master|pubblico|public domain|master)\.?$/i;
 // A statement that qualifies its own grant — do not fold it to a class; keep it as terms_text.
 // BL: "Public Domain in most countries other than the UK."
 const QUALIFIED = /\b(other than|except|outside|in most countries|in some countries|may be|unless|depending)\b/i;
@@ -304,7 +307,7 @@ export function readManifestRights(manifest) {
   if (reqStmt?.value) { attributionRequired = stripHtml(reqStmt.value); attributionFrom = 'manifest.requiredStatement'; }
   else if (attribution) { attributionRequired = stripHtml(attribution); attributionFrom = 'manifest.attribution'; }
   else { const a = metaText.find(e => /^(attribution|credit)/i.test(e.label)); if (a) { attributionRequired = a.text; attributionFrom = `manifest.metadata[${a.label}]`; } }
-  if (attributionRequired && NOT_A_LICENCE.test(attributionRequired)) { attributionRequired = null; attributionFrom = null; } // "Pubblico" is not a credit line
+  if (attributionRequired && (NOT_A_LICENCE.test(attributionRequired) || NOT_A_CREDIT.test(attributionRequired))) { attributionRequired = null; attributionFrom = null; } // "Pubblico" / "Goobi viewer" are not credit lines
 
   // terms_text: a usage statement in prose (BL "Usage terms: Public Domain in most countries other than the UK.")
   let termsText = null;
@@ -363,8 +366,8 @@ export function classifyStored({ license, license_url, attribution, rights, prov
     class: r ? r.class : 'unknown',
     statement_uri: r?.statement_uri || null,
     class_from: r ? from : null,
-    attribution_required: attr || null,
-    attribution_from: attr ? 'image_source.attribution' : null,
+    attribution_required: attr && !NOT_A_CREDIT.test(attr) ? attr : null,
+    attribution_from: attr && !NOT_A_CREDIT.test(attr) ? 'image_source.attribution' : null,
     terms_text: isQualified(attr) ? attr : null,
     raw: { license: lic || undefined, license_url: license_url || undefined, attribution: attribution || undefined, rights: iaRights ? String(rights).slice(0, 2000) : undefined },
     status: r ? (iaDefault && !iaRights ? 'assumed-by-importer' : 'stated') : 'unknown',
