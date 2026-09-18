@@ -59,6 +59,7 @@ import { S3Client, PutObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s
 import { createClient } from '@supabase/supabase-js';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 import { getPageSource, isUsableImageUrl } from '../lib/page-image-url.mjs';
+import { repairIiifV3Size } from '../lib/iiif-utils.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -173,7 +174,10 @@ process.on('unhandledRejection', (reason) => {
  */
 function resolveSource(page) {
   if (isUsableImageUrl(page.cropped_photo)) return { skip: 'legacy_split' };
-  const source = getPageSource(page);
+  // A stored `/full/full/` on a v3 service (every unarchived IA page) 400s on
+  // every attempt — repair the size keyword at fetch time, as the archiver
+  // does, instead of retrying a URL that cannot ever work (#4655).
+  const source = repairIiifV3Size(getPageSource(page));
   if (!source || !/^https?:\/\//.test(source) || /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i.test(source)) {
     return { skip: 'no_source' };
   }
