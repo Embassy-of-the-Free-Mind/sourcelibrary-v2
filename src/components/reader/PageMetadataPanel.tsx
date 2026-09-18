@@ -449,6 +449,26 @@ export default function PageMetadataPanel({
                 )}
               </>
             )}
+            {page.ocr?.engine && (
+              <>
+                {/* A specialist engine read this page (#4883): say which, and cite the
+                    model weights, the way the IA rows above cite the Archive's engine. */}
+                <MetadataRow label="Engine" value={[page.ocr.engine.name, page.ocr.engine.version].filter(Boolean).join(' ')} mono />
+                <MetadataRow label="Engine model" value={page.ocr.engine.model_label || page.ocr.engine.model} />
+                {page.ocr.engine.model_doi && (
+                  <MetadataRow
+                    label="Model DOI"
+                    value={
+                      <a href={`https://doi.org/${page.ocr.engine.model_doi}`} target="_blank" rel="noopener noreferrer" className="underline">
+                        {page.ocr.engine.model_doi}
+                      </a>
+                    }
+                  />
+                )}
+                {page.ocr.engine.licence && <MetadataRow label="Model licence" value={page.ocr.engine.licence} />}
+                {page.ocr.engine.segmenter && <MetadataRow label="Segmentation" value={`${page.ocr.engine.segmenter} · ${page.ocr.engine.direction}`} />}
+              </>
+            )}
             {page.ocr?.updated_at && (
               <MetadataRow label="OCR updated" value={formatDate(page.ocr.updated_at)} />
             )}
