@@ -1,0 +1,734 @@
+{
+ "_prior_art": "PRIOR ART: scripts/eval/suda-sol/align.py — aligns Suda entries to Greek page text by string match; this file is a hand-verified table of ORAEC text id -> edition page / plate, read off the page images, which no script can derive (data, not code).",
+ "verified": "Every ia_leaf was checked by eye on 2026-09-19 against the printed page header (Urk. I) or the plate label and title (HTBM) in the IA IIIF leaf itself. The Source Library reader page is given for humans; the offset between reader page and IA access leaf is NOT constant across these books (Urk. I and HTBM I: leaf = page-1; HTBM II and V: leaf = page-2; HTBM IV: the reader images themselves are shifted and the IA leaf is the only verified image).",
+ "entries": [
+  {
+   "oraec_id": "oraec3587",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 23 (16 B)",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 33,
+     "label": "I 23",
+     "ia_leaf": 32
+    }
+   ],
+   "notes": "Metjen, lintel with drum (Mü 5); page also carries 16 A."
+  },
+  {
+   "oraec_id": "oraec3592",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 23 (16 A)",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 33,
+     "label": "I 23",
+     "ia_leaf": 32
+    }
+   ],
+   "notes": "Metjen, panel (Mü 2); ORAEC marks Sethe's copy 'unvollständig'."
+  },
+  {
+   "oraec_id": "oraec1342",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 23 (16 A)",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 33,
+     "label": "I 23",
+     "ia_leaf": 32
+    }
+   ],
+   "notes": "Metjen, panel (Mü 2), person captions."
+  },
+  {
+   "oraec_id": "oraec372",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 59.10–60.11 (A)",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 69,
+     "label": "I 59",
+     "ia_leaf": 68
+    },
+    {
+     "reader": 70,
+     "label": "I 60",
+     "ia_leaf": 69
+    }
+   ],
+   "notes": "Senedjemib Inti, biography A, north thickness. Heavily hatched (damaged) on p. 59."
+  },
+  {
+   "oraec_id": "oraec585",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 61–63 (B)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 71,
+     "label": "I 61",
+     "ia_leaf": 70
+    },
+    {
+     "reader": 72,
+     "label": "I 62",
+     "ia_leaf": 71
+    },
+    {
+     "reader": 73,
+     "label": "I 63",
+     "ia_leaf": 72
+    }
+   ],
+   "notes": "Letter of Isesi (B.1–15). ORAEC follows Brovarski 2001; Sethe's copy may differ in detail."
+  },
+  {
+   "oraec_id": "oraec2400",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 61–63",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 71,
+     "label": "I 61",
+     "ia_leaf": 70
+    },
+    {
+     "reader": 72,
+     "label": "I 62",
+     "ia_leaf": 71
+    },
+    {
+     "reader": 73,
+     "label": "I 63",
+     "ia_leaf": 72
+    }
+   ],
+   "notes": "North wall speech; ORAEC encoding is sparse (0 complete sentences)."
+  },
+  {
+   "oraec_id": "oraec4708",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 61–63",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 71,
+     "label": "I 61",
+     "ia_leaf": 70
+    },
+    {
+     "reader": 72,
+     "label": "I 62",
+     "ia_leaf": 71
+    },
+    {
+     "reader": 73,
+     "label": "I 63",
+     "ia_leaf": 72
+    }
+   ],
+   "notes": "North wall, owner's caption."
+  },
+  {
+   "oraec_id": "oraec222",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 63.14–65.9 (C)",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 73,
+     "label": "I 63",
+     "ia_leaf": 72
+    },
+    {
+     "reader": 74,
+     "label": "I 64",
+     "ia_leaf": 73
+    },
+    {
+     "reader": 75,
+     "label": "I 65",
+     "ia_leaf": 74
+    }
+   ],
+   "notes": "Senedjemib Inti, inscription C, south thickness."
+  },
+  {
+   "oraec_id": "oraec2306",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 65–67 (D)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 75,
+     "label": "I 65",
+     "ia_leaf": 74
+    },
+    {
+     "reader": 76,
+     "label": "I 66",
+     "ia_leaf": 75
+    },
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    }
+   ],
+   "notes": "Inscription D, south wall."
+  },
+  {
+   "oraec_id": "oraec1630",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 65–67 (D, scene captions)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 75,
+     "label": "I 65",
+     "ia_leaf": 74
+    },
+    {
+     "reader": 76,
+     "label": "I 66",
+     "ia_leaf": 75
+    },
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    }
+   ],
+   "notes": "Boat-transport scene captions; p. 66 carries the figure."
+  },
+  {
+   "oraec_id": "oraec10247",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 65–67 (D, scene captions)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 75,
+     "label": "I 65",
+     "ia_leaf": 74
+    },
+    {
+     "reader": 76,
+     "label": "I 66",
+     "ia_leaf": 75
+    },
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    }
+   ],
+   "notes": "Cattle fording captions."
+  },
+  {
+   "oraec_id": "oraec7579",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Senedjemib Mehi titulary, door post; Sethe prints four selected lines 'aus der Titulatur'."
+  },
+  {
+   "oraec_id": "oraec7578",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi titulary, door post."
+  },
+  {
+   "oraec_id": "oraec2573",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi titulary, door post."
+  },
+  {
+   "oraec_id": "oraec7577",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi titulary, door post."
+  },
+  {
+   "oraec_id": "oraec4932",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi architrave."
+  },
+  {
+   "oraec_id": "oraec4341",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi titulary, inner post."
+  },
+  {
+   "oraec_id": "oraec4935",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 68 (44)",
+   "citation_kind": "vgl",
+   "pages": [
+    {
+     "reader": 77,
+     "label": "I 67",
+     "ia_leaf": 76
+    },
+    {
+     "reader": 78,
+     "label": "I 68",
+     "ia_leaf": 77
+    }
+   ],
+   "notes": "Mehi titulary, inner post."
+  },
+  {
+   "oraec_id": "oraec806",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 232 (7 [147])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 248,
+     "label": "I 232",
+     "ia_leaf": 247
+    }
+   ],
+   "notes": "Biographical stela inscription (Rawer)."
+  },
+  {
+   "oraec_id": "oraec3588",
+   "edition": "urk1",
+   "edition_ref": "Urk. I 233–234 (8 [148])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 249,
+     "label": "I 233",
+     "ia_leaf": 248
+    },
+    {
+     "reader": 250,
+     "label": "I 234",
+     "ia_leaf": 249
+    }
+   ],
+   "notes": "Second inscription of the same man; p. 234 also carries Ni-ankh-Ra."
+  },
+  {
+   "oraec_id": "oraec362",
+   "edition": "htbm1",
+   "edition_ref": "HTBM I, pl. 55 (No. 134 [1164])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 133,
+     "label": "PLATE 55",
+     "ia_leaf": 132
+    }
+   ],
+   "focus": "No. 134 [1164]",
+   "page_exclusive": true,
+   "notes": "Stela of Antef son of Mait."
+  },
+  {
+   "oraec_id": "oraec691",
+   "edition": "htbm1",
+   "edition_ref": "HTBM I, pl. 53 (No. [1203])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 129,
+     "label": "PLATE 53",
+     "ia_leaf": 128
+    }
+   ],
+   "focus": "[1203]",
+   "page_exclusive": true,
+   "notes": "Stela of Antef son of Ka."
+  },
+  {
+   "oraec_id": "oraec323",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 1–2 (No. [101])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 20,
+     "label": "PLATE 1",
+     "ia_leaf": 18
+    },
+    {
+     "reader": 22,
+     "label": "PLATE 2",
+     "ia_leaf": 20
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Stela of Nebpu-usertsen, two plates."
+  },
+  {
+   "oraec_id": "oraec160",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 8–9 (No. 146 [574])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 34,
+     "label": "PLATE 8",
+     "ia_leaf": 32
+    },
+    {
+     "reader": 36,
+     "label": "PLATE 9",
+     "ia_leaf": 34
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Stela of Semti / Khentiemsemt the younger."
+  },
+  {
+   "oraec_id": "oraec3353",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 17 (No. [559])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 52,
+     "label": "PLATE 17",
+     "ia_leaf": 50
+    }
+   ],
+   "focus": "[559]",
+   "page_exclusive": false,
+   "notes": "Stela of Inhernakht (BM 559)."
+  },
+  {
+   "oraec_id": "oraec730",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 18 (No. [575])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 54,
+     "label": "PLATE 18",
+     "ia_leaf": 52
+    }
+   ],
+   "focus": "[575]",
+   "page_exclusive": false,
+   "notes": "Stela of Inhernakht (BM 575)."
+  },
+  {
+   "oraec_id": "oraec935",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 21 (No. 145 [828])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 60,
+     "label": "PLATE 21",
+     "ia_leaf": 58
+    }
+   ],
+   "focus": "No. 145 [828]",
+   "page_exclusive": true,
+   "notes": "Stela of Sa-Montu."
+  },
+  {
+   "oraec_id": "oraec567",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 22 (No. 140 [572])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 62,
+     "label": "PLATE 22",
+     "ia_leaf": 60
+    }
+   ],
+   "focus": "No. 140 [572]",
+   "page_exclusive": true,
+   "notes": "Stela of Antef son of Senet."
+  },
+  {
+   "oraec_id": "oraec3775",
+   "edition": "htbm2",
+   "edition_ref": "HTBM II, pl. 37 (No. [580])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 92,
+     "label": "PLATE 37",
+     "ia_leaf": 90
+    }
+   ],
+   "focus": "[580]",
+   "page_exclusive": true,
+   "notes": "Stela of Sensebek and his wife."
+  },
+  {
+   "oraec_id": "oraec600",
+   "edition": "htbm5",
+   "edition_ref": "HTBM V, pl. 1–2 (No. [1628])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 20,
+     "label": "PLATE 1",
+     "ia_leaf": 18
+    },
+    {
+     "reader": 22,
+     "label": "PLATE 2",
+     "ia_leaf": 20
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Stela of Antef-aqer, upper and lower portions."
+  },
+  {
+   "oraec_id": "oraec504",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 2–3 (No. 196 [1177])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 19,
+     "ia_leaf": 18,
+     "label": "PLATE 2"
+    },
+    {
+     "reader": 21,
+     "ia_leaf": 20,
+     "label": "PLATE 3"
+    }
+   ],
+   "focus": "No. 196 [1177]",
+   "page_exclusive": false,
+   "notes": "Stela of Erta-antef-tatau; plate 2 also carries a statue of King An. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec2325",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 7 (No. 155 [257])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 29,
+     "ia_leaf": 28,
+     "label": "PLATE 7"
+    }
+   ],
+   "focus": "No. 155 [257]",
+   "page_exclusive": true,
+   "notes": "Stela of the shipmaster Sebekhetep. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec1399",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 18–21 (No. 280 [1163])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 51,
+     "ia_leaf": 50,
+     "label": "PLATE 18"
+    },
+    {
+     "reader": 53,
+     "ia_leaf": 52,
+     "label": "PLATE 19"
+    },
+    {
+     "reader": 55,
+     "ia_leaf": 54,
+     "label": "PLATE 20"
+    },
+    {
+     "reader": 57,
+     "ia_leaf": 56,
+     "label": "PLATE 21"
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Stela of the scribe Sebekhetep son of Sebeknekht, four sides on four plates. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec879",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 33 (No. [162])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 81,
+     "ia_leaf": 80,
+     "label": "PLATE 33"
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Stela of Ameni, chief commander of soldiers. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec1195",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 37 (No. 193 [566])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 89,
+     "ia_leaf": 88,
+     "label": "PLATE 37"
+    }
+   ],
+   "focus": "No. 193 [566]",
+   "page_exclusive": true,
+   "notes": "Stela of Sebek-tatau (II) / Dedusobek. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec2318",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 48–49 (No. 447 [893]), ll. 1–9",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 111,
+     "ia_leaf": 110,
+     "label": "PLATE 48"
+    },
+    {
+     "reader": 113,
+     "ia_leaf": 112,
+     "label": "PLATE 49"
+    }
+   ],
+   "focus": "",
+   "page_exclusive": false,
+   "notes": "Stela of the steward Amenemhat, Osiris hymn (lines 1–9); the Upuaut hymn on the same plates is oraec1027. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec1027",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 48–49 (No. 447 [893]), ll. 10–18",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 111,
+     "ia_leaf": 110,
+     "label": "PLATE 48"
+    },
+    {
+     "reader": 113,
+     "ia_leaf": 112,
+     "label": "PLATE 49"
+    }
+   ],
+   "focus": "",
+   "page_exclusive": false,
+   "notes": "Stela of the steward Amenemhat, Upuaut hymn (lines 10–18); lines 1–9 are oraec2318. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  },
+  {
+   "oraec_id": "oraec609",
+   "edition": "htbm4",
+   "edition_ref": "HTBM IV, pl. 50 (No. [494])",
+   "citation_kind": "direct",
+   "pages": [
+    {
+     "reader": 115,
+     "ia_leaf": 114,
+     "label": "PLATE 50"
+    }
+   ],
+   "focus": "",
+   "page_exclusive": true,
+   "notes": "Votive statuette from Deir el-Bahari; ORAEC encodes 11 of 28 sentences. Source Library reader images for this book are shifted against the IA source (reader page N shows a blank verso where the OCR text says the plate is); ia_leaf is what was verified."
+  }
+ ]
+}
