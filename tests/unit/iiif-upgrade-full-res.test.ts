@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { upgradeToFullRes } from '../../scripts/lib/iiif-utils.mjs';
+import { upgradeToFullRes, repairIiifV3Size } from '../../scripts/lib/iiif-utils.mjs';
 
 /**
  * A IIIF Image path is /{region}/{size}/{rotation}/{quality}.{format}.
@@ -145,5 +145,32 @@ describe('upgradeToFullRes — IIIF Image API 3.0 says `max`, not `full`', () =>
     expect(upgradeToFullRes(VATICAN_SIZED)).toMatch(/\/full\/full\//);
     const ndl = 'https://dl.ndl.go.jp/api/iiif/861218/R0000009/full/max/0/default.jpg';
     expect(upgradeToFullRes(ndl)).toBe('https://dl.ndl.go.jp/api/iiif/861218/R0000009/full/full/0/default.jpg');
+  });
+});
+
+describe('repairIiifV3Size — the fetch-time repair every direct consumer of a stored URL needs', () => {
+  // The display backfill fetched `pages.photo` straight from Mongo and never
+  // went through upgradeToFullRes, so the #4655 rows (v2 keyword, v3 service)
+  // failed 400 on every 30-minute run for two weeks. This helper is the
+  // minimal repair — ONLY the size keyword, no resolution upgrade — so a
+  // consumer that must not bump Gallica/e-rara sizes can still use it.
+  it('rewrites full→max on a v3 path', () => {
+    expect(repairIiifV3Size(IA_V3_FULL)).toBe(IA_V3_FULL.replace('/full/full/', '/full/max/'));
+  });
+
+  it('leaves everything else untouched — v2 hosts, already-max, sized v3, NDL', () => {
+    for (const url of [GALLICA_FULL, GALLICA_SIZED, MDZ_SIZED, VATICAN_FULL, IA_V3_MAX, KYOTO_V3_SIZED,
+      'https://dl.ndl.go.jp/api/iiif/861218/R0000009/full/full/0/default.jpg']) {
+      expect(repairIiifV3Size(url), url).toBe(url);
+    }
+  });
+
+  it('passes non-strings and empties through', () => {
+    expect(repairIiifV3Size(null as unknown as string)).toBe(null);
+    expect(repairIiifV3Size('')).toBe('');
+  });
+
+  it('is exactly the v3 branch of upgradeToFullRes', () => {
+    expect(upgradeToFullRes(IA_V3_FULL)).toBe(repairIiifV3Size(IA_V3_FULL));
   });
 });
