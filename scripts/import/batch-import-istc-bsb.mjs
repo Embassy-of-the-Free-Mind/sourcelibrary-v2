@@ -16,6 +16,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { readManifestRights } from '../lib/rights-normalize.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -194,6 +195,10 @@ async function main() {
     }
 
     const pages = extractPages(manifest);
+    // What the BSB manifest itself says about rights, read once and carried
+    // into image_source below (raw `license`) and into the derived lane.
+    const manifestRights = { ...readManifestRights(manifest), source: 'iiif-manifest', manifest_url: manifestUrl, read_at: new Date() };
+
     if (pages.length === 0) {
       errors++;
       if (errors <= 5) console.log(`  ERR ${record.source_id} — no pages in manifest`);
@@ -223,8 +228,15 @@ async function main() {
         provider_name: 'Bayerische Staatsbibliothek',
         source_url: `https://www.digitale-sammlungen.de/en/view/${bsbId}`,
         iiif_manifest: manifestUrl,
-        license: 'CC-BY-NC-4.0',
-        license_url: 'https://creativecommons.org/licenses/by-nc/4.0/',
+        // Read from the manifest we already hold, never hard-coded. This was a
+        // literal `license: 'CC-BY-NC-4.0'` on every BSB import; the manifests
+        // actually state PDM on 818 of the 908 books it produced, so the corpus
+        // read as non-commercial where the library had marked it public domain
+        // (rights backfill, 2026-09-19). Silence in the manifest means `unknown`,
+        // not a guess: `image_source.license` records what the library STATED.
+        license: manifestRights.class === 'unknown' ? 'unknown' : (manifestRights.statement_uri || manifestRights.class),
+        license_url: manifestRights.statement_uri,
+        rights_normalized: manifestRights,
         contributing_library: 'Bayerische Staatsbibliothek, Munich',
         shelfmark: bsbId,
         access_date: new Date(),
