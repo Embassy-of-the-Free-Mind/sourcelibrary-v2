@@ -1,0 +1,33 @@
+{
+  "slug": "greek-da99cc-p426",
+  "substratum": "pre-1700-print",
+  "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+  "year": 1533,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1027,
+  "corpus_votes": [
+    {
+      "id": "tlg0004.tlg001.perseus-grc2",
+      "hits": 19
+    },
+    {
+      "id": "tlg4090.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg4013.tlg004.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0004.tlg001.perseus-grc2",
+  "work_title": "Diogenes Laertius — Vitae philosophorum",
+  "edition": "Diogenes Laertius. Hicks, R. D., editor. Cambridge, MA.: Harvard University Press; London: William Heinemann Ltd., 1925.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0004/tlg001",
+  "phrase_hits": 19,
+  "etext_chars": 699202,
+  "window_words": 241,
+  "window_chars": 1443,
+  "overlap": 0.834
+}

@@ -1,0 +1,9 @@
+{
+  "slug": "greek-ea6195-p94",
+  "substratum": "pre-1700-print",
+  "title": "Dialectica Johannis Caesarii : Cum J. Murmellii in Praedicamenta Aristotelis Isagoge",
+  "year": 1537,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

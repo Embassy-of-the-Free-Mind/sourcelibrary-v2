@@ -1,0 +1,20 @@
+{
+  "slug": "greek-c80c9d-p16",
+  "substratum": "pre-1700-print",
+  "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+  "year": 1554,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 374,
+  "corpus_votes": [],
+  "phrases": 36,
+  "source": "el.wikisource",
+  "work": "Ανακρεόντεια",
+  "work_title": "Ανακρεόντεια",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%91%CE%BD%CE%B1%CE%BA%CF%81%CE%B5%CF%8C%CE%BD%CF%84%CE%B5%CE%B9%CE%B1",
+  "phrase_hits": 2,
+  "etext_chars": 26865,
+  "window_words": 68,
+  "window_chars": 465,
+  "overlap": 0.739
+}

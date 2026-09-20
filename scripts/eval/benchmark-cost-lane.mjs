@@ -37,7 +37,14 @@ const REF = argOf('ref', 'gemini-3.1-flash-lite');
 const REPEAT = argOf('repeat', 'gemini-3.1-flash-lite-b');
 const CLASSES = argOf('classes') ? argOf('classes').split(',') : null;
 // --leaf=zh: keep only pages whose by-eye leaf language is this (the prereg excludes non-Chinese leaves from both cells).
+// For --leaf=grc a page that carries a by-eye `greek_share` (Greek strata, tenths) is judged by that
+// instead: it enters at ≥ 0.5 — a parallel Greek–Latin leaf is `mixed` by language and still a Greek
+// cell member when Greek holds the majority (PREREGISTRATION-greek-ext-4925.md, cell membership).
 const LEAF = argOf('leaf');
+// --script-class=typeset-print: keep only pages of this by-eye class (the Greek prereg counts print
+// only; the 18 Greek codices with edition-era catalogue years are reported apart, never in a print cell).
+const SCRIPT_CLASS = argOf('script-class');
+const leafOk = p => !LEAF || (LEAF === 'grc' && typeof p.greek_share === 'number' ? p.greek_share >= 0.5 : (!p.leaf_language || p.leaf_language === LEAF));
 const MIN_N = parseInt(argOf('min-n', '50'), 10);
 const MARGIN = parseFloat(argOf('margin', '0.02')), CI_MAX = parseFloat(argOf('ci-max', '0.05')), NOISE = parseFloat(argOf('noise', '0.02'));
 const DIR = argOf('results', path.join(__dirname, 'results', 'benchmark'));
@@ -80,7 +87,7 @@ const result = { engine: ENGINE, ref: REF, repeat: REPEAT, min_n: MIN_N, rule: {
 const cerOf = (p, e) => (p.engines?.[e] && !p.engines[e].missing && typeof p.engines[e].cer === 'number') ? p.engines[e].cer : null;
 
 for (const c of classes) {
-  const inClass = pages.filter(p => p._group === c && (!LEAF || !p.leaf_language || p.leaf_language === LEAF));
+  const inClass = pages.filter(p => p._group === c && leafOk(p) && (!SCRIPT_CLASS || p.script_class === SCRIPT_CLASS));
   const referenced = inClass.filter(p => p.has_ref && !p.ref_mismatch);
   const paired = referenced.filter(p => cerOf(p, ENGINE) != null && cerOf(p, REF) != null);
   const deltas = paired.map(p => cerOf(p, ENGINE) - cerOf(p, REF));
@@ -111,6 +118,8 @@ for (const c of classes) {
   result.classes[c] = {
     n_pages: inClass.length, n_referenced: referenced.length, n_paired: paired.length, n_by_stratum: Object.fromEntries(STRATA.map(s => [s, paired.filter(p => p.stratum === s).length])),
     median_cer: { [ENGINE]: r3(median(paired.map(p => cerOf(p, ENGINE)))), [REF]: r3(median(paired.map(p => cerOf(p, REF)))), [REPEAT]: r3(median(withRepeat.map(p => cerOf(p, REPEAT)))) },
+    // the reference engine's own median with its interval — the Greek prereg's rule (a), "is lite good enough", reads this
+    ref_median_cer_ci95: bootstrapMedianCI(paired.map(p => cerOf(p, REF))),
     delta: { median: r3(medD), ci95: ci, wins, losses, ties, untied, p_sign: r3(p_sign), share_le_minus_005: r3(bigWinShare) },
     noise_floor: { n: withRepeat.length, median_delta0: r3(medD0), ci95: bootstrapMedianCI(deltas0) },
     catastrophic: { [ENGINE]: cata(ENGINE), [REF]: cata(REF) },

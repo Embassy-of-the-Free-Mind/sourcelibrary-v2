@@ -1,0 +1,9 @@
+{
+  "slug": "greek-ee80d6-p88",
+  "substratum": "pre-1700-print",
+  "title": "De rerum natura :mit Widmungsbrief an Albertus Pius von Aldus Manutius. Mit Privileg",
+  "year": 1500,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

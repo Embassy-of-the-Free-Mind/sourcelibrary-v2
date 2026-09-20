@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e2727b-p175",
+  "substratum": "pre-1700-print",
+  "title": "Aristotelis Stagiritae Omnia, Qvae Extant, Opera : Nvnc Primvm Selectis Translationibvs, Emendationibvs Ex Collatione gr",
+  "year": 1560,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

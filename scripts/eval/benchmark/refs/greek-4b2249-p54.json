@@ -1,0 +1,33 @@
+{
+  "slug": "greek-4b2249-p54",
+  "substratum": "19th-c-print",
+  "title": "De Communi Mathematica Scientia liber",
+  "year": 1891,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1148,
+  "corpus_votes": [
+    {
+      "id": "tlg2023.tlg003.1st1K-grc1",
+      "hits": 24
+    },
+    {
+      "id": "tlg0059.tlg030.perseus-grc2",
+      "hits": 20
+    },
+    {
+      "id": "tlg0032.tlg013.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg2023.tlg003.1st1K-grc1",
+  "work_title": "Iamblichus — De communi mathematica scientia",
+  "edition": "Iamblichus. Iamblichi De communi mathematica scientia liber. Festa, Nicolaus, editor. Stuttgart: Teubner, 1891.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg2023/tlg003",
+  "phrase_hits": 24,
+  "etext_chars": 124633,
+  "window_words": 232,
+  "window_chars": 1372,
+  "overlap": 1
+}

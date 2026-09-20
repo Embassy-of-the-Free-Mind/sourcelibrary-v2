@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e8a2f4-p80",
+  "substratum": "pre-1700-print",
+  "title": "Thesaurus veteris et novae logicae Aristotelis",
+  "year": 1497,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "greek-f8ec82-p43",
+  "substratum": "19th-c-print",
+  "title": "On the Sublime, chiefly from the text of Weiske",
+  "year": 1838,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 752,
+  "corpus_votes": [
+    {
+      "id": "tlg0560.tlg001.perseus-grc2",
+      "hits": 15
+    },
+    {
+      "id": "tlg0012.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg0284.tlg049.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0560.tlg001.perseus-grc2",
+  "work_title": "Longinus — On the Sublime",
+  "edition": "Longinus. On the Sublime. Roberts, William Rhys, editor. Cambridge: Cambridge University Press, 1907.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0560/tlg001",
+  "phrase_hits": 15,
+  "etext_chars": 80627,
+  "window_words": 105,
+  "window_chars": 678,
+  "overlap": 0.792
+}

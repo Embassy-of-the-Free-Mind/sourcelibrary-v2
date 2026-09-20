@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e5e533-p236",
+  "substratum": "pre-1700-print",
+  "title": "Philosophiae naturalis libri omnes :adiecta sunt argumenta cum in singulos libros ex praecipuis Graecorum commentariis d",
+  "year": 1579,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

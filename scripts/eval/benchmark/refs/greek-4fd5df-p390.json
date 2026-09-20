@@ -1,0 +1,33 @@
+{
+  "slug": "greek-4fd5df-p390",
+  "substratum": "19th-c-print",
+  "title": "Galeni Opera Omnia, Vol. 14 (BIU Santé)",
+  "year": 1821,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 742,
+  "corpus_votes": [
+    {
+      "id": "tlg0530.tlg029.1st1K-grc1",
+      "hits": 22
+    },
+    {
+      "id": "tlg4015.tlg009.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg4013.tlg001.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0530.tlg029.1st1K-grc1",
+  "work_title": "Pseudo-Galen — De remediis parabilibus",
+  "edition": "Pseudo-Galen. Claudii Galeni Opera Omnia, Volume 14. Kühn, Karl Gottlob, editor. Leipzig: Cnobloch, 1827.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0530/tlg029",
+  "phrase_hits": 22,
+  "etext_chars": 234559,
+  "window_words": 179,
+  "window_chars": 1288,
+  "overlap": 0.832
+}

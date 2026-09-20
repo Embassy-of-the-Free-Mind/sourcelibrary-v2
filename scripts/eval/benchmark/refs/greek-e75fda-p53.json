@@ -1,0 +1,33 @@
+{
+  "slug": "greek-e75fda-p53",
+  "substratum": "pre-1700-print",
+  "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+  "year": 1531,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1213,
+  "corpus_votes": [
+    {
+      "id": "tlg0094.tlg003.perseus-grc2",
+      "hits": 18
+    },
+    {
+      "id": "tlg2018.tlg001.1st1K-grc1",
+      "hits": 8
+    },
+    {
+      "id": "tlg0057.tlg017.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0094.tlg003.perseus-grc2",
+  "work_title": "Pseudo-Plutarch — Placita Philosophorum",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol V. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1888.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0094/tlg003",
+  "phrase_hits": 18,
+  "etext_chars": 101561,
+  "window_words": 198,
+  "window_chars": 1396,
+  "overlap": 0.694
+}
