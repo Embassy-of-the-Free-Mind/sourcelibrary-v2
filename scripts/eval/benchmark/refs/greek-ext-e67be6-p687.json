@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e67be6-p687",
+  "substratum": "greek-1700-1799",
+  "title": "Plvtarchi Chaeronensis, qvae svpersvnt, omnia, graece et latine. 4, Alexandrum Magnum, Caesarem, Phocionem, Catonem Mino",
+  "year": 1776,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 742,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg052.perseus-grc1",
+      "hits": 21
+    },
+    {
+      "id": "tlg0652.tlg001.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0545.tlg001.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg052.perseus-grc1",
+  "work_title": "Plutarch — Tiberius and Caius Gracchus",
+  "edition": "Plutarch. Plutarch's Lives, Vol. X. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1921.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg052",
+  "phrase_hits": 21,
+  "etext_chars": 60628,
+  "window_words": 120,
+  "window_chars": 850,
+  "overlap": 0.893,
+  "align_trim": {
+    "letters_before": 725,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07"
+    ],
+    "letters_after": 715
+  }
+}

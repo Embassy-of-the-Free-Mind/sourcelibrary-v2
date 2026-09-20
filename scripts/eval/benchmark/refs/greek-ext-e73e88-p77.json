@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e73e88-p77",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchi Chaeronensis quae supersunt omnia :cum adnotationibus variorum adiectaque lectionis diversitate. 1",
+  "year": 1791,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1333,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg002.perseus-grc2",
+      "hits": 21
+    },
+    {
+      "id": "tlg3135.tlg001.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg2048.tlg001.1st1K-grc1",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg002.perseus-grc2",
+  "work_title": "Plutarch — Romulus",
+  "edition": "Plutarch. Plutarch's Lives, Vol. I. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1914.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg002",
+  "phrase_hits": 21,
+  "etext_chars": 61012,
+  "window_words": 238,
+  "window_chars": 1604,
+  "overlap": 0.669,
+  "align_trim": {
+    "letters_before": 1331,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07"
+    ],
+    "letters_after": 1331
+  }
+}

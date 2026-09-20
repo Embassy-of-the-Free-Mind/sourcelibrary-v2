@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-f5190c-p137",
+  "substratum": "greek-1450-1699",
+  "title": "Ammonii Hermiae In Praedicamenta Aristotelis commentarius",
+  "year": 1546,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1275,
+  "corpus_votes": [
+    {
+      "id": "tlg4015.tlg001.1st1K-grc1",
+      "hits": 19
+    },
+    {
+      "id": "tlg4019.tlg002.1st1K-grc1",
+      "hits": 6
+    },
+    {
+      "id": "tlg4016.tlg002.1st1K-grc1",
+      "hits": 5
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg4015.tlg001.1st1K-grc1",
+  "work_title": "John Philoponus — In Aristotelis Categorias Commentarium",
+  "edition": "John Philoponus. Philoponi (olim Ammonii) in Aristotelis categorias commentarium (Commentaria in Aristotelem Graeca, Vol 13.1). Busse, Adolf, editor. Berlin: Reimer, 1898.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg4015/tlg001",
+  "phrase_hits": 19,
+  "etext_chars": 390842,
+  "window_words": 371,
+  "window_chars": 1448,
+  "overlap": 0.82,
+  "align_trim": {
+    "letters_before": 1845,
+    "reads_used": [
+      "gemini-3-flash-preview:0.17",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17"
+    ],
+    "letters_after": 1157
+  }
+}

@@ -28,6 +28,20 @@
   "phrase_hits": 24,
   "etext_chars": 124633,
   "window_words": 232,
-  "window_chars": 1372,
-  "overlap": 1
+  "window_chars": 1371,
+  "overlap": 1,
+  "align_trim": {
+    "letters_before": 1087,
+    "reads_used": [
+      "cllg-qwen3vl-8b:0.08",
+      "dots-mocr:0.07",
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.06",
+      "gemini-3.1-flash-lite-b:0.06",
+      "kraken-greek-cllg:0.07",
+      "surya2:0.08",
+      "tesseract-grc:0.21"
+    ],
+    "letters_after": 1086
+  }
 }

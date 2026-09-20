@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-cbbfb1-p39",
+  "substratum": "greek-1450-1699",
+  "title": "Moschiōnos peri gynaikeiōn pathōn, id est, Moschionis medici graeci de morbis muliebribus liber unus : cum Conradi Gesne",
+  "year": 1566,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1452,
+  "corpus_votes": [
+    {
+      "id": "tlg2003.tlg004.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0057.tlg017.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0527.tlg026.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

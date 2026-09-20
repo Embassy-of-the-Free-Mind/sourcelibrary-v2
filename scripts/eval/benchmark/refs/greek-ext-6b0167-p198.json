@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-6b0167-p198",
+  "substratum": "greek-1700-1799",
+  "title": "Luciani Samosatensis Opera (Vol. 4)",
+  "year": 1790,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 663,
+  "corpus_votes": [
+    {
+      "id": "tlg0062.tlg053.perseus-grc2",
+      "hits": 18
+    },
+    {
+      "id": "tlg0062.tlg053.perseus-grc3",
+      "hits": 18
+    },
+    {
+      "id": "tlg0062.tlg003.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 36,
+  "source": "el.wikisource",
+  "work": "Πώς δει ιστορίαν συγγράφειν",
+  "work_title": "Πώς δει ιστορίαν συγγράφειν",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%A0%CF%8E%CF%82%20%CE%B4%CE%B5%CE%B9%20%CE%B9%CF%83%CF%84%CE%BF%CF%81%CE%AF%CE%B1%CE%BD%20%CF%83%CF%85%CE%B3%CE%B3%CF%81%CE%AC%CF%86%CE%B5%CE%B9%CE%BD",
+  "phrase_hits": 5,
+  "etext_chars": 48242,
+  "window_words": 121,
+  "window_chars": 795,
+  "overlap": 0.794,
+  "align_trim": {
+    "letters_before": 671,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.05",
+      "gemini-3.1-flash-lite-b:0.05"
+    ],
+    "letters_after": 653
+  }
+}

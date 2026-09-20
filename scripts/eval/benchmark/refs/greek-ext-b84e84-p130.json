@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-b84e84-p130",
+  "substratum": "greek-1450-1699",
+  "title": "Loukianou Hapanta / Luciani Opera",
+  "year": 1545,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1041,
+  "corpus_votes": [
+    {
+      "id": "tlg0061.tlg001.1st1K-grc1",
+      "hits": 20
+    },
+    {
+      "id": "tlg4084.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0526.tlg001.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0061.tlg001.1st1K-grc1",
+  "work_title": "Pseudo-Lucian — Asinus",
+  "edition": "Lucian (Pseudo). Luciani Samosatensis Opera, Vol. 2. Jacobitz, Karl, editor. Leipzig: Teuber, 1913.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0061/tlg001",
+  "phrase_hits": 20,
+  "etext_chars": 59051,
+  "window_words": 204,
+  "window_chars": 1231,
+  "overlap": 0.868,
+  "align_trim": {
+    "letters_before": 998,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.13",
+      "gemini-3.1-flash-lite-b:0.13"
+    ],
+    "letters_after": 994
+  }
+}

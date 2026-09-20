@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-da33f7-p186",
+  "substratum": "greek-1450-1699",
+  "title": "Ars sacra philosophorum",
+  "year": 1491,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 837,
+  "corpus_votes": [
+    {
+      "id": "tlg1216.tlg001.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg2042.tlg019.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0086.tlg030.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

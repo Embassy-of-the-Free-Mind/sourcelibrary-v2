@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-dffea2-p46",
+  "substratum": "greek-1700-1799",
+  "title": "De poetica",
+  "year": 1745,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 658,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg034.digicorpus-grc2",
+      "hits": 15
+    },
+    {
+      "id": "tlg0086.tlg034.perseus-grc2",
+      "hits": 14
+    },
+    {
+      "id": "tlg4013.tlg004.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 26,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg034.digicorpus-grc2",
+  "work_title": "Aristotle — Poetics",
+  "edition": "Aristotle. Aristotelis Opera, Vol. 11. Bekker, Immanuel, editor. Oxford, UK: Oxford University Press, 1837.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg034",
+  "phrase_hits": 15,
+  "etext_chars": 60319,
+  "window_words": 118,
+  "window_chars": 777,
+  "overlap": 0.684,
+  "align_trim": {
+    "letters_before": 644,
+    "reads_used": [
+      "gemini-3-flash-preview:0.04",
+      "gemini-3.1-flash-lite:0.06",
+      "gemini-3.1-flash-lite-b:0.06"
+    ],
+    "letters_after": 638
+  }
+}

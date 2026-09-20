@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-26dbef-p141",
+  "substratum": "greek-1700-1799",
+  "title": "Hippokratous aphorismoi : = Hippocratis aphorismi : variorum auctorum, maxime Hippocratis &amp; Celsi, locis parallelis ",
+  "year": 1756,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 365,
+  "corpus_votes": [
+    {
+      "id": "tlg0057.tlg092.1st1K-grc1",
+      "hits": 7
+    },
+    {
+      "id": "tlg0627.tlg012.perseus-grc2",
+      "hits": 7
+    },
+    {
+      "id": "tlg0627.tlg012.1st1K-grc1",
+      "hits": 7
+    }
+  ],
+  "phrases": 18,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

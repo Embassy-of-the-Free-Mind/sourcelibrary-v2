@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-f59986-p157",
+  "substratum": "greek-1450-1699",
+  "title": "Logoi toutōni tōn rhētorōn. Aischinou. Lysiou. Alkidamantos. ... Orationes horum rhetorum. Aeschinis. Lysiae. Alcidamant",
+  "year": 1513,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3158,
+  "corpus_votes": [
+    {
+      "id": "tlg0027.tlg004.perseus-grc2",
+      "hits": 32
+    },
+    {
+      "id": "tlg4018.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0543.tlg001.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0027.tlg004.perseus-grc2",
+  "work_title": "Andocides — Against Alcibiades",
+  "edition": "Andocides. Minor Attic Orators, Vol. 1. Maidment, Kenneth John, editor. London: William Heinemann, Ltd.; Cambridge, MA: Harvard University Press, 1941 (1960 printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0027/tlg004",
+  "phrase_hits": 32,
+  "etext_chars": 18462,
+  "window_words": 575,
+  "window_chars": 3885,
+  "overlap": 0.851,
+  "align_trim": {
+    "letters_before": 3217,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17"
+    ],
+    "letters_after": 3215
+  }
+}

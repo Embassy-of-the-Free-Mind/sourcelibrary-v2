@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e6d5b3-p472",
+  "substratum": "greek-1700-1799",
+  "title": "Aristotelis Opera Omnia :Graece. 2",
+  "year": 1792,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 571,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg001.1st1K-grc1",
+      "hits": 14
+    },
+    {
+      "id": "tlg0086.tlg001.1st1K-grc2",
+      "hits": 14
+    },
+    {
+      "id": "tlg4015.tlg004.1st1K-grc1",
+      "hits": 8
+    }
+  ],
+  "phrases": 25,
+  "source": "el.wikisource",
+  "work": "Αναλυτικών υστέρων/1",
+  "work_title": "Αναλυτικών υστέρων/1",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%91%CE%BD%CE%B1%CE%BB%CF%85%CF%84%CE%B9%CE%BA%CF%8E%CE%BD%20%CF%85%CF%83%CF%84%CE%AD%CF%81%CF%89%CE%BD%2F1",
+  "phrase_hits": 3,
+  "etext_chars": 81111,
+  "window_words": 129,
+  "window_chars": 719,
+  "overlap": 1,
+  "align_trim": {
+    "letters_before": 580,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.03",
+      "gemini-3.1-flash-lite-b:0.03"
+    ],
+    "letters_after": 562
+  }
+}

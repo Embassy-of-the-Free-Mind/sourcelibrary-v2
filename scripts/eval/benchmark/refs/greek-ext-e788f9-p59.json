@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e788f9-p59",
+  "substratum": "greek-1700-1799",
+  "title": "De vitis, dogmatibus et apophthegmatibus liber decimus",
+  "year": 1791,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 856,
+  "corpus_votes": [
+    {
+      "id": "tlg0537.tlg010.1st1K-grc1",
+      "hits": 18
+    },
+    {
+      "id": "tlg0004.tlg001.perseus-grc2",
+      "hits": 15
+    },
+    {
+      "id": "tlg4015.tlg005.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0537.tlg010.1st1K-grc1",
+  "work_title": "Epicurus — Epistula ad Herodotum",
+  "edition": "Epicurus. Epistula Prima ad Herodotum. Epicuri epistulae tres et ratae sententiae a Laertio Diogene Servatae. von der Mühll, Peter, editor. Leipzig: Teubner, 1922.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0537/tlg010",
+  "phrase_hits": 18,
+  "etext_chars": 28059,
+  "window_words": 163,
+  "window_chars": 987,
+  "overlap": 0.852,
+  "align_trim": {
+    "letters_before": 827,
+    "reads_used": [
+      "gemini-3-flash-preview:0.10",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11"
+    ],
+    "letters_after": 810
+  }
+}

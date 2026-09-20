@@ -1,0 +1,34 @@
+{
+  "slug": "greek-ext-843b2c-p235",
+  "substratum": "greek-1700-1799",
+  "title": "[Greek: Panoplia dogmatike]",
+  "year": 1710,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3662,
+  "corpus_votes": [
+    {
+      "id": "tlg4102.tlg011.1st1K-grc1",
+      "hits": 7
+    },
+    {
+      "id": "tlg4102.tlg012.1st1K-grc1",
+      "hits": 6
+    },
+    {
+      "id": "tlg2042.tlg005.1st1K-grc1",
+      "hits": 4
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg4102.tlg011.1st1K-grc1",
+  "work_title": "Catenae (Novum Testamentum) — Catena In Epistulam Ad Romanos (Typus Monacensis) (E Cod. Monac. gr. 412)",
+  "edition": "Catenae (Novum Testamentum). Catenae Graecorum Patrum in Novum Testamentum, Vol 4. Cramer, John Anthony, editor. Oxford: Oxford University Pres, 1844.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg4102/tlg011",
+  "phrase_hits": 7,
+  "etext_chars": 719089,
+  "window_words": 1056,
+  "window_chars": 6716,
+  "overlap": 0.224,
+  "reason": "work identified but window overlap 0.22 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

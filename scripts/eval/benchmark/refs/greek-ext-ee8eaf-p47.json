@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-ee8eaf-p47",
+  "substratum": "greek-1450-1699",
+  "title": "De Herone et Leandro :mit der lat. Übers. des Marcus Musurus. Mit griech. Vorwort von Aldus Manutius an die Gelehrten, m",
+  "year": 1495,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 721,
+  "corpus_votes": [
+    {
+      "id": "tlg0012.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg2045.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg0007.tlg076.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "el.wikisource",
+  "work": "Τα καθ' Ηρώ και Λέανδρον",
+  "work_title": "Τα καθ' Ηρώ και Λέανδρον",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%A4%CE%B1%20%CE%BA%CE%B1%CE%B8'%20%CE%97%CF%81%CF%8E%20%CE%BA%CE%B1%CE%B9%20%CE%9B%CE%AD%CE%B1%CE%BD%CE%B4%CF%81%CE%BF%CE%BD",
+  "phrase_hits": 4,
+  "etext_chars": 15435,
+  "window_words": 121,
+  "window_chars": 883,
+  "overlap": 0.913,
+  "align_trim": {
+    "letters_before": 761,
+    "reads_used": [
+      "gemini-3-flash-preview:0.02",
+      "gemini-3.1-flash-lite:0.15",
+      "gemini-3.1-flash-lite-b:0.15"
+    ],
+    "letters_after": 723
+  }
+}

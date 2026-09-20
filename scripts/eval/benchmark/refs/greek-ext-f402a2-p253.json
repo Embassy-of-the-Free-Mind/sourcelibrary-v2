@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-f402a2-p253",
+  "substratum": "greek-1450-1699",
+  "title": "Habentur hoc uolumine hæc, uidelicet. Vita, & Fabellæ Aesopi cum interpretatione latina, ita tamen ut separari a græco p",
+  "year": 1505,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 2718,
+  "corpus_votes": [
+    {
+      "id": "tlg1553.tlg001.1st1K-grc1",
+      "hits": 12
+    },
+    {
+      "id": "tlg2021.tlg002.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0098.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg1553.tlg001.1st1K-grc1",
+  "work_title": "Palaiphatos — De Incredibilibus",
+  "edition": "Palaiphatos. Mythographi Graeci. Vol. 3, fasc. 2. Festa, Nicola, editor. Leipzig: Teubner, 1902.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg1553/tlg001",
+  "phrase_hits": 12,
+  "etext_chars": 47098,
+  "window_words": 490,
+  "window_chars": 3113,
+  "overlap": 0.539,
+  "align_trim": {
+    "letters_before": 2513,
+    "reads_used": [
+      "gemini-3-flash-preview:0.35",
+      "gemini-3.1-flash-lite:0.42",
+      "gemini-3.1-flash-lite-b:0.42"
+    ],
+    "letters_after": 2510
+  }
+}

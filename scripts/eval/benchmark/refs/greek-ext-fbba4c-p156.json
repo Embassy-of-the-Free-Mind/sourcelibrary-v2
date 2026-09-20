@@ -1,0 +1,39 @@
+{
+  "slug": "greek-ext-fbba4c-p156",
+  "substratum": "greek-1450-1699",
+  "title": "Callimachi Hymni et Epigrammata",
+  "year": 1577,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1318,
+  "corpus_votes": [
+    {
+      "id": "tlg0533.tlg015.perseus-grc3",
+      "hits": 17
+    },
+    {
+      "id": "tlg0533.tlg015.perseus-grc4",
+      "hits": 16
+    },
+    {
+      "id": "tlg5031.tlg002.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0533.tlg015.perseus-grc3",
+  "work_title": "Callimachus — Hymn to Zeus",
+  "edition": "Callimachus and Lycophron; Aratus. Mair, A. W., editor. London: William Heinemann; New York: G. P. Putnam's Sons, 1921.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0533/tlg015",
+  "phrase_hits": 17,
+  "etext_chars": 4311,
+  "window_words": 141,
+  "window_chars": 930,
+  "overlap": 0.511,
+  "align_trim": {
+    "letters_before": 742,
+    "reads_used": [],
+    "letters_after": 742,
+    "kept": "whole window (no aligning read, or window over the cap)"
+  }
+}

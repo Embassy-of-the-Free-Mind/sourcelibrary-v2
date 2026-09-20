@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-ddeaed-p48",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelus Ēthikōn Nikomacheiōn Biblia Deka : = Aristotelis De Moribus ad Nicomachum libri decem",
+  "year": 1549,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 861,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg010.perseus-grc2",
+      "hits": 18
+    },
+    {
+      "id": "tlg4031.tlg002.1st1K-grc1",
+      "hits": 8
+    },
+    {
+      "id": "tlg4033.tlg003.1st1K-grc1",
+      "hits": 4
+    }
+  ],
+  "phrases": 37,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg010.perseus-grc2",
+  "work_title": "Aristotle — Nicomachean Ethics",
+  "edition": "Aristotle. Aristotelis Ethica Nicomachea. Bywater, Ingram, editor. Oxford: Clarendon Press, 1894.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg010",
+  "phrase_hits": 18,
+  "etext_chars": 330265,
+  "window_words": 212,
+  "window_chars": 1038,
+  "overlap": 0.837,
+  "align_trim": {
+    "letters_before": 1074,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11"
+    ],
+    "letters_after": 848
+  }
+}

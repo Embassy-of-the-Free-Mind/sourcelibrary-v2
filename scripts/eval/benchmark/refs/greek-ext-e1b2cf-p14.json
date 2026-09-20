@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e1b2cf-p14",
+  "substratum": "greek-1450-1699",
+  "title": "De primo frigido",
+  "year": 1552,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1336,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg127.perseus-grc3",
+      "hits": 25
+    },
+    {
+      "id": "tlg1414.tlg001.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0059.tlg023.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg127.perseus-grc3",
+  "work_title": "Plutarch — De primo frigido",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol V. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1893.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg127",
+  "phrase_hits": 25,
+  "etext_chars": 31180,
+  "window_words": 278,
+  "window_chars": 1756,
+  "overlap": 0.798,
+  "align_trim": {
+    "letters_before": 1458,
+    "reads_used": [
+      "gemini-3-flash-preview:0.12",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17"
+    ],
+    "letters_after": 1439
+  }
+}

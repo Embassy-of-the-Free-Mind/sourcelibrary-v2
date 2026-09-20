@@ -1,0 +1,39 @@
+{
+  "slug": "greek-ext-b491d9-p174",
+  "substratum": "greek-1450-1699",
+  "title": "Fabulae",
+  "year": 1534,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 825,
+  "corpus_votes": [
+    {
+      "id": "tlg0096.tlg002.1st1K-grc1",
+      "hits": 18
+    },
+    {
+      "id": "tlg0096.tlg002.opp-grc3",
+      "hits": 9
+    },
+    {
+      "id": "tlg0614.tlg001.1st1K-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0096.tlg002.1st1K-grc1",
+  "work_title": "Aesop — Fabulae",
+  "edition": "Fabulae Aesopicae Collectae. Halm, Karl, editor. Leipzig: Teubner, 1872",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0096/tlg002",
+  "phrase_hits": 18,
+  "etext_chars": 278176,
+  "window_words": 150,
+  "window_chars": 1014,
+  "overlap": 0.503,
+  "align_trim": {
+    "letters_before": 745,
+    "reads_used": [],
+    "letters_after": 745,
+    "kept": "whole window (no aligning read, or window over the cap)"
+  }
+}

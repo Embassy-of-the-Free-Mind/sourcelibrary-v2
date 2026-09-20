@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-eb49dc-p56",
+  "substratum": "greek-1700-1799",
+  "title": "La Poetica de Aristoteles",
+  "year": 1778,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 753,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg034.perseus-grc2",
+      "hits": 14
+    },
+    {
+      "id": "tlg0086.tlg034.digicorpus-grc2",
+      "hits": 13
+    },
+    {
+      "id": "tlg4026.tlg001.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 27,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg034.perseus-grc2",
+  "work_title": "Aristotle — Poetics",
+  "edition": "Aristotle. Aristotelis De arte poetica liber. Kassel, Rudolf, editor. Oxford, UK: Clarendon Press, 1965 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg034",
+  "phrase_hits": 14,
+  "etext_chars": 59724,
+  "window_words": 125,
+  "window_chars": 746,
+  "overlap": 0.733,
+  "align_trim": {
+    "letters_before": 622,
+    "reads_used": [
+      "gemini-3-flash-preview:0.28",
+      "gemini-3.1-flash-lite:0.29",
+      "gemini-3.1-flash-lite-b:0.29"
+    ],
+    "letters_after": 604
+  }
+}

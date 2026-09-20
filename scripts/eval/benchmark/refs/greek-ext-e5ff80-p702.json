@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e5ff80-p702",
+  "substratum": "greek-1700-1799",
+  "title": "De vitis, dogmatibus et apophthegmatibus clarorum philosophorum",
+  "year": 1759,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 829,
+  "corpus_votes": [
+    {
+      "id": "tlg0537.tlg010.1st1K-grc1",
+      "hits": 12
+    },
+    {
+      "id": "tlg0004.tlg001.perseus-grc2",
+      "hits": 12
+    },
+    {
+      "id": "tlg0086.tlg013.1st1K-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "el.wikisource",
+  "work": "Βίοι φιλοσόφων/Ι",
+  "work_title": "Βίοι φιλοσόφων/Ι",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%92%CE%AF%CE%BF%CE%B9%20%CF%86%CE%B9%CE%BB%CE%BF%CF%83%CF%8C%CF%86%CF%89%CE%BD%2F%CE%99",
+  "phrase_hits": 2,
+  "etext_chars": 90104,
+  "window_words": 248,
+  "window_chars": 1053,
+  "overlap": 0.39,
+  "align_trim": {
+    "letters_before": 1274,
+    "reads_used": [
+      "gemini-3-flash-preview:0.16",
+      "gemini-3.1-flash-lite:0.16",
+      "gemini-3.1-flash-lite-b:0.16"
+    ],
+    "letters_after": 849
+  }
+}

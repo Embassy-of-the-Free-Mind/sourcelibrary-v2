@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-cbb0a8-p230",
+  "substratum": "greek-1450-1699",
+  "title": "Stoicheiōsis tēs Christianōn pisteōs, ē katēchismos kata tēn palaian onomasian : = Rudimenta fidei Christianae, vel Rudi",
+  "year": 1565,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 669,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg068.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0007.tlg121.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0027.tlg001.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

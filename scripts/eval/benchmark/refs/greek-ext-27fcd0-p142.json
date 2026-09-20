@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-27fcd0-p142",
+  "substratum": "greek-1450-1699",
+  "title": "Alexandri medici De febribus / Galeni Opera quaedam",
+  "year": 1491,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 985,
+  "corpus_votes": [
+    {
+      "id": "tlg0057.tlg045.1st1K-grc1",
+      "hits": 10
+    },
+    {
+      "id": "tlg0057.tlg017.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0627.tlg007.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0057.tlg045.1st1K-grc1",
+  "work_title": "Galen — De differentiis febrium",
+  "edition": "Galen. Claudii Galeni Opera Omnia, Volume 7. Kühn, Karl Gottlob, editor. Leipzig: Knobloch, 1824.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0057/tlg045",
+  "phrase_hits": 10,
+  "etext_chars": 132319,
+  "window_words": 176,
+  "window_chars": 1148,
+  "overlap": 0.481,
+  "align_trim": {
+    "letters_before": 941,
+    "reads_used": [
+      "gemini-3-flash-preview:0.28",
+      "gemini-3.1-flash-lite:0.37",
+      "gemini-3.1-flash-lite-b:0.37"
+    ],
+    "letters_after": 926
+  }
+}

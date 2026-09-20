@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e4881f-p230",
+  "substratum": "greek-1700-1799",
+  "title": "Diogenes Laertii de Vitis, Dogmatibus et Apophtegmatibus Clarorum Philosophorum Libri X. :Graece et Latine Ad Fidem Opti",
+  "year": 1739,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 457,
+  "corpus_votes": [
+    {
+      "id": "tlg1264.tlg002.1st1K-grc1",
+      "hits": 14
+    },
+    {
+      "id": "tlg0004.tlg001.perseus-grc2",
+      "hits": 14
+    },
+    {
+      "id": "tlg0732.tlg005.1st1K-grc1",
+      "hits": 3
+    }
+  ],
+  "phrases": 28,
+  "source": "el.wikisource",
+  "work": "Βίοι φιλοσόφων/Ζ",
+  "work_title": "Βίοι φιλοσόφων/Ζ",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%92%CE%AF%CE%BF%CE%B9%20%CF%86%CE%B9%CE%BB%CE%BF%CF%83%CF%8C%CF%86%CF%89%CE%BD%2F%CE%96",
+  "phrase_hits": 3,
+  "etext_chars": 120418,
+  "window_words": 100,
+  "window_chars": 565,
+  "overlap": 0.842,
+  "align_trim": {
+    "letters_before": 455,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07"
+    ],
+    "letters_after": 445
+  }
+}

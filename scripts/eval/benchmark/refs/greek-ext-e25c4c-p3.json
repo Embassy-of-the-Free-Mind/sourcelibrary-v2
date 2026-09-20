@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e25c4c-p3",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelus Oikonomika : = Aristotelis Oeconomica, Sive de Rebus domesticis",
+  "year": 1577,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1448,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg029.perseus-grc2",
+      "hits": 27
+    },
+    {
+      "id": "tlg0059.tlg023.perseus-grc2",
+      "hits": 3
+    },
+    {
+      "id": "tlg0086.tlg009.perseus-grc2",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg029.perseus-grc2",
+  "work_title": "Aristotle — Economics",
+  "edition": "Aristotle. Metaphysics; Oeconomica and Magna Moralia. Armstrong, George Cyril, editor. London: William Heinemann Ltd.; Cambridge, MA: Harvard University Press, 1935 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg029",
+  "phrase_hits": 27,
+  "etext_chars": 39974,
+  "window_words": 296,
+  "window_chars": 1695,
+  "overlap": 0.898,
+  "align_trim": {
+    "letters_before": 1470,
+    "reads_used": [
+      "gemini-3-flash-preview:0.08",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17"
+    ],
+    "letters_after": 1365
+  }
+}

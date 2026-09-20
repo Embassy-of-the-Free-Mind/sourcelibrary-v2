@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-8632bc-p404",
+  "substratum": "greek-1450-1699",
+  "title": "Theophrastus, De Historia Plantarum & De Causis Plantarum (Aldine, Vol. 4, 1497)",
+  "year": 1497,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1503,
+  "corpus_votes": [
+    {
+      "id": "tlg0093.tlg002.1st1K-grc1",
+      "hits": 20
+    },
+    {
+      "id": "tlg0656.tlg001.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0008.tlg001.perseus-grc3",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0093.tlg002.1st1K-grc1",
+  "work_title": "Theophrastus — On the Causes of Plants",
+  "edition": "Theophrastus. Theophrasti Eresii opera quae supersunt omnia, vol. II. Wimmer, Friedrich, editor. Leipzig: Teubner, 1854.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0093/tlg002",
+  "phrase_hits": 20,
+  "etext_chars": 406927,
+  "window_words": 304,
+  "window_chars": 1855,
+  "overlap": 0.702,
+  "align_trim": {
+    "letters_before": 1530,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.19",
+      "gemini-3.1-flash-lite-b:0.19"
+    ],
+    "letters_after": 1518
+  }
+}

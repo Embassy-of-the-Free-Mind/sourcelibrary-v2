@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-371648-p99",
+  "substratum": "greek-1450-1699",
+  "title": "Hermou tou Trismegistou Poimandres. Asklepiou horoi pros Ammona Basilea = : Mercurii Trismegisti Poemander, seu de potes",
+  "year": 1554,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1072,
+  "corpus_votes": [
+    {
+      "id": "tlg1286.tlg016.1st1K-grc1",
+      "hits": 22
+    },
+    {
+      "id": "tlg4018.tlg001.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg0732.tlg004.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg1286.tlg016.1st1K-grc1",
+  "work_title": "Hermetica — Ὅροι Ἀσκληπιοῦ πρὸς Ἄμμωνα βασιλέα",
+  "edition": "Hermetica. The Ancient Greek and Latin Writings which Contain Religious or Philosophic Teachings Ascribed to Hermes Trismegistus, Vol. I. Scott, Walter, editor. Oxford: Oxford University Press, 1924 (",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg1286/tlg016",
+  "phrase_hits": 22,
+  "etext_chars": 8500,
+  "window_words": 227,
+  "window_chars": 1396,
+  "overlap": 0.853,
+  "align_trim": {
+    "letters_before": 1154,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.16",
+      "gemini-3.1-flash-lite-b:0.09"
+    ],
+    "letters_after": 1102
+  }
+}

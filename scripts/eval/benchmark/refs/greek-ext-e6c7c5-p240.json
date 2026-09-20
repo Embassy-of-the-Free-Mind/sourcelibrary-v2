@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e6c7c5-p240",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchi Vitae parallelae Themistoclis et Camilli, Alexandri et Caesaris",
+  "year": 1788,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1287,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg048.perseus-grc2",
+      "hits": 30
+    },
+    {
+      "id": "tlg0543.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg0018.tlg030.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg048.perseus-grc2",
+  "work_title": "Plutarch — Caesar",
+  "edition": "Plutarch. Plutarch's Lives, Vol. VII. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1919.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg048",
+  "phrase_hits": 30,
+  "etext_chars": 107279,
+  "window_words": 212,
+  "window_chars": 1410,
+  "overlap": 0.91,
+  "align_trim": {
+    "letters_before": 1261,
+    "reads_used": [
+      "gemini-3-flash-preview:0.10",
+      "gemini-3.1-flash-lite:0.12",
+      "gemini-3.1-flash-lite-b:0.12"
+    ],
+    "letters_after": 1186
+  }
+}

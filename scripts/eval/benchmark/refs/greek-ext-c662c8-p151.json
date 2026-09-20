@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-c662c8-p151",
+  "substratum": "greek-1450-1699",
+  "title": "Ta  De Enestin En Tē De Tē Biblō Tu Agiu Dionysiu ... : = Hæc Insvnt In Hoc Libro Sancti Dionysii",
+  "year": 1516,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1032,
+  "corpus_votes": [
+    {
+      "id": "tlg0562.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg0018.tlg022.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg4031.tlg002.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e56930-p24",
+  "substratum": "greek-1700-1799",
+  "title": "Platōnos Apologia Sōkratus = Platonis Apologia Socratis",
+  "year": 1739,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1236,
+  "corpus_votes": [
+    {
+      "id": "tlg0059.tlg002.perseus-grc2",
+      "hits": 20
+    },
+    {
+      "id": "tlg0059.tlg034.perseus-grc2",
+      "hits": 3
+    },
+    {
+      "id": "tlg2018.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0059.tlg002.perseus-grc2",
+  "work_title": "Plato — Apology",
+  "edition": "Platonis Opera, Tomus I: Tetralogia I-II. Burnet, John, 1863-1928, editor. Oxford: Clarendon Press, 1905.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0059/tlg002",
+  "phrase_hits": 20,
+  "etext_chars": 52496,
+  "window_words": 342,
+  "window_chars": 1517,
+  "overlap": 0.771,
+  "align_trim": {
+    "letters_before": 1684,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.08",
+      "gemini-3.1-flash-lite-b:0.08"
+    ],
+    "letters_after": 1208
+  }
+}

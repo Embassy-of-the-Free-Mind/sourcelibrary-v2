@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-87583c-p174",
+  "substratum": "greek-1450-1699",
+  "title": "Cl. Galeni Pergameni nobilissimi medici libri aliquot Graeci : partim hactenus non visi, partim à mendis quibus scateban",
+  "year": 1544,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1484,
+  "corpus_votes": [
+    {
+      "id": "tlg0057.tlg011.1st1K-grc1",
+      "hits": 29
+    },
+    {
+      "id": "tlg2703.tlg001.1st1K-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0008.tlg001.perseus-grc3",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0057.tlg011.1st1K-grc1",
+  "work_title": "Galen — De anatomicis administrationibus",
+  "edition": "Galen. Claudii Galeni Opera Omnia, Volume 2. Kühn, Karl Gottlob, editor. Leipzig: Knobloch, 1821.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0057/tlg011",
+  "phrase_hits": 29,
+  "etext_chars": 487667,
+  "window_words": 355,
+  "window_chars": 1824,
+  "overlap": 0.826,
+  "align_trim": {
+    "letters_before": 1853,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.16",
+      "gemini-3.1-flash-lite-b:0.16"
+    ],
+    "letters_after": 1476
+  }
+}

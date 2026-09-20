@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-c79349-p200",
+  "substratum": "greek-1450-1699",
+  "title": "Thoukydidēs meta scholiōn palaiōn, kai pany ophelimōn, chōris hōn ho syngrapheus poly aneucherēs esti : = Thucydides cum",
+  "year": 1540,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3220,
+  "corpus_votes": [
+    {
+      "id": "tlg0003.tlg001.perseus-grc2",
+      "hits": 33
+    },
+    {
+      "id": "tlg0007.tlg060.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg3135.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0003.tlg001.perseus-grc2",
+  "work_title": "Thucydides — History of the Peloponnesian War",
+  "edition": "Thucydides. Historiae, Vol 1-2. Jones, Henry Stuart, editor. Oxford: Oxford University Press, 1910. (1942 printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0003/tlg001",
+  "phrase_hits": 33,
+  "etext_chars": 966987,
+  "window_words": 691,
+  "window_chars": 3931,
+  "overlap": 0.872,
+  "align_trim": {
+    "letters_before": 3709,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.24",
+      "gemini-3.1-flash-lite-b:0.24"
+    ],
+    "letters_after": 3239
+  }
+}

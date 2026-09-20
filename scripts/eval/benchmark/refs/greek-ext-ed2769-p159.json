@@ -1,0 +1,38 @@
+{
+  "slug": "greek-ext-ed2769-p159",
+  "substratum": "greek-1450-1699",
+  "title": "Aeschyli Tragoediae Sex : = Aischylu tragodiai hex.",
+  "year": 1518,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 871,
+  "corpus_votes": [
+    {
+      "id": "tlg0085.tlg006.perseus-grc2",
+      "hits": 13
+    },
+    {
+      "id": "tlg0085.tlg006.1st1K-grc1",
+      "hits": 13
+    }
+  ],
+  "phrases": 40,
+  "source": "el.wikisource",
+  "work": "Χοηφόροι",
+  "work_title": "Χοηφόροι",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%A7%CE%BF%CE%B7%CF%86%CF%8C%CF%81%CE%BF%CE%B9",
+  "phrase_hits": 2,
+  "etext_chars": 38720,
+  "window_words": 181,
+  "window_chars": 1136,
+  "overlap": 0.488,
+  "align_trim": {
+    "letters_before": 1036,
+    "reads_used": [
+      "gemini-3-flash-preview:0.25",
+      "gemini-3.1-flash-lite:0.29",
+      "gemini-3.1-flash-lite-b:0.29"
+    ],
+    "letters_after": 898
+  }
+}

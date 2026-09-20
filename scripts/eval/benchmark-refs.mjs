@@ -287,6 +287,52 @@ async function wikisourceLookup(probeWords, log) {
   log(`    el.wikisource: ${best[0]} ${best[1]}/${phrases.length} phrases, window overlap ${w.overlap.toFixed(2)}`);
   return { source: 'el.wikisource', work: best[0], work_title: best[0], edition: null, url: `https://el.wikisource.org/wiki/${encodeURIComponent(best[0])}`, phrase_hits: best[1], etext_chars: raw.length, window: raw.slice(offs[w.from][0], offs[w.to - 1][1]), overlap: w.overlap, window_words: w.to - w.from };
 }
+// ── Alignment trim (phase B, 2026-09-20; a DEVIATION from the preregistered trim, reported) ──
+// The bigram trim above left the window 20–40 % longer than the page on a third of the early-print
+// leaves (measured: engine-letters / window-letters down to 0.6 with the engines agreeing with each
+// other), and the scorer's whole-window CER charges that overshoot to EVERY engine as deletions —
+// the paired verdicts survive it, the absolute "is lite good enough" number does not. So the final
+// cut is by alignment: each scored read of the page is aligned to the best SUBSTRING of the window
+// (Greek letters only, case-folded; free skip at the window's two ends), reads that align at < 0.5
+// CER contribute their span, and the window is cut to the UNION of the spans. No engine is charged
+// for text another engine read; a header no engine read is dropped for all of them alike. The
+// per-page before/after letter counts and the reads used are recorded on the row.
+const GREEK_RE = /\p{Script=Greek}/u;
+function alignSpan(hyp, ref) {   // arrays of letters; returns the best span of ref and the edits within it
+  const n = hyp.length, m = ref.length; if (!n || !m) return null;
+  let prev = new Int32Array(m + 1), cur = new Int32Array(m + 1), ps = new Int32Array(m + 1), cs = new Int32Array(m + 1);
+  for (let j = 0; j <= m; j++) { prev[j] = 0; ps[j] = j; }
+  for (let i = 1; i <= n; i++) {
+    cur[0] = i; cs[0] = 0;
+    for (let j = 1; j <= m; j++) {
+      const sub = prev[j - 1] + (hyp[i - 1] === ref[j - 1] ? 0 : 1), del = prev[j] + 1, ins = cur[j - 1] + 1;
+      if (sub <= del && sub <= ins) { cur[j] = sub; cs[j] = ps[j - 1]; } else if (del <= ins) { cur[j] = del; cs[j] = ps[j]; } else { cur[j] = ins; cs[j] = cs[j - 1]; }
+    }
+    [prev, cur] = [cur, prev]; [ps, cs] = [cs, ps];
+  }
+  let best = Infinity, end = 0; for (let j = 0; j <= m; j++) if (prev[j] < best) { best = prev[j]; end = j; }
+  const start = ps[end]; return { start, end, cer: best / Math.max(1, end - start) };
+}
+function greekReads(p) {   // every scored engine's read of the page (not the classifier, not the screen)
+  const outRoot = path.join(ROOT, STRATUM, 'out'); const reads = {};
+  if (fs.existsSync(outRoot)) for (const e of fs.readdirSync(outRoot)) { if (e === 'script-class') continue; const f = path.join(outRoot, e, `${p.slug}.txt`); if (fs.existsSync(f)) reads[e] = fs.readFileSync(f, 'utf8'); }
+  return reads;
+}
+function alignTrim(window, reads) {
+  const w = window.normalize('NFC'); const pos = [], letters = [];
+  for (let i = 0; i < w.length; i++) if (GREEK_RE.test(w[i])) { pos.push(i); letters.push(w[i].toLowerCase()); }
+  const CAP = 6000; const refL = letters.slice(0, CAP);
+  let lo = Infinity, hi = -Infinity; const used = [];
+  for (const [e, text] of Object.entries(reads)) {
+    const hypL = [...text.normalize('NFC').toLowerCase().replace(/[^\p{Script=Greek}]+/gu, '')].slice(0, CAP);
+    if (hypL.length < 80) continue;
+    const a = alignSpan(hypL, refL); if (!a || a.cer >= 0.5 || a.end - a.start < 80) continue;
+    lo = Math.min(lo, a.start); hi = Math.max(hi, a.end); used.push(`${e}:${a.cer.toFixed(2)}`);
+  }
+  const note = { letters_before: letters.length, reads_used: used };
+  if (!used.length || refL.length < letters.length) { note.letters_after = letters.length; note.kept = 'whole window (no aligning read, or window over the cap)'; return { window: w, note }; }
+  const out = w.slice(pos[lo], pos[hi - 1] + 1); note.letters_after = hi - lo; return { window: out, note };
+}
 // Probe order for a Greek page: the longer Gemini read (the #4744 convention), else any other
 // engine's, else the free Tesseract screen read the seal step cached (phase A only — noisy on
 // ligatured type, so its hit rate is a LOWER bound on what the Gemini probe will find).
@@ -353,6 +399,7 @@ if (STRATUM.startsWith('greek')) {
     if (!src) { note.reason = 'no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)'; tally.none++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
     Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, edition: src.edition, url: src.url, phrase_hits: src.phrase_hits, etext_chars: src.etext_chars, window_words: src.window_words, window_chars: src.window.length, overlap: +src.overlap.toFixed(3) });
     if (src.overlap < MIN_OVERLAP) { note.reason = `work identified but window overlap ${src.overlap.toFixed(2)} < ${MIN_OVERLAP} (probe too noisy, or the page is commentary/paratext around the work)`; tally.work_only++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  ~ ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
+    const trimmed = alignTrim(src.window, greekReads(p)); note.align_trim = trimmed.note; src.window = trimmed.window; note.window_chars = src.window.length;
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     tally.built++; tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.by_sub[p.substratum] = (tally.by_sub[p.substratum] || 0) + 1;
     console.log(`  ✓ ${p.slug}: ${src.source} ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} window ${src.window_words} words / probe ${words.length} via ${probe.engine}`);

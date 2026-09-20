@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-85c00e-p285",
+  "substratum": "greek-1450-1699",
+  "title": "Tēs  Kainēs Diathēkēs hapanta : = Novi Testamenti omnia",
+  "year": 1538,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 910,
+  "corpus_votes": [
+    {
+      "id": "tlg0031.tlg003.perseus-grc2",
+      "hits": 17
+    },
+    {
+      "id": "tlg2021.tlg002.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg0031.tlg002.perseus-grc2",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0031.tlg003.perseus-grc2",
+  "work_title": "New Testament — Luke",
+  "edition": "The New Testament in the original Greek. Westcott, Brooke Foss; Hort, Fenton John Anthony, editors. New York: Harper and Brothers, 1882-1892.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0031/tlg003",
+  "phrase_hits": 17,
+  "etext_chars": 117998,
+  "window_words": 153,
+  "window_chars": 1010,
+  "overlap": 0.608,
+  "align_trim": {
+    "letters_before": 829,
+    "reads_used": [
+      "gemini-3-flash-preview:0.16",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17"
+    ],
+    "letters_after": 829
+  }
+}
