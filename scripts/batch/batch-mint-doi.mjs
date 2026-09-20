@@ -80,8 +80,22 @@ const LICENSE_MAP = {
 
 // ── Zenodo helpers ──────────────────────────────────────────────────
 
+/**
+ * Zenodo 403s a request that does not identify itself.
+ *
+ * Node's fetch sends undici's default User-Agent, and Zenodo's edge answers that
+ * with an HTML "Access to this resource has been restricted due to unusual traffic"
+ * page — a 403 where the API would return JSON. It is not the token, not the
+ * account, not the IP and not the endpoint: measured 2026-09-20, same host and
+ * token, POST to BOTH the legacy /deposit/depositions and the InvenioRDM /records
+ * returned 201 with a real User-Agent and 403 without it.
+ *
+ * Identifying ourselves is also just correct behaviour toward a public repository.
+ */
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+
 function zenodoHeaders(extra = {}) {
-  return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, ...extra };
+  return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
 }
 
 async function zenodoError(resp, context) {
@@ -110,7 +124,7 @@ async function zenodoUploadFile(draftId, filename, content) {
   // Step 1: init
   const initResp = await fetch(`${ZENODO_API}/records/${draftId}/draft/files`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    headers: zenodoHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify([{ key: filename }]),
   });
   if (!initResp.ok) await zenodoError(initResp, `file init (${filename})`);
@@ -119,14 +133,14 @@ async function zenodoUploadFile(draftId, filename, content) {
   const body = typeof content === 'string' ? new TextEncoder().encode(content) : new Uint8Array(content);
   const uploadResp = await fetch(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/content`,
-    { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/octet-stream' }, body },
+    { method: 'PUT', headers: zenodoHeaders({ 'Content-Type': 'application/octet-stream' }), body },
   );
   if (!uploadResp.ok) await zenodoError(uploadResp, `file upload (${filename})`);
 
   // Step 3: commit
   const commitResp = await fetch(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/commit`,
-    { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } },
+    { method: 'POST', headers: zenodoHeaders() },
   );
   if (!commitResp.ok) await zenodoError(commitResp, `file commit (${filename})`);
   return commitResp.json();
