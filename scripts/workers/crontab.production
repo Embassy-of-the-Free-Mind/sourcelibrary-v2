@@ -144,6 +144,11 @@
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
+# Syriac Kraken lane (#4883): re-transcribe every Syriac page with the open Kraken models on
+# this box's CPU (no Gemini, no cost), looped pages first; apply + release run under the same
+# tick. SYRIAC_KRAKEN_REPO points at the branch worktree until PR #4883 merges — then drop the
+# variable so it runs from /root/sourcelibrary. Touch /root/syriac-kraken/PAUSE to pause.
+*/30 * * * * SYRIAC_KRAKEN_REPO=/root/syriac-kraken/repo bash /root/syriac-kraken/repo/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
 # Withhold stale translations (#4523). Every apply pass of the re-OCR lane puts
 # more pages into the state where the English on the page was made from a
 # transcription we have since replaced — so the takedown has to be a STANDING
@@ -157,6 +162,15 @@
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+# Stale-translation marker (#4927). This daily sweep re-derives the verdict
+# (ocr.updated_at newer than translation.updated_at beyond the margin) for every
+# page whose OCR changed in the last 26h and for every page already carrying the
+# marker, so a re-OCR'd page is flagged within a day and a retranslated page is
+# cleared. Flagging only — it never withholds; the hourly withhold sweep above
+# is scoped to WITHHOLD_LANES. Runs before the 08:00 health snapshot.
+# ACTUATION: the marker is read by translate-worker's page selection and by
+# realtime-translate.mjs --stale — both paid lanes behind the daily spend dial.
+30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
 
 # Pipeline HOLD reconciliation (#4790, scripts/lib/pipeline-hold.mjs): a held book is a status no
 # lane selects plus a marker the status writers refuse. This finds the writer nobody guarded —

@@ -84,6 +84,16 @@ export async function GET(request: NextRequest) {
         pages_count: 1, pages_ocr: 1, pages_translated: 1,
         'taxonomy.cluster': 1, 'taxonomy.subcluster': 1,
         categories: 1, ia_identifier: 1,
+        // What the HOLDING LIBRARY stated about its page images. This endpoint
+        // ships no images and no image URLs, so nothing here is licensed by it —
+        // but a consumer who later wants the scans needs to know whose terms
+        // apply, and `status` says whether we read that from the library's own
+        // manifest or merely assumed it (#4939).
+        'image_source.provider_name': 1, 'image_source.contributing_library': 1,
+        'image_source.rights_normalized.class': 1,
+        'image_source.rights_normalized.status': 1,
+        'image_source.rights_normalized.statement_uri': 1,
+        'image_source.rights_normalized.attribution_required': 1,
       })
       .sort({ language: 1, year: 1 })
       .skip(offset)
@@ -126,6 +136,18 @@ export async function GET(request: NextRequest) {
       subcluster: b.taxonomy?.subcluster || null,
       categories: b.categories || [],
       url: `https://sourcelibrary.org/book/${b.slug || b._id}`,
+      // Page images are NOT part of any dataset licence and are not served here;
+      // they remain under the holding library's terms. Stated so a licensee can
+      // filter rather than assume. `status: 'assumed-by-importer'` means we have
+      // not verified it against the library's own record.
+      image_rights: {
+        holding_library: b.image_source?.contributing_library || b.image_source?.provider_name || null,
+        class: b.image_source?.rights_normalized?.class || 'unknown',
+        status: b.image_source?.rights_normalized?.status || 'unknown',
+        statement_uri: b.image_source?.rights_normalized?.statement_uri || null,
+        attribution_required: b.image_source?.rights_normalized?.attribution_required || null,
+        note: 'Applies to the holding library\u2019s page images, which this dataset does not include.',
+      },
     })),
   });
 }

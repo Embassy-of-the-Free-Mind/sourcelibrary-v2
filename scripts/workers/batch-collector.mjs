@@ -29,9 +29,11 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
+import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 
@@ -333,6 +335,17 @@ async function processOneJob(db, job) {
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
+        // A truncated generation cuts the LAST page mid-word; every page before
+        // it is complete. Drop only the tail rather than the whole response —
+        // the dropped page has no ocr.data, so it is re-selected next cycle.
+        // (In this branch one response covers N pages, so there is no single
+        // pageId to stamp a give-up on; see failedPageIds above.)
+        if (isTruncatedCandidate(candidate) && parsed.length > 0) {
+          const [droppedId] = parsed.pop();
+          failCount++;
+          noteFail(truncationFailReason(candidate));
+          console.warn(`  TRUNCATED: dropped partial tail page ${droppedId} (book: ${job.book_id}, ${candidate.finishReason})`);
+        }
         // One response covers N pages and reports one usageMetadata — split it
         // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
         // the whole request's tokens N times over.
@@ -373,6 +386,15 @@ async function processOneJob(db, job) {
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) {
           const reason = `no-text:${candidate?.finishReason || 'no-candidate'}`;
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
+        }
+        // The provider says this answer was cut off. Partial text is a FAILED
+        // read, not a short one: it has text and a non-refusal finishReason, so
+        // it matched neither branch above and was stored as a finished page
+        // (#4890). Routed through failedPageIds so the give-up counter applies —
+        // a page that always exceeds the token budget must stop being resubmitted.
+        if (isTruncatedCandidate(candidate)) {
+          const reason = truncationFailReason(candidate);
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
         }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
@@ -718,6 +740,7 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokens,
                 updated_at: now,
               },
+              $unset: CLEAR_STALE_UNSET,
             },
           },
         });
@@ -1696,3 +1719,4 @@ async function cleanupStaleFiles() {
 }
 
 run().then(() => cleanupStaleFiles()).catch(err => { console.error(err); process.exit(1); });
+

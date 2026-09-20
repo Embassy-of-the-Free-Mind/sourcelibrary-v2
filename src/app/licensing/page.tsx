@@ -199,6 +199,17 @@ export default function LicensingPage() {
             depreciates.
           </p>
           <p className="text-secondary leading-relaxed">
+            <strong>What is not included: the page images.</strong> A license covers
+            our text layer &mdash; transcriptions, translations, metadata and editorial
+            content. It does not cover the holding libraries&rsquo; digital
+            reproductions of the originals, which stay under whatever terms each
+            library sets, and which we neither sublicense nor deliver in a dataset
+            export. Every record we ship carries that library&rsquo;s name and its
+            stated rights class, so you can see whose terms apply before you ask them
+            for the scans.
+          </p>
+
+          <p className="text-secondary leading-relaxed">
             <strong>Unlicensed training use is unauthorized.</strong> Where we identify
             training use of our content without a license, we will invoice at the
             standard rates above and pursue payment under the reserved rights described

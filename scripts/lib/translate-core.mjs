@@ -26,6 +26,7 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -491,6 +492,8 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
         ...(extraSet || {}),
         updated_at: new Date(),
       },
+      // A new translation is the exit from the stale marker (#4927).
+      $unset: CLEAR_STALE_UNSET,
     }
   );
   return { written: true, protected: false, text: clean };

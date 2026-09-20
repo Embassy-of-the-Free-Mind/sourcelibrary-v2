@@ -16,8 +16,10 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -165,10 +167,18 @@ async function processOneJob(db, job) {
       // Multi-page OCR: parse <page id="...">...</page> blocks from each response
       for (const result of responses) {
         if (result.error) { failCount++; continue; }
-        const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = result.response?.candidates?.[0];
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         const usage = result.response?.usageMetadata;
-        const parsed = parseMultiPageOcr(text, { lenient: true });
+        const parsed = [...parseMultiPageOcr(text, { lenient: true })];
+        // A truncated generation cuts the LAST page mid-word; the pages before
+        // it are complete. Drop only the tail (#4890).
+        if (isTruncatedCandidate(candidate) && parsed.length > 0) {
+          const [droppedId] = parsed.pop();
+          console.warn(`  TRUNCATED (${candidate.finishReason}): dropping partial tail page ${droppedId}`);
+          failCount++;
+        }
         for (const [pageId, ocrText] of parsed) {
           pageResults.push({ pageId, text: ocrText, usage });
         }
@@ -178,8 +188,16 @@ async function processOneJob(db, job) {
         const result = responses[idx];
         const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
         if (!pageId) { failCount++; continue; }
-        const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = result.response?.candidates?.[0];
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
+        // Partial text is a FAILED read, not a short one — it has text and a
+        // non-refusal finishReason, so it matched no branch here and was stored
+        // as a finished page (#4890).
+        if (isTruncatedCandidate(candidate)) {
+          console.warn(`  TRUNCATED (${candidate.finishReason}): refusing page ${pageId} (${text.length} chars)`);
+          failCount++; continue;
+        }
         pageResults.push({ pageId, text, usage: result.response?.usageMetadata });
       }
     }
@@ -275,6 +293,7 @@ async function processOneJob(db, job) {
                 'translation.output_tokens': outputTokensFrom(usage),
                 updated_at: now,
               },
+              $unset: CLEAR_STALE_UNSET,
             },
           }
         });
@@ -552,3 +571,4 @@ async function updateBookCounts(db, bookId) {
 }
 
 run().catch(err => { console.error(err); process.exit(1); });
+

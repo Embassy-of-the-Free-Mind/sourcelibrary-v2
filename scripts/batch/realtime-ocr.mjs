@@ -51,6 +51,7 @@ import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 
 // --- Config ---
 // Statuses a fully-OCR'd book may be ADVANCED from — the ones where OCR is the
@@ -386,6 +387,19 @@ async function processPage(page, promptText, db) {
       });
       await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason: `repetition loop (${(loop.share * 100).toFixed(0)}% of body)`, durationMs };
+    }
+
+    // A truncation that DID produce text (#4890). The empty-text branch above
+    // already names `max-tokens-no-text`; the identical finishReason with a
+    // partial body matched nothing and was written as a finished page. A partial
+    // answer is a failed read, not a short one — and a stub transcription is
+    // worse than a missing one, because it is served, translated and quoted.
+    // Placed after the loop guard on purpose: a looping read that ran to the
+    // token cap is more usefully recorded as a loop, and its text is kept.
+    if (isTruncatedCandidate({ finishReason: result.finishReason })) {
+      const reason = truncationFailReason({ finishReason: result.finishReason });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      return { pageId: page.id, status: 'skip', reason: `${reason} (${result.text.length} chars kept nothing)`, durationMs };
     }
 
     const pageType = extractPageType(result.text);

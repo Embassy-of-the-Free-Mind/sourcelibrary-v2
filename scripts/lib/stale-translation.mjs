@@ -10,27 +10,59 @@
  * relative: it `$unset`s a field after snapshotting, which is the method
  * borrowed here, but it removes text that has no correct version, whereas this
  * text has a correct version that has not been written yet.
+ * `scripts/batch/retranslate-stale.mjs` defines "stale" by MODEL VINTAGE (OCR
+ * model newer than translation model) — a different question, left alone.
  *
  * ── The rule, once ───────────────────────────────────────────────────────────
  *
  * A page's stored translation is STALE when it was made from a transcription
- * the page no longer serves. Two arms, and a page is stale if either holds:
+ * the page no longer serves. `translationStaleness()` decides it from the two
+ * clocks every writer already stamps: `ocr.updated_at` newer than
+ * `translation.updated_at` by more than `STALE_MARGIN_MS` (same-run ordering
+ * — a collector writing the reading and the translation seconds apart — is not
+ * staleness; the margin was set by reading pages in each band, see the test
+ * and PR #4929). A MISSING translation date counts as old, never as fresh: the
+ * failure we are guarding is serving invented English, and guessing "fresh" is
+ * the guess that keeps serving it.
  *
- *   1. `stale_after_reocr` — the OCR was rewritten by a re-OCR lane
- *      (`ocr.pipeline` is set) and `translation.updated_at` is not newer than
- *      `ocr.updated_at`. The English on screen is a translation of text that
- *      was deleted; #4523 put 65,129 pages into this state on 2026-09-10.
+ * There is deliberately NO content hash (Derek, 2026-09-18: "I just don't see
+ * a situation where the timestamp wouldn't be enough… and if it doesn't leave
+ * one, that's a bigger issue"). Every live writer of `ocr.data` stamps
+ * `ocr.updated_at`; `tests/unit/ocr-write-stamps-updated-at.test.ts` asserts
+ * that at the write boundary, so a writer that forgot would fail CI rather
+ * than be tolerated by a parallel mechanism.
+ *
+ * Until #4927 this arm was gated on `ocr.pipeline`, which only one lane ever
+ * stamped — it caught 0 of the 16,026 pages measured stale corpus-wide.
+ *
+ * ── Two verbs, two predicates ────────────────────────────────────────────────
+ *
+ * FLAGGING (`translationStaleness`, materialised as `translation_stale` by
+ * `scripts/maintenance/mark-stale-translations.mjs`) applies to the whole
+ * corpus; its disposition is RE-TRANSLATION, drained by
+ * `scripts/batch/realtime-translate.mjs --stale`. Nothing goes dark.
+ *
+ * WITHHOLDING (`staleTranslationReason`, acted on by the hourly
+ * `withhold-stale-translations.mjs`) takes the text off the page. Three arms:
+ *
+ *   1. `stale_after_reocr` — the translation is stale (above) AND the page was
+ *      rewritten by a lane in `WITHHOLD_LANES`. Withholding is a per-lane
+ *      opt-in, never a property of staleness: Derek, 2026-09-18, on the Syriac
+ *      Kraken lane (#4883) — "don't withhold individual pages though". #4523
+ *      put 65,129 pages into this state on 2026-09-10 and is the one lane that
+ *      opted in.
  *   2. `ocr_unreadable` — the transcription is flagged `ocr.unreadable`, so the
  *      reader already withholds it as untrustworthy, but a translation OF that
  *      untrustworthy text is still stored. The reader withholds both panes;
  *      nothing else does — search, embeddings, quotes, exports and the MCP
  *      tools all read `translation.data` and see no flag.
+ *   3. `source_loop` — the transcription is a degeneration loop (#4850); opt-in
+ *      and book-scoped, see `LOOP_CANDIDATE_FILTER`.
  *
- * Both arms are SELF-HEALING: retranslate the page and arm 1 stops holding;
- * give the page a transcription we trust and arm 2 stops holding. Neither needs
- * a flag anyone has to remember to clear, and neither needs a frozen id list —
- * the sweep re-derives the set every run. (A frozen list is how the Kloss
- * takedown leaked for six weeks.)
+ * All arms are SELF-HEALING: retranslate the page and arm 1 stops holding;
+ * give the page a transcription we trust and arms 2 and 3 stop holding. None
+ * needs a frozen id list — the sweeps re-derive the set every run. (A frozen
+ * list is how the Kloss takedown leaked for six weeks.)
  *
  * ── Where the text goes ──────────────────────────────────────────────────────
  *
@@ -61,6 +93,122 @@ function isDegenerateSource(ocrText) {
   return loopVerdict(ocrText || '').refuse;
 }
 
+// ── Staleness: the flagging predicate (#4927) ────────────────────────────────
+
+/**
+ * The materialised verdict on the page: `{ reason, since, lane? }`. Written by
+ * the daily sweep (and by a re-OCR lane that wants its pages found at once —
+ * the Syriac Kraken lane stamps it with `ocr_rewritten`); cleared by every
+ * translation writer with `CLEAR_STALE_UNSET`. Indexed by
+ * `pages_translation_stale_partial` so "which books have stale translations"
+ * is a query, not a 40-minute `$expr` scan.
+ */
+export const STALE_FIELD = 'translation_stale';
+
+/** `$unset` fragment every translation writer includes: a new translation is the exit. */
+export const CLEAR_STALE_UNSET = Object.freeze({ [STALE_FIELD]: '' });
+
+/** How a stale verdict was reached — recorded on the marker. */
+export const STALE_REASONS = Object.freeze({
+  /** The transcription's date is newer than the translation's beyond the margin. */
+  OCR_NEWER: 'ocr_newer',
+  /** No translation date at all — missing counts as old. */
+  UNDATED: 'undated',
+  /** A re-OCR lane replaced the text under this translation and said so itself. */
+  OCR_REWRITTEN: 'ocr_rewritten',
+});
+
+/**
+ * A write-ordering tolerance, not a staleness threshold. Measured 2026-09-19
+ * over the 15,951 pages whose OCR clock is newer than their translation's
+ * (PR #4929): the only band where both fields come from ONE writer pass is
+ * under a second — a collector tick writing a translation job's result and an
+ * OCR job's result for the same book 96 ms apart (20 pages). From 3 s upward
+ * every sampled page was a second read landing over the first by a different
+ * lane (a realtime read translated, then a batch read collected; a lite read
+ * translated, then a full-model re-read; a Gemini read, then IA's text), and
+ * those re-reads can differ materially, so no wider band is excluded — the
+ * clock is the rule, and the consumer prices the set before draining. 60 s is
+ * that tolerance plus clock skew between hosts (Lambda, Hetzner, Vercel all
+ * write these fields); it excludes 47 of the 15,951 pages.
+ */
+export const STALE_MARGIN_MS = 60_000;
+
+/**
+ * A single bracketed line is a placeholder, never a translation:
+ * `[Blank page]`, `[This page could not be translated due to content recitation
+ * restrictions.]`, `[Illustration page — no translatable content]`, …
+ * Sweeping placeholders into a paid re-translate loop is how this gets expensive.
+ */
+export const PLACEHOLDER_RE = /^\s*\[[^\]]{0,200}\]\s*$/;
+export const PLACEHOLDER_SOURCES = Object.freeze(['skip', 'system']);
+
+export function isPlaceholderTranslation(tr) {
+  if (typeof tr === 'string') return PLACEHOLDER_RE.test(tr);
+  if (!tr || typeof tr !== 'object') return false;
+  if (PLACEHOLDER_SOURCES.includes(tr.source)) return true;
+  return typeof tr.data === 'string' && PLACEHOLDER_RE.test(tr.data);
+}
+
+/**
+ * Mongo filter: pages that carry a REAL translation (text, not a placeholder).
+ * The flagging sweep's candidate scope.
+ */
+export const REAL_TRANSLATION_FILTER = Object.freeze({
+  'translation.data': { $type: 'string', $ne: '', $not: PLACEHOLDER_RE },
+  'translation.source': { $nin: PLACEHOLDER_SOURCES },
+});
+
+/**
+ * The translation text a page is actually serving, or ''.
+ *
+ * Two shapes, both live in the collection: the modern `TranslationData` object
+ * and a bare string on legacy pages (`withdraw-fabricated-translation-4584.mjs`
+ * handles the same pair). A third shape — an object with no `data` — exists on
+ * ~2,000 pages of this cohort alone and serves NOTHING; counting it as text
+ * would withhold a field that has no text in it and inflate every number in the
+ * report by about 3%.
+ */
+export function translationText(tr) {
+  if (typeof tr === 'string') return tr;
+  return typeof tr?.data === 'string' ? tr.data : '';
+}
+
+/**
+ * Is this page's translation stale, and how do we know?
+ * Returns { stale: false } or { stale: true, reason }. A page with no real
+ * translation (none, empty, placeholder) is never stale — nothing is served.
+ * A page whose OCR carries no date predates date-stamping and is older than any
+ * translation made from it — not stale, nothing newer exists.
+ */
+export function translationStaleness(page, { marginMs = STALE_MARGIN_MS } = {}) {
+  const tr = page?.translation;
+  if (!translationText(tr)) return { stale: false };
+  if (isPlaceholderTranslation(tr)) return { stale: false };
+
+  const ocrAt = toTime(page?.ocr?.updated_at);
+  if (ocrAt === null) return { stale: false };
+  const trAt = typeof tr === 'object' ? toTime(tr.updated_at ?? tr.edited_at) : null;
+  if (trAt === null) return { stale: true, reason: STALE_REASONS.UNDATED };
+  if (ocrAt - trAt > marginMs) return { stale: true, reason: STALE_REASONS.OCR_NEWER };
+  return { stale: false };
+}
+
+/** The marker object written to `translation_stale`. */
+export function staleMarker(reason, { now = new Date(), lane } = {}) {
+  const m = { reason, since: now };
+  if (lane) m.lane = lane;
+  return m;
+}
+
+function toTime(v) {
+  if (!v) return null;
+  const t = v instanceof Date ? v.getTime() : new Date(v).getTime();
+  return Number.isFinite(t) ? t : null;
+}
+
+// ── Withholding: per lane ────────────────────────────────────────────────────
+
 /** Written into `translation_withheld.reason` and the `page_revisions` row. */
 export const WITHHOLD_REASONS = {
   STALE_AFTER_REOCR: 'stale_after_reocr',
@@ -84,13 +232,28 @@ export const STALE_PREDICATE_PROJECTION = {
   // would not make arm 3 cheap — it would make it silently never fire.
   'ocr.data': 1,
   'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
-  'translation.updated_at': 1, 'translation.edited_at': 1,
+  'translation.updated_at': 1, 'translation.edited_at': 1, 'translation.source': 1,
   translation_withheld: 1,
 };
 
 /**
- * A Mongo filter that is a SUPERSET of the stale set — it selects every page
- * either arm could apply to, cheaply, using the partial indexes
+ * Re-OCR lanes whose stale translations are WITHHELD by the hourly sweep.
+ * Withholding is a per-lane decision, not a property of staleness: Derek,
+ * 2026-09-18, on the Syriac Kraken lane (#4883) — "don't withhold individual
+ * pages though". Its disposition is re-translation (#4927), so it stamps
+ * `ocr.pipeline` for provenance and is deliberately NOT in this list. Add a
+ * lane here only when its pages should go dark until retranslated.
+ *
+ * The list is checked in BOTH places a withhold can start: the candidate query
+ * (`STALE_CANDIDATE_FILTER`) and the verdict (`staleTranslationReason`), so a
+ * caller that reaches the verdict by another route — `--loop-arm`, the restore
+ * script, a book-scoped run — cannot widen it.
+ */
+export const WITHHOLD_LANES = Object.freeze(['reocr_bdrc_4523']);
+
+/**
+ * A Mongo filter that is a SUPERSET of the withhold set — it selects every page
+ * either indexed arm could apply to, cheaply, using the partial indexes
  * `pages_ocr_pipeline_partial` and `pages_ocr_unreadable_partial`. The date
  * comparison is not expressible in a plain filter, so callers must still run
  * `staleTranslationReason` on each candidate. Kept as an `$or` of two indexed
@@ -98,7 +261,7 @@ export const STALE_PREDICATE_PROJECTION = {
  */
 export const STALE_CANDIDATE_FILTER = {
   $or: [
-    { 'ocr.pipeline': { $exists: true } },
+    { 'ocr.pipeline': { $in: [...WITHHOLD_LANES] } },
     { 'ocr.unreadable': true },
   ],
 };
@@ -120,12 +283,14 @@ export const LOOP_CANDIDATE_FILTER = {
 };
 
 /**
- * Why this page's translation is stale, or null if it is not.
+ * Why this page's translation should be WITHHELD, or null if it should not.
  *
  * Takes a page document (or the projection above). A page with no stored
- * translation is never stale — there is nothing being served. A page whose
- * translation has already been withheld is not stale either: the field it would
- * be judged on is gone, which is the point.
+ * translation is never withheld — there is nothing being served. A page whose
+ * translation has already been withheld is not either: the field it would be
+ * judged on is gone, which is the point. A page that is merely STALE (arm 1's
+ * rule holds but no withholding lane rewrote it) returns null here — it is
+ * flagged for re-translation by `translationStaleness`, not taken dark.
  *
  * @param {object} page
  * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|null}
@@ -143,38 +308,13 @@ export function staleTranslationReason(page) {
   // Self-healing like the other two arms: re-OCR the page and it stops holding.
   if (isDegenerateSource(page?.ocr?.data)) return WITHHOLD_REASONS.SOURCE_LOOP;
 
-  if (page?.ocr?.pipeline) {
-    const ocrAt = toTime(page.ocr.updated_at);
-    const trAt = toTime(tr?.updated_at ?? tr?.edited_at);
-    // No translation date at all means it predates date-stamping, which puts it
-    // years before any re-OCR lane. Treat missing as old, never as fresh — the
-    // failure we are guarding is serving invented English, and guessing "fresh"
-    // is the guess that keeps serving it.
-    if (trAt === null) return WITHHOLD_REASONS.STALE_AFTER_REOCR;
-    if (ocrAt !== null && trAt <= ocrAt) return WITHHOLD_REASONS.STALE_AFTER_REOCR;
+  // Arm 1: stale by the shared rule, AND rewritten by a lane that opted into
+  // withholding. The lane check is the whole difference between flagging and
+  // withholding; the staleness rule itself is not gated on any lane.
+  if (WITHHOLD_LANES.includes(page?.ocr?.pipeline) && translationStaleness(page).stale) {
+    return WITHHOLD_REASONS.STALE_AFTER_REOCR;
   }
   return null;
-}
-
-/**
- * The translation text a page is actually serving, or ''.
- *
- * Two shapes, both live in the collection: the modern `TranslationData` object
- * and a bare string on legacy pages (`withdraw-fabricated-translation-4584.mjs`
- * handles the same pair). A third shape — an object with no `data` — exists on
- * ~2,000 pages of this cohort alone and serves NOTHING; counting it as text
- * would withhold a field that has no text in it and inflate every number in the
- * report by about 3%.
- */
-export function translationText(tr) {
-  if (typeof tr === 'string') return tr;
-  return typeof tr?.data === 'string' ? tr.data : '';
-}
-
-function toTime(v) {
-  if (!v) return null;
-  const t = v instanceof Date ? v.getTime() : new Date(v).getTime();
-  return Number.isFinite(t) ? t : null;
 }
 
 /**
@@ -197,7 +337,8 @@ export function withholdUpdate(page, reason, now = new Date()) {
       translation_withheld: { ...obj, reason, withheld_at: now, chars: text.length },
       updated_at: now,
     },
-    $unset: { translation: '' },
+    // The stale marker (#4927) describes a translation that is no longer here.
+    $unset: { translation: '', [STALE_FIELD]: '' },
   };
 }
 

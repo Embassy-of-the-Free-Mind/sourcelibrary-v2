@@ -14,6 +14,7 @@ import { contentHash } from '@/lib/steganographia';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 // Git SHA of the producing code, for translation provenance (#2297). Translation's
 // *input* is the page's OCR text (not an image), so there is no image source_url to
@@ -173,7 +174,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
           updated_at: new Date(),
         },
         updated_at: new Date(),
-      }}
+      }, $unset: CLEAR_STALE_UNSET }
     ), `write blank marker for page ${pageId}`, 3, '[TRANS]');
     await sendWriteResult({
       type: 'translation',
@@ -276,7 +277,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     };
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
-      { $set: translationSetPayload }
+      { $set: translationSetPayload, $unset: CLEAR_STALE_UNSET }
     ), `save translation for page ${pageId}`, 3, '[TRANS]');
     // Dual-write to Supabase (fire-and-forget)
     syncPageUpdate(pageId, translationSetPayload);

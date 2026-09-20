@@ -1,0 +1,25 @@
+{
+ "status": "ok",
+ "finish_reason": "STOP",
+ "text": "𓈖𓇋\n𓀻𓋴𓈖𓇋\n𓇋𓂋𓎛𓁹𓈖\n𓊵𓏏𓊪\n𓐍𓅱𓊖𓉐𓏤𓂋\n𓅓𓂋\n𓇋𓂋𓅓𓊵𓏏𓊪𓅓𓊵𓏏𓊪\n𓇋𓊪𓈖𓇓𓏏𓊵\n𓀻𓈖𓇋𓇋𓇋𓂋𓂝\n𓀻𓐍𓅱𓇋𓅓𓈖𓈖\n𓀻𓋴𓈖𓇋𓂋𓏏𓊪\n𓁹𓈖𓇋𓊵𓏏𓊪\n𓐍𓅱𓊵𓁹𓈖𓇋𓂋\n𓇋𓈖𓇓𓏏𓀻\n𓈖𓇋𓀻",
+ "usage": {
+  "promptTokenCount": 1200,
+  "candidatesTokenCount": 334,
+  "totalTokenCount": 1534,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 120
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1080
+   }
+  ],
+  "serviceTier": "standard"
+ },
+ "usd": 0.0016,
+ "model": "gemini-3-flash-preview",
+ "prompt": "This is a page from a printed Egyptological edition. Transcribe every Egyptian hieroglyph on the page as Unicode Egyptian Hieroglyphs (code points U+13000–U+1342F), in reading order, one line of output per line or column of the original. Output ONLY hieroglyph characters and newlines: no transliteration, no translation, no Gardiner codes, no commentary, no Latin or German text. Skip hatched (damaged) areas. If the page shows more than one inscription, transcribe them all in the order they appear on the page.",
+ "n_signs": 80
+}

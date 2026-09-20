@@ -10,6 +10,7 @@ import { contentHash } from '@/lib/steganographia';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const preferredRegion = 'fra1';
 
@@ -203,7 +204,8 @@ export const PATCH = withAuth(async (request, session, context) => {
     // Use findOneAndUpdate to get updated document in a single query
     const updatedPage = await db.collection('pages').findOneAndUpdate(
       { id, tenantId },
-      { $set: updateData, $inc: { edit_count: 1 } },
+      // A hand-edited translation is a new translation: it clears the stale marker (#4927).
+      { $set: updateData, $inc: { edit_count: 1 }, ...(body.translation ? { $unset: CLEAR_STALE_UNSET } : {}) },
       { returnDocument: 'after' }
     );
 
