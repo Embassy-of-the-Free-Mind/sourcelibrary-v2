@@ -163,9 +163,18 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
 
   // Check license URL directly
   if (licenseUrl) {
-    if (licenseUrl.includes('by-nc/4.0')) return { license: 'CC-BY-NC-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc-sa')) return { license: 'CC-BY-NC-SA-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc-nd')) return { license: 'CC-BY-NC-ND-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc/')) return { license: 'CC-BY-NC-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-sa/')) return { license: 'CC-BY-SA-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nd/')) return { license: 'CC-BY-ND-4.0', license_url: licenseUrl };
     if (licenseUrl.includes('by/4.0')) return { license: 'CC-BY-4.0', license_url: licenseUrl };
     if (licenseUrl.includes('zero/1.0')) return { license: 'CC0-1.0', license_url: licenseUrl };
+    // Public Domain Mark and the rightsstatements.org "no copyright" family. Missing here is why
+    // 6,559 MDZ books (manifest license = PDM URL) were stored as 'unknown' — rights backfill 2026-09.
+    if (/publicdomain\/mark\//.test(licenseUrl)) return { license: 'publicdomain', license_url: licenseUrl };
+    if (/rightsstatements\.org\/vocab\/(NKC|NoC-US|NoC-OKLR)\//.test(licenseUrl)) return { license: 'publicdomain', license_url: licenseUrl };
+    if (/rightsstatements\.org\/vocab\/NoC-NC\//.test(licenseUrl)) return { license: licenseUrl, license_url: licenseUrl };
     return { license: 'unknown', license_url: licenseUrl };
   }
 
