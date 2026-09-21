@@ -174,7 +174,10 @@ export async function rerankByVisualComparison(
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0.1 } }),
+        // gemini-3-flash-preview thinks by default and bills it at the output rate
+        // (#4581, #4599) — this call is a raw REST fetch, so the SDK chokepoint's
+        // zero-budget default (src/lib/gemini-client.ts) does not reach it.
+        body: JSON.stringify({ contents: [{ parts }], generationConfig: { temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } } }),
         signal: AbortSignal.timeout(20000),
       },
     );
