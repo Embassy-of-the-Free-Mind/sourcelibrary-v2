@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext2-947ec1-p88",
+  "substratum": "greek-1450-1699",
+  "title": "Plato, Cratylus and Florilegium Profanum",
+  "year": 1501,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1750,
+  "corpus_votes": [
+    {
+      "id": "tlg0059.tlg003.perseus-grc2",
+      "hits": 4
+    },
+    {
+      "id": "tlg2018.tlg001.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg2042.tlg001.perseus-grc1",
+      "hits": 4
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

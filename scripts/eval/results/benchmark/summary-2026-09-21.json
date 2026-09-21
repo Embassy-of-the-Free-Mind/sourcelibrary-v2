@@ -1597,5 +1597,541 @@
         }
       }
     }
+  },
+  "greek-ext2": {
+    "stratum": "greek-ext2",
+    "issue": 4925,
+    "date": "2026-09-21",
+    "n_pages": 10,
+    "n_with_ref": 8,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.098,
+          "mean_cer": 0.093,
+          "catastrophic": 0,
+          "median_gap": 0.016,
+          "median_seq": 0.827
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.324,
+          "catastrophic": 1,
+          "median_gap": 0.011,
+          "median_bow": 0.516
+        },
+        "invention": {
+          "median": 0.103,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.197,
+          "ref_mean": 0.183
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 7,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.113,
+          "p_sign": 0.07,
+          "invention_wins": 7,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-947ec1-p88",
+            "title": "Plato, Cratylus and Florilegium Profanum",
+            "year": 1501,
+            "cer": 0.573,
+            "gap": 0.022,
+            "invention": 0.853,
+            "has_ref": false,
+            "unsupported": [
+              "αὐτοῖς",
+              "κέρδος",
+              "δίκης",
+              "ἐπίδειξον",
+              "ἀδικεῖν",
+              "πλουτεῖν",
+              "ἐστὶ",
+              "κακὸν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.122,
+            "gap": 0.038,
+            "invention": 0.114,
+            "has_ref": true,
+            "unsupported": [
+              "ὑποτιθείσης",
+              "φθείρεσθαι",
+              "εἴγε",
+              "ποιοῦντων",
+              "ἴσον",
+              "ὑπεροχὴν",
+              "κράσις",
+              "ὀξίτητα"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.116,
+            "gap": 0.032,
+            "invention": 0.173,
+            "has_ref": true,
+            "unsupported": [
+              "πᾶσα",
+              "οἶσθε",
+              "λέξεων",
+              "οὔτε",
+              "ἱκετεύουσιν",
+              "ἕτετε",
+              "καταζεύξαντες",
+              "στρατόπεδον"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.11,
+            "gap": 0.022,
+            "invention": 0.099,
+            "has_ref": true,
+            "unsupported": [
+              "μόνον",
+              "ταυτὸν",
+              "αἰσθητικὸν",
+              "φεστέρας",
+              "δόξας",
+              "παρακελεύεται",
+              "ἐρειδόμενος",
+              "παρεῖν'"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.099,
+            "gap": 0.007,
+            "invention": 0.014,
+            "has_ref": true,
+            "unsupported": [
+              "δαΐδ",
+              "ἐβαθύνθησαν"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.2,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.039,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.433
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.261,
+            "gap": 0.014,
+            "invention": 0.389,
+            "has_ref": true,
+            "unsupported": [
+              "ῥυομένην",
+              "ὠθουμένους",
+              "ἐσῶτας",
+              "σκωπτικοὺς",
+              "ἄρκαλουῶντας",
+              "ἀρτεμῖν",
+              "μαρχλω",
+              "ἀνθρώπω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.196,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.033,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.427
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 1,
+          "losses": 0,
+          "ties": 7,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 1,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.228,
+            "gap": 0.019,
+            "invention": 0.334,
+            "has_ref": true,
+            "unsupported": [
+              "γυμνῶν",
+              "ὀθωνεί",
+              "σκληρικοὺς",
+              "ἀρκαλοῦντες",
+              "ἀρτεμῶν",
+              "ἀνθρώπων",
+              "ἀφανῶς",
+              "δικάσαν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-greek-cllg": {
+        "pages_run": 9,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.07,
+          "mean_cer": 0.079,
+          "catastrophic": 0,
+          "median_gap": 0.007,
+          "median_seq": 0.813
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.106,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.734
+        },
+        "invention": {
+          "median": 0.153,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.254,
+          "ref_mean": 0.252
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 6,
+          "losses": 2,
+          "ties": 0,
+          "median_delta_cer": 0.143,
+          "p_sign": 0.289,
+          "invention_wins": 6,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-54d559-p126",
+            "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+            "year": 1589,
+            "cer": 0.164,
+            "gap": 0.011,
+            "invention": 0.229,
+            "has_ref": true,
+            "unsupported": [
+              "proegstiga",
+              "ρίοις",
+              "ἐμμενες",
+              "εκεπτεο",
+              "χλύϊ",
+              "ἠγηλάζει",
+              "τερες",
+              "ὅνοι"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.144,
+            "gap": 0.02,
+            "invention": 0.301,
+            "has_ref": true,
+            "unsupported": [
+              "ὠδῆς",
+              "ἑβραίοι",
+              "ικατοικῶν",
+              "βοηθεία",
+              "σκέπη",
+              "αὐλια",
+              "σθήσετες",
+              "κυρίω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec5a99-p69",
+            "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+            "year": 1539,
+            "cer": 0.106,
+            "gap": 0,
+            "invention": 0.153,
+            "has_ref": false,
+            "unsupported": [
+              "κροῦσον",
+              "αὐτὸν",
+              "ἀπέρ",
+              "έναντι",
+              "ἀποστραφήσεται",
+              "ἀμπέίλου",
+              "κατόπτρον",
+              "τοῦτο"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.086,
+            "gap": 0.02,
+            "invention": 0.186,
+            "has_ref": true,
+            "unsupported": [
+              "οὖσης",
+              "ἀπείη",
+              "ποσῶ",
+              "έτων",
+              "ἰσαζουσης",
+              "μεγέθη",
+              "ἄλλὰ",
+              "εσει"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.076,
+            "gap": 0.008,
+            "invention": 0.169,
+            "has_ref": true,
+            "unsupported": [
+              "ταγωή",
+              "τεὶς",
+              "ταὺλ",
+              "εγος",
+              "ύμασιν",
+              "ταὐτόν",
+              "προαίρησις",
+              "αἰσθτικοὶ"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.573,
+            "catastrophic": 1,
+            "median_unsupported": 0.853
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 0,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 9,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.099
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.224,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.222,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.076,
+            "catastrophic": 0,
+            "median_unsupported": 0.153
+          }
+        }
+      }
+    }
   }
 }

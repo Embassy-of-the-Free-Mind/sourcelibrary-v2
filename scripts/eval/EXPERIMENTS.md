@@ -1055,7 +1055,31 @@ so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.0
 - **Not settled.** Pre-1700 needs two more referenced books, by drawing further down the sealed
   walk (412 of 3,525 books walked) — never by lowering the overlap threshold. Rule (d) needs a
   repeat arm at temperature > 0 to mean anything.
-- **Files.** `results/benchmark/greek{,-ext}-2026-09-21.json`,
+- **SUPPLEMENT, same day (greek-ext2, seed 47442, Derek approved 10 pages).** Rule (e) says a
+  shortfall is a draw-more item. Ten more pre-1700 books were sealed as a separate file (every book
+  in greek.json / greek-ext.json excluded; 66 books walked). By eye, before any engine output was
+  read: 9 typeset Greek leaves, 1 codex (excluded). 8 of the 9 found a reference. **Pre-1700 is now
+  decision-grade at 56: lite 0.171 [0.159, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
+  [−0.093, −0.057], 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
+  better-reader rule at 60.7 % of pages (34 of 56) against a 60 % bar — ONE page. An independent
+  recompute puts that share at 57 %. Treat Kraken ≈ preview on letters, not "Kraken wins".** Spend
+  $0.11. Optional-stopping note: the supplement was drawn after seeing results, but its size was
+  fixed beforehand, the remedy is the preregistered one, and no verdict turned on it except that
+  knife-edge. The numbers above in this entry's headline are the pre-supplement state.
+- **THE ABSOLUTE NUMBERS CARRY A FLOOR THAT IS NOT READER ERROR (second spot check).** The scorer
+  replicates: independent code matched 18 of 18 values within 0.01. But a word diff of preview on
+  median 1700s pages shows the charged "errors" are mostly convention — sentence capitals, grave vs
+  acute, δ' vs δὲ, γίγνεται vs γίνεται — plus footnote apparatus the modern edition lacks (one
+  "error", Κράτης for Σωκράτης, is probably the early edition's true reading).
+  `benchmark-convention-floor.py` removes those layers (median CER, strict → tolerant):
+  pre-1700 lite 0.174 → 0.127, preview 0.093 → 0.052, Kraken 0.094 → 0.049; 1700–1799 lite
+  0.112 → 0.051, preview 0.088 → 0.033, Kraken 0.090 → 0.040. **So rule (a)'s thresholds, borrowed
+  from the 19th-c cell, do not transfer: "lite inadequate for 1700–1799" is WITHDRAWN (tolerant
+  0.051 sits on the adequate line; preview's edge is ≈ 1 character in 100 at 3× the price).
+  Pre-1700 "inadequate" stands under both measures.** Paired rules survive because every arm pays
+  the same floor. Next benchmark over early print: score convention-folded, and set adequacy
+  thresholds from the cell's own best-of-arms floor, not from another period.
+- **Files.** `results/benchmark/greek{,-ext,-ext2}-2026-09-21.json`, `benchmark/greek-ext2.json`,
   `results/benchmark/decisions/greek-period-*-2026-09-21.json` (the `prereg` block is the
   verdict; the generic `verdict` string is the step-1 cost-lane rule and does not apply to a
   3×-cost arm). Raw reads: `~/sl-benchmark-reads/greek-4925-2026-09-20/` on Derek's laptop.

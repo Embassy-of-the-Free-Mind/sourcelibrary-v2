@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext2-e51278-p628",
+  "substratum": "greek-1450-1699",
+  "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+  "year": 1542,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3356,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg066.perseus-grc2",
+      "hits": 27
+    },
+    {
+      "id": "tlg3135.tlg001.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg0060.tlg001.perseus-grc6",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg066.perseus-grc2",
+  "work_title": "Plutarch — Otho",
+  "edition": "Plutarch. Plutarch's Lives, Vol. XI. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1926.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg066",
+  "phrase_hits": 27,
+  "etext_chars": 28188,
+  "window_words": 714,
+  "window_chars": 4001,
+  "overlap": 0.748,
+  "align_trim": {
+    "letters_before": 4114,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.26",
+      "gemini-3.1-flash-lite-b:0.23",
+      "kraken-greek-cllg:0.03"
+    ],
+    "letters_after": 3350
+  }
+}

@@ -20,13 +20,19 @@
       "file": "greek-ext-2026-09-21.json",
       "n_pages": 170,
       "n_with_ref": 117
+    },
+    {
+      "stratum": "greek-ext2",
+      "file": "greek-ext2-2026-09-21.json",
+      "n_pages": 10,
+      "n_with_ref": 8
     }
   ],
   "classes": {
     "1450–1699": {
       "prereg": {
-        "decidable": false,
-        "note": "directional (n=48 < 50) — rule (e): no routing decision",
+        "decidable": true,
+        "note": null,
         "a_lite": "inadequate",
         "b_preferred_over_lite": {
           "core": true,
@@ -36,62 +42,63 @@
         },
         "c_better_reader": {
           "core": true,
-          "share_le_minus_005": 0.667,
+          "share_le_minus_005": 0.679,
           "with_invention_indep": true,
           "with_invention_ref": true
         },
         "d_noise_floor": {
           "median_delta0": 0,
-          "repeat_pages_identical": 43,
-          "n": 48,
+          "repeat_pages_identical": 50,
+          "n": 56,
           "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
         }
       },
       "invention_three_ways": {
         "invention": {
-          "gemini-3-flash-preview": 0.054,
+          "gemini-3-flash-preview": 0.055,
           "gemini-3.1-flash-lite": 0
         },
         "invention_indep": {
-          "gemini-3-flash-preview": 0.054,
-          "gemini-3.1-flash-lite": 0.191
+          "gemini-3-flash-preview": 0.055,
+          "gemini-3.1-flash-lite": 0.218
         },
         "invention_ref": {
-          "gemini-3-flash-preview": 0.146,
-          "gemini-3.1-flash-lite": 0.294
+          "gemini-3-flash-preview": 0.148,
+          "gemini-3.1-flash-lite": 0.36
         }
       },
-      "n_pages": 73,
-      "n_referenced": 48,
-      "n_paired": 48,
+      "n_pages": 82,
+      "n_referenced": 56,
+      "n_paired": 56,
       "n_by_stratum": {
         "greek": 4,
-        "greek-ext": 44
+        "greek-ext": 44,
+        "greek-ext2": 8
       },
       "median_cer": {
-        "gemini-3-flash-preview": 0.088,
-        "gemini-3.1-flash-lite": 0.17,
-        "gemini-3.1-flash-lite-b": 0.17
+        "gemini-3-flash-preview": 0.09,
+        "gemini-3.1-flash-lite": 0.171,
+        "gemini-3.1-flash-lite-b": 0.171
       },
       "ref_median_cer_ci95": [
-        0.156,
-        0.183
+        0.159,
+        0.188
       ],
       "delta": {
-        "median": -0.066,
+        "median": -0.068,
         "ci95": [
-          -0.087,
-          -0.053
+          -0.093,
+          -0.057
         ],
-        "wins": 48,
-        "losses": 0,
+        "wins": 55,
+        "losses": 1,
         "ties": 0,
-        "untied": 48,
+        "untied": 56,
         "p_sign": 0,
-        "share_le_minus_005": 0.667
+        "share_le_minus_005": 0.679
       },
       "noise_floor": {
-        "n": 48,
+        "n": 56,
         "median_delta0": 0,
         "ci95": [
           0,
@@ -103,8 +110,8 @@
         "gemini-3.1-flash-lite": 0
       },
       "invention_median": {
-        "gemini-3-flash-preview": 0.146,
-        "gemini-3.1-flash-lite": 0.294
+        "gemini-3-flash-preview": 0.148,
+        "gemini-3.1-flash-lite": 0.36
       },
       "loops": {
         "gemini-3-flash-preview": 0,
@@ -118,8 +125,8 @@
         "invention_le_ref": true,
         "loops_le_ref": true
       },
-      "better_reader": false,
-      "verdict": "directional (n=48 < 50) — no lane decision"
+      "better_reader": true,
+      "verdict": "cost lane ADOPTED; also the better reader"
     },
     "1700–1799": {
       "prereg": {
@@ -164,7 +171,8 @@
       "n_paired": 53,
       "n_by_stratum": {
         "greek": 0,
-        "greek-ext": 53
+        "greek-ext": 53,
+        "greek-ext2": 0
       },
       "median_cer": {
         "gemini-3-flash-preview": 0.085,
@@ -262,7 +270,8 @@
       "n_paired": 5,
       "n_by_stratum": {
         "greek": 5,
-        "greek-ext": 0
+        "greek-ext": 0,
+        "greek-ext2": 0
       },
       "median_cer": {
         "gemini-3-flash-preview": 0.061,

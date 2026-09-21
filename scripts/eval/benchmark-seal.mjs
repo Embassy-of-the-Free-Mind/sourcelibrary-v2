@@ -183,6 +183,17 @@ export const STRATA = {
       { name: 'greek-1450-1699', n: 90, spares: 0, filter: GREEK, pick: b => inRange(1450, 1700)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id), reference: 'First1KGreek / Perseus canonical-greekLit TEI or el.wikisource where the work is held (edition of the WORK, not ours — expect the mismatch demotion on some); no proxy top-ups' },
       { name: 'greek-1700-1799', n: 80, spares: 0, filter: GREEK, pick: b => inRange(1700, 1800)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id), reference: 'same' },
     ] },
+  // greek-ext2 (#4925 step 2, 2026-09-21): the SUPPLEMENTARY draw the preregistration's rule (e)
+  // names ("the shortfall is a draw-more item, never a proxy top-up"). The pre-1700 cell closed at 48
+  // referenced leaves, two short of 50. Size fixed before drawing: 10 books, approved by Derek. Same
+  // pool, same leaf-script screen, its own seed; every book already in greek.json or greek-ext.json is
+  // excluded. The original walk cannot be resumed — a draw is reproducible only against the id list
+  // as of its seal date — so this is a second sealed file, reported as a supplement, not a re-draw.
+  'greek-ext2': { issue: 4925, seed: 47442, screen: screenGreek,
+    screen_rule: 'identical to greek-ext',
+    subs: [
+      { name: 'greek-1450-1699', n: 10, spares: 0, filter: GREEK, pick: b => inRange(1450, 1700)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id) && !sealedBooks('greek-ext').has(b.id), reference: 'same as greek-ext' },
+    ] },
   syriac: { issue: 4746, seed: 4746, subs: [
     { name: 'manuscript', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: b => { const y = yearOf(b.published); return y == null || y < 1500; }, reference: 'agreement + invention' },
     { name: 'print', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: inRange(1700, 1990), reference: 'Digital Syriac Corpus / Peshitta where the text exists, else agreement' },

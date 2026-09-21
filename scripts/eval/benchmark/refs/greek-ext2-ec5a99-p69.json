@@ -1,0 +1,11 @@
+{
+  "slug": "greek-ext2-ec5a99-p69",
+  "substratum": "greek-1450-1699",
+  "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+  "year": 1539,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 913,
+  "corpus_votes": [],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}
