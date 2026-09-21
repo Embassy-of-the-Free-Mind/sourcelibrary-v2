@@ -2655,7 +2655,16 @@ async function run() {
         .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
+      // Scope envelopes bound SPEND, and enrolment spends nothing — it writes one
+      // Mongo field and dispatches no work. Every paid phase has its own gate
+      // (budgetAllowsDispatchForPhase on 1.25/1.5/1.6/2/3.7/4/8), so confining
+      // Phase 0 too buys no protection and costs real convergence: a book imported
+      // while an envelope is open is newer than `cutoff`, so the tail below (which
+      // is deliberately NOT scope-filtered) cannot see it either, and it waits
+      // ENROLL_WINDOW_DAYS before joining the back of an oldest-first queue of
+      // thousands. Seven books imported 2026-09-20 had to be enrolled by hand
+      // (#4948). A `--book` override still forces exactly one book through.
+      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
