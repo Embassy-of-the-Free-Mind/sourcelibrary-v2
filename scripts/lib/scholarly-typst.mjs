@@ -21,7 +21,8 @@
 
 import { execSync } from 'child_process';
 import { writeFileSync, readFileSync, mkdirSync, rmSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
@@ -168,7 +169,7 @@ export function findRunningHeads(pages) {
  *   which reads as noise in print)
  * - running heads, metadata tags, HTML remnants and entities stripped
  */
-export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '' } = {}) {
+export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
   if (!text) return { body: '', printedPage: null };
 
   let out = text;
@@ -267,6 +268,11 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     return cells.join(' — ');
   });
 
+  // A transcription keeps the source's line breaks, so every paragraph is
+  // short lines and words split across them; as reading text it reflows,
+  // with the printer's end-of-line hyphens closed up ("la-/tet" → "latet")
+  if (reflow) out = out.replace(/(\p{L})[-¬=]\n(?=\p{Ll})/gu, '$1');
+
   out = escapeTypst(out);
 
   // Paragraph pass: keep the line structure of lists (an index, a table of
@@ -294,7 +300,7 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     para = para.replace(/%%\/?DL\d?%%/g, '');
     const lines = para.split('\n').map(l => l.trim()).filter(Boolean);
     const visible = l => l.replace(/%%IN\d+%%/g, '').length;
-    const isList = lines.length >= 4 && lines.filter(l => visible(l) < 48).length / lines.length > 0.8;
+    const isList = !reflow && lines.length >= 4 && lines.filter(l => visible(l) < 48).length / lines.length > 0.8;
     // A line-initial "/ ", "- ", "+ ", "= " or "1. " is Typst list/term/heading
     // syntax; none of it is meant here
     const safe = l => l.replace(/^(\/|[-+=]+|\d+\.)(?=\s)/, m => m.replace(/[\/\-+=.]/g, c => `\\${c}`));
@@ -420,6 +426,18 @@ function isContentPage(page) {
 // A4 because a scholar prints it; a ~75-character text column because A4 at
 // full width is unreadable; the space that frees up on the right is the
 // margin column that carries source-page numbers and the original's marginalia.
+// Latin-script text is Libertinus (embedded in typst); the Notos in ./fonts
+// cover an Arabic or Hebrew title and quotation. Compiled with
+// --ignore-system-fonts, so a laptop with 900 fonts and a bare server agree.
+const FONT_DIR = join(dirname(fileURLToPath(import.meta.url)), 'fonts');
+const FONT_STACK = '("Libertinus Serif", "Noto Naskh Arabic", "Noto Serif Hebrew")';
+
+// Typst hyphenation languages for the source text; unknown → no hyphenation
+const LANG_CODES = { latin: 'la', german: 'de', french: 'fr', italian: 'it', greek: 'el', dutch: 'nl', spanish: 'es', english: 'en', portuguese: 'pt' };
+
+// Standing credits, printed on the imprint page of every edition
+const STANDING_CREDITS = ['Creative direction: Derek Lomas'];
+
 const TYPST_PREAMBLE = `
 #let rust = rgb("#9e4a3a")
 #let muted = rgb("#6b6560")
@@ -465,11 +483,19 @@ const TYPST_PREAMBLE = `
 // anchor — it is the N in sourcelibrary.org/book/…/page/N) and, when the
 // source prints one, its own page number
 #let pagegap = block(above: 1.25em, below: 0pt, sticky: true)[]
-#let src(n, printed: none) = in-margin(drop: -0.7em, {
+// side "t" is the translation, "o" the source text in the back. The number
+// links to that page's facsimile on the site; the small line under it jumps to
+// the same page on the other side, when the edition has one.
+#let src(n, printed: none, side: "t", other: none) = in-margin(drop: -0.7em, {
   set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
-  text(size: 8.5pt, fill: rust, weight: "semibold", number-type: "lining")[#n]
+  [#metadata(n)#label(side + "-" + n)]
+  link(page-url + n, text(size: 8.5pt, fill: rust, weight: "semibold", number-type: "lining")[#n])
   if printed != none {
     text(size: 7pt, fill: muted)[#h(0.5em)orig. #printed]
+  }
+  if other != none {
+    linebreak()
+    link(label((if side == "t" { "o" } else { "t" }) + "-" + n), text(size: 7pt, fill: muted)[#other #sym.arrow.r])
   }
 })
 
@@ -539,7 +565,7 @@ const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
-  const { introduction, methodology, doi, version, frontispieceFile } = options;
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -574,13 +600,14 @@ export function generateTypstSource(book, pages, options = {}) {
   title: ${typstString(`English Translation of ${bookTitle}`)},
   author: ${typstString(author)},
 )
+#let page-url = ${typstString(`${bookUrl}/page-number/`)}
 ${TYPST_PREAMBLE}
 #running-title.update(${typstString(shorten(mainTitle, 52))})
 
 #set page(
   paper: "a4",
   margin: (top: 30mm, bottom: 30mm, left: margin-l, right: 210mm - margin-l - text-w),
-  numbering: "i",
+  numbering: "i",  // front matter in roman; the translation restarts at arabic 1
   header-ascent: 9mm,
   header: context {
     // Footnotes number from 1 on every page: a 900-page herbal otherwise
@@ -606,7 +633,7 @@ ${TYPST_PREAMBLE}
 )
 
 #set text(
-  font: "Libertinus Serif",
+  font: ${FONT_STACK},
   size: 10.5pt,
   lang: "en",
   hyphenate: true,
@@ -698,23 +725,8 @@ ${TYPST_PREAMBLE}
 ]
 `);
 
-  // ── Frontispiece ──
-  // The source's own title page, in facsimile: the one picture that says a
-  // real book, in a real library, stands behind the text that follows
-  if (frontispieceFile) {
-    const coverPage = book.cover_page_number || book.cover_page;
-    doc.push(`
-#page(margin: (x: 28mm, top: 26mm, bottom: 24mm), header: none, footer: none)[
-  #set align(center + horizon)
-  #set par(first-line-indent: 0pt, justify: false, leading: 0.5em)
-  #block(stroke: 0.4pt + hairline, image(${typstString(frontispieceFile)}, height: 215mm, fit: "contain"))
-  #v(5mm)
-  #text(size: 8.5pt, fill: muted, number-type: "lining")[_${escapeTypst(book.title)}_${imprintLine ? ` (${escapeTypst(imprintLine)})` : ''}${coverPage ? `, page ${escapeTypst(coverPage)} of the digitized copy` : ''}.${holder ? ` \\ ${escapeTypst(holder)}.` : ''}]
-]
-`);
-  }
-
   // ── Imprint page ──
+  const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
   const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted). Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''} ${persistentUrl}`;
   doc.push(`
 #page(header: none, footer: none)[
@@ -735,7 +747,9 @@ ${TYPST_PREAMBLE}
 
   Published by Source Library, a project of the Embassy of the Free Mind, Amsterdam, under a Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0).${publicDomain ? ' The source images are in the public domain.' : ''}
 
-  #text(fill: muted)[Set in Libertinus Serif with Typst.]
+  ${creditLines}
+
+  #text(fill: muted)[${frontispieceFile && (book.cover_page_number || book.cover_page) ? `Cover: page ${escapeTypst(book.cover_page_number || book.cover_page)} of the digitized copy${holder ? `, ${escapeTypst(holder)}` : ''}. ` : ''}Set in Libertinus Serif with Typst.]
 ]
 `);
 
@@ -775,9 +789,9 @@ This AI-assisted translation has *not* been reviewed by human editors or transla
 
 == How to read the page
 
-The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and the page it names can be checked against its facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page/_n_. Where the source prints a page number of its own, it follows in grey.
+The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and it is a link: it opens that page's facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/_n_, where the translation can be checked against the original. Where the source prints a page number of its own, it follows in grey.
 
-Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
+${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
 This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 `);
@@ -811,7 +825,28 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
 #pagebreak()
 `);
 
-  const runningHeads = findRunningHeads(translatedPages);
+  // Render both sides first: a cross-link may only point at a page that
+  // made it onto the other side (Typst refuses a dangling label, which makes
+  // a clean compile the proof that every link lands)
+  const asText = field => p => ({ page_number: p.page_number, translation: { data: p[field]?.data || '' } });
+  const render = (list, side) => {
+    const runningHeads = findRunningHeads(list);
+    const out = new Map();
+    for (const p of list) {
+      const { body } = translationToTypst(p.translation.data, {
+        runningHeads,
+        reflow: side === 'o',
+        anchor: printedPage => `%%SRC:${side}:${p.page_number}:${printedPage ? typstString(printedPage) : 'none'}%%`,
+      });
+      if (body) out.set(p.page_number, body);
+    }
+    return out;
+  };
+  const english = render(translatedPages, 't');
+  const original = includeOriginal ? render(translatedPages.filter(p => p.ocr?.data).map(asText('ocr')), 'o') : new Map();
+  const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
+    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
+
   let chapterIdx = 0;
   for (const page of translatedPages) {
     // Every chapter that starts at or before this page and has not been
@@ -823,18 +858,38 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       doc.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
       doc.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
     }
-
-    const { body } = translationToTypst(page.translation.data, {
-      runningHeads,
-      anchor: printedPage => `#src(${typstString(page.page_number)}${printedPage ? `, printed: ${typstString(printedPage)}` : ''});`,
-    });
-    if (!body) continue;
+    if (!english.has(page.page_number)) continue;
     doc.push('#pagegap');
-    doc.push(body);
+    doc.push(anchored(english.get(page.page_number), original, language));
     doc.push('');
   }
 
   doc.push(`#in-body.update(false)\n#running-chapter.update("")`);
+
+  // ── The source text ──
+  // What the translation was made from, so a reader can check a rendering
+  // without leaving the PDF. It is the OCR transcription, unreviewed, and says so.
+  if (original.size) {
+    const code = LANG_CODES[String(language).toLowerCase()];
+    doc.push(`
+= The ${escapeTypst(language)} Text
+
+#[
+#set par(first-line-indent: 0pt)
+This is the transcription the translation was made from, produced by optical character recognition from the page images and not corrected by hand. It keeps the spelling and abbreviations of the source. Each page number opens the facsimile; "English" returns to the same page of the translation.
+]
+
+#running-chapter.update(${typstString(`${language} text`)})
+#[
+#set text(size: 9.5pt, ${code ? `lang: "${code}"` : 'hyphenate: false'})
+`);
+    for (const [n, body] of original) {
+      doc.push('#pagegap');
+      doc.push(anchored(body, english, 'English'));
+      doc.push('');
+    }
+    doc.push(']\n#running-chapter.update("")');
+  }
 
   // ── Index ──
   const index = book.index;
@@ -907,6 +962,17 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
 // ── Compile ─────────────────────────────────────────────────────────
 
 /**
+ * Per-book credit lines for the imprint page. A funded acquisition names its
+ * funder: `books.acquisition_funder` is a person's name as they want it
+ * printed (set by hand — it goes into a permanent deposit).
+ */
+export function editionCredits(book) {
+  const lines = [];
+  if (book.acquisition_funder) lines.push(`Acquisition of this book funded by ${book.acquisition_funder}`);
+  return lines;
+}
+
+/**
  * The book's chosen cover page (usually its title page) as a JPEG buffer for
  * the frontispiece, or null — the PDF is complete without it, so every
  * failure here is soft. The URL must carry the book's own id: a page-image
@@ -948,7 +1014,7 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
 
   try {
-    execSync(`typst compile "${typFile}" "${pdfFile}"`, {
+    execSync(`typst compile --ignore-system-fonts --font-path "${FONT_DIR}" "${typFile}" "${pdfFile}"`, {
       // Large books legitimately take minutes, and a loaded machine (this box
       // often runs concurrent pipeline jobs) stretches that further
       timeout: 300000,

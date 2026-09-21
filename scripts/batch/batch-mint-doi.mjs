@@ -23,7 +23,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { generateScholarlyPdf, fetchFrontispiece } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, fetchFrontispiece, editionCredits } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
@@ -593,6 +593,7 @@ async function mintOneBook(db, book) {
     methodology: edition.front_matter?.methodology,
     version: edition.version,
     frontispiece: await fetchFrontispiece(book),
+    credits: editionCredits(book),
   });
   const pdfFilename = `${book.slug || book.id}-scholarly-v${edition.version}.pdf`;
   await zenodoUploadFile(draft.id, pdfFilename, pdfBuffer);

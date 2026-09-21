@@ -8,7 +8,7 @@ import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
 import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf } from '../../scripts/lib/scholarly-typst.mjs';
 
-const page = (n: number, data: string) => ({ page_number: n, translation: { data } });
+const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
 describe('translationToTypst', () => {
   it('ends a labelled marginal note at its own line, not at the end of the paragraph', () => {
@@ -78,16 +78,26 @@ describe('findRunningHeads', () => {
 describe('generateTypstSource', () => {
   const book = { id: 'b1', slug: 'a-book', title: 'Liber "de" #rebus', display_title: 'A Book: Of Things', author: 'A | B', language: 'Latin', published: '1657' };
   const pages = [
-    page(1, '# Chapter One #\n\n[Marginal note: A note.]\nBody text with *emphasis*.and a <note>note [with] #brackets</note>.'),
+    page(1, '# Chapter One #\n\n[Marginal note: A note.]\nBody text with *emphasis*.and a <note>note [with] #brackets</note>.', 'Caput primum\n\nTextus cum la-\ntet verbo.'),
     page(2, '/ slash start\n- dash start\n1. numbered\n\n' + ['Aloe','Basil','Caraway','Dodder','Elder','Fennel','Garlic','Hyssop','Iris','Juniper','Kale','Lovage','Mallow','Nettle'].map((n, i) => `${n} ${i + 100}.A`).join('\n')),
   ];
 
   it('anchors every source page and keeps the DOI when it has one', () => {
     const src = generateTypstSource(book, pages, { doi: '10.5281/zenodo.1', version: '1.0.0' });
-    expect(src).toContain('#src("1")');
-    expect(src).toContain('#src("2")');
+    expect(src).toContain('#src("1", printed: none, side: "t"');
+    expect(src).toContain('#src("2", printed: none, side: "t"');
     expect(src).toContain('https://doi.org/10.5281/zenodo.1');
     expect(src).toContain('A, B');
+  });
+
+  it('cross-links a page to its source text only when the source side has that page, and reflows the transcription', () => {
+    const src = generateTypstSource(book, pages, { credits: ['Books funded by X'] });
+    expect(src).toContain('#src("1", printed: none, side: "t", other: "Latin");');
+    expect(src).toContain('#src("1", printed: none, side: "o", other: "English");');
+    expect(src).toContain('#src("2", printed: none, side: "t");');
+    expect(src).toContain('latet verbo');
+    expect(src).toContain('Books funded by X');
+    expect(src).toContain('page-number/');
   });
 
   const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
