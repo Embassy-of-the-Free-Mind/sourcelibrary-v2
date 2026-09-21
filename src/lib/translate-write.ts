@@ -76,9 +76,32 @@ export function translatableBodyLen(text: string | null | undefined): number {
   return out.replace(/\s+/g, ' ').trim().length;
 }
 
-/** True when there is nothing on this page for a translator to work from. */
+/**
+ * Length of an illustration description the page carries instead of text.
+ *
+ * `<image-desc>` is stripped by `translatableBodyLen` — right for "how much
+ * transcription is here", wrong for "is there anything to work from". An illustration
+ * leaf has no words by definition, and the translate lane legitimately renders its
+ * description as the `<note>` a reader sees. A gate that ignored this would have
+ * silently stopped image descriptions corpus-wide.
+ */
+export function imageDescLen(text: string | null | undefined): number {
+  if (!text) return 0;
+  let total = 0;
+  for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
+    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  }
+  return total;
+}
+
+/**
+ * True when there is nothing on this page for a translator to work from — neither
+ * words nor a described picture. The vacuum is the absence of both.
+ */
 export function hasNoTranslatableBody(ocrText: string | null | undefined): boolean {
-  return translatableBodyLen(ocrText) < MIN_TRANSLATABLE_BODY;
+  if (translatableBodyLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
+  if (imageDescLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
+  return true;
 }
 
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */

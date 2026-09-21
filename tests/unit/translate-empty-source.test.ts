@@ -5,6 +5,8 @@ import {
   isBlankFromOcr,
   isDegenerateSource,
   MIN_TRANSLATABLE_BODY,
+  imageDescLen,
+  hasTranslatableSource,
 } from '../../scripts/lib/translate-core.mjs';
 import {
   translatableBodyLen,
@@ -92,6 +94,31 @@ describe('isTranslatablePage refuses a source with nothing in it', () => {
     expect(isTranslatablePage(page(heading))).toEqual({ ok: true });
   });
 
+  it('does NOT refuse an illustration leaf that carries a description', () => {
+    // Found by sampling real pages before shipping the gate. An illustration has no
+    // words on it by definition, `<image-desc>` is stripped by bodyLen, and the
+    // translate lane legitimately turns that description into the <note> a reader
+    // sees. A gate that only asked about transcription would have silently stopped
+    // image descriptions across the corpus — a worse outage than the bug.
+    const plate = {
+      page_number: 41,
+      page_type: 'illustration',
+      ocr: { data: '<language>Latin</language><page-type>illustration</page-type>' +
+        '<image-desc>An engraving within a rectangular border depicts two men in ' +
+        '17th-century attire engaged in a wrestling match.</image-desc>' },
+    };
+    expect(bodyLen(plate.ocr.data)).toBe(0);            // no transcription at all
+    expect(imageDescLen(plate.ocr.data)).toBeGreaterThan(60);
+    expect(hasTranslatableSource(plate)).toBe(true);
+    expect(isTranslatablePage(plate)).toEqual({ ok: true });
+  });
+
+  it('still refuses a pictorial page whose description is empty too', () => {
+    const empty = { page_number: 9, page_type: 'illustration',
+      ocr: { data: '<page-type>illustration</page-type><image-desc></image-desc>' } };
+    expect(isTranslatablePage(empty)).toEqual({ ok: false, reason: 'no-body' });
+  });
+
   it('a page of leader dots is not a source either', () => {
     expect(isTranslatablePage(page(`12 ${'.'.repeat(400)} 34`)).ok).toBe(false);
   });
@@ -116,10 +143,12 @@ describe('the .mjs and .ts twins agree', () => {
       `ab${'&nbsp;'.repeat(200)}cd`,
       '',
       'CAPUT PRIMUM. De natura elementorum.',
+      '<image-desc>An engraving of two men wrestling in seventeenth-century attire.</image-desc>',
+      '<image-desc></image-desc>',
     ];
     for (const c of cases) {
       expect(hasNoTranslatableBody(c), JSON.stringify(c.slice(0, 40))).toBe(
-        bodyLen(c) < MIN_TRANSLATABLE_BODY,
+        !hasTranslatableSource(c),
       );
     }
   });

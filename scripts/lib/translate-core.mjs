@@ -288,6 +288,48 @@ export function bodyLen(text) {
 export const MIN_TRANSLATABLE_BODY = 24;
 
 /**
+ * Length of an illustration description the page carries instead of text.
+ *
+ * `<image-desc>` is in BLOCK_TAGS, so `bodyLen` strips it — which is right for asking
+ * "how much transcription is here" and wrong for asking "is there anything to work
+ * from". An illustration leaf has no words on it by definition, and the translate lane
+ * legitimately turns its description into the `<note>` a reader sees:
+ *
+ *   "An engraving within a rectangular border depicts two men in 17th-century attire
+ *    engaged in a wrestling match…"
+ *
+ * A no-body gate that ignored this would have silently stopped image descriptions
+ * across the corpus — found by sampling real pages before shipping the gate, not by
+ * reasoning about it.
+ */
+export function imageDescLen(text) {
+  if (!text) return 0;
+  let total = 0;
+  for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
+    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  }
+  return total;
+}
+
+/** Page types whose content is a picture, not words. */
+const PICTORIAL_TYPES = new Set(['illustration', 'diagram', 'plate', 'map', 'frontispiece', 'portrait']);
+
+/**
+ * Has this page ANYTHING a translator can work from — words, or a picture described?
+ * The vacuum is the absence of both.
+ */
+export function hasTranslatableSource(page) {
+  const ocr = typeof page === 'string' ? page : page?.ocr?.data;
+  if (bodyLen(ocr) >= MIN_TRANSLATABLE_BODY) return true;
+  if (imageDescLen(ocr) >= MIN_TRANSLATABLE_BODY) return true;
+  const type = typeof page === 'string' ? null : page?.page_type;
+  // A pictorial page with a real description already returned true above; one with
+  // neither words nor a description has nothing, whatever its type claims.
+  if (type && PICTORIAL_TYPES.has(type) && imageDescLen(ocr) > 0) return true;
+  return false;
+}
+
+/**
  * Collapse = the translation BODY is genuinely short in absolute terms (empty
  * or a sliver). The absolute cap is essential: dense pages and pages with
  * huge/artifact-inflated OCR have a low body RATIO but a perfectly adequate
@@ -439,7 +481,7 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // source does not decline — it invents (#4960), and the invention reads exactly
   // like a translation. Checked BEFORE the loop test because a page of `&nbsp;` is
   // not a loop; it is a vacuum.
-  if (bodyLen(ocr) < MIN_TRANSLATABLE_BODY) return { ok: false, reason: 'no-body' };
+  if (!hasTranslatableSource(page)) return { ok: false, reason: 'no-body' };
   // A looping transcription is not a text to translate — it is the input that
   // produces a fabricated translation (#4765/#4850).
   if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };
