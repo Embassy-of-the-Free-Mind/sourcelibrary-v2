@@ -148,3 +148,15 @@ export function costOf(model, inputTokens = 0, outputTokens = 0) {
   const p = priceFor(model);
   return (inputTokens / 1e6) * p.input + (outputTokens / 1e6) * p.output;
 }
+
+/**
+ * Can this model be sent `thinkingConfig: { thinkingBudget: 0 }`?
+ *
+ * Allow-list, not deny-list: a model with no reasoning stage (2.0, 1.5, TTS, embedding,
+ * image) rejects the unknown field, and pro models reject a zero budget — both are a 400.
+ * Only flash text models from 2.5 on. Twin of `acceptsZeroThinking` in
+ * src/lib/gemini-client.ts (TypeScript cannot import this file); the model lists in
+ * tests/unit/gemini-client-meters.test.ts pin the behaviour of both.
+ */
+export const acceptsZeroThinking = (model) =>
+  /^gemini-(2\.5|[3-9](\.\d+)?)-flash/.test(model) && !/tts|image|embedding|live|audio/.test(model);
