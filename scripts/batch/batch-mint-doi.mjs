@@ -25,6 +25,7 @@ import fs from 'fs';
 import path from 'path';
 import { generateScholarlyPdf } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
+import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -266,9 +267,47 @@ function buildDescription(book, edition) {
 
 // ── Front matter generation ─────────────────────────────────────────
 
+/**
+ * One generation, thinking OFF and metered.
+ *
+ * Both front-matter calls used a bare `model.generateContent(prompt)`. Two defects
+ * came with that, and neither was visible from the outside:
+ *
+ *  - **No `thinkingConfig`.** Gemini 3.x thinks by default and bills it at the OUTPUT
+ *    rate; six unconfigured call sites cost ~$2K/month for months before anyone noticed
+ *    (#4581, a 17x meter gap). Front matter is prose from supplied context, so 0.
+ *  - **No metering.** This script wrote no `gemini_usage` row at all, so when I asked
+ *    what the 19 Forum mints had cost, the answer came back **$0.00** — the instrument
+ *    failing, wearing the costume of a zero. That is the whole reason this exists
+ *    before any bulk run: 13,140 books through an unmetered spender is a bill nobody
+ *    can see until it arrives.
+ */
+async function meteredGenerate(model, prompt, { book, phase }) {
+  const result = await model.generateContent({
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+  });
+  const u = result.response?.usageMetadata;
+  await logUsage({
+    type: 'front_matter', mode: 'realtime', model: GEMINI_MODEL,
+    book_id: book?.id || null,
+    input_tokens: u?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(u),
+    status: 'success', phase,
+    endpoint: 'scripts/batch/batch-mint-doi.mjs',
+    timestamp: new Date(),
+  }).catch(e => console.warn(`  usage log failed (${phase}): ${e.message}`));
+  return result.response.text();
+}
+
 async function generateFrontMatter(book, pages) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+  // thinkingBudget on the MODEL, so it covers every call made through it rather
+  // than only the ones that remember to pass a generationConfig.
+  const model = genAI.getGenerativeModel({
+    model: GEMINI_MODEL,
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+  });
 
   const bookContext = buildBookContext(book, pages);
 
@@ -375,8 +414,7 @@ Rules:
 - Do NOT assert provenance of this particular copy (former owners, famous libraries)
 - If the edition date in the BIBLIOGRAPHIC DATA conflicts with the work's known publication history, do not invent a reconciliation — describe the work generally and refer to "this edition" without dating other printings`;
 
-  const result = await model.generateContent(prompt);
-  return result.response.text();
+  return meteredGenerate(model, prompt, { book, phase: 'introduction' });
 }
 
 async function generateMethodology(model, book, pages) {
@@ -425,8 +463,7 @@ async function generateMethodology(model, book, pages) {
 - Use ## markdown headings
 - Start directly with the first heading`;
 
-  const result = await model.generateContent(prompt);
-  return result.response.text();
+  return meteredGenerate(model, prompt, { book, phase: 'methodology' });
 }
 
 // ── Edition creation ────────────────────────────────────────────────
