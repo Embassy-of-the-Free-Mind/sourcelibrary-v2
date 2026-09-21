@@ -9,7 +9,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf]
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf] [--dedication text]
  *
  * The book + pages are cached under scripts/output/scholarly-cache/ after the
  * first fetch, so design iteration needs no database (pass --refresh to
@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, editionCredits } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -46,7 +46,10 @@ async function load() {
       .find({ book_id: book.id }, { projection: { page_number: 1, page_type: 1, 'translation.data': 1, 'ocr.data': 1 } })
       .sort({ page_number: 1 })
       .toArray();
-    const data = { book, pages: pages.filter(p => p.translation?.data) };
+    const collections = book.collections?.length
+      ? await db.collection('collections').find({ slug: { $in: book.collections }, dedication: { $exists: true } }, { projection: { slug: 1, dedication: 1 } }).toArray()
+      : [];
+    const data = { book, collections, pages: pages.filter(p => p.translation?.data) };
     mkdirSync(cacheDir, { recursive: true });
     writeFileSync(cacheFile, JSON.stringify(data));
     return data;
@@ -55,7 +58,7 @@ async function load() {
   }
 }
 
-const { book, pages } = await load();
+const { book, pages, collections = [] } = await load();
 let body = pages;
 const range = opt('pages');
 if (range) {
@@ -72,6 +75,8 @@ const options = {
   version: edition?.version,
   frontispiece: await fetchFrontispiece(book),
   credits: editionCredits(book),
+  // --dedication "text" previews wording without writing it anywhere
+  dedication: opt('dedication') || resolveDedication(book, collections),
 };
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 

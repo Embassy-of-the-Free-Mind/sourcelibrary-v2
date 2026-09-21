@@ -567,7 +567,7 @@ const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
-  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true } = options;
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book) } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -738,17 +738,20 @@ ${TYPST_PREAMBLE}
 
   // ── Dedication ──
   // These books open with a dedication to the patron who made them possible;
-  // this edition keeps the custom, in one sentence. `book.dedication` is
-  // printed as written; otherwise a funded acquisition gets the standing form.
-  const dedication = book.dedication
-    || (book.acquisition_funder ? `To ${book.acquisition_funder}, whose generosity brought this book and its companions into the library.` : null);
+  // this edition keeps the custom (see resolveDedication for where the text
+  // comes from). Salutation, then body.
   if (dedication) {
+    const [salutation, ...rest] = String(dedication).trim().split(/\n\s*\n/);
+    const body = rest.join('\n\n');
     doc.push(`
 #page(header: none, footer: none)[
   #set align(center)
-  #set par(first-line-indent: 0pt, justify: false, leading: 0.7em)
-  #v(38%)
-  #block(width: 100mm, text(size: 11.5pt, style: "italic")[${escapeTypst(dedication)}])
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.75em)
+  #v(34%)
+  #block(width: 104mm, {
+    text(size: ${body ? 12.5 : 11.5}pt, ${body ? 'tracking: 0.08em, smallcaps' : 'style: "italic"'}[${escapeTypst(salutation)}])
+    ${body ? `v(5mm)\n    text(size: 11pt, style: "italic")[${escapeTypst(body)}]` : ''}
+  })
 ]
 `);
   }
@@ -996,6 +999,24 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
  */
 export function editionCredits(book) {
   return book.edition_credits || [];
+}
+
+/**
+ * The dedication for a book, in precedence: the book's own, then the one
+ * carried by a collection it belongs to (a funded collection dedicates every
+ * book in it), then the standing line for a named funder. `collections` are
+ * the collection documents for `book.collections` that carry a `dedication`.
+ * Text is printed as written; a blank line separates the salutation from
+ * the body ("To N.\n\nwhose generosity…").
+ */
+export function resolveDedication(book, collections = []) {
+  if (book.dedication) return book.dedication;
+  const fromCollection = (book.collections || [])
+    .map(slug => collections.find(c => c.slug === slug || c.id === slug)?.dedication)
+    .find(Boolean);
+  if (fromCollection) return fromCollection;
+  if (book.acquisition_funder) return `To ${book.acquisition_funder},\n\nwhose generosity brought this book and its companions into the library.`;
+  return null;
 }
 
 /**

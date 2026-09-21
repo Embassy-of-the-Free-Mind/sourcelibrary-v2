@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -75,6 +75,16 @@ describe('findRunningHeads', () => {
   });
 });
 
+describe('resolveDedication', () => {
+  it('prefers the book, then a collection it belongs to, then the funder line', () => {
+    const forum = { slug: 'forum', dedication: 'To S.\n\nwhose generosity…' };
+    expect(resolveDedication({ dedication: 'Own' , collections: ['forum'] }, [forum])).toBe('Own');
+    expect(resolveDedication({ collections: ['other', 'forum'] }, [forum])).toBe(forum.dedication);
+    expect(resolveDedication({ collections: ['other'], acquisition_funder: 'S. P.' }, [forum])).toMatch(/^To S\. P\.,/);
+    expect(resolveDedication({ collections: ['other'] }, [forum])).toBeNull();
+  });
+});
+
 describe('generateTypstSource', () => {
   const book = { id: 'b1', slug: 'a-book', title: 'Liber "de" #rebus', display_title: 'A Book: Of Things', author: 'A | B', language: 'Latin', published: '1657' };
   const pages = [
@@ -97,7 +107,8 @@ describe('generateTypstSource', () => {
     expect(src).toContain('#src("2", printed: none, side: "t");');
     expect(src).toContain('latet verbo');
     expect(src).toContain('Books funded by X');
-    expect(src).toContain('To Stefan Pernar, whose generosity');
+    expect(src).toContain('To Stefan Pernar,');
+    expect(src).toContain('whose generosity brought this book');
     expect(src).toContain('page-number/');
   });
 
