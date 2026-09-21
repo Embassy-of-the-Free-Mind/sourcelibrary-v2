@@ -2035,7 +2035,14 @@ export default function TranslationEditor({
                             </span>
                           )}
                           {modernizeState === 'gated' && (
-                            <a href="/auth/signin" className="text-[11px] underline" style={{ color: 'var(--text-muted)' }}>
+                            <a
+                              // Carry the reader back to the page they were reading, as
+                              // the other gated actions in this component do — a sign-in
+                              // that lands you on the homepage loses your place.
+                              href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=limit`}
+                              className="text-[11px] underline"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
                               sign in to continue
                             </a>
                           )}
