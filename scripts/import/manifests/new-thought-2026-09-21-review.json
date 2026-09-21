@@ -1,0 +1,191 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from new-thought.json; config new-thought.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "new-thought-2026-09-21",
+  "collections": [],
+  "BOOKS": [
+    {
+      "id": "60221650R.nlm.nih.gov",
+      "title": "Brain and mind, or, Mental science considered in accordance with the principles of phrenology, and in relation to modern physiology",
+      "author": "H. S. (Henry Shipton) author Drayton",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine; alternate scans: brainandmindorm00mcnegoog"
+    },
+    {
+      "id": "63710510R.nlm.nih.gov",
+      "title": "Bread-pills : a study of mind cure : what it is and how to do it",
+      "author": "Charles M. (Charles Mason) Barrows",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "9602495.nlm.nih.gov",
+      "title": "Facts and fictions of mental healing",
+      "author": "Charles M. (Charles Mason) Barrows",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine; alternate scans: factsandfiction00barrgoog"
+    },
+    {
+      "id": "63560860R.nlm.nih.gov",
+      "title": "The educator, cause and cure of all diseases : designed as a guide to families, a complete common sense practical health instructor, a digest of all that is valuable in old and new systems and methods of healing : how to secure long life and avoid the infirmities and deformities of age",
+      "author": "Rosamond C Conger",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "101221907.nlm.nih.gov",
+      "title": "Uses of mental science : with addresses delivered before the American Institute of Phrenology, 1890",
+      "author": "Unknown",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "cihm_52349",
+      "title": "Beyond the clouds [microform] : Sunday evening lectures on the spiritual science of life, given before the alliance of divine unity",
+      "author": "Charles Brodie Patterson",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "cihm_29873",
+      "title": "Architects of fate, or, Steps to success and power [microform] : a book designed to inspire youth to character building, self-culture and noble achievement",
+      "author": "Orison Swett Marden",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "61460260R.nlm.nih.gov",
+      "title": "Health of body and mind : some practical suggestions of how to improve both by physical and mental culture : an extended series of movements and passive motions for the improvement of the muscles : how the thought force can be directed to the part, function or muscle to be developed : good health and long life",
+      "author": "T. W. (Thomas W.) author Topham",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "cihm_52350",
+      "title": "New Thought essays [microform]",
+      "author": "Charles Brodie Patterson",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org; alternate scans: newthoughtessays00patt"
+    },
+    {
+      "id": "63720470R.nlm.nih.gov",
+      "title": "The law of correspondences applied to healing : a course of seven practical lessons",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "63721040R.nlm.nih.gov",
+      "title": "The true history of mental science : the facts concerning the discovery of mental healing",
+      "author": "Julius A Dresser",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine; alternate scans: McGillLibrary-115579-531"
+    },
+    {
+      "id": "in.ernet.dli.2015.163555",
+      "title": "In Tune With The Infinite",
+      "author": "Ralph Trine Waldo",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_71036",
+      "title": "The dawn of a new era, or, The ideal state in the light of mental science [microform]",
+      "author": "Hedwig Selma Albarus",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "in.ernet.dli.2015.205033",
+      "title": "Perfect Whole.",
+      "author": "Horatio W Dresser",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_990558",
+      "title": "In the fire of the heart [microform]",
+      "author": "Ralph Waldo Trine",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org; alternate scans: infireofheart00trinuoft, infireofheart00trin, cihm_90558, dli.ernet.213370, infireheart00tringoog"
+    },
+    {
+      "id": "dli.ministry.16023",
+      "title": "The land of living man",
+      "author": "Ralph Waldo Trine",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.33449",
+      "title": "Power Of Silence Ed. 9",
+      "author": "Horatio W. Dresser",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "00650240R.nlm.nih.gov",
+      "title": "Scientific man building through thought force",
+      "author": "A. A. (Arthur Adolphus) author Lindsay",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine; alternate scans: scientificmanbu00lindgoog"
+    },
+    {
+      "id": "cihm_85045",
+      "title": "As a man thinketh [microform]",
+      "author": "James Allen",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "39002086413524.med.yale.edu",
+      "title": "Mental self-help",
+      "author": "Edwin Ash",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Yale University, Cushing/Whitney Medical Library"
+    },
+    {
+      "id": "in.ernet.dli.2015.49827",
+      "title": "Every Man A King Or Might In Mind Mastery",
+      "author": "Orison Seett Marden",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "33910100R.nlm.nih.gov",
+      "title": "Mental and spiritual healing : all schools and methods : a text book for physicians and metaphysicians",
+      "author": "Pierson Worrall author Banning",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "dli.ministry.23976",
+      "title": "Towards Islam : theosophy, spiritualism, new thought, Christian science, higher thought , new life",
+      "author": "Khwaja Kamal Ud Din",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}

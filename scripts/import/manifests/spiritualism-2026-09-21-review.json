@@ -1,0 +1,295 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from spiritualism.json; config spiritualism.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "spiritualism-2026-09-21",
+  "collections": [],
+  "BOOKS": [
+    {
+      "id": "cihm_92713",
+      "title": "Séance de la Société littéraire de Québec, tenue samedi, le 3e juin 1809 [microforme]",
+      "author": "Louis Plamondon",
+      "year": 1809,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "101158886.nlm.nih.gov",
+      "title": "Professor Anderson's exposé of \"spirit rappings,\" being a series of letters to the editors of the Baltimore Sun, together with a \"writing medium's\" reply",
+      "author": "J. H Anderson",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "in.ernet.dli.2015.283130",
+      "title": "The Dervishes Or Oriental Spiritualism",
+      "author": "John P. Brown",
+      "year": 1868,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.gov.ignca.21105"
+    },
+    {
+      "id": "55720250R.nlm.nih.gov",
+      "title": "Autobiography of Dr. D.B. Kellogg, or, Explanation of clairvoyance : being an account of the mysteries of his life, combined with a concise explanation of the phenomena of clairvoyance, somnambulism, and spirit manifestation",
+      "author": "D. B. (Daniel B.) author Kellogg",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "cihm_14832",
+      "title": "\"Spiritualism\", or, Modern necromancy [microform] : a sermon with preface and notes",
+      "author": "Edward Cridge",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "cihm_64926",
+      "title": "Clairvoyance and some practical results [microform]",
+      "author": "Geo. (George) Botsford",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "101734880.nlm.nih.gov",
+      "title": "Does matter do it all? : a reply to Professor Tyndall's latest attack on spiritualism",
+      "author": "Epes Sargent",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "101684563.nlm.nih.gov",
+      "title": "Dental spiritualism",
+      "author": "Louis Ottofy",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "cihm_92197",
+      "title": "By-laws of the First British Columbia Society of Spiritualists of Victoria, B.C. [microform]",
+      "author": "First British Columbia Society of Spiritualists",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "in.ernet.dli.2015.62076",
+      "title": "Spiritualist Philosohp The Soirits Book(1898)",
+      "author": "Allan Kardec",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.111291",
+      "title": "The Perfect Course Of Instruction In Hypnotism, Mesmerism, Clairvoyance, Suggestive Therapeutics And The Sleep Cure",
+      "author": "Masters Of The Science",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.112139",
+      "title": "Practical Psychomancy and Crystal Gazing: A Course of Lessons on the Psychic Phenomena of Distant Sensing, Clairvoyance, Psychometry, Crystal Gazing, etc.; containing Practical Instruction, Exercises, Directions, etc., capable of being understood, mastered and demonstrated by any person of average intelligence",
+      "author": "William Walker Atkinson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.36937",
+      "title": "Spiritualism",
+      "author": "James Robertson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.93450",
+      "title": "Wordsworth- English Men of Letters, Pocket ed.",
+      "author": "F. W. H. Myers",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.93800"
+    },
+    {
+      "id": "cihm_71839",
+      "title": "Extrait des délibérations de la Chambre de commerce du district de Nicolet [microforme] : séance du 13 décembre 1909",
+      "author": "Chambre de commerce du district de Nicolet",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "india.history.resource.117461",
+      "title": "Crystal-Gazing and the Wonders of Clairvoyance, embracing Practical Instructions in the Art, History and Philosophy of this Ancient Science; New and Revi. ed.",
+      "author": "John Melville",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.20711",
+      "title": "Psychical Research And Mans Survival Of Bodily Death",
+      "author": "Hiralal Haldar",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.7243",
+      "title": "Book of magical art, Hindu magic and Indian occultism",
+      "author": "L. W. De Laurence",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_86506",
+      "title": "Raymond, or, Life and death [microform] : with examples of the evidence for survival of memory and affection after death",
+      "author": "Oliver Sir Lodge",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org; alternate scans: raymondorlifedea00lod, raymondorlifedea00lodg, cu31924028954380, raymondorlifedea00lodguoft, raymondorlifedea00lodgrich, raymondorlifean00lodggoog, raymondorlifean01lodggoog, raymondorlifean02lodggoog, raymondorlifean03lodggoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.42346",
+      "title": "Raymond Or Life And Death Ed. 8",
+      "author": "Oliver J. Lodge",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_65182",
+      "title": "The case against spiritualism [microform]",
+      "author": "Jane T Stoddart",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org; alternate scans: caseagainstspiri00stod"
+    },
+    {
+      "id": "in.ernet.dli.2015.470180",
+      "title": "Genuine Mediumship Or The Invisible Powers",
+      "author": "Vishita Swami Bhakta",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.95648",
+      "title": "Raymond Revised Ed.12th",
+      "author": "Oliver J. Lodge",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.99343",
+      "title": "Spiritualism And Psychical Research",
+      "author": "J. Arthur Hill",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.16769",
+      "title": "Man visible and invisible : examples of different types of men as seen by means of trained clairvoyance",
+      "author": "C.W. Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.16766"
+    },
+    {
+      "id": "india.history.resource.117412",
+      "title": "Preliminary Report of the commission appointed by the University of Pennsylvania to investigate Modern Spiritualism",
+      "author": "Henry Seybert",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117463",
+      "title": "Verbatim Report of a Public Debate on the Truth of Spiritualism between Sir Arthur Conan Doyle and Joseph McCabe; held at the Queen’s Hall, London on March 11, 1920; Sir Edward Marshall-Hall",
+      "author": "Arthur Conan Sir Doyle",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.470173",
+      "title": "Spiritualism Among Civilised and Savage Races",
+      "author": "Lawrence Edward",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.219498",
+      "title": "Torchbearers Of Spiritualism",
+      "author": "St. Clair Stobart",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.155499",
+      "title": "Dorio A Practical And Timely Expose Of Spiritualism",
+      "author": "F. A. Kraft",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.14178",
+      "title": "The history of spiritualism",
+      "author": "Arthur Conan Doyle",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.173581"
+    },
+    {
+      "id": "in.ernet.dli.2015.218517",
+      "title": "The History Of Spiritualism Vol 1",
+      "author": "Arthur Conan Doyle",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.221709"
+    },
+    {
+      "id": "in.ernet.dli.2015.218497",
+      "title": "The History Of Spiritualism Vol 2",
+      "author": "Arthur Conan Doyle",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.177567",
+      "title": "The History Of Spiritualism Vol-ii",
+      "author": "M.d. Ll.d. Arthur Conan Doyle",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.11861",
+      "title": "Demonstrated survival : its influence on science, philosophy and religion",
+      "author": "Oliver Lodge",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.128330",
+      "title": "Transactions Of The Fourth International Congress For Psychical Research",
+      "author": "theodore Besterman",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}
