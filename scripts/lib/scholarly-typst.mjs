@@ -490,6 +490,37 @@ const TYPST_PREAMBLE = `
   columns(2, gutter: 8mm, body)
 })
 
+// ── Cover ──
+// A cloth binding in type: navy ground, a gilt ornamental border, the source
+// page in a gilt frame where a binder would stamp an emblem, and the Source
+// Library mark set into the foot of the border.
+#let navy = rgb("#0c1230")
+#let gold = rgb("#d8b25c")
+#let foil = gradient.linear(rgb("#f2da92"), rgb("#c4932e"), rgb("#ecd083"), rgb("#b98a2a"), angle: 35deg)
+#let lozenge(size) = rotate(45deg, square(size: size, fill: gold))
+// One 6mm repeat: a four-petalled flower with a lozenge at each corner, so
+// neighbouring tiles join into a lattice. relative: "self" anchors the repeat
+// to the band — anchored to the page it shows half-tiles.
+#let border-tile = tiling(size: (6mm, 6mm), relative: "self", {
+  let c = 3mm
+  for (dx, dy) in ((0mm, -1.25mm), (0mm, 1.25mm), (-1.25mm, 0mm), (1.25mm, 0mm)) {
+    place(top + left, dx: c + dx - 0.75mm, dy: c + dy - 0.75mm, lozenge(1.5mm))
+  }
+  place(top + left, dx: c - 0.35mm, dy: c - 0.35mm, circle(radius: 0.35mm, fill: navy))
+  for (x, y) in ((0mm, 0mm), (6mm, 0mm), (0mm, 6mm), (6mm, 6mm)) {
+    place(top + left, dx: x - 0.8mm, dy: y - 0.8mm, lozenge(1.6mm))
+  }
+})
+#let sl-mark(size, ink) = box(width: size, height: size, {
+  for (r, w) in ((0.5, 0.045), (0.36, 0.045), (0.2, 0.05)) {
+    place(center + horizon, circle(radius: size * r - size * w / 2, stroke: size * w + ink))
+  }
+})
+#let diamond-rule(ink) = box(width: 46mm, grid(
+  columns: (1fr, auto, 1fr), column-gutter: 2.2mm, align: horizon,
+  line(length: 100%, stroke: 0.5pt + ink), rotate(45deg, square(size: 1.5mm, fill: ink)), line(length: 100%, stroke: 0.5pt + ink),
+))
+
 #let running-title = state("running-title", "")
 #let running-chapter = state("running-chapter", "")
 #let in-body = state("in-body", false)
@@ -625,6 +656,39 @@ ${TYPST_PREAMBLE}
   v(0.7em, weak: true)
   text(tracking: 0.05em, smallcaps(it))
 }
+`);
+
+  // ── Cover ──
+  const coverTitle = mainTitle.length > 60 ? shorten(mainTitle, 60) : mainTitle;
+  const coverTitleSize = coverTitle.length > 42 ? 22 : coverTitle.length > 24 ? 27 : 32;
+  const coverPlaceDate = [place, book.published].filter(Boolean).join('  ·  ');
+  doc.push(`
+#page(fill: navy, margin: 0pt, header: none, footer: none)[
+  #place(top + left, dx: 12mm, dy: 10.5mm, rect(width: 186mm, height: 276mm, fill: border-tile, stroke: 0.6pt + gold))
+  #place(top + left, dx: 18mm, dy: 16.5mm, rect(width: 174mm, height: 264mm, fill: navy, stroke: 0.6pt + gold))
+  #place(bottom + center, dy: -5mm, circle(radius: 9.5mm, fill: navy))
+  #place(bottom + center, dy: -7.5mm, sl-mark(14mm, gold))
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.42em)
+  #set text(fill: gold, hyphenate: false)
+  #align(center, block(width: 140mm, {
+    v(${frontispieceFile ? 36 : 62}mm)
+    ${frontispieceFile
+      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 104mm, fit: "contain")))`
+      : 'sl-mark(40mm, gold)'}
+    v(15mm)
+    ${book.title !== bookTitle ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(book.title, 90))}]
+    v(7mm)` : ''}
+    text(size: ${coverTitleSize}pt, weight: "bold", tracking: 0.1em, fill: foil, upper[${escapeTypst(coverTitle)}])
+    ${subTitle ? `v(3.5mm)
+    text(size: 11pt, tracking: 0.08em, smallcaps[${escapeTypst(shorten(subTitle, 80))}])` : ''}
+    v(8mm)
+    diamond-rule(gold)
+    v(7mm)
+    text(size: 13pt, weight: "bold", tracking: 0.14em, upper[${escapeTypst(author)}])
+    ${coverPlaceDate ? `v(3mm)
+    text(size: 9.5pt, tracking: 0.22em, number-type: "lining", upper[${escapeTypst(coverPlaceDate)}])` : ''}
+  }))
+]
 `);
 
   // ── Title page ──
