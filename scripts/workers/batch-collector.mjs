@@ -190,6 +190,11 @@ async function closeUsagePlaceholder(db, job, reason, status = 'failed') {
       status,
       error_message: reason,
       batch_job_id: jobIdStr,
+      // Matches the submit-time placeholder's own label (pipeline-orchestrator.mjs)
+      // so a caller attribution report doesn't split one pipeline into two labels
+      // depending on whether a placeholder happened to still exist (spend-reconcile
+      // "(unlabelled)" line, #4939 follow-up).
+      endpoint: 'hetzner/pipeline-orchestrator',
       // No placeholder to close means the job predates the row or was already
       // reconciled — don't manufacture a new zero row for it.
       insertIfMissing: false,
@@ -916,6 +921,12 @@ async function processOneJob(db, job) {
       status: finalStatus === 'saved' ? 'success' : 'failed',
       error_message: errorDetail ?? null,
       batch_job_id: jobIdStr,
+      // completeBatchUsage() PATCHes the submit-time placeholder (which already
+      // carries this label) but falls back to an INSERT with no endpoint on a
+      // re-collected batch that has no placeholder left — that insert was the
+      // source of spend-reconcile's "(unlabelled)" attribution line (largest
+      // caller-unknown line some days). Pass it explicitly so both paths agree.
+      endpoint: 'hetzner/pipeline-orchestrator',
     }, db).catch(err => console.warn(`  Usage log failed: ${err.message}`));
 
     return {

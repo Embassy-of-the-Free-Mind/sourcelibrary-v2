@@ -25,7 +25,14 @@
  *
  * This script closes the loop. It reads BILLED token counts from Cloud
  * Monitoring and LIVE prices from the Cloud Billing SKU catalogue, prices them,
- * and diffs that against our own meters. It also prints the rest of the spend
+ * and diffs that against our own meters. Since 2026-09-21 it ALSO reads the
+ * Detailed usage cost BigQuery export — the actual invoice, not a token-count
+ * estimate — and prints it as its own BILLED FROM INVOICE section, per day and
+ * per SKU family (realtime output/input, batch, grounded search, embeddings).
+ * That is the number to trust; the Cloud Monitoring section above it is
+ * labelled an estimate and stays only because it is what still runs when the
+ * BigQuery query is refused (see `billedFromInvoice()` — degrades to a named
+ * permission gap, never a silent zero). It also prints the rest of the spend
  * surface — R2, Vercel, and the vendors we cannot read — so the run rate is
  * observable in one place rather than reconstructed by hand every few weeks.
  *
@@ -209,7 +216,10 @@ async function serviceAccountToken() {
     // Measured 2026-09-14 from Hetzner with the real key: `cloud-platform.read-only`
     // reads Monitoring but the SKU catalogue answers 403 "insufficient scopes";
     // `cloud-billing.readonly` is the scope it wants. Least privilege that works.
-    scope: 'https://www.googleapis.com/auth/monitoring.read https://www.googleapis.com/auth/cloud-billing.readonly',
+    // `bigquery.readonly` added 2026-09-21 for the Detailed usage cost export
+    // (BILLED FROM INVOICE section) — it covers jobs.query against a dataset
+    // the service account already holds READER on; it does not grant write.
+    scope: 'https://www.googleapis.com/auth/monitoring.read https://www.googleapis.com/auth/cloud-billing.readonly https://www.googleapis.com/auth/bigquery.readonly',
     aud: key.token_uri || 'https://oauth2.googleapis.com/token',
     iat, exp: iat + 3600,
   };
@@ -306,6 +316,125 @@ function resolvePrice(skus, model, { batch = false } = {}) {
 async function fetchSkus(token) {
   const j = await gapi(token, `https://cloudbilling.googleapis.com/v1/${GEMINI_SERVICE}/skus?pageSize=2000&currencyCode=USD`);
   return j.skus || [];
+}
+
+// ─────────────────────────────────────────── billed from invoice (BigQuery)
+
+/**
+ * The Detailed usage cost export — the actual bill, not a token-count estimate.
+ * Enabled 2026-09-16, backfilled to 2026-07-31. Unlike the Cloud Monitoring
+ * section above (billed TOKENS x today's catalogue PRICE, which cannot see
+ * batch generation or per-query grounded-search charges — see traps D and the
+ * `billedSearchRequests` comment) this table carries Google's own `cost`
+ * column per SKU per day: real dollars, whatever tier or unit that SKU bills
+ * in. It is EU-located and lives in the Sourcelibrary project, but — checked
+ * 2026-09-21 — covers the whole billing account: booksplit and soma rows are
+ * in it too, not just Sourcelibrary's own project.
+ *
+ * Table name is NOT a stable identifier — the trailing hex is BigQuery's
+ * export-table suffix, unique per billing account, and would change if the
+ * export were ever re-created. Re-derive with:
+ *   bq ls --project_id=gen-lang-client-0352480887 billing_export
+ */
+const BILLING_EXPORT = {
+  projectId: 'gen-lang-client-0352480887',
+  table: '`gen-lang-client-0352480887.billing_export.gcp_billing_export_resource_v1_010186_B7EF88_329F51`',
+  location: 'EU',
+};
+
+/**
+ * Run one query against the Detailed usage cost export via the BigQuery REST
+ * API (jobs.query), reusing the same bearer token as Monitoring/Billing.
+ *
+ * `jobs.query` is synchronous up to its timeout and returns rows inline when
+ * `jobComplete` is true — this table is small (aggregated Gemini rows only,
+ * a few months), so it always finishes inside the timeout in practice. If it
+ * ever doesn't, that is reported as a failure rather than silently polled
+ * forever — a query that needs polling on a table this size is itself a
+ * signal something changed.
+ *
+ * Returns { rows, error }. `error` carries Google's own message untouched, so
+ * the caller can recognise a missing-permission message and say exactly what
+ * is missing rather than guessing.
+ */
+async function bigQuery(token, sql) {
+  const r = await fetch(
+    `https://bigquery.googleapis.com/bigquery/v2/projects/${BILLING_EXPORT.projectId}/queries`,
+    {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: sql, useLegacySql: false, location: BILLING_EXPORT.location, timeoutMs: 30000,
+      }),
+    },
+  );
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) return { rows: null, error: j?.error?.message || `HTTP ${r.status}` };
+  if (!j.jobComplete) return { rows: null, error: 'query did not complete within 30s (table should be small — investigate)' };
+  const fields = j.schema?.fields || [];
+  const rows = (j.rows || []).map(row => {
+    const o = {};
+    row.f.forEach((cell, idx) => { o[fields[idx].name] = cell.v; });
+    return o;
+  });
+  return { rows, error: null };
+}
+
+/**
+ * Real dollars per day x SKU family, straight from the invoice. Family is
+ * inferred from `sku.description` text (Google gives no structured tier/kind
+ * field) — batch checked before output/input because a batch SKU's
+ * description also contains "output token count"/"input token count".
+ *
+ * Degrades LOUDLY, per trap E: a permission refusal is returned as
+ * `{ unreadable, permissionHint }`, never as an empty/zero result, so main()
+ * can print exactly what is missing and keep the Cloud Monitoring estimate
+ * (explicitly labelled an estimate) rather than silently reporting nothing.
+ */
+async function billedFromInvoice(token) {
+  const sql = `
+    SELECT
+      DATE(usage_start_time) AS day,
+      CASE
+        WHEN LOWER(sku.description) LIKE '%batch%' THEN 'batch'
+        WHEN LOWER(sku.description) LIKE '%search quer%' THEN 'grounded_search'
+        WHEN LOWER(sku.description) LIKE '%embed%' THEN 'embeddings'
+        WHEN LOWER(sku.description) LIKE '%output token%' THEN 'realtime_output'
+        WHEN LOWER(sku.description) LIKE '%input token%' THEN 'realtime_input'
+        ELSE 'other'
+      END AS family,
+      SUM(cost) AS cost,
+      SUM(usage.amount_in_pricing_units) AS units
+    FROM ${BILLING_EXPORT.table}
+    WHERE service.description LIKE '%Gemini%'
+      AND usage_start_time >= TIMESTAMP('${start.toISOString()}')
+      AND usage_start_time < TIMESTAMP('${end.toISOString()}')
+    GROUP BY day, family
+    ORDER BY day, family
+  `;
+  const { rows, error } = await bigQuery(token, sql);
+  if (error) {
+    // The one permission this needs beyond dataset READER (already granted) is
+    // roles/bigquery.jobUser on the project that runs the query job. Name it
+    // exactly, per the task: this is a manual grant, never self-service here.
+    const permissionHint = /permission|denied|access|forbidden/i.test(error)
+      ? `Likely missing roles/bigquery.jobUser on project ${BILLING_EXPORT.projectId} for the ` +
+        `calling service account (dataset READER alone is not enough to RUN a query job). ` +
+        `Grant (human step, not this script): gcloud projects add-iam-policy-binding ` +
+        `${BILLING_EXPORT.projectId} --member=serviceAccount:<sa-email> --role=roles/bigquery.jobUser`
+      : null;
+    return { unreadable: error, permissionHint };
+  }
+  const byDay = {}, byFamily = {};
+  let total = 0;
+  for (const r of rows) {
+    const cost = Number(r.cost || 0);
+    total += cost;
+    byDay[r.day] = byDay[r.day] || {};
+    byDay[r.day][r.family] = (byDay[r.day][r.family] || 0) + cost;
+    byFamily[r.family] = (byFamily[r.family] || 0) + cost;
+  }
+  return { byDay, byFamily, total, days: Object.keys(byDay).sort() };
 }
 
 // ─────────────────────────────────────────── billed tokens (Cloud Monitoring)
@@ -837,8 +966,32 @@ async function main() {
     const sqPrice = searchQueryPrice(skus);
     log(`  NOT IN THIS TOTAL: grounded search queries, billed per query at $${sqPrice ?? '?'}.`);
     log(`    quota metric saw ${searchRequests.toLocaleString()} this window — it reads ~17x low against the invoice,`);
-    log('    so it is shape, not money. Real figure: the Detailed usage cost export');
-    log('    (Sourcelibrary.billing_export, enabled 2026-09-16). August was $2,116.15.');
+    log('    so it is shape, not money. Real figure: the section below.');
+    log(`  ABOVE IS AN ESTIMATE (billed tokens x today's catalogue price) — it cannot see batch`);
+    log('    generation or per-query grounded search charges. See BILLED FROM INVOICE below for the real bill.');
+
+    // ---- billed from invoice (BigQuery Detailed usage cost export) ---------
+    const invoice = await billedFromInvoice(token);
+    log('\nBILLED FROM INVOICE (Detailed usage cost export, BigQuery — real dollars, not an estimate)');
+    out.billedFromInvoice = invoice;
+    if (invoice.unreadable) {
+      log(`  UNREADABLE — ${invoice.unreadable}`);
+      if (invoice.permissionHint) log(`  ${invoice.permissionHint}`);
+      log('  Falling back to the Cloud Monitoring estimate above, labelled as an estimate.');
+    } else {
+      const FAMILIES = ['realtime_output', 'realtime_input', 'batch', 'grounded_search', 'embeddings', 'other'];
+      log(`  ${'day'.padEnd(12)}${FAMILIES.map(f => f.padStart(16)).join('')}${'total'.padStart(12)}`);
+      for (const d of invoice.days) {
+        const row = invoice.byDay[d];
+        const rowTotal = FAMILIES.reduce((a, f) => a + (row[f] || 0), 0);
+        log(`  ${d.padEnd(12)}${FAMILIES.map(f => money(row[f] || 0).padStart(16)).join('')}${money(rowTotal).padStart(12)}`);
+      }
+      log(`  ${'TOTAL'.padEnd(12)}${FAMILIES.map(f => money(invoice.byFamily[f] || 0).padStart(16)).join('')}${money(invoice.total).padStart(12)}`);
+      if (invoice.byFamily.other) {
+        log(`  NB "other" is ${money(invoice.byFamily.other)} of SKU descriptions this classifier did not`);
+        log('    recognise — named rather than folded silently into a bucket that would hide it.');
+      }
+    }
 
     // ---- our meters (BOTH stores — see the block comment above) ------------
     const uri = process.env.MONGODB_URI;
@@ -1109,9 +1262,9 @@ async function main() {
     ['GitHub', 'receipts only — $20/mo Team, Embassy-of-the-Free-Mind org'],
   ]) log(`${vendor.padEnd(26)} UNREADABLE — ${why}`);
 
-  log('\nTo make the Google half exact rather than estimated, enable the Cloud');
-  log('Billing export to BigQuery. It is NOT retroactive, so it only helps from');
-  log('the day it is switched on.\n');
+  log('\nThe Google half is exact, not estimated, above (BILLED FROM INVOICE) — the');
+  log('Cloud Billing export to BigQuery was enabled 2026-09-16 and read from here');
+  log('since 2026-09-21. It is NOT retroactive before 2026-07-31 (backfill limit).\n');
 
   if (JSON_OUT) console.log(JSON.stringify(out, null, 2));
   process.exit(exitCode);
