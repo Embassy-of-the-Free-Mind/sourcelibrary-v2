@@ -28,7 +28,6 @@ import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
-import { editionYear } from '../lib/identity-fields.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -4666,12 +4665,6 @@ Rules:
 
         // Fresh books first (never translated), then re-queue partially-translated books
         const ENGLISH_VARIANTS_P4 = ['english', 'eng', 'en'];
-        // Twin of the reader's threshold in src/components/pipeline/TranslationEditor.tsx
-        // (`englishOcrIsReadingView`). If one moves, the other must — below it an English
-        // book reads as modernized-by-default, at or above it the OCR is the reading view
-        // and a modernization is generated for nobody. tests/unit/english-modernization-
-        // year-gate.test.ts pins the two files to the same number.
-        const MODERNIZATION_MAX_YEAR = 1820;
 
         let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
@@ -4697,37 +4690,41 @@ Rules:
           // pages_ocr must survive the projection: the "OCR incomplete" guard
           // reads it, and a projected-away field read as 0 — bouncing every
           // fully-translated >30-page book back to archive_complete forever.
-          // `published` + `year` feed editionYear() in the modernization gate below.
-          // Projecting them away would make every English book read as unknown-year,
-          // which the gate treats as modern — the #4563/#4565 starvation family, one
-          // step over: a projected-away field silently decides the filter.
-          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, published: 1, year: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+          // `language` must survive the projection: the English filter below reads it,
+          // and a projected-away field reads as undefined — which would let every
+          // English book back onto the translation lane.
+          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
         if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
 
-        // An English book is not translated, it is MODERNIZED (prompt type
-        // `english_modernization`), and the reader only ever shows that panel for
-        // archaic print: `englishOcrIsReadingView` in TranslationEditor.tsx hides it
-        // at edition year >= 1820 or unknown, because modern OCR is already readable.
-        // The generate side had no such gate, so we paid to modernize every English
-        // book and the output for modern ones was never displayed — while still
-        // setting pages_translated and is_fully_translated, which feed badges and
-        // homepage stats. On a 1907 Mead volume the "modernization" was not even a
-        // no-op: it Americanized spelling and injected editorial <note> glosses into
-        // text that needed neither (#4958).
+        // THE PIPELINE DOES NOT MODERNIZE ENGLISH (#4958).
         //
-        // editionYear() is the canonical reader of this field pair — `published` is
-        // free text and must never be parseInt'd directly.
+        // An English book is not translated, it is MODERNIZED — and a modernization is
+        // an aid to the text, not the text. It is now produced only where a reader asks
+        // for it, one page at a time, through /api/pages/[id]/modernize.
+        //
+        // Bulk generation was wrong in three compounding ways. It ran on every English
+        // book at any date, so modern print got a second English text nobody had asked
+        // for. The reader never displayed it, yet it still set pages_translated and
+        // is_fully_translated, which gate badges and feed homepage stats — a reader met
+        // "two englishes" on a 1907 volume that way. And on already-modern prose the
+        // pass was not the no-op it should have been: it Americanized spelling and
+        // injected editorial <note> glosses into text that needed neither.
+        //
+        // An interim version of this filter kept books below an edition year of 1820.
+        // That was a proxy for archaic ORTHOGRAPHY, and the on-demand lane now measures
+        // the thing itself (src/lib/archaic-orthography.ts) on the page in front of the
+        // reader, refusing to spend where there is nothing to modernize. A date cannot
+        // do that: presses dropped long ſ unevenly between roughly 1790 and 1810, and
+        // our own OCR preserves the glyph on some pages of a book and not others.
         {
           const before = freshBooks.length;
-          freshBooks = freshBooks.filter((b) => {
-            if (!ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())) return true;
-            const y = editionYear(b);
-            return typeof y === 'number' && y < MODERNIZATION_MAX_YEAR;
-          });
+          freshBooks = freshBooks.filter(
+            (b) => !ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())
+          );
           const skipped = before - freshBooks.length;
-          if (skipped > 0) console.log(`  Skipped ${skipped} modern-print English book(s) — modernization is only shown below ${MODERNIZATION_MAX_YEAR}`);
+          if (skipped > 0) console.log(`  Skipped ${skipped} English book(s) — modernization is reader-triggered, not dispatched`);
         }
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
