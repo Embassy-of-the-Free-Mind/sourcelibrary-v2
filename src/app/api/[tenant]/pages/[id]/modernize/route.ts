@@ -1,137 +1,107 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performModernization } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { resolveTenantId } from '@/lib/tenant-context';
+import {
+  hashString,
+  resolveModernizationSource,
+  readCachedModernization,
+  generateModernization,
+  loadEnglishModernizationPrompt,
+  wouldBeNoOp,
+} from '@/lib/modernize-page';
 
-// Simple hash function to detect translation changes
-function hashString(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
-  }
-  return hash.toString(16);
-}
-
+/**
+ * Tenant twin of `src/app/api/pages/[id]/modernize/route.ts`. Both delegate to
+ * `@/lib/modernize-page`: these two were copies, and a gate added to one of them would
+ * have left the other an ungated paid endpoint — the exact shape of
+ * `lesson_second_resolver_never_screened`.
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ tenant: string; id: string }> }
 ) {
-  const startTime = Date.now();
-
   try {
     const { tenant, id } = await params;
     const triggeredBy = getTriggerSource(request);
-    const db = await getDb();
-    
-    // Resolve tenant slug to UUID
+
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    
+
+    const db = await getDb();
     const body = await request.json().catch(() => ({}));
+    // `model` is deliberately NOT read from the body — see modernize-page.ts.
+    const { regenerate = false } = body;
 
-    const { regenerate = false, model = DEFAULT_MODEL } = body;
-
-    // Fetch the page
-    const page = await db.collection('pages').findOne({ id, tenantId });
+    const page = await db.collection('pages').findOne({ id });
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    // Check if translation exists
-    if (!page.translation?.data) {
-      return NextResponse.json({
-        error: 'Page has no translation. Translate first before modernizing.'
-      }, { status: 400 });
+    const book = await db.collection('books').findOne({ id: page.book_id }, { projection: { language: 1 } });
+    const resolved = resolveModernizationSource(page, book);
+    if (!resolved) {
+      return NextResponse.json(
+        { error: 'Page has no text to modernize. It needs OCR (English editions) or a translation first.' },
+        { status: 400 },
+      );
     }
 
-    const translationHash = hashString(page.translation.data);
+    const sourceHash = hashString(resolved.text);
 
-    // Check if we can use cached version
-    const hasValidCache = page.modernized?.data &&
-                          page.modernized.source_translation_hash === translationHash;
-
-    if (hasValidCache && !regenerate) {
+    const cached = readCachedModernization(page, sourceHash, resolved.source);
+    if (cached && !regenerate) {
       return NextResponse.json({
-        modernized: page.modernized.data,
+        modernized: cached,
         cached: true,
-        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 }
+        source: resolved.source,
+        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
       });
     }
 
-    // Get previous page for context
-    let previousContext: { translation?: string; modernized?: string } | undefined;
-
-    if (page.page_number > 1) {
-      const prevPage = await db.collection('pages').findOne({
-        book_id: page.book_id,
-        page_number: page.page_number - 1,
-        tenantId
+    // Refuse before spending — see the non-tenant twin.
+    if (wouldBeNoOp(resolved.text, resolved.source)) {
+      return NextResponse.json({
+        modernized: null,
+        skipped: 'already-modern',
+        source: resolved.source,
+        message: 'This page is already in modern English — a modernization would return the same text.',
       });
-
-      if (prevPage) {
-        previousContext = {
-          translation: prevPage.translation?.data,
-          modernized: prevPage.modernized?.data
-        };
-      }
     }
 
-    // Perform modernization
-    const result = await performModernization(
-      page.translation.data,
-      previousContext,
-      undefined, // customPrompt
-      model
-    );
+    const gate = await anonActionGate(request, { name: 'modernize', limit: 15, allowBotBypass: false });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: 'Modernization limit reached. Sign in (free) to keep going.',
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+          retry_after: gate.retryAfter,
+        },
+        { status: 429, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : undefined },
+      );
+    }
 
-    // Save to database
-    await db.collection('pages').updateOne(
-      { id, tenantId },
-      {
-        $set: {
-          'modernized.data': result.text,
-          'modernized.model': model,
-          'modernized.updated_at': new Date(),
-          'modernized.source_translation_hash': translationHash,
-          updated_at: new Date()
-        }
-      }
-    );
-
-    // Log AI usage to gemini_usage (single source of truth)
-    const duration = Date.now() - startTime;
-    logGeminiCall({
-      type: 'translation',
-      mode: 'realtime',
-      model,
-      book_id: page.book_id,
-      page_ids: [id],
-      input_tokens: result.usage.inputTokens,
-      output_tokens: result.usage.outputTokens,
-      status: 'success',
-      duration_ms: duration,
-      prompt_version: 'modernize-inline-v1',
-      endpoint: '/api/[tenant]/pages/[id]/modernize',
-      triggered_by: triggeredBy,
+    const customPrompt = await loadEnglishModernizationPrompt(db, resolved.source);
+    const result = await generateModernization(db, page as never, resolved.text, resolved.source, sourceHash, {
+      customPrompt,
+      triggeredBy,
     });
 
     return NextResponse.json({
       modernized: result.text,
       cached: false,
-      usage: result.usage
+      source: resolved.source,
+      usage: result.usage,
     });
   } catch (error) {
     console.error('Error modernizing page:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to modernize page' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

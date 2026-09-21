@@ -628,8 +628,20 @@ export default function TranslationEditor({
   // modernization in translation.data is the readable text, so those books read like
   // translated books: modernized panel by default, transcription toggleable as
   // "Original Text". Unknown year falls to the modern-print behavior.
-  const bookYear = parseInt(String(book.published ?? ''), 10);
-  const englishOcrIsReadingView = isEnglishBook && !(bookYear < 1820);
+  // The transcription is ALWAYS the reading view for an English book (#4958).
+  //
+  // This used to be year-split: below 1820 the modernized text in `translation.data`
+  // became the default view and the transcription was the toggle. That made a derived,
+  // machine-written text the thing a reader sees first — and quotes — on the strength
+  // of a date. Two problems, one practical and one editorial. Practically, a date is a
+  // poor proxy: presses dropped long ſ unevenly between roughly 1790 and 1810, and
+  // antiquarian reprints set archaic type long after. Editorially, the original is the
+  // artifact; a modernization is an aid to it, and an aid should be offered, not
+  // substituted.
+  //
+  // The modernized panel is unaffected and still one toggle away wherever it exists —
+  // these are initial panel states, not permissions. What changed is which one opens.
+  const englishOcrIsReadingView = isEnglishBook;
 
   // The same idea one locale over. A book WRITTEN in the reading language has
   // no translation into it and never will — `pages.translations.es` is empty
