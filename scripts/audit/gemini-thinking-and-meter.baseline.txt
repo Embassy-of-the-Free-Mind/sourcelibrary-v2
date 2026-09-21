@@ -11,7 +11,6 @@
 # transfer to creative paths — so they stay recorded here until that measurement is made.
 scripts/batch/batch-extract-chapters.mjs:thinking
 scripts/batch/batch-generate-indexes.mjs:thinking
-scripts/batch/batch-mint-doi.mjs:thinking
 scripts/lib/batch-mint-doi.mjs:thinking
 src/app/api/[tenant]/books/[id]/chat/route.ts:thinking
 src/app/api/[tenant]/books/[id]/editions/front-matter/route.ts:thinking
