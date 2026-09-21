@@ -15,7 +15,7 @@
       "hits": 3
     },
     {
-      "id": "tlg3135.tlg001.1st1K-grc1",
+      "id": "tlg0032.tlg007.perseus-grc2",
       "hits": 3
     }
   ],
@@ -28,15 +28,16 @@
   "phrase_hits": 18,
   "etext_chars": 258244,
   "window_words": 125,
-  "window_chars": 776,
+  "window_chars": 781,
   "overlap": 0.821,
   "align_trim": {
     "letters_before": 632,
     "reads_used": [
       "gemini-3-flash-preview:0.03",
       "gemini-3.1-flash-lite:0.03",
-      "gemini-3.1-flash-lite-b:0.03"
+      "gemini-3.1-flash-lite-b:0.03",
+      "kraken-greek-cllg:0.05"
     ],
-    "letters_after": 626
+    "letters_after": 630
   }
 }

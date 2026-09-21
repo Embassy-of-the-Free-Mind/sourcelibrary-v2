@@ -28,15 +28,16 @@
   "phrase_hits": 26,
   "etext_chars": 41420,
   "window_words": 155,
-  "window_chars": 1013,
+  "window_chars": 1020,
   "overlap": 0.834,
   "align_trim": {
     "letters_before": 821,
     "reads_used": [
       "gemini-3-flash-preview:0.03",
       "gemini-3.1-flash-lite:0.08",
-      "gemini-3.1-flash-lite-b:0.08"
+      "gemini-3.1-flash-lite-b:0.08",
+      "kraken-greek-cllg:0.04"
     ],
-    "letters_after": 811
+    "letters_after": 815
   }
 }

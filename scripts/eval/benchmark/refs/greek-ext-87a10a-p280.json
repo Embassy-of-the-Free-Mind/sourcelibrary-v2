@@ -7,11 +7,11 @@
   "probe_greek_letters": 920,
   "corpus_votes": [
     {
-      "id": "tlg0086.tlg001.1st1K-grc2",
+      "id": "tlg0086.tlg001.1st1K-grc1",
       "hits": 14
     },
     {
-      "id": "tlg0086.tlg001.1st1K-grc1",
+      "id": "tlg0086.tlg001.1st1K-grc2",
       "hits": 14
     },
     {
@@ -35,7 +35,8 @@
     "reads_used": [
       "gemini-3-flash-preview:0.15",
       "gemini-3.1-flash-lite:0.18",
-      "gemini-3.1-flash-lite-b:0.18"
+      "gemini-3.1-flash-lite-b:0.18",
+      "kraken-greek-cllg:0.13"
     ],
     "letters_after": 850
   }

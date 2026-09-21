@@ -35,7 +35,8 @@
     "reads_used": [
       "gemini-3-flash-preview:0.09",
       "gemini-3.1-flash-lite:0.13",
-      "gemini-3.1-flash-lite-b:0.13"
+      "gemini-3.1-flash-lite-b:0.13",
+      "kraken-greek-cllg:0.09"
     ],
     "letters_after": 994
   }

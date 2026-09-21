@@ -33,7 +33,8 @@
   "align_trim": {
     "letters_before": 2747,
     "reads_used": [
-      "gemini-3-flash-preview:0.18"
+      "gemini-3-flash-preview:0.18",
+      "kraken-greek-cllg:0.24"
     ],
     "letters_after": 1660
   }

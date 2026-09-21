@@ -7,11 +7,11 @@
   "probe_greek_letters": 571,
   "corpus_votes": [
     {
-      "id": "tlg0086.tlg001.1st1K-grc1",
+      "id": "tlg0086.tlg001.1st1K-grc2",
       "hits": 14
     },
     {
-      "id": "tlg0086.tlg001.1st1K-grc2",
+      "id": "tlg0086.tlg001.1st1K-grc1",
       "hits": 14
     },
     {
@@ -28,15 +28,16 @@
   "phrase_hits": 3,
   "etext_chars": 81111,
   "window_words": 129,
-  "window_chars": 719,
+  "window_chars": 722,
   "overlap": 1,
   "align_trim": {
     "letters_before": 580,
     "reads_used": [
       "gemini-3-flash-preview:0.03",
       "gemini-3.1-flash-lite:0.03",
-      "gemini-3.1-flash-lite-b:0.03"
+      "gemini-3.1-flash-lite-b:0.03",
+      "kraken-greek-cllg:0.02"
     ],
-    "letters_after": 562
+    "letters_after": 564
   }
 }

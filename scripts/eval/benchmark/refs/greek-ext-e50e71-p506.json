@@ -15,7 +15,7 @@
       "hits": 2
     },
     {
-      "id": "tlg0007.tlg051.perseus-grc1",
+      "id": "tlg0057.tlg049.1st1K-grc1",
       "hits": 1
     }
   ],
@@ -35,7 +35,8 @@
     "reads_used": [
       "gemini-3-flash-preview:0.10",
       "gemini-3.1-flash-lite:0.16",
-      "gemini-3.1-flash-lite-b:0.16"
+      "gemini-3.1-flash-lite-b:0.16",
+      "kraken-greek-cllg:0.07"
     ],
     "letters_after": 873
   }

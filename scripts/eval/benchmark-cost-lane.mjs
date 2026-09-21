@@ -44,7 +44,10 @@ const LEAF = argOf('leaf');
 // --script-class=typeset-print: keep only pages of this by-eye class (the Greek prereg counts print
 // only; the 18 Greek codices with edition-era catalogue years are reported apart, never in a print cell).
 const SCRIPT_CLASS = argOf('script-class');
-const leafOk = p => !LEAF || (LEAF === 'grc' && typeof p.greek_share === 'number' ? p.greek_share >= 0.5 : (!p.leaf_language || p.leaf_language === LEAF));
+// --min-share=0.9: the prereg's pure-Greek robustness slice (parallel and apparatus leaves carry Greek
+// inside their Latin that the Greek-letters-only scorer charges to every engine alike).
+const MIN_SHARE = parseFloat(argOf('min-share', '0.5'));
+const leafOk = p => !LEAF || (LEAF === 'grc' && typeof p.greek_share === 'number' ? p.greek_share >= MIN_SHARE : (!p.leaf_language || p.leaf_language === LEAF));
 const MIN_N = parseInt(argOf('min-n', '50'), 10);
 const MARGIN = parseFloat(argOf('margin', '0.02')), CI_MAX = parseFloat(argOf('ci-max', '0.05')), NOISE = parseFloat(argOf('noise', '0.02'));
 const DIR = argOf('results', path.join(__dirname, 'results', 'benchmark'));

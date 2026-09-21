@@ -11,11 +11,11 @@
       "hits": 23
     },
     {
-      "id": "tlg0562.tlg001.perseus-grc2",
+      "id": "tlg0007.tlg068.perseus-grc2",
       "hits": 1
     },
     {
-      "id": "tlg0007.tlg068.perseus-grc2",
+      "id": "tlg0562.tlg001.perseus-grc2",
       "hits": 1
     }
   ],
@@ -28,15 +28,16 @@
   "phrase_hits": 23,
   "etext_chars": 77169,
   "window_words": 165,
-  "window_chars": 1162,
+  "window_chars": 1164,
   "overlap": 0.783,
   "align_trim": {
     "letters_before": 979,
     "reads_used": [
       "gemini-3-flash-preview:0.07",
       "gemini-3.1-flash-lite:0.10",
-      "gemini-3.1-flash-lite-b:0.10"
+      "gemini-3.1-flash-lite-b:0.10",
+      "kraken-greek-cllg:0.09"
     ],
-    "letters_after": 974
+    "letters_after": 976
   }
 }

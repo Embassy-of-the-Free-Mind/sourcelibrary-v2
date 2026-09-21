@@ -7,11 +7,11 @@
   "probe_greek_letters": 1423,
   "corpus_votes": [
     {
-      "id": "tlg5026.tlg001.1st1K-grc1",
+      "id": "tlg0612.tlg001.perseus-grc2",
       "hits": 3
     },
     {
-      "id": "tlg0612.tlg001.perseus-grc2",
+      "id": "tlg5026.tlg001.1st1K-grc1",
       "hits": 3
     },
     {
