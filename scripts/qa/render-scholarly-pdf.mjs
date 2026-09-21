@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { generateScholarlyPdf, generateTypstSource } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -70,7 +70,9 @@ const options = {
   methodology: edition?.front_matter?.methodology,
   doi: edition?.doi,
   version: edition?.version,
+  frontispiece: await fetchFrontispiece(book),
 };
+if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 
 const out = opt('out') || join('scripts', 'output', `${book.id}-scholarly${range ? `-p${range}` : ''}.pdf`);
 mkdirSync(dirname(out), { recursive: true });

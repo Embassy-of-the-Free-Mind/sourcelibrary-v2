@@ -20,8 +20,9 @@
  */
 
 import { execSync } from 'child_process';
-import { writeFileSync, readFileSync, unlinkSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { writeFileSync, readFileSync, mkdirSync, rmSync, existsSync, copyFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
@@ -504,7 +505,9 @@ function shorten(text, max) {
 const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
 export function generateTypstSource(book, pages, options = {}) {
-  const { introduction, methodology, doi, version } = options;
+  // logoFile / frontispieceFile are filenames beside the .typ (generateScholarlyPdf
+  // puts them there); absent, the pages fall back to type alone
+  const { introduction, methodology, doi, version, logoFile, frontispieceFile } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -644,12 +647,29 @@ ${TYPST_PREAMBLE}
   #text(size: 10pt)[An English translation from the ${escapeTypst(language)}]
   #v(1.5mm)
   #text(size: 9pt, style: "italic", fill: muted)[AI-assisted and not reviewed by human editors]
-  #v(16mm)
-  #text(size: 10pt, tracking: 0.2em)[#upper[Source Library]]
-  #v(1.5mm)
+  #v(14mm)
+  ${logoFile ? `#image(${typstString(logoFile)}, height: 17mm)
+  #v(2.5mm)` : `#text(size: 10pt, tracking: 0.2em)[#upper[Source Library]]
+  #v(1.5mm)`}
   #text(size: 9pt, fill: muted)[Embassy of the Free Mind #h(0.4em)·#h(0.4em) Amsterdam #h(0.4em)·#h(0.4em) #text(number-type: "lining")[${year}]]
 ]
 `);
+
+  // ── Frontispiece ──
+  // The source's own title page, in facsimile: the one picture that says a
+  // real book, in a real library, stands behind the text that follows
+  if (frontispieceFile) {
+    const coverPage = book.cover_page_number || book.cover_page;
+    doc.push(`
+#page(margin: (x: 28mm, top: 26mm, bottom: 24mm), header: none, footer: none)[
+  #set align(center + horizon)
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.5em)
+  #block(stroke: 0.4pt + hairline, image(${typstString(frontispieceFile)}, height: 215mm, fit: "contain"))
+  #v(5mm)
+  #text(size: 8.5pt, fill: muted, number-type: "lining")[_${escapeTypst(book.title)}_${imprintLine ? ` (${escapeTypst(imprintLine)})` : ''}${coverPage ? `, page ${escapeTypst(coverPage)} of the digitized copy` : ''}.${holder ? ` \\ ${escapeTypst(holder)}.` : ''}]
+]
+`);
+  }
 
   // ── Imprint page ──
   const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted). Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''} ${persistentUrl}`;
@@ -843,16 +863,52 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
 
 // ── Compile ─────────────────────────────────────────────────────────
 
-export async function generateScholarlyPdf(book, pages, options = {}) {
-  const typstSource = generateTypstSource(book, pages, options);
+const LOGO_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'public', 'brand', 'svg', 'logo-stacked--black-on-white.svg');
 
-  // Write to temp file
+/**
+ * The book's chosen cover page (usually its title page) as a JPEG buffer for
+ * the frontispiece, or null — the PDF is complete without it, so every
+ * failure here is soft. The URL must carry the book's own id: a page-image
+ * key that does not is shared between books by construction (#3362), and a
+ * frontispiece from another book is worse than none.
+ */
+export async function fetchFrontispiece(book) {
+  const url = book.image_display || book.thumbnail;
+  if (!url || !/^https:\/\//.test(url) || !url.includes(String(book.id))) return null;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } });
+    if (!res.ok) return null;
+    const raw = Buffer.from(await res.arrayBuffer());
+    const { default: sharp } = await import('sharp');
+    return await sharp(raw).rotate().resize(1800, 1800, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * options: { introduction, methodology, doi, version, frontispiece }
+ * `frontispiece` is a JPEG/PNG buffer (see fetchFrontispiece); omit for none.
+ */
+export async function generateScholarlyPdf(book, pages, options = {}) {
+  // Write to temp dir: the .typ and the images it references by relative path
   const tmpDir = join(tmpdir(), `sourcelibrary-typst-${crypto.randomUUID()}`);
   mkdirSync(tmpDir, { recursive: true });
   const typFile = join(tmpDir, 'edition.typ');
   const pdfFile = join(tmpDir, 'edition.pdf');
 
-  writeFileSync(typFile, typstSource, 'utf-8');
+  const { frontispiece, ...rest } = options;
+  if (existsSync(LOGO_PATH)) {
+    copyFileSync(LOGO_PATH, join(tmpDir, 'logo.svg'));
+    rest.logoFile = 'logo.svg';
+  }
+  if (frontispiece) {
+    const ext = frontispiece[0] === 0x89 ? 'png' : 'jpg';
+    writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
+    rest.frontispieceFile = `frontispiece.${ext}`;
+  }
+
+  writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
 
   try {
     execSync(`typst compile "${typFile}" "${pdfFile}"`, {
@@ -862,12 +918,8 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 
-    const pdfBuffer = readFileSync(pdfFile);
-    return pdfBuffer;
+    return readFileSync(pdfFile);
   } finally {
-    // Cleanup
-    try { unlinkSync(typFile); } catch {}
-    try { unlinkSync(pdfFile); } catch {}
-    try { unlinkSync(tmpDir); } catch {} // rmdir if empty
+    try { rmSync(tmpDir, { recursive: true, force: true }); } catch {}
   }
 }

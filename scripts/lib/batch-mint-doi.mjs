@@ -535,7 +535,6 @@ async function mintOneBook(db, book) {
   const pdfBuffer = await generateScholarlyPdf(book, translatedPages, {
     introduction: edition.front_matter?.introduction,
     methodology: edition.front_matter?.methodology,
-    version: edition.version,
   });
   const pdfFilename = `${book.slug || book.id}-scholarly-v${edition.version}.pdf`;
   await zenodoUploadFile(draft.id, pdfFilename, pdfBuffer);
