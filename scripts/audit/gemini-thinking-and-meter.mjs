@@ -124,7 +124,15 @@ for (const f of files) {
   const rel = relative(ROOT, f);
 
   // ── 1. thinking ──
-  for (const m of src.matchAll(/getGenerativeModel\s*\(\s*\{/g)) {
+  // `getGeminiClient()` (src/lib/gemini-client.ts) sets `thinkingBudget: 0` on every model
+  // it hands out unless the call site set its own — pinned by
+  // tests/unit/gemini-client-meters.test.ts. A file whose ONLY way to a model is that
+  // client is covered at the boundary; one that also builds a raw or unmetered client is
+  // not, and is still checked site by site.
+  const boundaryDefault = /\bgetGeminiClient\s*\(/.test(src)
+    && !/new\s+GoogleGenerativeAI\s*\(|getUnmeteredGeminiClient\s*\(/.test(src)
+    && !rel.endsWith('src/lib/gemini-client.ts');
+  for (const m of boundaryDefault ? [] : src.matchAll(/getGenerativeModel\s*\(\s*\{/g)) {
     const open = src.indexOf('{', m.index + 'getGenerativeModel('.length - 1);
     const obj = objectAt(src, open);
     if (WAIVER.test(priorLines(src, m.index))) continue;

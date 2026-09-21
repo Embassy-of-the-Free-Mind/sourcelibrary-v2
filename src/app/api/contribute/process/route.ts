@@ -12,6 +12,12 @@ import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
 import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
+import type { GenerationConfig } from '@google/generative-ai';
+
+// The unmetered client skips the boundary's thinking default along with the meter, and
+// this spends a CONTRIBUTOR's money — reasoning tokens bill at the output rate (#4581).
+// thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
+const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const dynamic = 'force-dynamic';
@@ -38,7 +44,7 @@ async function performOCRWithKey(
   previousPageOcr?: string
 ): Promise<ContributorAiResult> {
   const genAI = getUnmeteredGeminiClient(apiKey);
-  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
+  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL, generationConfig: THINKING_OFF });
 
   const promptResult = await getOcrPrompt({ language });
   let prompt = promptResult.text;
@@ -77,7 +83,7 @@ async function performTranslationWithKey(
   previousPageTranslation?: string
 ): Promise<ContributorAiResult> {
   const genAI = getUnmeteredGeminiClient(apiKey);
-  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
+  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL, generationConfig: THINKING_OFF });
 
   const promptResult = await getTranslationPrompt(sourceLanguage);
   let prompt = promptResult.text;
