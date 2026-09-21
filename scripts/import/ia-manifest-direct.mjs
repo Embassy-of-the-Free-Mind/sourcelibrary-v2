@@ -126,7 +126,9 @@ async function main() {
       if (v === null || v === undefined || (Array.isArray(v) && v.length === 0)) delete iaCatalog[k]; }
 
     const licenseUrl = meta.licenseurl || meta.license || null;
-    const rights = meta.rights || meta.possible_copyright_status || null;
+    // IA spells the key with hyphens (`possible-copyright-status: NOT_IN_COPYRIGHT`); the underscore
+    // form never matched, so a 1929–30 imprint with no licenseurl was refused despite the statement.
+    const rights = meta.rights || meta['possible-copyright-status'] || meta.possible_copyright_status || null;
     // contributing_library is a NAME (memory: credit-holding-institutions). IA's `contributor` is
     // the holding library for library scans; a bare "Internet Archive" or an e-mail is a scanner or
     // an uploader, not a holder, and is left unset rather than credited wrongly.
@@ -137,7 +139,10 @@ async function main() {
     const imprintYear = b.year;
     const iaYear = parseInt(String(meta.date || meta.year || '').match(/\d{4}/)?.[0] || '0', 10);
     const pd = /publicdomain|public domain|cc0|creativecommons|not_in_copyright/i.test(String(licenseUrl || rights || ''));
-    if ((imprintYear >= 1929 || iaYear >= 1929) && !pd) { console.log(`FAIL  ${b.id} — rights: imprint ${imprintYear}, IA date ${iaYear}`); failed++; rec({ id: b.id, outcome: 'rights-refused', imprintYear, iaYear }); continue; }
+    // US public-domain line: everything published before 1931 is PD as of 2026-01-01 (the line
+    // advances one year every January — bump this constant then). Later imprints need a stated licence.
+    const PD_LINE = 1931;
+    if ((imprintYear >= PD_LINE || iaYear >= PD_LINE) && !pd) { console.log(`FAIL  ${b.id} — rights: imprint ${imprintYear}, IA date ${iaYear}`); failed++; rec({ id: b.id, outcome: 'rights-refused', imprintYear, iaYear }); continue; }
 
     const bookId = new ObjectId(), bookIdStr = bookId.toHexString();
     const slug = await uniqueSlug(db, slugify(`${b.title} ${b.author}`));
