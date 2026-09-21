@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
-import { isBareGreeting, greetingReply } from '@/lib/embassy/greeting';
+import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
 import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
 import { chatRequestSchema } from '@/lib/embassy/chat-request';
 import { threadVisibility } from '@/lib/embassy/thread-visibility';
@@ -132,13 +132,20 @@ export async function POST(request: NextRequest) {
   // A bare "hello" gets the desk's welcome, not six searches (see greeting.ts).
   // The thread it opens is kept but unlisted — there is nothing in it to read.
   const bareGreeting = isBareGreeting(message);
+  // A keepalive ("ping — daily auth check (automated, ignore)") gets a one-line
+  // acknowledgement and no model call. One client sent twelve of these to one
+  // thread, one a day, each answered with a full turn (#4853).
+  const keepalive = !bareGreeting && isKeepalivePing(message);
+  // Set below for an existing thread whose last completed turn had this exact
+  // message: a retry loop or a re-posting client. The earlier answer stands.
+  let duplicateOfLast = false;
   // An identical first-turn question answered within the last week is replayed
   // from that answer — no model call, instant, and the feed keeps one copy of
   // a canonical question instead of one per asker (see replay-cache.ts).
   // Only for a fresh thread on the default library; a collection context
   // changes the search weighting, so those always run the agent.
   const replay: ReplayableAnswer | null =
-    !threadId && history.length === 0 && !collection && !bareGreeting
+    !threadId && history.length === 0 && !collection && !bareGreeting && !keepalive
       ? await findReplayableAnswer(db, message, lang, now).catch(() => null)
       : null;
 
@@ -155,6 +162,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
     }
     activeThreadId = threadId;
+
+    // Only when the previous turn completed (an AI message follows the last
+    // human one) — a resend after a timeout still runs.
+    if (!bareGreeting && !keepalive) {
+      const lastTwo = await db.collection('embassy_messages')
+        .find({ threadId: new ObjectId(threadId) }, { projection: { authorType: 1, content: 1 } })
+        .sort({ createdAt: -1 })
+        .limit(2)
+        .toArray();
+      duplicateOfLast =
+        lastTwo.length === 2 &&
+        lastTwo[0].authorType === 'ai' &&
+        lastTwo[1].authorType === 'human' &&
+        typeof lastTwo[1].content === 'string' &&
+        sameMessage(lastTwo[1].content, message);
+    }
 
     // Apply the listing toggle to a conversation already under way. It used to
     // be read only in the create branch below, so a reader who turned listing
@@ -187,7 +210,7 @@ export async function POST(request: NextRequest) {
       firstMessageKey: firstMessageKey(message),
       creatorId: userId,
       creatorName: displayName,
-      visibility: bareGreeting || replay ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
+      visibility: bareGreeting || keepalive || replay ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
       aiEnabled: true,
       lang,
       messageCount: 0,
@@ -221,17 +244,26 @@ export async function POST(request: NextRequest) {
   const finalizeText = (text: string) =>
     applyImageRemovals(applyCitationFixes(text, citationFixes), imageRemovals);
 
-  /** One canned step in place of the agentic loop, for a bare greeting. */
-  async function* greetingSteps(): AsyncGenerator<LibrarianStep> {
-    yield { type: 'text', text: greetingReply(lang) };
+  /** One canned step in place of the agentic loop — greeting, ping, or duplicate. */
+  const cannedText: string | null = bareGreeting
+    ? greetingReply(lang)
+    : keepalive
+      ? pingReply(lang)
+      : duplicateOfLast
+        ? duplicateReply(lang)
+        : null;
+  /** Why no model ran, persisted on the AI message so the saving can be counted (#4748). */
+  const shortCircuit = bareGreeting ? 'greeting' : keepalive ? 'ping' : duplicateOfLast ? 'duplicate' : replay ? 'replay' : null;
+  async function* cannedSteps(text: string): AsyncGenerator<LibrarianStep> {
+    yield { type: 'text', text };
   }
   /** The earlier answer, replayed as the same two steps the agent would emit. */
   async function* replaySteps(answer: ReplayableAnswer): AsyncGenerator<LibrarianStep> {
     yield { type: 'text', text: answer.content };
     yield { type: 'sources', sources: answer.sources };
   }
-  const agentSteps = () => bareGreeting
-    ? greetingSteps()
+  const agentSteps = () => cannedText !== null
+    ? cannedSteps(cannedText)
     : replay
       ? replaySteps(replay)
       : streamAgenticResponse(message, history, activeThreadId, { collection, lang });
@@ -258,6 +290,7 @@ export async function POST(request: NextRequest) {
         usage: turnUsage,
         // Provenance of a replayed answer; also stops a replay being replayed.
         ...(replay ? { cachedFrom: replay.messageId, cachedFromThread: replay.threadId } : {}),
+        ...(shortCircuit ? { shortCircuit } : {}),
         createdAt: aiMessageTime,
       });
 
