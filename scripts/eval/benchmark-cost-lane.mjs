@@ -118,7 +118,26 @@ for (const c of classes) {
   else if (!checks.noise_floor_below_margin) verdict = 'engine noise exceeds the margin — no lane decision';
   else if (Object.values(checks).every(Boolean)) verdict = better ? 'cost lane ADOPTED; also the better reader' : 'cost lane ADOPTED';
   else verdict = 'REJECTED';
+  // ── PREREGISTRATION-greek-ext-4925.md rules (a)–(c), reported as written, alongside the generic
+  // cost-lane verdict above (which is the #4925 step-1 rule and mislabels a 3×-cost arm "cost lane").
+  // Invention is given under three definitions because the prereg's literal one ("in neither the
+  // reference nor any other engine") is structurally 0 for lite: its temperature-0 repeat vouches for it.
+  const invOf = (e, f) => median(paired.map(p => p.engines?.[e]?.[f]).filter(x => typeof x === 'number'));
+  const invention3 = Object.fromEntries(['invention', 'invention_indep', 'invention_ref'].map(f => [f, { [ENGINE]: r3(invOf(ENGINE, f)), [REF]: r3(invOf(REF, f)) }]));
+  const refMed = median(paired.map(p => cerOf(p, REF))), cataShare = paired.length ? cata(REF) / paired.length : null;
+  const decidable = paired.length >= MIN_N;
+  const leq = f => invOf(ENGINE, f) != null && invOf(REF, f) != null && invOf(ENGINE, f) <= invOf(REF, f);
+  const bCore = p_sign != null && p_sign < 0.05 && wins > losses && medD <= -0.01 && ci && ci[1] < 0 && cata(ENGINE) <= cata(REF);
+  const cCore = p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6 && cata(ENGINE) <= cata(REF);
+  const prereg = {
+    decidable, note: decidable ? null : `directional (n=${paired.length} < ${MIN_N}) — rule (e): no routing decision`,
+    a_lite: refMed == null ? null : (refMed <= 0.05 && cataShare <= 0.05 ? 'adequate' : (refMed > 0.10 || cataShare > 0.15 ? 'inadequate' : 'degraded')),
+    b_preferred_over_lite: { core: !!bCore, with_invention_literal: !!(bCore && leq('invention')), with_invention_indep: !!(bCore && leq('invention_indep')), with_invention_ref: !!(bCore && leq('invention_ref')) },
+    c_better_reader: { core: !!cCore, share_le_minus_005: r3(bigWinShare), with_invention_indep: !!(cCore && leq('invention_indep')), with_invention_ref: !!(cCore && leq('invention_ref')) },
+    d_noise_floor: { median_delta0: r3(medD0), repeat_pages_identical: withRepeat.filter(p => Math.abs(cerOf(p, REPEAT) - cerOf(p, REF)) < 1e-9).length, n: withRepeat.length, caveat: 'arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design' },
+  };
   result.classes[c] = {
+    prereg, invention_three_ways: invention3,
     n_pages: inClass.length, n_referenced: referenced.length, n_paired: paired.length, n_by_stratum: Object.fromEntries(STRATA.map(s => [s, paired.filter(p => p.stratum === s).length])),
     median_cer: { [ENGINE]: r3(median(paired.map(p => cerOf(p, ENGINE)))), [REF]: r3(median(paired.map(p => cerOf(p, REF)))), [REPEAT]: r3(median(withRepeat.map(p => cerOf(p, REPEAT)))) },
     // the reference engine's own median with its interval — the Greek prereg's rule (a), "is lite good enough", reads this

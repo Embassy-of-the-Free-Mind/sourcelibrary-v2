@@ -42,6 +42,9 @@ const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=
 const ROOT = argOf('root');
 const REF_ENGINE = argOf('ref', 'gemini-3.1-flash-lite');
 const OUT_DIR = argOf('out', path.join(__dirname, 'results', 'benchmark'));
+const REPEATS = argOf('repeat', 'gemini-3.1-flash-lite-b').split(',').filter(Boolean);
+// a repeat arm is named <engine>-b; twins never count as independent support for each other
+const isTwin = (a, b) => (REPEATS.includes(a) && a.replace(/-b$/, '') === b) || (REPEATS.includes(b) && b.replace(/-b$/, '') === a);
 const ONLY = argOf('stratum') ? argOf('stratum').split(',') : null;
 const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
 if (!ROOT) { console.error('--root required'); process.exit(1); }
@@ -222,11 +225,17 @@ for (const stratum of strata) {
       const uniq = [...new Set(h.content)];
       const unsupported = uniq.filter(t => !others.has(t));
       const inv = uniq.length ? unsupported.length / uniq.length : null;
+      // invention_indep: the same measure, but a REPEAT arm may not vouch for its twin. At temperature 0
+      // lite and lite-b are byte-identical on ~86 % of pages, so `invention` is structurally 0 for lite
+      // (47/52 Greek pages) and any rule comparing an arm's invention to lite's can never pass (#4925 step 2).
+      const indep = new Set(); if (hasRef) for (const t of ref.content) indep.add(t);
+      for (const o of engines) if (o !== e && !isTwin(e, o) && prepped[o]) for (const t of prepped[o].content) indep.add(t);
+      const invIndep = uniq.length ? uniq.filter(t => !indep.has(t)).length / uniq.length : null;
       // invention_ref: absent from the REFERENCE alone (the clean measure; needs a reference)
       let invRef = null, invRefSample = [];
       if (hasRef) { const R = new Set(ref.content); const miss = uniq.filter(t => !R.has(t)); invRef = uniq.length ? miss.length / uniq.length : null; invRefSample = miss.slice(0, 8); }
       const base = (e === REF_ENGINE && !hasRef) ? null : (ref ? compare(h, ref) : null);
-      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
+      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_indep: r3(invIndep), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
       // Greek strata, referenced pages: a SECONDARY, exploratory CER with accents, breathings and
       // iota subscript folded away (PREREGISTRATION-greek-ext-4925.md, References §c) — the e-text
       // is an edition of the WORK, and its diacritic conventions differ from a 1550 page's; the

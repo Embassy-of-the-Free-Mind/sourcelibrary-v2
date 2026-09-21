@@ -20,5 +20,15 @@
     }
   ],
   "phrases": 40,
-  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+  "source": "First1KGreek",
+  "work": "tlg0363.tlg007.1st1K-grc1",
+  "work_title": "Claudius Ptolemaeus — Apotelesmatica (= Tetrabiblos)",
+  "edition": "Claudius Ptolemaeus. Claudii Ptolemaei opera quae exstant omnia, Volume 3.1. Boll, Franz, and Boer, Emilie, editors. Leipzig: Teubner, 1954.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0363/tlg007",
+  "phrase_hits": 4,
+  "etext_chars": 246867,
+  "window_words": 222,
+  "window_chars": 1450,
+  "overlap": 0.239,
+  "reason": "work identified but window overlap 0.24 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
 }

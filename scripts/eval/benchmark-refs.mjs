@@ -263,7 +263,12 @@ async function greekCorpusLookup(probeWords, log) {
   if (!greekIndex) greekIndex = JSON.parse(fs.readFileSync(path.join(GREEK_DIR, 'index.json'), 'utf8'));
   const phrases = greekPhrases(probeWords, 40);
   const votes = rgVote(phrases);
-  if (!votes.length || votes[0].hits < 3 || (votes[1] && votes[1].hits >= votes[0].hits)) return { phrases: phrases.length, votes: votes.slice(0, 3) };
+  // A tie only voids the identification when the rival is a DIFFERENT work. Two editions of one
+  // work (tlg2018.tlg002.perseus-grc2 vs .1st1K-grc2) tie by construction — Eusebius 1544 was
+  // discarded at 32/40 phrase hits for exactly that (found 2026-09-21, #4925 step 2 spot check).
+  const workOf = (id) => id.split('.').slice(0, 2).join('.');
+  const rival = votes.find(v => workOf(v.id) !== workOf(votes[0]?.id || ''));
+  if (!votes.length || votes[0].hits < 3 || (rival && rival.hits >= votes[0].hits)) return { phrases: phrases.length, votes: votes.slice(0, 3) };
   const top = votes[0], meta = greekIndex[top.id] || {};
   const w = corpusWindow(top.id, probeWords);
   log(`    corpus: ${top.id} (${meta.author} — ${meta.title}) ${top.hits}/${phrases.length} phrases, window overlap ${w.overlap.toFixed(2)}`);

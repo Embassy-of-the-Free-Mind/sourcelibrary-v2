@@ -20,5 +20,24 @@
     }
   ],
   "phrases": 27,
-  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0627.tlg012.perseus-grc2",
+  "work_title": "Hippocrates — Aphorismi",
+  "edition": "Hippocrates. Oeuvres complètes d’Hippocrate, Vol. 4. Littré, Émile, editor. Adolf M. Hakkert: Amsterdam, 1961 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0627/tlg012",
+  "phrase_hits": 9,
+  "etext_chars": 49125,
+  "window_words": 77,
+  "window_chars": 586,
+  "overlap": 0.595,
+  "align_trim": {
+    "letters_before": 497,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.14",
+      "gemini-3.1-flash-lite-b:0.14",
+      "kraken-greek-cllg:0.10"
+    ],
+    "letters_after": 484
+  }
 }

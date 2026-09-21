@@ -1012,3 +1012,50 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   236 books' written pages at offset 0 from the cache (no model calls), images FIRST or both per
   book, since at the front the text currently matches the shifted image.
   Issue: #4790.
+
+## 2026-09-21 — Which engine should read Greek print, per period? (#4925 step 2, #4744)
+
+**Headline: for 1700–1799 (53 referenced books, decision-grade) production flash-lite is
+inadequate by the preregistered threshold (median CER 0.107, CI 0.077–0.122, threshold 0.10)
+and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.009], 46
+wins / 6 losses, 0 vs 1 catastrophic). Kraken greek-cllg reads the letters as well as preview
+(0.082) but is closed for the period: it clears Δ ≤ −0.05 on 15 % of pages, not the 60 % the
+better-reader rule needs. For 1450–1699 the cell holds 48 referenced books, two short of 50,
+so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.091 (46/1/1).**
+
+- **Design.** `PREREGISTRATION-greek-ext-4925.md`. One Greek-majority interior leaf per book,
+  typeset print only, by-eye `greek_share ≥ 0.5`; references from First1KGreek / Perseus /
+  el.wikisource; Greek letters only are scored. Arms: flash-lite, its repeat, flash-preview
+  (all `temperature: 0`, `thinkingBudget: 0`), Kraken greek-cllg on Hetzner CPU. Spend: $1.36
+  Gemini (approved ≈ $2).
+- **Spot check by hand (2026-09-21) — read before quoting any number here.**
+  1. The ranking holds on the image: on the 1531 Aristotle page Kraken reads *ἐστὶ θεῶν πλέα τε*
+     correctly, preview writes a fluent wrong *διὰ θεῶν τελέα τε*, lite garbles the line.
+  2. **The noise floor cannot fail in this design.** At temperature 0 the repeat read is
+     byte-identical on 91 of 101 cell pages; Δ₀ = 0 measures API nondeterminism, not reading
+     variance. Rule (d) is reported as untested, not as passed.
+  3. **The preregistered invention metric was degenerate for lite**: "in neither the reference
+     nor any other engine" lets the identical repeat vouch for lite, so lite scores 0 on nearly
+     every page and no arm could ever pass "invention ≤ lite's". DEVIATION, recorded: the
+     scorer now also writes `invention_indep` (a repeat arm never vouches for its twin) and the
+     decision file reports all three definitions. Preview passes under `invention_indep` and
+     `invention_ref`, fails only under the degenerate literal one. Kraken's verdict does not
+     depend on invention in either period.
+  4. Kraken's "invention" is word segmentation (run-together words, line-break fragments), not
+     hallucinated text. Describe it that way.
+  5. A reference is a modern critical edition; where the early edition prints a different text
+     (the 1538 New Testament against Westcott–Hort) every arm carries the same ≈ 0.16 floor.
+     This compresses differences; it does not favour an arm.
+  6. **Selection caveat.** A page gets a reference only if the preview read locates a window
+     (overlap ≥ 0.35). Pages preview reads worst are therefore under-represented, which can only
+     flatter preview. Six pre-1700 in-cell pages were dropped this way.
+- **Reference-builder bug fixed.** A tie between two EDITIONS of the same work voided the
+  identification (Eusebius 1544, 32/40 phrase hits, discarded). A tie now voids only against a
+  different work: +1 reference pre-1700, +1 in 1700–1799, none lost.
+- **Not settled.** Pre-1700 needs two more referenced books, by drawing further down the sealed
+  walk (412 of 3,525 books walked) — never by lowering the overlap threshold. Rule (d) needs a
+  repeat arm at temperature > 0 to mean anything.
+- **Files.** `results/benchmark/greek{,-ext}-2026-09-21.json`,
+  `results/benchmark/decisions/greek-period-*-2026-09-21.json` (the `prereg` block is the
+  verdict; the generic `verdict` string is the step-1 cost-lane rule and does not apply to a
+  3×-cost arm). Raw reads: `~/sl-benchmark-reads/greek-4925-2026-09-20/` on Derek's laptop.
