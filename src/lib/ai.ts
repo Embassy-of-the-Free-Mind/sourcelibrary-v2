@@ -78,6 +78,10 @@ export const MODEL_PRICING: Record<string, { input: number; output: number }> = 
 
   'gemini-3.6-flash': { input: 0.75, output: 3.75 },
   'gemini-3.7-flash': { input: 0.75, output: 3.75 },
+  // Measured 2026-09-21 from the Detailed usage cost BigQuery export and
+  // cross-checked against the live SKU catalogue — see the matching entry
+  // and comment in scripts/lib/model-pricing.mjs (#4599 follow-up).
+  'gemini-3.8-flash': { input: 0.75, output: 3.75 },
   // Legacy models — retained for historical rows; not verifiable against the
   // current catalogue, which splits 2.5-flash by long/short input.
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
