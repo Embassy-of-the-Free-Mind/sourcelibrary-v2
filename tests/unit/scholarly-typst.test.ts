@@ -91,12 +91,13 @@ describe('generateTypstSource', () => {
   });
 
   it('cross-links a page to its source text only when the source side has that page, and reflows the transcription', () => {
-    const src = generateTypstSource(book, pages, { credits: ['Books funded by X'] });
+    const src = generateTypstSource({ ...book, acquisition_funder: 'Stefan Pernar' }, pages, { credits: ['Books funded by X'] });
     expect(src).toContain('#src("1", printed: none, side: "t", other: "Latin");');
     expect(src).toContain('#src("1", printed: none, side: "o", other: "English");');
     expect(src).toContain('#src("2", printed: none, side: "t");');
     expect(src).toContain('latet verbo');
     expect(src).toContain('Books funded by X');
+    expect(src).toContain('To Stefan Pernar, whose generosity');
     expect(src).toContain('page-number/');
   });
 

@@ -486,9 +486,11 @@ const TYPST_PREAMBLE = `
 // side "t" is the translation, "o" the source text in the back. The number
 // links to that page's facsimile on the site; the small line under it jumps to
 // the same page on the other side, when the edition has one.
+#let current-src = state("current-src", none)
 #let src(n, printed: none, side: "t", other: none) = in-margin(drop: -0.7em, {
   set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
   [#metadata(n)#label(side + "-" + n)]
+  current-src.update(n)
   link(page-url + n, text(size: 8.5pt, fill: rust, weight: "semibold", number-type: "lining")[#n])
   if printed != none {
     text(size: 7pt, fill: muted)[#h(0.5em)orig. #printed]
@@ -626,9 +628,18 @@ ${TYPST_PREAMBLE}
     }
   },
   footer-descent: 12mm,
-  footer: {
+  // The foot of each page cites the source page current there, as a link —
+  // the last page anchor set before this point, on either side of the book
+  footer: context {
     set text(size: 7pt, fill: muted, tracking: 0.03em)
-    align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
+    // A state, not a query over every anchor before here(): the query made a
+    // 940-page book take five minutes to compile instead of thirty seconds
+    let n = current-src.get()
+    if n != none {
+      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/#n]]
+    } else {
+      align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
+    }
   },
 )
 
@@ -724,6 +735,23 @@ ${TYPST_PREAMBLE}
   }))
 ]
 `);
+
+  // ── Dedication ──
+  // These books open with a dedication to the patron who made them possible;
+  // this edition keeps the custom, in one sentence. `book.dedication` is
+  // printed as written; otherwise a funded acquisition gets the standing form.
+  const dedication = book.dedication
+    || (book.acquisition_funder ? `To ${book.acquisition_funder}, whose generosity brought this book and its companions into the library.` : null);
+  if (dedication) {
+    doc.push(`
+#page(header: none, footer: none)[
+  #set align(center)
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.7em)
+  #v(38%)
+  #block(width: 100mm, text(size: 11.5pt, style: "italic")[${escapeTypst(dedication)}])
+]
+`);
+  }
 
   // ── Imprint page ──
   const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
@@ -962,14 +990,12 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
 // ── Compile ─────────────────────────────────────────────────────────
 
 /**
- * Per-book credit lines for the imprint page. A funded acquisition names its
- * funder: `books.acquisition_funder` is a person's name as they want it
- * printed (set by hand — it goes into a permanent deposit).
+ * Per-book credit lines for the imprint page (`books.edition_credits`, set by
+ * hand — they go into a permanent deposit). A funder is credited by the
+ * dedication page instead: `books.acquisition_funder` or `books.dedication`.
  */
 export function editionCredits(book) {
-  const lines = [];
-  if (book.acquisition_funder) lines.push(`Acquisition of this book funded by ${book.acquisition_funder}`);
-  return lines;
+  return book.edition_credits || [];
 }
 
 /**
