@@ -20,9 +20,8 @@
  */
 
 import { execSync } from 'child_process';
-import { writeFileSync, readFileSync, mkdirSync, rmSync, existsSync, copyFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { writeFileSync, readFileSync, mkdirSync, rmSync } from 'fs';
+import { join } from 'path';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
@@ -491,12 +490,14 @@ const TYPST_PREAMBLE = `
 })
 
 // ── Cover ──
-// A cloth binding in type: navy ground, a gilt ornamental border, the source
-// page in a gilt frame where a binder would stamp an emblem, and the Source
-// Library mark set into the foot of the border.
-#let navy = rgb("#0c1230")
-#let gold = rgb("#d8b25c")
-#let foil = gradient.linear(rgb("#f2da92"), rgb("#c4932e"), rgb("#ecd083"), rgb("#b98a2a"), angle: 35deg)
+// A binding in type: an ornamental border, the source page framed where a
+// binder would stamp an emblem, and the Source Library mark set into the foot
+// of the border. Ink on white, not gilt on navy — this PDF gets printed, and
+// a full-bleed dark page costs toner and comes out of a laser printer muddy.
+// The names keep the binding's vocabulary: navy is the ground, gold the ink.
+#let navy = white
+#let gold = rgb("#1a1612")
+#let foil = gold
 #let lozenge(size) = rotate(45deg, square(size: size, fill: gold))
 // One 6mm repeat: a four-petalled flower with a lozenge at each corner, so
 // neighbouring tiles join into a lattice. relative: "self" anchors the repeat
@@ -536,9 +537,9 @@ function shorten(text, max) {
 const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
 export function generateTypstSource(book, pages, options = {}) {
-  // logoFile / frontispieceFile are filenames beside the .typ (generateScholarlyPdf
-  // puts them there); absent, the pages fall back to type alone
-  const { introduction, methodology, doi, version, logoFile, frontispieceFile } = options;
+  // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
+  // it there); absent, the cover falls back to the Source Library mark
+  const { introduction, methodology, doi, version, frontispieceFile } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -658,7 +659,7 @@ ${TYPST_PREAMBLE}
 }
 `);
 
-  // ── Cover ──
+  // ── Cover / title page ──
   const coverTitle = mainTitle.length > 60 ? shorten(mainTitle, 60) : mainTitle;
   const coverTitleSize = coverTitle.length > 42 ? 22 : coverTitle.length > 24 ? 27 : 32;
   const coverPlaceDate = [place, book.published].filter(Boolean).join('  ·  ');
@@ -671,9 +672,9 @@ ${TYPST_PREAMBLE}
   #set par(first-line-indent: 0pt, justify: false, leading: 0.42em)
   #set text(fill: gold, hyphenate: false)
   #align(center, block(width: 140mm, {
-    v(${frontispieceFile ? 36 : 62}mm)
+    v(${frontispieceFile ? 30 : 58}mm)
     ${frontispieceFile
-      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 104mm, fit: "contain")))`
+      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 100mm, fit: "contain")))`
       : 'sl-mark(40mm, gold)'}
     v(15mm)
     ${book.title !== bookTitle ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(book.title, 90))}]
@@ -687,35 +688,13 @@ ${TYPST_PREAMBLE}
     text(size: 13pt, weight: "bold", tracking: 0.14em, upper[${escapeTypst(author)}])
     ${coverPlaceDate ? `v(3mm)
     text(size: 9.5pt, tracking: 0.22em, number-type: "lining", upper[${escapeTypst(coverPlaceDate)}])` : ''}
+    v(15mm)
+    text(size: 10pt)[An English translation from the ${escapeTypst(language)}]
+    v(1.5mm)
+    text(size: 9pt, style: "italic", fill: muted)[AI-assisted and not reviewed by human editors]
+    v(1.5mm)
+    text(size: 9pt, fill: muted, number-type: "lining")[Source Library #h(0.4em)·#h(0.4em) Embassy of the Free Mind, Amsterdam #h(0.4em)·#h(0.4em) ${year}]
   }))
-]
-`);
-
-  // ── Title page ──
-  doc.push(`
-#page(margin: (x: 32mm, top: 36mm, bottom: 30mm), header: none, footer: none)[
-  #set par(first-line-indent: 0pt, justify: false, leading: 0.5em)
-  #set align(center)
-  #text(size: 8.5pt, tracking: 0.24em, fill: rust)[#upper[Source Library Editions]]
-  #v(34mm)
-  #text(size: 11pt, tracking: 0.16em)[#upper[${escapeTypst(author)}]]
-  #v(11mm)
-  #text(size: ${mainTitle.length > 48 ? 22 : 27}pt)[${escapeTypst(mainTitle)}]
-  ${subTitle ? `#v(3mm)\n  #text(size: 14.5pt, style: "italic")[${escapeTypst(subTitle)}]` : ''}
-  #v(9mm)
-  #line(length: 22mm, stroke: 0.7pt + rust)
-  #v(9mm)
-  ${book.title !== bookTitle ? `#text(size: 12pt, style: "italic")[${escapeTypst(book.title)}]\n  #v(2.5mm)` : ''}
-  ${imprintLine ? `#text(size: 10pt, number-type: "lining")[${escapeTypst(imprintLine)}]` : ''}
-  #v(1fr)
-  #text(size: 10pt)[An English translation from the ${escapeTypst(language)}]
-  #v(1.5mm)
-  #text(size: 9pt, style: "italic", fill: muted)[AI-assisted and not reviewed by human editors]
-  #v(14mm)
-  ${logoFile ? `#image(${typstString(logoFile)}, height: 17mm)
-  #v(2.5mm)` : `#text(size: 10pt, tracking: 0.2em)[#upper[Source Library]]
-  #v(1.5mm)`}
-  #text(size: 9pt, fill: muted)[Embassy of the Free Mind #h(0.4em)·#h(0.4em) Amsterdam #h(0.4em)·#h(0.4em) #text(number-type: "lining")[${year}]]
 ]
 `);
 
@@ -927,8 +906,6 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
 
 // ── Compile ─────────────────────────────────────────────────────────
 
-const LOGO_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'public', 'brand', 'svg', 'logo-stacked--black-on-white.svg');
-
 /**
  * The book's chosen cover page (usually its title page) as a JPEG buffer for
  * the frontispiece, or null — the PDF is complete without it, so every
@@ -962,10 +939,6 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
   const pdfFile = join(tmpDir, 'edition.pdf');
 
   const { frontispiece, ...rest } = options;
-  if (existsSync(LOGO_PATH)) {
-    copyFileSync(LOGO_PATH, join(tmpDir, 'logo.svg'));
-    rest.logoFile = 'logo.svg';
-  }
   if (frontispiece) {
     const ext = frontispiece[0] === 0x89 ? 'png' : 'jpg';
     writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
