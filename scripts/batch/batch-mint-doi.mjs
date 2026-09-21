@@ -638,7 +638,18 @@ async function main() {
 
     const eligible = await db.collection('books').aggregate([
       { $match: matchQuery },
-      { $addFields: { _pct: { $cond: [{ $gt: ['$pages_ocr', 0] }, { $divide: ['$pages_translated', '$pages_ocr'] }, 0] } } },
+      // The HONEST denominator (#4442): blank leaves carry no translation because
+      // they have nothing to translate, so counting them against the book is the
+      // numerator-excludes-what-the-denominator-does-not error that `page-counts.mjs`
+      // exists to prevent. Measured 2026-09-20: Antoninus of Florence's
+      // *Confessionale* read 84.9% and was withheld from a DOI while being 100%
+      // translated — all 54 of its "missing" pages are `page_type: blank`. 20,447
+      // of 41,920 readable books carry blank leaves, so this understated half the
+      // corpus.
+      { $addFields: {
+        _translatable: { $max: [{ $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }, 0] },
+      } },
+      { $addFields: { _pct: { $cond: [{ $gt: ['$_translatable', 0] }, { $divide: ['$pages_translated', '$_translatable'] }, 0] } } },
       { $match: { _pct: { $gte: MIN_TRANSLATION_PCT } } },
       { $sort: { quality_score: -1, pages_translated: -1 } },
       { $limit: BOOK_ID ? 1 : LIMIT },
