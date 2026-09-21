@@ -9,7 +9,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf] [--dedication text]
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf] [--dedication text | --dedication-file path]
  *
  * The book + pages are cached under scripts/output/scholarly-cache/ after the
  * first fetch, so design iteration needs no database (pass --refresh to
@@ -76,7 +76,7 @@ const options = {
   frontispiece: await fetchFrontispiece(book),
   credits: editionCredits(book),
   // --dedication "text" previews wording without writing it anywhere
-  dedication: opt('dedication') || resolveDedication(book, collections),
+  dedication: opt('dedication') || (opt('dedication-file') ? readFileSync(opt('dedication-file'), 'utf-8') : resolveDedication(book, collections)),
 };
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 

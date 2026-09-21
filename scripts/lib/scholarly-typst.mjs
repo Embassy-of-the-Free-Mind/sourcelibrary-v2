@@ -738,23 +738,8 @@ ${TYPST_PREAMBLE}
 
   // ── Dedication ──
   // These books open with a dedication to the patron who made them possible;
-  // this edition keeps the custom (see resolveDedication for where the text
-  // comes from). Salutation, then body.
-  if (dedication) {
-    const [salutation, ...rest] = String(dedication).trim().split(/\n\s*\n/);
-    const body = rest.join('\n\n');
-    doc.push(`
-#page(header: none, footer: none)[
-  #set align(center)
-  #set par(first-line-indent: 0pt, justify: false, leading: 0.75em)
-  #v(34%)
-  #block(width: 104mm, {
-    text(size: ${body ? 12.5 : 11.5}pt, ${body ? 'tracking: 0.08em, smallcaps' : 'style: "italic"'}[${escapeTypst(salutation)}])
-    ${body ? `v(5mm)\n    text(size: 11pt, style: "italic")[${escapeTypst(body)}]` : ''}
-  })
-]
-`);
-  }
+  // this edition keeps the custom and the form (see dedicationToTypst).
+  if (dedication) doc.push(dedicationToTypst(dedication));
 
   // ── Imprint page ──
   const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
@@ -1017,6 +1002,73 @@ export function resolveDedication(book, collections = []) {
   if (fromCollection) return fromCollection;
   if (book.acquisition_funder) return `To ${book.acquisition_funder},\n\nwhose generosity brought this book and its companions into the library.`;
   return null;
+}
+
+/**
+ * Set a dedication in the form the books themselves use — read from Fuchs
+ * to Joachim of Brandenburg (1542), della Porta to Philip II (1560) and
+ * Hooke to Charles II (1665): a cascade of address lines, a salutation, a
+ * short body, then valediction and signature.
+ *
+ * The text is plain paragraphs separated by blank lines:
+ *   - a first paragraph in CAPITALS (or lines beginning with #) is the
+ *     address cascade — first line small and spaced ("TO"), second large
+ *     (the name), the rest small capitals; a single short first line is a
+ *     plain salutation instead
+ *   - a one-line paragraph ending in a comma ("SIR,") is the salutation
+ *   - everything after a line of three dashes is the close: valediction
+ *     lines, then the signature, then (optionally) place and date
+ */
+export function dedicationToTypst(text) {
+  const blocks = String(text).trim().split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  const closeAt = blocks.findIndex(b => /^-{3,}$/.test(b));
+  const close = closeAt >= 0 ? blocks.splice(closeAt).slice(1).flatMap(b => b.split('\n')) : [];
+
+  let address = [];
+  const first = blocks[0]?.split('\n').map(l => l.trim()) || [];
+  if (first.length && first.every(l => l.startsWith('#') || (l === l.toUpperCase() && /\p{L}/u.test(l)))) {
+    address = first.map(l => l.replace(/^#+\s*/, ''));
+    blocks.shift();
+  } else if (first.length === 1 && first[0].length < 70) {
+    address = [first[0]];
+    blocks.shift();
+  }
+  let salutation = null;
+  if (blocks[0] && !blocks[0].includes('\n') && blocks[0].length < 40 && /[,:]$/.test(blocks[0])) salutation = blocks.shift();
+
+  const addressTypst = address.map((line, i) => {
+    if (address.length === 1) return `text(size: 12.5pt, tracking: 0.08em, smallcaps[${escapeTypst(line)}])`;
+    if (i === 0) return `text(size: 9pt, tracking: 0.3em)[${escapeTypst(line.toUpperCase())}]`;
+    if (i === 1) return `v(2mm)\n    text(size: 15pt, tracking: 0.12em)[${escapeTypst(line.toUpperCase())}]`;
+    return `v(1.2mm)\n    text(size: 9.5pt, tracking: 0.1em, smallcaps[${escapeTypst(line.toLowerCase())}])`;
+  }).join('\n    linebreak()\n    ');
+
+  const body = blocks.map(b => escapeTypst(b.replace(/\s*\n\s*/g, ' '))).join('\n\n');
+  const sig = close.length ? close[close.length - (/\d{4}/.test(close[close.length - 1]) && close.length > 1 ? 2 : 1)] : null;
+  const closeTypst = close.map(line => {
+    if (line === sig) return `text(size: 10.5pt, tracking: 0.12em, smallcaps[${escapeTypst(line)}])`;
+    if (/\d{4}/.test(line) && close.indexOf(line) === close.length - 1) return `text(size: 9pt, fill: muted)[${escapeTypst(line)}]`;
+    return `text(size: 10.5pt, style: "italic")[${escapeTypst(line)}]`;
+  }).join('\n    linebreak()\n    ');
+
+  return `
+#page(header: none, footer: none)[
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.62em)
+  #v(${body.length > 600 ? 12 : 20}%)
+  #align(center, block(width: 112mm, {
+    ${addressTypst}
+    ${address.length > 1 ? 'v(5mm)\n    diamond-rule(gold)\n    v(5mm)' : 'v(5mm)'}
+  }))
+  #align(center, block(width: 112mm, {
+    set par(justify: true, first-line-indent: 1.3em, leading: 0.68em, spacing: 0.68em)
+    set text(size: 10.5pt)
+    set align(left)
+    ${salutation ? `text(tracking: 0.08em, smallcaps[${escapeTypst(salutation)}])\n    v(0.6em)` : ''}
+    [${body}]
+    ${close.length ? `v(2.2em)\n    align(right, {\n    ${closeTypst}\n    })` : ''}
+  }))
+]
+`;
 }
 
 /**

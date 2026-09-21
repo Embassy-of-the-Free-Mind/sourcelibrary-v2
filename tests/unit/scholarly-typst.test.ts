@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -82,6 +82,23 @@ describe('resolveDedication', () => {
     expect(resolveDedication({ collections: ['other', 'forum'] }, [forum])).toBe(forum.dedication);
     expect(resolveDedication({ collections: ['other'], acquisition_funder: 'S. P.' }, [forum])).toMatch(/^To S\. P\.,/);
     expect(resolveDedication({ collections: ['other'] }, [forum])).toBeNull();
+  });
+});
+
+describe('dedicationToTypst', () => {
+  it('sets the address cascade, salutation, body and signed close', () => {
+    const t = dedicationToTypst('TO\nA PATRON\nSOURCE LIBRARY SENDS GREETING\n\nSIR,\n\nBody one.\n\nBody two.\n\n---\n\nYour servants,\nSOURCE LIBRARY\nAmsterdam, 2026');
+    expect(t).toContain('tracking: 0.3em)[TO]');
+    expect(t).toContain('text(size: 15pt, tracking: 0.12em)[A PATRON]');
+    expect(t).toContain('smallcaps[SIR,]');
+    expect(t).toContain('[Body one.\n\nBody two.]');
+    expect(t).toContain('smallcaps[SOURCE LIBRARY]');
+    expect(t).toContain('fill: muted)[Amsterdam, 2026]');
+  });
+  it('still sets the one-line form', () => {
+    const t = dedicationToTypst('To S. P.,\n\nwhose generosity brought this book here.');
+    expect(t).toContain('smallcaps[To S. P.,]');
+    expect(t).toContain('[whose generosity brought this book here.]');
   });
 });
 
