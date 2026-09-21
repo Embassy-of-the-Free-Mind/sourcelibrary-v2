@@ -236,11 +236,56 @@ const blockRe = new RegExp(`<(${BLOCK_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`
 const looseRe = new RegExp(`</?(${BLOCK_TAGS.join('|')})\\b[^>]*>`, 'gi');
 
 /** Length of the prose body after stripping wrappers, tags, and whitespace. */
+/**
+ * HTML whitespace entities, collapsed to a space before anything is measured.
+ *
+ * `&nbsp;` is six characters that carry no text, and OCR of a blank or lightly
+ * ruled leaf is often made almost entirely of them. Until 2026-09-21 every length
+ * check here counted them: page 170 of Kircher's *Iter extaticum II* measured
+ * **18,561 characters of body** and, once decoded, held **nine** — a folio number.
+ * `isBlankFromOcr`, `isDegenerateSource` and `isTranslatablePage` all passed it, the
+ * page went to the translator as a substantial source, and the model filled the
+ * vacuum with a fabricated 2011 nephrology journal table of contents that shipped to
+ * readers and was one deposit away from a permanent DOI (#4960).
+ *
+ * The loop guard cannot catch this: `&nbsp;` padding was explicitly tuned OUT of the
+ * repeat metric as a false positive (164 of 181 cases). Stripping apparatus so a
+ * metric is not fooled by it, and then never asking whether anything REMAINS, is the
+ * gap this closes.
+ */
+const WS_ENTITY = /&(?:nbsp|ensp|emsp|thinsp|hairsp|#0*160|#[xX]0*a0|#8194|#8195|#8201);/g;
+
+/** Decode the few entities that are text, so they count as one character, not six. */
+const TEXT_ENTITIES = [[/&amp;/g, '&'], [/&lt;/g, '<'], [/&gt;/g, '>'], [/&quot;/g, '"'], [/&#0*39;|&apos;/g, "'"]];
+
+/**
+ * Leader dots and rules: an index or table page can be mostly `....................`,
+ * which is typography, not words. Four or more of the same punctuation mark in a row
+ * collapse to one — four rather than three so a normal ellipsis survives untouched.
+ * Same apparatus class as the entities above: strip it before measuring, then ask
+ * whether anything is left.
+ */
+const LEADER_RUN = /([.\u00b7\u2022\u2024\u2027_\-–—=~*])\1{3,}/g;
+
 export function bodyLen(text) {
   if (!text) return 0;
-  return String(text).replace(blockRe, ' ').replace(looseRe, ' ')
-    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim().length;
+  let out = String(text).replace(blockRe, ' ').replace(looseRe, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ')
+    .replace(WS_ENTITY, ' ')
+    .replace(LEADER_RUN, ' ');
+  for (const [re, ch] of TEXT_ENTITIES) out = out.replace(re, ch);
+  return out.replace(/\s+/g, ' ').trim().length;
 }
+
+/**
+ * Characters of real body below which a page has nothing to translate.
+ *
+ * Deliberately low. The asymmetry decides it: refusing a genuinely short page costs
+ * an untranslated chapter heading, which is visible and recoverable; translating an
+ * empty one costs a fabrication that is fluent, plausible and indistinguishable
+ * downstream from a real translation. Missing is recoverable; invented is not.
+ */
+export const MIN_TRANSLATABLE_BODY = 24;
 
 /**
  * Collapse = the translation BODY is genuinely short in absolute terms (empty
@@ -373,8 +418,8 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * log why pages were excluded rather than silently dropping them.
  *
  * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
- * 'skip-type', 'no-ocr', 'blank-ocr', 'ocr-loop', 'recitation-blocked',
- * 'safety-blocked'.
+ * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
+ * 'recitation-blocked', 'safety-blocked'.
  *
  * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
  * retranslate-stale deliberately also skips illustrations and title pages.
@@ -390,6 +435,11 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // the result an hour later. Same rule as page-counts.hasOcr.
   if (page?.ocr?.unreadable === true) return { ok: false, reason: 'ocr-unreadable' };
   if (isBlankFromOcr(ocr)) return { ok: false, reason: 'blank-ocr' };
+  // Nothing to translate once the apparatus is discounted. A model handed an empty
+  // source does not decline — it invents (#4960), and the invention reads exactly
+  // like a translation. Checked BEFORE the loop test because a page of `&nbsp;` is
+  // not a loop; it is a vacuum.
+  if (bodyLen(ocr) < MIN_TRANSLATABLE_BODY) return { ok: false, reason: 'no-body' };
   // A looping transcription is not a text to translate — it is the input that
   // produces a fabricated translation (#4765/#4850).
   if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };
