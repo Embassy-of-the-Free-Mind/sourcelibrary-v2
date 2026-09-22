@@ -108,3 +108,23 @@ the denominator can see them, because a page awaiting OCR is in neither.
 - Related: the same asymmetry from the other end — a page awaiting OCR belongs
   in the DENOMINATOR of any corpus-wide translation-completeness figure (#4516).
   One number cannot serve both questions; say which one you measured.
+
+## Corpus counts (demoted from `CLAUDE.md`, PR #4469)
+
+**Measured 2026-08-30 — re-measure before quoting; these drift by thousands a
+month.** The 2026-05-26 vintage of this paragraph was off by up to 5x
+(`pages_count > 0` read ~15K against a true 74.7K) and sat wrong for months
+because nobody re-ran it.
+
+- **109,567** total docs in `bookstore`
+- **47,483** `visible: true` — but **15,752 are artwork records with
+  `pages_count: 0`**, so the honest "books you can read" figure is **31,731**
+  (`visible: true && pages_count > 0`)
+- **84,574** with `pages_count > 0` (actually processed)
+- **61,829** with `pages_ocr > 0` — 20.2M pages ingested, 6.45M transcribed,
+  5.05M translated
+
+The canonical "live" filter across all public APIs is
+`visible: true && pages_count > 0` (see `/api/books/library`). The `tier` field
+is **legacy** — its only remaining reader is `src/app/page.tsx` homepage ranking
+via `highlighted_books` collection entries.
