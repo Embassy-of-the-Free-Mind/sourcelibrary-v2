@@ -1816,5 +1816,575 @@
   "verdict": "RIGHT",
   "why": "RIGHT retains native court terms untranslated, matching the preceding page's convention of keeping such terms in the original, while LEFT fully translates them.",
   "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:699259763d2d40d1b058f2da",
+  "verdict": "TIE",
+  "why": "Both continue the sentence and terminology identically, differing only in punctuation and word-choice, with no clear seam advantage.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69e13af90dae29249d20bcf4",
+  "verdict": "RIGHT",
+  "why": "RIGHTs verse 18 repeats the preceding pages exact phrase the disk mentioned in the Earth-element, while LEFT drifts to the disk of the Earth-element.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6990540938e1fdee57b366e9",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the running header OF AN ENSEMBLE OF SYSTEMS matching the preceding page, whereas RIGHT switches to a different header OTHER DISTRIBUTIONS mid-section.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69d5ac3dd0bd3547a5655c53",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the preceding pages plain straight-quote convention for translated verse lines, while RIGHT switches to curly quotes, breaking format continuity.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b525972379d2fed6c29590",
+  "verdict": "RIGHT",
+  "why": "RIGHT correctly completes the sentence cut at the page break laid up for those who fear you, while LEFT inserts a redundant set up that breaks the carried-over sentence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6953ce6577f38f6761be4124",
+  "verdict": "RIGHT",
+  "why": "RIGHT opens with the page-number-then-title order matching the preceding pages convention, while LEFT reverses the order.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6aa35e80e213def30d6cb97f",
+  "verdict": "LEFT",
+  "why": "LEFT keeps a page number 81 at the head of the section matching the preceding pages numbered-header style; RIGHT drops the page number entirely.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:699068ed2e4efe910676a6a3",
+  "verdict": "RIGHT",
+  "why": "RIGHT repeats the exact running heading JATAKACHUNDRIKA seen on the preceding page, while LEFT substitutes an out-of-place editorial bracket Modernized from p. 43.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69ef2f8e72c1376fdf2afb08",
+  "verdict": "TIE",
+  "why": "Both versions continue the sentence and section identically with only trivial punctuation and quote-style differences.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69907cd85f855ec553e77a81",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the same running header III THE BULL-DIONYSUS as the preceding page, while RIGHT switches to an unrelated header OX REPRESENTS CHAP.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6953efda1479a63c1108830b",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the preceding pages dense italicized-key-term convention, while RIGHT thins the italics and swaps some to plain quotes.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a3535f9c8ce407afbe05377",
+  "verdict": "RIGHT",
+  "why": "RIGHT opens with escaped completing the sentence left hanging at the end of the preceding page, while LEFT starts a fresh heading without finishing that sentence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a088b0cbd8fc3beee8aab1c",
+  "verdict": "LEFT",
+  "why": "LEFT begins a new properly capitalized sentence after the preceding pages period, while RIGHTs lowercase and finally reads as an ungrammatical continuation of an already-closed sentence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a089bfc2b703903f58e82a6",
+  "verdict": "TIE",
+  "why": "The two arms render this passage almost verbatim identically; neither connects more cleanly to the preceding pages cut sentence than the other.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a58f53fc6cd8f9871069e3d",
+  "verdict": "RIGHT",
+  "why": "LEFT inserts an out-of-place editorial artifact continued on next page not present in the source, while RIGHT continues cleanly without adding meta-commentary.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6955962b7bd6d2cd1d620ef7",
+  "verdict": "TIE",
+  "why": "Both continue the Kabalah discussion with the same header and near-identical phrasing; differences are cosmetic.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69a552f30aade5c1d01fe6c0",
+  "verdict": "LEFT",
+  "why": "LEFT opens cleanly with the chapters running header, while RIGHTs leading ellipsis falsely implies a mid-sentence continuation from a page that actually ended on a full stop.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69ee646e7b983848aff573c6",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the preceding pages exact spelling Avrgelmir and keeps the untranslated term Hrimthursar, while RIGHT diverges to Aurgelmir and swaps in the translated Frost Giants.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:695934b6b282844d7b27845f",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the preceding pages heavy capitalization of key terms, matching its 17th-century register, while RIGHT lowercases them.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6991d6648c1030b12444b0ec",
+  "verdict": "TIE",
+  "why": "Both pick up the odd fragment identically; differences are only minor punctuation/word choice.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6991bd4f70254d38471e438c",
+  "verdict": "LEFT",
+  "why": "Lefts related phenomena reads smoother than rights awkward inserted gloss.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69e419cb8a8dae1074c518e6",
+  "verdict": "TIE",
+  "why": "Both open the new section with the same header and near-identical wording.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69906a4dd69de0e6980706cf",
+  "verdict": "TIE",
+  "why": "Both begin the new section with equivalent phrasing and the same dialogue content.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b302efb7250b3103276cfd",
+  "verdict": "RIGHT",
+  "why": "Rights consistent clinical uterus term matches the technical register of the preceding index list better than lefts plain womb.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a4e5b0300c1250433dc29c9",
+  "verdict": "TIE",
+  "why": "Both continue the legal citation string almost identically.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:65c7583f-4866-4f74-8903-a37bd8f1de33",
+  "verdict": "TIE",
+  "why": "Both verses have an equally awkward pronoun shift picking up the address after the simile.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a905cc05c1f3f2e1b8c2663",
+  "verdict": "TIE",
+  "why": "Both render the same content continuing the dedication letter with only minor synonym differences.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b6306e1c1c21a373801cad",
+  "verdict": "TIE",
+  "why": "Both pick up marriage identically and preserve the same Greek terms and structure.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b2f4160e2f024dfbfbb030",
+  "verdict": "TIE",
+  "why": "Neither side picks up specific vocabulary from the preceding fragment; both are equally plausible.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b51dd647b06ecd5818525b",
+  "verdict": "LEFT",
+  "why": "Left correctly renders the Latin as village of Emmaus; rights castle of Emmaus is an odd literal misstep.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b00f96e485bbb15c6b3357",
+  "verdict": "TIE",
+  "why": "Both introduce the Keronia carob passage with equivalent content and internally consistent terms.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a4ad54802f968641aca25ac",
+  "verdict": "LEFT",
+  "why": "Left continues the cut-off subject the blossoming youth aided by remedies directly; right restructures with a new pronoun that breaks the sentence flow.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b62fd91c1c21a3737fb4fb",
+  "verdict": "RIGHT",
+  "why": "Right avoids lefts redundant double preposition, reading as the cleaner direct continuation.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a492394a45b99e46af94e29",
+  "verdict": "RIGHT",
+  "why": "Right names the king Sapor, required for the following clause about King Sabor to make sense; left never introduces that name.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a4b0f667622bb5aba1286a3",
+  "verdict": "TIE",
+  "why": "Both continue the reject fragment identically with only minor clause reordering.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b51e9d9a81ef7feb3d8157",
+  "verdict": "LEFT",
+  "why": "Left preserves the Whether the intellect form used throughout the preceding pages list; right switches to Does interrogatives, breaking the pattern.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a085b0349638a50931caa99",
+  "verdict": "RIGHT",
+  "why": "Rights clause structure reads as a clearer, more coherent continuation of the dialogue than lefts slightly disjointed phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a42efe106e6ead3ac54b579",
+  "verdict": "TIE",
+  "why": "Both correctly continue the creedal list with our organ identically; rights extra page furniture is not a continuity difference.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a45cdca98e9f852e61cbce4",
+  "verdict": "LEFT",
+  "why": "LEFT resolves the dangling 'breathing the spirit of our own...' clause into a clear subject and clause matching the cut sentence, while RIGHT's 'breathing our own as they are distinguished' leaves the object of 'own' unclear.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a3c64e739b4508b04e2b091",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the same clean italicized-title convention and untranslated bracketed glosses used on the preceding page, while RIGHT inserts odd unglossed insertions that break the established citation style.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a3c632d879008ba7e166967",
+  "verdict": "LEFT",
+  "why": "LEFT continues translating each category heading into English exactly as the preceding page did, while RIGHT abruptly switches to leaving headings as raw untranslated Chinese characters.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6992f405c8c6ac61574e73ce",
+  "verdict": "LEFT",
+  "why": "LEFT keeps calling the male character 'the scholar' exactly as the preceding page consistently does, while RIGHT switches his designation to 'the student' mid-story.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a3c645739b4508b04e26377",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves the preceding page triple-hash heading level for its section headers, while LEFT drops to a single hash, breaking the established markdown convention.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a08c0d69b57265ed7f10cb5",
+  "verdict": "TIE",
+  "why": "Both sides render essentially the same sentence about perfection and deficiency with only trivial paraphrase differences, no distinguishing continuity marker.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69c1b8c38522835be844b11b",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves embedded transliterated Arabic terms in the running text matching the preceding page's convention of glossing key words in transliteration, which LEFT drops.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a2032e518654bf8e1903b96",
+  "verdict": "LEFT",
+  "why": "LEFT consistently renders the tawakkul root as 'rely/relied' throughout, matching the preceding page's exclusive usage, while RIGHT inconsistently mixes in 'trust' for the same root.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a2032f718654bf8e1903f05",
+  "verdict": "TIE",
+  "why": "Both sides give near-equivalent renderings of the same grammatical rule with comparable terminology and no clear tell distinguishing which continues the preceding page's register.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69c271a8b82ba5d5beda2ea0",
+  "verdict": "TIE",
+  "why": "LEFT and RIGHT are nearly word-for-word identical translations of the same catechism text, differing only in trivial line-wrapping and word choice.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a100911f717292950967898",
+  "verdict": "TIE",
+  "why": "LEFT and RIGHT are near-identical paraphrases of the same Typhon passage with only minor wording differences, no substantive continuity divergence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b3e675304c1c6b3950b1fa",
+  "verdict": "TIE",
+  "why": "Both continuations are equally garbled machine-Zohar-style prose using the same transliterated term 'chesed' and matching bolded emphasis convention, with no clear signal favoring either.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69c1bad18522835be845aabc",
+  "verdict": "RIGHT",
+  "why": "RIGHT's 'porters at every gate; they had no need to depart from their service' closely echoes the authentic KJV wording used throughout the preceding page, while LEFT's 'gatekeepers' breaks from the established KJV-echoing register.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a26d0aef5273a8d9079a45d",
+  "verdict": "LEFT",
+  "why": "LEFT correctly completes the sentence dangling from the preceding page before its heading, while RIGHT skips straight to a new heading and drops that clause entirely.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a26d296f5273a8d907a56c7",
+  "verdict": "LEFT",
+  "why": "LEFT cleanly completes the verb dangling from the preceding page ('demanded ... should make room for him'), while RIGHT's completion is garbled with a stray repeated 'should' and misplaced parenthesis.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69f8c1030c0c281d4bd321fd",
+  "verdict": "RIGHT",
+  "why": "RIGHT carries the sentence about the procurator through to a complete, coherent conclusion naming Father Fray Juan de la Puerta, while LEFT's parallel sentence cuts off incomplete at 'a matter'.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:69b525ca6be6046083032514",
+  "verdict": "LEFT",
+  "why": "LEFT correctly continues the sentence dangling from the preceding page, while RIGHT skips straight to an unrelated subheading and loses that clause.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6990592aaaa7f10ed4cfaa42",
+  "verdict": "LEFT",
+  "why": "LEFT's period-appropriate 'Greek Royal Library' matches the preceding page's convention of literal, era-correct library names, while RIGHT's anachronistic 'Bavarian State Library' breaks that register.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "A-At:6a20333118654bf8e1904805",
+  "verdict": "LEFT",
+  "why": "LEFT's opening 'After the King had finished hunting' correctly picks up the failed-hunt thread that closes the preceding page, while RIGHT's 'After the power was gone from the king' loses that connection.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:699259763d2d40d1b058f2da",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the numbered footnote apparatus of the scholarly edition while RIGHT silently drops it, a register break at the seam.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69e13af90dae29249d20bcf4",
+  "verdict": "TIE",
+  "why": "Both pick up verse 17 with plausible but differently worded imagery and neither term visibly ties back to the preceding bubble imagery.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6990540938e1fdee57b366e9",
+  "verdict": "TIE",
+  "why": "Both carry the same slightly garbled opening with only trivial punctuation and case differences.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69d5ac3dd0bd3547a5655c53",
+  "verdict": "RIGHT",
+  "why": "RIGHT preserves the grammatical commentary apparatus on the Arabic verse consistent with a scholarly annotated edition, which LEFT drops.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b525972379d2fed6c29590",
+  "verdict": "LEFT",
+  "why": "The preceding page uses modern you and your pronouns and LEFT continues that register, while RIGHT switches to archaic thee and thou, breaking pronoun continuity.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6953ce6577f38f6761be4124",
+  "verdict": "LEFT",
+  "why": "The preceding page cuts off at Tiberius sent many and LEFT completes it grammatically with confidential letters he wrote with his own hand, while RIGHT restarts awkwardly.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6aa35e80e213def30d6cb97f",
+  "verdict": "LEFT",
+  "why": "The preceding page ends mid sentence I am concerned only to and LEFT continues correctly with suggest that, while RIGHT restarts with a redundant I suggest.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:699068ed2e4efe910676a6a3",
+  "verdict": "TIE",
+  "why": "Content is equivalent, the only difference is a heading typo which is not decisive for translator continuity at the seam.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69ef2f8e72c1376fdf2afb08",
+  "verdict": "RIGHT",
+  "why": "LEFT injects a stray classifier label artifact into the page header that RIGHT does not have, breaking clean continuation.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69907cd85f855ec553e77a81",
+  "verdict": "LEFT",
+  "why": "LEFTs section heading is coherent, while RIGHTs heading is a garbled non heading that disrupts the seam.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6953efda1479a63c1108830b",
+  "verdict": "RIGHT",
+  "why": "RIGHT continues the exact hyphenated word split across the page break and keeps the archaic elisions matching the preceding pages period register, while LEFT modernizes and loses the carry over.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a3535f9c8ce407afbe05377",
+  "verdict": "LEFT",
+  "why": "Both continue the sentence identically, but RIGHT again carries a stray artifact header that LEFT lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a088b0cbd8fc3beee8aab1c",
+  "verdict": "RIGHT",
+  "why": "Same continuation text in both, but LEFT carries a stray artifact header that RIGHT lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a089bfc2b703903f58e82a6",
+  "verdict": "RIGHT",
+  "why": "Same continuation text in both, but LEFT carries a stray artifact header that RIGHT lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a58f53fc6cd8f9871069e3d",
+  "verdict": "TIE",
+  "why": "Both continue the legal clause identically with only a trivial word variant that does not clearly favor either as more continuous.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6955962b7bd6d2cd1d620ef7",
+  "verdict": "RIGHT",
+  "why": "The preceding page ends dangling on the occult student in and RIGHT completes it exactly with particular will feel that, while LEFT restarts with a redundant new subject.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69a552f30aade5c1d01fe6c0",
+  "verdict": "LEFT",
+  "why": "Both continue the same sentence, but RIGHT carries a stray header artifact that LEFT lacks.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69ee646e7b983848aff573c6",
+  "verdict": "LEFT",
+  "why": "The preceding page spells the giants name Avrgelmir and LEFT keeps that same spelling, while RIGHT switches to Aurgelmir, breaking name consistency.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:695934b6b282844d7b27845f",
+  "verdict": "RIGHT",
+  "why": "The preceding page ends mid Latin word supremam Uni and RIGHT correctly completes it in Latin, continuing the verbatim quotation, while LEFT abruptly switches to an English translation.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6991d6648c1030b12444b0ec",
+  "verdict": "TIE",
+  "why": "Both pick up the sentence correctly and match register and terms; differences are only punctuation and capitalization normalization.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6991bd4f70254d38471e438c",
+  "verdict": "TIE",
+  "why": "Both continue the same paragraph identically in content and terms, differing only in capitalization and a minor gloss.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69e419cb8a8dae1074c518e6",
+  "verdict": "TIE",
+  "why": "Both correctly pick up the trailing sentence and continue with matching names, register and content.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69906a4dd69de0e6980706cf",
+  "verdict": "RIGHT",
+  "why": "Right keeps the running chapter header and sequential page number matching the preceding page, while left inserts an unrelated heading that breaks structural continuity.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b302efb7250b3103276cfd",
+  "verdict": "LEFT",
+  "why": "Left directly completes the preceding page dangling clause about the interior cavity, while right inserted clause awkwardly restructures the sentence.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a4e5b0300c1250433dc29c9",
+  "verdict": "TIE",
+  "why": "Both continue the legal citation text with the same names and terms; the only difference is a running header that does not affect sentence continuity.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:65c7583f-4866-4f74-8903-a37bd8f1de33",
+  "verdict": "LEFT",
+  "why": "Right returned an empty string with no continuation at all, while left plausibly continues the elegy themes and register.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a905cc05c1f3f2e1b8c2663",
+  "verdict": "TIE",
+  "why": "Both continue the same sentence and paragraph with equivalent names, terms and register, differing only in phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b6306e1c1c21a373801cad",
+  "verdict": "TIE",
+  "why": "Both continue the commentary with the same Greek terms, names and register, differing only in wording.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b2f4160e2f024dfbfbb030",
+  "verdict": "TIE",
+  "why": "Both begin the same chorus passage with matching names and near-identical phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b51dd647b06ecd5818525b",
+  "verdict": "TIE",
+  "why": "Both continue the list of supernatural examples with matching content and register, differing only in word choice.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b00f96e485bbb15c6b3357",
+  "verdict": "LEFT",
+  "why": "At the new chapter, left supplies a distinct new title while right mistakenly repeats the prior chapter title, a continuity error.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a4ad54802f968641aca25ac",
+  "verdict": "RIGHT",
+  "why": "Right phrasing reads as a more direct grammatical completion of the preceding page dangling clause than left rearranged clause.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b62fd91c1c21a3737fb4fb",
+  "verdict": "TIE",
+  "why": "Both continue the outline with matching names, topics and register, differing only in wording.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a492394a45b99e46af94e29",
+  "verdict": "TIE",
+  "why": "Both plausibly complete the dangling clause with matching names and register.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a4b0f667622bb5aba1286a3",
+  "verdict": "TIE",
+  "why": "Both continue the same passage with matching names, terms and register, differing only in minor phrasing.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:69b51e9d9a81ef7feb3d8157",
+  "verdict": "RIGHT",
+  "why": "Right maintains the preceding page established list register throughout, while left switches to full interrogative sentences, breaking the established format.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a085b0349638a50931caa99",
+  "verdict": "RIGHT",
+  "why": "Right explicitly marks the continuation with a leading ellipsis matching the preceding page dangling quote and completes it naturally, while left drops the ellipsis and reads as a less clearly tied clause.",
+  "judge": "claude-sonnet subagent, blind"
+ },
+ {
+  "id": "At-Et:6a42efe106e6ead3ac54b579",
+  "verdict": "TIE",
+  "why": "Both continue the theological passage with matching names and near-identical content and register.",
+  "judge": "claude-sonnet subagent, blind"
  }
 ]
