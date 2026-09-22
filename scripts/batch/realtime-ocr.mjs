@@ -37,6 +37,8 @@
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
  *   --reason="..."     Why this run is being done by hand (recorded on the run, #4336)
+ *   --max-consecutive-errors=N  Stop after N consecutive failures (default 20). A small
+ *                      value (4) is the right guard for a one-off run outside the dial.
  */
 
 import fs from 'node:fs';
@@ -63,6 +65,8 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 // this script advanced unconditionally, which was harmless only while it was used
 // on books that had never been OCR'd.
 const PRE_OCR_STATUSES = ['archive_complete', 'ocr_submitted'];
+// TARGET_MODEL is resolved after arg parsing (--model); the constant name is kept
+// because the targeting queries and every write/meter row read it.
 const TARGET_PROMPT = 'v5.2026-02';
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
@@ -96,6 +100,7 @@ const PIPELINE_STATUS = getArg('status');
 const PROVIDER = getArg('provider');
 const INITIATED_BY = 'script:realtime-ocr';
 const REASON = parseInitiatedReason(args, INITIATED_BY);
+const MAX_CONSECUTIVE_ERRORS = parseInt(getArg('max-consecutive-errors') || '20', 10);
 
 // Targeting mode
 const MODE_NO_OCR = hasFlag('no-ocr');
@@ -486,8 +491,8 @@ async function processBatch(pages, promptText, db, runId) {
   for (const p of pages) pageBookMap[p.id] = p.book_id;
 
   for (let i = 0; i < pages.length; i += CONCURRENCY) {
-    if (consecutiveErrors >= 20) {
-      console.log(`\n  20 consecutive errors — stopping early`);
+    if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+      console.log(`\n  ${MAX_CONSECUTIVE_ERRORS} consecutive errors — stopping early`);
       break;
     }
 
