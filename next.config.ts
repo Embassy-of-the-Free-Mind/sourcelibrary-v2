@@ -120,8 +120,11 @@ const nextConfig: NextConfig = {
             value: [
               // Next.js requires 'unsafe-inline' for styles and 'unsafe-eval' for dev; in prod we need 'unsafe-inline' for React inline styles
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
+              // PROTOTYPE (#3823): jsdelivr allowed for the Alpheios embedded
+              // reading-tools evaluation. A production ship vendors the
+              // bundles and removes these entries.
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com https://cdn.jsdelivr.net",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://cdn.jsdelivr.net",
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
               // Host list lives in src/lib/csp-img-hosts.ts (shared with getBookThumbnailUrl's
@@ -131,7 +134,7 @@ const nextConfig: NextConfig = {
               // DOWNLOAD reads the bytes with fetch() — that is connect-src, and
               // its absence here silently killed both gallery download buttons
               // (with the R2 bucket's missing CORS header, #4630).
-              "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
+              "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com https://*.alpheios.net https://cdn.jsdelivr.net",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
               "frame-src 'self' https://translate.google.com",
               "worker-src 'self' blob: data:",
