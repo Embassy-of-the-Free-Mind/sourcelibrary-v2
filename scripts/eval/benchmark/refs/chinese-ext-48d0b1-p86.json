@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-48d0b1-p86",
+  "substratum": "skqs-manuscript",
+  "title": "御定佩文齋書畫譜·卷五十八 (vol 32)",
+  "probe_chars": 87,
+  "source": "Kanripo",
+  "work": "KR3h0061",
+  "work_title": "御定佩文齋書畫譜-清-孫岳頒",
+  "juan": "58",
+  "url": "https://github.com/kanripo/KR3h0061",
+  "etext_chars": 10579,
+  "window_chars": 141,
+  "overlap": 0.65
+}

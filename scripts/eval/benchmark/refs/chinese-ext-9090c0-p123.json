@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-9090c0-p123",
+  "substratum": "skqs-manuscript",
+  "title": "事類賦·卷二十五~卷三十 (vol 7)",
+  "probe_chars": 292,
+  "source": "Kanripo",
+  "work": "KR3k0011",
+  "work_title": "事類賦-宋-吳淑",
+  "juan": "25,26,27,28,29,30",
+  "url": "https://github.com/kanripo/KR3k0011",
+  "etext_chars": 41229,
+  "window_chars": 408,
+  "overlap": 0.751
+}

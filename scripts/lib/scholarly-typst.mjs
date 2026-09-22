@@ -1,44 +1,185 @@
 /**
- * Scholarly PDF generator using Typst.
+ * Scholarly PDF generator using Typst — the PDF deposited with Zenodo.
  *
- * Generates a clean, typeset citation PDF with:
- *   - Serif typography with proper hyphenation
- *   - Footnotes from <note> tags (auto-numbered)
- *   - Marginal page references
- *   - Front matter (intro, methodology)
- *   - Index
- *   - Colophon
+ * Its reader arrived from a DOI citation and has no site around them: the PDF
+ * is the whole impression, and once deposited it is permanent. (The reader
+ * download is a different generator: src/lib/pdf-export.ts.)
  *
- * Produces a .typ file, then compiles with `typst compile`.
+ * Layout: A4, a ~75-character text column, and a margin column that carries
+ *   - the source-page number where each page begins (the citable anchor),
+ *     with the source's own printed page number beside it when known
+ *   - the original's marginal notes, where the original has them
+ * Footnotes (the translation's explanatory notes) number from 1 per page.
+ * Title page, imprint page with "cite as", contents built from book.chapters,
+ * running heads, front matter (intro, methodology), index, colophon.
+ *
+ * Produces a .typ file, then compiles with `typst compile`. Uses only fonts
+ * embedded in the typst binary (Libertinus Serif), so it renders the same on
+ * the laptop and on Hetzner. Inspect changes without minting:
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId>
  */
 
 import { execSync } from 'child_process';
-import { writeFileSync, readFileSync, unlinkSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { writeFileSync, readFileSync, mkdirSync, rmSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
+// Tags whose CONTENT is about the page, not of it — dropped content-and-all.
+// `header` is the source's printed running head: it repeats on every page in
+// whatever half-translated form the model gave it that time, so it goes; the
+// edition carries its own running heads.
+const DROP_TAGS = 'meta|page-type|columns|detected-images|lang|language|folio|sig|header|warning|abbrev|vocab|summary|keywords|section-intro|image-desc|scan-quality|script';
+
+const ENTITIES = { nbsp: ' ', emsp: ' ', ensp: ' ', thinsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", mdash: '—', ndash: '–', hellip: '…' };
+
+/** Decode the handful of HTML entities the models emit; whitespace ones become a plain space. */
+function decodeEntities(text) {
+  return text
+    .replace(/&([a-z]+);/gi, (m, name) => ENTITIES[name.toLowerCase()] ?? m)
+    .replace(/&(?:nbsp|emsp|ensp)\b/gi, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)));
+}
+
+/** Strip markup from text headed for a footnote or margin note (plain prose, one paragraph). */
+function cleanForNote(text) {
+  let s = text.trim();
+  s = s.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
+  s = s.replace(/<note>([\s\S]*?)<\/note>/gi, '($1)');
+  s = s.replace(/<\/?[a-z][^>]*>/gi, '');
+  s = s.replace(/->([\s\S]*?)<-/g, '$1');
+  s = s.replace(/\*\*(.+?)\*\*/g, '$1');
+  s = s.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
+  s = s.replace(/\s*\n+\s*/g, ' ');
+  return s.trim();
+}
+
+// A marginal note longer than this cannot sit in a 40mm column without
+// running down the page and colliding with its neighbours — it becomes a
+// footnote labelled as marginal instead.
+const MARGIN_NOTE_MAX_CHARS = 220;
+
 /**
- * Convert translation text to Typst markup.
- * - <note>...</note> → #footnote[...]
- * - <margin>...</margin> → #footnote[Marginal note: ...]
- * - Strip metadata tags
- * - Strip AI preambles
- * - Escape Typst special chars
+ * The source's printed running head, when the model transcribed it as the
+ * page's first line instead of tagging it: "**Cap. V. On the globe of the
+ * Earth. 103**", "106        Dialogue II.", or a bare "140". Deliberately
+ * narrow — a short standalone first line carrying a page number at one end —
+ * because a false positive deletes a line of the author's text.
+ * Returns { printedPage, rest } or null.
  */
-function translationToTypst(text) {
-  if (!text) return '';
+function splitRunningHead(text) {
+  // A bare page number on the first line needs no blank line after it to be safe
+  const bare = text.match(/^\s*(?:\*\*)?(\d{1,4})(?:\*\*)?[ \t]*\n/);
+  if (bare) return { printedPage: bare[1], rest: text.slice(bare[0].length) };
+  const m = text.match(/^\s*([^\n]+)\n\s*\n/);
+  if (!m) return null;
+  const line = m[1].replace(/^[#>\-*\s]+|[#<\-*\s]+$/g, '').replace(/\s+/g, ' ');
+  if (line.length > 70) return null;
+  const num = line.match(/^(\d{1,4})\b(?:\s+\D.*)?$/) || line.match(/^\D.*\s(\d{1,4})\.?$/);
+  if (!num) return null;
+  if (line.split(' ').length > 10) return null;
+  return { printedPage: num[1], rest: text.slice(m[0].length) };
+}
+
+/**
+ * The page's first line, when it is short enough to be a running head —
+ * whether set as a heading ("-># IAMBLICHUS #<-") or left as a plain line
+ * ("Itineris exstatici"). Returns { key, length } — key for comparing across
+ * pages (letters only, so "… 139" and "… 141" match), length to cut.
+ * Plain string slicing, not one regex: a lazy match across a 3,000-character
+ * first line backtracks for minutes.
+ */
+function leadingDisplayLine(text) {
+  const start = text.search(/\S/);
+  const end = start < 0 ? -1 : text.indexOf('\n', start);
+  if (end < 0 || end - start > 80) return null;
+  // A line carrying a tag is content (a marginal section letter), not a head
+  if (text.slice(start, end).includes('<') && !/<-\s*$/.test(text.slice(start, end))) return null;
+  const line = text.slice(start, end)
+    .replace(/^->\s*/, '').replace(/\s*<-\s*$/, '')
+    .replace(/^#{1,6}\s*/, '').replace(/\s*#+\s*$/, '');
+  const key = line.replace(/[^\p{L}]+/gu, ' ').trim().toLowerCase();
+  return key && line.length <= 60 ? { key, length: end + 1 } : null;
+}
+
+/**
+ * Markdown-shape marginalia: the model labels the note instead of tagging it,
+ * and the label varies — "[Marginal note: …]", "[Marginal note, top right:]",
+ * "[Left marginal note 2]:", a bare "Marginal note: …".
+ *
+ * Where the note ENDS is the hazard. A closed bracket says so. A label with
+ * text after it on the line owns that line and no more. A label alone on its
+ * line owns the short lines that follow (a margin is narrow, so its lines
+ * are), stopping at the first blank or full-width line — on a page without
+ * blank lines, "to the end of the paragraph" would file the author's next
+ * three speeches in a footnote.
+ */
+function extractLabelledMarginalia(text, marginal) {
+  const closed = /\[(?:(?:left|right|top|bottom)\s+)?marginal notes?[^\]:\n]{0,40}:\s*([^\]]+)\]/gi;
+  const label = /(?:\[(?:(?:left|right|top|bottom)\s+)?marginal notes?[^\]:\n]{0,40}(?::\]|\]:?)|^[ \t]*marginal notes?:)[ \t]*/i;
+  const lines = text.replace(closed, (_, c) => marginal(c)).split('\n');
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(label);
+    if (!m) { out.push(lines[i]); continue; }
+    const before = lines[i].slice(0, m.index);
+    let note = lines[i].slice(m.index + m[0].length);
+    if (!note.trim()) {
+      const run = [];
+      while (i + 1 < lines.length && lines[i + 1].trim() && lines[i + 1].trim().length < 48 && run.length < 8 && !label.test(lines[i + 1])) run.push(lines[++i]);
+      note = run.join(' ');
+    }
+    out.push(before + marginal(note));
+  }
+  return out.join('\n');
+}
+
+/**
+ * Printed running heads that reached the text as headings. A real chapter
+ * title opens one page; a line that opens many is the printer's running head.
+ */
+export function findRunningHeads(pages) {
+  const counts = new Map();
+  for (const page of pages) {
+    const text = (page.translation?.data || '')
+      .replace(new RegExp(`<(${DROP_TAGS}|page-num)(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), '');
+    const lead = leadingDisplayLine(text);
+    if (lead) counts.set(lead.key, (counts.get(lead.key) || 0) + 1);
+  }
+  return new Set([...counts].filter(([, n]) => n >= 3).map(([key]) => key));
+}
+
+/**
+ * Convert one page of translation text to Typst markup.
+ *
+ * Handles both shapes the pipeline has produced over time: the tag-rich one
+ * (<note>, <margin>, <term>, <page-num>, <header>…) and the markdown one
+ * (# headings, **bold**, "[Marginal note: …]"). Returns the Typst body plus
+ * the source's own printed page number when the page states it.
+ *
+ * - <note>, <gloss>, explanatory <term> → footnotes
+ * - <margin> / [Marginal note: …] → set in the margin, as the original has them
+ * - # headings and ->centred<- lines → display lines (not outline entries)
+ * - *italic* kept; **bold** dropped (the models bold every annotated lemma,
+ *   which reads as noise in print)
+ * - running heads, metadata tags, HTML remnants and entities stripped
+ */
+export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
+  if (!text) return { body: '', printedPage: null };
 
   let out = text;
+  let printedPage = null;
 
-  // Remove metadata-only tags entirely
-  out = out.replace(
-    /<(?:meta|page-type|columns|detected-images|lang|language|page-num|folio|sig|header|warning|abbrev|vocab|summary|keywords)>[\s\S]*?<\/(?:meta|page-type|columns|detected-images|lang|language|page-num|folio|sig|header|warning|abbrev|vocab|summary|keywords)>/gi,
-    ''
-  );
+  const pageNum = out.match(/<page-num>\s*([^<]{1,12}?)\s*<\/page-num>/i);
+  if (pageNum) printedPage = pageNum[1];
+  out = out.replace(/<page-num>[\s\S]*?<\/page-num>/gi, '');
+
+  out = out.replace(new RegExp(`<(${DROP_TAGS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), '');
 
   // Remove AI preambles — the canonical guard (#3108) catches conversational
   // openers ("Note: the text in the image is in French...") that the narrow
@@ -47,92 +188,139 @@ function translationToTypst(text) {
   out = cleanOcrArtifacts(out);
   out = out.replace(/^(?:Okay,?\s*)?(?:Here(?:'s| is) (?:the|my) (?:translation|modernization|transcription)[\s\S]*?:\s*\n+)/i, '');
 
-  // Helper: clean raw tag content for use in footnotes
-  function cleanForFootnote(text) {
-    let s = text.trim();
-    s = s.replace(/<unclear>[\s\S]*?<\/unclear>/gi, '[?]');
-    s = s.replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
-    s = s.replace(/<note>([\s\S]*?)<\/note>/gi, '($1)');
-    s = s.replace(/<\/?[a-z][a-z0-9-]*\s*\/?>/gi, '');
-    s = s.replace(/->([\s\S]*?)<-/g, '$1');
-    s = s.replace(/\*\*(.+?)\*\*/g, '$1');
-    s = s.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
-    s = s.replace(/\n+/g, ' ');
-    return s.trim();
+  // HTML remnants: entities (a run of &nbsp; between a page number and a
+  // running head is the common one) and presentational tags with attributes
+  out = decodeEntities(out);
+  out = out.replace(/<\/?(?:div|span|center|p|font|u|sup|sub|br)(?:\s[^>]*)?\/?>/gi, ' ');
+  out = out.replace(/<(b|strong)>([\s\S]*?)<\/\1>/gi, '$2');
+  out = out.replace(/<(i|em)>([\s\S]*?)<\/\1>/gi, '*$2*');
+  out = out.replace(/[ \t]{2,}/g, ' ');
+
+  // A running head the model set as a heading ("-># IAMBLICHUS #<-"): known
+  // because the same leading line recurs across the book (see findRunningHeads)
+  const lead = leadingDisplayLine(out);
+  if (lead && runningHeads.has(lead.key)) out = out.slice(lead.length);
+
+  const head = splitRunningHead(out);
+  if (head) {
+    out = head.rest;
+    printedPage = printedPage || head.printedPage;
   }
 
-  // Extract margin notes FIRST (they may contain <note> tags)
-  // Process margins before notes so inner <note> tags get flattened
-  const footnotes = [];
-  out = out.replace(/<margin>([\s\S]*?)<\/margin>/gi, (_, content) => {
-    const clean = cleanForFootnote(content);
+  // Notes become placeholders now and Typst calls after escaping
+  const inserts = [];
+  const hold = typst => { inserts.push(typst); return `%%IN${inserts.length - 1}%%`; };
+  const footnote = content => hold(`#footnote[${escapeTypst(content)}];`);
+  const marginal = content => {
+    const clean = cleanForNote(content);
     if (!clean || clean.length < 3) return '';
-    const id = `%%FN${footnotes.length}%%`;
-    footnotes.push(`Marginal note: ${clean}`);
-    return id;
+    return clean.length > MARGIN_NOTE_MAX_CHARS
+      ? footnote(`In the margin: ${clean}`)
+      : hold(`#mnote[${escapeTypst(clean)}];`);
+  };
+
+  // Margins first: they may contain <note> tags, which cleanForNote flattens
+  out = out.replace(/<margin>([\s\S]*?)<\/margin>/gi, (_, c) => marginal(c));
+  // Markdown-shape marginalia: "[Marginal note: …]" and the block form
+  // "[Marginal note:]" followed by its lines up to the next blank line
+  out = extractLabelledMarginalia(out, marginal);
+
+  out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, c) => {
+    const clean = cleanForNote(c);
+    return clean ? footnote(clean) : '';
+  });
+  out = out.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, (_, c) => {
+    const clean = cleanForNote(c);
+    return clean.length >= 3 ? footnote(`Gloss: ${clean}`) : '';
+  });
+  // <term> is used two ways: wrapping a word (keep the word) or carrying an
+  // explanation of the preceding word ("hypophetas: from the Greek…") — a note
+  out = out.replace(/<term>([\s\S]*?)<\/term>/gi, (_, c) => {
+    const clean = cleanForNote(c);
+    return clean.length > 40 || /:\s/.test(clean) ? footnote(clean) : clean;
   });
 
-  // Extract <note>...</note> as footnotes
-  out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, content) => {
-    const clean = cleanForFootnote(content);
-    if (!clean) return '';
-    const id = `%%FN${footnotes.length}%%`;
-    footnotes.push(clean);
-    return id;
-  });
-
-  // Convert <unclear>...</unclear>
   out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
-
-  // Strip <term> tags (just keep content, no formatting)
-  out = out.replace(/<term>([\s\S]*?)<\/term>/gi, '$1');
-
-  // Remove <column-break/>
   out = out.replace(/<column-break\s*\/?>/gi, '\n\n');
 
-  // Remove arrow tags (paired and unpaired)
-  out = out.replace(/->([\s\S]*?)<-/g, '$1');
-  out = out.replace(/->\s*/g, '');
-  out = out.replace(/\s*<-/g, '');
+  // Display lines: markdown headings and ->centred<- text. Level is kept so
+  // a chapter title outranks a section title; none enter the PDF outline,
+  // which is built from the book's chapter list instead.
+  out = out.replace(/^[ \t]*->\s*([\s\S]*?)\s*<-[ \t]*$/gm, (_, c) => {
+    const h = c.match(/^(#{1,6})\s*(.*?)\s*#*$/s);
+    return `\n\n%%DL${h ? h[1].length : 3}%%${(h ? h[2] : c).replace(/\s*\n\s*/g, ' ')}%%/DL%%\n\n`;
+  });
+  out = out.replace(/^[ \t]*(#{1,6})\s+(.+?)\s*#*[ \t]*$/gm, (_, hashes, c) => `\n\n%%DL${hashes.length}%%${c}%%/DL%%\n\n`);
+  out = out.replace(/->\s*|\s*<-/g, ' ');
 
-  // Remove any remaining XML tags
-  out = out.replace(/<\/?[a-z][a-z0-9-]*\s*\/?>/gi, '');
+  // Any remaining tag, with or without attributes
+  out = out.replace(/<\/?[a-z][^>\n]*>/gi, '');
 
-  // Strip all markdown formatting
-  out = out.replace(/^#{1,6}\s+/gm, '');
-  out = out.replace(/^\s*[-*]{3,}\s*$/gm, '');
+  // Horizontal rules, bold; italic survives as a placeholder pair
+  out = out.replace(/^\s*[-*_]{3,}\s*$/gm, '');
   out = out.replace(/\*\*(.+?)\*\*/g, '$1');
-  out = out.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
-  out = out.replace(/^[_]{3,}.*$/gm, '');
+  out = out.replace(/(?<![*\w])\*(?![*\s])([^*\n]+?)(?<![*\s])\*(?![*\w])/g, '%%EM%%$1%%/EM%%');
 
-  // Now escape Typst special chars (but not our %%FN%% placeholders)
-  out = escapeTypst(out);
-
-  // Convert footnote placeholders to Typst footnotes. The trailing semicolon
-  // explicitly ends the code expression — without it, adjacent text like
-  // "#footnote[...].Feverish" parses as a field access and fails to compile
-  for (let i = 0; i < footnotes.length; i++) {
-    const escaped = escapeTypst(footnotes[i]);
-    out = out.replace(`%%FN${i}%%`, `#footnote[${escaped}];`);
-  }
-
-  // Remove markdown table rows (they don't render well — keep content)
+  // Markdown table rows don't survive typesetting — keep the cell content
   out = out.replace(/^\|.*\|$/gm, (line) => {
-    // Extract cell content, skip separator rows
     if (/^[\s|:-]+$/.test(line)) return '';
     const cells = line.split('|').map(c => c.trim()).filter(c => c && !/^[-:]+$/.test(c));
     return cells.join(' — ');
   });
 
-  // Clean up excessive blank lines
-  out = out.replace(/\n{4,}/g, '\n\n\n');
+  // A transcription keeps the source's line breaks, so every paragraph is
+  // short lines and words split across them; as reading text it reflows,
+  // with the printer's end-of-line hyphens closed up ("la-/tet" → "latet")
+  if (reflow) out = out.replace(/(\p{L})[-¬=]\n(?=\p{Ll})/gu, '$1');
 
-  // A line-initial "/ " is Typst term-list syntax and errors without a colon.
-  // Must run LAST: table-row flattening above can create new line-initial
-  // slashes by joining cells
-  out = out.replace(/^([ \t]*)\/(?!\/)/gm, '$1\\/');
+  out = escapeTypst(out);
 
-  return out.trim();
+  // Paragraph pass: keep the line structure of lists (an index, a table of
+  // plant names, verse) — prose lines reflow, short-line blocks do not
+  const paragraphs = out.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+  const rendered = [];
+  let pendingNotes = '';
+  // The source-page anchor rides inside the page's first block, so it sits
+  // beside that block's first line whatever the block is
+  let pendingAnchor = anchor(printedPage);
+  const takeAnchor = () => { const a = pendingAnchor; pendingAnchor = ''; return a; };
+  for (let para of paragraphs) {
+    // A margin note transcribed on its own lines would otherwise become an
+    // empty paragraph; carry it to the start of the text it sits beside
+    if (/^(?:%%IN\d+%%\s*)+$/.test(para) && para.split('%%IN').slice(1).every(s => inserts[parseInt(s, 10)].startsWith('#mnote'))) {
+      pendingNotes += para.replace(/\s+/g, '');
+      continue;
+    }
+    const display = para.match(/^%%DL(\d)%%([\s\S]*?)%%\/DL%%$/);
+    if (display && !/[\p{L}\p{N}]/u.test(display[2].replace(/%%IN\d+%%/g, ''))) continue; // "***" ornaments
+    if (display) {
+      rendered.push(`#dline(${display[1]})[${takeAnchor()}${display[2]}]`);
+      continue;
+    }
+    para = para.replace(/%%\/?DL\d?%%/g, '');
+    const lines = para.split('\n').map(l => l.trim()).filter(Boolean);
+    const visible = l => l.replace(/%%IN\d+%%/g, '').length;
+    const isList = !reflow && lines.length >= 4 && lines.filter(l => visible(l) < 48).length / lines.length > 0.8;
+    // A line-initial "/ ", "- ", "+ ", "= " or "1. " is Typst list/term/heading
+    // syntax; none of it is meant here
+    const safe = l => l.replace(/^(\/|[-+=]+|\d+\.)(?=\s)/, m => m.replace(/[\/\-+=.]/g, c => `\\${c}`));
+    let body = isList ? lines.map(safe).join(' \\\n') : lines.map(safe).join('\n');
+    body = takeAnchor() + pendingNotes + body;
+    pendingNotes = '';
+    rendered.push(isList && lines.length >= 12 ? `#listcols[\n${body}\n]` : body);
+  }
+  if (pendingNotes || pendingAnchor) rendered.push(takeAnchor() + pendingNotes);
+
+  let body = rendered.join('\n\n');
+  body = body.replace(/%%EM%%([\s\S]*?)%%\/EM%%/g, '#emph[$1];');
+  body = body.replace(/%%\/?EM%%/g, '');
+  // Placeholders last, innermost-safe: inserts never contain other placeholders
+  // Twice: a note can sit inside a marginal note
+  for (let pass = 0; pass < 3 && /%%IN\d+%%/.test(body); pass++) {
+    body = body.replace(/%%IN(\d+)%%/g, (_, i) => inserts[Number(i)]);
+  }
+
+  return { body: body.trim(), printedPage };
 }
 
 function escapeTypst(text) {
@@ -234,115 +422,392 @@ function isContentPage(page) {
 
 // ── Typst document generator ────────────────────────────────────────
 
+// Page geometry, shared by the JS that writes the preamble and nothing else.
+// A4 because a scholar prints it; a ~75-character text column because A4 at
+// full width is unreadable; the space that frees up on the right is the
+// margin column that carries source-page numbers and the original's marginalia.
+// Latin-script text is Libertinus (embedded in typst); the Notos in ./fonts
+// cover an Arabic or Hebrew title and quotation. Compiled with
+// --ignore-system-fonts, so a laptop with 900 fonts and a bare server agree.
+const FONT_DIR = join(dirname(fileURLToPath(import.meta.url)), 'fonts');
+const FONT_STACK = '("Libertinus Serif", "Noto Naskh Arabic", "Noto Serif Hebrew")';
+
+// Typst hyphenation languages for the source text; unknown → no hyphenation
+const LANG_CODES = { latin: 'la', german: 'de', french: 'fr', italian: 'it', greek: 'el', dutch: 'nl', spanish: 'es', english: 'en', portuguese: 'pt' };
+
+// Standing credits, printed on the imprint page of every edition
+const STANDING_CREDITS = ['Creative direction: Derek Lomas'];
+
+const TYPST_PREAMBLE = `
+#let rust = rgb("#9e4a3a")
+#let muted = rgb("#6b6560")
+#let hairline = rgb("#d4cfc4")
+
+#let text-w = 125mm
+#let margin-l = 25mm
+#let gutter = 6mm
+#let mcol = 40mm
+
+// ── Margin column ──
+// Everything in the margin goes through one state so items never overprint:
+// each asks for the height of the line it belongs to and is pushed down to
+// the running floor if an earlier item still occupies that space. The update
+// is a function of the previous value, so a page of ten notes resolves in a
+// single layout pass instead of one pass per note.
+#let margin-floor = state("margin-floor", (page: 0, y: 0pt))
+#let settle(floor, pg, want, h, limit) = {
+  let y = if floor.page == pg and floor.y > want { floor.y } else { want }
+  if y + h > limit { y = calc.max(want - h, limit - h) }
+  y
+}
+#let in-margin(body, drop: 0pt) = box(width: 0pt, height: 0pt, context {
+  let pos = here().position()
+  let pg = here().page()
+  let item = box(width: mcol, body)
+  let h = measure(item).height
+  let want = pos.y + drop.to-absolute()
+  let limit = page.height - 24mm
+  let y = settle(margin-floor.get(), pg, want, h, limit)
+  margin-floor.update(f => (page: pg, y: settle(f, pg, want, h, limit) + h + 1.8mm))
+  place(top + left, dx: margin-l + text-w + gutter - pos.x, dy: y - pos.y, item)
+})
+
+// A marginal note of the original, set where the original has it
+#let mnote(body) = in-margin(drop: -0.72em, {
+  set par(justify: false, leading: 0.5em, first-line-indent: 0pt)
+  set text(size: 7.8pt, style: "italic", fill: muted, hyphenate: true)
+  body
+})
+
+// Start of a source page: its number in the digitized copy (the citable
+// anchor — it is the N in sourcelibrary.org/book/…/page/N) and, when the
+// source prints one, its own page number
+#let pagegap = block(above: 1.25em, below: 0pt, sticky: true)[]
+// side "t" is the translation, "o" the source text in the back. The number
+// links to that page's facsimile on the site; the small line under it jumps to
+// the same page on the other side, when the edition has one.
+#let current-src = state("current-src", none)
+#let src(n, printed: none, side: "t", other: none) = in-margin(drop: -0.7em, {
+  set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
+  [#metadata(n)#label(side + "-" + n)]
+  current-src.update(n)
+  link(page-url + n, text(size: 8.5pt, fill: rust, weight: "semibold", number-type: "lining")[#n])
+  if printed != none {
+    text(size: 7pt, fill: muted)[#h(0.5em)orig. #printed]
+  }
+  if other != none {
+    linebreak()
+    link(label((if side == "t" { "o" } else { "t" }) + "-" + n), text(size: 7pt, fill: muted)[#other #sym.arrow.r])
+  }
+})
+
+// Headings of the source itself — display lines, never outline entries
+#let dline(level, body) = block(above: if level <= 2 { 1.6em } else { 1.2em }, below: 0.9em, width: 100%, sticky: true, {
+  set align(center)
+  set par(justify: false, first-line-indent: 0pt, leading: 0.55em)
+  if level == 1 { text(size: 13pt, tracking: 0.02em, body) }
+  else if level == 2 { text(size: 11.5pt, style: "italic", body) }
+  else { text(size: 10.5pt, style: "italic", body) }
+})
+
+// Lists the source sets in short lines (indexes, plant names): two columns
+#let listcols(body) = block(width: 100%, above: 1em, below: 1em, {
+  set par(justify: false, first-line-indent: 0pt, hanging-indent: 1em)
+  set text(size: 9pt)
+  columns(2, gutter: 8mm, body)
+})
+
+// ── Cover ──
+// A binding in type: an ornamental border, the source page framed where a
+// binder would stamp an emblem, and the Source Library mark set into the foot
+// of the border. Ink on white, not gilt on navy — this PDF gets printed, and
+// a full-bleed dark page costs toner and comes out of a laser printer muddy.
+// The names keep the binding's vocabulary: navy is the ground, gold the ink.
+#let navy = white
+#let gold = rgb("#1a1612")
+#let foil = gold
+#let lozenge(size) = rotate(45deg, square(size: size, fill: gold))
+// One 6mm repeat: a four-petalled flower with a lozenge at each corner, so
+// neighbouring tiles join into a lattice. relative: "self" anchors the repeat
+// to the band — anchored to the page it shows half-tiles.
+#let border-tile = tiling(size: (6mm, 6mm), relative: "self", {
+  let c = 3mm
+  for (dx, dy) in ((0mm, -1.25mm), (0mm, 1.25mm), (-1.25mm, 0mm), (1.25mm, 0mm)) {
+    place(top + left, dx: c + dx - 0.75mm, dy: c + dy - 0.75mm, lozenge(1.5mm))
+  }
+  place(top + left, dx: c - 0.35mm, dy: c - 0.35mm, circle(radius: 0.35mm, fill: navy))
+  for (x, y) in ((0mm, 0mm), (6mm, 0mm), (0mm, 6mm), (6mm, 6mm)) {
+    place(top + left, dx: x - 0.8mm, dy: y - 0.8mm, lozenge(1.6mm))
+  }
+})
+#let sl-mark(size, ink) = box(width: size, height: size, {
+  for (r, w) in ((0.5, 0.045), (0.36, 0.045), (0.2, 0.05)) {
+    place(center + horizon, circle(radius: size * r - size * w / 2, stroke: size * w + ink))
+  }
+})
+#let diamond-rule(ink) = box(width: 46mm, grid(
+  columns: (1fr, auto, 1fr), column-gutter: 2.2mm, align: horizon,
+  line(length: 100%, stroke: 0.5pt + ink), rotate(45deg, square(size: 1.5mm, fill: ink)), line(length: 100%, stroke: 0.5pt + ink),
+))
+
+#let running-title = state("running-title", "")
+#let running-chapter = state("running-chapter", "")
+#let in-body = state("in-body", false)
+`;
+
+function shorten(text, max) {
+  const s = String(text || '').replace(/\s+/g, ' ').trim();
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), max - 15)).replace(/[\s,;:.—–-]+$/, '')}…`;
+}
+
+const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+
 export function generateTypstSource(book, pages, options = {}) {
-  const { introduction, methodology } = options;
+  // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
+  // it there); absent, the cover falls back to the Source Library mark
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book) } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
+  const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
   const now = new Date().toISOString().split('T')[0];
+  const year = now.slice(0, 4);
   const translatedPages = pages.filter(isContentPage);
+  const author = String(book.author || 'Anonymous').replace(/\s*\|\s*/g, ', ');
+  const language = book.language || 'source language';
+
+  // "Title: Subtitle" reads better on a title page as two lines of different weight
+  const colon = bookTitle.indexOf(': ');
+  const mainTitle = colon > 0 ? bookTitle.slice(0, colon) : bookTitle;
+  const subTitle = colon > 0 ? bookTitle.slice(colon + 2) : '';
+
+  const place = book.place_published || book.publication_place;
+  const imprintLine = [[place, book.publisher].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
+  const holder = book.image_source?.contributing_library || book.contributing_library;
+  const provider = book.image_source?.provider_name;
+  const sourceUrl = book.image_source?.source_url
+    || (book.ia_identifier ? `https://archive.org/details/${book.ia_identifier}` : null);
+  // Say so only when the holding institution stated it — an importer default is not a rights statement
+  const rights = book.image_source?.rights_normalized;
+  const publicDomain = rights?.class === 'public-domain' && rights?.status === 'stated';
+  const persistentUrl = doi ? `https://doi.org/${doi}` : bookUrl;
+  const footerId = doi ? `doi:${doi}` : `sourcelibrary.org/book/${bookSlug}`;
 
   const doc = [];
 
   // ── Document setup ──
   doc.push(`
 #set document(
-  title: "English Translation of ${bookTitle.replace(/"/g, '\\"')}",
-  author: "${(book.author || 'Anonymous').replace(/"/g, '\\"')}",
+  title: ${typstString(`English Translation of ${bookTitle}`)},
+  author: ${typstString(author)},
 )
+#let page-url = ${typstString(`${bookUrl}/page-number/`)}
+${TYPST_PREAMBLE}
+#running-title.update(${typstString(shorten(mainTitle, 52))})
 
 #set page(
   paper: "a4",
-  margin: (top: 2.5cm, bottom: 3cm, left: 2.5cm, right: 2.5cm),
-  numbering: "i",
-  number-align: center,
+  margin: (top: 30mm, bottom: 30mm, left: margin-l, right: 210mm - margin-l - text-w),
+  numbering: "i",  // front matter in roman; the translation restarts at arabic 1
+  header-ascent: 9mm,
+  header: context {
+    // Footnotes number from 1 on every page: a 900-page herbal otherwise
+    // reaches note 9,299 and the markers outweigh the words they hang on
+    counter(footnote).update(0)
+    let pg = here().page()
+    let opens = query(heading.where(level: 1)).filter(h => h.location().page() == pg)
+    if opens.len() == 0 {
+      set text(size: 8pt, fill: muted, number-type: "lining")
+      let chapter = running-chapter.get()
+      box(width: text-w + gutter + mcol, grid(
+        columns: (text-w, gutter, mcol),
+        [#emph(running-title.get())#h(1fr)#chapter], [],
+        align(left, counter(page).display(page.numbering)),
+      ))
+    }
+  },
+  footer-descent: 12mm,
+  // The foot of each page cites the source page current there, as a link —
+  // the last page anchor set before this point, on either side of the book
+  footer: context {
+    set text(size: 7pt, fill: muted, tracking: 0.03em)
+    // A state, not a query over every anchor before here(): the query made a
+    // 940-page book take five minutes to compile instead of thirty seconds
+    let n = current-src.get()
+    if n != none {
+      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/#n]]
+    } else {
+      align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
+    }
+  },
 )
 
 #set text(
-  font: "New Computer Modern",
-  size: 10pt,
+  font: ${FONT_STACK},
+  size: 10.5pt,
   lang: "en",
   hyphenate: true,
+  number-type: "old-style",
 )
 
 #set par(
   justify: true,
-  leading: 0.65em,
-  first-line-indent: 1.5em,
+  leading: 0.68em,
+  spacing: 0.68em,
+  first-line-indent: 1.3em,
 )
 
 #set heading(numbering: none)
 
 #show heading.where(level: 1): it => {
+  // The translation's own opener is a composed part page; its heading exists
+  // for the contents and bookmarks only
+  if it.has("label") and it.label == <part> { return place(hide(box(width: 0pt, height: 0pt))) }
   pagebreak(weak: true)
-  v(2em)
-  text(size: 16pt, weight: "bold", it.body)
-  v(1em)
+  v(16mm)
+  block(below: 0pt, text(size: 21pt, weight: "regular", it.body))
+  v(4mm)
+  line(length: 18mm, stroke: 0.7pt + rust)
+  v(9mm)
 }
 
-#show heading.where(level: 2): it => {
-  v(1.5em)
-  text(size: 12pt, weight: "bold", it.body)
-  v(0.5em)
+// Inside the translation, levels 2–3 are the book's chapter list: they feed
+// the contents, the PDF bookmarks and the running head, but print nothing —
+// the source's own heading is already there in the text.
+#show heading.where(level: 2): it => context {
+  if in-body.get() { place(hide(box(width: 0pt, height: 0pt))) } else {
+    block(above: 1.7em, below: 0.8em, sticky: true, text(size: 12.5pt, weight: "regular", style: "italic", it.body))
+  }
+}
+#show heading.where(level: 3): it => context {
+  if in-body.get() { place(hide(box(width: 0pt, height: 0pt))) } else {
+    block(above: 1.3em, below: 0.6em, sticky: true, text(size: 10.5pt, weight: "regular", tracking: 0.04em, smallcaps(it.body)))
+  }
 }
 
-#show heading.where(level: 3): it => {
-  v(1em)
-  text(size: 10.5pt, weight: "bold", it.body)
-  v(0.3em)
-}
+#set footnote.entry(separator: line(length: 18mm, stroke: 0.4pt + hairline), gap: 0.45em, clearance: 1.2em)
+#show footnote.entry: set text(size: 8.3pt)
+#show footnote.entry: set par(leading: 0.5em)
+#show link: set text(fill: rust)
 
-#show footnote.entry: it => {
-  set text(size: 8pt)
-  it
+#show outline.entry.where(level: 1): it => {
+  v(0.7em, weak: true)
+  text(tracking: 0.05em, smallcaps(it))
 }
 `);
 
-  // ── Title page ──
+  // ── Cover / title page ──
+  const coverTitle = mainTitle.length > 60 ? shorten(mainTitle, 60) : mainTitle;
+  const coverTitleSize = coverTitle.length > 42 ? 22 : coverTitle.length > 24 ? 27 : 32;
+  const coverPlaceDate = [place, book.published].filter(Boolean).join('  ·  ');
   doc.push(`
-#page(numbering: none)[
-  #v(5cm)
-  #align(center)[
-    #text(size: 22pt, weight: "bold")[${escapeTypst(bookTitle)}]
-
-    ${book.title !== bookTitle ? `#v(0.5em)\n    #text(size: 12pt, style: "italic")[${escapeTypst(book.title)}]` : ''}
-
-    #v(1.5em)
-    #text(size: 14pt)[${escapeTypst(book.author || 'Anonymous')}]
-
-    ${book.published ? `#v(0.3em)\n    #text(size: 12pt)[${escapeTypst(book.published)}]` : ''}
-
-    #v(4cm)
-    #text(size: 10pt)[Translated by Source Library]
-    #v(0.3em)
-    #text(size: 9pt, fill: rgb("#666"))[sourcelibrary.org/book/${bookSlug}]
-    #v(0.3em)
-    #text(size: 9pt, fill: rgb("#666"))[${now}]
-  ]
+#page(fill: navy, margin: 0pt, header: none, footer: none)[
+  #place(top + left, dx: 12mm, dy: 10.5mm, rect(width: 186mm, height: 276mm, fill: border-tile, stroke: 0.6pt + gold))
+  #place(top + left, dx: 18mm, dy: 16.5mm, rect(width: 174mm, height: 264mm, fill: navy, stroke: 0.6pt + gold))
+  #place(bottom + center, dy: -5mm, circle(radius: 9.5mm, fill: navy))
+  #place(bottom + center, dy: -7.5mm, sl-mark(14mm, gold))
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.42em)
+  #set text(fill: gold, hyphenate: false)
+  #align(center, block(width: 140mm, {
+    v(${frontispieceFile ? 30 : 58}mm)
+    ${frontispieceFile
+      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 100mm, fit: "contain")))`
+      : 'sl-mark(40mm, gold)'}
+    v(15mm)
+    ${book.title !== bookTitle ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(book.title, 90))}]
+    v(7mm)` : ''}
+    text(size: ${coverTitleSize}pt, weight: "bold", tracking: 0.1em, fill: foil, upper[${escapeTypst(coverTitle)}])
+    ${subTitle ? `v(3.5mm)
+    text(size: 11pt, tracking: 0.08em, smallcaps[${escapeTypst(shorten(subTitle, 80))}])` : ''}
+    v(8mm)
+    diamond-rule(gold)
+    v(7mm)
+    text(size: 13pt, weight: "bold", tracking: 0.14em, upper[${escapeTypst(author)}])
+    ${coverPlaceDate ? `v(3mm)
+    text(size: 9.5pt, tracking: 0.22em, number-type: "lining", upper[${escapeTypst(coverPlaceDate)}])` : ''}
+    v(15mm)
+    text(size: 10pt)[An English translation from the ${escapeTypst(language)}]
+    v(1.5mm)
+    text(size: 9pt, style: "italic", fill: muted)[AI-assisted and not reviewed by human editors]
+    v(1.5mm)
+    text(size: 9pt, fill: muted, number-type: "lining")[Source Library #h(0.4em)·#h(0.4em) Embassy of the Free Mind, Amsterdam #h(0.4em)·#h(0.4em) ${year}]
+  }))
 ]
+`);
+
+  // ── Dedication ──
+  // These books open with a dedication to the patron who made them possible;
+  // this edition keeps the custom and the form (see dedicationToTypst).
+  if (dedication) doc.push(dedicationToTypst(dedication));
+
+  // ── Imprint page ──
+  const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
+  const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted). Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''} ${persistentUrl}`;
+  doc.push(`
+#page(header: none, footer: none)[
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.55em, spacing: 1.1em)
+  #set text(size: 8.8pt, number-type: "lining")
+  #v(1fr)
+  _${escapeTypst(bookTitle)}_ \\
+  An English translation of ${escapeTypst(author)}, _${escapeTypst(book.title)}_${imprintLine ? ` (${escapeTypst(imprintLine)})` : ''}.
+
+  ${holder || provider ? `Translated from the copy ${holder ? `held by ${escapeTypst(holder)}` : ''}${provider && provider !== holder ? `${holder ? ', ' : ''}digitized by ${escapeTypst(provider)}` : ''}${sourceUrl ? `: #link(${typstString(sourceUrl)})[${escapeTypst(sourceUrl.replace(/^https?:\/\//, ''))}]` : ''}.` : ''}
+
+  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}. ${doi ? `DOI #link(${typstString(persistentUrl)})[${escapeTypst(doi)}]. ` : ''}Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[sourcelibrary.org/book/${escapeTypst(bookSlug)}].
+
+  #text(fill: rust, tracking: 0.08em, size: 7.8pt)[#upper[Cite as]] \\
+  ${escapeTypst(citation)}
+
+  To cite a passage, give the page number printed in the margin, e.g. "p. ${translatedPages[Math.min(10, translatedPages.length - 1)]?.page_number ?? 1}".
+
+  Published by Source Library, a project of the Embassy of the Free Mind, Amsterdam, under a Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0).${publicDomain ? ' The source images are in the public domain.' : ''}
+
+  ${creditLines}
+
+  #text(fill: muted)[${frontispieceFile && (book.cover_page_number || book.cover_page) ? `Cover: page ${escapeTypst(book.cover_page_number || book.cover_page)} of the digitized copy${holder ? `, ${escapeTypst(holder)}` : ''}. ` : ''}Set in Libertinus Serif with Typst.]
+]
+`);
+
+  // ── Contents ──
+  const chapters = (book.chapters || []).filter(ch => ch?.pageNumber && (ch.titleEn || ch.title));
+  const topLevel = chapters.filter(ch => (ch.level || 1) <= 1).length;
+  // A long chapter list at full depth runs to pages of contents nobody reads
+  const outlineDepth = chapters.length <= 70 ? 3 : topLevel >= 4 ? 2 : 3;
+  doc.push(`
+#heading(level: 1, outlined: false)[Contents]
+
+#{
+  set par(first-line-indent: 0pt, justify: false)
+  set text(number-type: "lining")
+  outline(title: none, depth: ${outlineDepth}, indent: 1.2em)
+}
 `);
 
   // ── About this edition ──
   doc.push(`
 = About This Edition
 
-#set par(first-line-indent: 0pt)
-
 #block(
   width: 100%,
-  inset: 1em,
-  stroke: 0.5pt + rgb("#999"),
-  radius: 2pt,
+  inset: (left: 1em, y: 0.2em),
+  stroke: (left: 1.5pt + rust),
 )[
-  *This PDF is a citable scholarly record.* It is deposited with Zenodo and assigned a DOI so that scholars can reference specific passages in academic publications. For the full reading experience --- with original page facsimiles displayed alongside the translation, searchable text, and interactive navigation --- visit #link("https://sourcelibrary.org/book/${bookSlug}")[sourcelibrary.org].
+  #set par(first-line-indent: 0pt)
+  *This PDF is a citable scholarly record.* It is deposited with Zenodo and assigned a DOI so that scholars can reference specific passages in academic publications. For the full reading experience --- with original page facsimiles displayed alongside the translation, searchable text, and interactive navigation --- visit #link("${bookUrl}")[sourcelibrary.org].
 ]
 
-#v(1em)
+#v(0.8em)
 
-#set par(first-line-indent: 1.5em)
-
-This translation was produced using artificial intelligence by Source Library, a project of the Embassy of the Free Mind in Amsterdam. The original ${escapeTypst(book.language || 'source language')} text was transcribed from digitized page images using optical character recognition, then translated into English page by page using large language models.
+This translation was produced using artificial intelligence by Source Library, a project of the Embassy of the Free Mind in Amsterdam. The original ${escapeTypst(language)} text was transcribed from digitized page images using optical character recognition, then translated into English page by page using large language models.
 
 This AI-assisted translation has *not* been reviewed by human editors or translators. It captures the meaning and structure of the original text but may not reflect every nuance a specialist human translator would convey. Readers are encouraged to consult the original language text, available alongside this translation at Source Library.
+
+== How to read the page
+
+The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and it is a link: it opens that page's facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/_n_, where the translation can be checked against the original. Where the source prints a page number of its own, it follows in grey.
+
+${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
 This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 `);
@@ -361,50 +826,133 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   doc.push(`
 #set page(numbering: "1")
 #counter(page).update(1)
-
-= Translation
+#in-body.update(true)
+#heading(level: 1)[Translation] <part>
+#[
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.5em)
+  #v(52mm)
+  #text(size: 8.5pt, tracking: 0.24em, fill: rust)[#upper[The Translation]]
+  #v(7mm)
+  #text(size: 21pt)[${escapeTypst(mainTitle)}]
+  ${subTitle ? `#v(2mm)\n  #text(size: 13pt, style: "italic")[${escapeTypst(subTitle)}]` : ''}
+  #v(6mm)
+  #text(size: 10.5pt)[${escapeTypst(author)}]
+]
+#pagebreak()
 `);
 
-  // Group by chapters if available
-  const chapters = book.chapters || [];
+  // Render both sides first: a cross-link may only point at a page that
+  // made it onto the other side (Typst refuses a dangling label, which makes
+  // a clean compile the proof that every link lands)
+  const asText = field => p => ({ page_number: p.page_number, translation: { data: p[field]?.data || '' } });
+  const render = (list, side) => {
+    const runningHeads = findRunningHeads(list);
+    const out = new Map();
+    for (const p of list) {
+      const { body } = translationToTypst(p.translation.data, {
+        runningHeads,
+        reflow: side === 'o',
+        anchor: printedPage => `%%SRC:${side}:${p.page_number}:${printedPage ? typstString(printedPage) : 'none'}%%`,
+      });
+      if (body) out.set(p.page_number, body);
+    }
+    return out;
+  };
+  const english = render(translatedPages, 't');
+  const original = includeOriginal ? render(translatedPages.filter(p => p.ocr?.data).map(asText('ocr')), 'o') : new Map();
+  // A sentence that runs across a page break was translated in two halves
+  // (each page is translated on its own); the halves stay as the model
+  // wrote them, but the paragraph break between them is ours, so it goes:
+  // when a page ends mid-sentence and the next begins mid-sentence, the two
+  // are set as one paragraph. The translation marks its halves with an
+  // ellipsis; the transcription simply stops without a full stop.
+  const textOf = body => body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, '');
+  const endsMidSentence = body => {
+    // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
+    const t = textOf(body).replace(/\\$/, '').trimEnd().replace(/\\\[\?[^\]]*\\\]$/, 'x');
+    if (/[.!?:"”)\]]$/.test(t.replace(/(?:\.\.\.|…)$/, '').trimEnd())) return false;
+    return /(?:\.\.\.|…|[\p{L}\p{N},;—–-])$/u.test(t);
+  };
+  const startsMidSentence = body => {
+    const t = textOf(body).replace(/^(?:\.\.\.|…)\s*/, '');
+    return !t.startsWith('#') && /^\p{Ll}/u.test(t);
+  };
+  const continues = (prev, next) => Boolean(prev && next && endsMidSentence(prev) && startsMidSentence(next));
+  // The continuation's leading ellipsis is dropped; the first half keeps its own
+  const joinedForm = body => body.replace(/^((?:%%SRC:[^%]*%%)?\s*)(?:\.\.\.|…)\s*/, '$1');
+
+  const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
+    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
+
   let chapterIdx = 0;
-
+  let prevBody = null;
+  let pendingHeads = [];
   for (const page of translatedPages) {
-    // Chapter heading
-    if (chapters.length > 0 && chapterIdx < chapters.length) {
-      while (chapterIdx < chapters.length && chapters[chapterIdx].pageNumber <= page.page_number) {
-        const ch = chapters[chapterIdx];
-        if (ch.pageNumber === page.page_number || (chapterIdx === 0 && page.page_number <= ch.pageNumber)) {
-          doc.push(`\n== ${escapeTypst(ch.titleEn || ch.title)}\n`);
-        }
-        chapterIdx++;
-      }
+    // Every chapter that starts at or before this page and has not been
+    // emitted yet — a chapter whose own page was skipped as blank still
+    // gets its contents entry, on the next page that has text. The
+    // headings print nothing in the body (they feed contents, bookmarks and
+    // the running head), so when the page continues a sentence they go
+    // after it rather than splitting it.
+    const heads = [];
+    while (chapterIdx < chapters.length && chapters[chapterIdx].pageNumber <= page.page_number) {
+      const ch = chapters[chapterIdx++];
+      const title = ch.titleEn || ch.title;
+      heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
+      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
     }
+    if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
+    const body = english.get(page.page_number);
+    if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
+    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    prevBody = body;
+  }
+  doc.push('');
+  doc.push(...pendingHeads);
 
-    // Page marker in margin
-    doc.push(`#block(above: 0.8em, below: 0.3em)[#text(size: 7.5pt, fill: rgb("#999"), style: "italic")[p. ${page.page_number}]]`);
+  doc.push(`#in-body.update(false)\n#running-chapter.update("")`);
 
-    // Translation text
-    const typstText = translationToTypst(page.translation.data);
-    if (typstText) {
-      doc.push(typstText);
-      doc.push('');
+  // ── The source text ──
+  // What the translation was made from, so a reader can check a rendering
+  // without leaving the PDF. It is the OCR transcription, unreviewed, and says so.
+  if (original.size) {
+    const code = LANG_CODES[String(language).toLowerCase()];
+    doc.push(`
+= The ${escapeTypst(language)} Text
+
+#[
+#set par(first-line-indent: 0pt)
+This is the transcription the translation was made from, produced by optical character recognition from the page images and not corrected by hand. It keeps the spelling and abbreviations of the source. Each page number opens the facsimile; "English" returns to the same page of the translation.
+]
+
+#running-chapter.update(${typstString(`${language} text`)})
+#[
+#set text(size: 9.5pt, ${code ? `lang: "${code}"` : 'hyphenate: false'})
+`);
+    let prevOrig = null;
+    for (const [n, body] of original) {
+      if (continues(prevOrig, body)) doc.push(anchored(body, english, 'English'));
+      else { doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, english, 'English')); }
+      prevOrig = body;
     }
+    doc.push(']\n#running-chapter.update("")');
   }
 
   // ── Index ──
   const index = book.index;
-  if (index && (index.people?.length || index.places?.length || index.concepts?.length)) {
+  if (index && (index.people?.length || index.places?.length || index.concepts?.length || index.vocabulary?.length)) {
     doc.push('\n= Index\n');
+    doc.push('#[\n#set par(first-line-indent: 0pt, justify: false, hanging-indent: 1em)\n#set text(size: 9pt, number-type: "lining")\nNumbers refer to the source pages marked in the margin.\n');
 
     const renderSection = (title, entries) => {
       if (!entries?.length) return;
       doc.push(`== ${title}\n`);
+      doc.push('#columns(2, gutter: 8mm)[');
       for (const entry of entries.slice(0, 80)) {
-        const refs = entry.pages?.length ? ` _(pp. ${entry.pages.slice(0, 8).join(', ')})_` : '';
+        const refs = entry.pages?.length ? `, ${entry.pages.slice(0, 8).join(', ')}` : '';
         doc.push(`${escapeTypst(entry.term)}${refs} \\`);
       }
-      doc.push('');
+      doc.push(']\n');
     };
 
     renderSection('People', index.people);
@@ -415,10 +963,10 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       doc.push('== Glossary\n');
       for (const entry of index.vocabulary.slice(0, 80)) {
         const def = entry.definition ? ` --- ${escapeTypst(entry.definition)}` : '';
-        doc.push(`*${escapeTypst(entry.term)}*${def} \\`);
+        doc.push(`_${escapeTypst(entry.term)}_${def}\n`);
       }
-      doc.push('');
     }
+    doc.push(']');
   }
 
   // ── Colophon ──
@@ -426,6 +974,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
 = Colophon
 
 #set par(first-line-indent: 0pt)
+#set text(number-type: "lining")
 
 This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Library, a project of the Embassy of the Free Mind in Amsterdam.
 
@@ -433,21 +982,25 @@ This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Libra
 #table(
   columns: (auto, 1fr),
   stroke: none,
-  row-gutter: 0.3em,
-  [*Author:*], [${escapeTypst(book.author || 'Anonymous')}],
-  [*Language:*], [${escapeTypst(book.language || 'Unknown')}],
-  ${book.published ? `[*Published:*], [${escapeTypst(book.published)}],` : ''}
-  ${book.place_published ? `[*Place:*], [${escapeTypst(book.place_published)}],` : ''}
-  ${book.publisher ? `[*Publisher:*], [${escapeTypst(book.publisher)}],` : ''}
-  ${book.ustc_id ? `[*USTC:*], [${escapeTypst(book.ustc_id)}],` : ''}
-  [*Pages translated:*], [${translatedPages.length}],
-  [*Generated:*], [${now}],
-  [*License:*], [CC BY-SA 4.0],
+  inset: (x: 0pt, y: 0.25em),
+  column-gutter: 1.2em,
+  [#text(fill: muted)[Author]], [${escapeTypst(author)}],
+  [#text(fill: muted)[Language]], [${escapeTypst(book.language || 'Unknown')}],
+  ${book.published ? `[#text(fill: muted)[Published]], [${escapeTypst(book.published)}],` : ''}
+  ${place ? `[#text(fill: muted)[Place]], [${escapeTypst(place)}],` : ''}
+  ${book.publisher ? `[#text(fill: muted)[Publisher]], [${escapeTypst(book.publisher)}],` : ''}
+  ${book.ustc_id ? `[#text(fill: muted)[USTC]], [${escapeTypst(book.ustc_id)}],` : ''}
+  ${holder ? `[#text(fill: muted)[Source copy]], [${escapeTypst(holder)}],` : ''}
+  [#text(fill: muted)[Pages translated]], [${translatedPages.length}],
+  ${version ? `[#text(fill: muted)[Version]], [${escapeTypst(version)}],` : ''}
+  ${doi ? `[#text(fill: muted)[DOI]], [#link(${typstString(persistentUrl)})[${escapeTypst(doi)}]],` : ''}
+  [#text(fill: muted)[Generated]], [${now}],
+  [#text(fill: muted)[License]], [CC BY-SA 4.0],
 )
 
 #v(1em)
-Source Library: #link("https://sourcelibrary.org/book/${bookSlug}")[sourcelibrary.org/book/${bookSlug}]
-${book.ia_identifier ? `\\\nInternet Archive: #link("https://archive.org/details/${book.ia_identifier}")[archive.org/details/${book.ia_identifier}]` : ''}
+Source Library: #link("${bookUrl}")[sourcelibrary.org/book/${escapeTypst(bookSlug)}]
+${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst(sourceUrl.replace(/^https?:\/\//, ''))}]` : ''}
 `);
 
   return doc.join('\n');
@@ -455,31 +1008,151 @@ ${book.ia_identifier ? `\\\nInternet Archive: #link("https://archive.org/details
 
 // ── Compile ─────────────────────────────────────────────────────────
 
-export async function generateScholarlyPdf(book, pages, options = {}) {
-  const typstSource = generateTypstSource(book, pages, options);
+/**
+ * Per-book credit lines for the imprint page (`books.edition_credits`, set by
+ * hand — they go into a permanent deposit). A funder is credited by the
+ * dedication page instead: `books.acquisition_funder` or `books.dedication`.
+ */
+export function editionCredits(book) {
+  return book.edition_credits || [];
+}
 
-  // Write to temp file
+/**
+ * The dedication for a book, in precedence: the book's own, then the one
+ * carried by a collection it belongs to (a funded collection dedicates every
+ * book in it), then the standing line for a named funder. `collections` are
+ * the collection documents for `book.collections` that carry a `dedication`.
+ * Text is printed as written; a blank line separates the salutation from
+ * the body ("To N.\n\nwhose generosity…").
+ */
+export function resolveDedication(book, collections = []) {
+  if (book.dedication) return book.dedication;
+  const fromCollection = (book.collections || [])
+    .map(slug => collections.find(c => c.slug === slug || c.id === slug)?.dedication)
+    .find(Boolean);
+  if (fromCollection) return fromCollection;
+  if (book.acquisition_funder) return `To ${book.acquisition_funder},\n\nwhose generosity brought this book and its companions into the library.`;
+  return null;
+}
+
+/**
+ * Set a dedication in the form the books themselves use — read from Fuchs
+ * to Joachim of Brandenburg (1542), della Porta to Philip II (1560) and
+ * Hooke to Charles II (1665): a cascade of address lines, a salutation, a
+ * short body, then valediction and signature.
+ *
+ * The text is plain paragraphs separated by blank lines:
+ *   - a first paragraph in CAPITALS (or lines beginning with #) is the
+ *     address cascade — first line small and spaced ("TO"), second large
+ *     (the name), the rest small capitals; a single short first line is a
+ *     plain salutation instead
+ *   - a one-line paragraph ending in a comma ("SIR,") is the salutation
+ *   - everything after a line of three dashes is the close: valediction
+ *     lines, then the signature, then (optionally) place and date
+ */
+export function dedicationToTypst(text) {
+  const blocks = String(text).trim().split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  const closeAt = blocks.findIndex(b => /^-{3,}$/.test(b));
+  const close = closeAt >= 0 ? blocks.splice(closeAt).slice(1).flatMap(b => b.split('\n')) : [];
+
+  let address = [];
+  const first = blocks[0]?.split('\n').map(l => l.trim()) || [];
+  if (first.length && first.every(l => l.startsWith('#') || (l === l.toUpperCase() && /\p{L}/u.test(l)))) {
+    address = first.map(l => l.replace(/^#+\s*/, ''));
+    blocks.shift();
+  } else if (first.length === 1 && first[0].length < 70) {
+    address = [first[0]];
+    blocks.shift();
+  }
+  let salutation = null;
+  if (blocks[0] && !blocks[0].includes('\n') && blocks[0].length < 40 && /[,:]$/.test(blocks[0])) salutation = blocks.shift();
+
+  const addressTypst = address.map((line, i) => {
+    if (address.length === 1) return `text(size: 12.5pt, tracking: 0.08em, smallcaps[${escapeTypst(line)}])`;
+    if (i === 0) return `text(size: 9pt, tracking: 0.3em)[${escapeTypst(line.toUpperCase())}]`;
+    if (i === 1) return `v(2mm)\n    text(size: 15pt, tracking: 0.12em)[${escapeTypst(line.toUpperCase())}]`;
+    return `v(1.2mm)\n    text(size: 9.5pt, tracking: 0.1em, smallcaps[${escapeTypst(line.toLowerCase())}])`;
+  }).join('\n    linebreak()\n    ');
+
+  const body = blocks.map(b => escapeTypst(b.replace(/\s*\n\s*/g, ' '))).join('\n\n');
+  const sig = close.length ? close[close.length - (/\d{4}/.test(close[close.length - 1]) && close.length > 1 ? 2 : 1)] : null;
+  const closeTypst = close.map(line => {
+    if (line === sig) return `text(size: 10.5pt, tracking: 0.12em, smallcaps[${escapeTypst(line)}])`;
+    if (/\d{4}/.test(line) && close.indexOf(line) === close.length - 1) return `text(size: 9pt, fill: muted)[${escapeTypst(line)}]`;
+    return `text(size: 10.5pt, style: "italic")[${escapeTypst(line)}]`;
+  }).join('\n    linebreak()\n    ');
+
+  return `
+#page(header: none, footer: none)[
+  #set par(first-line-indent: 0pt, justify: false, leading: 0.62em)
+  #v(${body.length > 600 ? 12 : 20}%)
+  #align(center, block(width: 112mm, {
+    ${addressTypst}
+    ${address.length > 1 ? 'v(5mm)\n    diamond-rule(gold)\n    v(5mm)' : 'v(5mm)'}
+  }))
+  #align(center, block(width: 112mm, {
+    set par(justify: true, first-line-indent: 1.3em, leading: 0.68em, spacing: 0.68em)
+    set text(size: 10.5pt)
+    set align(left)
+    ${salutation ? `text(tracking: 0.08em, smallcaps[${escapeTypst(salutation)}])\n    v(0.6em)` : ''}
+    [${body}]
+    ${close.length ? `v(2.2em)\n    align(right, {\n    ${closeTypst}\n    })` : ''}
+  }))
+]
+`;
+}
+
+/**
+ * The book's chosen cover page (usually its title page) as a JPEG buffer for
+ * the frontispiece, or null — the PDF is complete without it, so every
+ * failure here is soft. The URL must carry the book's own id: a page-image
+ * key that does not is shared between books by construction (#3362), and a
+ * frontispiece from another book is worse than none.
+ */
+export async function fetchFrontispiece(book) {
+  const url = book.image_display || book.thumbnail;
+  if (!url || !/^https:\/\//.test(url) || !url.includes(String(book.id))) return null;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } });
+    if (!res.ok) return null;
+    const raw = Buffer.from(await res.arrayBuffer());
+    const { default: sharp } = await import('sharp');
+    return await sharp(raw).rotate().resize(1800, 1800, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * options: { introduction, methodology, doi, version, frontispiece }
+ * `frontispiece` is a JPEG/PNG buffer (see fetchFrontispiece); omit for none.
+ */
+export async function generateScholarlyPdf(book, pages, options = {}) {
+  // Write to temp dir: the .typ and the images it references by relative path
   const tmpDir = join(tmpdir(), `sourcelibrary-typst-${crypto.randomUUID()}`);
   mkdirSync(tmpDir, { recursive: true });
   const typFile = join(tmpDir, 'edition.typ');
   const pdfFile = join(tmpDir, 'edition.pdf');
 
-  writeFileSync(typFile, typstSource, 'utf-8');
+  const { frontispiece, ...rest } = options;
+  if (frontispiece) {
+    const ext = frontispiece[0] === 0x89 ? 'png' : 'jpg';
+    writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
+    rest.frontispieceFile = `frontispiece.${ext}`;
+  }
+
+  writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
 
   try {
-    execSync(`typst compile "${typFile}" "${pdfFile}"`, {
+    execSync(`typst compile --ignore-system-fonts --font-path "${FONT_DIR}" "${typFile}" "${pdfFile}"`, {
       // Large books legitimately take minutes, and a loaded machine (this box
       // often runs concurrent pipeline jobs) stretches that further
       timeout: 300000,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 
-    const pdfBuffer = readFileSync(pdfFile);
-    return pdfBuffer;
+    return readFileSync(pdfFile);
   } finally {
-    // Cleanup
-    try { unlinkSync(typFile); } catch {}
-    try { unlinkSync(pdfFile); } catch {}
-    try { unlinkSync(tmpDir); } catch {} // rmdir if empty
+    try { rmSync(tmpDir, { recursive: true, force: true }); } catch {}
   }
 }

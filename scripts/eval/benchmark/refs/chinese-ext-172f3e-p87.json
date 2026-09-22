@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-172f3e-p87",
+  "substratum": "skqs-manuscript",
+  "title": "醫門法律·卷五~卷六 (vol 4)",
+  "probe_chars": 125,
+  "source": "Kanripo",
+  "work": "KR3e0092",
+  "work_title": "醫門法律-清-喻昌",
+  "juan": "5,6",
+  "url": "https://github.com/kanripo/KR3e0092",
+  "etext_chars": 23542,
+  "window_chars": 182,
+  "overlap": 0.754
+}

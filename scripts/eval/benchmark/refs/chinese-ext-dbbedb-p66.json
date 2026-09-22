@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-dbbedb-p66",
+  "substratum": "woodblock-canon",
+  "title": "劉氏春秋意林",
+  "probe_chars": 402,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1e0023",
+  "work_title": "劉氏春秋意林-宋-劉敞",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR1e0023/blob/WYG/KR1e0023_002.txt",
+  "etext_chars": 13755,
+  "window_chars": 432,
+  "overlap": 0.899
+}

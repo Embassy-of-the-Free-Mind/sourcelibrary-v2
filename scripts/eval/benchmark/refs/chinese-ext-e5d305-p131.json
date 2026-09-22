@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-e5d305-p131",
+  "substratum": "skqs-manuscript",
+  "title": "思辨錄輯要·卷二十六~卷二十八 (vol 7)",
+  "probe_chars": 156,
+  "source": "Kanripo",
+  "work": "KR3a0111",
+  "work_title": "思辨錄輯要-清-陸世儀",
+  "juan": "26,27,28",
+  "url": "https://github.com/kanripo/KR3a0111",
+  "etext_chars": 20722,
+  "window_chars": 224,
+  "overlap": 0.965
+}

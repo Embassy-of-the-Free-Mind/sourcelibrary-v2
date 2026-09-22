@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-499e74-p14",
+  "substratum": "woodblock-canon",
+  "title": "癸辛雜識·前集",
+  "probe_chars": 196,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3l0076",
+  "work_title": "癸辛雜識-宋-周密",
+  "juan": 0,
+  "url": "https://github.com/kanripo/KR3l0076/blob/WYG/KR3l0076_000.txt",
+  "etext_chars": 33551,
+  "window_chars": 208,
+  "overlap": 0.798
+}

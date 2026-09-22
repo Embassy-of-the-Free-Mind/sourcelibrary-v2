@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-4d129c-p66",
+  "substratum": "woodblock-canon",
+  "title": "本草綱目·卷五十二",
+  "probe_chars": 208,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0079",
+  "work_title": "本草綱目-明-李時珍",
+  "juan": 122,
+  "url": "https://github.com/kanripo/KR3e0079/blob/WYG/KR3e0079_122.txt",
+  "etext_chars": 23707,
+  "window_chars": 235,
+  "overlap": 0.741
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-e35006-p38",
+  "substratum": "skqs-manuscript",
+  "title": "經濟類編·卷五十七 (vol 54)",
+  "probe_chars": 178,
+  "source": "Kanripo",
+  "work": "KR3k0046",
+  "work_title": "經濟類編-明-馮琦",
+  "juan": "57",
+  "url": "https://github.com/kanripo/KR3k0046",
+  "etext_chars": 22309,
+  "window_chars": 184,
+  "overlap": 0.794
+}

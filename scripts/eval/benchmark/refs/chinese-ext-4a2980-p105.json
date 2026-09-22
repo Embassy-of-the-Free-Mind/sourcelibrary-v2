@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-4a2980-p105",
+  "substratum": "skqs-manuscript",
+  "title": "五禮通考·卷二百二十一~卷二百二十二 (vol 151)",
+  "probe_chars": 225,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1d0087",
+  "work_title": "五禮通考-清-泰蕙田",
+  "juan": 232,
+  "url": "https://github.com/kanripo/KR1d0087/blob/WYG/KR1d0087_232.txt",
+  "etext_chars": 12690,
+  "window_chars": 270,
+  "overlap": 0.823
+}

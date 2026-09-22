@@ -1,0 +1,198 @@
+{
+  "engine": "paddleocr-vl-1.6",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "chinese",
+      "file": "chinese-2026-09-18.json",
+      "n_pages": 40,
+      "n_with_ref": 28
+    },
+    {
+      "stratum": "chinese-ext",
+      "file": "chinese-ext-2026-09-18.json",
+      "n_pages": 80,
+      "n_with_ref": 64
+    }
+  ],
+  "classes": {
+    "manuscript-regular": {
+      "n_pages": 82,
+      "n_referenced": 69,
+      "n_paired": 69,
+      "n_by_stratum": {
+        "chinese": 20,
+        "chinese-ext": 49
+      },
+      "median_cer": {
+        "paddleocr-vl-1.6": 0.166,
+        "gemini-3.1-flash-lite": 0.26,
+        "gemini-3.1-flash-lite-b": 0.26
+      },
+      "delta": {
+        "median": -0.028,
+        "ci95": [
+          -0.036,
+          -0.014
+        ],
+        "wins": 57,
+        "losses": 10,
+        "ties": 2,
+        "untied": 67,
+        "p_sign": 0,
+        "share_le_minus_005": 0.377
+      },
+      "noise_floor": {
+        "n": 69,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 14
+      },
+      "invention_median": {
+        "paddleocr-vl-1.6": 0.132,
+        "gemini-3.1-flash-lite": 0.201
+      },
+      "loops": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "cost lane ADOPTED"
+    },
+    "woodblock": {
+      "n_pages": 20,
+      "n_referenced": 14,
+      "n_paired": 14,
+      "n_by_stratum": {
+        "chinese": 2,
+        "chinese-ext": 12
+      },
+      "median_cer": {
+        "paddleocr-vl-1.6": 0.174,
+        "gemini-3.1-flash-lite": 0.202,
+        "gemini-3.1-flash-lite-b": 0.202
+      },
+      "delta": {
+        "median": -0.01,
+        "ci95": [
+          -0.022,
+          0.002
+        ],
+        "wins": 9,
+        "losses": 4,
+        "ties": 1,
+        "untied": 13,
+        "p_sign": 0.267,
+        "share_le_minus_005": 0.071
+      },
+      "noise_floor": {
+        "n": 14,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "paddleocr-vl-1.6": 0.128,
+        "gemini-3.1-flash-lite": 0.129
+      },
+      "loops": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=14 < 50) — no lane decision"
+    },
+    "typeset": {
+      "n_pages": 12,
+      "n_referenced": 6,
+      "n_paired": 6,
+      "n_by_stratum": {
+        "chinese": 5,
+        "chinese-ext": 1
+      },
+      "median_cer": {
+        "paddleocr-vl-1.6": 0.313,
+        "gemini-3.1-flash-lite": 0.314,
+        "gemini-3.1-flash-lite-b": 0.314
+      },
+      "delta": {
+        "median": 0,
+        "ci95": [
+          -0.005,
+          0.009
+        ],
+        "wins": 2,
+        "losses": 2,
+        "ties": 2,
+        "untied": 4,
+        "p_sign": 1,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 6,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0.003
+        ]
+      },
+      "catastrophic": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "paddleocr-vl-1.6": 0.098,
+        "gemini-3.1-flash-lite": 0.11
+      },
+      "loops": {
+        "paddleocr-vl-1.6": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=6 < 50) — no lane decision"
+    }
+  }
+}

@@ -87,7 +87,7 @@ function getModel() {
   return client.getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { temperature: 0.2, maxOutputTokens: 4096 },
+    generationConfig: { temperature: 0.2, maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } },
   });
 }
 
@@ -98,7 +98,7 @@ function getSummaryModel() {
   return client.getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { temperature: 0.3, maxOutputTokens: 8192 },
+    generationConfig: { temperature: 0.3, maxOutputTokens: 8192, thinkingConfig: { thinkingBudget: 0 } },
   });
 }
 

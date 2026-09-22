@@ -36,12 +36,14 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  continuityContext,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -265,11 +267,7 @@ async function translatePage(db, page, book, prevTranslation) {
     ? `\n\n**Text to modernize:**\n${page.ocr.data}`
     : `\n\n**Text to translate:**\n${page.ocr.data}`;
 
-  if (prevTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${prevTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${prevTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(prevTranslation, { english: isEnglish });
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
@@ -333,11 +331,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
   let prompt = headerPrompt;
 
-  if (prevTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${prevTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${prevTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(prevTranslation, { english: isEnglish });
 
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
@@ -472,7 +466,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     },
     updated_at: new Date(),
   };
-  await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload });
+  await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
 }
@@ -526,6 +520,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
           },
           updated_at: now,
         },
+        $unset: CLEAR_STALE_UNSET,
       },
     },
   }));
@@ -575,6 +570,9 @@ async function processBook(db, book, job, globalCounter, deadline) {
         { 'translation.data': null },
         { 'translation.data': '' },
         { $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } },
+        // Materialised staleness (#4927): the transcription this translation was
+        // made from is gone. Stamped by OCR writers and the daily sweep.
+        { 'translation_stale.reason': { $exists: true } },
       ],
     })
     .sort({ page_number: 1 })
@@ -592,7 +590,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
     await Promise.all(blankIds.map(id => saveRevisionBeforeOverwrite(db, id, 'translation', job?.id)));
     await db.collection('pages').updateMany(
       { id: { $in: blankIds } },
-      { $set: { page_type: 'blank', updated_at: new Date(), 'translation.data': '[Blank page]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } },
+      { $set: { page_type: 'blank', updated_at: new Date(), 'translation.data': '[Blank page]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET },
     );
     console.log(`  [${label}] Backfilled ${blankFromOcr.length} blank pages (missing page_type)`);
     // Remove from translation queue
@@ -761,13 +759,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
               if (msg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               } else {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
               }
@@ -843,13 +841,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
                 }
@@ -918,13 +916,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
+                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() }, $unset: CLEAR_STALE_UNSET }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
                 }
@@ -1182,6 +1180,7 @@ async function selfDispatch(db, limit) {
           { 'translation.data': null },
           { 'translation.data': '' },
           { $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } },
+          { 'translation_stale.reason': { $exists: true } }, // #4927
         ],
       })
       .sort({ page_number: 1 })

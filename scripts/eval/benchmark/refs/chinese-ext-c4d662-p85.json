@@ -1,0 +1,17 @@
+{
+  "slug": "chinese-ext-c4d662-p85",
+  "substratum": "skqs-manuscript",
+  "title": "欽定周官義疏·卷三十二 (vol 20)",
+  "probe_chars": 158,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1d0018",
+  "work_title": "欽定周官義疏-清-高宗弘曆",
+  "juan": 1,
+  "url": "https://github.com/kanripo/KR1d0018/blob/WYG/KR1d0018_001.txt",
+  "etext_chars": 12559,
+  "window_chars": 14,
+  "overlap": 0.019,
+  "reason": "overlap 0.02 < 0.35: page is not (cleanly) in this e-text"
+}

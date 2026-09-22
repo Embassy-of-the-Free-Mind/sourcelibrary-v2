@@ -1,133 +1,108 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performModernization } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTriggerSource } from '@/lib/cron-auth';
+import {
+  hashString,
+  resolveModernizationSource,
+  readCachedModernization,
+  generateModernization,
+  loadEnglishModernizationPrompt,
+  wouldBeNoOp,
+} from '@/lib/modernize-page';
 
-// Simple hash function to detect translation changes
-function hashString(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
-  }
-  return hash.toString(16);
-}
-
+/**
+ * On-demand modernization for one page. The logic lives in `@/lib/modernize-page` so
+ * that this route and its tenant twin cannot drift — see that file's header for why the
+ * gate and the fixed model are there (#4958).
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const startTime = Date.now();
-
   try {
     const { id } = await params;
     const triggeredBy = getTriggerSource(request);
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
+    // `model` is deliberately NOT read from the body — see modernize-page.ts.
+    const { regenerate = false } = body;
 
-    const { regenerate = false, model = DEFAULT_MODEL } = body;
-
-    // Fetch the page
     const page = await db.collection('pages').findOne({ id });
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    // Check if translation exists
-    if (!page.translation?.data) {
-      return NextResponse.json({
-        error: 'Page has no translation. Translate first before modernizing.'
-      }, { status: 400 });
+    const book = await db.collection('books').findOne({ id: page.book_id }, { projection: { language: 1 } });
+    const resolved = resolveModernizationSource(page, book);
+    if (!resolved) {
+      return NextResponse.json(
+        { error: 'Page has no text to modernize. It needs OCR (English editions) or a translation first.' },
+        { status: 400 },
+      );
     }
 
-    const translationHash = hashString(page.translation.data);
+    const sourceHash = hashString(resolved.text);
 
-    // Check if we can use cached version
-    const hasValidCache = page.modernized?.data &&
-                          page.modernized.source_translation_hash === translationHash;
-
-    if (hasValidCache && !regenerate) {
+    // Cached serves are free and ungated — a reader who hits the cap must still be able
+    // to read text already paid for.
+    const cached = readCachedModernization(page, sourceHash, resolved.source);
+    if (cached && !regenerate) {
       return NextResponse.json({
-        modernized: page.modernized.data,
+        modernized: cached,
         cached: true,
-        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 }
+        source: resolved.source,
+        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
       });
     }
 
-    // Get previous page for context
-    let previousContext: { translation?: string; modernized?: string } | undefined;
-
-    if (page.page_number > 1) {
-      const prevPage = await db.collection('pages').findOne({
-        book_id: page.book_id,
-        page_number: page.page_number - 1
+    // Refuse before spending, not after. 200 rather than an error: "this page needs no
+    // modernizing" is a successful answer to the question, and the reader renders it as
+    // a note rather than a failure.
+    if (wouldBeNoOp(resolved.text, resolved.source)) {
+      return NextResponse.json({
+        modernized: null,
+        skipped: 'already-modern',
+        source: resolved.source,
+        message: 'This page is already in modern English — a modernization would return the same text.',
       });
-
-      if (prevPage) {
-        previousContext = {
-          translation: prevPage.translation?.data,
-          modernized: prevPage.modernized?.data
-        };
-      }
     }
 
-    // Perform modernization
-    const result = await performModernization(
-      page.translation.data,
-      previousContext,
-      undefined, // customPrompt
-      model
-    );
+    const gate = await anonActionGate(request, { name: 'modernize', limit: 15, allowBotBypass: false });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        {
+          error: 'Modernization limit reached. Sign in (free) to keep going.',
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+          retry_after: gate.retryAfter,
+        },
+        { status: 429, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : undefined },
+      );
+    }
 
-    // Save to database
-    await db.collection('pages').updateOne(
-      { id },
-      {
-        $set: {
-          'modernized.data': result.text,
-          'modernized.model': model,
-          'modernized.updated_at': new Date(),
-          'modernized.source_translation_hash': translationHash,
-          updated_at: new Date()
-        }
-      }
-    );
-
-    // Log AI usage to gemini_usage (single source of truth)
-    const duration = Date.now() - startTime;
-    logGeminiCall({
-      type: 'translation',
-      mode: 'realtime',
-      model,
-      book_id: page.book_id,
-      page_ids: [id],
-      input_tokens: result.usage.inputTokens,
-      output_tokens: result.usage.outputTokens,
-      status: 'success',
-      duration_ms: duration,
-      prompt_version: 'modernize-inline-v1',
-      endpoint: '/api/pages/modernize',
-      triggered_by: triggeredBy,
+    const customPrompt = await loadEnglishModernizationPrompt(db, resolved.source);
+    const result = await generateModernization(db, page as never, resolved.text, resolved.source, sourceHash, {
+      customPrompt,
+      triggeredBy,
     });
 
     return NextResponse.json({
       modernized: result.text,
       cached: false,
-      usage: result.usage
+      source: resolved.source,
+      usage: result.usage,
     });
   } catch (error) {
     console.error('Error modernizing page:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to modernize page' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-// GET to retrieve existing modernized text without regenerating
+/** Retrieve an existing modernization without generating one. Always free. */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -140,28 +115,25 @@ export async function GET(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
-
     if (!page.modernized?.data) {
-      return NextResponse.json({
-        modernized: null,
-        hasTranslation: !!page.translation?.data,
-        message: 'No modernized text. Call POST to generate.'
-      });
+      return NextResponse.json({ modernized: null, message: 'No modernization. Call POST to generate.' });
     }
 
-    // Check if translation has changed since modernization
-    const translationHash = page.translation?.data ? hashString(page.translation.data) : null;
-    const isStale = translationHash &&
-                    page.modernized.source_translation_hash !== translationHash;
+    const book = await db.collection('books').findOne({ id: page.book_id }, { projection: { language: 1 } });
+    const resolved = resolveModernizationSource(page, book);
+    const isStale = resolved
+      ? readCachedModernization(page, hashString(resolved.text), resolved.source) === null
+      : false;
 
     return NextResponse.json({
       modernized: page.modernized.data,
       model: page.modernized.model,
+      source: page.modernized.source ?? null,
       updated_at: page.modernized.updated_at,
-      isStale // True if translation changed since modernization
+      isStale,
     });
   } catch (error) {
-    console.error('Error fetching modernized text:', error);
-    return NextResponse.json({ error: 'Failed to fetch modernized text' }, { status: 500 });
+    console.error('Error fetching modernization:', error);
+    return NextResponse.json({ error: 'Failed to fetch modernization' }, { status: 500 });
   }
 }

@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-45261c-p166",
+  "substratum": "woodblock-canon",
+  "title": "搜神記 Soushen Ji (Vols. 11-20)",
+  "probe_chars": 146,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3l0099",
+  "work_title": "搜神記-晉-干寶",
+  "juan": 18,
+  "url": "https://github.com/kanripo/KR3l0099/blob/WYG/KR3l0099_018.txt",
+  "etext_chars": 4340,
+  "window_chars": 158,
+  "overlap": 0.797
+}

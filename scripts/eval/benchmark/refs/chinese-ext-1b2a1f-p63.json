@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1b2a1f-p63",
+  "substratum": "skqs-manuscript",
+  "title": "春明夢餘錄·卷三十五 (vol 43)",
+  "probe_chars": 164,
+  "source": "Kanripo",
+  "work": "KR3j0161",
+  "work_title": "春明夢餘錄-清-孫承澤",
+  "juan": "35",
+  "url": "https://github.com/kanripo/KR3j0161",
+  "etext_chars": 18539,
+  "window_chars": 252,
+  "overlap": 0.714
+}

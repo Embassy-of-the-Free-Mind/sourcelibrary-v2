@@ -68,15 +68,20 @@ const ARCHIVABLE_RE = ARCHIVABLE_SOURCES_REGEX;
 function log(...a) { console.log(...a); }
 
 async function probeUrl(url) {
-  // Returns one of: 'ok' | 'dead' | 'unreachable'
-  if (!url || !/^https?:\/\//.test(url)) return 'dead';
+  // Returns { verdict: 'ok' | 'dead' | 'unreachable', why } — the WHY matters, because a
+  // throttle and a dead host are the same verdict here and want opposite responses. BSB and
+  // MDZ answer a single request with 200 and a sustained fetch with 429 (#4872): 2,784 books
+  // read as "unreachable since" when the source was only refusing the rate we asked at, and
+  // the fix is to fetch them from a residential connection, not to escalate them as gone.
+  if (!url || !/^https?:\/\//.test(url)) return { verdict: 'dead', why: 'no url' };
   try {
     const res = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(PROBE_TIMEOUT_MS) });
-    if (res.ok) return 'ok';
-    if ([401, 403, 404, 410].includes(res.status)) return 'dead';
-    return 'unreachable'; // 5xx, 429, etc. — transient
-  } catch {
-    return 'unreachable'; // timeout / DNS / connection refused
+    if (res.ok) return { verdict: 'ok', why: `HTTP ${res.status}` };
+    if ([401, 403, 404, 410].includes(res.status)) return { verdict: 'dead', why: `HTTP ${res.status}` };
+    if (res.status === 429) return { verdict: 'unreachable', why: 'HTTP 429 (throttled — try a residential lane)' };
+    return { verdict: 'unreachable', why: `HTTP ${res.status}` }; // 5xx etc. — transient
+  } catch (e) {
+    return { verdict: 'unreachable', why: (e?.name === 'TimeoutError' ? 'timeout' : (e?.message || 'fetch failed')).slice(0, 60) };
   }
 }
 
@@ -177,17 +182,20 @@ async function main() {
         buckets.restricted.push({ b, provider, url }); return;
       }
 
-      const verdict = await probeUrl(url);
-      if (verdict === 'dead') { buckets.dead.push({ b, provider, url }); }
-      else if (verdict === 'ok') { buckets.archivable.push({ b, provider, url }); }
+      const { verdict, why } = await probeUrl(url);
+      if (verdict === 'dead') { buckets.dead.push({ b, provider, url, why }); }
+      else if (verdict === 'ok') { buckets.archivable.push({ b, provider, url, why }); }
       else {
         // unreachable — transient; escalate only if it's been failing for a while
         const since = b.pipeline_auto?.archive_stall?.unreachable_since;
         const sinceMs = since ? new Date(since).getTime() : null;
-        if (sinceMs && (Date.now() - sinceMs) > ESCALATE_DAYS * 86400_000) {
-          buckets.escalated.push({ b, provider, url, since });
+        // A throttle never escalates: "gone" is the wrong conclusion from 429, however long
+        // it has been saying it. It needs a different lane, not a terminal status (#4872).
+        const throttled = why.startsWith('HTTP 429');
+        if (!throttled && sinceMs && (Date.now() - sinceMs) > ESCALATE_DAYS * 86400_000) {
+          buckets.escalated.push({ b, provider, url, since, why });
         } else {
-          buckets.unreachable.push({ b, provider, url, first: !sinceMs });
+          buckets.unreachable.push({ b, provider, url, first: !sinceMs, why });
         }
       }
     }));
@@ -203,13 +211,26 @@ async function main() {
   for (const { b, since } of buckets.escalated) {
     await setStatus(db, b, 'needs_attention', { error: `source unreachable since ${since} (>${ESCALATE_DAYS}d) — likely gone`, archive_verdict: 'escalated' });
   }
-  for (const { b, first } of buckets.unreachable) {
+  for (const { b, first, why } of buckets.unreachable) {
     if (APPLY) {
-      const set = { 'pipeline_auto.archive_stall.last_checked': new Date(), updated_at: new Date() };
+      const set = { 'pipeline_auto.archive_stall.last_checked': new Date(), 'pipeline_auto.archive_stall.why': why, updated_at: new Date() };
       if (first) set['pipeline_auto.archive_stall.unreachable_since'] = new Date();
       await db.collection('books').updateOne({ id: b.id }, { $set: set });
     }
   }
+  // THE FLAG MUST BE ABLE TO CLEAR. A book that probes 'ok' is not stalled, whatever it was
+  // last week — without this the flag only ever accumulates, and 4,048 books were parked
+  // behind it (#4872), 618 of them already fully archived. The archiver clears it too, on any
+  // page that actually lands; this covers books the archiver has not reached yet.
+  const recovered = buckets.archivable.filter(({ b }) => b.pipeline_auto?.archive_stall);
+  for (const { b } of recovered) {
+    if (APPLY) {
+      await db.collection('books').updateOne({ id: b.id }, {
+        $unset: { 'pipeline_auto.archive_stall': '' }, $set: { updated_at: new Date() },
+      });
+    }
+  }
+  if (recovered.length) log(`[watchdog] ${APPLY ? 'cleared' : 'would clear'} archive_stall on ${recovered.length} book(s) whose source answered this time`);
   const rearchiveResults = [];
   for (const { b } of buckets.archivable) {
     const res = await triggerRearchive(b);

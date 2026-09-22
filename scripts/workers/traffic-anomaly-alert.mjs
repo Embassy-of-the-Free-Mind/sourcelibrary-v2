@@ -70,6 +70,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 const args = process.argv.slice(2);
 const HOURS = args.includes('--hours') ? Number(args[args.indexOf('--hours') + 1]) : 24;
+const BACKFILL_DAYS = args.includes('--backfill') ? Number(args[args.indexOf('--backfill') + 1]) : 0;
 const JSON_OUT = args.includes('--json');
 
 // A /24 above this in the window is not a person. Sized off measured reality:
@@ -108,6 +109,46 @@ export const SPRAY_MAX_READS_PER_NET = 3;
 // alone fires on busy ones.
 export const SPRAY_MIN_READS = 2000;
 export const SPRAY_MIN_SHARE = 0.05;
+
+// ── The fingerprint axis (added 2026-09-20, #4947) ────────────────────────
+// Every check above thresholds a NETWORK, and the 2026-09-20 pool showed what
+// that costs. It read 149,296 pages over three weeks from 63,599 addresses in
+// 11,437 distinct /16 blocks, and the operators resolved to T-Mobile, Comcast,
+// Verizon, Cox, Charter, AT&T, Starlink and a long tail of Latin American
+// consumer ISPs — the single loudest was 2.5% of the traffic. There is no
+// network to threshold and there never will be: that is what a rented
+// residential pool is FOR. Both network checks stayed silent (spray reached
+// 4.2% against its 5% floor; 75% of the reads sat in /16s too thin for the
+// shape test to examine at all) while the pool ran at 87% of site traffic.
+//
+// So this check thresholds the thing the operator cannot subdivide: the
+// DISGUISE. To pass as a browser they must send a coherent UA string, and one
+// string across tens of thousands of addresses is not a population. Rotating
+// the string is the evasion, and it is not free — it is the one axis where
+// hiding costs them the realism they are paying the pool for.
+//
+// Sizing, measured on this corpus rather than chosen (the Lightpanda rows
+// before 2026-09-01 are excluded — they were bot traffic stored as human, and
+// including them would have set the bar at 27,000 and hidden everything):
+//   widest GENUINE single-UA fan-out, per 24h, Sep 1-20 ....... 220-1,292 addrs
+//   the pool, same windows ............ 861 (Sep 2) -> 45,054 (Sep 18) addrs
+// 2,500 sits above the widest real day with room to spare, and would have
+// fired on 2026-09-09 at 3,198 — ten days before the spike anyone noticed.
+// Between ~1,300 and 2,500 the two populations genuinely overlap; a lower bar
+// buys a few days at the cost of flagging real browsers, which is the trade
+// that turns a detector into noise.
+//
+// NOTE the reads-per-address trap. The obvious discriminator — "a pool reads
+// once per address, a person reads several" — is BACKWARDS here: site bounce
+// rate is 92.8%, so genuine UA strings run 1.01-1.26 reads/address while the
+// pool ran 1.77. Do not reintroduce it. Same shape as the pages-per-book trap
+// below, which this pool also defeats by reading 10.95 pages/book against a
+// human baseline of 3.83.
+export const UA_FANOUT_ADDRESSES = 2500;
+// A wide string is only interesting if it is also carrying real volume — a
+// long tail of one-hit strings is what a normal day looks like.
+export const UA_FANOUT_MIN_READS = 2000;
+export const UA_FANOUT_MIN_SHARE = 0.15;
 
 // Pages-per-book is what separates a fleet from a devoted reader, and it is a
 // far better discriminator than volume. The 2026-08-06 fleet read ~1.4-1.8
@@ -214,8 +255,22 @@ export function isSupposedlyBlocked(ip) {
 
 /** The /16 an address sits in, as a display string ("116.204.x.x"). */
 export function prefix16(ip) {
-  const m = /^(\d{1,3})\.(\d{1,3})\./.exec(String(ip));
-  return m ? `${m[1]}.${m[2]}.x.x` : null;
+  const s = String(ip);
+  const m = /^(\d{1,3})\.(\d{1,3})\./.exec(s);
+  if (m) return `${m[1]}.${m[2]}.x.x`;
+  // IPv6. Until 2026-09-20 this returned null, and every v6 address was dropped
+  // from nets16 before any /16 or spray check ran — silently, because the
+  // checks only ever saw a smaller map. The 2026-09-20 pool exited heavily via
+  // LACNIC mobile v6 (2800::/2804:: ranges, Brazil/Ecuador/Colombia): 5,857
+  // addresses carrying 11,430 reads in one 24h window, 17.5% of classified
+  // traffic, invisible to the instrument that exists to see exactly this.
+  // Two hextets is the v6 analogue of a /16 by ROLE, not by mask width — it is
+  // the coarse allocation unit, the level at which a pool's spread shows up.
+  if (s.includes(':')) {
+    const h = s.split(':').filter(Boolean).slice(0, 2);
+    if (h.length === 2) return `${h[0]}:${h[1]}::x`;
+  }
+  return null;
 }
 
 /**
@@ -240,6 +295,90 @@ export function looksLikeEnumeration(reads, books) {
   return reads / books < ENUMERATION_PAGES_PER_BOOK;
 }
 
+/**
+ * One exact user-agent string spread across more addresses than any real
+ * browser population reaches, while carrying a meaningful share of traffic.
+ * See the UA_FANOUT_* constants for why these numbers and not others.
+ *
+ * `share` is this string's share of classified reads in the window.
+ */
+export function looksLikeSharedFingerprint(addrs, reads, share) {
+  if (addrs < UA_FANOUT_ADDRESSES) return false;
+  if (reads < UA_FANOUT_MIN_READS) return false;
+  return share >= UA_FANOUT_MIN_SHARE;
+}
+
+/**
+ * Walk back N days and record the pool fingerprints active on each one.
+ *
+ * The hourly run only ever sees a 24h window, so on the day this check shipped
+ * the fingerprint collection knew about exactly one string — today's. Every
+ * metric with a longer window (MAU is 30 days) stayed contaminated by strings
+ * that had already stopped. Backfilling is how a 30-day figure becomes true on
+ * the day the detector lands rather than a month later.
+ *
+ * Each day is scored on its OWN share of that day's traffic, not the window's,
+ * so a pool that ran for three days in a quiet week is still caught.
+ */
+export async function backfillFingerprints(db, days) {
+  const ev = db.collection('analytics_events');
+  const found = new Map();
+  for (let d = days; d >= 1; d--) {
+    const from = new Date(Date.now() - d * 864e5);
+    const to = new Date(Date.now() - (d - 1) * 864e5);
+    // Same event filter as run(), so a day's share is measured against the
+    // same denominator the live check uses. A backfill scored on a different
+    // population would flag different strings than the hourly run.
+    const dayMatch = {
+      event: { $in: ['page_read', 'book_read'] },
+      timestamp: { $gte: from, $lt: to },
+      traffic_class: { $exists: true },
+    };
+    const dayTotal = await ev.countDocuments(dayMatch);
+    if (!dayTotal) continue;
+    const rows = await ev.aggregate([
+      { $match: { ...dayMatch, traffic_class: 'human' } },
+      { $group: { _id: { ua: '$user_agent', ip: '$ip' }, n: { $sum: 1 } } },
+      { $group: { _id: '$_id.ua', addrs: { $sum: 1 }, reads: { $sum: '$n' } } },
+      { $sort: { addrs: -1 } }, { $limit: 25 },
+    ], { allowDiskUse: true }).toArray();
+
+    for (const r of rows) {
+      const share = r.reads / dayTotal;
+      if (!looksLikeSharedFingerprint(r.addrs, r.reads, share)) continue;
+      const ua = r._id || '(empty)';
+      const prev = found.get(ua);
+      // last_seen must be the LATEST day the string was flagged, because that
+      // is what the staleness window in scripts/lib/suspected-pool.mjs reads.
+      if (!prev || to > prev.last_seen) {
+        found.set(ua, { last_seen: to, addrs: r.addrs, reads: r.reads, share, days: (prev?.days || 0) + 1 });
+      } else {
+        prev.days += 1;
+      }
+      console.log(`  ${to.toISOString().slice(0, 10)}  ${String(r.addrs).padStart(6)} addrs  ${String(r.reads).padStart(6)} reads  ${(share * 100).toFixed(1)}%  "${ua.slice(0, 60)}"`);
+    }
+  }
+
+  if (!found.size) { console.log('[backfill] no historical pool fingerprints found'); return 0; }
+  await db.collection('suspected_pool_fingerprints').bulkWrite(
+    [...found.entries()].map(([ua, v]) => ({
+      updateOne: {
+        filter: { _id: ua },
+        update: {
+          $max: { last_seen: v.last_seen },
+          $setOnInsert: { first_seen: v.last_seen },
+          $set: { last_addrs: v.addrs, last_reads: v.reads, last_share: Number((v.share * 100).toFixed(1)) },
+          $inc: { windows_flagged: v.days },
+        },
+        upsert: true,
+      },
+    })),
+    { ordered: false },
+  );
+  console.log(`[backfill] recorded ${found.size} fingerprint(s) over ${days} days`);
+  return found.size;
+}
+
 async function run() {
   if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
@@ -248,6 +387,16 @@ async function run() {
   const ev = db.collection('analytics_events');
   const since = new Date(Date.now() - HOURS * 3600e3);
   const alerts = [];
+
+  // One-shot maintenance mode: record historical pool fingerprints so the
+  // longer-window metrics (MAU is 30 days) are correct immediately rather than
+  // once the contaminated days age out. Exits without alerting.
+  if (BACKFILL_DAYS > 0) {
+    console.log(`[traffic-anomaly] backfilling pool fingerprints over ${BACKFILL_DAYS} days`);
+    await backfillFingerprints(db, BACKFILL_DAYS);
+    await client.close();
+    return;
+  }
 
   const base = { event: { $in: ['page_read', 'book_read'] }, timestamp: { $gte: since } };
   const classified = { ...base, traffic_class: { $exists: true } };
@@ -401,6 +550,71 @@ async function run() {
       check: 'distributed_proxy_pool',
       message: `${sprayReads.toLocaleString()} reads in ${HOURS}h (${(sprayShare * 100).toFixed(1)}% of classified traffic) arrived as a SPRAY: ${sprayed.length} /16 networks, ${sprayNets.toLocaleString()} distinct /24s, averaging ${(sprayReads / sprayNets).toFixed(2)} reads per /24. That is a residential/mobile proxy pool, not a datacenter fleet — each exit address is used once and discarded, so no per-IP, per-/24 or per-/16 threshold can see it. **Do NOT add these to blocked-networks.ts**: measured 2026-08-06 they were China Mobile provincial ASNs (Hebei, Hunan, Heilongjiang, Jilin, Henan), consumer mobile space where real readers live, and an app-layer block would refuse them along with the pool. The lever that fits this shape is a Cloudflare managed challenge scoped to the offending ASNs (real browsers pass, headless pool clients mostly do not) — a decision with a real blast radius, so it wants a human. Top: ${sprayed.slice(0, 6).map(v => `${v.p}(${v.n}/${v.nets} nets)`).join(' ')}`,
     });
+  }
+
+  // ── 1d. Shared fingerprint — the axis the pool cannot subdivide ───────────
+  // Checks 1, 1b and 1c all threshold a network. This one thresholds the
+  // disguise. See the UA_FANOUT_* block above for the measurement this is
+  // sized on and for the two discriminators (reads-per-address,
+  // pages-per-book) that this pool inverts.
+  const perUa = await ev.aggregate([
+    { $match: { ...classified, traffic_class: 'human' } },
+    { $group: { _id: { ua: '$user_agent', ip: '$ip' }, n: { $sum: 1 } } },
+    {
+      $group: {
+        _id: '$_id.ua',
+        addrs: { $sum: 1 },
+        reads: { $sum: '$n' },
+      },
+    },
+    { $sort: { addrs: -1 } },
+    { $limit: 50 },
+  ], { allowDiskUse: true }).toArray();
+
+  const fingerprints = perUa
+    .map((u) => ({
+      ua: u._id || '(empty)',
+      addrs: u.addrs,
+      reads: u.reads,
+      share: classifiedCount ? u.reads / classifiedCount : 0,
+    }))
+    .filter((u) => looksLikeSharedFingerprint(u.addrs, u.reads, u.share))
+    .sort((a, b) => b.reads - a.reads);
+
+  if (fingerprints.length) {
+    const worst = fingerprints[0];
+    const sum = fingerprints.reduce((s, u) => s + u.reads, 0);
+    alerts.push({
+      level: 'critical',
+      check: 'shared_fingerprint_pool',
+      message: `${fingerprints.length} user-agent string(s) each arrived from more than ${UA_FANOUT_ADDRESSES.toLocaleString()} distinct addresses in ${HOURS}h — ${sum.toLocaleString()} reads, all classified HUMAN. Worst: ${worst.addrs.toLocaleString()} addresses, ${worst.reads.toLocaleString()} reads (${(worst.share * 100).toFixed(1)}% of classified traffic) for the single exact string "${worst.ua.slice(0, 90)}". A real browser population does not share one byte-identical UA across that many addresses; the widest genuine string measured on this corpus was 1,292/day. This is a rented residential proxy pool, so do NOT reach for blocked-networks.ts — measured 2026-09-20 the operators were T-Mobile, Comcast, Verizon, Cox, Charter, AT&T and Starlink, consumer space full of real readers, and the loudest was 2.5% of the traffic. The lever that fits is a Cloudflare MANAGED CHALLENGE scoped to the UA string (real browsers pass silently, pool clients mostly do not) — a decision with a real blast radius, so it wants a human. Expect the string to rotate once challenged: that is this check re-firing on a new string, not the problem going away. Strings: ${fingerprints.slice(0, 4).map(u => `"${u.ua.slice(0, 44)}"(${u.addrs} addrs/${u.reads} reads)`).join(' ')}`,
+    });
+  }
+
+  // Record the flagged fingerprints so the ANALYTICS scripts stop reporting
+  // them as audience. This is the durable half of the fix: the alert tells a
+  // human, but `audience-metrics` and `usage-deepdive` are read far more often
+  // than any alert, and for three weeks they reported a proxy pool as record
+  // traffic (78,353 pageviews on 2026-09-19, 87% of it one string). Storing
+  // the verdict — rather than hardcoding a UA into classifyTraffic() — is what
+  // makes this survive the rotation, and it avoids libelling the real Chrome
+  // users who share that string. See scripts/lib/suspected-pool.mjs.
+  if (fingerprints.length) {
+    const now = new Date();
+    await db.collection('suspected_pool_fingerprints').bulkWrite(
+      fingerprints.map((u) => ({
+        updateOne: {
+          filter: { _id: u.ua },
+          update: {
+            $set: { last_seen: now, last_addrs: u.addrs, last_reads: u.reads, last_share: Number((u.share * 100).toFixed(1)) },
+            $setOnInsert: { first_seen: now },
+            $inc: { windows_flagged: 1 },
+          },
+          upsert: true,
+        },
+      })),
+      { ordered: false },
+    ).catch((err) => console.error(`[traffic-anomaly] fingerprint write failed: ${err.message}`));
   }
 
   // ── 2. Unguarded / unexpected host ────────────────────────────────────────

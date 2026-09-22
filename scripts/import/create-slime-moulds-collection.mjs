@@ -41,7 +41,8 @@ const COLLECTION = {
     'Neither plant, animal, nor fungus. Two centuries of naturalists filed the slime moulds with the mushrooms because that is what they look like once they have stopped moving. This collection follows the argument from the first published notice of one in 1654, through de Bary taking the group out of the fungi in 1859, to the first monograph of them in 1875.',
   color: 'sage',
   type: 'category',
-  parent: 'mycology',
+  // No parent: this is a top-level collection since 2026-09-16 (it sat under
+  // mycology before). The script also $unsets a stale parent below.
   hidden: false,
   visible: true,
   show_all_books: true,
@@ -65,7 +66,9 @@ if (DRY) { console.log('\n(dry run — nothing written)'); await client.close();
 
 await db.collection('collections').updateOne(
   { slug: SLUG },
-  { $set: { ...COLLECTION, updated_at: new Date() }, $setOnInsert: { created_at: new Date() } },
+  // $unset parent: the collection was a child of mycology until 2026-09-16 and
+  // is top-level now; a re-run must not leave the old link in place.
+  { $set: { ...COLLECTION, updated_at: new Date() }, $unset: { parent: '' }, $setOnInsert: { created_at: new Date() } },
   { upsert: true },
 );
 

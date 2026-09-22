@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-21d0fe-p23",
+  "substratum": "skqs-manuscript",
+  "title": "大易粹言·卷八~卷十 (vol 4)",
+  "probe_chars": 163,
+  "source": "Kanripo",
+  "work": "KR1a0041",
+  "work_title": "大易粹言-宋-方聞一",
+  "juan": "8,9,10",
+  "url": "https://github.com/kanripo/KR1a0041",
+  "etext_chars": 16497,
+  "window_chars": 213,
+  "overlap": 0.781
+}

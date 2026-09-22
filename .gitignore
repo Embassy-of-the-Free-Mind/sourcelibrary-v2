@@ -60,8 +60,11 @@ src/data/*
 !src/data/marcianus-berthelot-overlay.json
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/concept-aliases.json
+!src/data/ocr-benchmark-evidence.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
+!src/data/cite/
+!src/data/cite/*.json
 !src/data/shwep-bibliographies.ts
 !src/data/shwep-linked-bibliographies.ts
 !src/data/shwep-supplementary-works.ts
@@ -153,3 +156,8 @@ scripts/eval/results/revision-agreement-corpus-*.jsonl
 
 # Per-run import ledgers (progress state, not source)
 scripts/import/*-ledger.jsonl
+
+# Sidequests: independent nested repos kept beside the main project for organisation
+# (see sidequests/README.md). Never part of sourcelibrary; only the README is tracked.
+/sidequests/*
+!/sidequests/README.md

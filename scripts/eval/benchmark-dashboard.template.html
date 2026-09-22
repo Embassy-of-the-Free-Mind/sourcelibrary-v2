@@ -1,0 +1,183 @@
+<title>OCR Evidence Ledger</title>
+<!-- Template for the private evidence dashboard (#4735). Built by:
+       node scripts/eval/benchmark-dashboard-data.mjs --html=<out.html>
+     which replaces the DATA placeholder below with the evidence table. The same table feeds
+     /platform/admin/ocr-evidence; this standalone page is for sharing outside the admin login.
+     PRIOR ART: none — `git grep -i dashboard -- scripts src/app/platform` finds the admin
+     line/metrics/system-map pages (pipeline and traffic, Mongo-backed) and no view over
+     scripts/eval/results; benchmark-score.mjs prints a per-stratum markdown table only. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500&display=swap">
+<style>
+  :root {
+    --ground: #f6f8f6; --panel: #fcfdfc; --ink: #14201c; --ink-2: #4c5a55; --muted: #7f8a85;
+    --line: #dce3df; --mark: #0f5f5a; --mark-soft: #0f5f5a33;
+    --good: #0a7d2a; --good-bg: #e2f3e6; --warn: #8a5a00; --warn-bg: #fbeecb; --none: #66716c; --none-bg: #e9edeb;
+    --bad: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --ground: #121715; --panel: #181e1c; --ink: #eef3f0; --ink-2: #b9c4bf; --muted: #84908b;
+    --line: #2a3330; --mark: #58c4bb; --mark-soft: #58c4bb40;
+    --good: #5fd07c; --good-bg: #163222; --warn: #f0c060; --warn-bg: #3a2e10; --none: #9aa6a1; --none-bg: #242c29;
+    --bad: #ff8a80;
+  } }
+  :root[data-theme="dark"] {
+    --ground: #121715; --panel: #181e1c; --ink: #eef3f0; --ink-2: #b9c4bf; --muted: #84908b;
+    --line: #2a3330; --mark: #58c4bb; --mark-soft: #58c4bb40;
+    --good: #5fd07c; --good-bg: #163222; --warn: #f0c060; --warn-bg: #3a2e10; --none: #9aa6a1; --none-bg: #242c29;
+    --bad: #ff8a80;
+  }
+  body { background: var(--ground); color: var(--ink); font: 15px/1.5 "IBM Plex Sans", system-ui, sans-serif; padding-inline: clamp(16px, 4vw, 48px); padding-block: 32px 64px; }
+  .wrap { max-width: 1180px; margin-inline: auto; display: flex; flex-direction: column; gap: 28px; }
+  h1 { font: 500 clamp(28px, 4vw, 40px)/1.1 "Newsreader", Georgia, serif; margin: 0; text-wrap: balance; }
+  h2 { font: 600 16px/1.3 "IBM Plex Sans", sans-serif; margin: 0; }
+  p { margin: 0; max-width: 68ch; color: var(--ink-2); }
+  .num, td.n, .tally b { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  header { display: flex; flex-direction: column; gap: 12px; }
+  .tally { display: flex; flex-wrap: wrap; gap: 12px 32px; padding-block: 16px; border-block: 1px solid var(--line); }
+  .tally div { display: flex; flex-direction: column; }
+  .tally b { font-size: 28px; font-weight: 500; line-height: 1.1; }
+  .tally span { color: var(--ink-2); font-size: 13px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; }
+  .controls label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; text-transform: none; letter-spacing: 0; }
+  select:focus-visible, summary:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+  .level { display: flex; flex-direction: column; gap: 8px; }
+  .level-head { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+  .level-head small { color: var(--muted); font-size: 13px; }
+  .scroll { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 13.5px; }
+  th { text-align: left; font-weight: 500; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  td.n, th.n { text-align: right; }
+  td.eng { font-weight: 500; white-space: normal; min-width: 150px; }
+  tr.prod td.eng::after { content: "production"; margin-left: 8px; font-size: 11px; font-weight: 400; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+  .dim { color: var(--muted); }
+  .bad { color: var(--bad); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; border-radius: 999px; padding: 2px 9px 2px 7px; }
+  .chip i { width: 9px; height: 9px; border-radius: 50%; box-sizing: border-box; border: 1.5px solid currentColor; }
+  .chip.decision-grade { color: var(--good); background: var(--good-bg); } .chip.decision-grade i { background: currentColor; }
+  .chip.directional { color: var(--warn); background: var(--warn-bg); } .chip.directional i { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+  .chip.exploratory { color: var(--none); background: var(--none-bg); }
+  svg.ci { display: block; }
+  details { border-top: 1px solid var(--line); padding-top: 16px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details ul { color: var(--ink-2); max-width: 72ch; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  footer { color: var(--muted); font-size: 12.5px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>OCR Evidence Ledger</h1>
+    <p>Which engine reads which kind of page, and how much each claim can carry. Every cell is graded by its number of books with a ground-truth reference, one page per book. A routing or withholding decision should cite a decision-grade cell, or say it is a judgement call.</p>
+    <div class="tally" id="tally"></div>
+  </header>
+
+  <div class="controls">
+    <label for="f-factor">Slice by
+      <select id="f-factor"></select>
+    </label>
+    <label for="f-grade">Show
+      <select id="f-grade">
+        <option value="all">every cell</option>
+        <option value="referenced">cells with a reference</option>
+        <option value="gradeplus">directional and decision-grade only</option>
+      </select>
+    </label>
+    <label for="f-sort">Order engines by
+      <select id="f-sort">
+        <option value="cer">median error, best first</option>
+        <option value="name">name</option>
+      </select>
+    </label>
+  </div>
+
+  <main id="levels" class="wrap" style="gap:32px"></main>
+
+  <details>
+    <summary>How to read this</summary>
+    <ul>
+      <li><b>Error</b> is character error rate against a ground-truth reference (0.010 = one character in a hundred wrong). The bar is the 95 % interval on the median, bootstrapped over books. Cells with no reference show only a <span class="dim">proxy</span> figure, the distance from the production engine's own reading, which cannot show that engine's errors and is never graded.</li>
+      <li><b>Exploratory</b>: under 30 referenced books, or none. <b>Directional</b>: 30 to 49. <b>Decision-grade</b>: 50 or more. The head-to-head against production is graded on its own count of untied pairs: about 47 are needed to see a 70/30 split with 80 % power, about 85 for 65/35.</li>
+      <li><b>Placed</b> is coverage: the pages the engine's output could be aligned to the reference at all. An engine that reads well but only places half the pages is a half-lane.</li>
+      <li><b>Loop</b> and <b>catastrophic</b> (error above 0.5) are rates. A rate needs about 150 books for plus or minus 5 points, so nearly every rate here is an anecdote with an interval on it.</li>
+      <li><b>Still needed</b> is the number of further referenced books before the cell is decision-grade.</li>
+    </ul>
+  </details>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const f3 = (x) => (x == null ? "–" : x.toFixed(3));
+const FACTORS = { script: "script", language: "language", period: "period (catalogue year)", script_period: "script × period", language_period: "language × period", stratum: "sealed stratum", substratum: "stratum and draw", script_class: "observed script class" };
+
+function chip(g) { return `<span class="chip ${g}"><i></i>${g}</span>`; }
+
+function ciPlot(c, max) {
+  const W = 190, H = 22, L = 4, R = 4, x = (v) => L + Math.min(1, v / max) * (W - L - R);
+  const r = c.cer_vs_reference;
+  if (!r) return "";
+  const lo = r.ci95 ? r.ci95[0] : r.median, hi = r.ci95 ? r.ci95[1] : r.median, over = hi > max;
+  return `<svg class="ci" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="median ${f3(r.median)}, interval ${f3(lo)} to ${f3(hi)}">
+    <title>median ${f3(r.median)} · 95% interval ${r.ci95 ? f3(lo) + " to " + f3(hi) : "not shown under 5 books"} · ${r.n} books</title>
+    <line x1="${L}" x2="${W - R}" y1="11" y2="11" stroke="var(--line)" stroke-width="1"/>
+    <rect x="${x(lo)}" y="7" width="${Math.max(2, x(hi) - x(lo))}" height="8" rx="4" fill="var(--mark-soft)"/>
+    ${over ? `<path d="M${W - R - 5} 7 l5 4 l-5 4" fill="none" stroke="var(--mark)" stroke-width="1.5"/>` : ""}
+    <circle cx="${x(r.median)}" cy="11" r="4" fill="var(--mark)" stroke="var(--panel)" stroke-width="2"/>
+  </svg>`;
+}
+
+function render() {
+  const factor = $("f-factor").value, show = $("f-grade").value, sort = $("f-sort").value;
+  const cells = DATA.cells.filter((c) => c.factor === factor);
+  const levels = [...new Set(cells.map((c) => c.level))];
+  const key = (c) => (c.cer_vs_reference ? c.cer_vs_reference.median : 5 + (c.cer_vs_proxy ? c.cer_vs_proxy.median : 9));
+  let html = "";
+  for (const level of levels) {
+    let rows = cells.filter((c) => c.level === level);
+    const nPages = Math.max(...rows.map((c) => c.n_run)), nRef = Math.max(...rows.map((c) => c.n_referenced));
+    if (show === "referenced") rows = rows.filter((c) => c.cer_vs_reference);
+    if (show === "gradeplus") rows = rows.filter((c) => c.grade !== "exploratory");
+    if (!rows.length) continue;
+    rows.sort((a, b) => (sort === "name" ? a.engine.localeCompare(b.engine) : key(a) - key(b)));
+    const meds = rows.filter((c) => c.cer_vs_reference).map((c) => c.cer_vs_reference.median);
+    const max = meds.length ? Math.max(0.02, Math.min(1, Math.max(...meds) * 1.6)) : 1;
+    html += `<section class="level"><div class="level-head"><h2>${esc(level)}</h2><small>${nPages} books sealed · ${nRef} with a reference${meds.length ? ` · error axis 0 to ${max.toFixed(max < 0.1 ? 3 : 2)}` : " · proxy-scored only"}</small></div>
+      <div class="scroll"><table><thead><tr><th>Engine</th><th class="n">Ref. books</th><th class="n">Median error</th><th>95 % interval</th><th class="n">Placed</th><th>vs production (win / loss / tie)</th><th class="n">Catastrophic</th><th class="n">Loops</th><th>Evidence</th><th class="n">Still needed</th></tr></thead><tbody>`;
+    for (const c of rows) {
+      const r = c.cer_vs_reference, p = c.paired_vs_production, prod = c.engine === DATA.production_engine;
+      const err = r ? `<span class="num">${f3(r.median)}</span>` : c.cer_vs_proxy ? `<span class="dim">proxy ${f3(c.cer_vs_proxy.median)}</span>` : `<span class="dim">–</span>`;
+      const vs = prod ? `<span class="dim">baseline</span>` : p && p.n ? `<span class="num">${p.wins} / ${p.losses} / ${p.ties}</span> <span class="dim">p ${p.p_sign == null ? "–" : p.p_sign < 0.001 ? "&lt;0.001" : p.p_sign} · ${p.untied} untied</span>` : `<span class="dim">no referenced pairs</span>`;
+      const cata = c.catastrophic ? `<span class="${c.catastrophic.k ? "bad" : ""}">${c.catastrophic.k}/${c.catastrophic.n}</span>` : "–";
+      html += `<tr class="${prod ? "prod" : ""}"><td class="eng">${esc(c.engine)}</td><td class="n">${r ? r.n : 0}</td><td class="n">${err}</td><td>${ciPlot(c, max)}</td>
+        <td class="n">${c.coverage ? c.coverage.aligned + "/" + c.coverage.of : "–"}</td><td>${vs}</td><td class="n">${cata}</td>
+        <td class="n"><span class="${c.loop.k ? "bad" : ""}">${c.loop.k}/${c.loop.n}</span></td><td>${chip(c.grade)}</td><td class="n">${c.referenced_pages_needed || "–"}</td></tr>`;
+    }
+    html += `</tbody></table></div></section>`;
+  }
+  $("levels").innerHTML = html || `<p>No cells match this filter. That is itself the finding: nothing on this slice has a reference yet.</p>`;
+}
+
+function boot() {
+  const g = DATA.totals.cells_by_grade;
+  $("tally").innerHTML = [
+    [g["decision-grade"] || 0, "decision-grade cells"], [g["directional"] || 0, "directional"], [g["exploratory"] || 0, "exploratory"],
+    [DATA.totals.pages, "sealed books, one page each"], [DATA.totals.page_engine_rows, "engine readings scored"],
+  ].map(([n, l]) => `<div><b>${n.toLocaleString("en-US")}</b><span>${l}</span></div>`).join("");
+  const have = new Set(DATA.cells.map((c) => c.factor));
+  const present = [...Object.keys(FACTORS).filter((f) => have.has(f)), ...[...have].filter((f) => !FACTORS[f])];
+  $("f-factor").innerHTML = present.map((f) => `<option value="${f}">${FACTORS[f] || f}</option>`).join("");
+  const ids = ["f-factor", "f-grade", "f-sort"];
+  try { const s = JSON.parse(localStorage.getItem("ocr-ledger") || "{}"); for (const k of ids) if (s[k] && [...$(k).options].some((o) => o.value === s[k])) $(k).value = s[k]; } catch (e) {}
+  for (const k of ids) $(k).addEventListener("change", () => {
+    try { localStorage.setItem("ocr-ledger", JSON.stringify(Object.fromEntries(ids.map((i) => [i, $(i).value])))); } catch (e) {}
+    render();
+  });
+  $("foot").textContent = "Built from " + DATA.generated_from.map((s) => s.file).join(", ") + ". Production engine: " + DATA.production_engine + ".";
+  render();
+}
+boot();
+</script>

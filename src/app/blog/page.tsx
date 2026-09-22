@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'how-we-measure-ocr-quality',
+    title: 'How We Measure OCR Quality',
+    subtitle:
+      'One page per book, sealed before anyone looks, scored against a published edition, graded by how many referenced books the cell holds. The design behind every engine decision — and the day the "Chinese woodblock" cell turned out to be brush manuscript.',
+    date: '20 September 2026',
+    readTime: '12 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://images.sourcelibrary.org/archived/6a3ceccb4701a906f10db3cb/118.jpg',
+    imageAlt: 'A leaf of the Yuhai in the Siku Quanshu fair copy: brush-written regular script in ruled columns under the imperial header.',
+  },
+  {
     slug: 'where-the-instructions-are',
     title: 'Where the Instructions Are',
     subtitle:

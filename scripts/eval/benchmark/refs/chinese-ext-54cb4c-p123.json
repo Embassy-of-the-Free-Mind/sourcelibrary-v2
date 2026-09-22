@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-54cb4c-p123",
+  "substratum": "woodblock-canon",
+  "title": "齊民要術 (Qimin Yaoshu: Essential Techniques for the Welfare of the People) Vols 1-3",
+  "probe_chars": 170,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3d0001",
+  "work_title": "齊民要術-後魏-賈思勰",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR3d0001/blob/master/KR3d0001_002.txt",
+  "etext_chars": 9799,
+  "window_chars": 189,
+  "overlap": 0.635
+}

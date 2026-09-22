@@ -78,6 +78,10 @@ export const MODEL_PRICING: Record<string, { input: number; output: number }> = 
 
   'gemini-3.6-flash': { input: 0.75, output: 3.75 },
   'gemini-3.7-flash': { input: 0.75, output: 3.75 },
+  // Measured 2026-09-21 from the Detailed usage cost BigQuery export and
+  // cross-checked against the live SKU catalogue — see the matching entry
+  // and comment in scripts/lib/model-pricing.mjs (#4599 follow-up).
+  'gemini-3.8-flash': { input: 0.75, output: 3.75 },
   // Legacy models — retained for historical rows; not verifiable against the
   // current catalogue, which splits 2.5-flash by long/short input.
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
@@ -272,9 +276,18 @@ export async function performTranslation(
     : `\n\n**Text to translate:**\n${ocrText}`;
 
   if (previousPageTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
+    // The END of the previous page, not its start — the seam is what the
+    // model must continue (#4968; twin of continuityContext in
+    // scripts/lib/translate-core.mjs, keep in step)
+    const body = previousPageTranslation
+      .replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+      .trim();
+    const tail = body.length > 2000 ? `...${body.slice(-2000)}` : body;
+    if (tail) {
+      prompt += isEnglish
+        ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${tail}`
+        : `\n\n**Previous page translation for continuity — continue from its end:**\n${tail}`;
+    }
   }
 
   // If the OCR flagged this as handwritten, inject a note into the prompt

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState, ReactNode } from 'react';
+import React, { useMemo, useState, useEffect, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -611,6 +611,23 @@ function processChildren(children: ReactNode, showNotes: boolean): ReactNode {
 // Metadata panel component (collapsible)
 function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
+  // The OCR's <warning> is usually a note on the object's condition (yellowing,
+  // tears, a stain over the text) and used to render as a red banner on every
+  // page of the book. A reader asked to turn it off (#4854). It now renders as
+  // an amber chip, expanded on first sight and collapsed once the reader folds
+  // it, remembered per browser. localStorage is a per-viewer convenience: the
+  // page renders correctly without it.
+  const [warningOpen, setWarningOpen] = useState(true);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(CONDITION_NOTE_PREF_KEY) === 'collapsed') setWarningOpen(false);
+    } catch { /* private window or blocked storage — keep the default */ }
+  }, []);
+  const toggleWarning = () => {
+    const next = !warningOpen;
+    setWarningOpen(next);
+    try { localStorage.setItem(CONDITION_NOTE_PREF_KEY, next ? 'expanded' : 'collapsed'); } catch { /* ignore */ }
+  };
 
   const hasMetadata = metadata.language || metadata.pageType || metadata.pageNumber || metadata.folio ||
     metadata.signature || metadata.warning || metadata.scriptType || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
@@ -640,11 +657,25 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           </span>
         </div>
       )}
-      {/* Warning displayed prominently if present */}
+      {/* Condition / quality note from the OCR — a chip the reader can fold away */}
       {metadata.warning && (
-        <div className="px-3 py-2 bg-red-50 border-b border-red-200 text-sm text-red-800 flex items-start gap-2">
-          <span className="text-status-error font-bold">⚠</span>
-          <span><span className="font-medium">Quality Warning: </span>{metadata.warning}</span>
+        <div className="border-b border-amber-200 bg-amber-50 text-amber-900">
+          <button
+            type="button"
+            onClick={toggleWarning}
+            aria-expanded={warningOpen}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-left text-xs font-medium hover:bg-amber-100 transition-colors"
+          >
+            <span aria-hidden className="font-bold">⚠</span>
+            <span className="flex-shrink-0">Condition note</span>
+            {!warningOpen && (
+              <span className="ml-1 font-normal text-amber-800/80 truncate">{metadata.warning}</span>
+            )}
+            <span className="ml-auto flex-shrink-0 text-amber-700/70">{warningOpen ? 'Hide' : 'Show'}</span>
+          </button>
+          {warningOpen && (
+            <p className="px-3 pb-2 text-sm leading-snug">{metadata.warning}</p>
+          )}
         </div>
       )}
 
@@ -957,6 +988,9 @@ export function prepareNotesMarkdown(
 
   return { processedText, metadata, isDescriptionOnly };
 }
+
+/** localStorage key for the folded/unfolded state of the OCR condition note. */
+const CONDITION_NOTE_PREF_KEY = 'sl:reader:condition-note';
 
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
   const { processedText, metadata, isDescriptionOnly } = useMemo(

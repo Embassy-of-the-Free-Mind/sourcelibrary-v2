@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-170c84-p193",
+  "substratum": "skqs-manuscript",
+  "title": "伊川易傳·卷三 (vol 3)",
+  "probe_chars": 144,
+  "source": "Kanripo",
+  "work": "KR1a0016",
+  "work_title": "伊川易傳-宋-程頤",
+  "juan": "3",
+  "url": "https://github.com/kanripo/KR1a0016",
+  "etext_chars": 34463,
+  "window_chars": 153,
+  "overlap": 0.518
+}

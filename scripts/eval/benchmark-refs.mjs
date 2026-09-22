@@ -30,14 +30,23 @@ const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=
 const ROOT = argOf('root'); const STRATUM = argOf('stratum', 'chinese');
 const PROBES = argOf('probe', 'gemini-3-flash-preview,gemini-3.1-flash-lite').split(',');
 const ONLY = argOf('only'); const DRY = process.argv.includes('--dry');
+// --wide: when the title-and-juan lookup finds the work but not the page (a Siku Quanshu volume's
+// juan numbering rarely matches Kanripo's file numbering, and a plain title carries no juan),
+// list every juan file of the work on its Wenyuange (WYG) witness branch, else master, and take the
+// best window over all of them. Same acceptance threshold; a real reference or none.
+// --retry-missing: re-attempt pages whose earlier run wrote a JSON without a reference.
+const WIDE = process.argv.includes('--wide'); const RETRY = process.argv.includes('--retry-missing');
+const GH_HEADERS = process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {};
 const REFS = path.join(__dirname, 'benchmark', 'refs'); fs.mkdirSync(REFS, { recursive: true });
 const CATALOG = argOf('kanripo-catalog', '/Users/dereklomas/.claude/jobs/417569c5/tmp/refs/kanripo');
 const MIN_OVERLAP = 0.35;
+// Same title test as benchmark-seal.mjs's buddhist-canon draw.
+const BUDDHIST_RE = /佛|般若|菩薩|陀羅尼|華嚴|法華|楞嚴|楞伽|金剛|阿含|大藏|禪|涅槃|起信|淨土|地藏|藥師|觀音|sutra|sūtra/;
 
 const han = s => [...String(s || '').normalize('NFC')].filter(c => /\p{Script=Han}/u.test(c)).join('');
 const grams = (s, n = 4) => { const g = new Map(); for (let i = 0; i + n <= s.length; i++) { const k = s.slice(i, i + n); if (!g.has(k)) g.set(k, []); g.get(k).push(i); } return g; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-async function getJson(url) { const r = await fetch(url, { signal: AbortSignal.timeout(60000) }); if (!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
+async function getJson(url, headers = {}) { const r = await fetch(url, { headers, signal: AbortSignal.timeout(60000) }); if (!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
 async function getText(url) { const r = await fetch(url, { signal: AbortSignal.timeout(60000) }); if (!r.ok) throw new Error(`${r.status} ${url}`); return r.text(); }
 
 // Best window of the e-text for a probe: vote every probe 4-gram's positions in the e-text,
@@ -100,10 +109,16 @@ function cnNumber(s) { // 卷十六 → 16 ; 卷一百四十 → 140
   for (const c of s) { if (c === '百') { n += (cur || 1) * 100; cur = 0; } else if (c === '十') { n += (cur || 1) * 10; cur = 0; } else if (CN_NUM[c]) cur = CN_NUM[c]; }
   return n + cur;
 }
-async function kanripoLookup(title) {
+// Variant forms that differ between our catalogue titles and Kanripo's (録/錄, 説/說 …); folded on both sides.
+const foldTitle = s => String(s || '').replace(/録/g, '錄').replace(/説/g, '說').replace(/爲/g, '為').replace(/眞/g, '真').replace(/敎/g, '教');
+function titleCandidates(title) {
   const cat = loadCatalog();
+  const base = foldTitle(title.split('·')[0].split('(')[0].split(' ')[0].replace(/[（(].*$/, '').trim());
+  return cat.filter(c => foldTitle(c.title) === base).concat(cat.filter(c => foldTitle(c.title) !== base && base.length >= 3 && (foldTitle(c.title).startsWith(base) || base.startsWith(foldTitle(c.title)))));
+}
+async function kanripoLookup(title) {
   const base = title.split('·')[0].split('(')[0].split(' ')[0].replace(/[（(].*$/, '').trim();
-  const cands = cat.filter(c => c.title === base) .concat(cat.filter(c => c.title !== base && base.length >= 3 && (c.title.startsWith(base) || base.startsWith(c.title))));
+  const cands = titleCandidates(title);
   if (!cands.length) return null;
   const juanMatch = title.match(/卷([一二三四五六七八九十百]+)(?:上|中|下)?(?:[~～-]卷?([一二三四五六七八九十百]+))?/);
   let juans = juanMatch ? [cnNumber(juanMatch[1])] : [1];
@@ -117,6 +132,39 @@ async function kanripoLookup(title) {
     if (etext.length > 200) return { source: 'Kanripo', work: c.id, work_title: c.full, juan: juans.join(','), url: `https://github.com/kanripo/${c.id}`, etext };
   }
   return null;
+}
+// --wide: every juan file of the work, best window wins. Kanripo keeps one branch per witness;
+// WYG is the Wenyuange Siku Quanshu copy, the witness most of our Chinese pages are scans of.
+const kanripoHan = t => han(t.replace(/^#.*$/gm, '').replace(/<pb:[^>]+>/g, ''));
+async function ghJuanFiles(id, ref) {
+  const j = await getJson(`https://api.github.com/repos/kanripo/${id}/contents?ref=${ref}`, GH_HEADERS);
+  return (Array.isArray(j) ? j : []).map(x => x.name).filter(n => new RegExp(`^${id}_\\d{3}\\.txt$`).test(n)).sort();
+}
+async function kanripoSearch(title, probe, log = () => {}) {
+  const cands = titleCandidates(title).slice(0, 3);
+  if (!cands.length) return null;
+  const juanMatch = title.match(/卷([一二三四五六七八九十百]+)/); const hint = juanMatch ? cnNumber(juanMatch[1]) : null;
+  let best = null;
+  for (const c of cands) {
+    let files = [], ref = null;
+    for (const r of ['WYG', 'master']) { try { const f = await ghJuanFiles(c.id, r); if (f.length > files.length) { files = f; ref = r; } } catch (e) { /* branch absent or API limit */ } }
+    if (!files.length) continue;
+    const juanOf = f => +f.match(/_(\d{3})\.txt$/)[1];
+    // Hinted juan first (Siku volumes are often off by a few from Kanripo's numbering), then the rest.
+    if (hint != null) files.sort((a, b) => Math.abs(juanOf(a) - hint) - Math.abs(juanOf(b) - hint));
+    log(`    wide: ${c.id} ${c.full} — ${files.length} juan files on ${ref}${hint != null ? `, hint j${hint}` : ''}`);
+    for (let i = 0; i < files.length; i += 6) {
+      const batch = files.slice(i, i + 6);
+      const texts = await Promise.all(batch.map(f => getText(`https://raw.githubusercontent.com/kanripo/${c.id}/${ref}/${f}`).then(kanripoHan).catch(() => '')));
+      for (let k = 0; k < batch.length; k++) {
+        if (texts[k].length < 200) continue;
+        const w = bestWindow(texts[k], probe);
+        if (!best || w.overlap > best.overlap) best = { overlap: w.overlap, source: 'Kanripo', work: c.id, work_title: c.full, juan: juanOf(batch[k]), witness: ref, url: `https://github.com/kanripo/${c.id}/blob/${ref}/${batch[k]}`, etext: texts[k] };
+      }
+      if (best && best.overlap >= 0.6) return best;
+    }
+  }
+  return best;
 }
 
 // ── Word-script local corpus (Syriac: Digital Syriac Corpus, CC BY 4.0, flattened by the
@@ -187,16 +235,25 @@ const pages = reg.pages.filter(p => (!p.spare || p.promoted) && !p.retired && (!
 let built = 0, none = 0;
 for (const p of pages) {
   const outTxt = path.join(REFS, `${p.slug}.txt`), outJson = path.join(REFS, `${p.slug}.json`);
-  if (fs.existsSync(outJson) && !ONLY) { built++; continue; }
+  if (fs.existsSync(outJson) && !ONLY && !(RETRY && !fs.existsSync(outTxt))) { if (fs.existsSync(outTxt)) built++; else none++; continue; }
   let probe = '';
   for (const e of PROBES) { const f = path.join(ROOT, STRATUM, 'out', e, `${p.slug}.txt`); if (fs.existsSync(f)) { const t = han(fs.readFileSync(f, 'utf8')); if (t.length > probe.length) probe = t; } }
   const note = { slug: p.slug, substratum: p.substratum, title: p.title, probe_chars: probe.length };
   if (probe.length < 40) { note.reason = 'probe too short (page read as textless by the probe engines)'; fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason}`); continue; }
   let src = null;
-  try { src = p.substratum === 'buddhist-canon' ? await cbetaLookup(probe) : await kanripoLookup(p.title || ''); if (!src && p.substratum !== 'buddhist-canon') src = await cbetaLookup(probe); }
+  // CBETA first for Buddhist titles (the `buddhist-canon` sub-stratum, and the Buddhist share of
+  // chinese-ext's `woodblock-canon`), Kanripo-by-title first for everything else, the other as fallback.
+  const buddhist = p.substratum === 'buddhist-canon' || BUDDHIST_RE.test(p.title || '');
+  try { src = buddhist ? await cbetaLookup(probe) : await kanripoLookup(p.title || ''); if (!src) src = buddhist ? await kanripoLookup(p.title || '') : await cbetaLookup(probe); }
   catch (e) { note.error = e.message.slice(0, 120); }
+  let w = src ? bestWindow(src.etext, probe) : null;
+  if (WIDE && (!src || w.overlap < MIN_OVERLAP)) {
+    try {
+      const s2 = await kanripoSearch(p.title || '', probe, m => console.log(m));
+      if (s2 && (!src || s2.overlap > w.overlap)) { src = s2; w = bestWindow(src.etext, probe); note.witness = s2.witness; note.wide = true; }
+    } catch (e) { note.error = (note.error ? note.error + '; ' : '') + e.message.slice(0, 80); }
+  }
   if (!src) { note.reason = note.reason || 'no work identified (CBETA search / Kanripo catalogue)'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
-  const w = bestWindow(src.etext, probe);
   const win = trimWindow(w.window, probe);
   Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3) });
   if (w.overlap < MIN_OVERLAP) { note.reason = `overlap ${w.overlap.toFixed(2)} < ${MIN_OVERLAP}: page is not (cleanly) in this e-text`; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }

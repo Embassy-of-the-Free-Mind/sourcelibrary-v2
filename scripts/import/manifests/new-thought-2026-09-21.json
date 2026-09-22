@@ -1,0 +1,2609 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from new-thought.json; config new-thought.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Pruned 2026-09-21 by a reviewer pass over the review table (same work twice, off-topic, serials, non-English): 56 dropped (listed in hand_pruned with reasons), 7 kept with a FLAG note for a second look.",
+  "campaign": "new-thought-2026-09-21",
+  "collections": [],
+  "BOOKS": [
+    {
+      "id": "studiesinthought0000wood",
+      "title": "Studies in the thought world or, Practical mind art",
+      "author": "Henry Wood",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "mentalcureillust00eva",
+      "title": "The mental cure, illustrating the influence of the mind on the body",
+      "author": "W. F. (Warren Felt) Evans",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: b21454589, 9509595.nlm.nih.gov"
+    },
+    {
+      "id": "mentalmedicineth00evan",
+      "title": "Mental medicine : a theoretical and practical treatise on medical psychology",
+      "author": "W. F. (Warren Felt) Evans",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: mentalmedicinet00evan, mentalmedicinea00evangoog"
+    },
+    {
+      "id": "faithcuresoransw00cull",
+      "title": "Faith cures, or, Answers to prayer in the healing of the sick",
+      "author": "Charles Cullis",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "modernbethesdaor00newtrich",
+      "title": "The modern Bethesda, or, The gift of healing restored. Being some account of the life and labors of Dr. J.R. Newton, healer. With observations on the nature and source of the healing power, and the conditions of its exercise, notes of valuable auxiliary remedies, health maxims, etc",
+      "author": "Alonzo Eliot Newton",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "sciencehealthwit0000unse_r1f4",
+      "title": "Science and health",
+      "author": "Mary Baker Eddy",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: sciencehealth00eddy, 60340530R.nlm.nih.gov, 101490712.nlm.nih.gov"
+    },
+    {
+      "id": "vitalmagneticcur00magn",
+      "title": "Vital magnetic cure: an exposition of vital magnetism, and its application to the treatment of mental and physical disease",
+      "author": "Magnetic Physician",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "brainbibleorconf00beal",
+      "title": "The brain and the Bible; or, The conflict between mental science and theology",
+      "author": "Edgar Charles Beall",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: brainandbibleor00bealgoog"
+    },
+    {
+      "id": "healingpowerofmi00rootrich",
+      "title": "Healing power of mind : a treatise on mind-cure : with original views on the subject : and complete instructions for practice, and self treatment",
+      "author": "Julia Anderson Root",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: 66550910R.nlm.nih.gov"
+    },
+    {
+      "id": "healingpowermin00rootgoog",
+      "title": "Healing power of mind. A treatise on mind-cure, with original views on the subject, and complete instructions for practice, and self-treatment",
+      "author": "Julia Anderson Root",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California"
+    },
+    {
+      "id": "primitivemindcur00evanrich",
+      "title": "The primitive mind-cure : the nature and power of faith, or, elementary lessons in Christian philosophy and transcendental medicine",
+      "author": "W. F. (Warren Felt) Evans",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "divinelawofcure0000evan",
+      "title": "The divine law of cure",
+      "author": "W. F. (Warren Felt) Evans",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: divinelawofcure00evan"
+    },
+    {
+      "id": "mentalsciencemet00brooiala",
+      "title": "Mental science and methods of mental culture designed for the use of normal schools, academies, and private students preparing to be teachers",
+      "author": "Edward Brooks",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: mentalsciencemet0000edwa, mentalsciencemet00broo, mentalsciencean00broogoog"
+    },
+    {
+      "id": "mindcureonmateri00titc",
+      "title": "Mind-cure on a material basis",
+      "author": "Sarah Elizabeth Titcomb",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: mindcureonmater00titc"
+    },
+    {
+      "id": "cu31924031447646",
+      "title": "Esoteric Christianity and mental therapeutics",
+      "author": "W. F. (Warren Felt) Evans",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: esotericchristia00evan, esotericchristi00evan, esotericchristi00evangoog"
+    },
+    {
+      "id": "essentialsofment00mars",
+      "title": "Essentials of mental healing : the theory and practice",
+      "author": "L. M. (Luther M.) Marston",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: essentialsmenta00marsgoog"
+    },
+    {
+      "id": "mentalhealinglec00choa",
+      "title": "Mental healing : a lecture",
+      "author": "Clara Elizabeth author Choate",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "mindcureittruths00nich",
+      "title": "Mind cure; it truths and fallacies, from a common sense standpoint",
+      "author": "W. T. [from old catalog] Nichols",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "myphysicianmindm00croc",
+      "title": "My physician, mind : Metaphysics in a nutshell : a concise treatise on mental and spiritual dynamics : their application as a therapeutic agent, in the cure of all diseases, whether in acute or chronic form : in scope, it covers the entire domain of man's relations to God, the neighbor, and to the universe of things",
+      "author": "J. B Crocker",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "introductiontoth00dewe",
+      "title": "An introduction to the theosophy of Christ; embracing the science of intuition, mental healing and spiritual supremacy",
+      "author": "John Hamlin Dewey",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "christianpneumat00gill",
+      "title": "Christian pneumatopathy : or, the philosophy of mental healing",
+      "author": "William I. (William Icrin) Gill",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualscience00colv",
+      "title": "The spiritual science of health and healing;",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "universaltheosop00colv",
+      "title": "Universal theosophy: the science of health and healing",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: b28092235"
+    },
+    {
+      "id": "b20401437",
+      "title": "Christian science healing [electronic resource] : its principles and practice; with full explanations for home students",
+      "author": "Henrietta Frances Lord",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "spiritualtherap00colv",
+      "title": "Spiritual therapeutics;",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualtherape00colv"
+    },
+    {
+      "id": "waytruthlifehand00dewerich",
+      "title": "The way, the truth and the life; hand book of Christian theosophy, healing, and psychic culture, a new education, based on the ideal and method of the Christ",
+      "author": "John Hamlin Dewey",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "unityofgoodunrea00eddy",
+      "title": "Unity of good and unreality of evil,",
+      "author": "Mary Baker Eddy",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library; alternate scans: unityofgoodunrea01eddy"
+    },
+    {
+      "id": "lifebylandsea00mulf",
+      "title": "Life by land and sea",
+      "author": "Prentice Mulford",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "mindhealingconde00swar",
+      "title": "Mind-healing condensed: instruction book and formula",
+      "author": "Andrew J. [from old catalog] Swarts",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "seekingkingdoms00pattgoog",
+      "title": "Seeking the kingdom : Sunday evening talks on spiritual science, given at our home (Mental Science Institute)",
+      "author": "Charles Brodie Patterson",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "lessonsinscience00cramrich",
+      "title": "Lessons in the science of infinite spirit, and the Christ method of healing ..",
+      "author": "Malinda E Cramer",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "psychopathyorspi00rush",
+      "title": "Psychopathy : or, spirit healing : a series of lessons on the relations of the spirit to its own organism, and the interrelation of human beings with reference to health, disease and healing",
+      "author": "Benjamin Rush",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "faithhealinginsi00coxc",
+      "title": "Faith-healing in the sixteenth and seventeenth centuries; read before the American Folk-lore Society, November 29, 1890",
+      "author": "Charles Finney Cox",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "instructioninmet00whip",
+      "title": "Instruction in metaphysical healing",
+      "author": "Leander Edmund. [from old catalog] Whipple",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b21731330",
+      "title": "Faith-healing, Christian Science and kindred phenomena",
+      "author": "Buckley J. M. (James Monroe)",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Royal College of Physicians in Edinburgh"
+    },
+    {
+      "id": "retrospectionin00eddy",
+      "title": "Retrospection and introspection",
+      "author": "Mary Baker Eddy",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: retrospectioni00eddy, retrospectionint01eddy, cu31924029486234, retrospectionint00eddy, retrospectionan00eddygoog"
+    },
+    {
+      "id": "practicalhealing00yarnrich",
+      "title": "Practical healing for mind and body. A complete treatise on the principles and practice of healing by a knowledge of divine law",
+      "author": "Jane W Yarnall",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: practical-healing-for-mind-and-body-by-jane-yarnall, practicalhealin02yarngoog, practicalhealin01yarngoog"
+    },
+    {
+      "id": "philosophyofment00whip",
+      "title": "The philosophy of mental healing : a practical exposition of natural restorative power",
+      "author": "Leander Edmund Whipple",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: philosophyofme00whip, philosophyofmen00whip, b33767361, philosophymenta00whipgoog, practicecharity00devigoog"
+    },
+    {
+      "id": "pushingtofrontor1894mard",
+      "title": "Pushing to the front; or Success under difficulties, a book of inspiration and encouragement to all who are struggling for self-elevation along the paths of knowledge and of duty",
+      "author": "Orison Swett Marden",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Connecticut Libraries; alternate scans: cu31924031229051, pushingtofrontor00mardrich, pushingtofrontor00mard"
+    },
+    {
+      "id": "architectsoffate00mard",
+      "title": "Architects of fate : or, Steps to success and power : a book designed to inspire youth to character building, self-culture and noble achievement",
+      "author": "Orison Swett Marden",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Connecticut Libraries; alternate scans: architectsoffate00inmard, architectsfate00unkngoog"
+    },
+    {
+      "id": "churchmanualoffi00eddy",
+      "title": "Church manual of the First church of Christ, Scientist",
+      "author": "Mary Baker Eddy",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: churchmanualfir00massgoog, churchmanualfir00eddgoog"
+    },
+    {
+      "id": "hasmentalhealing00wood",
+      "title": "Has mental healing a valid scientific and religious basis? : Substance of a paper read by invitation before the clergymen's \"Monday Club\" (Unitarian ministers of Boston and vicinity) at the Channing Building, Boston, June 3d, 1895.",
+      "author": "Henry Wood",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "reincarnationmen00paul",
+      "title": "Reincarnation and mental science",
+      "author": "Paul Tyner",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Graduate Theological Union"
+    },
+    {
+      "id": "cu31924075437453",
+      "title": "Rising in the world, or, Architects of fate : a book designed to inspire youth to character building, self-culture and noble achievement",
+      "author": "Orison Swett Marden",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "successabookofid00mard",
+      "title": "Success;a book of ideals, helps, and examples for all desiring to make the most of life,",
+      "author": "Orison Swett Marden",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: successabookide00marsgoog"
+    },
+    {
+      "id": "worldbeautiful01whit",
+      "title": "World beautiful",
+      "author": "Lilian Whiting",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Florida, George A. Smathers Libraries; alternate scans: worldbeautiful00whitrich, worldbeautiful04whitgoog, worldbeautifulv00unkngoog, worldbeautiful05whitgoog, worldbeautiful09whitgoog, worldbeautiful01whitgoog"
+    },
+    {
+      "id": "christianscience00eddy",
+      "title": "Christian science versus pantheism",
+      "author": "Mary Baker Eddy",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: christianscience0000eddy, christianscience00eddyrich, cu31924029453473"
+    },
+    {
+      "id": "greatestthingeve0000trin",
+      "title": "The greatest thing ever known ..",
+      "author": "Ralph Waldo Trine",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: greatestthingeve00trin, greatestthingeve0000trin_r4w1, greatestthingev00trin, greatestthingev00tringoog"
+    },
+    {
+      "id": "secretofachievem04mard",
+      "title": "The secret of achievement",
+      "author": "Orison Swett Marden",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "voicesofhopeothe00dres",
+      "title": "Voices of hope, and other messages from the hills; a series of essays on the problem of life, optimism, and the Christ",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "christianscience00buckuoft",
+      "title": "Christian science and other superstitions : being selected chapters from \"Faith-healing, Christian science, and kindred phenomena,",
+      "author": "J. M. (James Monroe) Buckley",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: christianscience00buck"
+    },
+    {
+      "id": "christianscience00mccouoft",
+      "title": "Christian science, or, The false Christ of 1866 : an examination of the origin, animus, claims, philosophical absurdities, medical fallacies and doctrinal contents of the new gospel of mental healing",
+      "author": "William P McCorkle",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto"
+    },
+    {
+      "id": "everylivingcreat00trin",
+      "title": "Every living creature; or, Heart-training through the animal world",
+      "author": "Ralph Waldo Trine",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: everylivingcrea00trin"
+    },
+    {
+      "id": "idealsuggestion00wood",
+      "title": "Ideal suggestion through mental photography; a restorative system for home and private use",
+      "author": "Henry Wood",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: b28074518"
+    },
+    {
+      "id": "methodsproblemso00dres",
+      "title": "Methods and problems of spiritual healing",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "whatallworldsase00tri",
+      "title": "What all the world's a-seeking..",
+      "author": "Ralph Waldo Trine",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924029200743, whatallworldsase00trin_1, whatallworldsase00trinrich, whatallworldsase00trin, whatallworldsase00triniala, whatallworldsase00trin_0, whatallworldsas02tringoog"
+    },
+    {
+      "id": "characterbuildin0000trin",
+      "title": "Character-Building Thought Power",
+      "author": "Ralph Waldo Trine",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "educationphiloso00dresrich",
+      "title": "Education and the philosophical ideal",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: educationphiloso00dres, cu31924031760261, educationandphi00dresgoog, educationandphi02dresgoog"
+    },
+    {
+      "id": "b28099928",
+      "title": "Phrenopathy; or Rational mind cure",
+      "author": "Charles W. (Charles William) Close",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library"
+    },
+    {
+      "id": "psychiasishealin00mann",
+      "title": "Psychiasis; healing through the soul",
+      "author": "Charles Holbrook Mann",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: psychiasisheali00manngoog"
+    },
+    {
+      "id": "waltwhitmanmenta00trimuoft",
+      "title": "Walt Whitman and mental science, an interview",
+      "author": "Annie E. Trimble",
+      "year": 1900,
+      "lang": "English",
+      "note": "FLAG: 'Walt Whitman and mental science, an interview' - connection to the New Thought movement specifically is unclear; CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "lifesgreathealin00here",
+      "title": "Life's great healing law",
+      "author": "Densie. [from old catalog] Herendeen",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "psychicaldevelop00ande",
+      "title": "Psychical development and the philosophy of the new thought ..",
+      "author": "Emil Henry] [from old catalog] [Anderson",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "studiesinspiritu00ione",
+      "title": "Studies in spiritual harmony",
+      "author": "Ione",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "successlibrary28mard",
+      "title": "The success library",
+      "author": "Orison Swett Marden",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: successlibrary29mard, successlibrary30mard, successlibrary13mard, successlibrary21mard, successlibrary11mard, successlibrary02mard, successlibrary27mard, successlibrary24mard, successlibrary15mard, successlibrary01mard, successlibrary03mard, successlibrary25mard, successlibrary08mard, successlibrary14mard, successlibrary17mard, successlibrary09mard, successlibrary26mard, successlibrary07mard, successlibrary16mard, successlibrary04mard, successlibrary05mard, successlibrary06mard, successlibrary12mard, successlibrary10mard, successlibrary19mard, successlibrary20mard, successlibrary22mard"
+    },
+    {
+      "id": "symphonyoflifese00wood",
+      "title": "The symphony of life : a series of constructive sketches and interpretations",
+      "author": "Henry Wood",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: symphonyoflifese0000wood, symphonylifease01woodgoog, symphonylifease04woodgoog, symphonylifease00woodgoog, symphonylifease02woodgoog, symphonylifease03woodgoog"
+    },
+    {
+      "id": "thoughtforceinbu0000unse",
+      "title": "Thought-force in business and everyday life;: Being a series of lessons in personal magnetism, psychic influence, thougt-force, concentration, will power and practical mental science",
+      "author": "WILLIAM WALKER ATKINSON",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: thought-force-in-business-and-everyday-l"
+    },
+    {
+      "id": "mentalhealingmad00boeh",
+      "title": "Mental healing made plain",
+      "author": "Kate Atkinson. [from old catalog] Boehme",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: mentalhealingma00boehgoog"
+    },
+    {
+      "id": "b28133456",
+      "title": "The force of the mind : or, The mental factor in medicine",
+      "author": "A. T. (Alfred Taylor) Schofield",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: forceofmindormen00schoiala"
+    },
+    {
+      "id": "lawofmentalismpr00segnuoft",
+      "title": "The law of mentalism : a practical, scientific explanation of thought or mind force: the law which governs all mental and physical action and phenomena: the cause of life and death",
+      "author": "A. Victor Segno",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: lawofmentalismpr00segn"
+    },
+    {
+      "id": "b29011826",
+      "title": "The law of the new thought : a study of fundamental principles and their application",
+      "author": "William Walker Atkinson",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: india.history.resource.117493, lawnewthoughtas00atkigoog"
+    },
+    {
+      "id": "peopleshandbooko00colv",
+      "title": "The people's handbook of spiritual science :W.J. Colville's private course of lessons for the use of students.",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b22478607",
+      "title": "The wonders of thought force",
+      "author": "Royal College of Surgeons of England",
+      "year": 1902,
+      "lang": "English",
+      "note": "FLAG: author given as 'Royal College of Surgeons of E[ngland]' (an institution, not a person) for 'The wonders of thought force' - likely a cataloging error; verify actual author/content before import; CLEAR:by-date; held by Royal College of Surgeons of England"
+    },
+    {
+      "id": "artistichomeperu00barn",
+      "title": "artistic home : a perusal of which will give the modern housewife a hundred different ideas for the beautification of the home; every illustration a new thought, The",
+      "author": "Sumner and Putnam Company. Barnard",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Winterthur Museum Library"
+    },
+    {
+      "id": "artistichomeperu00gabl",
+      "title": "Artistic home : the perusal of which will give the modern housewife a hundred different ideas for the beautification of the home ; every illustration a new thought.",
+      "author": "Gable & Co.",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Winterthur Museum Library"
+    },
+    {
+      "id": "bibleyearbookofn00hayd",
+      "title": "Bible year book of the new thought,",
+      "author": "Mary F. [from old catalog] comp Haydon",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "joyphilosophy00town_0",
+      "title": "Joy philosophy",
+      "author": "Elizabeth Jones Towne",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign; alternate scans: joyphilosophy00town"
+    },
+    {
+      "id": "mandivineorderes00dres",
+      "title": "Man and the divine order; essays in the philosophy of religion and in constructive idealism",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: mananddivineord01dresgoog, mananddivineord00dresgoog"
+    },
+    {
+      "id": "newthoughtprimer00browrich",
+      "title": "New thought primer, origin, history and principles of the movement; a lesson in soul culture..",
+      "author": "Henry Harrison Brown",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b28142354",
+      "title": "The gift of the spirit : a selection from the essays of Prentice Mulford",
+      "author": "Prentice Mulford",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: giftofspiritsele00mulf"
+    },
+    {
+      "id": "kingsachievement00hadd",
+      "title": "The king's achievements : or, Power for success through culture of vibrant magnetism",
+      "author": "Frank C. (Frank Channing) Haddock",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "lawofmentalmedic00hudsuoft",
+      "title": "The law of mental medicine : the correlation of the facts of psychology and histology in their relation to mental therapeutics",
+      "author": "Thomson Jay Hudson",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: lawofmentalmedic00huds, lawofmentalmedic00hudsiala, 39002086413441.med.yale.edu"
+    },
+    {
+      "id": "newthoughtsimpli0000unse",
+      "title": "The New Thought Simplified",
+      "author": "Henry Wood",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: newthoughtsimpli00wood, in.ernet.dli.2015.49999, newthoughtsimpl01woodgoog, newthoughtsimpl00woodgoog"
+    },
+    {
+      "id": "studyofmentalsci00brou",
+      "title": "The study of mental science [microform] popular lectures on the uses and characteristics of logic and psychology",
+      "author": "Jos Brough",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries; alternate scans: in.ernet.dli.2015.274446, studymentalscie00brougoog"
+    },
+    {
+      "id": "trainingofchildr00part",
+      "title": "Training of children in the new thought",
+      "author": "Frances. [from old catalog] Partlow",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "firstlessonsinne00wink",
+      "title": "First lessons in the new thought;",
+      "author": "J[onathan] W[ingate] 1833- [from old catalog] Winkley",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "sciencenewthoug00hopkgoog",
+      "title": "Science of the New Thought",
+      "author": "Erastus Whitford Hopkins",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "powersilenceast00dresgoog",
+      "title": "The power of silence; a study of the values and ideals of the inner life",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: powersilenceast01dresgoog, powersilenceani02dresgoog, powersilenceani01dresgoog"
+    },
+    {
+      "id": "thoughtsonnewtho00vest",
+      "title": "Thoughts on \"new thought\"",
+      "author": "DeWitt Clinton Vestal",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "allthingsareposs00milirich",
+      "title": "All things are possible to them that believe. Thou shalt decree",
+      "author": "Annie Rix Militz",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "psychicphenomena00sowe",
+      "title": "Psychic phenomena in the light of the Bible; a treatise on the philosophy of non-medicinal healing and other psychic phenomena, in accordance with the ordinary theological science of evangelical Christianity",
+      "author": "Joseph Henry Sowerby",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rightwrongthinki00cran",
+      "title": "Right and wrong thinking, and their results; the undreamed-of possibilities which man may achieve through his own mental control",
+      "author": "Aaron Martin Crane",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: rightwrongthink00cran, rightandwrongth01crangoog, rightandwrongth00crangoog"
+    },
+    {
+      "id": "lawofnaturalheal00gils",
+      "title": "The law of natural healing",
+      "author": "Charles L[lewellyn] Gilson",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "peoplesideaofgod00eddy",
+      "title": "The people's idea of God: its effect on health and Christianity",
+      "author": "Mary Baker Eddy",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "youyourforces00town",
+      "title": "You and your forces;",
+      "author": "Elizabeth Towne",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "newthoughtpastel00wilc",
+      "title": "New thought pastels",
+      "author": "Ella Wheeler Wilcox",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: newthoughtpaste00unkngoog"
+    },
+    {
+      "id": "absenttreatment00leavgoog",
+      "title": "The absent treatment of disease",
+      "author": "Sheldon. [from old catalog] Leavitt",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "TheJoyThatNoManTakethFromYou",
+      "title": "The joy that no man taketh from you",
+      "author": "Lilian Whiting",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lifepowerhowtous00town",
+      "title": "The life power and how to use it",
+      "author": "Elizabeth Towne",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "willtobewell00patt",
+      "title": "The will to be well",
+      "author": "Charles Brodie Patterson",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924022985414",
+      "title": "A series of lessons in Raja yoga",
+      "author": "William Walker Atkinson",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "scienceofpsychi00rama",
+      "title": "The science of psychic healing",
+      "author": "Yogi Ramacharaka",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924022985422",
+      "title": "A series of lessons in Gnani yoga (the yoga of wisdom.)",
+      "author": "William Walker Atkinson",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "concentrationroa00browrich",
+      "title": "Concentration: the road to success. A lesson in soul culture",
+      "author": "Henry Harrison Brown",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "opensesamewordss00younrich",
+      "title": "Open sesame: words spoken to unlock the door of success",
+      "author": "Janet (Janet M.) Young",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "practicalhealt00whip",
+      "title": "Practical health",
+      "author": "Leander Edmund. [from old catalog] Whipple",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: practicalhealth00whip"
+    },
+    {
+      "id": "psychotherapyinp00leavrich",
+      "title": "Psycho-therapy in the practice of medicine and surgery",
+      "author": "Sheldon Leavitt",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "greatwithin00lars",
+      "title": "The great within",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: greatwithi00lars"
+    },
+    {
+      "id": "greatesttruth00dres",
+      "title": "The greatest truth",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: greatesttruthoth0000dres"
+    },
+    {
+      "id": "pathofprosperity00alle",
+      "title": "The path of prosperity",
+      "author": "James Allen",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "thinkingfeelingd00scriuoft",
+      "title": "Thinking, feeling, doing, an introduction to mental science",
+      "author": "E. W. (Edward Wheeler) Scripture",
+      "year": 1907,
+      "lang": "English",
+      "note": "FLAG: E. W. Scripture was an academic experimental psychologist (Yale); this may be general applied psychology rather than New Thought - kept as sole survivor of a 3-way dupe cluster, verify scope; CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "thismysticallife00trin_0",
+      "title": "This mystical life of ours;a book of suggestive thoughts for each week through the year selected from the works of Ralph Waldo Trine.",
+      "author": "Ralph Waldo Trine",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: thismysticallife00trinrich, in.ernet.dli.2015.205086"
+    },
+    {
+      "id": "the-new-thought",
+      "title": "The New Thought (extracted From White Hyacinths By Elbert Hubbard)",
+      "author": "Elbert Hubbard",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "asyewill00leav",
+      "title": "\"As ye will.\"",
+      "author": "Sheldon Leavitt",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "aphysiciantosou01dresgoog",
+      "title": "A physician to the soul",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "discoverieswhich00starrich",
+      "title": "Discoveries which make mental therepeutics and the transmission of mental communications an exact science",
+      "author": "Danvill William Starrett",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "hecanwhothinkshe00marduoft",
+      "title": "He can who thinks he can, and other papers on success in life",
+      "author": "Orison Swett Marden",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Kelly - University of Toronto; alternate scans: hecanwhothinkshe0000mard, hecanwhothinksh00mardgoog"
+    },
+    {
+      "id": "mindreligionhea00macd",
+      "title": "Mind, religion and health, with an appreciation of the Emmanuel movement; how its principles can be applied in promoting health and in the enriching of our daily life",
+      "author": "Robert MacDonald",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: mindreligionheal00macd"
+    },
+    {
+      "id": "newthoughtcommon00wilc",
+      "title": "New thought common sense and what life means to me",
+      "author": "Ella Wheeler Wilcox",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: newthoughtcommon025176mbp, newthoughtcommon021802mbp, in.ernet.dli.2015.201573, dli.ernet.163586, in.ernet.dli.2015.163308"
+    },
+    {
+      "id": "onheights00lars",
+      "title": "On the heights",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: onheights00larsgoog, onheights01larsgoog"
+    },
+    {
+      "id": "onopenroadbeings00trin",
+      "title": "On the open road; being some thoughts and a little creed of wholesome living",
+      "author": "Ralph Waldo Trine",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: onopenroadbeings0000trin, cu31924029202342, onopenroadbeing00tringoog"
+    },
+    {
+      "id": "pathstoheights0000leav",
+      "title": "Paths to the heights",
+      "author": "Sheldon Leavitt",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: pathstoheights00leav, pathstoheights00leavgoog"
+    },
+    {
+      "id": "practicalmindrea00atkirich",
+      "title": "Practical mind reading; a course of lessons on thought-transference, telepathy, mental-currents, mental rapport, etc",
+      "author": "William Walker Atkinson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b33408762",
+      "title": "Practical psychomancy and crystal gazing : a course of lessons on the psychic phenomena of distant sensing, clairvoyance, psychometry, crystal gazing, etc. ...",
+      "author": "William Walker author Atkinson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: practicalpsychom00atki, india.history.resource.112139"
+    },
+    {
+      "id": "religionmedicine00worcuoft",
+      "title": "Religion and medicine; the moral control of nervous disorders",
+      "author": "Elwood Worcester",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Gerstein - University of Toronto"
+    },
+    {
+      "id": "lawofchristianhe0000fitz",
+      "title": "The law of Christian healing",
+      "author": "David Bruce Fitzgerald",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "philosophyofspir00dresrich",
+      "title": "The philosophy of the spirit : a study of the spiritual nature of man and the presence of God, with a supplementary essay on the logic of Hegel",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: philosophyofspir00dres, philosophyofspir0000dres, philosophyspiri01dresgoog, philosophyspiri00dresgoog"
+    },
+    {
+      "id": "psychicsolutiono00leav",
+      "title": "The psychic solution of the problem of cure",
+      "author": "Sheldon Leavitt",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "questforhealthha00hawk",
+      "title": "The quest for health and happiness",
+      "author": "Chauncey J. (Chauncey Jeddie) Hawkins",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mentaltherapeuti00star",
+      "title": "Mental therapeutics;",
+      "author": "Danvill William Starrett",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "treatiseonmiracl00will",
+      "title": "A treatise on the miracles of Christ and mind healing of the present day as viewed by a physician",
+      "author": "Reinhold Willman",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "edinburghlectures00trow",
+      "title": "Edinburgh lectures on mental science, The",
+      "author": "T. (Thomas) Troward",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Substance Abuse Librarians and Information Specialists (SALIS); alternate scans: edinburghlecture0000unse_v9e6, edinburghlecture0000trow, cu31924029125982, b28083003"
+    },
+    {
+      "id": "healthwealthfrom00town",
+      "title": "Health and wealth from within ;how to apply New thought to the attainment of health, success, and the solving of every-day problems,",
+      "author": "William Elmer Towne",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "healthfromknowle00colv",
+      "title": "Health from knowledge;",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mentalmedicineso00huck",
+      "title": "Mental medicine, some practical suggestions from a spiritual standpoint; five conferences with students at the Johns Hopkins medical school",
+      "author": "Oliver Huckel",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "mesmerismchristi01podm",
+      "title": "Mesmerism and Christian Science",
+      "author": "Frank Podmore",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: mesmerismchristi00podmrich, mesmerismchristi0000podm, 39002053914348.med.yale.edu"
+    },
+    {
+      "id": "miraclesofhealin00waddrich",
+      "title": "Miracles of healing",
+      "author": "Charles W. (Charles Wilkin) Waddell",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b29011371",
+      "title": "New ideals in healing",
+      "author": "Ray Stannard Baker",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library"
+    },
+    {
+      "id": "rudimentaldivine00eddyrich",
+      "title": "Rudimental divine science",
+      "author": "Mary Baker Eddy",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: rudimentaldivine00eddy, cu31924029453523, rudimentaldivin01eddygoog"
+    },
+    {
+      "id": "soulculturepract00lindrich",
+      "title": "Soul-culture (practical psychology). Scientific prayer (religious suggestion). Religion (attitude toward spirit). Theology (conception of supreme power and intelligence)",
+      "author": "Arthur Adolphus Lindsay",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritualhealing00prat",
+      "title": "Spiritual healing",
+      "author": "Charles Edgar. [from old catalog] Prather",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "christianscience0000eddy_h6y0",
+      "title": "The Christian Science Hymnal",
+      "author": "Mary Baker Eddy",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "bwb_W9-DER-822",
+      "title": "The Dore Lectures On Mental Science",
+      "author": "Thomas Troward",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: dorelecturesonm00trowgoog"
+    },
+    {
+      "id": "evolutionofpsych00mcqurich",
+      "title": "The evolution of psychic healing",
+      "author": "Harmon H McQuilkin",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: evolutionofpsych0000mcqu"
+    },
+    {
+      "id": "triunedevelopmen00mill",
+      "title": "Triune development, the road to self-mastery",
+      "author": "Annie (Jenness) Mrs. Miller",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924022985406",
+      "title": "Fourteen lessons in yogi philosophy and oriental occultism",
+      "author": "William Walker Atkinson",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "what-is-truth-wattles",
+      "title": "What Is Truth? Wallace D Wattles",
+      "author": "Wallace Wattles",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "15lessonsinnewth0000unse",
+      "title": "15 lessons in new thought",
+      "author": "Unknown",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "allthesethingsad00alle",
+      "title": "All these things added",
+      "author": "James Allen",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: allthesethingsa00alle"
+    },
+    {
+      "id": "dominionpowerors00pattrich",
+      "title": "Dominion and power; or, The science of life and living",
+      "author": "Charles Brodie Patterson",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "frompassiontopea00alle",
+      "title": "From passion to peace, or, The pathway of the pure",
+      "author": "James Allen",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "glintsofwisdomor00colv",
+      "title": "Glints of wisdom, or, Helpful sayings for busy moments : being abstract from lectures with reflections, statements, meditations, and mottoes",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924031300324",
+      "title": "Human nature, its inner states and outer forms",
+      "author": "William Walker Atkinson",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "hypnotismmagneti00dela",
+      "title": "Hypnotism, and magnetism, mesmerism, suggestive therapeutics and magnetic healing ..",
+      "author": "L. W. (Lauron William) De Laurence",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "ldpd_11549783_000",
+      "title": "Mental healing and the Emmanuel movement : an editorial criticism",
+      "author": "Ed. Lightner Witmer",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "pulpitpres00eddy",
+      "title": "Pulpit and press",
+      "author": "Mary Baker Eddy",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: pulpitpress00eddy, cu31924029453515, pulpitpress00eddyrich, pulpitandpress00eddygoog, pulpitandpress01eddygoog, pulpitandpress02eddygoog"
+    },
+    {
+      "id": "spiritualhouseke00milirich",
+      "title": "Spiritual housekeeping; a study in concentration in the busy life",
+      "author": "Annie Rix Militz",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "landoflivingmen00trin_0",
+      "title": "The land of living men",
+      "author": "Ralph Waldo Trine",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "revivalofgiftsof00wood",
+      "title": "The revival of the gifts of healing",
+      "author": "Annie E.] [from old catalog] [Wood",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "scienceofbeingwe0000wall",
+      "title": "The Science of Being Well",
+      "author": "Wallace D. Wattles",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: isbn_1432519379, sciencebeingwel00wattgoog"
+    },
+    {
+      "id": "scienceofgetting0000wdwa",
+      "title": "The Science of Getting Rich",
+      "author": "W. D. Wattles",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: isbn_9781435100466"
+    },
+    {
+      "id": "the-pathway-of-roses",
+      "title": "Larson, Christian D 10 books-",
+      "author": "Christian D Larson",
+      "year": 1910,
+      "lang": "English",
+      "note": "FLAG: title reads 'Larson, Christian D 10 books-' - appears to be a multi-book bundle under one id; unclear what's inside and whether it duplicates already-listed individual Larson titles; CLEAR:stated"
+    },
+    {
+      "id": "manualofmentalsc00whip",
+      "title": "A manual of mental science,",
+      "author": "Leander Edmund Whipple",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "comparativeratio00robi",
+      "title": "Comparative and rational Christian science",
+      "author": "Charles Robinson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "fromsilenceorpat00davi",
+      "title": "From the silence; or, The pathway of hope",
+      "author": "Dan M Mrs. [from old catalog] Davidson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "newthoughtitslig00ande",
+      "title": "New thought, its lights and shadows; an appreciation and a criticism",
+      "author": "John Benjamin Anderson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924029124415, newthoughtitsli00andegoog"
+    },
+    {
+      "id": "scientificmental00brucrich",
+      "title": "Scientific mental healing",
+      "author": "H. Addington (Henry Addington) Bruce",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: scientificmental00bruc, scientificmenta00bruc, scientificmental0000hadd, scientificmental00bruc_0, scientificmenta00brucgoog, scientificmenta00unkngoog, scientificmenta01brucgoog"
+    },
+    {
+      "id": "masteryofbeingst00atki",
+      "title": "The mastery of being; a study of the ultimate principle of reality, and the application thereof",
+      "author": "William Walker Atkinson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "threethousandyea00cuttiala",
+      "title": "Three thousand years of mental healing",
+      "author": "George Barton Cutten",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: threethousandyea00cutt, cu31924012176057, b24865187, threethousandye00cuttgoog"
+    },
+    {
+      "id": "yourmindhowtouse00atki",
+      "title": "Your mind and how to use it : a manual of practical psychology",
+      "author": "William Walker Atkinson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "mentalmethodofbe00pott",
+      "title": "A mental method of beauty culture :how to be beautiful in face and form through the development of consciousness /",
+      "author": "Daniel Briggs. [from old catalog] Potter",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "BSG_8RSUP6512",
+      "title": "Cosmogony and thought-force",
+      "author": "G.-A. Mann",
+      "year": 1912,
+      "lang": "English",
+      "note": "FLAG: held by Bibliotheque Sainte-Genevieve (French library id); campaign is English-only - verify the text itself is in English, not a French-language record; CLEAR:by-date"
+    },
+    {
+      "id": "godpresenthelp0000cady",
+      "title": "God a present help",
+      "author": "H. Emilie (Harriette Emilie) Cady",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "howmindworks00larsrich",
+      "title": "How the mind works",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "howtostaywell00larsrich",
+      "title": "How to stay well",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "humanefficiencyp00dres",
+      "title": "Human efficiency; a psychological study of modern problems",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: humanefficiencyp00dresiala, humanefficiencyp00dresuoft, b28069146, cu31924014105195, humanefficiency01dresgoog, humanefficiency00dresgoog"
+    },
+    {
+      "id": "influenceofthoug00colv",
+      "title": "Influence of thought over all conditions [microform]",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "justbeglad00larsrich",
+      "title": "Just be glad",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924029179384",
+      "title": "Living waters; or, Rivers to the ocean",
+      "author": "Charles Brodie Patterson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "roadtofreedomhea00wils",
+      "title": "Road to freedom;health, success, happiness ... within the grasp of the million if they learn and follow the road open to all /",
+      "author": "Floyd B. (Floyd Baker) Wilson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: roadtofreedomhea0000wils"
+    },
+    {
+      "id": "idealmaderealora00larsrich",
+      "title": "The ideal made real: or, Applied metaphysics for beginners",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: idealmadereal00larsiala"
+    },
+    {
+      "id": "mindcure00larsrich",
+      "title": "The mind cure",
+      "author": "Christian Daa Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: mindcure00larsgoog"
+    },
+    {
+      "id": "pathwayofroses00larsiala",
+      "title": "The pathway of roses",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: pathwayroses01larsgoog"
+    },
+    {
+      "id": "physiologyoffait00sadl",
+      "title": "The physiology of faith and fear; or, The mind in health and disease",
+      "author": "William Samuel Sadler",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: physiologyfaith01sadlgoog, physiologyfaith00sadlgoog"
+    },
+    {
+      "id": "scientifictraini00larsrich",
+      "title": "The scientific training of children",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "winningofbest0000trin",
+      "title": "The winning of the best",
+      "author": "Ralph Waldo Trine",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: winningofbest00trin"
+    },
+    {
+      "id": "thinkingforresul00lars",
+      "title": "Thinking for results",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "thoughtsimetonhi0000trin",
+      "title": "Thoughts I met on the highway : words of friendly cheer from \"The books.\"",
+      "author": "Ralph Waldo Trine",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "whatistruth00lars",
+      "title": "What is truth",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "mind-power_202607",
+      "title": "Mind Power The Secret Of Mental Magic",
+      "author": "William Walker Atkinson",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "cu31924006051977",
+      "title": "Bible mystery and Bible meaning",
+      "author": "Thomas Troward",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "healinginfluenc01whipgoog",
+      "title": "Healing influences",
+      "author": "Leander Edmund Whipple",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: healinginfluenc00whipgoog"
+    },
+    {
+      "id": "howtomakemoneyth00austrich",
+      "title": "How to make money. Three lectures on \"the laws of financial success\"",
+      "author": "B. F. (Benjamin Fish) Austin",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "insunlightofheal00patt",
+      "title": "In the sunlight of health",
+      "author": "Charles Brodie Patterson",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mindandhealthwit00weavuoft",
+      "title": "Mind and health : with an examination of some systems of divine healing",
+      "author": "Edward Ebenezer Weaver",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto"
+    },
+    {
+      "id": "mindhealthwithex00weavrich",
+      "title": "Mind and health, with an examination of some systems of divine healing",
+      "author": "Edward Ebenezer Weaver",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: mindhealthwithex00weav, cu31924012174177, mindandhealthwi00weavgoog"
+    },
+    {
+      "id": "prosperitythroug00mili",
+      "title": "Prosperity through the knowledge and power of mind; lectures and mental treatments delivered in London, New York, Chicago, San Francisco and Los Angeles in the years between 1900 and 1913",
+      "author": "Annie Rix Militz",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: prosperitythroug00milirich"
+    },
+    {
+      "id": "firstchurchofchr00eddyuoft",
+      "title": "The first Church of Christ, Scientist, and miscellany",
+      "author": "Mary Baker Eddy",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: firstchurchofchr1916eddy, firstchurchofchr00eddyiala, firstchurchofch00eddy, cu31924029453481, firstchurchofchr01eddy, firstchurchofchr00eddy, firstchurchchri04eddygoog"
+    },
+    {
+      "id": "giftofhealingspi00arno",
+      "title": "The gift of healing and spiritual science as taught by Christ",
+      "author": "Adelaide Arnold",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "newalinementofli00trinrich",
+      "title": "The new alinement of life ..",
+      "author": "Ralph Waldo Trine",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: newalinementofli0000trin, newalinementofli0000trin_i0o8, newalinementlif00tringoog"
+    },
+    {
+      "id": "psychologyoforth00hous",
+      "title": "The psychology of orthodoxy",
+      "author": "Elwin Lincoln House",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: psychologyoforth00housiala, psychologyoforth0000hous"
+    },
+    {
+      "id": "whatisnewthought0000char",
+      "title": "What is New Thought?",
+      "author": "Charles Brodie Patterson",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "christchristmasp00eddyrich",
+      "title": "Christ and Christmas, a poem",
+      "author": "Mary Baker Eddy",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: christchristmasp00eddy, christchristmasp00edd, christchristmasp01eddy"
+    },
+    {
+      "id": "christianhealing00eddyuoft",
+      "title": "Christian healing, a sermon delivered at Boston",
+      "author": "Mary Baker Eddy",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "christianmindhea00rixhrich",
+      "title": "Christian mind healing, a course of lessons in the fundamentals of new thought",
+      "author": "Harriet Hale Rix",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "directhealing00ellsgoog",
+      "title": "Direct healing",
+      "author": "Paul Ellsworth] [Triem",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Wisconsin - Madison"
+    },
+    {
+      "id": "growthinsilence00cocr",
+      "title": "Growth in silence,",
+      "author": "Susanna Cocroft",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mentalphysicalea00leav",
+      "title": "Mental and physical ease and supremacy;",
+      "author": "C. Franklin (Cyrus Franklin) Leavitt",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "sciencepowerofmi00bish",
+      "title": "Science and power of the mind; lectures on life and health",
+      "author": "Richmond Leander Bishop",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualhealing00geikiala",
+      "title": "Spiritual healing",
+      "author": "William Frederick Geikie-Cobb",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924012284539"
+    },
+    {
+      "id": "spiritualhealing00clerrich",
+      "title": "Spiritual healing; report of a Clerical and medical committee of inquiry into spiritual, faith, and mental healing",
+      "author": "Faith and Mental Healing Clerical and Medical Committee of Inquiry into Spiritual",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: b23982391, b28102617, spiritualhealing00cler"
+    },
+    {
+      "id": "newthoughtofplan00phil",
+      "title": "The new thought of the planets influence upon children at the hour of their birth",
+      "author": "Karen M. [from old catalog] Phillips",
+      "year": 1914,
+      "lang": "English",
+      "note": "FLAG: 'The new thought of the planets influence upon children at the hour of...' - astrology content (planetary influence at birth), borderline for New Thought/mind-cure scope; CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "psychologyofsola00setorich",
+      "title": "The psychology of the solar plexus and subconscious mind",
+      "author": "Julia Seton",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "vitalissuesinchr00newy",
+      "title": "Vital issues in Christian Science : a record of unsettled questions which arose in the year of 1909, between the Directors of The Mother Church, The First Church of Christ, Scientist, Boston, Massachusetts and First Church of Christ, Scientist, New York City, eight of its nine trustees and sixteen of its practitioners",
+      "author": "New York City Christian Science Institute",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "christologyscien0000sabi",
+      "title": "Christology--science of health and happines, or, Metaphysical healing exemplified--through rules, formulas and incidents",
+      "author": "Oliver C. (Oliver Corwin) Sabin",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "divinescience00prat",
+      "title": "Divine science:",
+      "author": "Charles Edgar. [from old catalog] Prather",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "bwb_T4-ALB-643",
+      "title": "Financial Success Through Creative Thought",
+      "author": "Wallace D. Wattles",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "healthpowerthrou00trie",
+      "title": "Health and power through creation",
+      "author": "Paul Ellsworth Triem",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "newthoughtmeanst00browrich",
+      "title": "New Thought means a triumphant democracy : a United States of the world : an address given by Henry Harrison Brown at the International New Thought Congress, San Francisco, Cal., Sept. 1, 1915",
+      "author": "Henry Harrison Brown",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "steppingstoneso00greygoog",
+      "title": "Stepping stones; or, Helps along the by-ways of New thought",
+      "author": "Louise Grey",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library"
+    },
+    {
+      "id": "crimeofsilence01mard",
+      "title": "The crime of silence,",
+      "author": "Orison Swett Marden",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: crimeofsilence00mard, crimeofsilence00mardrich, crimesilence00mardgoog"
+    },
+    {
+      "id": "cultureofcourage00hadd",
+      "title": "The culture of courage : a practical companion-book for unfoldment of fearless personality through the white life of reason and harmony",
+      "author": "Frank C. (Frank Channing) Haddock",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "newworldnewthoug00bixb",
+      "title": "The new world and the new thought",
+      "author": "James Thompson Bixby",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: cu31924029073876, newworldnewthougt00bixb, newworldnewthoug01bixb, in.ernet.dli.2015.167412, newworldandnewt00bixbgoog, newworldandnewt01bixbgoog"
+    },
+    {
+      "id": "rhythmoflife00pattrich",
+      "title": "The rhythm of life",
+      "author": "Charles Brodie Patterson",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: rhythmoflife00patt"
+    },
+    {
+      "id": "thinkinguniverse00shep",
+      "title": "The thinking universe; reason as applied to the manifestations of the Infinite",
+      "author": "Edmund E Sheppard",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: thinkinguniverse00sheprich, thinkingunivers00shepgoog"
+    },
+    {
+      "id": "completeconcorda00eddy",
+      "title": "A complete concordance to Science and health with key to the scriptures : together with an index to the marginal headings and a list of the scriptural quotations contained therein",
+      "author": "Mary Baker Eddy",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "handbookofinstru00winb",
+      "title": "Hand book of instructions for healing and helping others ...",
+      "author": "Charles F. (Charles Fremont) Winbigler",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "inlightofspirit00lars",
+      "title": "In the light of the Spirit",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: inlightofspiri00lars"
+    },
+    {
+      "id": "littlebuildersne00gren",
+      "title": "Little builders, new thought talks to children",
+      "author": "Dorothy. [from old catalog] Grenside",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: littlebuildersne0000gren"
+    },
+    {
+      "id": "mentalharmonyits00ione",
+      "title": "Mental harmony : its influence on life",
+      "author": "Ione",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "noyes00eddy",
+      "title": "No and yes",
+      "author": "Mary Baker Eddy",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellesley College Library; alternate scans: noyes01eddy, noyesnoye00eddyrich, cu31924029453507, noyes00eddy_0, noandyes01eddygoog"
+    },
+    {
+      "id": "stepsinhumanprog00larsrich",
+      "title": "Steps in human progress",
+      "author": "Christian D. (Christian Daa) Larson",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: stepsinhumanprog00lars"
+    },
+    {
+      "id": "goodsideofchrist00lars",
+      "title": "The good side of Christian science",
+      "author": "Christian Daa Larson",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "richmentality00rixhrich",
+      "title": "The rich mentality",
+      "author": "Harriet Hale Rix",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: richmentality00rixgoog"
+    },
+    {
+      "id": "theosophynewthou00shel",
+      "title": "Theosophy and New thought",
+      "author": "Henry C. (Henry Clay) Sheldon",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: theosophynewthou0000shel, theosophyandnew00shelgoog"
+    },
+    {
+      "id": "thinkrightforhea00ione",
+      "title": "Think right for health and success",
+      "author": "Ione",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "growthinsilenceu00cocr",
+      "title": "Growth in silence, the undertone of life",
+      "author": "Susanna Cocroft",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "handbookofnewtho0000hora",
+      "title": "Handbook of the New Thought",
+      "author": "Horatio Dresser",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "bim_early-english-books-1641-1700_handbook-of-the-new-thou_horatio-w-dresser_1917",
+      "title": "Handbook of the New Thought. 1917",
+      "author": "Horatio W. Dresser",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "manualofmotherch00eddyrich",
+      "title": "Manual of the mother church, the First Church of Christ, Scientist, in Boston, Massachusets",
+      "author": "Mary Baker Eddy",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: manualofmotherch00eddy, manualmotherchu01eddygoog"
+    },
+    {
+      "id": "mentalcontrolofb00whitrich",
+      "title": "Mental control of the body : or, Health through self-conquest",
+      "author": "Villette Hutchins White",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: mentalcontrolofb00whit, mentalcontrolbo00whitgoog"
+    },
+    {
+      "id": "newthoughtchrist0000camp",
+      "title": "New thought Christianized",
+      "author": "James M. (James Mann) Campbell",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: newthoughtchrist00camp"
+    },
+    {
+      "id": "successthroughth00john",
+      "title": "Success through thought: habit",
+      "author": "Benjamin. [from old catalog] Johnson",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "higherpowersofmi00triniala",
+      "title": "The higher powers of mind and spirit",
+      "author": "Ralph Waldo Trine",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: higherpowersmin00tringoog"
+    },
+    {
+      "id": "lawsofhealthpros00mcle",
+      "title": "The laws of health and prosperity and how to apply them;",
+      "author": "Clara Chamberlain. [from old catalog] McLean",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924012175984",
+      "title": "The relief of pain by mental suggestion; a study of the moral and religious forces in healing",
+      "author": "Loring Woart Batten",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: reliefpainbymen02battgoog"
+    },
+    {
+      "id": "spiritofnewthoug0000hora",
+      "title": "the spirit of the new thought",
+      "author": "horatio w. dresser",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: spiritofnewthoug0000hora_b5d8, spiritofnewthoug00dres, spiritofnewthoug0000dres, spiritnewthough00dresgoog"
+    },
+    {
+      "id": "victoriousfait00dres",
+      "title": "The victorious faith, moral ideals in war time",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: victoriousfaithm00dres"
+    },
+    {
+      "id": "healingyoursel00lars",
+      "title": "Healing yourself",
+      "author": "Christian Daa Larson",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "lifeyouthsuccess00gazerich",
+      "title": "Life, youth and success, constructive psychology from A to Z, an alphabet of affimation [!]",
+      "author": "Harry Gaze",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "newthoughthealin00boeh",
+      "title": "New thought healing made plain",
+      "author": "Kate Atkinson. [from old catalog] Boehme",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924031757259",
+      "title": "Power of will",
+      "author": "Frank C. (Frank Channing) Haddock",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: powerofwillpract00hadd"
+    },
+    {
+      "id": "psychictendencie00mart",
+      "title": "Psychic tendencies of to-day, an exposition and critique of new thought, Christian science, spiritualism, psychical research (Sir Oliver Lodge) and modern materialism in relation to immortality",
+      "author": "Alfred W. (Alfred Wilhelm) Martin",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: psychictendencie00martuoft, psychictendenci00martgoog"
+    },
+    {
+      "id": "15lessonsinnewth00town",
+      "title": "15 lessons in new thought;or, Lessons in living,",
+      "author": "Elizabeth Towne",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "historyofnewthou00dres",
+      "title": "A history of the new thought movement, by Horatio W. Dresser ..",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: ahistorynewthou00dresgoog, ahistorynewthou01dresgoog"
+    },
+    {
+      "id": "treatiseonrenewa00englrich",
+      "title": "A treatise on the renewal and rejuvenation of the physical body, with affirmations for use in the work",
+      "author": "Jessie A. Millard English",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "creativemind00holm",
+      "title": "Creative mind",
+      "author": "Ernest Shurtleff. [from old catalog] Holmes",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: creative-mind"
+    },
+    {
+      "id": "haveyoustrongwil00lela",
+      "title": "Have you a strong will? How to develop and strengthen will power, memory",
+      "author": "Charles Godfrey Leland",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "healththroughwil00wals",
+      "title": "Health through will power",
+      "author": "James Joseph Walsh",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Mugar Memorial Library, Boston University; alternate scans: cu31924012175505, healththroughwi00unkngoog"
+    },
+    {
+      "id": "inhollowofhishan00trinrich",
+      "title": "In the hollow of His hand",
+      "author": "Ralph Waldo Trine",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924029237223, inhollowofhishan0000trin, inhollowhishand00tringoog"
+    },
+    {
+      "id": "onthresholdofspi00dresrich",
+      "title": "On the threshold of the spiritual world : a study of life and death over there",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: onthresholdspir01dresgoog, onthresholdspir00dresgoog"
+    },
+    {
+      "id": "scientifichealin00cosp",
+      "title": "Scientific healing; a correspondence course",
+      "author": "Wilbert Le Roy. [from old catalog] Cosper",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "gistofitforheali00rochiala",
+      "title": "The gist of it for healing, health and happiness",
+      "author": "Haydon Rochester",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: gistofitforheali00roch"
+    },
+    {
+      "id": "lawofmindinactio00holm",
+      "title": "The law of mind in action;",
+      "author": "Fenwicke Lindsay. [from old catalog] Holmes",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924013959717"
+    },
+    {
+      "id": "throughsunlityea0000trin",
+      "title": "Through the sunlit year; a book of suggestive thoughts for each day through the year from the writings of Ralph Waldo Trine",
+      "author": "Ralph Waldo Trine",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: throughsunlityea00trin"
+    },
+    {
+      "id": "unityofgood00eddy",
+      "title": "Unity of good",
+      "author": "Mary Baker Eddy",
+      "year": 1919,
+      "lang": "English",
+      "note": "FLAG: 268 pages vs unityofgoodunrea00eddy's 100 pages for what may be the same essay ('Unity of good' vs 'Unity of good and unreality of evil') - is this a padded/compiled edition and a dupe, or genuinely distinct?; CLEAR:stated; held by Boston Public Library; alternate scans: unityofgood02eddy, unityofgood01eddy, cu31924029453606"
+    },
+    {
+      "id": "concentration00lars",
+      "title": "Concentration",
+      "author": "Christian D (Christian Daa) Larson",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Brandeis University Libraries; alternate scans: cu31924029125420"
+    },
+    {
+      "id": "divine-science-bible-text-book",
+      "title": "Divine Science Bible Text Book",
+      "author": "A.B. Fay",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; alternate scans: divine-science-bible-textbook"
+    },
+    {
+      "id": "powerforsuccesst00hadd",
+      "title": "Power for success thorough culture of vibrant magnetism",
+      "author": "Frank C. (Frank Channing) Haddock",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "religiousaspects00john",
+      "title": "Religious aspects of scientific healing;",
+      "author": "Donald Kent. [from old catalog] Johnston",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "openvisionstudyo00dresrich",
+      "title": "The open vision; a study of psychic phenomena",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: openvisionstudyo00dres, openvisionastud00dresgoog, openvisionastud01dresgoog"
+    },
+    {
+      "id": "worldsbalancewhe00trin",
+      "title": "The world's balance-wheel",
+      "author": "Ralph Waldo Trine",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: worldsbalancewh00tringoog"
+    },
+    {
+      "id": "thoughtsfromtrin0000trin",
+      "title": "Thoughts from Trine : an anthology from the works of Ralph Waldo Trine",
+      "author": "Ralph Waldo Trine",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "correspondenceco00sear",
+      "title": "Correspondence course: The psychology of use or The extravagance of economy",
+      "author": "F. W. (Franklin Warren) Sears",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "bwb_W9-DER-823",
+      "title": "In Tune with the Infinite",
+      "author": "Ralph Waldo Trine",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: bwb_Y0-DGZ-813, bwb_S0-AFB-493, dli.bengal.10689.8933, in.ernet.dli.2015.33086, in.ernet.dli.2015.204903"
+    },
+    {
+      "id": "makinghealthcert00clym",
+      "title": "Making health certain; a philosophical and inspirational treatise on the establishment and maintenance of health through a constructive mental attitude",
+      "author": "R. Swinburne (Reuben Swinburne) Clymer",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "myphilosophymyre0000trin",
+      "title": "My philosophy and my religion",
+      "author": "Ralph Waldo Trine",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "newthoughtsystem00flow",
+      "title": "New thought system of physical culture and beauty culture,",
+      "author": "Sydney Blanshard Flower",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "powerthroughperf00neff",
+      "title": "Power through perfected ideas; a study of the qualitative principle of knowledge as applied to human development and success",
+      "author": "Silas S. (Silas Shoemaker) Neff",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "newthoughpio00martrich",
+      "title": "Prentice Mulford, \"new thought\" pioneer",
+      "author": "Eva M Martin",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "stepstohealthtri00moor",
+      "title": "Steps to health, triumph, success.",
+      "author": "Edith. [from old catalog] Moore",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "willpowerpersona00flow",
+      "title": "Will-power, personal magnetism, memory-training, and success",
+      "author": "Sydney Blanshard Flower",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "christianhealing00filliala",
+      "title": "Christian healing; the science of being",
+      "author": "Charles Fillmore",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: christianhealing0000fill_t6o5"
+    },
+    {
+      "id": "christianscience00bellrich",
+      "title": "Christian science and the Catholic faith, including a brief account of new thought and other modern mental healing movements",
+      "author": "Augustin Matthias Bellwald",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: christianscienc00bell, ChristianScienceCatholicFaith, christianscience00bell, christianscience00belluoft, christianscienc01bellgoog, christianscienc00bellgoog"
+    },
+    {
+      "id": "inharmonywithlif00pren",
+      "title": "In harmony with life",
+      "author": "Harriet Doan. [from old catalog] Prentiss",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mentalchemistry0000haan",
+      "title": "Mental chemistry",
+      "author": "Charles F. (Charles Francis) Haanel",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "miraclesnewpsych00mickiala",
+      "title": "Miracles & the new psychology; a study in the healing miracles of the New Testament",
+      "author": "E. R. (Edward Romilly) Micklem",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924029334111"
+    },
+    {
+      "id": "miraclesandpsych00mickuoft",
+      "title": "Miracles and the new psychology, a study in the healing miracles of the New Testament",
+      "author": "Edward Romilly Micklem",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "selfhealingsimpl00peri",
+      "title": "Self-healing simplified",
+      "author": "George Landor Perin",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "spiritualhealthh00dres",
+      "title": "Spiritual health and healing",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "suggestionmental00browrich",
+      "title": "Suggestion and mental analysis; an outline of theory and practice of mind cure",
+      "author": "William Brown",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924003476896",
+      "title": "The conquest of disease; the psychology of mental and spiritual healing",
+      "author": "Eugene Del Mar",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "vademecumgowithm0000snyd",
+      "title": "Vade mecum (go with me) for students of new thought",
+      "author": "Martin L.] [from old catalog] comp [Snyder",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "affirmationshowt00bush",
+      "title": "Affirmations and how to use them,",
+      "author": "David V. (David Van) Bush",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "appliedpsycholog00bush",
+      "title": "Applied psychology and scientific living;one in a series of books on the fundamentals of practical psychology, covering the field of success, health and happiness,",
+      "author": "David V. (David Van) Bush",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "bodysoulenquiryi0000dear",
+      "title": "Body and soul; an enquiry into the effect of religion upon health, with a description of Christian works of healing from the New Testament to the present day",
+      "author": "Percy Dearmer",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: b28107470, bodyandsoulanenq00dearuoft, bodysoulenquiryi0000dear_t6l7"
+    },
+    {
+      "id": "pastpresentfutur00melt",
+      "title": "Past, present and future of psychology and new thought; a complete course of instruction by the question and answer method",
+      "author": "J. E Melton",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualhealing0003para",
+      "title": "Spiritual healing",
+      "author": "Swami Paramananda",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "spiritualhealing0000anso",
+      "title": "Spiritual healing, a discussion of the religious element in physical health",
+      "author": "Harold Anson",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "godofbiblegodofb00torr",
+      "title": "The God of the Bible; the God of the bible as distinguished from the God of \"Christian science,\" the God of \"new thought,\" the God of spiritualism , the God of \"theosophy,\" the God of Unitarianism, the God of \"the new theology,\" the God of modern philosophy, and the God of modernism in general.",
+      "author": "R. A. (Reuben Archer) Torrey",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "psychology_of_mediumship",
+      "title": "The Psychology of Mediumship (1923)",
+      "author": "Ohio) H. Scheuing (Columbus",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "miscellaneouswri00eddyuoft",
+      "title": "Miscellaneous writings, 1833-1896",
+      "author": "Mary Baker Eddy",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "psychologyofheal05bush",
+      "title": "Psychology of healing;one in a series of book on the fundamentals of practical psychology, covering the field of success, health and happiness, Vol. V",
+      "author": "David V. (David Van) Bush",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "studiesinhighmys0000hopk",
+      "title": "Studies in high mysticism : the magia Jesu Christi. IV. Faith",
+      "author": "Emma Curtis Hopkins",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "healingpower00boul",
+      "title": "The healing power",
+      "author": "Helen Mary Boulnois",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "ethicsintheoryap00dres",
+      "title": "Ethics in theory and application",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "hiddenpowerother0000thom",
+      "title": "Hidden Power and Other Papers Upon Mental Science",
+      "author": "Thomas Troward",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: hiddenpowerother00trow, hiddenpower0000unse"
+    },
+    {
+      "id": "proseworks0000unse",
+      "title": "Prose works other than Science and health, with key to the scriptures",
+      "author": "Mary Baker Eddy",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "scientificspirit00wals",
+      "title": "Scientific spiritual healing",
+      "author": "William Thomas Walsh",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "selfmasterythrou0000leav",
+      "title": "Self mastery through understanding ; a treatise on Leavitt-Science",
+      "author": "C. Franklin (Cyrus Franklin) Leavitt",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "yourinvisiblepow0000gene_u4y0",
+      "title": "Your Invisible Power: A Presentation of the Mental Science of Judge Thomas Troward",
+      "author": "Genevieve Behrend",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "historyofmodernp0000dres",
+      "title": "A history of modern philosophy",
+      "author": "Horatio W. (Horatio Willis) Dresser",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "christianityment00plat",
+      "title": "Christianity and mental healing : an answer to the claims of Christian science ..",
+      "author": "Thomas George Platten",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "creativemindsucc00holm_1",
+      "title": "Creative mind and success ..",
+      "author": "Ernest Holmes",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: creative-mind-and-success-by-ernest-holmes"
+    },
+    {
+      "id": "exercisesinright0000farn",
+      "title": "Exercises in right thinking : a manual of daily meditations for growth in grace, with index of subjects, and self-treatments in prose and verse",
+      "author": "Ruby Farnham",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "powerthatwins0000trin",
+      "title": "The power that wins",
+      "author": "Ralph Waldo Trine",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "highmysticismfif0000hopk",
+      "title": "High mysticism : the fifth of a series of twelve studies in the inspirations of the sages of the ages. V. Works",
+      "author": "Emma Curtis Hopkins",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "whatmrseddysaidt0000unse",
+      "title": "What Mrs. Eddy Said To Arthur Brisbane",
+      "author": "Mary Baker Eddy",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    }
+  ],
+  "hand_pruned": [
+    "everylivingcreat0000trin — dupe of everylivingcreat00trin (same work, fewer pages)",
+    "glintsofwisdom00colv — dupe of glintsofwisdomor00colv (same work, fewer pages)",
+    "miscellaneouswri00eddy_0 — dupe of miscellaneouswri00eddyuoft (same Eddy work, prefer uoft library scan)",
+    "miscellaneouswri00eddy — dupe of miscellaneouswri00eddyuoft (same Eddy work, prefer uoft library scan)",
+    "pushingtofrontor00mard_0 — dupe of pushingtofrontor1894mard (same work, fewer pages)",
+    "religionmedicine00worciala — dupe of religionmedicine00worcuoft (same work, prefer uoft over iala)",
+    "rudimentaldivine0000eddy — dupe of rudimentaldivine00eddyrich (same Eddy work, prefer rich scan)",
+    "studiesinthought00wood — dupe of studiesinthought0000wood (same work, fewer pages)",
+    "greatesttruthoth00dres — dupe of greatesttruth00dres (same work, identical page count/year)",
+    "idealmaderealora00lars — dupe of idealmaderealora00larsrich (same work, prefer rich scan)",
+    "newworldnewthoug0000jame — dupe of newworldnewthoug00bixb (same work, fewer pages)",
+    "perceptionalist00hamigoog — off-topic: academic philosophy-of-mind textbook (Edward John Hamilton, not New Thought); also dupe of perceptionalisto00hamiuoft",
+    "perceptionalisto00hamiuoft — off-topic: academic philosophy-of-mind textbook (Edward John Hamilton, not New Thought)",
+    "primitivemindcur00evaniala — dupe of primitivemindcur00evanrich (same Evans work, prefer rich over iala)",
+    "TheScienceOfBeingWell1910_2018 — dupe of scienceofbeingwe0000wall (modern 2018 reupload of same PD text)",
+    "TheScienceOfGettingRich1910_2018 — dupe of scienceofgetting0000wdwa (modern 2018 reupload of same PD text)",
+    "the-science-of-getting-rich-pg-59844-images — dupe of scienceofgetting0000wdwa (Project Gutenberg image reupload of same PD text)",
+    "theosophy-and-new-thought_1916 — dupe of theosophynewthou00shel (same work, modern-style id, no author attribution)",
+    "bwb_T5-BBG-924 — dupe of thinkingfeelingd00scriuoft (same work)",
+    "thinkingfeelingd00scri — dupe of thinkingfeelingd00scriuoft (same work, prefer uoft scan)",
+    "unityofgoodrudim00eddy — dupe: compilation of works already listed individually (Unity of good, Rudimental divine science, No and yes, Retrospection and introspection)",
+    "manualofmotherch01eddy — dupe of manualofmotherch00eddyrich (same Eddy work, prefer rich scan / later fuller edition per 'one edition per work' rule)",
+    "success-through-though-habit — dupe of successthroughth00john (same work, same author/year)",
+    "intunewithinfini0000ralp — dupe of bwb_W9-DER-823 (same Trine work, fewer pages)",
+    "howtoknowhumanna00atki — dupe of cu31924031300324 (same Atkinson work, 'How to know' retitling; cu3192 scan preferred)",
+    "christianhealing00eddyiala — dupe: combines the Christian healing essay and The people's idea of God, both already covered separately (christianhealing00eddyuoft, peoplesideaofgod00eddy)",
+    "christianhealing0000eddy — dupe of christianhealing00eddyuoft (same core Eddy 'Christian healing' work, prefer uoft scan)",
+    "christchristmas0000unse — dupe of christchristmasp00eddyrich (same Eddy work, prefer rich scan)",
+    "crimeagainstlabo00wattiala — off-topic: labor/business history of an Omaha streetcar company (Gurdon Wallace Wattles, matched by surname only, not New Thought author Wallace D. Wattles)",
+    "autobiographyofg1922watt — off-topic: genealogy/autobiography of a businessman (Gurdon Wallace Wattles, matched by surname only)",
+    "funstondoubletra00watt — off-topic: unrelated local/engineering topic (Willard Austin Wattles, matched by surname only)",
+    "lanternsingethse00wattiala — off-topic: general religious/mystical poetry collection, not New Thought/mind-cure prose (Willard Austin Wattles, matched by surname only)",
+    "ASPC0005079400 — off-topic: 1835 abolitionist-era report on free people of color in Ohio (Augustus Wattles, matched by surname only)",
+    "b21534883 — off-topic: phrenology museum catalogue, not New Thought",
+    "b2931088x — off-topic: 1830 phrenology pamphlet, predates and unrelated to New Thought movement",
+    "LecturesOnMentalScience — off-topic: phrenology lectures, not New Thought",
+    "b28111163 — off-topic: phrenology lectures, not New Thought",
+    "b28140576 — off-topic: phrenology manual (Fowler family phrenologists), not New Thought",
+    "newextensiveanal00smitrich — off-topic: 1855 general mental-science/phrenology textbook, predates New Thought movement",
+    "lightofmentalsci00loud — off-topic: 1845 moral-training essay, predates and unrelated to New Thought movement",
+    "elementsofmental00dayh — off-topic: academic philosophy-of-mind textbook, not New Thought",
+    "b28123256 — off-topic: academic philosophy-of-mind textbook (Godwin), not New Thought",
+    "brainmindormray — off-topic: phrenology/physiological psychology textbook, not New Thought",
+    "b28103415 — off-topic: phrenology/physiological psychology textbook, not New Thought",
+    "autologyinductiv00hami — off-topic: 1873 academic mental-science treatise, predates and unrelated to New Thought movement",
+    "b21524294 — off-topic: phrenology guide, not New Thought",
+    "b2493236x — off-topic: phrenology guide, not New Thought (also dupe of b21524294)",
+    "newsystemofmenta00ferr — off-topic: phrenology manual, not New Thought",
+    "phrenologymadeea00ferr — off-topic: phrenology manual, not New Thought",
+    "jstor-1630807 — off-topic: academic psychology journal article (JSTOR) - campaign explicitly excludes academic psychology journals",
+    "jstor-27899492 — off-topic: academic psychology journal article (JSTOR) - campaign explicitly excludes academic psychology journals",
+    "jstor-25106356 — off-topic: academic psychology journal article (JSTOR) - campaign explicitly excludes academic psychology journals",
+    "jstor-27900382 — off-topic: academic psychology journal article (JSTOR) - campaign explicitly excludes academic psychology journals",
+    "bub_gb_cxk3AAAAMAAJ — off-topic: non-English (German translation of Science and Health), campaign is lang=English",
+    "nautilus_190611-partial — off-topic: partial issue of a magazine (serial), not a book-length work",
+    "hellfireharrison00wattrich — off-topic: fiction novel by Wallace D. Wattles, not a New Thought treatise"
+  ]
+}

@@ -26,9 +26,24 @@
  *      `thoughtsTokenCount` must be summed too (in practice: call `outputTokensFrom`).
  *      Google bills both.
  *
+ *   3. RAW REST CALLERS — most hand-run scripts under scripts/ don't use the SDK at
+ *      all; they `fetch(...:generateContent...)` directly with a JSON body, which
+ *      check 1 above cannot see (it only recognises `getGenerativeModel({...})`).
+ *      A file containing a `:generateContent`/`:streamGenerateContent` URL with no
+ *      `thinkingConfig` anywhere in it, no waiver, and no route through the safe
+ *      helpers (`scripts/lib/gemini-script-client.mjs`, `scripts/eval/lib/runners.mjs`)
+ *      is a finding — same THINKING category, different call shape (#4599 follow-up,
+ *      2026-09-21). This is what actually caught the $17.45 7.0M-thought-token script
+ *      of 2026-09-14: it built its own fetch call and set no thinkingConfig.
+ *
  * A deliberate exception (grounded search needs a POSITIVE budget — flash-lite does not
  * ground at all, and `-1` silently suppresses grounding) is declared with a waiver
  * comment on the line above:  // thinking-ok: <reason>
+ *
+ * SHIPPING A NEW HAND-RUN SCRIPT? The one-line fix for every finding below is the
+ * same: import `callGemini` from `scripts/lib/gemini-script-client.mjs` instead of
+ * building your own fetch call — it sets the zero budget, counts thinking as output,
+ * and logs the spend, in one import.
  *
  * Usage: node scripts/audit/gemini-thinking-and-meter.mjs
  * Exit 0 = clean, 1 = findings. Cheap and offline — safe in CI or a pre-push hook.
@@ -37,14 +52,27 @@
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from 'fs';
 import { join, relative } from 'path';
 
+// usage-ok: static analysis only. This file greps for the literal strings
+// `generateContent`/`generateContentStream` — it never calls Gemini itself, so
+// the sibling perimeter guard (gemini-usage-perimeter.mjs) would otherwise flag
+// it as an unmetered call site on the strength of its own doc comments.
 const ROOT = process.cwd();
 // Every directory that can call Gemini. `src/app` and `src/workers` were missing until
 // 2026-09-14 and held 20 unguarded meter lines — including `/api/explain` and
 // `/api/search/ai-expand`, which bill on the request path every day. A guard's coverage
 // is the list of directories it walks; nothing announces the ones it does not.
-const SCAN_DIRS = ['scripts/workers', 'scripts/lib', 'scripts/batch', 'src/lib', 'src/app', 'src/workers'];
+//
+// `scripts` used to be three named subdirectories (`scripts/workers`, `scripts/lib`,
+// `scripts/batch`) — the ones with a standing pipeline behind them. That left 79 other
+// hand-run scripts (maintenance, enrichment, analysis, eval, one-off imports) entirely
+// unwalked, which is exactly the population the $17.45/7.0M-thought-token run of
+// 2026-09-14 came from. Walk the whole tree instead; `_archived` and `archive`
+// directories are dead code by convention, and `results`/`fixtures` hold eval OUTPUT,
+// not call sites.
+const SCAN_DIRS = ['scripts', 'src/lib', 'src/app', 'src/workers'];
 const EXTS = ['.mjs', '.ts', '.js'];
 const WAIVER = /\/\/\s*thinking-ok:/;
+const SKIP_DIR_NAMES = new Set(['node_modules', '_archived', 'archive', 'results', 'fixtures']);
 
 function walk(dir, out = []) {
   let entries;
@@ -54,7 +82,7 @@ function walk(dir, out = []) {
     let st;
     try { st = statSync(p); } catch { continue; }
     if (st.isDirectory()) {
-      if (e === 'node_modules' || e === '_archived' || e.startsWith('.')) continue;
+      if (SKIP_DIR_NAMES.has(e) || e.startsWith('.')) continue;
       walk(p, out);
     } else if (EXTS.some((x) => e.endsWith(x))) {
       out.push(p);
@@ -62,6 +90,17 @@ function walk(dir, out = []) {
   }
   return out;
 }
+
+// A file that calls Gemini over raw fetch instead of the SDK — how most hand-run
+// scripts here do it. Static text check only: this never executes a script.
+const REST_URL = /:generateContent|:streamGenerateContent/;
+const HAS_THINKING_CONFIG = /thinkingConfig/;
+// Importing either safe helper means the actual request config lives THERE, not in
+// this file, even if this file's own text happens to mention the URL (e.g. in a
+// comment). Matched loosely on the module's basename so both relative-path depths
+// (scripts/foo/bar.mjs vs scripts/foo.mjs) resolve.
+const ROUTES_THROUGH_SAFE_HELPER = /gemini-script-client(\.mjs)?['"]|eval\/lib\/runners(\.mjs)?['"]/;
+const SAFE_HELPER_FILES = new Set(['scripts/lib/gemini-script-client.mjs', 'scripts/eval/lib/runners.mjs']);
 
 /** Extract the balanced `{...}` object literal that starts at `open`. */
 function objectAt(src, open) {
@@ -124,7 +163,15 @@ for (const f of files) {
   const rel = relative(ROOT, f);
 
   // ── 1. thinking ──
-  for (const m of src.matchAll(/getGenerativeModel\s*\(\s*\{/g)) {
+  // `getGeminiClient()` (src/lib/gemini-client.ts) sets `thinkingBudget: 0` on every model
+  // it hands out unless the call site set its own — pinned by
+  // tests/unit/gemini-client-meters.test.ts. A file whose ONLY way to a model is that
+  // client is covered at the boundary; one that also builds a raw or unmetered client is
+  // not, and is still checked site by site.
+  const boundaryDefault = /\bgetGeminiClient\s*\(/.test(src)
+    && !/new\s+GoogleGenerativeAI\s*\(|getUnmeteredGeminiClient\s*\(/.test(src)
+    && !rel.endsWith('src/lib/gemini-client.ts');
+  for (const m of boundaryDefault ? [] : src.matchAll(/getGenerativeModel\s*\(\s*\{/g)) {
     const open = src.indexOf('{', m.index + 'getGenerativeModel('.length - 1);
     const obj = objectAt(src, open);
     if (WAIVER.test(priorLines(src, m.index))) continue;
@@ -155,6 +202,25 @@ for (const f of files) {
     // Only flag lines that FEED a token/cost figure — a console.log or a comment is fine.
     if (!/(output|tokens|cost|usage)\s*[:+=]/i.test(line)) continue;
     findings.push({ file: rel, line: lineOf(src, m.index), kind: 'meter', detail: line.trim().slice(0, 100) });
+  }
+
+  // ── 3. raw REST callers ──
+  // Most hand-run scripts don't use the SDK at all — they `fetch()` the REST
+  // endpoint directly, which check 1 above cannot see. File-level, not call-site:
+  // a script that imports the safe helper has its request config built THERE, even
+  // if this file's own text still mentions the URL (e.g. in a usage comment).
+  const restMatch = REST_URL.exec(src);
+  if (restMatch
+    && !HAS_THINKING_CONFIG.test(src)
+    && !WAIVER.test(src)
+    && !ROUTES_THROUGH_SAFE_HELPER.test(src)
+    && !SAFE_HELPER_FILES.has(rel)) {
+    findings.push({
+      file: rel,
+      line: lineOf(src, restMatch.index),
+      kind: 'thinking',
+      detail: 'raw REST call to :generateContent with no thinkingConfig anywhere in file',
+    });
   }
 }
 
@@ -196,4 +262,10 @@ for (const kind of ['thinking', 'meter']) {
 console.log('Fix: add `thinkingConfig: { thinkingBudget: 0 }`, or call `outputTokensFrom(usage)`');
 console.log('from scripts/workers/lib/supabase-usage-logger.mjs. Deliberate exception:');
 console.log('put `// thinking-ok: <reason>` on the line above.');
+console.log('');
+console.log('WRITING A NEW HAND-RUN SCRIPT? The one-line fix is the same for both checks:');
+console.log('  import { callGemini } from \'scripts/lib/gemini-script-client.mjs\';');
+console.log('It sets the zero thinking budget, counts thoughts as output, and logs the');
+console.log('spend under an `endpoint` label you pass in — one import instead of three');
+console.log('separate things to remember.');
 process.exit(1);

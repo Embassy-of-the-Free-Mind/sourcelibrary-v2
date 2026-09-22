@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-1b5581-p24",
+  "substratum": "woodblock-canon",
+  "title": "冥報記",
+  "probe_chars": 163,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR6r0116",
+  "work_title": "冥報記-唐-唐臨",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR6r0116/blob/master/KR6r0116_002.txt",
+  "etext_chars": 7641,
+  "window_chars": 190,
+  "overlap": 0.66
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "chinese-ext-49df5a-p70",
+  "substratum": "skqs-manuscript",
+  "title": "皇極經世觀物外篇衍義·卷五~卷六 (vol 3)",
+  "probe_chars": 149,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR5d0063",
+  "work_title": "皇極經世--邵雍",
+  "juan": 22,
+  "url": "https://github.com/kanripo/KR5d0063/blob/master/KR5d0063_022.txt",
+  "etext_chars": 10802,
+  "window_chars": 198,
+  "overlap": 0.348,
+  "reason": "overlap 0.35 < 0.35: page is not (cleanly) in this e-text"
+}
