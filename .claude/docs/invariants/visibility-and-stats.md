@@ -111,18 +111,19 @@ the denominator can see them, because a page awaiting OCR is in neither.
 
 ## Corpus counts (demoted from `CLAUDE.md`, PR #4469)
 
-**Measured 2026-08-30 — re-measure before quoting; these drift by thousands a
+**Measured 2026-09-17 — re-measure before quoting; these drift by thousands a
 month.** The 2026-05-26 vintage of this paragraph was off by up to 5x
 (`pages_count > 0` read ~15K against a true 74.7K) and sat wrong for months
-because nobody re-ran it.
+because nobody re-ran it; the 2026-08-30 vintage was three weeks old and
+already 24% low on the reader-facing count (31,731 against 41,919).
 
-- **109,567** total docs in `bookstore`
-- **47,483** `visible: true` — but **15,752 are artwork records with
-  `pages_count: 0`**, so the honest "books you can read" figure is **31,731**
+- **114,695** total docs in `bookstore`
+- **57,670** `visible: true` — but **15,751 are artwork records with
+  `pages_count: 0`**, so the honest "books you can read" figure is **41,919**
   (`visible: true && pages_count > 0`)
-- **84,574** with `pages_count > 0` (actually processed)
-- **61,829** with `pages_ocr > 0` — 20.2M pages ingested, 6.45M transcribed,
-  5.05M translated
+- **89,700** with `pages_count > 0` (actually processed)
+- **64,444** with `pages_ocr > 0` — 21.6M pages ingested, 6.77M transcribed,
+  5.07M translated
 
 The canonical "live" filter across all public APIs is
 `visible: true && pages_count > 0` (see `/api/books/library`). The `tier` field
