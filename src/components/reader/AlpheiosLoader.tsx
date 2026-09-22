@@ -34,12 +34,12 @@ export default function AlpheiosLoader({ enabled }: { enabled: boolean }) {
     if (!document.querySelector('link[data-alpheios-css]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = 'https://cdn.jsdelivr.net/npm/alpheios-components@3.4.3-incr-3.4.x.20220428394/dist/style/style-components.min.css';
+      link.href = 'https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css';
       link.setAttribute('data-alpheios-css', '1');
       document.head.appendChild(link);
     }
 
-    import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/alpheios-embedded@3.4.2-incr-3.4.x.20220429024/dist/alpheios-embedded.min.js' as string)
+    import(/* webpackIgnore: true */ 'https://cdn.jsdelivr.net/npm/alpheios-embedded@latest/dist/alpheios-embedded.min.js' as string)
       .then(() => window.AlpheiosEmbed?.importDependencies({ mode: 'cdn' }))
       .then((Embedded) => {
         if (!Embedded) throw new Error('AlpheiosEmbed missing');
