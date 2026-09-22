@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -287,5 +287,33 @@ describe('stripLeadingApparatus', () => {
 
   it('does nothing to ordinary prose', () => {
     expect(stripLeadingApparatus('The volume is encased in a binding.')).toBe('The volume is encased in a binding.');
+  });
+});
+
+describe('resolveSourceImages', () => {
+  it('prefers a page a person can open over a IIIF manifest', () => {
+    // 2,648 of 11,237 deposit-eligible books record a manifest as source_url
+    expect(resolveSourceImages({
+      image_source: { source_url: 'https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10123/manifest' },
+      ia_identifier: 'somebook',
+    })).toEqual({ url: 'https://archive.org/details/somebook', label: 'Source images' });
+  });
+
+  it('says it is a manifest when the manifest is all there is', () => {
+    expect(resolveSourceImages({
+      image_source: { source_url: 'https://nrs.lib.harvard.edu/urn-3:FHCL:1234/manifest.json' },
+    })).toEqual({
+      url: 'https://nrs.lib.harvard.edu/urn-3:FHCL:1234/manifest.json',
+      label: 'Source images (IIIF manifest)',
+    });
+  });
+
+  it('leaves an ordinary viewer URL alone — the negative control', () => {
+    const url = 'https://digital.bodleian.ox.ac.uk/objects/748a9d50-5a3a-440e-ab9d-567dd68b6abb';
+    expect(resolveSourceImages({ image_source: { source_url: url } })).toEqual({ url, label: 'Source images' });
+  });
+
+  it('returns no link when the book records neither', () => {
+    expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
   });
 });

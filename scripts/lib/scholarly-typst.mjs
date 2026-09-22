@@ -647,8 +647,7 @@ export function generateTypstSource(book, pages, options = {}) {
   const imprintLine = [[place, book.publisher].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
   const holder = book.image_source?.contributing_library || book.contributing_library;
   const provider = book.image_source?.provider_name;
-  const sourceUrl = book.image_source?.source_url
-    || (book.ia_identifier ? `https://archive.org/details/${book.ia_identifier}` : null);
+  const { url: sourceUrl, label: sourceLabel } = resolveSourceImages(book);
   // Say so only when the holding institution stated it — an importer default is not a rights statement
   const rights = book.image_source?.rights_normalized;
   const publicDomain = rights?.class === 'public-domain' && rights?.status === 'stated';
@@ -1093,11 +1092,38 @@ This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Libra
 #block(width: 100%)[
 #set par(justify: false)
 Source Library: #link("${bookUrl}")[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}]
-${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}
+${sourceUrl ? `\\\n${escapeTypst(sourceLabel)}: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}
 ]
 `);
 
   return doc.join('\n');
+}
+
+/** A IIIF manifest or other raw JSON: a machine endpoint, not a page to read. */
+const IIIF_MANIFEST = /manifest|\.json(?:\?|$)|\/iiif\//i;
+
+/**
+ * Where the colophon sends a reader for the page images, and what to call it.
+ *
+ * 2,648 of 11,237 deposit-eligible books record a IIIF manifest as
+ * `image_source.source_url` (Munich, Harvard, EAP, e-rara…), so a quarter of
+ * deposits printed "Source images: <url>" against a link that hands a scholar
+ * a wall of JSON. Prefer a page a person can open when the book has one, and
+ * where only the manifest exists, say that it is a manifest rather than
+ * implying it is somewhere to browse.
+ *
+ * Deliberately NOT doing per-host manifest→viewer URL mapping: that is a
+ * provider allowlist (see .claude/docs/invariants/image-host-allowlists.md)
+ * and belongs in its own change, not in a typesetting fix.
+ */
+export function resolveSourceImages(book) {
+  const recorded = book?.image_source?.source_url || null;
+  const ia = book?.ia_identifier ? `https://archive.org/details/${book.ia_identifier}` : null;
+  const isManifest = Boolean(recorded && IIIF_MANIFEST.test(recorded));
+  if (isManifest && ia) return { url: ia, label: 'Source images' };
+  const url = recorded || ia;
+  if (!url) return { url: null, label: 'Source images' };
+  return { url, label: isManifest ? 'Source images (IIIF manifest)' : 'Source images' };
 }
 
 /**
@@ -1109,6 +1135,12 @@ ${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst
  *
  * So: hyphens are made non-breaking (U+2011) and a zero-width space is added
  * after each slash, which is the one place a URL may be broken unambiguously.
+ *
+ * TRADE-OFF, deliberate: text transformed this way no longer copy-pastes into
+ * a browser, because U+2011 is not U+002D. That is acceptable ONLY because
+ * every one of these is a live link (the href is untouched) and because the
+ * imprint page's "Cite as" block — the string the edition actually tells a
+ * reader to copy — is left raw. Do not run a citation through this.
  */
 export function urlDisplay(url) {
   return String(url ?? '')
