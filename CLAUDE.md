@@ -111,13 +111,6 @@ public badges removed seven hours later, by a safety valve the evidence itself u
 - Production database: `bookstore`, NOT `sourcelibrary_research`. Measured 2026-08-30: **109,567** total docs, **47,483** `visible: true` — but **15,752 of those are artwork records with `pages_count: 0`, so the honest "books you can read" number is 31,731** (`visible: true && pages_count > 0`). Also **84,574** with `pages_count > 0` (actually processed), **61,829** with `pages_ocr > 0` (20.2M pages ingested, 6.45M transcribed, 5.05M translated). Re-measure before quoting — these drift by thousands a month, and an earlier vintage of this line was off by up to 5× before anyone noticed. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
 - **supabase-js silently caps every response at 1,000 rows** — no error, no warning, just a truncated array (truncation order follows the query plan, so it can look systematic, e.g. alphabetical). Any `.select()` that can exceed 1K rows needs `.range()` pagination or must be split into per-key queries. This zeroed whole corpora on `/api/ngrams` while reporting `found=true` (PR #3208) — the bug shape is "some keys work, others silently empty."
 
-## AI Models — IMPORTANT
-- Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
-- **OCR and translation route DIFFERENTLY since #4762 — do not "fix" the divergence.** Translation: lite for all but BPH. OCR *as written* sends BPH, non-Latin and unknown language to full flash — **but `OCR_LITE_ONLY` (default ON since 2026-09-11) returns lite before any of that runs**, so in production that carve-out never fires; measured bad on manuscripts and early print, #4877. **Tell:** reading the router and assuming the carve-out applied. Detail → `language-fields.md`.
-- **Gemini 3.x thinks by default and bills it at the output rate, invisibly** — every `generateContent` call site MUST set an explicit `thinkingConfig` (`thinkingBudget: 0` for OCR/translation/extraction — measured no quality loss) and count `thoughtsTokenCount` when metering. Six unconfigured call sites cost ~$2K/mo for months (#4581, 17× meter gap); sweep of remaining sites: #4599.
-- **Grounded search: flash-lite does NOT ground, silently** — read `measurement-instruments.md` before using grounding.
-- Reference: https://ai.google.dev/gemini-api/docs/models
-
 ## Conditional invariants — read the one matching what you're touching
 
 Each of these is scar tissue from a real incident. They are **as binding as the rules
@@ -177,6 +170,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Deploy verification, purges, the `/explore` build interlock → `deploy-and-caching.md` (also routed above)
 
 **Handing something to a model**
+- Choosing a Gemini model, a `generateContent` call site, `thinkingConfig`, grounding, or metering a model's cost → `ai-models.md` (**thinking is ON by default in 3.x and billed at the output rate — go through `getGeminiClient()` / `gemini-script-client.mjs`, never around them**; the OCR/translation routing split is deliberate, do not "fix" it)
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
