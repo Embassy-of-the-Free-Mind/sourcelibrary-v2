@@ -82,6 +82,17 @@ const BLOCK = 8;                          // production BATCH_SIZE
 const MAX_BLOCK_OCR_CHARS = 20000;        // production MAX_BATCH_OCR_CHARS — a bigger block is never sent as 8
 const MIN_PAGE_OCR_CHARS = 200;           // production MIN_OCR_CHARS_FOR_BATCH — a shorter page ends the block
 const SEED_CHARS = 2000;                  // production seed slice
+// --tail: the seed is the END of the previous page, as production sends it since
+// PR #4970 (#4968: from 2025-12-12 to 2026-09-22 production — and arms A and E
+// here — sent the FIRST 2,000 chars, so the seam was the part never seen).
+// Arms At and Et are A and E with that fix; prev and B are shared unchanged.
+const TAIL = has('tail');
+/** Mirrors continuityContext() in translate-core (PR #4970): editorial blocks off, last SEED_CHARS, '...' in front. */
+export function seedSlice(text, tail = TAIL) {
+  if (!tail) return `${text.slice(0, SEED_CHARS)}...`;
+  const body = String(text).replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '').trim();
+  return body.length > SEED_CHARS ? `...${body.slice(-SEED_CHARS)}` : body;
+}
 const CEILING_USD = 5;                    // the preregistered hard ceiling
 const ENDPOINT = 'eval/translation-batch-continuity';
 const CONCURRENCY = Number(arg('concurrency', 4));
@@ -160,6 +171,9 @@ export function blockPrompt(prompts, book, pages, seed) {
   let prompt = header;
   if (seed?.text) {
     if (seed.kind === 'source') prompt += `\n\n**Previous page (untranslated source text) for continuity:**\n${seed.text.slice(0, SEED_CHARS)}...`;
+    else if (TAIL) prompt += english
+      ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${seedSlice(seed.text)}`
+      : `\n\n**Previous page translation for continuity — continue from its end:**\n${seedSlice(seed.text)}`;
     else prompt += english
       ? `\n\n**Previous page (modernized) for continuity:**\n${seed.text.slice(0, SEED_CHARS)}...`
       : `\n\n**Previous page translation for continuity:**\n${seed.text.slice(0, SEED_CHARS)}...`;
@@ -184,8 +198,8 @@ Change ONLY what continuity requires: a sentence carried over the page break tha
 
 Return the full revised page and nothing else.
 
-**Previous page translation:**
-${prevTranslation.slice(0, SEED_CHARS)}...
+**Previous page translation${TAIL ? ' (its end)' : ''}:**
+${seedSlice(prevTranslation)}
 
 **Source text of this page:**
 ${ocr}
@@ -355,6 +369,8 @@ function readRows() {
 async function phaseRun() {
   const payload = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
   const est = estimate(payload.sample);
+  // --tail: one block call (At) and one repair call (Et) per boundary, prev and B reused
+  if (TAIL) est.usd = est.usd / 4 * 1.15;
   const approved = Number(arg('approved-usd', 0));
   if (!(approved >= est.usd) || approved > CEILING_USD || est.usd > CEILING_USD) {
     console.error(`REFUSING TO SPEND. Estimate $${est.usd.toFixed(2)}; --approved-usd is ${approved || 'absent'}; preregistered ceiling $${CEILING_USD}.`);
@@ -406,7 +422,7 @@ async function phaseRun() {
     if (which === 'D') parsed.delete(pages[0].page_number);   // the overlap page is translated and thrown away
     const row = {
       bookId: r.bookId, language: r.language, which, seamPage: r.seamPage, model: MODEL,
-      seedKind: seed?.text ? seed.kind : null, seedChars: seed?.text ? Math.min(SEED_CHARS, seed.text.length) : 0,
+      seedKind: seed?.text ? (TAIL && seed.kind === 'translation' ? 'translation-tail' : seed.kind) : null, seedChars: seed?.text ? Math.min(SEED_CHARS, seed.text.length) : 0,
       pages: Object.fromEntries(parsed), pagesParsed: parsed.size, pagesSent: which === 'D' ? pages.length - 1 : pages.length, overlapPages: which === 'D' ? 1 : 0, retried,
       error: res.error || null, finish: res.finish || null, inTok: res.inTok || 0, outTok: res.outTok || 0,
       cost_usd: cost, at: new Date().toISOString(),
@@ -416,7 +432,7 @@ async function phaseRun() {
   };
 
   /** Arm E: repair B's seam page against the previous page's translation. One small call. */
-  const callRepair = async (r, lastPrev, bRow) => {
+  const callRepair = async (r, lastPrev, bRow, which = 'E') => {
     const first = r.next[0];
     const bFirst = bRow?.pages?.[first.page_number];
     if (!bFirst || spent >= approved) return null;
@@ -427,14 +443,14 @@ async function phaseRun() {
     await logUsage({
       type: 'translation', mode: 'realtime', model: MODEL, book_id: r.bookId, page_count: 1,
       input_tokens: res.inTok || 0, output_tokens: res.outTok || 0, cost_usd: cost, status: res.error ? 'error' : 'success',
-      error_message: res.error || null, duration_ms: Date.now() - t0, prompt_version: 'seam-repair-e1', endpoint: ENDPOINT, triggered_by: 'manual',
+      error_message: res.error || null, duration_ms: Date.now() - t0, prompt_version: TAIL ? 'seam-repair-e2-tail' : 'seam-repair-e1', endpoint: ENDPOINT, triggered_by: 'manual',
     }, db).catch((e) => console.warn(`usage log failed: ${e.message}`));
     spent += cost;
     const repaired = res.error ? null : sanitizeTranslationTags((res.text || '').replace(/^```[a-z]*\n?|```\s*$/g, '').trim());
     const pages = { ...bRow.pages };
     if (repaired) pages[first.page_number] = repaired; else delete pages[first.page_number];
     const row = {
-      bookId: r.bookId, language: r.language, which: 'E', seamPage: r.seamPage, model: MODEL, seedKind: 'repair-pass', seedChars: Math.min(SEED_CHARS, lastPrev.length),
+      bookId: r.bookId, language: r.language, which, seamPage: r.seamPage, model: MODEL, seedKind: TAIL ? 'repair-pass-tail' : 'repair-pass', seedChars: Math.min(SEED_CHARS, lastPrev.length),
       pages, pagesParsed: Object.keys(pages).length, pagesSent: 1, retried: false, error: res.error || null, finish: res.finish || null,
       inTok: res.inTok || 0, outTok: res.outTok || 0, cost_usd: cost, at: new Date().toISOString(),
     };
@@ -455,9 +471,13 @@ async function phaseRun() {
         B: null,
         C: { kind: 'source', text: r.prev[BLOCK - 1].ocr },
       };
-      for (const arm of ARMS) {
+      for (const arm of TAIL ? [] : ARMS) {
         if (have.has(`${r.bookId}:${arm}`)) continue;
         await callBlock(r, arm, r.next, seeds[arm]);
+      }
+      if (TAIL) {
+        if (!have.has(`${r.bookId}:At`)) await callBlock(r, 'At', r.next, seeds.A);
+        if (!have.has(`${r.bookId}:Et`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`), 'Et');
       }
       // Arm D (Amendment 1, run only with --with-d once B and C have failed): block k-1's last
       // page rides along as the first page of the prompt, unseeded, and its duplicate is discarded.
@@ -468,7 +488,7 @@ async function phaseRun() {
       if (has('with-a2') && !have.has(`${r.bookId}:A2`)) await callBlock(r, 'A2', r.next, seeds.A);
       // Arm E (Amendment 1, last rung, run only with --with-e once B, C and D have failed): a second
       // pass over B's FIRST page only. It is never shown pages 2-8, so it cannot edit outside the seam.
-      if (has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
+      if (!TAIL && has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
     } else if (!prev?.skipped) {
       console.log(`  ${r.bookId}: block k-1 did not return its last page — boundary unusable, arms NOT run (recorded, not padded)`);
     }
@@ -521,7 +541,8 @@ function judgeShare(pair) {
     const k = key.get(v.id);
     const side = String(v.verdict).toUpperCase();
     if (side !== 'LEFT' && side !== 'RIGHT') { ties++; continue; }
-    if (k[side.toLowerCase()] === 'A') aWins++; else otherWins++;
+    const first = k.pair.includes('-') ? k.pair.split('-')[0] : 'A';
+    if (k[side.toLowerCase()] === first) aWins++; else otherWins++;
   }
   const n = aWins + otherWins + ties;
   return { n, a_wins: aWins, other_wins: otherWins, ties, a_share: (aWins + 0.5 * ties) / n, sign_p: binomTwoSided(aWins, aWins + otherWins) };
@@ -535,7 +556,7 @@ function phaseScore() {
 
   const scored = usable.map(({ s, rows }) => {
     const terms = committedTerms(s.prev.map((p) => rows.prev.pages[p.page_number] || ''));
-    const present = [...ARMS, 'D', 'E', 'A2'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
+    const present = [...ARMS, 'D', 'E', 'A2', 'At', 'Et'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
     return { s, rows, terms, arms: Object.fromEntries(present.map((a) => [a, scoreArm(s, rows[a], terms)])) };
   });
 
@@ -583,7 +604,7 @@ function phaseScore() {
     control_shuffled: control, arms: {},
   };
   const hasE = scored.some((b) => b.arms.E);
-  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : []), ...(scored.some((b) => b.arms.A2) ? ['A2'] : [])];
+  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : []), ...(scored.some((b) => b.arms.A2) ? ['A2'] : []), ...['At', 'Et'].filter((a) => scored.some((b) => b.arms[a]))];
   for (const arm of SHOWN) report.arms[arm] = { n: scored.filter((b) => b.arms[arm]).length, h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.filter((b) => b.arms[arm]).map((b) => b.arms[arm].body_chars)) };
   for (const arm of SHOWN.slice(1)) {
     const c = compare(arm), g = h3(arm), j = judgeShare(`A${arm}`);
@@ -649,31 +670,36 @@ function phaseJudgePacket() {
   // verdict was scored). So: `--pairs` says which pairs draw, `--only` which of them are written,
   // and key entries for pairs not written are kept. As judged: AB and AC came from
   // `--pairs AB,AC`; AD from `--pairs AB,AC,AD --only AD`; AE from `--pairs AE`.
+  // A pair is 'A<other>' (legacy: A against one arm) or 'X/Y' (any two arms, e.g. At/Et, A/At).
+  // The packet id and file use the pair with '/' replaced by '-'.
   const PAIRS = String(arg('pairs', 'AB,AC')).split(',');
   const ONLY = String(arg('only', PAIRS.join(','))).split(',');
+  const sides = (pair) => (pair.includes('/') ? pair.split('/') : ['A', pair.slice(1)]);
+  const fileTag = (pair) => pair.replace('/', '-');
   const { usable } = loadBoundaries();
   resetSeed();
-  const packet = { AB: [], AC: [], AD: [], AE: [] }, key = [];
+  const packet = Object.fromEntries(PAIRS.map((p) => [p, []])), key = [];
   for (const { s, rows } of usable) {
     const preceding = readerText(rows.prev.pages[s.prev[BLOCK - 1].page_number]);
-    for (const other of ['B', 'C', 'D', 'E']) {
-      if (!PAIRS.includes(`A${other}`)) continue;
-      if (!rows[other]?.pages?.[s.next[0].page_number]) continue;
-      const pair = `A${other}`, id = `${pair}:${s.bookId}`;
+    for (const pair of PAIRS) {
+      const [first, second] = sides(pair);
+      if (!rows[first]?.pages?.[s.next[0].page_number] || !rows[second]?.pages?.[s.next[0].page_number]) continue;
+      const id = `${fileTag(pair)}:${s.bookId}`;
       const flip = seededRand() < 0.5;
-      const a = readerText(rows.A.pages[s.next[0].page_number]), x = readerText(rows[other].pages[s.next[0].page_number]);
+      const a = readerText(rows[first].pages[s.next[0].page_number]), x = readerText(rows[second].pages[s.next[0].page_number]);
       packet[pair].push({ id, language: s.language, preceding_page: preceding, left: flip ? x : a, right: flip ? a : x });
-      key.push({ id, pair, left: flip ? other : 'A', right: flip ? 'A' : other });
+      key.push({ id, pair: fileTag(pair), left: flip ? second : first, right: flip ? first : second });
     }
   }
   for (const pair of ONLY) {
     if (!packet[pair]?.length) continue;
-    const f = path.join(RESULTS, `translation-batch-continuity-judge-packet-${pair}.jsonl`);
+    const f = path.join(RESULTS, `translation-batch-continuity-judge-packet-${fileTag(pair)}.jsonl`);
     fs.writeFileSync(f, packet[pair].map((p) => JSON.stringify(p)).join('\n') + '\n');
     console.log(`wrote ${packet[pair].length} blinded junctions to ${f}`);
   }
-  const kept = fs.existsSync(KEY_FILE) ? JSON.parse(fs.readFileSync(KEY_FILE, 'utf8')).filter((k) => !ONLY.includes(k.pair)) : [];
-  fs.writeFileSync(KEY_FILE, JSON.stringify([...kept, ...key.filter((k) => ONLY.includes(k.pair))], null, 1));
+  const onlyTags = ONLY.map(fileTag);
+  const kept = fs.existsSync(KEY_FILE) ? JSON.parse(fs.readFileSync(KEY_FILE, 'utf8')).filter((k) => !onlyTags.includes(k.pair)) : [];
+  fs.writeFileSync(KEY_FILE, JSON.stringify([...kept, ...key.filter((k) => onlyTags.includes(k.pair))], null, 1));
   console.log(`key (do NOT give this to the judge): ${KEY_FILE}`);
   console.log('\nJudge question, per junction:');
   console.log('  "PRECEDING_PAGE is the end of a translated passage. LEFT and RIGHT are two translations of');

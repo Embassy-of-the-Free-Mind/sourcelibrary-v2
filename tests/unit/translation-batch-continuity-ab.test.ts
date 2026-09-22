@@ -87,3 +87,16 @@ describe('the arms differ by the seed and by nothing else', () => {
     expect([...out.entries()]).toEqual([[491, 'one'], [492, 'two']]);
   });
 });
+
+describe('seedSlice (--tail, #4968)', () => {
+  it('head mode is production-before-#4970 byte for byte; tail mode is the end, editorial blocks off, marked in front', async () => {
+    const { seedSlice } = await import('../../scripts/eval/translation-batch-continuity-ab.mjs');
+    const text = 'START ' + 'x'.repeat(2500) + ' It is graver...<summary>s</summary>';
+    expect(seedSlice(text, false)).toBe(text.slice(0, 2000) + '...');
+    const tail = seedSlice(text, true);
+    expect(tail.startsWith('...')).toBe(true);
+    expect(tail.endsWith('It is graver...')).toBe(true);
+    expect(tail).not.toContain('START');
+    expect(tail).not.toContain('<summary>');
+  });
+});
