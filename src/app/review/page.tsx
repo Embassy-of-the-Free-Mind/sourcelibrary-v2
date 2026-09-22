@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import ReviewStats from '@/components/review/ReviewStats';
+import TranslationCheckSummary from '@/components/review/TranslationCheckSummary';
 
 export const metadata: Metadata = {
   title: 'Help curate — Source Library',
@@ -94,6 +95,8 @@ export default function ReviewLandingPage() {
       </p>
 
       <ReviewStats />
+
+      <TranslationCheckSummary />
 
       <div className="grid gap-4 mt-8">
         {QUEUES.map(q => (
