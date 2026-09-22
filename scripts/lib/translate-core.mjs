@@ -281,10 +281,97 @@ const blockRe = new RegExp(`<(${BLOCK_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`
 const looseRe = new RegExp(`</?(${BLOCK_TAGS.join('|')})\\b[^>]*>`, 'gi');
 
 /** Length of the prose body after stripping wrappers, tags, and whitespace. */
+/**
+ * HTML whitespace entities, collapsed to a space before anything is measured.
+ *
+ * `&nbsp;` is six characters that carry no text, and OCR of a blank or lightly
+ * ruled leaf is often made almost entirely of them. Until 2026-09-21 every length
+ * check here counted them: page 170 of Kircher's *Iter extaticum II* measured
+ * **18,561 characters of body** and, once decoded, held **nine** — a folio number.
+ * `isBlankFromOcr`, `isDegenerateSource` and `isTranslatablePage` all passed it, the
+ * page went to the translator as a substantial source, and the model filled the
+ * vacuum with a fabricated 2011 nephrology journal table of contents that shipped to
+ * readers and was one deposit away from a permanent DOI (#4960).
+ *
+ * The loop guard cannot catch this: `&nbsp;` padding was explicitly tuned OUT of the
+ * repeat metric as a false positive (164 of 181 cases). Stripping apparatus so a
+ * metric is not fooled by it, and then never asking whether anything REMAINS, is the
+ * gap this closes.
+ */
+const WS_ENTITY = /&(?:nbsp|ensp|emsp|thinsp|hairsp|#0*160|#[xX]0*a0|#8194|#8195|#8201);/g;
+
+/** Decode the few entities that are text, so they count as one character, not six. */
+const TEXT_ENTITIES = [[/&amp;/g, '&'], [/&lt;/g, '<'], [/&gt;/g, '>'], [/&quot;/g, '"'], [/&#0*39;|&apos;/g, "'"]];
+
+/**
+ * Leader dots and rules: an index or table page can be mostly `....................`,
+ * which is typography, not words. Four or more of the same punctuation mark in a row
+ * collapse to one — four rather than three so a normal ellipsis survives untouched.
+ * Same apparatus class as the entities above: strip it before measuring, then ask
+ * whether anything is left.
+ */
+const LEADER_RUN = /([.\u00b7\u2022\u2024\u2027_\-–—=~*])\1{3,}/g;
+
 export function bodyLen(text) {
   if (!text) return 0;
-  return String(text).replace(blockRe, ' ').replace(looseRe, ' ')
-    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim().length;
+  let out = String(text).replace(blockRe, ' ').replace(looseRe, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ')
+    .replace(WS_ENTITY, ' ')
+    .replace(LEADER_RUN, ' ');
+  for (const [re, ch] of TEXT_ENTITIES) out = out.replace(re, ch);
+  return out.replace(/\s+/g, ' ').trim().length;
+}
+
+/**
+ * Characters of real body below which a page has nothing to translate.
+ *
+ * Deliberately low. The asymmetry decides it: refusing a genuinely short page costs
+ * an untranslated chapter heading, which is visible and recoverable; translating an
+ * empty one costs a fabrication that is fluent, plausible and indistinguishable
+ * downstream from a real translation. Missing is recoverable; invented is not.
+ */
+export const MIN_TRANSLATABLE_BODY = 24;
+
+/**
+ * Length of an illustration description the page carries instead of text.
+ *
+ * `<image-desc>` is in BLOCK_TAGS, so `bodyLen` strips it — which is right for asking
+ * "how much transcription is here" and wrong for asking "is there anything to work
+ * from". An illustration leaf has no words on it by definition, and the translate lane
+ * legitimately turns its description into the `<note>` a reader sees:
+ *
+ *   "An engraving within a rectangular border depicts two men in 17th-century attire
+ *    engaged in a wrestling match…"
+ *
+ * A no-body gate that ignored this would have silently stopped image descriptions
+ * across the corpus — found by sampling real pages before shipping the gate, not by
+ * reasoning about it.
+ */
+export function imageDescLen(text) {
+  if (!text) return 0;
+  let total = 0;
+  for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
+    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  }
+  return total;
+}
+
+/** Page types whose content is a picture, not words. */
+const PICTORIAL_TYPES = new Set(['illustration', 'diagram', 'plate', 'map', 'frontispiece', 'portrait']);
+
+/**
+ * Has this page ANYTHING a translator can work from — words, or a picture described?
+ * The vacuum is the absence of both.
+ */
+export function hasTranslatableSource(page) {
+  const ocr = typeof page === 'string' ? page : page?.ocr?.data;
+  if (bodyLen(ocr) >= MIN_TRANSLATABLE_BODY) return true;
+  if (imageDescLen(ocr) >= MIN_TRANSLATABLE_BODY) return true;
+  const type = typeof page === 'string' ? null : page?.page_type;
+  // A pictorial page with a real description already returned true above; one with
+  // neither words nor a description has nothing, whatever its type claims.
+  if (type && PICTORIAL_TYPES.has(type) && imageDescLen(ocr) > 0) return true;
+  return false;
 }
 
 /**
@@ -418,8 +505,8 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * log why pages were excluded rather than silently dropping them.
  *
  * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
- * 'skip-type', 'no-ocr', 'blank-ocr', 'ocr-loop', 'recitation-blocked',
- * 'safety-blocked'.
+ * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
+ * 'recitation-blocked', 'safety-blocked'.
  *
  * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
  * retranslate-stale deliberately also skips illustrations and title pages.
@@ -435,6 +522,11 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // the result an hour later. Same rule as page-counts.hasOcr.
   if (page?.ocr?.unreadable === true) return { ok: false, reason: 'ocr-unreadable' };
   if (isBlankFromOcr(ocr)) return { ok: false, reason: 'blank-ocr' };
+  // Nothing to translate once the apparatus is discounted. A model handed an empty
+  // source does not decline — it invents (#4960), and the invention reads exactly
+  // like a translation. Checked BEFORE the loop test because a page of `&nbsp;` is
+  // not a loop; it is a vacuum.
+  if (!hasTranslatableSource(page)) return { ok: false, reason: 'no-body' };
   // A looping transcription is not a text to translate — it is the input that
   // produces a fabricated translation (#4765/#4850).
   if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };

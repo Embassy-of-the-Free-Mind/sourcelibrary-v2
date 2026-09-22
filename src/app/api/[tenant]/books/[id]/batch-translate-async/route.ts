@@ -8,7 +8,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
-import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { VISIBLE_PAGE_MATCH } from '@/lib/page-counts';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -120,11 +120,30 @@ export const POST = withAuth(async (request, session, context) => {
       };
     }
 
-    const pagesToProcess = await db.collection('pages')
+    const selected = await db.collection('pages')
       .find(translationFilter)
       .sort({ page_number: 1 })
       .limit(limit)
       .toArray();
+
+    // Drop pages with nothing on them BEFORE paying to translate (#4960). The Mongo
+    // filter above can only ask whether `ocr.data` is non-empty, and a blank leaf's
+    // OCR is often thousands of characters of `&nbsp;` padding — non-empty, and
+    // entirely without text. Handed that, the model does not decline: it invents, and
+    // the invention reads exactly like a translation.
+    const emptySourcePageIds = selected
+      .filter((p) => hasNoTranslatableBody(p.ocr?.data))
+      .map((p) => p.id);
+    const pagesToProcess = selected.filter((p) => !hasNoTranslatableBody(p.ocr?.data));
+    if (emptySourcePageIds.length > 0) {
+      console.log(`[batch-translate] skipping ${emptySourcePageIds.length} page(s) with no translatable body (#4960)`);
+      // A skip is recorded, never silent: a completeness predicate is satisfied by
+      // output OR by an explicit recorded skip, and never by absence (#4458).
+      await db.collection('pages').updateMany(
+        { id: { $in: emptySourcePageIds } },
+        { $set: { 'translation.skipped_reason': 'no-translatable-body', 'translation.skipped_at': new Date() } },
+      ).catch((e: unknown) => console.warn(`[batch-translate] could not record skips: ${(e as Error)?.message}`));
+    }
 
     if (pagesToProcess.length === 0) {
       return NextResponse.json({

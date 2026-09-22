@@ -39,6 +39,71 @@ import { contentHash } from './steganographia';
  */
 export const CLEAR_STALE_UNSET = Object.freeze({ translation_stale: '' } as const);
 
+/**
+ * Does this OCR carry anything a translator could translate?
+ *
+ * TS twin of `bodyLen` / `MIN_TRANSLATABLE_BODY` in `scripts/lib/translate-core.mjs`;
+ * `tests/unit/translate-empty-source.test.ts` pins the two together.
+ *
+ * Page 170 of Kircher's *Iter extaticum II* is a blank leaf whose OCR is 18,561
+ * characters of `&nbsp;` padding around a folio number. Counting those six-character
+ * entities as text made it look like a substantial source, so it was sent to the
+ * translator, which filled the vacuum with a fabricated 2011 nephrology journal table
+ * of contents — live to readers, and one deposit from a permanent DOI (#4960).
+ *
+ * A model handed nothing does not decline; it invents, and the invention is
+ * indistinguishable downstream from a real translation. So the check is on the
+ * SOURCE, pre-flight, and the call is never billed.
+ */
+const WS_ENTITY = /&(?:nbsp|ensp|emsp|thinsp|hairsp|#0*160|#[xX]0*a0|#8194|#8195|#8201);/g;
+const LEADER_RUN = /([.·•․‧_\-–—=~*])\1{3,}/g;
+const TEXT_ENTITIES: Array<[RegExp, string]> = [
+  [/&amp;/g, '&'], [/&lt;/g, '<'], [/&gt;/g, '>'], [/&quot;/g, '"'], [/&#0*39;|&apos;/g, "'"],
+];
+
+/** Characters of real body below which a page has nothing to translate. */
+export const MIN_TRANSLATABLE_BODY = 24;
+
+/** Length of the part of an OCR response that is actually words on the page. */
+export function translatableBodyLen(text: string | null | undefined): number {
+  if (!text) return 0;
+  let out = String(text)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/->|<-/g, ' ')
+    .replace(WS_ENTITY, ' ')
+    .replace(LEADER_RUN, ' ');
+  for (const [re, ch] of TEXT_ENTITIES) out = out.replace(re, ch);
+  return out.replace(/\s+/g, ' ').trim().length;
+}
+
+/**
+ * Length of an illustration description the page carries instead of text.
+ *
+ * `<image-desc>` is stripped by `translatableBodyLen` — right for "how much
+ * transcription is here", wrong for "is there anything to work from". An illustration
+ * leaf has no words by definition, and the translate lane legitimately renders its
+ * description as the `<note>` a reader sees. A gate that ignored this would have
+ * silently stopped image descriptions corpus-wide.
+ */
+export function imageDescLen(text: string | null | undefined): number {
+  if (!text) return 0;
+  let total = 0;
+  for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
+    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  }
+  return total;
+}
+
+/**
+ * True when there is nothing on this page for a translator to work from — neither
+ * words nor a described picture. The vacuum is the absence of both.
+ */
+export function hasNoTranslatableBody(ocrText: string | null | undefined): boolean {
+  if (translatableBodyLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
+  if (imageDescLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
+  return true;
+}
+
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
 export interface HumanEditableField {
   source?: string;
