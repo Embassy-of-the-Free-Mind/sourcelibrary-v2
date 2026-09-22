@@ -276,17 +276,20 @@ export async function performTranslation(
     : `\n\n**Text to translate:**\n${ocrText}`;
 
   if (previousPageTranslation) {
-    // The END of the previous page, not its start — the seam is what the
-    // model must continue (#4968; twin of continuityContext in
-    // scripts/lib/translate-core.mjs, keep in step)
+    // Head AND tail, plus the page's <summary>/<keywords> — the head carries
+    // the page's conventions and names, the tail carries the seam the model
+    // is told to continue (#4968; twin of continuityContext in
+    // scripts/lib/translate-core.mjs, keep the two in step)
+    const blocks = (previousPageTranslation.match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
     const body = previousPageTranslation
       .replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
       .trim();
-    const tail = body.length > 2000 ? `...${body.slice(-2000)}` : body;
-    if (tail) {
+    if (body || blocks) {
+      const core = body.length <= 2000 ? body : `${body.slice(0, 600)}\n[…]\n${body.slice(-1400)}`;
+      const seed = `${core}${blocks ? `\n${blocks}` : ''}...`;
       prompt += isEnglish
-        ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${tail}`
-        : `\n\n**Previous page translation for continuity — continue from its end:**\n${tail}`;
+        ? `\n\n**Previous page (modernized) for continuity:**\n${seed}`
+        : `\n\n**Previous page translation for continuity:**\n${seed}`;
     }
   }
 
