@@ -370,7 +370,10 @@ async function phaseRun() {
   const payload = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
   const est = estimate(payload.sample);
   // --tail: one block call (At) and one repair call (Et) per boundary, prev and B reused
-  if (TAIL) est.usd = est.usd / 4 * 1.15;
+  if (TAIL) {
+    est.usd = est.usd / 4 * 1.15;
+    if (arg('pin-english') == null) { console.error('REFUSING: --tail without --pin-english — the original arms ran on English Modernization v1 and the default is now v2 (23 English boundaries would be confounded).'); process.exit(2); }
+  }
   const approved = Number(arg('approved-usd', 0));
   if (!(approved >= est.usd) || approved > CEILING_USD || est.usd > CEILING_USD) {
     console.error(`REFUSING TO SPEND. Estimate $${est.usd.toFixed(2)}; --approved-usd is ${approved || 'absent'}; preregistered ceiling $${CEILING_USD}.`);
@@ -384,10 +387,24 @@ async function phaseRun() {
   }
   const { db } = await connect();
   const prompts = await loadTranslationPrompts(db);
+  // --pin-english N / --pin-translation N: run with an older prompt version, so a re-run
+  // of some arms is compared like with like. The original arms (2026-09-17) used
+  // Standard Translation v13 and English Modernization v1; v2 of the latter was
+  // created 2026-09-21 and is now the default.
+  for (const [flag, key, type] of [['pin-english', 'english', 'english_modernization'], ['pin-translation', 'translation', 'translation']]) {
+    const v = arg(flag);
+    if (v == null) continue;
+    const doc = await db.collection('prompts').findOne({ type, version: Number(v) });
+    if (!doc?.content) throw new Error(`--${flag} ${v}: no '${type}' prompt with that version`);
+    prompts[key] = { text: doc.content, ref: { id: doc._id?.toString(), name: doc.name, version: doc.version, content_hash: doc.content_hash } };
+  }
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; english: ${prompts.english.ref.name} v${prompts.english.ref.version}; model ${MODEL}`);
 
   const price = priceFor(MODEL);
-  let spent = readRows().reduce((s, r) => s + (r.cost_usd || 0), 0);
+  // Under --tail only the new arms count against the approval; the original run's
+  // rows are on disk too, and counting them made every call skip as over budget.
+  const countsHere = (r) => !TAIL || r.which === 'At' || r.which === 'Et';
+  let spent = readRows().filter(countsHere).reduce((s, r) => s + (r.cost_usd || 0), 0);
   if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on disk`);
   const stream = fs.createWriteStream(OUT_FILE, { flags: 'a' });
 
