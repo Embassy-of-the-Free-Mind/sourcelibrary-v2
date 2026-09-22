@@ -173,6 +173,34 @@ export function isEnglishBook(book) {
  * note, the page text, and previous-page continuity (the chain that makes
  * translation sequential — see the pipeline explainer).
  */
+
+// Characters of the previous page's translation shown to the model as
+// continuity context. The prompt tells it to continue a sentence the previous
+// page left unfinished, so the context must be the END of that page: from
+// 2025-12-12 to 2026-09-22 every path sent the first 2,000 characters instead
+// (#4968), and with a median page near 3,000 the seam was exactly what the
+// model never saw — it re-translated the broken sentence from its start and
+// the verb came out twice ("It is graver... / fornication ... is more serious").
+export const CONTINUITY_CONTEXT_CHARS = 2000;
+
+/**
+ * The prompt fragment carrying the previous page's translation: its last
+ * CONTINUITY_CONTEXT_CHARS characters, with the page-level editorial blocks
+ * that close every page (<summary>, <keywords>, <vocab>, <meta>) removed
+ * first so they do not eat the window. Empty string when there is nothing.
+ */
+export function continuityContext(previousTranslation, { english = false } = {}) {
+  if (!previousTranslation) return '';
+  const body = String(previousTranslation)
+    .replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+    .trim();
+  if (!body) return '';
+  const tail = body.length > CONTINUITY_CONTEXT_CHARS ? `...${body.slice(-CONTINUITY_CONTEXT_CHARS)}` : body;
+  return english
+    ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${tail}`
+    : `\n\n**Previous page translation for continuity — continue from its end:**\n${tail}`;
+}
+
 export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }) {
   const english = isEnglishBook(book);
   const base = english ? prompts.english : prompts.translation;
@@ -196,11 +224,7 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
     ? `\n\n**Text to modernize:**\n${ocrText}`
     : `\n\n**Text to translate:**\n${ocrText}`;
 
-  if (previousTranslation) {
-    prompt += english
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(previousTranslation, { english });
 
   return { prompt, promptRef: base.ref, isEnglish: english };
 }

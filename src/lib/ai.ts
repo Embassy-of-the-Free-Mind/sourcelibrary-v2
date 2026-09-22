@@ -276,9 +276,18 @@ export async function performTranslation(
     : `\n\n**Text to translate:**\n${ocrText}`;
 
   if (previousPageTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
+    // The END of the previous page, not its start — the seam is what the
+    // model must continue (#4968; twin of continuityContext in
+    // scripts/lib/translate-core.mjs, keep in step)
+    const body = previousPageTranslation
+      .replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+      .trim();
+    const tail = body.length > 2000 ? `...${body.slice(-2000)}` : body;
+    if (tail) {
+      prompt += isEnglish
+        ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${tail}`
+        : `\n\n**Previous page translation for continuity — continue from its end:**\n${tail}`;
+    }
   }
 
   // If the OCR flagged this as handwritten, inject a note into the prompt
