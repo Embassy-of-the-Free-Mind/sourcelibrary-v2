@@ -982,14 +982,6 @@
       "note": "CLEAR:by-date; held by Harold B. Lee Library"
     },
     {
-      "id": "threefamousalche0000unse",
-      "title": "Three famous alchemists: Raymund Lully, by Arthur Edward Waite, Cornelius Agrippa, by Lewis Spence, [and] Theophrastus Paracelsus, by W.P. Swainson",
-      "author": "Unknown",
-      "year": 1930,
-      "lang": "English",
-      "note": "CLEAR:by-date; held by Internet Archive"
-    },
-    {
       "id": "witchcraft-magic-alchemy-gillot-de-givry",
       "title": "Witchcraft, Magic, and Alchemy – Gillot De Givry",
       "author": "Grillot de Givry",
@@ -1055,6 +1047,7 @@
     "the-alchemist_20210715 — off-topic: modern user upload misdated to 1901 (id suggests 2021 upload)",
     "jstor-6592 — serial: JSTOR journal article",
     "jstor-27900787 — serial: JSTOR journal article",
-    "h.-e.-j.-1928.-review-rasa-jala-nidhi-or-ocean-of-indian-chemistry-and-alchemy-v — serial: journal review article"
+    "h.-e.-j.-1928.-review-rasa-jala-nidhi-or-ocean-of-indian-chemistry-and-alchemy-v — serial: journal review article",
+    "threefamousalche0000unse — dropped at import 2026-09-22: archive.org dates it \"[193-?]\" with no stated rights, so the imprint may be after the 1930 public-domain line; needs a title-page check before it can be acquired"
   ]
 }

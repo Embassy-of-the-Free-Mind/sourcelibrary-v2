@@ -1156,14 +1156,6 @@
       "note": "CLEAR:stated"
     },
     {
-      "id": "thought-transference-oliver-lodge",
-      "title": "Thought Transference: An Application of Modern Thought to Ancient Superstitions",
-      "author": "Oliver Lodge",
-      "year": 1892,
-      "lang": "English",
-      "note": "CLEAR:stated"
-    },
-    {
       "id": "mediumshipitsdev00bach",
       "title": "Mediumship and its development, and how to mesmerize to assist development",
       "author": "W. H. (William H.) Bach",
@@ -2715,6 +2707,7 @@
     "scientificspirit00wood — fragment: 14pp generic sermon, not a known movement pamphlet",
     "jstor-1112490 — fragment: 12pp journal article (Spiritualism and Crime), not a known movement pamphlet",
     "jstor-25121602 — fragment: 13pp journal article (Orthodox Science and Psychical Research), not a known movement pamphlet",
-    "churchesreligion00murr — fragment: 10pp, unclear/broad theology topic, not a known movement pamphlet"
+    "churchesreligion00murr — fragment: 10pp, unclear/broad theology topic, not a known movement pamphlet",
+    "thought-transference-oliver-lodge — dropped at import 2026-09-22: no page count obtainable — the item carries no imagecount and its IIIF manifest returns HTTP 500 (probed twice)"
   ]
 }

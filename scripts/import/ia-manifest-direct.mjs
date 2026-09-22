@@ -63,7 +63,11 @@ const uniqueSlug = async (db, base) => { let s = base || 'book', i = 2;
 // leaves are skipped by IIIF (memory: IA leaf offset is always 0 — count the manifest, not imagecount).
 async function pageCountFor(ia, metadata) {
   try {
-    const r = await fetch(`https://iiif.archive.org/iiif/${ia}/manifest.json`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(30000) });
+    // 90 s, not 30: a cold IIIF manifest for a 200-leaf item regularly takes longer than 30 s to
+    // build on archive.org's side, and the abort surfaced as `FAIL … operation was aborted due to
+    // timeout` — indistinguishable from a dead item. Six of seven such failures across the
+    // 2026-09-22 shelf imports (#4966) imported fine on a plain retry once the manifest was warm.
+    const r = await fetch(`https://iiif.archive.org/iiif/${ia}/manifest.json`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(90000) });
     if (r.ok) { const m = await r.json();
       if (Array.isArray(m.items)) return { n: m.items.length, src: 'iiif_v3' };
       if (m.sequences?.[0]?.canvases) return { n: m.sequences[0].canvases.length, src: 'iiif_v2' }; }
