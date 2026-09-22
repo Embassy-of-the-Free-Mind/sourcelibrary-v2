@@ -254,7 +254,7 @@ function buildDescription(book, edition) {
 
 async function generateFrontMatter(book, pages) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL, generationConfig: { thinkingConfig: { thinkingBudget: 0 } } });
 
   const bookContext = buildBookContext(book, pages);
 

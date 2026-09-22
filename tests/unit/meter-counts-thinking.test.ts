@@ -12,13 +12,20 @@
  * directories and `src/app` was not one of them. A guard's coverage is the list
  * of directories it walks, and nothing announces the ones it skips.
  *
- * So this pins both halves:
+ * Widened again 2026-09-21 (#4599 follow-up): the guard used to walk three
+ * NAMED subdirectories of `scripts/` (`workers`, `lib`, `batch`) — leaving 79
+ * hand-run maintenance/enrichment/analysis/eval scripts entirely unwalked, and
+ * blind to the raw `fetch(...:generateContent...)` shape most of them use
+ * instead of the SDK. It now walks all of `scripts/` and recognises that shape.
+ *
+ * So this pins three things:
  *   1. the two helper definitions agree and count thinking;
  *   2. the guard still walks every directory that can call Gemini, and finds no
- *      NEW candidates-only meter line anywhere in them.
+ *      NEW candidates-only meter line anywhere in them;
+ *   3. the guard's `scripts` entry is not narrowed back down to a few named
+ *      subdirectories — that regression is exactly how 79 scripts went unwalked.
  *
- * (2) is what catches the next `src/app`: a fresh call site that meters the
- * visible half only fails here, in unit tests, before it can bill anything.
+ * (2) is what catches the next `src/app`; (3) is what catches the next narrowing.
  */
 import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'child_process';
@@ -56,9 +63,21 @@ describe('the standing guard covers every directory that can call Gemini', () =>
   it('walks src/app and src/workers — the two that were missing until 2026-09-14', () => {
     const src = readFileSync(guard, 'utf8');
     const dirs = src.match(/const SCAN_DIRS = \[([^\]]*)\]/)?.[1] ?? '';
-    for (const d of ['src/app', 'src/workers', 'src/lib', 'scripts/workers', 'scripts/batch', 'scripts/lib']) {
+    for (const d of ['src/app', 'src/workers', 'src/lib']) {
       expect(dirs, `SCAN_DIRS must include ${d}`).toContain(`'${d}'`);
     }
+  });
+
+  it('walks all of scripts/, not a few named subdirectories — the 2026-09-21 widening', () => {
+    // Pinned because the narrow form (`scripts/workers`, `scripts/lib`,
+    // `scripts/batch` only) is exactly how 79 hand-run scripts went unwalked
+    // and one of them billed $17.45 of un-metered thinking tokens in a single
+    // run (#4599 follow-up, 2026-09-21).
+    const src = readFileSync(guard, 'utf8');
+    const dirs = src.match(/const SCAN_DIRS = \[([^\]]*)\]/)?.[1] ?? '';
+    expect(dirs, 'SCAN_DIRS must include the whole scripts tree').toContain(`'scripts'`);
+    expect(dirs, 'SCAN_DIRS must not be narrowed to named scripts/ subdirectories')
+      .not.toMatch(/'scripts\/(workers|lib|batch)'/);
   });
 
   it('reports no NEW candidates-only meter line', () => {

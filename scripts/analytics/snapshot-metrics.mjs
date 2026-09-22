@@ -18,6 +18,7 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
+import { activePoolFingerprints, excludePoolFilter } from '../lib/suspected-pool.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const norm = (e) => (e || '').trim().toLowerCase();
@@ -95,12 +96,24 @@ await withMongo(async (db) => {
 
   // ─── DAU / MAU / DWELL ────────────────────────────────────────────────────
   const pv = db.collection('analytics_pageviews');
+
+  // Residential-proxy fingerprints flagged by traffic-anomaly-alert. This
+  // snapshot writes system_config.metrics_snapshot, which IS the admin metrics
+  // dashboard — the most-read numbers we publish. Without this exclusion the
+  // 2026-09-19 pool would have been charted as a 10x DAU record and then
+  // accumulated into metrics_history, where it is permanent. `isBot` below
+  // cannot see it: the pool wears a stock Chrome UA. (#4947)
+  // 30 days: MAU and the DAU trend series both span 30 days.
+  const poolUas = await activePoolFingerprints(db, { staleDays: 30 });
+  const notPool = excludePoolFilter(poolUas, 'userAgent');
+  if (poolUas.size) console.log(`  [snapshot] excluding ${poolUas.size} proxy-pool fingerprint(s) from traffic metrics`);
+
   const mau = (await pv.aggregate([
-    { $match: { timestamp: { $gt: d30 } } }, { $group: fpGroup }, { $count: 'n' },
+    { $match: { timestamp: { $gt: d30 }, ...notPool } }, { $group: fpGroup }, { $count: 'n' },
   ]).toArray())[0]?.n || 0;
   // 30-day DAU series (drives the trend chart); avg DAU uses the last 14 days.
   const dauSeries = await pv.aggregate([
-    { $match: { timestamp: { $gt: d30 } } },
+    { $match: { timestamp: { $gt: d30 }, ...notPool } },
     { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } } },
     { $group: { _id: '$_id.day', users: { $sum: 1 } } }, { $sort: { _id: 1 } },
   ], { allowDiskUse: true }).toArray();
@@ -108,7 +121,7 @@ await withMongo(async (db) => {
   const avgDau = Math.round(dau.reduce((s, d) => s + d.users, 0) / (dau.length || 1));
 
   // Dwell: per-session (ip+ua, 30-min idle gap) duration, last 7d, multi-hit only.
-  const rows = await pv.find({ timestamp: { $gt: d7 } }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
+  const rows = await pv.find({ timestamp: { $gt: d7 }, ...notPool }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
   const byFp = new Map();
   for (const r of rows) {
     const k = r.ip + '|' + (r.userAgent || '').slice(0, 60);
@@ -169,7 +182,7 @@ await withMongo(async (db) => {
   } catch { /* noop */ }
 
   // ─── TRAFFIC SHAPE / TOP CONTENT / REFERRERS (last DAYS, human-filtered) ──
-  const pvCursor = pv.find({ timestamp: { $gte: SINCE } }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } });
+  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } });
   let humanPvs = 0, botPvs = 0;
   const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), referrers = new Map(), countries = new Map();
   while (await pvCursor.hasNext()) {

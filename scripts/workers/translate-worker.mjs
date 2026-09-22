@@ -36,6 +36,7 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
+  continuityContext,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -266,11 +267,7 @@ async function translatePage(db, page, book, prevTranslation) {
     ? `\n\n**Text to modernize:**\n${page.ocr.data}`
     : `\n\n**Text to translate:**\n${page.ocr.data}`;
 
-  if (prevTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${prevTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${prevTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(prevTranslation, { english: isEnglish });
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
@@ -334,11 +331,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
   let prompt = headerPrompt;
 
-  if (prevTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${prevTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${prevTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(prevTranslation, { english: isEnglish });
 
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;

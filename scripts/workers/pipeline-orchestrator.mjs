@@ -2655,7 +2655,16 @@ async function run() {
         .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
+      // Scope envelopes bound SPEND, and enrolment spends nothing — it writes one
+      // Mongo field and dispatches no work. Every paid phase has its own gate
+      // (budgetAllowsDispatchForPhase on 1.25/1.5/1.6/2/3.7/4/8), so confining
+      // Phase 0 too buys no protection and costs real convergence: a book imported
+      // while an envelope is open is newer than `cutoff`, so the tail below (which
+      // is deliberately NOT scope-filtered) cannot see it either, and it waits
+      // ENROLL_WINDOW_DAYS before joining the back of an oldest-first queue of
+      // thousands. Seven books imported 2026-09-20 had to be enrolled by hand
+      // (#4948). A `--book` override still forces exactly one book through.
+      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
@@ -4655,6 +4664,8 @@ Rules:
         }
 
         // Fresh books first (never translated), then re-queue partially-translated books
+        const ENGLISH_VARIANTS_P4 = ['english', 'eng', 'en'];
+
         let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
           // translating them produces two-page texts the split then discards.
@@ -4679,10 +4690,42 @@ Rules:
           // pages_ocr must survive the projection: the "OCR incomplete" guard
           // reads it, and a projected-away field read as 0 — bouncing every
           // fully-translated >30-page book back to archive_complete forever.
+          // `language` must survive the projection: the English filter below reads it,
+          // and a projected-away field reads as undefined — which would let every
+          // English book back onto the translation lane.
           { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
-        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
+
+        // THE PIPELINE DOES NOT MODERNIZE ENGLISH (#4958).
+        //
+        // An English book is not translated, it is MODERNIZED — and a modernization is
+        // an aid to the text, not the text. It is now produced only where a reader asks
+        // for it, one page at a time, through /api/pages/[id]/modernize.
+        //
+        // Bulk generation was wrong in three compounding ways. It ran on every English
+        // book at any date, so modern print got a second English text nobody had asked
+        // for. The reader never displayed it, yet it still set pages_translated and
+        // is_fully_translated, which gate badges and feed homepage stats — a reader met
+        // "two englishes" on a 1907 volume that way. And on already-modern prose the
+        // pass was not the no-op it should have been: it Americanized spelling and
+        // injected editorial <note> glosses into text that needed neither.
+        //
+        // An interim version of this filter kept books below an edition year of 1820.
+        // That was a proxy for archaic ORTHOGRAPHY, and the on-demand lane now measures
+        // the thing itself (src/lib/archaic-orthography.ts) on the page in front of the
+        // reader, refusing to spend where there is nothing to modernize. A date cannot
+        // do that: presses dropped long ſ unevenly between roughly 1790 and 1810, and
+        // our own OCR preserves the glyph on some pages of a book and not others.
+        {
+          const before = freshBooks.length;
+          freshBooks = freshBooks.filter(
+            (b) => !ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())
+          );
+          const skipped = before - freshBooks.length;
+          if (skipped > 0) console.log(`  Skipped ${skipped} English book(s) — modernization is reader-triggered, not dispatched`);
+        }
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.

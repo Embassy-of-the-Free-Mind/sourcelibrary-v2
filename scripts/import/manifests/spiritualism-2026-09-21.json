@@ -1,0 +1,2713 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from spiritualism.json; config spiritualism.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Pruned 2026-09-21 by a reviewer pass over the review table (same work twice, off-topic, serials, non-English): 31 dropped (listed in hand_pruned with reasons), 6 kept with a FLAG note for a second look.",
+  "campaign": "spiritualism-2026-09-21",
+  "collections": [],
+  "BOOKS": [
+    {
+      "id": "returnofdeparted00phil",
+      "title": "A return of departed spirits of the highest characters of distinction as well as the indiscriminate of all nations, into the bodies of the \"Shakers,\" or \"United society of believers in the second advent of the Messiah.\"",
+      "author": "Unknown",
+      "year": 1843,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b21937965",
+      "title": "Mesmerism tried by the touchstone of truth : being a reply to Dr. Ashburner's remarks on phrenology, mesmerism, and clairvoyance",
+      "author": "George Corfe",
+      "year": 1848,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Royal College of Physicians in Edinburgh"
+    },
+    {
+      "id": "philosophywhich00weisgoog",
+      "title": "The Philosophy which Shows the Physiology of Mesmerism: And Explains the Phenomenon of Clairvoyance",
+      "author": "John Adam Weisse T. H. Pasley",
+      "year": 1848,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library; alternate scans: philosophywhich00paslgoog"
+    },
+    {
+      "id": "signsoftimescomp00cogg",
+      "title": "The signs of the times: comprising a history of the spirit-rappings, in Cincinnati and other places; with notes of clairvoyant revealments",
+      "author": "William Turner Coggeshall",
+      "year": 1851,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "expositionexplan00cool",
+      "title": "An exposition and explanation of the modern phenomena called spirit manifestations. Comprising the rappings, movements, writing mediums, and various other phenomena ... with extracts from different writers, of remarkable instances of presentiment, prophecying ... etc",
+      "author": "Benjamin Franklin Cooley",
+      "year": 1852,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "lightfromspiritw00ham",
+      "title": "Light from the spirit world",
+      "author": "C. (Charles) Hammond",
+      "year": 1852,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b20424838",
+      "title": "Natural and mesmeric clairvoyance [electronic resource] : with the practical application of mesmerism in surgery and medicine",
+      "author": "James Esdaile",
+      "year": 1852,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "discussionoffact00brit",
+      "title": "A discussion of the facts and philosophy of ancient and modern spiritualism",
+      "author": "S. B. (Samuel Byron) Brittan",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: adiscussionfact01richgoog"
+    },
+    {
+      "id": "spiritualismvol202edmo",
+      "title": "Spiritualism / (Vol. 2)",
+      "author": "John W. (John Worth) Edmonds",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualism00edmo, spiritualism03tallgoog"
+    },
+    {
+      "id": "presentageinnerl00davi",
+      "title": "The present age and inner life; a sequel to spiritual intercourse. Modern mysteries classified and explained",
+      "author": "Andrew Jackson Davis",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library"
+    },
+    {
+      "id": "spiritrappingsme00port",
+      "title": "The spirit rappings, mesmerism, clairvoyance, visions, revelations, startling phenomena, and infidelity of the rapping fraternity calmly considered, and exposed",
+      "author": "James Porter",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rivuletfromocean00adam",
+      "title": "A rivulet from the ocean of truth : an authentic and interesting narrative of the advancement of a spirit from darkness to light : proving, by an actual instance, the influence of man on earth, over the departed : with introductory and incidental remarks",
+      "author": "John S. (John Stowell) Adams",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritmanifestat00dods",
+      "title": "Spirit manifestations examined and explained. Judge Edmonds refuted; or, An exposition of the involuntary powers and instincts of the human mind",
+      "author": "John Bovee Dods",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library"
+    },
+    {
+      "id": "philosophyofcrea00pain",
+      "title": "The philosophy of creation : unfolding the laws of the progressive development of nature, and embracing the philosophy of man, spirit, and the spirit world",
+      "author": "Thomas Paine",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rapperteri00sear",
+      "title": "The rappers, or, The mysteries, fallacies, and absurdities of spirit-rapping, table-tipping, and entrancement",
+      "author": "Searcher after truth",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library; alternate scans: rappersormysteri00sear"
+    },
+    {
+      "id": "voicesfromspiri01whitgoog",
+      "title": "Voices from spirit-land",
+      "author": "Nathan Francis White",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "drhareslettertoe00hare",
+      "title": "Dr. Hare's letter to the Episcopal clergy : most respectfully offering to submit to their consideration new and irrefragable evidence of human inmortality, to which is subjoined a brief sketch of the spirit world and of the moral influences of spiritualism",
+      "author": "Robert Hare",
+      "year": 1855,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "modernspirituali00capr",
+      "title": "Modern spiritualism : its facts and fanaticisms, its consistencies and contradictions : with an appendix",
+      "author": "Eliab Wilkinson Capron",
+      "year": 1855,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924028954034"
+    },
+    {
+      "id": "spiritrappingunv00matt_0",
+      "title": "Spirit rapping unveiled! An exposé of the origin, history, theology and philosophy of certain alleged communications from the spirit world, by means of \"spirit rapping,\" \"medium writing, \" \"physical demonstrations, \" etc",
+      "author": "Hiram Mattison",
+      "year": 1855,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Tisch Library; alternate scans: cu31924031429743"
+    },
+    {
+      "id": "spiritualismspir00ansp",
+      "title": "Spiritualism and spirit-rapping / by Rev. F.R. Anspach",
+      "author": "F. R. (Frederick Reinhart) author Anspach",
+      "year": 1855,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by State Library of Pennsylvania"
+    },
+    {
+      "id": "experimentalinve00hare",
+      "title": "Experimental investigation of the spirit manifestations ..",
+      "author": "Robert Hare",
+      "year": 1856,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: experimentalinv00hare, experimentalinv01haregoog"
+    },
+    {
+      "id": "spiritualismexpl00tiff",
+      "title": "Spiritualism explained : being a series of twelve lectures delivered before the New York Conference of Spiritualists",
+      "author": "Joel Tiffany",
+      "year": 1856,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualismver01danigoog",
+      "title": "Spiritualism versus Christianity, or, Spiritualism thoroughly exposed",
+      "author": "J. W Daniels",
+      "year": 1856,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: spiritualismver00danigoog"
+    },
+    {
+      "id": "discourseonsaulw00camp",
+      "title": "A discourse on Saul and the witch of Endor, or, Ancient spiritualism / by Randolph Campbell.",
+      "author": "Randolph Campbell",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Phillips Library at The Peabody Essex Museum; alternate scans: a-discourse-on-saul-and-the-witch-of-endor-or-ancient-spiritualism-by-randolph-campbell-1857"
+    },
+    {
+      "id": "replytowilliamtd00wood",
+      "title": "A reply to William T. Dwight, D. D., on spiritualism : three lectures",
+      "author": "Jabez C. (Jabez Cushman) Woodman",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "reviewofreviedwi00tooh",
+      "title": "A review of Rev. I. E. Dwinell's sermon against spiritualism",
+      "author": "J. H. W. [from old catalog] Toohey",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "treatiseonturni02gasp",
+      "title": "A treatise on turning tables, the supernatural in general, and spirits;",
+      "author": "Agénor Étienne comte de Gasparin",
+      "year": 1857,
+      "lang": "English",
+      "note": "FLAG: Possible duplicate/companion volume of sciencevsmodern00bairgoog (Gasparin, similar title/pages); id suffix 02 suggests multi-volume set, not dropped as dupe without confirmation; CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "lendermansadvent00lendiala",
+      "title": "Lenderman's Adventures among the spiritualists and free-lovers : explaining how the \"rappings,\" \"table tippings,\" playing on the instruments, etc., are done, and where the spirit communicattion come from : containing a great number of exciting incidents of the ruin of individuals and families of lunacies; seductions and suicides, caused by these infernal systems of deception",
+      "author": "Lenderman",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "sciencevsmodern00bairgoog",
+      "title": "Science vs. modern spiritualism : a treatise on turning tables, the supernatural in general and spirits",
+      "author": "Agénor comte de Gasparin",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "b22270176",
+      "title": "The use of clairvoyance in medicine",
+      "author": "John Mill",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Royal College of Surgeons of England"
+    },
+    {
+      "id": "angelanddemontal00arthrich",
+      "title": "The angel and the demon: a tale of modern spiritualism",
+      "author": "T. S. (Timothy Shay) Arthur",
+      "year": 1858,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "roadtospirituali00hall",
+      "title": "The road to spiritualism : being a series of four lectures delivered at the opening of the New-York Lyceum",
+      "author": "Robert T Hallock",
+      "year": 1858,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "anthropomorphism00davi",
+      "title": "Anthropomorphism dissected and spiritualism vindicated",
+      "author": "Dixon Louis Davis",
+      "year": 1859,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "sixlecturesonthe00brit",
+      "title": "Six lectures on theology and nature. I. Astronomical religion",
+      "author": "Emma Hardinge Britten",
+      "year": 1860,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualismtest00sams",
+      "title": "Spiritualism tested, or, The facts of its history classified, and their cause in nature verified : from ancient and modern testimonies",
+      "author": "G. W. (George Whitefield) Samson",
+      "year": 1860,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualismtes00conggoog"
+    },
+    {
+      "id": "expositionofmode00post",
+      "title": "An exposition of modern spiritualism : showing its tendency to a total annihilation of Christianity : with other miscellaneous remarks and criticisms in support of the fundamental principles of the Christian religion",
+      "author": "Samuel Post",
+      "year": 1861,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "evidencesofmoder00whi",
+      "title": "Evidences of modern spiritualism, being a debate held at Decatur, Michigan, March 12th, 13th and 14th, 1861, between Mr. A.B. Whiting and Rev. Jos. Jones, upon the question \"Resolved, that the origin of modern spiritual phenomena is entirely hypothetical, and therefore, the revelations from that source are not at all reliable.\"",
+      "author": "A. B. (Albert Bennet) Whiting",
+      "year": 1861,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualisms00rams",
+      "title": "Spiritualism, a Satanic delusion, and a sign of the times",
+      "author": "William Ramsey",
+      "year": 1861,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualismsat00rams"
+    },
+    {
+      "id": "dealingswithdead00rand",
+      "title": "Dealings with the dead; the human soul, its migrations and its transmigrations",
+      "author": "Paschal Beverly Randolph",
+      "year": 1862,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "maryjaneorspirit00gupp",
+      "title": "Mary Jane : or, spiritualism chemically explained, with spirit drawings",
+      "author": "Samuel] [Guppy",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "historyofsuperna001howi",
+      "title": "The history of the supernatural in all ages and nations : and in all churches, Christian and pagan: demonstrating a universal faith",
+      "author": "William Howitt",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: historyofsuperna01howi, supernaturalhist02howirich, historyofthesupe02howiuoft, historysupernat08howigoog"
+    },
+    {
+      "id": "threearticlesonm00hall",
+      "title": "Three articles on modern spiritualism",
+      "author": "T. B. (Thomas Bartlett) Hall",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: threearticleson00hallgoog"
+    },
+    {
+      "id": "spiritualismitsf00powe",
+      "title": "Spiritualism : its facts and phases, with illustrated experiences",
+      "author": "J. H. (James Henry) Powell",
+      "year": 1864,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "morninglecturest00davi",
+      "title": "Morning lectures : twenty discourses, delivered before the friends of progress in the city of New York in the winter and spring of 1863",
+      "author": "Andrew Jackson Davis",
+      "year": 1865,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "gistofspirituali00chas",
+      "title": "The gist of spiritualism:",
+      "author": "Warren Chase",
+      "year": 1865,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: gistspiritualis00chasgoog"
+    },
+    {
+      "id": "deathafterlife00davi",
+      "title": "Death and the after-life",
+      "author": "Andrew Jackson Davis",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "onforceitsmental00brayiala",
+      "title": "On force, its mental and moral correlates; and on that which is supposed to underlie all phenomena: with speculations on spiritualism, and other abnormal conditions of mind",
+      "author": "Charles Bray",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: bub_gb_Ug6-OA6Lv-sC"
+    },
+    {
+      "id": "spiritualismiden00mcdo",
+      "title": "Spiritualism identical with ancient sorcery, New Testament demonology, and modern witchcraft : with the testimony of God and man against it",
+      "author": "W. (William) McDonald",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924029205255",
+      "title": "The history and philosophy of evil : with suggestions for more ennobling institutions, and philosophical systems of education",
+      "author": "Andrew Jackson Davis",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "notesandstudies00ashbgoog",
+      "title": "Notes and studies in the philosophy of animal magnetism and spiritualism",
+      "author": "John. [from old catalog] Ashburner",
+      "year": 1867,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Oxford University"
+    },
+    {
+      "id": "g5176",
+      "title": "\"Wonder\" in relation to spiritualism: an essay delivered to the Liverpool Phrenological Society",
+      "author": "Andrew Leighton",
+      "year": 1867,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "historyofearthsf00walrrich",
+      "title": "History of the earth's formation. Its first inhabitance in connection with the explanation of the Bible. By a convocation of God's messengers, through the mediumship of M.E. Walrath",
+      "author": "M. E Walrath",
+      "year": 1868,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "memorandaofperso00davi",
+      "title": "Memoranda of persons, places and events; embracing authentic facts, visions, impressions, discoveries, in magnetism, clairvoyance, spiritualism. Also quotations from the opposition",
+      "author": "Andrew Jackson Davis",
+      "year": 1868,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "harpcol00peeb",
+      "title": "The Spiritual harp : a collection of vocal music for the choir, congregation, and social circle",
+      "author": "J. M. (James Martin) Peebles",
+      "year": 1868,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "underhillonmesme00unde",
+      "title": "Underhill on mesmerism, with criticisms on its opposers, and a review of humbugs and humbuggers, with practical instructions for experiments in the science, full directions for using it as a remedy in disease ... the philosophy of its curative powers; how to develop a godd clairvoyant; the philosophy of seeing without eyes. The proofs of immortality derived from the unfoldings of mesmerism ..",
+      "author": "Samuel Underhill",
+      "year": 1868,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library"
+    },
+    {
+      "id": "instructivecommu00park",
+      "title": "Instructive communications from spirit life",
+      "author": "S. E Park",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: instructivecommu00park_2, instructivecommu00park_1"
+    },
+    {
+      "id": "planchetteordesp00sarg",
+      "title": "Planchette, or, The despair of science : being a full account of modern spiritualism, its phenomena, and the various theories regarding it : with a survey of French spiritism",
+      "author": "Epes Sargent",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: despairofscience00sargrich"
+    },
+    {
+      "id": "cu31924028954125",
+      "title": "The approaching crisis: being a review of Dr. Bushnell's recent lectures on supernaturalism",
+      "author": "Andrew Jackson Davis",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "magicstaffautobi0000davi",
+      "title": "The magic staff ; an autobiography",
+      "author": "Andrew Jackson Davis",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "questionsettledc00hull",
+      "title": "The question settled : a careful comparison of Biblical and modern spiritualism",
+      "author": "Moses Hull",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: questionsettled00hullgoog, questionsettled00conggoog"
+    },
+    {
+      "id": "modernamericansp00brit",
+      "title": "Modern American spiritualism: twenty years' record of the communion between earth and the world of spirits",
+      "author": "Emma Hardinge Britten",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "seersofagesembra01peeb",
+      "title": "Seers of the ages: embracing spiritualism, past and present. Doctrines stated and moral tendencies defined",
+      "author": "J. M. (James Martin) Peebles",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: seersofagesembra02peeb, seersagesembrac02peebgoog, seersagesembrac01peebgoog"
+    },
+    {
+      "id": "spiritlifeoftheo00rams",
+      "title": "Spirit life of Theodore Parker",
+      "author": "Elizabeth. [from old catalog] Ramsdell",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritlifeoftheo00ramsiala"
+    },
+    {
+      "id": "fountainwithjets00davi",
+      "title": "The fountain; with jets of new meanings",
+      "author": "Andrew Jackson Davis",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library; alternate scans: fountain01davi"
+    },
+    {
+      "id": "arcanaofspiritua00tutt",
+      "title": "Arcana of spiritualism: a manual of spiritual science and philosophy",
+      "author": "Hudson Tuttle",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924028954224, arcanaofspiritua02tutt, arcanaofspiritua01tutt_0, arcanaspiritual01tuttgoog"
+    },
+    {
+      "id": "deathafterlifeei00davi",
+      "title": "Death and the after-life. Eight evening lectures on the summer-land",
+      "author": "Andrew Jackson Davis",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "yearbookofspirit00tutt",
+      "title": "The Year-book of spiritualism for 1871",
+      "author": "Hudson Tuttle",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "whatisspirituali00king",
+      "title": "What is spiritualism? And shall spiritualists have a creed? In two lectures",
+      "author": "Maria M King",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "footfallsonbound00owenrich",
+      "title": "Footfalls on the boundary of another world : with narrative illustrations",
+      "author": "Robert Dale Owen",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: foot00fallsonboundowenrich, footfallsonbound00owen, footfallsonboun04owengoog, footfallsonboun03owengoog, footfallsonboun02owengoog, footfallsonboun00owengoog"
+    },
+    {
+      "id": "orthodoxyfalsesi00dent",
+      "title": "Orthodoxy false, since spiritualism is true",
+      "author": "William Denton",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "debatablelandbet00owen",
+      "title": "The debatable land between this world and the next, with illustrative narrations;",
+      "author": "Robert Dale Owen",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Illinois Urbana-Champaign; alternate scans: debatablelandbet00owenuoft, debatablelandbe03owengoog, debatablelandbe00owengoog, debatablelandbe01owengoog"
+    },
+    {
+      "id": "penetraliabeingh00davi",
+      "title": "The penetralia; being harmonial answers to important questions",
+      "author": "Andrew Jackson Davis",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: MN41724ucmf_0"
+    },
+    {
+      "id": "philosophyofspir00davi",
+      "title": "The philosophy of spiritual intercourse: being an explanation of modern mysteries",
+      "author": "Andrew Jackson Davis",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: philosophyofspir00davi_0, cu31924028954141"
+    },
+    {
+      "id": "biographyofmrsjh00park",
+      "title": "Biography of Mrs. J.H. Conant, the world's medium of the nineteenth century : being a history of her mediumship from childhood to the present time : Together with extracts from the diary of her physician; selections from letters received verifying spirit communications given through her organism at the Banner of light free circles; specimen messages, essays, and invocations from various intelligences in the other life, etc., etc., etc.",
+      "author": "Theodore Parker",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library"
+    },
+    {
+      "id": "spiritualismchar00jewe",
+      "title": "Spiritualism and charlatanism, or, The tricks of the media : embodying an exposé of the manifestations of modern spiritualism by a committee of business men of New-York",
+      "author": "Pendie L Jewett",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualismnecr00morr",
+      "title": "Spiritualism and necromancy",
+      "author": "A. B Morrison",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualismand00morrgoog"
+    },
+    {
+      "id": "defenceofmoderns01wall",
+      "title": "A defence of modern spiritualism",
+      "author": "Alfred Russel Wallace",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "experimentalspir00kard",
+      "title": "Experimental spiritism",
+      "author": "Allan Kardec",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "isspiritualismtr00dent",
+      "title": "Is spiritualism true?",
+      "author": "William Denton",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "researchesinphe00sirgoog",
+      "title": "Researches in the phenomena of spiritualism",
+      "author": "William Crookes (sir.)",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Oxford University"
+    },
+    {
+      "id": "philosophyofspir00marv",
+      "title": "The philosophy of spiritualism and the pathology and treatment of mediomania : two lectures",
+      "author": "Frederic Rowland Marvin",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "onmiraclesmodern00wall",
+      "title": "On miracles and modern spiritualism three essays",
+      "author": "Alfred Russel Wallace",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: OnMiraclesAndModernSpiritualism"
+    },
+    {
+      "id": "spiritualistphil01kard",
+      "title": "Spiritualist philosophy : the spirits' book : containing the principles of spiritist doctrine on the immortality of the soul, the nature of spirits and their relations with men, the moral law, the present life, the future life, and the destiny of the human race : according to the teachings of spirits of high degree",
+      "author": "Allan Kardec",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: spiritualistphil00kard, atextbookelemen03barkgoog"
+    },
+    {
+      "id": "tenyearswithspir00fair",
+      "title": "Ten years with spiritual mediums : an inquiry concerning the etiology of certain phenomena called spiritual",
+      "author": "Francis Gerry Fairfield",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: tenyearswithspi00fairgoog"
+    },
+    {
+      "id": "christiansdutyin00bake",
+      "title": "The Christian's duty in regard to spiritualism. A sermon by John Bakewell ...",
+      "author": "John Bakewell",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by State Library of Pennsylvania"
+    },
+    {
+      "id": "otherworldorglim01leef",
+      "title": "The other world; or, Glimpses of the supernatural. Being facts, records, and traditions relating to dreams, omens, miraculous occurrences, apparitions, wraiths, warnings, second-sight, witchcraft, necromancy, etc",
+      "author": "Frederick George Lee",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Yale University, Cushing/Whitney Medical Library; alternate scans: otherworldorglim02leef, otherworldorgli00leegoog"
+    },
+    {
+      "id": "truespiritualism00lean",
+      "title": "True spiritualism",
+      "author": "Normon Leander",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: pbhyklteraamsta00tomegoog"
+    },
+    {
+      "id": "mysteryembracing00kell",
+      "title": "A mystery: embracing an account of the lost angels, and the origin and source of spiritualism",
+      "author": "Rufus] [from old catalog] [Keller",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "epitomeofspiritu00hayw",
+      "title": "An epitome of spiritualism and spirit magnetism;",
+      "author": "Aaron Stevens Hayward",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "ExperiencesInSpiritualism",
+      "title": "Experiences in spiritualism : a record of extraordinary phenomena, witnessed through the most powerful mediums : with some historical fragments relating to Semiramide, given by the spirit of an Egyptian who lived contemporary with her",
+      "author": "Catherine fl. 1876 Berry",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "ghostlandorresea00britrich",
+      "title": "Ghost land; or, Researches into the mysteries of occultism. Illustrated in a series of autobiographical sketches ..",
+      "author": "William supposed author Britten",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "truthsofspiritua00wil",
+      "title": "The truths of spiritualism : immortality proved beyond a doubt by living witnesses",
+      "author": "Ebenezer V Wilson",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "useofspiritualis00halliala",
+      "title": "The use of spiritualism",
+      "author": "S. C. (Samuel Carter) Hall",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: usespiritualism00hallgoog"
+    },
+    {
+      "id": "cu31924028954050",
+      "title": "Lights and shadows of spiritualism. By D.D. Home",
+      "author": "D. D. (Daniel Dunglas) Home",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "b28055251",
+      "title": "Mesmerism, spiritualism, &c., historically & scientifically considered : being two lectures delivered at the London Institution, with preface and appendix",
+      "author": "William Benjamin Carpenter",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: cu31924028950919, mesmerismspirit00carpgoog"
+    },
+    {
+      "id": "spiritualismexpo00unse",
+      "title": "Spiritualism exposed : Prof. S.S. and Clara Baldwin, containing a sketch of Prof. Baldwin, accounts of their marvellous exposures of spiritualism, testimonials, anecdotes, incidents, etc., etc",
+      "author": "Unknown",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "psychographytrea00moserich",
+      "title": "Psychography : a treatise on one of the objective forms of psychic or spiritual phenomena",
+      "author": "Stainton Moses",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritpossession00hugu",
+      "title": "Spirit-possession. A treatise upon modern spiritualism",
+      "author": "Henry M. [from old catalog] Hugunin",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "viewsofourheaven00davi",
+      "title": "Views of our heavenly home : a sequel to a Stellar key to the summer-land",
+      "author": "Andrew Jackson Davis",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: viewsourheavenl00davigoog"
+    },
+    {
+      "id": "spiritmanifestat00beal",
+      "title": "Spirit manifestations of ancient and modern times compared",
+      "author": "Joseph fl. 1871-1880 Beals",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "hereafter00dewi",
+      "title": "The hereafter;",
+      "author": "Cornelia Mrs. [from old catalog] De Witt",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "naturallawinspir00drum",
+      "title": "Natural law in the spirit world",
+      "author": "Henry Drummond",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library"
+    },
+    {
+      "id": "secondsightexpla00wick",
+      "title": "Second sight explained : a complete exposition of clairvoyance or second sight, as exhibited by the late Robert Houdin and Robert Heller : showing how the supposed phenomena may be produced",
+      "author": "Frederick Wicks",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "scientificbasiso00sar",
+      "title": "The scientific basis of spiritualism",
+      "author": "Epes Sargent",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: scientificbasiso00sarg_0"
+    },
+    {
+      "id": "compilationoflec00klin",
+      "title": "A compilation of the lectures given by the spirit-band through the mediumship of Mrs. Magdalena Kline and which is called the Everlasting Gospel",
+      "author": "Magdalena Kline",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "eveningsathomein00houg_0",
+      "title": "Evenings at home in spiritual seance : welded together by a species of autobiography",
+      "author": "Georgiana Houghton",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: eveningsathomein00houg"
+    },
+    {
+      "id": "spiritualistcome00bake",
+      "title": "The spiritualist; a comedy in four acts",
+      "author": "Joseph Marion. [from old catalog] Baker",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "ConfessionsOfAMedium",
+      "title": "Confessions of a Medium",
+      "author": "Anonymous",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "driftfromshoreof00coch",
+      "title": "Drift, from the shore of the hereafter",
+      "author": "Harriet B. Mrs. ] [from old catalog] [Cochrane",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "johnwilliamflet00gaygoog",
+      "title": "John William Fletcher, clairvoyant : a biographical sketch with some chapters on the present era and religious reform",
+      "author": "Susan E. (Susan Elizabeth) Gay",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Oxford University"
+    },
+    {
+      "id": "laterpaperssuppl00bowl",
+      "title": "Later papers : supplement to the experiences of Samuel Bowles, late editor of the Springfield (Mass.) Republican : in spirit life or life as he now sees it from a spiritual stand-point",
+      "author": "Samuel (Spirit) Bowles",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "clearlightfromsp00irvi",
+      "title": "Clear light from the spirit world",
+      "author": "Kate Irving",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "demonologyorspir0000elde",
+      "title": "Demonology or Spiritualism, Ancient and Modern",
+      "author": "Eld. E. F. Hanson",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "nineteenthcentur01brit",
+      "title": "Nineteenth century miracles, or, Spirits and their work in every country of the earth : a complete historical compendium of the great movement known as \"modern spiritualism\"",
+      "author": "Emma Hardinge Britten",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "delusionofspirit00cadw",
+      "title": "The \"delusion\" of spiritualism compared with a belief in the Bible ..",
+      "author": "J. W Cadwell",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "isbn_9780967161068",
+      "title": "the nature spiritual existence, spiritual gifts, given through the mediumship, of mrs. cora l. v. richmond",
+      "author": "ancient savant",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "lifeandlaborins00shelgoog",
+      "title": "Life and labor in the spirit world : being a description of localities, employments, surroundings, and conditions in the spheres",
+      "author": "Mary T. (Mary Theresa) Longley",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "missinglinkinmod00underich",
+      "title": "The missing link in modern spiritualism",
+      "author": "A. Leah (Ann Leah) Underhill",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "newdispensationt00dyar",
+      "title": "The new dispensation : thirty-seventh anniversary discourse : delivered through the mediumship of E.R. Dyar before the Working Union of Progressive Spiritualists in Berkeley Hall, Boston, Mass, March 29th, 1885",
+      "author": "E. R. Mrs Dyar",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "discoursedeliver00hook",
+      "title": "A discourse delivered before the Willimantic Spiritualist Society, at Willimantic, Conn. ... March 21, 1886",
+      "author": "John Hooker",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "earthlywatchersa00chesuoft",
+      "title": "Earthly watchers at the heavenly gates ; the false and the true spiritualism",
+      "author": "John Chester",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "phantasmsoflivin01gurn",
+      "title": "Phantasms of the living",
+      "author": "Edmund Gurney",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: phantasmsoflivin02gurn, phantasmsoflivin001gurn, phantasmsoflivin02gurniala, phantasmsoflivin00gurn"
+    },
+    {
+      "id": "spiritualismsust00kels",
+      "title": "Spiritualism sustained",
+      "author": "John R. [from old catalog] Kelso",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "nineteenthcentur00darb",
+      "title": "Nineteenth century sense : the paradox of spiritualism",
+      "author": "John Darby",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "preliminaryrepor00univ",
+      "title": "Preliminary report of the Commission appointed by the University of Pennsylvania to investigate modern spiritualism : in accordance with the request of the late Henry Seybert",
+      "author": "University of Pennsylvania. Seybert Commission for Investigating Modern Spiritualism",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: preliminaryrepor02univ, preliminaryrepor00seybuoft, preliminaryrepo00penngoog, preliminaryrepo00seybgoog"
+    },
+    {
+      "id": "higherteachingso00tomp",
+      "title": "The higher teachings of spiritualism",
+      "author": "Joseph H.] [from old catalog] comp [Tompkins",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "newpsychicstudi00johngoog",
+      "title": "The new psychic studies in their relation to Christian thought [microform]",
+      "author": "Franklin Johnson",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "unanswerablelogi00fors",
+      "title": "Unanswerable logic: a series of spiritual discourses, given through the mediumship of Thomas Gales Forster",
+      "author": "Thomas Gales Forster",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "practicalocculti00mors",
+      "title": "Practical occultism: a course of lectures through the trance mediumship of J.J. Morse",
+      "author": "J. J. (James Johnson) Morse",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "demonologywitchc00brow",
+      "title": "Demonology and witchcraft : with especial reference to modern spiritualism, so-called, and the doctrines of demons",
+      "author": "Robert Brown",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "earthsearliestag00pemb",
+      "title": "Earth's earliest ages : and their connection with modern spiritualism and theosophy",
+      "author": "G. H. (George Hawkins) Pember",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "psychologyasnatu00rauerich",
+      "title": "Psychology as a natural science applied to the solution of occult psychic phenomena",
+      "author": "Charles Godlove Raue",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "astrallightattem0000nizi",
+      "title": "The astral light : an attempted exposition of certain occult principles in nature; with some remarks upon modern spiritism",
+      "author": "Nizida",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "b28125216",
+      "title": "How to mesmerise : a manual of instruction in the history, mysteries, modes of procedure, and arts of mesmerism, or, animal magnetism, hypnotism, clairvoyance, thought reading, and mesmeric entertainments",
+      "author": "James Coates",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "jesusmediums00hull",
+      "title": "Jesus and the mediums",
+      "author": "Moses Hull",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritmysteriese00mcma",
+      "title": "Spirit mysteries exposed : being a full and plain explanation of the wonderful feats of the Davenport brothers and other mediums : with a history of spirit rapping and explanation of the means by which its manifestations are produced, etc.",
+      "author": "McManus-Young Collection (Library of Congress) DLC",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "upwardstepsofsev0000steb",
+      "title": "Upward steps of seventy years : autobiographic, biographic, historic : growth of reforms, anti-slavery, etc. : the world's helpers and light-bringers : spiritualism, psychic research, religious outlook, coming reforms",
+      "author": "Giles Badger Stebbins",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: upwardstepsseve00stebgoog"
+    },
+    {
+      "id": "developmentofmed00juds",
+      "title": "Development of mediumship by terrestrial magnetism",
+      "author": "Abby A. (Abby Ann) Judson",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "occultsciencesco00wait",
+      "title": "The occult sciences : a compendium of transcendental doctrine and experiment : embracing an account of magical practices; of secret sciences in connection with magic; of the professors of magical arts; and of modern spiritualism, mesmerism and theosophy",
+      "author": "Arthur Edward Waite",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "wasabrahamlincol00lcmayn",
+      "title": "Was Abraham Lincoln a spiritualist?",
+      "author": "Nettie Colburn Maynard",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by The Library of Congress; alternate scans: wasabrahamlin2031mayn, wasabrahamlincol00mayn, cu31924032769915, wasabraham00mayn, wasabrahamlinc2033mayn, wasabrahamlinco3186mayn, wasabrahamlinco00mayngoog, wasabrahamlinco01mayngoog"
+    },
+    {
+      "id": "whyshebecamespir00juds",
+      "title": "Why she became a spiritualist : twelve lectures delivered before the Minneapolis Association of Spiritualists",
+      "author": "Abby A. (Abby Ann) Judson",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: whyshebecamespir00juds_0, whyshebecameasp00judsgoog"
+    },
+    {
+      "id": "mediumsunmaskede00garr",
+      "title": "Mediums unmasked : an exposé of modern spiritualism",
+      "author": "Julia E Garrett",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualism00wall",
+      "title": "Spiritualism",
+      "author": "Alfred Russel Wallace",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "MediumsAndTheirDupes",
+      "title": "Mediums And Their Dupes",
+      "author": "Unknown",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "mediumshipitsdev00bach",
+      "title": "Mediumship and its development, and how to mesmerize to assist development",
+      "author": "W. H. (William H.) Bach",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "scienceandfuture0000myer",
+      "title": "Science and a future life : with other essays",
+      "author": "F. W. H. (Frederic William Henry) Myers",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "spiritualismexam00dadm",
+      "title": "Spiritualism examined and refuted : it being found contrary to Scripture, known facts and common sense : its phenomena accounted for, while all its claims for disembodied spirits are disproved : also, a discussion of its moral claims, showing that they have not been verified by results attained in the present condition of mankind, as proved by statistics and known facts : some theories often reviewed by spiritualism are briefly examined and answered",
+      "author": "John H Dadmun",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "LawOfPsychicPhenomenaByThomsonHudson",
+      "title": "Law Of Psychic Phenomena By Thomson Hudson",
+      "author": "Thomson Hudson",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "the-mystery-of-no-9-stanhope-st",
+      "title": "The Mystery Of No 9 Stanhope St",
+      "author": "Emma Hardinge Britten",
+      "year": 1893,
+      "lang": "English",
+      "note": "FLAG: Pages unknown; vague title by Emma Hardinge Britten - confirm it's a spiritualism pamphlet, not unrelated fiction; CLEAR:stated"
+    },
+    {
+      "id": "margueritehunter00horirich",
+      "title": "Marguerite Hunter, a narrative descriptive of life in the material and spiritual spheres, as transcribed by a co-operative spirit band through the mediumship of Lizzie S. Bangs ... Inspirational verse offerings as given through the media of \"White Rose.\" Art productions obtained through \"Azur\" and the mediumship of A. Campbell. Published for Marguerite Hunter",
+      "author": "C. H. (Courtney H.) Horine",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritteachingst00mose",
+      "title": "Spirit teachings through the mediumship of William Stainton Moses (M.A., Oxon)",
+      "author": "William Stainton Moses",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "freedspiritorgli00dall",
+      "title": "The freed spirit, or, Glimpses beyond the border : a collection of new and authentic occult tales from the author's personal experience and reliable private sources",
+      "author": "Mary Kyle Dallas",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritworld00marr",
+      "title": "The spirit world",
+      "author": "Florence Marryat",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "veilliftedmodern00tayl",
+      "title": "The veil lifted : modern developments of spirit photography",
+      "author": "J. Traill (John Traill) author Taylor",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Getty Research Institute"
+    },
+    {
+      "id": "veilliftedmodern00glen",
+      "title": "The veil lifted. Modern developments of spirit photography. With twelve illustrations",
+      "author": "Andrew of London ed Glendinning",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "mytranscendental00lacr",
+      "title": "My transcendental experiences with spirits : mostly through my own conscious clairvoyance, clairaudience, and other inherent and developed powers",
+      "author": "Henry Lacroix",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "automaticorspir01undegoog",
+      "title": "Automatic or spirit writing, with other psychic experiences",
+      "author": "Sara A. Underwood",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "jamesgblaineonmo00minn",
+      "title": "James G. Blaine on the money question, and other psychic articles",
+      "author": "Unknown",
+      "year": 1896,
+      "lang": "English",
+      "note": "FLAG: Title James G. Blaine on the money question, and other psychic articles is odd for a politician's name - genuinely spiritualist/channeled work or off-topic?; CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "psychicphilosoph00dese",
+      "title": "Psychic philosophy as the foundation of a religion of natural law",
+      "author": "V. C Desertis",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "greatsecretitsun00davi",
+      "title": "The great secret and its unfoldment in occultism : a record of forty years' experience in the modern mystery",
+      "author": "Charles Maurice Davies",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: greatsecretandi00davigoog"
+    },
+    {
+      "id": "workersinvineyar00sch",
+      "title": "Workers in the vineyard : a review of the progress of spiritualism, biographical sketches, lectures, essays and poems",
+      "author": "Julia Schlesinger",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "englishparentalv00gile",
+      "title": "English and parental versions of the Bible and its deity; also, glimpses of ancient mysteries, biblical and classical, in the light of modern spiritualism",
+      "author": "Alfred Ellenwood Giles",
+      "year": 1897,
+      "lang": "English",
+      "note": "FLAG: Title truncated (English and parental versions of the Bible and its deity; also, glimps...) - unclear if glimpses refers to spiritualism; need full title; CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "hourswithghostso00evanrich",
+      "title": "Hours with the ghosts, or, Nineteenth century witchcraft : Illustrated investigations into the phenomena of spiritualism and theosophy",
+      "author": "Henry Ridgely Evans",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "realghoststories00steauoft",
+      "title": "Real ghost stories : a revised reprint of the Christmas and New Year's numbers of the \"Review of reviews\" 1891-2",
+      "author": "W. T. (William Thomas) Stead",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: realghoststories00stearich, 00252268.20179.emory.edu"
+    },
+    {
+      "id": "studiesinpsychi00podm",
+      "title": "Studies in psychical research",
+      "author": "Frank Podmore",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of British Columbia Library; alternate scans: studiesinpsychi01podmgoog"
+    },
+    {
+      "id": "telepathysublimi00masouoft",
+      "title": "Telepathy and the subliminal self : an account of recent investigations regarding hypnotism, automatism, dreams, phantasms, and related phenomena",
+      "author": "Rufus Osgood Mason",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "desperance-shadow-land",
+      "title": "Shadow Land, or, Light from the Other Side",
+      "author": "Elizabeth d'Esperance",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "practicalguideto00walr",
+      "title": "Practical guide to the investigation of spiritualism, healing, and the occult sciences",
+      "author": "George W Walrond",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "psychologyhypno00barngoog",
+      "title": "Psychology, hypnotism, personal magnetism, and clairvoyance",
+      "author": "William Abner Barnes",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "echoesfromspirit00kane",
+      "title": "Echoes from the spirit world",
+      "author": "Alice L Kane",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b24884121",
+      "title": "Essays in psychical research",
+      "author": "A. (Ada) Goodrich-Freer",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: essaysinpsychic00goodgoog"
+    },
+    {
+      "id": "hypnotismclairvo00welt",
+      "title": "Hypnotism and clairvoyance",
+      "author": "J[ohn] W. [from old catalog] Weltner",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "studiesinoutlyin01tutt",
+      "title": "Studies In the Out-Lying Fields of Psychic Science",
+      "author": "Hudson Tuttle",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "spiritualismofna00lock",
+      "title": "The spiritualism of nature; the formula and fact of the invisible co-relations of nature's elements, energies, and forces, discover and demonstrate life and intelligence beyond the grave",
+      "author": "W. M. (William Maynard) Lockwood",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "apolloniusorpres00benniala",
+      "title": "Apollonius; or, The present and future of psychical research",
+      "author": "Ernest Nathaniel Sir Bennett",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "britten-autobiography-of-emma-hardinge-britten",
+      "title": "Autobiography of Emma Hardinge Britten",
+      "author": "Emma Hardinge Britten",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "dodeadreturntrue00sanfrich",
+      "title": "Do the dead return? A true story of startling seances in San Francisco ..",
+      "author": "Unknown",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "easylessonsforun00grum",
+      "title": "Easy lessons for the unfoldment and realization of psychometry, clairvoyance, and inspiration /",
+      "author": "J. C. F. (Jesse Charles Fremont) Grumbine",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "manstoryofhisadv00fost",
+      "title": "Man, the story of his advent, life and development in the earth world and his continued life and progression in the spirit world, with a description allegory of his principal aids and counsellors, told in epic verse",
+      "author": "Edwy Wells. [from old catalog] Foster",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualfratern41will",
+      "title": "Spiritual fraternity discourses : a series of lectures delivered through the trance mediumship of Mrs. N.J. Willis at the First Spiritual Temple, Boston, Mass., U.S.A.",
+      "author": "N. J Willis",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "universaltreasur00grey",
+      "title": "The universal treasure casket : or Book of wisdom and knowledge containing how she became a medium or experience in the study of occult science and many formulas from which to choose a profession, with poems",
+      "author": "Mrs. Bertha Anna Greyer",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "wandererinspirit00farnrich",
+      "title": "A wanderer in the spirit lands",
+      "author": "A Farnese",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: awandererinspir01farngoog"
+    },
+    {
+      "id": "factfancyinspiri00hubb",
+      "title": "Fact and fancy in spiritualism, theosophy, and psychical research",
+      "author": "G. G. (Gabriel G.) Hubbell",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "celestialmessage00gaff",
+      "title": "A celestial message : a relation of the observations and experiences of a philosopher and poet in the the spirit world",
+      "author": "Erastus Celley Gaffield",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b2265205x_0001",
+      "title": "Modern spiritualism: a history and a criticism",
+      "author": "Frank Podmore",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Royal College of Physicians, London; alternate scans: modernspiritual03podmgoog, modernspiritual06podmgoog"
+    },
+    {
+      "id": "cu31924031447737",
+      "title": "Spirit-identity",
+      "author": "William Stainton Moses",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "proofsoflifeaf00thom",
+      "title": "The proofs of life after death : a collation of opinions as to future life",
+      "author": "Robert John Thompson",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto; alternate scans: proofslifeafter01thomgoog"
+    },
+    {
+      "id": "guidetomediumshi01wall",
+      "title": "A Guide to Mediumship and Psychical Unfoldment",
+      "author": "E. W. (Edward Walter) Wallis",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "bookofknowledgep00beigrich",
+      "title": "Book of knowledge : psychic facts",
+      "author": "Nellie Beighle",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "humanpersonality02myer",
+      "title": "Human personality and its survival of bodily death",
+      "author": "Frederic William Henry Myers",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: humanpersonality02myeruoft"
+    },
+    {
+      "id": "realityevilofspi00thom",
+      "title": "The reality and evil of spiritualism ..",
+      "author": "Mina Thomas",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "societyforpsych00benngoog",
+      "title": "The Society for Psychical Research: Its Rise & Progress & a Sketch of Its Work",
+      "author": "Edward T. Bennett",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "whatisspirituali00peeb_0",
+      "title": "What is spiritualism, who are these spiritualists, and what can spiritualism do for the world?",
+      "author": "J. M. (James Martin) author Peebles",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign; alternate scans: whatisspirituali00peeb, whatisspiritua00peeb, india.history.resource.117389, whatisspiritual00peebgoog"
+    },
+    {
+      "id": "clairvoyance00lead",
+      "title": "Clairvoyance",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: in.ernet.dli.2015.163527"
+    },
+    {
+      "id": "1903PodmoreCookSpiritualismProAndCon",
+      "title": "Spiritualism Pro and Con",
+      "author": "Frank Podmore",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "psychiclightcont00drakrich",
+      "title": "Psychic light, the continuity of law and life",
+      "author": "Maud Eugenia Barrock Lord Drake",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b31365899",
+      "title": "The demonism of the ages, spirit obsessions so common in spiritism, oriental and occidental occultism",
+      "author": "J. M. (James Martin) Peebles",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library"
+    },
+    {
+      "id": "nightsideofnatur00crowuoft",
+      "title": "The night side of nature : or ghosts and ghost seers",
+      "author": "Catherine Crowe",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "RigidTestsOfTheOccult",
+      "title": "Rigid Tests Of The Occult",
+      "author": "C. W. McCarthy",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lettersfromspiri00pete",
+      "title": "Letters from the spirit world",
+      "author": "Franz (Spirit) Petersilea",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: letters-from-the-spirit-world"
+    },
+    {
+      "id": "scienceandfuture00hysluoft",
+      "title": "Science and a future life",
+      "author": "James H. (James Hervey) Hyslop",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cu31924028951270"
+    },
+    {
+      "id": "b21694722",
+      "title": "Borderland of psychical research",
+      "author": "Hyslop James H. (James Hervey)",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Royal College of Physicians in Edinburgh"
+    },
+    {
+      "id": "enigmasofpsychic00hysl",
+      "title": "Enigmas of psychical research",
+      "author": "James H. (James Hervey) Hyslop",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: enigmasofpsychic01hysl_0, cu31924028951206, in.ernet.dli.2015.59867, enigmaspsychica01hyslgoog"
+    },
+    {
+      "id": "proofsoflifeafte00lodg",
+      "title": "Proofs of life after death",
+      "author": "Oliver Sir Lodge",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "truespiritualism00clym",
+      "title": "True spiritualism;",
+      "author": "R. Swinburne (Reuben Swinburne) Clymer",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: truespiritualis00clymgoog"
+    },
+    {
+      "id": "universalspiritu00colv",
+      "title": "Universal spiritualism : spirit communion in all ages among all nations",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: bwb_C0-AQK-289, universalspiritu0000wjco, universalspirit00colvgoog"
+    },
+    {
+      "id": "CrystalGazing.AstrologyPalmistryPlanchetteAndSpiritualism",
+      "title": "Crystal Gazing. Astrology, Palmistry, Planchette, And Spiritualism",
+      "author": "Will Goldston",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "futurelifecritic00davirich",
+      "title": "A future life? : a critical inquiry into the scientific value of the alleged evidences that man's conscious personality survives the life of the body; embracing a discussion of the doctrines of resurrection of the body, re-incarnation, spiritism, annihilation, theories of metaphysicians, phenomena of spiritualism, etc.",
+      "author": "Singleton Waters Davis",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: afuturelifeacri00davigoog"
+    },
+    {
+      "id": "historyofnewengl00budi",
+      "title": "History of the New England Spiritualist Campmeeting Association at Lake Pleasant, Mass.; by H. A. Budington",
+      "author": "H. A. (Henry Aaron) Budington",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "immortalityourem00peebrich",
+      "title": "Immortality and our employments hereafter : with what a hundred spirits, good and evil, say of their dwelling places",
+      "author": "J. M. (James Martin) Peebles",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritualist00bykogoog",
+      "title": "Spiritualist",
+      "author": "V. P . Bykov A. M. Markov",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "physicalphenomen00bennrich",
+      "title": "The physical phenomena popularly classed under the head of spiritualism : with facsimile illustrations of thought-transference drawings and direct writing",
+      "author": "Edward T Bennett",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "psychicriddle00funkuoft",
+      "title": "The psychic riddle",
+      "author": "Isaac Kaufman Funk",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: psychicriddle01funk, psychicriddle03funkgoog, psychicriddle01funkgoog"
+    },
+    {
+      "id": "theocosmia-the-spirit-world-explored",
+      "title": "Theocosmia: The Spirit World Explored by Astral Travel",
+      "author": "William Norman Wilson",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "dodeaddepartothe00bate",
+      "title": "Do the dead depart? and other questions",
+      "author": "E. Katherine (Emily Katherine) Bates",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: dodeaddepartand00bategoog"
+    },
+    {
+      "id": "occultismcommons00willrich",
+      "title": "Occultism and common-sense",
+      "author": "Beckles Willson",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "psychicalresearc00hysl",
+      "title": "Psychical research and the Resurrection",
+      "author": "James H. (James Hervey) Hyslop",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: psychicalresearc0000jame, psychicalresearc002924mbp, psychicalresearc013856mbp, x-psychical-research-and-the-resurrection, psychicalresear01hyslgoog, psychicalresear00hyslgoog"
+    },
+    {
+      "id": "bwb_P8-BNW-192",
+      "title": "Sermons on MOdern Spiritualism",
+      "author": "O.S.C. A. V. Miller",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "comingscience00carruoft",
+      "title": "The coming science",
+      "author": "Hereward Carrington",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "naturalisationof00podmrich",
+      "title": "The naturalisation of the supernatural",
+      "author": "Frank Podmore",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.223043"
+    },
+    {
+      "id": "physicalphenomen00carrrich",
+      "title": "The physical phenomena of spiritualism, fraudulent and genuine; being a brief account of the most important historical phenomena; a criticism of their evidential value, and a complete exposition of the methods employed in fraudulently reproducing the same",
+      "author": "Hereward Carrington",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: physicalphenome00carr, physicalphenome01carrgoog, physicalphenome03carrgoog, physicalphenome04carrgoog, physicalphenome05carrgoog"
+    },
+    {
+      "id": "afterdeathwhatsp00lomb",
+      "title": "After death--what? : Spiritistic phenomena and their interpretation",
+      "author": "Cesare Lombroso",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University Library, University of North Carolina at Chapel Hill; alternate scans: afterdeathwhats00lombgoog, afterdeathwhats01lombgoog"
+    },
+    {
+      "id": "eusapiapalladino1909carr",
+      "title": "Eusapia Palladino and her phenomena",
+      "author": "Hereward Carrington",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: eusapiapalladino00carr"
+    },
+    {
+      "id": "howiknowthatdead00stearich",
+      "title": "How I know that the dead return",
+      "author": "W. T. (William Thomas) Stead",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: howiknowthatdead00stea"
+    },
+    {
+      "id": "mesmerismchristi00podmrich",
+      "title": "Mesmerism and Christian science : a short history of mental healing",
+      "author": "Frank Podmore",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritmatestheir00peeb",
+      "title": "Spirit mates, their origin and destiny, sex-life, marriage, divorce",
+      "author": "J. M. (James Martin) Peebles",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "lifeoflittlejust02hulbiala",
+      "title": "The life of little Justin Hulburd, medium, actor and poet, who was during forty years one of the greatest attractions upon the dramatic stage and who served his adopted country during the civil war as President Lincoln's private spy. Given through his mediumship by prominent people of that time who knew him intimately, relating many exciting experiences",
+      "author": "E. W. (Ebenezer Wallace) Hulburd",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theoremorteleol00wiltgoog",
+      "title": "Theorem Or Teleology of Spiritualism",
+      "author": "May Barnard Wiltse",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "dawnofanotherlif00aber",
+      "title": "The dawn of another life : this book is wholly written by the star circle in full form materializations",
+      "author": "William W Aber",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "clairvoyancesyst00gru",
+      "title": "Clairvoyance; the system of philosophy concerning the divinity of clairvoyance; also a treatise on divination and crystal reading",
+      "author": "J. C. F. (Jesse Charles Fremont) Grumbine",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924028951122",
+      "title": "New evidences in psychical research; a record of investigations, with selected examples of recent S. P. R. results",
+      "author": "John Arthur Hill",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "october151910toj00mcar",
+      "title": "October 15, 1910 to January 28, 1911 : [a record of the proceedings of seances conducted in Brooklyn, New York City during this time period]",
+      "author": "Charles McArthur",
+      "year": 1911,
+      "lang": "English",
+      "note": "FLAG: Title truncated (October 15, 1910 to January 28, 1911: [a record of the proceedings of...]) - seance-sitting record or society proceedings (serial-adjacent)? need full title; CLEAR:by-date; held by Lincoln Financial Foundation Collection"
+    },
+    {
+      "id": "photographinginv00coat",
+      "title": "Photographing the invisible : practical studies in spirit photography, spirit portraiture, and other rare but allied phenomena",
+      "author": "James Coates",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Getty Research Institute"
+    },
+    {
+      "id": "psychicalresearc00barruoft",
+      "title": "Psychical research",
+      "author": "William Sir Barrett",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: psychicalresear00barr, b28067101, psychicalresearc00barr"
+    },
+    {
+      "id": "cu31924031183225",
+      "title": "Spirit messages",
+      "author": "Hiram Corson",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "spiritualisthymn00kate",
+      "title": "Spiritualist hymnal : a new collection of words and music for the congregation and choir, specially adapted for spiritualist meetings",
+      "author": "Zaida Brown Kates",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Music Library, University of North Carolina at Chapel Hill"
+    },
+    {
+      "id": "newerspiritualis00podmrich",
+      "title": "The newer spiritualism",
+      "author": "Frank Podmore",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "widowsmiteotherp00funkuoft",
+      "title": "The widow's mite, and other psychic phenomena",
+      "author": "Isaac K. (Isaac Kaufman) Funk",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: widowsmiteotherp01funk, widowsmiteotherp00funk, widowsmiteother00funk, widowsmiteotherp00funkiala, widowsmiteandot00funkgoog"
+    },
+    {
+      "id": "psychical-research-and-thought-tranference",
+      "title": "Psychical Research And Thought Tranference",
+      "author": "Eden Paul",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "behindsceneswith00abbo",
+      "title": "Behind the scenes with the mediums",
+      "author": "David P. (David Phelps) Abbott",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: behindsceneswit03abbogoog"
+    },
+    {
+      "id": "reminiscencesofw00mayn",
+      "title": "Reminiscences of the war of the rebellion. Did Abraham Lincoln receive aid from the spirit world? Some extracts from Mrs. Nettie Colburn Maynard's book--\"Was Abraham Lincoln a spiritualist?\"",
+      "author": "Nettie Colburn Maynard",
+      "year": 1912,
+      "lang": "English",
+      "note": "FLAG: Only 14pp (below fragment threshold) but kept as known pamphlet - Nettie Colburn Maynard's Lincoln-spiritualism testimony; confirm exception warranted; CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritmediumship00spra",
+      "title": "Spirit mediumship",
+      "author": "E. W. (Eli Wilmot) Sprague",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "stead-what-life-in-spirit-world-really-is",
+      "title": "What Life in the Spirit World Really Is",
+      "author": "W. T. (Spirit) Stead",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "personalexperien00carrrich",
+      "title": "Personal experiences in spiritualism (including the official account and record of the American Palladino séances)",
+      "author": "Hereward Carrington",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "dangersofspiritu0000jgod_w8w5",
+      "title": "The Dangers of Spiritualism",
+      "author": "J. Godfrey Raupert",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "innextworld01sinn",
+      "title": "In the Next World",
+      "author": "A. P. (Alfred Percy) Sinnett",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "apparitionsthoug01podm_0",
+      "title": "Apparitions and Thought-Transference",
+      "author": "Frank Podmore",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: apparitionsthoug00podmuoft, apparitionsandth031173mbp, apparitionsthoug01podm, apparitionsthoug00podm, apparitionsandt02podmgoog"
+    },
+    {
+      "id": "clairvoyanceasex00lairrich",
+      "title": "Clairvoyance as exemplified in \"The fifth force \" : a new philosophy for the guidance of humanity during the coming cycle",
+      "author": "A. W. (Abraham W.) Lair",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritualismitst00flet",
+      "title": "Spiritualism : its truth, helpfulness, and danger",
+      "author": "James Henry Fletcher",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "divinegiftofmedi00bish",
+      "title": "The divine gift of mediumship;",
+      "author": "Richmond Leander Bishop",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "clairvoyancethou00dela",
+      "title": "Clairvoyance and thought-transference",
+      "author": "L. W. (Lauron William) De Laurence",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "crystalgazingspi00dela",
+      "title": "Crystal-gazing and spiritual clairvoyance",
+      "author": "L. W. (Lauron William) De Laurence",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "divineinspiratio00will",
+      "title": "Divine inspiration : psychic research of the great beyond",
+      "author": "J. W. (John West) Williams",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "Swami_Panchadasis_Occult_Powers",
+      "title": "Clairvoyance and Occult Powers",
+      "author": "Author: Swami Panchadasi",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "experimentsinps01coovgoog",
+      "title": "Experiments in psychical research at Leland Stanford Junior University",
+      "author": "John Edgar Coover",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Wisconsin - Madison; alternate scans: experimentsinps02coovgoog"
+    },
+    {
+      "id": "immortalityessay00strerich",
+      "title": "Immortality : an essay in discovery, co-ordinating scientific, psychical, and Biblical research",
+      "author": "Burnett Hillman Streeter",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: immortality01unkngoog"
+    },
+    {
+      "id": "messagefromwilli00will",
+      "title": "Message from William T. Stead;sketch and events of his life, 1849-1912; short history of the medium Mrs. Pennau-Cook; principles of the center; A vision; including constitution and by-laws of the W.T.",
+      "author": "William T. Stead Memorial Center",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "ourhiddenforcesl00boirrich",
+      "title": "Our hidden forces (\"La psychologie inconnue\") An experimental study of the psychic sciences",
+      "author": "Emile Boirac",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "spiritintercours00mckerich",
+      "title": "Spirit intercourse, its theory and practice",
+      "author": "James Hewat McKenzie",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: spiritintercour00mckegoog"
+    },
+    {
+      "id": "spiritualismsiro00merc",
+      "title": "Spiritualism and Sir Oliver Lodge",
+      "author": "Charles Arthur Mercier",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "deadhaveneverdie01rand",
+      "title": "The Dead Have Never Died",
+      "author": "Edward C. (Edward Caleb) Randall",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: deadhaveneverdi00randgoog"
+    },
+    {
+      "id": "questionifmandie00cloduoft",
+      "title": "The question: \"If a man die, shall he live again?\" a brief history and examination of modern spiritualism",
+      "author": "Edward Clodd",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cu31924028952062"
+    },
+    {
+      "id": "hintsobservation00craw",
+      "title": "Hints and observations for those investigating the phenomena of spiritualism",
+      "author": "W. J. (William Jackson) Crawford",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: hintsobservation00cra, hintsandobserva01crawgoog, hintsandobserva00crawgoog"
+    },
+    {
+      "id": "howtospeakwithde00scie",
+      "title": "How to speak with the dead; a practical handbook",
+      "author": "Sciens",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "lifeafterdeathpr0000hysl",
+      "title": "Life after death : problems of the future life and its nature",
+      "author": "James H. (James Hervey) Hyslop",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "onthresholdofuns00barrrich",
+      "title": "On the threshold of the unseen : an examination of the phenomena of spiritualism and of the evidence for survival after death",
+      "author": "William Sir Barrett",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: india.history.resource.117426"
+    },
+    {
+      "id": "psychictendencie00mart",
+      "title": "Psychic tendencies of to-day, an exposition and critique of new thought, Christian science, spiritualism, psychical research (Sir Oliver Lodge) and modern materialism in relation to immortality",
+      "author": "Alfred W. (Alfred Wilhelm) Martin",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: psychictendenci00martgoog"
+    },
+    {
+      "id": "spiritismreligio00lilj",
+      "title": "Spiritism and religion : \"can you talk to the dead?\" : including a study of the most remarkable cases of spirit control",
+      "author": "Johan Baron Liljencrants",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "truthaboutspirit00brya",
+      "title": "The truth about spiritualism",
+      "author": "Wm. J. (William J.) Bryan",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "warlecturesfroms00gran",
+      "title": "War lectures from the spirit world",
+      "author": "Ulysses S. (Ulysses Simpson) Grant",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "christopherstudy00lodg",
+      "title": "Christopher; a study in human personality",
+      "author": "Oliver Sir Lodge",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: cu31924028003873, christopherastu00lodggoog"
+    },
+    {
+      "id": "essaysinoccultis00harr",
+      "title": "Essays in occultism, spiritism, and demonology",
+      "author": "William Richard Harris",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by PIMS - University of Toronto; alternate scans: essaysinoccultis0000unse, occultism00harruoft"
+    },
+    {
+      "id": "experimentsinpsy00craw",
+      "title": "Experiments in psychical science, levitation, contact, and the direct voice",
+      "author": "William Jackson Crawford",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "modernpsychicalp00carruoft",
+      "title": "Modern psychical phenomena, recent researches and speculations",
+      "author": "Hereward Carrington",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "PrivateDowding",
+      "title": "Private Dowding: a plain record of the after-death experiences of a soldier killed in battle : and some questions on world issues answered by the messenger who taught him wider truths",
+      "author": "Thomas Dowding",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "spiritualismitsh0000hill",
+      "title": "Spiritualism, its history phenomena and doctrine",
+      "author": "J. Arthur (John Arthur) Hill",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.155842, spiritualismits00hillgoog"
+    },
+    {
+      "id": "spiritualismitsh00hillrich",
+      "title": "Spiritualism; its history, phenomena and doctrine",
+      "author": "John Arthur Hill",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: india.history.resource.117413"
+    },
+    {
+      "id": "proofsoftruthsof00hensuoft",
+      "title": "The proofs of the truths of spiritualism",
+      "author": "George Henslow",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: proofsoftruthsof00hens"
+    },
+    {
+      "id": "whatisthisspirit00leafrich",
+      "title": "What is this spiritualism?",
+      "author": "Horace Leaf",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: bwb_T5-ARH-783, in.ernet.dli.2015.60772, whatisthisspiri00leafgoog"
+    },
+    {
+      "id": "TheFolliesAndFraudsOfSpiritualism",
+      "title": "The Follies And Frauds Of Spiritualism",
+      "author": "Walter Mann",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "candeadcommunic00haldgoog",
+      "title": "Can the dead communicate with the living!",
+      "author": "Isaac Massey Haldeman",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: candeadcommunic02haldgoog"
+    },
+    {
+      "id": "debateonspiritua122unse",
+      "title": "Debate on spiritualism",
+      "author": "Unknown",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Graduate Theological Union"
+    },
+    {
+      "id": "doestelepathyexp0000baxt",
+      "title": "Does telepathy explain spiritualism?",
+      "author": "Francis K Baxter",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "isspiritualismba00mccarich",
+      "title": "Is spiritualism based on fraud ?: the evidence given by Sir A.C. Doyle and others",
+      "author": "Joseph McCabe",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "proofsofspiritwo00chev",
+      "title": "Proofs of the spirit world (On ne meurt pas)",
+      "author": "Léon Chevreuil",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of British Columbia Library; alternate scans: proofsofspiritwo01chev"
+    },
+    {
+      "id": "psychicalinvesti00hilluoft",
+      "title": "Psychical investigations : some personally-observed proofs of survival",
+      "author": "John Arthur Hill",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "isbn_009183998x",
+      "title": "Psychical miscellanea, being papers on psychical research, telepathy, hypnotism, Christian science, etc.",
+      "author": "J. Arthur (John Arthur) Hill",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "spiritualismpers00kern",
+      "title": "Spiritualism : a personal experience and a warning",
+      "author": "Coulson Kernahan",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritualismnewp00culp",
+      "title": "Spiritualism and the new psychology, an explanation of spiritualist phenomena and beliefs in terms of modern knowledge",
+      "author": "Millais Culpin",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "spiritualismexpo00fawkrich",
+      "title": "Spiritualism exposed",
+      "author": "F. Attfield Fawkes",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: 1920FawkesSpiritualismExposed"
+    },
+    {
+      "id": "spiritualismpopu00mccarich",
+      "title": "Spiritualism; a popular history from 1847",
+      "author": "Joseph McCabe",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: SpiritualismAPopularHistory, spiritualismapo00mccagoog"
+    },
+    {
+      "id": "abcofspiritualis00aust",
+      "title": "The A.B.C. of spiritualism : one hundred of the questions most commonly asked about spiritualism, answered tersely and plainly",
+      "author": "B. F. (Benjamin Fish) Austin",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "churchpsychicalr00wrig",
+      "title": "The church and psychical research; a layman's view",
+      "author": "George E Wright",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "foundationsofspi00caririch",
+      "title": "The foundations of spiritualism, / by W. Whately Smith",
+      "author": "Whately Carington",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "problemsofmedium00zymo",
+      "title": "The problems of mediumship",
+      "author": "Allessandro Zymonidas",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "survivalofmanstu00lodgiala",
+      "title": "The survival of man; a study in unrecognized human faculty",
+      "author": "Oliver Sir Lodge",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: survivalofmanstu0000lodg, survivalofmanstu00lodgrich, survivalmanastu01lodggoog"
+    },
+    {
+      "id": "truthofspiritual00rita",
+      "title": "The truth of spiritualism",
+      "author": "Rita",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: truthspirituali00ritagoog, truthspirituali00humpgoog"
+    },
+    {
+      "id": "APublicDebateOnTheTruthOfSpiritualism",
+      "title": "A Public Debate On The Truth Of Spiritualism Between Sir Arthur Conan Doyle and Joseph McCabe",
+      "author": "Joseph McCabe",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "vale-owen-the-life-beyond-the-veil.-vol-1.-the-lowlands-of-heaven",
+      "title": "The Life Beyond The Veil. Vol 1. The Lowlands Of Heaven",
+      "author": "George Vale Owen",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: vale-owen-the-life-beyond-the-veil.-vol-2.-the-highlands-of-heaven, vale-owen-the-life-beyond-the-veil.-vol-4.-the-battalions-of-heaven, the-life-beyond-the-veil-vol.-5-the-outlands-of-heaven"
+    },
+    {
+      "id": "CollinsMableTheLockedRoom.ATrueStoryOfExperiencesInSpiritualism",
+      "title": "The Locked Room: A True Story of Experiences in Spiritualism",
+      "author": "Mabel Collins",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "1920BeadnellRealityOrUnrealityOfSpiritualisticPhenomena",
+      "title": "The Reality or Unreality of Spiritualistic Phenomena: Being a Criticism of Dr. W.J. Crawford's Investigation into Levitations and Raps",
+      "author": "Charles Marsh Beadnell",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "psychictelephone00melt",
+      "title": "A psychic telephone : its construction, the laws and conditions that govern its use",
+      "author": "F. R Melton",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Alberta Libraries"
+    },
+    {
+      "id": "drbealeormoreabo0000sidg",
+      "title": "Dr. Beale, or, More about the unseen",
+      "author": "Eleanor Mildred Sidgwick",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "josephglanvillan00redguoft",
+      "title": "Joseph Glanvill and psychical research in the seventeenth century",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "manssurvivalafte00twee",
+      "title": "Man's survival after death;",
+      "author": "Charles Lakeman Tweedale",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritismcultofd00patorich",
+      "title": "Spiritism and the cult of the dead in antiquity",
+      "author": "Lewis Bayles Paton",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: spiritismandcul00patogoog"
+    },
+    {
+      "id": "caseagainstspiri00cvin",
+      "title": "The case against spirit photographs",
+      "author": "C. Vincent Patrick and W. Whately Smith.",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by UCLA Library, Preservation Department"
+    },
+    {
+      "id": "problemsofpsychi00carrrich",
+      "title": "The problems of psychical research; experiments and theories in the realm of the supernormal",
+      "author": "Hereward Carrington",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.38168, india.history.resource.117446"
+    },
+    {
+      "id": "psychicstructure00craw",
+      "title": "The psychic structures at the Goligher circle",
+      "author": "W. J. (William Jackson) Crawford",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spiritworld0000revc_d3l0",
+      "title": "The spirit world",
+      "author": "Rev. Clarence Larkin",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "wanderingsofspir00doylrich",
+      "title": "The wanderings of a spiritualist",
+      "author": "Arthur Conan Sir Doyle",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: wanderingsofspir00doyl"
+    },
+    {
+      "id": "recordofpsychice00goer",
+      "title": "A record of psychic experiences",
+      "author": "George F Goerner",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "ghostsofbible00nick",
+      "title": "Ghosts of the Bible",
+      "author": "Converse Ennis. [from old catalog] Nickerson",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "mrssullivanssean00kell",
+      "title": "Mrs. Sullivan's seance..",
+      "author": "Laura Frances. [from old catalog] Kelley",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "philosophyphenom00thom",
+      "title": "Philosophy and phenomena of spiritualism",
+      "author": "Franklin Alonzo Thomas",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "othersideofdeath00coherich",
+      "title": "The other side of death : a critical examination of the belief in a future life, with a study of spiritualism",
+      "author": "Chapman Cohen",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "truespiritreturn00mcge",
+      "title": "True spirit return",
+      "author": "George McGehean",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "GhostWasAGirlDr.PrinceReports",
+      "title": "Ghost Was A Girl, Dr. Prince Reports",
+      "author": "Walter Franklin Prince",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "HowIMakeJustAsGoodGhostsAsDr.Doyle",
+      "title": "How I Make Just As Good Ghosts As Dr. Doyle",
+      "author": "Joseph Rinn",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "SpiritPhotographsThatWereFrauds",
+      "title": "Spirit Photographs That Were Frauds",
+      "author": "Nevil Maskelyne.",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "psychicalexperie00coms",
+      "title": "A psychical experience,a man works for help with personalities in the wider life;",
+      "author": "William Charles Comstock",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "harmonialphiloso00davi",
+      "title": "The harmonial philosophy : a compendium and digest of the works of Andrew Jackson Davis ...",
+      "author": "Andrew Jackson Davis",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Pittsburgh Library System"
+    },
+    {
+      "id": "psychologyofmedi00sche",
+      "title": "The psychology of mediumship : (two worlds in one)",
+      "author": "H. (Herman) Scheuing",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "truthaboutspirit00sadl",
+      "title": "The truth about spiritualism",
+      "author": "William S. (William Samuel) Sadler",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "bwb_T5-BCG-470",
+      "title": "thirty years of psychical research being a treatise on metapsychics",
+      "author": "charles richet",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "vanishingnightse00good",
+      "title": "Vanishing night; a series of letters given through telepathic correspondence to Juliet S. Goodenow",
+      "author": "Juliet S. Mrs Goodenow",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "1923DoyleTheCaseForSpiritPhotography",
+      "title": "The Case For Spirit Photography",
+      "author": "Arthur Conan Doyle",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lincolnwasspirit00fitz_0",
+      "title": "Lincoln Was a Spiritualist",
+      "author": "James Joseph Fitzgerrell",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Lincoln Financial Foundation Collection"
+    },
+    {
+      "id": "somenewevidencef00thom",
+      "title": "Some new evidence for human survival",
+      "author": "Charles Drayton Thomas",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "truespiritualism00here",
+      "title": "True spiritualism",
+      "author": "Carlos María de Heredia",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "1924BirdMyPsychicAdventures",
+      "title": "My Psychic Adventures",
+      "author": "Malcolm Bird",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "my-travels-in-the-spirit-world",
+      "title": "My Travels In The Spirit World",
+      "author": "Caroline D. Larsen",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "NotedWitnessesForPsychicOccurrences",
+      "title": "Noted Witnesses For Psychic Occurrences",
+      "author": "Walter Franklin Prince",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "ghostsspiritsina00ding",
+      "title": "Ghosts and spirits in the ancient world",
+      "author": "Eric John Dingwall",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    }
+  ],
+  "hand_pruned": [
+    "histoiredeltat00brio — off-topic: French text on 19th-c. military surgery, not spiritualism; also non-English",
+    "rcin.org.pl.WA35_140188_11371-2_Art70_115404 — off-topic/non-English: French academy note correction, not a spiritualism work",
+    "rcin.org.pl.WA35_140198_11371-2_Art73_115410 — off-topic/non-English: French academy note correction, not a spiritualism work",
+    "the-spiritualist-london-no.-179-january-28th-1876 — serial: single issue of The Spiritualist periodical; periodicals out of scope per campaign _why",
+    "light-vol-3-1883 — serial: volume of Light journal; periodicals out of scope per campaign _why",
+    "wordsworth03myer — off-topic: Myers's literary biography of Wordsworth, not psychical research",
+    "FromTheOldWorldToTheNewOrAChristmasStoryOfTheChicagoExhibition — off-topic: Stead travelogue/story about the 1893 Chicago Exhibition, not spiritualism",
+    "robertowen00podmgoog — off-topic: Podmore's biography of social reformer Robert Owen, not spiritualism",
+    "RobertOwenBio — off-topic: Podmore's biography of social reformer Robert Owen, not spiritualism",
+    "ramblesadventure00podmiala — off-topic: Podmore travel memoir (Australasia/Canada/India), not spiritualism",
+    "trentonoldnewbyh00podm — off-topic: local history of Trenton, not spiritualism",
+    "rappersormyster00psegoog — dupe of rapperteri00sear (same work The rappers; kept id is non-Google, similar page count)",
+    "spiritrappingun00matt — dupe of spiritrappingunv00matt_0 (same work Spirit rapping unveiled! by Mattison; kept has more pages)",
+    "spiritualismsata00rams — dupe of spiritualisms00rams (same work by William Ramsey, same year; kept has more pages)",
+    "ghostlandorresea00brit — dupe of ghostlandorresea00britrich (same work Ghost land by Britten; kept has more pages)",
+    "b24884704 — dupe of occultsciencesco00wait (same work The occult sciences by Waite; kept has more pages)",
+    "demonismofagessp00peeb — dupe of b31365899 (same work The demonism of the ages by Peebles; kept has more pages)",
+    "b21726164 — dupe of enigmasofpsychic00hysl (same work Enigmas of psychical research by Hyslop; kept has more pages)",
+    "nightsideofnatur00crow_0 — dupe of nightsideofnatur00crowuoft (same work The night side of nature by Crowe; kept matches preferred *uoft scan and has more pages)",
+    "survivalofmanstu00lodguoft — dupe of survivalofmanstu00lodgiala (same work The survival of man by Lodge; kept has more pages)",
+    "planchetteordesp1869sarg — dupe of planchetteordesp00sarg (same work by Epes Sargent, same year; kept has more pages)",
+    "onmiraclesmodern01wall — dupe of onmiraclesmodern00wall (same work by A.R. Wallace; kept is earlier printing with more pages)",
+    "confessionsamed00conggoog — dupe of ConfessionsOfAMedium (same work Confessions of a medium; kept is non-Google scan)",
+    "hilljohnarthur1800newy — dupe of isbn_009183998x (same work Psychical miscellanea by J. Arthur Hill; kept has far more pages)",
+    "experimentsinpsy01craw — dupe of experimentsinpsy00craw (same work by W.J. Crawford, same year; kept has more pages)",
+    "wandererinspirit1896fran — dupe of wandererinspirit00farnrich (same channeled work A Wanderer in the Spirit Lands; kept matches preferred *rich scan)",
+    "VerbatimReportOfAPublicDebateOnTheTruthOfSpiritualism — dupe of APublicDebateOnTheTruthOfSpiritualism (same McCabe debate transcript, same year)",
+    "scientificspirit00wood — fragment: 14pp generic sermon, not a known movement pamphlet",
+    "jstor-1112490 — fragment: 12pp journal article (Spiritualism and Crime), not a known movement pamphlet",
+    "jstor-25121602 — fragment: 13pp journal article (Orthodox Science and Psychical Research), not a known movement pamphlet",
+    "churchesreligion00murr — fragment: 10pp, unclear/broad theology topic, not a known movement pamphlet",
+    "thought-transference-oliver-lodge — dropped at import 2026-09-22: no page count obtainable — the item carries no imagecount and its IIIF manifest returns HTTP 500 (probed twice)"
+  ]
+}

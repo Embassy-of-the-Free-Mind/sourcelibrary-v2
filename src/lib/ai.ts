@@ -78,6 +78,10 @@ export const MODEL_PRICING: Record<string, { input: number; output: number }> = 
 
   'gemini-3.6-flash': { input: 0.75, output: 3.75 },
   'gemini-3.7-flash': { input: 0.75, output: 3.75 },
+  // Measured 2026-09-21 from the Detailed usage cost BigQuery export and
+  // cross-checked against the live SKU catalogue — see the matching entry
+  // and comment in scripts/lib/model-pricing.mjs (#4599 follow-up).
+  'gemini-3.8-flash': { input: 0.75, output: 3.75 },
   // Legacy models — retained for historical rows; not verifiable against the
   // current catalogue, which splits 2.5-flash by long/short input.
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
@@ -272,9 +276,21 @@ export async function performTranslation(
     : `\n\n**Text to translate:**\n${ocrText}`;
 
   if (previousPageTranslation) {
-    prompt += isEnglish
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
+    // Head AND tail, plus the page's <summary>/<keywords> — the head carries
+    // the page's conventions and names, the tail carries the seam the model
+    // is told to continue (#4968; twin of continuityContext in
+    // scripts/lib/translate-core.mjs, keep the two in step)
+    const blocks = (previousPageTranslation.match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
+    const body = previousPageTranslation
+      .replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
+      .trim();
+    if (body || blocks) {
+      const core = body.length <= 2000 ? body : `${body.slice(0, 600)}\n[…]\n${body.slice(-1400)}`;
+      const seed = `${core}${blocks ? `\n${blocks}` : ''}...`;
+      prompt += isEnglish
+        ? `\n\n**Previous page (modernized) for continuity:**\n${seed}`
+        : `\n\n**Previous page translation for continuity:**\n${seed}`;
+    }
   }
 
   // If the OCR flagged this as handwritten, inject a note into the prompt

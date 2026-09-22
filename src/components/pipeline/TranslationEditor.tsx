@@ -68,6 +68,15 @@ import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 type TransliterationGate = { message: string } | null;
 
 /**
+ * Where an on-demand English modernization has got to.
+ *  - `already-modern`: the route measured the page and declined to spend, because the
+ *    output would have been the input. That is a successful answer, not a failure, and
+ *    it is rendered as a note rather than an error.
+ *  - `gated`: the anonymous hourly cap, which asks for a (free) sign-in.
+ */
+type ModernizeState = 'idle' | 'loading' | 'ready' | 'already-modern' | 'gated' | 'error';
+
+/**
  * Both transliteration call sites — the panel's auto-fire effect and the
  * explicit button — share this. Generating a transliteration is a paid Gemini
  * call, so anonymous volume is capped per hour and the route answers 429 with
@@ -546,6 +555,17 @@ export default function TranslationEditor({
   });
   const [modernizedText, setModernizedText] = useState<string | null>(page.modernized?.data || null);
 
+  // On-demand modernization for an English page (#4958). The transcription is always
+  // the reading view; this is the aid a reader can ask for, one page at a time. Nothing
+  // is generated until the button is pressed, and the route refuses to spend on a page
+  // that carries no archaic orthography — an already-modern page comes back as
+  // `already-modern` rather than as a second, subtly different English text.
+  const [englishModernized, setEnglishModernized] = useState<string | null>(
+    page.modernized?.source === 'ocr' ? page.modernized?.data ?? null : null,
+  );
+  const [showEnglishModernized, setShowEnglishModernized] = useState(false);
+  const [modernizeState, setModernizeState] = useState<ModernizeState>('idle');
+
   // Navigation hint: shown for the reader's first few page views ever, then retired
   const [showNavHint, setShowNavHint] = useState(false);
   useEffect(() => {
@@ -628,8 +648,20 @@ export default function TranslationEditor({
   // modernization in translation.data is the readable text, so those books read like
   // translated books: modernized panel by default, transcription toggleable as
   // "Original Text". Unknown year falls to the modern-print behavior.
-  const bookYear = parseInt(String(book.published ?? ''), 10);
-  const englishOcrIsReadingView = isEnglishBook && !(bookYear < 1820);
+  // The transcription is ALWAYS the reading view for an English book (#4958).
+  //
+  // This used to be year-split: below 1820 the modernized text in `translation.data`
+  // became the default view and the transcription was the toggle. That made a derived,
+  // machine-written text the thing a reader sees first — and quotes — on the strength
+  // of a date. Two problems, one practical and one editorial. Practically, a date is a
+  // poor proxy: presses dropped long ſ unevenly between roughly 1790 and 1810, and
+  // antiquarian reprints set archaic type long after. Editorially, the original is the
+  // artifact; a modernization is an aid to it, and an aid should be offered, not
+  // substituted.
+  //
+  // The modernized panel is unaffected and still one toggle away wherever it exists —
+  // these are initial panel states, not permissions. What changed is which one opens.
+  const englishOcrIsReadingView = isEnglishBook;
 
   // The same idea one locale over. A book WRITTEN in the reading language has
   // no translation into it and never will — `pages.translations.es` is empty
@@ -1123,6 +1155,13 @@ export default function TranslationEditor({
     setTranslationText(translation);
     setSummaryText(summary);
     setModernizedText(page.modernized?.data || null);
+    // The on-demand modernization belongs to the page it was made from. Carrying it
+    // across a page turn would show one leaf's text under the next leaf's image — and
+    // silently, since both are plausible English prose. Reset to the incoming page's
+    // own cached modernization, if it has one, and close the view either way.
+    setEnglishModernized(page.modernized?.source === 'ocr' ? page.modernized?.data ?? null : null);
+    setShowEnglishModernized(false);
+    setModernizeState('idle');
     lastSavedRef.current = { ocr, translation, summary };
     setSaveStatus('idle');
     // Reset each content panel's internal scroll (desktop: panels scroll independently).
@@ -1143,6 +1182,47 @@ export default function TranslationEditor({
     const next = !modernizedMode;
     setModernizedMode(next);
     localStorage.setItem('sl_reader_mode', next ? 'modern' : 'scholarly');
+  };
+
+  /**
+   * Ask for a modernization of THIS page, or toggle back to the transcription once one
+   * exists. Nothing here runs on mount: generation is a paid call and the reader has to
+   * want it. A page already modernized this session toggles for free.
+   */
+  const requestEnglishModernization = async () => {
+    if (englishModernized) {
+      setShowEnglishModernized((v) => !v);
+      return;
+    }
+    setModernizeState('loading');
+    try {
+      const res = await fetch(`/api/pages/${page.id}/modernize`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.status === 429 || data?.code === 'SIGNIN_REQUIRED') {
+        setModernizeState('gated');
+        return;
+      }
+      if (!res.ok) {
+        setModernizeState('error');
+        return;
+      }
+      // The route measured the page and declined to spend — the honest answer when the
+      // text is already modern English, and the whole point of the no-op guard.
+      if (data?.skipped === 'already-modern' || !data?.modernized) {
+        setModernizeState('already-modern');
+        return;
+      }
+      setEnglishModernized(data.modernized as string);
+      setShowEnglishModernized(true);
+      setModernizeState('ready');
+    } catch {
+      setModernizeState('error');
+    }
   };
 
 
@@ -1899,7 +1979,15 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                        {paired ? 'Greek · Berthelot' : ocrText ? (isEnglishBook ? 'Original Text' : (book.language || 'Original')) : 'Step 1: Transcribe'}
+                        {paired
+                          ? 'Greek · Berthelot'
+                          : ocrText
+                          ? isEnglishBook
+                            ? showEnglishModernized && englishModernized
+                              ? 'Modernized'
+                              : 'Original Text'
+                            : (book.language || 'Original')
+                          : 'Step 1: Transcribe'}
                       </span>
                       {paired ? (
                         paired.badges.map((b) => (
@@ -1912,6 +2000,59 @@ export default function TranslationEditor({
                           <Check className="w-3 h-3" />
                         </span>
                       ) : null}
+
+                      {/* Modernize this page — English editions only, and only ever on
+                          request. The transcription stays the reading view; this offers
+                          the aid rather than substituting it (#4958). */}
+                      {isEnglishBook && ocrText && !paired && (
+                        <>
+                          <button
+                            onClick={requestEnglishModernization}
+                            disabled={modernizeState === 'loading'}
+                            className="px-1.5 py-0.5 rounded text-[11px] transition-colors disabled:opacity-60"
+                            style={{
+                              border: '1px solid var(--border-light)',
+                              color: showEnglishModernized && englishModernized ? '#fff' : 'var(--text-muted)',
+                              background: showEnglishModernized && englishModernized ? 'var(--accent-sage)' : 'transparent',
+                            }}
+                            title={
+                              englishModernized
+                                ? 'Switch between the transcription and its modernized spelling'
+                                : 'Normalise archaic spelling and letterforms on this page'
+                            }
+                          >
+                            {modernizeState === 'loading'
+                              ? 'Modernizing…'
+                              : englishModernized
+                              ? showEnglishModernized
+                                ? 'Show original'
+                                : 'Show modernized'
+                              : 'Modernize'}
+                          </button>
+                          {modernizeState === 'already-modern' && (
+                            <span className="text-[11px]" style={{ color: 'var(--text-muted)' }} title="No archaic letterforms or spelling were found on this page, so a modernization would return the same text.">
+                              already modern
+                            </span>
+                          )}
+                          {modernizeState === 'gated' && (
+                            <a
+                              // Carry the reader back to the page they were reading, as
+                              // the other gated actions in this component do — a sign-in
+                              // that lands you on the homepage loses your place.
+                              href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=limit`}
+                              className="text-[11px] underline"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              sign in to continue
+                            </a>
+                          )}
+                          {modernizeState === 'error' && (
+                            <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
+                              couldn&apos;t modernize
+                            </span>
+                          )}
+                        </>
+                      )}
                     </div>
                     {ocrText && (
                       <RevisionHistory
@@ -1944,7 +2085,10 @@ export default function TranslationEditor({
                       </>
                     ) : ocrText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
-                        <NotesRenderer text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} pageType={page.page_type} />
+                        {/* The modernization replaces the transcription in place when the
+                            reader asks for it, so the two are never on screen as rival
+                            texts — one panel, one reading, toggled by the header button. */}
+                        <NotesRenderer text={showEnglishModernized && englishModernized ? englishModernized : ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} pageType={page.page_type} />
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">

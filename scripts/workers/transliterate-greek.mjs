@@ -69,7 +69,9 @@ async function transliteratePage(db, page, bookId) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts: [{ text: PROMPT + ocrText }] }],
-      generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
+      // gemini-3.1-flash-lite thinks by default and bills it at the output rate
+      // (#4581, #4599) — transliteration needs no reasoning, so turn it off.
+      generationConfig: { temperature: 0.1, maxOutputTokens: 8192, thinkingConfig: { thinkingBudget: 0 } },
     }),
     signal: AbortSignal.timeout(30000),
   });

@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     // gemini_usage row here would attribute someone else's spend to us.
     // Test the key by making a simple request
     const genAI = getUnmeteredGeminiClient(apiKey);
+    // thinking-ok: gemini-2.0-flash has no reasoning stage and rejects a thinkingConfig.
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Simple test prompt

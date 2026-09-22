@@ -181,7 +181,10 @@ export async function POST(request: NextRequest) {
               { inline_data: { mime_type: mimeType, data: base64 } },
             ],
           }],
-          generationConfig: { temperature: 0.1 },
+          // gemini-3.1-flash-lite thinks by default and bills it at the output
+          // rate (#4581, #4599) — raw REST fetch, so the SDK chokepoint's
+          // zero-budget default (src/lib/gemini-client.ts) does not apply here.
+          generationConfig: { temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
         }),
         // Without a timeout a stalled Gemini connection holds the whole
         // request to maxDuration and the client sees a hang (2026-07-18).
@@ -478,6 +481,9 @@ Return JSON only:
                 }],
               }],
               tools: [{ google_search: {} }],
+              // thinking-ok: grounded search needs a positive/default thinking
+              // budget on gemini-2.5-flash — a zero budget can silently
+              // suppress grounding (see gemini-thinking-and-meter.mjs header).
               generationConfig: { temperature: 0.1 },
             }),
             signal: AbortSignal.timeout(20000),

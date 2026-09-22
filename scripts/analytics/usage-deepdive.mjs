@@ -9,6 +9,7 @@
 //       node scripts/analytics/usage-deepdive.mjs [--days N]
 
 import { MongoClient } from 'mongodb';
+import { activePoolFingerprints, poolBanner } from '../lib/suspected-pool.mjs';
 
 const DAYS = (() => {
   const i = process.argv.indexOf('--days');
@@ -128,8 +129,16 @@ async function main() {
   const pvAll = await db.collection('analytics_pageviews').countDocuments({ timestamp: { $gte: SINCE } });
   const pvCursor = db.collection('analytics_pageviews').find({ timestamp: { $gte: SINCE } });
 
+  // Fingerprints the hourly detector has flagged as a residential proxy pool.
+  // These wear a real browser UA — BOT_RE cannot see them, which is why on
+  // 2026-09-19 this report printed "Pageviews (bot/auto): 0 (0.0%)" on a day
+  // that was 87% one rented pool. Counted separately rather than dropped, so
+  // the contamination is visible instead of merely absent.
+  const poolUas = await activePoolFingerprints(db);
+
   let humanPvs = 0;
   let botPvs = 0;
+  let poolPvs = 0;
   const pageHits = new Map();        // path -> count (human)
   const kindHits = new Map();        // kind -> count (human)
   const tenantHits = new Map();      // tenant -> count (human)
@@ -144,6 +153,7 @@ async function main() {
   while (await pvCursor.hasNext()) {
     const d = await pvCursor.next();
     if (isBot(d.userAgent)) { botPvs++; continue; }
+    if (poolUas.has(d.userAgent)) { poolPvs++; continue; }
     humanPvs++;
     const normPath = normalizePath(d.path);
     const k = pathKind(normPath);
@@ -168,9 +178,13 @@ async function main() {
     sessions.get(sessKey).push({ ts: d.timestamp, path: d.path, kind: kindStr });
   }
 
+  const banner = poolBanner(poolUas, { excludedReads: poolPvs });
+  if (banner) { print(banner); print(``); }
+
   print(`Pageviews (raw):     ${pvAll.toLocaleString()}`);
   print(`Pageviews (human):   ${humanPvs.toLocaleString()}   (${pct(humanPvs, pvAll)})`);
   print(`Pageviews (bot/auto):${botPvs.toLocaleString()}   (${pct(botPvs, pvAll)})`);
+  print(`Pageviews (proxy pool):${poolPvs.toLocaleString()}   (${pct(poolPvs, pvAll)})`);
   print(`Unique (ip+ua) fingerprints: ${sessions.size.toLocaleString()}`);
   print(``);
 

@@ -46,7 +46,27 @@ describe('reset-book-ocr respects a pipeline hold', () => {
     // `'pipeline_auto.status': 'archive_complete',` is the regression.
     const line = SRC.slice(0, hits[0].index).split('\n').length;
     const text = SRC.split('\n')[line - 1];
-    expect(text).toMatch(/HELD\s*\?\s*\{\s*\}\s*:/);
+
+    const guard = text.match(/\(\s*(\w+)\s*\?\s*\{\s*\}\s*:/);
+    expect(
+      guard,
+      'the archive_complete write is no longer behind a ternary — a bare write releases every hold',
+    ).not.toBeNull();
+
+    // The guard may be indirected through a variable: #4958 added --translation-only,
+    // which must also skip the requeue, so the condition became `HELD || TRANSLATION_ONLY`
+    // hoisted into `keepStatus`. Follow the indirection rather than pinning the literal
+    // `HELD ?`, but require that whatever the condition is, HELD is still part of it —
+    // otherwise a future flag could quietly drop the hold out of the expression.
+    const condition = guard![1];
+    if (condition !== 'HELD') {
+      const def = SRC.match(new RegExp(`const\\s+${condition}\\s*=\\s*([^;]+);`));
+      expect(def, `the write is guarded by \`${condition}\`, which has no const definition to check`).not.toBeNull();
+      expect(
+        def![1],
+        `\`${condition}\` no longer mentions HELD — a held book would be requeued at archive_complete and the hold silently lifted`,
+      ).toMatch(/\bHELD\b/);
+    }
   });
 
   it('tells the operator the book stayed held, and how to release it', () => {

@@ -224,13 +224,13 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         priority={priority}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.94)] from-10% via-[rgba(26,22,18,0.62)] via-45% to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-        <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
+        <p className="text-white/75 text-[11px] mb-1 hidden sm:block">
           {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count)}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
-        <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+        <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] group-hover:text-accent-gold transition-colors">
           {col.name}
         </h2>
       </div>
@@ -257,13 +257,13 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         priority={priority}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.94)] from-10% via-[rgba(26,22,18,0.62)] via-45% to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
-        <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 group-hover:text-accent-gold transition-colors">
+        <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] group-hover:text-accent-gold transition-colors">
           {col.name}
         </h3>
         {col.subtitle && (
-          <p className="text-xs sm:text-sm text-white/60 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-white/80 leading-relaxed line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]">
             {col.subtitle}
           </p>
         )}
