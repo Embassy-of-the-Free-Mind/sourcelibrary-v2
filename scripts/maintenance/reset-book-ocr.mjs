@@ -34,6 +34,14 @@
  * Options:
  *   --dry-run              Report what would change, write nothing.
  *   --also-translation     Clear translation.data alongside ocr.data.
+ *   --translation-only     Clear ONLY translation.data; leave ocr.data untouched and do NOT
+ *                          requeue the book. For undoing a translation pass that should never
+ *                          have run (e.g. an English→English "modernization" written onto a
+ *                          modern-print book — see #4958) without destroying paid OCR. Snapshots
+ *                          to page_revisions and cancels outstanding TRANSLATION jobs exactly as
+ *                          the OCR path does; skips the ocr_generation bump, which is an OCR
+ *                          concept, and skips the archive_complete requeue, which would re-OCR a
+ *                          book whose text is fine.
  *   --pages 5-39           Only clear a page_number range (inclusive).
  *   --reason "..."         Recorded on the revision notes (default: manual reset).
  */
@@ -45,6 +53,13 @@ import { isHeld } from '../lib/pipeline-hold.mjs';
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const ALSO_TRANSLATION = args.includes('--also-translation');
+const TRANSLATION_ONLY = args.includes('--translation-only');
+if (ALSO_TRANSLATION && TRANSLATION_ONLY) {
+  console.error('--also-translation and --translation-only are mutually exclusive');
+  process.exit(1);
+}
+/** Which page fields this run destroys. The rest of the script keys off this. */
+const FIELDS = TRANSLATION_ONLY ? ['translation'] : ALSO_TRANSLATION ? ['ocr', 'translation'] : ['ocr'];
 const target = args.find(a => !a.startsWith('--'));
 const reasonIdx = args.indexOf('--reason');
 const REASON = reasonIdx !== -1 ? args[reasonIdx + 1] : 'manual reset via reset-book-ocr.mjs';
@@ -75,8 +90,11 @@ const book = await db.collection('books').findOne(
 if (!book) { console.error(`Book not found: ${target}`); process.exit(1); }
 
 const currentGen = book.pipeline_auto?.ocr_generation || 0;
-console.log(`\n=== Reset OCR: ${(book.title || '').slice(0, 60)} ===`);
-console.log(`id: ${book.id} | status: ${book.pipeline_auto?.status} | ocr ${book.pages_ocr}/${book.pages_count} | generation ${currentGen} -> ${currentGen + 1}`);
+console.log(`\n=== Reset ${FIELDS.join(' + ')}: ${(book.title || '').slice(0, 60)} ===`);
+console.log(
+  `id: ${book.id} | status: ${book.pipeline_auto?.status} | ocr ${book.pages_ocr}/${book.pages_count}` +
+    (TRANSLATION_ONLY ? ` | generation ${currentGen} (unchanged)` : ` | generation ${currentGen} -> ${currentGen + 1}`)
+);
 if (book.needs_splitting && !book.split_completed) {
   console.log('NOTE: book is an unsplit spread — after reset it re-OCRs via the spread-aware path.');
 }
@@ -86,35 +104,40 @@ if (HELD) {
   console.log(`HELD (${h.reason}${h.issue ? ` #${h.issue}` : ''}) — the reset will run, but pipeline_auto.status stays 'held'.`);
   console.log(`  release condition: ${h.release}`);
   console.log(`  release with: node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ${h.reason} --book ${book.id} --apply`);
+} else if (TRANSLATION_ONLY) {
+  console.log(`Translation-only — ocr.data and pipeline_auto.status are left untouched (no requeue).`);
 } else {
   console.log(`Not held — the book will be requeued at archive_complete.`);
 }
 if (DRY_RUN) console.log('DRY RUN — nothing will be written.');
 
-// 1. Outstanding OCR jobs
+// 1. Outstanding jobs for whichever lane this run destroys. Cancelling the OCR
+// lane on a --translation-only run would kill a live OCR pass the run is not
+// touching; cancelling the translation lane is what closes the resurrect window
+// for the text being cleared.
+const JOB_TYPE = TRANSLATION_ONLY ? 'translation' : 'ocr';
 const activeJobFilter = {
   $or: [{ book_id: book.id }, { book_ids: book.id }],
-  type: 'ocr',
+  type: JOB_TYPE,
   status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
 };
 const activeJobs = await db.collection('batch_jobs').countDocuments(activeJobFilter);
-console.log(`Outstanding OCR batch_jobs to cancel: ${activeJobs}`);
+console.log(`Outstanding ${JOB_TYPE} batch_jobs to cancel: ${activeJobs}`);
 
-// 2. Pages to clear
-const pageFilter = { book_id: book.id, 'ocr.data': { $exists: true, $nin: [null, ''] } };
+// 2. Pages to clear — selected on the field this run actually destroys.
+const pageFilter = { book_id: book.id, [`${FIELDS[0]}.data`]: { $exists: true, $nin: [null, ''] } };
 if (pageRange) pageFilter.page_number = pageRange;
 const pages = await db.collection('pages').find(
   pageFilter, { projection: { id: 1, book_id: 1, ocr: 1, translation: 1 } }
 ).toArray();
-console.log(`Pages to clear: ${pages.length}${pageRange ? ` (page_number ${pageRange.$gte}-${pageRange.$lte})` : ''}${ALSO_TRANSLATION ? ' (ocr + translation)' : ' (ocr only)'}`);
+console.log(`Pages to clear: ${pages.length}${pageRange ? ` (page_number ${pageRange.$gte}-${pageRange.$lte})` : ''} (${FIELDS.join(' + ')} only)`);
 
 if (DRY_RUN) { await client.close(); process.exit(0); }
 
 // 3. Revisions first — never destroy without a snapshot
 let revisions = 0;
 for (const p of pages) {
-  const fields = ALSO_TRANSLATION ? ['ocr', 'translation'] : ['ocr'];
-  for (const field of fields) {
+  for (const field of FIELDS) {
     if (!p[field]?.data) continue;
     await db.collection('page_revisions').insertOne({
       id: randomBytes(6).toString('hex'),
@@ -137,13 +160,18 @@ console.log(`Jobs cancelled: ${cancelRes.modifiedCount}`);
 
 // 5. Bump generation BEFORE clearing — any not-yet-cancelled job (e.g. created
 // by a concurrent submitter mid-reset) is now stale by generation.
-await db.collection('books').updateOne({ id: book.id }, {
-  $inc: { 'pipeline_auto.ocr_generation': 1 },
-  $set: { 'pipeline_auto.last_updated': new Date() },
-});
+// `ocr_generation` guards the OCR collector only; a --translation-only run does
+// not touch ocr.data, and bumping it would invalidate a live OCR pass for text
+// this run is deliberately preserving.
+if (!TRANSLATION_ONLY) {
+  await db.collection('books').updateOne({ id: book.id }, {
+    $inc: { 'pipeline_auto.ocr_generation': 1 },
+    $set: { 'pipeline_auto.last_updated': new Date() },
+  });
+}
 
 // 6. Clear page fields
-const unset = ALSO_TRANSLATION ? { ocr: '', translation: '' } : { ocr: '' };
+const unset = Object.fromEntries(FIELDS.map((f) => [f, '']));
 const clearFilter = { book_id: book.id };
 if (pageRange) clearFilter.page_number = pageRange;
 const clearRes = await db.collection('pages').updateMany(clearFilter, { $unset: unset });
@@ -155,16 +183,26 @@ const remainingTr = await db.collection('pages').countDocuments({ book_id: book.
 // A held book gets the counters but NOT the status write — see the header. The
 // counters are just recounts of what step 6 did; the status write is the one
 // that would release the hold.
+// A --translation-only run also leaves the status alone: the book's OCR is intact
+// and requeueing at archive_complete would re-run the whole OCR pass. And once the
+// last translated page is gone, `is_fully_translated` is a live lie — it gates
+// badges and feeds homepage stats (invariants/visibility-and-stats.md), so it is
+// cleared in the same update that zeroes the counter, never left to a later sweep.
+const keepStatus = HELD || TRANSLATION_ONLY;
 await db.collection('books').updateOne({ id: book.id }, {
   $set: {
     pages_ocr: remainingOcr,
     pages_translated: remainingTr,
-    ...(HELD ? {} : { 'pipeline_auto.status': 'archive_complete' }),
+    ...(remainingTr === 0 ? { is_fully_translated: false } : {}),
+    ...(keepStatus ? {} : { 'pipeline_auto.status': 'archive_complete' }),
     'pipeline_auto.last_updated': new Date(),
   },
 });
 console.log(
-  HELD
+  TRANSLATION_ONLY
+    ? `Translation cleared; OCR and status untouched | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr}` +
+      (remainingTr === 0 ? ' | is_fully_translated: false' : '')
+    : HELD
     ? `Book left HELD (status untouched) | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr} | generation: ${currentGen + 1}\n` +
       `  It will NOT re-enter OCR until the hold is released: node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ${book.pipeline_auto.hold.reason} --book ${book.id} --apply`
     : `Book requeued at archive_complete | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr} | generation: ${currentGen + 1}`

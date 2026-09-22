@@ -173,6 +173,55 @@ export function isEnglishBook(book) {
  * note, the page text, and previous-page continuity (the chain that makes
  * translation sequential — see the pipeline explainer).
  */
+
+// The previous page's translation, as continuity context. Three shapes have
+// been measured on the pinned 58-seam sample (PR #4912, blind judge):
+//
+//   head      first 2,000 chars + '...'         production 2025-12-12 → 2026-09-22
+//   tail      last 2,000 chars, blocks stripped  PR #4970, lost to head 13–24
+//   hybrid    head 600 + […] + tail 1,400 + blocks   this — 13–16, a tie with head
+//
+// The head could not see the seam it was told to continue (#4968): on 5.5% of
+// production seams page N ends mid-sentence and N+1 restarts the clause. But
+// the tail alone lost the things the head carried, and the judge said which:
+// running headers, page numbering, quote style, capitalisation, and name and
+// term consistency — the last of which the <summary>/<keywords> blocks help
+// with. So the hybrid keeps both ends and the blocks.
+//
+// Honest about the evidence: no variant beat another decisively. 19 of the 56
+// judged prompts were byte-identical (short pages, where hybrid ≡ head) and
+// the judge still split 6–5 on those, a 52.6% noise floor that the hybrid's
+// 52.7% sits exactly on. The hybrid is chosen because it strictly contains
+// what the head carried AND fixes the blind seam, not because it won.
+export const CONTINUITY_CONTEXT_CHARS = 2000;
+const CONTINUITY_HEAD_CHARS = 600;
+const CONTINUITY_TAIL_CHARS = 1400;
+
+/**
+ * The prompt fragment carrying the previous page's translation. Empty string
+ * when there is nothing to continue from.
+ */
+export function continuityContext(previousTranslation, { english = false } = {}) {
+  if (!previousTranslation) return '';
+  const raw = String(previousTranslation);
+  // The blocks that close a page: dropped from the body so they cannot eat the
+  // window, then re-appended whole — they name the page's people and terms.
+  const blocks = (raw.match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
+  const body = raw.replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '').trim();
+  if (!body && !blocks) return '';
+  const core = body.length <= CONTINUITY_CONTEXT_CHARS
+    ? body
+    : `${body.slice(0, CONTINUITY_HEAD_CHARS)}\n[…]\n${body.slice(-CONTINUITY_TAIL_CHARS)}`;
+  // The trailing '...' is production's own mark that the page is cut off here.
+  // A page whose text already ends in an ellipsis would otherwise read
+  // '......' — the one deliberate departure from the string that was judged,
+  // and a cosmetic one (the arm carried the artifact and still tied).
+  const seed = `${core}${blocks ? `\n${blocks}` : ''}...`.replace(/(?:\.\.\.|…)\s*\.\.\.$/, '...');
+  return english
+    ? `\n\n**Previous page (modernized) for continuity:**\n${seed}`
+    : `\n\n**Previous page translation for continuity:**\n${seed}`;
+}
+
 export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }) {
   const english = isEnglishBook(book);
   const base = english ? prompts.english : prompts.translation;
@@ -196,11 +245,7 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
     ? `\n\n**Text to modernize:**\n${ocrText}`
     : `\n\n**Text to translate:**\n${ocrText}`;
 
-  if (previousTranslation) {
-    prompt += english
-      ? `\n\n**Previous page (modernized) for continuity:**\n${previousTranslation.slice(0, 2000)}...`
-      : `\n\n**Previous page translation for continuity:**\n${previousTranslation.slice(0, 2000)}...`;
-  }
+  prompt += continuityContext(previousTranslation, { english });
 
   return { prompt, promptRef: base.ref, isEnglish: english };
 }

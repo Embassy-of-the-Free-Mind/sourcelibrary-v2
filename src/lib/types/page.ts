@@ -354,6 +354,12 @@ export interface ModernizedData {
   updated_at?: Date;
   prompt_name?: string;
   source_translation_hash?: string;  // Hash of translation.data to detect changes
+  // Which text this modernization was built FROM (#4958). A translated book modernizes
+  // its translation; an English edition has no translation and modernizes its
+  // transcription. The two keep separate hashes so a re-OCR or a re-translation
+  // invalidates only its own, and so neither is ever served in place of the other.
+  source?: 'translation' | 'ocr';
+  source_ocr_hash?: string;          // Hash of ocr.data, for the English lane
 }
 
 // Romanized transliteration for non-Latin scripts

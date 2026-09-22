@@ -1,0 +1,105 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from alchemy-revival.json; config alchemy-revival.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "alchemy-revival-2026-09-21",
+  "collections": [
+    "alchemy"
+  ],
+  "BOOKS": [
+    {
+      "id": "101230725.nlm.nih.gov",
+      "title": "The magic wand and medical guide : the most wonderful and entertaining book every published ; full of strange, curious, and marvelous disclosures, and practical hints, of use in love, courtship, and marriage ; also sure methods of curing and preventing disease ; it contains wonderful and mysterious disclosures of the great secrets of ancient and modern days, new revelations in natural and celestial magic, alchemy, transmutation, etc",
+      "author": "Eureka Medical Institute",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "dli.csl.7557",
+      "title": "The Indian religions or results of the mysterious Buddhism concerning that also which is to be understood in the divinity of fire",
+      "author": "Hargrave Jennings",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "101494017.nlm.nih.gov",
+      "title": "The life and doctrines of Jacob Boehme, the God-taught philosopher : an introduction to the study of his works",
+      "author": "Franz Hartmann",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "cihm_09695",
+      "title": "Love's divine alchemy [microform]",
+      "author": "E. A. (E. Augusta) McLennan",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "india.history.resource.84871",
+      "title": "The Hermetic Museum, restored and enlarged, in Two Volumes, Vol. I",
+      "author": "Arthur Edward Waite",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.84873"
+    },
+    {
+      "id": "63150050R.nlm.nih.gov",
+      "title": "Buried alive : an examination into the occult causes of apparent death, trance, and catalepsy",
+      "author": "Franz Hartmann",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "india.history.resource.91604",
+      "title": "The Life and the Doctrines of Philippus Theophrastus, Bombast of Hohenheim known by the name of Paracelsus; extracted and translated from his rare and extensive woeks and from some unpublished Manuscripts",
+      "author": "Franz Hartmann",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.107700",
+      "title": "A Mathematical Theory of Spirit; being an Attempt to Employ certain Mathematical Principles in the Elucidation of some Metaphysical Problems",
+      "author": "H. Stanley Redgrove",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.44937",
+      "title": "Magic Ed. 6",
+      "author": "Franz Hartmann",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.41501",
+      "title": "Magic White And Black Ed. 6",
+      "author": "Franz Hartmann",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.04761",
+      "title": "A new encyclopaedia of Freemasonry (Ars magna latomorum) and of cognate instituted mysteries : their rites, literature, and history",
+      "author": "Arthur Edward Waite",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.151604",
+      "title": "Alchemy Ancient And Modern",
+      "author": "H. Stanley Redgrove",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}

@@ -260,6 +260,11 @@ function NotebookPanel({
         </div>
       </div>
       <div className="max-h-[40vh] overflow-y-auto px-4 pb-3 space-y-3">
+        {findings.length === 0 && (
+          <p className="text-[13px] text-[#8a8480] font-sans">
+            Nothing saved yet. When the Librarian finds a passage that answers your question, it saves the quote and a note here; the notebook stays with this conversation.
+          </p>
+        )}
         {findings.map((f) => {
           const url = `/book/${f.bookSlug || f.bookId}/page-number/${f.pageNumber}`;
           return (
@@ -1091,7 +1096,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                 </div>
 
                 {/* Research notebook (collapsible) */}
-                {notebookOpen && notebookFindings.length > 0 && (
+                {notebookOpen && (threadId || notebookFindings.length > 0) && (
                   <NotebookPanel
                     findings={notebookFindings}
                     topic={notebookTopic}
@@ -1158,7 +1163,10 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                           {t.newConversation}
                         </button>
                       )}
-                      {notebookFindings.length > 0 && (
+                      {/* Always offered once a thread exists, so the words the
+                          Librarian uses ("your research notebook") and the page
+                          agree even before the first saved finding (#4852). */}
+                      {(threadId || notebookFindings.length > 0) && (
                         <button
                           onClick={() => setNotebookOpen(o => !o)}
                           aria-expanded={notebookOpen}

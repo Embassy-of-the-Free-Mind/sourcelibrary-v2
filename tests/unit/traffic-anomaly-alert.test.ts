@@ -18,6 +18,8 @@ import {
   PREFIX16_THRESHOLD,
   ENUMERATION_PAGES_PER_BOOK,
   SHOULD_BE_BLOCKED,
+  looksLikeSharedFingerprint,
+  UA_FANOUT_ADDRESSES,
 } from '../../scripts/workers/traffic-anomaly-alert.mjs';
 import { BLOCKED_CIDR_LIST, isBlockedNetwork } from '@/lib/blocked-networks';
 
@@ -175,8 +177,69 @@ describe('prefix16', () => {
     expect(prefix16('1.92.219.0')).toBe('1.92.x.x');
   });
 
-  it('returns null for anything that is not an IPv4 literal', () => {
-    expect(prefix16('2a02:c7f:1234::1')).toBe(null);
+  // This case previously asserted that an IPv6 address returns null, and it
+  // passed for a year — pinning the defect rather than the behaviour. Dropping
+  // every v6 address before the /16 and spray checks meant that on 2026-09-20
+  // 5,857 addresses carrying 11,430 reads (17.5% of a 24h window) were
+  // invisible to the instrument built to see exactly that shape. A test that
+  // says "this input produces nothing" is only a guard if producing nothing is
+  // the intent; here it was an unhandled branch wearing a green tick.
+  it('buckets IPv6 by allocation instead of discarding it', () => {
+    expect(prefix16('2a02:c7f:1234::1')).toBe('2a02:c7f::x');
+    expect(prefix16('2800:bf0:82:abc::1')).toBe('2800:bf0::x');
+  });
+
+  it('groups addresses in the same v6 allocation and separates different ones', () => {
+    expect(prefix16('2800:484:1::1')).toBe(prefix16('2800:484:9f::2'));
+    expect(prefix16('2800:484:1::1')).not.toBe(prefix16('2800:bf0:1::1'));
+  });
+
+  it('returns null for a value that is not an address at all', () => {
     expect(prefix16(null)).toBe(null);
+    expect(prefix16('')).toBe(null);
+    expect(prefix16('not-an-ip')).toBe(null);
+  });
+});
+
+/**
+ * The fingerprint axis (#4947). Added after a rented residential proxy pool
+ * read 149,296 pages over three weeks while every network-based check stayed
+ * silent — its loudest operator was 2.5% of its own traffic, so there was no
+ * network to threshold. These pin the MEASURED sizing; an edit that rounds
+ * these numbers off re-opens the blind spot.
+ */
+describe('shared-fingerprint (proxy pool) detection', () => {
+  // Measured 2026-09-20, 24h at the peak.
+  const FLEET = { addrs: 45054, reads: 63000, share: 0.87 };
+  // Widest GENUINE single-UA fan-out in any 24h window, Sep 1-20, after
+  // excluding the Lightpanda rows (bot traffic that was stored as human).
+  const WIDEST_REAL_DAY = 1292;
+
+  it('fires on the measured pool', () => {
+    expect(looksLikeSharedFingerprint(FLEET.addrs, FLEET.reads, FLEET.share)).toBe(true);
+  });
+
+  it('would have fired on 2026-09-09, ten days before anyone noticed', () => {
+    expect(looksLikeSharedFingerprint(3198, 2400, 0.25)).toBe(true);
+  });
+
+  it('does NOT fire on the widest genuine browser population measured', () => {
+    // The negative control. If this starts passing, the bar has drifted below
+    // real traffic and the check will begin flagging readers.
+    expect(looksLikeSharedFingerprint(WIDEST_REAL_DAY, 5000, 0.4)).toBe(false);
+    expect(UA_FANOUT_ADDRESSES).toBeGreaterThan(WIDEST_REAL_DAY);
+  });
+
+  it('needs volume and share, not fan-out alone', () => {
+    expect(looksLikeSharedFingerprint(50000, 100, 0.9)).toBe(false);
+    expect(looksLikeSharedFingerprint(50000, 50000, 0.01)).toBe(false);
+  });
+
+  it('does not reintroduce the reads-per-address discriminator', () => {
+    // The trap: site bounce is 92.8%, so GENUINE strings run 1.01-1.26
+    // reads/address while the measured pool ran 1.77. A rule keyed on "a pool
+    // reads once per address" flags readers and clears the pool. A pool
+    // reading three pages per address must still fire.
+    expect(looksLikeSharedFingerprint(10000, 30000, 0.5)).toBe(true);
   });
 });

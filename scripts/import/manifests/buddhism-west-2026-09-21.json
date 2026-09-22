@@ -1,0 +1,1724 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from buddhism.json; config buddhism.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Pruned 2026-09-21 by a reviewer pass over the review table (same work twice, off-topic, serials, non-English): 73 dropped (listed in hand_pruned with reasons), 10 kept with a FLAG note for a second look.",
+  "campaign": "buddhism-west-2026-09-21",
+  "collections": [
+    "buddhism"
+  ],
+  "BOOKS": [
+    {
+      "id": "japanesebuddhism00schn",
+      "title": "Japanese Buddhism ...",
+      "author": "D. B Schneder",
+      "year": 1800,
+      "lang": "English",
+      "note": "FLAG: Year field shows 1800, implausible for author D. B. Schneder (a 20th-century missionary scholar) — likely a metadata error or later reprint; confirm actual publication date; CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "10251302bsb",
+      "title": "The Mahávansi, the Rájá-Ratnácari and the Rájá-Vali, forming the sacred and historical books of Ceylon: also a collection of tracts illustrative of the doctrines and literature of Buddhism ; in three volumes. 3",
+      "author": "Unknown",
+      "year": 1833,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "christianityince00tennrich",
+      "title": "Christianity in Ceylon : its introduction and progress under the Portuguese, the Dutch, the British, and American missions ; with an historical sketch of the Brahmanical and Buddhist superstitions",
+      "author": "James Emerson Sir Tennent",
+      "year": 1850,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: christianityince00tenn, india.history.resource.40903"
+    },
+    {
+      "id": "losttribessaxons00moor",
+      "title": "The lost tribes and the Saxons of the East and of the west, with new views of Buddhism, and translations of rock-records in India",
+      "author": "George Moore",
+      "year": 1861,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "bub_gb__e3ACajL6TcC",
+      "title": "Buddhism in Tíbet Illustrated by Literary Documents and Objects of Religious Worship, Wiyh an Account of the Buddhist Systems Preceding it in India by Emil Schlagintweit",
+      "author": "Emil Schlagintweit",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:stated; held by National Central Library of Florence"
+    },
+    {
+      "id": "10445906bsb",
+      "title": "The legends and theories of the Buddhists: compared with history and science ; with introductory notices of the life and system of Gotama Buddha",
+      "author": "Robert Spence Hardy",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "lifeorlegendofga00biga_0",
+      "title": "The life, or legend, of Gaudama, the Budha of the Burmese, with annotations",
+      "author": "Paul Ambroise Bigandet",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "handbookstudent00eite",
+      "title": "Hand-book for the student of Chinese Buddhism",
+      "author": "Ernest John Eitel",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Smithsonian Libraries and Archives"
+    },
+    {
+      "id": "translationremar00wyli",
+      "title": "Translation and remarks on an ancient Buddhist inscription : at Keu-Yung Kwan in North China / by A. Wylie.",
+      "author": "A. (Alexander) Wylie",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "catenaofbuddhist00beal",
+      "title": "A catena of Buddhist scriptures from the Chinese",
+      "author": "Samuel Beal",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: dli.csl.5367, in.ernet.dli.2015.529146, in.ernet.dli.2015.529148"
+    },
+    {
+      "id": "dasarathajatakab00fausuoft",
+      "title": "The Dasaratha-Jataka. Being the Buddhist story of King Rama. The original Pali text with a translation and notes by V. Fausbøll",
+      "author": "Michael Viggo Fausbøll",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "wheeloflawbuddhi00alab",
+      "title": "The wheel of the law. Buddhism, illustrated from Siamese sources by the Modern Buddhist, a Life of Buddha, and an account of the Phrabat",
+      "author": "Henry Alabaster",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: wheellawbuddhis01alabgoog"
+    },
+    {
+      "id": "wbsl.16144",
+      "title": "The Ancient Geography Of India Vol. 1 (1871) The Buddhist Period, Including The Campaigns Of Alexander And The Travels Of Hwen Thsang With Thirteen Maps",
+      "author": "Alexander Cunningham",
+      "year": 1871,
+      "lang": "English",
+      "note": "FLAG: Ancient Geography of India Vol.1 — only touches the 'Buddhist Period', doesn't name a specific monument; is this in scope under the archaeological-survey rule?; CLEAR:by-date"
+    },
+    {
+      "id": "lecturesonscienc72ml",
+      "title": "Lectures on the science of religion : with a paper on Buddhist nihilism : and a translation of the Dhammapada or \"Path of virtue\"",
+      "author": "F. Max (Friedrich Max) Müller",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Connecticut Libraries; alternate scans: LecturesOnTheScienceOfReligion"
+    },
+    {
+      "id": "ngnadaorjoysnak00boydgoog",
+      "title": "Nágánada; or, the Joy of the snake-world: a Buddhist drama in five acts",
+      "author": "King of Thānesar and Kanauj fl. 606-647 Harṣavardhana",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: ngnadaorjoysnak00hargoog"
+    },
+    {
+      "id": "THEGREATDEBATEBUDDHISMAndChristianityFACEToFACEPeeblesJ.M.MohattiwatteGunandaDeSilva",
+      "title": "THE GREAT DEBATE BUDDHISM And Christianity FACE To FACE [ Peebles, J. M.; Mohattiwatte, Gunanda; De Silva",
+      "author": "https://en.wikipedia.org/wiki/Migettuwatte_Gunananda_Thera",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "christianitybudd0000hard",
+      "title": "Christianity and Buddhism compared",
+      "author": "R. Spence (Robert Spence) Hardy",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: christianityand01hardgoog"
+    },
+    {
+      "id": "indiansaintorbud00millrich",
+      "title": "The Indian saint : or, Buddha and Buddhism: a sketch, historical and critical",
+      "author": "Charles De Berard Mills",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: indiansaintorbu01millgoog"
+    },
+    {
+      "id": "theromanticlegen00bealuoft",
+      "title": "The romantic legend of SÃ¢kya Buddha : from the Chinese-Sanscrit",
+      "author": "Samuel Beal",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "wbsl.3306",
+      "title": "Memorandum Of The Buddhist Caves At Junagarh Translation Of Three Inscriptions From Badami, Pattadkal And Alholli",
+      "author": "J. Burgess",
+      "year": 1876,
+      "lang": "English",
+      "note": "FLAG: Memorandum on the Buddhist Caves at Junagarh (Burgess) — names a Buddhist site but is a short report/memorandum with unknown page count; pamphlet or fragment?; CLEAR:by-date"
+    },
+    {
+      "id": "cu31924022928844",
+      "title": "Buddhism as known in China",
+      "author": "John Newenham Hoare",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "buddhistbirthsto01daviuoft",
+      "title": "Buddhist birth-stories; Jataka tales. The commentarial introd. entitled Nidanakatha; the story of the lineage. Translated from V. Fausböll's ed. of the Pali text by T.W. Rhys Davids. New and rev. ed. by Mrs. Rhys Davids",
+      "author": "Thomas William Rhys Davids",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: buddhistbirth00daviuoft"
+    },
+    {
+      "id": "cu31924023203700",
+      "title": "Religion in China : containing a brief account of the three religions of the Chinese, with observations on the prospects of Christian conversion amongst that people",
+      "author": "Joseph Edkins",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "textsfrombuddhis00bealuoft",
+      "title": "Texts from the Buddhist Canon, commonly known as Dhammapada; with accompanying narratives;",
+      "author": "Samuel Beal",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: textsfrombuddhis00beal"
+    },
+    {
+      "id": "wbsl.3232",
+      "title": "Buddha Gaya, The Hermitage Of Sakya Muni",
+      "author": "Rajendralala Mitra",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "lightofasia00arno",
+      "title": "The light of Asia, or, The great renunciation (Mahabhinishkramana) : being the life and teaching of Gautama, prince of India and founder of Buddhism (as told in verse by an Indian Buddhist)",
+      "author": "Edwin Sir Arnold",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.202487"
+    },
+    {
+      "id": "stupaofbharhutbu00cunn",
+      "title": "The stûpa of Bharhut : a Buddhist monument ornamented with numerous sculptures illustrative of Buddhist legend and history in third century B.C.",
+      "author": "Alexander Sir Cunningham",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Getty Research Institute; alternate scans: india.history.resource.116939, stpabharhutabud00offigoog"
+    },
+    {
+      "id": "manualofbudhismi0000hard",
+      "title": "A manual of Budhism, in its modern development",
+      "author": "R. Spence (Robert Spence) Hardy",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: amanualbudhismi02hardgoog"
+    },
+    {
+      "id": "cu31924031271640",
+      "title": "Sakya Buddha : a versified, annotated narrative of his life and teachings; with an excursus, containing citations from the Dhammapada, or Buddhist canon.",
+      "author": "E. D Root",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "wbsl.15617",
+      "title": "Sketches From Nipal, Historical And Descriptive, With Anecdotes Of The Court Life And Wild Sports Of The Country In The Time Of Maharaja Jang Bahadur, G. C. B. Vol. 1 (1880) To Which Is Added An Essay On Nipalese Buddhism And Illustrations Of Religious Monuments, Architecture And Scenery From The Authors Own Drawings",
+      "author": "Henry Ambrose Oldfield",
+      "year": 1880,
+      "lang": "English",
+      "note": "FLAG: Sketches From Nipal (Oldfield) — general Nepal history/travel, title doesn't mention Buddhism; in scope?; CLEAR:by-date; alternate scans: india.history.resource.93121"
+    },
+    {
+      "id": "buddhistsuttas00davi",
+      "title": "Buddhist suttas",
+      "author": "T. W. Rhys (Thomas William Rhys) Davids",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: buddhistsuttas00daviuoft"
+    },
+    {
+      "id": "mlbd.vinayatextstrans0000thom_q8c1",
+      "title": "SBE 13: Vinaya Texts, Part 1 (Sacred Books of the East)",
+      "author": "Hermann Oldenberg Thomas William Rhys Davids",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Servants of Knowledge"
+    },
+    {
+      "id": "abstractfourlec00bealgoog",
+      "title": "Abstract of Four Lectures on Buddhist Literature in China: Delivered at ...",
+      "author": "Samuel Beal",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California"
+    },
+    {
+      "id": "mlbd.vinayatextsparti0000thom_i1k9",
+      "title": "SBE 17: Vinaya Texts, Part 2 (Sacred Books Of The East)",
+      "author": "Hermann Oldenberg Thomas William Rhys Davids",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Servants of Knowledge"
+    },
+    {
+      "id": "sanskritbuddhist00asiauoft",
+      "title": "The Sanskrit Buddhist literature of Nepal",
+      "author": "India). Library Asiatic Library (Calcutta",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "cu31924023893898",
+      "title": "A catalogue of the Chinese translation of the Buddhist Tripitaka : the sacred canon of the Buddhists in China and Japan",
+      "author": "Bunyiu Nanjio",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: india.history.resource.89803, acataloguechine00nanjgoog"
+    },
+    {
+      "id": "cu31924073030441",
+      "title": "Notes on Buddhist law",
+      "author": "Lower. Court of the Judicial Commissioner Burma",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: cu31924023169331, cu31924073030417"
+    },
+    {
+      "id": "buddhismitshisto00eiterich",
+      "title": "Buddhism : its historical, theoretical and popular aspects",
+      "author": "Ernest John Eitel",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.gov.ignca.19640, india.history.resource.85141, buddhismitshist01eitegoog"
+    },
+    {
+      "id": "cu31924013206358",
+      "title": "Edwin Arnold as poetizer and as paganizer; containing an examination of the \"Light of Asia\" for its literature and for its Buddhism",
+      "author": "William Cleaver Wilkinson",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: edwinarnoldaspoe00wilkuoft, edwinarnoldaspo01wilkgoog"
+    },
+    {
+      "id": "siyukibuddhistre02hsuoft",
+      "title": "Si-yu-ki, Buddhist records of the Western world;",
+      "author": "Hsüan-tsang",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: siyukibuddhistre02hsua, siyukibuddhistre01hsua_0"
+    },
+    {
+      "id": "saddharmapundark0021unse",
+      "title": "The Saddharma-pundarîka, or, The lotus of the true law",
+      "author": "Unknown",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "si-yu-ki-buddhist-records-of-the-western-world-vol-1-ia-siyuki",
+      "title": "Si Yu Ki - Buddhist Records Of The Western World",
+      "author": "Samuel Beal",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: si-yu-ki-1884, in.gov.ignca.34983"
+    },
+    {
+      "id": "ingloriouscolum00vini",
+      "title": "An inglorious Columbus : or, Evidence that Hwui Shn and a party of Buddhist monks from Afghanistan discovered America in the fifth century, A.D",
+      "author": "Edward Payson Vining",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto; alternate scans: bwb_S0-EDA-530"
+    },
+    {
+      "id": "shorthistoryoftw00nanjrich",
+      "title": "A Short history of the twelve Japanese Buddhist sects [microform]",
+      "author": "Bunyiu Nanjio",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "pts_divyvadnacol_3720-0688",
+      "title": "The Divyâvadâna [microform] : a collection of early Buddhist legends, now first edited from the Nepalese Sanskrit mss. in Cambridge and Paris",
+      "author": "Robert Alexander Neil",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Internet Archive"
+    },
+    {
+      "id": "vimanavattu00goonuoft",
+      "title": "The Vimana-Vathu of the Khuddhaka nikaya Sutta pitaka. Edited by Edmund Rowland Goonerathe",
+      "author": "Edmund Rowland Gunaratna",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "1861746",
+      "title": "The Buddhist diet-book / prepared by Laura C. Holloway.",
+      "author": "Laura C. (Laura Carter) Holloway",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "dragonimagedemon0000dubo",
+      "title": "The dragon, image, and demon ; or, The three religions of China; Confucianism, Buddhism and Taoism, giving an account of the mythology, idolatry, and demonolatry of the Chinese",
+      "author": "Hampden C DuBose",
+      "year": 1887,
+      "lang": "English",
+      "note": "FLAG: The Dragon, Image, and Demon: Three Religions of China (DuBose) — covers Confucianism/Taoism/Buddhism generally; keep as engaging Buddhism directly, or drop as general comparative theology?; CLEAR:by-date; held by Internet Archive; alternate scans: dragonimagedemon1887dubo"
+    },
+    {
+      "id": "mysticalbuddhism00moni",
+      "title": "Mystical Buddhism in connexion with the Yoga philosophy of the Hindus",
+      "author": "Monier Sir Monier-Williams",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "westernchinajour00hart",
+      "title": "Western China; a journey to the great Buddhist centre of Mount Omei",
+      "author": "Virgil C. (Virgil Chittenden) Hart",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by School of Theology, Boston University; alternate scans: westernchinaajo00hartgoog"
+    },
+    {
+      "id": "parallelbuddhism00scotuoft",
+      "title": "Buddhism and Christianity : a parallel and a contrast, being the Croall lecture for 1889-90",
+      "author": "Archibald Scott",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Emmanuel - University of Toronto; alternate scans: dli.ministry.10641"
+    },
+    {
+      "id": "christpupilofbud00unse",
+      "title": "Christ, the pupil of Buddha; a comparative study",
+      "author": "Unknown",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "eastwardorabudd00cogoog",
+      "title": "Eastward, or, A Buddhist lover: a novel",
+      "author": "J.G. Cupples Co Lucy Klinck Rice Hosea",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "mlbd.questionsofkingm0000vol-35.thom_w1l5",
+      "title": "SBE 35: The Questions of King Milinda, Part 1 (Sacred Books of the East)",
+      "author": "T. W. Rhys Davids (Translator)",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Servants of Knowledge"
+    },
+    {
+      "id": "indianreligionso00jenn",
+      "title": "The Indian religions : or, Results of the mysterious Buddhism, concerning that also which is to be understood in the divinity of fire",
+      "author": "Hargrave Jennings",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "questionsofkingm02daviuoft",
+      "title": "The questions of King Milinda",
+      "author": "Thomas William Rhys Davids",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: questionsofkingm028266mbp"
+    },
+    {
+      "id": "hinduismbrahmani00hand",
+      "title": "Hinduism, Brahmanism and Buddhism : the great religions of India.",
+      "author": "John Handley",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "lecturesonorigin00daviuoft",
+      "title": "Lectures on the origin and growth of religion as illustrated by some points in the history of Indian Buddhism",
+      "author": "Thomas William Rhys Davids",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: lecturesonorigin00davi_0, lecturesonorigin0000davi_b3j1, lecturesonorigi00davigoog, lecturesonorigi01davigoog"
+    },
+    {
+      "id": "cu31924008747788",
+      "title": "Mahâbodhi, or the great Buddhist temple under the Bodhi tree at Buddha-Gaya",
+      "author": "Alexander Sir Cunningham",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: dli.csl.8896"
+    },
+    {
+      "id": "cu31924095909390",
+      "title": "Sánchi and its remains; a full description of the ancient buildings, sculptures, and inscriptions at Sánchi, near Bhilsa, in Central India, with remarks on the evidence they supply as to the comparatively modern date of the Buddhism of Gotama, or Sákya Muni; with forty plates ;",
+      "author": "Fredrick Charles Maisey",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: india.history.resource.107627"
+    },
+    {
+      "id": "chinesebuddhismv00edki",
+      "title": "Chinese Buddhism: a volume of sketches, historical, descriptive, and critical",
+      "author": "Joseph Edkins",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: chinesebuddhism00edkiuoft, chinesebuddhism00edkirich, india.history.resource.85719"
+    },
+    {
+      "id": "outlinesofmahaya00kuroiala",
+      "title": "Outlines of the Mahâyâna as taught by Buddha",
+      "author": "Shinto Kuroda",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: outlinesmahynaa00gakkgoog"
+    },
+    {
+      "id": "princesiddarthaj00atki",
+      "title": "Prince Siddartha : the Japanese Buddha",
+      "author": "John L Atkinson",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: princesiddarthaj00atkirich, princesiddartha01atkigoog, princesiddartha00atkigoog"
+    },
+    {
+      "id": "isbn_9781141243235",
+      "title": "The Imitation of Buddha: Quotations from Buddhist Literature for each day in the Year",
+      "author": "Ernest M. Bowden",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: imitationbuddha00unkngoog"
+    },
+    {
+      "id": "influenceofbuddh00lill",
+      "title": "The influence of Buddhism on primitive Christianity",
+      "author": "Arthur Lillie",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: influencebuddhi00lillgoog"
+    },
+    {
+      "id": "esotericbuddhi00sinn",
+      "title": "Esoteric Buddhism",
+      "author": "A. P. (Alfred Percy) Sinnett",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: b24886348, esotericbuddhism00sinn, ult.esotericbuddhism0000apsi, in.ernet.dli.2015.201008, dli.ministry.12481, in.ernet.dli.2015.170446, in.ernet.dli.2015.31425, esotericbuddhis00sinngoog, esotericbuddhis01tinggoog"
+    },
+    {
+      "id": "specialexhibitio00muse_0",
+      "title": "A special exhibition of ancient Chinese Buddhist paintings : lent by the Temple Daitokuji, of Kioto, Japan : Catalogue",
+      "author": "Boston. Department of Chinese and Japanese Art issuing body Museum of Fine Arts",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "dawnanddayorbudd00nileiala",
+      "title": "The dawn and the day; or, The Buddha and the Christ. Part I",
+      "author": "Henry Thayer Niles",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "legendsmiracleso01ksem",
+      "title": "Legends and miracles of Buddha, Skaya Sinha",
+      "author": "11th cent Ksemendra",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "sacredbooksofbud19londuoft",
+      "title": "Sacred books of the Buddhists",
+      "author": "Unknown",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: p3sacredbooksofb20londuoft, sacredbooksofbud01londuoft, sacredbooksofbud21londuoft"
+    },
+    {
+      "id": "cu31924023024783",
+      "title": "The Buddha and his religion",
+      "author": "J. (Jules) Barthélemy Saint-Hilaire",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "jatakaorstorieso01cowe",
+      "title": "The Jataka; or, Stories of the Buddha's former births",
+      "author": "Edward B. (Edward Byles) Cowell",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: jatakaorstoriesofb02cowe"
+    },
+    {
+      "id": "jaytaka4chal",
+      "title": "The Jātaka : or, Stories of the Buddha's former births",
+      "author": "Robert Chalmers",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Smithsonian Libraries and Archives; alternate scans: jaytaka5chal, jaytaka00chal"
+    },
+    {
+      "id": "11541768bsb",
+      "title": "The Story of We-than-da-ya: A Buddhist Legend. Sketched from the Burmese Version of the Pali Text",
+      "author": "L. Allan Goss",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: storywethandaya01gossgoog"
+    },
+    {
+      "id": "recordofbuddhist00ichi",
+      "title": "A record of the Buddhist religion as practised in India and the Malay archipelago",
+      "author": "I-ching",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: arecordbuddhist00takagoog"
+    },
+    {
+      "id": "buddhismitshisto0000twrh_b0m8",
+      "title": "Buddhism its history and literature third edition",
+      "author": "T.W. Rhys Davids",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "karmastoryofearl00caru",
+      "title": "Karma : a story of early Buddhism",
+      "author": "Paul Carus",
+      "year": 1896,
+      "lang": "English",
+      "note": "FLAG: Possible dupe of karmastoryofbudd00carurich (both Carus 'Karma' story, but page counts differ a lot: 36 vs 68) — same text or genuinely different edition?; CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "thebuddhistprayi00simpuoft",
+      "title": "The Buddhist praying-wheel : a collection of material bearing upon the symbolism of the wheel and circular movements in custom and religious ritual",
+      "author": "William Simpson",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: buddhistpraying00simpgoog"
+    },
+    {
+      "id": "dharmaorreligion00caru",
+      "title": "The dharma, or The religion of enlightenment; an exposition of Buddhism",
+      "author": "Paul Carus",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellesley College Library"
+    },
+    {
+      "id": "gleaningsinbuddh00hearrich",
+      "title": "Gleanings in Buddha-fields : studies of hand and soul in the Far East",
+      "author": "Lafcadio Hearn",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: gleaningsinbuddh0000lafc_n0f1, gleaningsinbuddh00hearuoft, gleaningsinbudd01heargoog, gleaningsinbudd00heargoog"
+    },
+    {
+      "id": "descriptivecata00davi",
+      "title": "Descriptive catalogue of an important keramic collection of Japanese and Chinese pottery, porcelain, bronzes, lacquers, brocade, prints, embroideries, kakemono, screens, ethnological and buddhist objects selected by Mr. Bunkio Matsuki of Kobe, Japan, and Boston",
+      "author": "Davis and Harvey's Galleries",
+      "year": 1898,
+      "lang": "English",
+      "note": "FLAG: Descriptive catalogue of a keramic collection of Japanese art (Davis and Harvey's Galleries) — title truncated, unclear if Buddhist-focused; CLEAR:by-date; held by Smithsonian Libraries"
+    },
+    {
+      "id": "dhammapadacollec0010unse",
+      "title": "The Dhammapada : a collection of verses ; being one of the canonical books of the Buddhists",
+      "author": "Unknown",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: dhammapadaorpath01np"
+    },
+    {
+      "id": "christbuddhahist00mosc",
+      "title": "Christ and Buddha historically compared / by T. Moscrop.",
+      "author": "T. (Thomas) Moscrop",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "dialoguesofbuddh03unse_0",
+      "title": "Dialogues of the Buddha",
+      "author": "T. W. Rhys (Thomas William Rhys) Davids",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: india.history.resource.94181"
+    },
+    {
+      "id": "bronzebuddhamyst00dani",
+      "title": "The bronze Buddha; a mystery",
+      "author": "Cora Linn Daniels",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "buddhaofchristen00anderich",
+      "title": "The Buddha of Christendom; a book for the present crisis",
+      "author": "Robert Sir Anderson",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "abuddhistmanual01davigoog",
+      "title": "A Buddhist manual of psychological ethics of the fourth century B.C.",
+      "author": "Caroline Augusta Foley Rhys Davids",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Virginia; alternate scans: dli.ministry.01043"
+    },
+    {
+      "id": "lifeofbuddhainfr00nosu",
+      "title": "Life of Buddha in frescoes [microform], Mulagandhakuti vihara, Sarnath",
+      "author": "Kosetsu Nosu",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "sacredbooksofeas00wilsuoft",
+      "title": "Sacred books of the East : comprising The Vedic hymns, Zend-Avesta, Dhammapada, Upanishads, The Koran, and the Life of Buddha",
+      "author": "Epiphanius Wilson",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: sacredbooksofeas0000epip, sacredbooksofeas00wilsiala, sacredbookseast00wilsgoog"
+    },
+    {
+      "id": "sublimecodeofbud00west",
+      "title": "Sublime code of Buddha.",
+      "author": "Western Buddhist Order",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "dhammaofgotamabu00aike",
+      "title": "The dhamma of Gotama the Buddha and the gospel of Jesus the Christ; a critical inquiry into the alleged relations of Buddhism with primitive Christianity",
+      "author": "Charles Francis Aiken",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: dhammagotamabud00unkngoog"
+    },
+    {
+      "id": "outlineofbuddhis00nagarich",
+      "title": "The outline of Buddhism",
+      "author": "Skesaburo Nagao",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "truemeaningofbud0000fuji",
+      "title": "The true meaning of Buddhism",
+      "author": "Ryuchi Fujii",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophybuddhis0000pemb",
+      "title": "Theosophy, Buddhism, and the signs of the end",
+      "author": "G. H. (George Hawkins) Pember",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "Dhammasangani",
+      "title": "Dhammasangani",
+      "author": "C. A. F. Rhys Davids",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "cu31924093743619",
+      "title": "Buddha: his life, his teachings, his order",
+      "author": "Manmatha Nath Dutt",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: MN40141ucmf_1"
+    },
+    {
+      "id": "selectionsfrombu00asvarich",
+      "title": "Selections from Buddha",
+      "author": "Asvaghosa",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "hymnsoffaithdham00edmuiala",
+      "title": "Hymns of the faith (Dhammapada) being an ancient anthology preserved in the short collection of the sacred scriptures of the Buddhists:",
+      "author": "Albert J. (Albert Joseph) Edmunds",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: hymnsfaithdhamm02edmugoog, hymnsfaithdhamm01edmugoog"
+    },
+    {
+      "id": "nirvnastoryofb00caru",
+      "title": "Nirvâna : a story of Buddhist psychology",
+      "author": "Paul Carus",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: nirvnaastorybud00carugoog"
+    },
+    {
+      "id": "bub_gb_QXcAAAAAMAAJ",
+      "title": "Buddhism",
+      "author": "International Buddhist Society",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Michigan"
+    },
+    {
+      "id": "buddhistindia0000rhys",
+      "title": "buddhist india",
+      "author": "rhys davids",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.215944, buddhistindia01davigoog"
+    },
+    {
+      "id": "handbookofchines00eite",
+      "title": "Hand-book of Chinese Buddhism, being a Sanskrit-Chinese dictionary with vocabularies of Buddhist terms in Pali, Singhalese, Siamese, Burmese, Tibetan, Mongolian and Japanese",
+      "author": "Ernest John Eitel",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto; alternate scans: in.gov.ignca.19641, in.ernet.dli.2015.536045, in.ernet.dli.2015.106496"
+    },
+    {
+      "id": "on-yuan-chwangs-travels-in-india",
+      "title": "On Yuan Chwang's Travels In India",
+      "author": "Thomas Watters",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: onyuanchwangstr00wattgoog, onyuanchwangstr01wattgoog"
+    },
+    {
+      "id": "bwb_P9-EJE-437",
+      "title": "buddhism and its christian critics",
+      "author": "dr. paul carus",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: cu31924023024817, buddhismanditsc02carugoog"
+    },
+    {
+      "id": "amitabhastoryofb0000caru",
+      "title": "Amitabha : a story of Buddhist theology",
+      "author": "Paul Carus",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: amitabhastoryofb00caru, buddhistheology00carurich, amitabhaastoryb02carugoog, amitabhaastoryb01carugoog, amitabhaastoryb03carugoog, amitabhaastoryb00carugoog"
+    },
+    {
+      "id": "bibliothecabudd01unkngoog",
+      "title": "Bibliotheca buddhica",
+      "author": "Unknown",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "cu31924023498813",
+      "title": "Lhasa and its mysteries : with a record of the expedition of 1903-1904",
+      "author": "L. A. (Laurence Austine) Waddell",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: lhasaanditsmyst00unkngoog"
+    },
+    {
+      "id": "siyukibuddhistr00bealgoog",
+      "title": "Si-yu-ki: Buddhist Records of the Western World",
+      "author": "Samuel Beal Xuanzang",
+      "year": 1906,
+      "lang": "English",
+      "note": "FLAG: 1906 Google reprint of Beal's Si-yu-ki with no volume stated — likely dupe of the 1884 vol.1 (si-yu-ki-...-vol-1-ia-siyuki) but could be a combined edition; confirm before dropping; CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "wayofbuddha00bayn",
+      "title": "The way of the Buddha",
+      "author": "Herbert Baynes",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellesley College Library; alternate scans: wayofbuddha00baynrich, waybuddha00bayn, wayofbuddha00bayn_0, in.gov.ignca.20991, in.ernet.dli.2015.106796, waybuddha00bayngoog"
+    },
+    {
+      "id": "westerntibetbrit00sherrich",
+      "title": "Western Tibet and the British borderland; the sacred country of Hindus and Buddhists, with an account of the government, religion, and customs of its peoples",
+      "author": "Charles Atmore Sherring",
+      "year": 1906,
+      "lang": "English",
+      "note": "FLAG: Western Tibet and the British Borderland (Sherring) — general travel book, but subtitle names it the 'sacred country of Hindus and Buddhists'; keep or drop as off-topic travel?; CLEAR:stated; held by University of California Libraries; alternate scans: b29351844"
+    },
+    {
+      "id": "yinchihwen00suzu",
+      "title": "Yin chih wen;",
+      "author": "Daisetz Teitaro Suzuki",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries; alternate scans: yinchihwentracto00suzurich"
+    },
+    {
+      "id": "christbuddha00cush",
+      "title": "Christ and Buddha",
+      "author": "Josiah Nelson Cushing",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by School of Theology, Boston University"
+    },
+    {
+      "id": "guidetobuddhism00unknuoft",
+      "title": "Guide to Buddahood : being a standard manual of Chinese Buddhism",
+      "author": "Timothy Richard",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "essenceofbuddhis00laksrich",
+      "title": "The essence of Buddhism",
+      "author": "P. (Pokala) Lakshmi Narasu",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "thepraisesofamid00kanauoft",
+      "title": "The praises of Amida : seven Buddhist sermons translated from the Japanese of Tada Kanai by Rev. Arthur Lloyd",
+      "author": "Tada Kanai",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: praisesofamidase00kanarich"
+    },
+    {
+      "id": "thepraisesofamid00tadauoft",
+      "title": "The praises of Amida : seven Buddhist sermons",
+      "author": "Kanai Tada",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: praisesamidasev01lloygoog"
+    },
+    {
+      "id": "buddhismprimitiv00copeuoft",
+      "title": "Buddhism primitive and present in Magadha and Ceylon",
+      "author": "Reginald Stephen Copleston",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "buddhistpopularl00besa",
+      "title": "Buddhist popular lectures delivered in Ceylon in 1907",
+      "author": "Annie Wood Besant",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "ceylonbuddhismb00gogegoog",
+      "title": "Ceylon Buddhism; being the collected writings of Daniel John Gogerly ..",
+      "author": "Daniel John Gogerly",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California"
+    },
+    {
+      "id": "cu31924024260683",
+      "title": "Sayings of Buddha, the Iti-Vuttaka : a Pali work of the Buddhist canon for the first time translated",
+      "author": "Justin H. (Justin Hartley) Moore",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: sayingsbuddhait00moorgoog"
+    },
+    {
+      "id": "greedofbuddha0000vari",
+      "title": "THE GREED OF BUDDHA",
+      "author": "VARIOUS",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "wheatamongtaress00lloy",
+      "title": "The wheat among the tares : studies of Buddhism in Japan",
+      "author": "Arthur Lloyd",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "outlinesmahayan00suzugoog",
+      "title": "Outlines of Mahayana Buddhism",
+      "author": "Daisetz Teitaro Suzuki",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "newtestamentofhi0000timo",
+      "title": "the new testament of higher buddhism",
+      "author": "timothy richard",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: newtestamentofhi0000unse_k2b7"
+    },
+    {
+      "id": "earlybuddhism00davi",
+      "title": "Early Buddhism",
+      "author": "T. W. Rhys (Thomas William Rhys) Davids",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: earlybuddhism014733mbp, EarlyBuddhism, earlybuddhism00davigoog"
+    },
+    {
+      "id": "legendsofindianb00burniala",
+      "title": "Legends of Indian Buddhism;",
+      "author": "Eugène Burnouf",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: legendsofindianb00burn, india.history.resource.112118"
+    },
+    {
+      "id": "creedofbuddha0000holm",
+      "title": "The Creed of Buddha",
+      "author": "Edmond Holmes",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.536040, dli.ernet.106489, in.ernet.dli.2015.282137, creedbuddha00holmgoog"
+    },
+    {
+      "id": "creedofhalfjapan00lloy",
+      "title": "The creed of half Japan : historical sketches of Japanese Buddhism",
+      "author": "Arthur Lloyd",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "lifeorlegendofga02biga",
+      "title": "The life, or legend, of Gaudama, the Buddha of the Burmese",
+      "author": "Paul Ambrose Bigandet",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: lifelegendgaudam02bigauoft, lifeorlegendofga01bigaiala"
+    },
+    {
+      "id": "lotusgospelormah00gord",
+      "title": "The Lotus gospel : or, Mahayana Buddhism and its symbolic teachings compared historically and geographically with those of Catholic Christianity",
+      "author": "E. A. (Elizabeth Anna) Gordon",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "the-modern-buddhism-and-its-followers-in-orissa",
+      "title": "The modern Buddhism and its followers in Orissa",
+      "author": "Nagendra Nath Basu",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "thedustofdesire00karnuoft",
+      "title": "The dust of desire, or, In the days of Buddha",
+      "author": "Evelyn S Karney",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "dustofdesireorin0000karn",
+      "title": "The dust of desire; or, In the days of Buddha",
+      "author": "Evelyn S Karney",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cu31924022982114",
+      "title": "Buddhism & science",
+      "author": "Paul Dahlke",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "buddhiststories00dahlrich",
+      "title": "Buddhist stories",
+      "author": "Paul Dahlke",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.24245"
+    },
+    {
+      "id": "ost-history-buddhistchina00johnuoft",
+      "title": "Buddhist China",
+      "author": "Reginald Fleming Johnson",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by hst"
+    },
+    {
+      "id": "parallelbuddhism01edmuuoft",
+      "title": "Buddhist and Christian Gospels : now first compared from originals : being Gospel parallels from Pali texts reprinted with additions",
+      "author": "Albert Joseph Edmunds",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Emmanuel - University of Toronto; alternate scans: buddhistchristia01edmu, buddhistchristia02edmu, buddhistandchri01anesgoog, buddhistandchri00anesgoog, buddhistchristi00edmugoog"
+    },
+    {
+      "id": "mythsofhindusbud00nive",
+      "title": "Myths of the Hindus & Buddhists",
+      "author": "Sister Nivedita",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: mythsofhindusbu00nive"
+    },
+    {
+      "id": "pampletsbuddhism00unknuoft",
+      "title": "Pamphlets on Buddhism",
+      "author": "Unknown",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto"
+    },
+    {
+      "id": "isbn_9781360553252",
+      "title": "The Beginnings of Buddhist Art, and Other Essays in Indian and Central Asian Archhaelogy",
+      "author": "A. Foucher",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: beginningsofbudd00fouc, in.ernet.dli.2015.70162"
+    },
+    {
+      "id": "bwb_W9-DJE-205",
+      "title": "the buddha and his religions",
+      "author": "j. barthelemy saint-hilaire",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "thedhammapada00theruoft",
+      "title": "The Dhammapada. New edition by Suriyagoda Sumangala Thera",
+      "author": "Thera Suriyagoda Sumangala",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "endoflaworchrist0000gilm",
+      "title": "The end of the law : or, Christ and Buddhism",
+      "author": "D. C. (David Chandler) Gilmore",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "wordofbuddhaoutl0000nyan_m9y5",
+      "title": "The word of the Buddha : An outline of the ethico-philosophical system of the Buddha, in the words of the Pāli canon, together with explanatory notes",
+      "author": "Bhikkhu Nyanatiloka",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: MN40150ucmf_1"
+    },
+    {
+      "id": "gospelofbuddhaco00caruuoft",
+      "title": "The gospel of Buddha, compiled from ancient records. Illustrated by O. Kopetzky",
+      "author": "Paul Carus",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Mississauga - University of Toronto"
+    },
+    {
+      "id": "theheartofbuddhi00unknuoft",
+      "title": "The heart of Buddhism : being an anthology of Buddhist verse",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: heartofbuddhismb00saunrich, cihm_81129, TheHeartOfBuddhism, in.ernet.dli.2015.175114, in.ernet.dli.2015.181407"
+    },
+    {
+      "id": "PointsOfControversyKathavatthu",
+      "title": "Points Of Controversy - Kathavatthu, C.A.F. Rhys Davids",
+      "author": "C.A.F. Rhys Davids",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "manuscriptremain00hoeruoft",
+      "title": "Manuscript remains of Buddhist literature found in Eastern Turkestan; facsimiles with transcripts, translation and notes",
+      "author": "August Friedrich Rudolf Hoernle",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cu31924023185584, dli.pahar.2037, dli.csl.3843"
+    },
+    {
+      "id": "nichirenbuddhist00anesrich",
+      "title": "Nichiren, the Buddhist prophet [microform]",
+      "author": "Masaharu Anesaki",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "buddhisttemperan59jaya",
+      "title": "The Buddhist temperance movement of Ceylon : a vindication and an appeal",
+      "author": "D. B. (Don Baron) Sir Jayatilaka",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "thestoryofbuddhi00saunuoft",
+      "title": "The story of Buddhism",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cihm_86804, dli.csl.3794, in.ernet.dli.2015.187348"
+    },
+    {
+      "id": "karmastoryofbudd00carurich",
+      "title": "Karma, a story of Buddhist ethics",
+      "author": "Paul Carus",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "socialreactions00asak",
+      "title": "Social reactions of Buddhism in medieval Japan",
+      "author": "Kanʼichi Asakawa",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Smithsonian Libraries and Archives"
+    },
+    {
+      "id": "thewaytonirvanas00lavauoft",
+      "title": "The way to Nirvana : six lectures on ancient Buddhism as a discipline of salvation : Hibbert lectures, Manchester College, Oxford, February - April 1916",
+      "author": "Louis de La Vallée Poussin",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto; alternate scans: waytonirvanasixl00lava, cu31924007986932"
+    },
+    {
+      "id": "studiesjapanese00reis",
+      "title": "Studies in Japanese Buddhism",
+      "author": "August Karl Reischauer",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Smithsonian Libraries and Archives"
+    },
+    {
+      "id": "prolegomenatoahi00baruuoft",
+      "title": "Prolegomena to a history of Buddhist philosophy",
+      "author": "Benimadhab Barua",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: ProlegomenaToAHistoryOfBuddhistPhilosophy"
+    },
+    {
+      "id": "spoiledbuddhapla00wadduoft",
+      "title": "The spoiled Buddha : a play in two acts",
+      "author": "Helen Waddell",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "buddhistcatechis00subhrich",
+      "title": "A Buddhist catechism : an outline of the doctrine of the Buddha Gotama in the form of question and answer ; compiled from the sacred writings of the southern Buddhists for the use of Europeans",
+      "author": "Bhikshu Subhadra",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: buddhistcatechis0000subh, abuddhistcatech02subhgoog, abuddhistcatech00subhgoog"
+    },
+    {
+      "id": "asokabuddhistemp0000vinc",
+      "title": "Asoka the buddhist emperor of india",
+      "author": "Vincent A. Smith",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.279639, in.ernet.dli.2015.107421"
+    },
+    {
+      "id": "gotamabuddha0000kenn",
+      "title": "gotama buddha",
+      "author": "Kenneth J. Saunders",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: gotamabuddhabiog00sauniala, gotamabuddha00saunuoft, gotamabuddhabiog00saun, in.ernet.dli.2015.277197, india.history.resource.117471"
+    },
+    {
+      "id": "buddhaswayofvirt00unse",
+      "title": "The Buddha's \"Way of Virtue\"",
+      "author": "Unknown",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: buddhaswayofvirt00newyiala"
+    },
+    {
+      "id": "buddhistlegends01budd",
+      "title": "Buddhist legends.",
+      "author": "Buddhaghosa. supposed author",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "buddhistpsalms00shinuoft",
+      "title": "Buddhist psalms",
+      "author": "Shinran",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Trinity College - University of Toronto"
+    },
+    {
+      "id": "descriptivecatal00casa",
+      "title": "Descriptive catalogue of the collection of Buddhist art in the United States National museum",
+      "author": "Immanuel Moses Casanowicz",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of British Columbia Library"
+    },
+    {
+      "id": "goldbrocadestape00ande_0",
+      "title": "Gold brocades, tapestries, velvets, Buddhist scriptures of the Ming dynasty, and decorative Mao-Chang rugs",
+      "author": "Inc Anderson Galleries",
+      "year": 1921,
+      "lang": "English",
+      "note": "FLAG: Anderson Galleries auction catalogue that explicitly lists 'Buddhist scriptures of the Ming dynasty' — keep as Buddhist-art-adjacent, or drop as a general auction listing?; CLEAR:by-date; held by The Metropolitan Museum of Art"
+    },
+    {
+      "id": "hinduismandbuddh03eliouoft",
+      "title": "Hinduism and Buddhism : an historical sketch",
+      "author": "Charles Sir Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: hinduismbuddhism0003sirc, hinduismandbuddh00eliouoft, hinduismandbuddh02eliouoft, dli.csl.3865, dli.csl.3810, in.ernet.dli.2015.106171"
+    },
+    {
+      "id": "inquestofgodlife00broo",
+      "title": "In quest of God; the life story of pastors Chang & Ch'ü, Buddhist priest & Chinese scholar",
+      "author": "Marshall Broomhall",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "isbn_9781372068171",
+      "title": "the pali text society's pali-english dictionary",
+      "author": "t. w. rhys davids",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "PaliGrammarDuroiselle",
+      "title": "Pali Grammar by Charles Duroiselle in the Original Version",
+      "author": "Charles Duroiselle",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "bwb_KU-245-632",
+      "title": "An Introduction To Mahayana Buddhism",
+      "author": "Ph. D. William Montgomery McGovern",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: introductiontoma00mcgo_0, cu31924022981140, in.ernet.dli.2015.68164, in.gov.ignca.19655"
+    },
+    {
+      "id": "introductiontoma00mcgo",
+      "title": "An introduction to Mahayana Buddhism, with especial reference to Chinese and Japanese phases",
+      "author": "William Montgomery McGovern",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellesley College Library"
+    },
+    {
+      "id": "buddhism00trotiala",
+      "title": "Buddhism",
+      "author": "F. E Trotman",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "buddhisminmodern0000saun",
+      "title": "Buddhism in the modern world",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: cu31924008608659, buddhisminmoder00saungoog"
+    },
+    {
+      "id": "buddhismintransl00warruoft",
+      "title": "Buddhism in translations; passages selected from the Buddhist sacred books and translated from the original Pali into English. [8th issue]",
+      "author": "Henry Clarke Warren",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "buddhistimages01akiy",
+      "title": "Buddhist images",
+      "author": "Aisaburō Akiyama",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "cu31924051433393",
+      "title": "Buddhist parables",
+      "author": "Eugene Watson Burlingame",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: india.history.resource.117511"
+    },
+    {
+      "id": "sikshasamuccayac00santuoft",
+      "title": "Siksha-Samuccaya, a compendium of Buddhist doctrine;",
+      "author": "Santi-Deva",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: in.ernet.dli.2015.203828"
+    },
+    {
+      "id": "buddhismbuddhist00saun",
+      "title": "Buddhism and Buddhists in southern Asia [microform]",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "isbn_9781174696657",
+      "title": "Buddhist Mahayana Texts",
+      "author": "Edward B. Cowell",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: buddhistmahy01cowe"
+    },
+    {
+      "id": "buddhistphilosop0000arth",
+      "title": "Buddhist philosophy in India and Ceylon",
+      "author": "Arthur Berriedale Keith",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: dli.csl.3739, in.ernet.dli.2015.106497"
+    },
+    {
+      "id": "literaryhistoryo0000nari_i4t3",
+      "title": "Literary history of Sanskrit Buddhism; from Winternitz, Sylvain Levi, Huber 1923",
+      "author": "Gushtaspshah Kaikhushro Nariman",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Toronto, Downsview; alternate scans: dli.ministry.16442"
+    },
+    {
+      "id": "travelsoffahsien0000faxi",
+      "title": "The travels of Fa-hsien (399-414 A.D.), or, Record of the Buddhistic kingdoms 1923",
+      "author": "approximately 337-approximately 422 Faxian",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Toronto, Downsview"
+    },
+    {
+      "id": "wisdomofaryas0000anan",
+      "title": "The wisdom of the Aryas",
+      "author": "bhikkhu Ānanda Mettēyya",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "BuddhistAnnualOfCeylonVol2",
+      "title": "Buddhist Annual of Ceylon, Vol 2 (1923-26)",
+      "author": "Silacara [Bhiku); W. E. Bastian",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "sanskrit-buddhism",
+      "title": "Literary History of Sanskrit Buddhism",
+      "author": "G.K. Narima",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "buddhismbuddhist0000hodo",
+      "title": "Buddhism and Buddhists in China",
+      "author": "Lewis Hodous",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "epochsinbuddhist00saun_0",
+      "title": "Epochs in Buddhist history",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: epochsinbudhisth035244mbp, in.gov.ignca.2473"
+    },
+    {
+      "id": "buddhastoryinsto0000harg",
+      "title": "The Buddha story in stone",
+      "author": "H. (Harold) Hargreaves",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "buddhistphilosop322tich",
+      "title": "The Buddhist philosophy of life",
+      "author": "Henry M. (Henry Mulford) Tichenor",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "buddhismbuddhist0000arms",
+      "title": "Buddhism and Buddhists in Japan",
+      "author": "Robert Cornell Armstrong",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "bwb_W8-BHA-192",
+      "title": "The life of Buddha as legend and history (The history of civilization)",
+      "author": "Edward J. Thomas",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "religionoftibets0000ella",
+      "title": "The religion of Tibet : a study of Lamaism",
+      "author": "John E Ellam",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "storyofbuddhabud00brow",
+      "title": "The story of Buddha and Buddhism; his life and sayings",
+      "author": "Brian Brown",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "bwb_S0-CFF-747",
+      "title": "Was Jesus Influenced by Buddhism?",
+      "author": "Dwight Goddard",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: wasjesusinfluenc00godd, bwb_P7-EDD-848"
+    },
+    {
+      "id": "dt-suzuki-essays-in-zen-buddhism-1",
+      "title": "SpiritualQuest - D. T. Suzuki - Essays in Zen Buddhism. First Series.",
+      "author": "D. T. Suzuki",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lecturesinbuddhi0000taix",
+      "title": "Lectures in Buddhism",
+      "author": "Taixu",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "gospelforasiastu0000saun",
+      "title": "The gospel for Asia; a study of three religious masterpieces: Gita, Lotus, and Fourth Gospel",
+      "author": "Kenneth J. (Kenneth James) Saunders",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "historyteachingo0000unse",
+      "title": "The history and the teaching of Shin buddhism",
+      "author": "Unknown",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "pilgrimageofbudd0000jame",
+      "title": "the pilgrimage of buddhism",
+      "author": "James Bissett Pratt",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "GodsOfNorthernBuddhism1928",
+      "title": "Gods Of Northern Buddhism 1928",
+      "author": "Alice Getty",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "kindredsayingson0000rhys",
+      "title": "Kindred Sayings On Buddhism",
+      "author": "Rhys Davids",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: dli.csl.6996"
+    },
+    {
+      "id": "studiesinlankava0000suzu",
+      "title": "Studies in the Lankavatara sutra, one of the most important text of Mahayana Buddhism",
+      "author": "Daisetz Teitaro Suzuki",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "buddhistpiligrim0000haye",
+      "title": "The Buddhist Piligrim's progress : from he Shi yeu ki, \"The records of the journey to the Western paradise\"",
+      "author": "Helen M Hayes",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "womenunderprimit00horn",
+      "title": "Women under primitive Buddhism : laywomen and almswomen",
+      "author": "I. B. (Isaline Blew) Horner",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: dli.ernet.506181"
+    },
+    {
+      "id": "MahayanaBuddismAndItsRelationToHinayana",
+      "title": "Mahayana Buddism And Its Relation To Hinayana",
+      "author": "Nalinaksha Dutt",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    }
+  ],
+  "hand_pruned": [
+    "bub_gb_l6zG7t_xQVcC — dupe of 10251302bsb (The Mahavansi, same work, Google scan vs library scan)",
+    "wheeloflawbuddhi0000alab — dupe of wheeloflawbuddhi00alab (same work, fewer pages)",
+    "indiansaintorbud00mill — dupe of indiansaintorbud00millrich (same work, kept preferred 'rich' scan)",
+    "romanticlegendof00ahbi — dupe of theromanticlegen00bealuoft (same Beal translation of the Romantic Legend of Sakya Buddha)",
+    "romanticlegendof00jnan — dupe of theromanticlegen00bealuoft (same Beal translation of the Romantic Legend of Sakya Buddha)",
+    "manualofbuddhism0000hard — dupe of manualofbudhismi0000hard (same Spence Hardy manual, earlier/shorter printing)",
+    "legendstheorieso00hardrich — dupe of 10445906bsb (same Spence Hardy work, fewer pages)",
+    "buddhistindiaytw00davi — dupe of buddhistindia0000rhys (same Rhys Davids 'Buddhist India', fewer pages)",
+    "sayingsofbuddhai00itiv — dupe of cu31924024260683 (same Iti-Vuttaka translation, preferred cu3192 scan has more pages)",
+    "dhammaofgotamabu0000revc — dupe of dhammaofgotamabu00aike (same Aiken work, fewer pages)",
+    "pilgrimageofbudd0000prat — dupe of pilgrimageofbudd0000jame (same Pratt work, fewer pages)",
+    "pilgrimageofbuil0000jame — dupe of pilgrimageofbudd0000jame (same Pratt work, mistitled 'Building' scan)",
+    "buddhistlegends00unkngoog — dupe of buddhistlegends01budd (same work, Google scan least preferred)",
+    "dasarathajtakab00jtgoog — dupe of dasarathajatakab00fausuoft (same Dasaratha-Jataka, preferred uoft scan)",
+    "buddhaswayvirtu00saungoog — dupe of buddhaswayofvirt00unse (same Saunders Dhammapada translation, Google scan least preferred)",
+    "gospelofbuddha0000paul_k9i8 — dupe of gospelofbuddhaco00caruuoft (same Carus work, preferred uoft scan)",
+    "heartofbuddhismb00saunuoft — dupe of theheartofbuddhi00unknuoft (identical Saunders anthology, same year/pages, duplicate upload)",
+    "sacredbooksofeas0000unse_q9x2 — dupe of sacredbooksofeas00wilsuoft (same Wilson anthology, preferred uoft scan)",
+    "sikshasamuccayac00sant — dupe of sikshasamuccayac00santuoft (same work, preferred uoft scan)",
+    "bwb_P9-EAE-894 — dupe of buddhistpiligrim0000haye (same Buddhist Pilgrim's Progress work)",
+    "wbsl.11166 — dupe of stupaofbharhutbu00cunn (same Cunningham Stupa of Bharhut work)",
+    "wbsl.4086 — dupe of cu31924095909390 (same Maisey Sanchi work, preferred cu3192 scan)",
+    "bwb_W9-CWL-603 — dupe of lecturesonorigin00daviuoft (same Rhys Davids Hibbert Lectures 1881, preferred uoft scan)",
+    "vtgdwightgoddard0000unse — dupe of bwb_S0-CFF-747 (same Goddard 'Was Jesus Influenced by Buddhism?', garbled listing-style duplicate)",
+    "bwb_T3-CBQ-978 — dupe of buddhistcatechis00subhrich (same Subhadra Buddhist Catechism, preferred 'rich' scan)",
+    "abridgedreprinto0003henr — dupe of buddhismintransl00warruoft (abridged reprint of same Warren work, preferred uoft full edition)",
+    "buddhist-records-of-the-western-world-vol-2 — dupe of siyukibuddhistre02hsuoft (same Beal Si-yu-ki Vol.2, preferred uoft scan)",
+    "isbn_0486210634 — dupe of mlbd.questionsofkingm0000vol-35.thom_w1l5 (same Questions of King Milinda Part I, Dover ISBN reprint)",
+    "phallicismcelest00jenn_0 — off-topic: general occult/heathen-Christian comparative work (Phallicism), not Buddhism-focused",
+    "elementsgeneral06unkngoog — off-topic: general philosophy textbook, not about Buddhism despite author's Buddhist scholarship",
+    "b29352083 — off-topic: general Tibet geography/ethnography travel book, not Buddhist-focused, not a pilgrimage account",
+    "faceofchinatrav00kemp — off-topic: general China travel narrative that only touches on a Buddhist site",
+    "catalogueofacoll00fift — off-topic: general oriental art auction catalogue, not Buddhism-focused",
+    "chineseporcelain00walp_0 — off-topic: general Chinese porcelain/art auction catalogue, no Buddhism focus",
+    "b14101440 — off-topic: general comparative-religion survey (Hinduism/Buddhism/Islam), not Buddhism-focused",
+    "mlbd.grihyasutraspart0000fmax — off-topic: Vedic/Hindu domestic-ritual text (Grihya Sutras, SBE29), not Buddhist despite being in the Sacred Books of the East series",
+    "mlbd.grihyasutrassacr0000herm — off-topic: Vedic/Hindu domestic-ritual text (Grihya Sutras, SBE30), not Buddhist despite being in the Sacred Books of the East series",
+    "grihyasutrasrule02olde — off-topic: Vedic/Hindu domestic-ceremony text (Grihya Sutras), not Buddhist",
+    "mlbd.vedichymnssacredvol-46.0000herm — off-topic: Vedic Hymns (SBE46), not Buddhist despite being in the Sacred Books of the East series",
+    "hibbertlectures10000unse_m7o2 — off-topic: Sayce's Hibbert Lectures address a different, non-Buddhist topic; title collides with Rhys Davids' 1881 Buddhist Hibbert Lectures",
+    "buddhainderkunst0000unse — non-English title (German: 'Buddha in der Kunst des Ostens')",
+    "jstor-25563450 — serial: JSTOR journal article excerpt, not a standalone monograph",
+    "jstor-25581740 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25207554 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-3217805 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25228686 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25228681 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25228728 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-3014316 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25581249 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25118272 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-25118486 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-2375122 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27897133 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27897424 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27897409 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27897483 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27899468 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-3141017 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-20022589 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27900346 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27900368 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27900503 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-27900506 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-4423680 — serial: JSTOR journal article (2 pages), not a standalone monograph",
+    "jstor-4169825 — serial: JSTOR journal article, not a standalone monograph",
+    "jstor-1195306 — serial: JSTOR journal article, not a standalone monograph",
+    "the-buddhist-review-volume-1 — serial: journal volume (The Buddhist Review), not a monograph",
+    "the-buddhist-review-volume-2 — serial: journal volume (The Buddhist Review), not a monograph",
+    "the-buddhist-review-volume-3 — serial: journal volume (The Buddhist Review), not a monograph",
+    "the-buddhist-review-volume-4 — serial: journal volume (The Buddhist Review), not a monograph",
+    "buddhistreview11anan_0 — serial: journal issue (The Buddhist Review, Vol.11 No.3), not a monograph",
+    "buddhistreview12anan — serial: journal issue (The Buddhist Review, Vol.12 No.1), not a monograph"
+  ]
+}
