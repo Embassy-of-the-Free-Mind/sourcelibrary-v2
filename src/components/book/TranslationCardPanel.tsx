@@ -30,7 +30,7 @@ export default function TranslationCardPanel({
         <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
           {isFirst ? (
             <span className="inline-flex items-center gap-2 px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors">
-              First Translation
+              Possible first translation
             </span>
           ) : (
             <span className="text-sm text-stone-300 hover:text-stone-100 transition-colors">
@@ -40,8 +40,10 @@ export default function TranslationCardPanel({
         </summary>
 
         <div className="mt-2 rounded border border-stone-700/40 bg-stone-800/20 px-3 py-2.5 text-sm">
+          {/* cardLabel() owns the wording; this used to hold its own copy of the
+              sentence, so softening one left the other asserting the superlative. */}
           {isFirst && (
-            <p className="text-stone-300">The first English translation of this work.</p>
+            <p className="text-stone-300">{label.sentence}</p>
           )}
 
           {label.entries.length > 0 && (
