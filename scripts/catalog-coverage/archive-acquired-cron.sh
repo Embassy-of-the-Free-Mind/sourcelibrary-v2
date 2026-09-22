@@ -47,10 +47,11 @@ BATCH="${ARCHIVE_BATCH:-240}"
 # our own decoders being OOM-killed, not sources refusing us — so a lower
 # concurrency should RAISE net throughput, not lower it.
 #
-# 4 keeps peak decoder memory near 4 GB with headroom for node + the workers
-# that share this machine. Raise it only against measured `free -g` headroom
-# under a real run, never on assumption.
-CONCURRENCY="${ARCHIVE_CONCURRENCY:-4}"
+# 6 matches the concurrency archive-acquired.ts itself now defaults to
+# (CONCURRENCY × PAGE_CONCURRENCY, #4656/#4739) rather than picking an
+# independent number for this wrapper. Raise it only against measured
+# `free -g` headroom under a real run, never on assumption.
+CONCURRENCY="${ARCHIVE_CONCURRENCY:-6}"
 
 # Ceiling below the hourly interval, so a stuck run is always dead before the
 # next one is due and can never chain into a multi-hour silent outage. The
