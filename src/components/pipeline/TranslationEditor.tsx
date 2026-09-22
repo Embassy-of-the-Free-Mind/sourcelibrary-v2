@@ -36,8 +36,6 @@ import { useReaderPreferences, type ReaderTheme, type ReaderFount } from '@/hook
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
-import LexiconTapLayer from '@/components/reader/LexiconTapLayer';
-import AlpheiosLoader from '@/components/reader/AlpheiosLoader';
 import AiBadge from '@/components/ui/AiBadge';
 import { MANUSCRIPT_OCR_FLAG } from '@/lib/marcianus-overlay.shared';
 import { usePairedEdition } from '@/hooks/usePairedEdition';
@@ -1361,18 +1359,6 @@ export default function TranslationEditor({
 
     return (
       <div className="h-screen flex flex-col" data-reader-theme={theme} data-reader-fount={hasFount ? fount : undefined} style={{ background: 'var(--bg-cream)' }}>
-        {/* Tap-a-word dictionary on the original-text pane. Gate on the
-            language of the EDITION whose text fills that pane (book.language
-            is the edition language — the OCR pane always shows edition text),
-            not on the work's source language. Latin and Greek for now (#3823). */}
-        {/* PROTOTYPE comparison (#3823): Alpheios embedded vs our popover.
-            Alpheios is on; our LexiconTapLayer is off while we evaluate. */}
-        <AlpheiosLoader enabled={(book.language === 'Latin' || book.language === 'Greek') && !paired} />
-        <LexiconTapLayer
-          targetSelector='[data-reader-section="ocr"] [data-reader-panel]'
-          enabled={false}
-          lang={book.language === 'Greek' ? 'grc' : 'la'}
-        />
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
@@ -2098,11 +2084,7 @@ export default function TranslationEditor({
                         )}
                       </>
                     ) : ocrText ? (
-                      // lang: Alpheios activates on its ISO 639-2 codes (lat/grc)
-                      // for the two languages it serves; the rest keep 639-1.
-                      // The modernized English shares this pane, so the reading
-                      // tools stay off while it is the text on screen.
-                      <div className={`prose-manuscript leading-relaxed ${!showEnglishModernized && (book.language === 'Latin' || book.language === 'Greek') ? 'alpheios-enabled' : ''}`} style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'lat' : book.language === 'Greek' ? 'grc' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
+                      <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         {/* The modernization replaces the transcription in place when the
                             reader asks for it, so the two are never on screen as rival
                             texts — one panel, one reading, toggled by the header button. */}
