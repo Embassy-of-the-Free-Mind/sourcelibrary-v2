@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
-import { IMAGE_LICENSES } from '@/lib/types';
+import { licenseDisplay } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
 import { useRouter } from 'next/navigation';
@@ -527,14 +527,27 @@ export default function BibliographicInfo({
                     <span className="text-stone-200">{book.image_source.sponsor}</span>
                   </div>
                 )}
-                {book.image_source.license && (
-                  <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">License:</span>
-                    <span className="text-stone-200">
-                      {IMAGE_LICENSES.find(l => l.id === book.image_source?.license)?.name || book.image_source.license}
-                    </span>
-                  </div>
-                )}
+                {(() => {
+                  // Resolved for display only — the stored value is the source's
+                  // own rights statement and stays as it is. 3,740 live books
+                  // store a rightsstatements.org URI or a Creative Commons deed
+                  // URL rather than one of our seven ids, and this used to print
+                  // the bare URL where a licence should be.
+                  const lic = licenseDisplay(book.image_source?.license);
+                  if (!lic) return null;
+                  return (
+                    <div className="flex gap-2">
+                      <span className="text-stone-500 w-24 flex-shrink-0">License:</span>
+                      <span className="text-stone-200">
+                        {showExternalLinks && lic.url ? (
+                          <a href={lic.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                            {lic.name}
+                          </a>
+                        ) : lic.name}
+                      </span>
+                    </div>
+                  );
+                })()}
                 {book.image_source.attribution && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
