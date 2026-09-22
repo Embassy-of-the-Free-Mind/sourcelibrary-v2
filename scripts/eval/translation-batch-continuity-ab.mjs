@@ -87,6 +87,20 @@ const SEED_CHARS = 2000;                  // production seed slice
 // here — sent the FIRST 2,000 chars, so the seam was the part never seen).
 // Arms At and Et are A and E with that fix; prev and B are shared unchanged.
 const TAIL = has('tail');
+// --hybrid: arm Ah — the previous page's <summary>/<keywords> KEPT (the head seed
+// carried them on short pages and the judge preferred it, PR #4912 comment
+// 2026-09-22), the first HEAD_CHARS for the page's conventions, the last
+// TAIL_CHARS for the seam, production's original label and trailing '...'.
+// Identical to A when the page fits in SEED_CHARS.
+const HYBRID = has('hybrid');
+const HEAD_CHARS = 600, TAIL_CHARS = 1400;
+export function seedHybrid(text) {
+  const raw = String(text);
+  const blocks = (raw.match(/<(summary|keywords)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi) || []).join('\n');
+  const body = raw.replace(/<(meta|summary|keywords|vocab|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '').trim();
+  const core = body.length <= SEED_CHARS ? body : `${body.slice(0, HEAD_CHARS)}\n[…]\n${body.slice(-TAIL_CHARS)}`;
+  return `${core}${blocks ? `\n${blocks}` : ''}...`;
+}
 /** Mirrors continuityContext() in translate-core (PR #4970): editorial blocks off, last SEED_CHARS, '...' in front. */
 export function seedSlice(text, tail = TAIL) {
   if (!tail) return `${text.slice(0, SEED_CHARS)}...`;
@@ -171,6 +185,9 @@ export function blockPrompt(prompts, book, pages, seed) {
   let prompt = header;
   if (seed?.text) {
     if (seed.kind === 'source') prompt += `\n\n**Previous page (untranslated source text) for continuity:**\n${seed.text.slice(0, SEED_CHARS)}...`;
+    else if (HYBRID) prompt += english
+      ? `\n\n**Previous page (modernized) for continuity:**\n${seedHybrid(seed.text)}`
+      : `\n\n**Previous page translation for continuity:**\n${seedHybrid(seed.text)}`;
     else if (TAIL) prompt += english
       ? `\n\n**Previous page (modernized) for continuity — continue from its end:**\n${seedSlice(seed.text)}`
       : `\n\n**Previous page translation for continuity — continue from its end:**\n${seedSlice(seed.text)}`;
@@ -370,8 +387,9 @@ async function phaseRun() {
   const payload = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
   const est = estimate(payload.sample);
   // --tail: one block call (At) and one repair call (Et) per boundary, prev and B reused
-  if (TAIL) {
-    est.usd = est.usd / 4 * 1.15;
+  if (HYBRID) est.usd = est.usd / 4;
+  if (TAIL || HYBRID) {
+    if (TAIL) est.usd = est.usd / 4 * 1.15;
     if (arg('pin-english') == null) { console.error('REFUSING: --tail without --pin-english — the original arms ran on English Modernization v1 and the default is now v2 (23 English boundaries would be confounded).'); process.exit(2); }
   }
   const approved = Number(arg('approved-usd', 0));
@@ -403,7 +421,7 @@ async function phaseRun() {
   const price = priceFor(MODEL);
   // Under --tail only the new arms count against the approval; the original run's
   // rows are on disk too, and counting them made every call skip as over budget.
-  const countsHere = (r) => !TAIL || r.which === 'At' || r.which === 'Et';
+  const countsHere = (r) => (TAIL ? r.which === 'At' || r.which === 'Et' : HYBRID ? r.which === 'Ah' : true);
   let spent = readRows().filter(countsHere).reduce((s, r) => s + (r.cost_usd || 0), 0);
   if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on disk`);
   const stream = fs.createWriteStream(OUT_FILE, { flags: 'a' });
@@ -439,7 +457,7 @@ async function phaseRun() {
     if (which === 'D') parsed.delete(pages[0].page_number);   // the overlap page is translated and thrown away
     const row = {
       bookId: r.bookId, language: r.language, which, seamPage: r.seamPage, model: MODEL,
-      seedKind: seed?.text ? (TAIL && seed.kind === 'translation' ? 'translation-tail' : seed.kind) : null, seedChars: seed?.text ? Math.min(SEED_CHARS, seed.text.length) : 0,
+      seedKind: seed?.text ? (seed.kind === 'translation' && TAIL ? 'translation-tail' : seed.kind === 'translation' && HYBRID ? 'translation-hybrid' : seed.kind) : null, seedChars: seed?.text ? Math.min(SEED_CHARS, seed.text.length) : 0,
       pages: Object.fromEntries(parsed), pagesParsed: parsed.size, pagesSent: which === 'D' ? pages.length - 1 : pages.length, overlapPages: which === 'D' ? 1 : 0, retried,
       error: res.error || null, finish: res.finish || null, inTok: res.inTok || 0, outTok: res.outTok || 0,
       cost_usd: cost, at: new Date().toISOString(),
@@ -488,10 +506,11 @@ async function phaseRun() {
         B: null,
         C: { kind: 'source', text: r.prev[BLOCK - 1].ocr },
       };
-      for (const arm of TAIL ? [] : ARMS) {
+      for (const arm of TAIL || HYBRID ? [] : ARMS) {
         if (have.has(`${r.bookId}:${arm}`)) continue;
         await callBlock(r, arm, r.next, seeds[arm]);
       }
+      if (HYBRID && !have.has(`${r.bookId}:Ah`)) await callBlock(r, 'Ah', r.next, seeds.A);
       if (TAIL) {
         if (!have.has(`${r.bookId}:At`)) await callBlock(r, 'At', r.next, seeds.A);
         if (!have.has(`${r.bookId}:Et`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`), 'Et');
@@ -505,7 +524,7 @@ async function phaseRun() {
       if (has('with-a2') && !have.has(`${r.bookId}:A2`)) await callBlock(r, 'A2', r.next, seeds.A);
       // Arm E (Amendment 1, last rung, run only with --with-e once B, C and D have failed): a second
       // pass over B's FIRST page only. It is never shown pages 2-8, so it cannot edit outside the seam.
-      if (!TAIL && has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
+      if (!TAIL && !HYBRID && has('with-e') && !have.has(`${r.bookId}:E`)) await callRepair(r, lastPrev, have.get(`${r.bookId}:B`));
     } else if (!prev?.skipped) {
       console.log(`  ${r.bookId}: block k-1 did not return its last page — boundary unusable, arms NOT run (recorded, not padded)`);
     }
@@ -573,7 +592,7 @@ function phaseScore() {
 
   const scored = usable.map(({ s, rows }) => {
     const terms = committedTerms(s.prev.map((p) => rows.prev.pages[p.page_number] || ''));
-    const present = [...ARMS, 'D', 'E', 'A2', 'At', 'Et'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
+    const present = [...ARMS, 'D', 'E', 'A2', 'At', 'Et', 'Ah'].filter((a) => rows[a]?.pages?.[s.next[0].page_number]);
     return { s, rows, terms, arms: Object.fromEntries(present.map((a) => [a, scoreArm(s, rows[a], terms)])) };
   });
 
@@ -621,7 +640,7 @@ function phaseScore() {
     control_shuffled: control, arms: {},
   };
   const hasE = scored.some((b) => b.arms.E);
-  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : []), ...(scored.some((b) => b.arms.A2) ? ['A2'] : []), ...['At', 'Et'].filter((a) => scored.some((b) => b.arms[a]))];
+  const SHOWN = [...ARMS, ...(hasD ? ['D'] : []), ...(hasE ? ['E'] : []), ...(scored.some((b) => b.arms.A2) ? ['A2'] : []), ...['At', 'Et', 'Ah'].filter((a) => scored.some((b) => b.arms[a]))];
   for (const arm of SHOWN) report.arms[arm] = { n: scored.filter((b) => b.arms[arm]).length, h1_pooled: pooled(arm), h1_first_page_pooled: pooled(arm, (x) => x.h1_first_page), body_chars: mean(scored.filter((b) => b.arms[arm]).map((b) => b.arms[arm].body_chars)) };
   for (const arm of SHOWN.slice(1)) {
     const c = compare(arm), g = h3(arm), j = judgeShare(`A${arm}`);

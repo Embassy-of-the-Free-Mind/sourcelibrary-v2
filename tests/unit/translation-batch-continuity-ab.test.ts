@@ -100,3 +100,19 @@ describe('seedSlice (--tail, #4968)', () => {
     expect(tail).not.toContain('<summary>');
   });
 });
+
+describe('seedHybrid (--hybrid)', () => {
+  it('equals production head mode on a short page; on a long page keeps head, tail and the summary block', async () => {
+    const { seedHybrid } = await import('../../scripts/eval/translation-batch-continuity-ab.mjs');
+    const short = 'Short page. It is graver...\n<summary>s</summary>';
+    expect(seedHybrid(short)).toBe('Short page. It is graver...\n<summary>s</summary>...');
+    const long = 'HEAD-CONVENTIONS ' + 'x'.repeat(2500) + ' It is graver...\n<summary>About it.</summary>\n<keywords>k</keywords>';
+    const h = seedHybrid(long);
+    expect(h.startsWith('HEAD-CONVENTIONS')).toBe(true);
+    expect(h).toContain('[…]');
+    expect(h).toContain('It is graver...');
+    expect(h).toContain('<summary>About it.</summary>');
+    expect(h.endsWith('...')).toBe(true);
+    expect(h.length).toBeLessThan(2200);
+  });
+});
