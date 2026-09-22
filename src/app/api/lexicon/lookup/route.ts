@@ -17,13 +17,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { lookupLatinWord } from '@/lib/lexicon/lookup';
+import { lookupGreekWord } from '@/lib/lexicon/lookup-grc';
 
 export const dynamic = 'force-dynamic';
 
 const CACHE_HEADERS = {
-  // max-age matters: a Cache-Control without it survives CDN purges in
-  // browser caches (see lesson on s-maxage-only headers).
-  'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+  // Browser max-age is deliberately SHORT: the lexicon dataset is young and
+  // improving, and a long browser cache pins stale misses on readers after a
+  // re-import (an hour-old miss survived the sigma-fix rejoin in testing).
+  // The CDN keeps the long TTL — deploys purge it. max-age must be present:
+  // a Cache-Control without it survives CDN purges in browser caches.
+  'Cache-Control': 'public, max-age=60, s-maxage=86400, stale-while-revalidate=604800',
   'CDN-Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
 } as const;
 
@@ -31,9 +35,9 @@ export async function GET(request: NextRequest) {
   const word = request.nextUrl.searchParams.get('word') ?? '';
   const lang = request.nextUrl.searchParams.get('lang') ?? 'la';
 
-  if (lang !== 'la') {
+  if (lang !== 'la' && lang !== 'grc') {
     return NextResponse.json(
-      { error: `Unsupported lang "${lang}" — only "la" (Latin) is available.` },
+      { error: `Unsupported lang "${lang}" — "la" (Latin) and "grc" (Ancient Greek) are available.` },
       { status: 400 }
     );
   }
@@ -43,7 +47,31 @@ export async function GET(request: NextRequest) {
 
   try {
     const db = await getReadDb();
-    const result = await lookupLatinWord(db, word);
+    // Greek matches are reshaped to the Latin match schema so the popover
+    // renders both without branching (shortDef plays the first-sense role).
+    const result =
+      lang === 'grc'
+        ? await lookupGreekWord(db, word).then((r) => ({
+            query: r.query,
+            normalized: r.normalized,
+            found: r.found,
+            matches: r.matches.map((m) => ({
+              key: m.key,
+              headword: m.headword,
+              matchType: m.matchType,
+              confident: m.confident,
+              entryType: 'main',
+              partOfSpeech: m.grammar,
+              orthography: m.headword,
+              genitive: null,
+              gender: null,
+              declension: null,
+              mainNotes: m.etymology,
+              senses: m.shortDef ? [m.shortDef] : [],
+              sensesTruncated: false,
+            })),
+          }))
+        : await lookupLatinWord(db, word);
     if (!result.found && result.normalized.length >= 3) {
       // Miss telemetry: aggregated per normalized form (bounded by vocabulary,
       // no PII, nothing automated reads it). This is the Phase-2.5 worklist —
@@ -51,7 +79,7 @@ export async function GET(request: NextRequest) {
       db.collection('lexicon_misses')
         .updateOne(
           { form: result.normalized },
-          { $inc: { count: 1 }, $set: { last_seen: new Date(), sample_query: result.query } },
+          { $inc: { count: 1 }, $set: { last_seen: new Date(), sample_query: result.query, lang } },
           { upsert: true }
         )
         .catch(() => {});
