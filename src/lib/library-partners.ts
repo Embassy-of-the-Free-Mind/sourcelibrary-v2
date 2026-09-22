@@ -500,11 +500,11 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   'oraec': {
     slug: 'oraec',
     kind: 'platform',
-    name: 'ORAEC (Ancient Egyptian Texts)',
+    name: 'ORAEC (Open Richly Annotated Egyptian Corpus)',
     shortName: 'ORAEC',
     providerKey: 'oraec',
     url: 'https://oraec.github.io',
-    description: 'The Online Resource for Ancient Egyptian Coffin Texts provides digitized hieratic manuscripts from ancient Egyptian sarcophagi, including the Coffin Texts, the Book of the Dead, and the Report of Wenamun.',
+    description: 'The Open Richly Annotated Egyptian Corpus (ORAEC) is an open, TLA-derived corpus of ancient Egyptian texts with transliteration, word-by-word hieroglyphs and translation, from the Old Kingdom instructions and autobiographies to the Book of the Dead.',
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69e1582bec0a328a49d0a24c/0003.jpg',
   },
