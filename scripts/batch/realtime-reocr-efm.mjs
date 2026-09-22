@@ -22,6 +22,7 @@ import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -131,10 +132,13 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
   }
 
   const result = await response.json();
-  const text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const candidate = result.candidates?.[0];
+  const text = candidate?.content?.parts?.[0]?.text || '';
   const usage = result.usageMetadata || {};
   return {
     text,
+    // Returned so the caller can tell a finished read from a cut-off one (#4890).
+    finishReason: candidate?.finishReason || null,
     usage: {
       inputTokens: usage.promptTokenCount || 0,
       outputTokens: outputTokensFrom(usage),
@@ -179,6 +183,13 @@ async function processPage(page, promptText, db) {
         text: result.text, model: TARGET_MODEL, verdict: loop,
       });
       return { pageId: page.id, status: 'loop-refused', durationMs };
+    }
+
+    // Truncation guard (#4890): the provider says this answer was cut off. This
+    // lane OVERWRITES existing OCR, so a stored stub replaces a whole reading.
+    if (isTruncatedCandidate({ finishReason: result.finishReason })) {
+      console.warn(`  page ${page.page_number}: ${truncationFailReason({ finishReason: result.finishReason })} — refusing (${result.text.length} chars)`);
+      return { pageId: page.id, status: 'truncated', durationMs };
     }
 
     // Extract metadata

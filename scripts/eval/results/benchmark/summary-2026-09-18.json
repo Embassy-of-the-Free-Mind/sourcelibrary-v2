@@ -1,0 +1,1944 @@
+{
+  "chinese": {
+    "stratum": "chinese",
+    "issue": 4743,
+    "date": "2026-09-18",
+    "n_pages": 40,
+    "n_with_ref": 28,
+    "ref_mismatch": [
+      "chinese-15f4c5-p32"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "dots-mocr": {
+        "pages_run": 40,
+        "empty": 1,
+        "loop": 2,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.176,
+          "mean_cer": 0.211,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.867
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.244,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_bow": 0.889
+        },
+        "invention": {
+          "median": 0.03,
+          "mean": 0.076,
+          "n_engines": 8,
+          "ref_median": 0.13,
+          "ref_mean": 0.146
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 14,
+          "losses": 9,
+          "ties": 5,
+          "median_delta_cer": 0.003,
+          "p_sign": 0.405,
+          "invention_wins": 21,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "chinese-c79205-p12",
+            "title": "大明嘉靖三年大統曆 (Ming Imperial Calendar, Jiajing Year 3)",
+            "year": 1524,
+            "cer": 1.765,
+            "gap": 0.073,
+            "invention": 0.392,
+            "has_ref": false,
+            "unsupported": [
+              "造芳天",
+              "芳天德",
+              "酉月在",
+              "月在申",
+              "月殺去",
+              "殺去月",
+              "去月德",
+              "月在丙"
+            ]
+          },
+          {
+            "slug": "chinese-1f15a0-p87",
+            "title": "春秋地名考略·卷三~卷五 (vol 2)",
+            "year": null,
+            "cer": 1.132,
+            "gap": 0.656,
+            "invention": 0.132,
+            "has_ref": false,
+            "unsupported": [
+              "令狐令",
+              "狐令狐",
+              "令狐二",
+              "狐二十",
+              "取白衰",
+              "白衰杜",
+              "至于剝",
+              "于剝首"
+            ]
+          },
+          {
+            "slug": "chinese-1c692d-p45",
+            "title": "經典釋文·卷二十五~卷二十七 (vol 11)",
+            "year": null,
+            "cer": 1.043,
+            "gap": 0.09,
+            "invention": 0.248,
+            "has_ref": false,
+            "unsupported": [
+              "汨音滑",
+              "音滑徐",
+              "滑徐音",
+              "云汨昏",
+              "汨昏未",
+              "繩也花",
+              "也花徐",
+              "花徐徒"
+            ]
+          },
+          {
+            "slug": "chinese-db7772-p18",
+            "title": "凝禪寺三級浮圖碑",
+            "year": 1946,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-15f5dd-p52",
+            "title": "佛說阿彌陀經 (vol 1)",
+            "year": null,
+            "cer": 0.93,
+            "gap": 0.561,
+            "invention": 0.4,
+            "has_ref": false,
+            "unsupported": [
+              "知知時",
+              "至身身",
+              "身身無",
+              "戀意罪",
+              "意罪罪",
+              "滅善善",
+              "善善根",
+              "長若若"
+            ]
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 40,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.163,
+          "mean_cer": 0.2,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.888
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.159,
+          "catastrophic": 2,
+          "median_gap": 0.009,
+          "median_bow": 0.986
+        },
+        "invention": {
+          "median": 0.021,
+          "mean": 0.05,
+          "n_engines": 8,
+          "ref_median": 0.126,
+          "ref_mean": 0.13
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 18,
+          "losses": 4,
+          "ties": 6,
+          "median_delta_cer": 0.007,
+          "p_sign": 0.004,
+          "invention_wins": 20,
+          "invention_losses": 5
+        },
+        "worst": [
+          {
+            "slug": "chinese-1f15a0-p87",
+            "title": "春秋地名考略·卷三~卷五 (vol 2)",
+            "year": null,
+            "cer": 1.195,
+            "gap": 0.633,
+            "invention": 0.056,
+            "has_ref": false,
+            "unsupported": [
+              "令狐可",
+              "狐可以",
+              "互耳僖",
+              "耳僖二",
+              "刳首闞",
+              "首闞駰",
+              "闞駰曰",
+              "耳山秦"
+            ]
+          },
+          {
+            "slug": "chinese-1c692d-p45",
+            "title": "經典釋文·卷二十五~卷二十七 (vol 11)",
+            "year": null,
+            "cer": 0.684,
+            "gap": 0.056,
+            "invention": 0.234,
+            "has_ref": false,
+            "unsupported": [
+              "汨音潠",
+              "音潠徐",
+              "潠徐音",
+              "徐音潠",
+              "音潠向",
+              "潠向云",
+              "云汨合",
+              "汨合也"
+            ]
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.461,
+            "gap": 0.092,
+            "invention": 0.011,
+            "has_ref": true,
+            "unsupported": [
+              "巻上巽",
+              "上巽故",
+              "巽故但",
+              "巻上季",
+              "上季牒",
+              "季牒上"
+            ]
+          },
+          {
+            "slug": "chinese-c79205-p12",
+            "title": "大明嘉靖三年大統曆 (Ming Imperial Calendar, Jiajing Year 3)",
+            "year": 1524,
+            "cer": 0.38,
+            "gap": 0.033,
+            "invention": 0.292,
+            "has_ref": false,
+            "unsupported": [
+              "前月壬",
+              "月壬辰",
+              "壬辰巳",
+              "辰巳未",
+              "行宜出",
+              "出行修",
+              "修造葬",
+              "造葬天"
+            ]
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.377,
+            "gap": 0.028,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 40,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.191,
+          "mean_cer": 0.262,
+          "catastrophic": 2,
+          "median_gap": 0.002,
+          "median_seq": 0.865
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 8,
+          "ref_median": 0.164,
+          "ref_mean": 0.174
+        },
+        "worst": [
+          {
+            "slug": "chinese-153862-p25",
+            "title": "金剛般若波羅蜜經 (vol 3)",
+            "year": null,
+            "cer": 0.911,
+            "gap": 0.475,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-48e6c5-p77",
+            "title": "大戴禮記·卷一~卷三 (vol 1)",
+            "year": null,
+            "cer": 0.57,
+            "gap": 0.115,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.461,
+            "gap": 0.093,
+            "invention": 0.004,
+            "has_ref": true,
+            "unsupported": [
+              "前文覚",
+              "文覚者"
+            ]
+          },
+          {
+            "slug": "chinese-1e9cd1-p43",
+            "title": "白孔六帖·卷四十五~卷四十六 (vol 21)",
+            "year": null,
+            "cer": 0.434,
+            "gap": 0.089,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.384,
+            "gap": 0.028,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 40,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.191,
+          "mean_cer": 0.263,
+          "catastrophic": 2,
+          "median_gap": 0.002,
+          "median_seq": 0.865
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 8,
+          "ref_median": 0.165,
+          "ref_mean": 0.175
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 0,
+          "losses": 1,
+          "ties": 27,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "chinese-153862-p25",
+            "title": "金剛般若波羅蜜經 (vol 3)",
+            "year": null,
+            "cer": 0.911,
+            "gap": 0.475,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-48e6c5-p77",
+            "title": "大戴禮記·卷一~卷三 (vol 1)",
+            "year": null,
+            "cer": 0.57,
+            "gap": 0.115,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.466,
+            "gap": 0.097,
+            "invention": 0.016,
+            "has_ref": true,
+            "unsupported": [
+              "薩地満",
+              "地満足",
+              "迷動心",
+              "猶如念",
+              "如念今",
+              "平等等",
+              "等等始",
+              "前文初"
+            ]
+          },
+          {
+            "slug": "chinese-1e9cd1-p43",
+            "title": "白孔六帖·卷四十五~卷四十六 (vol 21)",
+            "year": null,
+            "cer": 0.434,
+            "gap": 0.089,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.384,
+            "gap": 0.028,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "ndlkotenocr-v3": {
+        "pages_run": 40,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.25,
+          "mean_cer": 0.347,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_seq": 0.801
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.879,
+          "catastrophic": 9,
+          "median_gap": 0.207,
+          "median_bow": 0.685
+        },
+        "invention": {
+          "median": 0.267,
+          "mean": 0.396,
+          "n_engines": 8,
+          "ref_median": 0.349,
+          "ref_mean": 0.394
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 7,
+          "losses": 21,
+          "ties": 0,
+          "median_delta_cer": -0.056,
+          "p_sign": 0.013,
+          "invention_wins": 1,
+          "invention_losses": 27
+        },
+        "worst": [
+          {
+            "slug": "chinese-1f15a0-p87",
+            "title": "春秋地名考略·卷三~卷五 (vol 2)",
+            "year": null,
+            "cer": 1.2,
+            "gap": 0.586,
+            "invention": 0.382,
+            "has_ref": false,
+            "unsupported": [
+              "平陽水",
+              "陽水可",
+              "邑也藩",
+              "也藩史",
+              "藩史云",
+              "史云降",
+              "云降水",
+              "降水可"
+            ]
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.984,
+            "gap": 0.01,
+            "invention": 1,
+            "has_ref": true,
+            "unsupported": [
+              "書布布",
+              "布布十",
+              "布十二",
+              "十二事",
+              "二事津",
+              "事津波",
+              "津波女",
+              "波女七"
+            ]
+          },
+          {
+            "slug": "chinese-8f115a-p210",
+            "title": "妙法蓮華經 佛教十三經今譯 董國柱 2 (vol 2)",
+            "year": 1998,
+            "cer": 0.965,
+            "gap": 0.451,
+            "invention": 0.986,
+            "has_ref": false,
+            "unsupported": [
+              "七十筆",
+              "十筆本",
+              "筆本十",
+              "本十一",
+              "十一庄",
+              "一庄湊",
+              "庄湊日",
+              "湊日有"
+            ]
+          },
+          {
+            "slug": "chinese-160972-p14",
+            "title": "藥師琉璃光如來本願功德經 (vol 2)",
+            "year": null,
+            "cer": 0.937,
+            "gap": 0.268,
+            "invention": 0.798,
+            "has_ref": true,
+            "unsupported": [
+              "故当仏",
+              "当仏足",
+              "仏足応",
+              "足応八",
+              "応八才",
+              "八才比",
+              "才比軽",
+              "比軽波"
+            ]
+          },
+          {
+            "slug": "chinese-15f5dd-p52",
+            "title": "佛說阿彌陀經 (vol 1)",
+            "year": null,
+            "cer": 0.93,
+            "gap": 0.533,
+            "invention": 0.361,
+            "has_ref": false,
+            "unsupported": [
+              "山者不",
+              "仏因縁",
+              "因縁得",
+              "縁得得",
+              "得得入",
+              "得入如",
+              "来大誓",
+              "慈力罪"
+            ]
+          }
+        ]
+      },
+      "paddleocr-vl-1.6": {
+        "pages_run": 40,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.149,
+          "mean_cer": 0.201,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.89
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.255,
+          "catastrophic": 3,
+          "median_gap": 0.006,
+          "median_bow": 0.871
+        },
+        "invention": {
+          "median": 0.054,
+          "mean": 0.065,
+          "n_engines": 8,
+          "ref_median": 0.132,
+          "ref_mean": 0.143
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 18,
+          "losses": 7,
+          "ties": 3,
+          "median_delta_cer": 0.008,
+          "p_sign": 0.043,
+          "invention_wins": 18,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "chinese-1f15a0-p87",
+            "title": "春秋地名考略·卷三~卷五 (vol 2)",
+            "year": null,
+            "cer": 1.229,
+            "gap": 0.632,
+            "invention": 0.098,
+            "has_ref": false,
+            "unsupported": [
+              "刳首閙",
+              "首閙駰",
+              "閙駰曰",
+              "有令瓜",
+              "令瓜戎",
+              "瓜戎令",
+              "戎令孤",
+              "近也曰"
+            ]
+          },
+          {
+            "slug": "chinese-db7772-p18",
+            "title": "凝禪寺三級浮圖碑",
+            "year": 1946,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-1c692d-p45",
+            "title": "經典釋文·卷二十五~卷二十七 (vol 11)",
+            "year": null,
+            "cer": 0.727,
+            "gap": 0.046,
+            "invention": 0.188,
+            "has_ref": false,
+            "unsupported": [
+              "金定四",
+              "汨音同",
+              "音同崔",
+              "木也湣",
+              "也湣徐",
+              "徐音昬",
+              "音昬向",
+              "昬向云"
+            ]
+          },
+          {
+            "slug": "chinese-15f5dd-p52",
+            "title": "佛說阿彌陀經 (vol 1)",
+            "year": null,
+            "cer": 0.491,
+            "gap": 0.151,
+            "invention": 0.176,
+            "has_ref": false,
+            "unsupported": [
+              "消如慈",
+              "如慈雲",
+              "土文苦",
+              "文苦長",
+              "眾得四",
+              "得四五"
+            ]
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.47,
+            "gap": 0.097,
+            "invention": 0.014,
+            "has_ref": true,
+            "unsupported": [
+              "四生菩",
+              "生菩薩",
+              "無初以",
+              "初以遠",
+              "前文心",
+              "文心起",
+              "五十牒",
+              "十牒上"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 40,
+        "empty": 0,
+        "loop": 1,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.188,
+          "mean_cer": 0.245,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.84
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.257,
+          "catastrophic": 4,
+          "median_gap": 0.012,
+          "median_bow": 0.923
+        },
+        "invention": {
+          "median": 0.052,
+          "mean": 0.097,
+          "n_engines": 8,
+          "ref_median": 0.152,
+          "ref_mean": 0.178
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 13,
+          "losses": 10,
+          "ties": 5,
+          "median_delta_cer": 0,
+          "p_sign": 0.678,
+          "invention_wins": 9,
+          "invention_losses": 16
+        },
+        "worst": [
+          {
+            "slug": "chinese-1f15a0-p87",
+            "title": "春秋地名考略·卷三~卷五 (vol 2)",
+            "year": null,
+            "cer": 1.19,
+            "gap": 0.655,
+            "invention": 0.161,
+            "has_ref": false,
+            "unsupported": [
+              "邑也僖",
+              "也僖史",
+              "僖史云",
+              "文之五",
+              "之五耳",
+              "五耳令",
+              "取白袁",
+              "白袁杜"
+            ]
+          },
+          {
+            "slug": "chinese-8ec8ed-p44",
+            "title": "御定駢字類編·卷九十六 — Imperial Parallel Characters (vol 278)",
+            "year": null,
+            "cer": 0.881,
+            "gap": 0.01,
+            "invention": 0.189,
+            "has_ref": true,
+            "unsupported": [
+              "一一一",
+              "一一皆",
+              "一皆家",
+              "之浜一",
+              "浜一魏",
+              "一魏志",
+              "属上一",
+              "上一一"
+            ]
+          },
+          {
+            "slug": "chinese-21a8c6-p494",
+            "title": "大方廣佛華嚴經 (Avataṃsaka Sūtra / Huayan Jing)",
+            "year": null,
+            "cer": 0.834,
+            "gap": 0.535,
+            "invention": 0.053,
+            "has_ref": false,
+            "unsupported": [
+              "仏慧此",
+              "慧此光",
+              "神通是",
+              "無畏此",
+              "畏此光",
+              "怖者非",
+              "者非人",
+              "塗体酥"
+            ]
+          },
+          {
+            "slug": "chinese-c79205-p12",
+            "title": "大明嘉靖三年大統曆 (Ming Imperial Calendar, Jiajing Year 3)",
+            "year": 1524,
+            "cer": 0.546,
+            "gap": 0.073,
+            "invention": 0.422,
+            "has_ref": false,
+            "unsupported": [
+              "前月西",
+              "月西日",
+              "西日未",
+              "午正列",
+              "正列清",
+              "列清明",
+              "行宜宮",
+              "宜宮行"
+            ]
+          },
+          {
+            "slug": "chinese-1c692d-p45",
+            "title": "經典釋文·卷二十五~卷二十七 (vol 11)",
+            "year": null,
+            "cer": 0.529,
+            "gap": 0.046,
+            "invention": 0.184,
+            "has_ref": false,
+            "unsupported": [
+              "剣定四",
+              "汨音合",
+              "木也潘",
+              "也潘徐",
+              "潘徐音",
+              "云汨晉",
+              "汨晉未",
+              "晉未定"
+            ]
+          }
+        ]
+      },
+      "tesseract-chi_tra_vert": {
+        "pages_run": 40,
+        "empty": 0,
+        "loop": 1,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.726,
+          "mean_cer": 0.731,
+          "catastrophic": 26,
+          "median_gap": 0.024,
+          "median_seq": 0.349
+        },
+        "proxy_vs_ref_engine": {
+          "n": 12,
+          "median_cer": 0.95,
+          "catastrophic": 11,
+          "median_gap": 0.091,
+          "median_bow": 0.341
+        },
+        "invention": {
+          "median": 0.913,
+          "mean": 0.85,
+          "n_engines": 8,
+          "ref_median": 0.918,
+          "ref_mean": 0.863
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "wins": 1,
+          "losses": 27,
+          "ties": 0,
+          "median_delta_cer": -0.526,
+          "p_sign": 0,
+          "invention_wins": 0,
+          "invention_losses": 28
+        },
+        "worst": [
+          {
+            "slug": "chinese-db7772-p18",
+            "title": "凝禪寺三級浮圖碑",
+            "year": 1946,
+            "cer": 23.071,
+            "gap": 0.006,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "用擴吃",
+              "擴吃地",
+              "吃地人",
+              "地人地",
+              "人地肖",
+              "地肖他",
+              "肖他人",
+              "他人束"
+            ]
+          },
+          {
+            "slug": "chinese-15f5dd-p52",
+            "title": "佛說阿彌陀經 (vol 1)",
+            "year": null,
+            "cer": 1.561,
+            "gap": 0.39,
+            "invention": 0.65,
+            "has_ref": false,
+            "unsupported": [
+              "要咖和",
+              "咖和訕",
+              "和訕還",
+              "訕還人",
+              "還人如",
+              "人如的",
+              "如的人",
+              "的人多"
+            ]
+          },
+          {
+            "slug": "chinese-c79205-p12",
+            "title": "大明嘉靖三年大統曆 (Ming Imperial Calendar, Jiajing Year 3)",
+            "year": 1524,
+            "cer": 1.169,
+            "gap": 0.07,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "六二主",
+              "二主用",
+              "主用尚",
+              "用尚包",
+              "尚包主",
+              "包主目",
+              "主目震",
+              "目震大"
+            ]
+          },
+          {
+            "slug": "chinese-16fa19-p41",
+            "title": "海録碎事·卷六 (vol 6)",
+            "year": null,
+            "cer": 1.092,
+            "gap": 0.01,
+            "invention": 0.925,
+            "has_ref": false,
+            "unsupported": [
+              "為言閏",
+              "言閏酒",
+              "閏酒有",
+              "酒有頼",
+              "有頼人",
+              "頼人舞",
+              "人舞相",
+              "舞相伏"
+            ]
+          },
+          {
+            "slug": "chinese-160513-p37",
+            "title": "藥師琉璃光如來本願功德經 (vol 1)",
+            "year": null,
+            "cer": 1.017,
+            "gap": 0.007,
+            "invention": 0.816,
+            "has_ref": true,
+            "unsupported": [
+              "家辺之",
+              "辺之人",
+              "之人和",
+              "人和来",
+              "和来者",
+              "者悪硼",
+              "悪硼焉",
+              "硼焉相"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript-cursive": {
+        "n": 2,
+        "engines": {
+          "dots-mocr": {
+            "n": 2,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.947,
+            "catastrophic": 1,
+            "median_unsupported": 0.206
+          },
+          "gemini-3-flash-preview": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.267,
+            "catastrophic": 0,
+            "median_unsupported": 0.164
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.147,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.074,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "ndlkotenocr-v3": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.428,
+            "catastrophic": 1,
+            "median_unsupported": 0.434
+          },
+          "paddleocr-vl-1.6": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.239,
+            "catastrophic": 0,
+            "median_unsupported": 0.165
+          },
+          "surya2": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.353,
+            "catastrophic": 1,
+            "median_unsupported": 0.266
+          },
+          "tesseract-chi_tra_vert": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.949,
+            "catastrophic": 2,
+            "median_unsupported": 0.974
+          }
+        }
+      },
+      "manuscript-regular": {
+        "n": 24,
+        "engines": {
+          "dots-mocr": {
+            "n": 24,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.176,
+            "catastrophic": 2,
+            "median_unsupported": 0.063
+          },
+          "gemini-3-flash-preview": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.162,
+            "catastrophic": 2,
+            "median_unsupported": 0.042
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.188,
+            "catastrophic": 2,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.159,
+            "catastrophic": 2,
+            "median_unsupported": 0
+          },
+          "ndlkotenocr-v3": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.252,
+            "catastrophic": 3,
+            "median_unsupported": 0.254
+          },
+          "paddleocr-vl-1.6": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.15,
+            "catastrophic": 2,
+            "median_unsupported": 0.06
+          },
+          "surya2": {
+            "n": 24,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.196,
+            "catastrophic": 3,
+            "median_unsupported": 0.072
+          },
+          "tesseract-chi_tra_vert": {
+            "n": 24,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.728,
+            "catastrophic": 24,
+            "median_unsupported": 0.913
+          }
+        }
+      },
+      "rubbing": {
+        "n": 1,
+        "engines": {
+          "dots-mocr": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": 1,
+            "catastrophic": 1,
+            "median_unsupported": null
+          },
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.286,
+            "catastrophic": 0,
+            "median_unsupported": 0.5
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "ndlkotenocr-v3": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": 0.929,
+            "catastrophic": 1,
+            "median_unsupported": 1
+          },
+          "paddleocr-vl-1.6": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": 1,
+            "catastrophic": 1,
+            "median_unsupported": null
+          },
+          "surya2": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.5,
+            "catastrophic": 0,
+            "median_unsupported": 0.8
+          },
+          "tesseract-chi_tra_vert": {
+            "n": 1,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 23.071,
+            "catastrophic": 1,
+            "median_unsupported": 1
+          }
+        }
+      },
+      "typeset": {
+        "n": 10,
+        "engines": {
+          "dots-mocr": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.246,
+            "catastrophic": 1,
+            "median_unsupported": 0.01
+          },
+          "gemini-3-flash-preview": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.227,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.352,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.09,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "ndlkotenocr-v3": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.925,
+            "catastrophic": 9,
+            "median_unsupported": 0.851
+          },
+          "paddleocr-vl-1.6": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.227,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "surya2": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.23,
+            "catastrophic": 1,
+            "median_unsupported": 0
+          },
+          "tesseract-chi_tra_vert": {
+            "n": 10,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.933,
+            "catastrophic": 9,
+            "median_unsupported": 0.925
+          }
+        }
+      },
+      "woodblock": {
+        "n": 3,
+        "engines": {
+          "dots-mocr": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.018
+          },
+          "gemini-3-flash-preview": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.075,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.126,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.106,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "ndlkotenocr-v3": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.207,
+            "catastrophic": 0,
+            "median_unsupported": 0.2
+          },
+          "paddleocr-vl-1.6": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.051
+          },
+          "surya2": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.101,
+            "catastrophic": 0,
+            "median_unsupported": 0.051
+          },
+          "tesseract-chi_tra_vert": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.463,
+            "catastrophic": 1,
+            "median_unsupported": 0.758
+          }
+        }
+      }
+    }
+  },
+  "chinese-ext": {
+    "stratum": "chinese-ext",
+    "issue": 4925,
+    "date": "2026-09-18",
+    "n_pages": 80,
+    "n_with_ref": 64,
+    "ref_mismatch": [
+      "chinese-ext-43a275-p256",
+      "chinese-ext-8f091d-p94",
+      "chinese-ext-e4473e-p16"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 80,
+        "empty": 0,
+        "loop": 1,
+        "ref": {
+          "n": 64,
+          "median_cer": 0.224,
+          "mean_cer": 0.246,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.845
+        },
+        "proxy_vs_ref_engine": {
+          "n": 16,
+          "median_cer": 0.056,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_bow": 0.96
+        },
+        "invention": {
+          "median": 0.031,
+          "mean": 0.059,
+          "n_engines": 4,
+          "ref_median": 0.14,
+          "ref_mean": 0.162
+        },
+        "paired_vs_ref": {
+          "n": 64,
+          "wins": 52,
+          "losses": 3,
+          "ties": 9,
+          "median_delta_cer": 0.015,
+          "p_sign": 0,
+          "invention_wins": 54,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-e4473e-p16",
+            "title": "測量法義 (Methods of Surveying)",
+            "year": 1608,
+            "cer": 0.978,
+            "gap": 0.002,
+            "invention": 0.074,
+            "has_ref": false,
+            "unsupported": [
+              "一庚幸",
+              "庚幸景",
+              "幸景六",
+              "篇三即",
+              "三即直",
+              "与表題",
+              "表題注",
+              "題注之"
+            ]
+          },
+          {
+            "slug": "chinese-ext-165e17-p63",
+            "title": "欽定叶韻彙輯·卷五~卷九 (vol 3)",
+            "year": null,
+            "cer": 0.972,
+            "gap": 0.789,
+            "invention": 0.169,
+            "has_ref": false,
+            "unsupported": [
+              "靡旌旆",
+              "旌旆其",
+              "旆其如",
+              "語為鳶",
+              "為鳶詩",
+              "鳶詩経",
+              "旬反別",
+              "反別慟"
+            ]
+          },
+          {
+            "slug": "chinese-ext-f49f20-p89",
+            "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 19 of 24) — Shao Yong Neo-Confucian cosmic numerology, Siku Quanshu",
+            "year": 1782,
+            "cer": 0.66,
+            "gap": 0.51,
+            "invention": 0.699,
+            "has_ref": false,
+            "unsupported": [
+              "四音半",
+              "音半父",
+              "父半凡",
+              "凡半口",
+              "口半吠",
+              "半吠三",
+              "吠三声",
+              "三声半"
+            ]
+          },
+          {
+            "slug": "chinese-ext-48d0b1-p86",
+            "title": "御定佩文齋書畫譜·卷五十八 (vol 32)",
+            "year": null,
+            "cer": 0.489,
+            "gap": 0,
+            "invention": 0.079,
+            "has_ref": true,
+            "unsupported": [
+              "金定四",
+              "定四庫",
+              "四庫全",
+              "庫全書",
+              "全書巻",
+              "書巻五"
+            ]
+          },
+          {
+            "slug": "chinese-ext-351f3b-p69",
+            "title": "御定佩文韻府·卷十四之三 (vol 353)",
+            "year": null,
+            "cer": 0.475,
+            "gap": 0.094,
+            "invention": 0.192,
+            "has_ref": true,
+            "unsupported": [
+              "之三攢",
+              "三攢陳",
+              "円而矩",
+              "往往一",
+              "往一一",
+              "一一万",
+              "一万斛",
+              "斛攢揚"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 80,
+        "empty": 0,
+        "loop": 2,
+        "ref": {
+          "n": 64,
+          "median_cer": 0.265,
+          "mean_cer": 0.32,
+          "catastrophic": 12,
+          "median_gap": 0.006,
+          "median_seq": 0.808
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 4,
+          "ref_median": 0.195,
+          "ref_mean": 0.226
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-637837-p123",
+            "title": "本草綱目·卷十四",
+            "year": 1596,
+            "cer": 0.934,
+            "gap": 0.657,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-0e588a-p21",
+            "title": "御定淵鑑類函·卷一百四十一~卷一百四十三 (vol 81)",
+            "year": null,
+            "cer": 0.918,
+            "gap": 0.605,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-487512-p49",
+            "title": "尚書纂傳·卷三十六~卷四十 (vol 8)",
+            "year": null,
+            "cer": 0.893,
+            "gap": 0.483,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-21513f-p32",
+            "title": "御定分類字錦·卷二十七 (vol 89)",
+            "year": null,
+            "cer": 0.655,
+            "gap": 0.184,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-2006a1-p13",
+            "title": "周易本義集成·卷十一~卷十二 (vol 11)",
+            "year": null,
+            "cer": 0.651,
+            "gap": 0.193,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 80,
+        "empty": 0,
+        "loop": 2,
+        "ref": {
+          "n": 64,
+          "median_cer": 0.265,
+          "mean_cer": 0.32,
+          "catastrophic": 12,
+          "median_gap": 0.006,
+          "median_seq": 0.808
+        },
+        "proxy_vs_ref_engine": {
+          "n": 16,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.001,
+          "n_engines": 4,
+          "ref_median": 0.196,
+          "ref_mean": 0.227
+        },
+        "paired_vs_ref": {
+          "n": 64,
+          "wins": 0,
+          "losses": 1,
+          "ties": 63,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-637837-p123",
+            "title": "本草綱目·卷十四",
+            "year": 1596,
+            "cer": 0.934,
+            "gap": 0.657,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-0e588a-p21",
+            "title": "御定淵鑑類函·卷一百四十一~卷一百四十三 (vol 81)",
+            "year": null,
+            "cer": 0.918,
+            "gap": 0.605,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-487512-p49",
+            "title": "尚書纂傳·卷三十六~卷四十 (vol 8)",
+            "year": null,
+            "cer": 0.893,
+            "gap": 0.483,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-21513f-p32",
+            "title": "御定分類字錦·卷二十七 (vol 89)",
+            "year": null,
+            "cer": 0.655,
+            "gap": 0.184,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-2006a1-p13",
+            "title": "周易本義集成·卷十一~卷十二 (vol 11)",
+            "year": null,
+            "cer": 0.651,
+            "gap": 0.193,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "paddleocr-vl-1.6": {
+        "pages_run": 80,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 64,
+          "median_cer": 0.211,
+          "mean_cer": 0.233,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.857
+        },
+        "proxy_vs_ref_engine": {
+          "n": 16,
+          "median_cer": 0.142,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_bow": 0.917
+        },
+        "invention": {
+          "median": 0.067,
+          "mean": 0.096,
+          "n_engines": 4,
+          "ref_median": 0.128,
+          "ref_mean": 0.148
+        },
+        "paired_vs_ref": {
+          "n": 64,
+          "wins": 53,
+          "losses": 9,
+          "ties": 2,
+          "median_delta_cer": 0.023,
+          "p_sign": 0,
+          "invention_wins": 51,
+          "invention_losses": 11
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-165e17-p63",
+            "title": "欽定叶韻彙輯·卷五~卷九 (vol 3)",
+            "year": null,
+            "cer": 1.006,
+            "gap": 0.805,
+            "invention": 0.227,
+            "has_ref": false,
+            "unsupported": [
+              "金りて",
+              "りて人",
+              "て人こ",
+              "人こ象",
+              "こ象巻",
+              "象巻七",
+              "巻七思",
+              "七思帰"
+            ]
+          },
+          {
+            "slug": "chinese-ext-f49f20-p89",
+            "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 19 of 24) — Shao Yong Neo-Confucian cosmic numerology, Siku Quanshu",
+            "year": 1782,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-ext-e4473e-p16",
+            "title": "測量法義 (Methods of Surveying)",
+            "year": 1608,
+            "cer": 0.979,
+            "gap": 0,
+            "invention": 0.077,
+            "has_ref": false,
+            "unsupported": [
+              "浚真治",
+              "真治書",
+              "治書為",
+              "書為第",
+              "因権値",
+              "権値有",
+              "値有畸",
+              "日審値"
+            ]
+          },
+          {
+            "slug": "chinese-ext-098ab5-p149",
+            "title": "金剛般若波羅蜜經 (Diamond Sutra, Wanli Edition)",
+            "year": 1613,
+            "cer": 0.833,
+            "gap": 0,
+            "invention": 0.714,
+            "has_ref": false,
+            "unsupported": [
+              "十五給",
+              "五給須",
+              "給須菩",
+              "云何復",
+              "何復蕃",
+              "復蕃提",
+              "蕃提汝",
+              "提汝等"
+            ]
+          },
+          {
+            "slug": "chinese-ext-4d0d40-p61",
+            "title": "本草綱目·卷四十七~卷四十八",
+            "year": 1596,
+            "cer": 0.535,
+            "gap": 0.067,
+            "invention": 0.727,
+            "has_ref": false,
+            "unsupported": [
+              "鴿嘉枯",
+              "嘉枯突",
+              "枯突厥",
+              "遺雀别",
+              "雀别録",
+              "别録嵩",
+              "録嵩雀",
+              "嵩雀拾"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "illustration": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.209,
+            "catastrophic": 0,
+            "median_unsupported": 0.007
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.229,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.229,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "paddleocr-vl-1.6": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.157,
+            "catastrophic": 0,
+            "median_unsupported": 0.132
+          }
+        }
+      },
+      "manuscript-cursive": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.435,
+            "catastrophic": 0,
+            "median_unsupported": 0.019
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.441,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.441,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "paddleocr-vl-1.6": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.418,
+            "catastrophic": 0,
+            "median_unsupported": 0.09
+          }
+        }
+      },
+      "manuscript-regular": {
+        "n": 58,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 58,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.212,
+            "catastrophic": 1,
+            "median_unsupported": 0.032
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 58,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.267,
+            "catastrophic": 12,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 58,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.22,
+            "catastrophic": 12,
+            "median_unsupported": 0
+          },
+          "paddleocr-vl-1.6": {
+            "n": 58,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.195,
+            "catastrophic": 2,
+            "median_unsupported": 0.066
+          }
+        }
+      },
+      "typeset": {
+        "n": 3,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.054,
+            "catastrophic": 0,
+            "median_unsupported": 0.014
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.237,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "paddleocr-vl-1.6": {
+            "n": 3,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.157,
+            "catastrophic": 0,
+            "median_unsupported": 0.063
+          }
+        }
+      },
+      "woodblock": {
+        "n": 17,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 17,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.221,
+            "catastrophic": 2,
+            "median_unsupported": 0.038
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 17,
+            "empty": 0,
+            "loop": 2,
+            "median_cer": 0.258,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 17,
+            "empty": 0,
+            "loop": 2,
+            "median_cer": 0.118,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "paddleocr-vl-1.6": {
+            "n": 17,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": 0.269,
+            "catastrophic": 3,
+            "median_unsupported": 0.074
+          }
+        }
+      }
+    }
+  }
+}

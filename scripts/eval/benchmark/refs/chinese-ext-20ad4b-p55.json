@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-20ad4b-p55",
+  "substratum": "skqs-manuscript",
+  "title": "齊東野語·卷十~卷十二 (vol 4)",
+  "probe_chars": 157,
+  "source": "Kanripo",
+  "work": "KR3j0134",
+  "work_title": "齊東野語-宋-周密",
+  "juan": "10,11,12",
+  "url": "https://github.com/kanripo/KR3j0134",
+  "etext_chars": 19138,
+  "window_chars": 164,
+  "overlap": 0.864
+}

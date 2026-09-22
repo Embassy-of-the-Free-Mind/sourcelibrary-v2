@@ -163,24 +163,35 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
 
   // Check license URL directly
   if (licenseUrl) {
-    if (licenseUrl.includes('by-nc/4.0')) return { license: 'CC-BY-NC-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc-sa')) return { license: 'CC-BY-NC-SA-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc-nd')) return { license: 'CC-BY-NC-ND-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nc/')) return { license: 'CC-BY-NC-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-sa/')) return { license: 'CC-BY-SA-4.0', license_url: licenseUrl };
+    if (licenseUrl.includes('by-nd/')) return { license: 'CC-BY-ND-4.0', license_url: licenseUrl };
     if (licenseUrl.includes('by/4.0')) return { license: 'CC-BY-4.0', license_url: licenseUrl };
     if (licenseUrl.includes('zero/1.0')) return { license: 'CC0-1.0', license_url: licenseUrl };
+    // Public Domain Mark and the rightsstatements.org "no copyright" family. Missing here is why
+    // 6,559 MDZ books (manifest license = PDM URL) were stored as 'unknown' — rights backfill 2026-09.
+    if (/publicdomain\/mark\//.test(licenseUrl)) return { license: 'publicdomain', license_url: licenseUrl };
+    if (/rightsstatements\.org\/vocab\/(NKC|NoC-US|NoC-OKLR)\//.test(licenseUrl)) return { license: 'publicdomain', license_url: licenseUrl };
+    if (/rightsstatements\.org\/vocab\/NoC-NC\//.test(licenseUrl)) return { license: licenseUrl, license_url: licenseUrl };
     return { license: 'unknown', license_url: licenseUrl };
   }
 
-  // Provider-specific defaults (based on known terms)
-  if (provider.includes('Vatican')) {
-    // Vatican: CC BY-NC 4.0 for manifests, images copyright Vatican
-    return { license: 'CC-BY-NC-4.0', license_url: 'https://creativecommons.org/licenses/by-nc/4.0/' };
-  }
-  if (provider.includes('Bodleian')) {
-    return { license: 'CC-BY-NC-4.0', license_url: 'https://creativecommons.org/licenses/by-nc/4.0/' };
-  }
-  if (provider.includes('Gallica') || provider.includes('BnF')) {
-    return { license: 'publicdomain', license_url: null };
-  }
-
+  // NO PROVIDER DEFAULTS. This block used to answer "the manifest said nothing"
+  // with what we believed the provider's terms to be — Vatican and Bodleian
+  // CC-BY-NC, Gallica public-domain — and wrote that belief into the same field
+  // a manifest-read value lands in, indistinguishable from one. 102 Vatican books
+  // carry a CC-BY-NC that BAV's own manifest does not state (it asserts copyright
+  // and names no licence), and Gallica's real terms are non-commercial-free with
+  // commercial use licensed by the BnF — terms-of-use, not public domain. The
+  // rights backfill (2026-09-19) had to undo both.
+  //
+  // `image_source.license` records what the HOLDING LIBRARY STATED. When it
+  // states nothing, the honest value is `unknown`: silence is not a licence.
+  // Provider knowledge belongs in the derived, clearly-labelled lane —
+  // `image_source.rights_normalized`, whose `status` can say
+  // `assumed-by-importer` — never in the raw field.
   return { license: 'unknown', license_url: licenseUrl };
 }
 

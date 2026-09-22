@@ -70,3 +70,12 @@ merge; the timestamp is the tell. Read the age column on anything open more than
   sweep that motivated `/reap-prs` found an unvalidated `bookId` interpolated straight into an R2
   object key (reproducing #3362) in a PR that classified MERGE_READY with everything green. Green
   checks measure that a PR *can* merge, never that it *should*.
+- **Two PRs can each be green against their own base and break `main` together — and no check will
+  say so.** Same principle as the bullet above, one step out: a PR's checks ran against the base it
+  branched from, not against the base it will land on. On 2026-09-21 #4959 added a test pinning the
+  reader's English-modernization year threshold and #4961 removed that threshold by design. Both were
+  green, both were MERGEABLE-CLEAN against `main` *at the moment of merging* (GitHub's mergeability is
+  textual — neither touched the other's lines), and `main` went red on the second merge. The tell is
+  not in the diffs: it is that **two open PRs name the same invariant**, one asserting it and one
+  changing it. Before merging the second of a related pair, re-run the suite with both applied — or
+  merge one, let CI re-run on the other, and read it. A conflict-free merge is not an independent one.

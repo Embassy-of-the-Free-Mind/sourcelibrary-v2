@@ -1,0 +1,767 @@
+{
+  "note": "Campaign 1 of #4966 — the introduction and development of yoga in English print, 1850–1930. Curated by ia-campaign-curate.mjs on 2026-09-21 from q1-yoga.json, q2-patanjali.json, q3-authors.json; config yoga-west.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Hand-pruned 2026-09-21 from 119 curated picks to one scan per WORK (the curator clusters by surname, so a work catalogued once under Patañjali and once under its translator splits): 28 dropped, listed in `hand_pruned`. The 103 Digital Library of India picks sit in the separate review manifest (manifests/yoga-west-2026-09-21-review.json) — imprint years there are often the author birth year and several are Bengali despite the English tag; each needs a title-page look before import.",
+  "campaign": "yoga-west-2026-09-21",
+  "collections": [
+    "yoga"
+  ],
+  "BOOKS": [
+    {
+      "id": "alectureonsnkhy00ballgoog",
+      "title": "A lecture on the Sánkhya philosophy: embracing the text of the Tattwa samása",
+      "author": "James Robert Ballantyne",
+      "year": 1850,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "christianitycont00ball",
+      "title": "Christianity contrasted with Hindu philosophy: an essay, in five books, Sanskrit and English: with practical suggestions tendered to the missionary among the Hindus",
+      "author": "James Robert Ballantyne",
+      "year": 1859,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: christianitycont00bal, india.history.resource.70886, bub_gb_dN0tWI9EmaUC"
+    },
+    {
+      "id": "yogaaphorismspa00malwgoog",
+      "title": "The Yoga aphorisms of Patañjali",
+      "author": "Bhojarāja (King of Malwa)",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "sankhyaaphorisms00kapi",
+      "title": "The Sánkhya aphorisms of Kapila",
+      "author": "Kapila",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: india.history.resource.89770, snkhyaaphorisms00bhikgoog"
+    },
+    {
+      "id": "snkhyaaphorism00kapiiala",
+      "title": "The Sánkhya aphorisms of Kapila, with illustrative extracts from the commentaries",
+      "author": "Kapila",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "acompendiumofthe00asacuoft",
+      "title": "A compendium of the Raja Yoga philosophy",
+      "author": "Sankaracarya",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "mysticalbuddhism00moni",
+      "title": "Mystical Buddhism in connexion with the Yoga philosophy of the Hindus",
+      "author": "Monier Sir Monier-Williams",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "cu31924097525954",
+      "title": "Lectures on Hindu religion, philosophy and yoga",
+      "author": "K Chakravarti",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "AddressesAtTheParliamentOfReligions",
+      "title": "Addresses At The Parliament Of Religions",
+      "author": "Swami Vivekananda",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "b30094835",
+      "title": "An English translation with sanskrit text of the Yogasara-sangraha",
+      "author": "active 16th century. n 50078856 Vijñānabhikṣu",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: anenglishtransl00vijgoog"
+    },
+    {
+      "id": "buildingofkosmos00besarich",
+      "title": "The building of the kosmos and other lectures. Delivered at the eighteenth annual convention of the Theosophical society at Adyar, Madras, December 27th, 28th, 29th, 30th, 1893",
+      "author": "Annie Wood Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: buildingkosmosa02besagoog"
+    },
+    {
+      "id": "rama-prasad-sb",
+      "title": "The science of breath and the philosophy of the tattvas",
+      "author": "Rama Prasada Rama Prasad",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "bhagavadgtorlor00unkngoog",
+      "title": "The Bhagavad Gītā: or, the Lord's song",
+      "author": "Unknown",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "yogavasishtalagh00aiyeuoft",
+      "title": "A translation of Yoga-Vâsishta-Laghu - (the smaller)",
+      "author": "K Narayanaswami Aiyar",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "addressonvedanta00vive",
+      "title": "Address on Vedanta philosophy : the ideal of a universal religion / by Swami Vivekananda.",
+      "author": "Swami Vivekānanda",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "yogaphilosophyle00viverich",
+      "title": "Yoga philosophy : lectures delivered in New York, winter of 1895-6",
+      "author": "Swami Vivekananda",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "secondorlastele00changoog",
+      "title": "The Second: Or the Last Elements of the Yoga",
+      "author": "Bissessur Nath Chandik",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "yoga-vasishtha-maharamayana-vol-3",
+      "title": "Yoga Vasishtha Maharamayana Vol 3",
+      "author": "Unknown",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "cu31924029075063",
+      "title": "Yoga; or, Transformation; a comparative statement of the various religious dogmas concerning the soul and its destiny, and of Akkadian, Hindu, Taoist, Egyptian, Hebrew, Greek, Christian, Mohammedan, Japanese and other magic",
+      "author": "W. J. (William Joseph) Flagg",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: yogaortransform01flaggoog, yogaortransform02flaggoog"
+    },
+    {
+      "id": "vedantasara00sadauoft",
+      "title": "The Vedanta-sara",
+      "author": "Sadananda Yogindra",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "JnanaYogaswamiVivekanandaBook",
+      "title": "Jnana Yoga (Swami Vivekananda book)",
+      "author": "Swami Vivekananda",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "hathayogaortheyo00ramauoft",
+      "title": "Hatha yoga : or the yogi philosophy of physical well-being, with numberous excercises, etc",
+      "author": "Yogi Ramacharaka",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: hathayogaoryogip00rama, hathayoga00rama, bwb_P8-BLS-444, hathayoga00ramagoog"
+    },
+    {
+      "id": "cu31924023202264",
+      "title": "The yoga of the Kaṭhopanishad",
+      "author": "Sri Krishna Prem",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "eightlectures00vive",
+      "title": "Vedanta philosophy Eight lectures ... on Karma Yoga (the secret of work) ..",
+      "author": "Swami Vivekānanda",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "jstor-592436",
+      "title": "Yoga-Technique in the Great Epic",
+      "author": "E. Washburn Hopkins",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by JSTOR"
+    },
+    {
+      "id": "mymasterwithappe00vive",
+      "title": "My master; with an appended extract from the Theistic quarterly review",
+      "author": "Swami Vivekananda",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924022930907, mymaster00unkngoog, mymasterwithana00mozogoog"
+    },
+    {
+      "id": "vedantaphilosopy0000swam",
+      "title": "Vedanta Philosopy three lectures",
+      "author": "Swami Abhedananda",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "howtobeyogi00abhe",
+      "title": "How to be a Yogi",
+      "author": "Swami Abhedananda",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: howtobeayogived00abhegoog"
+    },
+    {
+      "id": "studiesinthebhag00dreauoft",
+      "title": "Studies in the Bhagavad Gîtâ",
+      "author": "Dreamer",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "b28990559",
+      "title": "The Hindu system of self-culture of the Patanjala Yoga Shastra",
+      "author": "Kishori Lal Sarkar",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: dli.ministry.13943, hindusystemself00sarkgoog"
+    },
+    {
+      "id": "ve00dantaphilosophabherich",
+      "title": "Vedanta philosophy : five lectures on reincarnation",
+      "author": "Abhedânanda Swâmi",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: vedntaphilosoph00swgoog"
+    },
+    {
+      "id": "b28102654",
+      "title": "The Hindu-Yogi science of breath : a complete manual of the Oriental breathing philosophy of physical, mental, psychic and spiritual development",
+      "author": "Yogi Ramacharaka",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: hinduyogiscienc00ramagoog"
+    },
+    {
+      "id": "yogiphilosophyor0000yogi",
+      "title": "yogi philosophy and oriental occultism",
+      "author": "yogi ramacharaka",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "vedntaphilosopabherich",
+      "title": "Vedänta philosophy. Divine heritage of man",
+      "author": "Swami Abhedananda",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: vedantaphilos00abheuoft, ve00dntaphilosopabherich, in.ernet.dli.2015.21756"
+    },
+    {
+      "id": "bhagavadgt00unkngoog",
+      "title": "The Bhagavad-gîtâ",
+      "author": "Bhagavân Dâs Annie Wood Besant",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: bhagavadgt00besagoog"
+    },
+    {
+      "id": "b24873184",
+      "title": "The mystics, ascetics, and saints of India : a study of Sadhuism, with an account of the Yogis, Sanyasis, Bairagis, and other strange Hindu sectarians",
+      "author": "John Campbell Oman",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: mysticsasceticss00oman, dli.csl.4775, india.history.resource.88874, mysticsascetics00omangoog"
+    },
+    {
+      "id": "advancedcoursein00yogi",
+      "title": "Advanced course in Yogi philosophy and oriental occultism",
+      "author": "Yogi Ramacharaka",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: advancedcoursein00rama, advancedcoursein0000yogi_y0q6"
+    },
+    {
+      "id": "cu31924022985398",
+      "title": "Fourteen lessons in yogi philosophy and oriental occultism",
+      "author": "William Walker Atkinson",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: cu31924022985406"
+    },
+    {
+      "id": "vedantaphilosoph00abherich",
+      "title": "Vedanta philosophy Self-knowledge [atma-jnana]",
+      "author": "Swami Abhedananda",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924022985414",
+      "title": "A series of lessons in Raja yoga",
+      "author": "William Walker Atkinson",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "YogiRamacharakaTheScienceOfPsychicHealing",
+      "title": "Yogi Ramacharaka The Science Of Psychic Healing",
+      "author": "William Walker Atkinson",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "cu31924022985422",
+      "title": "A series of lessons in Gnani yoga (the yoga of wisdom.)",
+      "author": "William Walker Atkinson",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "gospelofrmakri00ramarich",
+      "title": "The gospel of Râmakrishna",
+      "author": "Ramakrishna",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: gospelofrmakrish00rama"
+    },
+    {
+      "id": "gnaniyoga00ramagoog",
+      "title": "GNANI YOGA",
+      "author": "YOGI RAMACHARAKA",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "lecturesfromcol00vivegoog",
+      "title": "Lectures from Columbo to Almora",
+      "author": "Vivekananda",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "b2899579x",
+      "title": "The Hindu-Yogi system of practical water cure : as practiced in India and other oriental countries",
+      "author": "Yogi Ramacharaka",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "the-philosophies-and-religions-of-india",
+      "title": "THE PHILOSOPHIES AND RELIGIONS OF INDIA",
+      "author": "Yogi Ramacharaka",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "inspiredtalks00viverich",
+      "title": "Inspired talks",
+      "author": "Swami Vivekananda",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "principlespurpos00para",
+      "title": "Principles and purpose of Vedanta",
+      "author": "Swami Paramananda",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: principlespurpos0000para"
+    },
+    {
+      "id": "visittognior00carprich",
+      "title": "A visit to a gñáni : or wise man of the East",
+      "author": "Edward Carpenter",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924075773436"
+    },
+    {
+      "id": "yogalessonsforde00muke",
+      "title": "Yoga lessons for developing spiritual consciousness",
+      "author": "A. P. swami Mukerji",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: yogalessonsforde032191mbp, in.ernet.dli.2015.205205, in.ernet.dli.2015.54697, in.ernet.dli.2015.115092"
+    },
+    {
+      "id": "lifebeyonddeathb0000yogi",
+      "title": "The life beyond death, by Yogi Ramacharaka [pseud.]",
+      "author": "Yogi Ramacharaka",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "yogasutrasofpata00pata_0",
+      "title": "The Yoga sutras of Patanjali : the book of the spiritual man : an interpretation",
+      "author": "Patañjali",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library"
+    },
+    {
+      "id": "rama-prasad-ys",
+      "title": "Patanjali's Yoga sutras, with the commentary of Vyâsa and the gloss of Vâchaspati Miśra",
+      "author": "Rama Prasada Rama Prasad",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "introductiontoyo00besarich",
+      "title": "An introduction to yoga; four lectures delivered at the 32nd anniversary of the Theosophical society, held at Benares, on Dec. 27th, 29th, 30th, 1907",
+      "author": "Annie Wood Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: yogaintro00besarich, in.ernet.dli.2015.33151"
+    },
+    {
+      "id": "hindumagicexpose00carr",
+      "title": "Hindu magic; an expose of the tricks of the Yogis and fakirs of India",
+      "author": "Hereward Carrington",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924087818823"
+    },
+    {
+      "id": "vedntaphilosop00viverich",
+      "title": "Vedânta philosophy; lectures",
+      "author": "Swami Vivekananda",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: vedantaphilosoph00vive, cu31924022896223, vedaantaphilosop00viveuoft, vedntaphilosop00vive, vedantaphilosoph0000vive, b24886282, vedantaphilosoph0005vive, vedntaphilosoph01vivegoog"
+    },
+    {
+      "id": "notesofsome00viveuoft",
+      "title": "Notes of some wanderings with the Swami Vivekananda",
+      "author": "Sister Nivedita",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "hathayogapradipi0000panc",
+      "title": "THE HATHA YOGA PRADIPIKA",
+      "author": "PANCHAM SINH",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "yogasystemofpata00pata",
+      "title": "The Yoga-system of Patañjali",
+      "author": "Patañjali",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "principlesoftant2852bhat",
+      "title": "Principles of Tantra ... The Tantratattva of Shriyukta Siva Chandra Vidyârnava Bhattâchâryya mahodaya;",
+      "author": "Shiva Chandra Vidyarnava Bhattacharya",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "jstor-592528",
+      "title": "The Yoga-Sūtras of Patañjali as Illustrated by the Comment Entitled the Jewel's Lustre or Maṇiprabhā",
+      "author": "James Haughton Woods",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by JSTOR"
+    },
+    {
+      "id": "yogachristianmys00para",
+      "title": "Yoga and the Christian mystics",
+      "author": "Swami Paramananda",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "samkhya-sutras-of-panchashikha-by-swami-hariharananda-aranya",
+      "title": "Samkhya Sutras Of Panchashikha By Swami Hariharananda Aranya",
+      "author": "Swami Hariharananda Aranya",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "principlesoftant0000arth",
+      "title": "principles of tantra",
+      "author": "arthur avalon",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: dli.bengal.10689.636"
+    },
+    {
+      "id": "sciencepracticeo00para",
+      "title": "Science and practice of yoga",
+      "author": "Swami Paramananda",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "hinduyogasystem00lanm",
+      "title": "The Hindu Yoga-system",
+      "author": "Charles Rockwell Lanman",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: jstor-1507563"
+    },
+    {
+      "id": "emersonvedanta00para",
+      "title": "Emerson and Vedanta",
+      "author": "Swami Paramananda",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: emersonvedanta0000para, emersonandvedan00paragoog"
+    },
+    {
+      "id": "saktisakta0000unse",
+      "title": "Sakti and Sakta",
+      "author": "Sir John Woodroffe",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "jstor-2940488",
+      "title": "The Yoga System of Mental Concentration and Religious Mysticism",
+      "author": "James H. Leuba",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by JSTOR"
+    },
+    {
+      "id": "katherine-tingley-and-her-raja-yoga-system-of-education",
+      "title": "Katherine Tingley And Her Raja Yoga System Of Education",
+      "author": "Lilian Whiting",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "higherpsychicald00carr",
+      "title": "Higher psychical development (Yoga philosophy) : an outline of the secret Hindu teachings",
+      "author": "Hereward Carrington",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine; alternate scans: higherpsychical00carrgoog"
+    },
+    {
+      "id": "studyofpatanjali00dasgiala",
+      "title": "The study of Patanjali",
+      "author": "Surendranath Dasgupta",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu_pub691, in.ernet.dli.2015.90194, dli.csl.8612, dli.csl.3559"
+    },
+    {
+      "id": "yogaaphorismsofp00pata",
+      "title": "The yoga aphorisms of Patanjali : an interpretation, [the thought of Patanjali clothed in our language]",
+      "author": "Patañjali",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto; alternate scans: yogaaphorismspa01judggoog, yogaaphorismspa00conngoog"
+    },
+    {
+      "id": "secretkeyofyogap00wass",
+      "title": "Secret key of the yoga philosophy, ida, pingla, sukhmuna",
+      "author": "yogi Wassan",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "concentrationmed00paraiala",
+      "title": "Concentration and meditation",
+      "author": "Swami Paramananda",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b29981013",
+      "title": "The world as power : reality",
+      "author": "John George Sir Woodroffe",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: worldaspower033188mbp"
+    },
+    {
+      "id": "doctrinepractice00muke",
+      "title": "The doctrine and practice of Yoga;",
+      "author": "A. P. swami. [from old catalog] Mukerji",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "GarlandOfLettersOrStudiesInTheMantraShastra",
+      "title": "Garland Of Letters Or Studies ( In The Mantra Shastra)",
+      "author": "John Woodroffe",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "yogaphilosophyou421carr",
+      "title": "Yoga philosophy ; an outline of the secret Hindu teachings",
+      "author": "Hereward Carrington",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "selfmastery00para",
+      "title": "Self-mastery",
+      "author": "Swami Paramananda",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Graduate Theological Union"
+    },
+    {
+      "id": "songsofsoul00swam",
+      "title": "Songs of the soul",
+      "author": "Swami Yogananda",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by UCLA Library, Preservation Department"
+    },
+    {
+      "id": "spiritualhealing0003para",
+      "title": "Spiritual healing",
+      "author": "Swami Paramananda",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.21895"
+    },
+    {
+      "id": "scienceofreligio0003swam",
+      "title": "the science of religion",
+      "author": "swami yogananda",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: scienceofreligioyoga"
+    },
+    {
+      "id": "yoga0000jfcf",
+      "title": "Yoga",
+      "author": "J.F.C. Fuller",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "yogamimansa0002srim",
+      "title": "Yoga-Mimansa",
+      "author": "S'rimat Kuvalayananda (J. G. Gune)",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "yogamimanasa0000unse",
+      "title": "Yoga=mimanasa",
+      "author": "Unknown",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Servants of Knowledge"
+    },
+    {
+      "id": "patanjali-for-western-readers",
+      "title": "Patanjali For Western Readers",
+      "author": "Daniel R. Stephen",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "YogaMimansaVol.III",
+      "title": "Yoga Mimansa, Vol. III",
+      "author": "Ed. Kuvalayanada",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "whispersfrometernityyogananda",
+      "title": "Whispers from eternity.",
+      "author": "Yogananda",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "bhagavadgitaorme00rama",
+      "title": "The Bhagavad gita : or, The message of the master",
+      "author": "Yogi Ramacharaka",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    }
+  ],
+  "hand_pruned": [
+    "yogadaranaorpoet00pererich — Sinhalese medical poem, not yoga",
+    "b28138661 — dupe of acompendiumofthe00asacuoft",
+    "compendiumofraja00bombiala — dupe of acompendiumofthe00asacuoft",
+    "anenglishtransl00fundgoog — Google dupe of b30094835",
+    "b28106635 — dupe of yogaphilosophyle00viverich",
+    "LaghuYogaVasishtaEnglishTranslation — user upload dupe of yogavasishtalagh00aiyeuoft",
+    "RajaYogaAndPatanjalisYogaAphorisms — user upload of held Raja Yoga",
+    "yogaortransforma00flagrich — microform dupe of cu31924029075063",
+    "Spiritual-Unfoldment-by-swami-abhedananda — user upload dupe of vedantaphilosopy0000swam (Three lectures on spiritual unfoldment)",
+    "jstor-592380 — 13-page article fragment",
+    "bwb_KT-543-632 — dupe of b28102654",
+    "vedantaphilosoph0000abhe — dupe of vedntaphilosopabherich",
+    "hathayogawithnu00ramagoog — dupe (1904 Google) of hathayogaortheyo00ramauoft",
+    "scienceofbreathc0000rama — 1905 reprint of b28102654",
+    "annie-besant-bhagavadgita-word-by-word — user upload dupe of bhagavadgt00unkngoog",
+    "hinduaryantheor00iyengoog — marginal, Google scan",
+    "lifebeyonddeath00rama — dupe of lifebeyonddeathb0000yogi",
+    "ramacharaka-1912-the-life-beyond-death — user upload dupe of lifebeyonddeathb0000yogi",
+    "yogasystempataj00vcgoog — Google dupe of yogasystemofpata00pata",
+    "principlesoftant0000arth_w0d0 — dupe of principlesoftant0000arth",
+    "self-mastery-swami-paramananda — user upload dupe of selfmastery00para",
+    "raajayogabeingle00viveuoft — 1920 ed. of held Raja Yoga (1896)",
+    "dasgupta-s.-ho-ip-vol.-1 — 5-vol history, out of campaign scope",
+    "yogasystemofpata0017jame — 1927 2nd ed. of yogasystemofpata00pata",
+    "yogasystemofpata0000pata_x2k1 — 1927 dupe of yogasystemofpata00pata",
+    "kamaratnatantrae00goswuoft — Assamese tantra edition, not the Western-yoga story",
+    "hathayogaoryogip0000will — 1930 reprint of hathayogaortheyo00ramauoft",
+    "hatyayoga0000yogi — 1930 reprint of hathayogaortheyo00ramauoft"
+  ]
+}

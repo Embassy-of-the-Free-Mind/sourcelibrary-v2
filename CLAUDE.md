@@ -31,7 +31,6 @@ because every incident added a section and nothing ever demoted one. It is now c
 `/gnite` runs both halves of that ratchet. See `.claude/docs/knowledge-layer.md`.
 
 ## Development Workflow — CRITICAL
-- **Never combine `export const revalidate = false` + a fallible fetch + a `try/catch` that renders a fallback** — one bad render caches the fallback until the next deploy (`/explore/timeline`, #2973). Let it throw and use a numeric `revalidate`. Mechanism and audit → `rendering-and-seo.md`.
 - **Feature branches off `main`.** One branch per feature/task: `feat/ai-search`, `fix/cover-thumbnails`, etc. No long-running dev branches.
 - **Create a branch via worktree:** Use `EnterWorktree` at session start — it creates an isolated checkout with its own branch. Do NOT `git checkout -b` in the main directory (see Multi-Session Awareness below).
 - **PR when done:** `gh pr create --base main`. Keep PRs focused (5-15 commits). Small PRs merge fast.
@@ -164,7 +163,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 **Queries, search & rendering**
 - A query behind an API route, especially over `pages` / `entities` → `request-path-queries.md`
 - Search filters, a new search lane, indexing a column into a public search surface → `search-filters-and-lanes.md`
-- Client components on ISR routes, reader panels, root layout, page `metadata`, **or a route-level `redirect()`/`notFound()`** → `rendering-and-seo.md`
+- Client components on ISR routes, reader panels, root layout, page `metadata`, a route-level `redirect()`/`notFound()`, **or `export const revalidate = false`** → `rendering-and-seo.md` (**with a fallible fetch and a `try/catch` fallback, one bad render freezes the page until the next deploy**)
 - A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays) — and for a **formatted number** in a localized view, `localized-surfaces.md` (**a literal `€1,000` reads as one euro in `es-ES`**)
 
 **Measuring anything**
@@ -182,6 +181,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 
 **Writing a sweep, an import, or a new field**
 - A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
+- **Renting a GPU (Scaleway)** → tag it `lease-until=<ISO>` + `owner=<issue>` at creation or via `scripts/maintenance/gpu-lease-watchdog.mjs --lease`; the Hetzner watchdog (#4909) stops expired leases through the provider API (a guest `poweroff` still bills) and only nags untagged ones.
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
 

@@ -42,7 +42,6 @@ scripts/backfill-catalog-ustc-sl-links.mjs
 scripts/backfill-iconclass-artworks.mjs
 scripts/backfill-iconclass-gallery.mjs
 scripts/backfill-thin-subs.mjs
-scripts/batch/batch-mint-doi.mjs
 scripts/check-ocr-drift.mjs
 scripts/classify-artworks-gemini.mjs
 scripts/create-political-thought-subs.mjs

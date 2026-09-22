@@ -2,7 +2,7 @@
 
 Source Library uses Supabase Postgres alongside MongoDB. MongoDB is the source of truth for all book/page data and pipeline state. Supabase serves analytics, browse/filter read paths, catalog cross-referencing, and experimental semantic search.
 
-**Project:** `ykhxaecbbxaaqlujuzde` (secondrenaissance), West EU (Ireland), Pro plan ($25/mo)
+**Project:** `ykhxaecbbxaaqlujuzde` — named **`source-library`** in the Supabase dashboard since 2026-09-22 (it was `secondrenaissance` before; older docs, alerts and scripts still say that — same project, the ref never changed). West EU (Ireland), org on Pro. Sibling projects: `fundraising-crm` (donor CRM, separate on purpose) and `sidequests` (shared home for side projects, one schema + scoped role each; recipe in the private ops repo, `infra/supabase-projects.md`).
 **Client:** `src/lib/supabase.ts` — exports `supabase` (anon), `supabaseAdmin` (service role)
 
 ## Why Supabase Exists (What It Prevents)

@@ -8,6 +8,8 @@ import { toGalleryCardUrl } from '@/lib/utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
+import CollectionCoverEditor from '@/components/collections/CollectionCoverEditor';
+import { readCardFraming } from '@/lib/collection-card-image';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 import type { Metadata } from 'next';
@@ -44,6 +46,7 @@ interface CollectionDoc {
   published?: boolean;
   featured_images?: FeaturedImage[];
   hero_image?: string;
+  card_framing?: unknown;
   languages: { lang: string; count: number }[];
   children_count?: number;
   collection_type?: string;
@@ -118,6 +121,9 @@ const CURATED_PATHWAYS = [
   // sub-collections there rather than duplicated as loose top-level pathways.
   'great-manuscripts',
   'herbalism',
+  // Top-level since 2026-09-16 (it was a child of mycology); a fixed slot here
+  // keeps it out of the shuffled tail of loose top-level collections.
+  'slime-moulds',
   'jungs-library',
 ];
 
@@ -201,6 +207,10 @@ function cardImageCandidates(images: FeaturedImage[] | undefined, override?: str
 
 function CollectionCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
   return (
+    // The editor-only cover control is a sibling of the link, not a child: a
+    // button inside an anchor navigates. The wrapper carries `group` so the
+    // control appears on hover of the whole card.
+    <div className="relative group">
     <Link
       key={col.slug}
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
@@ -208,21 +218,25 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
     >
       <CollectionCardImage
         candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug), col.hero_image)}
+        framing={readCardFraming(col.card_framing)}
+        slug={col.slug}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         priority={priority}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.94)] from-10% via-[rgba(26,22,18,0.62)] via-45% to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-        <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
+        <p className="text-white/75 text-[11px] mb-1 hidden sm:block">
           {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count)}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
-        <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+        <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] group-hover:text-accent-gold transition-colors">
           {col.name}
         </h2>
       </div>
     </Link>
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
+    </div>
   );
 }
 
@@ -230,28 +244,33 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
 
 function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {
   return (
+    <div className="relative group">
     <Link
       href={tenantSlug ? `/${tenantSlug}/collections/${col.slug}` : `/collections/${col.slug}`}
       className="group relative block overflow-hidden rounded-lg aspect-square animate-fade-in-up"
     >
       <CollectionCardImage
         candidates={cardImageCandidates(col.featured_images, coverOverride(col.slug), col.hero_image)}
+        framing={readCardFraming(col.card_framing)}
+        slug={col.slug}
         alt={`Illustration from ${col.name}`}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         priority={priority}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.94)] from-10% via-[rgba(26,22,18,0.62)] via-45% to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
-        <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 group-hover:text-accent-gold transition-colors">
+        <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)] group-hover:text-accent-gold transition-colors">
           {col.name}
         </h3>
         {col.subtitle && (
-          <p className="text-xs sm:text-sm text-white/60 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-white/80 leading-relaxed line-clamp-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]">
             {col.subtitle}
           </p>
         )}
       </div>
     </Link>
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
+    </div>
   );
 }
 

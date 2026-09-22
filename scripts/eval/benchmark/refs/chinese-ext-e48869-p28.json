@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-e48869-p28",
+  "substratum": "skqs-manuscript",
+  "title": "論衡·卷七~卷九 (vol 4)",
+  "probe_chars": 152,
+  "source": "Kanripo",
+  "work": "KR3j0080",
+  "work_title": "論衡-漢-王充",
+  "juan": "7,8,9",
+  "url": "https://github.com/kanripo/KR3j0080",
+  "etext_chars": 20240,
+  "window_chars": 181,
+  "overlap": 0.919
+}

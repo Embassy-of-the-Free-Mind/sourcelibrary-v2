@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
@@ -76,6 +77,7 @@ interface CollectionResult {
   book_count: number;
   featured_image?: string;
   hero_image?: string;
+  card_framing?: { x: number; y: number; scale: number };
 }
 
 /**
@@ -1145,7 +1147,7 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
         { slug: queryRegex },
       ],
     })
-    .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, featured_images: { $slice: 1 } })
+    .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
     .limit(3)
     .maxTimeMS(2000)
@@ -1166,6 +1168,8 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
         book_count: c.book_count,
         featured_image: c.featured_image,
         hero_image: heroUrl || undefined,
+        // Editor-chosen crop for that image (lib/collection-card-image).
+        card_framing: readCardFraming(c.card_framing),
       };
     }),
   };

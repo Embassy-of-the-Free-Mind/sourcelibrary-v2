@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-2b1beb-p47",
+  "substratum": "skqs-manuscript",
+  "title": "易經蒙引 (vol 22)",
+  "probe_chars": 167,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1a0092",
+  "work_title": "易經蒙引-明-蔡清",
+  "juan": 12,
+  "url": "https://github.com/kanripo/KR1a0092/blob/WYG/KR1a0092_012.txt",
+  "etext_chars": 30604,
+  "window_chars": 223,
+  "overlap": 0.797
+}

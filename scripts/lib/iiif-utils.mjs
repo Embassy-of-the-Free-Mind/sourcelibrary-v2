@@ -247,6 +247,33 @@ export async function rateLimitedFetch(url, opts = {}) {
 
 // ── IIIF URL transforms ──
 
+/** A URL whose PATH declares Image API 3.0 — except dl.ndl.go.jp, which serves a
+ *  v3-shaped path but 500s on `max` and wants `full` (see upgradeToFullRes). */
+function isIiifV3Path(url) {
+  return /\/iiif\/3\//.test(url) && !url.includes('dl.ndl.go.jp');
+}
+
+/**
+ * Repair the one URL shape that can NEVER fetch: a v2 size keyword on a v3
+ * service. IIIF Image API 3.0 removed `full`; its spelling is `max`, and a v3
+ * service answers `/full/full/` with `400 Bad Request — Invalid size` in ~0.2s
+ * (#4655). 91,695 stored `pages.photo` values carry this form, so any consumer
+ * that fetches a stored source URL directly — not only the archiver's
+ * `upgradeToFullRes` path — must run it through here first. The display
+ * backfill did not, and failed ~95% of every 30-minute run for two weeks
+ * while the log read as ordinary page failures.
+ *
+ * Does nothing else: no resolution upgrade, no per-host rule. Returns the URL
+ * unchanged when it is not a v3 path or does not use the v2 keyword.
+ */
+export function repairIiifV3Size(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (isIiifV3Path(url) && /\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) {
+    return url.replace(/\/full\/full\/(\d+\/[a-z]+\.)/i, '/full/max/$1');
+  }
+  return url;
+}
+
 /**
  * Upgrade a IIIF image URL to request full native resolution.
  *
@@ -291,10 +318,9 @@ export function upgradeToFullRes(url) {
     // excluded explicitly: it serves a v3-shaped path but 500s on `max` and
     // wants `full` (the rule further down), and two rules must not fight over
     // the same URL.
-    const isIiifV3 = /\/iiif\/3\//.test(url) && !url.includes('dl.ndl.go.jp');
-    if (isIiifV3 && /\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) {
-      return url.replace(/\/full\/full\/(\d+\/[a-z]+\.)/i, '/full/max/$1');
-    }
+    const isIiifV3 = isIiifV3Path(url);
+    const v3Repaired = repairIiifV3Size(url);
+    if (v3Repaired !== url) return v3Repaired;
     // The size keyword this URL's API version understands. Used by the generic
     // rules below so an upgrade never hands a v3 service a v2-only keyword.
     const FULL_SIZE = isIiifV3 ? 'max' : 'full';

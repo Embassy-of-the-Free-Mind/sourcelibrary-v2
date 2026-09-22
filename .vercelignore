@@ -19,3 +19,6 @@ scripts/output/*
 !scripts/output/hieroglyph-eval.json
 scripts/eval/results
 .sibling-bak
+
+# Sidequest repos (own git, own deploys) — never part of a sourcelibrary deploy.
+sidequests

@@ -7,7 +7,8 @@ import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
-import { findHumanEditedPageIds, findPendingBatchJob } from '@/lib/translate-write';
+import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { VISIBLE_PAGE_MATCH } from '@/lib/page-counts';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -367,7 +368,19 @@ export const GET = withAuth(async (request, session, context) => {
           }
 
           // Extract text from nested response structure
-          const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+          const candidate = response.response?.candidates?.[0];
+          const text = candidate?.content?.parts?.[0]?.text;
+
+          // The provider says this answer was cut off. A truncated translation
+          // has text and a non-refusal finishReason, so it matched no branch
+          // here and was stored as the page's finished translation — half a
+          // page, served and quoted as the whole of it (#4890). Refuse it; the
+          // page keeps no translation and is re-selected next pass.
+          if (text && isTruncatedCandidate(candidate)) {
+            console.warn(`[batch-translate] TRUNCATED (${candidate?.finishReason}): refusing page ${pageId} (${text.length} chars)`);
+            failCount++;
+            continue;
+          }
 
           if (text) {
             // Snapshot manual edits before overwriting
@@ -391,7 +404,8 @@ export const GET = withAuth(async (request, session, context) => {
                     ...(jobDoc.prompt_name && { prompt_name: jobDoc.prompt_name }),
                   },
                   updated_at: new Date()
-                }
+                },
+                $unset: CLEAR_STALE_UNSET,
               }
             );
             successCount++;

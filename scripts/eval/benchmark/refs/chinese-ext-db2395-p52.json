@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-db2395-p52",
+  "substratum": "woodblock-canon",
+  "title": "春秋屬辭比事記",
+  "probe_chars": 237,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1e0104",
+  "work_title": "春秋屬辭比事記-清-毛奇齡",
+  "juan": 3,
+  "url": "https://github.com/kanripo/KR1e0104/blob/WYG/KR1e0104_003.txt",
+  "etext_chars": 4189,
+  "window_chars": 363,
+  "overlap": 0.928
+}

@@ -18,7 +18,15 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 const generateContent = vi.fn();
 const generateContentStream = vi.fn();
-const getGenerativeModel = vi.fn(() => ({ generateContent, generateContentStream }));
+const sendMessage = vi.fn();
+const sendMessageStream = vi.fn();
+const startChat = vi.fn((_params?: unknown) => ({ sendMessage, sendMessageStream }));
+const getGenerativeModel = vi.fn((params: { generationConfig?: unknown }) => ({
+  generationConfig: params.generationConfig ?? {},
+  generateContent,
+  generateContentStream,
+  startChat,
+}));
 
 vi.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: class {
@@ -31,7 +39,7 @@ vi.mock('@/lib/gemini-logger', async () => {
 });
 
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { getGeminiClient, getUnmeteredGeminiClient } from '@/lib/gemini-client';
+import { getGeminiClient, getUnmeteredGeminiClient, acceptsZeroThinking } from '@/lib/gemini-client';
 
 const usage = { promptTokenCount: 100, candidatesTokenCount: 20, thoughtsTokenCount: 300 };
 
@@ -39,6 +47,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   process.env.GEMINI_API_KEY = 'test-key';
   generateContent.mockResolvedValue({ response: { usageMetadata: usage } });
+  sendMessage.mockResolvedValue({ response: { usageMetadata: usage } });
 });
 
 describe('getGeminiClient meters every generation', () => {
@@ -109,5 +118,78 @@ describe('opting out', () => {
     const model = getUnmeteredGeminiClient('a-contributor-key').getGenerativeModel({ model: 'm' });
     await model.generateContent('x');
     expect(logGeminiCall).not.toHaveBeenCalled();
+  });
+});
+
+/**
+ * A ChatSession never calls `model.generateContent` — the SDK sends the turn
+ * through its own request function — so a chat built from a metered model
+ * spent with no row at all. Both book-chat routes were in that hole (found
+ * 2026-09-21, while chasing the 25% realtime meter gap).
+ */
+describe('chat sessions are metered too', () => {
+  it('writes a usage row for sendMessage', async () => {
+    const chat = getGeminiClient({ endpoint: '/api/books/[id]/chat' })
+      .getGenerativeModel({ model: 'gemini-3.1-flash-lite' })
+      .startChat({ history: [] });
+    await chat.sendMessage('what does the author say about mercury?');
+
+    expect(logGeminiCall).toHaveBeenCalledTimes(1);
+    const row = vi.mocked(logGeminiCall).mock.calls[0][0];
+    expect(row.endpoint).toBe('/api/books/[id]/chat');
+    expect(row.output_tokens).toBe(320);
+  });
+});
+
+/**
+ * Thinking is off unless a call site asks for it (#4581, #4599). Gemini 3.x
+ * thinks by default and bills it at the output rate; 28 call sites behind this
+ * client set no budget. The default lives at the boundary, in BOTH places the
+ * SDK reads a generationConfig from, because a request-level config replaces
+ * the model-level one wholesale rather than merging with it.
+ */
+describe('thinking is off by default', () => {
+  const budgetOf = (config: unknown) =>
+    (config as { thinkingConfig?: { thinkingBudget?: number } } | undefined)?.thinkingConfig?.thinkingBudget;
+
+  it('sets a zero budget on the model when the caller set none', () => {
+    const model = getGeminiClient({ endpoint: 't' }).getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+    expect(budgetOf(model.generationConfig)).toBe(0);
+  });
+
+  it('re-applies it to a request-level generationConfig, which would otherwise replace it', async () => {
+    const model = getGeminiClient({ endpoint: 't' }).getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: 'x' }] }],
+      generationConfig: { temperature: 0.2 },
+    });
+    const sent = generateContent.mock.calls[0][0] as { generationConfig: { temperature: number } };
+    expect(budgetOf(sent.generationConfig)).toBe(0);
+    expect(sent.generationConfig.temperature).toBe(0.2);
+  });
+
+  it('leaves a call site that ASKED for reasoning alone', async () => {
+    const asked = { thinkingConfig: { thinkingBudget: 2048 } } as never;
+    const model = getGeminiClient({ endpoint: 't' })
+      .getGenerativeModel({ model: 'gemini-3-flash-preview', generationConfig: asked });
+    expect(budgetOf(model.generationConfig)).toBe(2048);
+  });
+
+  it('covers self-metered lanes — opting out of the meter is not opting into thinking', () => {
+    const model = getGeminiClient({ selfMetered: true, reason: 'logs its own row' })
+      .getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+    expect(budgetOf(model.generationConfig)).toBe(0);
+  });
+
+  it('only touches models that accept a zero budget — anything else would 400', () => {
+    for (const id of ['gemini-3.1-flash-lite', 'gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-3.8-flash']) {
+      expect(acceptsZeroThinking(id), id).toBe(true);
+    }
+    for (const id of ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-3-pro-preview', 'gemini-2.5-pro',
+      'gemini-2.5-flash-preview-tts', 'gemini-embedding-001']) {
+      expect(acceptsZeroThinking(id), id).toBe(false);
+    }
+    const untouched = getGeminiClient({ endpoint: 't' }).getGenerativeModel({ model: 'gemini-2.0-flash' });
+    expect(budgetOf(untouched.generationConfig)).toBeUndefined();
   });
 });

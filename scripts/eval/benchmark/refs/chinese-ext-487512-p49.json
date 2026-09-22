@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-487512-p49",
+  "substratum": "skqs-manuscript",
+  "title": "尚書纂傳·卷三十六~卷四十 (vol 8)",
+  "probe_chars": 301,
+  "source": "Kanripo",
+  "work": "KR1b0034",
+  "work_title": "尚書纂傳-元-王天與",
+  "juan": "36,37,38,39,40",
+  "url": "https://github.com/kanripo/KR1b0034",
+  "etext_chars": 24832,
+  "window_chars": 440,
+  "overlap": 0.686
+}

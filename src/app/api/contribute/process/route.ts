@@ -12,6 +12,13 @@ import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
 import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
+import type { GenerationConfig } from '@google/generative-ai';
+
+// The unmetered client skips the boundary's thinking default along with the meter, and
+// this spends a CONTRIBUTOR's money — reasoning tokens bill at the output rate (#4581).
+// thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
+const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
+import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -37,7 +44,7 @@ async function performOCRWithKey(
   previousPageOcr?: string
 ): Promise<ContributorAiResult> {
   const genAI = getUnmeteredGeminiClient(apiKey);
-  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
+  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL, generationConfig: THINKING_OFF });
 
   const promptResult = await getOcrPrompt({ language });
   let prompt = promptResult.text;
@@ -76,7 +83,7 @@ async function performTranslationWithKey(
   previousPageTranslation?: string
 ): Promise<ContributorAiResult> {
   const genAI = getUnmeteredGeminiClient(apiKey);
-  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
+  const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL, generationConfig: THINKING_OFF });
 
   const promptResult = await getTranslationPrompt(sourceLanguage);
   let prompt = promptResult.text;
@@ -235,6 +242,10 @@ export async function POST(request: NextRequest) {
                     'ocr.prompt_hash': result.promptRef.content_hash,
                     'ocr.prompt_name': result.promptRef.name,
                     'ocr.processed_at': new Date(),
+                    // The clock translation staleness is decided from (#4927). This
+                    // was the one live writer that replaced the text without it —
+                    // found by tests/unit/ocr-write-stamps-updated-at.test.ts.
+                    'ocr.updated_at': new Date(),
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
                     ...(pageType && { page_type: pageType }),
@@ -304,6 +315,7 @@ export async function POST(request: NextRequest) {
                     },
                     ...translationMeta,
                   },
+                  $unset: CLEAR_STALE_UNSET,
                 }
               );
 

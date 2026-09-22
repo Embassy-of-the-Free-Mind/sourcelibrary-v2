@@ -47,7 +47,7 @@ const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
 if (!ROOT) { console.error('--root required'); process.exit(1); }
 
 // ── normalisation ──────────────────────────────────────────────────
-const CJK_STRATA = new Set(['chinese', 'japanese', 'japanese-ext']);
+const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'japanese', 'japanese-ext']);
 function normAlpha(s) {
   return String(s || '')
     .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
@@ -177,8 +177,8 @@ for (const stratum of strata) {
   // catalogue year is the WORK's date (a 1716 Hagakure is a modern typeset reprint), so the per-class
   // roll-up below is the one that answers "does engine X read kuzushiji".
   const classDir = path.join(outRoot, 'script-class');
-  const classOf = new Map();
-  if (fs.existsSync(classDir)) for (const f of fs.readdirSync(classDir).filter(f => f.endsWith('.json'))) { try { const j = JSON.parse(fs.readFileSync(path.join(classDir, f), 'utf8')); classOf.set(f.replace(/\.json$/, ''), j.script_class || null); } catch { /* unparsed */ } }
+  const classOf = new Map(); const leafOf = new Map();   // leaf_language: the LEAF's language by eye (a Chinese title can hold a kanbun reprint)
+  if (fs.existsSync(classDir)) for (const f of fs.readdirSync(classDir).filter(f => f.endsWith('.json'))) { try { const j = JSON.parse(fs.readFileSync(path.join(classDir, f), 'utf8')); classOf.set(f.replace(/\.json$/, ''), j.script_class || null); if (j.leaf_language) leafOf.set(f.replace(/\.json$/, ''), j.leaf_language); } catch { /* unparsed */ } }
   // Only the SEALED pages are scored: registry entries that are not spares, plus spares
   // promoted in place of a textless page. Stray images in the directory are ignored.
   const slugs = fs.readdirSync(path.join(ROOT, stratum)).filter(f => f.endsWith('.jpg')).map(f => f.replace(/\.jpg$/, '')).sort()
@@ -196,7 +196,7 @@ for (const stratum of strata) {
     if (maxContent < 30) { textless.push(s); continue; }
     const hasRef = !!refText[s];
     const ref = hasRef ? prep(refText[s], cjk) : prepped[REF_ENGINE];
-    const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
+    const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, leaf_language: leafOf.get(s) || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
     // LOOP: the failure kind a CER against a proxy cannot see (both arms loop on kuzushiji; flash-preview
     // wrote 448 lines for a 35-line Serto page). Repeated non-blank lines ≥ 30 % with ≥ 5 lines, or an
     // output more than 3× the median length of the other engines' and over 2,000 characters.

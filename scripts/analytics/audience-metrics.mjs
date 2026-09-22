@@ -14,6 +14,7 @@
 //       node scripts/analytics/audience-metrics.mjs
 
 import { withMongo } from '../lib/mongo.mjs';
+import { activePoolFingerprints, excludePoolFilter, poolBanner } from '../lib/suspected-pool.mjs';
 
 const norm = (e) => (e || '').trim().toLowerCase();
 
@@ -44,15 +45,28 @@ await withMongo(async (db) => {
 
   // ---- DAU / MAU / DWELL from analytics_pageviews ----
   const pv = db.collection('analytics_pageviews');
+
+  // This script had NO bot filtering of any kind, so every figure below counted
+  // whatever arrived. On 2026-09-19 that meant a rented residential proxy pool
+  // wearing a stock Chrome UA — 63,599 addresses — landed in MAU as 63,599
+  // monthly actives. A fingerprint-based metric treats a proxy pool as its best
+  // possible month, which is the exact inversion this exclusion exists to stop.
+  // 30 days, to match the widest window reported below (MAU). A string that
+  // was a pool three weeks ago still inflates a 30-day figure today.
+  const poolUas = await activePoolFingerprints(db, { staleDays: 30 });
+  const notPool = excludePoolFilter(poolUas, 'userAgent');
+  const banner = poolBanner(poolUas);
+  if (banner) console.log(`\n${banner}`);
+
   // MAU = distinct fingerprints in 30d
   const mau = (await pv.aggregate([
-    { $match: { timestamp: { $gt: d30 } } },
+    { $match: { timestamp: { $gt: d30 }, ...notPool } },
     { $group: { _id: { ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } } },
     { $count: 'n' },
   ]).toArray())[0]?.n || 0;
   // avg DAU over last 14 days
   const dau = await pv.aggregate([
-    { $match: { timestamp: { $gt: new Date(now - 14 * 864e5) } } },
+    { $match: { timestamp: { $gt: new Date(now - 14 * 864e5) }, ...notPool } },
     { $group: { _id: { day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } }, ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } } },
     { $group: { _id: '$_id.day', users: { $sum: 1 } } },
     { $sort: { _id: 1 } },
@@ -64,9 +78,9 @@ await withMongo(async (db) => {
   console.log(`DAU last 3 days: ${dau.slice(-3).map((d) => d._id + '=' + d.users).join('  ')}`);
 
   // ---- PAGEVIEWS: raw volume + per-day averages ----
-  const pv24 = await pv.countDocuments({ timestamp: { $gt: d1 } });
-  const pv7 = await pv.countDocuments({ timestamp: { $gt: d7 } });
-  const pv30 = await pv.countDocuments({ timestamp: { $gt: d30 } });
+  const pv24 = await pv.countDocuments({ timestamp: { $gt: d1 }, ...notPool });
+  const pv7 = await pv.countDocuments({ timestamp: { $gt: d7 }, ...notPool });
+  const pv30 = await pv.countDocuments({ timestamp: { $gt: d30 }, ...notPool });
   console.log('\n=== PAGEVIEWS ===');
   console.log(`last 24h                 ${pv24}`);
   console.log(`avg/day (last 7d)        ${Math.round(pv7 / 7)}   (${pv7} total)`);
@@ -74,7 +88,7 @@ await withMongo(async (db) => {
 
   // Dwell time: per session (ip+ua, 30-min gap) duration. Fetch 30d once, then
   // split sessions by start time into past-month (all) and past-day buckets.
-  const rows = await pv.find({ timestamp: { $gt: d30 } }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
+  const rows = await pv.find({ timestamp: { $gt: d30 }, ...notPool }, { projection: { ip: 1, userAgent: 1, timestamp: 1 } }).toArray();
   const byFp = new Map();
   for (const r of rows) {
     const k = r.ip + '|' + (r.userAgent || '').slice(0, 60);

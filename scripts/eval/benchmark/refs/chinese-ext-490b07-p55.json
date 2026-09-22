@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-490b07-p55",
+  "substratum": "woodblock-canon",
+  "title": "郊社禘祫問",
+  "probe_chars": 176,
+  "source": "Kanripo",
+  "work": "KR1d0082",
+  "work_title": "郊社禘祫問-清-毛奇齡",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1d0082",
+  "etext_chars": 9219,
+  "window_chars": 223,
+  "overlap": 0.93
+}

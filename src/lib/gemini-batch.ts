@@ -60,6 +60,14 @@ export interface BatchResponse {
       content: {
         parts: Array<{ text: string }>;
       };
+      /**
+       * Why generation stopped: STOP, MAX_TOKENS, RECITATION, SAFETY.
+       *
+       * It was missing from this type, so every TypeScript caller was blind to
+       * the difference between a finished answer and a cut-off one — the text
+       * is present either way. See `src/lib/truncated-response.ts` (#4890).
+       */
+      finishReason?: string;
     }>;
     usageMetadata?: {
       promptTokenCount: number;

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-1cca26-p72",
+  "substratum": "skqs-manuscript",
+  "title": "孟子注疏·卷二上~卷三下 (vol 11)",
+  "probe_chars": 187,
+  "source": "Kanripo",
+  "work": "KR1h0003",
+  "work_title": "孟子注疏-漢-趙岐",
+  "juan": "2,3",
+  "url": "https://github.com/kanripo/KR1h0003",
+  "etext_chars": 50520,
+  "window_chars": 234,
+  "overlap": 0.944
+}

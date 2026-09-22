@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-499f9f-p91",
+  "substratum": "skqs-manuscript",
+  "title": "輟耕録·卷一~卷二 (vol 1)",
+  "probe_chars": 126,
+  "source": "Kanripo",
+  "work": "KR3l0084",
+  "work_title": "輟耕錄-元-陶宗儀",
+  "juan": "1,2",
+  "url": "https://github.com/kanripo/KR3l0084",
+  "etext_chars": 10275,
+  "window_chars": 139,
+  "overlap": 0.746
+}

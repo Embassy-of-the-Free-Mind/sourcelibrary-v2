@@ -8,7 +8,7 @@ import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
 import { type PageImageFields } from '@/lib/page-image-url';
-import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
+import { HERO_MOSAIC_VERSION, heroMosaicCurrent, heroMosaicSource, type HeroMosaicFields } from '@/lib/hero-mosaic-version';
 
 /**
  * GET /api/books/[id]/hero-mosaic
@@ -129,17 +129,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1 } },
+      { projection: { _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1, hero_mosaic_source: 1, hero_mosaic_built_from: 1 } },
     );
     if (!book?.id) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
 
+    // Pages by default; an editor can set the book to tile its plates instead
+    // (see lib/hero-mosaic-version). The setting is part of the cache key.
+    const source = heroMosaicSource(book as HeroMosaicFields);
+
     // Up-to-date cache: redirect to the stored image, or 404 the negative result.
-    if (book.hero_mosaic_version === MOSAIC_VERSION) {
+    if (heroMosaicCurrent(book as HeroMosaicFields)) {
       return book.hero_mosaic_url ? redirectToMosaic(book.hero_mosaic_url) : noMosaic();
     }
 
     const cacheNegative = async () => {
-      await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: null, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_at: new Date() } }).catch(() => {});
+      await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: null, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_built_from: source, hero_mosaic_at: new Date() } }).catch(() => {});
       return noMosaic();
     };
 
@@ -221,21 +225,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
     const pageEntries = sampleEvenly([...byUrl.values()], CANDIDATE_LIMIT);
 
-    let distinct = (await fetchTiles(pageEntries)).tiles;
     let usingPlates = false;
     let plateUrlCount = 0;
+    // Pages are fetched unless the book is set to plates and they fill a grid
+    // (checked below); the page candidates are still listed for the fallbacks.
+    let distinct: Tile[] = [];
 
-    // Plates are a fallback ONLY for pages that genuinely can't make a grid:
-    //  - too few distinct page URLs (structurally image-poor pages), or
-    //  - cover-fallback (we fetched plenty of pages but they collapsed to ~1
-    //    distinct image — every "page" is really the same cover).
-    // A merely-flaky page fetch (many URLs, transient failures) must NOT drop us
-    // to plates — that's how a rich text book (e.g. the Compendium) wrongly
-    // cached a plate grid. It instead builds from whatever pages it got, or 404s
-    // to retry (below).
-    const pageStructural = pageEntries.length < MIN_TILES * 3;      // < ~12 distinct page URLs
-    const pageCoverFallback = pageEntries.length >= 12 && distinct.length <= 3; // collapsed to one image
-    if (distinct.length < MIN_TILES * 3 && (pageStructural || pageCoverFallback)) {
+    // The book's extracted plates, best-scored first, as tiles.
+    const fetchPlateTiles = async (): Promise<Tile[]> => {
       const plates = await db.collection('gallery_images')
         .find(
           { book_id: book.id, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
@@ -248,10 +245,31 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         plates.map(p => (p.thumbnail_url || p.extracted_url || p.image_url) as string | undefined).filter((u): u is string => !!u && !UNSAFE_IMG.test(u) && (RENDERABLE.test(u) || IIIF_ABS.test(u))),
       ));
       plateUrlCount = plateUrls.length;
-      if (plateUrls.length) {
-        const plateTiles = (await fetchTiles(plateUrls.map(u => ({ url: u })))).tiles;
-        if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
-      }
+      return plateUrls.length ? (await fetchTiles(plateUrls.map(u => ({ url: u })))).tiles : [];
+    };
+
+    // Plates FIRST only when the book is set to them: its scans make a poor
+    // grid (scanner black, colour bars, spreads) and its plates a good one.
+    // Falls back to pages if the plates cannot fill a grid on their own.
+    if (source === 'plates') {
+      const plateTiles = await fetchPlateTiles();
+      if (plateTiles.length >= MIN_TILES) { distinct = plateTiles; usingPlates = true; }
+    }
+    if (!usingPlates) distinct = (await fetchTiles(pageEntries)).tiles;
+
+    // Otherwise plates are a fallback ONLY for pages that genuinely can't make a grid:
+    //  - too few distinct page URLs (structurally image-poor pages), or
+    //  - cover-fallback (we fetched plenty of pages but they collapsed to ~1
+    //    distinct image — every "page" is really the same cover).
+    // A merely-flaky page fetch (many URLs, transient failures) must NOT drop us
+    // to plates — that's how a rich text book (e.g. the Compendium) wrongly
+    // cached a plate grid. It instead builds from whatever pages it got, or 404s
+    // to retry (below).
+    const pageStructural = pageEntries.length < MIN_TILES * 3;      // < ~12 distinct page URLs
+    const pageCoverFallback = pageEntries.length >= 12 && distinct.length <= 3; // collapsed to one image
+    if (!usingPlates && distinct.length < MIN_TILES * 3 && (pageStructural || pageCoverFallback)) {
+      const plateTiles = await fetchPlateTiles();
+      if (plateTiles.length > distinct.length) { distinct = plateTiles; usingPlates = true; }
     }
 
     if (distinct.length < MIN_TILES) {
@@ -309,10 +327,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       .avif({ quality: AVIF_QUALITY, effort: 5 })
       .toBuffer();
 
-    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.avif`;
+    // The source is part of the object key: the stored image is treated as
+    // immutable by every cache, so a book switched to plates must get a new
+    // URL rather than new bytes behind the old one.
+    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}${source === 'plates' ? '-plates' : ''}.avif`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/avif', allowOverwrite: true });
 
-    await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_at: new Date() } }).catch(() => {});
+    await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_built_from: source, hero_mosaic_at: new Date() } }).catch(() => {});
 
     return redirectToMosaic(uploaded.url);
   } catch (error) {

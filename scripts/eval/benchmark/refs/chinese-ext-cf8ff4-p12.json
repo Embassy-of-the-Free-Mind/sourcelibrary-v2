@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-ext-cf8ff4-p12",
+  "substratum": "woodblock-canon",
+  "title": "神仙傳 (卷六~卷十) — Biographies of Divine Immortals, vol.2",
+  "probe_chars": 454,
+  "source": "Kanripo",
+  "work": "KR5c0317",
+  "work_title": "神仙傳-晉-葛洪",
+  "juan": "6,7,8,9,10",
+  "url": "https://github.com/kanripo/KR5c0317",
+  "etext_chars": 16192,
+  "window_chars": 679,
+  "overlap": 0,
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

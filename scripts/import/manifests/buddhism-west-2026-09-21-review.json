@@ -1,0 +1,1873 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from buddhism.json; config buddhism.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "buddhism-west-2026-09-21",
+  "collections": [
+    "buddhism"
+  ],
+  "BOOKS": [
+    {
+      "id": "india.history.resource.100292",
+      "title": "The History and Doctirne of Buddhism, popularly illustrated with notices of the Kappooism or Demon Worship and of the Bali or Planetary Incantations of Ceylon",
+      "author": "Edward Upham",
+      "year": 1829,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.0213",
+      "title": "Primary Language of Buddhist Writings",
+      "author": "Hodgson from JASBv6pt2",
+      "year": 1837,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.0218",
+      "title": "Different Systems of Buddhism from Tibetan authorities",
+      "author": "Csomo Korosi from JASBv7pt1",
+      "year": 1838,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.40288",
+      "title": "Notes on the Religious, Moral, and Political State of India before the Mahomedan Invasion, chiefly founded on the travels of the Chinese Buddhist Priest Fa Hian in India, AD. 399 and on the commentaries of Messrs, Remusat, Klaproth, Burnouf, and Landresse",
+      "author": "W. H. Syker",
+      "year": 1841,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.215945",
+      "title": "The Light Of Asia",
+      "author": "Denison Ross E",
+      "year": 1845,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.4627",
+      "title": "Eastern monachism",
+      "author": "R. Spence Hardy",
+      "year": 1850,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.gov.ignca.19648"
+    },
+    {
+      "id": "in.ernet.dli.2015.228128",
+      "title": "A Manual Of Buddhism In Its Modern Development",
+      "author": "R. Spence Tr. Hardy",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.41163"
+    },
+    {
+      "id": "india.history.resource.53524",
+      "title": "The Bhilsa Topes; Buddhist Monuments of Central India, comprising a Brief Historical Sketch of the Rise, Progress, and Decline of Buddhism, with an Account of the Opening and Examination of the Various Groups of Topes around Bhilsa",
+      "author": "Alexander Cunningham",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.71986, bhilsatopesorbu01cunngoog"
+    },
+    {
+      "id": "dli.csl.6020",
+      "title": "Buddhism and Buddhist pilgrims",
+      "author": "Max Muller",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.148552",
+      "title": "Buddhism In Tibet",
+      "author": "emil Schlagintweit",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.49739"
+    },
+    {
+      "id": "dli.pahar.0557",
+      "title": "Buddhism In Tibet",
+      "author": "Emil Schlagintweit S",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.71022",
+      "title": "The Legends and Theories of the Budhists compared with History and Science, with Introductory Notices of the Life and System of Gotama Buddha",
+      "author": "R. Spence Hardy",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.70975",
+      "title": "Buddha and His Doctrines: A Bibliographical Essay",
+      "author": "Otto Kistner",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.4774",
+      "title": "Travels of Fah-Hian and Sung-Yun, Buddhist pilgrims from China to India (400 A.D. 518 A.D. )",
+      "author": "Samuel Beal",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.106415"
+    },
+    {
+      "id": "in.ernet.dli.2015.158458",
+      "title": "Buddhism",
+      "author": "Mrs.rhys Davids M.a.",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.280966",
+      "title": "A Catena Of Buddhist Scripturs From The Chinese",
+      "author": "Samuel Beal",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.85713",
+      "title": "Full Account of the Buddhist Controversy, held at Pantura, in August, 1873 by the Cylon Times Special Reporter",
+      "author": "Ceylon Times",
+      "year": 1873,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.107560",
+      "title": "The History of India, from the Earliest Ages, Vol. III- Hindu. Buddhist. Brahmanical Revival",
+      "author": "J. Talboys Wheeler",
+      "year": 1874,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "pli.kerala.rare.5283",
+      "title": "Memoir on the History of the Tooth-Relic of Ceylon; with preliminary essay on the Life and System of Gautama Buddha",
+      "author": "J.Gerson Da Cunha",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library; alternate scans: india.history.resource.86102"
+    },
+    {
+      "id": "in.ernet.dli.2015.78463",
+      "title": "Buddha Jayanei Souveniy",
+      "author": "Not",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.93619",
+      "title": "Old Gill’s Notes and Illustrations of the Buddhist Caves of Ajanta",
+      "author": "Old Gill",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.93269"
+    },
+    {
+      "id": "india.history.resource.85725",
+      "title": "The Buddhist Tripitaka as it is known in China and Japan; a Catalogue and Compendious Report",
+      "author": "Tripitaka",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.85714",
+      "title": "The Jataka, together with its Commentary; being Tales of the Anterior births of Gotama Buddha, Vol. III",
+      "author": "Jataka",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.77384",
+      "title": "The Dipavamsa: An Ancient Buddist Historical Record",
+      "author": "Hermann (Ed. and Tr.) Oldenberg",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dpavasaanancien03oldegoog, dpavasaanancien01oldegoog, dpavasaanancien00oldegoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.283849",
+      "title": "The Vinaya Pitakam Vol I",
+      "author": "Hermann Oldenberg",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.0914",
+      "title": "Buddhism in British Provinces of Little Tibet",
+      "author": "Paske from Jour Anthro Inst GB&Ireland v8",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.283277",
+      "title": "The Jataka Together With Its Commentary Vol Ii",
+      "author": "T.w. Rhys Davids",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.85685",
+      "title": "The Vinaya Pitakam, one of the Principal Buddhist Holy Scriptures in the Pali Language, Vol. I- the Mahavagga",
+      "author": "Hermann (Ed.) Oldenberg",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.215949",
+      "title": "Buddhism A Sketch Of The Life And Teachings Of Gautama The Buddha",
+      "author": "T.w Rhys Davids",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3720",
+      "title": "Buddhist birth stories; or Jataka Tales",
+      "author": "V. Fausboll",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.24244",
+      "title": "Buddhist Birth-stories",
+      "author": "Fausboll V.",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.06374",
+      "title": "Sketches from Nipal : historical and descriptive, with anecdotes of the court life and wild sports of the country in the time of Maharaja Jang Bahadur, G.C.B., to which is added an essay on Nipalese Buddhism and illustrations of religious monuments, architecture, and scenery from the author’s own drawings",
+      "author": "Henry Ambrose Oldfield",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.103883",
+      "title": "The Life Of Gaudama The Buddha Of The Burmese",
+      "author": "P. Bignet",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.85102",
+      "title": "The Vinaya Pitakam: One of the Principal Buddhist Holy Scriptures in the Pali Language, Vol. II- the Cullavagga",
+      "author": "Hermann (Ed.) Oldenberg",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.529143",
+      "title": "Vinaya Pitakam Vol.ii",
+      "author": "Hermann Oldenberg",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.88897",
+      "title": "Anecdota Oxoniensia; Texts, Documents and Extracts chiefly from Manuscripts in the Bodleian and other Oxford Libraries; Aryan Series, Vol. I, Part I.; Buddhist Texts from Japan",
+      "author": "F. Max (Ed.) Muller",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.49040",
+      "title": "Buddhist-suttas",
+      "author": "T.W. Rhys Davids F. Max Muller",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.134763",
+      "title": "Chinese Accounts Of India Vol. 4",
+      "author": "Samuel Beal",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.68359",
+      "title": "Indian Buddhism",
+      "author": "Davids Rhys",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.89714",
+      "title": "The Sacred Books of the East; translated by Various Oriental Scholars, Vol. XIII; Vinaya Texts; translated from the Pali; Part II.- the Patimokkha; the Mahavagga, I-IV",
+      "author": "F. Max (Ed.) Muller",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.89711, india.history.resource.89728"
+    },
+    {
+      "id": "in.ernet.dli.2015.47532",
+      "title": "The Vinaya Pitakam Vol. 3",
+      "author": "Hermann Ed. Oldenberg",
+      "year": 1881,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.116989",
+      "title": "Antiquarian Remains at Sopara and Padana; being an Account of the Buddhist Stupa and Asoka Edict, recently discovered at Sopara and of other Antiquities in the Neighbourhood",
+      "author": "Bhagvanlal Indraji",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: antiquarianrema00indrgoog"
+    },
+    {
+      "id": "dli.ministry.22345",
+      "title": "Sanskrit Buddhist literature of Nepal",
+      "author": "Rajendralala Mitra",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: sanskritbuddhis00mitrgoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.106252",
+      "title": "Catalogue Of Pali Mss.",
+      "author": "Hermann Oldenberg",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.90544",
+      "title": "Catalogue of Pali MSS. in the India Office Library, being Appendix to the Journal of the Pali Text Society for 1882",
+      "author": "Hermann Oldenberg",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.529116"
+    },
+    {
+      "id": "india.history.resource.89769",
+      "title": "Non-Christian Religious Systems; Buddhism; being a Sketch of the Life and Teachings of Gautama, the Buddha",
+      "author": "T. W. Rhys Davids",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "wg919",
+      "title": "1883 -The Sacred Books Of East Vol 19 Of 50 Buddhism The Fo Sho Hing Tsan King",
+      "author": "Samuel Beal",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.110515",
+      "title": "Catalogue of the Buddhist Sanskrit Manuscripts in the University Library, Cambridge; with introductory notices and illustrations of the Palaeography and Chronology of Nepal and Bengal",
+      "author": "Cecil Bendall",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.536234",
+      "title": "Fo-sho-hing-tsan-king A Life Of Buddha",
+      "author": "Asvaghosha Bodhisattva",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.93161",
+      "title": "Report on the Buddhist Cave Temples and their Inscriptions; being part of the results of the Fourth, Fifth and Sixth Seasons Operations of the Archaeological Survey of Western India, 1876-77, 1877-78, 1878-70; Supplementary to the Volume on the Cave Temples of India- Archaeological Survey of Western India, Vol. IV",
+      "author": "Jas. Burgess",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.283948",
+      "title": "Udanavarga From The Buddhist Canon",
+      "author": "W.woodville Rockhill",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.196085",
+      "title": "Vinaya Pitakam Vol. 5",
+      "author": "Hermann Ed. Oldenberg",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.529145",
+      "title": "Vinaya Pitakam Vol.v",
+      "author": "Hermann Oldenberg",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.237087",
+      "title": "Esoteric Buddhism",
+      "author": "Sinnett A.p.",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_34235",
+      "title": "An inglorious Columbus, or, Evidence that Hwui Shn and a party of Buddhist monks from Afghanistan discovered America in the fifth century, A.D. [microform]",
+      "author": "Edward Payson Vining",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org"
+    },
+    {
+      "id": "wg920",
+      "title": "1885 -The Sacred Books Of East Vol 20 Of 50 Buddhism Vinaya Texts Part 3 Of 3",
+      "author": "T. W. Rhys Davids and Hermann Oldenberg",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.38406",
+      "title": "Esoteric Buddhism Ed. 5",
+      "author": "A. P. Sinnett",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "wg929",
+      "title": "1886 -The Sacred Books Of East Vol 29 Of 50 Hindus Grihya Sutras Part 1 Of 2 Rules Of Vedic Domestic Ceremonies",
+      "author": "Herman Oldenberg",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117688",
+      "title": "A Record of Buddhistic Kingdoms, being an account by the Chinese Monk Fa-Hien of his Travels in India and Ceylon (A.D. 399-414) in Search of the Buddhist Books of Discipline; translated and annotated with a corean recension of the Chinese Text",
+      "author": "Fa-hien",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.540",
+      "title": "A Record of Buddhistic Kingdoms; Being an Account by the Chinese Monk Fâ-Hien of his Travels in India and Ceylon, A.D. 399-414, in Search of the Buddhist Books of Discipline. Translated and Annotated with a Corean Recension of the Chinese Text",
+      "author": "Fa-Hien",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.188958",
+      "title": "The Grihya Sutras",
+      "author": "Translated (hermann Oldenberg",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.9178",
+      "title": "Vimana-Vatthu of the Khuddhaka Nikaya Sutta pitaka",
+      "author": "Edmund Rowland Gooneratne",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.89526",
+      "title": "Buddhism in Christendom or Jesus, the Essence",
+      "author": "Arthur Lillie",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.30762",
+      "title": "Buddhism In Christendom Or Jesus,the Essene",
+      "author": "Arthur Lillie",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.1129",
+      "title": "Buddhist and other Legends about Khoten",
+      "author": "Das from JASBv55pt1",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.116946",
+      "title": "The Buddhist Stupas of Amaravati and Jaggayyapeta in the Krishna District, Madras Presidency surveyed in 1882; with Translations of the Asoka Inscriptions at Jaugada and Dhauli (Archaeological Survey of Southern India)",
+      "author": "Jas Burgess",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.lightofasia0000sire_d5z0",
+      "title": "The Light Of Asia",
+      "author": "Sir Edwin Arnold",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: lightofasiagreat00arno_bw, lightofasiaorgre00arno, 30081000044945, lightofasia0000edwi, rbanms.25.lightofasia0000edwi_i0z1, lightofasia0000edwi_c5r2, lightofasiaorgre00arnoiala, lightofasia01arno, in.ernet.dli.2015.217494, dli.ernet.213398, in.ernet.dli.2015.283467, the-light-of-asia-edwin-arnold, lightasia00arnogoog, lightasiaorgrea05arnogoog"
+    },
+    {
+      "id": "wg935",
+      "title": "1890 -The Sacred Books Of East Vol 35 Of 50 Buddhishm The Questions Of King Milinda Part 1 Of 2",
+      "author": "T. W. Rhys Davids",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.422",
+      "title": "A History of Civilization in Ancient India, in 3 Vols., Vol.III: Buddhist and Pauranik Ages:Based on Sanscrit Literature",
+      "author": "Romesh Chunder Dutt",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10643",
+      "title": "Buddhism : in its connexion with Brahmanism and Hinduism and in its contrast with Christianity",
+      "author": "Monier Williams",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.279737",
+      "title": "Buddhism 1890",
+      "author": "Monier Monier Williams",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.499378",
+      "title": "Buddhist Catechism An Outline Of The Doctrine Of The Buddha Gotama",
+      "author": "Subhdra Bhikshu",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.7557",
+      "title": "The Indian religions or results of the mysterious Buddhism concerning that also which is to be understood in the divinity of fire",
+      "author": "Hargrave Jennings",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.1219",
+      "title": "Buddhist Monastery at Bhot Bagan (Howrah) by",
+      "author": "Bysack from JASBv59pt1",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "wg930",
+      "title": "1892 -The Sacred Books Of East Vol 30 Of 50 Hindus Grihya Sutras Part 2 Of 2 Rules Of Vedic Domestic Ceremonies",
+      "author": "Herman Oldenberg",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.70146",
+      "title": "Buddhism Primitive And Present",
+      "author": "Reginald Stephen Copleston",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.22230",
+      "title": "The Grihya-sutras Part 2",
+      "author": "Hermann Tr. Oldenberg",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217594",
+      "title": "The Life And Teachings Of Buddha",
+      "author": "Anagarika Dharmapala",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.28232",
+      "title": "Worte der Wahrheit Dhammapadam",
+      "author": "Leopold von Schroeder",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.1272",
+      "title": "Buddhist Pictorial Wheel of Life",
+      "author": "Waddell from JASBv61pt1",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.84922",
+      "title": "Chinese Buddhism A Volume Of Sketches",
+      "author": "Rev. Joseph Edkins",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.272724",
+      "title": "The Buddha Karita Of Asvghosha",
+      "author": "E.b. Cowell",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.283042",
+      "title": "The Buddha-karita Of Asvaghosha",
+      "author": "E. B. Cowell",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "wg936",
+      "title": "1894 -The Sacred Books Of East Vol 36 Of 50 Buddhishm The Questions Of King Milinda Part 2 Of 2",
+      "author": "T. W. Rhys Davids",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.8012",
+      "title": "Buddhist mahayana texts",
+      "author": "Unknown",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.68624",
+      "title": "The Buddha-karita",
+      "author": "edward B.tr. Cowell",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.282313",
+      "title": "The Questions Of King Milinda Part Ii",
+      "author": "T W Rhys Davids",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.buddhismoftibet0000laus",
+      "title": "The Buddhism of Tibet",
+      "author": "M.B L. Austine Waddell",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "dli.pahar.1355",
+      "title": "Buddhism Of Tibet Or Lamaism",
+      "author": "Waddell S",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.280780",
+      "title": "Legends And Miracles Of Buddha Sakya Sinha Part.i",
+      "author": "Nobin Chandra Das",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.70147"
+    },
+    {
+      "id": "in.ernet.dli.2015.215947",
+      "title": "The Buddha And His Religion",
+      "author": "Laura Ensor",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10640",
+      "title": "The Buddha and the religion",
+      "author": "J. Barthelemy Saint-Hilaire",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10653",
+      "title": "The Budh-Gaya temple case",
+      "author": "H. Dharmapala",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.279742",
+      "title": "Buddhism Its History And Literature",
+      "author": "T. W. Rhys Davids",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.215917"
+    },
+    {
+      "id": "dli.ministry.05625",
+      "title": "A record of the Buddhist reli,: as practised in India and the Malay Archipela (A.D. 671–695)",
+      "author": "F. Max Muller",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.50803",
+      "title": "A Record Of The Buddhist Religion",
+      "author": "Unknown",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3854",
+      "title": "A Record of the Buddhist religion as practiced in India and the Malay Archipelago (A.D. 671-695)",
+      "author": "J. Takakusu",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.88902",
+      "title": "A Record of the Buddhist Religion as practised in India and the Malay Archipelago(A.D. 671-695)",
+      "author": "I-Tsing",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.208910",
+      "title": "Buddhism",
+      "author": "Davids T. W. Rhys",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.174771",
+      "title": "Manual Of Indian Buddhism",
+      "author": "H. Kern.",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.100450",
+      "title": "The Paintings in the Buddhist Cave-Temples of Ajanta Khandesh, India, Vol. I (Pictorial Subjects)",
+      "author": "John Griffiths",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.100449"
+    },
+    {
+      "id": "wg946",
+      "title": "1897 -The Sacred Books Of East Vol 46 Of 50 Vedic Hymns Part 2 Of 2",
+      "author": "Herman Oldenberg",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.01044",
+      "title": "Buddhist sermons: and other lectures on buddhist subjects delivered on various occasions",
+      "author": "Oung B. H.",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.47680",
+      "title": "Discovery Of Living Buddhism In Bengal",
+      "author": "Haraprasad Sastri",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.37616",
+      "title": "Fo-sho-hing-tsan-king, A Life of Buddha (Sacred Books of the East, Volume 19)",
+      "author": "Samuel Beal (Translator)",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180491",
+      "title": "Monograph On Buddha Sakgamunis Birth Place",
+      "author": "A. Fuhrer",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.47909"
+    },
+    {
+      "id": "in.ernet.dli.2015.142646",
+      "title": "Monograph On Buddha Sakyamunis Birth Place",
+      "author": "a. Fuhrer",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.126702"
+    },
+    {
+      "id": "in.ernet.dli.2015.46320",
+      "title": "Scred Book Of The East",
+      "author": "Muller F. Max Oldenberg Hermann",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.8115",
+      "title": "Scenes from the life of buddha",
+      "author": "Unknown",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.223782",
+      "title": "The Dhammapada",
+      "author": "F. Max Muller",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.96567",
+      "title": "The Metaphysic Of Christianity And Buddhism",
+      "author": "Dawsonne M. Strong",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.110631",
+      "title": "The Sacred Books of the Buddhists translated by Various Oriental Scholars; published under the patronage of His Majesty Chulalankarana, King of Siam, Vol. II- Dialogues of the Buddha; translated from the Pali",
+      "author": "T. W. Rhys (Tr.) Davids",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.170359",
+      "title": "Buddha And Buddhism",
+      "author": "Arthur Lillie",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.200954, india.history.resource.112109"
+    },
+    {
+      "id": "in.ernet.dli.2015.142050",
+      "title": "Kalyano Dhammo The Gospel Of Buddha",
+      "author": "Paul Carus",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.19646",
+      "title": "Mythologie des Buddhismus",
+      "author": "Albert Grunwedel",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.132971",
+      "title": "Psychological Ethies",
+      "author": "Caroline A.f. Rhys Davids",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.16131",
+      "title": "Buddhist Art In India",
+      "author": "Burgess Jas",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.158460",
+      "title": "Buddhist Art In India",
+      "author": "Agnes C. G",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.174430",
+      "title": "Buddhist Art In India",
+      "author": "Agnes C.g",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.94246",
+      "title": "Rulers of India- Asoka, the Buddhist Emperor of India",
+      "author": "Vincent A. Smith",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.04014",
+      "title": "The living Buddha",
+      "author": "Roy Horniman",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.60921",
+      "title": "The Story Of The Nations Buddhist India",
+      "author": "T.w.rhys Davids",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.198029",
+      "title": "Sanyutta-nikaya Voll. Vi",
+      "author": "Rhys Davids",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.175102",
+      "title": "The Gospel Of Buddha (ninth Edition).",
+      "author": "Paul Caurs",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.163397",
+      "title": "Vedaforschung.",
+      "author": "Hermann. Oldenberg",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.96704",
+      "title": "A Digest Of The Burmese Buddhist Law,vol.2,marriage",
+      "author": "u Gaung",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.13672",
+      "title": "The growth of the soul : a sequel to esoteric Buddhism",
+      "author": "A.P. Sinnett",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.13676"
+    },
+    {
+      "id": "dli.ministry.06783",
+      "title": "Translation of a digest of the Burmese Buddhist law concerning inheritance and marriage: being a collection of texts from thirty-six Dhammathats",
+      "author": "Unknown",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.215932",
+      "title": "Buddhism In Translations Vol Iii",
+      "author": "Henry Clarke Warren",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10650",
+      "title": "Buddhist records of the western World",
+      "author": "Samuel Beal",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.217504, in.gov.ignca.34984"
+    },
+    {
+      "id": "dli.csl.5027",
+      "title": "Si-yu-ki Buddhist records of the western world",
+      "author": "Unknown",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.158459",
+      "title": "Buddhism Its History And Literature Second Edition",
+      "author": "T. W Rhys Davids",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.1773",
+      "title": "Life of the Buddha and Early History of His Order derived from Tibetan works trans",
+      "author": "Rockhill",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180802",
+      "title": "Mahayana Buddhism",
+      "author": "Daisetz Teitaro Suzuki",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.97304",
+      "title": "The Dharma",
+      "author": "Paul Carus",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.18206"
+    },
+    {
+      "id": "dli.csl.7262",
+      "title": "The Jataka : or stories of the Buddh aʼs former births",
+      "author": "Unknown",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.94238",
+      "title": "Early Buddhism",
+      "author": "Davids T. W. Rhys",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.279745",
+      "title": "Buddhist Essays By Paul Dahlke",
+      "author": "Paul Dahlke",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.18816",
+      "title": "CIVILISATION IN THE BUDDHIST AGE",
+      "author": "ROMESH C. DUTT",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.106490",
+      "title": "Buddha Sakyamuni A Historical Personace",
+      "author": "Sophia Egoroff",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.89024",
+      "title": "Buddha-Sakya-Muni: A Historical Personage who lived towards B.C. 390-320; the Divine Socialisti, his Life and Preachings his Salutary Influence on the Civilisation of the Whole World",
+      "author": "Sophia Egoroff",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.77134",
+      "title": "Buddhism as a Religion: Its Historical Development and its Present Conditions; from the German",
+      "author": "H. Hackmann",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.18154",
+      "title": "DIALOGUES OF THE BUDDHA VOL. 2",
+      "author": "C. A. F. RHYS TR. DAVIDS",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.70756",
+      "title": "Maha Bodhi And The United Buddhist World Vol.18",
+      "author": "Anagarika H. Dharmapala",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.70758, in.ernet.dli.2015.70760, in.ernet.dli.2015.70763, in.ernet.dli.2015.70764, in.ernet.dli.2015.70765, in.gov.ignca.25557, in.ernet.dli.2015.70772, in.gov.ignca.25562, in.ernet.dli.2015.70774, in.gov.ignca.25564, in.ernet.dli.2015.70775, in.gov.ignca.25565, in.ernet.dli.2015.70776, dli.ministry.16628, dli.ministry.16620, dli.ministry.16630"
+    },
+    {
+      "id": "in.ernet.dli.2015.213183",
+      "title": "Buddhist India",
+      "author": "Rhys Davids T.w.",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.112366",
+      "title": "Annual Progress Report of the Superintendent, Hindu and Buddhist Monuments, Northern Circle for the Year ending 31st March 1911",
+      "author": "Northern Circle Archaeological Survey of India",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.112367, india.history.resource.112368, india.history.resource.112369, india.history.resource.112370, india.history.resource.112371, india.history.resource.112372, india.history.resource.112375, india.history.resource.112376"
+    },
+    {
+      "id": "in.ernet.dli.2015.217138",
+      "title": "Christ And Buddha",
+      "author": "C. Jinarajadasa",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.9253",
+      "title": "Jatakam vol.3",
+      "author": "Julius Dutoit",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.106798",
+      "title": "Legends Of Indian Buddhism",
+      "author": "Winifred Stephens",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.16915",
+      "title": "Legends Of Indian Buddhism",
+      "author": "Stephens Winifred",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.19666",
+      "title": "Modern Buddhism and its followers in Orissa",
+      "author": "Nagendra Nath Vasu",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117468",
+      "title": "The Life or Legend of Gaudama: The Buddha of the Burmese, with annotations the Ways to Neibban and Notice on the Phongyies or Burmese Monks, in Two Volumes, Vol. I, 4th ed.",
+      "author": "P. Rgt. Rev. Bigandet",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "cihm_990143",
+      "title": "Buddhism [microform] : a study of the Buddhist norm",
+      "author": "Rhys Mrs. Davids",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Canadiana.org; alternate scans: buddhismbeingske0000twrh, MN40132ucmf_6"
+    },
+    {
+      "id": "in.gov.ignca.3183",
+      "title": "Systems of Buddhistic thought",
+      "author": "Yamakami Sogen",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.106501",
+      "title": "Manual Of Buddhism",
+      "author": "Rhys Davids",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.536050"
+    },
+    {
+      "id": "in.ernet.dli.2015.198031",
+      "title": "The Commentary On The Dhammapada (vol-iii)",
+      "author": "Oxford University Press Warehouse Amen Corner F.c.",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.112170",
+      "title": "The Majjhima Nikaya: The First Fifty Discources, from the Collection of the Medium-Length Discourses of Gotama the Buddha; freely rendered and abridged from the Pali, Vol. I",
+      "author": "Buddha",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.536249",
+      "title": "Buddhist Scriptures",
+      "author": "E.j. Thomas",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.189272",
+      "title": "Sacred Writings Of The Buddhist Vol. 3",
+      "author": "R. Davids",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.33636"
+    },
+    {
+      "id": "in.ernet.dli.2015.73616",
+      "title": "Buddhist Psychology",
+      "author": "Davids C A F Rhys",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.18030",
+      "title": "BUDDHIST PSYCHOLOGY",
+      "author": "C. A. F. RHYS DAVIDS",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.csl.8082, dli.csl.3537"
+    },
+    {
+      "id": "india.history.resource.112149",
+      "title": "Dhammapada, New ed.",
+      "author": "Dhammapada",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.71115",
+      "title": "Fragments Of A Buddhist Work In The Ancient Aryan Language Of Chinese Turkistan Vol V",
+      "author": "Stein Aurel .m",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.15385",
+      "title": "The Beginnings Of Buddhist Art",
+      "author": "Foucher A.",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.87995",
+      "title": "The Life of Hiuen-Tsiang; with an Introduction conatining an Account of the Works of I-Tsing",
+      "author": "Hwui Li Shaman",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.57219",
+      "title": "Goepel Of Buddha",
+      "author": "Paul And Kopetzky Carus",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.112142",
+      "title": "The Commentary on the Dhammapada, Vol. V- Indexes",
+      "author": "Dhammapada",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.232722",
+      "title": "The Gospel Of Buddha",
+      "author": "Chicago London The Open Court Publishing Co.",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217539",
+      "title": "The Gospel Of Buddha",
+      "author": "O. Kopetzky",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.6226",
+      "title": "Manuscript Remain of Buddhist Literature found in Eastern Turkestan, Vol. I",
+      "author": "A F Rudolf Hoernle",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.20257",
+      "title": "THE STORY OF THE BUDDHA",
+      "author": "EDITH HOLLAND",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.106492",
+      "title": "Arya Dharma Of Sakya Muni Gautama, Buddha",
+      "author": "Anagarika Dharmapala",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.pahar.2045",
+      "title": "Beginnings of Buddhist Art",
+      "author": "Foucher",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern; alternate scans: ost-art-cu31924009002308"
+    },
+    {
+      "id": "india.history.resource.112178",
+      "title": "Bodhi Sattvavadana Kalpalata: A Buddhist Sanskrit Work on the Exploits and Glorius of Buddha by Ksemendra with its Tibetan Version, Vol. II (Bibliotheca Indica: A Collection of Oriental Works, New Series, Nos. 777, 826, 848, 860, 1168, 1257, 1262, 1295, 1310 and 1354",
+      "author": "Ksemendra",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3696",
+      "title": "The Expositor (atthasalini): Buddhagho aʼs commentary on the Dhammasangani the first book of the Abhidhamma Pitaka, vol. I",
+      "author": "Maung Tin",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.16627",
+      "title": "The maha bodhi and the united buddhist world",
+      "author": "Unknown",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.16632, dli.ministry.16625, dli.ministry.16623"
+    },
+    {
+      "id": "in.ernet.dli.2015.225508",
+      "title": "Hinduism And Buddhism An Historical Sketch Vol I",
+      "author": "Gharles Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.csl.5925, in.ernet.dli.2015.280583"
+    },
+    {
+      "id": "in.ernet.dli.2015.41588",
+      "title": "Prakrit Dhammapada",
+      "author": "Sailendranath Tr. Mitra",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.231755",
+      "title": "Prakrit Dhammapada",
+      "author": "Benimadhab Barua",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.279746",
+      "title": "Buddhist Legends Part 3",
+      "author": "Charles Rockwell Lanman",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.21024",
+      "title": "Buddhist Psalms",
+      "author": "Shinran Shonin",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.231896",
+      "title": "Hinduism and Buddhism An Historical Sketch V-iii",
+      "author": "Eliot Sir Charles",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.4185, dli.ernet.16470, dli.ernet.16469"
+    },
+    {
+      "id": "dli.ernet.30445",
+      "title": "Hinduism and Buddhism An Historical Sketch Vol-i (1921)",
+      "author": "Unknown",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.49751",
+      "title": "Hinduism And Buddhism Vol-1 (1921)",
+      "author": "Sir Charles Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.23803"
+    },
+    {
+      "id": "in.ernet.dli.2015.188791",
+      "title": "Hinduism And Buddhism Vol. Ii",
+      "author": "Sir Charles Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.39425",
+      "title": "Hinduism And Buddhism Vol.3",
+      "author": "Charles Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.177356",
+      "title": "Hinduism And Buddhism,vol-i",
+      "author": "Sir Charles Eliot",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.188793",
+      "title": "Hindusm And Buddhism Vol. I",
+      "author": "Routledge Ampkegan Paul Ltd . London",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.283162",
+      "title": "The Eastern Buddhist Vol. I No. 1",
+      "author": "Digital Library Of India",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.264420",
+      "title": "Tikapatthana Part 1",
+      "author": "Mrs. Rhys Davids",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.461235",
+      "title": "The Life Of Gotama The Buddha",
+      "author": "E. H. Comp. Brewster",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.26273, MN40141ucmf_3"
+    },
+    {
+      "id": "in.ernet.dli.2015.21371",
+      "title": "The Message Of Buddhism",
+      "author": "Bhikkhu Subhadra",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "rkas.1406..indianteachersof0000phan",
+      "title": "Indian Teachers Of Buddhist Universities",
+      "author": "Phanindranath Bose",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.461946",
+      "title": "A Buddhist Bible Ed. 1st",
+      "author": "Not Available",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.90244",
+      "title": "A Manual Of Buddhist Philosophy Vol I",
+      "author": "William Montgomery Mcgovern",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3820",
+      "title": "A Manual of Buddhist philosophy: cosmology, vol. 1",
+      "author": "William Montgomery McGovern",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10091",
+      "title": "Baralam and Yewasef : the ethiopic version of a Christianized recension of the Buddhist legend of the Buddha and the Bodhisattva",
+      "author": "E.A. Wallis Budge",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.237339",
+      "title": "Literary History Of Sanskrit Buddhism",
+      "author": "Nariman G.k.",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217543",
+      "title": "Sanskrit Buddhism",
+      "author": "G.k Nariman",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.90300",
+      "title": "The Buddha And His Doctrine",
+      "author": "Strauss C. T.",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.211215",
+      "title": "The Buddhist Conception Of Spirits",
+      "author": "Charan Law Bimala.",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.189881",
+      "title": "The Central Conception Of Buddhism",
+      "author": "Susil Gupta(india) Ltd",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.23376",
+      "title": "The Indian Buddhist Iconography Vol.31",
+      "author": "B. Bhattacharyya",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.57624",
+      "title": "Early Buddhist Monachism",
+      "author": "Sukumar Dutt",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.186932"
+    },
+    {
+      "id": "india.history.resource.112153",
+      "title": "Early Buddhist Monachism, 600 B.C. - 100 B.C.",
+      "author": "Sukumar Dutt",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.179414",
+      "title": "In The Land Of The Laughing Buddha The Adventures Of An American Barbarian In China",
+      "author": "Upton Close",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.78551",
+      "title": "The History Of Sarnath Or The Cradle Of Buddhism",
+      "author": "At The Tara Printing Works Benares",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.206656",
+      "title": "The History Of Sarnath Orthe Cradle Of Buddhism",
+      "author": "Bhattacharya B. C.",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.61757",
+      "title": "The Buddha-mimansa",
+      "author": "Yogiraja Disciple Maitreya",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.536432",
+      "title": "Buddhist Ruins Of Sarnath",
+      "author": "Daya Ram Sahani",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.107077"
+    },
+    {
+      "id": "dli.csl.3940",
+      "title": "The Life of Gautama the Buddha",
+      "author": "E.H. Brewster",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.110926",
+      "title": "A Historical Study of the terms Hinayana and Mahayana and the Origin of Mahayana Buddhism",
+      "author": "Ryukan Kimura",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.gov.ignca.7388"
+    },
+    {
+      "id": "in.ernet.dli.2015.191286",
+      "title": "Buddhism And Its Place In The Mental Life Of Mankind",
+      "author": "Paul Dahlke",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.9219",
+      "title": "Further dialogues of the Buddha vol.2",
+      "author": "Chalmers",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.11573",
+      "title": "Life of the Buddha",
+      "author": "A. Ferdinand Herold",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.103793"
+    },
+    {
+      "id": "in.ernet.dli.2015.69487",
+      "title": "Life Of The Buddha",
+      "author": "W. Woodville Rockhill",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.12031",
+      "title": "The doctrine of the Buddha: the religion of reason",
+      "author": "George Grimm",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.76219",
+      "title": "The Word Of The Buddha",
+      "author": "Nyanatiloka Maharthera",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3890",
+      "title": "What is Buddhism?: an answer from the western point of view",
+      "author": "Buddhist Lodge",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217541",
+      "title": "The Spirit Of Buddhism",
+      "author": "Hari Singh Gour",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.283770"
+    },
+    {
+      "id": "in.ernet.dli.2015.21596",
+      "title": "The Spirit Of Buddhism",
+      "author": "Not Available",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3930",
+      "title": "The Spirit of Buddhism being an examination - analytical - explanatory and critical of the life of the founder of Buddhism",
+      "author": "Hari Singh Gour",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.189351",
+      "title": "The Spirit Of Buddhism Vol. 1",
+      "author": "H. S. Gour",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.189352",
+      "title": "The Spirit Of Buddhism Vol. 2",
+      "author": "H. S. Gour",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.533476",
+      "title": "Buddhist Logic Vol.i",
+      "author": "F. Th. Stcherbatsky",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.108301",
+      "title": "Early History Of The Spread Of Buddhism and The Buddhist Schools",
+      "author": "Nalinaksha Dutt",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.6458",
+      "title": "History of Dharma - Sastra ancient and medival religious and civil Law",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.277086",
+      "title": "Mahayana Buddhism and its relation to HinayanaA",
+      "author": "Nalinaksh Dutt",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.167269",
+      "title": "Old Buddha",
+      "author": "Princess Der Ling",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.17149",
+      "title": "The milinda-questions : an inquiry into its place in the history of Buddhism with a theory as to its author",
+      "author": "Rhys Davids",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.5313",
+      "title": "Woman under primitive Buddhism",
+      "author": "I. B. Horner",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.57516"
+    },
+    {
+      "id": "in.ernet.dli.2015.46329",
+      "title": "Women Under Primitive Buddhism Laywomen And Almswomen",
+      "author": "Horner I.b.",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.284010",
+      "title": "Women Under Prmitive Buddhism",
+      "author": "I.b.horner",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}

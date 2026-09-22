@@ -83,8 +83,13 @@ const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.o
 const CDM = 'https://ccdl.claremont.edu/digital/bl/dmwebservices/index.php?q=';
 const COLLECTION_URL = 'https://ccdl.claremont.edu/digital/collection/nha';
 const IIIF_HOST = 'ccdl.claremont.edu';
-const iiifPhoto = (pointer) => `https://${IIIF_HOST}/iiif/2/nha:${pointer}/full/full/0/default.jpg`;
-const iiifThumb = (pointer) => `https://${IIIF_HOST}/iiif/2/nha:${pointer}/full/200,/0/default.jpg`;
+// CONTENTdm exposes two IIIF Image paths. `/iiif/2/nha:<ptr>/` — the form the
+// March 2026 import stored on 853 pages — answers 403 for every image (probed
+// from Hetzner and the laptop, 2026-09-17). `/digital/iiif/nha/<ptr>/` serves
+// the 4.4 MB master. Build every URL in the working form.
+const iiifPhoto = (pointer) => `https://${IIIF_HOST}/digital/iiif/nha/${pointer}/full/full/0/default.jpg`;
+const iiifThumb = (pointer) => `https://${IIIF_HOST}/digital/iiif/nha/${pointer}/full/200,/0/default.jpg`;
+const DEAD_IIIF_FORM = /^https:\/\/ccdl\.claremont\.edu\/iiif\/2\/nha:(\d+)\//;
 const R2_PUBLIC = (process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org').trim();
 const isR2 = (u) => typeof u === 'string' && u.startsWith(`${R2_PUBLIC}/`);
 
@@ -334,7 +339,11 @@ async function fetchBytes(url) {
     await claimSlot(IIIF_HOST, getDomainLimit(url));
     try {
       const { res, buffer } = await fetchWithStallTimeout(url, { headers: { 'User-Agent': UA }, stallMs: 60_000 });
-      if (res.ok) return buffer;
+      // Claremont sometimes answers 200 with an HTML error body (Codex VII,
+      // 7 pages, 2026-09-18) — sharp then dies with "unsupported image format".
+      // A JPEG starts FF D8; anything else is a retry, not a crash.
+      if (res.ok && !(buffer.length > 2 && buffer[0] === 0xff && buffer[1] === 0xd8)) { lastErr = new Error(`non-JPEG body (${res.headers.get('content-type') || 'no content-type'}, ${buffer.length} B)`); }
+      else if (res.ok) return buffer;
       if (res.status === 429) { noteRateLimited(url, Number(res.headers.get('retry-after'))); lastErr = new Error('HTTP 429'); }
       else if (res.status >= 400 && res.status < 500) throw new Error(`HTTP ${res.status} ${url}`);
       else lastErr = new Error(`HTTP ${res.status}`);
@@ -372,11 +381,18 @@ async function archivePage(book, p) {
     storagePut(paths.display, display, { contentType: 'image/jpeg', access: 'public' }),
     storagePut(paths.thumb, thumb, { contentType: 'image/jpeg', access: 'public' }),
   ]);
+  // The March pages store the dead `/iiif/2/nha:` form as their source URL;
+  // record the form that actually resolves, so `photo` stays a usable
+  // pointer at the host (lesson_page_image_fields_r2_vs_source).
+  const fixSource = DEAD_IIIF_FORM.test(p.photo || '') || DEAD_IIIF_FORM.test(p.photo_original || '')
+    ? { photo: src, photo_original: src }
+    : {};
   return {
     $set: {
       archived_photo: full.url,
       display_photo: disp.url,
       thumbnail_blob: th.url,
+      ...fixSource,
       ...dimensionFields(stored, { nativeWidth: info?.width ?? null, nativeHeight: info?.height ?? null, stitchedTiles }),
       updated_at: new Date(),
     },
@@ -467,11 +483,14 @@ async function main() {
           // A book row with no page rows is the shell an aborted run leaves
           // behind (the first --apply died in makePageDoc after insertBookIfNew,
           // 2026-09-17). Adopt it and finish it rather than refusing.
+          // A Claremont book this script created on an earlier run (the four
+          // new codices are not in EXISTING by design — that map is the March
+          // nine). Adopt it: with page rows it takes the existing-book path
+          // (stamp + archive); with none it takes the create-pages path.
           const pageRows = await pages.countDocuments({ book_id: clash.id });
-          if (pageRows > 0) throw new Error(`Codex ${codex}: a Claremont book already exists (${clash.id}) but is not in EXISTING — update the map`);
           book = await books.findOne({ id: clash.id });
-          resumeEmpty = true;
-          log(`Codex ${codex}: adopting empty book ${clash.id} left by an aborted run`);
+          resumeEmpty = pageRows === 0;
+          log(`Codex ${codex}: adopting ${clash.id} from an earlier run (${pageRows} page rows)`);
         }
       }
       const isNew = !book || resumeEmpty;
@@ -482,6 +501,20 @@ async function main() {
         row.missing = plan.missing;
         if (PLAN) {
           log(`Codex ${codex}: NEW — ${plan.pages.length} pages from ${plan.plateRecords} plate records; primary "${plan.primary}"; gaps ${plan.missing.join(',') || 'none'}; letter pages ${plan.pages.filter((p) => !isNumeric(p.label)).map((p) => p.label).join(',') || 'none'}`);
+          // A plan that never builds a page doc or touches an image URL proves
+          // nothing about either — that is how #4903 and #4906 got past a green
+          // plan run. Build-and-discard through the guarded constructor, and
+          // HEAD one master, so both fail here instead of on --apply.
+          plan.pages.slice(0, 3).forEach((p, i) => makePageDoc({
+            _id: new ObjectId(), id: randomUUID(), book_id: 'plan-probe', page_number: i + 1,
+            page_label: `papyrus page ${p.label}`, source_ref: `nha:${p.pointer}`,
+            photo: iiifPhoto(p.pointer), photo_original: iiifPhoto(p.pointer), thumbnail: iiifThumb(p.pointer),
+            catalog_metadata: { source: 'claremont_nha', pointer: p.pointer, title: p.title, series: p.series, papyrus_page: p.label, alternates: p.alternates },
+            created_at: now, updated_at: now,
+          }));
+          const probe = plan.pages[0] ? await fetch(iiifPhoto(plan.pages[0].pointer), { method: 'HEAD', headers: { 'User-Agent': UA } }).catch((e) => ({ status: `ERR ${e.message}` })) : null;
+          if (probe && probe.status !== 200) throw new Error(`Codex ${codex}: master URL probe returned ${probe.status} — fix the URL form before --apply`);
+          row.probe = probe ? probe.status : 'n/a';
           rows.push(row);
           continue;
         }

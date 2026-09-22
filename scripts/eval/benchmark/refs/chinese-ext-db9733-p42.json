@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-ext-db9733-p42",
+  "substratum": "woodblock-canon",
+  "title": "漢武帝內傳",
+  "probe_chars": 363,
+  "source": "Kanripo",
+  "work": "KR3l0096",
+  "work_title": "漢武帝內傳-漢-班固",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR3l0096",
+  "etext_chars": 2797,
+  "window_chars": 20,
+  "overlap": 0.003,
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

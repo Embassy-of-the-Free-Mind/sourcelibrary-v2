@@ -23,8 +23,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { generateScholarlyPdf } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
+import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -80,8 +81,22 @@ const LICENSE_MAP = {
 
 // ── Zenodo helpers ──────────────────────────────────────────────────
 
+/**
+ * Zenodo 403s a request that does not identify itself.
+ *
+ * Node's fetch sends undici's default User-Agent, and Zenodo's edge answers that
+ * with an HTML "Access to this resource has been restricted due to unusual traffic"
+ * page — a 403 where the API would return JSON. It is not the token, not the
+ * account, not the IP and not the endpoint: measured 2026-09-20, same host and
+ * token, POST to BOTH the legacy /deposit/depositions and the InvenioRDM /records
+ * returned 201 with a real User-Agent and 403 without it.
+ *
+ * Identifying ourselves is also just correct behaviour toward a public repository.
+ */
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+
 function zenodoHeaders(extra = {}) {
-  return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, ...extra };
+  return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
 }
 
 async function zenodoError(resp, context) {
@@ -110,7 +125,7 @@ async function zenodoUploadFile(draftId, filename, content) {
   // Step 1: init
   const initResp = await fetch(`${ZENODO_API}/records/${draftId}/draft/files`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    headers: zenodoHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify([{ key: filename }]),
   });
   if (!initResp.ok) await zenodoError(initResp, `file init (${filename})`);
@@ -119,14 +134,14 @@ async function zenodoUploadFile(draftId, filename, content) {
   const body = typeof content === 'string' ? new TextEncoder().encode(content) : new Uint8Array(content);
   const uploadResp = await fetch(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/content`,
-    { method: 'PUT', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/octet-stream' }, body },
+    { method: 'PUT', headers: zenodoHeaders({ 'Content-Type': 'application/octet-stream' }), body },
   );
   if (!uploadResp.ok) await zenodoError(uploadResp, `file upload (${filename})`);
 
   // Step 3: commit
   const commitResp = await fetch(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/commit`,
-    { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } },
+    { method: 'POST', headers: zenodoHeaders() },
   );
   if (!commitResp.ok) await zenodoError(commitResp, `file commit (${filename})`);
   return commitResp.json();
@@ -252,9 +267,47 @@ function buildDescription(book, edition) {
 
 // ── Front matter generation ─────────────────────────────────────────
 
+/**
+ * One generation, thinking OFF and metered.
+ *
+ * Both front-matter calls used a bare `model.generateContent(prompt)`. Two defects
+ * came with that, and neither was visible from the outside:
+ *
+ *  - **No `thinkingConfig`.** Gemini 3.x thinks by default and bills it at the OUTPUT
+ *    rate; six unconfigured call sites cost ~$2K/month for months before anyone noticed
+ *    (#4581, a 17x meter gap). Front matter is prose from supplied context, so 0.
+ *  - **No metering.** This script wrote no `gemini_usage` row at all, so when I asked
+ *    what the 19 Forum mints had cost, the answer came back **$0.00** — the instrument
+ *    failing, wearing the costume of a zero. That is the whole reason this exists
+ *    before any bulk run: 13,140 books through an unmetered spender is a bill nobody
+ *    can see until it arrives.
+ */
+async function meteredGenerate(model, prompt, { book, phase }) {
+  const result = await model.generateContent({
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+  });
+  const u = result.response?.usageMetadata;
+  await logUsage({
+    type: 'front_matter', mode: 'realtime', model: GEMINI_MODEL,
+    book_id: book?.id || null,
+    input_tokens: u?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(u),
+    status: 'success', phase,
+    endpoint: 'scripts/batch/batch-mint-doi.mjs',
+    timestamp: new Date(),
+  }).catch(e => console.warn(`  usage log failed (${phase}): ${e.message}`));
+  return result.response.text();
+}
+
 async function generateFrontMatter(book, pages) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+  // thinkingBudget on the MODEL, so it covers every call made through it rather
+  // than only the ones that remember to pass a generationConfig.
+  const model = genAI.getGenerativeModel({
+    model: GEMINI_MODEL,
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+  });
 
   const bookContext = buildBookContext(book, pages);
 
@@ -361,8 +414,7 @@ Rules:
 - Do NOT assert provenance of this particular copy (former owners, famous libraries)
 - If the edition date in the BIBLIOGRAPHIC DATA conflicts with the work's known publication history, do not invent a reconciliation — describe the work generally and refer to "this edition" without dating other printings`;
 
-  const result = await model.generateContent(prompt);
-  return result.response.text();
+  return meteredGenerate(model, prompt, { book, phase: 'introduction' });
 }
 
 async function generateMethodology(model, book, pages) {
@@ -411,8 +463,7 @@ async function generateMethodology(model, book, pages) {
 - Use ## markdown headings
 - Start directly with the first heading`;
 
-  const result = await model.generateContent(prompt);
-  return result.response.text();
+  return meteredGenerate(model, prompt, { book, phase: 'methodology' });
 }
 
 // ── Edition creation ────────────────────────────────────────────────
@@ -540,6 +591,12 @@ async function mintOneBook(db, book) {
   const pdfBuffer = await generateScholarlyPdf(book, translatedPages, {
     introduction: edition.front_matter?.introduction,
     methodology: edition.front_matter?.methodology,
+    version: edition.version,
+    frontispiece: await fetchFrontispiece(book),
+    credits: editionCredits(book),
+    dedication: resolveDedication(book, book.collections?.length
+      ? await db.collection('collections').find({ slug: { $in: book.collections }, dedication: { $exists: true } }, { projection: { slug: 1, dedication: 1 } }).toArray()
+      : []),
   });
   const pdfFilename = `${book.slug || book.id}-scholarly-v${edition.version}.pdf`;
   await zenodoUploadFile(draft.id, pdfFilename, pdfBuffer);
@@ -624,7 +681,18 @@ async function main() {
 
     const eligible = await db.collection('books').aggregate([
       { $match: matchQuery },
-      { $addFields: { _pct: { $cond: [{ $gt: ['$pages_ocr', 0] }, { $divide: ['$pages_translated', '$pages_ocr'] }, 0] } } },
+      // The HONEST denominator (#4442): blank leaves carry no translation because
+      // they have nothing to translate, so counting them against the book is the
+      // numerator-excludes-what-the-denominator-does-not error that `page-counts.mjs`
+      // exists to prevent. Measured 2026-09-20: Antoninus of Florence's
+      // *Confessionale* read 84.9% and was withheld from a DOI while being 100%
+      // translated — all 54 of its "missing" pages are `page_type: blank`. 20,447
+      // of 41,920 readable books carry blank leaves, so this understated half the
+      // corpus.
+      { $addFields: {
+        _translatable: { $max: [{ $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }, 0] },
+      } },
+      { $addFields: { _pct: { $cond: [{ $gt: ['$_translatable', 0] }, { $divide: ['$pages_translated', '$_translatable'] }, 0] } } },
       { $match: { _pct: { $gte: MIN_TRANSLATION_PCT } } },
       { $sort: { quality_score: -1, pages_translated: -1 } },
       { $limit: BOOK_ID ? 1 : LIMIT },

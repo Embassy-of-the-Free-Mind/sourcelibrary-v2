@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-052e60-p64",
+  "substratum": "skqs-manuscript",
+  "title": "繪事備考·卷三~卷四 (vol 2)",
+  "probe_chars": 125,
+  "source": "Kanripo",
+  "work": "KR3h0065",
+  "work_title": "繪事備考-清-王毓賢",
+  "juan": "3,4",
+  "url": "https://github.com/kanripo/KR3h0065",
+  "etext_chars": 18039,
+  "window_chars": 135,
+  "overlap": 0.869
+}

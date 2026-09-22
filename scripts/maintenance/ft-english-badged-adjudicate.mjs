@@ -109,11 +109,23 @@ async function main() {
 
   if (APPLY) {
     console.log(`\nAttempts written: ${written}   already present: ${existing}`);
-    console.log('\nNothing public has changed yet. To materialise:');
-    console.log('  npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead]            # dry-run, review');
-    console.log('  npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts --apply    # writes the verdict only');
-    console.log('  npx tsx scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --only-demotions --verdict=not_first,not_applicable --resolver=tier2_agent,human           # dry-run');
-    console.log('  ... add --apply to flip the badges.  (The 05:30 cron runs exactly this pair unattended.)');
+    // What actually happens next (#4536). `books.is_first_translation` is FROZEN:
+    // the derive -> reconcile valve and both FT crons were retired and deleted, and
+    // Translation Card review is the only writer. The attempts above are binding
+    // EVIDENCE and nothing more — no job consumes them, so no badge will change on
+    // its own, in either direction.
+    //
+    // The previous version of this block listed the derive and reconcile commands
+    // and closed with "the 05:30 cron runs exactly this pair unattended". The
+    // retirement was patched in by find-and-replace, which left the `--apply` line
+    // unmarked and the cron sentence untouched: an operator reading it would either
+    // wait for a change that never comes or believe they had just armed an
+    // unattended public edit. Neither is true, and both are worse than silence.
+    console.log('\nEVIDENCE RECORDED — nothing public has changed, and nothing will on its own.');
+    console.log('  books.is_first_translation is frozen (#4536); Translation Card review is the only writer.');
+    console.log('  The derive/reconcile valve and the 05:30 FT cron are retired — see');
+    console.log('  .claude/docs/invariants/first-translation-claims.md and translation-card-method.md.');
+    console.log('  To change a badge, propose a Translation Card edit citing these attempts.');
   } else {
     console.log('\nDRY-RUN — no writes. Re-run with --apply to append the attempts.');
   }

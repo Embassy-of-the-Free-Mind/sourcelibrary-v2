@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-e4473e-p16",
+  "substratum": "woodblock-canon",
+  "title": "測量法義 (Methods of Surveying)",
+  "probe_chars": 17770,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3f0014",
+  "work_title": "測量法義-明-徐光啟",
+  "juan": 0,
+  "url": "https://github.com/kanripo/KR3f0014/blob/WYG/KR3f0014_000.txt",
+  "etext_chars": 17237,
+  "window_chars": 7502,
+  "overlap": 0.682
+}

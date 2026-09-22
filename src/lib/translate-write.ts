@@ -29,6 +29,16 @@ import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
 import { contentHash } from './steganographia';
 
+/**
+ * `$unset` fragment every translation writer includes (#4927). `translation_stale`
+ * is the materialised verdict that the stored translation was made from a
+ * transcription the page no longer holds (`ocr.updated_at` newer than
+ * `translation.updated_at`); a new translation is the exit, so every writer
+ * clears it in the same update. Twin of `CLEAR_STALE_UNSET` in
+ * `scripts/lib/stale-translation.mjs`.
+ */
+export const CLEAR_STALE_UNSET = Object.freeze({ translation_stale: '' } as const);
+
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
 export interface HumanEditableField {
   source?: string;
@@ -169,6 +179,7 @@ export async function writePageTranslation(
         ...(extraSet || {}),
         updated_at: now,
       },
+      $unset: CLEAR_STALE_UNSET,
     }
   );
   return { written: true, protected: false, text };

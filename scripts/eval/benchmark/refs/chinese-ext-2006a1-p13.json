@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-2006a1-p13",
+  "substratum": "skqs-manuscript",
+  "title": "周易本義集成·卷十一~卷十二 (vol 11)",
+  "probe_chars": 342,
+  "source": "Kanripo",
+  "work": "KR1a0079",
+  "work_title": "周易本義集成-元-熊良輔",
+  "juan": "11,12",
+  "url": "https://github.com/kanripo/KR1a0079",
+  "etext_chars": 5927,
+  "window_chars": 513,
+  "overlap": 0.76
+}

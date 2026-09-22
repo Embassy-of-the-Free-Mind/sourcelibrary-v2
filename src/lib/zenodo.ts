@@ -68,8 +68,21 @@ function getAccessToken(): string {
   return token;
 }
 
+/**
+ * Zenodo 403s a request that does not identify itself.
+ *
+ * Node's fetch sends undici's default User-Agent, and Zenodo's edge answers that with
+ * an HTML "Access to this resource has been restricted due to unusual traffic" page —
+ * a 403 where the API would return JSON. It is not the token, not the account, not the
+ * IP and not the endpoint: measured 2026-09-20, same host and token, POST to BOTH the
+ * legacy /deposit/depositions and the InvenioRDM /records returned 201 with a real
+ * User-Agent and 403 without it. Identifying ourselves is also simply correct
+ * behaviour toward a public repository.
+ */
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+
 function authHeaders(extra?: Record<string, string>): Record<string, string> {
-  return { 'Authorization': `Bearer ${getAccessToken()}`, ...extra };
+  return { 'Authorization': `Bearer ${getAccessToken()}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
 }
 
 /* ── Error handling ── */
@@ -197,7 +210,7 @@ export async function uploadFile(
   // Step 1: Initialize file upload
   const initResp = await fetch(`${ZENODO_API}/records/${draftId}/draft/files`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify([{ key: filename }]),
   });
   if (!initResp.ok) await handleZenodoError(initResp, `file init (${filename})`);
@@ -208,7 +221,7 @@ export async function uploadFile(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/content`,
     {
       method: 'PUT',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/octet-stream' },
+      headers: authHeaders({ 'Content-Type': 'application/octet-stream' }),
       body,
     }
   );
@@ -219,7 +232,7 @@ export async function uploadFile(
     `${ZENODO_API}/records/${draftId}/draft/files/${encodeURIComponent(filename)}/commit`,
     {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: authHeaders(),
     }
   );
   if (!commitResp.ok) await handleZenodoError(commitResp, `file commit (${filename})`);

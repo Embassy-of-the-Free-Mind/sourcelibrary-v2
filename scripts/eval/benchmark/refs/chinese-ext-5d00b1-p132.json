@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-5d00b1-p132",
+  "substratum": "skqs-manuscript",
+  "title": "大學衍義·卷二十九~卷三十三 (vol 8)",
+  "probe_chars": 164,
+  "source": "Kanripo",
+  "work": "KR3a0058",
+  "work_title": "大學衍義-宋-眞德秀",
+  "juan": "29,30,31,32,33",
+  "url": "https://github.com/kanripo/KR3a0058",
+  "etext_chars": 25794,
+  "window_chars": 167,
+  "overlap": 0.736
+}

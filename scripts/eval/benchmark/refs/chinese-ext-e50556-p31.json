@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-e50556-p31",
+  "substratum": "skqs-manuscript",
+  "title": "禮記集說·卷一百五十六~卷一百五十七 (vol 161)",
+  "probe_chars": 127,
+  "source": "Kanripo",
+  "work": "KR1d0057",
+  "work_title": "禮記集說-宋-衞湜",
+  "juan": "156,157",
+  "url": "https://github.com/kanripo/KR1d0057",
+  "etext_chars": 22799,
+  "window_chars": 133,
+  "overlap": 0.613
+}

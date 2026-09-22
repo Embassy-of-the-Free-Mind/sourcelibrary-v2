@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-ext-db76e7-p11",
+  "substratum": "woodblock-canon",
+  "title": "南嶽單傳記",
+  "probe_chars": 389,
+  "source": "Kanripo",
+  "work": "KR6r0106",
+  "work_title": "南嶽單傳記-清-弘儲",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR6r0106",
+  "etext_chars": 41608,
+  "window_chars": 396,
+  "overlap": 0.955
+}

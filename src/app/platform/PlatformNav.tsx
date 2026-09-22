@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/platform/admin/metrics', label: 'Metrics' },
   { href: '/platform/admin/reading-register', label: 'Reading Register' },
   { href: '/platform/admin/translation-failures', label: 'Translation Failures' },
+  { href: '/platform/admin/ocr-evidence', label: 'OCR Evidence' },
   { href: '/platform/tenants/new', label: 'New Library' },
 ];
 

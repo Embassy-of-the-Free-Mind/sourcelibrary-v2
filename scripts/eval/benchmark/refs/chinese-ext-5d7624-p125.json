@@ -1,0 +1,17 @@
+{
+  "slug": "chinese-ext-5d7624-p125",
+  "substratum": "skqs-manuscript",
+  "title": "山堂肆考·卷一百七十七~卷一百七十八 (vol 79)",
+  "probe_chars": 116,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3k0052",
+  "work_title": "山堂肆考-明-彭大翼",
+  "juan": 56,
+  "url": "https://github.com/kanripo/KR3k0052/blob/WYG/KR3k0052_056.txt",
+  "etext_chars": 2953,
+  "window_chars": 18,
+  "overlap": 0.009,
+  "reason": "overlap 0.01 < 0.35: page is not (cleanly) in this e-text"
+}

@@ -1,0 +1,1060 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from alchemy-revival.json; config alchemy-revival.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Pruned 2026-09-21 by a reviewer pass over the review table (same work twice, off-topic, serials, non-English): 57 dropped (listed in hand_pruned with reasons), 10 kept with a FLAG note for a second look.",
+  "campaign": "alchemy-revival-2026-09-21",
+  "collections": [
+    "alchemy"
+  ],
+  "BOOKS": [
+    {
+      "id": "b24926735",
+      "title": "The magus, or, Celestial intelligencer : being a complete system of occult philosophy : in three books containing the antient and modern practice of the cabalistic art, natural and celestial magic, &c. ... exhibiting the sciences of natural magic; alchymy, or hermetic philosophy also the nature, creation, and fall of man ... ; To which is added Biographia antiqua, or the lives of the most eminent philosophers, magi, &c. : the whole illustrated with a great variety of curious engravings, magical and cabalistical figures, &c.",
+      "author": "Francis F.R.C. Prof. of Chemistry Barrett",
+      "year": 1801,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Glasgow Library"
+    },
+    {
+      "id": "livesofadeptsina00wait",
+      "title": "The lives of the adepts in alchemystical philosophy",
+      "author": "Arthur Edward Waite",
+      "year": 1814,
+      "lang": "English",
+      "note": "FLAG: 1814 date with author 'Arthur Edward Waite' (b.1857) is anachronistic — likely a metadata error; may be the same underlying work as Barrett's 1815 'Lives of Alchemystical Philosophers' (livesofalchemyst00barr). Dupe or distinct?; CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "livesofalchemyst00barr",
+      "title": "The lives of alchemystical philosophers : with a critical catalogue of books in occult chemistry, and a selection of the most celebrated treatises on the theory and practice of the hermetic art",
+      "author": "Francis Barrett",
+      "year": 1815,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Getty Research Institute; alternate scans: b33280009"
+    },
+    {
+      "id": "ancientfragments00coryuoft",
+      "title": "Ancient fragments, containing what remains of the writings of Sanchoniatho, Berossus, Abydenus, Megasthenes, and Manetho : also the Hermetic Creed, the Old Chronicle, the Laterculus of Eratosthenes, the Tyrian annals, the Oracles of Zoroaster, and the Periplus of Hanno",
+      "author": "Isaac Preston Cory",
+      "year": 1828,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cory-i.-p-1828-ancient-fragments-1st-ed"
+    },
+    {
+      "id": "theosophy-or-psychological-religion-the",
+      "title": "Theosophy or Psychological Religion: The Hidden Doctrine of the Rosicrucians",
+      "author": "Godfrey Higgins",
+      "year": 1836,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "mentalalchemy00will",
+      "title": "Mental alchemy",
+      "author": "B. Brown. [from old catalog] Williams",
+      "year": 1854,
+      "lang": "English",
+      "note": "FLAG: Title 'Mental alchemy' with unclear author — is this about historical alchemy or 19th-c. mesmerism/mental-healing?; CLEAR:by-date; held by The Library of Congress; alternate scans: 60331250R.nlm.nih.gov"
+    },
+    {
+      "id": "b24927004",
+      "title": "The alchemical testament of John Gybbys of Exeter, temp. Elizabeth, now first edited from MS. Ashmole 1423, at Oxford",
+      "author": "John Gybbys",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Glasgow Library"
+    },
+    {
+      "id": "remarksuponalche00hitc",
+      "title": "Remarks upon alchemy and the alchemists : indicating a method of discovering the true nature of hermetic philosophy : and showing that the search after the philosopher's stone had not for its object the discovery of an agent for the transmutation of metals : being also an attempt to rescue from undeserved opprobrium the reputation of a class of extraordinary thinkers in past ages",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1857,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Getty Research Institute"
+    },
+    {
+      "id": "swedenborghermet00hitciala",
+      "title": "Swedenborg, a hermetic philosopher : being a sequel to Remarks on alchemy and the alchemists. Showing that Emanuel Swedenborg was a hermetic philosopher and that his writings may be interpreted from the point of view of hermetic philosophy. With a chapter comparing Swedenborg and Spinoza",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1858,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: swedenborghermet0000hitc, cu31924031447364, swedenborghermet00hitc, swedenborgaherm00hitcgoog"
+    },
+    {
+      "id": "christspiritbein01hitc",
+      "title": "Christ the Spirit : being an attempt to state the primitive view of Christianity",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1861,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: christspiritbein02hitc, india.history.resource.73169"
+    },
+    {
+      "id": "redbookofappinst00hitc",
+      "title": "The Red book of Appin : a story of the Middle Ages : with other hermetic stories, and allegorical fairy tales with interpretations",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University Library, University of North Carolina at Chapel Hill"
+    },
+    {
+      "id": "rosicrucianorcur00jenn",
+      "title": "The Rosicrucian: or, Curious things of the outside world",
+      "author": "Hargrave Jennings",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "storyofredbookof00hitc",
+      "title": "The story of the Red book of Appin: a fairy tale of the Middle Ages",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1863,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "spenserspoementi00hitcrich",
+      "title": "Spenser's poem, entitled Colin Clouts come home againe, explained; with remarks upon the Amoretti sonnets, and also upon a few of the minor poems of other early English poets",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1865,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924013124791"
+    },
+    {
+      "id": "cu31924013143866",
+      "title": "Remarks on the Sonnets of Shakespeare; with the Sonnets. Showing that they belong to the hermetic class of writings, and explaining their general meaning and purpose",
+      "author": "Ethan Allen Hitchcock",
+      "year": 1867,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: cu31924013143841"
+    },
+    {
+      "id": "oneofthirtystran00jenniala",
+      "title": "One of the thirty: a strange history now for the first time told",
+      "author": "Hargrave Jennings",
+      "year": 1870,
+      "lang": "English",
+      "note": "FLAG: Jennings work, title 'a strange history' gives no alchemy/Rosicrucian signal — fiction or occult nonfiction?; CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924025077664",
+      "title": "The Rosicrucians, their rites and mysteries; with chapters on the ancient fire- and serpent-worshipers, and explanations of the mystic symbols represented in the monuments and talismans of the primeval philosophers",
+      "author": "Hargrave Jennings",
+      "year": 1870,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "rosicruciandream00rand",
+      "title": "The Rosicrucian dream book",
+      "author": "Paschal Beverly Randolph",
+      "year": 1871,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b29008128",
+      "title": "Sketches of early Scottish alchemists",
+      "author": "George Small",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "keysofcreeds00maitrich",
+      "title": "The Keys of the creeds",
+      "author": "Edward Maitland",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "hintsfromhornogr00gosh",
+      "title": "Hints from the hornograph on the signs of the times : or, The unsealing of the hermetic books of Joseph the Hebrew",
+      "author": "Compte Goshorne",
+      "year": 1879,
+      "lang": "English",
+      "note": "FLAG: Title 'Hints from the hornograph on the signs of the times' gives no clear alchemy/Hermetic/Rosicrucian signal — on-topic?; CLEAR:stated; held by Brandeis University Libraries"
+    },
+    {
+      "id": "scientificstudie00dirciala",
+      "title": "Scientific studies, or, practical, in contrast with chimerical pursuits, exemplified in two popular lectures. I. The life of Edward Somerset, second marquis of Worcester, inventor of the steam engine. II. Chimeras of science: astrology, alchemy, squaring the circle, perpetuum mobile, etc",
+      "author": "Henry Dircks",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "TheRosicrucians",
+      "title": "The Rosicrucians",
+      "author": "Hargrave Jennings",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: rosicrucians00jenngoog"
+    },
+    {
+      "id": "b2487839x",
+      "title": "Diivine pymander of Hermes Mercurius Trismegistus",
+      "author": "John translator. n 85028265 Everard",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "confessionsofeng00dequuoft",
+      "title": "Confessions of an English opium-eater, with Levana, the Rosicrucians and Freemasons, Notes from the pocket-book of a late opium-eater, etc. With introductory note by William Sharp",
+      "author": "Thomas De Quincey",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "anadventureamon00hartgoog",
+      "title": "An adventure among the Rosicrucians",
+      "author": "Franz Hartmann",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "BaconShakespeareAndTheRosicruciansWilliamFrancisChalmersWigston",
+      "title": "Bacon, Shakespeare And The Rosicrucians",
+      "author": "William Francis Chalmers Wigston",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; alternate scans: baconshakespear00wigsgoog"
+    },
+    {
+      "id": "b21930478",
+      "title": "Lives of alchemystical philosophers ... To which is added a bibliography of alchemy and hermetic philosophy",
+      "author": "Arthur Edward Waite",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Royal College of Physicians in Edinburgh"
+    },
+    {
+      "id": "someearlytreatis00ferguoft",
+      "title": "Some early treatises on technological chemistry",
+      "author": "John Ferguson",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "lifeofjehoshuapr00hart",
+      "title": "The life of Jehoshua, the prophet of Nazareth",
+      "author": "Franz Hartmann",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "thesaurusincanta00mach",
+      "title": "Thesaurus incantatus : the enchanted treasure, or, the spagyric quest of Beroaldus Cosmopolita, in which is sophically and mystagorically declared the first matter of the stone : with a list of choice books on alchemy, magic, talismans ..",
+      "author": "Arthur Machen",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "b24884145",
+      "title": "The principles of astrological geomancy : the art of divining by punctuation",
+      "author": "Franz Hartmann",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "contributionsofa00bolt",
+      "title": "Contributions of alchemy to numismatics",
+      "author": "Henry Carrington Bolton",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: 101165036.nlm.nih.gov, contributionsal00boltgoog"
+    },
+    {
+      "id": "b24884157",
+      "title": "In the pronaos of the temple of wisdom : containing the history of the true and the false Rosicrucians : with an introduction into the mysteries of the hermetic philosophy",
+      "author": "Franz Hartmann",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "magicwhiteblacko00hartrich",
+      "title": "Magic, white and black; or The science of finate [!] and infinate life, containing practical hints for students of occultism",
+      "author": "Franz Hartmann",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: magicwhiteblack00hart_0, magicwhiteblacko00hart"
+    },
+    {
+      "id": "b24887092",
+      "title": "Nicholas Flammel : his exposition of the hieroglyphical figures which he caused to be painted upon an arch in St. Innocents church yard in Paris : concerning both the theory and practice of the philosophers stone",
+      "author": "Nicolas Flamel",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "hermetic-philosophy-mc-donald-1890",
+      "title": "Hermetic Philosophy McDonald 1890",
+      "author": "Jonathan S. McDonald",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "b24884704",
+      "title": "[The occult sciences : a compendium of transcendental doctrine and experiment, embracing an account of magical practices; of secret sciences in connection with magic; of the professors of magical arts; and of modern spiritualism, mesmerism and theosophy",
+      "author": "Arthur Edward Waite",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "francisbaconhiss00pot",
+      "title": "Francis Bacon and his secret society. An attempt to collect and unite the lost links of a long and strong chain",
+      "author": "Henry Mrs. Pott",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: francisbaconhiss00pott, cu31924088837368, baconhiss00pottfrancisrich, francisbaconandh00pottuoft, francisbaconhiss00pottrich, francisbaconand00pottgoog"
+    },
+    {
+      "id": "francisbaconpoet00wigs",
+      "title": "Francis Bacon, poet, prophet, philosopher, versus phantom Captain Shakespeare, the Rosicrucian mask",
+      "author": "W. F. C. (William Francis C.) Wigston",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: francisbaconpoet00wigsuoft, cu31924013153915"
+    },
+    {
+      "id": "mysteriesofrosie0000unse",
+      "title": "Mysteries of the Rosie cross; or, The history of that curious sect of the middle ages, known as the Rosicrucians; with examples of their pretensions and claims as set forth in the writings of their leaders and disciples",
+      "author": "Unknown",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: mysteriesofrosie00londrich"
+    },
+    {
+      "id": "selectbibliograp00bolt",
+      "title": "A select bibliography of chemistry, 1492-1892",
+      "author": "Henry Carrington Bolton",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by NIH Library; alternate scans: selectbibliograp00boltuoft, selectbibliograp02boltuoft, selectbibliograp00bolt_1, selectbibliograp01boltuoft, selectbibliograp00bolt_0, cu31924014491389, b28994048, aselectbibliogr00boltgoog, aselectbibliogr02boltgoog, aselectbibliogr01boltgoog, aselectbibliogr03boltgoog"
+    },
+    {
+      "id": "b29005863",
+      "title": "An English translation of the Hermetic Arcanum of Penes Nos Unda Tagi [pseud.] 1623",
+      "author": "Jean d' active 17th century Espagnet",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "nineteenthcentur00garr",
+      "title": "Nineteenth century sense: being the paradox of Spiritus sanctus and of Rosicrucianism",
+      "author": "James Edmund Garretson",
+      "year": 1893,
+      "lang": "English",
+      "note": "FLAG: Title 'paradox of Spiritus sanctus' is unclear — on-topic for the campaign?; CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "occultscienceinm00hart",
+      "title": "Occult science in medicine",
+      "author": "Franz Hartmann",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Francis A. Countway Library of Medicine"
+    },
+    {
+      "id": "bub_gb_3MMLAQAAIAAJ",
+      "title": "The Hermetic Museum, Restored and Enlarged Most Faithfully Instructing All Disciples of the Sophospagyric Art how that Greatest and Truest Medicine of the Philosopher's Stone May be Found and Held Now First Done Into English from the Latin Original Published at Frankfort in the Year 1678 Containing Twentytwo Most Celebrated Ch",
+      "author": "Unknown",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "collectanea-hermetica-william-wynn-westc",
+      "title": "Collectanea Hermetica: Selected Essays on Hermetic Philosophy",
+      "author": "William Wynn Westcott",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "b24887341",
+      "title": "A short enquiry concerning the hermetic art",
+      "author": "Lover of Philaletha. nr2002043612",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "b24927521",
+      "title": "On remedies in the Sloane collections, and on alchemical symbols",
+      "author": "F. C. J Spurrell",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Glasgow Library"
+    },
+    {
+      "id": "cu31924092287121",
+      "title": "The Hermetic and alchemical writings of Aureolus Philippus Theophrastus Bombast, of Hohenheim, called Paracelsus the Great",
+      "author": "Paracelsus",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: cu31924092287113, hermeticalchemic00para, 11521596bsb"
+    },
+    {
+      "id": "alchemyturbaphil00waitrich",
+      "title": "Alchemy the turba philosophorum; or, Assembly of the sages, called also the book of truth in the art and the third Pythagorical synod;",
+      "author": "Arthur Edward Waite",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b24920241_0002",
+      "title": "Bibliographical notes on histories of inventions and books of secrets",
+      "author": "John Ferguson",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Glasgow Library; alternate scans: b24926905, b29005152_0002, b24920241_0001, b29005152_0001, b29005152_0003"
+    },
+    {
+      "id": "b24926747",
+      "title": "The book of the magi : a complete system of occult philosophy, consisting of natural, celestial, cabalistic, and ceremonial magic ; invocations ; conjurations of spirits, &c., &c. ; biographical sketch of seventeen great philosophers and adepts",
+      "author": "Francis F.R.C. Prof. of Chemistry Barrett",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Glasgow Library"
+    },
+    {
+      "id": "lifeofphilippust00hartuoft",
+      "title": "The life of Philippus Theophrastus Bombast of Hohenheim [microform] : known by the name of Paracelsus : and the substance of his teachings concerning cosmology, anthropology, pneumatology, magic and sorcery, medicine, alchemy and astrology, philosophy and theosophy",
+      "author": "Franz Hartmann",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: lifeofphilippust1896hart, lifeofphilippust00hart, b33780560"
+    },
+    {
+      "id": "turbaphilosophor00gratiala",
+      "title": "The Turba philosophorum, or assembly of the sagas; called also the book of truth in the art and the third Pythagorical synod. An ancient alchemical treatise translated from the Latin, the chief readings of the shorter codex, parallels from the Greek alchemists, and explanations of obscure terms",
+      "author": "Guglielmo Gratarolo",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "transcendentalma00leviuoft",
+      "title": "Transcendental magic, its doctrine and ritual",
+      "author": "Eliphas Lévi",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "mysteryromanceof00thom",
+      "title": "The mystery and romance of alchemy and pharmacy",
+      "author": "C. J. S. (Charles John Samuel) Thompson",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by West Virginia University Libraries"
+    },
+    {
+      "id": "treatiseongreata00pern_0",
+      "title": "Treatise on the great art : a system of physics according to Hermetic philosophy and theory and practice of the Magisterium",
+      "author": "Antoine-Joseph Pernety",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: treatiseongreat00blitgoog"
+    },
+    {
+      "id": "evolutionofimmor00dowd",
+      "title": "Evolution of immortality",
+      "author": "F. B. (Freeman Benjamin) Dowd",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "regenerationbein00dowd",
+      "title": "Regeneration : being pt. II of the temple of the rosy cross",
+      "author": "F. B. (Freeman Benjamin) Dowd",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "lifeoflouisclaud00wait",
+      "title": "The life of Louis Claude de Saint-Martin, the unknown philosopher, and the substance of his transcendental doctrine;",
+      "author": "Arthur Edward Waite",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "templeofrosycro00dowd",
+      "title": "The temple of the rosy cross : the soul, its powers, migrations, and transmigrations",
+      "author": "F. B. (Freeman Benjamin) Dowd",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: templeofrosycr00dowd, templeofrosycros00dowd_0"
+    },
+    {
+      "id": "b28034612",
+      "title": "Doctor Robert Fludd (Robertus de Fluctibus) : the English Rosicrucian : life and writings",
+      "author": "Royal College of Physicians of London. n 80046799",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Royal College of Physicians, London"
+    },
+    {
+      "id": "b24857452",
+      "title": "The story of alchemy and the beginnings of chemistry",
+      "author": "M. M. Pattison (Matthew Moncrieff Pattison) Muir",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library"
+    },
+    {
+      "id": "ourstoryofatlant00phel",
+      "title": "Our story of Atlantis : written down for the Hermetic Brotherhood",
+      "author": "W. P. (William P.) Phelon",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: storyofatlantis00phelrich"
+    },
+    {
+      "id": "b24855327",
+      "title": "The follies of science at the court of Rudolph II : 1576-1612",
+      "author": "Henry Carrington Bolton",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: folliesofscience00boltrich, folliessciencea01boltgoog, folliessciencea02boltgoog, folliessciencea00boltgoog"
+    },
+    {
+      "id": "b33453883",
+      "title": "Alchemical equipment in the eleventh century, A.D.",
+      "author": "H. E Stapleton",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "b24886713",
+      "title": "Studies in mysticism and certain aspects of the secret tradition",
+      "author": "Arthur Edward Waite",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: studiesinmystici0000wait"
+    },
+    {
+      "id": "alchemyalchemist00clym",
+      "title": "Alchemy and the alchemists; giving the secret of the philosopher's stone, the elixir of youth, and the universal solvent. Also showing that the true alchemists did not seek to transmute base metals into gold, but sought the highest initiation or the development of the spiritual nature in man \"knowing thyself.\"",
+      "author": "R. Swinburne (Reuben Swinburne) Clymer",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "stepstothecrown",
+      "title": "Steps To The Crown",
+      "author": "Arthur Edward Waite",
+      "year": 1907,
+      "lang": "English",
+      "note": "FLAG: Waite work with unclear subject (Tarot? mysticism?) — confirm it's Hermetic/Rosicrucian before keeping.; CLEAR:stated"
+    },
+    {
+      "id": "kybalionstudyofh00thre",
+      "title": "The Kybalion; a study of the hermetic philosophy of ancient Egypt and Greece, by Three Initiates",
+      "author": "Three Initiates",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: Kybalion1908"
+    },
+    {
+      "id": "hiddenchurchofho00waituoft",
+      "title": "The hidden church of the Holy Graal : its legends and symbolism considered in their affinity with certain mysteries of initiation and other traces of a secret tradition in Christian times",
+      "author": "Arthur Edward Waite",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "perfectwayorfind00kinguoft",
+      "title": "The perfect way; or, The finding of Christ",
+      "author": "Anna (Bonus) Kingsford",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: perfectwayorfind00king, india.history.resource.110803"
+    },
+    {
+      "id": "b2152354x",
+      "title": "Count Michael Maier, doctor of philosophy and of medicine, alchemist, Rosicrucian, mystic, 1568-1622 : life and writings",
+      "author": "J. B. (James Brown) Craven",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Leeds Library"
+    },
+    {
+      "id": "arcana-majora-or-curious-and-useful-desc",
+      "title": "Arcana Majora: Curious and Useful Descriptions of Alchemical and Occult Practices",
+      "author": "Albertus Magnus",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "TheRosicruciansTheirTeachingsR.SwinburneClymer",
+      "title": "The Rosicrucians Their Teachings",
+      "author": "R. Swinburne Clymer",
+      "year": 1910,
+      "lang": "English",
+      "note": "FLAG: Title nearly identical to rosicruciansthei0000unse (1923, 'the rosicrucians their teaching') — same underlying work reprinted under Unknown authorship, or a distinct Clymer title?; CLEAR:by-date"
+    },
+    {
+      "id": "the-secret-book-of-the-black-arts-contai",
+      "title": "The Secret Book of the Black Arts: Containing Hidden Rites of Occult Traditions",
+      "author": "Anonymous",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "rosicruciancosmo00heiniala",
+      "title": "The Rosicrucian cosmo-conception, or, Mystic Christianity : an elementary treatise upon man's past evolution, present constitution and future development",
+      "author": "Max Heindel",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.22470"
+    },
+    {
+      "id": "rosicrucianmyste00heinrich",
+      "title": "The Rosicrucian mysteries; an elementary exposition of their secret teachings",
+      "author": "Max Heindel",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: rosicrucianmyste00heiniala, rosicrucianmyste0000maxh, rosicrucianmyst00heingoog, rosicrucianmyst01heingoog"
+    },
+    {
+      "id": "secrettraditioni02waituoft",
+      "title": "The secret tradition in freemasonry : and an analysis of the inter-relation between the craft and the high grades in respect to their term of research, expressed by the way of symbolism",
+      "author": "Arthur Edward Waite",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "clothedwithsun00kingiala",
+      "title": "\"Clothed with the sun\";",
+      "author": "Anna (Bonus) Mrs. Kingsford",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: clothedwithsun00king"
+    },
+    {
+      "id": "secretdoctrinein00wait",
+      "title": "The secret doctrine in Israel : a study of the Zohar and its connections",
+      "author": "Arthur Edward Waite",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: thesecretdoctrin00waituoft"
+    },
+    {
+      "id": "howshallweknowch00heinrich",
+      "title": "How shall we know Christ at his coming?",
+      "author": "Max Heindel",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "wayofdivineunion00wait",
+      "title": "The way of divine union, being a doctrine of experience in the life of sanctity, considered on the faith of its testimonies and interpreted after a new manner",
+      "author": "Arthur Edward Waite",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "philosophiaherme00rale",
+      "title": "Philosophia hermetica : a course of ten lessons, being an introduction to \"The Philosophy of Alchemy,\"",
+      "author": "A. S. (Albert Sidney) Raleigh",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rosicrvciansymbo00plum",
+      "title": "Rosicrvcian symbology; a treatise wherein the discerning ones will find the elements of constructive symbology and certain other things",
+      "author": "George Winslow Plummer",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "secretshakespear00fratuoft",
+      "title": "Secret Shakespearean seals : revelations of Rosicrucian arcana, discoveries in the Shakespeare plays, sonnets, and works, printed circa 1586-1740, of \"Secreti sigilli\", concealed author's marks and signs",
+      "author": "Fratres roseæ crucis",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: cu31924013153857"
+    },
+    {
+      "id": "rosecrossordersh00clym",
+      "title": "The Rose Cross order; a short sketch of the history of the Rose Cross order in America, together with a sketch of the life of Dr. P. B. Randolph, the founder of the order ..",
+      "author": "R. Swinburne (Reuben Swinburne) Clymer",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "sonofgodmystical1916clym",
+      "title": "The Son of God : the mystical teachings of the masters, giving a short sketch of the early life of Jesus and of his training by the Essenean Order, and an interpretation of some of his teachings, in harmony with the fundamental principles of the Temple of Illumination, known as the \"Christic Interpretation\",",
+      "author": "R. Swinburne (Reuben Swinburne) Clymer",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "waytextbookforst00dowd",
+      "title": "The way; a text book for the student of Rosicrucian philosophy",
+      "author": "F. B. (Freeman Benjamin) Dowd",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "suggestiveinquir1918atwo",
+      "title": "A suggestive inquiry into the Hermetic mystery : with a dissertation on the more celebrated of the alchemical philosophers being an attempt towards the recovery of the ancient experiement of nature",
+      "author": "Mary Anne Atwood",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: suggestiveinquir00atwo_0, suggestiveinquir00atwo"
+    },
+    {
+      "id": "incognito1918secretdoctrine",
+      "title": "Magus Incognito, The Secret Doctrine of the Rosicrucians",
+      "author": "Clifford Edgar Brooksmith",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "personalchristia00bh",
+      "title": "Personal Christianity a science; the doctrines ;of Jacob Boehme, the God-taught philosopher",
+      "author": "Jakob Böhme",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: personalchristia00bhuoft, personalchristi00hartgoog, personalchristi01hartgoog"
+    },
+    {
+      "id": "hermeticart01rale",
+      "title": "The Hermetic art:",
+      "author": "A. S. (Albert Sidney) Raleigh",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries; alternate scans: hermeticartintro00rale"
+    },
+    {
+      "id": "occultchemistryc00besa",
+      "title": "Occult chemistry; clairvoyant observations on the chemical elements;",
+      "author": "Annie Wood Besant",
+      "year": 1919,
+      "lang": "English",
+      "note": "FLAG: Besant's theosophical clairvoyant chemistry — occult but not alchemy/Hermeticism/Rosicrucianism specifically; include?; CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "bygonebeliefsbei00redguoft",
+      "title": "Bygone beliefs : being a series of excursions in the byways of thought",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: bwb_T5-BZG-987, bygonebeliefs0000hsta"
+    },
+    {
+      "id": "b29978026",
+      "title": "Roger Bacon, the father of experimental science and mediæval occultism",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "rosicrucianfunda00plum",
+      "title": "Rosicrucian fundamentals : an exposition of the Rosicrucian synthesis of religion, science and philosophy, in fourteen complete instructions",
+      "author": "George Winslow Plummer",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "webofdestinyhowm00heinrich",
+      "title": "The web of destiny; how made and unmade",
+      "author": "Max Heindel",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: webdestinyhowma00heingoog"
+    },
+    {
+      "id": "how-the-rosicrucians-heal-the-sick",
+      "title": "How The Rosicrucians Heal The Sick",
+      "author": "Rosicrucian Fellowship",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "josephglanvillan00redguoft",
+      "title": "Joseph Glanvill and psychical research in the seventeenth century",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "alchemyancientmo00redg_0",
+      "title": "Alchemy: ancient and modern, being a brief account of the alchemistic doctrines, and their relations, to mysticism on the one hand, and to recent discoveries in physical science on the other hand; together with some particulars regarding the lives and teachings of the most noted alchemists",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: alchemyancientmo00redgrich, b31365917, bwb_S0-ADE-180"
+    },
+    {
+      "id": "gleaningsofmysti00hein",
+      "title": "Gleanings of a mystic",
+      "author": "Max Heindel",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: gleaningsofmysti00heinrich"
+    },
+    {
+      "id": "joannesbaptistav00redg",
+      "title": "Joannes Baptista van Helmont; alchemist, physician and philosopher",
+      "author": "H. Stanley (Herbert Stanley) Redgrove",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by West Virginia University Libraries"
+    },
+    {
+      "id": "saintmartinfrenc00waitrich",
+      "title": "Saint-Martin, the French mystic, and the story of modern Martinism, by Arthur Edward Waite",
+      "author": "Arthur Edward Waite",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "historyofmagicin00lv",
+      "title": "The history of magic : including a clear and precise exposition of its procedure, its rites and its mysteries",
+      "author": "Eliphas Lévi",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "rosicrucianphilo00heinrich",
+      "title": "The Rosicrucian philosophy in questions and answers",
+      "author": "Max Heindel",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "rosicrucianmanua00plum",
+      "title": "Rosicrucian manual for the instruction of postulants in the congregation of the outer, neophytes, and fraters of duly istituted colleges of the Societas rosicruciana in America",
+      "author": "George Winslow Plummer",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rosicruciansthei0000unse",
+      "title": "the rosicrucians their teaching",
+      "author": "Unknown",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "HermeticScienceOfMotionAndNumber",
+      "title": "Hermetic Science Of Motion And Number",
+      "author": "A. S. (Albert Sidney) Raleigh",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "McGillLibrary-osl_outflying-philosophy-literary-study_S474o1925-49351",
+      "title": "Outflying philosophy; a literary study of the religious element in the poems and letters of John Donne and in the works of Sir Thomas Browne and of Henry Vaughan the Silurist, together with an account of the interest of these writers in scholastic philosophy, in Platonism and in Hermetic physic, with also some notes on witchcraft",
+      "author": "Robert Sencourt",
+      "year": 1925,
+      "lang": "English",
+      "note": "FLAG: 'Religious element' literary study — unclear whether it covers Hermeticism/alchemy specifically.; CLEAR:by-date; held by McGill University Library"
+    },
+    {
+      "id": "secrettraditioni0000unse",
+      "title": "The Secret Tradition in Alchemy: Its Development and Records",
+      "author": "arthur edward waite",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "paul-foster-case-the-true-and-invisible-rosicrucian-order-1",
+      "title": "SpiritualQuest - Paul Foster Case - The True and Invisible Rosicrucian Order. An Interpretation of the Rosicrucian Allegory & An Explanation of the Ten Rosicrucian Grades",
+      "author": "Paul Foster Case",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "rosicrucian0000hspe",
+      "title": "ROSICRUCIAN",
+      "author": "PH.D. F.R.C. H. SPENCER LEWIS",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "holykabbalahstud00wait",
+      "title": "The holy Kabbalah; a study of the secret tradition in Israel as unfolded by sons of the doctrine for the benefit and consolation of the elect dispersed through the lands and ages of the greater exile",
+      "author": "Arthur Edward Waite",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "RosicrucianAndMasonicOriginsManlyPalmerHall1929",
+      "title": "Rosicrucian and Masonic Origins",
+      "author": "Manly Palmer Hall",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "cumberland-clark-shakespeare-science-9781906267391",
+      "title": "Shakespeare and Science: A Study of Shakespeare’s Interest in, and Literary and Dramatic Use of, Natural Phenomena; with an Account of the Astronomy, Astrology, and Alchemy of his Day, and his Attitude towards these Sciences",
+      "author": "Cumberland Clark",
+      "year": 1929,
+      "lang": "English",
+      "note": "FLAG: General Shakespeare-and-science study — unclear whether it focuses on alchemy specifically, or is general-interest.; CLEAR:stated"
+    },
+    {
+      "id": "INDEFENSEOFMAGIC",
+      "title": "In defense of magic; the meaning and use of symbol and rite,",
+      "author": "Catharine Cook. Smith",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "rosicrucian00426808",
+      "title": "Rosicrucian philosophy : pointers for students",
+      "author": "Rosicrucian Order. Crotona Fellowship",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Southampton"
+    },
+    {
+      "id": "rosicrucian00426809",
+      "title": "Secrets of the Rosicrucians",
+      "author": "Frater of the Rosy Cross",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Southampton"
+    },
+    {
+      "id": "rosicrucian00426831",
+      "title": "The Rosicrucians",
+      "author": "pseud Maître L'Inconnu",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Southampton"
+    },
+    {
+      "id": "theurgyorhermeti00gars",
+      "title": "Theurgy, or, The hermetic practice : a treatise on spiritual alchemy",
+      "author": "E. J. Langford Garstin",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "threefamousalche0000unse",
+      "title": "Three famous alchemists: Raymund Lully, by Arthur Edward Waite, Cornelius Agrippa, by Lewis Spence, [and] Theophrastus Paracelsus, by W.P. Swainson",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "witchcraft-magic-alchemy-gillot-de-givry",
+      "title": "Witchcraft, Magic, and Alchemy – Gillot De Givry",
+      "author": "Grillot de Givry",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    }
+  ],
+  "hand_pruned": [
+    "bib_fict_4102585 — dupe of ancientfragments00coryuoft",
+    "10239301bsb — dupe of ancientfragments00coryuoft",
+    "spenserspoem00hitc — dupe of spenserspoementi00hitcrich",
+    "mysteriesrosiec00readgoog — dupe of mysteriesofrosie0000unse",
+    "occultsciencesco00wait — dupe of b24884704",
+    "templeofrosycros00dowd — dupe of templeofrosycro00dowd",
+    "bygonebeliefsbei00redg — dupe of bygonebeliefsbei00redguoft",
+    "b24869351_0002 — dupe of b2152354x",
+    "rosicruciancosmo0000maxh_a3x2 — dupe of rosicruciancosmo00heiniala",
+    "livesofalchemyst1888wait — dupe of b21930478",
+    "a-suggestive-inquiry-into-the-hermetic-m — dupe of suggestiveinquir1918atwo (same Atwood text)",
+    "withadeptsanadv00hartgoog — dupe of anadventureamon00hartgoog",
+    "the-rosicrucians-their-rites-and-mysteri — dupe of cu31924025077664",
+    "lifeofjehoshuapr0000hart — dupe of lifeofjehoshuapr00hart",
+    "hermeticalchemic0000arth_p3q3 — dupe of cu31924092287121",
+    "alchemistthe00hughiala — off-topic: novel, not a study of alchemy",
+    "mymarinememoran00jenngoog — off-topic: Jennings travel/naval memoir",
+    "playbookmetalsi01peppgoog — off-topic: popular science on metallurgy, not alchemy history",
+    "Wm.HarroldSmithsHermeticPatentMethodsOfPreservingWoodenPilesPosts — off-topic: wood-preservation patent, false 'hermetic' (airtight) keyword match",
+    "maideealchemist00cann — off-topic: novel",
+    "lyricoffairyland00wait — off-topic: Waite poetry, not alchemy/Hermetic/Rosicrucian subject matter (cf. Heindel opera guide exclusion)",
+    "b29007239 — off-topic: 16th c. poetry miscellany, false 'posies' keyword match",
+    "childishnessbrut00jennrich — off-topic: Jennings social commentary tract, not alchemy/Rosicrucian",
+    "phallicismcelest00jenn_0 — off-topic: Jennings comparative-religion phallicism study, not alchemy/Hermeticism/Rosicrucianism (cf. Hartmann homeopathy exclusion)",
+    "phallicismcelest00jenn — off-topic: Jennings comparative-religion phallicism study, not alchemy/Hermeticism/Rosicrucianism (cf. Hartmann homeopathy exclusion)",
+    "cu31924095790527 — off-topic: Waite poetry (Israfel), not alchemy subject matter",
+    "thealchemistAkhundov — off-topic: play by Akhundov",
+    "songspoemsoffair00waituoft — off-topic: Waite poetry",
+    "elfinmusicanthol00wait — off-topic: Waite poetry",
+    "b20425016 — off-topic: Kingsford diet/health book, explicitly excluded by campaign scope",
+    "indianreligionso00jenn — off-topic: Jennings comparative religion/Buddhism, not alchemy/Rosicrucian",
+    "alchemist00balz — off-topic: Balzac novel",
+    "timesofalchemy00tope — off-topic: Topelius fiction",
+    "cu31924093743635 — off-topic: Jennings Phallism, comparative religion, not alchemy/Rosicrucian",
+    "lucastaparablesp00wait — off-topic: Waite poetry",
+    "academicalchemis00univrich — off-topic: student musical comedy/farce, explicitly excluded genre",
+    "strangehousesofs00waitrich — off-topic: Waite poetry collection",
+    "50yearsincampfie00hitcuoft — off-topic: Hitchcock military memoir/diary, not hermetic writing",
+    "oncalculationoft00redgrich — off-topic: technical/industrial thermo-chemistry, explicitly excluded noise",
+    "alchemyofthought00jackuoft — off-topic: metaphorical title (philosophy of thought), not historical alchemy",
+    "addressesessayso00king — off-topic: Kingsford vegetarianism/diet essays, explicitly excluded by campaign scope",
+    "collectedpoemsof01wait — off-topic: Waite poetry",
+    "rosicrucianroman00evan — off-topic: novel/war romance fiction",
+    "alchemysymphonic00hill — off-topic: symphonic poem, metaphorical alchemy",
+    "secret_practices_sufi_freemasons — off-topic: Sufi Freemasonry ritual, not about Rosicrucianism, explicitly excluded",
+    "lovesalchemypoem0000fsco — off-topic: poetry, metaphorical alchemy",
+    "manuscriptsbooks0000vari — off-topic: appears to be a bookseller sale catalogue",
+    "chambers-papers-for-the-people-vol-9-1856-alchemy-and-the-alchemist — serial: Chambers's Papers for the People periodical volume",
+    "jstor-20487171 — serial: JSTOR journal article",
+    "jstor-1625000 — serial: JSTOR journal article",
+    "alchemist0000unse_i4k6 — off-topic: Ben Jonson's play The Alchemist",
+    "cu31924006465599 — off-topic: Ben Jonson's play The Alchemist",
+    "the-alchemist_202107 — off-topic: modern user upload misdated to 1901 (id suggests 2021 upload)",
+    "the-alchemist_20210715 — off-topic: modern user upload misdated to 1901 (id suggests 2021 upload)",
+    "jstor-6592 — serial: JSTOR journal article",
+    "jstor-27900787 — serial: JSTOR journal article",
+    "h.-e.-j.-1928.-review-rasa-jala-nidhi-or-ocean-of-indian-chemistry-and-alchemy-v — serial: journal review article"
+  ]
+}

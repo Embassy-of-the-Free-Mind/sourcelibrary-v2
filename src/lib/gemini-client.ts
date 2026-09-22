@@ -142,6 +142,55 @@ const isSelfMetered = (m?: GeminiMeter | SelfMeteredGemini): m is SelfMeteredGem
   !!m && 'selfMetered' in m;
 
 type GenerateArgs = Parameters<GenerativeModel['generateContent']>;
+
+/**
+ * THINKING IS OFF UNLESS A CALL SITE ASKS FOR IT (#4581, #4599).
+ *
+ * Gemini 3.x thinks by default and bills the thoughts at the output rate. 28
+ * call sites behind this client set no `thinkingConfig` at all (chat, ask,
+ * explain, identify, index, detect-split, split-gemini, and a dozen lib
+ * helpers) — so the default lives here, once, instead of in 28 files. A site
+ * that WANTS reasoning sets its own `thinkingConfig` and this leaves it alone.
+ *
+ * Two places, because the SDK does not merge them: a request-level
+ * `generationConfig` REPLACES the model-level one wholesale, so a default set
+ * only on the model is silently dropped by any call that passes its own
+ * temperature. `thinkingConfig` is not in @google/generative-ai 0.24.x types.
+ *
+ * Allow-list, not deny-list: a model that does not think (2.0, 1.5, TTS,
+ * embedding, image) rejects the unknown field, and pro models reject a zero
+ * budget — both are a 400 on a call that worked yesterday. Only the flash
+ * text models from 2.5 on get the default; anything else is untouched.
+ */
+type LooseGenerationConfig = Record<string, unknown> & { thinkingConfig?: unknown };
+export const acceptsZeroThinking = (modelId: string) =>
+  /^gemini-(2\.5|[3-9](\.\d+)?)-flash/.test(modelId) && !/tts|image|embedding|live|audio/.test(modelId);
+
+function withoutThinking<T>(config: T | undefined): T {
+  const c = (config ?? {}) as LooseGenerationConfig;
+  if (c.thinkingConfig !== undefined) return c as T;
+  return { ...c, thinkingConfig: { thinkingBudget: 0 } } as T;
+}
+
+function noThinkingByDefault(model: GenerativeModel, modelId: string): GenerativeModel {
+  if (!acceptsZeroThinking(modelId)) return model;
+  model.generationConfig = withoutThinking(model.generationConfig);
+
+  const patch = <A extends unknown[]>(args: A): A => {
+    const req = args[0];
+    if (req && typeof req === 'object' && !Array.isArray(req) && 'generationConfig' in req && req.generationConfig) {
+      return [{ ...req, generationConfig: withoutThinking(req.generationConfig) }, ...args.slice(1)] as unknown as A;
+    }
+    return args;
+  };
+  const generate = model.generateContent.bind(model);
+  const stream = model.generateContentStream.bind(model);
+  const startChat = model.startChat.bind(model);
+  model.generateContent = (...args: GenerateArgs) => generate(...patch(args));
+  model.generateContentStream = (...args: Parameters<GenerativeModel['generateContentStream']>) => stream(...patch(args));
+  model.startChat = (...args: Parameters<GenerativeModel['startChat']>) => startChat(...patch(args));
+  return model;
+}
 type StreamArgs = Parameters<GenerativeModel['generateContentStream']>;
 
 /**
@@ -196,6 +245,42 @@ function meterModel(model: GenerativeModel, modelId: string, meter: GeminiMeter)
     }
   };
 
+  // A ChatSession does NOT call `model.generateContent` — the SDK routes
+  // `sendMessage` straight to its module-level request function, so a chat
+  // built from a metered model spent silently (both book-chat routes, found
+  // 2026-09-21). Wrap the session the same way the model is wrapped.
+  const startChat = model.startChat.bind(model);
+  model.startChat = (...chatArgs: Parameters<GenerativeModel['startChat']>) => {
+    const chat = startChat(...chatArgs);
+    const send = chat.sendMessage.bind(chat);
+    const sendStream = chat.sendMessageStream.bind(chat);
+    chat.sendMessage = async (...a: Parameters<typeof send>) => {
+      const startedAt = Date.now();
+      try {
+        const result = await send(...a);
+        await record(result?.response?.usageMetadata, startedAt);
+        return result;
+      } catch (err) {
+        await record(undefined, startedAt, err);
+        throw err;
+      }
+    };
+    chat.sendMessageStream = async (...a: Parameters<typeof sendStream>) => {
+      const startedAt = Date.now();
+      try {
+        const result = await sendStream(...a);
+        result.response
+          .then((r) => record(r?.usageMetadata, startedAt))
+          .catch((err) => record(undefined, startedAt, err));
+        return result;
+      } catch (err) {
+        await record(undefined, startedAt, err);
+        throw err;
+      }
+    };
+    return chat;
+  };
+
   model.generateContentStream = async (...args: StreamArgs) => {
     const startedAt = Date.now();
     try {
@@ -226,11 +311,14 @@ function meterModel(model: GenerativeModel, modelId: string, meter: GeminiMeter)
 export function getGeminiClient(meter?: GeminiMeter | SelfMeteredGemini): GoogleGenerativeAI {
   const apiKey = getNextApiKey();
   const client = new GoogleGenerativeAI(apiKey);
-  if (isSelfMetered(meter)) return client;
   const getModel = client.getGenerativeModel.bind(client);
-  const ctx: GeminiMeter = meter ?? { endpoint: 'unlabelled' };
-  client.getGenerativeModel = (params: ModelParams, requestOptions?: RequestOptions) =>
-    meterModel(getModel(params, requestOptions), params.model, ctx);
+  const ctx: GeminiMeter | null = isSelfMetered(meter) ? null : (meter ?? { endpoint: 'unlabelled' });
+  client.getGenerativeModel = (params: ModelParams, requestOptions?: RequestOptions) => {
+    // Thinking default first, metering outermost — a self-metered lane skips the
+    // meter, never the thinking default.
+    const model = noThinkingByDefault(getModel(params, requestOptions), params.model);
+    return ctx ? meterModel(model, params.model, ctx) : model;
+  };
   return client;
 }
 

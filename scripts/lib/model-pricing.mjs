@@ -45,6 +45,15 @@ export const MODEL_PRICING = {
   'gemini-3.5-flash':        { input: 1.50, output: 9.00 },
   'gemini-3.6-flash':        { input: 0.75, output: 3.75 },  // was 1.50/7.50
   'gemini-3.7-flash':        { input: 0.75, output: 3.75 },
+  // Added 2026-09-21 (#4599 follow-up): missing here made spend-reconcile.mjs
+  // exit 2 every day once booksplit made 4.45M output tokens on this model on
+  // 2026-09-15 ($18.04). Measured from the Detailed usage cost BigQuery export
+  // (cost / usage.amount_in_pricing_units, standard tier, text — the model's
+  // only traffic so far): $16.702336 / 4,453,957 out tok = $3.75/1M out;
+  // $0.076873 / 102,498 in tok = $0.75/1M in. Cross-checked against the live
+  // Cloud Billing SKU catalogue's "gemini 3.8 flash text" standard-tier SKUs
+  // (unambiguous — one input, one output) the same day: identical, $0.75/$3.75.
+  'gemini-3.8-flash':        { input: 0.75, output: 3.75 },
   'gemini-3.1-pro-preview':  { input: 2.50, output: 15.00 }, // not verifiable — no unambiguous SKU
   'gemini-3-pro-preview':    { input: 2.50, output: 10.00 }, // not verifiable — no unambiguous SKU
   'gemini-2.5-flash':        { input: 0.15, output: 0.60 },  // catalogue splits by long/short input
@@ -139,3 +148,15 @@ export function costOf(model, inputTokens = 0, outputTokens = 0) {
   const p = priceFor(model);
   return (inputTokens / 1e6) * p.input + (outputTokens / 1e6) * p.output;
 }
+
+/**
+ * Can this model be sent `thinkingConfig: { thinkingBudget: 0 }`?
+ *
+ * Allow-list, not deny-list: a model with no reasoning stage (2.0, 1.5, TTS, embedding,
+ * image) rejects the unknown field, and pro models reject a zero budget — both are a 400.
+ * Only flash text models from 2.5 on. Twin of `acceptsZeroThinking` in
+ * src/lib/gemini-client.ts (TypeScript cannot import this file); the model lists in
+ * tests/unit/gemini-client-meters.test.ts pin the behaviour of both.
+ */
+export const acceptsZeroThinking = (model) =>
+  /^gemini-(2\.5|[3-9](\.\d+)?)-flash/.test(model) && !/tts|image|embedding|live|audio/.test(model);

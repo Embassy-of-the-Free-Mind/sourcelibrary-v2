@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-db5ac3-p566",
+  "substratum": "woodblock-canon",
+  "title": "尚書古文疏證",
+  "probe_chars": 423,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1b0048",
+  "work_title": "尚書古文疏證-清-閻若璩",
+  "juan": 7,
+  "url": "https://github.com/kanripo/KR1b0048/blob/WYG/KR1b0048_007.txt",
+  "etext_chars": 27549,
+  "window_chars": 468,
+  "overlap": 0.79
+}

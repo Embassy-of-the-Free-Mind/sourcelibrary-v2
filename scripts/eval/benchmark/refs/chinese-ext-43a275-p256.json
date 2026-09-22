@@ -1,0 +1,16 @@
+{
+  "slug": "chinese-ext-43a275-p256",
+  "substratum": "woodblock-canon",
+  "title": "韓非子 (Han Feizi)",
+  "probe_chars": 269,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR5f0011",
+  "work_title": "韓非子--韓非",
+  "juan": 18,
+  "url": "https://github.com/kanripo/KR5f0011/blob/master/KR5f0011_018.txt",
+  "etext_chars": 6378,
+  "window_chars": 320,
+  "overlap": 0.449
+}

@@ -126,12 +126,16 @@ export default function CollectionAnchorBar({ sections, slug, tone = 'light' }: 
       ? `transition-opacity ${isActive ? 'text-white' : 'text-white/55 hover:text-white/85'}`
       : `transition-opacity ${isActive ? 'text-primary' : 'text-secondary/70 hover:text-primary'}`;
   };
+  // A fixed height, not padding: the Save pill wraps LikeButton, whose heart
+  // carries its own padding and made that pill taller than Share.
   const pillCls = dark
-    ? 'inline-flex items-center gap-1.5 text-sm text-white/85 border border-white/25 rounded-full px-3 py-1.5 hover:bg-white/10 transition-colors'
-    : 'inline-flex items-center gap-1.5 text-sm text-secondary border border-border-light rounded-full px-3 py-1.5 hover:bg-warm transition-colors';
+    ? 'inline-flex items-center gap-1.5 h-9 text-sm text-white/85 border border-white/25 rounded-full px-3 hover:bg-white/10 transition-colors'
+    : 'inline-flex items-center gap-1.5 h-9 text-sm text-secondary border border-border-light rounded-full px-3 hover:bg-warm transition-colors';
 
+  // Dark tone: no top hairline, so the bar continues the hero's dark ground
+  // instead of ruling a line under it.
   return (
-    <nav ref={navRef} aria-label="Sections" className={`sticky top-0 z-30 ${dark ? 'border-y border-white/10 bg-dark' : 'border-y border-border-light bg-cream'}`}>
+    <nav ref={navRef} aria-label="Sections" className={`sticky top-0 z-30 ${dark ? 'border-b border-white/10 bg-dark' : 'border-y border-border-light bg-cream'}`}>
       <div ref={rootRef} className="max-w-[1500px] mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
         {/* Jump links — inline on desktop */}
         <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
@@ -160,7 +164,7 @@ export default function CollectionAnchorBar({ sections, slug, tone = 'light' }: 
           {/* LikeButton hardcodes grey for the unliked heart and label; on the
               dark bar those are overridden to the pill's white. The liked
               state keeps its red. */}
-          <div className={`${pillCls} ${dark ? '[&_.text-gray-400]:!text-white/85 [&_.text-gray-500]:!text-white/85' : ''}`}>
+          <div className={`${pillCls} [&_span]:!text-sm ${dark ? '[&_.text-gray-400]:!text-white/85 [&_.text-gray-500]:!text-white/85' : ''}`}>
             <LikeButton targetType="collection" targetId={slug} size="sm" showCount label="Save" />
           </div>
 
