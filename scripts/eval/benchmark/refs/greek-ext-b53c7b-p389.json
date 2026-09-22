@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-b53c7b-p389",
+  "substratum": "greek-1450-1699",
+  "title": "Historiae Byzantinae scriptores tres",
+  "year": 1604,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1203,
+  "corpus_votes": [
+    {
+      "id": "tlg4102.tlg035.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0031.tlg005.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg2048.tlg001.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

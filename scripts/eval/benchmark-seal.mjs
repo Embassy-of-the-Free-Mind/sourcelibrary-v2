@@ -27,6 +27,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { loadEnv, connect, disconnect } from './lib/sampling.mjs';
 import { fetchImage } from './lib/runners.mjs';
@@ -84,6 +85,60 @@ function kanripoExact(title) {
 }
 // Book ids already sealed in another stratum's registry (so an extension never re-draws them).
 const sealedBooks = (name) => { const f = path.join(__dirname, 'benchmark', `${name}.json`); return new Set(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).pages.map(p => p.book_id) : []); };
+const GREEK = { language: /^(Greek|Ancient Greek|grc|gre)$/i, pages_count: { $gt: 5 } };
+
+// ── Leaf-script screen (greek-ext, #4925 step 2) ───────────────────
+// `books.language = Greek` is the EDITION's tag: 17 of the 20 sealed "pre-1700 Greek" pages were
+// Latin leaves of Greek–Latin editions (#4884). A Greek cell needs Greek leaves, so the extension
+// draw screens each candidate page with Tesseract (grc+lat, free, local): keep the first of the
+// book's SCREEN_TRIES pre-drawn interior pages whose recognised letters are ≥ SCREEN_SHARE Greek
+// (≥ SCREEN_MIN Greek letters). One page per book still holds; a book with no passing page is
+// skipped. The screen only decides script, not quality — by-eye classification follows export and
+// is the label that counts. Tesseract output is cached under <out>/<stratum>/screen/ (it doubles as
+// the free phase-A probe for the reference lookup).
+const SCREEN_TRIES = 6, SCREEN_SHARE = 0.4, SCREEN_MIN = 80, SCREEN_CONCURRENCY = 12, SCREEN_WIDTH = 1200;
+// Fast path: a page with stored OCR (≈ 10 % of the pool) is screened on that text, no fetch, no
+// Tesseract. Same share rule; the by-eye pass catches a poisoned read (#3362) like any other.
+const scriptShare = txt => { const grc = (txt.match(/\p{Script=Greek}/gu) || []).length, lat = (txt.match(/\p{Script=Latin}/gu) || []).length; return { greek_letters: grc, latin_letters: lat, greek_share: grc + lat ? +(grc / (grc + lat)).toFixed(3) : 0 }; };
+// Async on purpose: a synchronous execFileSync here blocks the event loop and serialises every
+// "concurrent" book behind one Tesseract process (measured: 3 pages/min instead of ~60).
+function tesseract(buf, langs = 'grc+lat') {
+  return new Promise((resolve, reject) => {
+    const p = spawn('tesseract', ['stdin', 'stdout', '-l', langs, '--psm', '3'], { stdio: ['pipe', 'pipe', 'ignore'], env: { ...process.env, OMP_THREAD_LIMIT: '1' } });
+    const chunks = []; const timer = setTimeout(() => { p.kill('SIGKILL'); reject(new Error('tesseract timeout')); }, 180000);
+    p.stdout.on('data', c => chunks.push(c));
+    p.on('error', e => { clearTimeout(timer); reject(e); });
+    p.on('close', code => { clearTimeout(timer); code === 0 ? resolve(Buffer.concat(chunks).toString('utf8')) : reject(new Error(`tesseract exit ${code}`)); });
+    p.stdin.on('error', () => {}); p.stdin.end(buf);
+  });
+}
+async function screenGreek(page, book, stratum) {
+  const url = getPageSource(page);
+  const dir = path.join(args.out || path.join(process.env.HOME || '', '.claude/jobs/417569c5/tmp/bench-images'), stratum, 'screen');
+  fs.mkdirSync(dir, { recursive: true });
+  const key = `${book.id}-p${page.page_number}`, jf = path.join(dir, `${key}.json`);
+  if (fs.existsSync(jf)) return JSON.parse(fs.readFileSync(jf, 'utf8'));
+  let res;
+  if (page.ocr?.data && letters(stripTags(page.ocr.data)) >= MIN_LETTERS) {
+    const s = scriptShare(stripTags(page.ocr.data));
+    res = { key, url, ...s, pass: s.greek_letters >= SCREEN_MIN && s.greek_share >= SCREEN_SHARE, from: 'stored_ocr' };
+    fs.writeFileSync(jf, JSON.stringify(res));
+    return res;
+  }
+  try {
+    const sharp = (await import('sharp')).default;
+    // IIIF sources can render the screening size server-side (a BSB full/full leaf is 3–8 MB).
+    let buf = await fetchImage(url.replace(/\/full\/full\/0\/default\.jpg$/, `/full/${SCREEN_WIDTH},/0/default.jpg`), 60000);
+    buf = await sharp(buf).resize({ width: SCREEN_WIDTH, withoutEnlargement: true }).png().toBuffer();
+    const txt = await tesseract(buf);
+    const grc = (txt.match(/\p{Script=Greek}/gu) || []).length, lat = (txt.match(/\p{Script=Latin}/gu) || []).length;
+    const share = grc + lat ? grc / (grc + lat) : 0;
+    res = { key, url, greek_letters: grc, latin_letters: lat, greek_share: +share.toFixed(3), pass: grc >= SCREEN_MIN && share >= SCREEN_SHARE, from: 'tesseract' };
+    fs.writeFileSync(path.join(dir, `${key}.txt`), txt);
+  } catch (e) { res = { key, url, error: String(e.message || e).slice(0, 120), pass: false }; }
+  fs.writeFileSync(jf, JSON.stringify(res));
+  return res;
+}
 export const STRATA = {
   chinese: { issue: 4743, seed: 4743, subs: [
     { name: 'buddhist-canon', n: 20, filter: { ...ZH, title: BUDDHIST_RE }, reference: 'CBETA (full-text search, cbdata.dila.edu.tw)' },
@@ -115,6 +170,30 @@ export const STRATA = {
     { name: 'skqs-manuscript', n: 40, spares: 8, filter: ZH, pick: b => isSkqs(b) && !sealedBooks('chinese').has(b.id), reference: 'Kanripo (SKQS witness, catalogue title + juan)' },
     { name: 'woodblock-canon', n: 40, spares: 8, filter: ZH, pick: b => !isSkqs(b) && !sealedBooks('chinese').has(b.id) && (BUDDHIST_RE.test(b.title || '') || kanripoExact(b.title)), reference: 'CBETA (full-text search) for Buddhist titles, else Kanripo (exact catalogue title)' },
   ] },
+  // Extension (2026-09-18, #4925 step 2, #4744): the Greek decision has references only for
+  // 19th-century print; the sealed `greek` stratum's pre-1700 draw was 17/20 Latin leaves. Two
+  // open periods, each drawn with the leaf-script screen above (see screen_rule), no spares —
+  // every drawn page is classified by eye and the cell is the referenced Greek subset.
+  'greek-ext': { issue: 4925, seed: 47441, screen: screenGreek,
+    screen_rule: `per book, ${SCREEN_TRIES} interior pages pre-drawn in PRNG order; each is screened with Tesseract grc+lat (image downscaled to 1600 px) and the first with ≥ ${SCREEN_MIN} Greek letters and Greek share ≥ ${SCREEN_SHARE} of recognised letters is kept; a book with no passing page is skipped. The screen decides SCRIPT only; leaf_language and script_class are assigned by eye after export and are the labels that count.`,
+    subs: [
+      // n is what the ≈ 50-referenced-leaf target needs at the measured rates (screen pass ≈ 7 % of
+      // books, by-eye confirmation and reference hit rates from the sealed stratum); the 1700–1799
+      // pool (357 print books) is walked to exhaustion if it holds fewer.
+      { name: 'greek-1450-1699', n: 90, spares: 0, filter: GREEK, pick: b => inRange(1450, 1700)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id), reference: 'First1KGreek / Perseus canonical-greekLit TEI or el.wikisource where the work is held (edition of the WORK, not ours — expect the mismatch demotion on some); no proxy top-ups' },
+      { name: 'greek-1700-1799', n: 80, spares: 0, filter: GREEK, pick: b => inRange(1700, 1800)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id), reference: 'same' },
+    ] },
+  // greek-ext2 (#4925 step 2, 2026-09-21): the SUPPLEMENTARY draw the preregistration's rule (e)
+  // names ("the shortfall is a draw-more item, never a proxy top-up"). The pre-1700 cell closed at 48
+  // referenced leaves, two short of 50. Size fixed before drawing: 10 books, approved by Derek. Same
+  // pool, same leaf-script screen, its own seed; every book already in greek.json or greek-ext.json is
+  // excluded. The original walk cannot be resumed — a draw is reproducible only against the id list
+  // as of its seal date — so this is a second sealed file, reported as a supplement, not a re-draw.
+  'greek-ext2': { issue: 4925, seed: 47442, screen: screenGreek,
+    screen_rule: 'identical to greek-ext',
+    subs: [
+      { name: 'greek-1450-1699', n: 10, spares: 0, filter: GREEK, pick: b => inRange(1450, 1700)(b) && !MS_RE.test(b.title || '') && !sealedBooks('greek').has(b.id) && !sealedBooks('greek-ext').has(b.id), reference: 'same as greek-ext' },
+    ] },
   syriac: { issue: 4746, seed: 4746, subs: [
     { name: 'manuscript', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: b => { const y = yearOf(b.published); return y == null || y < 1500; }, reference: 'agreement + invention' },
     { name: 'print', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: inRange(1700, 1990), reference: 'Digital Syriac Corpus / Peshitta where the text exists, else agreement' },
@@ -151,6 +230,7 @@ async function drawSub(db, stratum, sub, rand) {
   books.sort((a, b) => (a.id < b.id ? -1 : 1));
   // Fisher–Yates with the seeded PRNG over the sorted list, then walk in order.
   for (let i = books.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [books[i], books[j]] = [books[j], books[i]]; }
+  if (sub.screen) return drawScreened(db, stratum, sub, rand, books);
   const out = [];
   let wantColumns = sub.columns || 0;
   let skippedBooks = 0;
@@ -181,18 +261,63 @@ async function drawSub(db, stratum, sub, rand) {
     }
     if (!chosen) { skippedBooks++; continue; }
     if (chosen._columns) wantColumns--;
-    const year = yearOf(book.published);
-    const slug = `${stratum}-${book.id.slice(-6)}-p${chosen.page_number}`;
-    out.push({
-      slug, book_id: book.id, page_number: chosen.page_number, substratum: sub.name,
-      title: (book.title || '').slice(0, 120), year, published: book.published || null,
-      language: book.language, provider: book.contributing_library || book.image_source?.provider || null,
-      image_url: getPageSource(chosen), stored_ocr_chars: chosen.ocr?.data ? chosen.ocr.data.length : 0,
-      multi_column_tag: !!chosen._columns, reference_plan: sub.reference,
-    });
+    out.push(entry(stratum, sub, book, chosen));
   }
   out.forEach((p, i) => { p.spare = i >= sub.n; });
   console.log(`  ${sub.name}: ${Math.min(out.length, sub.n)}/${sub.n} pages + ${Math.max(0, out.length - sub.n)} spares from ${books.length} eligible books (${skippedBooks} books skipped, ${out.filter(p => p.multi_column_tag && !p.spare).length} multi-column-tagged)`);
+  return out;
+}
+
+const PAGE_PROJ = { page_number: 1, 'ocr.data': 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1 };
+function entry(stratum, sub, book, chosen) {
+  const e = {
+    slug: `${stratum}-${book.id.slice(-6)}-p${chosen.page_number}`, book_id: book.id, page_number: chosen.page_number, substratum: sub.name,
+    title: (book.title || '').slice(0, 120), year: yearOf(book.published), published: book.published || null,
+    language: book.language, provider: book.contributing_library || book.image_source?.provider || null,
+    image_url: getPageSource(chosen), stored_ocr_chars: chosen.ocr?.data ? chosen.ocr.data.length : 0,
+    multi_column_tag: !!chosen._columns, reference_plan: sub.reference,
+  };
+  if (chosen._screen) e.screen = { greek_share: chosen._screen.greek_share, greek_letters: chosen._screen.greek_letters, latin_letters: chosen._screen.latin_letters, pages_screened: chosen._tries };
+  return e;
+}
+
+// Screened draw (see the leaf-script screen above): every book's SCREEN_TRIES candidate page
+// numbers are pre-drawn from the PRNG in book order, so the seed fixes the candidates regardless
+// of I/O timing; books are then screened SCREEN_CONCURRENCY at a time and kept in draw order.
+async function drawScreened(db, stratum, sub, rand, books) {
+  const want = sub.n + (sub.spares ?? SPARES);
+  const cands = books.map(book => {
+    const lo = Math.max(1, Math.floor(book.pages_count * 0.10)), hi = Math.max(lo + 1, Math.floor(book.pages_count * 0.90));
+    return Array.from({ length: SCREEN_TRIES }, () => lo + Math.floor(rand() * (hi - lo + 1)));
+  });
+  let skippedBooks = 0, screened = 0, passed = 0;
+  const one = async (i) => {
+    const book = books[i];
+    const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $in: [...new Set(cands[i])] } }, { projection: PAGE_PROJ, maxTimeMS: 30000 }).toArray();
+    const byPn = new Map(pages.map(p => [p.page_number, p]));
+    let tries = 0;
+    for (const pn of cands[i]) {
+      const page = byPn.get(pn);
+      if (!page || !getPageSource(page)) continue;
+      if (page.ocr?.data && letters(stripTags(page.ocr.data)) < MIN_LETTERS) continue;
+      tries++; screened++;
+      const s = await sub.screen(page, book, stratum);
+      if (s.pass) { passed++; page._screen = s; page._tries = tries; return page; }
+    }
+    return null;
+  };
+  // Sliding pool, not chunks: a chunk waits for its slowest book (a Latin book burns all six
+  // screens), which halved throughput. Results are consumed in book order, so the kept set is the
+  // first `want` passing books in draw order whatever the completion order.
+  const results = new Array(books.length); let next = 0, consumed = 0, keptInOrder = 0;
+  const t0 = Date.now();
+  const advance = () => { while (consumed < books.length && results[consumed] !== undefined) { if (results[consumed]) keptInOrder++; else skippedBooks++; consumed++; if (consumed % 50 === 0) console.log(`  ${sub.name}: ${keptInOrder}/${want} kept after ${consumed}/${books.length} books (${screened} pages screened, ${passed} passed, ${Math.round((Date.now() - t0) / 60000)} min)`); } };
+  const worker = async () => { while (keptInOrder < want && next < books.length) { const i = next++; results[i] = (await one(i)) || null; advance(); } };
+  await Promise.all(Array.from({ length: SCREEN_CONCURRENCY }, worker));
+  const out = [];
+  for (let i = 0; i < consumed && out.length < want; i++) if (results[i]) out.push(entry(stratum, sub, books[i], results[i]));
+  out.forEach((p, i) => { p.spare = i >= sub.n; });
+  console.log(`  ${sub.name}: ${Math.min(out.length, sub.n)}/${sub.n} pages + ${Math.max(0, out.length - sub.n)} spares from ${books.length} eligible books (${skippedBooks} books skipped by the screen, ${screened} pages screened)`);
   return out;
 }
 
@@ -210,10 +335,11 @@ async function sealStratum(stratum) {
     // One PRNG per sub-stratum (seed + index): a sub-stratum's draw must not shift when the
     // one before it consumes a different number of random numbers (spares, skipped pages).
     const pages = [];
-    for (const [i, sub] of cfg.subs.entries()) pages.push(...await drawSub(db, stratum, sub, mulberry32(cfg.seed * 100 + i)));
+    for (const [i, sub] of cfg.subs.entries()) pages.push(...await drawSub(db, stratum, cfg.screen ? { ...sub, screen: cfg.screen } : sub, mulberry32(cfg.seed * 100 + i)));
     reg = {
       stratum, issue: cfg.issue, seed: cfg.seed, sealed_at: new Date().toISOString(),
       draw_rule: 'one page per book; books Fisher–Yates-shuffled with Mulberry32(seed*100+substratum index) over the id-sorted eligible list; page uniform over interior 10–90%; skip if no usable image or stored OCR < 120 letters; multi-column quota from pages whose stored OCR carries a <columns>N≥2 tag. The draw is reproducible only against the eligible id list AS OF THE SEAL DATE (imports keep adding books, which reshuffles everything) — this file, not the script, is the seal.',
+      ...(cfg.screen_rule ? { screen_rule: cfg.screen_rule } : {}),
       max_width: MAX_WIDTH, n: pages.filter(p => !p.spare).length, spares: pages.filter(p => p.spare).length,
       spare_rule: 'a sealed page that every engine returns textless (<30 letters) is replaced by the first unused spare of its sub-stratum; the replacement is recorded in the results file',
       substrata: cfg.subs.map(s => ({ name: s.name, n: s.n, reference: s.reference })),

@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e3dbaa-p165",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelis Ethicorum Nicomachiorum Paraphrasis",
+  "year": 1607,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1174,
+  "corpus_votes": [
+    {
+      "id": "tlg4033.tlg003.1st1K-grc1",
+      "hits": 21
+    },
+    {
+      "id": "tlg0086.tlg010.perseus-grc2",
+      "hits": 7
+    },
+    {
+      "id": "tlg0615.tlg001.1st1K-grc1",
+      "hits": 5
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg4033.tlg003.1st1K-grc1",
+  "work_title": "Anonymi In Aristotelis Ethica Nicomachea — In Ethica Nicomachea Paraphrasis (Pseudepigraphum Olim A Constantino Palaeocappa confectum et olim sub auctore Heliodoro Prusensi vel Andronico Rhodio vel Olympiodoro)",
+  "edition": "Anonymi In Aristotelis Ethica Nicomachea. In Ethica Nicomachea Paraphrasis (Commentaria in Aristotelem Graeca 19.2). Heylbut, Gustav, editor. Berlin: Reimer, 1889.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg4033/tlg003",
+  "phrase_hits": 21,
+  "etext_chars": 579049,
+  "window_words": 298,
+  "window_chars": 1461,
+  "overlap": 0.958,
+  "align_trim": {
+    "letters_before": 1456,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07",
+      "kraken-greek-cllg:0.04"
+    ],
+    "letters_after": 1181
+  }
+}

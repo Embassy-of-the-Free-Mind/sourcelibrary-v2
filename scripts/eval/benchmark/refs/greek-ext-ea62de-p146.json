@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-ea62de-p146",
+  "substratum": "greek-1450-1699",
+  "title": "Epitome logices Aristotelis",
+  "year": 1548,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1055,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg044.1st1K-grc1",
+      "hits": 6
+    },
+    {
+      "id": "tlg0732.tlg006.1st1K-grc1",
+      "hits": 6
+    },
+    {
+      "id": "tlg0732.tlg004.1st1K-grc1",
+      "hits": 4
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

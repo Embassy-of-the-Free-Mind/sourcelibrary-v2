@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e1abe6-p149",
+  "substratum": "greek-1700-1799",
+  "title": "Selecta loca e vitis illustrium Romanorum",
+  "year": 1714,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 735,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg016.perseus-grc2",
+      "hits": 19
+    },
+    {
+      "id": "tlg0543.tlg001.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0551.tlg017.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 39,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg016.perseus-grc2",
+  "work_title": "Plutarch — Caius Marcius Coriolanus",
+  "edition": "Plutarch. Plutarch's Lives, Vol. IV. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1916.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg016",
+  "phrase_hits": 19,
+  "etext_chars": 61573,
+  "window_words": 154,
+  "window_chars": 888,
+  "overlap": 0.837,
+  "align_trim": {
+    "letters_before": 907,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07",
+      "kraken-greek-cllg:0.03"
+    ],
+    "letters_after": 737
+  }
+}

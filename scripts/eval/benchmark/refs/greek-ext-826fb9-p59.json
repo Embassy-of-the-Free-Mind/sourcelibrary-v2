@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-826fb9-p59",
+  "substratum": "greek-1450-1699",
+  "title": "Geōrgiou Gemistou tou kai Plēthōnos, Ek tou Diodōrou, kai Ploutarchou, peri tōn meta tīn en Mantineia machīn, en kephala",
+  "year": 1503,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3758,
+  "corpus_votes": [
+    {
+      "id": "tlg0015.tlg001.1st1K-grc1",
+      "hits": 23
+    },
+    {
+      "id": "tlg2048.tlg001.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0081.tlg004.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0015.tlg001.1st1K-grc1",
+  "work_title": "Herodian — Ab excessu divi Marci",
+  "edition": "Herodian. Ab excessu divi Marci. Bekker, Immanuel, editor. Leipzig: Teubner, 1855.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0015/tlg001",
+  "phrase_hits": 23,
+  "etext_chars": 307372,
+  "window_words": 887,
+  "window_chars": 4576,
+  "overlap": 0.685,
+  "align_trim": {
+    "letters_before": 4738,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.21",
+      "gemini-3.1-flash-lite-b:0.21",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 3731
+  }
+}

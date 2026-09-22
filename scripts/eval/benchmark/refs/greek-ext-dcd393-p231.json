@@ -1,0 +1,26 @@
+{
+  "slug": "greek-ext-dcd393-p231",
+  "substratum": "greek-1700-1799",
+  "title": "Argonautica",
+  "year": 1779,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1543,
+  "corpus_votes": [
+    {
+      "id": "tlg0001.tlg001.perseus-grc2",
+      "hits": 7
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0001.tlg001.perseus-grc2",
+  "work_title": "Apollonius Rhodius — Argonautica",
+  "edition": "The Argonautica of Apollonius Rhodius, Apollonius, Rhodius, creator; Mooney, George W, editor, translator. London: Longmans, Green, and Co., 1912.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0001/tlg001",
+  "phrase_hits": 7,
+  "etext_chars": 254471,
+  "window_words": 51,
+  "window_chars": 364,
+  "overlap": 0.17,
+  "reason": "work identified but window overlap 0.17 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

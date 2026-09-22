@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e92072-p25",
+  "substratum": "pre-1700-print",
+  "title": "De ingenuis moribus ac liberalibus studiis :gewidmet Ubertinus de Cararia. Mit Nachwort an den Leser von Johannes Calphu",
+  "year": 1493,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

@@ -1,0 +1,9 @@
+{
+  "slug": "greek-cab899-p398",
+  "substratum": "19th-c-print",
+  "title": "De thematibus et de administrando imperio",
+  "year": 1840,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

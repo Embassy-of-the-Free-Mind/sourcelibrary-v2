@@ -1,0 +1,40 @@
+{
+  "slug": "greek-ext-42d3fa-p297",
+  "substratum": "greek-1450-1699",
+  "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+  "year": 1515,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1823,
+  "corpus_votes": [
+    {
+      "id": "tlg0016.tlg001.perseus-grc2",
+      "hits": 26
+    },
+    {
+      "id": "tlg0032.tlg001.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0003.tlg001.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0016.tlg001.perseus-grc2",
+  "work_title": "Herodotus — Histories",
+  "edition": "Herodotus. Godley, Alfred Denis, editor. Cambridge, MA; London: Harvard University Press; William Heinemann, Ltd., 1920-1925 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0016/tlg001",
+  "phrase_hits": 26,
+  "etext_chars": 1170305,
+  "window_words": 331,
+  "window_chars": 2196,
+  "overlap": 0.783,
+  "align_trim": {
+    "letters_before": 1845,
+    "reads_used": [
+      "gemini-3-flash-preview:0.12"
+    ],
+    "letters_after": 1817
+  }
+}

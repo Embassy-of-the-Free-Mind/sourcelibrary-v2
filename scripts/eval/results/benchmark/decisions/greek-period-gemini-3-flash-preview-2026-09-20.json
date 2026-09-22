@@ -1,0 +1,210 @@
+{
+  "engine": "gemini-3-flash-preview",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "greek",
+      "file": "greek-2026-09-20.json",
+      "n_pages": 30,
+      "n_with_ref": 11
+    },
+    {
+      "stratum": "greek-ext",
+      "file": "greek-ext-2026-09-20.json",
+      "n_pages": 170,
+      "n_with_ref": 115
+    }
+  ],
+  "classes": {
+    "1450–1699": {
+      "n_pages": 73,
+      "n_referenced": 47,
+      "n_paired": 47,
+      "n_by_stratum": {
+        "greek": 4,
+        "greek-ext": 43
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.089,
+        "gemini-3.1-flash-lite": 0.169,
+        "gemini-3.1-flash-lite-b": 0.168
+      },
+      "ref_median_cer_ci95": [
+        0.156,
+        0.18
+      ],
+      "delta": {
+        "median": -0.066,
+        "ci95": [
+          -0.079,
+          -0.051
+        ],
+        "wins": 47,
+        "losses": 0,
+        "ties": 0,
+        "untied": 47,
+        "p_sign": 0,
+        "share_le_minus_005": 0.66
+      },
+      "noise_floor": {
+        "n": 47,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.146,
+        "gemini-3.1-flash-lite": 0.291
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=47 < 50) — no lane decision"
+    },
+    "1700–1799": {
+      "n_pages": 65,
+      "n_referenced": 52,
+      "n_paired": 52,
+      "n_by_stratum": {
+        "greek": 0,
+        "greek-ext": 52
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.085,
+        "gemini-3.1-flash-lite": 0.107,
+        "gemini-3.1-flash-lite-b": 0.107
+      },
+      "ref_median_cer_ci95": [
+        0.079,
+        0.121
+      ],
+      "delta": {
+        "median": -0.017,
+        "ci95": [
+          -0.024,
+          -0.008
+        ],
+        "wins": 45,
+        "losses": 6,
+        "ties": 1,
+        "untied": 51,
+        "p_sign": 0,
+        "share_le_minus_005": 0.077
+      },
+      "noise_floor": {
+        "n": 52,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.139,
+        "gemini-3.1-flash-lite": 0.178
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "cost lane ADOPTED"
+    },
+    "1800–1899": {
+      "n_pages": 7,
+      "n_referenced": 5,
+      "n_paired": 5,
+      "n_by_stratum": {
+        "greek": 5,
+        "greek-ext": 0
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.061,
+        "gemini-3.1-flash-lite": 0.064,
+        "gemini-3.1-flash-lite-b": 0.064
+      },
+      "ref_median_cer_ci95": [
+        0.017,
+        0.162
+      ],
+      "delta": {
+        "median": -0.003,
+        "ci95": [
+          -0.009,
+          -0.001
+        ],
+        "wins": 5,
+        "losses": 0,
+        "ties": 0,
+        "untied": 5,
+        "p_sign": 0.063,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 5,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.054,
+        "gemini-3.1-flash-lite": 0.068
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=5 < 50) — no lane decision"
+    }
+  }
+}

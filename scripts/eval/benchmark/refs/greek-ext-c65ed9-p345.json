@@ -1,0 +1,39 @@
+{
+  "slug": "greek-ext-c65ed9-p345",
+  "substratum": "greek-1450-1699",
+  "title": "Novum Instrumentum omne : diligenter ab Erasmo Roterodamo recognitum &amp; emendatum, ... una cum Annotationibus ...",
+  "year": 1516,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1282,
+  "corpus_votes": [
+    {
+      "id": "tlg4102.tlg008.1st1K-grc1",
+      "hits": 22
+    },
+    {
+      "id": "tlg0031.tlg005.perseus-grc2",
+      "hits": 19
+    },
+    {
+      "id": "tlg4102.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg4102.tlg008.1st1K-grc1",
+  "work_title": "Catenae (Novum Testamentum) — Catena In Acta (Catena Andreae) (e cod. Oxon. coll. nov. 58)",
+  "edition": "Catenae (Novum Testamentum). Catenae Graecorum Patrum in Novum Testamentum, Vol 3. Cramer, John Anthony, editor. Oxford: Oxford University Pres, 1838.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg4102/tlg008",
+  "phrase_hits": 22,
+  "etext_chars": 751765,
+  "window_words": 389,
+  "window_chars": 2593,
+  "overlap": 0.439,
+  "align_trim": {
+    "letters_before": 2080,
+    "reads_used": [],
+    "letters_after": 2080,
+    "kept": "whole window (no aligning read, or window over the cap)"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "greek-ext-1c9f35-p57",
+  "substratum": "greek-1450-1699",
+  "title": "Platonos, Thoukydidous, kai Demosthenous, Epitaphioi logoi. Platonis, Thucydidis, et Demosthenis Funebres orationes.",
+  "year": 1549,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1281,
+  "corpus_votes": [
+    {
+      "id": "tlg0014.tlg060.perseus-grc2",
+      "hits": 5
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0014.tlg060.perseus-grc2",
+  "work_title": "Demosthenes — The Funeral Speech",
+  "edition": "Demosthenes. Orationes, Vol. III. Rennie, W., editor. Oxford: Clarendon Press, 1931.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0014/tlg060",
+  "phrase_hits": 5,
+  "etext_chars": 16167,
+  "window_words": 167,
+  "window_chars": 1129,
+  "overlap": 0.213,
+  "reason": "work identified but window overlap 0.21 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

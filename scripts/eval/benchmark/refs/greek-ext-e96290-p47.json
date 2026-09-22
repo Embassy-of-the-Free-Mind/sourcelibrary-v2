@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e96290-p47",
+  "substratum": "greek-1450-1699",
+  "title": "Ex Platonis Timaeo particula, Ciceronis de universitate libro respondens",
+  "year": 1542,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 974,
+  "corpus_votes": [
+    {
+      "id": "tlg0059.tlg031.perseus-grc2",
+      "hits": 18
+    },
+    {
+      "id": "tlg4013.tlg003.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg1287.tlg001.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0059.tlg031.perseus-grc2",
+  "work_title": "Plato — Timaeus",
+  "edition": "Platonis Opera Tomus IV: Tetralogia VIII. Burnet, John, editor. Oxford: Clarendon Press, 1905.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0059/tlg031",
+  "phrase_hits": 18,
+  "etext_chars": 145708,
+  "window_words": 267,
+  "window_chars": 1180,
+  "overlap": 0.728,
+  "align_trim": {
+    "letters_before": 1399,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11",
+      "kraken-greek-cllg:0.07"
+    ],
+    "letters_after": 974
+  }
+}

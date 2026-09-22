@@ -1,0 +1,46 @@
+{
+  "slug": "greek-db6c8d-p219",
+  "substratum": "pre-1700-print",
+  "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+  "year": 1576,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 530,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg035.perseus-grc2",
+      "hits": 7
+    },
+    {
+      "id": "tlg0059.tlg037.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg1692.tlg005.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 30,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg035.perseus-grc2",
+  "work_title": "Aristotle — Politics",
+  "edition": "Aristotle. Aristotelis Politica. Ross, William David, editor. Oxford: Clarendon Press, 1957 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg035",
+  "phrase_hits": 7,
+  "etext_chars": 402827,
+  "window_words": 104,
+  "window_chars": 632,
+  "overlap": 0.594,
+  "align_trim": {
+    "letters_before": 531,
+    "reads_used": [
+      "cllg-qwen3vl-8b:0.35",
+      "dots-mocr:0.31",
+      "gemini-3-flash-preview:0.17",
+      "gemini-3.1-flash-lite:0.20",
+      "gemini-3.1-flash-lite-b:0.20",
+      "kraken-greek-cllg:0.08",
+      "surya2:0.32"
+    ],
+    "letters_after": 515
+  }
+}

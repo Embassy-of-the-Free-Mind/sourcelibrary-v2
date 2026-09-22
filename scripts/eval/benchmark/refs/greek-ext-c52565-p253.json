@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-c52565-p253",
+  "substratum": "greek-1700-1799",
+  "title": "Leucippe and Clitophon (Greek-Latin)",
+  "year": 1776,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 400,
+  "corpus_votes": [
+    {
+      "id": "tlg0532.tlg001.perseus-grc2",
+      "hits": 5
+    },
+    {
+      "id": "tlg4013.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg4031.tlg002.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 20,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0532.tlg001.perseus-grc2",
+  "work_title": "Achilles Tatius — Leucippe and Clitophon",
+  "edition": "Achilles Tatius. Erotikōn logōn syngrapheis = Erotici scriptores Graeci, Vol. 1. Hercher, Rudolf, editor. Leipzig: Teubner, 1858.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0532/tlg001",
+  "phrase_hits": 5,
+  "etext_chars": 256702,
+  "window_words": 76,
+  "window_chars": 417,
+  "overlap": 0.695,
+  "align_trim": {
+    "letters_before": 358,
+    "reads_used": [
+      "gemini-3-flash-preview:0.23",
+      "gemini-3.1-flash-lite:0.26",
+      "gemini-3.1-flash-lite-b:0.26",
+      "kraken-greek-cllg:0.21"
+    ],
+    "letters_after": 333
+  }
+}

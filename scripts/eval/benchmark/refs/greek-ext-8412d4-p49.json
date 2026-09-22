@@ -1,0 +1,16 @@
+{
+  "slug": "greek-ext-8412d4-p49",
+  "substratum": "greek-1450-1699",
+  "title": "Divi Ioannis Chrysostomi Conciunculae perquam elegantes sex de fato &amp; providentia Dei",
+  "year": 1526,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1035,
+  "corpus_votes": [
+    {
+      "id": "tlg0003.tlg001.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

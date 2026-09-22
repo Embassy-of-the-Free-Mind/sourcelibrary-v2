@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e5674a-p163",
+  "substratum": "greek-1700-1799",
+  "title": "Theseus",
+  "year": 1789,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 855,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg002.perseus-grc2",
+      "hits": 19
+    },
+    {
+      "id": "tlg3135.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0543.tlg001.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg002.perseus-grc2",
+  "work_title": "Plutarch — Romulus",
+  "edition": "Plutarch. Plutarch's Lives, Vol. I. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1914.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg002",
+  "phrase_hits": 19,
+  "etext_chars": 61012,
+  "window_words": 104,
+  "window_chars": 750,
+  "overlap": 0.783,
+  "align_trim": {
+    "letters_before": 622,
+    "reads_used": [
+      "gemini-3-flash-preview:0.41",
+      "gemini-3.1-flash-lite:0.45",
+      "gemini-3.1-flash-lite-b:0.45"
+    ],
+    "letters_after": 621
+  }
+}

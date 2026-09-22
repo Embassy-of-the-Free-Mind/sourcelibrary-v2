@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-bd545d-p85",
+  "substratum": "greek-1700-1799",
+  "title": "Ephraem Syri Opera Omnia (Greek/Latin)",
+  "year": 1746,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1730,
+  "corpus_votes": [
+    {
+      "id": "tlg2018.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg4102.tlg038.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg2371.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

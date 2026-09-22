@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-ea4cec-p10",
+  "substratum": "greek-1450-1699",
+  "title": "Peri zōōn poreias",
+  "year": 1561,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1367,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg015.1st1K-grc1",
+      "hits": 12
+    },
+    {
+      "id": "tlg4034.tlg005.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg0057.tlg057.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0086.tlg015.1st1K-grc1",
+  "work_title": "Aristotle — De animalium incessu",
+  "edition": "Aristotle. De animalium motione et De animalium incessu. Jaeger, Werner, editor. Leipzig: Teubner, 1913.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0086/tlg015",
+  "phrase_hits": 12,
+  "etext_chars": 36926,
+  "window_words": 268,
+  "window_chars": 1665,
+  "overlap": 0.665,
+  "align_trim": {
+    "letters_before": 1339,
+    "reads_used": [
+      "gemini-3-flash-preview:0.11",
+      "gemini-3.1-flash-lite:0.14",
+      "gemini-3.1-flash-lite-b:0.14",
+      "kraken-greek-cllg:0.09"
+    ],
+    "letters_after": 1339
+  }
+}

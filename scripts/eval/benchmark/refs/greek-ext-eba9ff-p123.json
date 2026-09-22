@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-eba9ff-p123",
+  "substratum": "greek-1700-1799",
+  "title": "De physicis philosophorum decretis libri quinque",
+  "year": 1787,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 515,
+  "corpus_votes": [
+    {
+      "id": "tlg2018.tlg001.1st1K-grc1",
+      "hits": 12
+    },
+    {
+      "id": "tlg0094.tlg003.perseus-grc2",
+      "hits": 11
+    },
+    {
+      "id": "tlg0363.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 32,
+  "source": "First1KGreek",
+  "work": "tlg2018.tlg001.1st1K-grc1",
+  "work_title": "Eusebius of Caesarea — Praeparatio Evangelica",
+  "edition": "Eusebius. Eusebii Caesariensis Opera, Volume 1-2. Dindorf, Ludwig, editor. Leipzig: Teubner, 1867.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg2018/tlg001",
+  "phrase_hits": 12,
+  "etext_chars": 1441267,
+  "window_words": 81,
+  "window_chars": 536,
+  "overlap": 0.648,
+  "align_trim": {
+    "letters_before": 425,
+    "reads_used": [
+      "gemini-3-flash-preview:0.33",
+      "gemini-3.1-flash-lite:0.35",
+      "gemini-3.1-flash-lite-b:0.37",
+      "kraken-greek-cllg:0.31"
+    ],
+    "letters_after": 425
+  }
+}

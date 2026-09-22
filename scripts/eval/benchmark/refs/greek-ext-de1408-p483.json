@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-de1408-p483",
+  "substratum": "greek-1700-1799",
+  "title": "De mundo",
+  "year": 1792,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 585,
+  "corpus_votes": [
+    {
+      "id": "tlg4015.tlg009.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "stoa0033a.tlg028.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0626.tlg002.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

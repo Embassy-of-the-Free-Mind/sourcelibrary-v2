@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext2-835422-p79",
+  "substratum": "greek-1450-1699",
+  "title": "Psaltērion",
+  "year": 1520,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1460,
+  "corpus_votes": [
+    {
+      "id": "tlg0527.tlg027.1st1K-grc1",
+      "hits": 26
+    },
+    {
+      "id": "tlg2018.tlg005.1st1K-grc1",
+      "hits": 21
+    },
+    {
+      "id": "tlg2042.tlg058.1st1K-grc1",
+      "hits": 13
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0527.tlg027.1st1K-grc1",
+  "work_title": "Septuaginta — Psalmi",
+  "edition": "Septuaginta. The Old Testament in Greek According to the Septuagint. Volume 2: I Chronicles-Tobit. Swete, Henry Barclay, editor. Cambridge: Cambridge University Press, 1896.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0527/tlg027",
+  "phrase_hits": 26,
+  "etext_chars": 211743,
+  "window_words": 340,
+  "window_chars": 1806,
+  "overlap": 0.915,
+  "align_trim": {
+    "letters_before": 1674,
+    "reads_used": [
+      "gemini-3-flash-preview:0.10",
+      "gemini-3.1-flash-lite:0.09",
+      "gemini-3.1-flash-lite-b:0.09",
+      "kraken-greek-cllg:0.14"
+    ],
+    "letters_after": 1442
+  }
+}

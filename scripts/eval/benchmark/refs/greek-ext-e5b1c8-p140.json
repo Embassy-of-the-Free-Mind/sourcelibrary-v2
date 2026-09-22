@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e5b1c8-p140",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelus Politikōn Kai Oikonomikōn ta heuriskomena = Aristotelis Politicorvm Et Oeconomicorvm libri qui exstant",
+  "year": 1587,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1066,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg035.perseus-grc2",
+      "hits": 23
+    },
+    {
+      "id": "tlg0086.tlg030.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0086.tlg014.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg035.perseus-grc2",
+  "work_title": "Aristotle — Politics",
+  "edition": "Aristotle. Aristotelis Politica. Ross, William David, editor. Oxford: Clarendon Press, 1957 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg035",
+  "phrase_hits": 23,
+  "etext_chars": 402827,
+  "window_words": 302,
+  "window_chars": 1315,
+  "overlap": 1,
+  "align_trim": {
+    "letters_before": 1492,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.09",
+      "gemini-3.1-flash-lite-b:0.09",
+      "kraken-greek-cllg:0.06"
+    ],
+    "letters_after": 1053
+  }
+}

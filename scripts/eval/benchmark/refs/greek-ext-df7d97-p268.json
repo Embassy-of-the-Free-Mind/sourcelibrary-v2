@@ -1,0 +1,11 @@
+{
+  "slug": "greek-ext-df7d97-p268",
+  "substratum": "greek-1700-1799",
+  "title": "Platōnos dialogoi [treis] : Quibus praefiguntur Olympiodori vita Platonis et Albini in dialogos Platonis introductio",
+  "year": 1771,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 592,
+  "corpus_votes": [],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

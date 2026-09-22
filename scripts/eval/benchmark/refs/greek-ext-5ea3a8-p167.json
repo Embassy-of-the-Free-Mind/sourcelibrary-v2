@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-5ea3a8-p167",
+  "substratum": "greek-1450-1699",
+  "title": "[Greek] Ecclesiasticae historiae",
+  "year": 1544,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 2573,
+  "corpus_votes": [
+    {
+      "id": "tlg2018.tlg002.perseus-grc2",
+      "hits": 32
+    },
+    {
+      "id": "tlg2018.tlg002.1st1K-grc2",
+      "hits": 32
+    },
+    {
+      "id": "tlg2018.tlg002.1st1K-grc1",
+      "hits": 30
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg2018.tlg002.perseus-grc2",
+  "work_title": "Eusebius of Caesarea — Ecclesiastical History",
+  "edition": "Eusebius. Historia Ecclesiastica, Volumes 1-2. Lake, Kirsopp; Oulton, J.E.L.; Lawlor, H.J., editors. London: William Heinemann; New York: G.P. Putnam's Sons; Cambridge, MA: Harvard University Press, 1",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg2018/tlg002",
+  "phrase_hits": 32,
+  "etext_chars": 661538,
+  "window_words": 462,
+  "window_chars": 3077,
+  "overlap": 0.837,
+  "align_trim": {
+    "letters_before": 2555,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.23",
+      "gemini-3.1-flash-lite-b:0.23",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 2542
+  }
+}

@@ -1,0 +1,2137 @@
+{
+  "greek": {
+    "stratum": "greek",
+    "issue": 4744,
+    "date": "2026-09-21",
+    "n_pages": 30,
+    "n_with_ref": 11,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "cllg-qwen3vl-8b": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.306,
+          "mean_cer": 0.234,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.785
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.03,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.744
+        },
+        "invention": {
+          "median": 0.062,
+          "mean": 0.32,
+          "n_engines": 8,
+          "ref_median": 0.219,
+          "ref_mean": 0.376
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "median_delta_cer": -0.012,
+          "p_sign": 0.549,
+          "invention_wins": 1,
+          "invention_losses": 10
+        },
+        "worst": [
+          {
+            "slug": "greek-e69e14-p141",
+            "title": "Quest[i]o[n]es venerabilis d[omi]ni Joannis Versoris super vetere[m] arte[m] Ares.",
+            "year": 1487,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "'iβγοιβίαι"
+            ]
+          },
+          {
+            "slug": "greek-e8a2f4-p80",
+            "title": "Thesaurus veteris et novae logicae Aristotelis",
+            "year": 1497,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ὀceptum"
+            ]
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.43,
+            "gap": 0.013,
+            "invention": 0.703,
+            "has_ref": true,
+            "unsupported": [
+              "γνωαγορας",
+              "ὑβριμὸν",
+              "αὐτρὶς",
+              "χωῒς",
+              "αἵποψ",
+              "τλιύ",
+              "λλιίλω",
+              "λαλμπτεοδακ"
+            ]
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.416,
+            "gap": 0.009,
+            "invention": 0.694,
+            "has_ref": true,
+            "unsupported": [
+              "αὐξοφθεῖς",
+              "ἐμπίπλουν",
+              "ζελούεας",
+              "ζωιέσι",
+              "ἀναξίμανοβος",
+              "τίνι",
+              "δάλασσαιν",
+              "φησὶν"
+            ]
+          },
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.394,
+            "gap": 0,
+            "invention": 0.055,
+            "has_ref": true,
+            "unsupported": [
+              "ὁλοὸν",
+              "ἰδιόν",
+              "ἀλλαών",
+              "ἐπείin"
+            ]
+          }
+        ]
+      },
+      "dots-mocr": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.313,
+          "mean_cer": 0.219,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.788
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.012,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.956
+        },
+        "invention": {
+          "median": 0.028,
+          "mean": 0.192,
+          "n_engines": 8,
+          "ref_median": 0.203,
+          "ref_mean": 0.37
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "median_delta_cer": -0.002,
+          "p_sign": 0.549,
+          "invention_wins": 2,
+          "invention_losses": 9
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.387,
+            "gap": 0.008,
+            "invention": 0.014,
+            "has_ref": true,
+            "unsupported": [
+              "ἱλιακῶν"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.368,
+            "gap": 0,
+            "invention": 0.37,
+            "has_ref": true,
+            "unsupported": [
+              "ταξεως",
+              "μέλλον",
+              "εὑρεῖ",
+              "xpuτέον",
+              "ἐρωτήματος",
+              "ταξα",
+              "wêðς",
+              "τεῖτον"
+            ]
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.359,
+            "gap": 0.019,
+            "invention": 0.568,
+            "has_ref": true,
+            "unsupported": [
+              "βιβλίομ",
+              "αὐξοδεῖς",
+              "ἐμπίπλους",
+              "ζαλύεσθ",
+              "ισές",
+              "αναξίμανδρος",
+              "λείτανομ",
+              "μόρθα"
+            ]
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.347,
+            "gap": 0.013,
+            "invention": 0.625,
+            "has_ref": true,
+            "unsupported": [
+              "αὐρὶς",
+              "οἶδε",
+              "ῥωῆς",
+              "αἴπομ",
+              "τιμά",
+              "λιώλιο",
+              "λαμπεσθαί",
+              "αὐθρώτωραί"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.329,
+            "gap": 0,
+            "invention": 0.5,
+            "has_ref": true,
+            "unsupported": [
+              "κέαταμ",
+              "δαμμύτα",
+              "ἔρχος",
+              "ἤτισαθάς",
+              "ἔφιω",
+              "θύεας",
+              "ἀρέστει",
+              "μεδέχοσις"
+            ]
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 1,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.115,
+          "mean_cer": 0.126,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.855
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.02,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.932
+        },
+        "invention": {
+          "median": 0.012,
+          "mean": 0.034,
+          "n_engines": 8,
+          "ref_median": 0.157,
+          "ref_mean": 0.142
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.009,
+          "p_sign": 0.012,
+          "invention_wins": 9,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.411,
+            "gap": 0,
+            "invention": 0.013,
+            "has_ref": true,
+            "unsupported": [
+              "τρέφω"
+            ]
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.169,
+            "gap": 0,
+            "invention": 0.189,
+            "has_ref": true,
+            "unsupported": [
+              "πεινῆν",
+              "δοκίμε",
+              "ἀγαθῶ",
+              "τίθεμλμ",
+              "ἀρχικιώ",
+              "ἀμφότ'ρ'",
+              "ἐπίςασθαι",
+              "τὸωτ'"
+            ]
+          },
+          {
+            "slug": "greek-458842-p434",
+            "title": "Origenes: Contra Celsum (Greek Critical Edition)",
+            "year": 1899,
+            "cer": 0.161,
+            "gap": 0.003,
+            "invention": 0.007,
+            "has_ref": true,
+            "unsupported": [
+              "ἀρχητεκτονικήν"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.145,
+            "gap": 0.016,
+            "invention": 0.067,
+            "has_ref": true,
+            "unsupported": [
+              "μετα",
+              "ἐρωτᾷν"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.129,
+            "gap": 0,
+            "invention": 0.039,
+            "has_ref": true,
+            "unsupported": [
+              "δαμλύτα",
+              "ἔρος"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.171,
+          "mean_cer": 0.153,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.802
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 8,
+          "ref_median": 0.178,
+          "ref_mean": 0.186
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.39,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.223,
+            "gap": 0.017,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.196,
+            "gap": 0.019,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.183,
+            "gap": 0.026,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.18,
+            "gap": 0.024,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.171,
+          "mean_cer": 0.153,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.802
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 8,
+          "ref_median": 0.178,
+          "ref_mean": 0.186
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 0,
+          "losses": 0,
+          "ties": 11,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.39,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.223,
+            "gap": 0.017,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.196,
+            "gap": 0.019,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.183,
+            "gap": 0.026,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.18,
+            "gap": 0.024,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-greek-cllg": {
+        "pages_run": 30,
+        "empty": 15,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.087,
+          "mean_cer": 0.12,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.827
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.027,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.922
+        },
+        "invention": {
+          "median": 0.9,
+          "mean": 0.583,
+          "n_engines": 8,
+          "ref_median": 0.205,
+          "ref_mean": 0.21
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 8,
+          "losses": 2,
+          "ties": 1,
+          "median_delta_cer": 0.025,
+          "p_sign": 0.109,
+          "invention_wins": 3,
+          "invention_losses": 8
+        },
+        "worst": [
+          {
+            "slug": "greek-cab899-p398",
+            "title": "De thematibus et de administrando imperio",
+            "year": 1840,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "proιegomena"
+            ]
+          },
+          {
+            "slug": "greek-db4f92-p330",
+            "title": "Plutarchi apophthegmata Francisco Philelpho interprete - BSB Clm 512",
+            "year": 1487,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ειgιοε",
+              "fαετε",
+              "δceιbu",
+              "eδes"
+            ]
+          },
+          {
+            "slug": "greek-dc33bd-p19",
+            "title": "Theses Philosophicae, De Tribvs Rervm Natvralivm Principiis Tam In Genere Qvam In Specie, Ex I. Phys. Aristotelis desump",
+            "year": 1595,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ινηaς",
+              "dοστιssιμα",
+              "εlegaντιss",
+              "ιdem",
+              "adaμus"
+            ]
+          },
+          {
+            "slug": "greek-dd47d0-p103",
+            "title": "In universam Aristotelis philosophiam introductio",
+            "year": 1692,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "caρυτ",
+              "sεeuνdυμ"
+            ]
+          },
+          {
+            "slug": "greek-defdb8-p22",
+            "title": "Disp. philos. de communibus rerum naturalium principiis et affectionibus ex IIX libris Physicorum Aristotelis deprompta",
+            "year": 1604,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "ιoanνes"
+            ]
+          }
+        ]
+      },
+      "surya2": {
+        "pages_run": 30,
+        "empty": 16,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.324,
+          "mean_cer": 0.242,
+          "catastrophic": 0,
+          "median_gap": 0.004,
+          "median_seq": 0.688
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.03,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.934
+        },
+        "invention": {
+          "median": 0.131,
+          "mean": 0.283,
+          "n_engines": 8,
+          "ref_median": 0.351,
+          "ref_mean": 0.45
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.023,
+          "p_sign": 0.001,
+          "invention_wins": 0,
+          "invention_losses": 11
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.413,
+            "gap": 0.008,
+            "invention": 0.135,
+            "has_ref": true,
+            "unsupported": [
+              "εὐρήσων",
+              "ἀντιτάτηται",
+              "'ομηρος",
+              "'αρης",
+              "ὖλης",
+              "'οδυσσείας",
+              "ἔνεκα",
+              "γήρα"
+            ]
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.386,
+            "gap": 0.024,
+            "invention": 0.617,
+            "has_ref": true,
+            "unsupported": [
+              "γυθαγορας",
+              "θόλμὸν",
+              "αὐτρῖς",
+              "αὐτισύντων",
+              "λιωίων",
+              "λαμπεσταν",
+              "αὐθρώσσων",
+              "θεσὺς"
+            ]
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.384,
+            "gap": 0.029,
+            "invention": 0.67,
+            "has_ref": true,
+            "unsupported": [
+              "αὐτοσφέεις",
+              "ἐμπίπτονθες",
+              "θελούεσθς",
+              "θαλάσσις",
+              "υμέσις",
+              "αναξίμανθρος",
+              "λείψανου",
+              "πλείου"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.378,
+            "gap": 0,
+            "invention": 0.677,
+            "has_ref": true,
+            "unsupported": [
+              "γδον",
+              "τοπιcorvm",
+              "αὐτὰ",
+              "τὰξεως",
+              "ἀφῶτον",
+              "εὐρεῖν",
+              "οὐτὸν",
+              "αρητέον"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.36,
+            "gap": 0.013,
+            "invention": 0.49,
+            "has_ref": true,
+            "unsupported": [
+              "δαμδύτα",
+              "έρφς",
+              "πισαστός",
+              "έκοπ'",
+              "όχῆας",
+              "έφλω",
+              "σύρας",
+              "ἀράωτει"
+            ]
+          }
+        ]
+      },
+      "tesseract-grc": {
+        "pages_run": 30,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.61,
+          "mean_cer": 1.327,
+          "catastrophic": 6,
+          "median_gap": 0.013,
+          "median_seq": 0.296
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 1.116,
+          "catastrophic": 2,
+          "median_gap": 0.011,
+          "median_bow": 0.552
+        },
+        "invention": {
+          "median": 1,
+          "mean": 0.829,
+          "n_engines": 8,
+          "ref_median": 0.765,
+          "ref_mean": 0.69
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.427,
+          "p_sign": 0.001,
+          "invention_wins": 0,
+          "invention_losses": 11
+        },
+        "worst": [
+          {
+            "slug": "greek-5f245c-p190",
+            "title": "The Oxyrhynchus Papyri, Part 10",
+            "year": 1898,
+            "cer": 5.669,
+            "gap": 0.011,
+            "invention": 0.884,
+            "has_ref": false,
+            "unsupported": [
+              "τὴηε",
+              "οχυκηυνοηῦ5",
+              "ραρυβι",
+              "βιγαίθβριιβ",
+              "ρίνβ",
+              "δίιοη",
+              "ογάθυ",
+              "πιπρ'"
+            ]
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 5.101,
+            "gap": 0.011,
+            "invention": 0.954,
+            "has_ref": true,
+            "unsupported": [
+              "θεαπὶ",
+              "ετερ",
+              "ἴ2οι",
+              "ορτίπλτανη",
+              "νἱταπὶ",
+              "σοοτς",
+              "πεαὰς",
+              "γπάπὶ"
+            ]
+          },
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 2.697,
+            "gap": 0.014,
+            "invention": 0.7,
+            "has_ref": true,
+            "unsupported": [
+              "5εοτ",
+              "αλλὰ",
+              "τοις",
+              "αλλο",
+              "ἐχχέσπαλος",
+              "ὀλοὺν",
+              "είως",
+              "αφλοισμὸς"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 2.267,
+            "gap": 0.03,
+            "invention": 0.888,
+            "has_ref": true,
+            "unsupported": [
+              "τιρπτθ",
+              "ἑξως",
+              "φεσρτσξέσσις",
+              "στθθξ",
+              "ἄριστοι",
+              "εἰλϑυ",
+              "χισπεικοῖν",
+              "ολεν"
+            ]
+          },
+          {
+            "slug": "greek-4fd5df-p390",
+            "title": "Galeni Opera Omnia, Vol. 14 (BIU Santé)",
+            "year": 1821,
+            "cer": 1.268,
+            "gap": 0.013,
+            "invention": 0.747,
+            "has_ref": true,
+            "unsupported": [
+              "ζαλη",
+              "περὶ",
+              "ποριστων",
+              "οονί",
+              "βϑηϑεῖν",
+              "πεπίστευταν",
+              "εἴλη",
+              "παραυτίχα"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 1,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "dots-mocr": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "kraken-greek-cllg": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 1
+          },
+          "surya2": {
+            "n": 1,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "tesseract-grc": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 1
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 29,
+        "engines": {
+          "cllg-qwen3vl-8b": {
+            "n": 29,
+            "empty": 15,
+            "loop": 0,
+            "median_cer": 0.228,
+            "catastrophic": 0,
+            "median_unsupported": 0.062
+          },
+          "dots-mocr": {
+            "n": 29,
+            "empty": 15,
+            "loop": 0,
+            "median_cer": 0.115,
+            "catastrophic": 0,
+            "median_unsupported": 0.028
+          },
+          "gemini-3-flash-preview": {
+            "n": 29,
+            "empty": 15,
+            "loop": 1,
+            "median_cer": 0.089,
+            "catastrophic": 0,
+            "median_unsupported": 0.012
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 29,
+            "empty": 15,
+            "loop": 0,
+            "median_cer": 0.171,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 29,
+            "empty": 15,
+            "loop": 0,
+            "median_cer": 0.116,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 29,
+            "empty": 14,
+            "loop": 0,
+            "median_cer": 0.081,
+            "catastrophic": 0,
+            "median_unsupported": 0.8
+          },
+          "surya2": {
+            "n": 29,
+            "empty": 15,
+            "loop": 0,
+            "median_cer": 0.13,
+            "catastrophic": 0,
+            "median_unsupported": 0.131
+          },
+          "tesseract-grc": {
+            "n": 29,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.757,
+            "catastrophic": 8,
+            "median_unsupported": 1
+          }
+        }
+      }
+    }
+  },
+  "greek-ext": {
+    "stratum": "greek-ext",
+    "issue": 4925,
+    "date": "2026-09-21",
+    "n_pages": 170,
+    "n_with_ref": 117,
+    "ref_mismatch": [
+      "greek-ext-8336c0-p409",
+      "greek-ext-b491d9-p174",
+      "greek-ext-c65ed9-p345",
+      "greek-ext-e4c86c-p199",
+      "greek-ext-e4e32d-p286",
+      "greek-ext-e59f23-p391",
+      "greek-ext-e72747-p58",
+      "greek-ext-e88de4-p87",
+      "greek-ext-f69fd9-p70",
+      "greek-ext-fbba4c-p156"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 170,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.084,
+          "mean_cer": 0.109,
+          "catastrophic": 0,
+          "median_gap": 0.005,
+          "median_seq": 0.867
+        },
+        "proxy_vs_ref_engine": {
+          "n": 53,
+          "median_cer": 0.096,
+          "catastrophic": 6,
+          "median_gap": 0.005,
+          "median_bow": 0.726
+        },
+        "invention": {
+          "median": 0.056,
+          "mean": 0.112,
+          "n_engines": 4,
+          "ref_median": 0.139,
+          "ref_mean": 0.157
+        },
+        "paired_vs_ref": {
+          "n": 117,
+          "wins": 105,
+          "losses": 8,
+          "ties": 4,
+          "median_delta_cer": 0.035,
+          "p_sign": 0,
+          "invention_wins": 99,
+          "invention_losses": 12
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-6cea03-p228",
+            "title": "Sophocles and Euripides: Ajax, Electra, Oedipus Tyrannus, Phoenissae",
+            "year": 1505,
+            "cer": 1.969,
+            "gap": 0.016,
+            "invention": 0.962,
+            "has_ref": false,
+            "unsupported": [
+              "ἀρζόος",
+              "ὀνδράσι",
+              "ἀργηκός",
+              "πράξεις",
+              "ὀλίγον",
+              "ἥμαρ",
+              "ἀμνάσει",
+              "φθόνος"
+            ]
+          },
+          {
+            "slug": "greek-ext-88ed68-p222",
+            "title": "Plotini Enneades (Ficino Working Copy)",
+            "year": 1455,
+            "cer": 0.894,
+            "gap": 0.037,
+            "invention": 0.922,
+            "has_ref": false,
+            "unsupported": [
+              "τοιαῦτα",
+              "ἡμῖν",
+              "ἴχνος",
+              "ψυχῆς",
+              "ὑποκειμένῳ",
+              "αὐτὸν",
+              "εἶναί",
+              "μάρτυρες"
+            ]
+          },
+          {
+            "slug": "greek-ext-946843-p157",
+            "title": "Aristophanes, Plutus, Clouds, and Frogs",
+            "year": 1477,
+            "cer": 0.675,
+            "gap": 0.008,
+            "invention": 0.771,
+            "has_ref": false,
+            "unsupported": [
+              "κλῆρον",
+              "χορὸν",
+              "καλλιχορώτατον",
+              "δαίμονες",
+              "ὄλβιοι",
+              "συνιστῶσι",
+              "ξυνάγουσίν",
+              "μετὰ"
+            ]
+          },
+          {
+            "slug": "greek-ext-e7cbe2-p97",
+            "title": "Aristotelis Summi Semper Viri, ... opera quaecunq[ue] impressa hactenus extiterunt omnia :denuo iam collatione vetustiss",
+            "year": 1539,
+            "cer": 0.634,
+            "gap": 0.05,
+            "invention": 0.223,
+            "has_ref": false,
+            "unsupported": [
+              "πανῦργος",
+              "πλεονεκτικός",
+              "λάβῃ",
+              "ὑπάρχει",
+              "ἄξιος",
+              "λυπᾶται",
+              "πραττόντων",
+              "ἀνώνυμός"
+            ]
+          },
+          {
+            "slug": "greek-ext-beb9cc-p606",
+            "title": "Homer, Iliad",
+            "year": 1450,
+            "cer": 0.541,
+            "gap": 0.031,
+            "invention": 0.796,
+            "has_ref": false,
+            "unsupported": [
+              "νῆας",
+              "πάλιν",
+              "ἔσαντο",
+              "σῶτρον",
+              "ἱέτο",
+              "δυνάμενος",
+              "ἦλθον",
+              "ἀνδρόμεον"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 170,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.141,
+          "mean_cer": 0.162,
+          "catastrophic": 1,
+          "median_gap": 0.007,
+          "median_seq": 0.755
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.02,
+          "n_engines": 4,
+          "ref_median": 0.235,
+          "ref_mean": 0.262
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-a61180-p183",
+            "title": "Athanasius of Alexandria, Works (Vol. 1)",
+            "year": 1550,
+            "invention": 0.991,
+            "has_ref": false,
+            "unsupported": [
+              "ζωηπριθεωθηπριηιζω",
+              "τωμησωαμηνης",
+              "γυστου",
+              "ηγυδο",
+              "θεοτηλος",
+              "επηκέω",
+              "προσαγιασμον",
+              "τοις"
+            ]
+          },
+          {
+            "slug": "greek-ext-665d2e-p83",
+            "title": "Hē  Kainē Diathēkē tou Kyriou ēmōn Iēsou Christou",
+            "year": 1708,
+            "cer": 0.849,
+            "gap": 0.376,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-42d3fa-p297",
+            "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+            "year": 1515,
+            "cer": 0.483,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-f5470c-p42",
+            "title": "Philostratou eis ton Apollōniou tou Tyaneōs bion biblia octō. Eusebiou Kaisareias tou Pamphilou antirrhētikos pros ta Hi",
+            "year": 1502,
+            "invention": 0.46,
+            "has_ref": false,
+            "unsupported": [
+              "ἐπεῖπε",
+              "κᾀτῇ",
+              "προσμαίνων",
+              "γλυκέα",
+              "βασιλεύς",
+              "κρμηκυταλύοντα",
+              "σορῶς",
+              "ἐφέπετη"
+            ]
+          },
+          {
+            "slug": "greek-ext-e5674a-p163",
+            "title": "Theseus",
+            "year": 1789,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 170,
+        "empty": 0,
+        "loop": 1,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.135,
+          "mean_cer": 0.161,
+          "catastrophic": 1,
+          "median_gap": 0.008,
+          "median_seq": 0.768
+        },
+        "proxy_vs_ref_engine": {
+          "n": 53,
+          "median_cer": 0,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.016,
+          "n_engines": 4,
+          "ref_median": 0.235,
+          "ref_mean": 0.26
+        },
+        "paired_vs_ref": {
+          "n": 117,
+          "wins": 10,
+          "losses": 3,
+          "ties": 104,
+          "median_delta_cer": 0,
+          "p_sign": 0.092,
+          "invention_wins": 7,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-665d2e-p83",
+            "title": "Hē  Kainē Diathēkē tou Kyriou ēmōn Iēsou Christou",
+            "year": 1708,
+            "cer": 0.849,
+            "gap": 0.376,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-f5470c-p42",
+            "title": "Philostratou eis ton Apollōniou tou Tyaneōs bion biblia octō. Eusebiou Kaisareias tou Pamphilou antirrhētikos pros ta Hi",
+            "year": 1502,
+            "cer": 0.596,
+            "gap": 0.028,
+            "invention": 0.26,
+            "has_ref": false,
+            "unsupported": [
+              "ῥωμαίοισι",
+              "προῄειν",
+              "τάρχας",
+              "βασιλεῖ",
+              "γλυναῖος",
+              "μηκηταλύοντας",
+              "ἐπέστη",
+              "πειν"
+            ]
+          },
+          {
+            "slug": "greek-ext-42d3fa-p297",
+            "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+            "year": 1515,
+            "cer": 0.483,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-a61180-p183",
+            "title": "Athanasius of Alexandria, Works (Vol. 1)",
+            "year": 1550,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0.59,
+            "has_ref": false,
+            "unsupported": [
+              "ζωηριθεῖσα",
+              "ἀμβροτῆς",
+              "ἐπιλάμψει",
+              "προσαγιάσμον",
+              "προσελάμβε",
+              "πνεῦμα",
+              "συμπληρῶν",
+              "ἁγιασ"
+            ]
+          },
+          {
+            "slug": "greek-ext-e5674a-p163",
+            "title": "Theseus",
+            "year": 1789,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-greek-cllg": {
+        "pages_run": 134,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 97,
+          "median_cer": 0.088,
+          "mean_cer": 0.11,
+          "catastrophic": 0,
+          "median_gap": 0.007,
+          "median_seq": 0.813
+        },
+        "proxy_vs_ref_engine": {
+          "n": 37,
+          "median_cer": 0.132,
+          "catastrophic": 2,
+          "median_gap": 0.011,
+          "median_bow": 0.708
+        },
+        "invention": {
+          "median": 0.165,
+          "mean": 0.184,
+          "n_engines": 4,
+          "ref_median": 0.229,
+          "ref_mean": 0.245
+        },
+        "paired_vs_ref": {
+          "n": 97,
+          "wins": 77,
+          "losses": 19,
+          "ties": 1,
+          "median_delta_cer": 0.038,
+          "p_sign": 0,
+          "invention_wins": 47,
+          "invention_losses": 48
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-e7cbe2-p97",
+            "title": "Aristotelis Summi Semper Viri, ... opera quaecunq[ue] impressa hactenus extiterunt omnia :denuo iam collatione vetustiss",
+            "year": 1539,
+            "cer": 0.626,
+            "gap": 0.045,
+            "invention": 0.255,
+            "has_ref": false,
+            "unsupported": [
+              "ηθικῶν",
+              "πανοῦργος",
+              "πάντως",
+              "πλεονεκτικὸς",
+              "εὐπραγίαις",
+              "λυποῦσι",
+              "τοὺς",
+              "φθονεροὺς"
+            ]
+          },
+          {
+            "slug": "greek-ext-e59f23-p391",
+            "title": "Platonis Dialogi Quatuor :Euthyphro, Apologia Socrati, Crito, Phaedo",
+            "year": 1770,
+            "cer": 0.619,
+            "gap": 0.217,
+            "invention": 0.212,
+            "has_ref": false,
+            "unsupported": [
+              "ἄμειτ",
+              "ενον",
+              "έγειν",
+              "ἠμῶν",
+              "υχαὶ",
+              "μεθυπ",
+              "άρχει",
+              "λόσοφος"
+            ]
+          },
+          {
+            "slug": "greek-ext-f69fd9-p70",
+            "title": "Homeri Hymnus in Cererem (Hymn to Demeter, Ruhnken Critical Edition)",
+            "year": 1781,
+            "cer": 0.458,
+            "gap": 0.115,
+            "invention": 0.39,
+            "has_ref": false,
+            "unsupported": [
+              "υμνοε",
+              "hμητραν",
+              "σκίδ",
+              "νατο",
+              "ἀποὶ",
+              "κατενήνσθεν",
+              "αἰστεροπῆς",
+              "μεγάρειν"
+            ]
+          },
+          {
+            "slug": "greek-ext-fbba4c-p156",
+            "title": "Callimachi Hymni et Epigrammata",
+            "year": 1577,
+            "cer": 0.38,
+            "gap": 0.095,
+            "invention": 0.245,
+            "has_ref": false,
+            "unsupported": [
+              "εἶπεν",
+              "αἵμιν",
+              "έπριον",
+              "ὑἰωνοὶ",
+              "ἔσαι",
+              "ἐγγυθι",
+              "ἀίκνῳ",
+              "ενίνης"
+            ]
+          },
+          {
+            "slug": "greek-ext-ddae34-p38",
+            "title": "Libellus de discrimine amici et adulatoris : Graece primum seorsim edidit varietatem lectionis notavit animadversiones H",
+            "year": 1775,
+            "cer": 0.372,
+            "gap": 0.01,
+            "invention": 0.288,
+            "has_ref": true,
+            "unsupported": [
+              "μισμα",
+              "δοκιμασμένον",
+              "ἐλεγχόυμενον",
+              "ἀλλτ",
+              "προγεγευισθαι",
+              "σaρvτ",
+              "εφίλον",
+              "καλον"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 18,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 18,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.314,
+            "catastrophic": 5,
+            "median_unsupported": 0.384
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 18,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.152,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 18,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.082,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 0,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 152,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 152,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.083,
+            "catastrophic": 1,
+            "median_unsupported": 0.049
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 152,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.138,
+            "catastrophic": 1,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 152,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.096,
+            "catastrophic": 2,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 134,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.094,
+            "catastrophic": 2,
+            "median_unsupported": 0.165
+          }
+        }
+      }
+    }
+  },
+  "greek-ext2": {
+    "stratum": "greek-ext2",
+    "issue": 4925,
+    "date": "2026-09-21",
+    "n_pages": 10,
+    "n_with_ref": 8,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.098,
+          "mean_cer": 0.093,
+          "catastrophic": 0,
+          "median_gap": 0.016,
+          "median_seq": 0.827
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.324,
+          "catastrophic": 1,
+          "median_gap": 0.011,
+          "median_bow": 0.516
+        },
+        "invention": {
+          "median": 0.103,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.197,
+          "ref_mean": 0.183
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 7,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.113,
+          "p_sign": 0.07,
+          "invention_wins": 7,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-947ec1-p88",
+            "title": "Plato, Cratylus and Florilegium Profanum",
+            "year": 1501,
+            "cer": 0.573,
+            "gap": 0.022,
+            "invention": 0.853,
+            "has_ref": false,
+            "unsupported": [
+              "αὐτοῖς",
+              "κέρδος",
+              "δίκης",
+              "ἐπίδειξον",
+              "ἀδικεῖν",
+              "πλουτεῖν",
+              "ἐστὶ",
+              "κακὸν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.122,
+            "gap": 0.038,
+            "invention": 0.114,
+            "has_ref": true,
+            "unsupported": [
+              "ὑποτιθείσης",
+              "φθείρεσθαι",
+              "εἴγε",
+              "ποιοῦντων",
+              "ἴσον",
+              "ὑπεροχὴν",
+              "κράσις",
+              "ὀξίτητα"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.116,
+            "gap": 0.032,
+            "invention": 0.173,
+            "has_ref": true,
+            "unsupported": [
+              "πᾶσα",
+              "οἶσθε",
+              "λέξεων",
+              "οὔτε",
+              "ἱκετεύουσιν",
+              "ἕτετε",
+              "καταζεύξαντες",
+              "στρατόπεδον"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.11,
+            "gap": 0.022,
+            "invention": 0.099,
+            "has_ref": true,
+            "unsupported": [
+              "μόνον",
+              "ταυτὸν",
+              "αἰσθητικὸν",
+              "φεστέρας",
+              "δόξας",
+              "παρακελεύεται",
+              "ἐρειδόμενος",
+              "παρεῖν'"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.099,
+            "gap": 0.007,
+            "invention": 0.014,
+            "has_ref": true,
+            "unsupported": [
+              "δαΐδ",
+              "ἐβαθύνθησαν"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.2,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.039,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.433
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.261,
+            "gap": 0.014,
+            "invention": 0.389,
+            "has_ref": true,
+            "unsupported": [
+              "ῥυομένην",
+              "ὠθουμένους",
+              "ἐσῶτας",
+              "σκωπτικοὺς",
+              "ἄρκαλουῶντας",
+              "ἀρτεμῖν",
+              "μαρχλω",
+              "ἀνθρώπω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.196,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.033,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.427
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 1,
+          "losses": 0,
+          "ties": 7,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 1,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.228,
+            "gap": 0.019,
+            "invention": 0.334,
+            "has_ref": true,
+            "unsupported": [
+              "γυμνῶν",
+              "ὀθωνεί",
+              "σκληρικοὺς",
+              "ἀρκαλοῦντες",
+              "ἀρτεμῶν",
+              "ἀνθρώπων",
+              "ἀφανῶς",
+              "δικάσαν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-greek-cllg": {
+        "pages_run": 9,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.07,
+          "mean_cer": 0.079,
+          "catastrophic": 0,
+          "median_gap": 0.007,
+          "median_seq": 0.813
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.106,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.734
+        },
+        "invention": {
+          "median": 0.153,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.254,
+          "ref_mean": 0.252
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 6,
+          "losses": 2,
+          "ties": 0,
+          "median_delta_cer": 0.143,
+          "p_sign": 0.289,
+          "invention_wins": 6,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-54d559-p126",
+            "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+            "year": 1589,
+            "cer": 0.164,
+            "gap": 0.011,
+            "invention": 0.229,
+            "has_ref": true,
+            "unsupported": [
+              "proegstiga",
+              "ρίοις",
+              "ἐμμενες",
+              "εκεπτεο",
+              "χλύϊ",
+              "ἠγηλάζει",
+              "τερες",
+              "ὅνοι"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.144,
+            "gap": 0.02,
+            "invention": 0.301,
+            "has_ref": true,
+            "unsupported": [
+              "ὠδῆς",
+              "ἑβραίοι",
+              "ικατοικῶν",
+              "βοηθεία",
+              "σκέπη",
+              "αὐλια",
+              "σθήσετες",
+              "κυρίω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec5a99-p69",
+            "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+            "year": 1539,
+            "cer": 0.106,
+            "gap": 0,
+            "invention": 0.153,
+            "has_ref": false,
+            "unsupported": [
+              "κροῦσον",
+              "αὐτὸν",
+              "ἀπέρ",
+              "έναντι",
+              "ἀποστραφήσεται",
+              "ἀμπέίλου",
+              "κατόπτρον",
+              "τοῦτο"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.086,
+            "gap": 0.02,
+            "invention": 0.186,
+            "has_ref": true,
+            "unsupported": [
+              "οὖσης",
+              "ἀπείη",
+              "ποσῶ",
+              "έτων",
+              "ἰσαζουσης",
+              "μεγέθη",
+              "ἄλλὰ",
+              "εσει"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.076,
+            "gap": 0.008,
+            "invention": 0.169,
+            "has_ref": true,
+            "unsupported": [
+              "ταγωή",
+              "τεὶς",
+              "ταὺλ",
+              "εγος",
+              "ύμασιν",
+              "ταὐτόν",
+              "προαίρησις",
+              "αἰσθτικοὶ"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.573,
+            "catastrophic": 1,
+            "median_unsupported": 0.853
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 0,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 9,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.099
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.224,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.222,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.076,
+            "catastrophic": 0,
+            "median_unsupported": 0.153
+          }
+        }
+      }
+    }
+  }
+}

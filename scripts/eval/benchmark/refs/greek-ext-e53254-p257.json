@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e53254-p257",
+  "substratum": "greek-1700-1799",
+  "title": "Aristotelis Opera Omnia :Graece. 3",
+  "year": 1792,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 632,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg044.1st1K-grc1",
+      "hits": 17
+    },
+    {
+      "id": "tlg0732.tlg006.1st1K-grc1",
+      "hits": 8
+    },
+    {
+      "id": "tlg4013.tlg003.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 31,
+  "source": "First1KGreek",
+  "work": "tlg0086.tlg044.1st1K-grc1",
+  "work_title": "Aristotle — Topica",
+  "edition": "Aristotle. Aristotelis Opera, Volume 1. Bekker, Immanuel, editor. Oxford: Oxford University Press, 1837.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0086/tlg044",
+  "phrase_hits": 17,
+  "etext_chars": 258822,
+  "window_words": 136,
+  "window_chars": 790,
+  "overlap": 0.917,
+  "align_trim": {
+    "letters_before": 650,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.03",
+      "gemini-3.1-flash-lite-b:0.03",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 635
+  }
+}

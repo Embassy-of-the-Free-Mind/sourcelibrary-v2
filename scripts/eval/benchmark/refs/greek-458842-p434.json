@@ -1,0 +1,47 @@
+{
+  "slug": "greek-458842-p434",
+  "substratum": "19th-c-print",
+  "title": "Origenes: Contra Celsum (Greek Critical Edition)",
+  "year": 1899,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1661,
+  "corpus_votes": [
+    {
+      "id": "tlg2042.tlg001.perseus-grc1",
+      "hits": 28
+    },
+    {
+      "id": "tlg2042.tlg019.1st1K-grc1",
+      "hits": 25
+    },
+    {
+      "id": "tlg1402.tlg001.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg2042.tlg001.perseus-grc1",
+  "work_title": "Origen — Contra Celsum",
+  "edition": "Origenes. Origenes Werke Vol 1-2. Koetschau, Paul, editor. Leipzig: Hinrichs, 1899.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg2042/tlg001",
+  "phrase_hits": 28,
+  "etext_chars": 1040948,
+  "window_words": 311,
+  "window_chars": 2036,
+  "overlap": 0.895,
+  "align_trim": {
+    "letters_before": 1697,
+    "reads_used": [
+      "cllg-qwen3vl-8b:0.10",
+      "dots-mocr:0.15",
+      "gemini-3-flash-preview:0.15",
+      "gemini-3.1-flash-lite:0.15",
+      "gemini-3.1-flash-lite-b:0.15",
+      "kraken-greek-cllg:0.14",
+      "surya2:0.16",
+      "tesseract-grc:0.38"
+    ],
+    "letters_after": 1675
+  }
+}

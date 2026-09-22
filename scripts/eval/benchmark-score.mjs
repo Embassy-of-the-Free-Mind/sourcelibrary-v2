@@ -42,6 +42,9 @@ const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=
 const ROOT = argOf('root');
 const REF_ENGINE = argOf('ref', 'gemini-3.1-flash-lite');
 const OUT_DIR = argOf('out', path.join(__dirname, 'results', 'benchmark'));
+const REPEATS = argOf('repeat', 'gemini-3.1-flash-lite-b').split(',').filter(Boolean);
+// a repeat arm is named <engine>-b; twins never count as independent support for each other
+const isTwin = (a, b) => (REPEATS.includes(a) && a.replace(/-b$/, '') === b) || (REPEATS.includes(b) && b.replace(/-b$/, '') === a);
 const ONLY = argOf('stratum') ? argOf('stratum').split(',') : null;
 const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
 if (!ROOT) { console.error('--root required'); process.exit(1); }
@@ -94,10 +97,21 @@ const median = xs => { const s = xs.filter(x => x != null).sort((a, b) => a - b)
 const mean = xs => { const s = xs.filter(x => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
 const CAP = 6000;
 
-function prep(text, cjk) {
+// GREEK strata score the GREEK letters only (#4925 step 2, preregistered): a Greek cell's reference
+// is the Greek e-text, while 42 of the 80 drawn 1700–1799 leaves are Greek–Latin parallel pages.
+// With the whole output in the Levenshtein, the Latin half is charged as insertions to EVERY engine
+// (CER ≥ 0.5 → the mismatch guard demotes the page) — the metric would measure layout, not reading.
+// Tokens are kept if they contain a Greek letter; Latin words are neither counted nor credited.
+const GREEK_STRATA = new Set(['greek', 'greek-ext']);
+const greekOnly = s => s.replace(/[^\p{Script=Greek}]+/gu, '');
+const hasGreek = t => /\p{Script=Greek}/u.test(t);
+// Diacritic fold for the secondary Greek CER: decompose, drop combining marks, lower-case, final sigma → sigma.
+const foldGreek = s => s.normalize('NFD').replace(/\p{M}+/gu, '').toLowerCase().replace(/ς/g, 'σ');
+function prep(text, cjk, greek = false) {
   if (cjk) { const n = normCJK(text).slice(0, CAP); return { chars: n, tokens: cjkTokens(n), content: cjkGrams(n, 3), nContent: n.length }; }
-  const n = normAlpha(text).slice(0, CAP); const toks = tokensAlpha(n);
-  return { chars: lettersOnly(n), tokens: toks, content: toks.filter(t => lettersOnly(t).length >= 4), nContent: lettersOnly(n).length };
+  const n = normAlpha(text).slice(0, CAP); const toks = greek ? tokensAlpha(n).filter(hasGreek) : tokensAlpha(n);
+  const letters = greek ? greekOnly(n) : lettersOnly(n);
+  return { chars: letters, tokens: toks, content: toks.filter(t => lettersOnly(t).length >= 4), nContent: letters.length };
 }
 function compare(h, r) {
   // h, r prepared. CER on letters/chars (symmetric Levenshtein over the reference length).
@@ -166,7 +180,7 @@ const date = new Date().toISOString().slice(0, 10);
 const summaryAll = {};
 for (const stratum of strata) {
   if (stratum.startsWith('ref-')) { summaryAll[stratum] = scoreRefTier(stratum); continue; }
-  const cjk = CJK_STRATA.has(stratum);
+  const cjk = CJK_STRATA.has(stratum), greek = GREEK_STRATA.has(stratum);
   const regPath = path.join(__dirname, 'benchmark', `${stratum}.json`);
   const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : null;
   const meta = new Map((reg?.pages || []).map(p => [p.slug, p]));
@@ -177,8 +191,8 @@ for (const stratum of strata) {
   // catalogue year is the WORK's date (a 1716 Hagakure is a modern typeset reprint), so the per-class
   // roll-up below is the one that answers "does engine X read kuzushiji".
   const classDir = path.join(outRoot, 'script-class');
-  const classOf = new Map(); const leafOf = new Map();   // leaf_language: the LEAF's language by eye (a Chinese title can hold a kanbun reprint)
-  if (fs.existsSync(classDir)) for (const f of fs.readdirSync(classDir).filter(f => f.endsWith('.json'))) { try { const j = JSON.parse(fs.readFileSync(path.join(classDir, f), 'utf8')); classOf.set(f.replace(/\.json$/, ''), j.script_class || null); if (j.leaf_language) leafOf.set(f.replace(/\.json$/, ''), j.leaf_language); } catch { /* unparsed */ } }
+  const classOf = new Map(); const leafOf = new Map(); const shareOf = new Map();   // leaf_language: the LEAF's language by eye (a Chinese title can hold a kanbun reprint); greek_share: the by-eye Greek share in tenths (Greek strata — a parallel Greek–Latin leaf is `mixed` and enters a Greek cell at ≥ 0.5)
+  if (fs.existsSync(classDir)) for (const f of fs.readdirSync(classDir).filter(f => f.endsWith('.json'))) { try { const j = JSON.parse(fs.readFileSync(path.join(classDir, f), 'utf8')); classOf.set(f.replace(/\.json$/, ''), j.script_class || null); if (j.leaf_language) leafOf.set(f.replace(/\.json$/, ''), j.leaf_language); if (typeof j.greek_share === 'number') shareOf.set(f.replace(/\.json$/, ''), j.greek_share); } catch { /* unparsed */ } }
   // Only the SEALED pages are scored: registry entries that are not spares, plus spares
   // promoted in place of a textless page. Stray images in the directory are ignored.
   const slugs = fs.readdirSync(path.join(ROOT, stratum)).filter(f => f.endsWith('.jpg')).map(f => f.replace(/\.jpg$/, '')).sort()
@@ -191,12 +205,12 @@ for (const stratum of strata) {
   const pages = [];
   const textless = [];
   for (const s of slugs) {
-    const prepped = {}; for (const e of engines) prepped[e] = texts[s][e] == null ? null : prep(texts[s][e], cjk);
+    const prepped = {}; for (const e of engines) prepped[e] = texts[s][e] == null ? null : prep(texts[s][e], cjk, greek);
     const maxContent = Math.max(0, ...engines.map(e => prepped[e]?.nContent || 0));
     if (maxContent < 30) { textless.push(s); continue; }
     const hasRef = !!refText[s];
-    const ref = hasRef ? prep(refText[s], cjk) : prepped[REF_ENGINE];
-    const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, leaf_language: leafOf.get(s) || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
+    const ref = hasRef ? prep(refText[s], cjk, greek) : prepped[REF_ENGINE];
+    const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, leaf_language: leafOf.get(s) || null, ...(shareOf.has(s) ? { greek_share: shareOf.get(s) } : {}), title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
     // LOOP: the failure kind a CER against a proxy cannot see (both arms loop on kuzushiji; flash-preview
     // wrote 448 lines for a 35-line Serto page). Repeated non-blank lines ≥ 30 % with ≥ 5 lines, or an
     // output more than 3× the median length of the other engines' and over 2,000 characters.
@@ -211,11 +225,22 @@ for (const stratum of strata) {
       const uniq = [...new Set(h.content)];
       const unsupported = uniq.filter(t => !others.has(t));
       const inv = uniq.length ? unsupported.length / uniq.length : null;
+      // invention_indep: the same measure, but a REPEAT arm may not vouch for its twin. At temperature 0
+      // lite and lite-b are byte-identical on ~86 % of pages, so `invention` is structurally 0 for lite
+      // (47/52 Greek pages) and any rule comparing an arm's invention to lite's can never pass (#4925 step 2).
+      const indep = new Set(); if (hasRef) for (const t of ref.content) indep.add(t);
+      for (const o of engines) if (o !== e && !isTwin(e, o) && prepped[o]) for (const t of prepped[o].content) indep.add(t);
+      const invIndep = uniq.length ? uniq.filter(t => !indep.has(t)).length / uniq.length : null;
       // invention_ref: absent from the REFERENCE alone (the clean measure; needs a reference)
       let invRef = null, invRefSample = [];
       if (hasRef) { const R = new Set(ref.content); const miss = uniq.filter(t => !R.has(t)); invRef = uniq.length ? miss.length / uniq.length : null; invRefSample = miss.slice(0, 8); }
       const base = (e === REF_ENGINE && !hasRef) ? null : (ref ? compare(h, ref) : null);
-      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
+      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_indep: r3(invIndep), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
+      // Greek strata, referenced pages: a SECONDARY, exploratory CER with accents, breathings and
+      // iota subscript folded away (PREREGISTRATION-greek-ext-4925.md, References §c) — the e-text
+      // is an edition of the WORK, and its diacritic conventions differ from a 1550 page's; the
+      // primary CER keeps diacritics.
+      if (greek && hasRef && base && ref.chars.length) { const hf = [...foldGreek(h.chars)], rf = [...foldGreek(ref.chars)]; if (rf.length) row.engines[e].cer_folded = r3(levenshtein(hf, rf) / rf.length); }
       // agreement with every other engine, order-free, for the reference-free strata
       row.engines[e].agree = {}; for (const o of engines) if (o !== e && prepped[o]) row.engines[e].agree[o] = r3(bagDice(h.tokens, prepped[o].tokens));
     }

@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e4a112-p150",
+  "substratum": "greek-1700-1799",
+  "title": "Platonis Dialogi Dvo Philebvs Et Symposivm",
+  "year": 1776,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1291,
+  "corpus_votes": [
+    {
+      "id": "tlg0059.tlg011.perseus-grc2",
+      "hits": 19
+    },
+    {
+      "id": "tlg4013.tlg005.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg4015.tlg008.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0059.tlg011.perseus-grc2",
+  "work_title": "Plato — Symposium",
+  "edition": "Platonis Opera, Tomus II: Tetralogia III-IV. Burnet, John, editor. Oxford: Clarendon Press, 1910.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0059/tlg011",
+  "phrase_hits": 19,
+  "etext_chars": 103662,
+  "window_words": 226,
+  "window_chars": 1472,
+  "overlap": 0.672,
+  "align_trim": {
+    "letters_before": 1219,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.12",
+      "gemini-3.1-flash-lite-b:0.12",
+      "kraken-greek-cllg:0.06"
+    ],
+    "letters_after": 1206
+  }
+}

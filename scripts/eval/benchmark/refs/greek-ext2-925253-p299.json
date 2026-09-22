@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext2-925253-p299",
+  "substratum": "greek-1450-1699",
+  "title": "Vitae Parallelae",
+  "year": 1519,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 4289,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg045.perseus-grc2",
+      "hits": 22
+    },
+    {
+      "id": "tlg0007.tlg081.perseus-grc3",
+      "hits": 3
+    },
+    {
+      "id": "tlg0007.tlg081.perseus-grc4",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg045.perseus-grc2",
+  "work_title": "Plutarch — Pompey",
+  "edition": "Plutarch. Plutarch's Lives, Vol. V. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1917.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg045",
+  "phrase_hits": 22,
+  "etext_chars": 134702,
+  "window_words": 1008,
+  "window_chars": 5155,
+  "overlap": 0.711,
+  "align_trim": {
+    "letters_before": 5669,
+    "reads_used": [
+      "gemini-3-flash-preview:0.10",
+      "gemini-3.1-flash-lite:0.27",
+      "gemini-3.1-flash-lite-b:0.27",
+      "kraken-greek-cllg:0.03"
+    ],
+    "letters_after": 4275
+  }
+}

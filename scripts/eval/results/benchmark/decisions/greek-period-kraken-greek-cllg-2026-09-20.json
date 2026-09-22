@@ -1,0 +1,210 @@
+{
+  "engine": "kraken-greek-cllg",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "greek",
+      "file": "greek-2026-09-20.json",
+      "n_pages": 30,
+      "n_with_ref": 11
+    },
+    {
+      "stratum": "greek-ext",
+      "file": "greek-ext-2026-09-20.json",
+      "n_pages": 170,
+      "n_with_ref": 115
+    }
+  ],
+  "classes": {
+    "1450–1699": {
+      "n_pages": 73,
+      "n_referenced": 47,
+      "n_paired": 47,
+      "n_by_stratum": {
+        "greek": 4,
+        "greek-ext": 43
+      },
+      "median_cer": {
+        "kraken-greek-cllg": 0.091,
+        "gemini-3.1-flash-lite": 0.169,
+        "gemini-3.1-flash-lite-b": 0.168
+      },
+      "ref_median_cer_ci95": [
+        0.156,
+        0.18
+      ],
+      "delta": {
+        "median": -0.052,
+        "ci95": [
+          -0.076,
+          -0.045
+        ],
+        "wins": 45,
+        "losses": 1,
+        "ties": 1,
+        "untied": 46,
+        "p_sign": 0,
+        "share_le_minus_005": 0.574
+      },
+      "noise_floor": {
+        "n": 47,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "kraken-greek-cllg": 0.237,
+        "gemini-3.1-flash-lite": 0.291
+      },
+      "loops": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=47 < 50) — no lane decision"
+    },
+    "1700–1799": {
+      "n_pages": 65,
+      "n_referenced": 52,
+      "n_paired": 52,
+      "n_by_stratum": {
+        "greek": 0,
+        "greek-ext": 52
+      },
+      "median_cer": {
+        "kraken-greek-cllg": 0.082,
+        "gemini-3.1-flash-lite": 0.107,
+        "gemini-3.1-flash-lite-b": 0.107
+      },
+      "ref_median_cer_ci95": [
+        0.079,
+        0.121
+      ],
+      "delta": {
+        "median": -0.016,
+        "ci95": [
+          -0.026,
+          -0.004
+        ],
+        "wins": 34,
+        "losses": 18,
+        "ties": 0,
+        "untied": 52,
+        "p_sign": 0.036,
+        "share_le_minus_005": 0.135
+      },
+      "noise_floor": {
+        "n": 52,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "kraken-greek-cllg": 0.232,
+        "gemini-3.1-flash-lite": 0.178
+      },
+      "loops": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "1800–1899": {
+      "n_pages": 7,
+      "n_referenced": 5,
+      "n_paired": 5,
+      "n_by_stratum": {
+        "greek": 5,
+        "greek-ext": 0
+      },
+      "median_cer": {
+        "kraken-greek-cllg": 0.066,
+        "gemini-3.1-flash-lite": 0.064,
+        "gemini-3.1-flash-lite-b": 0.064
+      },
+      "ref_median_cer_ci95": [
+        0.017,
+        0.162
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          -0.006,
+          0.006
+        ],
+        "wins": 2,
+        "losses": 2,
+        "ties": 1,
+        "untied": 4,
+        "p_sign": 1,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 5,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "kraken-greek-cllg": 0.101,
+        "gemini-3.1-flash-lite": 0.068
+      },
+      "loops": {
+        "kraken-greek-cllg": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=5 < 50) — no lane decision"
+    }
+  }
+}

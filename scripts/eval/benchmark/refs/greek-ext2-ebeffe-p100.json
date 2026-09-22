@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext2-ebeffe-p100",
+  "substratum": "greek-1450-1699",
+  "title": "In Topica Aristotelis Commentarii",
+  "year": 1513,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 3174,
+  "corpus_votes": [
+    {
+      "id": "tlg0732.tlg006.1st1K-grc1",
+      "hits": 25
+    },
+    {
+      "id": "tlg0732.tlgX01.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg4015.tlg009.1st1K-grc1",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0732.tlg006.1st1K-grc1",
+  "work_title": "Alexander of Aphrodisias — In Aristotelis Topicorum Libros Octo Commentaria",
+  "edition": "Alexander of Aphrodisias. In Aristotelis topicorum libros octo commentaria (Commentaria in Aristotelem Graeca 2.2). Wallies, Maximilian, editor. Berlin: Reimer, 1891.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0732/tlg006",
+  "phrase_hits": 25,
+  "etext_chars": 1073250,
+  "window_words": 867,
+  "window_chars": 3845,
+  "overlap": 0.862,
+  "align_trim": {
+    "letters_before": 4606,
+    "reads_used": [
+      "gemini-3-flash-preview:0.11",
+      "gemini-3.1-flash-lite:0.22",
+      "gemini-3.1-flash-lite-b:0.22",
+      "kraken-greek-cllg:0.08"
+    ],
+    "letters_after": 3139
+  }
+}

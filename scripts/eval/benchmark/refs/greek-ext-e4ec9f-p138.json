@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e4ec9f-p138",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchu tu Chairōneōs ta ēthika. T. 1, pars 1",
+  "year": 1796,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1565,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg067.perseus-grc2",
+      "hits": 28
+    },
+    {
+      "id": "tlg0081.tlg016.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0059.tlg007.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg067.perseus-grc2",
+  "work_title": "Plutarch — De liberis educandis",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol I. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1888.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg067",
+  "phrase_hits": 28,
+  "etext_chars": 39861,
+  "window_words": 281,
+  "window_chars": 1888,
+  "overlap": 0.775,
+  "align_trim": {
+    "letters_before": 1547,
+    "reads_used": [
+      "gemini-3-flash-preview:0.04",
+      "gemini-3.1-flash-lite:0.05",
+      "gemini-3.1-flash-lite-b:0.05",
+      "kraken-greek-cllg:0.04"
+    ],
+    "letters_after": 1545
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e50e71-p506",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchu tu Chairōneōs Ta Ethika. 4",
+  "year": 1797,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 929,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg125.perseus-grc2",
+      "hits": 23
+    },
+    {
+      "id": "tlg2000.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0057.tlg049.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg125.perseus-grc2",
+  "work_title": "Plutarch — Quaestiones Naturales",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol. V. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1893.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg125",
+  "phrase_hits": 23,
+  "etext_chars": 30167,
+  "window_words": 152,
+  "window_chars": 1058,
+  "overlap": 0.804,
+  "align_trim": {
+    "letters_before": 873,
+    "reads_used": [
+      "gemini-3-flash-preview:0.10",
+      "gemini-3.1-flash-lite:0.16",
+      "gemini-3.1-flash-lite-b:0.16",
+      "kraken-greek-cllg:0.07"
+    ],
+    "letters_after": 873
+  }
+}

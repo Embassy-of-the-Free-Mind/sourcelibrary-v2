@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e0177f-p606",
+  "substratum": "pre-1700-print",
+  "title": "In IIII. libros Aristotelis de Caelo Commentarii",
+  "year": 1565,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}
