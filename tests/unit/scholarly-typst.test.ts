@@ -102,6 +102,33 @@ describe('dedicationToTypst', () => {
   });
 });
 
+describe('page seams', () => {
+  const book = { id: 'b2', slug: 'seams', title: 'T', author: 'A', language: 'Latin' };
+  it('sets a sentence broken across two pages as one paragraph and drops the continuation ellipsis', () => {
+    const src = generateTypstSource(book, [
+      page(6, 'He ought to inquire whether he sinned in a time of joy. It is graver...', 'Grauior est'),
+      page(7, '...fornication committed in mourning is more serious. Next sentence.', 'fornicatio tempore luctus.'),
+    ], { includeOriginal: true });
+    expect(src).toMatch(/It is graver\.\.\.\n#src\("7"[^\n]*\);fornication committed/);
+    expect(src).toMatch(/Grauior est\n#src\("7"[^\n]*\);fornicatio/);
+  });
+  it('keeps the paragraph break when the page ends a sentence or the next starts one', () => {
+    const src = generateTypstSource(book, [
+      page(1, 'A full sentence.'),
+      page(2, 'Another full sentence.'),
+      page(3, 'lowercase start after a full stop is still a new paragraph.'),
+    ]);
+    expect(src.match(/#pagegap/g)).toHaveLength(3);
+  });
+  it('puts a chapter heading after a continued sentence, not inside it', () => {
+    const src = generateTypstSource({ ...book, chapters: [{ pageNumber: 2, title: 'Two', level: 1 }] }, [
+      page(1, 'It is graver...'),
+      page(2, '...fornication is worse. Done.'),
+    ]);
+    expect(src).toMatch(/It is graver\.\.\.\n#src\("2"[^\n]*\);fornication is worse\. Done\.\n\n#heading\(level: 2\)\[Two\]/);
+  });
+});
+
 describe('generateTypstSource', () => {
   const book = { id: 'b1', slug: 'a-book', title: 'Liber "de" #rebus', display_title: 'A Book: Of Things', author: 'A | B', language: 'Latin', published: '1657' };
   const pages = [

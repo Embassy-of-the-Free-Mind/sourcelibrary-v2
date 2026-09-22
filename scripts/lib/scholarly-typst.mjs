@@ -860,25 +860,55 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   };
   const english = render(translatedPages, 't');
   const original = includeOriginal ? render(translatedPages.filter(p => p.ocr?.data).map(asText('ocr')), 'o') : new Map();
+  // A sentence that runs across a page break was translated in two halves
+  // (each page is translated on its own); the halves stay as the model
+  // wrote them, but the paragraph break between them is ours, so it goes:
+  // when a page ends mid-sentence and the next begins mid-sentence, the two
+  // are set as one paragraph. The translation marks its halves with an
+  // ellipsis; the transcription simply stops without a full stop.
+  const textOf = body => body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, '');
+  const endsMidSentence = body => {
+    // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
+    const t = textOf(body).replace(/\\$/, '').trimEnd().replace(/\\\[\?[^\]]*\\\]$/, 'x');
+    if (/[.!?:"”)\]]$/.test(t.replace(/(?:\.\.\.|…)$/, '').trimEnd())) return false;
+    return /(?:\.\.\.|…|[\p{L}\p{N},;—–-])$/u.test(t);
+  };
+  const startsMidSentence = body => {
+    const t = textOf(body).replace(/^(?:\.\.\.|…)\s*/, '');
+    return !t.startsWith('#') && /^\p{Ll}/u.test(t);
+  };
+  const continues = (prev, next) => Boolean(prev && next && endsMidSentence(prev) && startsMidSentence(next));
+  // The continuation's leading ellipsis is dropped; the first half keeps its own
+  const joinedForm = body => body.replace(/^((?:%%SRC:[^%]*%%)?\s*)(?:\.\.\.|…)\s*/, '$1');
+
   const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
     `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
 
   let chapterIdx = 0;
+  let prevBody = null;
+  let pendingHeads = [];
   for (const page of translatedPages) {
     // Every chapter that starts at or before this page and has not been
     // emitted yet — a chapter whose own page was skipped as blank still
-    // gets its contents entry, on the next page that has text
+    // gets its contents entry, on the next page that has text. The
+    // headings print nothing in the body (they feed contents, bookmarks and
+    // the running head), so when the page continues a sentence they go
+    // after it rather than splitting it.
+    const heads = [];
     while (chapterIdx < chapters.length && chapters[chapterIdx].pageNumber <= page.page_number) {
       const ch = chapters[chapterIdx++];
       const title = ch.titleEn || ch.title;
-      doc.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
-      doc.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
+      heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
+      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
     }
-    if (!english.has(page.page_number)) continue;
-    doc.push('#pagegap');
-    doc.push(anchored(english.get(page.page_number), original, language));
-    doc.push('');
+    if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
+    const body = english.get(page.page_number);
+    if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
+    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    prevBody = body;
   }
+  doc.push('');
+  doc.push(...pendingHeads);
 
   doc.push(`#in-body.update(false)\n#running-chapter.update("")`);
 
@@ -899,10 +929,11 @@ This is the transcription the translation was made from, produced by optical cha
 #[
 #set text(size: 9.5pt, ${code ? `lang: "${code}"` : 'hyphenate: false'})
 `);
+    let prevOrig = null;
     for (const [n, body] of original) {
-      doc.push('#pagegap');
-      doc.push(anchored(body, english, 'English'));
-      doc.push('');
+      if (continues(prevOrig, body)) doc.push(anchored(body, english, 'English'));
+      else { doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, english, 'English')); }
+      prevOrig = body;
     }
     doc.push(']\n#running-chapter.update("")');
   }
