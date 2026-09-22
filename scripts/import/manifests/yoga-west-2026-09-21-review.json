@@ -1,0 +1,833 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-21 from q1-yoga.json, q2-patanjali.json, q3-authors.json; config yoga-west.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "yoga-west-2026-09-21",
+  "collections": [
+    "yoga"
+  ],
+  "BOOKS": [
+    {
+      "id": "pli.kerala.rare.12090",
+      "title": "Christanity contrasted with Hindu Philosophy",
+      "author": "James R Ballantyne",
+      "year": 1859,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library"
+    },
+    {
+      "id": "dli.ministry.11157",
+      "title": "Christianity contracted with Hindu philosophy : an essay in five books, Sanskrit and English : the missionary among the Hindus",
+      "author": "James R. Ballantyne",
+      "year": 1859,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217410",
+      "title": "Hindu Philosophy",
+      "author": "James R Ballantyne",
+      "year": 1859,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.48943",
+      "title": "Sankhya Aphorisms Of Kapila",
+      "author": "J. R. Tr. Ballantyne",
+      "year": 1865,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.196195, in.ernet.dli.2015.196152, in.ernet.dli.2015.203850"
+    },
+    {
+      "id": "india.history.resource.77177",
+      "title": "The Sankhya Aphorisms of Kapila, with extracts from Vijn’ana Bhikshu’s Commentary",
+      "author": "Kapila",
+      "year": 1865,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.63697",
+      "title": "The Yoga System Of Health",
+      "author": "Yogi Vithaldas",
+      "year": 1866,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.120553",
+      "title": "Letters On Yoga Part Four Vol.-24",
+      "author": "Sri Aurobindo",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.146972"
+    },
+    {
+      "id": "in.ernet.dli.2015.120552",
+      "title": "Letters On Yoga Parts Two And Three Vol.-23",
+      "author": "Sri Aurobindo",
+      "year": 1872,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.146971"
+    },
+    {
+      "id": "pli.kerala.rare.21720",
+      "title": "Studies in Mantra Shastra Part 1,2,3,4",
+      "author": "Arthur Avalon",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library"
+    },
+    {
+      "id": "dli.csl.5569",
+      "title": "Raja yoga or the practical metaphysics of the Ved nta being a translation of the Vajyasudha or Drigdrishya-Viveka of Bharatitirtha, and the Aparokshannubhuti of Shri Shankaracharya",
+      "author": "Manilal Nabhubhai Dvivedi",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.3656",
+      "title": "The Sankhya aphorisms of Kapila with illustrative extracts from the commentaries",
+      "author": "James R. Ballantyne",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.4695",
+      "title": "Yoga-Vasistha-Maharamayana of Valmiki",
+      "author": "Unknown",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.csl.4668"
+    },
+    {
+      "id": "dli.bengal.10689.7196",
+      "title": "Yoga-Vasishtha Maharamayana - Vol.2",
+      "author": "Vihari Lala tr Mitra",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180621",
+      "title": "Yoga Philosophy",
+      "author": "B. N. Banerjee",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.196096, in.ernet.dli.2015.47078"
+    },
+    {
+      "id": "in.ernet.dli.2015.180605",
+      "title": "The Yoga Of Christ",
+      "author": "F. Henrietta Ed. Muller",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.47977"
+    },
+    {
+      "id": "dli.ministry.27138",
+      "title": "Swami Vivekananda on hinduism: an examination of his address at the Chicago Parliament of religions",
+      "author": "Vivekananda",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.195997",
+      "title": "The Imitation Of Sankara",
+      "author": "Manilal N. Dvivedi",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.47319"
+    },
+    {
+      "id": "in.ernet.dli.2015.195578",
+      "title": "Bhakti - Yoga",
+      "author": "Swami Vivekananda",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: acc.-no.-39713-bhakti-yoga-1927, dli.ministry.25402"
+    },
+    {
+      "id": "dli.ministry.16153",
+      "title": "Lecture on “ Bhakti Yoga”",
+      "author": "Vivekananda",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.130982",
+      "title": "Unity The Goal Of Relgion Bhakti-yoga",
+      "author": "vivekanandh Swami",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.25518",
+      "title": "From Colombo to Almora: being a record of the Swami Vivekananda’s return to India after his mission to the west",
+      "author": "Vivekananda",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: fromcolombotoal00vivegoog, fromcolombotoal01vivegoog"
+    },
+    {
+      "id": "kuh.ag.1018.032360",
+      "title": "Lectures From Colombo Almora",
+      "author": "Vivekananda Swami",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "atj.lecturesfromcolo0000swam",
+      "title": "Lectures From Colombo To Almore",
+      "author": "Swami Vivekananda",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.195770",
+      "title": "Lectures From Colombo To Almora",
+      "author": "Swami Vivekananda",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.96046",
+      "title": "The Yoga-vasishtha-maharamayana Of Valmiki,vol.4",
+      "author": "vihari Lala Tr. Mitra",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.62046"
+    },
+    {
+      "id": "dli.csl.6019",
+      "title": "Yoga Vasishtha Maharamayana of Valmiki",
+      "author": "Unknown",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.31749",
+      "title": "Nine Lectures Part, 1",
+      "author": "Swami Abhedananda",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217400",
+      "title": "A Compendium Of The Raja Yoga Philosophy",
+      "author": "Rajaram Tookaram",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.15997",
+      "title": "KARMA-YOGA ED. 1ST",
+      "author": "SWAMI VIVEKANANDA",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180547",
+      "title": "Spiritual Unfoldment Ed. 3",
+      "author": "Swami Abhedananda",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.49217"
+    },
+    {
+      "id": "in.ernet.dli.2015.84501",
+      "title": "Vedanta Philosophy Three Lectures On Spiritual Unfoldment",
+      "author": "Swami Abhedananda",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.27140",
+      "title": "Swami Vivekananda’s valuable letters and other lectures",
+      "author": "Vivekananda",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.110902",
+      "title": "The Hindu-yogi",
+      "author": "Yogi Ramacharaka",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.115240"
+    },
+    {
+      "id": "in.ernet.dli.2015.31388",
+      "title": "Divine Heritage Of Man",
+      "author": "Swami Abhedananda",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.272660",
+      "title": "Tantrik Texts Vol I",
+      "author": "Arthur Avalon",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.13177",
+      "title": "Fourteen lessons in Yogi philosophy and oriental occultism",
+      "author": "Yogi Ramacharaka",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.218696, fourteenlessons00ramagoog"
+    },
+    {
+      "id": "dli.ernet.238373",
+      "title": "Hatha Yoga (1904)",
+      "author": "Yogi Ramachraka",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.979",
+      "title": "A Series of Lessons Raja Yoga (1905)",
+      "author": "Ramacharaka Yogi",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.236568"
+    },
+    {
+      "id": "dli.ernet.503423",
+      "title": "Advanced Coures In Yogi Philosiphy",
+      "author": "Ramacharaka Yogi",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.233310",
+      "title": "Advanced Coures In Yogi Philosiphy",
+      "author": "Unknown",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ernet.5638"
+    },
+    {
+      "id": "wg1100",
+      "title": "1905 -The Bhagavad Gita",
+      "author": "Annie Besant And Bhagavan Das",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.163355",
+      "title": "The Science Of Psychic Healing.",
+      "author": "Yogi. Ramacharaka",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.yogadarsana0000gang",
+      "title": "The Yoga-Darsana",
+      "author": "Ganganatha Jha",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: pli.kerala.rare.28327"
+    },
+    {
+      "id": "in.ernet.dli.2015.195766",
+      "title": "Karma Yoga Ed. 2",
+      "author": "Swami Vivekananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.8903",
+      "title": "Lectures on Jnana Yoga",
+      "author": "Vivekananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.529042"
+    },
+    {
+      "id": "in.ernet.dli.2015.180481",
+      "title": "Lessons In Gnani Yoga",
+      "author": "Yogi Ramacharaka",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.195772, in.ernet.dli.2015.47056"
+    },
+    {
+      "id": "in.gov.ignca.8905",
+      "title": "Two Lectures on Karma Yoga",
+      "author": "Vivekananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.110525",
+      "title": "Vedanta Philosophy, Jnana Yoga, Part II., Seven Lectures on Swami Vivekananda",
+      "author": "Swami Vivekananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.110387",
+      "title": "Vedanta Philosophy, Lectures by the Swami Vivekananda on Jnana Yoga, Part I., 3rd ed.",
+      "author": "Swami Vivekananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.27420"
+    },
+    {
+      "id": "in.ernet.dli.2015.195684",
+      "title": "Gospel Of Ramakrishna",
+      "author": "Swami Abhedananda",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.20715",
+      "title": "Raja Yoga, Or Conquering The Internal Nature Ed.2",
+      "author": "Swami Vivekananda",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.26782",
+      "title": "Realisation and its methods",
+      "author": "Vivekananda",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.5716",
+      "title": "A series of lessons in raja yoga",
+      "author": "Yogi Ramacharaka",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: aserieslessonsi00yoggoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.22595",
+      "title": "The Yoga Philosophy",
+      "author": "Bhagu F. Ed. Karbhari",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.5754",
+      "title": "Tantra of the Great liberation (Mahanirvana Tantra)",
+      "author": "Arthur Avalon",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ernet.205077, india.history.resource.110781"
+    },
+    {
+      "id": "india.history.resource.111802",
+      "title": "Power of Thought, 3rd ed.",
+      "author": "Swami Paramananda",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.yogasutraofpatan0000mani",
+      "title": "The Yoga-Sutra Of Patanjali",
+      "author": "Manilal Nabhubhi Dvivedi",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.62535",
+      "title": "-a Yoga-vasishta Laghu The Smaller (1914)",
+      "author": "k Narayanaswami Aiyar",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.133116",
+      "title": "The Yoga Sutra Of Patanjali",
+      "author": "Manilal Nabhubhai",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.142067"
+    },
+    {
+      "id": "india.history.resource.77139",
+      "title": "The Yoga of Yama, What Death Said: A Version of the Katopanishad, with commentary; being a System of Yoga or Means of Attainment",
+      "author": "W. Gorn Old",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.90706",
+      "title": "Maha-Bharata or Karma-Yoga; the Second Volumes of the Permanent History of History of Bharata-Varsha",
+      "author": "Mahabharata",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.247796",
+      "title": "Fourteen Lessons In Yogi Philosophy and Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.206230",
+      "title": "Advance Course In Yogi Philosophy And Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.30987",
+      "title": "Maha-bharata Or Karma-yoga, Vol.2",
+      "author": "K. Narayana Aiyar",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.gov.ignca.8994",
+      "title": "Mahabharata or Karma Yoga",
+      "author": "K. Narayana Aiyar",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.529048"
+    },
+    {
+      "id": "in.ernet.dli.2015.148945",
+      "title": "Emerson And Vedanta Ed. 2nd",
+      "author": "Swami Paramananda",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.5457",
+      "title": "The Yoga And Its Object",
+      "author": "Aurobindo Ghose",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.143266",
+      "title": "The Swacchanda Tantra",
+      "author": "Kshemaraja",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.127413"
+    },
+    {
+      "id": "dli.ernet.238065",
+      "title": "The World As Power Reality (1921)",
+      "author": "Woodroffe John",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "gss.5.worldaspowerpowe0000sirj",
+      "title": "The World As Power Power AS Mind",
+      "author": "Sir John Woodroffe",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: in.ernet.dli.2015.22944"
+    },
+    {
+      "id": "in.ernet.dli.2015.277192",
+      "title": "Garland of letters or studies in the mantra shastra",
+      "author": "John Woodroffe",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.274061",
+      "title": "The Garland Of Letters",
+      "author": "John Woodroffe",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.22943",
+      "title": "The World As Power Power As Life",
+      "author": "John Sir Woodroffe",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.238064",
+      "title": "The World As Power Power As Life (1922)",
+      "author": "Woodroffe John",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.42344",
+      "title": "Raja Yoga Ed. 6",
+      "author": "Swami Vivekananda",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "gss.e07.worldaspowercaus000sirj",
+      "title": "The World as Power Causality and Continuity",
+      "author": "Sir John Woodroffe",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: in.ernet.dli.2015.178722"
+    },
+    {
+      "id": "pli.kerala.rare.24764",
+      "title": "The World as Power, Power as matter, Vol.1",
+      "author": "John Woodroffe and Pramathanatha Mukhyopadhyaya",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library"
+    },
+    {
+      "id": "pli.kerala.rare.24765",
+      "title": "World as Power, Casuality and Continuity, Vol.2",
+      "author": "John Woodroffe and Pramathanatha Mukhyopadhyaya",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library"
+    },
+    {
+      "id": "in.ernet.dli.2015.97423",
+      "title": "The World As Power Power As Matter",
+      "author": "john Woodroffe",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.61889",
+      "title": "The Yoga Philosophy",
+      "author": "Bhagu F. Krabhari",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.946",
+      "title": "Yoga as Philosophy and Religion (1924)",
+      "author": "Dasgupta Surendranath",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ernet.236532"
+    },
+    {
+      "id": "rkas.653.yogamimansavolum0000unse",
+      "title": "Yoga Mimansa Volume I",
+      "author": "Unknown",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.274679",
+      "title": "Yoga",
+      "author": "J.f.c.fuller",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.13878",
+      "title": "Essays On The Gita",
+      "author": "Ghose Aurobindo",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.5740",
+      "title": "Yoga Mimansa",
+      "author": "Kuvalayanananda",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.22750",
+      "title": "Tantraraja Tantra",
+      "author": "Lakshmana Mahamahopadhyaya Ed. Shastri",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.149564",
+      "title": "The Harvard Oriental Series Vol.17 The Yoga-system Of Patanjali Ed. 2nd",
+      "author": "James Haughton Woods",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.36292",
+      "title": "The Yoga System Of Patanjali",
+      "author": "Unknown",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.928",
+      "title": "The Yoga System of Patanjali (1927)",
+      "author": "Woods James Haughton",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.236515"
+    },
+    {
+      "id": "in.ernet.dli.2015.115178",
+      "title": "Speeches And Writings Of Swami Vivekananda",
+      "author": "Vivekananda",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.272370",
+      "title": "Mystic Experiences Tales Of Yoga And Vedanta",
+      "author": "Bhagavan Das",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.06735",
+      "title": "Tibet’s great Yogi Milarepa : a biography from the Tibetan being the Fetsun-Kahbum",
+      "author": "Unknown",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.277125",
+      "title": "Yoga - Mimansa",
+      "author": "Ed.by.Kuvalayananda",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.31127",
+      "title": "Yoga Mimansa",
+      "author": "Srimat Kuvalayananda",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.31125, dli.ministry.31124, in.ernet.dli.2015.277088"
+    },
+    {
+      "id": "dli.ministry.03463",
+      "title": "Kamaratna tantra",
+      "author": "Hemchandra Goswami Tattabhusan",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.280743"
+    },
+    {
+      "id": "in.ernet.dli.2015.274289",
+      "title": "The Mysterious Kundalini",
+      "author": "Vasant G. Rele",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217348",
+      "title": "Mahamaya",
+      "author": "Sir John Woodroffe",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.ministry.16657"
+    },
+    {
+      "id": "in.ernet.dli.2015.272293",
+      "title": "Mahamaya (the World As Power)",
+      "author": "John Woodroffe And Pramatma Natha Mukhyopadhyaya",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.277100",
+      "title": "Shakti and Shakta",
+      "author": "John Woodroffe",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: ShaktiAndShakta, in.ernet.dli.2015.217317, dli.ministry.22677"
+    },
+    {
+      "id": "in.gov.ignca.7294",
+      "title": "Yoga Philosophy",
+      "author": "S.N. Dasgupta",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.205135",
+      "title": "Yogi Philosophy And Oriental Occultism",
+      "author": "Yogi Ramachareka",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.524246",
+      "title": "Yogi Philosphy And Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.55355",
+      "title": "Inner Teachings Of The Philosophies And Relegions Of India",
+      "author": "Ramacharaka",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}
