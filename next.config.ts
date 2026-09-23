@@ -355,6 +355,12 @@ const nextConfig: NextConfig = {
         destination: '/book/:bookId',
         permanent: true,
       },
+      // The prose note was replaced by the document itself (PR #4991), then given its own name.
+      {
+        source: '/blog/where-the-instructions-are',
+        destination: '/blog/techniques-of-the-body',
+        permanent: true,
+      },
       {
         source: '/library',
         destination: '/search',
