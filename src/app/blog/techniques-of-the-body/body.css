@@ -41,3 +41,5 @@
 .bodymap a.img{ display: block; }
 .bodymap a.img img{ transition: opacity .15s; }
 .bodymap a.img:hover img{ opacity: .85; }
+/* portrait plates (de Gheyn) must not fill the column */
+.bodymap figure.wide a.img img{ max-height: 520px; width: auto; max-width: 100%; margin-inline: auto; display: block; }
