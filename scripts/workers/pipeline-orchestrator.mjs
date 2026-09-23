@@ -3806,7 +3806,8 @@ Rules:
             const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
             if (pages.length > 0) {
               const bulkOps = pages.map(page => {
-                const { _id, ...pageWithoutId } = page;
+                // tenant_id is retired on pages too (#4858) — don't carry it over.
+                const { _id, tenant_id: _retired, ...pageWithoutId } = page;
                 return {
                   updateOne: {
                     filter: { book_id: page.book_id, page_number: page.page_number },

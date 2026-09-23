@@ -93,7 +93,8 @@ export async function promoteFromWarehouse(db: Db, bookId: string): Promise<bool
   // Move pages in bulk
   const pages = await db.collection('pages_warehouse').find({ book_id: bookId }).toArray();
   if (pages.length > 0) {
-    const bulkOps = pages.map(page => ({
+    // tenant_id is retired on pages too (#4858) — don't carry it over.
+    const bulkOps = pages.map(({ tenant_id: _retired, ...page }) => ({
       replaceOne: {
         filter: { _id: page._id },
         replacement: page,
