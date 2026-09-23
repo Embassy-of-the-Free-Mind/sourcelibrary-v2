@@ -39,11 +39,11 @@ export const posts: BlogPost[] = [
   },
   {
     slug: 'where-the-instructions-are',
-    title: 'Where the Instructions Are',
+    title: 'Techniques of the Body',
     subtitle:
-      'We asked the library how people were taught to move, breathe and sit. China answered with a posture for every fortnight of the year, India with a commentary that measures the gap from chin to chest. The West came back empty — and the emptiness was in our question: its body instructions are in rubrics, grimoires and lodge rituals, not in manuals.',
+      'Not what people did, but how. A year of seated exercises from a Ming encyclopedia with the woodcut for each fortnight, the eight brocades with their counts, the Sanskrit seat and its breaths with a commentary that says which foot goes where — and the Greek, Arabic and Latin rites — each original beside its translation.',
     date: '15 September 2026',
-    readTime: '11 min read',
+    readTime: 'Atlas',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
     image: 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg',
