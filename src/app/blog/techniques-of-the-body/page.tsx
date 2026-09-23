@@ -9,11 +9,11 @@ import './body.css';
 // (body.css, scoped under .bodymap) mapped onto the site's colour and font tokens.
 // It replaced the prose note "Where the Instructions Are"; that URL 308s here (next.config.ts).
 
-const HERO = 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg';
+const HERO = 'https://sourcelibrary.org/blog/techniques-of-the-body/hero-khrul-khor.jpg';
 const HERO_ALT =
-  'Woodcut from the Sancai tuhui of 1609: a seated figure performing the exercise prescribed for the fortnight of Rain Water, with the instruction printed beside him.';
+  'Two leaves of a Tibetan manuscript of the Nyang tradition: seven figures drawn in the sequence of the ’khrul ’khor, the “magical movement” exercises.';
 const DESCRIPTION =
-  'Postures, breathing methods and exercises quoted from the manuals that prescribe them: the Ming seasonal exercises and Eight Brocades, Hua Tuo’s five animals, the seat and breath retentions of haṭha yoga, and the Greek, Arabic and Latin rites. Each original beside its translation.';
+  'Postures, breathing methods and exercises quoted from the books that prescribe them: the Ming seasonal exercises and Eight Brocades, haṭha yoga’s seat and breath retentions, the Pythagorean day, the Mithras Liturgy, Proclus, Plethon and Ficino, and the Greek, Arabic and Latin rites. Each original beside its translation.';
 
 export const metadata: Metadata = {
   title: 'Techniques of the Body - Research Notes - Source Library',
@@ -34,7 +34,7 @@ export default function TechniquesOfTheBodyPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader title="Techniques of the Body" subtitle={DESCRIPTION} image={HERO} imageAlt={HERO_ALT}>
+        <ContentHeader title="Techniques of the Body" subtitle={DESCRIPTION} image="/blog/techniques-of-the-body/hero-khrul-khor.jpg" imageAlt={HERO_ALT}>
           <p className="text-stone-400 text-sm mt-4">15 September 2026</p>
         </ContentHeader>
       }

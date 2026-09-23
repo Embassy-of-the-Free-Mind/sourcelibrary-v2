@@ -34,3 +34,10 @@
     .bodymap .method { grid-template-columns: 1fr; }.bodymap .m-img{ width: 140px; }.bodymap .entry{ grid-template-columns: 1fr; }.bodymap .tally{ grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 10px; }.bodymap .tally .none{ padding-top: 0; }
   }
   @media (prefers-reduced-motion: reduce) { .bodymap * { transition: none !important; } }
+
+/* added on the site: an opening introduction, and every picture links to its page */
+.bodymap .intro{ max-width: var(--measure); margin: 0 0 14px; font-size: 1.12rem; line-height: 1.65; text-wrap: pretty; }
+.bodymap .intro + .legend{ margin-top: 18px; }
+.bodymap a.img{ display: block; }
+.bodymap a.img img{ transition: opacity .15s; }
+.bodymap a.img:hover img{ opacity: .85; }
