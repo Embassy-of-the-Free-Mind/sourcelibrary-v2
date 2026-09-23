@@ -41,9 +41,9 @@ export const posts: BlogPost[] = [
     slug: 'techniques-of-the-body',
     title: 'Techniques of the Body',
     subtitle:
-      'Not what people did, but how. A year of seated exercises from a Ming encyclopedia with the woodcut for each fortnight, the eight brocades with their counts, the Sanskrit seat and its breaths with a commentary that says which foot goes where — and the Greek, Arabic and Latin rites — each original beside its translation.',
+      'Postures, breathing methods and exercises quoted from the manuals that prescribe them: the Ming seasonal exercises and Eight Brocades, Hua Tuo’s five animals, the seat and breath retentions of haṭha yoga, and the Greek, Arabic and Latin rites. Each original beside its translation.',
     date: '15 September 2026',
-    readTime: 'Atlas',
+    readTime: '25 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
     image: 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg',
