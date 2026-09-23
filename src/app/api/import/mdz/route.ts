@@ -205,7 +205,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       mdz_id: normalizedId,
       bsb_id: normalizedId,
       thumbnail: getThumbnailUrl(0),
-      pageCount,
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`MDZ:${normalizedId}`, `URN:${normalizedId}`],

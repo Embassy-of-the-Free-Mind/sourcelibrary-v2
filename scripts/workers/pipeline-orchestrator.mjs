@@ -44,6 +44,13 @@ import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
+
+// Fields consolidated away from `books` (#3969). The warehouse copy of a book is
+// a snapshot taken before those consolidations, so promoting it verbatim puts
+// them back (#4858: 2,489 `tenant_id` and 87 `pageCount` re-grown this way).
+const RETIRED_BOOK_FIELDS = JSON.parse(
+  fs.readFileSync(new URL('../lib/books-known-fields.json', import.meta.url), 'utf8'),
+).retired;
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -3750,6 +3757,7 @@ Rules:
           try {
             const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
             if (!book) continue;
+            for (const f of RETIRED_BOOK_FIELDS) delete book[f];
 
             // Check if book already exists in live (can have different _id)
             const existingLive = await db.collection('books').findOne(

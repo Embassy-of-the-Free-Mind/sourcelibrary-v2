@@ -258,7 +258,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       erara_id: numericId,
       erara_doi: doi || null,
       thumbnail: getThumbnailUrl(0),
-      pageCount,
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`ERARA:${numericId}`, ...(doi ? [`DOI:${doi}`] : [])],
