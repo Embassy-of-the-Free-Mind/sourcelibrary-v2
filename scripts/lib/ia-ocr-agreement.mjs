@@ -62,7 +62,13 @@ const POINTING_RE = /[ً-ْٰـ֑-ׇֽֿׁׂׅׄ]/g;
 
 /** Text of one side → token list: characters for space-less runs, words elsewhere. */
 export function tokens(s) {
-  const text = (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(POINTING_RE, '').replace(/[’‘ʼ]/g, "'").toLowerCase();
+  // A TAG opens with a letter or a slash. `<[^>]+>` also matched the model's centred-heading
+  // marker `->TITLE<-`, whose `<-` then swallowed everything up to the next real tag's `>` —
+  // deleting the whole page body from the comparison. Measured on divineinspiratio00will p9
+  // (#4966): 25 tokens survived instead of 348, and the page scored 0.086 against IA text it
+  // actually matches at 0.983, dragging the book's median to 0.624 and REJECTING it at the 0.80
+  // gate. Any page carrying `->…<-` plus any later tag was affected.
+  const text = (s || '').replace(/<\/?[A-Za-z][^>]*>/g, ' ').normalize('NFC').replace(POINTING_RE, '').replace(/[’‘ʼ]/g, "'").toLowerCase();
   const out = [];
   for (const w of text.match(WORD_RE) || []) {
     if (!SPACELESS_RE.test(w)) { out.push(w); continue; }
