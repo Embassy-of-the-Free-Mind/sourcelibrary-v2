@@ -41,7 +41,7 @@ export const posts: BlogPost[] = [
     slug: 'techniques-of-the-body',
     title: 'Techniques of the Body',
     subtitle:
-      'Postures, breathing methods and exercises quoted from the books that prescribe them: the Ming seasonal exercises and Eight Brocades, haṭha yoga’s seat and breath retentions, the Pythagorean day, the Mithras Liturgy, Proclus, Plethon and Ficino, and the Greek, Arabic and Latin rites. Each original beside its translation.',
+      'Postures, breathing methods and exercises quoted from the books that prescribe them: the Ming seasonal exercises and Eight Brocades, haṭha yoga’s seat and breath retentions, the Pythagorean day, Neoplatonist theurgy, Plethon and Ficino, and the Greek, Arabic and Latin rites. Each original beside its translation.',
     date: '15 September 2026',
     readTime: '25 min read',
     tag: 'Collection',

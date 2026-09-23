@@ -13,7 +13,7 @@ const HERO = 'https://sourcelibrary.org/blog/techniques-of-the-body/hero-khrul-k
 const HERO_ALT =
   'Two leaves of a Tibetan manuscript of the Nyang tradition: seven figures drawn in the sequence of the ’khrul ’khor, the “magical movement” exercises.';
 const DESCRIPTION =
-  'Postures, breathing methods and exercises quoted from the books that prescribe them: the Ming seasonal exercises and Eight Brocades, haṭha yoga’s seat and breath retentions, the Pythagorean day, the Mithras Liturgy, Proclus, Plethon and Ficino, and the Greek, Arabic and Latin rites. Each original beside its translation.';
+  'Postures, breathing methods and exercises quoted from the books that prescribe them: the Ming seasonal exercises and Eight Brocades, haṭha yoga’s seat and breath retentions, the Pythagorean day, Neoplatonist theurgy, Plethon and Ficino, and the Greek, Arabic and Latin rites. Each original beside its translation.';
 
 export const metadata: Metadata = {
   title: 'Techniques of the Body - Research Notes - Source Library',
