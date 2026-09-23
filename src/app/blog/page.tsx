@@ -38,7 +38,7 @@ export const posts: BlogPost[] = [
     imageAlt: 'A leaf of the Yuhai in the Siku Quanshu fair copy: brush-written regular script in ruled columns under the imperial header.',
   },
   {
-    slug: 'where-the-instructions-are',
+    slug: 'techniques-of-the-body',
     title: 'Techniques of the Body',
     subtitle:
       'Not what people did, but how. A year of seated exercises from a Ming encyclopedia with the woodcut for each fortnight, the eight brocades with their counts, the Sanskrit seat and its breaths with a commentary that says which foot goes where — and the Greek, Arabic and Latin rites — each original beside its translation.',

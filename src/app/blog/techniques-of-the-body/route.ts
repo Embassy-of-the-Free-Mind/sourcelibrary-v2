@@ -1,7 +1,8 @@
 // "Techniques of the Body" — a 1.3 MB made document (originals beside translations,
 // woodcuts and plates inlined as data URIs) built in the atlas repo by
 // ~/sourcelibrary-atlas/scripts/build-body.mjs and copied here as document.json.
-// It replaced the prose note that used to live at this URL (git history has it).
+// It replaced the prose note "Where the Instructions Are" (git history has it); the old
+// URL /blog/where-the-instructions-are 308s here (next.config.ts).
 //
 // Served as plain static HTML rather than a React page for the same reason the atlas
 // serves it that way: rendering 1.3 MB through a page would ship it twice (HTML + RSC
@@ -9,7 +10,7 @@
 // below and the document cannot style each other.
 //
 // To refresh: rebuild in the atlas, then copy src/content/body.json over document.json
-// (dropping the colophon's link back to this URL, which would now point at itself).
+// (dropping the colophon's link to the old note, which now redirects here).
 import doc from './document.json';
 
 export const dynamic = 'force-static';
@@ -17,7 +18,7 @@ export const dynamic = 'force-static';
 const TITLE = 'Techniques of the Body';
 const DESCRIPTION =
   'Named postures, breaths and exercises quoted from the manuals themselves — Chinese daoyin, the Sanskrit seat and its commentary, the drawn asanas of the Śrītattvanidhi, and the Greek, Arabic and Latin rites — each original beside its translation.';
-const URL = 'https://sourcelibrary.org/blog/where-the-instructions-are';
+const URL = 'https://sourcelibrary.org/blog/techniques-of-the-body';
 const HERO = 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg';
 const HERO_ALT =
   'Woodcut from the Sancai tuhui of 1609: a seated figure performing the exercise prescribed for the fortnight of Rain Water, with the instruction printed beside him.';
