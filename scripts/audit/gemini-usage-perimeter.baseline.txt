@@ -81,7 +81,6 @@ scripts/experiments/check-implicit-caching.mjs
 scripts/fix-untitled-slugs.mjs
 scripts/import/oraec-paginate-translate.mjs
 scripts/ingest-index-from-ocr.mjs
-scripts/lib/batch-mint-doi.mjs
 scripts/lib/page-embedding-text.mjs
 scripts/maintenance/audit-upgraded-artwork-images.mjs
 scripts/maintenance/backfill-collection-relevance.mjs

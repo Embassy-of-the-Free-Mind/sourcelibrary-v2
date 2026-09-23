@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { execFileSync } from 'child_process';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { countVisiblePageStats } from '../../scripts/lib/page-counts.mjs';
@@ -74,5 +75,24 @@ describe('the DOI gate uses that denominator', () => {
       /\$divide:\s*\[\s*'\$pages_translated',\s*'\$pages_ocr'\s*\]/,
     );
     expect(src).toMatch(/\$subtract:\s*\[\s*'\$pages_ocr',\s*\{\s*\$ifNull:\s*\['\$pages_blank'/);
+  });
+
+  it('no OTHER script carries a copy of the wrong denominator', () => {
+    // Pinning one path is not enough. scripts/lib/batch-mint-doi.mjs was a stale
+    // duplicate of this gate that still divided by pages_ocr, and it sat on main for
+    // weeks while this test was green - the test only ever read scripts/batch/.
+    // Deleted 2026-09-23; this assertion is what stops the next copy.
+    const files = execFileSync('git', ['ls-files', 'scripts', 'src'], { cwd: REPO, encoding: 'utf8' })
+      .split('\n')
+      .filter(f => /\.(mjs|js|ts)$/.test(f));
+
+    // The negative control: a matcher that scans nothing passes vacuously.
+    expect(files.length, 'found no scripts to scan - the glob is broken, not clean').toBeGreaterThan(200);
+
+    const offenders = files.filter(f => {
+      const body = readFileSync(path.join(REPO, f), 'utf8');
+      return /\$divide:\s*\[\s*'\$pages_translated',\s*'\$pages_ocr'\s*\]/.test(body);
+    });
+    expect(offenders, 'these divide translated pages by pages_ocr, counting blank leaves').toEqual([]);
   });
 });
