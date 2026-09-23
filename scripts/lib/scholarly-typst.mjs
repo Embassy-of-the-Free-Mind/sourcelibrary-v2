@@ -564,6 +564,63 @@ function shorten(text, max) {
 
 const typstString = s => `"${String(s ?? '').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
+/**
+ * Catalogue apparatus that routinely rides along in `title` / `display_title`:
+ * series names, volume numbers, holdings notes, "with <other authors>". These
+ * are shelf information, not part of what the book is called, and they read as
+ * part of the title once set in display type on a cover.
+ *
+ * Deliberately a list of known junk rather than "strip any trailing
+ * parenthetical": plenty of parentheticals are real alternative titles
+ * (Kircher's "Iter extaticum II (Mundus subterraneus prodromus)") and a
+ * blanket strip would discard them.
+ */
+const CATALOGUE_PARENTHETICAL = new RegExp(
+  '^(?:'
+  + 'vols?\\.?\\s*\\d+|[ivxlc]+|\\d{1,4}'
+  + '|(?:loeb|aldine|elzevir|teubner|sbe|etcsl|cdli|budé|budae|oct|ocT)\\b.*'
+  + '|(?:with|incl\\.?|including|tr\\.?|trans\\.?|comm\\.?|ed\\.?|attrib\\.?)\\s+.*'
+  + '|(?:ms|mss|manuscript|facsimile|reprint|fragment)\\b.*'
+  + '|.*\\b(?:manuscript|codex|papyrus|fragment|dynasty|reign|edition|series)\\b.*'
+  + ')$',
+  'i',
+);
+
+/**
+ * A title as it should appear in display type: catalogue apparatus removed,
+ * and existing hyphens made non-breaking so a name like `Ghāyat al-Ḥakīm`
+ * cannot be split across two lines of a cover.
+ */
+export function displayTitle(title, { author = '' } = {}) {
+  let t = String(title ?? '').trim();
+  // A trailing imprint tail — ", Augsburg 1518", ", London, 1653"
+  t = t.replace(/,\s*[^,()]{2,40}?,?\s*\d{4}\s*$/, '').trim();
+  // Trailing parentheticals, innermost last: "(Alain de Lille)", "(vol 2)"
+  for (let i = 0; i < 3; i++) {
+    const m = t.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+    if (!m) break;
+    const inner = m[2].trim();
+    const isAuthor = author && inner.toLocaleLowerCase() === String(author).trim().toLocaleLowerCase();
+    if (!isAuthor && !CATALOGUE_PARENTHETICAL.test(inner)) break;
+    t = m[1].trim();
+  }
+  // U+2011 NON-BREAKING HYPHEN: `hyphenate: false` stops Typst inventing new
+  // break points but not breaking at a hyphen that is already in the string.
+  return (t || String(title ?? '').trim()).replace(/(\S)-(\S)/g, '$1‑$2');
+}
+
+/**
+ * The line under the title block. `language` is the EDITION's language, so a
+ * 1903 English edition of a Hebrew manuscript is `language: "English"` and the
+ * naive template produces "An English translation from the English".
+ */
+export function translationLine(language) {
+  const lang = String(language ?? '').trim();
+  if (!lang || /^(source language|unknown|und)$/i.test(lang)) return 'An English translation';
+  if (/^en(g(lish)?)?$/i.test(lang)) return 'A modernized English edition';
+  return `An English translation from the ${lang}`;
+}
+
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
@@ -578,16 +635,19 @@ export function generateTypstSource(book, pages, options = {}) {
   const language = book.language || 'source language';
 
   // "Title: Subtitle" reads better on a title page as two lines of different weight
-  const colon = bookTitle.indexOf(': ');
-  const mainTitle = colon > 0 ? bookTitle.slice(0, colon) : bookTitle;
-  const subTitle = colon > 0 ? bookTitle.slice(colon + 2) : '';
+  const coverDisplay = displayTitle(bookTitle, { author });
+  const colon = coverDisplay.indexOf(': ');
+  const mainTitle = colon > 0 ? coverDisplay.slice(0, colon) : coverDisplay;
+  const subTitle = colon > 0 ? coverDisplay.slice(colon + 2) : '';
+  // The original-language line above the title, when it says something the
+  // English title does not
+  const coverOriginal = displayTitle(book.title, { author });
 
   const place = book.place_published || book.publication_place;
   const imprintLine = [[place, book.publisher].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
   const holder = book.image_source?.contributing_library || book.contributing_library;
   const provider = book.image_source?.provider_name;
-  const sourceUrl = book.image_source?.source_url
-    || (book.ia_identifier ? `https://archive.org/details/${book.ia_identifier}` : null);
+  const { url: sourceUrl, label: sourceLabel } = resolveSourceImages(book);
   // Say so only when the holding institution stated it — an importer default is not a rights statement
   const rights = book.image_source?.rights_normalized;
   const publicDomain = rights?.class === 'public-domain' && rights?.status === 'stated';
@@ -612,9 +672,6 @@ ${TYPST_PREAMBLE}
   numbering: "i",  // front matter in roman; the translation restarts at arabic 1
   header-ascent: 9mm,
   header: context {
-    // Footnotes number from 1 on every page: a 900-page herbal otherwise
-    // reaches note 9,299 and the markers outweigh the words they hang on
-    counter(footnote).update(0)
     let pg = here().page()
     let opens = query(heading.where(level: 1)).filter(h => h.location().page() == pg)
     if opens.len() == 0 {
@@ -636,7 +693,7 @@ ${TYPST_PREAMBLE}
     // 940-page book take five minutes to compile instead of thirty seconds
     let n = current-src.get()
     if n != none {
-      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/#n]]
+      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}/page-number/`))}#n]]
     } else {
       align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
     }
@@ -660,10 +717,34 @@ ${TYPST_PREAMBLE}
 
 #set heading(numbering: none)
 
+// Footnotes restart at 1 in each chapter. They must NOT be reset from the
+// page header: a header is laid out after the body it sits above, so the
+// reset lands unpredictably and the notes at the foot of a page print out of
+// order (measured 18% of multi-note pages in one book, 5% in another).
+// A heading is in the body flow, so the reset is deterministic — and
+// per-chapter numbering is the scholarly convention anyway.
+// Footnotes restart at 1 in each chapter, NOT on each page.
+//
+// Per-page numbering was tried in both the header and the footer and is
+// structurally unreliable here: display lines are sticky, so Typst
+// relocates them across a page break AFTER their markers have been numbered,
+// and the moved note then prints out of sequence at the foot of its new page.
+// Measured on the page-reset build: 18% of multi-note pages in one book, 5%
+// in another, printing notes in the order 3 4 5 6 7 1 2 — a reader cannot
+// match a marker to its note.
+//
+// A heading is in the body flow, so the reset is deterministic, and
+// per-chapter numbering is the scholarly convention. The cost is marker
+// width: a book whose chapter extraction is sparse (Iamblichus has few
+// headings for 550 pages) reaches three digits. That is ugly but correct,
+// and correctness of reference wins.
+#let restart-notes = counter(footnote).update(0)
+
 #show heading.where(level: 1): it => {
   // The translation's own opener is a composed part page; its heading exists
   // for the contents and bookmarks only
   if it.has("label") and it.label == <part> { return place(hide(box(width: 0pt, height: 0pt))) }
+  restart-notes
   pagebreak(weak: true)
   v(16mm)
   block(below: 0pt, text(size: 21pt, weight: "regular", it.body))
@@ -676,6 +757,7 @@ ${TYPST_PREAMBLE}
 // the contents, the PDF bookmarks and the running head, but print nothing —
 // the source's own heading is already there in the text.
 #show heading.where(level: 2): it => context {
+  restart-notes
   if in-body.get() { place(hide(box(width: 0pt, height: 0pt))) } else {
     block(above: 1.7em, below: 0.8em, sticky: true, text(size: 12.5pt, weight: "regular", style: "italic", it.body))
   }
@@ -689,7 +771,10 @@ ${TYPST_PREAMBLE}
 #set footnote.entry(separator: line(length: 18mm, stroke: 0.4pt + hairline), gap: 0.45em, clearance: 1.2em)
 #show footnote.entry: set text(size: 8.3pt)
 #show footnote.entry: set par(leading: 0.5em)
-#show link: set text(fill: rust)
+// A URL must never be hyphenated: Typst breaks at the hyphens already in a
+// slug, so ...commentarii-insignes-fuchs-2 acquired a line break mid-slug and
+// the printed reference read as two broken URLs.
+#show link: set text(fill: rust, hyphenate: false)
 
 #show outline.entry.where(level: 1): it => {
   v(0.7em, weak: true)
@@ -715,7 +800,7 @@ ${TYPST_PREAMBLE}
       ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 100mm, fit: "contain")))`
       : 'sl-mark(40mm, gold)'}
     v(15mm)
-    ${book.title !== bookTitle ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(book.title, 90))}]
+    ${coverOriginal && coverOriginal !== coverDisplay ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(coverOriginal, 90))}]
     v(7mm)` : ''}
     text(size: ${coverTitleSize}pt, weight: "bold", tracking: 0.1em, fill: foil, upper[${escapeTypst(coverTitle)}])
     ${subTitle ? `v(3.5mm)
@@ -727,7 +812,7 @@ ${TYPST_PREAMBLE}
     ${coverPlaceDate ? `v(3mm)
     text(size: 9.5pt, tracking: 0.22em, number-type: "lining", upper[${escapeTypst(coverPlaceDate)}])` : ''}
     v(15mm)
-    text(size: 10pt)[An English translation from the ${escapeTypst(language)}]
+    text(size: 10pt)[${escapeTypst(translationLine(language))}]
     v(1.5mm)
     text(size: 9pt, style: "italic", fill: muted)[AI-assisted and not reviewed by human editors]
     v(1.5mm)
@@ -752,9 +837,9 @@ ${TYPST_PREAMBLE}
   _${escapeTypst(bookTitle)}_ \\
   An English translation of ${escapeTypst(author)}, _${escapeTypst(book.title)}_${imprintLine ? ` (${escapeTypst(imprintLine)})` : ''}.
 
-  ${holder || provider ? `Translated from the copy ${holder ? `held by ${escapeTypst(holder)}` : ''}${provider && provider !== holder ? `${holder ? ', ' : ''}digitized by ${escapeTypst(provider)}` : ''}${sourceUrl ? `: #link(${typstString(sourceUrl)})[${escapeTypst(sourceUrl.replace(/^https?:\/\//, ''))}]` : ''}.` : ''}
+  ${holder || provider ? `Translated from the copy ${holder ? `held by ${escapeTypst(holder)}` : ''}${provider && provider !== holder ? `${holder ? ', ' : ''}digitized by ${escapeTypst(provider)}` : ''}${sourceUrl ? `: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}.` : ''}
 
-  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}. ${doi ? `DOI #link(${typstString(persistentUrl)})[${escapeTypst(doi)}]. ` : ''}Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[sourcelibrary.org/book/${escapeTypst(bookSlug)}].
+  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}. ${doi ? `DOI #link(${typstString(persistentUrl)})[${escapeTypst(doi)}]. ` : ''}Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}].
 
   #text(fill: rust, tracking: 0.08em, size: 7.8pt)[#upper[Cite as]] \\
   ${escapeTypst(citation)}
@@ -866,7 +951,9 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // when a page ends mid-sentence and the next begins mid-sentence, the two
   // are set as one paragraph. The translation marks its halves with an
   // ellipsis; the transcription simply stops without a full stop.
-  const textOf = body => body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, '');
+  const textOf = body => stripLeadingApparatus(
+    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, ''),
+  );
   const endsMidSentence = body => {
     // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
     const t = textOf(body).replace(/\\$/, '').trimEnd().replace(/\\\[\?[^\]]*\\\]$/, 'x');
@@ -945,11 +1032,14 @@ This is the transcription the translation was made from, produced by optical cha
     doc.push('#[\n#set par(first-line-indent: 0pt, justify: false, hanging-indent: 1em)\n#set text(size: 9pt, number-type: "lining")\nNumbers refer to the source pages marked in the margin.\n');
 
     const renderSection = (title, entries) => {
-      if (!entries?.length) return;
+      const prepared = indexEntries(entries, pages.length);
+      if (!prepared.length) return;
       doc.push(`== ${title}\n`);
       doc.push('#columns(2, gutter: 8mm)[');
-      for (const entry of entries.slice(0, 80)) {
-        const refs = entry.pages?.length ? `, ${entry.pages.slice(0, 8).join(', ')}` : '';
+      for (const entry of prepared) {
+        const shown = entry.pages.slice(0, INDEX_MAX_LOCATORS);
+        const more = entry.pages.length > shown.length ? ' …' : '';
+        const refs = shown.length ? `, ${shown.join(', ')}${more}` : '';
         doc.push(`${escapeTypst(entry.term)}${refs} \\`);
       }
       doc.push(']\n');
@@ -958,14 +1048,12 @@ This is the transcription the translation was made from, produced by optical cha
     renderSection('People', index.people);
     renderSection('Places', index.places);
     renderSection('Concepts', index.concepts);
-
-    if (index.vocabulary?.length) {
-      doc.push('== Glossary\n');
-      for (const entry of index.vocabulary.slice(0, 80)) {
-        const def = entry.definition ? ` --- ${escapeTypst(entry.definition)}` : '';
-        doc.push(`_${escapeTypst(entry.term)}_${def}\n`);
-      }
-    }
+    // Vocabulary entries carry `pages` and never `definition` (measured: all
+    // 6,438,284 of them corpus-wide). They were being rendered as a bare
+    // italic word list by a glossary branch that printed `definition` and
+    // dropped the locators — so 99.4% of deposits shipped an index with no
+    // page numbers under a line promising page numbers.
+    renderSection('Terms', index.vocabulary);
     doc.push(']');
   }
 
@@ -991,7 +1079,7 @@ This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Libra
   ${book.publisher ? `[#text(fill: muted)[Publisher]], [${escapeTypst(book.publisher)}],` : ''}
   ${book.ustc_id ? `[#text(fill: muted)[USTC]], [${escapeTypst(book.ustc_id)}],` : ''}
   ${holder ? `[#text(fill: muted)[Source copy]], [${escapeTypst(holder)}],` : ''}
-  [#text(fill: muted)[Pages translated]], [${translatedPages.length}],
+  [#text(fill: muted)[Pages translated]], [${translatedPages.length}${pages.length > translatedPages.length ? ` of ${pages.length}` : ''}],
   ${version ? `[#text(fill: muted)[Version]], [${escapeTypst(version)}],` : ''}
   ${doi ? `[#text(fill: muted)[DOI]], [#link(${typstString(persistentUrl)})[${escapeTypst(doi)}]],` : ''}
   [#text(fill: muted)[Generated]], [${now}],
@@ -999,11 +1087,144 @@ This digital edition of _${escapeTypst(bookTitle)}_ was produced by Source Libra
 )
 
 #v(1em)
-Source Library: #link("${bookUrl}")[sourcelibrary.org/book/${escapeTypst(bookSlug)}]
-${sourceUrl ? `\\\nSource images: #link(${typstString(sourceUrl)})[${escapeTypst(sourceUrl.replace(/^https?:\/\//, ''))}]` : ''}
+// Not justified: these are label + URL lines, and justification stretched the
+// two words of "Source   Library:" across the measure to pad a short line.
+#block(width: 100%)[
+#set par(justify: false)
+Source Library: #link("${bookUrl}")[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}]
+${sourceUrl ? `\\\n${escapeTypst(sourceLabel)}: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}
+]
 `);
 
   return doc.join('\n');
+}
+
+/** A IIIF manifest or other raw JSON: a machine endpoint, not a page to read. */
+const IIIF_MANIFEST = /manifest|\.json(?:\?|$)|\/iiif\//i;
+
+/**
+ * Where the colophon sends a reader for the page images, and what to call it.
+ *
+ * 2,648 of 11,237 deposit-eligible books record a IIIF manifest as
+ * `image_source.source_url` (Munich, Harvard, EAP, e-rara…), so a quarter of
+ * deposits printed "Source images: <url>" against a link that hands a scholar
+ * a wall of JSON. Prefer a page a person can open when the book has one, and
+ * where only the manifest exists, say that it is a manifest rather than
+ * implying it is somewhere to browse.
+ *
+ * Deliberately NOT doing per-host manifest→viewer URL mapping: that is a
+ * provider allowlist (see .claude/docs/invariants/image-host-allowlists.md)
+ * and belongs in its own change, not in a typesetting fix.
+ */
+export function resolveSourceImages(book) {
+  const recorded = book?.image_source?.source_url || null;
+  const ia = book?.ia_identifier ? `https://archive.org/details/${book.ia_identifier}` : null;
+  const isManifest = Boolean(recorded && IIIF_MANIFEST.test(recorded));
+  if (isManifest && ia) return { url: ia, label: 'Source images' };
+  const url = recorded || ia;
+  if (!url) return { url: null, label: 'Source images' };
+  return { url, label: isManifest ? 'Source images (IIIF manifest)' : 'Source images' };
+}
+
+/**
+ * A URL as displayed text. `hyphenate: false` stops Typst INSERTING hyphens
+ * but not breaking at the hyphens a slug already contains, so
+ * `de-historia-stirpium-commentarii-insignes-fuchs-2` broke mid-slug and the
+ * printed reference read as two broken URLs — a reader cannot tell that
+ * trailing hyphen from one the typesetter added.
+ *
+ * So: hyphens are made non-breaking (U+2011) and a zero-width space is added
+ * after each slash, which is the one place a URL may be broken unambiguously.
+ *
+ * TRADE-OFF, deliberate: text transformed this way no longer copy-pastes into
+ * a browser, because U+2011 is not U+002D. That is acceptable ONLY because
+ * every one of these is a live link (the href is untouched) and because the
+ * imprint page's "Cite as" block — the string the edition actually tells a
+ * reader to copy — is left raw. Do not run a citation through this.
+ */
+export function urlDisplay(url) {
+  return String(url ?? '')
+    .replace(/^https?:\/\//, '')
+    .replace(/-/g, '‑')
+    .replace(/\//g, '/​');
+}
+
+/**
+ * Page furniture the translation emitted as a bracketed English *description*
+ * rather than a tag: "[Bottom center signature mark]", "[Bottom right
+ * catchword/fragment]", "[page number]". The prompt asks for <sig>/<catchword>
+ * tags (src/lib/types/prompt.ts) and mostly gets them; this is the residue.
+ *
+ * Only POSITION-and-furniture descriptions match. Bracketed descriptions of
+ * woodcuts, ornaments and decorated initials are deliberately excluded — for
+ * a book like the Fuchs herbal, whose deposit carries no plate images at all,
+ * those descriptions are the only record that the illustration exists.
+ *
+ * Signature letters and catchwords sit between the brackets as bare tokens
+ * ("[Bottom center signature mark] A [Bottom right catchword]"), so a short
+ * run of them is consumed too.
+ *
+ * Related: `LEADING_FURNITURE` in src/lib/page-continuity.ts does the same job
+ * for the reader's continuity flags, but only for TAGGED furniture and bare
+ * uppercase lines — it does not know this bracketed form. Teaching it that is
+ * a change to a live reading surface and belongs in its own PR.
+ */
+const APPARATUS_PHRASE = /^\[[^\]]{0,80}?(?:catchword|signature mark|sig\.? mark|page number|folio number|running head|(?:bottom|top)\s+(?:center|centre|left|right))[^\]]{0,40}\]/i;
+
+export function stripLeadingApparatus(text) {
+  let t = String(text ?? '');
+  for (let i = 0; i < 6; i++) {
+    const before = t;
+    t = t.replace(/^\s+/, '');
+    const m = t.match(APPARATUS_PHRASE);
+    if (m) t = t.slice(m[0].length);
+    // A bare signature letter or catchword token stranded between two brackets
+    else t = t.replace(/^[\p{Lu}\p{N}][\p{L}\p{N}.]{0,3}(?=\s*\[)/u, '');
+    if (t === before) break;
+  }
+  return t.replace(/^\s+/, '');
+}
+
+/** Locators shown per index entry before the list is elided. */
+export const INDEX_MAX_LOCATORS = 12;
+/** Entries kept per index section, chosen by weight then sorted for reading. */
+const INDEX_MAX_ENTRIES = 240;
+
+/**
+ * Turn a raw `books.index.*` array into printable index entries.
+ *
+ * Three things the raw arrays are not: deduplicated (`botany` and `Botany`
+ * arrive as separate entries), ordered for a reader (they come out weighted,
+ * so an alphabetical slice would stop at C), or filtered for usefulness — in
+ * a 940-page herbal `botany` carries 300 locators, which is the subject of
+ * the book rather than an index entry.
+ */
+export function indexEntries(entries, pageCount = 0) {
+  if (!entries?.length) return [];
+  // A term on more than a quarter of the pages is the book's subject, not a
+  // way into it. The floor keeps short books (where a quarter is 3 pages)
+  // from having their whole index filtered away.
+  const tooCommon = Math.max(20, Math.round(pageCount * 0.25));
+  const merged = new Map();
+  for (const entry of entries) {
+    const term = String(entry?.term ?? '').trim();
+    if (!term) continue;
+    const key = term.toLocaleLowerCase();
+    const existing = merged.get(key);
+    if (existing) {
+      for (const p of entry.pages || []) existing.pages.add(p);
+      // Prefer the capitalised form: proper nouns should not be folded to lower case.
+      if (term[0] === term[0].toLocaleUpperCase()) existing.term = term;
+    } else {
+      merged.set(key, { term, pages: new Set(entry.pages || []) });
+    }
+  }
+  return [...merged.values()]
+    .map(e => ({ term: e.term, pages: [...e.pages].sort((a, b) => a - b) }))
+    .filter(e => e.pages.length > 0 && e.pages.length <= tooCommon)
+    .sort((a, b) => b.pages.length - a.pages.length)
+    .slice(0, INDEX_MAX_ENTRIES)
+    .sort((a, b) => a.term.localeCompare(b.term, 'en', { sensitivity: 'base' }));
 }
 
 // ── Compile ─────────────────────────────────────────────────────────

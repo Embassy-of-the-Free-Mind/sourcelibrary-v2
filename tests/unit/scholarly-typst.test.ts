@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -161,4 +161,159 @@ describe('generateTypstSource', () => {
     const pdf = await generateScholarlyPdf(book, pages, { introduction: '## Context\n\nAn *intro* with https://example.org/x.' });
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
   }, 60000);
+});
+
+/**
+ * Found by rendering six books and reading the pages (2026-09-22). Each case
+ * below reached a cover, an index or a colophon that would have gone into a
+ * permanent deposit.
+ */
+describe('displayTitle', () => {
+  it('drops catalogue apparatus that is not part of the title', () => {
+    expect(displayTitle('De mysteriis Aegyptiorum (with Proclus, Porphyry)')).toBe('De mysteriis Aegyptiorum');
+    expect(displayTitle('Clavicula Salomonis (Hebrew Manuscript)')).toBe('Clavicula Salomonis');
+    expect(displayTitle('春秋五禮例宗·卷四~卷十 (vol 2)')).toBe('春秋五禮例宗·卷四~卷十');
+    expect(displayTitle('Euripides V: Bacchae, Heracles, Phoenissae (Loeb)')).toBe('Euripides V: Bacchae, Heracles, Phoenissae');
+  });
+
+  it('keeps a parenthetical that is a real alternative title', () => {
+    // The negative control: a blanket "strip any trailing parenthetical" would
+    // discard this, which is why the rule is a list of known apparatus.
+    expect(displayTitle('Iter extaticum II (Mundus subterraneus prodromus)'))
+      .toBe('Iter extaticum II (Mundus subterraneus prodromus)');
+  });
+
+  it('drops an imprint tail and a parenthetical repeating the author', () => {
+    expect(displayTitle('Liber de penitentia (Alain de Lille), Augsburg 1518', { author: 'Alain de Lille' }))
+      .toBe('Liber de penitentia');
+  });
+
+  it('makes existing hyphens non-breaking so a name cannot split across lines', () => {
+    // "PICATRIX (GHĀYAT AL-" / "ḤAKĪM)" appeared on a rendered cover
+    expect(displayTitle('Picatrix')).toBe('Picatrix');
+    expect(displayTitle('Ghāyat al-Ḥakīm')).toBe('Ghāyat al\u2011Ḥakīm');
+  });
+
+  it('never returns empty, even when the whole title looks like apparatus', () => {
+    expect(displayTitle('(vol 2)')).toBe('(vol 2)');
+  });
+});
+
+describe('translationLine', () => {
+  it('does not say a book was translated from the language it is in', () => {
+    // 1,460 deposit-eligible books are language: "English" and read
+    // "An English translation from the English" on their cover
+    expect(translationLine('English')).toBe('A modernized English edition');
+  });
+
+  it('names the source language when there is one', () => {
+    expect(translationLine('Latin')).toBe('An English translation from the Latin');
+  });
+
+  it('omits the clause when the language is unknown', () => {
+    expect(translationLine('')).toBe('An English translation');
+    expect(translationLine('source language')).toBe('An English translation');
+  });
+});
+
+describe('indexEntries', () => {
+  const e = (term: string, pages: number[]) => ({ term, pages });
+
+  it('keeps the locators (they were being dropped for a bare word list)', () => {
+    const out = indexEntries([e('Aloe', [3, 1, 2])], 100);
+    expect(out).toEqual([{ term: 'Aloe', pages: [1, 2, 3] }]);
+  });
+
+  it('merges entries that differ only by case, preferring the capitalised form', () => {
+    const out = indexEntries([e('botany', [1]), e('Botany', [2])], 100);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toEqual({ term: 'Botany', pages: [1, 2] });
+  });
+
+  it('drops a term so common it is the subject rather than a way in', () => {
+    const everywhere = Array.from({ length: 300 }, (_, i) => i + 1);
+    const out = indexEntries([e('botany', everywhere), e('Aloe', [5, 9])], 940);
+    expect(out.map(x => x.term)).toEqual(['Aloe']);
+  });
+
+  it('keeps a frequent term in a short book, where a quarter is only a page or two', () => {
+    const out = indexEntries([e('Solomon', [1, 2, 3, 4, 5, 6])], 20);
+    expect(out.map(x => x.term)).toEqual(['Solomon']);
+  });
+
+  it('sorts for reading but selects by weight', () => {
+    // A weighted source list sliced alphabetically would stop at the first letters
+    const many = Array.from({ length: 300 }, (_, i) => e(`term${String(i).padStart(3, '0')}`, [i + 1]));
+    many.push(e('zzz-important', [1, 2, 3, 4, 5]));
+    const out = indexEntries(many, 400);
+    expect(out.some(x => x.term === 'zzz-important')).toBe(true);
+    const terms = out.map(x => x.term);
+    expect(terms).toEqual([...terms].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })));
+  });
+
+  it('drops entries with no locators rather than printing a bare word', () => {
+    expect(indexEntries([e('ghost', [])], 100)).toEqual([]);
+  });
+});
+
+describe('urlDisplay', () => {
+  it('breaks a URL only at slashes, never at a hyphen the slug already contains', () => {
+    const out = urlDisplay('https://sourcelibrary.org/book/de-historia-stirpium-commentarii-insignes-fuchs-2');
+    expect(out.startsWith('sourcelibrary.org/')).toBe(true);
+    expect(out).not.toContain('-');           // every hyphen is now U+2011
+    expect(out).toContain('\u2011');
+    expect(out).toContain('/\u200B');
+  });
+});
+
+describe('stripLeadingApparatus', () => {
+  it('sees through a run of bracketed page furniture', () => {
+    // A rendered Kircher page opened with exactly this
+    expect(stripLeadingApparatus('[Bottom center signature mark] A [Bottom right catchword/fragment] -self, returned'))
+      .toBe('-self, returned');
+  });
+
+  it('leaves a woodcut description alone — it is the only record of the plate', () => {
+    // Fuchs deposits 1,321 pages and one image; these descriptions are the
+    // only evidence the ~500 woodcuts exist
+    const t = '[Large decorative initial Q containing a figure] Quoniam autem';
+    expect(stripLeadingApparatus(t)).toBe(t);
+  });
+
+  it('leaves a translator supplement alone', () => {
+    const t = '[He should be] willing to lift';
+    expect(stripLeadingApparatus(t)).toBe(t);
+  });
+
+  it('does nothing to ordinary prose', () => {
+    expect(stripLeadingApparatus('The volume is encased in a binding.')).toBe('The volume is encased in a binding.');
+  });
+});
+
+describe('resolveSourceImages', () => {
+  it('prefers a page a person can open over a IIIF manifest', () => {
+    // 2,648 of 11,237 deposit-eligible books record a manifest as source_url
+    expect(resolveSourceImages({
+      image_source: { source_url: 'https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10123/manifest' },
+      ia_identifier: 'somebook',
+    })).toEqual({ url: 'https://archive.org/details/somebook', label: 'Source images' });
+  });
+
+  it('says it is a manifest when the manifest is all there is', () => {
+    expect(resolveSourceImages({
+      image_source: { source_url: 'https://nrs.lib.harvard.edu/urn-3:FHCL:1234/manifest.json' },
+    })).toEqual({
+      url: 'https://nrs.lib.harvard.edu/urn-3:FHCL:1234/manifest.json',
+      label: 'Source images (IIIF manifest)',
+    });
+  });
+
+  it('leaves an ordinary viewer URL alone — the negative control', () => {
+    const url = 'https://digital.bodleian.ox.ac.uk/objects/748a9d50-5a3a-440e-ab9d-567dd68b6abb';
+    expect(resolveSourceImages({ image_source: { source_url: url } })).toEqual({ url, label: 'Source images' });
+  });
+
+  it('returns no link when the book records neither', () => {
+    expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
 });
