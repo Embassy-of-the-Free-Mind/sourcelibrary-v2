@@ -317,12 +317,26 @@ export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}
 //   gemini:  { submit({ model, requests, displayName }) → { name, keyIndex },
 //              fetch(name) → { state, responses } },
 //   logUsage(params, db), completeBatchUsage(params, db),   // supabase-usage-logger
-//   budgetAllows(db, label) → boolean,                     // spend-guard
+//   budgetAllows(db, label) → boolean,                     // spend-guard (see gateAllowsBook)
 //   writePage?  (defaults to translate-core writePageTranslation),
 //   syncPage?   (Supabase dual-write, optional),
 //   log?        (defaults to console.log),
 //   now?        () → Date
 // }
+
+/**
+ * Does a scoped spend-guard verdict (`budgetAllowsDispatchScoped`) let THIS book run?
+ * Same rule the realtime translate-worker applies to its candidates: the global dial open
+ * covers every book; the global dial closed covers only the books inside an OPEN scope
+ * envelope (#4540). A boolean gate (`budgetAllowsDispatch`) cannot see envelopes, which is
+ * why the first shadow runs (2026-09-24) were refused on a day the realtime lane was
+ * dispatching envelope work.
+ */
+export function gateAllowsBook(gate, bookId) {
+  if (!gate?.allowed) return false;
+  if (gate.envelopeIds == null) return true;
+  return gate.envelopeIds.has(bookId);
+}
 
 const newRunId = () => `tbs_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 

@@ -10,7 +10,8 @@
  *
  *   --plan    --book=ID                          FREE  blocks, seams, refusals, cost estimate
  *   --submit  --book=ID --approved-usd=X          PAID  submit the translate job (refuses if the
- *             [--shadow] [--limit=N]                    estimate exceeds X or the dial is closed)
+ *             [--shadow] [--limit=N]                    estimate exceeds X, or if neither the daily
+ *                                                       dial nor an open scope envelope covers the book)
  *   --advance [--run=ID]                          PAID  poll open runs; when the translate job is
  *                                                       done, submit the repair job (~15% more);
  *                                                       when that is done, write the pages
@@ -27,9 +28,9 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { loadTranslationPrompts } from '../lib/translate-core.mjs';
 import {
-  planRun, startRun, advanceRun, estimateRunUsd, RUNS_COLLECTION, TERMINAL_PHASES,
+  planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, RUNS_COLLECTION, TERMINAL_PHASES,
 } from '../lib/translate-batch-seam.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { logUsage, completeBatchUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate } from './lib/supabase-page-writer.mjs';
 import { probeBatchJob } from './lib/batch-reconcile.mjs';
@@ -122,7 +123,9 @@ async function main() {
       const prompts = await loadTranslationPrompts(db);
       const res = await startRun(db, bookId, {
         gemini: makeGeminiAdapter(), logUsage, completeBatchUsage,
-        budgetAllows: (d, label) => budgetAllowsDispatch(d, label),
+        // Scoped like the realtime worker: a closed daily dial still lets a book inside an open
+        // envelope run (set-scope.mjs --books ... --budget), on that envelope's own meter.
+        budgetAllows: async (d, label) => gateAllowsBook(await budgetAllowsDispatchScoped(d, label), bookId),
       }, { prompts, approvedUsd: arg('approved-usd'), shadow: has('shadow'), limit: arg('limit') ? Number(arg('limit')) : undefined });
       if (!res.ok) { console.log(`REFUSED: ${res.reason}`); process.exitCode = 2; }
       return;
