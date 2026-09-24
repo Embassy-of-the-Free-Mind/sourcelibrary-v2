@@ -80,9 +80,23 @@ async function main() {
   const covered = await gallery.countDocuments({ ...base, 'metadata.subjects': { $in: Object.keys(subjectMap).filter((k) => subjectMap[k].length) } });
   console.log(`visible images: ${visible}; in at least one category: ${covered} (${(100 * covered / visible).toFixed(1)}%)`);
 
+  // A hand-picked tile picture (`featured_image`, a gallery_images id) wins over the
+  // automatic pick — some categories' best-scoring images read badly as a tile
+  // (Fludd's solid black "primeval void" for Astronomy). Reserve them first so no
+  // other tile reuses them.
+  const featured = new Map();
+  for (const cat of vocab.categories) {
+    if (!cat.featured_image) continue;
+    const doc = await gallery.findOne({ id: cat.featured_image }, { projection: { thumbnail_url: 1, extracted_url: 1 } });
+    const url = doc && (doc.thumbnail_url || doc.extracted_url);
+    if (url) { featured.set(cat.id, url); usedThumbs.add(url); }
+    else console.warn(`featured_image ${cat.featured_image} for ${cat.id} not found — using the automatic pick`);
+  }
+
   const categories = [];
   for (const cat of vocab.categories) {
     const catStats = await stats(rawFor(cat.terms.map((t) => t.id)));
+    if (featured.has(cat.id)) catStats.thumbnail = featured.get(cat.id);
     const terms = [];
     for (const t of cat.terms) {
       const s = await stats(rawFor([t.id]));

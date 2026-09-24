@@ -1,5 +1,5 @@
 {
-  "_about": "Controlled two-level vocabulary for browsing book illustrations by subject (#4856). The extractor writes free-text metadata.subjects (39K distinct strings); src/data/image-subject-map.json maps those raw strings onto the term ids below. Categories are for readers, in their words; they are not Iconclass. Edit a label here freely; changing an id breaks /gallery?topic= links.",
+  "_about": "Controlled two-level vocabulary for browsing book illustrations by subject (#4856). The extractor writes free-text metadata.subjects (39K distinct strings); src/data/image-subject-map.json maps those raw strings onto the term ids below. Categories are for readers, in their words; they are not Iconclass. Edit a label here freely; changing an id breaks /gallery?topic= links. A category may name a featured_image (a gallery_images id) to override the automatically chosen tile picture.",
   "categories": [
     {
       "id": "plants",
@@ -143,7 +143,8 @@
           "id": "astronomy.instruments",
           "label": "Scientific instruments"
         }
-      ]
+      ],
+      "featured_image": "69f3239b4f633eaed8014a18-0"
     },
     {
       "id": "science",
@@ -341,7 +342,8 @@
           "id": "emblems.fables",
           "label": "Fables & satire"
         }
-      ]
+      ],
+      "featured_image": "699065ffef12272ffdc94be9-0"
     },
     {
       "id": "medicine",
