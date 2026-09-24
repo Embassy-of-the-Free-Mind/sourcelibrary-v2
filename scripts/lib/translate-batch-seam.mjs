@@ -261,7 +261,7 @@ export function summarizeResponseErrors(responses) {
   return { errored: errors.length, of: (responses || []).length, top: `${top} (×${n})` };
 }
 
-/** One inline Batch API request. thinkingBudget: 0 is mandatory (#4581) — never remove it. */
+/** One Batch API request in the SDK's inline shape. thinkingBudget: 0 is mandatory (#4581) — never remove it. */
 export function batchRequest({ key, prompt, maxOutputTokens }) {
   return {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
@@ -271,6 +271,26 @@ export function batchRequest({ key, prompt, maxOutputTokens }) {
       thinkingConfig: { thinkingBudget: 0 },
     },
     metadata: { key },
+  };
+}
+
+/**
+ * The same request as one line of a Batch API input FILE (JSONL, REST shape): `config` becomes
+ * `generationConfig` with `safetySettings` beside it, `metadata.key` stays where the result line
+ * will echo it. File-based input is how the OCR orchestrator submits to the Lite model — its
+ * comment records 300 inline Lite jobs stuck against 1,995 file-based successes — and on
+ * 2026-09-24 this lane's inline Lite jobs were cancelled about every second job while the
+ * file-based OCR lane had a normal day.
+ */
+export function batchRequestToJsonlLine(req) {
+  const { safetySettings, ...generationConfig } = req.config || {};
+  return {
+    request: {
+      contents: req.contents,
+      ...(safetySettings ? { safetySettings } : {}),
+      generationConfig,
+    },
+    metadata: req.metadata,
   };
 }
 
