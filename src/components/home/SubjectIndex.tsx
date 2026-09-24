@@ -19,7 +19,8 @@ export interface SubjectIndexItem {
 interface Props {
   items: SubjectIndexItem[];
   initialCount: number;
-  showMoreLabel: (n: number) => string;
+  /** "See 21 more" — computed by the server parent; a function cannot cross the client boundary. */
+  showMoreLabel: string;
 }
 
 export default function SubjectIndex({ items, initialCount, showMoreLabel }: Props) {
@@ -55,7 +56,7 @@ export default function SubjectIndex({ items, initialCount, showMoreLabel }: Pro
             onClick={() => setExpanded(true)}
             className="text-sm text-accent-rust hover:underline"
           >
-            {showMoreLabel(remaining)} &darr;
+            {showMoreLabel} &darr;
           </button>
         </div>
       )}

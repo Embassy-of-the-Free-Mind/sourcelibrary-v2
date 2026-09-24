@@ -168,7 +168,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 count: indexCount(col),
               }))}
               initialCount={12}
-              showMoreLabel={t.seeMore}
+              showMoreLabel={t.seeMore(Math.max(0, collections.length - 12))}
             />
 
             <div className="mt-6 flex items-center justify-between">
