@@ -968,7 +968,8 @@ export async function proxy(request: NextRequest) {
       // route it is rewritten to here does not, so a subdomain served the same
       // book at two URLs. Canonicalize first, on-host; the redirected request
       // then runs the admission check below on the slug.
-      const bookSegment = decodeURIComponent(bookRoot[1]);
+      let bookSegment = bookRoot[1];
+      try { bookSegment = decodeURIComponent(bookSegment); } catch { /* keep raw */ }
       if (looksLikeBookId(bookSegment)) {
         const slug = await resolveBookSlugById(bookSegment);
         if (slug && slug !== bookSegment) {
