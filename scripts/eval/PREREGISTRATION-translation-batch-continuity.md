@@ -112,6 +112,71 @@ lands in `scripts/eval/results/`, never in the corpus. The translate worker's wr
 is not called; only its prompt construction is reused. A page in the sample must come out
 of this experiment byte-identical to how it went in.
 
+## Amendments
+
+### 2026-09-17, before the draw and before any paid call — operational definitions
+
+Written while building the harness, with no arm output in existence. None of these
+changes an arm, a margin or the decision rule; each pins something the text above left
+open, so that it cannot be chosen after seeing numbers either.
+
+1. **What the production seed actually is.** The text above says "the first 2,000
+   characters of block k−1's freshly translated output". Read against the code, the worker
+   overwrites `prevTranslation` once per page as it walks the block, so what reaches block
+   k is the first 2,000 characters of block k−1's **last page's** translation. Arm A
+   reproduces the code, not the sentence.
+2. **Strata come from throughput, not the instantaneous queue.** The live queue held 22
+   books (English 15, Tibetan 5, Latin 2) when measured — the daily dial keeps it drained,
+   so it cannot define 60-book strata and would say nothing about Chinese or Arabic. The
+   allocation is proportional to the 104,008 pages production translated 2026-09-01..17
+   (usage rows at `worker/hetzner-translate-batch`, joined to `books.language`): English
+   23, Latin 16, Chinese 6, Arabic 4, French 2, Hebrew 2, German 2, and one each of
+   Spanish, Dutch, Tibetan, Greek, Malay. **English is kept** (38% of the lane): it runs
+   through the same worker as modernization and would move to batch with everything else.
+   BPH books are excluded — they are the one route not on `gemini-3.1-flash-lite`.
+3. **A seam must be one production could produce, and must be mid-flow.** All 16 pages
+   consecutive and translatable, each ≥200 OCR chars and each block ≤20,000 OCR chars
+   (below/above those the worker would not send a block of 8). The seam pages must be
+   prose by `page_type`, carry ≥400 chars of prose each, block k−1 must not end at a
+   section terminator and block k must not open on a heading. Every rejected candidate is
+   counted by reason in the pinned sample file. Whether the seam ends mid-sentence is
+   recorded and reported as a descriptive subgroup.
+4. **H1, operationally.** A *content term* is a `<term>` block k−1 tagged (parsed by
+   `parseTranslationTerms`). Its *rendering* is each `/`- or `;`-separated alternative of
+   its `<gloss>`, or the term as kept when it has no gloss. It is *eligible* when its
+   source form recurs in block k's OCR — so the denominator depends on the shared block
+   and the source, never on the arm. It is *consistent* in an arm when block k's
+   translation contains every content word of at least one rendering. The per-boundary
+   rate is consistent/eligible; boundaries with no eligible term are excluded from H1 and
+   counted. **Pass:** the lower bound of the bootstrap 95% CI on the paired per-boundary
+   differences (arm − A) is above −5pp. The unpaired `diffCI` is printed beside it; the
+   paired interval governs, because the design is paired and `diffCI` resamples the arms
+   independently.
+5. **H1's positive control.** The same block k is scored against the committed terms of a
+   *different* book in the same language. If arm A's real rate is not above that chance
+   band, the probe is inert and a null is void — reported as such, not as a pass.
+6. **H2, operationally.** The judge sees the last page of block k−1 and two translations
+   of the first page of block k, page wrappers and notes removed, left/right randomised
+   from the seeded PRNG, the key withheld. Answers LEFT, RIGHT or TIE. A's share is
+   (A wins + ½ ties)/n; **pass** at ≤60%. A/C is judged only if B fails.
+7. **Arm C's seed** sits in the same prompt slot as production's, same 2,000-char slice,
+   labelled "Previous page (untranslated source text) for continuity".
+8. **Block k−1** is seeded from the database's existing translation of the page before it
+   when one exists, as production's first block is; otherwise unseeded. One retry is
+   allowed when a block fails to return its seam page. A boundary whose seam page is
+   missing in any arm is dropped and counted, never padded.
+9. **The spend is logged to the usage meter** under `eval/translation-batch-continuity`.
+   The daily dial sums every row, so this run counts against that day's dial like any
+   other spend.
+
+### 2026-09-17, after the draw and before any paid call — n is 58, not 60
+
+The Chinese stratum gave 4 of its 6 boundaries after six rounds and was not padded from
+another language. 209 candidate seams were rejected, by reason, in the pinned sample
+file: 103 had an untranslatable page inside the 16-page window, 44 had a block over
+20,000 OCR chars, 38 had a seam page under 400 chars of prose, 12 opened block k on a
+heading, 7 ran off the book, 4 had a non-prose seam page, 1 had a page under 200 chars.
+40 of the 58 seams end mid-sentence. Estimated spend from the drawn text: $1.98.
 ---
 
 ## Amendment 1 — 2026-09-17: the seam-repair option, and why it is last

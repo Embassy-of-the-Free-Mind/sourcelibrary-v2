@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-b166c3-p161",
+  "substratum": "greek-1700-1799",
+  "title": "Scriptores Erotici Graeci (Heliodorus), Vol. 3",
+  "year": 1792,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 623,
+  "corpus_votes": [
+    {
+      "id": "tlg0561.tlg001.perseus-grc2",
+      "hits": 17
+    },
+    {
+      "id": "tlg4013.tlg004.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0057.tlg017.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0561.tlg001.perseus-grc2",
+  "work_title": "Longus — Daphnis and Chloe",
+  "edition": "Longus. Erotici Scriptores Graeci, Vol. 1. Hercher, Rudolph, editor. Leipzig: Teubner, 1858.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0561/tlg001",
+  "phrase_hits": 17,
+  "etext_chars": 124565,
+  "window_words": 95,
+  "window_chars": 646,
+  "overlap": 0.896,
+  "align_trim": {
+    "letters_before": 532,
+    "reads_used": [
+      "gemini-3-flash-preview:0.19",
+      "gemini-3.1-flash-lite:0.19",
+      "gemini-3.1-flash-lite-b:0.19",
+      "kraken-greek-cllg:0.20"
+    ],
+    "letters_after": 532
+  }
+}

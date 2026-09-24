@@ -1,0 +1,21 @@
+{
+ "n": 58,
+ "seam_page_byte_identical_to_B": 1,
+ "sim_B_vs_E": {
+  "p10": 0.628099173553719,
+  "median": 0.9563567362428842,
+  "p90": 0.9973190348525469
+ },
+ "sim_A_vs_B_same_page_for_scale": {
+  "median": 0.685069008782936
+ },
+ "length_ratio_E_over_B": {
+  "p10": 0.8693009118541033,
+  "median": 0.996993987975952,
+  "p90": 1.1032338308457712
+ },
+ "pages_outside_seam_changed": 0,
+ "e_cost_usd": 0.06656725000000002,
+ "b_cost_usd": 0.43486400000000014,
+ "e_as_share_of_b": 0.1530760191692115
+}

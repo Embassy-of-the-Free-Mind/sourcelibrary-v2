@@ -10,5 +10,6 @@ export * from './edition';
 export * from './annotation';
 export * from './social';
 export * from './likes';
+export * from './lists';
 export * from './prompts';
 export * from './language';

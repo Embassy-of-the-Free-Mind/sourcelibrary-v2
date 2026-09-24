@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e5597a-p204",
+  "substratum": "greek-1700-1799",
+  "title": "Aristotelis Opera Omnia :Graece. 4",
+  "year": 1793,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 628,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg038.perseus-grc2",
+      "hits": 18
+    },
+    {
+      "id": "tlg4026.tlg001.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg0032.tlg007.perseus-grc2",
+      "hits": 3
+    }
+  ],
+  "phrases": 35,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg038.perseus-grc2",
+  "work_title": "Aristotle — Rhetoric",
+  "edition": "Aristotle. Aristotelis Ars Rhetorica. Ross, William David, editor. Oxford: Clarendon Press,1959 (printing).",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg038",
+  "phrase_hits": 18,
+  "etext_chars": 258244,
+  "window_words": 125,
+  "window_chars": 781,
+  "overlap": 0.821,
+  "align_trim": {
+    "letters_before": 632,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.03",
+      "gemini-3.1-flash-lite-b:0.03",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 630
+  }
+}

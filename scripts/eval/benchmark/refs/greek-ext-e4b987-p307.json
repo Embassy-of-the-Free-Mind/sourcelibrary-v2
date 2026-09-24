@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e4b987-p307",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchi Chaeronensis quae supersunt omnia :cum adnotationibus variorum adiectaque lectionis diversitate. 8",
+  "year": 1796,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1079,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg083.perseus-grc4",
+      "hits": 21
+    },
+    {
+      "id": "tlg0007.tlg083.perseus-grc3",
+      "hits": 21
+    },
+    {
+      "id": "tlg3135.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "el.wikisource",
+  "work": "Γυναικών αρεταί",
+  "work_title": "Γυναικών αρεταί",
+  "edition": null,
+  "url": "https://el.wikisource.org/wiki/%CE%93%CF%85%CE%BD%CE%B1%CE%B9%CE%BA%CF%8E%CE%BD%20%CE%B1%CF%81%CE%B5%CF%84%CE%B1%CE%AF",
+  "phrase_hits": 2,
+  "etext_chars": 64788,
+  "window_words": 195,
+  "window_chars": 1327,
+  "overlap": 0.632,
+  "align_trim": {
+    "letters_before": 1083,
+    "reads_used": [
+      "gemini-3-flash-preview:0.13",
+      "gemini-3.1-flash-lite:0.12",
+      "gemini-3.1-flash-lite-b:0.12",
+      "kraken-greek-cllg:0.08"
+    ],
+    "letters_after": 1071
+  }
+}

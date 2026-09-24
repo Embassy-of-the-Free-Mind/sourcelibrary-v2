@@ -1,0 +1,35 @@
+{
+  "slug": "greek-ext-e68709-p375",
+  "substratum": "greek-1700-1799",
+  "title": "Plvtarchi Chaeronensis, qvae svpersvnt, omnia, graece et latine. 10, Operum Moralium Et Philosophicorum Partem Quintam E",
+  "year": 1778,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 790,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg137.perseus-grc2",
+      "hits": 19
+    }
+  ],
+  "phrases": 38,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg137.perseus-grc2",
+  "work_title": "Plutarch — Compendium argumenti Stoicos absurdiora poetis dicere",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol 6. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1895.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg137",
+  "phrase_hits": 19,
+  "etext_chars": 3295,
+  "window_words": 135,
+  "window_chars": 950,
+  "overlap": 0.728,
+  "align_trim": {
+    "letters_before": 797,
+    "reads_used": [
+      "gemini-3-flash-preview:0.12",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11",
+      "kraken-greek-cllg:0.11"
+    ],
+    "letters_after": 796
+  }
+}

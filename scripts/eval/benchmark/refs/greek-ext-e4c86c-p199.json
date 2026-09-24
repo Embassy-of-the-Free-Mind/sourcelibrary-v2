@@ -1,0 +1,39 @@
+{
+  "slug": "greek-ext-e4c86c-p199",
+  "substratum": "greek-1700-1799",
+  "title": "De Iside et Osiride :lib. graece et anglice",
+  "year": 1744,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 837,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg089.perseus-grc2",
+      "hits": 9
+    },
+    {
+      "id": "tlg0057.tlg054.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0057.tlg060.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg089.perseus-grc2",
+  "work_title": "Plutarch — De Iside et Osiride",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol II. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1889.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg089",
+  "phrase_hits": 9,
+  "etext_chars": 101931,
+  "window_words": 107,
+  "window_chars": 714,
+  "overlap": 0.448,
+  "align_trim": {
+    "letters_before": 596,
+    "reads_used": [],
+    "letters_after": 596,
+    "kept": "whole window (no aligning read, or window over the cap)"
+  }
+}

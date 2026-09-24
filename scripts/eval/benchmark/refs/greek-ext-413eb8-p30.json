@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-413eb8-p30",
+  "substratum": "greek-1450-1699",
+  "title": "Archimedis Opera Omnia",
+  "year": 1544,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 2675,
+  "corpus_votes": [
+    {
+      "id": "tlg0552.tlg001.1st1K-grc1",
+      "hits": 30
+    },
+    {
+      "id": "tlg4072.tlg001.1st1K-grc1",
+      "hits": 13
+    },
+    {
+      "id": "tlg1799.tlg001.perseus-grc2",
+      "hits": 10
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0552.tlg001.1st1K-grc1",
+  "work_title": "Archimedes — De sphaera et cylindro",
+  "edition": "Archimedes. Archimède, Volume 1. Mugler, Charles, editor. Paris: Les Belles Lettres, 1970.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0552/tlg001",
+  "phrase_hits": 30,
+  "etext_chars": 125620,
+  "window_words": 841,
+  "window_chars": 2833,
+  "overlap": 1,
+  "align_trim": {
+    "letters_before": 4312,
+    "reads_used": [
+      "gemini-3-flash-preview:0.23",
+      "gemini-3.1-flash-lite:0.34",
+      "gemini-3.1-flash-lite-b:0.34",
+      "kraken-greek-cllg:0.23"
+    ],
+    "letters_after": 2249
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e5c2f9-p413",
+  "substratum": "greek-1700-1799",
+  "title": "Aristotelis Opera Omnia Graece. 1",
+  "year": 1791,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 658,
+  "corpus_votes": [
+    {
+      "id": "tlg2034.tlg006.opp-grc1",
+      "hits": 14
+    },
+    {
+      "id": "tlg4021.tlg002.1st1K-grc1",
+      "hits": 8
+    },
+    {
+      "id": "tlg4020.tlg001.1st1K-grc1",
+      "hits": 3
+    }
+  ],
+  "phrases": 24,
+  "source": "First1KGreek",
+  "work": "tlg2034.tlg006.opp-grc1",
+  "work_title": "Porphyrius — Isagoge Sive Quinque Voces",
+  "edition": "Porphyrius. Porphyrii isagoge et in Aristotelis categorias commentarium. Commentaria in Aristotelem graeca 4.1. Busse, Adolf, editor. Berlin: Reimer, 1887.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg2034/tlg006",
+  "phrase_hits": 14,
+  "etext_chars": 33365,
+  "window_words": 163,
+  "window_chars": 811,
+  "overlap": 0.862,
+  "align_trim": {
+    "letters_before": 821,
+    "reads_used": [
+      "gemini-3-flash-preview:0.03",
+      "gemini-3.1-flash-lite:0.03",
+      "gemini-3.1-flash-lite-b:0.03",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 657
+  }
+}

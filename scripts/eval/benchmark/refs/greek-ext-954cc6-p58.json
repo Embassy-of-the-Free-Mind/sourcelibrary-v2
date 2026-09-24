@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-954cc6-p58",
+  "substratum": "greek-1450-1699",
+  "title": "Praeludia",
+  "year": 1515,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1080,
+  "corpus_votes": [
+    {
+      "id": "tlg0592.tlg004.1st1K-grc1",
+      "hits": 25
+    },
+    {
+      "id": "tlg4015.tlg009.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0544.tlg002.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0592.tlg004.1st1K-grc1",
+  "work_title": "Hermogenes — Περὶ ἰδεῶν λόγου",
+  "edition": "Hermogenes. Hermogenis Opera. Rabe, Hugo, editor. Leipzig: Teubner, 1913.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0592/tlg004",
+  "phrase_hits": 25,
+  "etext_chars": 244021,
+  "window_words": 281,
+  "window_chars": 1327,
+  "overlap": 0.833,
+  "align_trim": {
+    "letters_before": 1389,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11",
+      "kraken-greek-cllg:0.09"
+    ],
+    "letters_after": 1073
+  }
+}

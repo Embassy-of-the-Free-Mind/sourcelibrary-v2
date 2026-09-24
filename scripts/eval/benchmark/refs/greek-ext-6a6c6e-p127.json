@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-6a6c6e-p127",
+  "substratum": "greek-1700-1799",
+  "title": "Luciani Samosatensis Opera, Vol. VIII — incl. Dialogi Meretricii (Bipontine, 1791)",
+  "year": 1791,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 730,
+  "corpus_votes": [
+    {
+      "id": "tlg0062.tlg011.perseus-grc2",
+      "hits": 20
+    },
+    {
+      "id": "tlg9010.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0099.tlg001.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0062.tlg011.perseus-grc2",
+  "work_title": "Lucian of Samosata — Macrobii",
+  "edition": "Lucian, Vol. 1. Harmon, Austin Morris, editor. London: William Heinemann, Ltd.; Cambridge, MA: Harvard University Press, 1913.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0062/tlg011",
+  "phrase_hits": 20,
+  "etext_chars": 14049,
+  "window_words": 114,
+  "window_chars": 812,
+  "overlap": 0.656,
+  "align_trim": {
+    "letters_before": 686,
+    "reads_used": [
+      "gemini-3-flash-preview:0.12",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11",
+      "kraken-greek-cllg:0.13"
+    ],
+    "letters_after": 680
+  }
+}

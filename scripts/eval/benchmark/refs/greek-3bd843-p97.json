@@ -1,0 +1,47 @@
+{
+  "slug": "greek-3bd843-p97",
+  "substratum": "19th-c-print",
+  "title": "Plutarchi Vitae Parallelae, Vol. 4 (Sintenis, Teubner)",
+  "year": 1875,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1217,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg061.perseus-grc2",
+      "hits": 29
+    },
+    {
+      "id": "tlg0007.tlg062.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg4031.tlg002.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg061.perseus-grc2",
+  "work_title": "Plutarch — Brutus",
+  "edition": "Plutarch. Plutarch's Lives, Vol. VI. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1918.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg061",
+  "phrase_hits": 29,
+  "etext_chars": 78860,
+  "window_words": 219,
+  "window_chars": 1466,
+  "overlap": 0.87,
+  "align_trim": {
+    "letters_before": 1234,
+    "reads_used": [
+      "cllg-qwen3vl-8b:0.01",
+      "dots-mocr:0.01",
+      "gemini-3-flash-preview:0.01",
+      "gemini-3.1-flash-lite:0.02",
+      "gemini-3.1-flash-lite-b:0.02",
+      "kraken-greek-cllg:0.02",
+      "surya2:0.03",
+      "tesseract-grc:0.22"
+    ],
+    "letters_after": 1211
+  }
+}

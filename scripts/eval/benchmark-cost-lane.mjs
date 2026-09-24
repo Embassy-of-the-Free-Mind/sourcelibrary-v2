@@ -37,7 +37,17 @@ const REF = argOf('ref', 'gemini-3.1-flash-lite');
 const REPEAT = argOf('repeat', 'gemini-3.1-flash-lite-b');
 const CLASSES = argOf('classes') ? argOf('classes').split(',') : null;
 // --leaf=zh: keep only pages whose by-eye leaf language is this (the prereg excludes non-Chinese leaves from both cells).
+// For --leaf=grc a page that carries a by-eye `greek_share` (Greek strata, tenths) is judged by that
+// instead: it enters at ≥ 0.5 — a parallel Greek–Latin leaf is `mixed` by language and still a Greek
+// cell member when Greek holds the majority (PREREGISTRATION-greek-ext-4925.md, cell membership).
 const LEAF = argOf('leaf');
+// --script-class=typeset-print: keep only pages of this by-eye class (the Greek prereg counts print
+// only; the 18 Greek codices with edition-era catalogue years are reported apart, never in a print cell).
+const SCRIPT_CLASS = argOf('script-class');
+// --min-share=0.9: the prereg's pure-Greek robustness slice (parallel and apparatus leaves carry Greek
+// inside their Latin that the Greek-letters-only scorer charges to every engine alike).
+const MIN_SHARE = parseFloat(argOf('min-share', '0.5'));
+const leafOk = p => !LEAF || (LEAF === 'grc' && typeof p.greek_share === 'number' ? p.greek_share >= MIN_SHARE : (!p.leaf_language || p.leaf_language === LEAF));
 const MIN_N = parseInt(argOf('min-n', '50'), 10);
 const MARGIN = parseFloat(argOf('margin', '0.02')), CI_MAX = parseFloat(argOf('ci-max', '0.05')), NOISE = parseFloat(argOf('noise', '0.02'));
 const DIR = argOf('results', path.join(__dirname, 'results', 'benchmark'));
@@ -67,12 +77,20 @@ for (const st of STRATA) {
   for (const p of j.pages) pages.push({ ...p, stratum: st });
 }
 
-const classes = CLASSES || [...new Set(pages.map(p => p.script_class).filter(Boolean))].sort();
+// --by=period: group by the catalogue century of the page's book instead of the observed script
+// class (#4925 step 2: the Greek decision is per PERIOD of print; the by-eye leaf filter --leaf=grc
+// still applies). The period is the edition's catalogue year — read with #4884 in mind.
+const BY = argOf('by', 'script_class');
+const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
+const PERIOD_GROUPS = { '1450–1699': ['before 1500', '1500–1599', '1600–1699'], '1700–1799': ['1700–1799'], '1800–1899': ['1800–1899'] };
+const groupOf = p => BY === 'period' ? (Object.entries(PERIOD_GROUPS).find(([, ps]) => ps.includes(periodOf(p.year)))?.[0] || null) : p.script_class;
+for (const p of pages) p._group = groupOf(p);
+const classes = CLASSES || [...new Set(pages.map(p => p._group).filter(Boolean))].sort();
 const result = { engine: ENGINE, ref: REF, repeat: REPEAT, min_n: MIN_N, rule: { margin: MARGIN, ci_max: CI_MAX, noise: NOISE }, sources, classes: {} };
 const cerOf = (p, e) => (p.engines?.[e] && !p.engines[e].missing && typeof p.engines[e].cer === 'number') ? p.engines[e].cer : null;
 
 for (const c of classes) {
-  const inClass = pages.filter(p => p.script_class === c && (!LEAF || !p.leaf_language || p.leaf_language === LEAF));
+  const inClass = pages.filter(p => p._group === c && leafOk(p) && (!SCRIPT_CLASS || p.script_class === SCRIPT_CLASS));
   const referenced = inClass.filter(p => p.has_ref && !p.ref_mismatch);
   const paired = referenced.filter(p => cerOf(p, ENGINE) != null && cerOf(p, REF) != null);
   const deltas = paired.map(p => cerOf(p, ENGINE) - cerOf(p, REF));
@@ -100,9 +118,30 @@ for (const c of classes) {
   else if (!checks.noise_floor_below_margin) verdict = 'engine noise exceeds the margin — no lane decision';
   else if (Object.values(checks).every(Boolean)) verdict = better ? 'cost lane ADOPTED; also the better reader' : 'cost lane ADOPTED';
   else verdict = 'REJECTED';
+  // ── PREREGISTRATION-greek-ext-4925.md rules (a)–(c), reported as written, alongside the generic
+  // cost-lane verdict above (which is the #4925 step-1 rule and mislabels a 3×-cost arm "cost lane").
+  // Invention is given under three definitions because the prereg's literal one ("in neither the
+  // reference nor any other engine") is structurally 0 for lite: its temperature-0 repeat vouches for it.
+  const invOf = (e, f) => median(paired.map(p => p.engines?.[e]?.[f]).filter(x => typeof x === 'number'));
+  const invention3 = Object.fromEntries(['invention', 'invention_indep', 'invention_ref'].map(f => [f, { [ENGINE]: r3(invOf(ENGINE, f)), [REF]: r3(invOf(REF, f)) }]));
+  const refMed = median(paired.map(p => cerOf(p, REF))), cataShare = paired.length ? cata(REF) / paired.length : null;
+  const decidable = paired.length >= MIN_N;
+  const leq = f => invOf(ENGINE, f) != null && invOf(REF, f) != null && invOf(ENGINE, f) <= invOf(REF, f);
+  const bCore = p_sign != null && p_sign < 0.05 && wins > losses && medD <= -0.01 && ci && ci[1] < 0 && cata(ENGINE) <= cata(REF);
+  const cCore = p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6 && cata(ENGINE) <= cata(REF);
+  const prereg = {
+    decidable, note: decidable ? null : `directional (n=${paired.length} < ${MIN_N}) — rule (e): no routing decision`,
+    a_lite: refMed == null ? null : (refMed <= 0.05 && cataShare <= 0.05 ? 'adequate' : (refMed > 0.10 || cataShare > 0.15 ? 'inadequate' : 'degraded')),
+    b_preferred_over_lite: { core: !!bCore, with_invention_literal: !!(bCore && leq('invention')), with_invention_indep: !!(bCore && leq('invention_indep')), with_invention_ref: !!(bCore && leq('invention_ref')) },
+    c_better_reader: { core: !!cCore, share_le_minus_005: r3(bigWinShare), with_invention_indep: !!(cCore && leq('invention_indep')), with_invention_ref: !!(cCore && leq('invention_ref')) },
+    d_noise_floor: { median_delta0: r3(medD0), repeat_pages_identical: withRepeat.filter(p => Math.abs(cerOf(p, REPEAT) - cerOf(p, REF)) < 1e-9).length, n: withRepeat.length, caveat: 'arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design' },
+  };
   result.classes[c] = {
+    prereg, invention_three_ways: invention3,
     n_pages: inClass.length, n_referenced: referenced.length, n_paired: paired.length, n_by_stratum: Object.fromEntries(STRATA.map(s => [s, paired.filter(p => p.stratum === s).length])),
     median_cer: { [ENGINE]: r3(median(paired.map(p => cerOf(p, ENGINE)))), [REF]: r3(median(paired.map(p => cerOf(p, REF)))), [REPEAT]: r3(median(withRepeat.map(p => cerOf(p, REPEAT)))) },
+    // the reference engine's own median with its interval — the Greek prereg's rule (a), "is lite good enough", reads this
+    ref_median_cer_ci95: bootstrapMedianCI(paired.map(p => cerOf(p, REF))),
     delta: { median: r3(medD), ci95: ci, wins, losses, ties, untied, p_sign: r3(p_sign), share_le_minus_005: r3(bigWinShare) },
     noise_floor: { n: withRepeat.length, median_delta0: r3(medD0), ci95: bootstrapMedianCI(deltas0) },
     catastrophic: { [ENGINE]: cata(ENGINE), [REF]: cata(REF) },

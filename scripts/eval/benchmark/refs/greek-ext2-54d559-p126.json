@@ -1,0 +1,35 @@
+{
+  "slug": "greek-ext2-54d559-p126",
+  "substratum": "greek-1450-1699",
+  "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+  "year": 1589,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 973,
+  "corpus_votes": [
+    {
+      "id": "tlg0653.tlg001.perseus-grc2",
+      "hits": 15
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0653.tlg001.perseus-grc2",
+  "work_title": "Aratus Solensis — Phaenomena",
+  "edition": "Aratus Solensis. Callimachus and Lycophron; Aratus. Mair, Gilbert Robinson, editor. London: William Heinemann; New York: G.P. Putnam's Sons, 1921.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0653/tlg001",
+  "phrase_hits": 15,
+  "etext_chars": 50350,
+  "window_words": 174,
+  "window_chars": 1177,
+  "overlap": 0.653,
+  "align_trim": {
+    "letters_before": 971,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.12",
+      "gemini-3.1-flash-lite-b:0.12",
+      "kraken-greek-cllg:0.15"
+    ],
+    "letters_after": 949
+  }
+}

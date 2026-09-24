@@ -38,12 +38,12 @@ export const posts: BlogPost[] = [
     imageAlt: 'A leaf of the Yuhai in the Siku Quanshu fair copy: brush-written regular script in ruled columns under the imperial header.',
   },
   {
-    slug: 'where-the-instructions-are',
-    title: 'Where the Instructions Are',
+    slug: 'techniques-of-the-body',
+    title: 'Techniques of the Body',
     subtitle:
-      'We asked the library how people were taught to move, breathe and sit. China answered with a posture for every fortnight of the year, India with a commentary that measures the gap from chin to chest. The West came back empty — and the emptiness was in our question: its body instructions are in rubrics, grimoires and lodge rituals, not in manuals.',
+      'Postures, breathing methods and exercises quoted from the manuals that prescribe them: the Ming seasonal exercises and Eight Brocades, Hua Tuo’s five animals, the seat and breath retentions of haṭha yoga, and the Greek, Arabic and Latin rites. Each original beside its translation.',
     date: '15 September 2026',
-    readTime: '11 min read',
+    readTime: '25 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
     image: 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg',
@@ -72,6 +72,32 @@ export const posts: BlogPost[] = [
     tagColor: 'bg-accent-violet/10 text-accent-violet',
     image: 'https://images.sourcelibrary.org/archived/695573e7f63a757109172b1d/293.jpg',
     imageAlt: 'Plate XXII of Praetorius\'s Theatrum Instrumentorum, 1620: folk instruments including a keyed fiddle.',
+  },
+  {
+    slug: 'technique-is-local',
+    title: 'Technique Is Local, Crisis Is Universal',
+    subtitle:
+      'Reading a thousand years of meditation manuals as research artifacts: the Visuddhimagga prescribes practices by temperament, Iamblichus states a dose-response curve for ritual prayer, and every imaging tradition wrote the same safety warnings. Seven testable hypotheses from the contemplative archive — and one measurement suggesting the cross-cultural core of deep practice is not bliss, but crisis.',
+    date: '27 August 2026',
+    readTime: '11 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/6a1d81af5afc14a085e6d7e6/spdxcs-0138.jpg',
+    imageAlt:
+      'Woodcut from the 1615 Xingming guizhi: a Daoist practitioner in seated meditation with an internal-alchemy diagram on his abdomen.',
+  },
+  {
+    slug: 'two-copies-two-languages',
+    title: 'Two Copies, Two Languages',
+    subtitle:
+      'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Measuring 21,481 books to settle it produced two headline findings that turned out to be the measuring instrument — and one cheap check that caught them both.',
+    date: '21 August 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/69b220ccf79d8af0eab7fd3a/0043.jpg',
+    imageAlt:
+      'A page of Greek type from the 1495 Aldine edition of Lascaris’ Erotemata, facing its Latin translation.',
   },
   {
     slug: 'suda-benchmark',

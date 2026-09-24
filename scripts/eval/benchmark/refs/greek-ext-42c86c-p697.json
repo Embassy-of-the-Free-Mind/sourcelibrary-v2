@@ -1,0 +1,34 @@
+{
+  "slug": "greek-ext-42c86c-p697",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotle, Ptolemy Quadripartitum, Hero of Alexandria Geodaesia",
+  "year": 1450,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1290,
+  "corpus_votes": [
+    {
+      "id": "tlg0363.tlg007.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg0363.tlg007.perseus-grc2",
+      "hits": 4
+    },
+    {
+      "id": "tlg2036.tlg001.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0363.tlg007.1st1K-grc1",
+  "work_title": "Claudius Ptolemaeus — Apotelesmatica (= Tetrabiblos)",
+  "edition": "Claudius Ptolemaeus. Claudii Ptolemaei opera quae exstant omnia, Volume 3.1. Boll, Franz, and Boer, Emilie, editors. Leipzig: Teubner, 1954.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0363/tlg007",
+  "phrase_hits": 4,
+  "etext_chars": 246867,
+  "window_words": 222,
+  "window_chars": 1450,
+  "overlap": 0.239,
+  "reason": "work identified but window overlap 0.24 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

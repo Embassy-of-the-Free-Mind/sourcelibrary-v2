@@ -53,6 +53,18 @@ describe('tokens', () => {
     // The corrected variant, for the follow-up that re-derives the cutoffs: blocks dropped, printed marks kept.
     expect(tokensBody(t)).toEqual([...'欽定四庫全書河之南']);
   });
+
+  it('keeps the body when a centred-heading marker precedes a later tag (#4966)', () => {
+    // `->TITLE<-` is how the model marks centred text. `<[^>]+>` treated the `<-` as an opening
+    // tag and consumed everything up to the next real tag's `>`, deleting the page body from the
+    // comparison: divineinspiratio00will p9 kept 25 of 348 tokens and scored 0.086 against IA text
+    // it matches at 0.983, which REJECTED the whole book at the 0.80 gate.
+    const page = '<page-type>preface</page-type>\n->THE WRITER\'S INTRODUCTION.<-\n\nthe name of this philosophy\n\n<vocab>psychic</vocab>';
+    expect(tokens(page)).toEqual(['preface', 'the', "writer's", 'introduction', 'the', 'name', 'of', 'this', 'philosophy', 'psychic']);
+    // A real tag is still stripped with its delimiters; only the `<-` marker is no longer a tag.
+    expect(tokens('<header>abc</header>')).toEqual(['abc']);
+    expect(tokens('a <b>c</b> d')).toEqual(['a', 'c', 'd']);
+  });
 });
 
 describe('ratio / agreement', () => {

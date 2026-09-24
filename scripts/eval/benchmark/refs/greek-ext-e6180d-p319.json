@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e6180d-p319",
+  "substratum": "greek-1700-1799",
+  "title": "Diogenes Laertii de Vitis, Dogmatibus et Apophtegmatibus Clarorum Philosophorum Libri X. :Graece et Latine Ad Fidem Opti",
+  "year": 1739,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 538,
+  "corpus_votes": [
+    {
+      "id": "tlg0004.tlg001.perseus-grc2",
+      "hits": 14
+    },
+    {
+      "id": "tlg0008.tlg001.perseus-grc3",
+      "hits": 2
+    },
+    {
+      "id": "tlg0008.tlg001.perseus-grc4",
+      "hits": 2
+    }
+  ],
+  "phrases": 31,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0004.tlg001.perseus-grc2",
+  "work_title": "Diogenes Laertius — Vitae philosophorum",
+  "edition": "Diogenes Laertius. Hicks, R. D., editor. Cambridge, MA.: Harvard University Press; London: William Heinemann Ltd., 1925.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0004/tlg001",
+  "phrase_hits": 14,
+  "etext_chars": 699202,
+  "window_words": 95,
+  "window_chars": 650,
+  "overlap": 0.56,
+  "align_trim": {
+    "letters_before": 533,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.04",
+      "gemini-3.1-flash-lite-b:0.04",
+      "kraken-greek-cllg:0.08"
+    ],
+    "letters_after": 533
+  }
+}

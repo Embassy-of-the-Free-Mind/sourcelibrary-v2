@@ -1,0 +1,26 @@
+{
+  "slug": "greek-ext-f5470c-p42",
+  "substratum": "greek-1450-1699",
+  "title": "Philostratou eis ton Apollōniou tou Tyaneōs bion biblia octō. Eusebiou Kaisareias tou Pamphilou antirrhētikos pros ta Hi",
+  "year": 1502,
+  "probe_engine": "gemini-3.1-flash-lite-b",
+  "probe_greek_letters": 9114,
+  "corpus_votes": [
+    {
+      "id": "tlg0638.tlg001.perseus-grc2",
+      "hits": 4
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0638.tlg001.perseus-grc2",
+  "work_title": "Philostratus the Athenian — Life of Apollonius of Tyana",
+  "edition": "Philostratus the Athenian. Flavii Philostrati Opera, Vol 1. Kayser, Carl Ludwig, editor. Lepizig: Teubner, 1870.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0638/tlg001",
+  "phrase_hits": 4,
+  "etext_chars": 510808,
+  "window_words": 397,
+  "window_chars": 2449,
+  "overlap": 0.234,
+  "reason": "work identified but window overlap 0.23 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

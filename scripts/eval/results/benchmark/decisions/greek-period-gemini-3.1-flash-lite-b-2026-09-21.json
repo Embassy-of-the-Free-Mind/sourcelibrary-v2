@@ -1,0 +1,327 @@
+{
+  "engine": "gemini-3.1-flash-lite-b",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "greek",
+      "file": "greek-2026-09-21.json",
+      "n_pages": 30,
+      "n_with_ref": 11
+    },
+    {
+      "stratum": "greek-ext",
+      "file": "greek-ext-2026-09-21.json",
+      "n_pages": 170,
+      "n_with_ref": 117
+    },
+    {
+      "stratum": "greek-ext2",
+      "file": "greek-ext2-2026-09-21.json",
+      "n_pages": 10,
+      "n_with_ref": 8
+    }
+  ],
+  "classes": {
+    "1450–1699": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.036,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 50,
+          "n": 56,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3.1-flash-lite-b": 0,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "gemini-3.1-flash-lite-b": 0.196,
+          "gemini-3.1-flash-lite": 0.218
+        },
+        "invention_ref": {
+          "gemini-3.1-flash-lite-b": 0.341,
+          "gemini-3.1-flash-lite": 0.36
+        }
+      },
+      "n_pages": 82,
+      "n_referenced": 56,
+      "n_paired": 56,
+      "n_by_stratum": {
+        "greek": 4,
+        "greek-ext": 44,
+        "greek-ext2": 8
+      },
+      "median_cer": {
+        "gemini-3.1-flash-lite-b": 0.171,
+        "gemini-3.1-flash-lite": 0.171
+      },
+      "ref_median_cer_ci95": [
+        0.159,
+        0.188
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "wins": 6,
+        "losses": 0,
+        "ties": 50,
+        "untied": 6,
+        "p_sign": 0.031,
+        "share_le_minus_005": 0.036
+      },
+      "noise_floor": {
+        "n": 56,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3.1-flash-lite-b": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3.1-flash-lite-b": 0.341,
+        "gemini-3.1-flash-lite": 0.36
+      },
+      "loops": {
+        "gemini-3.1-flash-lite-b": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "cost lane ADOPTED"
+    },
+    "1700–1799": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 48,
+          "n": 53,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3.1-flash-lite-b": 0,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "gemini-3.1-flash-lite-b": 0.085,
+          "gemini-3.1-flash-lite": 0.082
+        },
+        "invention_ref": {
+          "gemini-3.1-flash-lite-b": 0.174,
+          "gemini-3.1-flash-lite": 0.181
+        }
+      },
+      "n_pages": 65,
+      "n_referenced": 53,
+      "n_paired": 53,
+      "n_by_stratum": {
+        "greek": 0,
+        "greek-ext": 53,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "gemini-3.1-flash-lite-b": 0.107,
+        "gemini-3.1-flash-lite": 0.107
+      },
+      "ref_median_cer_ci95": [
+        0.077,
+        0.122
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "wins": 3,
+        "losses": 2,
+        "ties": 48,
+        "untied": 5,
+        "p_sign": 1,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 53,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3.1-flash-lite-b": 1,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "gemini-3.1-flash-lite-b": 0.174,
+        "gemini-3.1-flash-lite": 0.181
+      },
+      "loops": {
+        "gemini-3.1-flash-lite-b": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "cost lane ADOPTED"
+    },
+    "1800–1899": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=5 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 5,
+          "n": 5,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3.1-flash-lite-b": 0,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "gemini-3.1-flash-lite-b": 0.013,
+          "gemini-3.1-flash-lite": 0.013
+        },
+        "invention_ref": {
+          "gemini-3.1-flash-lite-b": 0.068,
+          "gemini-3.1-flash-lite": 0.068
+        }
+      },
+      "n_pages": 7,
+      "n_referenced": 5,
+      "n_paired": 5,
+      "n_by_stratum": {
+        "greek": 5,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "gemini-3.1-flash-lite-b": 0.064,
+        "gemini-3.1-flash-lite": 0.064
+      },
+      "ref_median_cer_ci95": [
+        0.017,
+        0.162
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "wins": 0,
+        "losses": 0,
+        "ties": 5,
+        "untied": 0,
+        "p_sign": null,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 5,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3.1-flash-lite-b": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3.1-flash-lite-b": 0.068,
+        "gemini-3.1-flash-lite": 0.068
+      },
+      "loops": {
+        "gemini-3.1-flash-lite-b": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=5 < 50) — no lane decision"
+    }
+  }
+}

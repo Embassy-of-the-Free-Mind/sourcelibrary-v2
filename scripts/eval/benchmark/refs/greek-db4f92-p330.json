@@ -1,0 +1,9 @@
+{
+  "slug": "greek-db4f92-p330",
+  "substratum": "pre-1700-print",
+  "title": "Plutarchi apophthegmata Francisco Philelpho interprete - BSB Clm 512",
+  "year": 1487,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

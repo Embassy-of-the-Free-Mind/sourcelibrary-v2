@@ -1,0 +1,34 @@
+{
+  "slug": "greek-ext-ddb89e-p270",
+  "substratum": "greek-1700-1799",
+  "title": "Menandri et Philemonis Reliquiae",
+  "year": 1709,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 799,
+  "corpus_votes": [
+    {
+      "id": "tlg0061.tlg002.1st1K-grc1",
+      "hits": 7
+    },
+    {
+      "id": "tlg0099.tlg001.perseus-grc2",
+      "hits": 6
+    },
+    {
+      "id": "tlg0019.tlg006.perseus-grc2",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0061.tlg002.1st1K-grc1",
+  "work_title": "Pseudo-Lucian — Amores",
+  "edition": "Lucian (Pseudo). Luciani Samosatensis Opera, Vol. 2. Jacobitz, Karl, editor. Leipzig: Teuber, 1913.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0061/tlg002",
+  "phrase_hits": 7,
+  "etext_chars": 50197,
+  "window_words": 61,
+  "window_chars": 406,
+  "overlap": 0.315,
+  "reason": "work identified but window overlap 0.32 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

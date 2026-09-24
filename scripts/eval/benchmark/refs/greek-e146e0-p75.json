@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e146e0-p75",
+  "substratum": "pre-1700-print",
+  "title": "Michaelis Ephesii scholia in Aristotelis libros aliquot: nempe, de iuventute, senectute, vita et morte, de longitudine a",
+  "year": 1541,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

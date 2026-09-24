@@ -1,0 +1,30 @@
+{
+  "slug": "greek-ext-c73d7b-p719",
+  "substratum": "greek-1700-1799",
+  "title": "Suidae Lexicon, Graece & Latine, Vol. 1",
+  "year": 1705,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1970,
+  "corpus_votes": [
+    {
+      "id": "tlg9010.tlg001.1st1K-grc1",
+      "hits": 4
+    },
+    {
+      "id": "tlg2057.tlg002.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg9010.tlg001.1st1K-grc1",
+  "work_title": "Suda — Suidae lexicon",
+  "edition": "Suda, Suidae lexicon, Adler, Teubner, 1935",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg9010/tlg001",
+  "phrase_hits": 4,
+  "etext_chars": 3309841,
+  "window_words": 344,
+  "window_chars": 2558,
+  "overlap": 0.283,
+  "reason": "work identified but window overlap 0.28 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

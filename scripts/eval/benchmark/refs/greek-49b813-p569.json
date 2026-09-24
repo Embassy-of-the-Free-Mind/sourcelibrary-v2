@@ -1,0 +1,46 @@
+{
+  "slug": "greek-49b813-p569",
+  "substratum": "19th-c-print",
+  "title": "Claudii Galeni Opera Omnia, Vol. 8",
+  "year": 1821,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 819,
+  "corpus_votes": [
+    {
+      "id": "tlg0057.tlg059.1st1K-grc1",
+      "hits": 26
+    },
+    {
+      "id": "tlg0057.tlg061.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg0057.tlg060.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0057.tlg059.1st1K-grc1",
+  "work_title": "Galen — De differentiis pulsuum",
+  "edition": "Galen. Claudii Galeni Opera Omnia, Volume 8. Kühn, Karl Gottlob, editor. Leipzig: Knobloch, 1824.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0057/tlg059",
+  "phrase_hits": 26,
+  "etext_chars": 267669,
+  "window_words": 142,
+  "window_chars": 935,
+  "overlap": 0.843,
+  "align_trim": {
+    "letters_before": 774,
+    "reads_used": [
+      "cllg-qwen3vl-8b:0.06",
+      "dots-mocr:0.04",
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.07",
+      "gemini-3.1-flash-lite-b:0.07",
+      "kraken-greek-cllg:0.07",
+      "surya2:0.08"
+    ],
+    "letters_after": 769
+  }
+}

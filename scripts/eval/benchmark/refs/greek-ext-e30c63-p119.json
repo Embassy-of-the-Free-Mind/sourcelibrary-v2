@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e30c63-p119",
+  "substratum": "greek-1450-1699",
+  "title": "Commentarii Joannis Ludovici Havenreuteri Med. Doctoris, Professoris et Archiatri Argentinensis In Aristotelis Philosoph",
+  "year": 1605,
+  "probe_engine": "gemini-3.1-flash-lite-b",
+  "probe_greek_letters": 865,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg005.1st1K-grc1",
+      "hits": 15
+    },
+    {
+      "id": "tlg4013.tlg004.1st1K-grc1",
+      "hits": 3
+    },
+    {
+      "id": "tlg0086.tlg031.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0086.tlg005.1st1K-grc1",
+  "work_title": "Aristotle — De caelo",
+  "edition": "Aristotle. Aristoteles de coelo et de generatione et corruptione. Prantl, Carl von, editor. Leipzig: Teubner, 1881.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0086/tlg005",
+  "phrase_hits": 15,
+  "etext_chars": 170341,
+  "window_words": 246,
+  "window_chars": 1110,
+  "overlap": 0.695,
+  "align_trim": {
+    "letters_before": 1093,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.10",
+      "gemini-3.1-flash-lite-b:0.10",
+      "kraken-greek-cllg:0.10"
+    ],
+    "letters_after": 871
+  }
+}

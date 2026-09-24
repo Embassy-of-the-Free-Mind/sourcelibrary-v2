@@ -47,4 +47,7 @@ jobs:
         env:
           BPH_AUDIT_DEPTH: '3'
           BPH_AUDIT_MAX: '80'
+          # Without it the script skips the foreign-book check and prints
+          # 'N book link(s) left unverified' — the audit half-runs.
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: node scripts/audit-bph-leaks.mjs "${{ steps.target.outputs.url }}"

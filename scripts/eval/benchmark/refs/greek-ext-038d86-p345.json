@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-038d86-p345",
+  "substratum": "greek-1450-1699",
+  "title": "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. A",
+  "year": 1552,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1471,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg010.perseus-grc2",
+      "hits": 33
+    },
+    {
+      "id": "tlg4031.tlg002.1st1K-grc1",
+      "hits": 28
+    },
+    {
+      "id": "tlg4033.tlg003.1st1K-grc1",
+      "hits": 13
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0086.tlg010.perseus-grc2",
+  "work_title": "Aristotle — Nicomachean Ethics",
+  "edition": "Aristotle. Aristotelis Ethica Nicomachea. Bywater, Ingram, editor. Oxford: Clarendon Press, 1894.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0086/tlg010",
+  "phrase_hits": 33,
+  "etext_chars": 330265,
+  "window_words": 400,
+  "window_chars": 1860,
+  "overlap": 0.886,
+  "align_trim": {
+    "letters_before": 1910,
+    "reads_used": [
+      "gemini-3-flash-preview:0.04",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 1474
+  }
+}

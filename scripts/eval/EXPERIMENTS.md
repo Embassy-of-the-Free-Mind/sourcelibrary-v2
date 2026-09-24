@@ -106,6 +106,108 @@ LEFT column of a right-to-left leaf and repeats a line; Paddle reads the columns
   `/platform/admin/ocr-evidence?by=script_class_pooled`. PR #4926.
 
 ---
+## 2026-09-17 — Does translation survive the Batch API? The block-boundary continuity A/B (#4681, prereg #4905) — RESULT
+
+**Headline: by the rule as written, nothing passes (rung 5, "do not migrate") — but the
+rule's H1 bound turned out to be unreachable, and production run twice against itself
+fails it by more than any arm did. What the experiment actually established: the
+cross-block seed is NOT buying nothing. A blind judge prefers chained production over
+naive batch 41–11 at the seam. A one-page second pass that repairs only the seam page
+(arm E) ties production 27–27, touches nothing outside the seam, and costs +15% on top of
+batch. Migration is Derek's call; the evidence points at "batch + seam repair", not at
+"stay" and not at "plain batch".**
+
+*Question.* Production translates 8 pages per prompt and hands the next block the first
+2,000 chars of the previous block's last-page translation. The Batch API (half price,
+≈ $149/mo saved) cannot do that. Does anything measurable get lost at that one seam in
+eight, and if so what is the cheapest way to get it back?
+
+*Design.* Paired, `gemini-3.1-flash-lite`, production prompts (Standard Translation v13,
+English Modernization v1), block size 8, unit = one block BOUNDARY per book. **58
+boundaries** (60 planned; Chinese gave 4 of 6) stratified on what production translated
+2026-09-01..17: English 23, Latin 16, Chinese 4, Arabic 4, French/Hebrew/German 2 each,
+Spanish/Dutch/Tibetan/Greek/Malay 1 each. 57 scored (one lost arm C's seam page). Block
+k−1 translated once and shared. Arms: **A** chained (production) · **B** unseeded (naive
+batch) · **C** seeded with the previous page's OCR source · **D** previous page re-sent as
+an overlap and discarded · **E** second pass repairing B's seam page only. D and E were
+added by Amendment 1 and each ran only after the rung above failed.
+
+*The draw is explained, which is how an inert probe is ruled out.* 209 candidate seams
+rejected: 103 untranslatable page in the 16-page window, 44 a block over 20,000 OCR chars,
+38 a seam page under 400 chars of prose, 12 block k opening on a heading, 7 off the end of
+the book, 4 non-prose seam page, 1 page under 200 chars. 40 of 58 seams end mid-sentence.
+
+*Controls.* (1) **H1's probe fires:** real cross-boundary consistency is 73.8% against
+3.8% [1.5, 6.8] when the same pages are scored on another same-language book's terms.
+(2) **The harness runs production's configuration:** on block-k pages already translated
+by the current prompt and model, arm A reproduces the stored text as closely as two
+harness runs reproduce each other (strict match 8 pages/1 book, 0.986 vs 0.985; looser
+version-label match 32 pages/4 books, 0.57 vs 0.70; floor 0.06). Stored translations were
+NOT used as a scoring reference — they span eight prompt generations. (3) **Nothing was
+written to `pages`:** sha256 over all 928 sample page documents identical before and
+after. (4) Positive-control unit tests for the term scorer, the seam filter and the prompt
+builder (`tests/unit/translation-batch-continuity-ab.test.ts`).
+
+*Result.*
+
+| arm | H2: judge prefers A / arm / tie | A's share (limit 60%) | H1 whole block k | H1 seam page only | H3 body vs A |
+|---|---|---|---|---|---|
+| A production | — | — | 73.8% | 72% | — |
+| B unseeded | 41 / 11 / 5 | **76.3% FAIL** | 66.7% | 40% | +0.4% |
+| C source-seeded | 32 / 16 / 9 | **64.0% FAIL** | 71.4% | 48% | −0.1% |
+| D overlap | 30 / 21 / 6 | 57.9% pass | 64.3% | 32% | −2.0% |
+| E seam repair | 27 / 27 / 3 | **50.0% pass** | 69.0% | 72% | +0.5% |
+| *A2: A run again* | *not judged* | — | *64.3%* | *80%* | *+0.9%* |
+
+- **H1 cannot discriminate at this n, and the rule needed it to.** Only 17 of 57
+  boundaries carry a term block k−1 tagged whose source form recurs in block k (42 terms).
+  Every arm fails the −5pp paired bound (B −13.9, C −10.0, D −23.5, E −11.8 lower bounds) —
+  and so does **A2, production run a second time: −12.0pp [−25.5, −1.2], 0 better / 4
+  worse.** A bound that production fails against itself is not a quality bar. A2 was post
+  hoc and descriptive; it is the most useful number here for reading the rest.
+- **The seam-page column is where the signal is**, and it agrees with the judge: arms that
+  see the previous page's *translation* (A, A2, E) sit at 72–80%; arms that do not (B, C,
+  D) sit at 32–48%. Seeing the previous page's *source* (C, D) does not carry renderings
+  across — which is why D, rated above E before the run, measured below it.
+- **H2 is decisive for B.** 41–11 (sign p < 0.001), no left/right bias (25 of 52 LEFT).
+  The judge's reasons are concrete: a dangling clause picked up or dropped, "Allah" kept vs
+  switched to "God", "powers" vs "faculties", header and gloss conventions.
+- **E did not show the invention its prior predicted**, with the source page in the prompt:
+  median seam page 96% similar to B's (p10 63%), length ratio 0.997, invented tags
+  unchanged, **zero pages outside the seam altered** (by construction: it never sees
+  them). One caveat: the A/E judges picked LEFT 34 of 54 — a mild position lean the
+  randomised sides mostly cancel, but it makes 27–27 softer than it looks.
+- H3 passes everywhere. One outlier worth knowing: a single Arabic boundary under C emitted
+  534 `<foreign>` tags; the gate was (correctly) not decisive on one book.
+
+*Decision-rule branch that fired:* **rung 5 — nothing passes; do not migrate; report the
+cost of the quality.** Reported as written. The honest reading is that the rule's H1 leg
+was mis-specified for n = 17, so E "fails" on a leg production also fails; on the two legs
+that can discriminate (H2, H3) **E passes and D passes, B and C fail.** A re-run to confirm
+E before shipping it should drop whole-block H1 for the seam-page rate and judge A2 as
+well, so H2 has a noise floor too.
+
+*What E costs in production.* A second batch job over one page in eight: measured +15% of
+B's spend here at realtime rates. It needs block k−1's output first, so it is a two-stage
+batch (translate everything unseeded, then repair seam pages), not a single submission.
+
+*Considered and excluded:* scoring against published translations — a different estimand
+(absolute quality, not production-vs-batch), covered by #4883 and the Tibetan benchmark.
+
+*A trap caught in-run:* re-emitting judge packets AB and AC alongside the new AD pair moved
+their left/right flips (one seeded stream), so the key on disk stopped matching what the
+judges had read — 59 of 114 entries would have been wrong. Caught before any verdict was
+scored; packets verified byte-identical to the files the judges read; `--pairs/--only` now
+makes emission order-stable.
+
+*Spend:* **$2.72** metered at `eval/translation-batch-continuity` (A/B/C $1.74, D $0.47,
+E $0.07, A2 $0.44) against a $3.00 estimate and a $5 ceiling. It counted against the
+2026-09-17 daily dial. Judge: 8 blind Claude subagents, not metered Gemini.
+*Replicated?* No — single run, k = 1 per arm; A2 is the only replicate and it is why H1 is
+read the way it is. *Artifacts:* `translation-batch-continuity-ab.mjs`,
+`PREREGISTRATION-translation-batch-continuity.md` (eight dated amendments, each before the
+output it governs), `results/translation-batch-continuity-{sample,arms,report-2026-09-17,
+judge-packet-*,judge-key,judge-verdicts,harness-control*,e-rewrite}`.
 ## 2026-09-16 — Syriac retest: do the Beth Mardutho Kraken models read what Gemini loops on? (#4746 addendum, decides #4883)
 
 **Headline: yes. Against 40 pages of PUBLISHED ground truth (MS Jerusalem SMMJ 36, ÖNB Cod.
@@ -1012,3 +1114,74 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   236 books' written pages at offset 0 from the cache (no model calls), images FIRST or both per
   book, since at the front the text currently matches the shifted image.
   Issue: #4790.
+
+## 2026-09-21 — Which engine should read Greek print, per period? (#4925 step 2, #4744)
+
+**Headline: for 1700–1799 (53 referenced books, decision-grade) production flash-lite is
+inadequate by the preregistered threshold (median CER 0.107, CI 0.077–0.122, threshold 0.10)
+and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.009], 46
+wins / 6 losses, 0 vs 1 catastrophic). Kraken greek-cllg reads the letters as well as preview
+(0.082) but is closed for the period: it clears Δ ≤ −0.05 on 15 % of pages, not the 60 % the
+better-reader rule needs. For 1450–1699 the cell holds 48 referenced books, two short of 50,
+so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.091 (46/1/1).**
+
+- **Design.** `PREREGISTRATION-greek-ext-4925.md`. One Greek-majority interior leaf per book,
+  typeset print only, by-eye `greek_share ≥ 0.5`; references from First1KGreek / Perseus /
+  el.wikisource; Greek letters only are scored. Arms: flash-lite, its repeat, flash-preview
+  (all `temperature: 0`, `thinkingBudget: 0`), Kraken greek-cllg on Hetzner CPU. Spend: $1.36
+  Gemini (approved ≈ $2).
+- **Spot check by hand (2026-09-21) — read before quoting any number here.**
+  1. The ranking holds on the image: on the 1531 Aristotle page Kraken reads *ἐστὶ θεῶν πλέα τε*
+     correctly, preview writes a fluent wrong *διὰ θεῶν τελέα τε*, lite garbles the line.
+  2. **The noise floor cannot fail in this design.** At temperature 0 the repeat read is
+     byte-identical on 91 of 101 cell pages; Δ₀ = 0 measures API nondeterminism, not reading
+     variance. Rule (d) is reported as untested, not as passed.
+  3. **The preregistered invention metric was degenerate for lite**: "in neither the reference
+     nor any other engine" lets the identical repeat vouch for lite, so lite scores 0 on nearly
+     every page and no arm could ever pass "invention ≤ lite's". DEVIATION, recorded: the
+     scorer now also writes `invention_indep` (a repeat arm never vouches for its twin) and the
+     decision file reports all three definitions. Preview passes under `invention_indep` and
+     `invention_ref`, fails only under the degenerate literal one. Kraken's verdict does not
+     depend on invention in either period.
+  4. Kraken's "invention" is word segmentation (run-together words, line-break fragments), not
+     hallucinated text. Describe it that way.
+  5. A reference is a modern critical edition; where the early edition prints a different text
+     (the 1538 New Testament against Westcott–Hort) every arm carries the same ≈ 0.16 floor.
+     This compresses differences; it does not favour an arm.
+  6. **Selection caveat.** A page gets a reference only if the preview read locates a window
+     (overlap ≥ 0.35). Pages preview reads worst are therefore under-represented, which can only
+     flatter preview. Six pre-1700 in-cell pages were dropped this way.
+- **Reference-builder bug fixed.** A tie between two EDITIONS of the same work voided the
+  identification (Eusebius 1544, 32/40 phrase hits, discarded). A tie now voids only against a
+  different work: +1 reference pre-1700, +1 in 1700–1799, none lost.
+- **Not settled.** Pre-1700 needs two more referenced books, by drawing further down the sealed
+  walk (412 of 3,525 books walked) — never by lowering the overlap threshold. Rule (d) needs a
+  repeat arm at temperature > 0 to mean anything.
+- **SUPPLEMENT, same day (greek-ext2, seed 47442, Derek approved 10 pages).** Rule (e) says a
+  shortfall is a draw-more item. Ten more pre-1700 books were sealed as a separate file (every book
+  in greek.json / greek-ext.json excluded; 66 books walked). By eye, before any engine output was
+  read: 9 typeset Greek leaves, 1 codex (excluded). 8 of the 9 found a reference. **Pre-1700 is now
+  decision-grade at 56: lite 0.171 [0.159, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
+  [−0.093, −0.057], 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
+  better-reader rule at 60.7 % of pages (34 of 56) against a 60 % bar — ONE page. An independent
+  recompute puts that share at 57 %. Treat Kraken ≈ preview on letters, not "Kraken wins".** Spend
+  $0.11. Optional-stopping note: the supplement was drawn after seeing results, but its size was
+  fixed beforehand, the remedy is the preregistered one, and no verdict turned on it except that
+  knife-edge. The numbers above in this entry's headline are the pre-supplement state.
+- **THE ABSOLUTE NUMBERS CARRY A FLOOR THAT IS NOT READER ERROR (second spot check).** The scorer
+  replicates: independent code matched 18 of 18 values within 0.01. But a word diff of preview on
+  median 1700s pages shows the charged "errors" are mostly convention — sentence capitals, grave vs
+  acute, δ' vs δὲ, γίγνεται vs γίνεται — plus footnote apparatus the modern edition lacks (one
+  "error", Κράτης for Σωκράτης, is probably the early edition's true reading).
+  `benchmark-convention-floor.py` removes those layers (median CER, strict → tolerant):
+  pre-1700 lite 0.174 → 0.127, preview 0.093 → 0.052, Kraken 0.094 → 0.049; 1700–1799 lite
+  0.112 → 0.051, preview 0.088 → 0.033, Kraken 0.090 → 0.040. **So rule (a)'s thresholds, borrowed
+  from the 19th-c cell, do not transfer: "lite inadequate for 1700–1799" is WITHDRAWN (tolerant
+  0.051 sits on the adequate line; preview's edge is ≈ 1 character in 100 at 3× the price).
+  Pre-1700 "inadequate" stands under both measures.** Paired rules survive because every arm pays
+  the same floor. Next benchmark over early print: score convention-folded, and set adequacy
+  thresholds from the cell's own best-of-arms floor, not from another period.
+- **Files.** `results/benchmark/greek{,-ext,-ext2}-2026-09-21.json`, `benchmark/greek-ext2.json`,
+  `results/benchmark/decisions/greek-period-*-2026-09-21.json` (the `prereg` block is the
+  verdict; the generic `verdict` string is the step-1 cost-lane rule and does not apply to a
+  3×-cost arm). Raw reads: `~/sl-benchmark-reads/greek-4925-2026-09-20/` on Derek's laptop.

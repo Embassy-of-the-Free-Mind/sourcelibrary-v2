@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-e6b51b-p96",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchi Chaeronensis quae supersunt omnia :cum adnotationibus variorum adiectaque lectionis diversitate. 6",
+  "year": 1794,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 1197,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg058.perseus-grc2",
+      "hits": 16
+    },
+    {
+      "id": "tlg0526.tlg001.perseus-grc2",
+      "hits": 2
+    },
+    {
+      "id": "tlg2200.tlg00543.opp-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg058.perseus-grc2",
+  "work_title": "Plutarch — Antony",
+  "edition": "Plutarch. Plutarch's Lives, Vol. IX. Perrin, Bernadotte, editor. Cambridge, MA: Harvard University Press; London: William Heinemann Ltd., 1920.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg058",
+  "phrase_hits": 16,
+  "etext_chars": 124596,
+  "window_words": 227,
+  "window_chars": 1483,
+  "overlap": 0.587,
+  "align_trim": {
+    "letters_before": 1239,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.11",
+      "gemini-3.1-flash-lite-b:0.11"
+    ],
+    "letters_after": 1222
+  }
+}

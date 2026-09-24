@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e4cc31-p88",
+  "substratum": "greek-1700-1799",
+  "title": "Traité sur la manière de discerner un flatteur d'avec un ami; et le banquet des sept sages",
+  "year": 1772,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 988,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg070.perseus-grc2",
+      "hits": 23
+    },
+    {
+      "id": "tlg0007.tlg068.perseus-grc2",
+      "hits": 1
+    },
+    {
+      "id": "tlg0562.tlg001.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg070.perseus-grc2",
+  "work_title": "Plutarch — Quomodo adulator ab amico internoscatur",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol I. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1888.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg070",
+  "phrase_hits": 23,
+  "etext_chars": 77169,
+  "window_words": 165,
+  "window_chars": 1164,
+  "overlap": 0.783,
+  "align_trim": {
+    "letters_before": 979,
+    "reads_used": [
+      "gemini-3-flash-preview:0.07",
+      "gemini-3.1-flash-lite:0.10",
+      "gemini-3.1-flash-lite-b:0.10",
+      "kraken-greek-cllg:0.09"
+    ],
+    "letters_after": 976
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-88ed68-p222",
+  "substratum": "greek-1450-1699",
+  "title": "Plotini Enneades (Ficino Working Copy)",
+  "year": 1455,
+  "probe_engine": "gemini-3.1-flash-lite",
+  "probe_greek_letters": 10957,
+  "corpus_votes": [
+    {
+      "id": "tlg4018.tlg001.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0057.tlg057.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg2001.tlg039.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 31,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

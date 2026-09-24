@@ -1,0 +1,26 @@
+{
+  "slug": "greek-ext-740725-p167",
+  "substratum": "greek-1450-1699",
+  "title": "Epigrammatōn Hellēnikōn epilektōn tomē a : = Epigrammatvm Græcorvm Selectorvm Pars Prima [- Pars Tertia]",
+  "year": 1617,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 655,
+  "corpus_votes": [
+    {
+      "id": "tlg7000.tlg001.perseus-grc9",
+      "hits": 14
+    }
+  ],
+  "phrases": 37,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg7000.tlg001.perseus-grc9",
+  "work_title": "Greek Anthology — Greek Anthology",
+  "edition": "Greek Anthology, Vol. 4. Paton, William Roger, editor. London: William Heinemann Ltd.; New York, NY: G. P. Putnam's Sons, 1918.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg7000/tlg001",
+  "phrase_hits": 14,
+  "etext_chars": 170925,
+  "window_words": 166,
+  "window_chars": 1180,
+  "overlap": 0.291,
+  "reason": "work identified but window overlap 0.29 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+}

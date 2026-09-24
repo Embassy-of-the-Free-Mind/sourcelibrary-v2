@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-db1b80-p411",
+  "substratum": "greek-1450-1699",
+  "title": "Plvtarchi Opvscvla LXXXXII : Index Moralium omnium, & eorum quae in ipsis tractantur ...",
+  "year": 1509,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 2863,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg098.perseus-grc2",
+      "hits": 24
+    },
+    {
+      "id": "tlg1304.tlg002.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg0007.tlg129.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg098.perseus-grc2",
+  "work_title": "Plutarch — De Amore Prolis",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol IΙI. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1891.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg098",
+  "phrase_hits": 24,
+  "etext_chars": 14223,
+  "window_words": 499,
+  "window_chars": 3395,
+  "overlap": 0.647,
+  "align_trim": {
+    "letters_before": 2820,
+    "reads_used": [
+      "gemini-3-flash-preview:0.11",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.17",
+      "kraken-greek-cllg:0.05"
+    ],
+    "letters_after": 2817
+  }
+}

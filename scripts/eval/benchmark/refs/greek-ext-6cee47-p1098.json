@@ -1,0 +1,35 @@
+{
+  "slug": "greek-ext-6cee47-p1098",
+  "substratum": "greek-1450-1699",
+  "title": "Dionysiaca (Cunaeus Edition)",
+  "year": 1610,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1187,
+  "corpus_votes": [
+    {
+      "id": "tlg2045.tlg001.perseus-grc2",
+      "hits": 21
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg2045.tlg001.perseus-grc2",
+  "work_title": "Nonnus of Panopolis — Dionysiaca",
+  "edition": "Nonnus of Panopolis. Dionysiaca, Vol. 1-3. Rouse, W.H.D., editor. London: W. Heinemann Ltd.; Cambridge, MA, 1940-1942.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg2045/tlg001",
+  "phrase_hits": 21,
+  "etext_chars": 926235,
+  "window_words": 203,
+  "window_chars": 1356,
+  "overlap": 0.714,
+  "align_trim": {
+    "letters_before": 1248,
+    "reads_used": [
+      "gemini-3-flash-preview:0.13",
+      "gemini-3.1-flash-lite:0.25",
+      "gemini-3.1-flash-lite-b:0.25",
+      "kraken-greek-cllg:0.08"
+    ],
+    "letters_after": 1128
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-e2aded-p207",
+  "substratum": "greek-1450-1699",
+  "title": "In priora analytica Aristotelis commentaria",
+  "year": 1521,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 2329,
+  "corpus_votes": [
+    {
+      "id": "tlg0732.tlg005.1st1K-grc1",
+      "hits": 28
+    },
+    {
+      "id": "tlg4015.tlg002.1st1K-grc1",
+      "hits": 9
+    },
+    {
+      "id": "tlg2001.tlg042.1st1K-grc1",
+      "hits": 5
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0732.tlg005.1st1K-grc1",
+  "work_title": "Alexander of Aphrodisias — In Aristotelis Analyticorum Priorum Librum I Commentarium",
+  "edition": "Alexander of Aphrodisias. In Aristotelis analyticorum priorum librum I commentarium (Commentaria in Aristotelem Graeca 2.1). Wallies, Maximilian, editor. Berlin: Reimer, 1883.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0732/tlg005",
+  "phrase_hits": 28,
+  "etext_chars": 939442,
+  "window_words": 550,
+  "window_chars": 2845,
+  "overlap": 1,
+  "align_trim": {
+    "letters_before": 3080,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.17",
+      "gemini-3.1-flash-lite-b:0.12",
+      "kraken-greek-cllg:0.08"
+    ],
+    "letters_after": 2320
+  }
+}

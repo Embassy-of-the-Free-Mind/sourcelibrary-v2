@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-eb0eaf-p344",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelis Svmmi Semper Viri ... opera, quaecunq[ue] impressa hactenus extiterunt omnia : summa cum uigilantia excusa, ",
+  "year": 1531,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 4175,
+  "corpus_votes": [
+    {
+      "id": "stoa0033a.tlg028.1st1K-grc1",
+      "hits": 33
+    },
+    {
+      "id": "tlg4013.tlg003.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0086.tlg009.perseus-grc2",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "stoa0033a.tlg028.1st1K-grc1",
+  "work_title": "Pseudo-Aristotle — De mundo",
+  "edition": "pseudo-Aristotle, De mundo, Aristotelis Opera, Volume 3, Oxford, Bekker, 1837",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/stoa0033a/tlg028",
+  "phrase_hits": 33,
+  "etext_chars": 39995,
+  "window_words": 920,
+  "window_chars": 5044,
+  "overlap": 0.939,
+  "align_trim": {
+    "letters_before": 4828,
+    "reads_used": [
+      "gemini-3-flash-preview:0.06",
+      "gemini-3.1-flash-lite:0.28",
+      "gemini-3.1-flash-lite-b:0.28",
+      "kraken-greek-cllg:0.04"
+    ],
+    "letters_after": 4136
+  }
+}

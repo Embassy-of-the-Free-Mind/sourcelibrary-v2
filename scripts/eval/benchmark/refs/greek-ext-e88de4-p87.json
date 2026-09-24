@@ -1,0 +1,39 @@
+{
+  "slug": "greek-ext-e88de4-p87",
+  "substratum": "greek-1700-1799",
+  "title": "Plutarchu Peri Paidōn Agōgēs = Plutarchi Liber De Puerorum Educatione",
+  "year": 1774,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 578,
+  "corpus_votes": [
+    {
+      "id": "tlg0007.tlg067.perseus-grc2",
+      "hits": 6
+    },
+    {
+      "id": "tlg0011.tlg003.1st1K-grc1",
+      "hits": 1
+    },
+    {
+      "id": "tlg0057.tlg053.1st1K-grc1",
+      "hits": 1
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0007.tlg067.perseus-grc2",
+  "work_title": "Plutarch — De liberis educandis",
+  "edition": "Plutarch. Plutarchi Chaeronensis Moralia, Vol I. Vernardakēs, Grēgorios N., editor. Leipzig: Teubner, 1888.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0007/tlg067",
+  "phrase_hits": 6,
+  "etext_chars": 39861,
+  "window_words": 63,
+  "window_chars": 373,
+  "overlap": 0.364,
+  "align_trim": {
+    "letters_before": 296,
+    "reads_used": [],
+    "letters_after": 296,
+    "kept": "whole window (no aligning read, or window over the cap)"
+  }
+}

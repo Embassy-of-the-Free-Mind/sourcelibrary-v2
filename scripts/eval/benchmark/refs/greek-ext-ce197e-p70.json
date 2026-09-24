@@ -1,0 +1,42 @@
+{
+  "slug": "greek-ext-ce197e-p70",
+  "substratum": "greek-1450-1699",
+  "title": "Homeri Odyssea : A B G",
+  "year": 1627,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 846,
+  "corpus_votes": [
+    {
+      "id": "tlg0012.tlg002.perseus-grc2",
+      "hits": 25
+    },
+    {
+      "id": "tlg2035.tlg117.1st1K-grc1",
+      "hits": 6
+    },
+    {
+      "id": "tlg0012.tlg001.perseus-grc2",
+      "hits": 3
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0012.tlg002.perseus-grc2",
+  "work_title": "Homer — Odyssey",
+  "edition": "Homer. The Odyssey, Volume 1-2. Murray, A. T. (Augustus Taber), editor. London: William Heinmann; New York: G.P. Putnam's Sons, 1919.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0012/tlg002",
+  "phrase_hits": 25,
+  "etext_chars": 538302,
+  "window_words": 246,
+  "window_chars": 1049,
+  "overlap": 0.93,
+  "align_trim": {
+    "letters_before": 1228,
+    "reads_used": [
+      "gemini-3-flash-preview:0.05",
+      "gemini-3.1-flash-lite:0.09",
+      "gemini-3.1-flash-lite-b:0.09"
+    ],
+    "letters_after": 820
+  }
+}

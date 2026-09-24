@@ -1,0 +1,9 @@
+{
+  "slug": "greek-ed9d28-p267",
+  "substratum": "pre-1700-print",
+  "title": "M. Antonii Flaminii In Librvm Psalmorvm Brevis Explanatio : Ad Alexandrvm Farnesivm, Cardinalem Amplissimvm",
+  "year": 1545,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "greek-ext-a61180-p183",
+  "substratum": "greek-1450-1699",
+  "title": "Athanasius of Alexandria, Works (Vol. 1)",
+  "year": 1550,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1320,
+  "corpus_votes": [
+    {
+      "id": "tlg1443.tlg002.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg2042.tlg005.1st1K-grc1",
+      "hits": 2
+    },
+    {
+      "id": "tlg4102.tlg012.1st1K-grc1",
+      "hits": 2
+    }
+  ],
+  "phrases": 40,
+  "reason": "no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)"
+}

@@ -291,7 +291,27 @@ async function jp2ToJpeg(jp2Path) {
 
 async function processBook(book, db) {
   const iaId = book.ia_identifier || book.image_source?.identifier;
-  if (!iaId) { stats.booksSkipped++; return; }
+  if (!iaId) {
+    // LIVELOCK (#4966, 2026-09-23): a book can match the selection query on
+    // `image_source.provider: 'internet_archive'` alone while carrying no identifier on either
+    // field. Returning here without marking it left it permanently at the head of the queue —
+    // the sort puts non-English first, 413 such books existed, and the run takes only 30, so
+    // every run for weeks selected the same unprocessable books, skipped all 30, and archived
+    // nothing. The tell is a log of `Books: 0 processed, 0 failed, 30 skipped` with no [SKIP]
+    // lines. Mark it the same way the no-download branch below does, so the queue drains.
+    console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no IA identifier, marking bulk_unsuitable`);
+    await db.collection(book._booksCol || 'books').updateOne(
+      { id: book.id },
+      { $set: {
+        'archive_metadata.bulk_unsuitable': true,
+        'archive_metadata.bulk_unsuitable_at': new Date(),
+        'archive_metadata.bulk_unsuitable_reason': 'no IA identifier (ia_identifier and image_source.identifier both empty)',
+        updated_at: new Date(),
+      } },
+    );
+    stats.booksSkipped++;
+    return;
+  }
 
   const pagesCol = book._pagesCol || 'pages';
   const booksCol = book._booksCol || 'books';

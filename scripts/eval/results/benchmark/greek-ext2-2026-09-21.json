@@ -1,0 +1,1933 @@
+{
+  "summary": {
+    "stratum": "greek-ext2",
+    "issue": 4925,
+    "date": "2026-09-21",
+    "n_pages": 10,
+    "n_with_ref": 8,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.098,
+          "mean_cer": 0.093,
+          "catastrophic": 0,
+          "median_gap": 0.016,
+          "median_seq": 0.827
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.324,
+          "catastrophic": 1,
+          "median_gap": 0.011,
+          "median_bow": 0.516
+        },
+        "invention": {
+          "median": 0.103,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.197,
+          "ref_mean": 0.183
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 7,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.113,
+          "p_sign": 0.07,
+          "invention_wins": 7,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-947ec1-p88",
+            "title": "Plato, Cratylus and Florilegium Profanum",
+            "year": 1501,
+            "cer": 0.573,
+            "gap": 0.022,
+            "invention": 0.853,
+            "has_ref": false,
+            "unsupported": [
+              "αὐτοῖς",
+              "κέρδος",
+              "δίκης",
+              "ἐπίδειξον",
+              "ἀδικεῖν",
+              "πλουτεῖν",
+              "ἐστὶ",
+              "κακὸν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.122,
+            "gap": 0.038,
+            "invention": 0.114,
+            "has_ref": true,
+            "unsupported": [
+              "ὑποτιθείσης",
+              "φθείρεσθαι",
+              "εἴγε",
+              "ποιοῦντων",
+              "ἴσον",
+              "ὑπεροχὴν",
+              "κράσις",
+              "ὀξίτητα"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.116,
+            "gap": 0.032,
+            "invention": 0.173,
+            "has_ref": true,
+            "unsupported": [
+              "πᾶσα",
+              "οἶσθε",
+              "λέξεων",
+              "οὔτε",
+              "ἱκετεύουσιν",
+              "ἕτετε",
+              "καταζεύξαντες",
+              "στρατόπεδον"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.11,
+            "gap": 0.022,
+            "invention": 0.099,
+            "has_ref": true,
+            "unsupported": [
+              "μόνον",
+              "ταυτὸν",
+              "αἰσθητικὸν",
+              "φεστέρας",
+              "δόξας",
+              "παρακελεύεται",
+              "ἐρειδόμενος",
+              "παρεῖν'"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.099,
+            "gap": 0.007,
+            "invention": 0.014,
+            "has_ref": true,
+            "unsupported": [
+              "δαΐδ",
+              "ἐβαθύνθησαν"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.2,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.039,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.433
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.261,
+            "gap": 0.014,
+            "invention": 0.389,
+            "has_ref": true,
+            "unsupported": [
+              "ῥυομένην",
+              "ὠθουμένους",
+              "ἐσῶτας",
+              "σκωπτικοὺς",
+              "ἄρκαλουῶντας",
+              "ἀρτεμῖν",
+              "μαρχλω",
+              "ἀνθρώπω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 10,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.196,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.033,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.427
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 1,
+          "losses": 0,
+          "ties": 7,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 1,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.228,
+            "gap": 0.019,
+            "invention": 0.334,
+            "has_ref": true,
+            "unsupported": [
+              "γυμνῶν",
+              "ὀθωνεί",
+              "σκληρικοὺς",
+              "ἀρκαλοῦντες",
+              "ἀρτεμῶν",
+              "ἀνθρώπων",
+              "ἀφανῶς",
+              "δικάσαν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-greek-cllg": {
+        "pages_run": 9,
+        "empty": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.07,
+          "mean_cer": 0.079,
+          "catastrophic": 0,
+          "median_gap": 0.007,
+          "median_seq": 0.813
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.106,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.734
+        },
+        "invention": {
+          "median": 0.153,
+          "mean": 0.167,
+          "n_engines": 4,
+          "ref_median": 0.254,
+          "ref_mean": 0.252
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "wins": 6,
+          "losses": 2,
+          "ties": 0,
+          "median_delta_cer": 0.143,
+          "p_sign": 0.289,
+          "invention_wins": 6,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-54d559-p126",
+            "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+            "year": 1589,
+            "cer": 0.164,
+            "gap": 0.011,
+            "invention": 0.229,
+            "has_ref": true,
+            "unsupported": [
+              "proegstiga",
+              "ρίοις",
+              "ἐμμενες",
+              "εκεπτεο",
+              "χλύϊ",
+              "ἠγηλάζει",
+              "τερες",
+              "ὅνοι"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.144,
+            "gap": 0.02,
+            "invention": 0.301,
+            "has_ref": true,
+            "unsupported": [
+              "ὠδῆς",
+              "ἑβραίοι",
+              "ικατοικῶν",
+              "βοηθεία",
+              "σκέπη",
+              "αὐλια",
+              "σθήσετες",
+              "κυρίω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec5a99-p69",
+            "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+            "year": 1539,
+            "cer": 0.106,
+            "gap": 0,
+            "invention": 0.153,
+            "has_ref": false,
+            "unsupported": [
+              "κροῦσον",
+              "αὐτὸν",
+              "ἀπέρ",
+              "έναντι",
+              "ἀποστραφήσεται",
+              "ἀμπέίλου",
+              "κατόπτρον",
+              "τοῦτο"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.086,
+            "gap": 0.02,
+            "invention": 0.186,
+            "has_ref": true,
+            "unsupported": [
+              "οὖσης",
+              "ἀπείη",
+              "ποσῶ",
+              "έτων",
+              "ἰσαζουσης",
+              "μεγέθη",
+              "ἄλλὰ",
+              "εσει"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.076,
+            "gap": 0.008,
+            "invention": 0.169,
+            "has_ref": true,
+            "unsupported": [
+              "ταγωή",
+              "τεὶς",
+              "ταὺλ",
+              "εγος",
+              "ύμασιν",
+              "ταὐτόν",
+              "προαίρησις",
+              "αἰσθτικοὶ"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.573,
+            "catastrophic": 1,
+            "median_unsupported": 0.853
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 0,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 9,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.099
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.224,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.222,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "kraken-greek-cllg": {
+            "n": 9,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.076,
+            "catastrophic": 0,
+            "median_unsupported": 0.153
+          }
+        }
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "greek-ext2-54d559-p126",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+      "year": 1589,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 990,
+          "empty": false,
+          "loop": false,
+          "cer": 0.08,
+          "acc": 0.92,
+          "seq": 0.859,
+          "bow": 0.865,
+          "gap": 0.005,
+          "len_ratio": 1.043,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": 0.195,
+          "unsupported_sample": [
+            "ἔμμενες",
+            "λεπτά",
+            "μέση",
+            "κινυμένης"
+          ],
+          "invention_ref_sample": [
+            "prognostica",
+            "ἑσπερίοις",
+            "μᾶλλον",
+            "ἀληθέα",
+            "τεκμήραιο",
+            "ἔμμενες",
+            "ὀλίγη",
+            "λεπτά"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.716,
+            "gemini-3.1-flash-lite-b": 0.716,
+            "kraken-greek-cllg": 0.709
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 966,
+          "empty": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.661,
+          "bow": 0.667,
+          "gap": 0.005,
+          "len_ratio": 1.018,
+          "invention": 0,
+          "invention_indep": 0.198,
+          "invention_ref": 0.319,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "prognostica",
+            "ἑσπερίοις",
+            "μᾶλλον",
+            "ἀληθέα",
+            "τεκμήραι",
+            "σημαινεται",
+            "ὀλίγη",
+            "ἀχλύι"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.716,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.543
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 966,
+          "empty": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.661,
+          "bow": 0.667,
+          "gap": 0.005,
+          "len_ratio": 1.018,
+          "invention": 0,
+          "invention_indep": 0.198,
+          "invention_ref": 0.319,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "prognostica",
+            "ἑσπερίοις",
+            "μᾶλλον",
+            "ἀληθέα",
+            "τεκμήραι",
+            "σημαινεται",
+            "ὀλίγη",
+            "ἀχλύι"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.716,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.543
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 892,
+          "empty": false,
+          "loop": false,
+          "cer": 0.164,
+          "acc": 0.836,
+          "seq": 0.663,
+          "bow": 0.674,
+          "gap": 0.011,
+          "len_ratio": 0.94,
+          "invention": 0.229,
+          "invention_indep": 0.229,
+          "invention_ref": 0.339,
+          "unsupported_sample": [
+            "proegstiga",
+            "ρίοις",
+            "ἐμμενες",
+            "εκεπτεο",
+            "χλύϊ",
+            "ἠγηλάζει",
+            "τερες",
+            "ὅνοι"
+          ],
+          "invention_ref_sample": [
+            "proegstiga",
+            "ρίοις",
+            "μᾶλλον",
+            "ἀληθέα",
+            "τεκμήραιο",
+            "ἐμμενες",
+            "εκεπτεο",
+            "χλύϊ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.709,
+            "gemini-3.1-flash-lite": 0.543,
+            "gemini-3.1-flash-lite-b": 0.543
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-835422-p79",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Psaltērion",
+      "year": 1520,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1459,
+          "empty": false,
+          "loop": false,
+          "cer": 0.099,
+          "acc": 0.901,
+          "seq": 0.894,
+          "bow": 0.901,
+          "gap": 0.007,
+          "len_ratio": 1.008,
+          "invention": 0.014,
+          "invention_indep": 0.014,
+          "invention_ref": 0.144,
+          "unsupported_sample": [
+            "δαΐδ",
+            "ἐβαθύνθησαν"
+          ],
+          "invention_ref_sample": [
+            "δαΐδ",
+            "ἀνεπίγραφος",
+            "ἑβραίοις",
+            "ἀντιλήπτωρ",
+            "καταφυγή",
+            "ῥύσεταί",
+            "χιλιὰς",
+            "ὄψει"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.968,
+            "gemini-3.1-flash-lite-b": 0.968,
+            "kraken-greek-cllg": 0.782
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1455,
+          "empty": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.892,
+          "bow": 0.895,
+          "gap": 0.003,
+          "len_ratio": 1.006,
+          "invention": 0,
+          "invention_indep": 0.021,
+          "invention_ref": 0.138,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "δαυΐδ",
+            "ἀνεπίγραφος",
+            "ἑβραίοις",
+            "ἀντιλήπτωρ",
+            "καταφυγή",
+            "ῥύσεταί",
+            "ὄψει",
+            "καταφυγήν"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.968,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.769
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1455,
+          "empty": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.892,
+          "bow": 0.895,
+          "gap": 0.003,
+          "len_ratio": 1.006,
+          "invention": 0,
+          "invention_indep": 0.021,
+          "invention_ref": 0.138,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "δαυΐδ",
+            "ἀνεπίγραφος",
+            "ἑβραίοις",
+            "ἀντιλήπτωρ",
+            "καταφυγή",
+            "ῥύσεταί",
+            "ὄψει",
+            "καταφυγήν"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.968,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.769
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 1450,
+          "empty": false,
+          "loop": false,
+          "cer": 0.144,
+          "acc": 0.856,
+          "seq": 0.709,
+          "bow": 0.729,
+          "gap": 0.02,
+          "len_ratio": 1.002,
+          "invention": 0.301,
+          "invention_indep": 0.301,
+          "invention_ref": 0.399,
+          "unsupported_sample": [
+            "ὠδῆς",
+            "ἑβραίοι",
+            "ικατοικῶν",
+            "βοηθεία",
+            "σκέπη",
+            "αὐλια",
+            "σθήσετες",
+            "κυρίω"
+          ],
+          "invention_ref_sample": [
+            "ὠδῆς",
+            "ἀνεπίγραφος",
+            "ἑβραίοι",
+            "ικατοικῶν",
+            "βοηθεία",
+            "σκέπη",
+            "αὐλια",
+            "σθήσετες"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.782,
+            "gemini-3.1-flash-lite": 0.769,
+            "gemini-3.1-flash-lite-b": 0.769
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-925253-p299",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Vitae Parallelae",
+      "year": 1519,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 4291,
+          "empty": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.727,
+          "bow": 0.75,
+          "gap": 0.023,
+          "len_ratio": 1.004,
+          "invention": 0.149,
+          "invention_indep": 0.149,
+          "invention_ref": 0.222,
+          "unsupported_sample": [
+            "ρομπήιος",
+            "ἐλευθέρου",
+            "δικαίζειν",
+            "ἀρμενίους",
+            "πάρθους",
+            "ἐπεδίφρον",
+            "ἀρμένιοις",
+            "φήμης"
+          ],
+          "invention_ref_sample": [
+            "ρομπήιος",
+            "ἐλευθέρου",
+            "δικαίζειν",
+            "διαι",
+            "ἀρμενίους",
+            "πάρθους",
+            "ἐπεδίφρον",
+            "ἀρμένιοις"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.493,
+            "gemini-3.1-flash-lite-b": 0.493,
+            "kraken-greek-cllg": 0.77
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 4026,
+          "empty": false,
+          "loop": false,
+          "cer": 0.267,
+          "acc": 0.733,
+          "seq": 0.395,
+          "bow": 0.428,
+          "gap": 0.033,
+          "len_ratio": 0.942,
+          "invention": 0,
+          "invention_indep": 0.55,
+          "invention_ref": 0.597,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ρομηιος",
+            "ἀπέφλυε",
+            "δήμῳ",
+            "ἰουδαίῳ",
+            "σοβουλον",
+            "ῥωμαῖον",
+            "πολεῖς",
+            "ἐκτῖε"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.493,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.433
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 4026,
+          "empty": false,
+          "loop": false,
+          "cer": 0.267,
+          "acc": 0.733,
+          "seq": 0.395,
+          "bow": 0.428,
+          "gap": 0.033,
+          "len_ratio": 0.942,
+          "invention": 0,
+          "invention_indep": 0.55,
+          "invention_ref": 0.597,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ρομηιος",
+            "ἀπέφλυε",
+            "δήμῳ",
+            "ἰουδαίῳ",
+            "σοβουλον",
+            "ῥωμαῖον",
+            "πολεῖς",
+            "ἐκτῖε"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.493,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.433
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 4322,
+          "empty": false,
+          "loop": false,
+          "cer": 0.031,
+          "acc": 0.969,
+          "seq": 0.867,
+          "bow": 0.87,
+          "gap": 0.003,
+          "len_ratio": 1.011,
+          "invention": 0.116,
+          "invention_indep": 0.116,
+          "invention_ref": 0.163,
+          "unsupported_sample": [
+            "πομπηο",
+            "ἐνταύταις",
+            "εράννους",
+            "ἄρμενίους",
+            "διαλακτάς",
+            "ὄνος",
+            "ἁμαρτή",
+            "όματα"
+          ],
+          "invention_ref_sample": [
+            "πομπηο",
+            "ἐνταύταις",
+            "εράννους",
+            "διαι",
+            "ἄρμενίους",
+            "διεφέρον",
+            "διαλακτάς",
+            "ὄνος"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.77,
+            "gemini-3.1-flash-lite": 0.433,
+            "gemini-3.1-flash-lite-b": 0.433
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-947ec1-p88",
+      "substratum": "greek-1450-1699",
+      "script_class": "manuscript",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Plato, Cratylus and Florilegium Profanum",
+      "year": 1501,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1751,
+          "empty": false,
+          "loop": false,
+          "cer": 0.573,
+          "acc": 0.427,
+          "seq": 0.238,
+          "bow": 0.259,
+          "gap": 0.022,
+          "len_ratio": 1.144,
+          "invention": 0.853,
+          "invention_indep": 0.853,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "αὐτοῖς",
+            "κέρδος",
+            "δίκης",
+            "ἐπίδειξον",
+            "ἀδικεῖν",
+            "πλουτεῖν",
+            "ἐστὶ",
+            "κακὸν"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.259,
+            "gemini-3.1-flash-lite-b": 0.259
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1531,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0.85,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.259,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1531,
+          "empty": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0.85,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.259,
+            "gemini-3.1-flash-lite": 1
+          }
+        },
+        "kraken-greek-cllg": {
+          "missing": true
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-e0caa7-p61",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Platonicae quaestiones",
+      "year": 1552,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1840,
+          "empty": false,
+          "loop": false,
+          "cer": 0.048,
+          "acc": 0.952,
+          "seq": 0.9,
+          "bow": 0.903,
+          "gap": 0.003,
+          "len_ratio": 1.013,
+          "invention": 0.057,
+          "invention_indep": 0.057,
+          "invention_ref": 0.114,
+          "unsupported_sample": [
+            "qvaestiones",
+            "platonicae",
+            "ἀνθρώποις",
+            "ἀποσιωπήσεις",
+            "παρακουώμεθα",
+            "συκοφαντεῖ",
+            "χωρίς",
+            "ἔννοιαν"
+          ],
+          "invention_ref_sample": [
+            "qvaestiones",
+            "platonicae",
+            "ἀνθρώποις",
+            "ἐπιμειδιάσεις",
+            "ἀποσιωπήσεις",
+            "ἀναγκαῖαν",
+            "ἔχειν",
+            "παρακουώμεθα"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.65,
+            "gemini-3.1-flash-lite-b": 0.65,
+            "kraken-greek-cllg": 0.815
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1783,
+          "empty": false,
+          "loop": false,
+          "cer": 0.159,
+          "acc": 0.841,
+          "seq": 0.59,
+          "bow": 0.617,
+          "gap": 0.027,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.261,
+          "invention_ref": 0.383,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "qvæstiones",
+            "platonicæ",
+            "ἄλλο",
+            "προστιθέντες",
+            "ἀνθρώποισι",
+            "χρεία",
+            "πρᾶξιν",
+            "ἀρθρῳ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.65,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.664
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1783,
+          "empty": false,
+          "loop": false,
+          "cer": 0.159,
+          "acc": 0.841,
+          "seq": 0.59,
+          "bow": 0.617,
+          "gap": 0.027,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.261,
+          "invention_ref": 0.383,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "qvæstiones",
+            "platonicæ",
+            "ἄλλο",
+            "προστιθέντες",
+            "ἀνθρώποισι",
+            "χρεία",
+            "πρᾶξιν",
+            "ἀρθρῳ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.65,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.664
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 1803,
+          "empty": false,
+          "loop": false,
+          "cer": 0.063,
+          "acc": 0.937,
+          "seq": 0.801,
+          "bow": 0.801,
+          "gap": 0,
+          "len_ratio": 0.993,
+          "invention": 0.126,
+          "invention_indep": 0.126,
+          "invention_ref": 0.242,
+          "unsupported_sample": [
+            "qvasτιονes",
+            "plατονισa",
+            "προσδεηθένντες",
+            "πρῶν",
+            "πασχόντας",
+            "ποκριτῶν",
+            "ἀπωσιώπησις",
+            "φαντικώτερον"
+          ],
+          "invention_ref_sample": [
+            "qvasτιονes",
+            "plατονισa",
+            "προσδεηθένντες",
+            "πρῶν",
+            "πασχόντας",
+            "ἀποση",
+            "μαίνειν",
+            "χρώντως"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.815,
+            "gemini-3.1-flash-lite": 0.664,
+            "gemini-3.1-flash-lite-b": 0.664
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-e2bfa2-p180",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+      "year": 1535,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 4274,
+          "empty": false,
+          "loop": false,
+          "cer": 0.122,
+          "acc": 0.878,
+          "seq": 0.753,
+          "bow": 0.792,
+          "gap": 0.038,
+          "len_ratio": 0.957,
+          "invention": 0.114,
+          "invention_indep": 0.114,
+          "invention_ref": 0.199,
+          "unsupported_sample": [
+            "ὑποτιθείσης",
+            "φθείρεσθαι",
+            "εἴγε",
+            "ποιοῦντων",
+            "ἴσον",
+            "ὑπεροχὴν",
+            "κράσις",
+            "ὀξίτητα"
+          ],
+          "invention_ref_sample": [
+            "βιβλιον",
+            "μίας",
+            "ὑποτιθείσης",
+            "φθείρεσθαι",
+            "εἴγε",
+            "πολλὴ",
+            "ποιὸν",
+            "ποιοῦντων"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.668,
+            "gemini-3.1-flash-lite-b": 0.668,
+            "kraken-greek-cllg": 0.778
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 4119,
+          "empty": false,
+          "loop": false,
+          "cer": 0.222,
+          "acc": 0.778,
+          "seq": 0.55,
+          "bow": 0.598,
+          "gap": 0.048,
+          "len_ratio": 0.923,
+          "invention": 0,
+          "invention_indep": 0.343,
+          "invention_ref": 0.453,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "βιβλιον",
+            "ὁρᾶται",
+            "λέγει",
+            "μίαν",
+            "εὐαργῶς",
+            "ῥωμάμεως",
+            "φθείρειν",
+            "πολλὴ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.668,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.633
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 4119,
+          "empty": false,
+          "loop": false,
+          "cer": 0.222,
+          "acc": 0.778,
+          "seq": 0.55,
+          "bow": 0.598,
+          "gap": 0.048,
+          "len_ratio": 0.923,
+          "invention": 0,
+          "invention_indep": 0.343,
+          "invention_ref": 0.453,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "βιβλιον",
+            "ὁρᾶται",
+            "λέγει",
+            "μίαν",
+            "εὐαργῶς",
+            "ῥωμάμεως",
+            "φθείρειν",
+            "πολλὴ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.668,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.633
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 4330,
+          "empty": false,
+          "loop": false,
+          "cer": 0.086,
+          "acc": 0.914,
+          "seq": 0.785,
+          "bow": 0.805,
+          "gap": 0.02,
+          "len_ratio": 0.97,
+          "invention": 0.186,
+          "invention_indep": 0.186,
+          "invention_ref": 0.279,
+          "unsupported_sample": [
+            "οὖσης",
+            "ἀπείη",
+            "ποσῶ",
+            "έτων",
+            "ἰσαζουσης",
+            "μεγέθη",
+            "ἄλλὰ",
+            "εσει"
+          ],
+          "invention_ref_sample": [
+            "βιβλιον",
+            "μίας",
+            "οὖσης",
+            "ἀπείη",
+            "πολλὴ",
+            "ποσῶ",
+            "ποιὸν",
+            "δύνατον"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.778,
+            "gemini-3.1-flash-lite": 0.633,
+            "gemini-3.1-flash-lite-b": 0.633
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-e51278-p628",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+      "year": 1542,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 3359,
+          "empty": false,
+          "loop": false,
+          "cer": 0.069,
+          "acc": 0.931,
+          "seq": 0.876,
+          "bow": 0.884,
+          "gap": 0.009,
+          "len_ratio": 1.003,
+          "invention": 0.106,
+          "invention_indep": 0.106,
+          "invention_ref": 0.134,
+          "unsupported_sample": [
+            "χθυομένην",
+            "ἐπιπλεῖς",
+            "ὀθωνιστὰς",
+            "πυῤῥιχιστὰς",
+            "ταῖς",
+            "κεφαλαῖς",
+            "ἀρτεμίῳ",
+            "ἀνθρώπῳ"
+          ],
+          "invention_ref_sample": [
+            "χθυομένην",
+            "ἐπιπλεῖς",
+            "ὀθωνιστὰς",
+            "πυῤῥιχιστὰς",
+            "ταῖς",
+            "κεφαλαῖς",
+            "ἀρτεμίῳ",
+            "ἀνθρώπῳ"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.435,
+            "gemini-3.1-flash-lite-b": 0.499,
+            "kraken-greek-cllg": 0.838
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3103,
+          "empty": false,
+          "loop": false,
+          "cer": 0.261,
+          "acc": 0.739,
+          "seq": 0.414,
+          "bow": 0.427,
+          "gap": 0.014,
+          "len_ratio": 0.926,
+          "invention": 0.389,
+          "invention_indep": 0.579,
+          "invention_ref": 0.604,
+          "unsupported_sample": [
+            "ῥυομένην",
+            "ὠθουμένους",
+            "ἐσῶτας",
+            "σκωπτικοὺς",
+            "ἄρκαλουῶντας",
+            "ἀρτεμῖν",
+            "μαρχλω",
+            "ἀνθρώπω"
+          ],
+          "invention_ref_sample": [
+            "ῥυομένην",
+            "ὠθουμένους",
+            "ἐσῶτας",
+            "σκωπτικοὺς",
+            "πυρρίχιας",
+            "ἀθέας",
+            "ἄρκαλουῶντας",
+            "ἀνόπλα"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.435,
+            "gemini-3.1-flash-lite-b": 0.583,
+            "kraken-greek-cllg": 0.423
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 3144,
+          "empty": false,
+          "loop": false,
+          "cer": 0.228,
+          "acc": 0.772,
+          "seq": 0.474,
+          "bow": 0.493,
+          "gap": 0.019,
+          "len_ratio": 0.939,
+          "invention": 0.334,
+          "invention_indep": 0.525,
+          "invention_ref": 0.559,
+          "unsupported_sample": [
+            "γυμνῶν",
+            "ὀθωνεί",
+            "σκληρικοὺς",
+            "ἀρκαλοῦντες",
+            "ἀρτεμῶν",
+            "ἀνθρώπων",
+            "ἀφανῶς",
+            "δικάσαν"
+          ],
+          "invention_ref_sample": [
+            "γυμνῶν",
+            "ὀθωνεί",
+            "σκληρικοὺς",
+            "πυρρίχιας",
+            "ρούς",
+            "ἀθέας",
+            "ἀρκαλοῦντες",
+            "φρονοῦντες"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.499,
+            "gemini-3.1-flash-lite": 0.583,
+            "kraken-greek-cllg": 0.497
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 3393,
+          "empty": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.896,
+          "bow": 0.9,
+          "gap": 0.003,
+          "len_ratio": 1.013,
+          "invention": 0.108,
+          "invention_indep": 0.108,
+          "invention_ref": 0.143,
+          "unsupported_sample": [
+            "γενομένη",
+            "οὐτελλίου",
+            "θεωτ",
+            "έχην",
+            "οὐδέ",
+            "μηχανημάτ",
+            "έτων",
+            "ἀποτ"
+          ],
+          "invention_ref_sample": [
+            "γενομένη",
+            "οὐτελλίου",
+            "θεωτ",
+            "ρούς",
+            "φρονοῦντες",
+            "έχην",
+            "οὐδέ",
+            "μηχανημάτ"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.838,
+            "gemini-3.1-flash-lite": 0.423,
+            "gemini-3.1-flash-lite-b": 0.497
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-ebeffe-p100",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "In Topica Aristotelis Commentarii",
+      "year": 1513,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 3176,
+          "empty": false,
+          "loop": false,
+          "cer": 0.11,
+          "acc": 0.89,
+          "seq": 0.795,
+          "bow": 0.817,
+          "gap": 0.022,
+          "len_ratio": 1.01,
+          "invention": 0.099,
+          "invention_indep": 0.099,
+          "invention_ref": 0.206,
+          "unsupported_sample": [
+            "μόνον",
+            "ταυτὸν",
+            "αἰσθητικὸν",
+            "φεστέρας",
+            "δόξας",
+            "παρακελεύεται",
+            "ἐρειδόμενος",
+            "παρεῖν'"
+          ],
+          "invention_ref_sample": [
+            "ἀλεξάνδρου",
+            "ἔπεται",
+            "μαθή",
+            "μασιν",
+            "μόνον",
+            "ἐπιστήμη",
+            "ταυτὸν",
+            "οὕτω"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.64,
+            "gemini-3.1-flash-lite-b": 0.64,
+            "kraken-greek-cllg": 0.833
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3048,
+          "empty": false,
+          "loop": false,
+          "cer": 0.225,
+          "acc": 0.775,
+          "seq": 0.553,
+          "bow": 0.597,
+          "gap": 0.043,
+          "len_ratio": 0.969,
+          "invention": 0,
+          "invention_indep": 0.352,
+          "invention_ref": 0.443,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "αλεξανδρου",
+            "ἔπεται",
+            "μαθή",
+            "μασιν",
+            "λόντων",
+            "γοῦν",
+            "ἐπιστήμη",
+            "ταὐτὸν"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.64,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.63
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 3048,
+          "empty": false,
+          "loop": false,
+          "cer": 0.225,
+          "acc": 0.775,
+          "seq": 0.553,
+          "bow": 0.597,
+          "gap": 0.043,
+          "len_ratio": 0.969,
+          "invention": 0,
+          "invention_indep": 0.352,
+          "invention_ref": 0.443,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "αλεξανδρου",
+            "ἔπεται",
+            "μαθή",
+            "μασιν",
+            "λόντων",
+            "γοῦν",
+            "ἐπιστήμη",
+            "ταὐτὸν"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.64,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.63
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 3252,
+          "empty": false,
+          "loop": false,
+          "cer": 0.076,
+          "acc": 0.924,
+          "seq": 0.825,
+          "bow": 0.833,
+          "gap": 0.008,
+          "len_ratio": 1.034,
+          "invention": 0.169,
+          "invention_indep": 0.169,
+          "invention_ref": 0.266,
+          "unsupported_sample": [
+            "ταγωή",
+            "τεὶς",
+            "ταὺλ",
+            "εγος",
+            "ύμασιν",
+            "ταὐτόν",
+            "προαίρησις",
+            "αἰσθτικοὶ"
+          ],
+          "invention_ref_sample": [
+            "ταγωή",
+            "τεὶς",
+            "ταὺλ",
+            "ἀλεξάνδρου",
+            "εγος",
+            "μαθή",
+            "ύμασιν",
+            "ἐπιστήμη"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.833,
+            "gemini-3.1-flash-lite": 0.63,
+            "gemini-3.1-flash-lite-b": 0.63
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-ec5a99-p69",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+      "year": 1539,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 915,
+          "empty": false,
+          "loop": false,
+          "cer": 0.076,
+          "acc": 0.924,
+          "seq": 0.773,
+          "bow": 0.773,
+          "gap": 0,
+          "len_ratio": 1.017,
+          "invention": 0.074,
+          "invention_indep": 0.074,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "κρῖσον",
+            "ἀπογραφήσεται",
+            "κάτοπτρον",
+            "ἀναρτήσῃς",
+            "ξυλίνους",
+            "περιεκισαμένης",
+            "ἔκτε"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.773,
+            "gemini-3.1-flash-lite-b": 0.773,
+            "kraken-greek-cllg": 0.899
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 900,
+          "empty": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0.326,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.773,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.734
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 900,
+          "empty": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0.326,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.773,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.734
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 927,
+          "empty": false,
+          "loop": false,
+          "cer": 0.106,
+          "acc": 0.894,
+          "seq": 0.734,
+          "bow": 0.734,
+          "gap": 0,
+          "len_ratio": 1.03,
+          "invention": 0.153,
+          "invention_indep": 0.153,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "κροῦσον",
+            "αὐτὸν",
+            "ἀπέρ",
+            "έναντι",
+            "ἀποστραφήσεται",
+            "ἀμπέίλου",
+            "κατόπτρον",
+            "τοῦτο"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.899,
+            "gemini-3.1-flash-lite": 0.734,
+            "gemini-3.1-flash-lite-b": 0.734
+          }
+        }
+      }
+    },
+    {
+      "slug": "greek-ext2-ec8fdb-p90",
+      "substratum": "greek-1450-1699",
+      "script_class": "typeset-print",
+      "leaf_language": "grc",
+      "greek_share": 1,
+      "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+      "year": 1503,
+      "has_ref": true,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 3658,
+          "empty": false,
+          "loop": false,
+          "cer": 0.116,
+          "acc": 0.884,
+          "seq": 0.75,
+          "bow": 0.782,
+          "gap": 0.032,
+          "len_ratio": 0.994,
+          "invention": 0.173,
+          "invention_indep": 0.173,
+          "invention_ref": 0.251,
+          "unsupported_sample": [
+            "πᾶσα",
+            "οἶσθε",
+            "λέξεων",
+            "οὔτε",
+            "ἱκετεύουσιν",
+            "ἕτετε",
+            "καταζεύξαντες",
+            "στρατόπεδον"
+          ],
+          "invention_ref_sample": [
+            "ηρωδιανου",
+            "προσφερόμενα",
+            "προσελθών",
+            "δημηγορια",
+            "μαξιμινου",
+            "πᾶσα",
+            "οἶσθε",
+            "λέξεων"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.567,
+            "gemini-3.1-flash-lite-b": 0.567,
+            "kraken-greek-cllg": 0.762
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3399,
+          "empty": false,
+          "loop": false,
+          "cer": 0.252,
+          "acc": 0.748,
+          "seq": 0.478,
+          "bow": 0.527,
+          "gap": 0.048,
+          "len_ratio": 0.924,
+          "invention": 0,
+          "invention_indep": 0.45,
+          "invention_ref": 0.525,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ηρωδιανου",
+            "προσφερόμενα",
+            "διόλεως",
+            "στράτευμα",
+            "προσελθών",
+            "ταύτης",
+            "αὐελθών",
+            "συνταξαντές"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.567,
+            "gemini-3.1-flash-lite-b": 1,
+            "kraken-greek-cllg": 0.548
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 3399,
+          "empty": false,
+          "loop": false,
+          "cer": 0.252,
+          "acc": 0.748,
+          "seq": 0.478,
+          "bow": 0.527,
+          "gap": 0.048,
+          "len_ratio": 0.924,
+          "invention": 0,
+          "invention_indep": 0.45,
+          "invention_ref": 0.525,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ηρωδιανου",
+            "προσφερόμενα",
+            "διόλεως",
+            "στράτευμα",
+            "προσελθών",
+            "ταύτης",
+            "αὐελθών",
+            "συνταξαντές"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.567,
+            "gemini-3.1-flash-lite": 1,
+            "kraken-greek-cllg": 0.548
+          }
+        },
+        "kraken-greek-cllg": {
+          "n_content": 3726,
+          "empty": false,
+          "loop": false,
+          "cer": 0.043,
+          "acc": 0.957,
+          "seq": 0.833,
+          "bow": 0.838,
+          "gap": 0.005,
+          "len_ratio": 1.013,
+          "invention": 0.113,
+          "invention_indep": 0.113,
+          "invention_ref": 0.183,
+          "unsupported_sample": [
+            "γλωτα",
+            "ύτης",
+            "πρὸτῆς",
+            "ἀνελ",
+            "ιθών",
+            "μαξμινου",
+            "αἱροῦν",
+            "εται"
+          ],
+          "invention_ref_sample": [
+            "ηρωδιανου",
+            "γλωτα",
+            "ύτης",
+            "προσφερόμενα",
+            "πρὸτῆς",
+            "προσελθών",
+            "ἀνελ",
+            "ιθών"
+          ],
+          "agree": {
+            "gemini-3-flash-preview": 0.762,
+            "gemini-3.1-flash-lite": 0.548,
+            "gemini-3.1-flash-lite-b": 0.548
+          }
+        }
+      }
+    }
+  ]
+}

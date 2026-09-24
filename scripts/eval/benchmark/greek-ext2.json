@@ -1,0 +1,241 @@
+{
+  "stratum": "greek-ext2",
+  "issue": 4925,
+  "seed": 47442,
+  "sealed_at": "2026-09-21T14:29:32.098Z",
+  "draw_rule": "one page per book; books Fisher–Yates-shuffled with Mulberry32(seed*100+substratum index) over the id-sorted eligible list; page uniform over interior 10–90%; skip if no usable image or stored OCR < 120 letters; multi-column quota from pages whose stored OCR carries a <columns>N≥2 tag. The draw is reproducible only against the eligible id list AS OF THE SEAL DATE (imports keep adding books, which reshuffles everything) — this file, not the script, is the seal.",
+  "screen_rule": "identical to greek-ext",
+  "max_width": 2400,
+  "n": 10,
+  "spares": 0,
+  "spare_rule": "a sealed page that every engine returns textless (<30 letters) is replaced by the first unused spare of its sub-stratum; the replacement is recorded in the results file",
+  "substrata": [
+    {
+      "name": "greek-1450-1699",
+      "n": 10,
+      "reference": "same as greek-ext"
+    }
+  ],
+  "pages": [
+    {
+      "slug": "greek-ext2-e0caa7-p61",
+      "book_id": "6a50747f78825bd7fde0caa7",
+      "page_number": 61,
+      "substratum": "greek-1450-1699",
+      "title": "Platonicae quaestiones",
+      "year": 1552,
+      "published": "1552",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://images.sourcelibrary.org/archived/6a50747f78825bd7fde0caa7/61.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.774,
+        "greek_letters": 1270,
+        "latin_letters": 371,
+        "pages_screened": 2
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-e51278-p628",
+      "book_id": "6a50820478825bd7fde51278",
+      "page_number": 628,
+      "substratum": "greek-1450-1699",
+      "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+      "year": 1542,
+      "published": "1542",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139854_00628/full/full/0/default.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.772,
+        "greek_letters": 2236,
+        "latin_letters": 662,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-ebeffe-p100",
+      "book_id": "6a508d0878825bd7fdebeffe",
+      "page_number": 100,
+      "substratum": "greek-1450-1699",
+      "title": "In Topica Aristotelis Commentarii",
+      "year": 1513,
+      "published": "1513",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10195386_00100/full/full/0/default.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.768,
+        "greek_letters": 2253,
+        "latin_letters": 679,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-ec5a99-p69",
+      "book_id": "6a508d6978825bd7fdec5a99",
+      "page_number": 69,
+      "substratum": "greek-1450-1699",
+      "title": "Geōponika, de re rustica selectorum libri XX Graeci :Item Aristotelis de plantis libri duo Graeci",
+      "year": 1539,
+      "published": "1539",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00028265_00069/full/full/0/default.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.642,
+        "greek_letters": 545,
+        "latin_letters": 304,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-e2bfa2-p180",
+      "book_id": "6a507c7678825bd7fde2bfa2",
+      "page_number": 180,
+      "substratum": "greek-1450-1699",
+      "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+      "year": 1535,
+      "published": "1535",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139054_00180/full/full/0/default.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.846,
+        "greek_letters": 3272,
+        "latin_letters": 594,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-947ec1-p88",
+      "book_id": "699389e5ce15387065947ec1",
+      "page_number": 88,
+      "substratum": "greek-1450-1699",
+      "title": "Plato, Cratylus and Florilegium Profanum",
+      "year": 1501,
+      "published": "1501",
+      "language": "Greek",
+      "provider": "Bayerische Staatsbibliothek",
+      "image_url": "https://images.sourcelibrary.org/archived/699389e5ce15387065947ec1/88.jpg",
+      "stored_ocr_chars": 2503,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.995,
+        "greek_letters": 1831,
+        "latin_letters": 9,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-54d559-p126",
+      "book_id": "69b66403b3f4fc044154d559",
+      "page_number": 126,
+      "substratum": "greek-1450-1699",
+      "title": "Astronomica veterum scripta ... : Auct. Graeci: Procli sphaera, Arati Solensis phenomena, et Prognostica. Leontius Mecha",
+      "year": 1589,
+      "published": "1589",
+      "language": "Greek",
+      "provider": "e-rara",
+      "image_url": "https://images.sourcelibrary.org/archived/69b66403b3f4fc044154d559/126.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.534,
+        "greek_letters": 348,
+        "latin_letters": 304,
+        "pages_screened": 2
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-ec8fdb-p90",
+      "book_id": "6a508da878825bd7fdec8fdb",
+      "page_number": 90,
+      "substratum": "greek-1450-1699",
+      "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+      "year": 1503,
+      "published": "1503",
+      "language": "Greek",
+      "provider": "bsb",
+      "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10140046_00090/full/full/0/default.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.795,
+        "greek_letters": 2615,
+        "latin_letters": 675,
+        "pages_screened": 1
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-925253-p299",
+      "book_id": "69b2fee065b9d6bf89925253",
+      "page_number": 299,
+      "substratum": "greek-1450-1699",
+      "title": "Vitae Parallelae",
+      "year": 1519,
+      "published": "1519",
+      "language": "Greek",
+      "provider": "Google Books",
+      "image_url": "https://images.sourcelibrary.org/archived/69b2fee065b9d6bf89925253/299.jpg",
+      "stored_ocr_chars": 5663,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.971,
+        "greek_letters": 4272,
+        "latin_letters": 129,
+        "pages_screened": 2
+      },
+      "spare": false
+    },
+    {
+      "slug": "greek-ext2-835422-p79",
+      "book_id": "69b6382d1c1c21a373835422",
+      "page_number": 79,
+      "substratum": "greek-1450-1699",
+      "title": "Psaltērion",
+      "year": 1520,
+      "published": "1520",
+      "language": "Greek",
+      "provider": "e-rara",
+      "image_url": "https://images.sourcelibrary.org/archived/69b6382d1c1c21a373835422/79.jpg",
+      "stored_ocr_chars": 0,
+      "multi_column_tag": false,
+      "reference_plan": "same as greek-ext",
+      "screen": {
+        "greek_share": 0.751,
+        "greek_letters": 975,
+        "latin_letters": 323,
+        "pages_screened": 1
+      },
+      "spare": false
+    }
+  ]
+}

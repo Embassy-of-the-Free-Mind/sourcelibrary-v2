@@ -1,0 +1,43 @@
+{
+  "slug": "greek-ext-862ab8-p105",
+  "substratum": "greek-1450-1699",
+  "title": "Aristotelis Opera, Vol. 1 (Organon)",
+  "year": 1495,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1481,
+  "corpus_votes": [
+    {
+      "id": "tlg0086.tlg001.1st1K-grc1",
+      "hits": 22
+    },
+    {
+      "id": "tlg4015.tlg002.1st1K-grc1",
+      "hits": 19
+    },
+    {
+      "id": "tlg0086.tlg001.1st1K-grc2",
+      "hits": 16
+    }
+  ],
+  "phrases": 40,
+  "source": "First1KGreek",
+  "work": "tlg0086.tlg001.1st1K-grc1",
+  "work_title": "Aristotle — Analytica priora",
+  "edition": "Aristotle. Aristotelis Opera, Volume 1. Bekker, Immanuel, editor. Oxford: Oxford University Press, 1837.",
+  "url": "https://github.com/OpenGreekAndLatin/First1KGreek/tree/master/data/tlg0086/tlg001",
+  "phrase_hits": 22,
+  "etext_chars": 327123,
+  "window_words": 268,
+  "window_chars": 1741,
+  "overlap": 0.902,
+  "align_trim": {
+    "letters_before": 1434,
+    "reads_used": [
+      "gemini-3-flash-preview:0.09",
+      "gemini-3.1-flash-lite:0.22",
+      "gemini-3.1-flash-lite-b:0.22",
+      "kraken-greek-cllg:0.16"
+    ],
+    "letters_after": 1425
+  }
+}

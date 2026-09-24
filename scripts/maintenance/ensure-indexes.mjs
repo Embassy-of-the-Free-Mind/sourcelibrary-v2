@@ -257,6 +257,11 @@ export const INDEXES = [
   { collection: 'likes', key: { 'target_type': 1, 'target_id': 1, 'visitor_id': 1 }, options: { 'name': 'likes_target_visitor_idx', 'background': true, 'unique': true }, why: 'Toggle lookup { target_type, target_id, visitor_id }, unique. Archived ensure-indexes route.' },
   { collection: 'likes', key: { 'target_type': 1, 'target_id': 1 }, options: { 'name': 'likes_target_idx', 'background': true }, why: 'Count aggregation by target. Archived ensure-indexes route.' },
   { collection: 'likes', key: { 'visitor_id': 1, 'target_type': 1 }, options: { 'name': 'likes_visitor_type_idx', 'background': true }, why: 'Visitor\'s likes lookup. Archived ensure-indexes route.' },
+  // ── user_lists / user_list_items ──────────────────────────────
+  { collection: 'user_lists', key: { 'id': 1 }, options: { 'name': 'user_lists_id_idx', 'unique': true, 'background': true }, why: 'List lookup by app-level id (URL identity). src/app/api/lists/*.' },
+  { collection: 'user_lists', key: { 'owner_id': 1, 'updated_at': -1 }, options: { 'name': 'user_lists_owner_idx', 'background': true }, why: "Owner's lists, newest-updated first. src/app/api/lists/route.ts GET." },
+  { collection: 'user_list_items', key: { 'list_id': 1, 'target_type': 1, 'target_id': 1 }, options: { 'name': 'user_list_items_unique_idx', 'unique': true, 'background': true }, why: 'One row per item per list; backstops the add-item upsert race. src/app/api/lists/[id]/items/route.ts.' },
+  { collection: 'user_list_items', key: { 'list_id': 1, 'added_at': -1 }, options: { 'name': 'user_list_items_list_idx', 'background': true }, why: 'List detail page: items newest first. src/app/api/lists/[id]/route.ts GET.' },
   // ── loading_metrics ───────────────────────────────────────────
   { collection: 'loading_metrics', key: { 'received_at': -1 }, options: { 'name': 'loading_metrics_received_at_idx' }, why: 'Time-range scans for the performance dashboard. Archived ensure-indexes route / scripts/maintenance/create-critical-indexes.mjs.' },
   { collection: 'loading_metrics', key: { 'name': 1, 'received_at': -1 }, options: { 'name': 'loading_metrics_name_ts_idx', 'background': true }, why: 'Metric-name-filtered time range queries. Archived ensure-indexes route.' },

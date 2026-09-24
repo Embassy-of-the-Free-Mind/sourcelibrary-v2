@@ -1,0 +1,9 @@
+{
+  "slug": "greek-e31359-p688",
+  "substratum": "pre-1700-print",
+  "title": "Plutarchi Chaeronensis vitae parallelae, seu comparatae : cum annotationibus, appendice item ad vitas comparatas et tern",
+  "year": 1606,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 0,
+  "reason": "probe has < 15 Greek words (Latin leaf, plate or blank as read)"
+}

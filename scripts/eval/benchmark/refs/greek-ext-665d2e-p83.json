@@ -1,0 +1,41 @@
+{
+  "slug": "greek-ext-665d2e-p83",
+  "substratum": "greek-1700-1799",
+  "title": "Hē  Kainē Diathēkē tou Kyriou ēmōn Iēsou Christou",
+  "year": 1708,
+  "probe_engine": "gemini-3-flash-preview",
+  "probe_greek_letters": 1797,
+  "corpus_votes": [
+    {
+      "id": "tlg0031.tlg002.perseus-grc2",
+      "hits": 21
+    },
+    {
+      "id": "tlg4102.tlg002.1st1K-grc1",
+      "hits": 12
+    },
+    {
+      "id": "tlg2042.tlg005.1st1K-grc1",
+      "hits": 9
+    }
+  ],
+  "phrases": 40,
+  "source": "Perseus canonical-greekLit",
+  "work": "tlg0031.tlg002.perseus-grc2",
+  "work_title": "New Testament — Mark",
+  "edition": "The New Testament in the original Greek. Westcott, Brooke Foss; Hort, Fenton John Anthony, editors. New York: Harper and Brothers, 1882-1892.",
+  "url": "https://github.com/PerseusDL/canonical-greekLit/tree/master/data/tlg0031/tlg002",
+  "phrase_hits": 21,
+  "etext_chars": 69239,
+  "window_words": 544,
+  "window_chars": 2044,
+  "overlap": 0.816,
+  "align_trim": {
+    "letters_before": 2747,
+    "reads_used": [
+      "gemini-3-flash-preview:0.18",
+      "kraken-greek-cllg:0.24"
+    ],
+    "letters_after": 1660
+  }
+}
