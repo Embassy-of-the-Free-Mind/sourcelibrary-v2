@@ -379,8 +379,16 @@ async function main() {
   // Get all low-res artworks
   const lowRes = await db.collection('books').find(
     { commons_full_url: { $exists: true }, hidden_reason: 'low_resolution' },
-    { projection: { slug: 1, title: 1, author: 1, commons_title: 1, commons_full_url: 1, commons_width: 1, commons_height: 1 } }
+    { projection: { slug: 1, title: 1, author: 1, commons_title: 1, commons_page_title: 1, source_ids: 1, commons_full_url: 1, commons_width: 1, commons_height: 1 } }
   ).toArray();
+
+  // The Commons page title lives under different names depending on which
+  // importer wrote the record: `commons_title` (this script's own writes),
+  // `commons_page_title` / `source_ids.commons` (the Commons artwork importer).
+  // Reading only the first threw on 1,543 of 1,728 records (measured 2026-09-24).
+  for (const book of lowRes) {
+    book.commons_title = book.commons_title || book.commons_page_title || book.source_ids?.commons || null;
+  }
 
   console.log(`Found ${lowRes.length} low-res artworks to upgrade\n`);
 
@@ -397,7 +405,7 @@ async function main() {
       let bestImage = null;
       let wikidataMetadata = null;
 
-      const wdEntity = await findWikidataEntity(book.commons_title);
+      const wdEntity = book.commons_title ? await findWikidataEntity(book.commons_title) : null;
       if (wdEntity) {
         console.log(`  Wikidata: ${wdEntity.wikidataId} — ${wdEntity.label}`);
         wikidataMetadata = wdEntity;
