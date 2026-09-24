@@ -44,6 +44,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { dropDriftedPages, PAGE_BOUNDARY_RULE } from '../lib/block-drift.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -336,6 +337,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
   prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  prompt += PAGE_BOUNDARY_RULE;
   prompt += `\n**Pages to ${verb}:**\n`;
   for (const page of pages) {
     prompt += `\n--- Page ${page.page_number} ---\n${page.ocr.data}\n`;
@@ -392,6 +394,14 @@ async function translateBatch(db, pages, book, prevTranslation) {
         translations.set(pages[i].page_number, parsedEntries[i]);
       }
     }
+  }
+
+  // A clause moved across an in-block page break (#5021): the model finished page N's last
+  // sentence with page N+1's opening words. Both pages drop out of the map, so the caller's
+  // "missing from batch" path re-translates them single-page, in order, with continuity.
+  const { drifted } = dropDriftedPages(pages, translations);
+  if (drifted.length) {
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: clause moved across ${drifted.map(d => `${d.prev}→${d.next}`).join(', ')} — re-translating those pages single-page`);
   }
 
   return {
