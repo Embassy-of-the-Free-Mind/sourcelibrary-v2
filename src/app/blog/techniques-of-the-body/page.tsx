@@ -13,7 +13,7 @@ const HERO = 'https://sourcelibrary.org/blog/techniques-of-the-body/hero-khrul-k
 const HERO_ALT =
   'Two leaves of a Tibetan manuscript of the Nyang tradition: seven figures drawn in the sequence of the ’khrul ’khor, the “magical movement” exercises.';
 const DESCRIPTION =
-  'Postures, breathing methods and exercises quoted from the books that prescribe them, in Chinese, Sanskrit, Tibetan, Greek, Latin, Hebrew, Arabic and the European vernaculars: seasonal exercises, haṭha yoga, the Pythagorean day, theurgy, penance, prayer, drill, the gymnasium and ritual. Each original beside its translation.';
+  'Postures, breathing methods and exercises quoted from the books that prescribe them, in Chinese, Sanskrit, Tibetan, Greek, Latin, Hebrew, Arabic and the European vernaculars: seasonal exercises, haṭha yoga, breathing methods, the Pythagorean day, theurgy, penance, prayer, drill, the gymnasium and ritual. Each original beside its translation.';
 
 export const metadata: Metadata = {
   title: 'Techniques of the Body - Research Notes - Source Library',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600&display=swap';
+  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Serif+Tibetan:wght@400&family=Noto+Serif+Hebrew:wght@400&display=swap';
 
 export default function TechniquesOfTheBodyPage() {
   return (
