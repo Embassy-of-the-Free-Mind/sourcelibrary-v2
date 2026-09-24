@@ -1,0 +1,33 @@
+{
+ "report": {
+  "S1/S2": {
+   "judged": 47,
+   "expected": 47,
+   "ties": 24,
+   "tie_rate": 0.511,
+   "wins": {
+    "S1": 14,
+    "S2": 9
+   },
+   "decided": 23,
+   "S2_share_of_decided": 0.391,
+   "split_p_two_sided": 0.405,
+   "left_share_of_decided": 0.391
+  },
+  "S1/P": {
+   "judged": 62,
+   "expected": 62,
+   "ties": 29,
+   "tie_rate": 0.468,
+   "wins": {
+    "S1": 14,
+    "P": 19
+   },
+   "decided": 33,
+   "P_share_of_decided": 0.576,
+   "split_p_two_sided": 0.487,
+   "left_share_of_decided": 0.485
+  }
+ },
+ "verdict": "lane holds against production at the seam (production share ≤ 60%), read against the A/A row above"
+}

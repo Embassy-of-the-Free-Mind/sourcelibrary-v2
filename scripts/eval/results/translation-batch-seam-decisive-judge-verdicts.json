@@ -1,0 +1,547 @@
+[
+ {
+  "id": "j001",
+  "verdict": "LEFT",
+  "why": "LEFT reads be betrothed to your heavenly spouse, smoother across the break than RIGHTs wished to espouse to your heavenly bridegroom."
+ },
+ {
+  "id": "j002",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the same verb asked on both sides of the break; LEFT switches from rely on the Greek to asked in Greek, a term mismatch."
+ },
+ {
+  "id": "j003",
+  "verdict": "TIE",
+  "why": "Both sides carry the admonition clause across the break with equally natural grammar."
+ },
+ {
+  "id": "j004",
+  "verdict": "TIE",
+  "why": "Both prayers end and begin cleanly at the break with no continuity issue either way."
+ },
+ {
+  "id": "j005",
+  "verdict": "TIE",
+  "why": "Both split the same word, we are / decided, across the break identically well."
+ },
+ {
+  "id": "j006",
+  "verdict": "RIGHT",
+  "why": "RIGHT reads and you, are in the better course, keeping a clear referent; LEFT reads and it is in a better course, losing the antecedent."
+ },
+ {
+  "id": "j007",
+  "verdict": "RIGHT",
+  "why": "LEFT produces a doubled him him across the break; RIGHT reads come to him, and angers him, a coherent if redundant clause."
+ },
+ {
+  "id": "j008",
+  "verdict": "LEFT",
+  "why": "RIGHT repeats the verb, and lead, also lead an exemplary life, ungrammatically; LEFT reads and lead even an exemplary life, which is clean."
+ },
+ {
+  "id": "j009",
+  "verdict": "RIGHT",
+  "why": "LEFT drops an orphan fragment, away O no, right after the break; RIGHT continues straight into numbered paragraph 164 cleanly."
+ },
+ {
+  "id": "j010",
+  "verdict": "TIE",
+  "why": "Both continue the tithe fraud clause across the break with equivalent clarity."
+ },
+ {
+  "id": "j011",
+  "verdict": "LEFT",
+  "why": "RIGHT shifts pronoun register from you to thee across the break; LEFT keeps you throughout."
+ },
+ {
+  "id": "j012",
+  "verdict": "LEFT",
+  "why": "Both continue the sentence through the running header, but RIGHT carries stray leftover page-number artifacts LEFT does not."
+ },
+ {
+  "id": "j013",
+  "verdict": "LEFT",
+  "why": "LEFT gives one clean capture of Gerberon after the break; RIGHT redundantly mentions moved against Gerberon then seized Gerberon as two separate actions."
+ },
+ {
+  "id": "j014",
+  "verdict": "RIGHT",
+  "why": "RIGHT gives one clean single apprehension of Gerberon after the break; LEFT repeats the action, moved against Gerberon then seized Gerberon."
+ },
+ {
+  "id": "j015",
+  "verdict": "RIGHT",
+  "why": "LEFT's break glues from to with us pastors into ungrammatical from with us pastors, while RIGHT ends a clean sentence before the break and resumes with a parallel clause."
+ },
+ {
+  "id": "j016",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the term stewards consistent across and after the break, whereas LEFT switches from procurators at the break to stewards a paragraph later, breaking terminological continuity."
+ },
+ {
+  "id": "j017",
+  "verdict": "TIE",
+  "why": "Both sides render the same corrupted fragment prevented/protected by protection incoherently at the break, with no clear advantage either way."
+ },
+ {
+  "id": "j018",
+  "verdict": "RIGHT",
+  "why": "RIGHT reconstructs the split word Remember whole across the break, while LEFT drops the initial letter, printing the broken fragment emember."
+ },
+ {
+  "id": "j019",
+  "verdict": "LEFT",
+  "why": "LEFT reads as coherent continuous English across the break, while RIGHT leaves an untranslated Latin fragment -rum glued onto Bishop-, producing a nonsense hybrid word."
+ },
+ {
+  "id": "j020",
+  "verdict": "RIGHT",
+  "why": "RIGHT's continuation did not hesitate to pour out their lives even to the point of death is grammatically clean, whereas LEFT's did not hesitate to pour out and led their souls mixes infinitive and past tense awkwardly."
+ },
+ {
+  "id": "j021",
+  "verdict": "TIE",
+  "why": "Both sides use the same slightly redundant who, when/since nothing unable to obtain anything construction across the break with no meaningful difference."
+ },
+ {
+  "id": "j022",
+  "verdict": "TIE",
+  "why": "Both end a complete sentence cleanly before the break and resume with near-identical wording Sing to our Lady a new song."
+ },
+ {
+  "id": "j023",
+  "verdict": "RIGHT",
+  "why": "RIGHT continues cleanly into numbered item 164, while LEFT inserts a stray, unattached fragment away / Oh no! under a header, dropping the numbering and losing the antecedent."
+ },
+ {
+  "id": "j024",
+  "verdict": "RIGHT",
+  "why": "RIGHT's and lead even an exemplary life yourself is grammatical, while LEFT's and lead also lead an exemplary life duplicates lead into an ungrammatical repetition."
+ },
+ {
+  "id": "j025",
+  "verdict": "TIE",
+  "why": "Both sides reproduce the same duplicated to whom ... to whom (apparent catchword artifact) identically across the break."
+ },
+ {
+  "id": "j026",
+  "verdict": "TIE",
+  "why": "Both sides show the identical is is duplication across the break, likely a shared catchword artifact, with no distinguishing quality."
+ },
+ {
+  "id": "j027",
+  "verdict": "TIE",
+  "why": "Both sides use the same elliptical, subject-less was read with patience construction immediately after the break."
+ },
+ {
+  "id": "j028",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the full continuation sentence about the Epistle to Titus and Timothy before resuming numbered items, while RIGHT drops that sentence entirely, jumping straight from item 49 to item 50."
+ },
+ {
+  "id": "j029",
+  "verdict": "LEFT",
+  "why": "LEFT carries the sentence about reading Titus and Timothy on how a bishop ought to be across the break, while RIGHT drops that continuation entirely and jumps straight to paragraph 50."
+ },
+ {
+  "id": "j030",
+  "verdict": "TIE",
+  "why": "Both sides restart the numbered verse sequence at the break with equally fluent, consistent phrasing and no name or term drift."
+ },
+ {
+  "id": "j031",
+  "verdict": "RIGHT",
+  "why": "LEFT leaves a hanging, unresolved word fragment at the break, while RIGHT resolves cleanly into a complete phrase about the Chamberlain with no orphaned fragment."
+ },
+ {
+  "id": "j032",
+  "verdict": "RIGHT",
+  "why": "The same LEFT text again ends on an unresolved fragment across the break, while RIGHT continues smoothly with a complete clause about the Chamberlain."
+ },
+ {
+  "id": "j033",
+  "verdict": "TIE",
+  "why": "Both sides repeat the relative pronoun after the marginal citations and complete the clause about delegating the preaching ministry equally smoothly."
+ },
+ {
+  "id": "j034",
+  "verdict": "TIE",
+  "why": "Both sides carry the same slightly awkward causal construction across the break with equal coherence and no name or term drift."
+ },
+ {
+  "id": "j035",
+  "verdict": "TIE",
+  "why": "Both cleanly close one Marian antiphon and open the next with near-identical phrasing and no dropped or duplicated content."
+ },
+ {
+  "id": "j036",
+  "verdict": "TIE",
+  "why": "Both continue the You are litany across the break with only a minor preposition difference and no substantive divergence."
+ },
+ {
+  "id": "j037",
+  "verdict": "TIE",
+  "why": "Both end the paragraph before the heading and resume with the numbered paragraph identically in structure and sense."
+ },
+ {
+  "id": "j038",
+  "verdict": "TIE",
+  "why": "Both complete we are decided across the break; RIGHT interposes a running header mid-clause but the sense lands the same as LEFTs unheaded version."
+ },
+ {
+  "id": "j039",
+  "verdict": "TIE",
+  "why": "Both complete the place of propitiation and the dwelling place of the holy ones or saints of God with equally valid synonym choices."
+ },
+ {
+  "id": "j040",
+  "verdict": "LEFT",
+  "why": "RIGHT leaves a hyphenated word unresolved across the break plus stray page-number artifacts, while LEFT completes the clause cleanly before continuing the sentence."
+ },
+ {
+  "id": "j041",
+  "verdict": "RIGHT",
+  "why": "RIGHT fully translates the section heading to English and keeps one consistent register, whereas LEFT keeps the untranslated Latin heading and a bare ampersand at the break."
+ },
+ {
+  "id": "j042",
+  "verdict": "TIE",
+  "why": "Both sides produce an equally garbled clause at the break, reflecting the same underlying awkward split rather than one translator handling it better."
+ },
+ {
+  "id": "j043",
+  "verdict": "LEFT",
+  "why": "LEFT keeps terror of demons for the proud coherent; RIGHT breaks the preposition logic with from the proud."
+ },
+ {
+  "id": "j044",
+  "verdict": "TIE",
+  "why": "Both sides carry the elliptical shed their blood, they did not hesitate to pour out construction with equal coherence."
+ },
+ {
+  "id": "j045",
+  "verdict": "LEFT",
+  "why": "LEFT keeps He as subject across the break; RIGHT drops He mid-sentence and switches subject to we, breaking continuity."
+ },
+ {
+  "id": "j046",
+  "verdict": "TIE",
+  "why": "Both continue the relative clause about the bath of baptism into you wished to be betrothed with equal fluency."
+ },
+ {
+  "id": "j047",
+  "verdict": "TIE",
+  "why": "Both mark the same prayer boundary at My days with equivalent register and no name or term slippage."
+ },
+ {
+  "id": "j048",
+  "verdict": "TIE",
+  "why": "Both continue the same Blessed be, us Lady, and comfort us construction identically across the break."
+ },
+ {
+  "id": "j049",
+  "verdict": "LEFT",
+  "why": "LEFT correctly continues the numbering thirteenth to fourteenth principal; RIGHT jumps from thirteenth to first principal, a numbering discontinuity."
+ },
+ {
+  "id": "j050",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the bishop name consistent as Soanen on both sides of the break; LEFT switches from Suanenius before to Soanen after."
+ },
+ {
+  "id": "j051",
+  "verdict": "TIE",
+  "why": "Both sides carry the identical bolded phrase are prevented by protection across the break with matching wording."
+ },
+ {
+  "id": "j052",
+  "verdict": "TIE",
+  "why": "Both continue the psalm stanza into let the humble penitents breathe in indulgence with equal fluency and matching verse numbering."
+ },
+ {
+  "id": "j053",
+  "verdict": "LEFT",
+  "why": "LEFT completes is the place into place of propitiation and a dwelling place of the holy ones of God, fuller than RIGHT truncated version."
+ },
+ {
+  "id": "j054",
+  "verdict": "LEFT",
+  "why": "LEFT continuation into it is an ancient proverb follows logically; RIGHT inserts that you are troubled which does not connect to the proverb that follows."
+ },
+ {
+  "id": "j055",
+  "verdict": "LEFT",
+  "why": "LEFT supplies the relative pronoun who making the clause grammatical across the break; RIGHT version lacks a clear subject."
+ },
+ {
+  "id": "j056",
+  "verdict": "TIE",
+  "why": "Both sides carry the same because and sometimes it is possible construction across the break with equivalent coherence."
+ },
+ {
+  "id": "j057",
+  "verdict": "TIE",
+  "why": "Both sides continue the Paul/Jews sentence with the same minor grammatical awkwardness at the break, neither clearly cleaner."
+ },
+ {
+  "id": "j058",
+  "verdict": "RIGHT",
+  "why": "RIGHTs phrase parses across the break, while LEFT has a subject mismatch (they/it) right at the seam."
+ },
+ {
+  "id": "j059",
+  "verdict": "TIE",
+  "why": "Both open the Eucharistic prayer well after the break with internally consistent terminology on their own side."
+ },
+ {
+  "id": "j060",
+  "verdict": "RIGHT",
+  "why": "LEFTs split produces the ungrammatical phrase I did not justly given across the break; RIGHT completes the sentence before the break, avoiding the grammar break."
+ },
+ {
+  "id": "j061",
+  "verdict": "RIGHT",
+  "why": "RIGHT bridges the break with a bracketed write something...you should write to me, a coherent carried-over thought; LEFTs phrasing is vaguer."
+ },
+ {
+  "id": "j062",
+  "verdict": "RIGHT",
+  "why": "LEFT inserts a visible editorial artifact continues from previous page right at the break; RIGHT has no such artifact."
+ },
+ {
+  "id": "j063",
+  "verdict": "LEFT",
+  "why": "LEFT continues He completely equipped as one clause about the same subject; RIGHT inserts an ellipsis suggesting dropped text at the seam."
+ },
+ {
+  "id": "j064",
+  "verdict": "LEFT",
+  "why": "LEFTs lift up your gates to the triumphant one, say hail reads as one coherent imperative across the break; RIGHTs two clauses lack a connective."
+ },
+ {
+  "id": "j065",
+  "verdict": "TIE",
+  "why": "Both sides have the same abrupt paragraph shift at the break, equally awkward in either translation."
+ },
+ {
+  "id": "j066",
+  "verdict": "RIGHT",
+  "why": "RIGHTs bracketed from evil completes the Lords Prayer naturally and transitions more clearly than LEFTs vaguer From this, I have said."
+ },
+ {
+  "id": "j067",
+  "verdict": "TIE",
+  "why": "Both sides share the identical crucified in the flesh rendering and continue the birth-narrative list with equal smoothness."
+ },
+ {
+  "id": "j068",
+  "verdict": "TIE",
+  "why": "Both versions carry the conditional clause across the break equally well."
+ },
+ {
+  "id": "j069",
+  "verdict": "TIE",
+  "why": "Both sides share the same structurally odd juxtaposition at the break, neither resolving it better."
+ },
+ {
+  "id": "j070",
+  "verdict": "TIE",
+  "why": "Both continue the hymns imperative sequence acceptably across the break; differences are minor punctuation only."
+ },
+ {
+  "id": "j071",
+  "verdict": "RIGHT",
+  "why": "RIGHT turned to the Greek / inquiries from the Greeks reads as one continuous clause about Greek testing, while LEFT rely on the Greek / asked in Greek juxtaposes Greek twice with no clear subject."
+ },
+ {
+  "id": "j072",
+  "verdict": "TIE",
+  "why": "Both sides break cleanly at a full stop before the numbered paragraph 108, Mr. Primarius, I could say much to you here, near-identical wording, no continuity advantage either way."
+ },
+ {
+  "id": "j073",
+  "verdict": "TIE",
+  "why": "Both continue faith is the only/sole mouth into the instrument for/of eating the flesh and blood of Christ equally smoothly across the intervening header."
+ },
+ {
+  "id": "j074",
+  "verdict": "TIE",
+  "why": "Both split which is above / the world is rejoiced/glad to be restored identically; equal fluency and equal residual ambiguity."
+ },
+ {
+  "id": "j075",
+  "verdict": "TIE",
+  "why": "Both share the same catchword artifact Anony- then a fresh sentence An anonymous continuator, and both carry names/dates consistently across it."
+ },
+ {
+  "id": "j076",
+  "verdict": "TIE",
+  "why": "Clean paragraph break in both, end of one Psalm-like stanza and start of the next, with no sentence carried over; equally competent on either side."
+ },
+ {
+  "id": "j077",
+  "verdict": "RIGHT",
+  "why": "RIGHT keeps the book title in English on both sides of the break, forming one coherent sentence, whereas LEFT leaves the title in untranslated Latin then switches to English right after the break, breaking the illusion of one translator."
+ },
+ {
+  "id": "j078",
+  "verdict": "TIE",
+  "why": "Both render If this is true, much / I think these/those things pertain to our citizens with the same slightly awkward but equivalent construction."
+ },
+ {
+  "id": "j079",
+  "verdict": "RIGHT",
+  "why": "RIGHT Others most especially is a self-contained adverbial phrase continuing tolerably into they admire this deed of mine, while LEFT dangling The rest most followed by they admire this act is more grammatically broken."
+ },
+ {
+  "id": "j080",
+  "verdict": "RIGHT",
+  "why": "Right after the break both say if anyone has assisted, but RIGHT continues with singular-agreeing he cannot be free from the obligation while LEFT continues with mismatched plural they cannot be free."
+ },
+ {
+  "id": "j081",
+  "verdict": "TIE",
+  "why": "Both share the same catchword Re and continue equally well into The remaining interrogatories, the Visitors shall/may supply at their discretion."
+ },
+ {
+  "id": "j082",
+  "verdict": "TIE",
+  "why": "Both share the identical source-numbering jump from the thirteenth to the first principal contains two, both reserved to/for the Pope, with equal fluency and no name/term drift."
+ },
+ {
+  "id": "j083",
+  "verdict": "TIE",
+  "why": "Both continue the list of participial clauses about Christ life, suckled into circumcised/crucified in the flesh, manifested and adored by them, sharing the same translation choice and equal grammatical smoothness."
+ },
+ {
+  "id": "j084",
+  "verdict": "RIGHT",
+  "why": "RIGHT ends the clause before the break with a comma so or receives the omnipotence of God reads as a continuing alternative clause, while LEFT ends with a period making the following or fragment a non sequitur."
+ },
+ {
+  "id": "j085",
+  "verdict": "LEFT",
+  "why": "LEFT carries the unfinished noun phrase 'Augsburg [Confession]' into 'confession, among which he communed...' while RIGHT restarts the clause with an inserted bracket '[He adhered to]', breaking the flow across the seam."
+ },
+ {
+  "id": "j086",
+  "verdict": "TIE",
+  "why": "Both sides handle the 'Anony-' catchword and resume the sentence about the anonymous continuator with equivalent fidelity; neither is clearly smoother."
+ },
+ {
+  "id": "j087",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the broken clause 'I did not justly' / 'given.' split across the page exactly as the source syntax demands and stays in consistent English register, whereas RIGHT finishes the sentence before the break and abruptly switches to untranslated Latin terms right after the seam."
+ },
+ {
+  "id": "j088",
+  "verdict": "TIE",
+  "why": "Both translations produce an equally garbled clause across the break; neither resolves more cleanly than the other."
+ },
+ {
+  "id": "j089",
+  "verdict": "TIE",
+  "why": "This is a natural stanza boundary in both (litany to psalm), and both continue with matching 'have mercy' phrasing and consistent register."
+ },
+ {
+  "id": "j090",
+  "verdict": "RIGHT",
+  "why": "RIGHT's Habakkuk quotation reads as one fluent clause connecting thematically to the following Genesis gloss, and RIGHT preserves the numbered-rule convention across the break while LEFT drops the rule number entirely."
+ },
+ {
+  "id": "j091",
+  "verdict": "RIGHT",
+  "why": "RIGHT completes the dangling clause 'yet the flesh itself... does not change or lose that nature' after the break, while LEFT abandons that sentence and jumps straight to an unrelated heading."
+ },
+ {
+  "id": "j092",
+  "verdict": "TIE",
+  "why": "Both continue the 'mysteriorum Fidei'/'mysteries of the faith' + 'of God' construction identically and keep pronoun references consistent after the break."
+ },
+ {
+  "id": "j093",
+  "verdict": "TIE",
+  "why": "Both sides use the identical carried phrase 'watched over him' across the break; the post-break stylistic choice doesn't favor either clearly."
+ },
+ {
+  "id": "j094",
+  "verdict": "TIE",
+  "why": "This is a natural list-item boundary (marked by page number '41') in both, resuming the 'Whether he...' format identically."
+ },
+ {
+  "id": "j095",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the catchword 'Re' that correctly anticipates 'remaining' ('Reliqua'), landing exactly on 'The remaining interrogatories...' after the break, while RIGHT shows no such catchword."
+ },
+ {
+  "id": "j096",
+  "verdict": "RIGHT",
+  "why": "RIGHT's catchword 'There' literally completes into 'Therefore I say' across the break, mirroring the source page-break device, whereas LEFT leaves an untranslated German catchword 'Dare' unconnected to the English text."
+ },
+ {
+  "id": "j097",
+  "verdict": "RIGHT",
+  "why": "Same as j096: RIGHT's 'There' catchword resolves into 'Therefore' right after the break for seamless continuation, while LEFT's German 'Dare' catchword is orphaned."
+ },
+ {
+  "id": "j098",
+  "verdict": "TIE",
+  "why": "This is a natural hymn-stanza boundary in both versions, each resuming the Marian prayer with equivalent, consistent phrasing."
+ },
+ {
+  "id": "j099",
+  "verdict": "RIGHT",
+  "why": "RIGHT completes the dangling clause about the flesh naturally on the next page; LEFT abandons the sentence for an unrelated EPISTLE heading."
+ },
+ {
+  "id": "j100",
+  "verdict": "TIE",
+  "why": "Both carry the same prayer content across the break with matched register and no dropped names."
+ },
+ {
+  "id": "j101",
+  "verdict": "TIE",
+  "why": "Both render the same awkward carry-over with comparable fidelity."
+ },
+ {
+  "id": "j102",
+  "verdict": "RIGHT",
+  "why": "RIGHT ends the pre-break line with a complete unit so the next page starts cleanly; LEFT leaves an orphaned word that does not connect grammatically."
+ },
+ {
+  "id": "j103",
+  "verdict": "LEFT",
+  "why": "LEFT keeps the clean numbered list format across the break; RIGHT injects a garbled index keyword list at the seam."
+ },
+ {
+  "id": "j104",
+  "verdict": "LEFT",
+  "why": "LEFT opening after the break is grammatically coherent; RIGHT confuses the subject."
+ },
+ {
+  "id": "j105",
+  "verdict": "LEFT",
+  "why": "LEFT preserves the hyphenated word split across the page break; RIGHT drops the hyphen continuation."
+ },
+ {
+  "id": "j106",
+  "verdict": "LEFT",
+  "why": "LEFT post-break text is a complete sentence; RIGHT drops the verb, reading as a fragment."
+ },
+ {
+  "id": "j107",
+  "verdict": "LEFT",
+  "why": "LEFT completes the phrase once cleanly across the break; RIGHT redundantly brackets the word and repeats it again after."
+ },
+ {
+  "id": "j108",
+  "verdict": "TIE",
+  "why": "The text spanning the break is identical in both versions."
+ },
+ {
+  "id": "j109",
+  "verdict": "TIE",
+  "why": "Both insert comparable page furniture with similarly rough grammar carrying the sentence across the break."
+ }
+]
