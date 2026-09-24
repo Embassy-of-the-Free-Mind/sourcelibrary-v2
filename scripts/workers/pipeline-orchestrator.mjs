@@ -2710,9 +2710,14 @@ async function run() {
   // Done here, after all health-grade and limit_overrides adjustments.
   if (SCOPED_MODE) {
     const SCOPE_LIMIT = 100000;
+    // IA_REFERENCE_LIMIT belongs here with the rest. Each phase applies its `.limit()` BEFORE
+    // `applyBookOverride` narrows the result to the allowlist, so a limit left at its normal value
+    // takes the first N books corpus-wide and then filters them away — the phase reports "0 of 0
+    // candidates" while thousands of scoped books wait. Measured 2026-09-24: with a $120 envelope
+    // open over 1,043 #4966 books, Phase 1.45 selected ZERO, because its 20 came from elsewhere.
     ENROLL_LIMIT = ARCHIVE_LIMIT = OCR_SUBMIT_LIMIT = METADATA_ENRICH_LIMIT =
       TRANSLATE_SUBMIT_LIMIT = ENRICH_LIMIT = CHAPTER_LIMIT = IMAGE_SUBMIT_LIMIT =
-      FINALIZE_LIMIT = TRANSLITERATE_LIMIT = PREVIEW_LIMIT = SCOPE_LIMIT;
+      FINALIZE_LIMIT = TRANSLITERATE_LIMIT = PREVIEW_LIMIT = IA_REFERENCE_LIMIT = SCOPE_LIMIT;
     console.log(`[pipeline-orchestrator] Scoped mode: per-phase candidate limits raised to ${SCOPE_LIMIT} (work still confined to ${_scopeIds.size} allowlisted book(s)).`);
   }
 
