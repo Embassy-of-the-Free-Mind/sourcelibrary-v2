@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab5b5f1a22ab19a974bf_00508",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Are the phenomena that categorize individuals—such as the Stream-Enterer, the Once-Returner, the Non-Returner, the Arhat, the Solitary Buddha, and the Tathagata, the Arhat, the Perfectly Awakened Buddha—also emanations? The Blessed One replied, \"Subhuti, all phenomena are emanations. Some are emanations of the Hearers. Some are emanations of the Solitary Buddhas. Some are emanations of the Bodhisattvas. Some are emanations of the Tathagatas. Some are emanations of the defilements. Some are emanations of karma. Subhuti, by this reasoning, all phenomena are emanations.\"\n\nHe asked, \"Blessed One, are all those phenomena that are called 'abandoned'—such as the fruit of the Stream-Enterer, the fruit of the Once-Returner, the fruit of the Non-Returner, the state of the Non-Returner, the stage of the Solitary Buddha, the stage of the Buddha, or the abandonment of all connections to latent tendencies—also emanations?\"\n\nThe Blessed One replied, \"Subhuti, whatever phenomena are produced or obstructed, all of them are emanations.\"\n\nHe asked, \"Blessed One, what is the phenomenon that is not an emanation?\"\n\nThe Blessed One replied, \"That which has no arising and no cessation is not an emanation.\"\n\nHe asked, \"What is that?\"\n\nThe Blessed One replied, \"It is the unequaled Nirvana. That phenomenon is not an emanation.\"\n\n<summary>This passage from the Thadrak Kanjur explores the nature of reality, defining all conditioned phenomena—including spiritual attainments and karmic states—as emanations, while identifying Nirvana as the only unconditioned, non-emanated reality.</summary>\n<keywords>Emanation, Nirvana, Stream-Enterer, Arhat, Tathagata, Subhuti, Conditioned Phenomena</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2637,
+ "outputTokens": 411,
+ "thinkingTokens": 0,
+ "ms": 2072,
+ "cost_usd": 0.00127575,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1207
+}

@@ -1,0 +1,29 @@
+{
+ "id": "69e7aae45f1a22ab19a8f1d1_00518",
+ "src_chars": 915,
+ "sentences": 17,
+ "chunks": [
+  {
+   "src": "ཆོས་ནུབ་མཐའ་དང་ངན་སོང་འཕེལ་བ་ན།🔽མཁས་པས་ཤིན་ཏུ་ཡིད་བྱུང་བྱས་ནས་ཀྱང་།🔽བག་ཡོད་རི་དགས་བཞིན་དུ་སྐྲག་པར་འགྱུར།🔽མཆོག་ཏུ་དགའ་བའི་རྒྱལ་པོ།🔽བྱང་ཆུབ་སེམས་དཔའ་གང་ཞིག་གིས་བསྐལ་པ་སྟོང་དུ་ཐབས་མཁས་པ་མ་གཏོགས་པར།🔽ཕ་རོལ་ཏུ་ཕྱིན་པ་དྲུག་དག་ལ་སྤྱད་པ་བས་ནི།🔽ཏིང་ངེ་འཛིན་འདི་ཐོས་ནས་རྗེས་སུ་ཡི་རང་བར་བྱས་པའི་བསོད་ནམས་ཀྱི་ཕུང་པོ་འདི་ལ།🔽བསོད་ནམས་ཀྱི་ཕུང་པོ་སྔ་མ་དེས་བརྒྱའི་ཆར་ཡང་ཉེ་བར་མི་འགྲོ་བ་ནས།🔽དཔེའི་བར་དུ་ཡང་ཉེ་བར་མི་འགྲོའོ།🔽ཆོས་ཀྱི་རྣམ་གྲངས་འདི་བསྟན་པ་ན།",
+   "out": " When the Dharma is on the wane and the lower realms are increasing,🔽The wise will be deeply saddened🔽And will be frightened like deer.🔽King of Supreme Joy🔽If a bodhisattva practices the six perfections for a thousand eons,🔽apart from skillful means,🔽the merit of rejoicing in hearing this samādhi🔽does not come close to a hundredth of the merit of the previous merit,🔽and it does not come close to a fraction.🔽When this Dharma teaching was given,",
+   "finish": "stop",
+   "prompt_tokens": 300,
+   "completion_tokens": 104,
+   "ms": 8498
+  },
+  {
+   "src": "བྱང་ཆུབ་སེམས་དཔའ་གྲངས་མེད་པ་དག་གིས་བླ་ན་མེད་པ་ཡང་དག་པར་རྫོགས་པའི་བྱང་ཆུབ་ཏུ་སེམས་བསྐྱེད་དེ།🔽དེ་དག་ཐམས་ཅད་བླ་ན་མེད་པ་ཡང་དག་པ་རྫོགས་པའི་བྱང་ཆུབ་ལས་ཕྱིར་མི་ལྡོག་པར་གྱུར་ཏོ།🔽ལྷ་དང་མིའི་སྐྱེ་དགུའི་ཚོགས་བརྒྱད་འབུམ་སྙེད་ཀྱང་།🔽རྡུལ་མེད་ཅིང་དྲི་མ་དང་བྲལ་ལ་ཆོས་རྣམས་ལ་ཆོས་ཀྱི་མིག་རྣམ་པར་དག་གོ།🔽ལྷ་དེ་དག་ཆོས་ཀྱི་མིག་རྣམ་པར་དག །🔽དག་པས་བཅོམ་ལྡན་འདས་ཀྱི་ཆོས་ལ་མངོན་པར་དགའ་བའི་ཕྱིར་སྟོང་གསུམ་གྱི་སྟོང་ཆེན་པོའི་འཇིག་རྟེན་གྱི་ཁམས་དག་མེ་ཏོག་གིས་ཆལ་པར་བཀྲམ་པར་གྱུར་ཏོ།🔽སྟོང་གསུམ་གྱི་སྟོང་ཆེན་པོ་",
+   "out": " Countless bodhisattvas gave rise to the mind set on unsurpassed and perfect awakening.🔽All of them became irreversible from unsurpassed and perfect awakening.🔽Eight hundred thousand beings of the gods and humans🔽became free from dust and defilements, and their Dharma eyes became perfectly pure with regard to phenomena.🔽Those gods, with their perfectly pure Dharma eyes,🔽were so delighted by the Blessed One’s Dharma that they scattered flowers all over the trichiliocosm.🔽The trichiliocosm",
+   "finish": "stop",
+   "prompt_tokens": 324,
+   "completion_tokens": 100,
+   "ms": 8189
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 16688,
+ "text": "When the Dharma is on the wane and the lower realms are increasing,\nThe wise will be deeply saddened\nAnd will be frightened like deer.\nKing of Supreme Joy\nIf a bodhisattva practices the six perfections for a thousand eons,\napart from skillful means,\nthe merit of rejoicing in hearing this samādhi\ndoes not come close to a hundredth of the merit of the previous merit,\nand it does not come close to a fraction.\nWhen this Dharma teaching was given,\nCountless bodhisattvas gave rise to the mind set on unsurpassed and perfect awakening.\nAll of them became irreversible from unsurpassed and perfect awakening.\nEight hundred thousand beings of the gods and humans\nbecame free from dust and defilements, and their Dharma eyes became perfectly pure with regard to phenomena.\nThose gods, with their perfectly pure Dharma eyes,\nwere so delighted by the Blessed One’s Dharma that they scattered flowers all over the trichiliocosm.\nThe trichiliocosm",
+ "prompt_tokens": 624,
+ "completion_tokens": 204
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab535f1a22ab19a96a78_00266",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>completely pure. Because the six <term>ayatana</term> <gloss>sense spheres</gloss> are completely pure, the perceiver is completely pure. In that way, because the perceiver is completely pure and the six sense spheres are completely \n\n<summary>This page discusses the philosophical concept of the purity of perception and the sense spheres within the context of Buddhist epistemology. It establishes a logical link between the purification of the internal sense bases and the resulting purity of the perceiving subject.</summary>\n<keywords>purity, sense spheres, perceiver, ayatana, Buddhist philosophy, epistemology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1871,
+ "outputTokens": 135,
+ "thinkingTokens": 0,
+ "ms": 1594,
+ "cost_usd": 0.0013405000000000001,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 127
+}

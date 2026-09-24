@@ -1,0 +1,18 @@
+{
+ "id": "69e7abce5f1a22ab19a9e719_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "In the Tibetan language: A Brief Exposition of the Empowerment. Homage to the glorious <term>Vajrasattva</term> <gloss>the Diamond Being</gloss>.\n\n<term>Suchandra</term> <gloss>the King of Shambhala</gloss> requested:\n\nO Teacher, regarding the seven types of empowerment, and the three types <unclear>...</unclear>\n\n<summary>This page contains the opening lines of the Brief Exposition of the Empowerment, beginning with a salutation to Vajrasattva and a request from King Suchandra to the Buddha regarding the categories of tantric initiation.</summary>\n<keywords>Vajrasattva, Suchandra, empowerment, initiation, Kalachakra, Tibetan Buddhism, tantra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1895,
+ "outputTokens": 157,
+ "thinkingTokens": 0,
+ "ms": 1457,
+ "cost_usd": 0.0014185,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 142
+}

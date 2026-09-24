@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab985f1a22ab19a9a963_00510",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nJust as they awaken to buddhahood, all of them are indeed present here. I have expressed as much as can be said in words; therefore, you should accomplish these things here. If you do not take joy in the teachings of the Omniscient One, you will certainly come to regret it in the future. All the perfections <note>original: \"paramitas\"</note> that I have taught, and those paths of application that lead to the ocean of primordial wisdom, cannot be understood by those who remain attached to the conduct of an immature person <note>original: \"balya\", referring to those spiritually unrefined</note> within this physical support. When times are degenerate, when sentient beings are unruly, when the teachings are on the verge of disappearing, and when the lower realms are increasing, the wise should become deeply disillusioned and, like a cautious deer, remain vigilant and wary.\n\nO King of Supreme Joy, if a bodhisattva were to practice the six perfections for a thousand eons without skillful means, the heap of merit gained from that would not come close to even a hundredth part of the heap of merit gained by someone who, having heard this meditative concentration <note>original: \"samadhi\"</note>, rejoices in it. Indeed, the former merit would not even serve as a remote comparison. When this Dharma discourse was taught, immeasurable bodhisattvas generated the mind directed toward unsurpassed, true, and complete enlightenment. All of them became irreversible from unsurpassed, true, and complete enlightenment. Eight hundred thousand beings among the gods and humans also became free of dust and stainless.\n\n<summary>The text emphasizes the immense merit of rejoicing in this specific meditative teaching compared to eons of ordinary practice. It concludes with a large number of beings attaining irreversible enlightenment and spiritual purity.</summary>\n<keywords>merit, skillful means, six perfections, samadhi, irreversible enlightenment, degenerate times, bodhisattva</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2512,
+ "outputTokens": 410,
+ "thinkingTokens": 0,
+ "ms": 9376,
+ "cost_usd": 0.002486,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1061
+}

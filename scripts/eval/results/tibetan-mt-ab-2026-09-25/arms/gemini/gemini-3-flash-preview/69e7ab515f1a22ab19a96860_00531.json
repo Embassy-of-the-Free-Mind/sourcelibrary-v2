@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab515f1a22ab19a96860_00531",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>The purity of the knower is the purity of body-consciousness. That which is the purity of body-consciousness is the purity of the knower. Thus, the purity of the knower and the purity of body-consciousness are not two; they cannot be divided, they are not separate, and they are not distinct.\n\nThe purity of the seer is the purity of body-consciousness. That which is the purity of body-consciousness is the purity of the seer. Thus, the purity of the seer and the purity of body-consciousness are not two; they cannot be divided, they are not separate, and they are not distinct.\n\n<summary>This page discusses the non-dual nature of the knower, the seer, and body-consciousness, emphasizing that their essential purity is identical and inseparable. It reflects the Prajnaparamita philosophy of the unity of subject and object.</summary>\n<keywords>purity, body-consciousness, non-duality, knower, seer, Buddhist philosophy, Prajnaparamita</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2163,
+ "outputTokens": 226,
+ "thinkingTokens": 0,
+ "ms": 1790,
+ "cost_usd": 0.0017595,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 559
+}

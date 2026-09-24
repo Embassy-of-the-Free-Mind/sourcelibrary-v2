@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab4f5f1a22ab19a96632_00556",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "There is the emptiness of the endless. There is the emptiness of the non-abandoned. There is the emptiness of intrinsic nature. There is the emptiness of all phenomena. There is the emptiness of self-characteristic. There is the emptiness of non-apprehension. There is the emptiness of non-existence. There is the emptiness of essence. There is the emptiness of the essence of non-existence. There are the foundations of mindfulness. There are the perfect exertions. There are the bases of miraculous power. There are the faculties. There are the powers. There are the limbs of enlightenment. There is the noble eightfold path. There are the noble truths. There are the meditative concentrations. There are the immeasurables. There are the formless absorptions. There are the eight liberations. There are the nine successive meditative absorptions. There are the doors of liberation: emptiness, signlessness, and wishlessness. There are the clairvoyances. There are the meditative concentrations. There are the doors of retention. There are the Thus-Gone\n\n<summary>This passage lists various categories of Buddhist doctrine and meditative attainments, framing them within the context of emptiness and the path to enlightenment.</summary>\n<keywords>emptiness, sunyata, foundations of mindfulness, noble eightfold path, meditative absorption, liberation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2392,
+ "outputTokens": 273,
+ "thinkingTokens": 0,
+ "ms": 1402,
+ "cost_usd": 0.0010075000000000001,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 875
+}

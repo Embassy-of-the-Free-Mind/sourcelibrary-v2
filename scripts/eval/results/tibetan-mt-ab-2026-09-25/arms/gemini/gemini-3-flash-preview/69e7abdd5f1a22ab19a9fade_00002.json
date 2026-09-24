@@ -1,0 +1,18 @@
+{
+ "id": "69e7abdd5f1a22ab19a9fade_00002",
+ "arm": "gemini-3-flash-preview",
+ "text": "In the language of India: <note>original: \"rgya gar skad du\"</note>\n\nHomage! You are the Virtuous Mother of all the Victors <note>Buddhas</note> of the past, the future, and the present. You are the Goddess, the Daughter of the Victors. You possess the nature of having no inherent nature. I shall speak the name of that Virtuous One who has become the Mother of the Buddhas. Let those who desire prosperity listen!\n\nThe Perfection of Wisdom; Omniscience; Knowledge of all aspects of the path <unclear>...</unclear>\n\n<summary>This page contains the opening verses of a Buddhist tantric or philosophical text, offering praise to the Mother of all Buddhas, identified as the personification of the Perfection of Wisdom.</summary>\n<keywords>Perfection of Wisdom, Prajnaparamita, Mother of Buddhas, Omniscience, Indian language, homage, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2029,
+ "outputTokens": 205,
+ "thinkingTokens": 0,
+ "ms": 1804,
+ "cost_usd": 0.0016294999999999999,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 347
+}

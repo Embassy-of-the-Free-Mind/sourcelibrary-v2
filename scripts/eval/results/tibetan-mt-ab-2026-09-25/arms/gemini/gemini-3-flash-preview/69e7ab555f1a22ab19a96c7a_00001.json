@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab555f1a22ab19a96c7a_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "The purity of the Noble Eightfold Path <note>Sanskrit: aryastangamarga</note>, the purity of form <note>Sanskrit: rupa</note>, and the purity of the knowledge of all aspects <note>Sanskrit: sarvakarajñata</note> are non-dual. They cannot be divided into two, are not distinct, and are not separate. Through the purity of the Noble Eightfold Path comes the purity of sensation <note>Sanskrit: vedana</note>. Through the purity of sensation comes the purity of the knowledge of all aspects. In this way, the purity of the Noble Eightfold Path and the purity of sensation are <note>the text continues to establish the non-dual relationship between these factors of enlightenment and the aggregates</note>\n\n<summary>This page discusses the ontological unity and purity of the Noble Eightfold Path, physical form, and the omniscience of a Buddha. It emphasizes the non-dual nature of these qualities within the framework of Prajnaparamita philosophy.</summary>\n<keywords>Noble Eightfold Path, non-duality, purity, sensation, omniscience, Buddhist philosophy, Prajnaparamita</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2034,
+ "outputTokens": 249,
+ "thinkingTokens": 0,
+ "ms": 2319,
+ "cost_usd": 0.001764,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 366
+}

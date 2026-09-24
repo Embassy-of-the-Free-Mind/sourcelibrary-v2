@@ -1,0 +1,18 @@
+{
+ "id": "69e7abdd5f1a22ab19a9fade_00002",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "In the language of India:\n\nHomage! To all the victorious ones of the past, future, and present, you are the mother, the virtuous one. You are the goddess, the child of the victorious ones, possessing a nature that is the nature of non-existence. I shall speak the name of her who has become the mother of the Buddhas, the virtuous one. Those who desire to attain it, listen!\n\nThe perfection of wisdom, omniscience, and the knowledge of all aspects of the path.\n\n<summary>This text provides an introductory homage to the Perfection of Wisdom, identifying it as the mother of all Buddhas and the source of omniscience.</summary>\n<keywords>Perfection of Wisdom, Prajnaparamita, Homage, Omniscience, Buddhas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2029,
+ "outputTokens": 167,
+ "thinkingTokens": 0,
+ "ms": 1449,
+ "cost_usd": 0.00075775,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 347
+}

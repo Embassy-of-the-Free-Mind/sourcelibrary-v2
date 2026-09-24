@@ -1,0 +1,18 @@
+{
+ "id": "69e7abe75f1a22ab19aa00d4_00566",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nA Sanskrit manuscript was obtained from the hand of the great <term>Chakravartin</term> <gloss>Universal Monarch</gloss> Chodrak Palzangpo. Based on his command to restore missing sections and translate the conclusion, the following parts were included:\n\nIn the tenth <term>bampo</term> <gloss>section or volume</gloss>, from the line stating, \"It accomplishes all the purposes of activities,\" up to the line, \"Perform the supreme recitation of the secret mantra.\"\n\nIn the twelfth <term>bampo</term>, from the line, \"Blessed One, however, for the sake of a special purpose,\" up to the line, \"The body of the <term>vidyadhara</term> <gloss>knowledge-holder</gloss> shall become radiant.\"\n\nIn the thirteenth <term>bampo</term>, from the line, \"Merely hearing this ritual of the <term>mandala</term> <gloss>sacred circle</gloss>,\" up to the line, \"One should carve it to the height of a man.\"\n\nIn the fourteenth <term>bampo</term>, from the line, \"Having fully empowered the lotus, the water, and the white mustard seeds with recitations,\" up to the line, \"One should wash with a white cloth seven times.\"\n\nAt the junction of the fourteenth and fifteenth <term>bampo</term>, from the line, \"Eight silver incense burners,\" up to the line, \"In all other various places, one performs all the activities as they are intended in the mind.\"\n\n<summary>This page documents the editorial history of a Tantric manuscript, noting specific textual additions and translations commissioned by Chodrak Palzangpo to fill gaps in the tenth through fifteenth sections.</summary>\n<keywords>Chodrak Palzangpo, bampo, Sanskrit manuscript, translation history, ritual instructions, mandala, mantra recitation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2336,
+ "outputTokens": 417,
+ "thinkingTokens": 0,
+ "ms": 2718,
+ "cost_usd": 0.002419,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 792
+}

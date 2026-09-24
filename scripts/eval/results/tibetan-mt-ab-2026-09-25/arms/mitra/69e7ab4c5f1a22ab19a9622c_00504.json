@@ -1,0 +1,37 @@
+{
+ "id": "69e7ab4c5f1a22ab19a9622c_00504",
+ "src_chars": 1094,
+ "sentences": 22,
+ "chunks": [
+  {
+   "src": "ཉིད་སྟོང་པ་ཉིད་མྱེད་པའི་ཕྱིར །🔽བྱང་ཆུབ་སེམས་དཔའ་ཕྱི་མའི་མཐར་མྱི་དམྱིགས་སོ།🔽དངོས་པོ་མྱེད་པའི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་སྟོང་པ་ཉིད་ཀྱི་ཕྱིར །🔽བྱང་ཆུབ་སེམསདཔའ་ཕྱི་མའི་མཐར་མྱི་དམྱྀགས་སོ།🔽དངོས་པོ་མྱེད་བའི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་དབེན་པའི་ཕྱིར །🔽བྱང་ཆུབ་སེམ་དཔའ་ཕྱི་མའི་མཐར་མྱི་དམིགས་སོ།🔽དངོས་པོ་མྱེད་པ་འི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་མྱེད་པའྀ་ཕྱིར །🔽མྱེད་པའི་ངོ་བོ་ཉིད་སྟོང་བ་ཉིད་ངོ་བོ་ཉིད་མྱེད་པའི་ཕྱིར །🔽བྱངཆུབ་སེམས་དཔའ་ཕྱི་མའི་འཐར་མྱི་དམྱིགས་སོ།🔽དངོསཔོ་མྱེད་པའི་ངོ་བོ་ཉིད་སྟོག་པ་ཉིད་མྱེད་པའི་ཕྱིར།",
+   "out": " Because emptiness is empty.🔽A bodhisattva is not apprehended in the future.🔽Because the emptiness of the essential nature of non-entities is empty.🔽A bodhisattva is not apprehended in the future.🔽Because the emptiness of the essential nature of non-entities is isolated.🔽A bodhisattva is not apprehended in the future.🔽Because the emptiness of the essential nature of non-entities does not exist.🔽Because the emptiness of the essential nature of non-entities is essenceless.🔽A bodhisattva is not apprehended in the future.🔽Because the emptiness of the essential nature of non-entities does not exist.",
+   "finish": "stop",
+   "prompt_tokens": 337,
+   "completion_tokens": 127,
+   "ms": 10885
+  },
+  {
+   "src": "བྱང་ཆུབ་སེམས་དཔའ་དབུས་སུ་མྱི་དམྱིགས་སོ།🔽དངོས་པ་མྱེད་པའི་ངོ་བོ་ཉིད་སྟོང་ཉིད་སྟོང་པ་ཉིད་ཀྱི་ཕྱིར།🔽བྱང་ཆུབ་སེམས་དཔའ་དབུསསུ་མྱི་དམྱིགས་སོ།🔽དངོས་པོ་མྱེད་པའི་ངོ་བོ་ནིད་སྟོང་པ་ཉིད་དབེན་བའི་ཕྱིར།🔽བྱང་ཆུབ་སེམས་དབའ་དབུས་སུ་མྱི་དམྱིགས་སོ་།🔽དངོས་པོ་མྱེད་པའི་ངོབོ་ཉིད་སྟོང་པ་ཉིད་ངོ་བོ་ཉིད་མྱེད་པའིབྱང་ཆུབ་སེམས་དཔའ་དང་དབུས་སུ་མྱི་དམྱིགས་སོ།།🔽དེ་ཅིའི་ཕྱིར་ཞེ་ན།🔽ཚེ་དང་ལྡན་པ་ཤ་ར་དྭི་ཏིའི་བུ།🔽དངོས་པོ་མྱེད་པའི་ངོ་བོ་ཉིད་སྟོངས་པ་ཉིད་མྱེད་པ་དང་།🔽དངོས་པོ་མྱེདཔའི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིདསྟོང་པ་ཉིད་དང་།",
+   "out": "🔽The bodhisattva is not apprehended in the middle.🔽Because the emptiness of the essential nature of non-entities is empty,🔽the bodhisattva is not apprehended in the middle.🔽Because the emptiness of the essential nature of non-entities is isolated,🔽the bodhisattva is not apprehended in the middle.🔽The emptiness of the essential nature of non-entities is not the bodhisattva, and the middle is not apprehended.🔽And why?🔽Venerable Śāradvatīputra,🔽because the emptiness of the essential nature of non-entities is non-existent,🔽and the emptiness of the emptiness of the essential nature of non-entities is empty,",
+   "finish": "stop",
+   "prompt_tokens": 340,
+   "completion_tokens": 136,
+   "ms": 11672
+  },
+  {
+   "src": "དངོས་པོ་མྱེད་པའི་ངོ་བ་ཉིད་སྟོང་པ་ཉིད་དབེན་པ་དང་།🔽དངོས་པོ་མྱེད་པ་འི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་ངོ་བོཉིད་མྱེད་པ་ལ་སྔོན་གྱི་མཐའ་མྱི་དམྱིགས།",
+   "out": " The emptiness of the essential nature of non-things is isolated.🔽The emptiness of the essential nature of non-things has no prior limit.",
+   "finish": "stop",
+   "prompt_tokens": 96,
+   "completion_tokens": 29,
+   "ms": 2664
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 25222,
+ "text": "Because emptiness is empty.\nA bodhisattva is not apprehended in the future.\nBecause the emptiness of the essential nature of non-entities is empty.\nA bodhisattva is not apprehended in the future.\nBecause the emptiness of the essential nature of non-entities is isolated.\nA bodhisattva is not apprehended in the future.\nBecause the emptiness of the essential nature of non-entities does not exist.\nBecause the emptiness of the essential nature of non-entities is essenceless.\nA bodhisattva is not apprehended in the future.\nBecause the emptiness of the essential nature of non-entities does not exist.\nThe bodhisattva is not apprehended in the middle.\nBecause the emptiness of the essential nature of non-entities is empty,\nthe bodhisattva is not apprehended in the middle.\nBecause the emptiness of the essential nature of non-entities is isolated,\nthe bodhisattva is not apprehended in the middle.\nThe emptiness of the essential nature of non-entities is not the bodhisattva, and the middle is not apprehended.\nAnd why?\nVenerable Śāradvatīputra,\nbecause the emptiness of the essential nature of non-entities is non-existent,\nand the emptiness of the emptiness of the essential nature of non-entities is empty,\nThe emptiness of the essential nature of non-things is isolated.\nThe emptiness of the essential nature of non-things has no prior limit.",
+ "prompt_tokens": 773,
+ "completion_tokens": 292
+}

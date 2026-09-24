@@ -1,0 +1,29 @@
+{
+ "id": "69e7abe95f1a22ab19aa030c_00106",
+ "src_chars": 624,
+ "sentences": 19,
+ "chunks": [
+  {
+   "src": "ཅད་དུ་ཁྱབ་སྟེ།🔽འོད་ཁ་དོག་སྣ་ཚོགས་པས་འཇིག་རྟེན་གྱི་ཁམས་ཐམས་ཅད་སྤྲུལ་པ་ལྟ་བུ་དང་།🔽སྒྱུ་མ་དང་།🔽འཇའ་ཚོན་དང་།🔽སྨིག་རྒྱུ་དང་།🔽ཆུ་ཟླ་དང་།🔽གཟུགས་བརྙན་ལྟ་བུར་མཐོང་ངོ་།🔽དེའི་ཨུཏྤ་ལ་ལས་བྱུང་བའི་སྒྲོལ་མ་མཐིང་ཁ་ཕྱག་གཉིས་པ།🔽གཡས་ཀྱིས་ཏྲི་ཤཱུ་ལ་འཛིན་པ།🔽ཕྱག་གཡོན་ན་སྡོང་བུ་དང་བཅས་པའི་ཨུཏྤ་ལ་འཛིན་པ།🔽མཛེས་པའི་སྐུ་རིན་པོ་ཆེའི་དོ་ཤལ་དང་།🔽སྙན་ཆ་དང་།🔽དཔུང་རྒྱན་དང་།🔽རྒྱན་རྣམ་པ་སྣ་ཚོགས་པས་བརྒྱན་པ།🔽གཞོན་ནུ་ལང་ཚོ་ལ་བབ་པ།🔽ཞལ་འཛུམ་པ་དང་བཅས་པ།🔽མཉམ་པའི་སྐྱིལ་མོ་ཀྲུང་དང་བཅས་པས་ཟླ་བ་དང་པདྨའི་སྟེང་དུ་བཞུགས་པའོ།",
+   "out": "🔽It pervades everywhere.🔽The world systems are seen as emanations,🔽like illusions,🔽like rainbows,🔽like mirages,🔽like the moon in water,🔽and like reflections.🔽From the utpala flower arises blue Tārā with two arms.🔽She holds a trident in her right hand.🔽Her left hand holds an utpala flower with a stem.🔽Her beautiful body is adorned with a jewel necklace,🔽earrings,🔽armlets,🔽and various ornaments.🔽She is a youthful maiden in the prime of her youth.🔽She has a smiling face.🔽She sits in the cross-legged posture on a moon and lotus.🔽",
+   "finish": "stop",
+   "prompt_tokens": 331,
+   "completion_tokens": 140,
+   "ms": 11632
+  },
+  {
+   "src": "ལྷོར་ཟླ་བ་དང་པདྨའི་སྟེང་དུ་རེ་ལས་སྐྱེས་པའི་ཨུཏྤ་ལ་སེར་པོ་ས་བོན་དང་བཅས་པ་ལས་འཇིག་རྟེན་གྱི་ཁམས་ཐམ་ཅད་དུ་ཁྱབ་སྟེ།🔽འོད་ཁ་དག་སྣ་ཚོགས་པས་འཇིག་རྟེན",
+   "out": " In the south, on a moon and lotus, a yellow utpala arises from re, with a seed syllable.🔽From that, light rays spread throughout all world systems.🔽The various lights of the world systems",
+   "finish": "stop",
+   "prompt_tokens": 105,
+   "completion_tokens": 44,
+   "ms": 3753
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 15385,
+ "text": "It pervades everywhere.\nThe world systems are seen as emanations,\nlike illusions,\nlike rainbows,\nlike mirages,\nlike the moon in water,\nand like reflections.\nFrom the utpala flower arises blue Tārā with two arms.\nShe holds a trident in her right hand.\nHer left hand holds an utpala flower with a stem.\nHer beautiful body is adorned with a jewel necklace,\nearrings,\narmlets,\nand various ornaments.\nShe is a youthful maiden in the prime of her youth.\nShe has a smiling face.\nShe sits in the cross-legged posture on a moon and lotus.\nIn the south, on a moon and lotus, a yellow utpala arises from re, with a seed syllable.\nFrom that, light rays spread throughout all world systems.\nThe various lights of the world systems",
+ "prompt_tokens": 436,
+ "completion_tokens": 184
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab095f1a22ab19a91c1c_00434",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Through the wisdom born of hearing, one understands that in the realm of animals, there are those who subsist on the food of delight characterized by defilement. In the forest, there is a great serpent called <term>Ajagara</term> <gloss>python</gloss> that lives by consuming the food of delight and air. There are also creatures such as the <term>Gagolika</term> <gloss>a type of small creature</gloss> and those that dwell in the mountain valleys, among others. While the gods of clear light subsist on the food of delight that is free from malice, the food of delight for those who crawl is characterized by resentment and a mind that clings tightly to grudges. Thinking about what causes one to be reborn there, one examines this with the wisdom born of hearing: those who have a strong tendency toward hatred, or whose nature is hatred, align with the causes of resentment. If one who has a strong tendency toward ignorance commits the act of killing, upon the separation of the body, they will fall into the lower realms and be reborn among the hell-beings. If one who possesses the basis of resentment and delight is reborn among animals, they will consume the food of delight and air. If they are reborn as humans with a similar karmic fortune, one observes that, in accordance with the causes of that karma, they will constantly and suddenly become involved in conflicts with others without any apparent reason. Then, the monk who understands the ripening of the fruits of karma examines the infinite world of animals in another way, wondering how those who move in the water come to be born. Examining this with the wisdom born of hearing, one finds that those who are dull-witted and have weak consciousness, who die while afflicted by mental agitation, will, upon the separation of the body, fall into the lower realms and be reborn as those who move in the water.\n\n<summary>This text explains the karmic causes for rebirth in various animal realms, specifically linking states of hatred, ignorance, and mental agitation to specific modes of existence and behavior in the animal and lower worlds.</summary>\n<keywords>Karma, Rebirth, Animal Realm, Hatred, Ignorance, Wisdom, Causality</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2674,
+ "outputTokens": 462,
+ "thinkingTokens": 0,
+ "ms": 2476,
+ "cost_usd": 0.0013615,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1340
+}

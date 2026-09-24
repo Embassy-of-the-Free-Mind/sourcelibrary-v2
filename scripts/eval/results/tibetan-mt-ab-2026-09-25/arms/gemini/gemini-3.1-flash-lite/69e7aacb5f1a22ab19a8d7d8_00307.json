@@ -1,0 +1,18 @@
+{
+ "id": "69e7aacb5f1a22ab19a8d7d8_00307",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "He turned the wheel of the Dharma <note>original: \"’dul chos kyi ’khor lo bskor\"</note>. To hold the wheel here is to possess wisdom. His speech is excellent and pleasing, and it is always free from the ways of the childish <note>a term for those lacking spiritual maturity</note>. Pleasing and excellent, it is sweet to the ear, and it is in harmony with that which generates joy and sweetness. It satisfies the mind and provides great happiness. The Buddha’s true speech is called \"gentle.\"\n\nBy the distinction of those Thus-Gone Ones <note>Sanskrit: <term>Tathāgata</term> <gloss>Thus-Gone One</gloss></note>, whose power cannot be fathomed by the wise, their sons who have entered the stages <note>the bodhisattva levels</note> and the ten stages beyond the world, even you, the lord of the gods, cannot know the excellence of the Sage through the distinction of the world. The form and formless realms, the stages, the gods of desire, and humans born of the mind, those who have attained the accomplishments of yoga, and all the distinguished beings in the world, including the chief of men—there is no sentient being who knows his greatness. This greatness of yours is fully known only by the Buddha, who is known as the Gentle One.\n\nThe name <term>Mañjuśrī</term> <gloss>Gentle Glory</gloss> was bestowed upon you by the Victors of the past. This name was designated for you by the Buddhas of the past, the future, and the present. By listening to your name within the assembly with a focused and pure mind, one attains knowledge and peace. May you attain the supreme enlightenment at the end of existence. May all mantras be accomplished, and may the birth-places of beings...\n\n<column-break/>\n\n...be entered. Immediately after the Blessed One, Śākyamuni, entered into meditative absorption, light rays of blue, yellow, white, crimson, and crystal-like colors emerged from the tuft of hair between his eyebrows. They illuminated this entire Buddha-field and also illuminated other world systems. In an instant, they suppressed and summoned all the planets and constellations. Having summoned them and properly placed them in their respective positions, they were drawn in by the Buddha’s blessing into that very tuft of hair of the Blessed One and disappeared.\n\nHaving rendered the light of all the planets, constellations, and stars void, they became distressed and fearful. They took refuge in the Blessed One, Śākyamuni, and sat with palms joined. In this way, they repeatedly prostrated and fell upon the ground. Then, the Blessed One, Śākyamuni, for the sake of guiding the wise and those sentient beings who possess the minds of the childish, spoke thus: \"Listen, you companions, including the hosts of gods and humans. The diverse world depends entirely upon karma, and sentient beings rely upon it. Whatever the vajra-body of the Buddha, the Blessed One, has manifested, and whatever the world, including gods and demigods, consists of...\"\n\n<summary>This text describes the qualities of the Buddha's speech, the greatness of Mañjuśrī, and a miraculous event where Śākyamuni Buddha subdues the planets and constellations through light rays emitted from his brow.</summary>\n<keywords>Dharma, Mañjuśrī, Śākyamuni, planets, constellations, karma, meditative absorption, vajra-body</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3356,
+ "outputTokens": 751,
+ "thinkingTokens": 0,
+ "ms": 3683,
+ "cost_usd": 0.0019655000000000002,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2258
+}

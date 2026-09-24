@@ -1,0 +1,18 @@
+{
+ "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Those two sons of noble family are the practices of the great bodhisattvas. Furthermore, son of noble family, there are two practices of the great bodhisattvas. What are these two? They are the practice of abandoning the faults of the stages, and the practice of perfecting the skill of leaping from stage to stage. Those two sons of noble family are the practices of the great bodhisattvas. Furthermore, son of noble family, there are two practices of the great bodhisattvas. What are these two? They are the practice of teaching the path of the <term>shravakas</term> <gloss>hearers/disciples</gloss> and <term>pratyekabuddhas</term> <gloss>solitary realizers</gloss>, and the practice of being skilled in not turning back from the enlightenment of a buddha. Those two sons of noble family are the practices of the great bodhisattvas. Son of noble family, these are the practices of the great bodhisattvas, and the great bodhisattvas should strive in them. Son of noble family, for a great bodhisattva who practices in this way, supreme and perfect enlightenment is not difficult to attain. Then, the Blessed One spoke to Manjushri, the youth.\n\n<summary>This passage outlines specific dual practices for great bodhisattvas, focusing on overcoming stage-related faults, advancing through spiritual stages, and mastering the path toward non-retrogression from full enlightenment.</summary>\n<keywords>Bodhisattva, practice, stages, Shravaka, Pratyekabuddha, enlightenment, Manjushri</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2510,
+ "outputTokens": 335,
+ "thinkingTokens": 0,
+ "ms": 1758,
+ "cost_usd": 0.00113,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1016
+}

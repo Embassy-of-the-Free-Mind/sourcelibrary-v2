@@ -1,0 +1,18 @@
+{
+ "id": "69e7aae45f1a22ab19a8f1d1_00518",
+ "arm": "gemini-3-flash-preview",
+ "text": "When the Dharma declines in the final age and the lower realms of existence increase, the wise should become deeply disillusioned and remain as cautious and fearful as a wary deer.\n\nKing of Supreme Joy, if a Bodhisattva were to practice the six <term>paramitas</term> <gloss>perfections</gloss> for a thousand eons without the inclusion of skillful means, the mass of merit gained would not even approach a hundredth part of the merit gained by someone who simply hears this <term>samadhi</term> <gloss>meditative absorption</gloss> and rejoices in it. Indeed, the former merit cannot even be compared to the latter by any means of analogy.\n\nWhen this Dharma discourse was taught, immeasurable Bodhisattvas generated the mind directed toward unexcelled, perfect, and complete enlightenment. All of them reached the stage of non-retrogression from that unexcelled, perfect, and complete enlightenment. Furthermore, eight hundred thousand beings from the hosts of gods and humans attained the pure Dharma eye, becoming free from dust and stainless regarding all phenomena. Because those gods attained the pure Dharma eye and rejoiced in the Dharma of the Blessed One, the entire great trichiliocosm <note>a universe comprising one billion worlds</note> became strewn with a carpet of flowers. The great trichiliocosm...\n\n<summary>This page describes the immense merit of rejoicing in the Samadhi teachings compared to long-term practice without skillful means. It records the spiritual attainment of numerous beings and the miraculous appearance of flowers across the universe upon hearing the discourse.</summary>\n<keywords>Dharma decline, merit, six perfections, samadhi, non-retrogression, Dharma eye, trichiliocosm, King of Supreme Joy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2409,
+ "outputTokens": 365,
+ "thinkingTokens": 0,
+ "ms": 2723,
+ "cost_usd": 0.0022995000000000003,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 921
+}

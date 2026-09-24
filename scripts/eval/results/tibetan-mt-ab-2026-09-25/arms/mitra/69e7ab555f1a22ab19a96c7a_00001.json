@@ -1,0 +1,21 @@
+{
+ "id": "69e7ab555f1a22ab19a96c7a_00001",
+ "src_chars": 363,
+ "sentences": 9,
+ "chunks": [
+  {
+   "src": "༄༅༅།🔽འཕགས་པའི་ལམ་ཡན་ལག་བརྒྱད་པ་རྣམ་པར་དག་པ་དང་།🔽གཟུགས་རྣམ་པར་དག་པ་དང་།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་རྣམ་པར་དག་པ་འདི་ལ་གཉིས་སུ་མེད་དེ་གཉིས་སུ་བྱར་མེད་སོ་སོ་མ་ཡིན་ཐ་མྱི་དད་དོ།🔽འཕགས་པའི་ལམ་ཡན་ལག་བརྒྱད་པ་རྣམས་པར་དག་པས།🔽ཚོར་བ་རྣམ་པར་དག་པ།🔽ཚོར་བ་རྣམ་པར་དག་པས།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིདརྣམ་པར་དག་པ་སྟེ།🔽དེ་ལྟར་ན་འཕགས་པའི་ལམ་ཡན་ལག་རྒྱད་པ་རྣམ་པར་དག་པ་དག ཚོར་བ་རྣམ་པར་དག་པ་དང་།",
+   "out": "🔽The purity of the eightfold noble path,🔽the purity of form,🔽and the purity of omniscience are not two, cannot be divided into two, are not broken apart, and are not multiple.🔽The purity of the eightfold noble path🔽is the purity of feeling.🔽The purity of feeling🔽is the purity of omniscience.🔽Thus, the purity of the eightfold noble path, the purity of feeling,🔽",
+   "finish": "stop",
+   "prompt_tokens": 246,
+   "completion_tokens": 91,
+   "ms": 7780
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 7780,
+ "text": "The purity of the eightfold noble path,\nthe purity of form,\nand the purity of omniscience are not two, cannot be divided into two, are not broken apart, and are not multiple.\nThe purity of the eightfold noble path\nis the purity of feeling.\nThe purity of feeling\nis the purity of omniscience.\nThus, the purity of the eightfold noble path, the purity of feeling,",
+ "prompt_tokens": 246,
+ "completion_tokens": 91
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7abad5f1a22ab19a9c315_00404",
+ "arm": "gemini-3-flash-preview",
+ "text": "\"He has become the supreme object of worship among men. You should know that he possesses great merit,\" they said. Then the Blessed One <note>Sanskrit: Bhagavan</note> spoke: \"Monks, ninety-one eons ago, the Perfectly Awakened One named Vipashyin <note>Sanskrit: Vipasyin; Tibetan: rNam-par-gzigs</note> appeared in the world. He was endowed with knowledge and conduct, a Sugata <note>One who has gone to bliss</note>, a knower of the world, a charioteer who subdues men, unsurpassed, a teacher of gods and men, a Buddha, a Blessed One. He resided in the palace of King Bandhumat <note>Tibetan: gNyen-ldan</note>. At that time, a person from the caste of plasterers <note>Tibetan: zhal-zhal-mkhan; those who apply finish to walls</note> built a temple for Vipashyin. He planted beautiful flower and fruit trees, and the area became filled with a fragrant scent. After offering the temple, he was ordained into the teachings of that very Teacher. After the Perfectly Awakened One Vipashyin passed into Parinirvana <note>the final passing away of a Buddha</note>, he erected a single precious stone pillar beneath the foundation of the stupa <note>reliquary monument</note> for the bodily relics. Many followers of that monk from the plasterer caste also rejoiced and felt devotion. They said, 'Just as you have developed devotion for the Teacher, we also shall act with faith and devotion. We shall act according to the Teacher's word, doing what is pleasing and avoiding what is displeasing' <unclear>...</unclear>\n\n<summary>The Buddha recounts a previous life of a highly meritorious individual who served the past Buddha Vipashyin by building a temple and erecting a relic pillar. The story emphasizes the karmic rewards of devotion and the communal inspiration felt by the builder's followers.</summary>\n<keywords>Vipashyin Buddha, merit, temple construction, ordination, relics, stupa, Bandhumat, karma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2521,
+ "outputTokens": 460,
+ "thinkingTokens": 0,
+ "ms": 3584,
+ "cost_usd": 0.0026405,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1049
+}

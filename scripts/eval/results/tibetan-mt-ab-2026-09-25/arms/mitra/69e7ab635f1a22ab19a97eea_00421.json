@@ -1,0 +1,29 @@
+{
+ "id": "69e7ab635f1a22ab19a97eea_00421",
+ "src_chars": 920,
+ "sentences": 27,
+ "chunks": [
+  {
+   "src": "གཟུགས་རྣམ་པར་དག་པ་དང་།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་རྣམ་པར་དག་པ་འདི་ལ་གཉིས་སུ་མེད་དེ་གཉིས་སུ་བྱར་མེད་སོ་སོ་མ་ཡིན་ཐ་མི་དད་དོ།🔽འཕགས་པའི་བདེན་པ་དང་།🔽བསམ་གཏན་དང་།🔽ཚད་མེད་པ་དང་།🔽གཟུགས་མེད་པའི་སྙོམས་པར་འཇུག་པ་དང་།🔽རྣམ་པར་ཐར་པ་དང་།🔽མཐར་གྱིས་གནས་པའི་སྙོམས་པར་འཇུག་པ་ དང་།🔽སྟོང་པ་ཉིད་དང་།🔽མཚན་མ་མེད་པ་དང་།🔽སྨོན་པ་མེད་པ་དང་།🔽མངོན་པར་ཤེས་པ་དང་།🔽ཏིང་ངེ་འཛིན་དང་།🔽གཟུངས་ཀྱི་སྒོ་དང་།🔽དེ་བཞིན་གཤེགས་པའི་སྟོབས་དང་།🔽མི་འཇིགས་པ་དང་།🔽སོ་སོ་ཡང་དག་པར་རིག་པ་དང་།🔽བྱམས་པ་ཆེན་པོ་དང་།🔽སྙིང་རྗེ་ཆེན་པོ་དང་།🔽སངས་རྒྱས་ཀྱི་ཆོས་མ་འདྲེས་པ་རྣམ་པར་དག་པས།",
+   "out": "🔽The purity of form🔽and the purity of the knowledge of all aspects are not two, are not divided, and are not distinct.🔽The noble truths🔽and the concentrations🔽and the immeasurables🔽and the formless absorptions🔽and the liberations🔽and the serial absorptions🔽and emptiness🔽and signlessness🔽and wishlessness🔽and the higher knowledges🔽and the meditative stabilities🔽and the dhāraṇī gateways🔽and the powers of the tathāgatas🔽and the fearlessnesses🔽and the detailed and thorough knowledges🔽and great love🔽and great compassion🔽and the distinct attributes of a buddha are pure.",
+   "finish": "stop",
+   "prompt_tokens": 332,
+   "completion_tokens": 137,
+   "ms": 11815
+  },
+  {
+   "src": "ཡིད་ཀྱི་འདུས་ཏེ་རེག་པའི་རྐྱེན་གྱིས་ཚོར་བའི་བར་དུ་རྣམ་པར་དག་པ།🔽ཡིད་ཀྱི་འདུས་ཏེ་རེག་བའི་རྐྱེན་གྱིས་ཚོར་བ་རྣམ་པར་དག་པས།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་རྣམ་པར་དག་པ་སྟེ།🔽དེ་ལྟར་ན་སངས་རྒྱས་ཀྱི་ཆོས་མ་འདྲེས་པ་རྣལ་པར་དག་པ་དང་།🔽ཡིད་ཀྱི་འདུས་ཏེ་རེག་པ་རྐྱེན་གྱིས་ཚོར་བ་རྣམ་ པར་དག་པ་དང་།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེནཔ་ཉིད་རྣམ་པར་དག་པ་འདི་ལ་གཉིས་སུ་མེད་དེ་གཉིས་སུ་བྱར་མེད་སོ་སོ་མ་ཡིན་ཐ་མི་དད་དོ།།🔽དགེ་བ་འདི་ཐེམ་པ་བསད་མ་ཐེམ་པ་དག་གི་",
+   "out": "🔽The purity of the sensory element of the mental faculty, the sensory element of mental phenomena, and the sensory element of mental consciousness is the purity of the sensory element of mental contact that arises from the condition of the coming together of the three.🔽The purity of the sensory element of mental contact that arises from the condition of the coming together of the three is the purity of the sensory element of the feeling that arises from the condition of the coming together of the three.🔽The purity of the sensory element of the feeling that arises from the condition of the coming together of the three is the purity of the knowledge of all aspects.🔽Thus, the purity of the distinct attributes of a buddha,🔽the purity of the sensory element of mental contact that arises from the condition of the coming together of the three,🔽and the purity of the knowledge of all aspects are indivisible, not two, and cannot be divided into two, and they are not distinct.🔽This virtue is the killing of the step.🔽",
+   "finish": "stop",
+   "prompt_tokens": 274,
+   "completion_tokens": 204,
+   "ms": 17421
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 29237,
+ "text": "The purity of form\nand the purity of the knowledge of all aspects are not two, are not divided, and are not distinct.\nThe noble truths\nand the concentrations\nand the immeasurables\nand the formless absorptions\nand the liberations\nand the serial absorptions\nand emptiness\nand signlessness\nand wishlessness\nand the higher knowledges\nand the meditative stabilities\nand the dhāraṇī gateways\nand the powers of the tathāgatas\nand the fearlessnesses\nand the detailed and thorough knowledges\nand great love\nand great compassion\nand the distinct attributes of a buddha are pure.\nThe purity of the sensory element of the mental faculty, the sensory element of mental phenomena, and the sensory element of mental consciousness is the purity of the sensory element of mental contact that arises from the condition of the coming together of the three.\nThe purity of the sensory element of mental contact that arises from the condition of the coming together of the three is the purity of the sensory element of the feeling that arises from the condition of the coming together of the three.\nThe purity of the sensory element of the feeling that arises from the condition of the coming together of the three is the purity of the knowledge of all aspects.\nThus, the purity of the distinct attributes of a buddha,\nthe purity of the sensory element of mental contact that arises from the condition of the coming together of the three,\nand the purity of the knowledge of all aspects are indivisible, not two, and cannot be divided into two, and they are not distinct.\nThis virtue is the killing of the step.",
+ "prompt_tokens": 606,
+ "completion_tokens": 341
+}

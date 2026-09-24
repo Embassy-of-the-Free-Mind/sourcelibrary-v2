@@ -1,0 +1,18 @@
+{
+ "id": "69e7aae45f1a22ab19a8f1d1_00518",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "When the Dharma declines at the end of the age and the lower realms increase, the wise person becomes deeply disillusioned and, like a deer, becomes fearful and vigilant. O King of Supreme Joy, if a Bodhisattva were to practice the six <term>paramitas</term> <gloss>perfections</gloss> for a thousand <term>kalpas</term> <gloss>eons</gloss> without the use of skillful means, the mass of merit gained from hearing this <term>samadhi</term> <gloss>meditative absorption</gloss> and rejoicing in it would exceed that former mass of merit by more than a hundredfold, and would not even approach it in terms of comparison. When this discourse on the Dharma was taught, countless Bodhisattvas generated the mind for supreme, perfect, and complete enlightenment, and all of them became irreversible from that supreme, perfect, and complete enlightenment. Eight hundred thousand beings among gods and humans also became free of dust and stains, and their Dharma-eye for all phenomena became purified. Because those gods had their Dharma-eye purified and rejoiced in the teachings of the Blessed One, the trichiliocosm, the great thousand-fold world system, became strewn with flowers. The trichiliocosm, the great thousand-fold\n\n<summary>This passage describes the immense merit gained by hearing and rejoicing in a specific meditative teaching compared to other practices, and recounts the spiritual awakening of countless beings upon hearing the discourse.</summary>\n<keywords>Dharma, Bodhisattva, merit, paramitas, samadhi, enlightenment, trichiliocosm</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2409,
+ "outputTokens": 332,
+ "thinkingTokens": 0,
+ "ms": 1924,
+ "cost_usd": 0.00110025,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 921
+}

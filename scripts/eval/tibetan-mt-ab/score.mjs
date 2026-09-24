@@ -68,6 +68,24 @@ for (const judge of Object.keys(decoded)) {
   out.controls.same_arm[judge] = { pairs, n: pairs.length, ties: pairs.filter((p) => p.tie).length, tie_rate: r3(pairs.length ? pairs.filter((p) => p.tie).length / pairs.length : null) };
 }
 
+// supplementary positive-control packets (--controls name=dir,...): each dir holds key.json and
+// verdicts-<judge>.jsonl for ONE page carrying the reference as a candidate
+out.controls.positive_supplementary = {};
+for (const [name, dir] of opt('controls', '').split(',').filter(Boolean).map((s) => s.split('='))) {
+  const ck = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
+  const pid = ck.positive_control_page;
+  const rec = { page: pid, by_judge: {} };
+  for (const judge of Object.keys(VERDICTS)) {
+    const f = path.join(dir, `verdicts-${judge}.jsonl`);
+    if (!fs.existsSync(f)) { rec.by_judge[judge] = { pass: false, note: 'not scored' }; continue; }
+    const row = readJsonl(f).find((r) => r.id === pid);
+    const label = Object.entries(ck.pages[pid]).find(([, arm]) => arm === 'reference')?.[0];
+    const sc = row?.scores?.[label];
+    rec.by_judge[judge] = sc ? { fidelity: sc.fidelity, invention: sc.invention, omission: sc.omission, rank: rankOf(row.ranking || [], label), pass: sc.fidelity === 5 && !sc.invention, reason: row.reason } : { pass: false, note: 'not scored' };
+  }
+  out.controls.positive_supplementary[name] = rec;
+}
+
 // ── per engine, per judge (test pages only; the same-arm duplicate label is ignored) ──
 for (const arm of ENGINES) {
   out.engines[arm] = { by_judge: {} };

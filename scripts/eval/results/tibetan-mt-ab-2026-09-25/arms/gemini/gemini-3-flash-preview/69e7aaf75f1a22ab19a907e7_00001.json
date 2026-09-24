@@ -1,0 +1,18 @@
+{
+ "id": "69e7aaf75f1a22ab19a907e7_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nHe dwelt within the celestial palace of the <term>dharmadhatu</term> <gloss>sphere of reality</gloss>, the essence of non-conceptuality that is far superior to all the three realms. He was together with a great assembly of monks and a vast gathering of <term>bodhisattvas</term> <gloss>beings dedicated to awakening</gloss>, such as: the <term>bodhisattva mahasattva</term> <gloss>great heroic being of awakening</gloss> Non-conceptuality, and Non-conceptual Radiance, and Non-conceptual Moon, and Non-conceptual Hero, and the one skilled in teaching the non-conceptual doctrine, and Non-conceptual Essence, and Non-conceptual <unclear>text ends mid-word</unclear>\n\n<summary>The Buddha resides in the celestial palace of the sphere of reality alongside a vast assembly of monks and specifically named bodhisattvas characterized by non-conceptuality. This passage establishes the divine setting and the high-level spiritual audience for the discourse.</summary>\n<keywords>dharmadhatu, non-conceptuality, bodhisattva mahasattva, three realms, celestial palace, Buddhist assembly</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2077,
+ "outputTokens": 259,
+ "thinkingTokens": 0,
+ "ms": 1966,
+ "cost_usd": 0.0018154999999999998,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 414
+}

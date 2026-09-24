@@ -1,0 +1,18 @@
+{
+ "id": "69e7abce5f1a22ab19a9e719_00001",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "In the Tibetan language: The Summary of the Empowerment. Homage to the glorious Vajrasattva. Zla-ba bzang-po <note>original: \"Zla-ba bzang-po\", meaning \"Excellent Moon\"</note> requested: O Teacher, the seven types of empowerment and the three types of that...\n\n<summary>This page introduces the text \"The Summary of the Empowerment\" with an invocation to Vajrasattva and the beginning of a request by Zla-ba bzang-po regarding the seven and three types of empowerment.</summary>\n<keywords>Empowerment, Vajrasattva, Zla-ba bzang-po, Initiation, Tantra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1895,
+ "outputTokens": 148,
+ "thinkingTokens": 0,
+ "ms": 4382,
+ "cost_usd": 0.00069575,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 142
+}

@@ -1,0 +1,53 @@
+{
+ "id": "69e7aacb5f1a22ab19a8d7d8_00307",
+ "src_chars": 2245,
+ "sentences": 49,
+ "chunks": [
+  {
+   "src": "༄༅།🔽འདུལ་ཆོས་ཀྱི་འཁོར་ལོ་བསྐོར།🔽འཁོར་ལོ་འཛིན་པར་འདིར་ནི་རིགས་པ་ཡིན།🔽གང་གི་གསུང་ནི་བཟང་པོ་ཡིད་འོང་ཞིང་།🔽རྟག་ཏུ་བྱིས་པའི་སྐྱེ་བོ་རྣམ་སྤངས་ཡིན།🔽ཡིད་འོང་བཟང་པོ་རྣར་ནི་སྙན་པ་དང་།🔽དགའ་སྐྱེད་སྙན་པ་དང་ནི་རྗེས་སུ་མཐུན།🔽སེམས་ནི་ཚིམ་བྱེད་བདེ་བར་རབ་ཏུ་སྦྱིན།🔽འཇམ་ཞེས་བྱ་བར་སངས་རྒྱས་ཡང་དག་གསུང་།🔽དེ་དག་དེ་བཞིན་གཤེགས་པའི་ཁྱད་པར་གྱིས།🔽གང་གི་མཐུ་ནི་མཁྱེན་པར་མི་སྤྱོད་དེ།🔽དེ་དག་གི་སྲས་དེ་བཞིན་སར་ཞུགས་པ།🔽འཇོག་རྟེན་འདས་པ་དེ་བཞིན་བཅུ་ཡི་གྲངས།🔽ཁྱོད་ཀྱང་ལྷ་ཡི་དབང་ཕྱུག་འཇིག་རྟེན་ཁྱད་པར་གྱིས།🔽ཐུབ་བཟང་ཤེས་པར་ནུས་པ་མ་ཡིན་ནོ།",
+   "out": "🔽He turns the wheel of the Dharma of discipline.🔽It is fitting that he hold the wheel.🔽His speech is good, pleasing,🔽and always free from childish beings.🔽It is pleasing, good, and pleasant to the ear,🔽and it is agreeable and delightful.🔽It satisfies the mind and gives great happiness.🔽The Buddha speaks what is called “gentle.”🔽By the special qualities of the Tathāgata,🔽his power is not to be known.🔽His sons who have entered the grounds🔽are as numerous as the past buddhas.🔽You, Lord of the Gods, are special in the world,🔽but you cannot know the good Sage.🔽",
+   "finish": "stop",
+   "prompt_tokens": 359,
+   "completion_tokens": 143,
+   "ms": 11490
+  },
+  {
+   "src": "གཟུགས་དང་གཟུགས་མེད་དེ་བཞིན་ས་གནས་དང་།🔽འདོད་ལྡན་ལྷ་དང་མི་ནི་ཡིད་ལས་སྐྱེས།🔽རྣལ་འབྱོར་གྲུབ་པ་ཐོབ་དང་འཇིག་རྟེན་ན།🔽ཁྱད་པར་ཅན་ཀུན་དེ་བཞིན་མི་ཡི་གཙོ།🔽དེ་ཡི་ཆེ་བ་གང་གིས་ཤེས་གྱུར་པ།🔽སེམས་ཅན་གང་དེ་ཡོད་པ་མ་ཡིན་ཏེ།🔽ཁྱོད་ཀྱི་ཆེ་བ་འདི་ནི་ཡོངས་ཤེས་པ།🔽འཇམ་ཞེས་བྱ་བར་རབ་ཤེས་སངས་རྒྱས་ཡིན།🔽འཇམ་དཔལ་ཞེས་བྱར་ཡོངས་སུ་བརྟགས་པ་ནི།🔽ཁྱོད་ཀྱི་མིང་ནི་སྔོན་གྱི་རྒྱལ་བས་མཛད།🔽ཁྱོད་ཀྱི་མིང་དུ་འདི་ལྟར་བརྟགས་བྱས་པ།🔽འདས་དང་མ་བྱོན་ད་ལྟར་སངས་རྒྱས་ཀྱི།🔽གཞན་དུ་མ་ཡེངས་རྩེ་གཅིག་ཡིད་དག་པས།🔽ཁྱོད་ཀྱི་མིང་ནི་འཁོར་གྱི་ནང་དུ་ཐོས།",
+   "out": " The gods of the form and formless realms, the gods of the desire realm,🔽and humans are born from mind.🔽In the world of the accomplished yogis,🔽all the special ones are like that, and so are the best of humans.🔽Those who know your greatness🔽are not sentient beings.🔽Those who know your greatness🔽are the buddhas who are called “Gentle.”🔽The one who is called “Gentle Splendor”🔽is named by the buddhas of the past.🔽The one who is named in this way🔽is the one who is called “Gentle Splendor.”🔽The buddhas of the past, future, and present🔽are the ones who are called “Gentle Splendor.”🔽With a pure mind, undistracted and one-pointed,🔽you hear your name in the midst of the assembly.🔽",
+   "finish": "stop",
+   "prompt_tokens": 325,
+   "completion_tokens": 179,
+   "ms": 14465
+  },
+  {
+   "src": "དེས་ནི་འདི་ལ་ཤེས་དང་ཞི་བ་ཐོབ།🔽སྲིད་མཐར་བྱང་ཆུབ་མཆོག་ནི་ཁྱད་པར་ཤོག །🔽སྔགས་རྣམས་མ་ལུས་འགྲུབ་པར་འགྱུར་བ་དང་།🔽འགྲོ་བའི་སྐྱེ་གནས་༄༅།🔽ཞུགས་སོ།🔽བཅོམ་ལྡན་འདས་ཤཱཀྱ་ཐུབ་པ་སྙོམས་པར་ཞུགས་མ་ཐག་ཏུ།🔽སྨིན་མཚམས་ཀྱི་མཛོད་སྤུ་ནས་འོད་ཟེར་སྔོན་པོ་དང་སེར་པོ་དང་དཀར་པོ་དང་ལེ་བརྒན་དང་ཤེལ་གྱི་ཁ་དོག་ལྟ་བུ་བྱུང་སྟེ།🔽སངས་རྒྱས་ཀྱི་ཞིང་འདི་ཐམས་ཅད་ཀྱང་སྣང་བར་བྱས་ཤིང་།🔽འཇིག་རྟེན་གྱི་ཁམས་གཞན་དག་ཀྱང་སྣང་བར་མཛད་ནས།🔽གཟའ་དང་རྒྱུ་སྐར་ཐམས་ཅད་ཀྱང་ཡུད་ཙམ་གྱིས་ཟིལ་གྱིས་མནན་ཏེ་བཀུག་པར་གྱུར་ཏོ།🔽བཀུག་ནས་ཀྱང་རང་རང་གི་གནས་ལ་ཡང་དག་པར་སྦྱར་ནས།",
+   "out": "🔽By this, may they attain knowledge and peace.🔽May they attain the supreme enlightenment that ends existence.🔽May all mantras be accomplished.🔽May all beings be born in the higher realms.🔽🔽As soon as the Blessed One Śākyamuni entered into meditative equipoise,🔽blue, yellow, white, crimson, and crystal-colored light rays emerged from the curl of hair between his eyebrows.🔽They illuminated this entire buddha realm,🔽and also illuminated other world systems.🔽All the planets and stars were instantly outshone and drawn in.🔽Having drawn them in, he properly assigned them to their respective places.🔽",
+   "finish": "stop",
+   "prompt_tokens": 347,
+   "completion_tokens": 133,
+   "ms": 10822
+  },
+  {
+   "src": "འཁོར་གྱི་དཀྱིལ་འཁོར་དེར་སངས་རྒྱས་ཀྱི་བྱིན་གྱིས་བརླབས་ཀྱིས་བཀུག་ནས་བཅོམ་ལྡན་འདས་ཀྱི་མཛོད་སྤུ་དེ་ཉིད་དུ་མི་སྣང་བར་གྱུར་ཏོ།🔽གཟའ་དང་རྒྱུ་སྐར་དང་སྐར་མ་ཐམས་ཅད་ཀྱི་འོད་མེད་པར་བྱས་ནས་ཉམ་ཐག་པ་དང་འཇིགས་པས་བཅོམ་ལྡན་འདས་ཤཱཀྱ་ཐུབས་པ་ལ་སྐྱབས་སུ་འགྲོ་ཞིང་ཐལ་མོར་སྦྱར་ནས་འདུག་པར་གྱུར་ཏེ།🔽དེ་ལྟར་རབ་ཏུ་འདོར་ཞིང་ཡང་དང་ཡང་སའི་སྟེང་དུ་འགྱེལ་བར་གྱུར་ཏོ།🔽དེ་ནས་བཅོམ་ལྡན་འདས་ཤཱཀྱ་ཐབ་པས་གཟའ་དང་རྒྱུ་སྐར་དང་སྐར?་མ་ཐམས་ཅད་ལ་མཁས་པ་རྣམས་དང་།🔽བྱིས་པའི་སྐྱེ་བོའི་བློ་དང་ལྡན་པའི་སེམས་ཅན་རྗེས་སུ་གཟུང་བའི་ཕྱིར་བཀའ་སྩལ་པ་ནི།",
+   "out": "  By the blessing of the Buddha, they were summoned to the mandala of the retinue and disappeared into the tuft of hair between the Buddha's eyebrows.🔽All the planets, stars, and constellations lost their light and became distressed and terrified. They took refuge in the Blessed One Śākyamuni and joined their palms in supplication.🔽Thus they fell to the ground again and again.🔽Then the Blessed One Śākyamuni spoke to all the planets, stars, and constellations,🔽in order to guide those who are wise and those who are childish and ignorant.🔽",
+   "finish": "stop",
+   "prompt_tokens": 332,
+   "completion_tokens": 122,
+   "ms": 9936
+  },
+  {
+   "src": "ལྷའི་ཚོགས་མི་དང་བཅས་པའི་གྲོགས་པོ་དག་ཁྱེད་ཅག་ཉོན་ཅིག །🔽འཇིག་རྟེན་སྣ་ཚོགས་ནི་ལས་ཉིད་ལ་སེམས་ཅན་རྣམས་རྣམ་པར་རྟེན་པར་བྱེད་དེ།🔽གང་ཡང་སངས་རྒྱས་བཅོམ་ལྡན་འདས་ཀྱི་རྡོ་རྗེའི་སྐུ་ཡང་མངོན་པར་གྲུབ་ལ།🔽གང་ཡང་ལྷ་དང་ལྷ་མ་ཡིན་དུ་བཅས་པའི་འཇིག་རྟེན་མང་",
+   "out": " \"O friends, gods and men, listen!🔽\" \"The world is based on the actions of beings.🔽\" \"The body of the Buddha, the Blessed One, is also accomplished by it.🔽\" \"The world with its gods and asuras is also based on it.🔽\" ",
+   "finish": "stop",
+   "prompt_tokens": 161,
+   "completion_tokens": 62,
+   "ms": 5098
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 51813,
+ "text": "He turns the wheel of the Dharma of discipline.\nIt is fitting that he hold the wheel.\nHis speech is good, pleasing,\nand always free from childish beings.\nIt is pleasing, good, and pleasant to the ear,\nand it is agreeable and delightful.\nIt satisfies the mind and gives great happiness.\nThe Buddha speaks what is called “gentle.”\nBy the special qualities of the Tathāgata,\nhis power is not to be known.\nHis sons who have entered the grounds\nare as numerous as the past buddhas.\nYou, Lord of the Gods, are special in the world,\nbut you cannot know the good Sage.\nThe gods of the form and formless realms, the gods of the desire realm,\nand humans are born from mind.\nIn the world of the accomplished yogis,\nall the special ones are like that, and so are the best of humans.\nThose who know your greatness\nare not sentient beings.\nThose who know your greatness\nare the buddhas who are called “Gentle.”\nThe one who is called “Gentle Splendor”\nis named by the buddhas of the past.\nThe one who is named in this way\nis the one who is called “Gentle Splendor.”\nThe buddhas of the past, future, and present\nare the ones who are called “Gentle Splendor.”\nWith a pure mind, undistracted and one-pointed,\nyou hear your name in the midst of the assembly.\nBy this, may they attain knowledge and peace.\nMay they attain the supreme enlightenment that ends existence.\nMay all mantras be accomplished.\nMay all beings be born in the higher realms.\n\nAs soon as the Blessed One Śākyamuni entered into meditative equipoise,\nblue, yellow, white, crimson, and crystal-colored light rays emerged from the curl of hair between his eyebrows.\nThey illuminated this entire buddha realm,\nand also illuminated other world systems.\nAll the planets and stars were instantly outshone and drawn in.\nHaving drawn them in, he properly assigned them to their respective places.\nBy the blessing of the Buddha, they were summoned to the mandala of the retinue and disappeared into the tuft of hair between the Buddha's eyebrows.\nAll the planets, stars, and constellations lost their light and became distressed and terrified. They took refuge in the Blessed One Śākyamuni and joined their palms in supplication.\nThus they fell to the ground again and again.\nThen the Blessed One Śākyamuni spoke to all the planets, stars, and constellations,\nin order to guide those who are wise and those who are childish and ignorant.\n\"O friends, gods and men, listen!\n\" \"The world is based on the actions of beings.\n\" \"The body of the Buddha, the Blessed One, is also accomplished by it.\n\" \"The world with its gods and asuras is also based on it.\n\"",
+ "prompt_tokens": 1524,
+ "completion_tokens": 639
+}

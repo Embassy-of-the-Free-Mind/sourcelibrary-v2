@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab4a5f1a22ab19a96014_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "If he dwells in internal emptiness, he practices the manifestation of internal emptiness, but he does not practice the perfection of wisdom. Blessed One, if a <term>bodhisattva</term> <gloss>hero of awakening</gloss> <term>mahasattva</term> <gloss>great being</gloss>, while practicing the perfection of wisdom, dwells in external emptiness with a mind that abides in the notions of \"I\" and \"mine\" due to a lack of <term>upaya</term> <gloss>skillful means</gloss>, then he practices the manifestation of external emptiness, but he does not practice the perfection of wisdom. Blessed One <unclear>...</unclear>\n\n<summary>This page discusses the distinction between merely dwelling on the concept of emptiness and the true practice of the perfection of wisdom. It warns that practicing without skillful means can lead to an ego-centered attachment to the idea of internal or external emptiness.</summary>\n<keywords>perfection of wisdom, Prajnaparamita, internal emptiness, external emptiness, bodhisattva, skillful means, upaya, ego-attachment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2076,
+ "outputTokens": 232,
+ "thinkingTokens": 0,
+ "ms": 1752,
+ "cost_usd": 0.001734,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 409
+}

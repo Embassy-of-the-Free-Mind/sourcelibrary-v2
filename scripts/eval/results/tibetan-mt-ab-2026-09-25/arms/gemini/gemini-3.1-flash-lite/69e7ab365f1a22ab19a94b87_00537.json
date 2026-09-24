@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab365f1a22ab19a94b87_00537",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Ask. Then, the merchant's son Sudhana, who possesses the <term>bodhisattva</term> <gloss>enlightenment-being</gloss> qualities of overcoming obstacles and striving for complete purity, whose mind is made radiant by the light of the <term>bodhisattva</term> power, who is a steadfast <term>bodhisattva</term> possessing a heart that cannot be overcome or deterred by others, who is undaunted in mind by the excellent armor of <term>bodhisattva</term> vows, who strives to dwell in and fully develop the steadfast intention of a <term>bodhisattva</term>, who possesses the intention to fully grasp the rain of <term>bodhisattva</term> conduct, who possesses a mental continuum that is never satisfied by the rain of the <term>bodhisattva</term> teachings, who is manifest in the prayers to engage in all the virtues of a <term>bodhisattva</term>, who desires to fully dedicate himself to gathering all beings by transforming their paths, and who desires to rescue all beings from the great wilderness of <term>samsara</term> <gloss>cyclic existence</gloss>, and who is never satisfied with seeing, listening to, and serving spiritual friends, and who possesses the capacity to generate immeasurable offerings of the <term>dharma</term> <gloss>teachings</gloss>, bowed his head to the two feet of the monk Sudarshana <note>original: \"bLta na sdug pa\"</note>. Having circumambulated the monk Sudarshana hundreds of thousands of times to the right, and having looked at him again and again, he departed from the presence of the monk Sudarshana.\n\n<summary>This passage describes the spiritual qualities of the merchant's son Sudhana and his respectful departure from the monk Sudarshana after seeking his guidance.</summary>\n<keywords>Sudhana, Sudarshana, bodhisattva, dharma, samsara, spiritual practice, devotion</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2517,
+ "outputTokens": 428,
+ "thinkingTokens": 0,
+ "ms": 2064,
+ "cost_usd": 0.00127125,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1070
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab555f1a22ab19a96c7a_00001",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "The purification of the Noble Eightfold Path, the purification of form, and the purification of omniscience are non-dual. They cannot be divided, they are not separate, and they are not distinct. Through the purification of the Noble Eightfold Path, feelings are purified. Through the purification of feelings, omniscience is purified. Thus, the purification of the Noble Eightfold Path and the purification of feelings are one.\n\n<summary>This passage explains the non-dual nature of the Noble Eightfold Path, physical form, feelings, and omniscience, asserting that the purification of one leads to the purification of the others.</summary>\n<keywords>Noble Eightfold Path, omniscience, non-duality, purification, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2034,
+ "outputTokens": 152,
+ "thinkingTokens": 0,
+ "ms": 1307,
+ "cost_usd": 0.0007365,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 366
+}
