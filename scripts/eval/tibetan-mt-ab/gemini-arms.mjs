@@ -71,7 +71,10 @@ for (const arm of ARMS) {
     }
     if (spent > MAX_USD) throw new Error(`spend cap: $${spent.toFixed(2)} > $${MAX_USD}`);
     const t0 = Date.now();
-    const res = await callGemini({
+    let res;
+    for (let attempt = 1; ; attempt++) {
+      try {
+        res = await callGemini({
       model: arm,
       prompt,
       endpoint: 'scripts/eval/tibetan-mt-ab/gemini-arms.mjs',
@@ -84,7 +87,20 @@ for (const arm of ARMS) {
       pageIds: [r.id],
       promptVersion: `v${promptRef.version}`,
       triggeredBy: 'tibetan-mt-ab',
-    });
+        });
+        break;
+      } catch (err) {
+        // 503/429 are the API's weather, not a result; four tries, then the page is a recorded failure
+        if (attempt >= 4 || !/Gemini (503|429|500)/.test(String(err.message))) {
+          fs.writeFileSync(outf.replace(/\.json$/, '.failed.json'), JSON.stringify({ id: r.id, arm, error: String(err.message).slice(0, 300), attempts: attempt }, null, 1));
+          console.log(`${arm} ${r.id} FAILED after ${attempt}: ${String(err.message).slice(0, 120)}`);
+          res = null;
+          break;
+        }
+        await new Promise((ok) => setTimeout(ok, 5000 * attempt));
+      }
+    }
+    if (!res) continue;
     const ms = Date.now() - t0;
     const cost_usd = costOf(arm, res.inputTokens, res.outputTokens);
     spent += cost_usd;
