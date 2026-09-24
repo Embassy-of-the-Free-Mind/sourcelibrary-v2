@@ -690,7 +690,7 @@ function phaseScore() {
 
 // ── phase: judge packet ─────────────────────────────────────────────────────
 /** The junction as a reader meets it: page-level wrappers off, inline markup off, prose kept. */
-function readerText(t) {
+export function readerText(t) {
   return (t || '')
     .replace(/<(meta|summary|keywords|warning)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<note\b[^>]*>[\s\S]*?<\/note>/gi, ' ')

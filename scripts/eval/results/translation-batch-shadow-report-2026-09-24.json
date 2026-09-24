@@ -1,0 +1,47 @@
+{
+ "report": {
+  "S1/S2": {
+   "judged": 16,
+   "expected": 16,
+   "ties": 13,
+   "tie_rate": 0.813,
+   "wins": {
+    "S1": 1,
+    "S2": 2
+   },
+   "decided": 3,
+   "S2_share_of_decided": 0.667,
+   "split_p_two_sided": 1,
+   "left_share_of_decided": 0.333
+  },
+  "S1/P": {
+   "judged": 20,
+   "expected": 20,
+   "ties": 14,
+   "tie_rate": 0.7,
+   "wins": {
+    "S1": 1,
+    "P": 5
+   },
+   "decided": 6,
+   "P_share_of_decided": 0.833,
+   "split_p_two_sided": 0.219,
+   "left_share_of_decided": 0.333
+  },
+  "S1/P (unrepaired, plain batch)": {
+   "judged": 12,
+   "expected": 12,
+   "ties": 6,
+   "tie_rate": 0.5,
+   "wins": {
+    "S1": 2,
+    "P": 4
+   },
+   "decided": 6,
+   "P_share_of_decided": 0.667,
+   "split_p_two_sided": 0.688,
+   "left_share_of_decided": 0.5
+  }
+ },
+ "verdict": "production preferred beyond the 60% limit — do not flip"
+}
