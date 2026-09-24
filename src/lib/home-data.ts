@@ -2,9 +2,10 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
-import { sortCollections, withTimeout, coverOverride } from '@/lib/collections-utils';
+import { sortCollections, withTimeout, coverOverride, cardImageCandidates } from '@/lib/collections-utils';
+import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { toGalleryCardUrl } from '@/lib/utils';
+import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
@@ -185,6 +186,77 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
 
   // Only return collections that have translated books to show
   return results.filter(r => r.books.length > 0);
+}
+
+/** One curated exhibition on the homepage showcase: the name, its one-line
+ *  hook (the collection's `subtitle`), and the card image chain. */
+export interface CuratedShowcaseItem {
+  slug: string;
+  name: string;
+  subtitle: string;
+  book_count: number;
+  artwork_count: number;
+  imageCandidates: string[];
+  /** The same chain with full-resolution gallery crops first — for the lead
+   *  card, whose slot is ~800px wide and would upscale the 300px thumb the
+   *  `hero_image` field usually holds into a blur. */
+  leadImageCandidates: string[];
+  framing?: CardFraming;
+}
+
+export interface CuratedShowcase {
+  items: CuratedShowcaseItem[];
+  /** How many published exhibitions /curated lists — the "All N exhibitions" link. */
+  total: number;
+}
+
+/**
+ * The homepage's editorial showcase: four published curated exhibitions, drawn
+ * at random from those with a one-line hook, a cover, and enough books to be
+ * worth a visit. The subject index below the showcase is the stable part of
+ * the section; this part rotates with each revalidation, the same way the
+ * featured-collection spread further down the page does.
+ * `homepage_exclude` opts an exhibition out without unpublishing it.
+ */
+async function getCuratedShowcase(): Promise<CuratedShowcase> {
+  const db = await getReadDb();
+  const published = { type: 'curated', published: true, visible: { $ne: false } };
+  const [total, docs] = await Promise.all([
+    db.collection('collections').countDocuments(published, { maxTimeMS: 5000 }),
+    db.collection('collections').aggregate([
+      {
+        $match: {
+          ...published,
+          homepage_exclude: { $ne: true },
+          book_count: { $gte: 15 },
+          subtitle: { $type: 'string', $nin: ['', '-'] },
+          $or: [
+            { hero_image: { $type: 'string', $nin: [''] } },
+            { 'featured_images.0': { $exists: true } },
+          ],
+        },
+      },
+      { $sample: { size: 4 } },
+      { $project: { _id: 0, slug: 1, name: 1, subtitle: 1, book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: ['$featured_images', 4] } } },
+    ], { maxTimeMS: 5000 }).toArray(),
+  ]);
+
+  const items: CuratedShowcaseItem[] = docs.map((doc) => {
+    const imageCandidates = cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image);
+    const full = imageCandidates.map(toGalleryFullUrl).filter((u): u is string => Boolean(u));
+    return {
+      slug: doc.slug as string,
+      name: doc.name as string,
+      subtitle: (doc.subtitle || '') as string,
+      book_count: (doc.book_count || 0) as number,
+      artwork_count: (doc.artwork_count || 0) as number,
+      imageCandidates,
+      leadImageCandidates: [...new Set([...full, ...imageCandidates])],
+      framing: readCardFraming(doc.card_framing),
+    };
+  }).filter((item) => item.imageCandidates.length > 0);
+
+  return { items, total };
 }
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
@@ -666,6 +738,8 @@ export interface HomeData {
   galleryPlates: Plate[];
   counts: HomeCounts;
   collections: CollectionForGrid[];
+  /** The four curated exhibitions the Collections section leads with. */
+  curatedShowcase: CuratedShowcase;
   blogPosts: HomeBlogPost[];
   /** The `en-espanol` collection card. Null on the English homepage. */
   spanishCollection: EsSpanishCollectionCard | null;
@@ -682,18 +756,20 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishCollection, localizedCollectionCounts] = await Promise.all([
+  const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
+    withTimeout(getCuratedShowcase(), 8000, emptyShowcase),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
 }

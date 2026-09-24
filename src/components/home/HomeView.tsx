@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
@@ -8,6 +7,8 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
+import CuratedShowcase from '@/components/home/CuratedShowcase';
+import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
@@ -24,15 +25,20 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, spanishCollection, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts } = data;
+  const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
-  // The grid card's count line. On /es it says how many of the collection's
+  // The subject index's count. On /es it also says how many of the collection's
   // books can actually be READ in Spanish — the same thing /es/collections
-  // tells you, and the only number on the card a Spanish visitor can act on.
-  // Empty on `/`, where every book is already in the page's language.
-  const countLabel = (slug: string, bookCount: number) => {
-    const localized = localizedCollectionCounts[slug] ?? 0;
-    const base = `${nf(bookCount)} ${t.booksLabel}`;
+  // tells you, and the only number there a Spanish visitor can act on. Empty
+  // suffix on `/`, where every book is already in the page's language. A
+  // collection of artworks rather than books (Leonardo's notebooks) counts
+  // its artworks instead of reading "0 books".
+  const indexCount = (col: { slug: string; book_count: number; artwork_count?: number }) => {
+    const base = col.book_count > 0
+      ? `${nf(col.book_count)} ${t.booksLabel}`
+      : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
+    const localized = localizedCollectionCounts[col.slug] ?? 0;
     return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
   };
 
@@ -70,104 +76,116 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
-      {/* Collections Grid */}
+      {/* Collections — two jobs, kept apart. The showcase leads: four curated
+          exhibitions with a one-line hook each, one large and three beside it,
+          because a small argued selection is what makes someone open a
+          collection. The subject index follows as plain navigation: every
+          top-level collection with its count, in the pinned reading order, no
+          images, so the whole library is one glance away without competing
+          with the showcase. The corpus stats belong to the index (they describe
+          the whole library), not to the section heading. */}
       <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <div className="flex items-baseline justify-between mb-8">
+          <div className="flex items-end justify-between gap-4 mb-8 md:mb-10">
             <div>
+              {hasShowcase && (
+                <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.showcaseEyebrow}</p>
+              )}
               <h2 className="text-3xl md:text-4xl text-primary font-display">
                 {t.collectionsHeading}
               </h2>
-              <p className="text-muted mt-2">
-                <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
-                {' '}&middot;{' '}
-                <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
-                {' '}&middot;{' '}
-                <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
-                {counts.artworkCount > 0 && (
-                  <>
-                    {' '}&middot;{' '}
-                    <Link href="/artwork" className="hover:text-accent-rust transition-colors">{nf(counts.artworkCount)} {t.artworksLabel}</Link>
-                  </>
-                )}
-                {counts.illustrationCount > 0 && (
-                  <>
-                    {' '}&middot;{' '}
-                    <Link href="/browse/subjects" className="hover:text-accent-rust transition-colors">{nf(counts.illustrationCount)} {t.illustrationsLabel}</Link>
-                  </>
-                )}
-              </p>
+              {hasShowcase && (
+                <p className="text-muted mt-2 max-w-2xl">{t.showcaseSubtitle}</p>
+              )}
             </div>
-            <Link
-              href="/catalog"
-              className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors hidden md:flex"
-            >
-              {t.browseCatalog}
-              <span className="text-xs">&rarr;</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {collections.slice(0, 11).map((col, i) => (
+            {hasShowcase && (
               <Link
-                key={col.slug}
-                href={lp(`/collections/${col.slug}`)}
-                className="group relative rounded-xl overflow-hidden aspect-square hover:shadow-lg transition-all hover:-translate-y-0.5"
+                href="/curated"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
-                {col.hero_image ? (
-                  <Image
-                    src={col.hero_image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    priority={i < 4}
-                    loading={i < 8 ? 'eager' : 'lazy'}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                    {countLabel(col.slug, col.book_count)}
-                  </p>
-                  <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
-                    {collectionName(lang, col.slug, col.name)}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-            {collections.length > 11 && (
-              <Link
-                href={lp('/collections')}
-                className="group relative rounded-xl overflow-hidden aspect-square bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
-              >
-                <div className="text-center px-4">
-                  <p className="font-serif text-lg sm:text-xl text-white/90 group-hover:text-accent-gold transition-colors">
-                    {t.seeMore(collections.length - 11)}
-                  </p>
-                  <p className="text-white/40 text-xs mt-1">{t.collectionsWord}</p>
-                </div>
+                {t.allExhibitions(curatedShowcase.total)} &rarr;
               </Link>
             )}
           </div>
 
-          {/* Curated exhibitions link */}
-          <div className="mt-6 flex items-center justify-between">
-            <Link
-              href="/curated"
-              className="group inline-flex items-center gap-2 text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
-            >
-              {t.curatedExhibitions}
-              <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
-            </Link>
-            <Link
-              href={lp('/collections')}
-              className="text-sm text-muted hover:text-accent-rust transition-colors"
-            >
-              {t.allCollections} &rarr;
-            </Link>
+          {hasShowcase && (
+            <>
+              <CuratedShowcase
+                items={curatedShowcase.items}
+                lang={lang}
+                countLabel={(item) => `${nf(item.book_count)} ${t.booksLabel}`}
+              />
+              <div className="mt-6 sm:hidden">
+                <Link href="/curated" className="text-sm text-accent-rust hover:underline">
+                  {t.allExhibitions(curatedShowcase.total)} &rarr;
+                </Link>
+              </div>
+            </>
+          )}
+
+          {/* Subject index */}
+          <div className={hasShowcase ? 'mt-14 md:mt-20 pt-10 md:pt-12 border-t border-border-light' : ''}>
+            <div className="flex items-end justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-2xl md:text-3xl text-primary font-display">
+                  {t.bySubjectHeading}
+                </h3>
+                <p className="text-muted mt-2">
+                  {t.bySubjectLead}{' '}
+                  <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
+                  {' '}&middot;{' '}
+                  <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                  {' '}&middot;{' '}
+                  <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
+                  {counts.artworkCount > 0 && (
+                    <>
+                      {' '}&middot;{' '}
+                      <Link href="/artwork" className="hover:text-accent-rust transition-colors">{nf(counts.artworkCount)} {t.artworksLabel}</Link>
+                    </>
+                  )}
+                  {counts.illustrationCount > 0 && (
+                    <>
+                      {' '}&middot;{' '}
+                      <Link href="/browse/subjects" className="hover:text-accent-rust transition-colors">{nf(counts.illustrationCount)} {t.illustrationsLabel}</Link>
+                    </>
+                  )}
+                </p>
+              </div>
+              <Link
+                href="/catalog"
+                className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors hidden md:flex"
+              >
+                {t.browseCatalog}
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </div>
+
+            <SubjectIndex
+              items={collections.map((col) => ({
+                slug: col.slug,
+                href: lp(`/collections/${col.slug}`),
+                name: collectionName(lang, col.slug, col.name),
+                count: indexCount(col),
+              }))}
+              initialCount={12}
+              showMoreLabel={t.seeMore(Math.max(0, collections.length - 12))}
+            />
+
+            <div className="mt-6 flex items-center justify-between">
+              <Link
+                href="/curated"
+                className="group inline-flex items-center gap-2 text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
+              >
+                {t.curatedExhibitions}
+                <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+              </Link>
+              <Link
+                href={lp('/collections')}
+                className="text-sm text-muted hover:text-accent-rust transition-colors"
+              >
+                {t.allCollections} &rarr;
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -3,8 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride, PINNED_COLLECTION_SLUGS } from '@/lib/collections-utils';
-import { toGalleryCardUrl } from '@/lib/utils';
+import { sortCollections, collectionCountLabel, coverOverride, PINNED_COLLECTION_SLUGS, cardImageCandidates } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
@@ -178,31 +177,6 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   } catch {
     return { decades: [], total: 0 };
   }
-}
-
-/** Ordered, de-duped list of candidate image URLs for a card — prefer small
- *  thumbnails, then extracted, then the raw page, across all featured images.
- *  The card renders these with a fallback chain so a single dead/slow source
- *  doesn't leave a broken thumbnail. */
-function cardImageCandidates(images: FeaturedImage[] | undefined, override?: string, heroImage?: string): string[] {
-  const urls: string[] = [];
-  const add = (u: string | undefined | null) => {
-    const s = sanitizeThumbnail(u);
-    if (s && !urls.includes(s)) urls.push(s);
-  };
-  add(override); // curated cover wins over everything
-  add(heroImage); // curated hero_image (set per-collection in Mongo) beats auto featured_images
-  if (!images?.length) return urls;
-  for (const img of images) {
-    if (typeof img === 'string') { add(img); continue; }
-    // Prefer the 600px gallery `-card.jpg` (sharp on retina); fall back to the
-    // 300px thumb for crops whose card variant isn't backfilled yet (#2401).
-    add(toGalleryCardUrl(img.thumbnail_url));
-    add(img.thumbnail_url);
-    add(img.extracted_url);
-    add(img.image_url);
-  }
-  return urls;
 }
 
 function CollectionCard({ col, tenantSlug, priority = false }: { col: CollectionDoc; tenantSlug?: string | null; priority?: boolean }) {

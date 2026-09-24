@@ -67,6 +67,16 @@ export interface HomeStrings {
   collectionsWord: string;
   curatedExhibitions: string;
   allCollections: string;
+  /** Small caps line above the Collections heading: what the showcase IS. */
+  showcaseEyebrow: string;
+  /** One sentence under the heading saying why an exhibition is worth opening. */
+  showcaseSubtitle: string;
+  /** "All 60 exhibitions" — the link to /curated. */
+  allExhibitions: (n: number) => string;
+  /** The subject index heading under the showcase. */
+  bySubjectHeading: string;
+  /** The stats line's lead-in: "Everything in the library:" */
+  bySubjectLead: string;
 
   // Recently translated slider
   recentlyTranslatedHeading: string;
@@ -178,6 +188,11 @@ const en: HomeStrings = {
   collectionsWord: 'collections',
   curatedExhibitions: 'Browse curated exhibitions',
   allCollections: 'All collections',
+  showcaseEyebrow: 'Curated exhibitions',
+  showcaseSubtitle: 'Small selections with an argument to make — a few dozen books each, chosen and introduced by a curator.',
+  allExhibitions: (n) => `All ${n} exhibitions`,
+  bySubjectHeading: 'Browse by subject',
+  bySubjectLead: 'The whole library:',
 
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
@@ -284,6 +299,11 @@ const es: HomeStrings = {
   collectionsWord: 'colecciones',
   curatedExhibitions: 'Explorar exposiciones comisariadas',
   allCollections: 'Todas las colecciones',
+  showcaseEyebrow: 'Exposiciones comisariadas',
+  showcaseSubtitle: 'Selecciones breves con una tesis — unas docenas de libros cada una, elegidos y presentados por un comisario.',
+  allExhibitions: (n) => `Las ${n} exposiciones`,
+  bySubjectHeading: 'Explorar por tema',
+  bySubjectLead: 'Toda la biblioteca:',
 
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',

@@ -1,3 +1,5 @@
+import { toGalleryCardUrl } from '@/lib/utils';
+
 /**
  * Shared utilities for collections and homepage.
  * Extracted from duplicated code across page components.
@@ -134,6 +136,43 @@ export function collectionCountLabel(bookCount?: number, artworkCount?: number, 
   if (b > 0) return `${b.toLocaleString()} texts`;
   if (a > 0) return `${a.toLocaleString()} artworks`;
   return '';
+}
+
+// ---------- Card image candidates ----------
+
+/** The image fields a collection document may carry per featured image. */
+export interface CardImageSource {
+  thumbnail_url?: string;
+  extracted_url?: string;
+  image_url?: string;
+}
+
+/** Ordered list of image URLs for a collection card, best first:
+ *  1. the hand-curated override (coverOverride)
+ *  2. the collection's `hero_image` (set per-collection in Mongo)
+ *  3. each featured image, preferring the 600px gallery `-card.jpg` (sharp on
+ *     retina), then the 300px thumb, then the extracted/original.
+ *  The card renders these with a fallback chain so a single dead/slow source
+ *  doesn't leave a broken thumbnail. Shared by /collections and the homepage. */
+export function cardImageCandidates(images: (CardImageSource | string)[] | undefined, override?: string, heroImage?: string): string[] {
+  const urls: string[] = [];
+  const add = (u: string | undefined | null) => {
+    const s = sanitizeThumbnail(u);
+    if (s && !urls.includes(s)) urls.push(s);
+  };
+  add(override); // curated cover wins over everything
+  add(heroImage); // curated hero_image (set per-collection in Mongo) beats auto featured_images
+  if (!images?.length) return urls;
+  for (const img of images) {
+    if (typeof img === 'string') { add(img); continue; }
+    // Prefer the 600px gallery `-card.jpg` (sharp on retina); fall back to the
+    // 300px thumb for crops whose card variant isn't backfilled yet (#2401).
+    add(toGalleryCardUrl(img.thumbnail_url));
+    add(img.thumbnail_url);
+    add(img.extracted_url);
+    add(img.image_url);
+  }
+  return urls;
 }
 
 // ---------- Promise timeout ----------
