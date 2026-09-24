@@ -142,8 +142,10 @@ export async function GET(request: NextRequest) {
     const includeArchive = searchParams.get('includeArchive') === 'true';
     // Uncapped by DEFAULT for API callers (#4509 follow-up). The cap exists so
     // one heavily-illustrated volume cannot dominate the human gallery — and
-    // that surface sets its own value (src/app/gallery/page.tsx passes 3
-    // explicitly), so it is unaffected. As an API default it was a silent
+    // that surface sets its own value (src/app/gallery/page.tsx's server render
+    // AND GalleryClient's refetch both send 3 — until #4856's follow-up only the
+    // server render did, so the client refetch replaced it uncapped and one
+    // tarot deck filled the first rows). As an API default it was a silent
     // CEILING: it put ~120,000 of our own images out of reach however far a
     // consumer paginated. Pass maxPerBook=3 to get the curated spread back.
     const maxPerBook = parseInt(searchParams.get('maxPerBook') || '1000');

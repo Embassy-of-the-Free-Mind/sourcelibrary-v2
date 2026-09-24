@@ -160,11 +160,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
-  // /api/gallery caps results at 3 images per book by default, for variety on the
-  // unscoped browse. Collection pages link here with maxPerBook=999 so "view all
-  // N plates" lands on all N — but the param was never read, so those links
-  // opened a page showing 9 of 267 and looked broken.
+  // At most 3 images per book, for variety, unless the URL asks otherwise or the
+  // view is one book. /api/gallery itself is uncapped by default since #4522, which
+  // said this page "passes 3 explicitly" — only the server render did; this client
+  // refetch replaced it uncapped, so one tarot deck or codex filled the first rows.
+  // Collection pages link here with maxPerBook=999 so "view all N plates" lands on all N.
   const maxPerBookParam = searchParams.get('maxPerBook');
+  const maxPerBook = maxPerBookParam ? parseInt(maxPerBookParam, 10) : (bookId ? undefined : 3);
 
   const limit = 48;
 
@@ -219,7 +221,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           offset: 0,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
-          maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
+          maxPerBook,
           library: libraryFilter || undefined,
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
@@ -252,7 +254,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -267,7 +269,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         offset: currentOffset,
         bookId: bookId || undefined,
         collection: collectionFilter || undefined,
-        maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
+        maxPerBook,
         library: libraryFilter || undefined,
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
@@ -299,7 +301,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
