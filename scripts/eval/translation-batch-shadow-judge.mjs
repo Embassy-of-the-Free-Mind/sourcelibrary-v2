@@ -48,7 +48,7 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { readerText, similarity, assessSeam } from './translation-batch-continuity-ab.mjs';
 import { resetSeed, seededRand, binomTwoSided } from './lib/paired-stats.mjs';
-import { RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
+import { RUNS_COLLECTION, SEAM_SOURCE_REPAIR } from '../lib/translate-batch-seam.mjs';
 
 const args = process.argv.slice(2);
 const arg = (n) => args.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
@@ -71,13 +71,22 @@ const tail = (t) => (t.length > EXCERPT ? '…' + t.slice(-EXCERPT) : t);
 const head = (t) => (t.length > EXCERPT ? t.slice(0, EXCERPT) + '…' : t);
 const junction = (prev, seam) => `${tail(readerText(prev))}\n\n———— page break ————\n\n${head(readerText(seam))}`;
 
-/** The text a lane put on a page: for a shadow run, the repair when the run chose it, else the draft. */
+/**
+ * The text a lane put on a page: for a shadow run, the repair when the run chose it, else the draft.
+ * The worker records the choice as `source: 'repair'` (translate-batch-seam.mjs chooseSeamText). Until
+ * 2026-09-25 this matched the literal 'repaired', which no outcome ever carries, so BOTH judged draws
+ * (#5020 first shadow, #5053 decisive) showed the judges the plain DRAFT on every seam page while the key
+ * labelled it "repaired". A matcher pinned to a literal passes vacuously — so this now asserts that a run
+ * with repairs substituted at least one, instead of silently judging the wrong arm.
+ */
 function laneTexts(run) {
   const drafts = new Map((run.drafts || []).map((d) => [d.id, d.text]));
   const repairs = new Map((run.repairs || []).map((r) => [r.id, r.text]));
   const chosen = new Map((run.seam_outcomes || []).map((o) => [o.id, o.source]));
   const out = new Map(drafts);
-  for (const [id, source] of chosen) if (source === 'repaired' && repairs.has(id)) out.set(id, repairs.get(id));
+  let substituted = 0;
+  for (const [id, source] of chosen) if (source === SEAM_SOURCE_REPAIR && repairs.has(id)) { out.set(id, repairs.get(id)); substituted++; }
+  if (repairs.size && !substituted) throw new Error(`${run.id}: run has ${repairs.size} repairs but no seam_outcome chose one — outcome vocabulary drifted from '${SEAM_SOURCE_REPAIR}'?`);
   return out;
 }
 

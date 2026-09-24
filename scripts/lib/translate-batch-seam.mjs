@@ -66,6 +66,8 @@ export const MIN_OCR_CHARS_FOR_BLOCK = 200;   // translate-worker MIN_OCR_CHARS_
 export const SEAM_SEED_CHARS = 2000;          // the repair prompt's previous-page window (arm Et)
 export const MAX_PAGES_PER_RUN = 300;         // retranslate-stale MAX_PAGES_PER_BATCH; keeps the run doc small
 export const RUNS_COLLECTION = 'translate_batch_runs';
+/** `seam_outcomes[].source` when the run chose the repair over the draft. Readers (the eval harness) import this rather than re-typing the literal. */
+export const SEAM_SOURCE_REPAIR = 'repair';
 export const ENDPOINT = 'hetzner/translate-batch-seam';
 export const REPAIR_PROMPT_VERSION = 'seam-repair-e2-tail'; // the label arm Et was metered under
 export const REVISION_NOTE = 'translate-batch-seam';
@@ -239,7 +241,7 @@ export function chooseSeamText({ ocr, draft, repaired }) {
   if (!repaired) return { text: draft, source: 'draft', reason: 'repair-missing' };
   const health = assessTranslationHealth(ocr, repaired);
   if (!health.healthy) return { text: draft, source: 'draft', reason: `repair-${health.reason}` };
-  return { text: repaired, source: 'repair', reason: repaired === draft ? 'repair-unchanged' : 'repair-changed' };
+  return { text: repaired, source: SEAM_SOURCE_REPAIR, reason: repaired === draft ? 'repair-unchanged' : 'repair-changed' };
 }
 
 // ── Batch API response helpers ─────────────────────────────────────────────
@@ -648,7 +650,7 @@ export async function writeRun(db, run, deps) {
         const choice = chooseSeamText({ ocr: page.ocr.data, draft, repaired: repairs.get(ref.id) });
         text = choice.text;
         seamOutcomes.push({ id: ref.id, source: choice.source, reason: choice.reason });
-        if (choice.source === 'repair') counts.repaired++;
+        if (choice.source === SEAM_SOURCE_REPAIR) counts.repaired++;
         else if (repairs.get(ref.id)) counts.repair_rejected++;
       }
       const res = await writePage(db, {
