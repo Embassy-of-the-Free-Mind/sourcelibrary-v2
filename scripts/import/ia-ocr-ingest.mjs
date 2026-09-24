@@ -116,6 +116,22 @@ function gateFor(book) {
   return iaOcrMinAgreement(book.language);
 }
 const MIN_REF_PAGES = +arg('--min-ref-pages', 5);
+// SCRIPT-LOSS GUARD (2026-09-24). The Archive's engine transcribes inline non-Latin as nothing at
+// all. Measured on 1,214 paired leaves (our model read vs the Archive's reading of the SAME leaf,
+// books 1800+): ours 28,489 non-Latin characters, the Archive's 149. Then measured on the books
+// this lane had already filled — every one of 220 filled pages carried ZERO, while our own pages
+// of the same books carried up to 602 characters of Devanagari or Greek.
+//
+// The agreement gate half-catches this on its own, because losing a script drags the score down:
+// it refused every book whose sampled pages were >= 12% non-Latin (Hatha Yoga Pradipika, two
+// Samkhya texts, Yoga-mimansa). It does NOT catch the sparse case — ten books with script on
+// 4-16% of pages were filled, and their Greek and Sanskrit is now silently gone. A few lines of
+// Greek in an alchemical text is exactly the citation a reader came for, so the threshold here is
+// PRESENCE, not proportion.
+const NONLATIN_RE = /[\u0370-\u03FF\u0590-\u05FF\u0600-\u06FF\u0700-\u074F\u0900-\u097F\u4E00-\u9FFF\u3040-\u30FF]/g;
+/** Non-Latin characters on a page; >= this many means the page really carries script, not a stray glyph. */
+const MIN_SCRIPT_CHARS = +arg('--min-script-chars', 5);
+const ALLOW_SCRIPT_LOSS = process.argv.includes('--allow-script-loss');
 const MAX_OFFSET = +arg('--max-offset', 3);
 const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
 const CACHE = arg('--cache', null);
@@ -201,7 +217,7 @@ await withMongo(async (db) => {
   const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, script_loss: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -299,10 +315,17 @@ await withMongo(async (db) => {
     const implausibleLeaves = wordFillable.length - fillable.length;
     summary.implausible_leaves += implausibleLeaves;
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
-    const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
+    // Judge on OUR OWN pages, not the Archive's: the Archive's text is where the script is missing,
+    // so asking IT whether the book has any would always answer no. This is the one signal that
+    // cannot be read off the thing being judged.
+    const scriptPages = pages.filter((p) => p.ocr?.data && p.ocr?.source !== SOURCE
+      && (p.ocr.data.match(NONLATIN_RE) || []).length >= MIN_SCRIPT_CHARS).length;
+    const scriptLoss = scriptPages > 0 && !ALLOW_SCRIPT_LOSS;
+    const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : scriptLoss ? 'SCRIPT_LOSS' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
-    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
+    const scriptNote = scriptPages > 0 ? ` | NON-LATIN on ${scriptPages} of our pages${ALLOW_SCRIPT_LOSS ? ' (override: filling anyway)' : ''}` : '';
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}${scriptNote}`);
+    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; if (verdict === 'SCRIPT_LOSS') summary.script_loss++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
 
