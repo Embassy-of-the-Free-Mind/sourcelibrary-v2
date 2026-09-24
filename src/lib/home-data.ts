@@ -5,7 +5,7 @@ import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout, coverOverride, cardImageCandidates } from '@/lib/collections-utils';
 import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
-import { toGalleryCardUrl } from '@/lib/utils';
+import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
@@ -197,6 +197,10 @@ export interface CuratedShowcaseItem {
   book_count: number;
   artwork_count: number;
   imageCandidates: string[];
+  /** The same chain with full-resolution gallery crops first — for the lead
+   *  card, whose slot is ~800px wide and would upscale the 300px thumb the
+   *  `hero_image` field usually holds into a blur. */
+  leadImageCandidates: string[];
   framing?: CardFraming;
 }
 
@@ -237,15 +241,20 @@ async function getCuratedShowcase(): Promise<CuratedShowcase> {
     ], { maxTimeMS: 5000 }).toArray(),
   ]);
 
-  const items: CuratedShowcaseItem[] = docs.map((doc) => ({
-    slug: doc.slug as string,
-    name: doc.name as string,
-    subtitle: (doc.subtitle || '') as string,
-    book_count: (doc.book_count || 0) as number,
-    artwork_count: (doc.artwork_count || 0) as number,
-    imageCandidates: cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image),
-    framing: readCardFraming(doc.card_framing),
-  })).filter((item) => item.imageCandidates.length > 0);
+  const items: CuratedShowcaseItem[] = docs.map((doc) => {
+    const imageCandidates = cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image);
+    const full = imageCandidates.map(toGalleryFullUrl).filter((u): u is string => Boolean(u));
+    return {
+      slug: doc.slug as string,
+      name: doc.name as string,
+      subtitle: (doc.subtitle || '') as string,
+      book_count: (doc.book_count || 0) as number,
+      artwork_count: (doc.artwork_count || 0) as number,
+      imageCandidates,
+      leadImageCandidates: [...new Set([...full, ...imageCandidates])],
+      framing: readCardFraming(doc.card_framing),
+    };
+  }).filter((item) => item.imageCandidates.length > 0);
 
   return { items, total };
 }

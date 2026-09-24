@@ -22,7 +22,7 @@ function LeadCard({ item, href, count }: { item: CuratedShowcaseItem; href: stri
     <Link href={href} className="group block">
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-border-light bg-warm">
         <CollectionCardImage
-          candidates={item.imageCandidates}
+          candidates={item.leadImageCandidates}
           alt=""
           sizes="(max-width: 1024px) 100vw, 60vw"
           priority

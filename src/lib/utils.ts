@@ -257,6 +257,16 @@ export function toGalleryCardUrl(url: string | null | undefined): string | null 
   return url.replace('-thumb.jpg', '-card.jpg');
 }
 
+/** The full-resolution gallery crop (the bare `.jpg`, ~2000-3000px) behind a
+ *  `-thumb.jpg` (300px) or `-card.jpg` (600px) gallery URL. For a hero-sized
+ *  slot, where either small variant would be upscaled to a blur. Null when the
+ *  URL is not a gallery crop. */
+export function toGalleryFullUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (!/\/gallery\/.*-(thumb|card)\.jpg(\?|$)/.test(url)) return null;
+  return url.replace(/-(thumb|card)\.jpg/, '.jpg');
+}
+
 /**
  * Get the best available image URL for a page.
  *

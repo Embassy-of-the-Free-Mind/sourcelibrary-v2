@@ -8,6 +8,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
+import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
@@ -159,23 +160,16 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </Link>
             </div>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10">
-              {collections.map((col) => (
-                <li key={col.slug} className="border-b border-border-light">
-                  <Link
-                    href={lp(`/collections/${col.slug}`)}
-                    className="group flex items-baseline justify-between gap-4 py-2.5"
-                  >
-                    <span className="font-serif text-lg text-primary group-hover:text-accent-rust transition-colors leading-snug">
-                      {collectionName(lang, col.slug, col.name)}
-                    </span>
-                    <span className="text-xs text-muted tabular-nums whitespace-nowrap">
-                      {indexCount(col)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <SubjectIndex
+              items={collections.map((col) => ({
+                slug: col.slug,
+                href: lp(`/collections/${col.slug}`),
+                name: collectionName(lang, col.slug, col.name),
+                count: indexCount(col),
+              }))}
+              initialCount={12}
+              showMoreLabel={t.seeMore}
+            />
 
             <div className="mt-6 flex items-center justify-between">
               <Link
