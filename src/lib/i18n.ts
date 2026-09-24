@@ -142,6 +142,12 @@ export interface FeedbackStrings {
   tryAgain: string;
   thanks: string;
   received: string;
+  /** Image attachments — button, the hint beside it, and its two failure states. */
+  attach: string;
+  attachHint: string;
+  attachLimit: string;
+  attachFailed: string;
+  removeImage: string;
 }
 
 export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
@@ -163,6 +169,11 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
     tryAgain: 'Try again',
     thanks: 'Thank you!',
     received: 'Your feedback has been received.',
+    attach: 'Add a screenshot',
+    attachHint: 'or paste / drop an image',
+    attachLimit: 'Up to four images',
+    attachFailed: 'That image could not be uploaded. Try a smaller one.',
+    removeImage: 'Remove image',
   },
   es: {
     calloutHeading: 'Comparte tus comentarios.',
@@ -182,6 +193,11 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
     tryAgain: 'Int\u00e9ntalo de nuevo',
     thanks: '\u00a1Gracias!',
     received: 'Hemos recibido tus comentarios.',
+    attach: 'A\u00f1adir una captura',
+    attachHint: 'o pega / arrastra una imagen',
+    attachLimit: 'Hasta cuatro im\u00e1genes',
+    attachFailed: 'No se pudo subir esa imagen. Prueba con una m\u00e1s peque\u00f1a.',
+    removeImage: 'Quitar imagen',
   },
 };
 

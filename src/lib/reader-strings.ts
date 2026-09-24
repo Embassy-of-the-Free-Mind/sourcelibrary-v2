@@ -427,6 +427,12 @@ export interface ReaderStrings {
     tooShort: string;
     /** Reminds the reader which page the note will carry. */
     aboutPage: (pageNumber: number | string) => string;
+    /** Image attachments — button, the hint beside it, and its two failure states. */
+    attach: string;
+    attachHint: string;
+    attachLimit: string;
+    attachFailed: string;
+    removeImage: string;
   };
 
   /** Revision history panel (public; the Restore action itself stays
@@ -824,6 +830,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       failed: 'That did not send. Try again in a moment.',
       tooShort: 'Tell us a little more first.',
       aboutPage: (pageNumber) => `Your note will say you were on p. ${pageNumber}.`,
+      attach: 'Add a screenshot',
+      attachHint: 'or paste / drop an image',
+      attachLimit: 'Up to four images',
+      attachFailed: 'That image could not be uploaded. Try a smaller one.',
+      removeImage: 'Remove image',
     },
     history: {
       title: 'Revision history',
@@ -1208,6 +1219,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
       tooShort: 'Cuéntanos un poco más primero.',
       aboutPage: (pageNumber) => `Tu mensaje indicará que estabas en la p. ${pageNumber}.`,
+      attach: 'Añadir una captura',
+      attachHint: 'o pega / arrastra una imagen',
+      attachLimit: 'Hasta cuatro imágenes',
+      attachFailed: 'No se pudo subir esa imagen. Prueba con una más pequeña.',
+      removeImage: 'Quitar imagen',
     },
     history: {
       title: 'Historial de revisiones',

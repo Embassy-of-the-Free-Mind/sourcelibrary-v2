@@ -31,3 +31,17 @@
  */
 export const MAX_FEEDBACK_MESSAGE = 20000;
 export const MIN_FEEDBACK_MESSAGE = 2;
+
+/**
+ * Image attachments (screenshots of a broken page, a photo of a misread line).
+ *
+ * `MAX_FEEDBACK_IMAGE_BYTES` bounds what `/api/feedback/upload` will accept in
+ * one request. It sits under Vercel's 4.5 MB function body limit on purpose:
+ * the client shrinks anything larger before sending (see useFeedbackImages),
+ * because a phone photo is routinely 3–8 MB and a request over the platform
+ * cap fails with a 413 the route never sees.
+ */
+export const MAX_FEEDBACK_IMAGES = 4;
+export const MAX_FEEDBACK_IMAGE_BYTES = 4 * 1024 * 1024;
+/** Longest edge after server-side re-encode. A 2000px screenshot is still legible. */
+export const FEEDBACK_IMAGE_MAX_EDGE = 2000;

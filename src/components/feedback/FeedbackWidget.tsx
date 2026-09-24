@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSession } from 'next-auth/react';
 import { useLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
+import { useFeedbackImages } from './useFeedbackImages';
+import { FeedbackImageAttach } from './FeedbackImageAttach';
 
 export default function FeedbackWidget({ className, style, initialMessage, label, heading, intro, placeholder, contactEmail }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string; heading?: string; intro?: string; placeholder?: string; contactEmail?: string }) {
   const { data: session } = useSession();
@@ -22,6 +24,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const attachments = useFeedbackImages();
 
   const signedInName = session?.user?.name || '';
   const signedInEmail = session?.user?.email || '';
@@ -33,6 +36,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
   const submit = async () => {
     if (!message.trim()) return;
     if (needsEmailForVolunteer) return;
+    if (attachments.uploading) return;
     setStatus('sending');
     try {
       const res = await fetch('/api/feedback', {
@@ -44,11 +48,13 @@ export default function FeedbackWidget({ className, style, initialMessage, label
           email: effectiveEmail || null,
           page: typeof window !== 'undefined' ? window.location.pathname : null,
           wantsToHelp,
+          images: attachments.urls,
         }),
       });
       if (!res.ok) throw new Error();
       setStatus('sent');
       setMessage('');
+      attachments.reset();
       setName('');
       setEmail('');
       const sentWithVolunteer = wantsToHelp;
@@ -113,9 +119,13 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               onChange={(e) => setMessage(e.target.value)}
               placeholder={placeholder || t.placeholder}
               rows={4}
+              onPaste={attachments.onPaste}
+              onDrop={attachments.onDrop}
+              onDragOver={attachments.onDragOver}
               className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold resize-none"
               autoFocus
             />
+            <FeedbackImageAttach attachments={attachments} strings={t} disabled={status === 'sending'} />
 
             {signedInName ? (
               <p className="text-xs text-stone-500 mt-3">{t.sendingAs} {signedInName}</p>
@@ -159,7 +169,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               </p>
               <button
                 onClick={submit}
-                disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer}
+                disabled={!message.trim() || status === 'sending' || needsEmailForVolunteer || attachments.uploading}
                 className="w-full sm:w-auto flex-shrink-0 px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
                 {status === 'sending' ? t.sending : status === 'error' ? t.tryAgain : t.send}

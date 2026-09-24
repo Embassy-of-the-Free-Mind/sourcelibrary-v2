@@ -16,6 +16,8 @@ interface FeedbackItem {
   read: boolean;
   /** Set from the SourceLibrary-MCP user-agent at submit time. Absent on pre-backfill rows. */
   channel?: 'mcp' | 'web' | null;
+  /** Public R2 URLs written by /api/feedback/upload; absent on rows without pictures. */
+  images?: string[];
 }
 
 /**
@@ -125,6 +127,24 @@ export default function FeedbackPage() {
                 <p className="text-base leading-relaxed mb-3" style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap' }}>
                   {item.message}
                 </p>
+                {item.images && item.images.length > 0 && (
+                  <ul className="flex flex-wrap gap-2 mb-3">
+                    {item.images.map(src => (
+                      <li key={src}>
+                        <a href={src} target="_blank" rel="noopener noreferrer" title="Open full size">
+                          {/* eslint-disable-next-line @next/next/no-img-element -- R2 URL, already validated at write time */}
+                          <img
+                            src={src}
+                            alt="Attached by the submitter"
+                            className="h-28 w-auto max-w-[240px] object-cover rounded"
+                            style={{ border: '1px solid var(--border-light)', background: 'var(--bg-cream)' }}
+                            loading="lazy"
+                          />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: 'var(--text-faint)' }}>
                   {/* Only shown under "All", where the two kinds are interleaved and the
                       distinction is otherwise invisible. */}
