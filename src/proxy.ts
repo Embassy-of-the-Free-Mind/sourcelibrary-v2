@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
+import { PREFIXED_LOCALES } from '@/lib/locale-path';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import {
@@ -397,6 +398,20 @@ async function isBookAdmittedOnTenant(
   if (book.tenantId) return book.tenantId === tenantId;
   const bookId = book.id || book._id?.toString();
   return !!bookId && tenantCatalogReferencesBook(tenantSlug, bookId);
+}
+
+/** Slug of the book an id-form segment names, or null (unknown, or a lookup error). */
+async function resolveBookSlugById(segment: string): Promise<string | null> {
+  try {
+    const db = await getDb();
+    const book = await db.collection('books').findOne(
+      { $or: [{ id: segment }, { slug: segment }] },
+      { projection: { slug: 1 } },
+    ) as { slug?: string } | null;
+    return book?.slug ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -868,6 +883,26 @@ export async function proxy(request: NextRequest) {
     });
   }
 
+  // A partner reading room has no localized layout: only the standard layout
+  // is localized, tenant rooms keep the English/embed layout (i18n.md). Yet the
+  // `/es/*` routes are global and answered on every host, so on a subdomain
+  // `/es` rendered the GLOBAL Spanish homepage (23 foreign book links on BPH)
+  // and `/es/book/<slug>` the global landing page — the #5038 leak through the
+  // locale door, because the lockdown below only ever matched `/book/…`.
+  // Strip the prefix on-host (308): the redirected path then meets every
+  // tenant rule in this block like any other. Pathname-only, so no redirect
+  // ever leaves the subdomain (tenant-lockdown.md, invariant 1).
+  if (tenant) {
+    const localePrefix = PREFIXED_LOCALES.find(
+      l => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
+    );
+    if (localePrefix) {
+      const url = request.nextUrl.clone();
+      url.pathname = pathname.slice(localePrefix.length + 1) || '/';
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
   // Checked before the rewrite block, which skips /api/* — the listed API twins
   // are the unscoped data sources behind these pages and must be refused too.
@@ -929,9 +964,22 @@ export async function proxy(request: NextRequest) {
     let refuseBook = false;
     const bookRoot = pathname.match(/^\/book\/([^/]+)\/?$/);
     if (bookRoot && !request.nextUrl.searchParams.has('page')) {
+      // The apex `/book/[id]` page 301s an id-form URL to the slug; the embed
+      // route it is rewritten to here does not, so a subdomain served the same
+      // book at two URLs. Canonicalize first, on-host; the redirected request
+      // then runs the admission check below on the slug.
+      let bookSegment = bookRoot[1];
+      try { bookSegment = decodeURIComponent(bookSegment); } catch { /* keep raw */ }
+      if (looksLikeBookId(bookSegment)) {
+        const slug = await resolveBookSlugById(bookSegment);
+        if (slug && slug !== bookSegment) {
+          url.pathname = `/book/${slug}`;
+          return NextResponse.redirect(url, 308);
+        }
+      }
       const subdomainTenantForBook = await resolveTenantByExactSlug(tenant);
       if (subdomainTenantForBook?.id) {
-        if (await isBookAdmittedOnTenant(decodeURIComponent(bookRoot[1]), tenant, subdomainTenantForBook.id)) {
+        if (await isBookAdmittedOnTenant(bookSegment, tenant, subdomainTenantForBook.id)) {
           url.pathname = `/embed/${tenant}/book/${bookRoot[1]}`;
           needsRewrite = true;
         } else {
