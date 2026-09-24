@@ -1,0 +1,1687 @@
+{
+ "seed": 6252,
+ "books": [
+  "69b51e949a81ef7feb3d7864",
+  "69b51e72ff09e4fe943af0f5",
+  "69b6304e1c1c21a3738009c8",
+  "69b630791c1c21a3738028ac",
+  "69b6311a1c1c21a3738052ca",
+  "69b630c31c1c21a373804063",
+  "69b6312f1c1c21a373805dbb",
+  "69b630dc1c1c21a3738049a3",
+  "69b631fb1c1c21a37380c13a"
+ ],
+ "midflow": true,
+ "skipped": [
+  {
+   "bookId": "69b51e72ff09e4fe943af0f5",
+   "seamId": "69b51e72ff09e4fe943af0fe",
+   "pair": "*",
+   "reason": "not mid-flow: block k opens with a heading"
+  },
+  {
+   "bookId": "69b51e72ff09e4fe943af0f5",
+   "seamId": "69b51e72ff09e4fe943af116",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b51e72ff09e4fe943af0f5",
+   "seamId": "69b51e72ff09e4fe943af13e",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b6304e1c1c21a3738009c8",
+   "seamId": "69b6304e1c1c21a3738009d3",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b6304e1c1c21a3738009c8",
+   "seamId": "69b6304e1c1c21a3738009eb",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630791c1c21a3738028ac",
+   "seamId": "69b630791c1c21a3738028f0",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a37380408d",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a373804095",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a37380409d",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040a5",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040ad",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040b7",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040c8",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040d0",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b630c31c1c21a373804063",
+   "seamId": "69b630c31c1c21a3738040d8",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b6312f1c1c21a373805dbb",
+   "seamId": "69b6312f1c1c21a373805df0",
+   "pair": "*",
+   "reason": "degenerate half (<120 chars) in S2"
+  },
+  {
+   "bookId": "69b631fb1c1c21a37380c13a",
+   "seamId": "69b631fb1c1c21a37380c148",
+   "pair": "*",
+   "reason": "not mid-flow: block k opens with a heading"
+  },
+  {
+   "bookId": "69b631fb1c1c21a37380c13a",
+   "seamId": "69b631fb1c1c21a37380c189",
+   "pair": "S1/S2",
+   "reason": "missing text in S2"
+  },
+  {
+   "bookId": "69b631fb1c1c21a37380c13a",
+   "seamId": "69b631fb1c1c21a37380c19a",
+   "pair": "*",
+   "reason": "not mid-flow: block k-1 ends at a section terminator"
+  }
+ ],
+ "key": [
+  {
+   "id": "j012",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d786d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1542,
+    "P": 1443,
+    "ocr": 1917
+   }
+  },
+  {
+   "id": "j028",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d786d",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1542,
+    "S2": 1528,
+    "ocr": 1917
+   }
+  },
+  {
+   "id": "j111",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7875",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1422,
+    "P": 1455,
+    "ocr": 1801
+   }
+  },
+  {
+   "id": "j026",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7875",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1422,
+    "S2": 1421,
+    "ocr": 1801
+   }
+  },
+  {
+   "id": "j089",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d787d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1355,
+    "P": 784,
+    "ocr": 1783
+   }
+  },
+  {
+   "id": "j016",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d787d",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1355,
+    "S2": 1387,
+    "ocr": 1783
+   }
+  },
+  {
+   "id": "j100",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7885",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1408,
+    "P": 1407,
+    "ocr": 1909
+   }
+  },
+  {
+   "id": "j101",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7885",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1408,
+    "S2": 1361,
+    "ocr": 1909
+   }
+  },
+  {
+   "id": "j076",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d788d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1299,
+    "P": 1242,
+    "ocr": 1665
+   }
+  },
+  {
+   "id": "j069",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d788d",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1299,
+    "S2": 1294,
+    "ocr": 1665
+   }
+  },
+  {
+   "id": "j065",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7895",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1365,
+    "P": 1342,
+    "ocr": 1887
+   }
+  },
+  {
+   "id": "j071",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d7895",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1365,
+    "S2": 1375,
+    "ocr": 1887
+   }
+  },
+  {
+   "id": "j020",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d789d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1214,
+    "P": 1293,
+    "ocr": 1672
+   }
+  },
+  {
+   "id": "j010",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d789d",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1214,
+    "S2": 1297,
+    "ocr": 1672
+   }
+  },
+  {
+   "id": "j005",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78a5",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1352,
+    "P": 1364,
+    "ocr": 1781
+   }
+  },
+  {
+   "id": "j042",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78a5",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1352,
+    "S2": 1362,
+    "ocr": 1781
+   }
+  },
+  {
+   "id": "j029",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78ad",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1057,
+    "P": 1289,
+    "ocr": 1509
+   }
+  },
+  {
+   "id": "j014",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78ad",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1057,
+    "S2": 1062,
+    "ocr": 1509
+   }
+  },
+  {
+   "id": "j075",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78b5",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1489,
+    "P": 1438,
+    "ocr": 1934
+   }
+  },
+  {
+   "id": "j096",
+   "book_id": "69b51e949a81ef7feb3d7864",
+   "seam_id": "69b51e949a81ef7feb3d78b5",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1489,
+    "S2": 1484,
+    "ocr": 1934
+   }
+  },
+  {
+   "id": "j081",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af106",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1529,
+    "P": 3321,
+    "ocr": 1636
+   }
+  },
+  {
+   "id": "j056",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af106",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1529,
+    "S2": 1568,
+    "ocr": 1636
+   }
+  },
+  {
+   "id": "j090",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af116",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1747,
+    "P": 1810,
+    "ocr": 1765
+   }
+  },
+  {
+   "id": "j079",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af11e",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1955,
+    "P": 1938,
+    "ocr": 1826
+   }
+  },
+  {
+   "id": "j073",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af11e",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1955,
+    "S2": 1928,
+    "ocr": 1826
+   }
+  },
+  {
+   "id": "j018",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af126",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1799,
+    "P": 1778,
+    "ocr": 1878
+   }
+  },
+  {
+   "id": "j009",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af126",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1799,
+    "S2": 1796,
+    "ocr": 1878
+   }
+  },
+  {
+   "id": "j046",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af12e",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1774,
+    "P": 1766,
+    "ocr": 1821
+   }
+  },
+  {
+   "id": "j087",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af12e",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1774,
+    "S2": 2784,
+    "ocr": 1821
+   }
+  },
+  {
+   "id": "j001",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af136",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1865,
+    "P": 1858,
+    "ocr": 1904
+   }
+  },
+  {
+   "id": "j011",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af136",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1865,
+    "S2": 1824,
+    "ocr": 1904
+   }
+  },
+  {
+   "id": "j110",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af13e",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1734,
+    "P": 1769,
+    "ocr": 2030
+   }
+  },
+  {
+   "id": "j050",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af146",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1790,
+    "P": 1821,
+    "ocr": 1871
+   }
+  },
+  {
+   "id": "j054",
+   "book_id": "69b51e72ff09e4fe943af0f5",
+   "seam_id": "69b51e72ff09e4fe943af146",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1790,
+    "S2": 1820,
+    "ocr": 1871
+   }
+  },
+  {
+   "id": "j004",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009d3",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1792,
+    "P": 1908,
+    "ocr": 1895
+   }
+  },
+  {
+   "id": "j103",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009e3",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1632,
+    "P": 2105,
+    "ocr": 1964
+   }
+  },
+  {
+   "id": "j023",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009e3",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1632,
+    "S2": 2004,
+    "ocr": 1964
+   }
+  },
+  {
+   "id": "j088",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009eb",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1846,
+    "P": 1857,
+    "ocr": 1970
+   }
+  },
+  {
+   "id": "j077",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009f3",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1788,
+    "P": 1766,
+    "ocr": 1828
+   }
+  },
+  {
+   "id": "j047",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009f3",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1788,
+    "S2": 1760,
+    "ocr": 1828
+   }
+  },
+  {
+   "id": "j002",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009fc",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1807,
+    "P": 1797,
+    "ocr": 1935
+   }
+  },
+  {
+   "id": "j045",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a3738009fc",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1807,
+    "S2": 1825,
+    "ocr": 1935
+   }
+  },
+  {
+   "id": "j037",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a373800a06",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1813,
+    "P": 1820,
+    "ocr": 1899
+   }
+  },
+  {
+   "id": "j027",
+   "book_id": "69b6304e1c1c21a3738009c8",
+   "seam_id": "69b6304e1c1c21a373800a06",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1813,
+    "S2": 1785,
+    "ocr": 1899
+   }
+  },
+  {
+   "id": "j044",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028c7",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1375,
+    "P": 1387,
+    "ocr": 1669
+   }
+  },
+  {
+   "id": "j013",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028c7",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1375,
+    "S2": 1339,
+    "ocr": 1669
+   }
+  },
+  {
+   "id": "j098",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028e0",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1229,
+    "P": 1253,
+    "ocr": 1620
+   }
+  },
+  {
+   "id": "j107",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028e0",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1229,
+    "S2": 1213,
+    "ocr": 1620
+   }
+  },
+  {
+   "id": "j099",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028e8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1057,
+    "P": 1057,
+    "ocr": 1486
+   }
+  },
+  {
+   "id": "j031",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028e8",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1057,
+    "S2": 1151,
+    "ocr": 1486
+   }
+  },
+  {
+   "id": "j109",
+   "book_id": "69b630791c1c21a3738028ac",
+   "seam_id": "69b630791c1c21a3738028f0",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1168,
+    "P": 1115,
+    "ocr": 1382
+   }
+  },
+  {
+   "id": "j062",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a3738052d8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2372,
+    "P": 2321,
+    "ocr": 2011
+   }
+  },
+  {
+   "id": "j017",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a3738052d8",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2372,
+    "S2": 2400,
+    "ocr": 2011
+   }
+  },
+  {
+   "id": "j030",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a3738052f0",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2349,
+    "P": 2398,
+    "ocr": 2021
+   }
+  },
+  {
+   "id": "j055",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a3738052f0",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2349,
+    "S2": 2356,
+    "ocr": 2021
+   }
+  },
+  {
+   "id": "j105",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a373805300",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 4013,
+    "P": 2073,
+    "ocr": 2152
+   }
+  },
+  {
+   "id": "j074",
+   "book_id": "69b6311a1c1c21a3738052ca",
+   "seam_id": "69b6311a1c1c21a373805300",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 4013,
+    "S2": 2063,
+    "ocr": 2152
+   }
+  },
+  {
+   "id": "j059",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a37380406c",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2012,
+    "P": 2004,
+    "ocr": 1714
+   }
+  },
+  {
+   "id": "j097",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a37380406c",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2012,
+    "S2": 2084,
+    "ocr": 1714
+   }
+  },
+  {
+   "id": "j064",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a373804085",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2188,
+    "P": 2118,
+    "ocr": 1912
+   }
+  },
+  {
+   "id": "j022",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a373804085",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2188,
+    "S2": 2204,
+    "ocr": 1912
+   }
+  },
+  {
+   "id": "j049",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a37380408d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2088,
+    "P": 2009,
+    "ocr": 1896
+   }
+  },
+  {
+   "id": "j082",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a373804095",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2299,
+    "P": 2219,
+    "ocr": 1912
+   }
+  },
+  {
+   "id": "j083",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a37380409d",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2087,
+    "P": 2105,
+    "ocr": 1948
+   }
+  },
+  {
+   "id": "j041",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040a5",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2250,
+    "P": 2255,
+    "ocr": 1866
+   }
+  },
+  {
+   "id": "j092",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040ad",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2053,
+    "P": 1539,
+    "ocr": 1860
+   }
+  },
+  {
+   "id": "j019",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040b7",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2145,
+    "P": 2142,
+    "ocr": 1881
+   }
+  },
+  {
+   "id": "j015",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040c8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2091,
+    "P": 1939,
+    "ocr": 1910
+   }
+  },
+  {
+   "id": "j072",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040d0",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2193,
+    "P": 2301,
+    "ocr": 1887
+   }
+  },
+  {
+   "id": "j058",
+   "book_id": "69b630c31c1c21a373804063",
+   "seam_id": "69b630c31c1c21a3738040d8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2236,
+    "P": 2179,
+    "ocr": 1807
+   }
+  },
+  {
+   "id": "j057",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805dd8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2818,
+    "P": 2515,
+    "ocr": 2187
+   }
+  },
+  {
+   "id": "j066",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805dd8",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2818,
+    "S2": 2686,
+    "ocr": 2187
+   }
+  },
+  {
+   "id": "j043",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805de0",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2727,
+    "P": 2656,
+    "ocr": 2338
+   }
+  },
+  {
+   "id": "j038",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805de0",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2727,
+    "S2": 4755,
+    "ocr": 2338
+   }
+  },
+  {
+   "id": "j086",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805de8",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2734,
+    "P": 2814,
+    "ocr": 2191
+   }
+  },
+  {
+   "id": "j094",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805de8",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2734,
+    "S2": 2840,
+    "ocr": 2191
+   }
+  },
+  {
+   "id": "j007",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805e08",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2484,
+    "P": 2586,
+    "ocr": 2439
+   }
+  },
+  {
+   "id": "j048",
+   "book_id": "69b6312f1c1c21a373805dbb",
+   "seam_id": "69b6312f1c1c21a373805e08",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 2484,
+    "S2": 2535,
+    "ocr": 2439
+   }
+  },
+  {
+   "id": "j052",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ac",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1024,
+    "P": 1055,
+    "ocr": 1068
+   }
+  },
+  {
+   "id": "j084",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ac",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1024,
+    "S2": 1009,
+    "ocr": 1068
+   }
+  },
+  {
+   "id": "j039",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049b4",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1096,
+    "P": 1112,
+    "ocr": 1006
+   }
+  },
+  {
+   "id": "j067",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049b4",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1096,
+    "S2": 1119,
+    "ocr": 1006
+   }
+  },
+  {
+   "id": "j040",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049bc",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1140,
+    "P": 1098,
+    "ocr": 1070
+   }
+  },
+  {
+   "id": "j036",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049bc",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1140,
+    "S2": 1061,
+    "ocr": 1070
+   }
+  },
+  {
+   "id": "j033",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049c4",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1175,
+    "P": 1042,
+    "ocr": 1782
+   }
+  },
+  {
+   "id": "j053",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049c4",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1175,
+    "S2": 1084,
+    "ocr": 1782
+   }
+  },
+  {
+   "id": "j102",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049e7",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 960,
+    "P": 957,
+    "ocr": 1221
+   }
+  },
+  {
+   "id": "j106",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049e7",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 960,
+    "S2": 962,
+    "ocr": 1221
+   }
+  },
+  {
+   "id": "j032",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ef",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 899,
+    "P": 934,
+    "ocr": 1252
+   }
+  },
+  {
+   "id": "j034",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ef",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 899,
+    "S2": 914,
+    "ocr": 1252
+   }
+  },
+  {
+   "id": "j021",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049f7",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1219,
+    "P": 1210,
+    "ocr": 1126
+   }
+  },
+  {
+   "id": "j003",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049f7",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1219,
+    "S2": 1208,
+    "ocr": 1126
+   }
+  },
+  {
+   "id": "j006",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ff",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 971,
+    "P": 971,
+    "ocr": 1346
+   }
+  },
+  {
+   "id": "j078",
+   "book_id": "69b630dc1c1c21a3738049a3",
+   "seam_id": "69b630dc1c1c21a3738049ff",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 971,
+    "S2": 957,
+    "ocr": 1346
+   }
+  },
+  {
+   "id": "j070",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c150",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1301,
+    "P": 1294,
+    "ocr": 1377
+   }
+  },
+  {
+   "id": "j093",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c150",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1301,
+    "S2": 1272,
+    "ocr": 1377
+   }
+  },
+  {
+   "id": "j061",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c159",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1520,
+    "P": 1486,
+    "ocr": 1528
+   }
+  },
+  {
+   "id": "j091",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c159",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1520,
+    "S2": 1594,
+    "ocr": 1528
+   }
+  },
+  {
+   "id": "j068",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c161",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1251,
+    "P": 1289,
+    "ocr": 1411
+   }
+  },
+  {
+   "id": "j051",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c161",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1251,
+    "S2": 1283,
+    "ocr": 1411
+   }
+  },
+  {
+   "id": "j025",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c169",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 1425,
+    "P": 1395,
+    "ocr": 1632
+   }
+  },
+  {
+   "id": "j008",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c169",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1425,
+    "S2": 1433,
+    "ocr": 1632
+   }
+  },
+  {
+   "id": "j095",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c171",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1441,
+    "P": 1444,
+    "ocr": 2281
+   }
+  },
+  {
+   "id": "j108",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c171",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1441,
+    "S2": 1434,
+    "ocr": 2281
+   }
+  },
+  {
+   "id": "j060",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c179",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "P",
+   "seam_len": {
+    "S1": 2276,
+    "P": 1247,
+    "ocr": 1349
+   }
+  },
+  {
+   "id": "j035",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c179",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 2276,
+    "S2": 2261,
+    "ocr": 1349
+   }
+  },
+  {
+   "id": "j080",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c181",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1421,
+    "P": 1355,
+    "ocr": 1369
+   }
+  },
+  {
+   "id": "j063",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c181",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S1",
+   "right": "S2",
+   "seam_len": {
+    "S1": 1421,
+    "S2": 1346,
+    "ocr": 1369
+   }
+  },
+  {
+   "id": "j085",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c189",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1431,
+    "P": 1430,
+    "ocr": 1537
+   }
+  },
+  {
+   "id": "j024",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c191",
+   "pair": "S1/P",
+   "s1_repaired": true,
+   "left": "P",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1370,
+    "P": 1332,
+    "ocr": 1353
+   }
+  },
+  {
+   "id": "j104",
+   "book_id": "69b631fb1c1c21a37380c13a",
+   "seam_id": "69b631fb1c1c21a37380c191",
+   "pair": "S1/S2",
+   "s1_repaired": true,
+   "left": "S2",
+   "right": "S1",
+   "seam_len": {
+    "S1": 1370,
+    "S2": 1333,
+    "ocr": 1353
+   }
+  }
+ ]
+}
