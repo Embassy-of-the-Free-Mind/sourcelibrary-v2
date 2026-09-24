@@ -57,12 +57,19 @@ async function main() {
   async function stats(raws) {
     if (raws.length === 0) return { count: 0, book_count: 0, thumbnail: null };
     const match = { ...base, 'metadata.subjects': { $in: raws } };
-    const [count, books, top] = await Promise.all([
+    // Thumbnail: prefer pictures whose FIRST subject is in this topic. Ranking on
+    // gallery_quality alone picked allegorical frontispieces that mention everything
+    // (a world map for Emblems, a title-page allegory for Plants).
+    const primary = { ...match, 'metadata.subjects.0': { $in: raws } };
+    const [count, books, primaryTop, anyTop] = await Promise.all([
       gallery.countDocuments(match, { maxTimeMS: 300000 }),
       gallery.aggregate([{ $match: match }, { $group: { _id: '$book_id' } }, { $count: 'n' }], { maxTimeMS: 300000 }).toArray(),
+      gallery.find(primary, { projection: { thumbnail_url: 1, extracted_url: 1 } })
+        .sort({ gallery_quality: -1 }).limit(25).toArray(),
       gallery.find(match, { projection: { thumbnail_url: 1, extracted_url: 1 } })
         .sort({ gallery_quality: -1 }).limit(25).toArray(),
     ]);
+    const top = [...primaryTop, ...anyTop];
     const pick = top.find((d) => !usedThumbs.has(d.thumbnail_url || d.extracted_url)) ?? top[0];
     const thumbnail = pick ? (pick.thumbnail_url || pick.extracted_url) : null;
     if (thumbnail) usedThumbs.add(thumbnail);
