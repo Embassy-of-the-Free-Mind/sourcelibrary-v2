@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Upload, Loader2, ExternalLink } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -232,6 +232,26 @@ export default function IdentifyPage() {
     submitFile(file);
   }, [submitFile]);
 
+  // Paste an image from the clipboard (a screenshot, or "Copy image" from
+  // another site) anywhere on the page — desktop visitors rarely have a camera
+  // pointed at the print, but often have the picture on screen already.
+  useEffect(() => {
+    const onPaste = (e: ClipboardEvent) => {
+      if (loading) return;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('input, textarea, [contenteditable="true"]')) return;
+      const item = Array.from(e.clipboardData?.items ?? []).find(
+        i => i.kind === 'file' && i.type.startsWith('image/'),
+      );
+      const file = item?.getAsFile();
+      if (!file) return;
+      e.preventDefault();
+      handleFile(file);
+    };
+    window.addEventListener('paste', onPaste);
+    return () => window.removeEventListener('paste', onPaste);
+  }, [loading, handleFile]);
+
   const retry = useCallback(() => {
     if (lastFileRef.current) {
       submitFile(lastFileRef.current);
@@ -336,6 +356,9 @@ export default function IdentifyPage() {
                   <Upload className="w-4 h-4" />
                   Upload an image
                 </button>
+                <span className="hidden sm:inline text-sm text-white/50">
+                  or paste one with {'\u2318'}V / Ctrl+V
+                </span>
               </div>
             </div>
           </section>
