@@ -1,0 +1,661 @@
+{
+ "_note": "Real pages where the numbers matter; synthetic sequences are the printed values of real books.",
+ "cases": [
+  {
+   "name": "Camden Society member list: 17 → 20, surnames C → E (a leaf missing)",
+   "book": "69528509ab34727b1f04b1db",
+   "expect": [
+    {
+     "shape": "jump",
+     "fromValue": 17,
+     "toValue": 20,
+     "d": 2
+    }
+   ],
+   "pages": [
+    {
+     "p": 132,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>15</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\n| | |\n|---|---|\n| M. le Comte Arthur Beugnot, Membre de l'Institut de France. | Rev. Wm. Blunt, B.A. *Under Master of Merchant-Taylors' School.* |\n| John Bevan, Esq. Cowbridge. | Miss Bockett, Southcote Lodge, Berks. |\n| La Bibliothèque du Roi, Paris. | Henry G. Bohn, Esq. |\n| Robert Bickersteth, Esq. Liverpool. | Rev. J. A. Bolster, M.A., M.R.I.A. *Local Secretary at Cork.* |\n| John Bidwell, Esq. F.S.A. | Edward A. Bond, Esq. |\n| Leonard Shelford Bidwell, Esq. F.S.A. Thetford. | Mr. William Boone. |\n| Rev. George Augustus Biedermann, *Rector of Dauntsey, Wilts.* | Mr. Lionel Booth. |\n| Rev. Edward T. Bigge, M.A. *Fellow of Merton Coll. Oxford.* | Rt. Hon. Sir John Bernard Bosanquet, one of the Judges of the Common Pleas, M.A. |\n| Arthur Biggs, Esq. Bristol. | Rev. Joseph Bosworth, LL.D., F.R.S., F.S.A. *Local Secretary at Nottingham.* |\n| Edw. Charles Bird, Esq. Southwold. | William Fuller Boteler, Esq. M.A., Q.C. |\n| Thomas Birkbeck, Esq. | (c.) Beriah Botfield, Esq. M.P., F.R.S., F.S.A. Norton Hall, Northamptonshire. |\n| The Birmingham Public Library. | Rev. Thomas Bowdler, Sydenham. |\n| John Black, Esq. | Henry Bower, Esq. F.S.A. *Local Secretary at Doncaster.* [Died Feb. 25, 1842.] |\n| William Black, Esq. | Rev. Thomas Frere Bowerbank, M.A. *Vicar of Chiswick.* |\n| Alexander Blair, Esq. LL.D. Bristol. | Mark Boyd, Esq. |\n| Dr. Malachi Blake, Taunton. | David Bradberry, Esq. |\n| Rev. W. Blakesley, M.A. Trin. Coll. Camb. | Robert Greene Bradley, Esq. *Bencher of Gray's Inn.* |\n| Michael Bland, Esq. F.R.S., F.S.A. | Joseph Hoare Bradshaw, Esq. |\n| Rev. George Bland, M.A. | George Weare Braikenridge, Esq. F.S.A. Brislington House, Som. |\n| Francis Lawrence Bland, Esq. | Edw. Henry Bramah, Esq. Reading. |\n| William Bland, Esq. Place House, Hartlip. | Jonathan Brammall, Esq. Sheffield. |\n| Charles Blandy, Esq. Reading. | Rev. Thomas Brancker, M.A. *Fellow of Wadham Coll. Oxford.* |\n| (c.) John Jackson Blandy, Esq. Reading. | **Right Hon. LORD BRAYBROOKE,** F.S.A. *Pres. Percy Society.* |\n| William Blandy, Esq. Reading. | Edward Wedlake Brayley, Esq. F.S.A. |\n| Octavian Blewitt, Esq. *Secretary to the Literary Fund Society.* | |\n| (c.) Rev. Philip Bliss, D.C.L., F.S.A. *Registrar of the Univ. of Oxford. Local Secretary at Oxford.* | |\n| Bindon Blood, Esq. F.R.S.E., F.S.A. Scot., M.R.I.A. Edinburgh. | |\n| Edward Blore, Esq. D.C.L., F.S.A. | |\n| B. Blundell, Esq. Temple. | |\n\n<vocab>Camden Society, membership list, Arthur Beugnot, Philip Bliss, Lord Braybrooke, 19th century, historical society, learned societies</vocab>"
+    },
+    {
+     "p": 133,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>16</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\nHenry Brice, Esq. Bristol.\nRev. Thomas Edward Bridges, D.D. President of Corpus Christi Coll. Oxford.\nBenjamin Heywood Bright, Esq. Ham Green, near Bristol.\nJohn Bright, Esq. M.D.\nJohn Ruggles Brise, Esq. Spains-hall, Finchingfield, Essex.\nJohn Britton, Esq. <term>F.S.A.</term>\nJames Broadwood, Esq.\nThomas Broadwood, Esq.\nWilliam Brockedon, Esq. <term>F.R.S.</term>\nJohn Trotter Brockett, Esq. <term>F.S.A.</term> Newcastle.\nWilliam Bromet, M.D., <term>F.S.A.</term> Surgeon 1st Life Guards.\n(c.) Right Hon. Lord Brooke, St. John’s College, Oxford.\nFrancis Capper Brooke, Esq. Ufford Place, Suffolk.\nCharles Bros, Esq.\nThe Right Hon. Lord Brougham and Vaux, <term>F.R.S.</term> Pres. of Univ. College, London, and Member of the National Institute of France.\nRev. John Brown, M.A. Vice-Master of Trinity College, Camb.\nSamuel Cowper Brown, Esq. <term>F.S.A.</term> Shillingford Cross, Devon.\nW. H. Brown, Esq.\nRev. G. A. Browne, M.A. Fellow of Trin. Coll. Camb.\nRt. Hon. Sir Jas. Lewis Knight Bruce, Vice Chancellor, <term>F.R.S.</term>, <term>F.S.A.</term>\nJOHN BRUCE, Esq. <term>F.S.A.</term> *Treasurer.*\nThomas Bruce, Esq. Shenfield.\nMr. Leonard Bruton, Bristol.\nRev. Guy Bryan, M.A., <term>F.S.A.</term> Rector of Woodham Walter, Essex. *Local Secretary at Maldon.*\nMr. John Bryant.\n\nRev. George Buckeridge, M.A. Fellow of Worcester Coll. Oxford.\nGeorge Buckton, Esq. Oakfield.\nLieut.-Gen. Sir Henry Bunbury, K.C.B., <term>F.S.A.</term>\nJohn Burder, Esq. <term>F.S.A.</term>\nWilliam Burge, Esq. <term>Q.C.</term> M.A., <term>D.C.L.</term>\nJohn William Burgon, Esq. *Auditor.*\nJames Burn, Esq. <term>W.S.</term> Edinburgh.\nVen. Charles Parr Burney, D.D., <term>F.R.S.</term>, <term>F.S.A.</term> Archdeacon of St. Alban’s.\nJohn Burrell, Esq. Durham.\nRobert Burrell, Esq. Durham.\nEdmund Burrow, Esq.\nDecimus Burton, Esq. <term>F.R.S.</term>, <term>F.S.A.</term>\nJohn Hill Burton, Esq. Advocate, Edinburgh.\nSeptimus Burton, Esq.\nRev. Thomas Byrth, M.A., <term>F.S.A.</term>, Rector of Wallasey, Cheshire.\nBenjamin Bond Cabbell, Esq. <term>F.R.S.</term>, <term>F.S.A.</term>\nFrederick Caldwell, Esq.\nRev. Henry Calthrop, B.D. Fellow of Corpus Christi Coll. Camb.\nRt. Hon. Lord Campbell.\nJohn Campbell, Esq.\nRt. Hon. the Earl of Camperdown.\nEdward Capps, Esq.\nRev. Henry Card, D.D. <term>F.S.A.</term> Great Malvern.\nJ. S. Cardale, Esq. Leicester.\nThe Cardiff Institution.\n(c.) The Rev. Edward Cardwell, D.D. <term>Camden’s Professor of Ancient History</term>, Oxford.\n(c.) Peter Stafford Carey, Esq. M.A.\nRt. Hon. the Earl of Carlisle, <term>F.R.S.</term>\nEdward John Carlos, Esq.\n\n<vocab>Camden Society, F.R.S., F.S.A., Treasurer, Auditor, Local Secretary, K.C.B., Q.C., D.D., B.D., M.A., D.C.L., W.S., Fellow, Rector, Archdeacon, Vice Chancellor, Professor of Ancient History</vocab>"
+    },
+    {
+     "p": 134,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>17</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\n| | |\n|:--- |:--- |\n| A. N. Carmichael, Esq. Principal Classical Master at the Edinburgh Academy. | Charles Clark, Esq. |\n| Rev. John Carr, M.A. Fellow of Balliol Coll. Oxford. | John Clarke, Esq. Southwark. |\n| William Thomas Carr, Esq. | John Clarke, jun. Esq. Peatling Hall, Leicestershire. |\n| John Carter, Esq. Coventry. | Thomas Clarke, Esq. Knedlington, Yorkshire. |\n| George Alfred Carthew, Esq. East Dereham, Norfolk. | Thomas Clarke, Esq. F.S.A. |\n| (c.) Cornelius Cartwright, Esq. Dudley. | Rev. Piers C. Claughton, M.A. Fellow of Univ. Coll. Oxford. |\n| Rev. W. Carus, M.A. Fellow of Trin. Coll. Camb. | Rev. Patrick Clason, D.D. Edinb. |\n| The Rt. Hon. Earl Cawdor, F.R.S. | Jacob Clements, Esq. |\n| Mr. James Chaffin, Islington. | (c.) Rev. A. B. Clough, B.D., F.S.A. Jesus Coll. Oxford. |\n| Thomas Chapman, Esq. F.S.A. | Charles Thornton Coathupe, Esq. Wraxhall, near Bristol. |\n| William Chapman, Esq. Richmond, Surrey. | James Cobb, Esq. Yarmouth. |\n| William Chappell, Esq. F.S.A. Treasurer of the Percy and the Musical Antiq. Societies. | J. Ingram Cobbin, Esq. |\n| Mr. Emerson Charnley, Newcastle. | Sir William S. R. Cockburn, Bart. M.A., Bath. |\n| Sir William Chatterton, Bart. | William Colbourne, Esq. Chippenham. |\n| J. M. G. Cheek, Esq. Evesham. | Robert Cole, Esq. |\n| Rt. Rev. the Lord Bishop of Chichester. | Rev. Edward Coleridge, M.A. |\n| (c.) John Walbanke Childers, Esq. M.P. | Francis George Coleridge, Esq. Ottery St. Mary, Devon. |\n| Francis Cholmeley, Esq. F.S.A. | Henry Nelson Coleridge, Esq. M.A. |\n| Rev. Henry Christmas, M.A. F.R.S. F.S.A. | The Hon. Sir John Taylor Coleridge, one of the Judges of the Queen's Bench, M.A. |\n| Henry Christy, Esq. | **JOHN PAYNE COLLIER**, Esq. F.S.A. Director of the Shakespeare Society. |\n| William Church, Esq. Streatley, Reading. | Mr. Edwin Collings, Bath. |\n| Rev. Thomas Townson Churton, M.A. Brazenose College, Oxford. | Edward Collins, Esq. |\n| Rev. Francis Foreman Clark, B.A. Townfield House, near Newcastle, Staffordshire. | Thomas Combe, Esq. Oxford. |\n| George Thomas Clark, Esq. | Rev. C. Comberbach, Stonor. |\n| William Clark, M.D. Professor of Anatomy, Cambridge. | Mr. John Comport, Stroud. |\n| | (c.) Rev. John Connop, M.A. Bradfield Hall, Berkshire. |\n| | Edward Conroy, Esq. M.A., M.R.I.A. |\n| | Lord Albert Conyngham, F.S.A. |\n\n<vocab>Camden Society, Edinburgh Academy, Balliol College, Trinity College, Earl Cawdor, Percy Society, Musical Antiquarian Society, John Payne Collier, Shakespeare Society, F.S.A., M.R.I.A., 19th-century membership list</vocab>"
+    },
+    {
+     "p": 135,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>20</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\nEdward Hugh Edwards, Esq.\nJoseph Berry Edwards, Esq. South-\n   wold.\nThe Rt. Hon. George Earl of Egre-\n   mont, F.S.A.\nBenjamin Elam, Esq.\nRev. H. T. Ellacombe, M.A., F.S.A.\n   Bitton near Bristol.\nSir HENRY ELLIS, K.H., LL.B.\n   F.R.S., Sec. S. A., Principal Li-\n   brarian of the British Museum.\nRev. John Joseph Ellis, M.A., F.S.A.\nJoseph Ellis, jun. Esq. Richmond.\nJohn Fullerton Elphinstone, Esq.\nHastings Elwin, Esq.\nWilliam Empson, Esq. M.A.\nDr. Endlicher, Vienna.\nRt. Hon. Thomas Erskine, Chief\n   Judge of the Bankruptcy Court.\nGeorge Essell, Esq. Rochester.\nThomas Grimston Bucknall Estcourt,\n   Esq. M. P. for the University of\n   Oxford. Estcourt, Gloucestershire.\nRev. Henry H. Evans.\nHerbert Norman Evans, Esq.\nThomas Evans, Esq. Cardiff.\nJohn Leman Ewen, Esq. Southwold.\nEdmund Eyton, Esq.\nJames Falconar, Esq. F.S.A.\nJames William Farrer, Esq. Master\n   in Chancery.\nMr. Thomas Faulkner, Chelsea.\nMr. William Faulkner, Chelsea.\nRev. Godfrey Faussett, D.D. Mar-\n   garet Professor of Divinity, Oxf.\nJoseph Fearn, Esq.\nTarver R. Fearnside, Esq.\nDr. Feder, Privy Councillor, and\n   Head Librarian to the Court of\n   Hesse Darmstadt.\nRev. George O. Fenwicke, F.S.A.\n   Aston near Birmingham. *Local\n   Secretary at Birmingham.*\nSir Charles Dalrymple Fergusson, of\n   Hailes and Kilkerran, Bart.\nCopley Fielding, Esq. Brighton.\nRev. Henry Fielding, M.A. Sal-\n   monby Rectory near Horncastle.\nWilliam Figg, Esq. Lewes.\nCharles Filica, Esq.\nJohn Joseph Ashby Fillinham, Esq.\nCharles John Fisher, Esq. Jesus\n   College, Cambridge.\nJohn Goate Fisher, Esq. Yarmouth.\nPaul Hawkins Fisher, Esq. The Cas-\n   tle, Stroud.\nWm. Stevenson Fitch, Esq. *Local\n   Secretary at Ipswich.*\nRobert Fitch, Esq. Norwich.\nEdward Herbert Fitzherbert, Esq.\n   M.A., Barrister at Law.\nRichard Wilson FitzPatrick, Esq.\n   South Luffenham, Rutland.\nThe Right Hon. Earl FitzWilliam.\nSir Hesketh Fleetwood, Bart. Rossall\n   Hall, Lancashire.\n(c.) Thomas W. Fletcher, Esq. F.R.S.,\n   F.S.A. *Local Secretary at Dudley.*\n(c.) Rev. William Fletcher, M.A.\n   *Local Secretary at Derby.*\n(c.) John Harris Flooks, Esq. Wilton.\nSir William J. H. Browne Folkes,\n   Bart. F.R.S., F.S.A.\n(c.) George Folliott, Esq. Vicar's\n   Cross, Chester.\nThomas G. Fonnereau, Esq.\n   F.S.A.\nM. de la Fontenelle de Vaudoré,\n   Conseiller à la Cour Royale de\n   Poitiers, For. Memb. S.A.\nCharles Ford, Esq.\nG. J. Ford, Esq. Exeter Coll. Oxf.\n\n<vocab>Camden Society, Edward Hugh Edwards, Earl of Egremont, Sir Henry Ellis, British Museum, Dr. Endlicher, Thomas Erskine, Bankruptcy Court, University of Oxford, Margaret Professor of Divinity, local secretary, Earl FitzWilliam, Fontenelle de Vaudoré, Poitiers</vocab>"
+    },
+    {
+     "p": 136,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>21</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\n### MEMBERS OF THE CAMDEN SOCIETY, 1841-42.\n\n| | |\n|:---|:---|\n| Rev. Josiah Forshall, M.A., F.R.S., F.S.A. Secretary to the British Museum. | Humphrey Gibbs, Esq. |\n| John Forster, Esq. Newton-in-the-Willows. | Joseph Gibbs, Esq. M.I.C.E. |\n| Matthew Forster, Esq. Belsize, Hampstead. | John Gidley, Esq. Exeter. |\n| Hon. George M. Fortescue. | Edward Gifford, Esq. Admiralty. |\n| Edward Foss, Esq. F.S.A. | Richard James Gilman, Esq. |\n| Rev. W. W. Fowler, Darley, near Derby. | William Anthony Gilman, Esq. |\n| Lieut.-Colonel Charles Richard Fox. | Thomas Ward Gleadow, Esq. Hull. |\n| Henry Ralph Francis, Esq. M.A. late Fellow of St. John’s College, Cambridge. | The Literary and Scientific Association of Gloucester. |\n| Miss Francis, Hampstead. | John Hulbert Glover, Esq. F.S.A. Librarian to Her Majesty. |\n| Richard Frankum, Esq. | Sir Stephen Richard Glynne, Bart. F.S.A. |\n| Thomas Fraser, Esq. Advocate, Inner Temple. | George Godwin, jun. Esq. F.R.S. F.S.A. |\n| Mons. Frère, Rouen. | Gabriel Goldney, Esq. |\n| Thomas Frewen, Esq. Cold Overton, Leicestershire. | Aaron Asher Goldsmid, Esq. |\n| Charles Frost, Esq. F.S.A. Pres. of the Lit. and Philos. Soc. of Hull. <br> *Local Secretary at Hull.* | Sir Isaac Lyon Goldsmid, Bart. F.R.S., F.S.A. |\n| Baldwin Fulford, Esq. Great Fulford, Devon. | Rev. Charles Portales Golightly, M.A. Oriel College, Oxford. |\n| (c.) John Lewis Ffytche, Esq. Linc. Coll. Oxf., Thorpe Hall, Louth. | Rev. W. Goode. |\n| Charles Gambier, Esq. Harley-street. | James Gooden, Esq. F.S.A. |\n| James Gandy, jun. Esq. Heave’s Lodge, near Kendal. | Jonathan Gooding, Esq. *Local Secretary at Southwold.* |\n| Rev. Richard Garnett, F.S.A. British Museum. | Alexander Gordon, jun. Esq. |\n| Thomas Garrard, Esq. F.S.A. Bristol. | Richard Gosling, Esq. |\n| Thomas Gaspey, Esq. | The Gottingen University Library. |\n| Mr. Geeves, Regent-street. | James Robert Gowen, Esq. F.G.S. |\n| Herr von Gévay, Vienna. | John Black Gracie, Esq. F.S.A. Sc. Edinburgh. |\n| Professor Aug. Fred. Gfroerer, Director of the Royal Library, Stutt-gardt. | Charles Graham, Esq. F.S.A. |\n| | Rev. Robert Henry Gray, Christ Church, Oxford. |\n| | The Library of the Hon. Society of Gray’s Inn. |\n| | Charles Green, Esq. Spalding. |\n| | Henry Green, Esq. |\n| | Thomas Abbott Green, Esq. Bedford. |\n\n<sig>d</sig>\n\n<vocab>Camden Society, British Museum, F.S.A., M.A., F.R.S., M.I.C.E., Bart., F.G.S., Oxford, Cambridge, Hull, Gloucester, Southwold, Stuttgardt, Edinburgh, Vienna, Rouen</vocab>"
+    },
+    {
+     "p": 137,
+     "type": null,
+     "ocr": "<lang>English</lang>\n<page-num>22</page-num>\n<header>MEMBERS OF THE CAMDEN SOCIETY, 1841-42.</header>\n\nJohn Greenall, Esq. Warrington.\nBenjamin W. Greenfield, Esq. Shirley, Southampton.\nHon. and Rev. George Neville Grenville, M.A. Master of Magdalene Coll. Camb.\nRight Hon. Thomas Grenville, F.S.A.\nJohn Morewood Gresley, Esq. Exeter College, Oxford.\nCharles Cavendish Greville, Esq.\nPhilip Griffith, Esq.\nRev. Robert H. Groome, M.A. Caius Coll. Camb.\n(c.) The Right Hon. Earl Grosvenor.\nJohn Grundy, Esq. Hampton Court Palace.\nThe Lady Charlotte E. Guest.\nEdwin Guest, Esq. M.A. Fellow of Caius Coll. Camb.\nSir John Guise, Bart. Rendcomb, Gloucestershire.\nJohn Lewis Guillemard, M.A. F.R.S.\nDaniel Gurney, Esq. F.S.A.\n(c.) Hudson Gurney, Esq. V.P.S.A., F.R.S.\nThe Hon. Sir John Gurney, one of the Barons of the Exchequer.\nRev. John Hampden Gurney, M.A. Lutterworth.\nJohn Mathew Gutch, Esq. F.S.A.\n*Local Secretary at Worcester.*\nFrederick Gwatkin, Esq.\nMr. Henry Gwyn.\nMiss Hackett, Clapham, Surrey.\nWilliam D. Haggard, Esq. F.S.A., F.R.A.S., M.N.S.\nMr. David Haig, Advocates' Library, Edinburgh.\nEdward Hailstone, Esq. Horton House, near Bradford, Yorkshire.\nAlexander Haldane, Esq. Barrister.\n\n---\n\nSir Henry Halford, Bart. G.C.H. M.D. F.R.S. Pres. of the College of Physicians, and Physician to the Queen.\nMr. Charles Hall, Blandford.\nRev. George W. Hall, D.D. Master of Pembroke College, Oxford.\nGiles Hall, Esq. Gloucester.\nJohn Hall, Esq.\nJohn Charles Hall, Esq.\n(c.) Thomas Henry Hall, F.R.S.\n*Barrister-at-Law.*\nHenry Hallam, Esq. M.A., F.R.S. V.P.S.A.\nCharles William Hallett, Esq.\nJames Orchard Halliwell, Esq. F.R.S. F.S.A.\nWilliam Richard Hamilton, Esq. F.R.S., V.P.S.A.\nRobert Handyside, Esq. Advocate, Edinburgh.\nPhilip Augustus Hanrott, Esq. F.S.A.\n(c.) J. A. Hardcastle, Esq. Hatcham House, New Cross.\nGeorge Perfect Harding, Esq. F.S.A.\nJoseph Harding, Esq. Finchley.\nE. T. Harding, Esq. Librarian to the King of Hanover.\nJohn Stockdale Hardy, Esq. F.S.A. Leicester.\n(c.) Ven. Julius Charles Hare, M.A. Archdeacon of Lewes.\nEdward Harman, Esq. F.S.A.\nRev. William Harness, M.A.\nRobert Harris, Esq. Reading.\nEdward M. Harrison, Esq.\nWm. F. Harrison, Esq. M.N.S. Rochester.\nWilliam Henry Harrison, Esq.\nRight Hon. the Earl of Harrowby, F.S.A.\n\n<vocab>Camden Society, members list, 1841-1842, antiquaries, F.S.A., F.R.S., V.P.S.A., M.A., Esq., John Greenall, Thomas Grenville, Earl Grosvenor, Charlotte Guest, Hudson Gurney, Henry Halford, Henry Hallam, Julius Charles Hare, Earl of Harrowby</vocab>"
+    }
+   ]
+  },
+  {
+   "name": "Lyte herbal 362 → 361 with the sentence running on (\"they come / foorth\") — misnumbered, not a leaf",
+   "book": "6958de1bf26aeac672f1ef7e",
+   "expect": [
+    {
+     "shape": "misnumbered"
+    }
+   ],
+   "pages": [
+    {
+     "p": 383,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>360</page-num>\n<header>The thirde Booke of</header>\n\n### Tithymalus Helioſcopius.\n### Wartewort or Son Spourge.\n### Sonturner.\n\n### Tithymalis Cypariffias.\n### Cypresſe Spourge.\n\n<image-desc>Two woodcut illustrations of plants. On the left is Tithymalus Helioscopius (Sun Spurge), showing a plant with rounded leaves and umbel-like flower clusters. On the right is Tithymalis Cyparissias (Cypress Spurge), showing a plant with much finer, needle-like foliage resembling a cypress tree, with a dense cluster of flowers at the top.</image-desc>\n\n7 The ſeuenth kinde hath ſoft leaues like **Molin** or **Higtaper**, but it is yet vnknowen.\n\nAll theſe kindes are full of white liquor or ſappe like milke, the which commeth foorth whan they be broken or hurt, and it is ſharpe and bitter vpon the tongue.\n\n-> ☩ *The Place.* <-\n\n1 The firſt kinde of Spourge groweth not of his owne kinde in this Countrie, and is ſeldome founde, but in the gardens of diligent Herboriſtes.\n2 The ſeconde, as ſaith **Dioſcorides**, groweth in places that lye waſte.\n3 The thirde groweth about the Sea, and is founde in **Zelande** vpon trenches and drie ſandie bankes and in waſt places adioyning to the ſea.\n4 The fourth groweth about townes in plaine fieldes, and in ſome gardens: it is very common in this Countrie.\n5 The fifth called **Cypres Tithymale** is not founde in this Countrie, but in the gardens of Herboriſtes.\nBut the litle of the ſame kinde groweth about **Malines**, in borders of ſome fieldes, yet it is not founde euery where.\n6 The ſixth kinde groweth in ſtonie places.\n\n-> ☩ *The Tyme.* <-\n\nAll the kindes of **Tithymal** or **Spourge**, are moſt commonly in flower in **June** and **July**, and their ſeede is ripe in **Auguſt**.\n\n-> ☩ *The Names.* <-\n\nAll kindes of this herbe are called in Greeke τιθυμάλοι: in Latine **Lactariæ**: in French\n\n<meta>catchword: french</meta>\n\n<vocab>Tithymalus Helioscopius, Wartewort, Son Spourge, Sonturner, Tithymalis Cypariffias, Cypresse Spurge, Molin, Higtaper, Dioscorides, Zelande, Malines, Lactariae</vocab>"
+    },
+    {
+     "p": 384,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>361</page-num>\n<header>the Historie of Plantes.</header>\n<meta>Catchword: The</meta>\n\nFrench *Tithymales* or *Herbe à laict*: in high Douch **Wolfzmilch**: in base Almaigne **Wolfsmelck**: in English **Spurge**.\n\n<margin>1</margin> The first kind is called in Greeke τιθυμάλ@ χαρακίας, καὶ ἀμυγδαλωίδης: in Latine *Tithymalus mas*, or *Lactaria mascula*; that is to say in Frenche, *Tithymale masle*: in English **Wood Spurge**.\n\n<margin>2</margin> The seconde kinde is called in Greeke τιθυμάλ@ μυρσινίτης, & of some *Caryites*: in Latine *Tithymalus foemina*, that is to say, in Frenche *Tithymale femelle*: in English **femall Tithymall**, of Theodor Gaza *Myrtaria*, it may be named in English **Myrtell Spurge**.\n\n<margin>3</margin> The thirde kinde is called in Greeke παράλι@, *Paralios*, and *Tithymalus*, or *Mecon*, of Theophraste κόκκ@, *Coccos*. This kind may be wel called in French *Tithymale marin*: in English **Sea Spurge**: in Douche **Zee Wolfsmelck**.\n\n<margin>4</margin> The fourth is called in Greeke τιθυμάλ@ ἡλιοσκόπι@, that is to say in Latine *Tithymalus solsequius*, or *Lactaria solsequia*: in Frenche *Tithymale suyuant le soleil*, and *Reueille matin*: in Almaigne **Sonnewend**, **Wolfsmelck**: and in Brabant **Croonkens cruyt**: in English **Sonne Spurge**, or **Wartwurt**.\n\n<margin>5</margin> The fifth is called in Greeke τιθυμάλ@ κυπαρισσίας, that is to say, *Tithymale lyke Cypres*.\n\n<margin>6</margin> The sixth is called in Greeke δενδροειδής, and of some *Leptophyllos*: in Latine *Tithymalus arborescens*, that is to say, *Tithymal growing lyke a tree*: or **Tree Tithymall**.\n\n<margin>7</margin> The seuenth kinde is called in Greeke τιθυμάλ@ πλατυφύλλ@, and of some, as Hermolaus Barbarus writeth, *Corymbites*, & *Amigdalites*: in Latine *Tithymalus latifolius*, or *Lactaria latifolia*, that is to say, **Large leaned Tithymall** or **Spurge**.\n\n->*The Nature.*<-\n\nAll the Tithymales are hoate and drie almost in the fourth degree, of a very sharpe, and biting qualitie, fretting and cosuming, first of al the milke or sappe, then the fruit and leaues. The roote is of least strength. And amongst all the Tithymales as Galen sayth, the male is the strongest, then the female, thirdly the sixth kinde, and the Tithymale with broade leaues. The fifth in strength is that, which is lyke Cypres, the forth is Sea Tithymall, the seuenth and of least force is the Sonne Spurge, or Tithymall folowing the Sonne.\n\n->*The Vertues.*<-\n\n<margin>A</margin> The iuyce of Tithymal is a very strong medicine opening the belly, and sometimes causing vomit, bringing tough flegme & cholerique humours: like vertue is in the seede and roote, especially the barke therof, and are very good for such as fall into the Dropsie, whan it is ministred with discretion and wel corrected or prepared.\n\n<margin>B</margin> The same mixt with hony, causeth heare to fall from the place that hath ben annoynted therewithall in the Sonne.\n\n<margin>C</margin> The same put into the holes of corrupt & noughtie teeth, swageth the toothache, but ye must beware, ye put not the iuyce vpon any sounde tooth, or whole place, but first ye must couer them with waxe to preserue them from the sayde iuyce. The roote of Tithymal boyled in vineger and holden in the mouth, is good for the same intent.\n\n<margin>D</margin> The same doth also cure all roughnesse of the skinne, manginesse, leprie, wild scurffe, and spreading scabbes, the white scurffe of the head, and it taketh away and causeth to fall of all kindes of wartes, it taketh away the knobbes & hardnesse of fistulas, corrupt and fretting vlcers, and is good agaynst hoate swellings and Carboncles.\n\n<margin>E</margin> It kylleth fishe, if it be mixt with any bayte, and giuen them to eate.\n\n<vocab>Tithymales, Spurge, Wood Spurge, Myrtell Spurge, Sea Spurge, Sonne Spurge, Wartwurt, Tree Tithymall, Galen, Dropsie, Carboncles</vocab>"
+    },
+    {
+     "p": 385,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>362</page-num>\n<header>The thirde Booke of</header>\n<meta>catchword: foorth</meta>\n\n-> ✠ *The Danger.* <-\n\nThe iuyce, the seede, and rootes of Tithymales, do worke their effect with violēce, and are hurtful to the nature of man, troubling the body, and ouerturning the stomacke, burning and parching the throte, and making it rough and sore, insomuch that Galen writeth, that these herbes ought not to be ministred or taken into the body, much lesse the iuyce ought to be dealt with, but onely it must be applied outwardly, and that with great discretion.\n\n-> ✠ *The correction or remedie.* <-\n\nIf one lay the barke of the rootes of Tithymales, to soke or stiepe in vineger by the space of a whole day, then if it be dryed and made into powder, putting to it of Annys or Fenell seede, gumme Tragagante and Masticke, and so ministred altogither with some refreshing or cooling liquor, as of Endiue, Cicorie, or Orenges, it wil do his operation, without great trouble or payne, and will neither chafe nor inflame the throte, nor the inwarde partes.\n\n### Of Ezula. Chap.xxx.\n\n-> ✠ *The Kyndes.* <-\n\nEzula is of two sortes (as Mesue saith) the great and small, whereunto Dioscorides doth agree, where as he writeth, that Pityusa is small in one place, and great in another.\n\n| Pityusa maior. Great Ezula. | Pityusa minor. Smal Ezula. |\n| :--- | :--- |\n| **Spourge Giant.** | **Pyne Spourge.** |\n\n<image-desc>Two woodcut illustrations of plants. On the left is the \"Spourge Giant\" (Pityusa maior), featuring a single thick stalk with broad, alternating leaves and a cluster of flowers at the top. On the right is the \"Pyne Spourge\" (Pityusa minor), showing a more branched, bushy plant with narrower, needle-like leaves and multiple flowering heads.</image-desc>\n\n-> ✠ *The Description* <-\n\nThe great Ezula hath straight high stalkes, vpon y^e which grow great brode leaues, greater then the leaues of male Tithymale. The flowers and seede growe at the highest of the stalke, and sometimes they come\n\n<vocab>Tithymales, Galen, Annys, Fenell, Tragagante, Masticke, Endiue, Cicorie, Ezula, Mesue, Dioscorides, Pityusa maior, Pityusa minor, Spourge Giant, Pyne Spourge</vocab>"
+    },
+    {
+     "p": 386,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>361</page-num>\n<header>the Historie of Plantes.</header>\n<sig>Hh</sig>\n<meta>catchword: The</meta>\n\nfoorth at the sides of the stalkes, like the seede of Tithymale, the roote is great and thicke, couered ouer with a thicke barke.\n\n<margin>2</margin> The small Ezula in stalkes and leaues is much lesse, the leaues are narrow lyke the leaues of wilde flaxe, the flowers and seede are lyke the first kind, but smaller. The rootes be small couered with a smooth or fine barke. These two kindes be lyke the Tithymales: therfore they haue ben reckoned of some Aun-cientes for kindes of Tithymale (as Dioscorides writeth) and as they be now counted, and they do also yeelde a white sappe or liquor like milke, whan they be either brused or broken, the which liquor is sharpe and biting.\n\n->*The Place.*<-\n\nThe great Ezula in some Countries groweth in wooddes and wildernesses, and in this Countrie in the gardens of Herboristes.\n\nThe lesser groweth in rough stony places, and is found in this Countrie in arable fieldes and bankes, but not euerywhere.\n\n->*The Tyme.*<-\n\nThese herbes do flower about Midsomer, like the Tithymales.\n\n->*The Names.*<-\n\nThese herbes are called in Greeke πιτυοῦσα: in Latine Pityusa: in the Arabian speache of Mesue Alscebran: in Shoppes Ezula, and Esula, and it should seeme that this name Esula, was borrowed of Pityusa: for in leauing out the first two syllables Pity, there remaineth usa, wherof commeth the diminutiue usula, the whiche is quickly turned into Ezula, or Esula.\n\n->*The Nature.*<-\n\nEzula is hoate and drie in the thirde degree, sharpe, byting, and burning inwardly, of nature much like Tithymale.\n\n->*The Vertues.*<-\n\nThe iuyce, seede, and roote of Ezula, openeth the belly, and driueth foorth a tough flegme and grosse humours, also it pourgeth Cholerique and sharpe humours like the Tithymales.\n\nTo be short, both kindes of Ezula are in al thinges like to the Tithymales, in facultie and operation agreeable to all that, whereunto the others are profitable.\n\n->*The Danger.*<-\n\nAs Ezula is like the Tithymales in nature and working, so it is of hurtful qualitie agreeable to the same.\n\n->*The Correction.*<-\n\nThe euill qualitie of Ezula is amended, in lyke maner as Tithymale.\n\n# Of Spourge. Chap. xxxi.\n\n->*The Description.*<-\n\nSpourge hath a browne stalke, of two foote high or more, of the bignesse of ones finger. The leaues be long and narrow, like the leaues of a withie or Almonde tree, the stalke breaketh abroade at the top into many other little branches, set with little rounde leaues, vpon the same little branches groweth the triangled fruit, like the fruit of Palma Christi, but smaller, where in is conteyned little round seedes, the which by force of the heate of the Sonne, do skip out of their huskes whan the fruite is ripe. The roote is of a wooddy substance and not very thicke.\n\nAll the herbe with his stalkes and leaues do yeelde a white milke lyke the Tithymales being bursten or hurt.\n\n->*The Place.*<-\n\nIt is planted in many gardens of this Countrie.\n\n<vocab>Ezula, Esula, Tithymale, Spourge, Dioscorides, Pityusa, Mesue, Alscebran, Palma Christi, purgative, botany</vocab>"
+    },
+    {
+     "p": 387,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>362</page-num>\n<header>The thirde Booke of Lathyris.</header>\n<meta>catchword: Peplis</meta>\n\n->*The Tyme.*<-\n\nIt hath flowers and seede in July and August.\n\n<image-desc>A detailed woodcut illustration of the Lathyris (Spurge) plant, showing its upright stem, narrow pointed leaves arranged in whorls/pairs, and a fibrous root system at the base.</image-desc>\n\n->*The Names.*<-\n\nThis herbe is called in Greeke λαθυρίς: and in Latine Lathyris: in Shoppes Cataputia minor: of some, as Dioscorides saith, Tithymalus: in Frenche *Espurge*: in high Douche *Springkraut*, *Springkorner*, and *Treitkorner*: in base Almaigne *Springcruyt*, & in some places of flaunders *Spurgie*: in English **Spurge**.\n\n->*The Nature.*<-\n\nThis herbe is hoate and drie in the thirde degree, and in facultie lyke Tithymale.\n\n->*The Vertues.*<-\n\n<margin>A</margin> If one take fyre or seuen seedes of Spurge, it openeth the belly mightily, & driueth foorth choler, fleme, and waterish humours. Like vertue hath the iuyce, but it is of stronger operation.\n\n<margin>B</margin> To be briefe, Spurge and the iuyce thereof, are of facultie lyke to the Tithymales.\n\n->*The Danger.*<-\n\nSpurge is as hurtfull to mans body as the Tithymales.\n\n->*The Correction.*<-\n\nIf one take the seede of Spurge with Dates, Figges, or gumme Tragagante, Mastik, Annys seede, or any cooling or refreshing herbe, or if one drinke water straightwayes after the taking of the same seede, it wil not stirre up the inflammation of the inward partes, nor much trouble the partie receiuing the same, and it shall not be much hurtfull to mans body.\n\n---\n\n# Of Pety Surge. Chap. xxxi.\n\n->*The Description.*<-\n\nWartwurt or rather Peplos is a plante fashioned like a little tree, not much unlike the Tithymale that foloweth the Sonne, but farre smaller, growing of the higth of halfe a spanne with diuers branches, set ful of very smal leaues. The sede is smal growing in triangled huskes lyke Spurge. The roote is long and somwhat threddy, all the herbe is full of milke like the Tithymales.\n\nBysides this there is yet founde an other kinde described by Hyppocrates and Dioscorides, called Peplis, the which hath many rounde leaues like the leaues of garden Porcelane, red underneath, the seede groweth amongst the leaues, like the seede of Peplos. The roote is smal and very tender, this herbe is also full of white liquor neither more nor lesse, but as the aforesayde.\n\n->*The Place.*<-\n\nPeplos groweth in this Countrie in gardens amongst pot herbes & beanes, and in some places amongst vines.\n\n<vocab>Lathyris, Spurge, Tithymalus, Cataputia minor, Peplos, Wartwurt, Dioscorides, Hyppocrates, purgative, medicinal herbs</vocab>"
+    },
+    {
+     "p": 388,
+     "type": "text",
+     "ocr": "<language>English</language>\n<page-type>text</page-type>\n<page-num>363</page-num>\n<header>the Historie of Plantes.</header>\n<sig>Hh ij</sig>\n<meta>catchword: The</meta>\n\n# Peplos.\n# Sea Wartwurt or wilde Porcelayne.\n->Peplis.<-\n\n<image-desc>Two botanical woodcut illustrations. On the left is Peplos, a branching plant with small oval leaves and thin roots. On the right is Peplis (Sea Wartwurt), featuring a thicker, more succulent-looking stem with closely packed small leaves and a bulbous root structure with fine fibers.</image-desc>\n\nPeplis, as Dioscorides reporteth, groweth in salt grounde by the Sea syde.\n\n->*The Tyme.*<-\n\nPeplos flowreth, and deliuereth his seede at Midsomer, lyke the Tithymales.\n\n->*The Names.*<-\n\nPeplos is called in Greeke πέπλος: in Latine Peplus: in Shoppes Ezula rotunda: in high Douche Teufels Milch: in base Almaigne Duyuels Melck: in Frenche *Reueille matin des vignes*: in English of some Wartwurt, & Spurge time, we may cal it after the Greke Peplos, or folowing the Douche, Dyuels milke, also Pety Spurge, and Spurge time.\n\nThe other is called in Greeke πεπλίς: in Latine Peplis: Hippocrates calleth it πέπλιον, Peplion, some call it Portulaca syluestris. Turner nameth this Sea Wartwurt.\n\n->*The Nature.*<-\n\nPeplos is hoate and dry in the thirde degree, lyke the Tithymales: and Peplis is of the lyke temperament.\n\n->*The Vertues.*<-\n\n<margin>A</margin> The seede and iuyce of Peplos are both of like qualitie with the iuyce and seede of Spurge and Tithymal, and serueth to all ententes and purposes, as Tithymal doth, wherefore they lose the belly, and driue foorth tough flegme, with water and cholerique humours.\n\n<margin>B</margin> This herbe kept in brine and eaten, dissolueth windinesse in the bowels and Matrix, and cureth the hardnesse of the milt.\n\n<margin>C</margin> Of the lyke vertue is Peplis, as Dioscorides writeth.\n\n<vocab>Peplos, Peplis, Sea Wartwurt, wilde Porcelayne, Dioscorides, Tithymales, Ezula rotunda, Teufels Milch, Duyuels Melck, Reueille matin des vignes, Pety Spurge, Hippocrates, Portulaca syluestris, Turner, flegme, cholerique humours, Matrix, milt</vocab>"
+    }
+   ]
+  },
+  {
+   "name": "BPH 69804b90: openings 138-139 photographed twice (image-verified) — a back-step, NOT misnumbered",
+   "book": "69804b9019712623cff10895",
+   "includes": true,
+   "expect": [
+    {
+     "shape": "back",
+     "fromValue": 139,
+     "toValue": 138
+    }
+   ],
+   "pages": [
+    {
+     "p": 150,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>102</page-num>\n<meta>catchword: lau</meta>\n\n<margin>\np\nIer: Thren: 5.\n</margin>\npermanebis; solium tuum in generatione & generatio-nem **p**: In DEO salutare meum & gloria mea, DEus auxilij mei & spes mea in Deo\n\n<margin>\nq\nPsalm. 61\n</margin>\nest **q**: Iustus Dominus DEus noster in omnibus operibus\n\n<margin>\nr\nDaniel: 9\n</margin>\nsuis quæ fecit **r**: Qui Dominatur in virtute sua in æter-\n\n<margin>\ns\nPsalm: 65\n</margin>\nnum **s**: Magnus Dominus & laudabilis nimis, & magni-\n\n<margin>\nt\nPsalm: 144\n</margin>\ntudinis eius non est finis **t**: Omnia quæcunque voluit Dominus fecit, in cœlo & in terra, in mari & omnibus a-\n\n<margin>\nu\nPsalm: 134\n</margin>\nbyssis **u**: Dominus in templo sancto suo, & Dominus in\n\n<margin>\nx\nPsalm: 10\n</margin>\ncœlo sedes eius **x**: Iubilate Domino omnis terra: Can-\n\n<margin>\ny\nPsalm: 97\n</margin>\ntate & exultate & psallite **y**: Laudate pueri Dominum,\n\n<vocab>Threnorum, Psalmi, Daniel, DEus, Dominus, cœlo, terra</vocab>"
+    },
+    {
+     "p": 151,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>103</page-num>\n<sig>G 4</sig>\n<meta>catchword: in</meta>\n\n<margin>z\nPfalm: 112</margin>\nLaudate nomen Domini $^z$ :\n<margin>a\nPfalm. 134</margin>\nLaudate Dominum, quia bonus Dominus, pfallite nomini eius, quoniam fuauis eft $^a$: Dominum exercituum ipfum fanctificate, & ipfe pauor vefter, & ipfe terror vefter, & erit vobis in fanctificatione $^b$:\n<margin>b\nEfaiae. 12</margin>\nCantate Domino & benedicite nomini eius annunciate de die in diem falutare eius $^c$:\n<margin>c\nPfalm: 95</margin>\nConfitemini Domino, & inuocate nomen eius $^d$:\n<margin>d\nEfaiae: 12</margin>\nVenite & videte opera Dei terribilis in confilijs fuper filijs hominum $^e$:\n<margin>e\nPfalm: 65</margin>\nQuoniam magnus Dominus & laudabilis nimis, terribilis eft fuper omnes DEVS $^f$:\n<margin>f\nPfalm: 95</margin>\nBenedictus Dominus DEVS Ifrael $^g$:\n<margin>g\n3: Reg: 8. & Lucae: 1</margin>\nSit gloria Domini\n\n<vocab>Laudate nomen Domini, Pfalmi, Esaias, Regum, Lucas, sanctificatio, salutare</vocab>"
+    },
+    {
+     "p": 152,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>104</page-num>\n<meta>catchword: DEus</meta>\n\n<margin>\nh\nPfalm: 103\n\ni\n2. Paral: 2\n\nk\nLucæ: 2\n\nl\nPfalm: 40 & 105.\n</margin>\nin feculum, lætabitur Dominus in operibus fuis<sup>h</sup>. Magnus eft DEus nofter fuper omnes DEos<sup>i</sup>. Gloria in excelfis Deo, & in terra pax hominibus bonæ voluntatis<sup>k</sup>: Benedictus Dominus DEus Ifrael à feculo & ufque in feculum<sup>l</sup>. Amen.\n\n---\n\n# ORATIO PRO\n### DEI MISERICORDIA,\n\n### Ioel: 2.\n\n> *Convertimini ad Dominum DEum veftrum, quia benignus & mifericors eft, patiens & multæ mifericordiæ.*\n\n### Hebræ: 4.\n\n> *Accedamus igitur cum fiducia ad thronum gratiæ, ut confequamur mifericordiam & gratiam inveniamus ad opportunum auxilium.*\n\n---\n\n<vocab>Oratio, Misericordia, Joel, Hebrae, Gloria in excelsis, Benedictus Dominus</vocab>"
+    },
+    {
+     "p": 153,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>105</page-num>\n<sig>G 5</sig>\n<meta>catchword: lex</meta>\n\n<margin>\na\nSapient: 9\n</margin>\nDeus Patrum meorum & Domine misericordiæ, qui fecisti omnia verbo tuo <gloss>a</gloss>.\n<margin>\nb\nPsalm: 85\n</margin>\nEt tu Domine DEus miserator, & misericors, patiens & multæ misericordiæ & verax <gloss>b</gloss>: Iustus es Domine, & omnia iudicia tua vera sunt, & omnes viæ tuæ misericordiæ & veritas & iudicium <gloss>c</gloss>.\n<margin>\nc\nTobiæ: 3\n</margin>\nTu non in sempiternum litigabis, neq; usq; ad finem irasceris <gloss>d</gloss>: Cum iratus fueris, misericordiæ recordaberis <gloss>e</gloss>.\n<margin>\nd\nEsaiæ. 58\ne\nHabacuc: 3\n</margin>\nVbi sunt misericordiæ tuæ antiquæ Domine, sicut iurasti seruo tuo in veritate tua <gloss>f</gloss>: Ecce aderis, quia misericors es Domine DEVS meus <gloss>g</gloss>: Veniant mihi miserationes tuæ, & viuam, quia\n<margin>\nf\nPsalm: 88\ng\nEsaiæ: 18\n</margin>\n\n<vocab>Deus, misericordia, Sapientia, Psalmi, Tobias, Esaias, Habacuc, iudicium, veritas</vocab>"
+    },
+    {
+     "p": 154,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>104</page-num>\n<meta>catchword: Deus</meta>\n\n<margin>\nh\nPsalm: 103\ni\n2. Paral: 2\nk\nLucæ: 2\nl\nPsalm: 40\n& 105.\n</margin>\nin seculum, lætabitur Dominus in operibus suis<sup>h</sup>. Magnus est DEus noster super omnes DEos<sup>i</sup>: Gloria in excelsis Deo, & in terra pax hominibus bonæ voluntatis<sup>k</sup>: Benedictus Dominus DEus Israel à seculo & usque in seculum<sup>l</sup>. Amen.\n\n# ORATIO PRO\n### DEI MISERICORDIA,\n\n->Joel: 2.<-\n\n> *Convertimini ad Dominum DEum vestrum, quia benignus & misericors est, patiens & multæ misericordiæ.*\n\n->Hebræ: 4.<-\n\n> *Accedamus igitur cum fiducia ad thronum gratiæ, ut consequamur misericordiam & gratiam inveniamus ad opportunum auxilium.*\n\n---\n\n<vocab>Misericordia, Joel, Hebræ, Gloria in excelsis, Benedictus Dominus</vocab>"
+    },
+    {
+     "p": 155,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>105</page-num>\n<sig>G 5</sig>\n<meta>catchword: lex</meta>\n\n<margin>\na\nSapient: 9\n</margin>\nDeus Patrum meorum & Domine misericordiæ, qui fecisti omnia verbo tuo <gloss>a</gloss>.\n<margin>\nb\nPsalm: 85\n</margin>\nEt tu Domine DEus miserator, & misericors, patiens & multæ misericordiæ & verax <gloss>b</gloss>: Iustus es Domine, & omnia iudicia tua vera sunt,\n<margin>\nc\nTobiæ: 3\n</margin>\n& omnes viæ tuæ misericordiæ & veritas & iudicium <gloss>c</gloss>.\n<margin>\nd\nEsaiæ. 58\ne\nHabacuc: 3\n</margin>\nTu non in sempiternum litigabis, neq; usq; ad finem irasceris <gloss>d</gloss>: Cum iratus fueris, misericordiæ recordaberis <gloss>e</gloss>.\n<margin>\nf\nPsalm: 88\n</margin>\nVbi sunt misericordiæ tuæ antiquæ Domine, sicut iurasti seruo tuo in veritate tua <gloss>f</gloss>: Ecce aderis, quia misericors es Domine DEVS\n<margin>\ng\nEsaiæ: 18\n</margin>\nmeus <gloss>g</gloss>: Veniant mihi miserationes tuæ, & viuam, quia lex\n\n<vocab>Deus, misericordia, Sapientia, Psalmi, Tobias, Esaias, Habacuc, iudicium, veritas</vocab>"
+    },
+    {
+     "p": 156,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>104</page-num>\n<meta>catchword: DEus</meta>\n\n<margin>\n**h**\nPfalm: 103\n\n**i**\n2. Paral: 2\n\n**k**\nLucæ: 2\n\n**l**\nPfalm: 40 & 105.\n</margin>\nin feculum, lætabitur Dominus in operibus fuis **h**. Magnus eft DEus nofter fuper omnes DEos **i**: Gloria in excelfis Deo, & in terra pax hominibus bonæ voluntatis **k**: Benedictus Dominus DEus Ifrael à feculo & ufque in feculum **l**. Amen.\n\n# ORATIO PRO\n### DEI MISERICORDIA,\n\n->**Ioel: 2.**<-\n\n> *Convertimini ad Dominum DEum veftrum, quia benignus & mifericors eft, patiens & multæ mifericordiæ.*\n\n->**Hebræ: 4.**<-\n\n> *Accedamus igitur cum fiducia ad thronum gratiæ, ut confequamur mifericordiam & gratiam inveniamus ad opportunum auxilium.*\n\n---\n\n<vocab>Misericordia, Joel, Hebraeos, Psalmi, Paralipomenon, Lucas</vocab>"
+    },
+    {
+     "p": 157,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>105</page-num>\n<sig>G 5</sig>\n<meta>catchword: lex</meta>\n\n<margin>\na\nSapient: 9\n</margin>\nDeus Patrum meorum & Domine misericordiæ, qui fecisti omnia verbo tuo <gloss>a</gloss>.\n<margin>\nb\nPsalm: 85\n</margin>\nEt tu Domine DEus miserator, & misericors, patiens & multæ misericordiæ & verax <gloss>b</gloss>: Iustus es Domine, & omnia iudicia tua vera sunt, & omnes viæ tuæ misericordiæ & veritas & iudicium <gloss>c</gloss>.\n<margin>\nc\nTobi: 3\n</margin>\nTu non in sempiternum litigabis, neq; usq; ad finem irasceris <gloss>d</gloss>: Cum iratus fueris, misericordiæ recordaberis <gloss>e</gloss>.\n<margin>\nd\nEsaiæ. 58\ne\nHabacuc: 3\n</margin>\nVbi sunt misericordiæ tuæ antiquæ Domine, sicut iurasti seruo tuo in veritate tua <gloss>f</gloss>: Ecce aderis, quia misericors es Domine DEVS meus <gloss>g</gloss>: Veniant mihi miserationes tuæ, & viuam, quia\n<margin>\nf\nPsalm: 88\ng\nEsaiæ: 18\n</margin>\n\n<vocab>Deus, misericordia, iudicia, Sapientia, Psalmi, Tobias, Esaias, Habacuc</vocab>"
+    },
+    {
+     "p": 158,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>106</page-num>\n<meta>catchword: bis</meta>\n\n<margin>h\nPsalm: 118\nIod.</margin>\nlex tua meditatio mea est <gloss>h</gloss>\nEt veniat super me misericordia tua Domine, salutare tuum secundum eloquium tuum <gloss>i</gloss>: \n\n<margin>i\nPsalm: 118\nVau.</margin>\nTu es Dominus DEus meus faciens misericordiam his qui diligunt te, & custodiunt præcepta tua <gloss>k</gloss>: \n\n<margin>k\nExod: 20</margin>\nReminiscere miserationum tuarum Domine, misericordiarum tuarum quæ à seculo sunt <gloss>l</gloss>: \n\n<margin>l\nPsalm: 24</margin>\nMirifica misericordias tuas, qui saluos facis sperantes in te <gloss>m</gloss>: \n\n<margin>m\nPsalm: 16</margin>\nFiat misericordia tua, vt consoletur me secundum eloquium tuum seruo tuo <gloss>n</gloss>: \n\n<margin>n\nPsalm: 118\nIod.</margin>\nAudi Domine & miserere, quia DEus es misericors <gloss>o</gloss>: \n\n<margin>o\nIud: 7</margin>\nAuditam fac mihi manè misericordiam tuam, quia in te speraui <gloss>p</gloss>: \n\n<margin>p\nPsalm: 142</margin>\nIn æternum seruabis\n\n<vocab>misericordia, salutare, eloquium, præcepta, miserationum, sperantes, consoletur, Psalm, Exod, Iud</vocab>"
+    },
+    {
+     "p": 159,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>107</page-num>\n<meta>catchword: cem</meta>\n\nbis mihi misericordiam tuam, & testimonium tuum fidele mihi <margin>q Psalm: 88</margin> **q** : Domine misericordia tua in seculum, opera manuum tuarum ne despicias <margin>r Psalm: 137</margin> **r** : Miserere mei Domine, quoniam ad te clamaui tota die, lætifica animam serui tui, quoniam ad te Domine animam meam leuaui <margin>s Psalm: 85</margin> **s** : Et tu Domine Domine fac mecum propter nomen tuum, quia suauis est misericordia tua <margin>t Psalm: 108</margin> **t** : Signatum est super nos lumen vultus tui Domine <margin>u Psalm: 4</margin> **u** : Quoniam DEus miserationum & clemens es tu <margin>x 2. Esdr: 9</margin> **x** : Ostende mihi Domine misericordiā tuā, & salutare tuum da mihi <margin>y Psalm: 84</margin> **y** Miserere mei DEus omniū, & respice me, & ostende mihi lucem\n\n<vocab>misericordia, testimonium, Domine, Psalmi, Esdras, salutare, DEus</vocab>"
+    },
+    {
+     "p": 160,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>108</page-num>\n<meta>catchword: DEus</meta>\n\n<margin>\nz\nEccl: 36\n</margin>\ncem miſerationum tuarum<sup>z</sup>:\n<margin>\nPſalm: 118\nRes.\n</margin>\nMiſericordiæ tuæ multæ Domine, ſecundum iudicium tuum viuifica me<sup>a</sup>: Et miſericordia tua ſubſequetur me\n<margin>\nb\nPſalm: 22\n</margin>\nomnibus diebus vitæ meæ<sup>b</sup>:\n<margin>\nc.\n1. Par: 36\n</margin>\nImmenſa enim & inueſtigabilis miſericordia promiſsionis tuæ<sup>c</sup>: Miſericordia & veritas præcedent faciem tu-\n<margin>\nd\nPſalm: 88\n</margin>\nam<sup>d</sup>: Quia DEus miſericors\n<margin>\ne\nDeut: 4\n</margin>\nDominus DEus meus es tu<sup>e</sup>.\n<margin>\nf\n1. Tim: 6\n</margin>\nCui honor & imperium ſempiternum, Amen<sup>f</sup>.\n\n# ALIA EIVSMO-\n->DI ORATIO.<-\n\n<margin>\na\nApocal. 16\n</margin>\nDomine DEus omnipotens, vera & iuſta iudicia tua<sup>a</sup>: DEus DEus noſter\n\n<vocab>misericordia, iudicium, Amen, Deus, oratio</vocab>"
+    },
+    {
+     "p": 161,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>109</page-num>\n<meta>catchword: per</meta>\n\n<margin>\nb\nDeut: 6\nc\nPsalm: 88\nd\nGenef. 32\ne\nPsalm: 6\nf\nPsalm: 24\ng\nPsalm: 56\nh\nPsalm: 118\nRes.\ni\nPsalm: 93\n</margin>\n\nDEus meus es $^b$ : Misericordiam tuam non disperges à me, neq; nocebis in veritate tua $^c$ : Domine minor sum cunctis miserationibus tuis $^d$ : Et anima mea turbata est valde, sed tu Domine usquequo $^e$ ? secundum misericordiam tuam memento mei tu, propter bonitatem tuam Domine $^f$ : Miserere mei DEus, miserere mei, quoniam in te confidit anima mea $^g$. Vide quoniam mandata tua dilexi Domine, in misericordia tua viuifica me $^h$ : Si dicebam, motus est pes meus, misericordia tua Domine adiuuabit me $^i$ : Tu autem Domine, ne longè facias miserationes tuas á me: Misericordia tua & veritas tua semper\n\n<vocab>Deuteronomium, Psalmi, Genesis, misericordia, veritas, anima, mandata</vocab>"
+    },
+    {
+     "p": 162,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>110</page-num>\n<meta>catchword: mi</meta>\n\n<margin>\nk\nPsalm: 39\n</margin>\nper susceperunt me k : Secun-\ndum misericordiam tuam vi-\nuifica me, & custodiam te-\n<margin>\nl\nPsalm: 118\nCaph.\n</margin>\nstimonia oris tui l : Deprecatus\nsum faciem tuam in toto cor-\nde meo, miserere mei secun-\n<margin>\nm\nPsalm: 118\nHeth.\n</margin>\ndum eloquium tuum m : Abba\n<margin>\nn\nMarci 4.\nRom. 8. &\nGalat: 4\n</margin>\nPater n : Aspice me & misere-\nre mei secundum iudicium di-\n<margin>\no\nPsalm: 118\nPe.\n</margin>\nligentium nomen tuum o : Ex-\naudi me Domine, quoniam\nbenigna est misericordia tua,\nsecundum multitudinem mi-\nserationum tuarum respice\nme, & ne auertas faciem tu-\nam à puero tuo, quoniam tri-\n<margin>\np\nPsalm: 68\n</margin>\nbulor, velociter exaudi me p :\nMisericordia autem tua Do-\nmine nō recedet à me & foedus\n<margin>\nq\nIsaiæ: 54\n</margin>\npacis tuæ non mouebitur q :\nQuia magna est super coelos\n\n---\n\n<vocab>Psalm 39, Psalm 118, Psalm 68, Isaias, misericordia, Abba Pater, foedus pacis</vocab>"
+    },
+    {
+     "p": 163,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>111</page-num>\n<meta>catchword: quasi</meta>\n\nmisericordia tua, & vsq: ad nubes veritas tua <gloss>r</gloss>: Fac cum seruo tuo secundum misericordiam tuam, & iustificationes tuas doce me <gloss>s</gloss>: Fiat misericordia tua Domine super nos, quemadmodum sperauim⁹ in te <gloss>t</gloss>: Aut obliuiscetur misereri Deus, aut continebit in ira sua misericordias suas <gloss>u</gloss>? Exortum est in tenebris lumen rectis, misericors & miserator & iustus <gloss>x</gloss>: Miserator & misericors Dominus, longanimus & multum misericors <gloss>y</gloss>. Quia misericordiam & veritatem diligit DEus gratiam & gloriam dabit Dominus <gloss>z</gloss>. Quoniam misericors est DEus & miserator <gloss>a</gloss>: Speciosa misericordia Dei in tempore tribulationis,\n\n<margin>\nr\nPsalm: 107\n\ns\nPsalm: 118\nAn.\n\nt\nPsalm: 32\n\nu\nPsalm: 76\n\nx\nPsalm: 111\n\ny\nPsalm: 102\n\nz\nPsalm: 83\n\na\nIacob: 5\n</margin>\n\n<vocab>misericordia, veritas, iustificationes, lumen, miserator, longanimus, gratia, gloria, tribulatio</vocab>"
+    },
+    {
+     "p": 164,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>112</page-num>\n<meta>catchword: Eccl</meta>\n\n<margin>\n**b**\nEccl: 18\n</margin>\nquasi nubes pluviæ in tempo-\nre siccitatis **b**: Permanet in æ-\nternum in conspectu DEI,\nmisericordiam & veritatem\n<margin>\n**c**\nPsalm: 60\n</margin>\neius qui requiret **c**: Hic acci-\npiet benedictionem à Domi-\nno, & misericordiam à DEO\n<margin>\n**d**\nPsalm: 23\n</margin>\nsalutari suo **d**: Etenim Domi-\nnus dabit benignitatem, &\nterra nostra dabit fructum\n<margin>\n**e**\nPsalm: 84\n</margin>\nsuum **e**: Quia DEus susce-\nptor meus, DEus meus, mi-\n<margin>\n**f**\nPsalm: 58\n</margin>\nsericordiæ eius præveniet me,\nDEus adiutor noster in æter-\n<margin>\n**g**\nPsalm: 61\n</margin>\nnum **g**. AMEN.\n\n# GRATIARVM\n### ACTIO PRO MISERI-\n->cordia DEI.<-\n### Esaix: 63.\n> *Misericordias Domini in memoriam re-\nducam, laudes Domini, adeoq; omnia quæ\nretribuit nobis Dominus.*\n\n---\n\n<vocab>misericordia, benedictio, Gratiarum Actio, Esaias, Psalmi</vocab>"
+    },
+    {
+     "p": 165,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>113</page-num>\n<sig>H</sig>\n<meta>catchword: bes</meta>\n\n# Eccl: 17.\n\n> *Confiteberis & laudabis DEum, gloriaberis in miserationibus eius.*\n\n<margin>\n**a**\nIudith: 16\n**b**\nNumeri: 16\n**c**\nPsalm : 58\n**d**\nEccl: 17\n**e**\nPsalm: 88\n**f**\nIerem: 9\n</margin>\nAdonay Domine DEVS magnus es tu, & præclarus in virtute tua **a**, fortissime DEus spirituum **b**: Adiutor meus, tibi psallam, quia DEus susceptor meus es, DEus meus misericordia mea **c**: Confitebor & laudabo DEum, gloriabor in miserationibus eius **d**: Misericordias Domini in æternum cantabo, in generatione & generationem annunciabo veritatem tuam in ore meo **e**: Tu es Dominus, qui facis misericordiam, & iudicium & iustitiam in terra **f**. Domine in cælo misericordia tua, & veritas tua usq; ad nubes\n\n---\n\n<vocab>Adonay, misericordia, iustitia, Ecclesiasticus, Iudith, Numeri, Psalmi, Ieremias</vocab>"
+    },
+    {
+     "p": 166,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>114</page-num>\n<meta>catchword: tat</meta>\n\n<margin>\ng\nPsalm: 35\n56. & 107\nh\nPsalm: 30\n</margin>\nbes g, Ego autem in Domino\nsperaui, exultabo & lætabor\nin misericordia tua h: Quoni-\nam tu Domine suauis & mi-\ntis, & multæ misericordiæ\n<margin>\ni\nPsalm: 85\n</margin>\nomnibus inuocantibus te i.\n**Ad punctum in modico dere-**\n**liquisti me, & in miseratio-**\n**nibus magnis congregasti me**\n**in momento indignationis**\n**abscondisti faciem tuam pa-**\n**rumper á me, & in misericordia**\n<margin>\nk\nEsaie. 54\n</margin>\n**sempiterna misertus es mei k.**\nTu autem DEus noster sua-\nuis & verus es, patiens & in\nmisericordia disponens o-\n<margin>\nl\nSapient: 15\nm\nEccl: 51\n</margin>\nmnia l: Lætetur anima mea\nin misericordia tua, & non con-\nfundar in laude tua m: Quoniam\nmisericordia tua ante oculos\nmeos est, & complacui in veri-\n\n---\n\n<vocab>misericordia, Psalm, Esaie, Sapientia, Ecclesiasticus, Dominus</vocab>"
+    },
+    {
+     "p": 167,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>115</page-num>\n<sig>H 2</sig>\n<meta>catchword: Memo-</meta>\n\n<margin>n\nPsalm: 25</margin>\ntate tua n: Memoratus sum misericordiæ tuæ Domine, &amp; cooperationis tuæ, quæ à seculo sunt o: \n<margin>o\nEccl: 51</margin>\nQuia misericordia tua magna est super me, &amp; eruisti animā meam ex inferno inferiori p: \n<margin>p\nPsalm: 85</margin>\nEt veritas tua, &amp; misericordia tua mecū, &amp; in nomine tuo exaltabitur cornu meū q: \n<margin>q\nPsalm: 88</margin>\nBenedictus Dominus, quoniam mirificauit misericordiam suam mihi r: \n<margin>r\nPsalm: 30</margin>\nAudiuit Dominus &amp; misertus est mei, Dominus factus est adiutor meus s: \n<margin>s\nPsalm: 29</margin>\nMiserator &amp; misericors Dominus, patiens &amp; multum misericors t: \n<margin>t\nPsalm: 144</margin>\nDiligit misericordiam &amp; iudiciū: Misericordia Domini plena est terra u: \n<margin>u\nPsalm. 32</margin>\nQuomodo miseretur Pater filiorum, misertus est Dominus timentibus se x:\n<margin>x\nPsalm: 102</margin>\n\n<vocab>misericordia, Dominus, Psalmi, Ecclesiasticus, anima, inferno, adiutor, iudicium</vocab>"
+    },
+    {
+     "p": 168,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>116</page-num>\n<meta>catchword: cordia</meta>\n\n<margin>\ny\nPsalm: 110\n</margin>\nMemoriam fecit mirabilium fuorum mifericors & miferator Dominus **y**: Ecce oculi Domini fuper metuentes eum, & in eis qui fperant fuper mife-\n<margin>\nz\nPsalm: 32\n</margin>\nricordia eius **z**: Suauis Dominus vniuerfis, & mifera-\n<margin>\na\nPsalm: 144\n</margin>\ntiones eius fuper opera eius **a**: Mifericors Dominus & DEus nofter miferetur **b**: Quam\n<margin>\nb\nPsalm: 11 & 114\n</margin>\nmagna mifericordia Domini & propitiatio illius conuertentibus ad fe **c**: A cufto-\n<margin>\nc\nEccl: 17\n</margin>\ndia matutina vfque ad noctem fperet Ifraël in Domino, Quia apud Dominū mifericordia & copiofa apud eum redē-\n<margin>\nd\nPsalm: 129\n</margin>\nptio **d**: Mifericordia Domini ab æterno, & vfque in æternum fuper timentes eum **e**: Vniuerfæ viæ Domini Mifericordia\n<margin>\ne\nPsalm: 102\n</margin>\n\n<vocab>misericordia, Dominus, Psalmi, Ecclesiasticus, redemptio, propitiatio</vocab>"
+    },
+    {
+     "p": 169,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>117</page-num>\n<sig>H 3</sig>\n<meta>catchword: IN-</meta>\n\n<margin>f\nPfalm: 24</margin>\ncordia & veritas requirenti-\nbus teftamentum eius & te-\nftimonia eius$^f$: Laudate cœ-\nli quoniam mifericordiam\nfecit Dominus, iubilate ex-\n<margin>g\nEfaia. 44</margin>\ntrema terræ$^g$: Laudate Do-\nminum omnes gentes, Lau-\ndate eum omnes populi. Quo-\nniam confirmata eft fuper\nnos mifericordia eius, & ve-\nritas Domini manet in æter-\n<margin>h\nPfalm: 116</margin>\nnum$^h$. Amen.\n\n# POSTVLATIO\n## PRO VERBI DIVINI\n->cognitione.<-\n\n### Tob: 4.\n\n> *Omni tempore benedic DEum, & pete*\n> *ab eo, ut vias tuas dirigat, & omnia confi-*\n> *lia tua in ipfo permaneant.*\n\n---\n\n<vocab>misericordia, veritas, testamentum, Laudate Dominum, Postulatio, Verbum Divinum, Tobit</vocab>"
+    },
+    {
+     "p": 170,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>118</page-num>\n<meta>catchword: meus</meta>\n\n<margin>\na\nPsalm: 37\n</margin>\nIntende in adiutorium meum Domine DEVS salutis meæ **a**. Tu es Dominus DEUs meus faciens misericordiam his qui diligunt te, & custo-\n<margin>\nb\nExod. 20\n</margin>\ndiunt præcepta tua **b**. Initio cognoui de testimonijs tuis, quia in æternum fundasti ea: Principium verborum tuorum veritas, in æternum omnia\n<margin>\nc\nPsalm: 118\nZade.\n</margin>\niudicia iustitiæ tuæ **c**. Eloquia Domini eloquia casta: argentum igne examinatum, probatum terræ, purgatum septuplum **d**. Lex Domini immaculata conuertens animas: Testimonium Domini fidele, sapientiam præstans\n<margin>\nd\nPsalm: 11\n</margin>\n<margin>\ne\nPsalm. 18\n</margin>\nparuulis **e**: Beati qui scrutantur testimonia eius, in toto\n<margin>\nf\nPsalm: 118\nAleph.\n</margin>\ncorde exquirunt eum **f**: DEus\n\n<vocab>Psalm 37, Exod. 20, Psalm 118, Psalm 11, Psalm 18, Zade, Aleph, misericordiam, præcepta, iudicia, Lex Domini</vocab>"
+    },
+    {
+     "p": 171,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>119</page-num>\n<sig>H 4</sig>\n<meta>catchword: as :</meta>\n\nmeus impolluta via eius : Eloquia DEi igne examinata, protector est omnium sperantium in se <margin>g Psalm: 17</margin> ^g. Ignitum eloquium tuum vehementer, seruus tuus dilixit illud : Iustitia tua, iustitia in æternum, & lex tua veritas <margin>h Psalm: 118 Zade.</margin> ^h. Mirabilia Testimonia tua, ideo scrutata est ea anima mea : Declaratio sermonum tuorum illuminat, & intellectum dat paruulis : Os meum aperui, & attraxi spiritum, quia Mandata tua desyderabam <margin>i Psalm: 118 Pe.</margin> ^i. Priusquam humiliarer, ego deliqui, propterea Eloquium tuum custodiui. Bonum mihi, quia humiliasti me, vt discam iustificationes tuas :\n\n<vocab>Eloquia Dei, Iustitia, Lex, Testimonia, Mandata, Psalm 17, Psalm 118</vocab>"
+    },
+    {
+     "p": 172,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>120</page-num>\n<meta>catchword: quod</meta>\n\n<margin>\nPsalm: 118\nTheth.\n</margin>\nas: Bonum mihi lex oris tui\nsuper millia auri & argenti.\nLætabor super eloquia tua,\nsicut qui inuenit spolia mul-\nta. Custodiuit anima mea\ntestimonia tua, & dilexit ea\n<margin>\nl\nPsalm: 118\nSin.\n</margin>\nvehementer $^l$. Dulcis & rectus\nDominus, propter hoc legem\ndabit delinquentibus in via,\ndiriget mansuetos in iudicio,\n<margin>\nm\nPsalm: 24\n</margin>\ndocebit mites vias suas $^m$. Do-\nminus scit cogitationes homi-\nnum, quoniam vanæ sunt:\nBeatus Homo, quem tu eru-\ndieris Domine, & de lege tua\n<margin>\nn\nPsalm: 93\n</margin>\ndocueris eum $^n$. Præueniunt o-\nculi mei ad te diluculo, vt me-\n<margin>\no\nPsalm: 118\nZade.\n</margin>\nditarer eloquia tua $^o$. Nam\n& testimonia tua meditatio\nmea est: & consilium meum\n<margin>\np\nPsalm: 118\nGimel.\n</margin>\niustificationes tuæ $^p$. Nisi\n\n<vocab>Psalm 118, Psalm 24, Psalm 93, lex, eloquia, testimonia, iustificationes</vocab>"
+    },
+    {
+     "p": 173,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>121</page-num>\n<sig>H 5</sig>\n<meta>catchword: meo</meta>\n\n<margin>\nq\nPsalm: 118\nLamed.\n</margin>\nquòd lex tua meditatio mea\nest, tunc fortè perijſſem in\nhumilitate mea **q**. Lucerna\n<margin>\nr\nPsalm: 118\nNun.\n</margin>\npedibus meis verbum tuū, &\nlumen ſemitis meis **r**: Manus\ntuae fecerunt me & plantaue-\nrunt me, da mihi intellectum,\n<margin>\ns\nPsalm: 118\nIod.\n</margin>\nut diſcam Mandata tua **s**.\nperfice greſſus meos in ſemi-\ntis tuis, ut non moueantur\n<margin>\nt\nPsalm: 16\n</margin>\nveſtigia mea **t**: Appropinquet\ndeprecatio mea in conſpectu\ntuo Domine, iuxta eloqui-\num tuum da mihi intelle-\n<margin>\nu\nPſam: 118\nThau.\n</margin>\nctum **u**. Seruus tuus ſum ego,\nda mihi intellectum, ut ſci-\n<margin>\nx\nPſalm: 118\nAin\n</margin>\nam teſtimonia tua **x**: Memen-\nto Domine teſtamenti tui,\n& da verbum in ore meo, &\nin corde meo conſilium cor-\n<margin>\ny\nIudith: 9\n</margin>\nrobora **y**: Et ne auferas de ore\n\n<vocab>Psalm 118, Psalm 16, Judith 9, Lamed, Nun, Iod, Thau, Ain, Mandata, testimonia</vocab>"
+    },
+    {
+     "p": 174,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>122</page-num>\n<meta>catchword: tuo</meta>\n\n<margin>\nz\nPsalm: 118\nVau.\n</margin>\nmeo verbum veritatis usque\nquo, quia in iudicijs tuis su-\npersperaui **z**. Deduc me Do-\nmine in via tua, & ingrediar\n<margin>\na\nPsalm: 85\n</margin>\nin veritate tua **a**. Vias tuas Do-\nmine demonstra mihi, & se-\nmitas tuas edoce me, Dirige\nme in veritate tua, & doce me,\nquia tu es DEus saluator me⁹,\n<margin>\nb\nPsalm: 24\n</margin>\n& te sustinui tota die **b**. Viam\niustificationum tuarum in-\nstrue me, & exercebor in mi-\nrabilibus tuis. Dormitauit a-\nnima mea præ tædio, confir-\n<margin>\nc\nPsalm: 118\nDaleth.\n</margin>\nma me in verbis tuis **c**. Inclina\ncor meum in testimonia tua,\n& non in auaritiam, auerte\noculos meos, ne videant va-\n<margin>\nd\nPsalm: 118\nHe.\n</margin>\nnitatem, in via tua viuifi-\nca me **d**. Quoniam apud te\nest fons vitæ, & in lumine\n\n<vocab>Psalm 118, Psalm 85, Psalm 24, veritas, iudicijs, saluator, iustificationum, testimonia, auaritiam, fons vitæ</vocab>"
+    },
+    {
+     "p": 175,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>123</page-num>\n<meta>catchword: Do-</meta>\n\ntuo videbimus lumen <gloss>e</gloss>. Re<margin>e Psalm: 35</margin>uela <gloss>f</gloss> oculos meos & confide<margin>f Psalm: 118 Beth.</margin>rabo mirabilia de lege tua <gloss>f</gloss>. Quia tu lucerna mea <gloss>g</gloss> Do<margin>g 2: Reg: 22 & Psal: 17</margin>mine, & tu Domine illuminabis tenebras meas <gloss>g</gloss>. Bonitatem & disciplinam, & scientiam doce me, quia Mandatis tuis credidi <gloss>h</gloss>. Da<margin>h Psalm: 118 Thath.</margin> mihi intellectum, & scrutabor Legem tuam, & custodiam illam in toto corde meo <gloss>i</gloss>. In Mandatis tuis ex<margin>i Psalm: 118 He.</margin>ercebor, & considerabo vias tuas: In iustificationibus tuis meditabor, non obliuiscar sermones tuos <gloss>k</gloss>. E<margin>k Psalm: 118 Beth.</margin>ructabunt labia mea Hymnum, cum docueris me iustificationes tuas <gloss>l</gloss>: Quo<margin>l Psalm: 118 Thau.</margin>modo dilexi legem tuam\n\n<vocab>Psalm: 35, Psalm: 118, 2: Reg: 22, Psal: 17, Beth, Thath, He, Thau, lumen, lex, lucerna, mandata, iustificationes</vocab>"
+    },
+    {
+     "p": 176,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>124</page-num>\n<meta>catchword: in</meta>\n\n<margin>\nm\nPsalm: 118\nMem.\nn\nPsalm: 118\nBeth.\no\nPsalm: 118\nMem.\np\n1. Pet. 1\n</margin>\nDomine tota die meditatio mea est $^m$. In via testimoniorū tuorum delectatus sum, sicut in omnibus diuitijs $^n$. Quàm dulcia faucibus meis eloquia tua, super mel ori meo $^o$. Verbum Domini manet in æternum $^p$. Amen.\n\n---\n\n# ORATIONIS\n## DOMINICÆ EXPO-\n->sitio.<-\n### PATER NOSTER.\n### 2. Corinth: 6.\n> *Ego recipiam vos, & ero vobis in patrem, & vos eritis mihi in filios & filias, dicit Dominus omnipotens.*\n\nFlecto genua ad Patrem Domini nostri IESV CHRISTI, ex quo omnis paternitas in cœlis &\n\n<vocab>Oratio Dominica, Pater Noster, Psalmi, 2. Corinth, 1. Pet, meditatio, paternitas</vocab>"
+    },
+    {
+     "p": 177,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>125</page-num>\n<meta>show-through from verso visible</meta>\n\n<margin>\na\nEpheſ: 3\n</margin>\nin terra nominatur ᵃ. Ecce i-\ngitur nos venimus ad te, tu\nenim es Dominus DEus no-\n<margin>\nb\nIacob. 3\n</margin>\nſter ᵇ. Et nunc Domine Pater\nnoſter es tu, nos vero lutum,\n& fictor noſter tu, & ope-\n<margin>\nc\nEſaiæ: 64\n</margin>\nra manuum tuarum omnes\nnos ᶜ.\n\n# QVI ES IN\n### C O E L I S.\n\n### Eſaiæ: 66.\n\n> Hæc dicit Dominus: cælum ſedes\n> mea, terra autem ſcabellum pedem meo-\n> rum.\n\n<margin>\nd\nPſalm: 112\n</margin>\nQuis ſicut Dominus DE-\nus noſter, qui in altis\nhabitat, & humilia re-\nſpicit in cælo & in terra ᵈ.\nDominus in cælo parauit ſe-\ndem ſuam, & regnum ſuum\nomni-\n\n<vocab>Epheſios, Iacobus, Eſaias, Pſalmi, Pater noſter, Creator, Coelum</vocab>"
+    },
+    {
+     "p": 178,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>126</page-num>\n<meta>catchword: Ad</meta>\n\n<margin>\ne\nPsalm: 102\n\nf 1\nEsaiae. 63\n\nf 2\nZachar: 10\n</margin>\nomnibus dominabitur **e**. Attende de coelo & vide de habitaculo sancto tuo, & folio gloriae tuae **f 1**. Tu enim Domine DEVS noster, & exaudies nos **f 2**.\n\n# SANCTIFICETVR NOMEN TVVM.\n\n### Esaiae: 9.\n\n> *Dominum exercituum ipsum sanctificate, & ipse pauor vester, & ipse terror vester, & erit vobis in sanctificationem.*\n\n<margin>\ng\nDaniel: 2\n\nh\nPsalm: 112\n\ni\nPsalm: 113\n</margin>\nAlis ortu usque ad occasum laudabile Nomen Domini **g**. Sit Nomen Domini benedictum ex hoc nunc & usque in seculum **h**. Non nobis Domine, non nobis, sed Nomini tuo da gloriam **i**.\n\n<vocab>Sanctificetur Nomen Tuum, Esaiae, Daniel, Psalmi, Dominus exercituum</vocab>"
+    },
+    {
+     "p": 179,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>127</page-num>\n\n# ADVENIAT REGNVM TVVM.\n\n### Matth. 6. & Luc. 12.\n\n> *Quærite primum regnum DEI & iustitiam eius, & cætera omnia adijcientur vobis.*\n\n---\n\n<margin>\n**k**\n1: Tim: 6\nItem\nApocal: 17\n& 19\n</margin>\nTV es beatus & solus Princeps, Rex regnantium & Dominus Dominantium **k**. Regnum tuum regnum omnium seculorum, & Dominatio tua in omni generatione & generatione **l**. Ideo accipiemus Regnum & Diadema speciei de manu Domini **m**, qui vocavit nos in suum regnum & gloriam **n**.\n\n<margin>\n**l**\nPsalm: 144\n\n**m**\nSapient. 5\n\n**n**\n1. Thessal: 2\n</margin>\n\n---\n\n->FIAT<-\n\n<vocab>Adveniat Regnum Tuum, Matth. 6, Luc. 12, 1. Tim. 6, Apocal. 17, Psalm. 144, Sapient. 5, 1. Thessal. 2, Rex regnantium, Dominus Dominantium</vocab>"
+    },
+    {
+     "p": 180,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>128</page-num>\n<meta>catchword: PANEM</meta>\n\n# FIAT VOLVN\n### TAS TVA SICVT IN\n->cœlo, & in terra.<-\n\n---\n\n### 1. Iohan: 5.\n\n> *Hæc est fiducia nostra, quam habe-\nmus ad DEum, quod quicquid petierimus\nsecundum voluntatem eius, exaudit\nnos.*\n\n---\n\n<margin>\n**p**\nSapient: 12\n\n**q**\nEsaiæ: 46\n\n**r**\nPsalm: 142\n\n**s**\n1. Sam. 3 &\n1. Par: 19\n\n**t**\n1. Macc: 3\n</margin>\n\n**T**Va autem Pater proui-\ndentia gubernat **p**. Con-\nsilium tuum stabit, &\nomnis voluntas tua fiet **q**.\nDoce me facere voluntatem\ntuam, quia DEus noster es\ntu **r**. Dominus quod in con-\nspectu suo bonum est, faci-\nat **s**, & sicut fuerit voluntas in\ncœlo, sic fiat **t**.\n\n---\n\n<vocab>Fiat voluntas tua, 1. Iohan: 5, Sapientia, Esaias, Psalmi, 1. Samuel, 1. Paralipomenon, 1. Maccabæorum, Providentia</vocab>"
+    },
+    {
+     "p": 181,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>129</page-num>\n<meta>catchword: suscipe</meta>\n\n# PANEM NO-\n### STRVM QVOTIDIANVM\n->da nobis Hodie.<-\n\n### Psalm: 84.\n\n> Dominus dabit benignitatem, & terra nostra dabit fructum suum.\n\nDomine DEus Abraham Deus fortis super omnes, exaudivocem eorum qui nullā aliam spem habent <margin>u. Esdr: 14</margin> u. Non enim est alius DEus quam tu, cui cura est de omnibus <margin>x Sapient: 12</margin> x: Oculi omnium in te sperant Domine, & tu das escam illorum in tempore opportuno, aperis tu manum tuam, & imples omne animal benedictione <margin>y Psalm: 144</margin> y: Omnia quæ sunt in cœlo & in terra, tua sunt <margin>z 1 Par: 29</margin> z.\n\n<vocab>Panem Nostrum Quotidianum, Psalm 84, Abraham, Esdras, Sapientia, Psalmi, Paralipomenon</vocab>"
+    },
+    {
+     "p": 182,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>130</page-num>\n<meta>catchword: pone</meta>\n\n---\n\n<margin>\nz 2\n2. Reg: 7\n</margin>\nIncipe ergo & benedic domui\nserui tui, ut sit in sempiter-\nnum coram te, & benedictio-\nne tua benedicetur domus\nserui tui in sempiternum $^z$ $^2$.\n\n# ET REMITTE\n### NOBIS DEBITA\n->nostra.<-\n\n### Esaiæ: 43.\n\n> *Ego sum, ego sum ipse, qui deleo ini-*\n> *quitates tuas propter me, & peccatorum*\n> *tuorum non recordabor.*\n\n<margin>\na\nPsalm: 105\n</margin>\nPeccauimus cum patribus\nnostris, iniustè egimus,\niniquitatem facimus $^a$.\nQuoniam vero volens miseri-\ncordiam tu es, reuerteris\n& misereberis nostri, de-\n\n<vocab>2. Regum 7, Esaias 43, Psalmus 105, remitte nobis debita nostra, misericordia</vocab>"
+    },
+    {
+     "p": 183,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>131</page-num>\n<sig>I 2</sig>\n<meta>catchword: &amp;</meta>\n\npones iniquitates nostras &amp; proijcies in profundum maris omnia peccata nostra <gloss>b</gloss>.\n<margin>\n**b**\nMichæ. 7\n</margin>\nPropitiaberis iniquitati nostræ, &amp; peccati nostri non amplius recordaberis <gloss>c</gloss>.\n<margin>\n**c**\nIerem. 31\n</margin>\nDomine tu benefacies nobis propter Nomen tuum, &amp; non secundum vias nostras malas, neque secundum scelera nostra pessima <gloss>d</gloss>.\n<margin>\n**d**\nEzech: 20\n</margin>\nAdiuua nos DEus salutaris noster propter gloriam Nominis tui Domine libera nos, &amp; propitius esto peccatis nostris propter Nomen tuum <gloss>e</gloss>.\n<margin>\n**e**\nPsalm: 78\n</margin>\nOstende nobis Domine misericordiam tuam, &amp; salutare tuum da nobis <gloss>f</gloss>.\n<margin>\n**f**\nPsalm: 84\n</margin>\nOmnem aufer iniquitatem,\n\n<vocab>iniquitates, peccata, Michæas, Ieremias, Ezechiel, Psalmi, misericordia, salutare</vocab>"
+    },
+    {
+     "p": 184,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>132</page-num>\n<meta>catchword: autem</meta>\n\n<margin>\ng\nHose: 14\n</margin>\n& accipe bonum, & reddemus vitulos labiorum nostrorum $^g$.\n\n# SICVT ET NOS\n### REMITTIMVS DEBITO-\n->ribus nostris.<-\n\n### Matthæ. 6. Marci 11. & Eccl. 28.\n\n> *Cum stabitis ad orandum, dimittite, si quid habetis aduersus aliquem, ut & Pater noster, qui in cælis est, dimittat vobis peccata vestra.*\n\n<margin>\nh\nEphes: 4\n& Col: 3\n</margin>\nOmnis amaritudo & ira & indignatio, & clamor, & blasphemia tollatur à nobis, cum omni malitia. Simus autem inuicem benigni, misericordes, donantes inuicem, sicut & DEus in Christo donauit nobis $^h$. Qui\n\n---\n\n<vocab>Hosea, Matthæus, Marcus, Ecclesiasticus, Ephesios, Colossenses, remittimus debitoribus, misericordes</vocab>"
+    },
+    {
+     "p": 185,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>133</page-num>\n<sig>I 3</sig>\n<meta>catchword: tauerit</meta>\n\n<margin>i Eccl: 28</margin>\nautem vindicari vult, á Domi-\nno inveniet vindictam, &amp; pec-\ncata illius servans servabit $^i$.\n<margin>k Prou: 3</margin>\nMansuetis verò dabit grati-\nam $^k$. Illiqué hæreditabunt\n<margin>l Psalm: 36</margin>\nterram, &amp; delectabuntur in\nmultitudine pacis $^l$.\n\n# ET NE NOS\n### INDVCAS IN TENTA-\n### tionem.\n\n->Matth: 26. &amp; Luc: 22.<-\n\n> *Vigilate &amp; orate, vt non intretis in tentationem.*\n\n<margin>m 1. Cor: 10</margin>\nFidelis autem DEus es, qui\nnon pateris nos tentari\nsupra id, quod possumus,\nsed facies etiam cum tenta-\ntione prouentum, vt possi-\nmus sustinere $^m$: ne fortè ten-\n\n---\n\n<vocab>vindicta, mansuetis, tentationem, vigilate, orate, fidelis Deus</vocab>"
+    },
+    {
+     "p": 186,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>134</page-num>\n<meta>catchword: Exal-</meta>\n\n<margin>\n**n**\n1. Thessal: 3\n</margin>\ntauerit nos is qui tentat **n**; neue quis tentetur á concupiscentia sua abstractus & illectus **o**, & ne incidamus in tentationem & in laqueum Diaboli & desideria multa & inutilia & nociua, quæ mergunt homines in interitum & perditionem **p**. Tu Domine seruabis nos & custodies nos á generatione hac in æternum **q**.\n\n<margin>\n**o**\nIacob: 1\n</margin>\n\n<margin>\n**p**\n1. Thessal: 6\n</margin>\n\n<margin>\n**q**\nPsalm: 11\n</margin>\n\n# SED LIBERA\n->NOS A MALO.<-\n\n### Ecclef: 33.\n\n> *Timenti Dominum non occurrent mala, sed in tentatione DEus illum conseruabit & liberabit á malis.*\n\n---\n\n<vocab>tentatio, concupiscentia, Diabolus, interitus, perditio, Ecclefiafticus, liberatio</vocab>"
+    },
+    {
+     "p": 187,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>135</page-num>\n<sig>I 4</sig>\n<meta>catchword: Domi-</meta>\n\n<margin>r Psalm: 107</margin>\nExaltare super coelos DEus, & super omnem terram gloria tua, ut liberentur dilecti tui<gloss>r</gloss>. \n<margin>s 2. Pet: 2</margin>\nNouisti Domine pios de tentatione eripere<gloss>s</gloss>. \n<margin>t Psalm: 59 & 107</margin>\nDa nobis auxilium de tribulatione, quia vana salus hominis: In DEo faciemus virtutem, & ipse ad vilulum deducet tribulantes nos<gloss>t</gloss>. \n<margin>u Psalm: 78</margin>\nAdiuua nos DEus salutaris noster, propter gloriam Nominis tui Domine libera nos<gloss>u</gloss>.\n\n# QVIA TVVM\n### EST REGNVM ET POTENTIA, & gloria in secula seculorum Amen.\n\n### Psalm 21.\n> *Domini est Regnum & ipse dominabitur gentium.*\n\n---\n\n<vocab>Exaltare, tentatione, tribulatione, Regnum, Potentia, Psalm 107, Psalm 59, Psalm 78, Psalm 21</vocab>"
+    },
+    {
+     "p": 188,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>135</page-num>\n<meta>catchword: Iacobi.</meta>\n\n<margin>x\nIsaiæ: 33.</margin>\nDominus enim Iudex noster, Dominus legifer noster, Dominus Rex noster, ipse saluabit nos<gloss>x</gloss>. Et omnis creatura quæ in cœlo est, super terram, & sub terra, & in mari, & quæ in eis sunt omnia, dicant: Sedenti in throno & Agno, benedictio & honor, & gloria & potestas in secula seculorum<gloss>y</gloss>: Amen.\n<margin>y\nApocal: 5.</margin>\n\n# POSTULATIO\n## PRO SAPIENTIA\n->impetranda.<-\n\n### Prouerb: 2.\n\n> **DOMINVS** *dat Sapientiam, & ex ore eius scientia & prudentia.*\n\n---\n\n<vocab>Dominus, Iudex, legifer, Rex, Isaias, Apocalypsis, Postulatio, Sapientia, Prouerbia, scientia, prudentia</vocab>"
+    },
+    {
+     "p": 189,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>137</page-num>\n<sig>I 5</sig>\n<meta>catchword: mi-</meta>\n\n### Iacob: 1.\n\n> Si quis autem vestrûm indiget sapientia, postulet à DEO, qui dat omnibus affluenter, & non improperat.\n\nDEVS Patrum nostrorum & Domine misericordiæ, qui fecisti omnia verbo tuo, & sapientia tua constituisti hominem, ut dominaretur creaturæ quæ á te facta est, ut disponat orbem terrarum in æquitate & iusticia, & in directione cordis iudicium iudicet: Da mihi sedium tuarum assistricem Sapientiam, & noli me reprobare á pueris tuis, quoniam seruus tuus sum ego, & filius ancillæ tuæ, homo infirmus & exigui temporis, &\n\n<vocab>Iacobus, Sapientia, DEVS, misericordia, iusticia, iudicium</vocab>"
+    },
+    {
+     "p": 190,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>138</page-num>\n<meta>catchword: intel-</meta>\n\nminor ad intellectum iudicij tui & legum: Mitte illam de cœlis sanctis tuis, & à sede magnitudinis tuæ, vt mecum sit, & mecum laboret, & sciam quid acceptum sit apud te: Scit enim omnia & intelligit & deducet me in operibus meis sobriè, & custodiet me in tua potentia, & erunt accepta \n<margin>\na\nSapient: 9\n</margin>\nopera mea ᵃ: Cum adhuc iunior eram, priusquam oberrarem, quæsiui Sapientiam palam in oratione mea. Ante tempus postulabā pro illa, & vsq; in nouissimis inquiram eam, & florebit, tanquam præcor \n<margin>\nb\nEccl: 51\nc\nPsalm. 88\n</margin>\nvua ᵇ: Pater meus es tu, DEUS meus & susceptor salutis meæᶜ: Manus tuæ fecerunt me & plantauerunt me: Da mihi\n\n---\n\n<vocab>Sapientia, intellectus, legum, oratio, Deus, Ecclesiasticus, Psalmi</vocab>"
+    },
+    {
+     "p": 191,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: Quo-</meta>\n\n<margin>\nd\nPfalm: 118\nIod.\nc\nPfalm: 118\nGimel.\nf\nIudith: 9\ng\nPfalm: 118\nSade.\nh 1\nPfalm: 24\nh 2\nPfalm: 118\nAin.\nh 3\nPfalm: 58\ni\nSapient: 12\nk\nPfalm: 42\n</margin>\nintellectum, vt difcam mandata tua<sup>d</sup>: Reuela oculos meos & confiderabo mirabilia de lege tua<sup>e</sup>: Memento Domine teftamenti tui, & da verbū in ore meo, & in corde meo confilium corrobora<sup>f</sup>: Intellectum da mihi, & viuam<sup>g</sup>: Vias tuas Domine demonftra mihi & femitas tuas edoce me<sup>h 1</sup>. Seruus tuus fum ego, da mihi intellectum vt fciam teftimonia tua<sup>h 2</sup>. Redde mihi lætitiam falutaris tui, & fpiritu principali confirma me<sup>h 3</sup>. Quam bonus & fuauis eft, Domine fpiritus tuus in omnib;<sup>i</sup>: Doce me facere voluntatem tuam, quia DEus meus es tu Spiritus tuus bonus deducet me in terram rectam<sup>k</sup>.\n\n<vocab>intellectum, mandata, teftamenti, Iudith, Pfalm, Sapientia, Spiritus</vocab>"
+    },
+    {
+     "p": 192,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>138</page-num>\n<meta>catchword: intel-</meta>\n\nminor ad intellectum iudicij tui & legum: Mitte illam de cœlis sanctis tuis, & à sede magnitudinis tuæ, vt mecum sit, & mecum laboret, & sciam quid acceptum sit apud te: Scit enim omnia & intelligit & deducet me in operibus meis sobriè, & custodiet me in tua potentia, & erunt accepta \n<margin>\na\nSapient: 9\n</margin>\nopera mea ᵃ: Cum adhuc iunior eram, priusquam oberrarem, quæsiui Sapientiam palam in oratione mea. Ante tempus postulabā pro illa, & vsq; in nouissimis inquiram eam, & florebit, tanquam præcox \n<margin>\nb\nEccl: 51\n</margin>\nvua ᵇ: Pater meus es tu, DEus \n<margin>\nc\nPsalm. 88\n</margin>\nmeus & susceptor salutis meæ ᶜ: Manus tuæ fecerunt me & plantauerunt me: Da mihi\n\n<vocab>Sapientia, Ecclesiasticus, Psalmi, intellectus, legum, oratio, DEus</vocab>"
+    },
+    {
+     "p": 193,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: Quo-</meta>\n\nintellectum, vt difcam mandata tua <gloss>d</gloss>: Reuela oculos meos & confiderabo mirabilia de lege tua <gloss>e</gloss>: Memento Domine teftamenti tui, & da verbū in ore meo, & in corde meo confilium corrobora <gloss>f</gloss>: Intellectum da mihi, & viuam <gloss>g</gloss>: Vias tuas Domine demonftra mihi & femitas tuas edoce me <gloss>h 1</gloss>. Seruus tuus fum ego, da mihi intellectum vt fciam teftimonia tua <gloss>h 2</gloss>. Redde mihi lætitiam falutaris tui, & fpiritu principali confirma me <gloss>h 3</gloss>. Quam bonus & fuauis eft, Domine fpiritus tuus in omnib; <gloss>i</gloss>. Doce me facere voluntatem tuam, quia DEus meus es tu Spiritus tuus bonus deducet me in terram rectam <gloss>k</gloss>.\n\n<margin>\nd\nPfalm: 118\nIod.\nc\nPfalm: 118\nGimel.\nf\nIudith: 9\ng\nPfalm: 118\nSade.\nh 1\nPfalm: 24\nh 2\nPfalm. 118\nAin.\nh 3\nPfalm: 50\ni\nSapient: 12\nk\nPfalm: 142\n</margin>\n\n<vocab>intellectum, mandata, teftamenti, Iudith, Pfalm, Sapientia, Spiritus bonus</vocab>"
+    },
+    {
+     "p": 194,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: miſe</meta>\n\n<margin>\nl\nPsalm: 35\n</margin>\nQuoniam apud te est fons vitæ, & in lumine tuo videbimus lumen **l**: Gressus meos dirige secundum eloquium tuum, & non dominetur mihi omnis iniusticia **m**. \n\n<margin>\nm\nPsalm: 118\nPe.\n</margin>\nBonitatem & disciplinam & scientiam doce me, quia mandatis tuis credidi **n**: \n\n<margin>\nn\nPsalm: 118\nTheth.\n</margin>\nDirige me in veritate tua, & doce me, quia tu es <term>DEus</term> saluator meus & te sustinui tota die **o**, \n\n<margin>\no\nPsalm: 24\n</margin>\nFaciem tuam illumina super seruum tuum **p**. \n\n<margin>\np\nPsalm: 118\nPe.\n</margin>\nOstende mihi gloriam tuam **q**. \n\n<margin>\nq\nExod: 33\n</margin>\nQuia tu lucerna mea Domine, & tu Domine illuminabis tenebras meas **r**: \n\n<margin>\nr\n2. Reg. 22\n& Psalm. 17\n</margin>\nEt sponsabis me tibi in æternum, & sponsabis me tibi in iustitia & in iudicio, & in misericordia & miſe\n\n<vocab>fons vitae, lumen, iusticia, disciplina, scientia, salvator, gloria, lucerna, sponsabis</vocab>"
+    },
+    {
+     "p": 195,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>141</page-num>\n<meta>catchword: Pro-</meta>\n\n<margin>\ns\nOse: 2\n</margin>\nmiserationibus; & sponsabis\nme tibi in fide, & sciam quia\ntu Dominus **s**. Appropin-\nquet deprecatio mea in con-\nspectu tuo Domine, iuxta elo-\nquium tuum da mihi intel-\n<margin>\nt\nPsalm: 118\nThau.\n</margin>\nlectum **t**: Deduc me Domine\nin via tua, & ingrediar in\nveritate tua, lætetur cor me-\n<margin>\nu\nPsalm: 85\n</margin>\num ut timeat nomen tuum **u**:\nMemor ero Nominis tui in\nomni generatione & genera-\ntionem, propterea populi\nconfitebuntur tibi in æter-\n<margin>\nx\nPsalm: 144\n</margin>\nnum & in seculum seculi **x**.\nAmen.\n\n---\n\n# GRATIARVM\n## ACTIO PRO SA-\n->pientia.<-\n\n<vocab>Ose, Psalm, Gratiarum actio, sapientia</vocab>"
+    },
+    {
+     "p": 196,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>142</page-num>\n<meta>catchword: usque</meta>\n\n# Prouerbio: 3.\n\n> *Beatus homo qui inuenit Sapientiam & mortalis qui vidit prudentiam: Præstat enim ipsam accipere, quam Auri & Argenti thesauros.*\n\n<margin>\na\nPsalm: 33\n</margin>\nBEnedicam Domino in omni tempore, semper laus eius in ore meo: In Domino lætabitur Anima mea ᵃ: \n\n<margin>\nb\nPsalm: 15\n</margin>\nBenedicam Domino, qui tribuit mihi intellectum ᵇ: \n\n<margin>\nc\nPsalm: 110\n</margin>\nSanctum & terribile nomen eius, initium Sapientiæ timor Domini ᶜ: \n\n<margin>\nd\nPsalm: 118\nNun.\n</margin>\nLucerna pedibus meis verbum, & lumen semitis ᵈ: \n\n<margin>\ne\nSapient. 14\n</margin>\nTua autem Pater prouidentia gubernat ᵉ: Notas mihi fecisti vias vitæ, adimplebis me lætitia cum vultu tuo, delectationes in dextera tua\n\n<vocab>Prouerbio, Sapientia, Psalmus, Sapientia, Providentia</vocab>"
+    },
+    {
+     "p": 197,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>143</page-num>\n<meta>catchword: Bene-</meta>\n\n<margin>\ne 2\nPfalm: 15\n\nf\nEfaiæ. 48\n\ng\nPfalm: 50\n\nh\nPfalm: 30\n\ni\nEfaiæ: 64\n& 1. Cor: 2.\nk\nApocal: 9\n</margin>\nvſque in finem <gloss>e 2</gloss> Tu Domi-\nnus DEus meus docens me\nvtilia, gubernans me in via\nqua ambulo <gloss>f</gloss>: Ecce enim ve-\nritatem dilexiſti, incerta &\nocculta Sapientiæ tuæ mani-\nfeſtaſti mihi <gloss>g</gloss>. Quam ma-\ngna multitudo dulcedinis\ntuæ Domine, quam abſcon-\ndiſti timentibus te: pro-\nfeciſti eis qui ſperant in te in\nconſpectu filiorum homi-\nnum <gloss>h</gloss>. Quod oculus non\nvidit, nec auris audiuit, nec\nin cor hominis aſcendit, quæ\npræparauit DEus his qui dili-\ngunt illum: Nobis autem re-\nuelauit DEVS per ſpiritum\nſuum <gloss>i</gloss>. Alleluia, ſalus &\nhonor & gloria, & virtus\nDomino DEO noſtro <gloss>k</gloss>\n\n->Bene-<-\n\n<vocab>Sapientia, Alleluia, Spiritus, Psalmi, Esaias, Apocalypsis, Corintios</vocab>"
+    },
+    {
+     "p": 198,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>142</page-num>\n<meta>catchword: usque</meta>\n\n## Prouerbio: 3.\n\n> *Beatus homo qui inuenit Sapientiam & mortalis qui videt prudentiam: Præstat enim ipsam accipere, quam Auri & Argenti thesauros.*\n\n<margin>\na\nPsalm: 33\n</margin>\nBEnedicam Domino in omni tempore, semper laus eius in ore meo: In Domino lætabitur Anima mea ᵃ: Benedicam Domino, qui tribuit mihi intellectum ᵇ: Sanctum & terribile nomen eius, initium Sapientiæ timor Domini ᶜ: Lucerna pedibus meis verbum, & lumen semitis ᵈ: Tua autem Pater prouidentia gubernat ᵉ: Notas mihi fecisti vias vitæ, adimplebis me lætitia cum vultu tuo, delectationes in dextera tua\n\n<margin>\nb\nPsalm: 15\n\nc\nPsalm: 110\n\nd\nPsalm: 118 Nun.\n\ne\nSapient. 14\n</margin>\n\n<vocab>Sapientia, prudentia, Benedictio, timor Domini, Prouidentia, Psalmi</vocab>"
+    },
+    {
+     "p": 199,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>143</page-num>\n<meta>catchword: Bene-</meta>\n\n<margin>\ne 2\nPsalm: 15\n</margin>\nvſque in finem <gloss>e 2</gloss> Tu Domi-\nnus DEus meus docens me\n<margin>\nf\nEſaiæ. 48\n</margin>\nvtilia, gubernans me in via\nqua ambulo <gloss>f</gloss>: Ecce enim ve-\nritatem dilexiſti, incerta &\nocculta Sapientiæ tuæ mani-\n<margin>\ng\nPsalm: 50\n</margin>\nfeſtaſti mihi <gloss>g</gloss>. Quam ma-\ngna multitudo dulcedinis\ntuæ Domine, quam abſcon-\ndiſti timentibus te: pro-\nfeciſti eis qui ſperant in te in\nconſpectu filiorum homi-\n<margin>\nh\nPsalm: 30\n</margin>\nnum <gloss>h</gloss>. Quod oculus non\nvidit, nec auris audiuit, nec\nin cor hominis aſcendit, quæ\npræparauit DEus his qui dili-\ngunt illum: Nobis autem re-\n<margin>\ni\nEſaiæ: 64\n& 1. Cor: 2.\nk\nApocal: 19\n</margin>\nuelauit DEVS per ſpiritum\nſuum <gloss>i</gloss>. Alleluia, ſalus &\nhonor & gloria, & virtus\nDomino DEO noſtro <gloss>k</gloss>\n\n->Bene-<-\n\n<vocab>Sapientia, Alleluia, Spiritus, Eſaias, Psalmi, Apocalypſis</vocab>"
+    },
+    {
+     "p": 200,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>144</page-num>\n<meta>catchword: &amp;</meta>\n\n<margin>\nl\nPsalm: 30\n</margin>\nBenedictus Dominus, quoniam mirificauit misericordiam suam mihi<gloss>l</gloss>. Sit nomen Domini benedictum á seculo &amp; usque in seculum: Quia sapientia &amp; fortitudo eius sunt: Dat sapientiam sapientibus, &amp; scientiam intelligentibus disciplinam: Ipse reuelat profunda &amp; abscondita, &amp; nouit in tenebris constituta, &amp; lux cum eo est: Tibi DEus Patrum meorum confiteor, teq; laudo, quia sapientiam &amp; fortitudinem dedisti mihi, &amp; nunc ostendisti mihi quæ rogaui te<gloss>m</gloss>: Lætatum est cor meum in sapientia, ambulauit pes meus iter rectum, á iuuentute mea inuestigabam eam: Inclinaui modicè aurem me\n\n<margin>\nm\nDaniel: 2\n</margin>\n\n<vocab>Benedictus Dominus, misericordia, sapientia, fortitudo, Daniel, Psalmi</vocab>"
+    },
+    {
+     "p": 201,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>145</page-num>\n<sig>K</sig>\n<meta>catchword: man-</meta>\n\n& excepi illam : Multam inueni in meipfo fapientiam, & multum profeci in ea: Danti mihi Sapientiam dabo gloriam: Confiliatus fum enim vt facerem illam: Zelatus fum bonum, & non confundar: colluctata eft anima mea in illa, & in faciendo eam confirmatus fum: manus meas extendi in altum, & in fapientia eius luxit anima mea, & ignorantias meas illuminauit: Animam meam direxi ad illam, & in agnitione inueni eam: Poffedi cum ipfa cor ab initio, propter hoc non derelinquar<gloss>n</gloss>. \n\n<margin>\n<gloss>n</gloss>\n**Eccl: 51**\n</margin>\n\nSuper omnes docentes me intellexi, quia teftimonia tua meditatio mea eft: Super fenes intellexi, quia\n\n<vocab>Sapientia, Ecclesiasticus, meditatio, testimonia</vocab>"
+    },
+    {
+     "p": 202,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>146</page-num>\n\n<margin>\nPsalm. 118\nMem\n</margin>\nmandata tua quæsiui. DEus\nin sancta via tua: Quis DE-\nus magnus, sicut DEus no-\nster? Tu es DEus qui fecisti\n<margin>\np\nPsalm: 76\n</margin>\nmirabilia <gloss>p</gloss>. Me autem pro-\npter innocentiam suscepisti\n& confirmasti me in conspe-\n<margin>\nq\nPsalm: 40\n</margin>\nctu tuo in æternum <gloss>q</gloss>: A-\nmen.\n\n# DEPRECATIO\n### IN TRIBVLA-\n->tione.<-\n\n### 2. Reg: 22.\n\n> *In Tribulatione mea inuocabo Domi-\nnum, & ad DEum meum clamabo.*\n\n### Psalm: 19.\n\n> *Exaudiet te Dominus in die tribu-\nlationis.*\n\n---\n<margin>\nPsalm: 33\n</margin>\n\n<vocab>mandata, mirabilia, innocentiam, Deprecatio, Tribulatione, Psalm: 118, Psalm: 76, Psalm: 40, 2. Reg: 22, Psalm: 19, Psalm: 33</vocab>"
+    },
+    {
+     "p": 203,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>147</page-num>\n<sig>K 2</sig>\n<meta>catchword: osten-</meta>\n\n### Psalm: 33.\n\n> *Clamauerunt iusti, & Dominus exaudiuit eos, & ex omnibus tribulationibus eorum liberauit eos.*\n\n---\n\nDomine Rex omnipotens in ditione enim tua cuncta sunt posita, & non est qui tuæ possit resistere voluntati: Tu fecisti cœlum & terram, & quicquid cœli ambitu continetur: Dominus omnium es, nec est qui resistat maiestati tuæ<margin>a Esther: 13</margin>: Tu cœlum & terrā imples<margin>b Ierem: 23</margin>: Super me confirmat, est furor tuus, & omnes fluctus tuos induxisti super me<margin>c Psalm: 87</margin>: DEus DEus meus respice in me, quare me dereliquisti<margin>d Psalm: 21 Matth: 27 & Marc: 15</margin>: Cur faciem tuā abscondis, & arbitraris me inimicum tuū: Contra foliū, quod vento rapitur,\n\n<vocab>Psalm 33, Rex omnipotens, Esther 13, Ieremias 23, Psalm 87, Psalm 21, Matthaeus 27, Marcus 15</vocab>"
+    },
+    {
+     "p": 204,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>148</page-num>\n<meta>catchword: quid</meta>\n\n<margin>\ne\nHiob: 13\n</margin>\nostendis potentiam tuam, &amp; stipulam siccam persequeris <gloss>e</gloss>?\nQuare in perpetuum oblivisceris mei, derelinques nos in\n<margin>\nf\nIer: Thren: 5.\n</margin>\nlongitudinem dierum <gloss>f</gloss>? Ut quid Domine recessisti longè, despicis in opportunita-\n<margin>\ng\nPsalm: 9\n</margin>\ntibus, in tribulatione <gloss>g</gloss>? Non sis tu mihi formidini spes\n<margin>\nh\nIerem: 17\n</margin>\nmea in die afflictionis <gloss>h</gloss>: Adjutor &amp; susceptor meus es tu, &amp; in verbum tuum superspe-\n<margin>\ni\nPsalm: 118 Samech.\n</margin>\nraui <gloss>i</gloss>: DEus ne elongéris à me, DEus meus in auxilium\n<margin>\nk\nPsalm: 70\n</margin>\nmeum respice <gloss>k</gloss>: Domine refugium meum, fortitudo mea, robur meum in die tribula-\n<margin>\nl\nIerem. 16\n</margin>\ntionis <gloss>l</gloss>: Suscipe me secundum eloquium tuum, &amp; vivam, &amp; non confundas me ab\n<margin>\nm\nPsalm: 118 Samech\n</margin>\nexpectatione mea <gloss>m</gloss>: Nunquid\n\n<vocab>Hiob, Ieremias, Threni, Psalmi, Samech, tribulatio, refugium, auxilium</vocab>"
+    },
+    {
+     "p": 205,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>149</page-num>\n<sig>K 3</sig>\n<meta>catchword: mei</meta>\n\nquid obliuiſci poteſt mulier infantem ſuum, & non miſereatur filio vteri ſui? Etſi illa oblita fuerit, tu tamen Domine DEVS meus non obliuiſceris mei <gloss>n</gloss>, Tu tu ipſe conſolaberis me <gloss>o</gloss>: Et ſcio quia tu es Dominus, ſupra quo non confundentur, qui expectant eum, & ſcio quia tu Dominus ſaluans me, & Redemptor meus fortis Iacob <gloss>p</gloss>: Ecce aderis, quia miſericors es Domine DEus meus <gloss>q</gloss>. Si ambulauero in medio tribulationis, viuificabis me <gloss>r</gloss>. Et conuertes me, quia miſereberis mei, & ero ſicut fui, quando non proieceras me <gloss>s</gloss>, Tribulatio & anguſtia inuenerunt me <gloss>t</gloss>: Defecerunt præ lachrymis oculi mei\n\n<margin>\nn\nEſaiæ. 49\no\nEſaiæ: 49\n& 51.\np\nEſaiæ. 60\nq\nEſaiæ. 18\nr\nPſalm: 137\ns\nZach: 10\nt\nPſalm: 118\nSade\n</margin>\n\n<vocab>Eſaias, Pſalmi, Zacharias, Redemptor, Iacob, tribulatio, miſericors</vocab>"
+    },
+    {
+     "p": 206,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>150</page-num>\n<meta>catchword: rere</meta>\n\n<margin>\nu\nIer: Thren: 2.\n</margin>\nmei, conturbata sunt viscera mea $^u$: DEus noster refugium & virtus, adiutor in tribulationibus, quæ inuenerunt \n\n<margin>\nx\nPsalm: 45\n</margin>\nme nimis $^x$. Tribulationes cordis mei multiplices sunt, de necessitatibus meis erue \n\n<margin>\ny\nPsalm: 24\n</margin>\nme $^y$: Memento Domine, & ostende te nobis in tempore tribulationis nostræ, & da mihi fiduciam Domine Rex Deorum & vniuersæ pote-\n\n<margin>\nz\nEsther: 14\n</margin>\nstatis $^z$: Quia propè es omnibus illis, qui tribulato sunt corde, & humiles Spiritu sal-\n\n<margin>\na\nPsalm: 33\n</margin>\nuabis $^a$: Da mihi auxilium de tribulatione, quia vana salus \n\n<margin>\nb\nPsalm: 59 & 107.\n</margin>\nhominis $^b$: Exaltare super cœlos DEus, & super omnem terrã gloria tua, vt liberentur \n\n<margin>\nc\nPsalm: 107\n</margin>\ndilecti tui $^c$: Domine mise-\n\n<vocab>Threnorum, Psalmi, Esther, tribulatio, refugium, salus</vocab>"
+    },
+    {
+     "p": 207,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>151</page-num>\n<sig>K 4</sig>\n<meta>catchword: &amp;</meta>\n\nrere mei, te enim expecta-\nui: Eſto brachium meum in\nmanè, &amp; ſalus mea in tem-\n<margin>\nd\nMiche, 7\n</margin>\npore tribulationis $^d$: Clama-\nbo ad te in tribulatione mea,\n&amp; exaudies me ſaluumq; fa-\n<margin>\ne\n2. Paral: 20\n</margin>\ncies $^e$: Specioſa miſericordia\nDEI in tempore tribulatio-\nnis, quaſi nubes pluuiæ in\n<margin>\nf\nEccl: 18\n</margin>\ntempore ſiccitatis $^f$: Multæ\ntribulationes iuſtorum, ſed\nde omnibus his liberabit eos\n<margin>\ng\nPſalm: 33\nh\nSapient: 1\n</margin>\nDominus $^g$. DEUS cordis\nſcrutator verus $^h$: Effundo in\nconſpectu eius orationem me-\nam, &amp; tribulationem meam\n<margin>\ni\nPſalm: 141\n</margin>\nante ipſum pronuncio $^i$:\nQuoniam in DEum meum\nſperaui, liberabit me, quo-\nniam cognoui nomen ei-\nus: clamaui ad eum,\n\n<vocab>tribulatio, misericordia, Deus, Psalmi, Ecclesiasticus, Paralipomenon, Michaeas, Sapientia</vocab>"
+    },
+    {
+     "p": 208,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>152</page-num>\n<meta>catchword: in</meta>\n\n<margin>\nk\nPsalm: 90\nl\nRom: 16\n</margin>\n& ipse exaudiet me, mecum est in tribulatione, eripiet me, & glorificabo eum $^k$. Cui honor & gloria in secula seculorum Amen $^l$.\n\n---\n\n# PRECATIO\n### PRÆSERVATIVA\n-> contra pestem. <-\n\n### 3. Reg: 8. & 2. Paral. 6.\n\n> *Fames si oborta fuerit in terra, aut pestilentia, aut corruptus aer &c. Omnis plaga, vniuersa infirmitas, cuncta deuotio, & imprecatio quæ acciderit omni homini & populo tuo israel: si quis cognouerit plagam cordis sui, & expanderit manus suas in domo hac, tu exaudies in cælo, in loco habitationis tuæ, & repropitiaberis, & facies, ut des vnicuique secundum omnes vias suas, sicut videris cor eius.*\n\n<vocab>Precatio, pestis, Fames, pestilentia, Israel, Salomon</vocab>"
+    },
+    {
+     "p": 209,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>153</page-num>\n<sig>K 5</sig>\n<meta>catchword: tuo</meta>\n\nIntende vocem Orationis meæ, Rex meus & DEVS meus <gloss>a</gloss>: Pater meus es tu, Deus meus & ſuſceptor ſalutis meæ <gloss>b</gloss>. Manus tuæ fecerūt me & plantauerunt me <gloss>c</gloss>. Cor meum conturbatum eſt in me, & formido mortis cecidit ſuper me: Timor & tremor venerunt ſuper me, & contexerunt me tenebræ <gloss>d</gloss> Et nunc Domine omnipotens DEUS Iſrael, anima in anguſtijs & ſpiritus anxius clamat ad te, audi Domine, & miſerere, quia DEVS es miſericors <gloss>e</gloss>. Domine, Pater & Dominator vitæ meæ, ne derelinquas me <gloss>f</gloss>. Non ſis tu mihi formidini ſpes mea in die afflictionis <gloss>g</gloss>. Domine, ne in furore\n\n<margin>\na\nPſalm: 5\n\nb\nPſalm: 88\n\nc\nPſalm: 118\nIod.\n\nd\nPſalm: 54\n\ne\nBaruc: 3\n\nf\nEccl: 23\n\ng\nIerem: 17\n</margin>\n\n<vocab>Oratio, Rex, Deus, Pater, Salus, Manus, Cor, Mors, Timor, Israel, Misericors, Vita, Afflictio</vocab>"
+    },
+    {
+     "p": 210,
+     "type": "text",
+     "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>154</page-num>\n<meta>catchword: in</meta>\n\n<margin>\nh\nPsalm: 6 & 37\n</margin>\ntuo arguas me, neque in ira tua corripias me <gloss>h</gloss>. Et nunc Domine memor esto mei, & ne vindictam sumas de peccatis meis, neq; reminiscaris delicta mea vel parentum meorum <gloss>i</gloss>. Adiutor meus esto, ne derelinquas me neque despicias me DEus salutaris meus <gloss>k</gloss>. Suscipe me secundum eloquium tuũ & viuam, & non confundas me ab expectatione mea <gloss>l</gloss>: Non enim est alius DEus quam tu, cui cura est de omnibus <gloss>m</gloss>. Custodi animam meam & erue me, non erubescam, quoniam speraui in te <gloss>n</gloss>. In te Domine speraui, non confundar in æternum <gloss>o</gloss>. In Domino speraui, non infirmabor <gloss>p</gloss>. Nã etsi ambulauero\n\n<margin>\ni\nTobi: 3\n\nk\nPsalm: 26\n\nl\nPsalm: 118 Samech.\n\nm\nSapient. 12\n\nn\nPsalm: 24\n\no\nPsalm: 30 & 70.\n\np\nPsalm: 35\n</margin>\n\n<vocab>Psalmi, Tobias, Sapientia, oratio, peccata, Deus salutaris</vocab>"
+    }
+   ]
+  },
+  {
+   "name": "Atalanta 105…114 with the misprint run 118, 18 — outliers, no break",
+   "synthetic": true,
+   "expect": [],
+   "outliers": 2,
+   "pages": [
+    {
+     "p": 1,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>105</page-num>\nbody text of the page."
+    },
+    {
+     "p": 2,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>106</page-num>\nbody text of the page."
+    },
+    {
+     "p": 3,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>107</page-num>\nbody text of the page."
+    },
+    {
+     "p": 4,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>108</page-num>\nbody text of the page."
+    },
+    {
+     "p": 5,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>109</page-num>\nbody text of the page."
+    },
+    {
+     "p": 6,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>110</page-num>\nbody text of the page."
+    },
+    {
+     "p": 7,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>111</page-num>\nbody text of the page."
+    },
+    {
+     "p": 8,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>118</page-num>\nbody text of the page."
+    },
+    {
+     "p": 9,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>18</page-num>\nbody text of the page."
+    },
+    {
+     "p": 10,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>114</page-num>\nbody text of the page."
+    },
+    {
+     "p": 11,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>115</page-num>\nbody text of the page."
+    },
+    {
+     "p": 12,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>116</page-num>\nbody text of the page."
+    },
+    {
+     "p": 13,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>117</page-num>\nbody text of the page."
+    }
+   ]
+  },
+  {
+   "name": "duplicated opening 120 121 122 123 122 123 124 125",
+   "synthetic": true,
+   "expect": [
+    {
+     "shape": "back",
+     "d": -2
+    }
+   ],
+   "pages": [
+    {
+     "p": 1,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>120</page-num>\nbody text of the page."
+    },
+    {
+     "p": 2,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>121</page-num>\nbody text of the page."
+    },
+    {
+     "p": 3,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>122</page-num>\nbody text of the page."
+    },
+    {
+     "p": 4,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>123</page-num>\nbody text of the page."
+    },
+    {
+     "p": 5,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>122</page-num>\nbody text of the page."
+    },
+    {
+     "p": 6,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>123</page-num>\nbody text of the page."
+    },
+    {
+     "p": 7,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>124</page-num>\nbody text of the page."
+    },
+    {
+     "p": 8,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>125</page-num>\nbody text of the page."
+    },
+    {
+     "p": 9,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>126</page-num>\nbody text of the page."
+    }
+   ]
+  },
+  {
+   "name": "section numbers, not a pagination (10 10 10 11 11 12 …)",
+   "synthetic": true,
+   "expect": [],
+   "irregular": true,
+   "pages": [
+    {
+     "p": 1,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>10</page-num>\nbody text of the page."
+    },
+    {
+     "p": 2,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>10</page-num>\nbody text of the page."
+    },
+    {
+     "p": 3,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>10</page-num>\nbody text of the page."
+    },
+    {
+     "p": 4,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>11</page-num>\nbody text of the page."
+    },
+    {
+     "p": 5,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>11</page-num>\nbody text of the page."
+    },
+    {
+     "p": 6,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>12</page-num>\nbody text of the page."
+    },
+    {
+     "p": 7,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>12</page-num>\nbody text of the page."
+    },
+    {
+     "p": 8,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>12</page-num>\nbody text of the page."
+    },
+    {
+     "p": 9,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>13</page-num>\nbody text of the page."
+    },
+    {
+     "p": 10,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>13</page-num>\nbody text of the page."
+    },
+    {
+     "p": 11,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>14</page-num>\nbody text of the page."
+    },
+    {
+     "p": 12,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>14</page-num>\nbody text of the page."
+    }
+   ]
+  },
+  {
+   "name": "a number read off a plate is not in the sequence — the plate is an extra scan, never a jump to 99",
+   "synthetic": true,
+   "expect": [
+    {
+     "shape": "extra",
+     "between": [
+      "illustration"
+     ]
+    }
+   ],
+   "pages": [
+    {
+     "p": 1,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>40</page-num>\nbody text of the page."
+    },
+    {
+     "p": 2,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>41</page-num>\nbody text of the page."
+    },
+    {
+     "p": 3,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>42</page-num>\nbody text of the page."
+    },
+    {
+     "p": 4,
+     "type": "illustration",
+     "ocr": "<page-type>illustration</page-type>\n<page-num>99</page-num>"
+    },
+    {
+     "p": 5,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>43</page-num>\nbody text of the page."
+    },
+    {
+     "p": 6,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>44</page-num>\nbody text of the page."
+    },
+    {
+     "p": 7,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>45</page-num>\nbody text of the page."
+    },
+    {
+     "p": 8,
+     "type": "text",
+     "ocr": "<page-type>text</page-type>\n<page-num>46</page-num>\nbody text of the page."
+    }
+   ]
+  }
+ ]
+}

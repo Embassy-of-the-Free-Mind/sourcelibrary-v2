@@ -1,0 +1,61 @@
+{
+ "_note": "Pairs of real pages. 69804b90 pp.191/193 were compared BY EYE on the images (2026-09-24): the same leaf, photographed twice.",
+ "cases": [
+  {
+   "name": "69804b90 p.191 vs p.193 (same leaf twice, image-verified)",
+   "expect": true,
+   "a": {
+    "p": 191,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: Quo-</meta>\n\n<margin>\nd\nPfalm: 118\nIod.\nc\nPfalm: 118\nGimel.\nf\nIudith: 9\ng\nPfalm: 118\nSade.\nh 1\nPfalm: 24\nh 2\nPfalm: 118\nAin.\nh 3\nPfalm: 58\ni\nSapient: 12\nk\nPfalm: 42\n</margin>\nintellectum, vt difcam mandata tua<sup>d</sup>: Reuela oculos meos & confiderabo mirabilia de lege tua<sup>e</sup>: Memento Domine teftamenti tui, & da verbū in ore meo, & in corde meo confilium corrobora<sup>f</sup>: Intellectum da mihi, & viuam<sup>g</sup>: Vias tuas Domine demonftra mihi & femitas tuas edoce me<sup>h 1</sup>. Seruus tuus fum ego, da mihi intellectum vt fciam teftimonia tua<sup>h 2</sup>. Redde mihi lætitiam falutaris tui, & fpiritu principali confirma me<sup>h 3</sup>. Quam bonus & fuauis eft, Domine fpiritus tuus in omnib;<sup>i</sup>: Doce me facere voluntatem tuam, quia DEus meus es tu Spiritus tuus bonus deducet me in terram rectam<sup>k</sup>.\n\n<vocab>intellectum, mandata, teftamenti, Iudith, Pfalm, Sapientia, Spiritus</vocab>"
+   },
+   "b": {
+    "p": 193,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: Quo-</meta>\n\nintellectum, vt difcam mandata tua <gloss>d</gloss>: Reuela oculos meos & confiderabo mirabilia de lege tua <gloss>e</gloss>: Memento Domine teftamenti tui, & da verbū in ore meo, & in corde meo confilium corrobora <gloss>f</gloss>: Intellectum da mihi, & viuam <gloss>g</gloss>: Vias tuas Domine demonftra mihi & femitas tuas edoce me <gloss>h 1</gloss>. Seruus tuus fum ego, da mihi intellectum vt fciam teftimonia tua <gloss>h 2</gloss>. Redde mihi lætitiam falutaris tui, & fpiritu principali confirma me <gloss>h 3</gloss>. Quam bonus & fuauis eft, Domine fpiritus tuus in omnib; <gloss>i</gloss>. Doce me facere voluntatem tuam, quia DEus meus es tu Spiritus tuus bonus deducet me in terram rectam <gloss>k</gloss>.\n\n<margin>\nd\nPfalm: 118\nIod.\nc\nPfalm: 118\nGimel.\nf\nIudith: 9\ng\nPfalm: 118\nSade.\nh 1\nPfalm: 24\nh 2\nPfalm. 118\nAin.\nh 3\nPfalm: 50\ni\nSapient: 12\nk\nPfalm: 142\n</margin>\n\n<vocab>intellectum, mandata, teftamenti, Iudith, Pfalm, Sapientia, Spiritus bonus</vocab>"
+   }
+  },
+  {
+   "name": "69804b90 p.191 vs p.192 (neighbours, different text)",
+   "expect": false,
+   "a": {
+    "p": 191,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>139</page-num>\n<meta>catchword: Quo-</meta>\n\n<margin>\nd\nPfalm: 118\nIod.\nc\nPfalm: 118\nGimel.\nf\nIudith: 9\ng\nPfalm: 118\nSade.\nh 1\nPfalm: 24\nh 2\nPfalm: 118\nAin.\nh 3\nPfalm: 58\ni\nSapient: 12\nk\nPfalm: 42\n</margin>\nintellectum, vt difcam mandata tua<sup>d</sup>: Reuela oculos meos & confiderabo mirabilia de lege tua<sup>e</sup>: Memento Domine teftamenti tui, & da verbū in ore meo, & in corde meo confilium corrobora<sup>f</sup>: Intellectum da mihi, & viuam<sup>g</sup>: Vias tuas Domine demonftra mihi & femitas tuas edoce me<sup>h 1</sup>. Seruus tuus fum ego, da mihi intellectum vt fciam teftimonia tua<sup>h 2</sup>. Redde mihi lætitiam falutaris tui, & fpiritu principali confirma me<sup>h 3</sup>. Quam bonus & fuauis eft, Domine fpiritus tuus in omnib;<sup>i</sup>: Doce me facere voluntatem tuam, quia DEus meus es tu Spiritus tuus bonus deducet me in terram rectam<sup>k</sup>.\n\n<vocab>intellectum, mandata, teftamenti, Iudith, Pfalm, Sapientia, Spiritus</vocab>"
+   },
+   "b": {
+    "p": 192,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>138</page-num>\n<meta>catchword: intel-</meta>\n\nminor ad intellectum iudicij tui & legum: Mitte illam de cœlis sanctis tuis, & à sede magnitudinis tuæ, vt mecum sit, & mecum laboret, & sciam quid acceptum sit apud te: Scit enim omnia & intelligit & deducet me in operibus meis sobriè, & custodiet me in tua potentia, & erunt accepta \n<margin>\na\nSapient: 9\n</margin>\nopera mea ᵃ: Cum adhuc iunior eram, priusquam oberrarem, quæsiui Sapientiam palam in oratione mea. Ante tempus postulabā pro illa, & vsq; in nouissimis inquiram eam, & florebit, tanquam præcox \n<margin>\nb\nEccl: 51\n</margin>\nvua ᵇ: Pater meus es tu, DEus \n<margin>\nc\nPsalm. 88\n</margin>\nmeus & susceptor salutis meæ ᶜ: Manus tuæ fecerunt me & plantauerunt me: Da mihi\n\n<vocab>Sapientia, Ecclesiasticus, Psalmi, intellectus, legum, oratio, DEus</vocab>"
+   }
+  },
+  {
+   "name": "698255f3 p.128 vs p.130 (two OCR runs: ſ/f, broken hyphen)",
+   "expect": true,
+   "a": {
+    "p": 128,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>122</page-num>\n<header>IAMBLICHVS</header>\n\ntionemq́; ipſis in cultu congruam adhibe\nbimus. Corpora igitur vita priuata, & ani-\nmalium cædes deſtructu corporum, mu-\ntatioq́ue multiformis, atque corruptio, &\nomnino proiectio materiæ precedẽtis ma\nterialibus diis congruit, non quidem ipſis\npropter ſeipfos, ſed propter materiam, cui\npręſunt. Etſi enim ab hac maximè ſepara-\nti ſint, ſimul tamen huic adſunt: ac ſi ma-\nteriam in poteſtate immateriali cõtinent,\nattamen vnà cum hac exiſtunt. Iam verò\ngubernata gubernatoribus non ſunt alie-\nna. ſimiliter exornatoribus-exornata.\nQuinetiam vtentibus, quæ ſubminiſtrãt,\ntanquam inſtrumenta, facile proportioni-\nbus coaptãtur. quapropter immaterialib⁹\nquidem diis, materiã in ſacrificiis adhibe-\nre eſt alienum: materialibus autem omni-\nbus eſt admodum conſentaneum. Operę-\npretium eſt ad hæc inſuper geminum vi-\ntæ noſtræ habitum cogitare. Aliquando\nquidem animus toti nos efficimur poſiti\nextra corpus, & eleuati mẽte, vnà cum to-\ntis immaterialibus diis per ſublimia nos\nattollimus, aliquando verò terreno corpo\nre colligamur, ſumusq́; corporei, materia\nvidelicet cõprehenſi. Similiter duplex erit\ncultus diuini ratio, vna quidẽ erit ſimplex\nincorporea ab omni generatione ſynce-\n\n<meta>catchword: ra,</meta>\n\n<vocab>Iamblichus, cultus, diis, materia, immaterialis, sacrificia, anima, habitum</vocab>"
+   },
+   "b": {
+    "p": 130,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-num>122</page-num>\n<page-type>text</page-type>\n<header>IAMBLICHVS</header>\n<meta>catchword: ra,</meta>\n\ntionemq; ipfis in cultu congruam adhibe-\nbimus. Corpora igitur vita priuata, & ani-\nmalium cædes deftructu corporum, mu-\ntatióque multiformis, atque corruptio, &\nomninò proiectio materiæ precedētis ma-\nterialibus diis congruit, non quidem ipfis\npropter feipfos, fed propter materiam, cui\npræfunt. Etfi enim ab hac maximè fepara-\nti fint, fimul tamen huic adfunt: ac fi ma-\nteriam in poteftate immateriali cōtinent,\nattamen unà cum hac exiftunt. Iam verò\ngubernata gubernatoribus non funt alie-\nna. fimiliter exornatoribus exornata.\nQuinetiam utentibus, quæ fubminiftrāt,\ntanquam inftrumenta, facile proportioni-\nbus coaptātur. quapropter immaterialib⁹\nquidem diis, materiā in facrificiis adhibe-\nre eft alienum: materialibus autem omni-\nbus eft admodum confentaneum. Operę-\npretium eft ad hæc infuper geminum vi-\ntæ nostræ habitum cogitare. Aliquando\nquidem animus toti nos efficimur pofiti\nextra corpus, & eleuati mētē, unà cum to-\ntis immaterialibus diis per fublimia nos\nattollimus, aliquando verò terreno corpó-\nre colligamur, fumusq; corporei, materia\nvidelicet cōprehenfi. Similiter duplex erit\ncultus diuini ratio, una quidē erit fimplex\nincorporea ab omni generatione fynce-\n\n<vocab>Iamblichus, cultus, animalium, materia, diis, sacrificiis, anima, immaterialibus</vocab>"
+   }
+  },
+  {
+   "name": "698255f3 p.128 vs p.129",
+   "expect": false,
+   "a": {
+    "p": 128,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>122</page-num>\n<header>IAMBLICHVS</header>\n\ntionemq́; ipſis in cultu congruam adhibe\nbimus. Corpora igitur vita priuata, & ani-\nmalium cædes deſtructu corporum, mu-\ntatioq́ue multiformis, atque corruptio, &\nomnino proiectio materiæ precedẽtis ma\nterialibus diis congruit, non quidem ipſis\npropter ſeipfos, ſed propter materiam, cui\npręſunt. Etſi enim ab hac maximè ſepara-\nti ſint, ſimul tamen huic adſunt: ac ſi ma-\nteriam in poteſtate immateriali cõtinent,\nattamen vnà cum hac exiſtunt. Iam verò\ngubernata gubernatoribus non ſunt alie-\nna. ſimiliter exornatoribus-exornata.\nQuinetiam vtentibus, quæ ſubminiſtrãt,\ntanquam inſtrumenta, facile proportioni-\nbus coaptãtur. quapropter immaterialib⁹\nquidem diis, materiã in ſacrificiis adhibe-\nre eſt alienum: materialibus autem omni-\nbus eſt admodum conſentaneum. Operę-\npretium eſt ad hæc inſuper geminum vi-\ntæ noſtræ habitum cogitare. Aliquando\nquidem animus toti nos efficimur poſiti\nextra corpus, & eleuati mẽte, vnà cum to-\ntis immaterialibus diis per ſublimia nos\nattollimus, aliquando verò terreno corpo\nre colligamur, ſumusq́; corporei, materia\nvidelicet cõprehenſi. Similiter duplex erit\ncultus diuini ratio, vna quidẽ erit ſimplex\nincorporea ab omni generatione ſynce-\n\n<meta>catchword: ra,</meta>\n\n<vocab>Iamblichus, cultus, diis, materia, immaterialis, sacrificia, anima, habitum</vocab>"
+   },
+   "b": {
+    "p": 129,
+    "type": "text",
+    "ocr": "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>123</page-num>\n<header>DE MYSTERIIS.</header>\n\nra, ſynceris competens animalibus : alte-\nra verò plena corporibus, & actione pror-\nſus materiali cõueniens animalibus non-\ndum puris, necdum ab omni generatione\npurgatis. Sacrificiorum ergo ſpecies duæ\nſunt , puriſſima quidem ſacrificia homi-\nnum ſunt ſummopere purgatorum. quod\nquidem rarò conuenit vni , vel admodum\npauciſſimis , vt inquit Heraclitus. ſacrifi-\ncia verò materialia , & quæ in mutatione\nverſantur, animalibus adhuc occupatis\ncorpore competunt. ciuitatibus ergo nõ-\ndũ purgatis genitali ſorte, contubernioq́;\ncorporeo niſi eiuſmodi ſacrificia dederis,\nab vtrifq́; pariter aberrabis ab immateria\nlibus ſimul atque materialibus bonis. Illa\nquidem nõ poſſunt accipere, his autẽ pro-\nprium, conſentaneumq́; nõ offerunt. Ac-\ncedit ad hæc quòd vnuſquiſq; qua ratione\neſt, non qua non eſt, agere debet eſſentiæ\ncuram. Non oportet igitur hanc præuari-\ncari propriam colentis menſurã, atq; natu\nrā. complexionẽ quoq; propriè coaptatam\ninter curātes homines , potentiasq́; cura-\ntas, electurã iudico conueniẽtem ſibi cul-\nturæ modum. Nā complexio eiuſmodi im\nmaterialiter tẽperato immaterialẽ eligit,\nquatenus ipſa videlicet potentiis purè in-\ncorporeis ad ipſa purè incorporea copu-\nlatur,\n\n<meta>catchword: latur,</meta>\n\n<vocab>Heraclitus, Sacrificiorum, immaterialis, essentia, complexio, purgatis</vocab>"
+   }
+  }
+ ]
+}
