@@ -16,7 +16,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
-import { topicLabel } from '@/lib/image-subjects';
+import { SUBJECT_CATEGORIES, topicLabel } from '@/lib/image-subjects';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
@@ -653,24 +653,27 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                 </select>
               </div>
 
-              {/* Subjects */}
-              {data.filters.subjects.length > 0 && (
-                <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">Subject</label>
-                  <select
-                    value={subjectFilter}
-                    onChange={(e) => updateParams({ subject: e.target.value })}
-                    className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
-                  >
-                    <option value="">All subjects</option>
-                    {data.filters.subjects.map((subject) => (
-                      <option key={subject} value={subject}>
-                        {subject.charAt(0).toUpperCase() + subject.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              {/* Subject — the browse vocabulary (#4856), not the raw extractor strings,
+                  which listed thousands of near-duplicates alphabetically. Choosing a
+                  topic clears any raw ?subject= so the two filters never stack. */}
+              <div>
+                <label className="block text-xs font-medium text-stone-500 mb-2">Subject</label>
+                <select
+                  value={topicFilter}
+                  onChange={(e) => updateParams({ topic: e.target.value, subject: '' })}
+                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                >
+                  <option value="">All subjects</option>
+                  {SUBJECT_CATEGORIES.map((cat) => (
+                    <optgroup key={cat.id} label={cat.label}>
+                      <option value={cat.id}>All {cat.label.toLowerCase()}</option>
+                      {cat.terms.map((t) => (
+                        <option key={t.id} value={t.id}>{t.label}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
 
               {/* Year Range */}
               {data.filters.yearRange.minYear && (
