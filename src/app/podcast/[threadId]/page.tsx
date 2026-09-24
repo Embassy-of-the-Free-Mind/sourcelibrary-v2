@@ -318,6 +318,9 @@ export default async function EpisodePage({ params }: Props) {
           <p className="text-[13px] text-[#8a8480] font-sans">
             {episode.formatLabel} &middot; {episode.findingCount} sources &middot; {formatDate(episode.generatedAt)}
           </p>
+          <p className="mt-1 text-[13px] text-[#8a8480] font-sans">
+            From the podcast archive. No new episodes are being made.
+          </p>
         </div>
 
         {/* Audio player */}

@@ -3,7 +3,6 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import {
-  generatePodcast,
   getPodcastForThread,
   getAllPodcastsForThread,
   type PodcastFormat,
@@ -11,7 +10,6 @@ import {
 } from '@/lib/embassy/podcast';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 120;
 
 const VALID_FORMATS = Object.keys(PODCAST_FORMATS) as PodcastFormat[];
 
@@ -43,83 +41,24 @@ export async function GET(
 }
 
 /**
- * POST /api/embassy/threads/[id]/podcast — Generate a podcast.
- * Body: { format?: "deep-dive" | "brief" | "critique" | "guided-reading" }
- * Auth required (must be thread creator).
+ * POST /api/embassy/threads/[id]/podcast — formerly generated an episode.
+ *
+ * The podcast is retired and archived (#5007): existing episodes stay
+ * readable through GET and /podcast, but no new ones are made. 410 rather than
+ * 404 so a stale client learns the feature is gone, not that the thread is.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
-  }
-
-  const { id } = await params;
-  const db = await getDb();
-
-  // Parse format from body
-  let format: PodcastFormat = 'deep-dive';
-  try {
-    const body = await request.json().catch(() => ({}));
-    if (body.format && VALID_FORMATS.includes(body.format)) {
-      format = body.format;
-    }
-  } catch { /* default format */ }
-
-  // Verify thread ownership
-  const thread = await db.collection('embassy_threads').findOne({
-    _id: new ObjectId(id),
-    creatorId: session.user.id,
-  });
-  if (!thread) {
-    return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
-  }
-
-  // Load notebook
-  const notebook = await db.collection('research_notebooks').findOne({
-    threadId: new ObjectId(id),
-  });
-  if (!notebook || !notebook.findings?.length) {
-    return NextResponse.json(
-      { error: 'No research findings yet — ask the Librarian to research a topic first' },
-      { status: 400 },
-    );
-  }
-
-  // Check if this format already exists
-  const existing = await getPodcastForThread(id, format);
-  if (existing) {
-    return NextResponse.json({ podcast: existing, cached: true });
-  }
-
-  try {
-    const topic = notebook.topic || thread.title || 'Research Discussion';
-    const result = await generatePodcast(id, topic, notebook.findings, format);
-
-    return NextResponse.json({
-      podcast: {
-        audioUrl: result.audioUrl,
-        script: result.script,
-        format: result.format,
-        generatedAt: new Date(),
-        topic,
-        findingCount: notebook.findings.length,
-      },
-    });
-  } catch (err) {
-    console.error('[podcast] Generation failed:', err);
-    return NextResponse.json(
-      { error: 'Podcast generation failed — please try again' },
-      { status: 500 },
-    );
-  }
+export async function POST() {
+  return NextResponse.json(
+    { error: 'The podcast is retired; no new episodes are generated.' },
+    { status: 410 },
+  );
 }
 
 /**
- * PATCH /api/embassy/threads/[id]/podcast — Update podcast metadata (e.g., publish).
- * Body: { format: "deep-dive", published: true }
+ * PATCH /api/embassy/threads/[id]/podcast — Update podcast metadata.
+ * Body: { format: "deep-dive", published: false }
+ * Unpublishing still works; publishing is refused because the podcast is
+ * retired and the archive is closed (#5007).
  */
 export async function PATCH(
   request: NextRequest,
@@ -134,6 +73,9 @@ export async function PATCH(
   const db = await getDb();
 
   const body = await request.json();
+  if (body.published === true) {
+    return NextResponse.json({ error: 'The podcast is retired; episodes can no longer be published.' }, { status: 410 });
+  }
   const format = body.format as PodcastFormat;
   if (!format || !VALID_FORMATS.includes(format)) {
     return NextResponse.json({ error: 'Invalid format' }, { status: 400 });
