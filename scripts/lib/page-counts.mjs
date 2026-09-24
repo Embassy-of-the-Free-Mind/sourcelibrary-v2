@@ -338,3 +338,66 @@ export function isBlockedForModel(page, model) {
   const blockedBy = page?.ocr?.fail_blocked_model;
   return blockedBy == null || blockedBy === model;
 }
+
+/**
+ * Minimum share of the book's translatable pages that must be OCR'd before
+ * `is_fully_translated` / `over_90_translated` may be set (#5063).
+ */
+export const FULL_TRANSLATION_MIN_OCR_COVERAGE = 0.9;
+
+/**
+ * The stored translation flags on a `books` document, from its page counters.
+ * Single writer of the rule: `scripts/workers/sync-worker.mjs` calls this for
+ * every book, every 2 h. Pinned by tests/unit/page-counts.test.ts.
+ *
+ * THE RULE (#5063): completion AND coverage, not completion alone.
+ *
+ *   readable   = pages_ocr - pages_blank            (what the translator could read)
+ *   whole book = pages_count - pages_blank          (what a reader expects)
+ *   is_fully_translated = translated > 0
+ *                      && translated >= readable
+ *                      && pages_ocr  >= 0.9 * whole book
+ *
+ * The flag used to be completion only — `translated >= readable`. The
+ * denominator was OCR'd pages, so a book whose only OCR was the 25-page preview
+ * (envelope mode, `image_download_failed`, `low_ocr_coverage`) had
+ * pages_ocr = 25, pages_translated = 25, and read as DONE. On 2026-09-25 that
+ * was 2,086 books, 1,369 of them visible (10.4% of every visible book badged
+ * fully translated) — De sensu rerum et magia at 23/332, Trithemius' Chronicon
+ * Hirsaugiense at 26/350. It is the mirror of #3804: there the NUMERATOR had
+ * to exclude what the denominator excludes; here the DENOMINATOR excluded
+ * pages that were never read, and the flag said the book was finished.
+ *
+ * `readable` stays as the completion denominator (it is the canonical one —
+ * `src/lib/first-translation/derive.ts`); the coverage clause is what keeps
+ * an unread book out. `over_90_translated` gets the same coverage clause.
+ *
+ * `translation_pct` is a different quantity: it answers "how much of THIS
+ * BOOK can I read", so its denominator is the whole book —
+ * `pages_translatable` when the book has been recounted (#4442), else
+ * `pages_count - pages_blank` — exactly the rule in
+ * `src/lib/translation-completeness.ts` and `sync-books-catalog.mjs`, so the
+ * stored value agrees with the rendered one. A 4%-read book cannot read 100%.
+ * Clamped to 100 for the same reason those two are (the Blue Qur'an's 1000%).
+ */
+export function computeTranslationMetrics(counts) {
+  const pagesCount = Math.max(0, counts?.pages_count ?? 0);
+  const pagesOcr = Math.max(0, counts?.pages_ocr ?? 0);
+  const pagesTranslated = Math.max(0, counts?.pages_translated ?? 0);
+  const pagesBlank = Math.max(0, counts?.pages_blank ?? 0);
+
+  const readable = pagesOcr - pagesBlank;
+  const wholeBook = Math.max(0, pagesCount - pagesBlank);
+  const coverage = pagesOcr >= FULL_TRANSLATION_MIN_OCR_COVERAGE * wholeBook;
+
+  const is_fully_translated = pagesTranslated > 0 && pagesTranslated >= readable && coverage;
+  const over_90_translated = pagesTranslated > 0 && pagesTranslated >= readable * 0.9 && coverage;
+
+  const exact = typeof counts?.pages_translatable === 'number' && counts.pages_translatable >= 0;
+  const pctDenominator = exact ? counts.pages_translatable : wholeBook;
+  const translation_pct = pctDenominator > 0
+    ? Math.min(100, Math.round((pagesTranslated / pctDenominator) * 10000) / 100) // 2 decimal places
+    : 0;
+
+  return { translation_pct, is_fully_translated, over_90_translated };
+}
