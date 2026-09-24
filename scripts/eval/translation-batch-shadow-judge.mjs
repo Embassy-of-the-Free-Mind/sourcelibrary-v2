@@ -109,9 +109,11 @@ async function buildPacket(db, bookIds) {
         if (!lanes[x].every(Boolean) || !lanes[y].every(Boolean)) { skipped.push({ bookId, seamId, pair, reason: `missing text in ${!lanes[x].every(Boolean) ? x : y}` }); continue; }
         const flip = seededRand() < 0.5;
         const jx = junction(...lanes[x]), jy = junction(...lanes[y]);
-        const id = `${bookId.slice(-6)}-${seamId.slice(-6)}-${pair.replace('/', '')}`;
-        entries.push({ id, language: book.language, left: flip ? jy : jx, right: flip ? jx : jy });
-        key.push({ id, book_id: bookId, seam_id: seamId, pair, s1_repaired: s1Repaired, left: flip ? y : x, right: flip ? x : y });
+        // Ids are assigned AFTER the shuffle and carry nothing: a book, seam or pair-type in the
+        // id would let a judge tell the A/A controls from the test pairs.
+        const entry = { id: null, language: book.language, left: flip ? jy : jx, right: flip ? jx : jy };
+        entries.push(entry);
+        key.push({ id: null, entry, book_id: bookId, seam_id: seamId, pair, s1_repaired: s1Repaired, left: flip ? y : x, right: flip ? x : y });
       }
     }
     // Body pages (never repaired, never seeded): the lane should be indistinguishable from itself
@@ -122,8 +124,10 @@ async function buildPacket(db, bookIds) {
       body.push({ book_id: bookId, page_id: id, s1_s2: a && b ? similarity(a, b) : null, s1_p: a && p ? similarity(a, p) : null, len_s1_over_p: a && p ? +(readerText(a).length / Math.max(1, readerText(p).length)).toFixed(3) : null });
     }
   }
-  // Shuffle so pair types and books interleave; the judge sees only opaque ids.
+  // Shuffle so pair types and books interleave, then number: the judge sees only `j001…`.
   for (let i = entries.length - 1; i > 0; i--) { const j = Math.floor(seededRand() * (i + 1)); [entries[i], entries[j]] = [entries[j], entries[i]]; }
+  entries.forEach((e, i) => { e.id = `j${String(i + 1).padStart(3, '0')}`; });
+  for (const k of key) { k.id = k.entry.id; delete k.entry; }
   fs.mkdirSync(RESULTS, { recursive: true });
   fs.writeFileSync(PACKET_FILE, entries.map((e) => JSON.stringify(e)).join('\n') + '\n');
   fs.writeFileSync(KEY_FILE, JSON.stringify({ seed: SEED, books: bookIds, skipped, key }, null, 1));
