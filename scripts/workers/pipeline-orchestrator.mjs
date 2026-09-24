@@ -236,6 +236,19 @@ const IA_REFERENCE_PAGES = 8;
 // interior-only sample would leave half of them blank, which today's 25-page preview happens to
 // prevent. The gate takes a median, and a median over 10 is unmoved by 2 front-matter values.
 const IA_REFERENCE_LEAD_PAGES = 2;
+// Phase 1.45 buys a reference only for books the free gate can plausibly ACCEPT. The Archive's own
+// OCR is good on modern print and poor on early print, and the gate is the arbiter — but a
+// reference bought for a book that will certainly be rejected is spend with a known outcome, the
+// same argument as the never-filled-language skip below.
+//
+// The floor is 1800, from the baseline in #4763 / `ia-ocr-baseline-pilot-2026-07-24.md`: IA-vs-ours
+// agreement is 34–62% for everything 1500s–1600s — far below every per-language cutoff in
+// `scripts/lib/ia-ocr-gate.mjs` (0.80–0.85) — against French 1800s 82% and Latin 1800s 68%.
+// Measured 2026-09-24 on the live candidate pool: 373 of 708 candidates are pre-1700 and a further
+// 90 are 1700s, so 65% of the spend would have gone to books the gate rejects. `books.year` is a
+// NUMBER or absent on every candidate (verified: 710 numeric, 0 string), so a numeric floor is
+// safe here — `books.published` is free text and must never be compared this way.
+const IA_REFERENCE_MIN_YEAR = 1800;
 let IA_REFERENCE_LIMIT = 20; // Books per run to seed a gate reference for
 // How long a submitted preview batch suppresses re-offering its book. Longer
 // than any healthy batch (measured p90 0.4h) so we never double-submit, short
@@ -3315,7 +3328,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           // Catalogue metadata already present, so skipping front matter costs nothing.
           title: { $type: 'string', $ne: '' },
           author: { $type: 'string', $ne: '' },
-          year: { $exists: true, $ne: null },
+          // A known year, and a modern one. A book with no year at all is left to Phase 1.5:
+          // undated here means unjudgeable, not old, and guessing either way spends real money.
+          year: { $type: 'number', $gte: IA_REFERENCE_MIN_YEAR },
           $and: [
             { $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }] },
           ],
