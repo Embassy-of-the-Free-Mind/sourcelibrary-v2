@@ -6,7 +6,6 @@
 import Replicate from 'replicate';
 import { normalizeBbox, normalizeRotation } from '@/lib/bbox';
 import { images } from '@/lib/api-client';
-import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 
@@ -119,14 +118,12 @@ export interface DetectedImage {
   model: string;
 }
 
-/** Build the complete prompt with book context + page grounding + classification context. */
+/** Build the complete prompt with book context + page grounding. */
 function buildFullPrompt(bookContext?: BookContext, customPrompt?: string, ocrData?: string): string {
   const base = customPrompt || IMAGE_EXTRACTION_PROMPT;
   const prefix = bookContext ? buildContextPrefix(bookContext) : '';
   const grounding = buildPageGrounding(ocrData);
-  const systems = getClassificationSystems(bookContext);
-  const classificationSuffix = buildClassificationPrompt(systems);
-  return prefix + base + grounding + classificationSuffix;
+  return prefix + base + grounding;
 }
 
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
