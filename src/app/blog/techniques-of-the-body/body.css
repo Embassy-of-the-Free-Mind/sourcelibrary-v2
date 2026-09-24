@@ -46,3 +46,9 @@
 .bodymap [lang="bo"]{ font-family: "Noto Serif Tibetan", "Kailasa", serif; font-style: normal; line-height: 1.9; }
 .bodymap [lang="he"]{ font-family: "Noto Serif Hebrew", "Times New Roman", serif; direction: rtl; text-align: right; font-style: normal; }
 .bodymap [lang="ta"]{ font-family: "Noto Serif Tamil", "Tamil Sangam MN", serif; font-style: normal; line-height: 1.8; }
+/* tradition sections hold practice sub-sections */
+.bodymap .sub{ margin-top: 48px; }
+.bodymap .sub > h3{ font-family: var(--f-display); font-weight: 400; font-size: clamp(1.45rem, 2.6vw, 1.9rem); line-height: 1.15; margin: 0; padding-bottom: 6px; border-bottom: 1px solid var(--hair); }
+.bodymap .sub > h3 [lang]{ font-size: .72em; color: var(--dust); margin-left: .35em; font-weight: 400; }
+.bodymap .sub-src{ font-family: var(--f-mono); font-size: 12px; color: var(--dust); margin: 6px 0 0; }
+.bodymap .sec-head h2 [lang="bo"], .bodymap .sec-head h2 [lang="he"], .bodymap .sec-head h2 [lang="ar"]{ font-size: .72em; color: var(--dust); margin-left: .3em; font-weight: 400; }
