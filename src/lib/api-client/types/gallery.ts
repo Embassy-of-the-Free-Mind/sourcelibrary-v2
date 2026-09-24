@@ -183,4 +183,6 @@ export interface GalleryImageDetail {
   readUrl: string;
   galleryUrl: string;
   citation: string;
+  /** Allmaps Editor link for `type: map` images with a source IIIF service (#5070); null otherwise. */
+  allmapsUrl?: string | null;
 }

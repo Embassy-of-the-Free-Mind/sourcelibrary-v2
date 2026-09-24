@@ -7,6 +7,7 @@ import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-conte
 import { getPageImageUrl } from '@/lib/utils';
 import { remapBboxToMaster } from '@/lib/gallery-deepzoom-bbox';
 import { VALID_IMAGE_TYPES } from '@/lib/gallery-image-types';
+import { allmapsEditorUrl } from '@/lib/allmaps';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -376,6 +377,16 @@ export async function GET(
       // Present only when both the pyramid and a trustworthy remap exist.
       deepzoom: focusBbox ? deepzoom : null,
       focusBbox,
+
+      // Allmaps (#5070) — georeference link for maps, pointed at the holding
+      // institution's IIIF resource (our marked R2 image has no tile service).
+      allmapsUrl: detection.type === 'map'
+        ? allmapsEditorUrl({
+            pageImageUrls: [pageData.photo_original, pageData.photo],
+            iaIdentifier: pageData.book?.ia_identifier,
+            iiifManifest: pageData.book?.image_source?.iiif_manifest,
+          })
+        : null,
 
       // Source context
       book: {

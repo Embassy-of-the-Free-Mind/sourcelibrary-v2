@@ -29,7 +29,8 @@ import {
   Download,
   Loader2,
   Eye,
-  Search
+  Search,
+  Map as MapIcon
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -956,6 +957,22 @@ export default function ImageDetailPage({
                 <Search className="w-4 h-4" />
                 <span className="hidden sm:inline">Deep zoom</span>
               </button>
+            )}
+            {/* Allmaps (#5070) — georeference a map in the Allmaps Editor. The API
+                sets allmapsUrl only for type=map pages whose SOURCE library exposes
+                a IIIF image service; our marked R2 image cannot be tiled. */}
+            {data.type === 'map' && data.allmapsUrl && (
+              <a
+                href={data.allmapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sendGAEvent({ action: 'gallery_allmaps_open', label: imageId || undefined })}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/70 rounded-lg text-xs text-stone-300 hover:text-white transition-colors"
+                title="Georeference this map in the Allmaps Editor (opens the holding library's IIIF image)"
+              >
+                <MapIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">Georeference</span>
+              </a>
             )}
             {(brightness !== 100 || contrast !== 100) && (
               <button
