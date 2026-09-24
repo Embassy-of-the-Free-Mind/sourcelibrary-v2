@@ -19,6 +19,68 @@ The replication column exists because of 2026-09-02, below.
 
 ---
 
+## 2026-09-24 — What is the efficient pattern for finding "body instruction" pages across 4.5M pages? (Jev, $8.57 total) — RESULT
+
+**Headline: distil Jev into a linear probe on the page embeddings we already hold, then spend Jev only on the probe's top.**
+Fresh check: of the probe's top 1,343 never-labelled pages (≤ 3 per book, 926 books), **44.5 % are Jev-positive**
+(≥ 0.5), against **0.9 %** at random and **15.6 %** for the best Jev-only cascade. Scoring the whole corpus with the probe
+is free and takes seconds; the verification pass cost **$0.08**.
+
+**The steps and what each measured** (scripts in `scripts/eval/jev/`, rubric = the instruction-page judge prompt):
+1. *Random base rate* — one random translated page from each of 21,018 books: 0.89 % ≥ 0.5, 0.07 % ≥ 0.9 ($1.08).
+2. *Book screen* — Jev on each book's catalogue title+summary+categories (21,107 books, $0.42): at ≥ 0.5 keeps 32 % of
+   pages, recall 91 % of the random-sample positives.
+3. *Page `<summary>` only* — AUC 0.98 vs the full-page verdict, but only ~2.7× cheaper (question text dominates) and
+   only 58 % of pages carry a summary ($0.23).
+4. *Chapter summary* (the chapter's page summaries joined; chapters = `books.chapters`, 16,431 books, titles only) —
+   AUC 0.96; at ≥ 0.2 keeps 11.6 % of pages, recall 92 %, ~57 tokens per page covered — ~20× cheaper than full pages.
+   **Gap:** ~40 % of pages have no summary and they held about half the positives.
+5. *Cascade at scale* — books ≥ 0.7 → 40,446 chapters → full pages of chapters ≥ 0.5 (stopped at the $8.50 cap after
+   87,566 pages): 15.6 % ≥ 0.5, 1,375 pages ≥ 0.9 from 151 books.
+6. *Embedding probe* — logistic regression on the 768-d `gemini-embedding-2-preview` page vectors (`~/sl-corpus/emb`,
+   snapshot 2026-09-10) trained on 67,109 Jev-labelled pages: **AUC 0.949 on held-out BOOKS** (GroupKFold by book; the
+   embeddings cluster by book, so a page split would flatter it), 0.977 on the random sample; top-50 of the random
+   sample 34 % positive vs 0.3 % base. Then the fresh check above.
+
+**Read by eye (18 of the fresh ≥ 0.8):** real finds no keyword search had reached — computus finger-counting, a Tamil
+*Sara Nul* (science of breath), Sarum liturgy movements, the Shīʿa takbīr, Avicenna on exercise, Mersenne on the lute
+hand, the Ars Notoria bed rite. Edge class: surgical/bloodletting procedures (body instructions, not practices) — the
+companion Choice question files most of them as `none`, so filter on it.
+
+**Not shown.** Labels are Jev's, not people's (Jev itself was AUC 0.94 vs Sonnet judges, #5006 pilot). Pages newer than
+the 2026-09-10 embedding snapshot are invisible to the probe. One probe, one C; no per-kind probes; untranslated
+pages untested.
+
+*Replicated?* No. **Artifact:** `scripts/eval/jev/` (stage1–6, `probe.py`); results in the session scratchpad.
+
+---
+
+## 2026-09-24 — Can Jev (TypeSafe's typed-decision model) screen pages for "this tells a body what to do"? — RESULT
+
+**Headline: yes, as a first-pass filter.** One Noul question worded from the instruction-page judge rubric
+(`~/sourcelibrary-atlas/scripts/graph/instruction-pages-JUDGE-PROMPT.md`) over the 292 pages Sonnet judges labelled
+on 2026-09-13 (144 instruction / 148 not): **AUC 0.94; 0.99 on the 194 pages the judges marked ≥ 0.85 confident.**
+At threshold 0.3: accuracy 0.87, precision 0.93, recall 0.81, κ 0.75 (the two blind judges on H7 agreed at κ 0.86).
+A naive one-line question does worse (AUC 0.89): the rubric wording matters. Cost for all 507 calls: **$0.019**
+(~900 input tokens/page), 8 concurrent, 0 failures, ~0.2 s/call.
+
+**Controls.** Negative: 133 random translated pages from the local mirror — 1 scored ≥ 0.5 (a Vajravārāhī sādhana,
+plausibly a true find). Positive: the 82 quoted translations on /blog/techniques-of-the-body — 67 ≥ 0.5. The misses
+are read by eye and are mostly *reports*, not instructions (Santorio weighing himself, Guarinoni watching handball,
+Iamblichus' signs of possession, Marinus on Proclus' day, a bare list of the eight kumbhakas) — the rubric excludes
+reports, so Jev is applying it more strictly than the page's curation did. Disagreements with the judges are mostly
+ethnographic dance descriptions the judges themselves were unsure of (conf 0.55–0.7).
+
+**Not shown.** Labels are Sonnet judges, not people. No test on untranslated OCR text (the state was English
+translations). One prompt wording beyond the naive one. Recall on a fresh pool is unmeasured — the next step is a
+wide candidate pool, human-read at the top.
+
+*Replicated?* No. **Artifact:** `scripts/eval/jev/instruction-page-pilot.py` (gateway endpoint
+`https://ai-gateway.vercel.sh/typesafe/v1/systemone`, model `typesafe-ai/jev`; a Vercel OIDC token from
+`vercel env pull` works for 12 h). Results were written to the session scratchpad, not committed.
+
+---
+
 ## 2026-09-19 — Can a vision model read hieroglyphs off a printed edition? (baseline for `scripts/eval/hieroglyph-ocr/`)
 
 **Headline: no — and the benchmark can say so.** `gemini-3-flash-preview`, temperature 0,
