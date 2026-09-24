@@ -43,6 +43,10 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import fs from 'node:fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+// This eval spends real money, so it records what it spent in the same attribution table as
+// the pipeline (#4599) instead of declaring an exemption. The #4966 campaign's own sore point
+// is a preview lane that spends invisibly; an eval measuring that campaign should not add to it.
+import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
 
 const args = process.argv.slice(2);
 const val = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : d; };
@@ -125,6 +129,7 @@ async function askSheet(genAI, jpeg, expectedCells) {
   const model = genAI.getGenerativeModel({ model: MODEL, generationConfig: { temperature: 0, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } } });
   let inTok = 0, outTok = 0, finishReason = null, why = null;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const t0 = Date.now();
     let res;
     try {
       res = await model.generateContent([{ inlineData: { mimeType: 'image/jpeg', data: jpeg.toString('base64') } }, PROMPT]);
@@ -135,8 +140,14 @@ async function askSheet(genAI, jpeg, expectedCells) {
     }
     const u = res.response.usageMetadata || {};
     inTok = u.promptTokenCount || 0;
+    // Billed output = visible + reasoning, even with thinkingBudget 0; keep them summed for money.
     outTok = (u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0);
     spent += inTok * PRICE_IN + outTok * PRICE_OUT; callsMade++;
+    await logUsage({
+      type: 'extract_images', mode: 'realtime', model: MODEL,
+      input_tokens: inTok, output_tokens: outTok, status: 'success',
+      duration_ms: Date.now() - t0, endpoint: 'eval/contact-sheet-screen', triggered_by: 'manual',
+    }).catch(() => {});
     finishReason = res.response.candidates?.[0]?.finishReason || null;
     let text = '';
     try { text = res.response.text(); } catch (e) { why = `text(): ${String(e.message || e).slice(0, 80)}`; }
