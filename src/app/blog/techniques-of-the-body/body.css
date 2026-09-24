@@ -45,3 +45,4 @@
 .bodymap figure.wide a.img img{ max-height: 520px; width: auto; max-width: 100%; margin-inline: auto; display: block; }
 .bodymap [lang="bo"]{ font-family: "Noto Serif Tibetan", "Kailasa", serif; font-style: normal; line-height: 1.9; }
 .bodymap [lang="he"]{ font-family: "Noto Serif Hebrew", "Times New Roman", serif; direction: rtl; text-align: right; font-style: normal; }
+.bodymap [lang="ta"]{ font-family: "Noto Serif Tamil", "Tamil Sangam MN", serif; font-style: normal; line-height: 1.8; }

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 const FONTS =
-  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Serif+Tibetan:wght@400&family=Noto+Serif+Hebrew:wght@400&display=swap';
+  'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600&family=Noto+Serif+Tibetan:wght@400&family=Noto+Serif+Hebrew:wght@400&family=Noto+Serif+Tamil:wght@400&display=swap';
 
 export default function TechniquesOfTheBodyPage() {
   return (
