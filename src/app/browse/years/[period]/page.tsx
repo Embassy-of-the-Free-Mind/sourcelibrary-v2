@@ -6,6 +6,12 @@ import { browseBooks } from '@/lib/books-catalog';
 import { tenantBrowseYears } from '@/lib/tenant-browse';
 import { notFound } from 'next/navigation';
 import BrowseViewToggle from '@/components/browse/BrowseViewToggle';
+import BrowsePager, { browsePageHref } from '@/components/browse/BrowsePager';
+
+// One page must fit in a single Supabase response, which is silently capped at
+// 1,000 rows (a single 2,000-row request used to truncate every large period).
+// Larger periods paginate via ?page=N.
+const PER_PAGE = 1000;
 
 const PERIODS: Record<string, { label: string; min: number; max: number }> = {
   ancient: { label: 'Ancient (before 500 CE)', min: -9999, max: 499 },
@@ -34,21 +40,30 @@ export function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ period: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+function parsePage(raw: string | undefined): number {
+  const n = Number.parseInt(raw ?? '1', 10);
+  return Number.isFinite(n) && n >= 1 ? n : 1;
+}
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { period } = await params;
+  const page = parsePage((await searchParams).page);
   const p = PERIODS[period];
   if (!p) return { title: 'Not Found' };
   return {
-    title: `${p.label} - Source Library`,
+    title: `${p.label}${page > 1 ? ` (page ${page})` : ''} - Source Library`,
     description: `Browse all translated books from the ${p.label.toLowerCase()} in Source Library.`,
-    alternates: { canonical: `/browse/years/${period}` },
+    // Each page is its own canonical — see browse/titles/[letter].
+    alternates: { canonical: browsePageHref(`/browse/years/${period}`, page) },
   };
 }
 
-export default async function BrowseYearsPage({ params }: PageProps) {
+export default async function BrowseYearsPage({ params, searchParams }: PageProps) {
   const { period } = await params;
+  const page = parsePage((await searchParams).page);
   const p = PERIODS[period];
   if (!p) notFound();
 
@@ -72,17 +87,22 @@ export default async function BrowseYearsPage({ params }: PageProps) {
     thumbnail_blob: string | null;
     is_first_translation: boolean;
   }> = [];
+  let total = 0;
   try {
     if (tenantId) {
       books = await tenantBrowseYears(tenantId, p.min, p.max);
+      total = books.length;
     } else {
       const result = await browseBooks({
         yearMin: p.min,
         yearMax: p.max,
         hasTranslation: true,
         sort: 'year_asc',
-        limit: 2000,
+        offset: (page - 1) * PER_PAGE,
+        limit: PER_PAGE,
+        exactCount: true,
       });
+      total = result.total;
       books = result.books.map(b => ({
         id: b.id,
         slug: b.slug || undefined,
@@ -102,6 +122,8 @@ export default async function BrowseYearsPage({ params }: PageProps) {
   } catch {
     // Supabase error — render empty page
   }
+  const totalPages = tenantId ? 1 : Math.ceil(total / PER_PAGE);
+  if (page > 1 && page > totalPages) notFound();
 
   return (
     <>
@@ -111,7 +133,8 @@ export default async function BrowseYearsPage({ params }: PageProps) {
           {p.label}
         </h1>
         <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
-          {books.length.toLocaleString('en-US')} {books.length === 1 ? 'book' : 'books'}
+          {total.toLocaleString('en-US')} {total === 1 ? 'book' : 'books'}
+          {totalPages > 1 && ` · page ${page} of ${totalPages}`}
         </p>
 
         {/* Period nav */}
@@ -133,7 +156,10 @@ export default async function BrowseYearsPage({ params }: PageProps) {
         </div>
 
         {books.length > 0 ? (
-          <BrowseViewToggle books={books} />
+          <>
+            <BrowseViewToggle books={books} />
+            <BrowsePager basePath={`${base}/years/${period}`} currentPage={page} totalPages={totalPages} />
+          </>
         ) : (
           <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
             No books found for this period.
