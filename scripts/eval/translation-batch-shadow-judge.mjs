@@ -30,6 +30,15 @@
  *   --packet --books=id1,id2,id3   FREE  build the blinded packet + key, print body-page similarity
  *   --score                        FREE  read the verdicts, report per pair type
  *
+ *   --midflow   (with --packet) keep only junctions where a sentence can actually cross the break:
+ *               the seam passes `assessSeam` on the OCR (≥400 chars of prose both sides, no
+ *               terminator, no heading) — decided from the SOURCE, so it is the same for every arm
+ *               and the blinding holds. A seam is also dropped, for EVERY pair, when any lane's
+ *               half is under 120 chars of prose (a degenerate junction the judge cannot read);
+ *               those drops are counted per lane in the key's `skipped`, since that one IS arm-side.
+ *   --tag=NAME  file-name stem for packet/key/verdicts/report (default translation-batch-shadow),
+ *               so a second book set never overwrites a judged key.
+ *
  * NOTHING here writes to `pages` or spends. Files land in scripts/eval/results/.
  *
  *   node --env-file=.env.production.local scripts/eval/translation-batch-shadow-judge.mjs --packet --books=...
@@ -37,12 +46,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
-import { readerText, similarity } from './translation-batch-continuity-ab.mjs';
+import { readerText, similarity, assessSeam } from './translation-batch-continuity-ab.mjs';
 import { resetSeed, seededRand, binomTwoSided } from './lib/paired-stats.mjs';
 import { RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 
+const args = process.argv.slice(2);
+const arg = (n) => args.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
+const has = (n) => args.includes(`--${n}`);
+
 const RESULTS = new URL('./results/', import.meta.url).pathname;
-const TAG = 'translation-batch-shadow';
+const TAG = arg('tag') || 'translation-batch-shadow';
 const PACKET_FILE = path.join(RESULTS, `${TAG}-judge-packet.jsonl`);
 const KEY_FILE = path.join(RESULTS, `${TAG}-judge-key.json`);
 const VERDICTS_FILE = path.join(RESULTS, `${TAG}-judge-verdicts.json`);
@@ -51,10 +64,8 @@ const BODY_FILE = path.join(RESULTS, `${TAG}-body-similarity.json`);
 const EXCERPT = 1200;
 /** The seed is fixed and the packet is built ONCE per book set; rebuilding after judging moves every flip. */
 const SEED = 0x5eed ^ 0x4681;
-
-const args = process.argv.slice(2);
-const arg = (n) => args.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
-const has = (n) => args.includes(`--${n}`);
+/** --midflow: a junction half shorter than this (reader text) is degenerate — nothing to carry across. */
+const MIN_HALF = 120;
 
 const tail = (t) => (t.length > EXCERPT ? '…' + t.slice(-EXCERPT) : t);
 const head = (t) => (t.length > EXCERPT ? t.slice(0, EXCERPT) + '…' : t);
@@ -95,15 +106,24 @@ async function loadBook(db, bookId) {
 }
 
 // ── --packet ────────────────────────────────────────────────────────────────
-async function buildPacket(db, bookIds) {
+async function buildPacket(db, bookIds, { midflow = false } = {}) {
   if (fs.existsSync(KEY_FILE)) throw new Error(`${KEY_FILE} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
   resetSeed(SEED);
   const entries = [], key = [], body = [], skipped = [];
   for (const bookId of bookIds) {
     const { book, r1, r2, s1, s2, prod, ids, s1Repaired } = await loadBook(db, bookId);
     const seamIds = new Set((r1.seams || []).map((s) => s.seamId));
+    const ocr = midflow ? new Map((await db.collection('pages')
+      .find({ id: { $in: (r1.seams || []).flatMap((s) => [s.prevId, s.seamId]) } }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
+      .toArray()).map((p) => [p.id, p])) : null;
     for (const { prevId, seamId } of r1.seams || []) {
       const lanes = { S1: [s1.get(prevId), s1.get(seamId)], S2: [s2.get(prevId), s2.get(seamId)], P: [prod.get(prevId), prod.get(seamId)] };
+      if (midflow) {
+        const seam = assessSeam(ocr.get(prevId), ocr.get(seamId));
+        if (!seam.ok) { skipped.push({ bookId, seamId, pair: '*', reason: `not mid-flow: ${seam.reason}` }); continue; }
+        const short = Object.entries(lanes).filter(([lane, ts]) => (lane !== 'S2' || r2) && ts.some((t) => t && readerText(t).trim().length < MIN_HALF)).map(([lane]) => lane);
+        if (short.length) { skipped.push({ bookId, seamId, pair: '*', reason: `degenerate half (<${MIN_HALF} chars) in ${short.join(',')}` }); continue; }
+      }
       for (const pair of r2 ? ['S1/P', 'S1/S2'] : ['S1/P']) {
         const [x, y] = pair.split('/');
         if (!lanes[x].every(Boolean) || !lanes[y].every(Boolean)) { skipped.push({ bookId, seamId, pair, reason: `missing text in ${!lanes[x].every(Boolean) ? x : y}` }); continue; }
@@ -130,7 +150,7 @@ async function buildPacket(db, bookIds) {
   for (const k of key) { k.id = k.entry.id; delete k.entry; }
   fs.mkdirSync(RESULTS, { recursive: true });
   fs.writeFileSync(PACKET_FILE, entries.map((e) => JSON.stringify(e)).join('\n') + '\n');
-  fs.writeFileSync(KEY_FILE, JSON.stringify({ seed: SEED, books: bookIds, skipped, key }, null, 1));
+  fs.writeFileSync(KEY_FILE, JSON.stringify({ seed: SEED, books: bookIds, midflow, skipped, key }, null, 1));
   fs.writeFileSync(BODY_FILE, JSON.stringify(body, null, 1));
   const med = (xs) => { const v = xs.filter((x) => x != null).sort((a, b) => a - b); return v.length ? v[Math.floor(v.length / 2)] : null; };
   console.log(`wrote ${entries.length} blinded junctions to ${PACKET_FILE} (${key.filter((k) => k.pair === 'S1/P').length} S1/P, ${key.filter((k) => k.pair === 'S1/S2').length} S1/S2; ${skipped.length} skipped)`);
@@ -198,7 +218,7 @@ if (has('score')) {
   const books = String(arg('books') || '').split(',').filter(Boolean);
   if (!books.length) { console.error('--packet needs --books=id1,id2,...'); process.exit(1); }
   const client = new MongoClient(process.env.MONGODB_URI);
-  try { await client.connect(); await buildPacket(client.db('bookstore'), books); } finally { await client.close(); }
+  try { await client.connect(); await buildPacket(client.db('bookstore'), books, { midflow: has('midflow') }); } finally { await client.close(); }
 } else {
   console.log('one of --packet --books=... | --score (see the header)');
 }
