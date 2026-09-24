@@ -8,7 +8,7 @@ import { posts as blogPostList } from '@/app/blog/page';
 //
 // Chunks:
 //   0 = static pages + blog + categories
-//   1 = collections + libraries + languages + works
+//   1 = collections + libraries + languages + works + authors
 //   2+ = books (up to 5000 per chunk)
 //   1000+ = indexable reader pages (seo_indexable; up to 5000 per chunk)
 //   2000+ = gallery images (public, gallery_quality >= 0.7; with <image:loc>)
@@ -153,13 +153,14 @@ export default async function sitemap({
   }
 
   if (chunkId === 1) {
-    const [collectionPages, libraryPages, languagePages, workPages] = await Promise.all([
+    const [collectionPages, libraryPages, languagePages, workPages, authorPages] = await Promise.all([
       getCollections(),
       getLibraries(),
       getLanguages(),
       getWorks(),
+      getAuthors(),
     ]);
-    return [...collectionPages, ...libraryPages, ...languagePages, ...workPages];
+    return [...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages];
   }
 
   // Offset ranges — highest first, since each test is only a lower bound.
@@ -464,6 +465,33 @@ async function getWorks(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
+    }));
+  }, [] as MetadataRoute.Sitemap);
+}
+
+// Author pages (#2266). Author pages are strong hubs (each links every book by
+// that person) but were reachable only through book pages. List exactly the
+// URLs book pages already link to — authorUrl() prefers books.author_id, the
+// canonical authors._id — for authors with at least one live book. Merged
+// tombstones are skipped (they redirect to their primary, which is listed in
+// its own right), as are ids with no authors doc.
+async function getAuthors(): Promise<MetadataRoute.Sitemap> {
+  return safeQuery('authors', async (db) => {
+    const ids = await db.collection('books').distinct(
+      'author_id',
+      { visible: true, pages_count: { $gt: 0 }, author_id: { $type: 'string', $ne: '' } },
+      { maxTimeMS: 20000 }
+    );
+    const authors = await db.collection<{ _id: string; updated_at?: Date }>('authors').find(
+      { _id: { $in: ids }, merged_into: { $exists: false } },
+      { projection: { _id: 1, updated_at: 1 }, maxTimeMS: 20000 }
+    ).toArray();
+
+    return authors.map((a) => ({
+      url: `${BASE_URL}/author/${encodeURIComponent(a._id)}`,
+      lastModified: a.updated_at ? new Date(a.updated_at) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     }));
   }, [] as MetadataRoute.Sitemap);
 }
