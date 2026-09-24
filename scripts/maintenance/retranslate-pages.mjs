@@ -23,6 +23,7 @@
  *   # whole flagged list from the detector:
  *   node scripts/maintenance/retranslate-pages.mjs --from=scripts/output/translation-collapse-2026-06-16.json --execute
  *   node scripts/maintenance/retranslate-pages.mjs --from=<json> --limit=50   # dry-run preview
+ *   node scripts/maintenance/retranslate-pages.mjs --book=<id> --pages=19,27 --no-context --execute   # #5026 leak repair
  */
 
 import { withMongo } from '../lib/mongo.mjs';
@@ -42,6 +43,14 @@ const LIMIT = parseInt(arg('limit', '100000'), 10);
 const MAX_RETRIES = parseInt(arg('retries', '2'), 10);
 const CONCURRENCY = parseInt(arg('concurrency', '8'), 10);
 const MODEL_OVERRIDE = arg('model', null); // 'flash' | 'lite' | null(=auto routing)
+// --no-context: translate each page with NO previous-page continuity block. For pages whose defect
+// IS the context (the previous page reproduced as page text, #5026), passing the previous page again
+// would re-create the fault; and a page that opens on a heading gains nothing from it.
+const NO_CONTEXT = process.argv.includes('--no-context');
+// --force: re-translate the named pages even when isBad() (built for COLLAPSED translations, i.e. too
+// short) calls them healthy. A leaked previous page makes a translation too LONG, which isBad cannot see.
+// Only honoured with an explicit --book/--pages or --from list — never a blanket sweep.
+const FORCE = process.argv.includes('--force');
 
 // ── model routing from translate-core (the one door, issue #3725) ──
 // The verbatim copy this replaces had drifted: it was missing nine languages
@@ -149,7 +158,7 @@ await withMongo(async (db) => {
     const model = getModelForBook(book);
 
     // Idempotent/resumable: a page already healthy (e.g. fixed in a prior run) is skipped.
-    if (EXECUTE && page.translation?.data && !isBad(page.ocr.data, page.translation.data)) { alreadyGood++; return; }
+    if (EXECUTE && !FORCE && page.translation?.data && !isBad(page.ocr.data, page.translation.data)) { alreadyGood++; return; }
 
     if (!EXECUTE) {
       console.log(`  • ${(book.display_title || book.id).slice(0,42).padEnd(42)} p${String(t.page_number).padStart(4)}  ${String(t.kind||'').padEnd(8)} ocrBody=${bodyLen(page.ocr.data)} trBody=${bodyLen(page.translation?.data)} trLen=${(page.translation?.data||'').length} → ${model}`);
@@ -162,7 +171,7 @@ await withMongo(async (db) => {
     let best = null;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const { text, promptRef } = await translateOnce(page, book, prevTr);
+        const { text, promptRef } = await translateOnce(page, book, NO_CONTEXT ? null : prevTr);
         if (!best || badnessScore(page.ocr.data, text) < badnessScore(page.ocr.data, best.text)) best = { text, promptRef };
         if (!isBad(page.ocr.data, text)) { best = { text, promptRef }; break; }
       } catch (e) {
