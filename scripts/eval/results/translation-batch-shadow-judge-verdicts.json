@@ -1,0 +1,242 @@
+[
+ {
+  "id": "j001",
+  "verdict": "RIGHT",
+  "why": "Right keeps the recurring term fantasy consistent immediately across the break, while Left switches from imagination before the break to fantasy right after it."
+ },
+ {
+  "id": "j009",
+  "verdict": "RIGHT",
+  "why": "Right places the Note on fixation and fusion heading before the paragraph it introduces, a coherent heading-content relation, while Left strands the same heading orphaned right before the break, attached to nothing."
+ },
+ {
+  "id": "j017",
+  "verdict": "TIE",
+  "why": "Both jump from an index or front-matter table to the same errata-list structure equally abruptly and equally well."
+ },
+ {
+  "id": "j025",
+  "verdict": "TIE",
+  "why": "Both continue the enumerated list of ancient testimonies straight into Anna Comnena Alexiad after the break with matching names and register, essentially indistinguishable in continuity."
+ },
+ {
+  "id": "j033",
+  "verdict": "TIE",
+  "why": "Both shift from the alchemical-stone passage into the closing formula about the common science of nature with the same abruptness and no clearer thread carried across in either."
+ },
+ {
+  "id": "j041",
+  "verdict": "TIE",
+  "why": "Both complete the footnote block and open the next paragraph on visual stimuli and self-representation with matching terminology consistently used on both sides."
+ },
+ {
+  "id": "j002",
+  "verdict": "RIGHT",
+  "why": "LEFT has a subject-verb mismatch (but...allow) at the seam; RIGHT bracketed [it] agrees with allows, reading as one grammatical sentence across the break."
+ },
+ {
+  "id": "j010",
+  "verdict": "TIE",
+  "why": "Both resume with an equally garbled but parallel line (The man must begin here/there, for/yet he has not yet come from the other deeds/acts), no clearer term carried across the break by either."
+ },
+ {
+  "id": "j018",
+  "verdict": "LEFT",
+  "why": "LEFT pre-break fragment (heated by ignorance and it does not... now; afterwards) reads as a coherent broken clause carrying into the next page; RIGHT has a stray repeated and and that breaks the flow right at the seam."
+ },
+ {
+  "id": "j026",
+  "verdict": "TIE",
+  "why": "The quoted line completes cleanly before the break and the new section heading and epigram begin identically well in both."
+ },
+ {
+  "id": "j034",
+  "verdict": "LEFT",
+  "why": "LEFT reuses the word divine on both sides of the break (power divine to the mercy of fire / the little divine light was carried), a consistent term carried across the page; RIGHT pre-break [as] and post-break diunal do not visibly connect."
+ },
+ {
+  "id": "j042",
+  "verdict": "TIE",
+  "why": "The break falls between finished poems, not mid-sentence; both restart the new epigram (heading, quote, footnote attribution) equally well."
+ },
+ {
+  "id": "j003",
+  "verdict": "TIE",
+  "why": "No sentence spans the break on either side; VI ends and VII begins fresh with a new number and citation, and both sides keep names and terms consistent across it."
+ },
+ {
+  "id": "j011",
+  "verdict": "TIE",
+  "why": "The break falls between two numbered fragments (LXXXIV ends, LXXXV begins) on both sides, so nothing actually carries over to judge continuity on."
+ },
+ {
+  "id": "j019",
+  "verdict": "TIE",
+  "why": "Both sides end a fragment before the break and start a new numbered fragment and citation after it, with no sentence or term crossing the break in either."
+ },
+ {
+  "id": "j027",
+  "verdict": "RIGHT",
+  "why": "Right resumes the sentence after the break with a properly capitalized new sentence, while lefts continuation is lowercase and reads as a dropped stitch after the period."
+ },
+ {
+  "id": "j035",
+  "verdict": "TIE",
+  "why": "The break sits between the end of one paragraph and a new section heading in both versions, so no carried sentence or term distinguishes them."
+ },
+ {
+  "id": "j043",
+  "verdict": "LEFT",
+  "why": "Lefts clause after the break reads as one continuing sentence naming the Odes translators, while rights I have heard Francesco Antonio Cappone breaks the grammar across the page turn."
+ },
+ {
+  "id": "j004",
+  "verdict": "TIE",
+  "why": "Both sides end a sentence with etc. and open a fresh topic sentence after the break equally cleanly, with no dropped clause on either side."
+ },
+ {
+  "id": "j012",
+  "verdict": "TIE",
+  "why": "Both are near-identical garbled word lists that mirror each others structure across the break, ending and/and or et/et then resuming the same list pattern."
+ },
+ {
+  "id": "j020",
+  "verdict": "TIE",
+  "why": "Both sides end on knowledge just before the break and both resume with an echo of knowledge and the same hunger tazlum phrase right after it."
+ },
+ {
+  "id": "j028",
+  "verdict": "TIE",
+  "why": "Both sides end the recipe sentence with deli and pick up the same garbled word-list block and then the same child/milk-nourishing passage after the break."
+ },
+ {
+  "id": "j036",
+  "verdict": "TIE",
+  "why": "Both sides show only the bare page-break marker with no surrounding text to compare."
+ },
+ {
+  "id": "j044",
+  "verdict": "LEFT",
+  "why": "Lefts pre-break paragraph is already about distillation and dryness, flowing naturally into the And in each distillation line after the break, while rights pre-break paragraph about dissolving gold in wine reads as an unrelated recipe abruptly followed by the distillation passage."
+ },
+ {
+  "id": "j005",
+  "verdict": "TIE",
+  "why": "Both sides carry the citation sentence into xiii, 596 c correctly and keep the Phaon and Adonis names and register consistent."
+ },
+ {
+  "id": "j013",
+  "verdict": "RIGHT",
+  "why": "Right splits the shepherd-men quotation across the break and resolves it correctly, showing real cross-break continuity; lefts sentence had already finished before the break."
+ },
+ {
+  "id": "j021",
+  "verdict": "TIE",
+  "why": "Neither side has a sentence crossing the break; both close the prior epigram cleanly and open XXXI fresh with matching numbering and register."
+ },
+ {
+  "id": "j029",
+  "verdict": "TIE",
+  "why": "Both continue the list of witnesses into Anna Comnena and the following hearsay-witness sentence consistently across the break."
+ },
+ {
+  "id": "j037",
+  "verdict": "TIE",
+  "why": "Both end the preface identically in sense and open section II fresh with no sentence actually spanning the break, keeping names and terms consistent."
+ },
+ {
+  "id": "j045",
+  "verdict": "TIE",
+  "why": "Both sides are just placeholder descriptions of an illegible page with no actual translated text crossing the break to judge."
+ },
+ {
+  "id": "j006",
+  "verdict": "LEFT",
+  "why": "LEFT carries the parenthetical citation '(In Athenaeus,' straight across the break into 'xiii, 596 c,...' cleanly, while RIGHT closes it with a stray quotation mark right before the break, a small stumble at the seam."
+ },
+ {
+  "id": "j014",
+  "verdict": "TIE",
+  "why": "Both sides preserve the same transliterated nonsense terms (tueson, penthon, arne, alistia rudamiss, vapothon) across the break equally, and the source is too garbled to prefer one continuation over the other."
+ },
+ {
+  "id": "j022",
+  "verdict": "TIE",
+  "why": "Both carry 'familiar with the mystical' into 'wish to sympathize...' with an identical, word-for-word footnote citation and matching phrasing of the symbolic formations term right across the break."
+ },
+ {
+  "id": "j030",
+  "verdict": "RIGHT",
+  "why": "RIGHT's post-break table reads as a coherent index (Dedication / Odes and Fragments of Sappho 61 / Ten Epigrams...), while LEFT's post-break text is unparsed OCR gibberish ('go INDI GEO', 'uao 0. to 5', 'PENE RO AO EIA DTA')."
+ },
+ {
+  "id": "j038",
+  "verdict": "RIGHT",
+  "why": "LEFT inserts an incongruous '[This page is blank.]' right at the break even though text continues immediately after, a visible seam artifact; RIGHT flows directly from the prior sentence into 'fine and subtle of the common John' without that contradiction."
+ },
+ {
+  "id": "j046",
+  "verdict": "TIE",
+  "why": "Both translations pick up 'acts, apart from the fact that...' identically and carry the nerve-group/vibration vocabulary across the break with the same smoothness and an identical Wundt footnote."
+ },
+ {
+  "id": "j007",
+  "verdict": "TIE",
+  "why": "Clean section break (paragraph ends, new heading begins) on both sides; no sentence spans it so continuity is equal."
+ },
+ {
+  "id": "j015",
+  "verdict": "RIGHT",
+  "why": "A sentence about a color acting truly spans the break; RIGHT ties the trailing clause back to the acting subject with an explicit and is pleasant or unpleasant, while LEFT leaves that link ambiguous."
+ },
+ {
+  "id": "j023",
+  "verdict": "TIE",
+  "why": "Break falls between a finished sentence and a new numbered section II; both sides carry the numeral and register equally well with nothing crossing the break to differentiate them."
+ },
+ {
+  "id": "j031",
+  "verdict": "TIE",
+  "why": "Both sides are a one-line note that the page is illegible, with nothing after the break to compare."
+ },
+ {
+  "id": "j039",
+  "verdict": "TIE",
+  "why": "Each numbered fragment is self-contained; the break falls between fragments with no sentence crossing it, so continuity is equal on both sides."
+ },
+ {
+  "id": "j047",
+  "verdict": "TIE",
+  "why": "Break falls within garbled OCR-derived text; both sides reproduce the same errata-list structure across it with no sentence spanning the break."
+ },
+ {
+  "id": "j008",
+  "verdict": "TIE",
+  "why": "The break falls at a chapter heading rather than mid-sentence, and both sides carry the surrounding register and terminology consistently across it."
+ },
+ {
+  "id": "j016",
+  "verdict": "RIGHT",
+  "why": "Left's post-break clause is missing a verb and reads as a broken continuation, while right's clause completes the carried-over sentence grammatically."
+ },
+ {
+  "id": "j024",
+  "verdict": "TIE",
+  "why": "The break falls between separate numbered epigram entries with no sentence spanning it, and both sides keep consistent numbering and citation format across the break."
+ },
+ {
+  "id": "j032",
+  "verdict": "TIE",
+  "why": "The break falls between separate numbered epigram entries with no carried sentence, and both maintain the same citation format on both sides."
+ },
+ {
+  "id": "j040",
+  "verdict": "TIE",
+  "why": "Both sides show only the page-break marker with no text on either side, so continuity cannot be distinguished."
+ },
+ {
+  "id": "j048",
+  "verdict": "LEFT",
+  "why": "Left continues the quoted thought cleanly, while right inserts stray artifact text before resuming the sentence, breaking the flow."
+ }
+]
