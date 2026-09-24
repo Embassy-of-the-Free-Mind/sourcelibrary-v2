@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import Reader2C from '@/components/reader-v2/Reader2C';
@@ -104,7 +104,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
 
   // Step 2: Book lookup + nav pages + music transcriptions in parallel
   const [bookResult, navPages, musicTranscriptions] = await Promise.all([
-    findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
+    findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       // Image fields are part of the nav list because the reader's filmstrip

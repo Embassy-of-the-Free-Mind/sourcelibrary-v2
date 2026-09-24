@@ -37,7 +37,7 @@ export default async function PublicReaderLayout({ children, params }: LayoutPro
   const ctx = await getTenantContext();
   // Same cache()d lookup the parent layout and generateMetadata already made
   // this request — no extra query.
-  const { book } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  const { book } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
 
   // Hidden (visible:false) books are not public — takedowns and copyright holds
   // live here. page.tsx still gates too (it is the shared component /preview

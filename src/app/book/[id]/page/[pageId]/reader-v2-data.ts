@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
@@ -33,7 +33,7 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
   if (!currentPage) notFound();
 
   const [bookResult, navPages] = await Promise.all([
-    findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
+    findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1, display_photo: 1, archived_photo: 1, photo: 1 })

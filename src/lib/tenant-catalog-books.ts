@@ -18,7 +18,9 @@
  * referenced stays locked out exactly as before.
  */
 
+import type { Db, Document } from 'mongodb';
 import { supabase } from '@/lib/supabase';
+import { findBookByIdOrSlug, type BookLookupResult } from '@/lib/book-lookup';
 
 export async function tenantCatalogReferencesBook(
   tenantSlug: string,
@@ -51,4 +53,35 @@ export async function tenantCatalogReferencesBook(
     // Fail closed: an unreachable catalogue admits nothing extra.
     return false;
   }
+}
+
+/**
+ * Book lookup with the full tenant admission rule: a book assigned to the
+ * tenant (`books.tenantId`), OR a global book the tenant's catalogue references
+ * (above). Without a tenant id this is the plain global lookup.
+ *
+ * `/book/[id]` applied the catalogue admission (#4218), but the page reader
+ * `/book/[id]/page/[pageId]` did a bare tenant-scoped lookup — so on a partner
+ * subdomain a catalogue-linked book rendered and every one of its page links
+ * 404'd. Reader-side lookups go through here so the two cannot drift again.
+ * Visibility/hidden gating stays with the caller, as above.
+ */
+export async function findBookForTenant(
+  db: Db,
+  idOrSlug: string,
+  projection: Document | undefined,
+  tenant: { id?: string | null; slug?: string | null } | null | undefined,
+): Promise<BookLookupResult | null> {
+  if (!tenant?.id) return findBookByIdOrSlug(db, idOrSlug, projection);
+
+  const scoped = await findBookByIdOrSlug(db, idOrSlug, projection, tenant.id);
+  if (scoped) return scoped;
+
+  if (!tenant.slug || tenant.slug === 'default') return null;
+  const unscoped = await findBookByIdOrSlug(db, idOrSlug, projection);
+  if (!unscoped) return null;
+  const book = unscoped.book as { id?: string; _id?: { toString(): string } };
+  const bookId = book.id || book._id?.toString();
+  if (!bookId) return null;
+  return (await tenantCatalogReferencesBook(tenant.slug, bookId)) ? unscoped : null;
 }

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { Book, Page } from '@/lib/types';
 import type { Locale } from '@/lib/locale-path';
@@ -66,12 +66,12 @@ const OG_PAGE_PROJECTION = {
   translations: 1, translation_es: 1,
 };
 
-async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
+async function getPageData(bookId: string, pageId: string, tenant: { id?: string | null; slug?: string | null } | null): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
 
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION, tenantId),
+      findBookForTenant(db, bookId, OG_BOOK_PROJECTION, tenant),
       db.collection('pages').findOne({ id: pageId }, { projection: OG_PAGE_PROJECTION }),
     ]);
 
@@ -95,7 +95,7 @@ async function getPageData(bookId: string, pageId: string, tenantId?: string): P
 export async function renderPageOgImage(id: string, pageId: string, lang: Locale = 'en') {
   const t = CARD_STRINGS[lang];
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  const { book, page } = await getPageData(id, pageId, ctx);
 
   const title = (book ? localizedTitle(book as Book & { localized?: LocalizedBookMap }, lang) : '') || t.unknownTitle;
   const author = book?.author || t.unknownAuthor;

@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { Book, Page } from '@/lib/types';
 
 // Shared book+page lookup for the reader segment's shells.
@@ -27,11 +27,11 @@ export const PAGE_META_PROJECTION = {
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
 };
 
-export const getPageData = cache(async function getPageData(bookId: string, pageId: string, tenantId?: string): Promise<{ book: Book | null; page: Page | null }> {
+export const getPageData = cache(async function getPageData(bookId: string, pageId: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION, tenantId),
+      findBookForTenant(db, bookId, BOOK_META_PROJECTION, { id: tenantId, slug: tenantSlug }),
       db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
     ]);
 
