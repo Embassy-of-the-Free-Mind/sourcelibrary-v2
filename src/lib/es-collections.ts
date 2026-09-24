@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { sortCollections, sanitizeThumbnail, coverOverride } from '@/lib/collections-utils';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { ES_COLLECTION_NAMES } from '@/lib/home-i18n';
-import { isNativeEdition, localizedCollection, localizedEditionFilter, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
+import { isNativeEdition, localizedCollection, localizedEditionFilter, localizedEditionFilterIndexed, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 
 /**
  * Data for the Spanish collection routes (`/es/collections`, `/es/collections/[id]`).
@@ -223,11 +223,19 @@ export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
   // set of books that have them, never by scanning collections × books. Fetched
   // FIRST because the collection query below selects on its keys; it was already
   // being computed here, so this is a reordering, not an extra round trip.
+  //
+  // Corpus-wide, so it takes the INDEXED form of the filter (see
+  // `localizedEditionFilterIndexed`): the sync regex form made the planner FETCH
+  // all ~57K visible books, ~1.4 s quiet and a failed build under a peer bulk
+  // sweep (#5073). The catch is the second half: this page is ISR
+  // (`revalidate = 3600`), so a timeout degrades to "top-level collections, no
+  // Spanish counts" for an hour rather than failing the build (or a reader's
+  // request) outright.
   const spanishCounts = await db.collection('books').aggregate<{ _id: string; count: number }>([
-    { $match: { ...localizedEditionFilter('es'), visible: true } },
+    { $match: { ...(await localizedEditionFilterIndexed(db, 'es')), visible: true } },
     { $unwind: '$collections' },
     { $group: { _id: '$collections', count: { $sum: 1 } } },
-  ], { maxTimeMS: 8000 }).toArray();
+  ], { maxTimeMS: 8000 }).toArray().catch(() => [] as { _id: string; count: number }[]);
   const spanishSlugs = spanishCounts.map((c) => c._id).filter((s): s is string => typeof s === 'string');
 
   const [docs, childCounts] = await Promise.all([
@@ -284,6 +292,16 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
   );
   if (!doc) return null;
 
+  // Sub-collections, so the branch can be walked DOWNWARD. `parent` is a
+  // string on some docs and an array on others (americas has two parents), so
+  // match both shapes — a plain equality check silently misses the arrays.
+  // Started here, outside the Promise.all, because the Spanish-count query
+  // below is scoped to these slugs and chains off it.
+  const childDocsPromise = db.collection('collections').find(
+    { parent: slug, ...PUBLIC_COLLECTION },
+    { projection: { _id: 0, slug: 1, name: 1, localized: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
+  ).toArray();
+
   const [rawBooks, parentDoc, childDocs, esCounts, gallery, rawFirstTranslations] = await Promise.all([
     db.collection('books').find(
       { collections: slug, visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false } },
@@ -302,18 +320,26 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
     typeof doc.parent === 'string'
       ? db.collection('collections').findOne({ slug: doc.parent, visible: true }, { projection: { _id: 0, slug: 1, name: 1, localized: 1 } })
       : Promise.resolve(null),
-    // Sub-collections, so the branch can be walked DOWNWARD. `parent` is a
-    // string on some docs and an array on others (americas has two parents), so
-    // match both shapes — a plain equality check silently misses the arrays.
-    db.collection('collections').find(
-      { parent: slug, ...PUBLIC_COLLECTION },
-      { projection: { _id: 0, slug: 1, name: 1, localized: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
-    ).toArray(),
-    db.collection('books').aggregate<{ _id: string; count: number }>([
-      { $match: { ...localizedEditionFilter('es'), visible: true } },
-      { $unwind: '$collections' },
-      { $group: { _id: '$collections', count: { $sum: 1 } } },
-    ], { maxTimeMS: 8000 }).toArray(),
+    childDocsPromise,
+    // Spanish-book counts for the CHILDREN only — that is the sole reader of
+    // this result (the page's own count comes from `rawBooks` below). This used
+    // to be the corpus-wide Spanish $group, run once per slug and identical for
+    // every slug: 1,246 render failures in one week when Atlas was under a peer
+    // sweep, 93 slugs × a 57K-doc scan on the worst day (#5074). Scoped to the
+    // child slugs it rides the `collections` index, and it is skipped outright
+    // for a leaf collection. The catch matches its siblings: this page is ISR
+    // (`revalidate = 3600`), so a timeout degrades to "no children listed" for
+    // an hour instead of a 500.
+    childDocsPromise.then((children) => {
+      const childSlugs = children.map((d) => d.slug as string).filter(Boolean);
+      if (!childSlugs.length) return [] as { _id: string; count: number }[];
+      return db.collection('books').aggregate<{ _id: string; count: number }>([
+        { $match: { collections: { $in: childSlugs }, ...localizedEditionFilter('es'), visible: true } },
+        { $unwind: '$collections' },
+        { $match: { collections: { $in: childSlugs } } },
+        { $group: { _id: '$collections', count: { $sum: 1 } } },
+      ], { maxTimeMS: 8000 }).toArray();
+    }).catch(() => [] as { _id: string; count: number }[]),
     // Illustrations — the same shape the English page uses, and gated the same
     // way (#4151): `luminance` keeps near-black and near-blank plates out, which
     // `gallery_quality` cannot do because a pristine scan of a dark mezzotint

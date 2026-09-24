@@ -8,7 +8,7 @@ import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
-import { localizedEditionFilter } from '@/lib/localized';
+import { localizedEditionFilterIndexed } from '@/lib/localized';
 import type { Locale } from '@/lib/locale-path';
 
 // Shared data layer for the homepage. Both the English `/` route and the
@@ -647,11 +647,14 @@ const BLOG_POSTS: HomeBlogPost[] = [
  */
 async function getLocalizedCollectionCounts(lang: Exclude<Locale, 'en'>): Promise<Record<string, number>> {
   const db = await getReadDb();
+  // Corpus-wide, so the INDEXED form of the filter (the regex form FETCHes all
+  // ~57K visible books — #5073/#5074), and a catch: the homepage is ISR, and a
+  // missing "· N en español" line for an hour beats a 500.
   const rows = await db.collection('books').aggregate<{ _id: string; count: number }>([
-    { $match: { ...localizedEditionFilter(lang), visible: true, pages_count: { $gt: 0 } } },
+    { $match: { ...(await localizedEditionFilterIndexed(db, lang)), visible: true, pages_count: { $gt: 0 } } },
     { $unwind: '$collections' },
     { $group: { _id: '$collections', count: { $sum: 1 } } },
-  ], { maxTimeMS: 8000 }).toArray();
+  ], { maxTimeMS: 8000 }).toArray().catch(() => [] as { _id: string; count: number }[]);
   const out: Record<string, number> = {};
   for (const r of rows) if (typeof r._id === 'string') out[r._id] = r.count;
   return out;
