@@ -1,130 +1,111 @@
 #!/usr/bin/env node
 /**
- * PRIOR ART: `scripts/compute-iconclass-tree.mjs` precomputes the SAME page's other
- * axis (`system_config.iconclass_tree`) in the same shape — aggregate, pick a
- * representative thumbnail, write one config doc the ISR page reads. This is that
- * script pointed at `metadata.subjects` instead, because Iconclass reaches 1.2% of the
- * pictures and subjects reach 97.2% (measured below, 2026-09-16). Not merged into it:
- * that one owns a fixed 10-division tree with a curated sub-category map; this one has
- * no taxonomy at all, only what the descriptions actually say.
+ * PRIOR ART: `scripts/compute-iconclass-tree.mjs` precomputed the page's old Iconclass
+ * axis in the same shape — aggregate, pick a representative thumbnail, write one config
+ * doc the ISR page reads. Iconclass was retired as navigation in #5012. The previous
+ * version of THIS script counted raw `metadata.subjects` strings with no vocabulary, so
+ * "botany", "herbalism", "flora" and "medicinal plants" were four separate tiles.
  *
- * Build the picture-subject index — the front door #4856 asked for.
+ * Build the picture-subject index behind /browse/subjects (#4856).
  *
- * WHY (#4856)
- * -----------
- * Derek, on /browse/subjects/2-nature: "Iconclass is not helping the organization of
- * images." Measured on 190,169 visible gallery images:
+ * WHAT IT COUNTS
+ * The vocabulary in `src/data/image-subjects.json` (categories → terms, in a reader's
+ * words) and the reviewed map in `src/data/image-subject-map.json` (raw extractor
+ * string → term ids). For every category and term, the index records:
+ *   - `count`: DISTINCT visible images whose `metadata.subjects` contains any raw
+ *     string mapped to it. This is a count of pictures, not of subject tags, so an
+ *     image tagged "botany" and "herbalism" counts once under Plants.
+ *   - `book_count`: distinct books those images come from.
+ *   - `thumbnail`: the best-scoring picture, not reused by an earlier tile.
+ * `covered_images` is the number of visible images that land in at least one
+ * category, so the page can say honestly how much of the collection the browse reaches.
  *
- *   metadata.iconclass    2,210  (1.2%)   ← what the browse tree indexes
- *   metadata.subjects   184,764 (97.2%)   ← what the model wrote about each picture
- *   metadata.technique  184,750 (97.2%)
- *   metadata.style      155,606 (81.8%)
+ * Every query is `metadata.subjects: {$in: …}`, which the `metadata.subjects` index serves.
+ * NEVER writes to `books`, `pages` or `gallery_images`; one `system_config` document.
  *
- * So the whole "2 Nature" division is 1,044 images of 190,169: the wall is
- * undifferentiated because the axis indexes almost nothing, not because a visual
- * taxonomy is the wrong idea. The subject terms, by contrast, are what a reader would
- * say out loud — botany (27,493), geometry (23,931), mathematics (14,361), astronomy
- * (10,938), alchemy (8,482), medicinal plants (7,359), cartography (5,031).
- *
- * WHAT IT REFUSES TO INDEX
- * `metadata.symbols` is 63% populated and its head is `A, B, C, D, E…` — diagram
- * labels, the detector's own artifact rather than a subject anyone browses by. Single
- * letters and bare numbers are dropped here for the same reason, and a term must reach
- * MIN_COUNT before it earns a tile: a one-image "subject" is a caption, not a category.
- *
- * NEVER writes to `books` or `pages`; one `system_config` document.
+ * Runs nightly on Hetzner (infrastructure/hetzner-crontab) so new extractions appear.
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/build-gallery-subject-index.mjs
- *   … --limit=N     keep only the top N terms (default 200)
- *   … --min-count=N floor for a term to appear (default 25)
- *   … --dry-run     print the head of the index, write nothing
+ *   … --dry-run   print the index, write nothing
  */
 import { MongoClient } from 'mongodb';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const ARG = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const DRY = process.argv.includes('--dry-run');
-const LIMIT = Number(ARG('limit', '200'));
-const MIN_COUNT = Number(ARG('min-count', '25'));
 const DOC_ID = 'gallery_subject_index';
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const vocab = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/image-subjects.json'), 'utf8'));
+const subjectMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/image-subject-map.json'), 'utf8')).map;
 
-/** Junk that is a diagram label or a stray token, never a subject to browse by. */
-function isJunkTerm(term) {
-  const t = String(term || '').trim();
-  if (t.length < 3) return true;                 // "A", "B", "ii"
-  if (/^[\d\W_]+$/.test(t)) return true;          // "1543", "—"
-  if (/^(fig|no|plate|page|tab)\.?\s*\d*$/i.test(t)) return true;
-  return false;
+const rawByTerm = new Map();
+for (const [raw, ids] of Object.entries(subjectMap)) {
+  for (const id of ids) rawByTerm.set(id, [...(rawByTerm.get(id) ?? []), raw]);
 }
-
-/** Display form: the terms arrive lower-case from the extractor, mostly. */
-function label(term) {
-  return term.length <= 3 ? term.toUpperCase() : term[0].toUpperCase() + term.slice(1);
-}
+const rawFor = (termIds) => [...new Set(termIds.flatMap((id) => rawByTerm.get(id) ?? []))];
 
 async function main() {
   if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
-  const db = client.db('bookstore');
+  const gallery = client.db('bookstore').collection('gallery_images');
+  const base = { book_visible: true, extracted_url: { $ne: null } };
+  const usedThumbs = new Set();
 
-  const visible = await db.collection('gallery_images').countDocuments({ book_visible: true });
-  console.log(`visible gallery images: ${visible}`);
+  async function stats(raws) {
+    if (raws.length === 0) return { count: 0, book_count: 0, thumbnail: null };
+    const match = { ...base, 'metadata.subjects': { $in: raws } };
+    const [count, books, top] = await Promise.all([
+      gallery.countDocuments(match, { maxTimeMS: 300000 }),
+      gallery.aggregate([{ $match: match }, { $group: { _id: '$book_id' } }, { $count: 'n' }], { maxTimeMS: 300000 }).toArray(),
+      gallery.find(match, { projection: { thumbnail_url: 1, extracted_url: 1 } })
+        .sort({ gallery_quality: -1 }).limit(25).toArray(),
+    ]);
+    const pick = top.find((d) => !usedThumbs.has(d.thumbnail_url || d.extracted_url)) ?? top[0];
+    const thumbnail = pick ? (pick.thumbnail_url || pick.extracted_url) : null;
+    if (thumbnail) usedThumbs.add(thumbnail);
+    return { count, book_count: books[0]?.n ?? 0, thumbnail };
+  }
 
-  console.log('aggregating metadata.subjects …');
-  const rows = await db.collection('gallery_images').aggregate([
-    { $match: { book_visible: true, 'metadata.subjects': { $exists: true, $ne: [] } } },
-    // Best images first, so `$first` picks a thumbnail worth showing on the tile.
-    { $sort: { gallery_quality: -1 } },
-    { $unwind: '$metadata.subjects' },
-    {
-      $group: {
-        _id: '$metadata.subjects',
-        count: { $sum: 1 },
-        thumbnail: { $first: '$thumbnail_url' },
-        extracted: { $first: '$extracted_url' },
-        books: { $addToSet: '$book_id' },
-      },
-    },
-    { $match: { count: { $gte: MIN_COUNT } } },
-    { $project: { count: 1, thumbnail: 1, extracted: 1, book_count: { $size: '$books' } } },
-    { $sort: { count: -1 } },
-    { $limit: LIMIT },
-  ], { maxTimeMS: 600000, allowDiskUse: true }).toArray();
+  const visible = await gallery.countDocuments(base);
+  const covered = await gallery.countDocuments({ ...base, 'metadata.subjects': { $in: Object.keys(subjectMap).filter((k) => subjectMap[k].length) } });
+  console.log(`visible images: ${visible}; in at least one category: ${covered} (${(100 * covered / visible).toFixed(1)}%)`);
 
-  const terms = rows
-    .filter((r) => !isJunkTerm(r._id))
-    .map((r) => ({
-      term: r._id,
-      label: label(r._id),
-      count: r.count,
-      book_count: r.book_count,
-      thumbnail: r.thumbnail || r.extracted || null,
-      // The gallery already filters on this exact value (`/api/gallery?subject=`),
-      // so the tile needs no new query path.
-      href: `/gallery?subject=${encodeURIComponent(r._id)}`,
-    }));
-
-  console.log(`${rows.length} terms over the floor, ${terms.length} after the junk filter`);
-  console.log(terms.slice(0, 25).map((t) => `${t.label} (${t.count} in ${t.book_count} books)`).join(', '));
+  const categories = [];
+  for (const cat of vocab.categories) {
+    const catStats = await stats(rawFor(cat.terms.map((t) => t.id)));
+    const terms = [];
+    for (const t of cat.terms) {
+      const s = await stats(rawFor([t.id]));
+      if (s.count > 0) terms.push({ id: t.id, label: t.label, ...s });
+    }
+    terms.sort((a, b) => b.count - a.count);
+    categories.push({ id: cat.id, label: cat.label, ...catStats, terms });
+    console.log(`${cat.label}: ${catStats.count} images, ${catStats.book_count} books — ${terms.map((t) => `${t.label} ${t.count}`).join(', ')}`);
+  }
+  categories.sort((a, b) => b.count - a.count);
 
   if (DRY) { console.log('\n(dry run — nothing written)'); await client.close(); return; }
 
-  await db.collection('system_config').updateOne(
+  const res = await client.db('bookstore').collection('system_config').updateOne(
     { _id: DOC_ID },
     {
       $set: {
-        terms,
+        categories,
         total_images: visible,
-        indexed_images: terms.reduce((n, t) => n + t.count, 0),
-        min_count: MIN_COUNT,
+        covered_images: covered,
         updated_at: new Date(),
         source: 'scripts/maintenance/build-gallery-subject-index.mjs (#4856)',
       },
+      // `terms` / `indexed_images` / `min_count` are the previous version's raw-string
+      // tiles. They are left in place, not $unset, so a deploy that still reads them
+      // keeps working while this change rolls out; nothing on main reads them.
     },
     { upsert: true },
   );
-  console.log(`wrote system_config.${DOC_ID}: ${terms.length} terms`);
+  console.log(`wrote system_config.${DOC_ID}: ${categories.length} categories (matched ${res.matchedCount}, modified ${res.modifiedCount}, upserted ${res.upsertedCount})`);
   await client.close();
 }
 

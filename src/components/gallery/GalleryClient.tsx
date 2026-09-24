@@ -16,6 +16,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
+import { topicLabel } from '@/lib/image-subjects';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
@@ -151,6 +152,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const libraryFilter = searchParams.get('library') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
+  const topicFilter = searchParams.get('topic') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
   // Committed image search query (drives the fetch); comes from the URL only.
@@ -185,7 +187,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // filters at all, OR the URL's bookId equals what the server pre-filtered on
   // and no other filters are present.
   useEffect(() => {
-    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || topicFilter || yearStart || yearEnd || qualityParam || includeArchive;
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
@@ -222,6 +224,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
           subject: subjectFilter || undefined,
+          topic: topicFilter || undefined,
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -249,7 +252,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -269,6 +272,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
         subject: subjectFilter || undefined,
+        topic: topicFilter || undefined,
         yearFrom: yearStart ? parseInt(yearStart) : undefined,
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -295,7 +299,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
@@ -371,7 +375,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     }
   };
 
-  const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
+  const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;
   const showCollections = !hasFilters;
 
   // Every filter that narrows the query — including the ones `hasFilters`
@@ -469,7 +473,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         </div>
 
         {/* Active Filters / Book Info */}
-        {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
+        {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {data?.bookInfo && (
               <>
@@ -509,6 +513,14 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
                 Type: {typeFilter}
                 <button onClick={() => updateParams({ type: '' })} className="hover:text-stone-900">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+            {topicFilter && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
+                Topic: {topicLabel(topicFilter) ?? topicFilter}
+                <button onClick={() => updateParams({ topic: '' })} className="hover:text-stone-900">
                   <X className="w-3 h-3" />
                 </button>
               </div>

@@ -8,6 +8,7 @@ import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem } from '@/lib/gallery-merge';
+import { subjectStringsForTopic } from '@/lib/image-subject-map';
 
 export const maxDuration = 30;
 
@@ -126,7 +127,13 @@ export async function GET(request: NextRequest) {
     const collectionSlug = searchParams.get('collection');
     const libraryFilter = searchParams.get('library');
     const imageType = searchParams.get('type');
-    const subjectFilter = searchParams.get('subject');
+    // `topic` is a browse-vocabulary id (#4856) and expands to every raw subject string
+    // mapped to it; `subject` is one raw string, matched exactly. Either way the value
+    // lands on `metadata.subjects`, which is indexed.
+    const topicParam = searchParams.get('topic');
+    const subjectFilter: string | { $in: string[] } | null = topicParam
+      ? { $in: subjectStringsForTopic(topicParam) }
+      : searchParams.get('subject');
     const figureFilter = searchParams.get('figure');
     const symbolFilter = searchParams.get('symbol');
     const iconclassFilter = searchParams.get('iconclass');

@@ -1,0 +1,6130 @@
+{
+ "_about": "Raw metadata.subjects string → term ids in src/data/image-subjects.json (#4856). Proposed by scripts/maintenance/map-image-subjects.mjs, reviewed by a human in the PR diff. [] = deliberately unmapped (a place, period or name, not a subject). Hand edits welcome.",
+ "map": {
+  "botany": [
+   "plants.botany"
+  ],
+  "geometry": [
+   "mathematics.geometry"
+  ],
+  "mathematics": [
+   "mathematics.general"
+  ],
+  "astronomy": [
+   "astronomy.general"
+  ],
+  "alchemy": [
+   "alchemy.general"
+  ],
+  "natural history": [
+   "animals.natural-history"
+  ],
+  "medicinal plants": [
+   "plants.medicinal"
+  ],
+  "architecture": [
+   "architecture.general"
+  ],
+  "astrology": [
+   "esoteric.astrology"
+  ],
+  "music theory": [
+   "music.theory"
+  ],
+  "cartography": [
+   "maps.cartography"
+  ],
+  "herbal medicine": [
+   "plants.medicinal",
+   "medicine.pharmacy"
+  ],
+  "physics": [
+   "science.physics"
+  ],
+  "mechanics": [
+   "science.mechanics"
+  ],
+  "allegory": [
+   "emblems.allegory"
+  ],
+  "geography": [
+   "maps.geography"
+  ],
+  "cosmology": [
+   "astronomy.cosmology"
+  ],
+  "optics": [
+   "science.optics"
+  ],
+  "herbalism": [
+   "plants.medicinal"
+  ],
+  "anatomy": [
+   "medicine.anatomy"
+  ],
+  "archaeology": [
+   "books.archaeology"
+  ],
+  "mythology": [
+   "religion.mythology"
+  ],
+  "typography": [
+   "books.typography"
+  ],
+  "occultism": [
+   "esoteric.hermeticism"
+  ],
+  "zoology": [
+   "animals.zoology"
+  ],
+  "heraldry": [
+   "society.heraldry"
+  ],
+  "ornithology": [
+   "animals.birds"
+  ],
+  "landscape": [
+   "maps.landscape"
+  ],
+  "divination": [
+   "esoteric.divination"
+  ],
+  "mycology": [
+   "plants.fungi"
+  ],
+  "philosophy": [
+   "philosophy.general"
+  ],
+  "engineering": [
+   "science.machines"
+  ],
+  "papyrology": [
+   "books.papyri"
+  ],
+  "hydraulics": [
+   "science.hydraulics"
+  ],
+  "hermeticism": [
+   "esoteric.hermeticism"
+  ],
+  "music": [
+   "music.theory"
+  ],
+  "symbolism": [
+   "emblems.symbolism"
+  ],
+  "medicine": [
+   "medicine.general"
+  ],
+  "ichthyology": [
+   "animals.fish"
+  ],
+  "Tibetan Buddhism": [
+   "religion.buddhism"
+  ],
+  "metallurgy": [
+   "science.mining"
+  ],
+  "acoustics": [
+   "music.acoustics"
+  ],
+  "microscopy": [
+   "science.microscopy"
+  ],
+  "fungi": [
+   "plants.fungi"
+  ],
+  "theology": [
+   "philosophy.theology"
+  ],
+  "ornament": [
+   "books.ornament"
+  ],
+  "celestial mechanics": [
+   "astronomy.planets"
+  ],
+  "agriculture": [
+   "plants.agriculture"
+  ],
+  "Buddhism": [
+   "religion.buddhism"
+  ],
+  "nature": [
+   "animals.natural-history"
+  ],
+  "mysticism": [
+   "religion.mysticism"
+  ],
+  "Euclidean geometry": [
+   "mathematics.geometry"
+  ],
+  "fortification": [
+   "architecture.fortification"
+  ],
+  "Egyptology": [
+   "books.archaeology",
+   "religion.egypt"
+  ],
+  "flora": [
+   "plants.botany"
+  ],
+  "pharmacology": [
+   "medicine.pharmacy"
+  ],
+  "mining": [
+   "science.mining"
+  ],
+  "ethnography": [
+   "society.peoples"
+  ],
+  "magic": [
+   "esoteric.magic"
+  ],
+  "laboratory equipment": [
+   "alchemy.laboratory"
+  ],
+  "liturgy": [
+   "religion.liturgy"
+  ],
+  "perspective": [
+   "mathematics.perspective"
+  ],
+  "distillation": [
+   "alchemy.laboratory"
+  ],
+  "logic": [
+   "philosophy.logic"
+  ],
+  "plants": [
+   "plants.botany"
+  ],
+  "magnetism": [
+   "science.magnetism"
+  ],
+  "proportions": [
+   "mathematics.perspective"
+  ],
+  "entomology": [
+   "animals.insects"
+  ],
+  "scholarship": [
+   "society.education"
+  ],
+  "Herculaneum papyri": [
+   "books.papyri"
+  ],
+  "epigraphy": [
+   "books.inscriptions"
+  ],
+  "transformation": [
+   "alchemy.transmutation"
+  ],
+  "Ming Dynasty": [],
+  "navigation": [
+   "maps.navigation"
+  ],
+  "military engineering": [
+   "war.military-engineering"
+  ],
+  "zodiac": [
+   "esoteric.astrology"
+  ],
+  "ritual": [
+   "religion.liturgy"
+  ],
+  "Egyptian mythology": [
+   "religion.egypt",
+   "religion.mythology"
+  ],
+  "hieroglyphs": [
+   "books.inscriptions"
+  ],
+  "sun": [
+   "astronomy.sun-moon"
+  ],
+  "pneumatics": [
+   "science.hydraulics"
+  ],
+  "ornamentation": [
+   "books.ornament"
+  ],
+  "surveying": [
+   "mathematics.surveying"
+  ],
+  "marine biology": [
+   "animals.fish"
+  ],
+  "exploration": [
+   "maps.travel"
+  ],
+  "traditional Chinese medicine": [
+   "medicine.chinese"
+  ],
+  "geology": [
+   "animals.earth"
+  ],
+  "numerology": [
+   "esoteric.numbers"
+  ],
+  "natural philosophy": [
+   "philosophy.natural"
+  ],
+  "mechanical engineering": [
+   "science.machines"
+  ],
+  "genealogy": [
+   "society.heraldry"
+  ],
+  "chemistry": [
+   "science.chemistry"
+  ],
+  "arithmetic": [
+   "mathematics.arithmetic"
+  ],
+  "mineralogy": [
+   "animals.earth"
+  ],
+  "plant anatomy": [
+   "plants.botany"
+  ],
+  "mushrooms": [
+   "plants.fungi"
+  ],
+  "esotericism": [
+   "esoteric.hermeticism"
+  ],
+  "planetary motion": [
+   "astronomy.planets"
+  ],
+  "provenance": [
+   "books.ownership"
+  ],
+  "Herculaneum scrolls": [
+   "books.papyri"
+  ],
+  "Philodemus": [],
+  "classical antiquity": [
+   "books.archaeology"
+  ],
+  "theosophy": [
+   "religion.mysticism"
+  ],
+  "education": [
+   "society.education"
+  ],
+  "military technology": [
+   "war.military-engineering"
+  ],
+  "Ming dynasty": [],
+  "transmutation": [
+   "alchemy.transmutation"
+  ],
+  "Herculaneum": [],
+  "biblical scene": [
+   "religion.bible"
+  ],
+  "counterpoint": [
+   "music.harmony"
+  ],
+  "Greek philosophy": [
+   "philosophy.general"
+  ],
+  "Christianity": [
+   "religion.christianity"
+  ],
+  "classical orders": [
+   "architecture.classical"
+  ],
+  "birds": [
+   "animals.birds"
+  ],
+  "horology": [
+   "astronomy.time"
+  ],
+  "maritime history": [
+   "maps.navigation"
+  ],
+  "Kabbalah": [
+   "esoteric.kabbalah"
+  ],
+  "harmony": [
+   "music.harmony"
+  ],
+  "moon": [
+   "astronomy.sun-moon"
+  ],
+  "scientific instruments": [
+   "astronomy.instruments"
+  ],
+  "kabbalah": [
+   "esoteric.kabbalah"
+  ],
+  "notation": [
+   "music.notation"
+  ],
+  "polyphony": [
+   "music.harmony"
+  ],
+  "calligraphy": [
+   "books.calligraphy"
+  ],
+  "Siku Quanshu": [],
+  "meteorology": [
+   "science.meteorology"
+  ],
+  "harmonics": [
+   "music.theory"
+  ],
+  "marine life": [
+   "animals.fish"
+  ],
+  "numismatics": [
+   "books.coins"
+  ],
+  "conic sections": [
+   "mathematics.conics"
+  ],
+  "portrait": [
+   "society.portraits"
+  ],
+  "linguistics": [
+   "books.language"
+  ],
+  "portraiture": [
+   "society.portraits"
+  ],
+  "measurement": [
+   "mathematics.surveying"
+  ],
+  "Chinese mythology": [
+   "religion.mythology",
+   "religion.taoism"
+  ],
+  "hieroglyphics": [
+   "books.inscriptions"
+  ],
+  "Gregorian chant": [
+   "music.notation",
+   "music.sacred"
+  ],
+  "prophecy": [
+   "esoteric.divination"
+  ],
+  "machinery": [
+   "science.machines"
+  ],
+  "topography": [
+   "maps.geography"
+  ],
+  "horoscope": [
+   "esoteric.astrology"
+  ],
+  "tarot": [
+   "esoteric.divination"
+  ],
+  "biology": [
+   "animals.natural-history"
+  ],
+  "travel": [
+   "maps.travel"
+  ],
+  "martial arts": [
+   "war.fencing"
+  ],
+  "herpetology": [
+   "animals.reptiles"
+  ],
+  "refraction": [
+   "science.optics"
+  ],
+  "New Spain": [],
+  "trigonometry": [
+   "mathematics.trigonometry"
+  ],
+  "religion": [],
+  "Greek paleography": [
+   "books.manuscripts"
+  ],
+  "royalty": [
+   "society.royalty"
+  ],
+  "statics": [
+   "science.mechanics"
+  ],
+  "Rosicrucianism": [
+   "esoteric.rosicrucian"
+  ],
+  "sacred music": [
+   "music.sacred"
+  ],
+  "mnemonics": [
+   "books.ciphers"
+  ],
+  "labor": [
+   "society.daily-life"
+  ],
+  "fable": [
+   "emblems.fables"
+  ],
+  "warfare": [
+   "war.battles"
+  ],
+  "grimoire": [
+   "esoteric.magic"
+  ],
+  "military architecture": [
+   "war.military-engineering"
+  ],
+  "proportion": [
+   "mathematics.perspective"
+  ],
+  "cryptography": [
+   "books.ciphers"
+  ],
+  "herbal": [
+   "plants.medicinal"
+  ],
+  "bestiary": [
+   "animals.natural-history"
+  ],
+  "biblical narrative": [
+   "religion.bible"
+  ],
+  "I Ching": [
+   "esoteric.divination"
+  ],
+  "weaponry": [
+   "war.weapons"
+  ],
+  "Passion of Christ": [
+   "religion.christ"
+  ],
+  "cityscape": [
+   "maps.cities"
+  ],
+  "decoration": [
+   "books.ornament"
+  ],
+  "technology": [
+   "science.machines"
+  ],
+  "paleontology": [
+   "animals.earth"
+  ],
+  "military strategy": [
+   "war.military-engineering"
+  ],
+  "elements": [
+   "alchemy.elements"
+  ],
+  "Chinese history": [
+   "society.history"
+  ],
+  "surgery": [
+   "medicine.surgery"
+  ],
+  "metaphysics": [
+   "philosophy.theology"
+  ],
+  "spirituality": [
+   "religion.mysticism"
+  ],
+  "palaeography": [
+   "books.manuscripts"
+  ],
+  "hunting": [
+   "society.daily-life"
+  ],
+  "constellations": [
+   "astronomy.stars"
+  ],
+  "Chinese flora": [
+   "plants.botany"
+  ],
+  "organology": [
+   "music.instruments"
+  ],
+  "siege warfare": [
+   "war.battles"
+  ],
+  "musical instruments": [
+   "music.instruments"
+  ],
+  "Christian iconography": [
+   "religion.christianity"
+  ],
+  "Greek literature": [
+   "arts.literature"
+  ],
+  "materia medica": [
+   "medicine.pharmacy"
+  ],
+  "furnace": [
+   "alchemy.laboratory"
+  ],
+  "maritime": [
+   "maps.navigation"
+  ],
+  "daily life": [
+   "society.daily-life"
+  ],
+  "human proportion": [
+   "mathematics.perspective",
+   "medicine.anatomy"
+  ],
+  "taxonomy": [
+   "animals.natural-history"
+  ],
+  "geomancy": [
+   "esoteric.divination"
+  ],
+  "musical notation": [
+   "music.notation"
+  ],
+  "fashion": [
+   "society.costume"
+  ],
+  "combinatorics": [
+   "mathematics.general"
+  ],
+  "fish": [
+   "animals.fish"
+  ],
+  "Hinduism": [
+   "religion.hinduism"
+  ],
+  "microcosm": [
+   "esoteric.microcosm"
+  ],
+  "liturgical music": [
+   "music.sacred"
+  ],
+  "mensural notation": [
+   "music.notation"
+  ],
+  "gnomonics": [
+   "astronomy.time"
+  ],
+  "literature": [
+   "arts.literature"
+  ],
+  "urban planning": [
+   "architecture.plans"
+  ],
+  "mythical creatures": [
+   "animals.monsters"
+  ],
+  "metamorphosis": [
+   "religion.mythology"
+  ],
+  "mountains": [
+   "maps.landscape"
+  ],
+  "demonology": [
+   "esoteric.magic"
+  ],
+  "Jyotisha": [
+   "esoteric.astrology"
+  ],
+  "nobility": [
+   "society.royalty"
+  ],
+  "chiromancy": [
+   "esoteric.divination"
+  ],
+  "teratology": [
+   "animals.monsters"
+  ],
+  "Chinese herbal medicine": [
+   "medicine.chinese"
+  ],
+  "folklore": [
+   "arts.literature"
+  ],
+  "domestic life": [
+   "society.daily-life"
+  ],
+  "science": [
+   "philosophy.natural"
+  ],
+  "garden design": [
+   "plants.gardens"
+  ],
+  "malacology": [
+   "animals.shells"
+  ],
+  "Chinese literature": [
+   "arts.literature"
+  ],
+  "calculus": [
+   "mathematics.general"
+  ],
+  "hagiography": [
+   "religion.saints"
+  ],
+  "Roman history": [
+   "society.history"
+  ],
+  "palmistry": [
+   "esoteric.divination"
+  ],
+  "scholar": [
+   "society.education"
+  ],
+  "classification": [
+   "animals.natural-history"
+  ],
+  "military history": [
+   "society.history"
+  ],
+  "vision": [
+   "science.optics"
+  ],
+  "floor plan": [
+   "architecture.plans"
+  ],
+  "talisman": [
+   "esoteric.magic"
+  ],
+  "costume": [
+   "society.costume"
+  ],
+  "indigenous people": [
+   "society.peoples"
+  ],
+  "Great Work": [
+   "alchemy.transmutation"
+  ],
+  "bookbinding": [
+   "books.ownership"
+  ],
+  "Freemasonry": [
+   "esoteric.rosicrucian"
+  ],
+  "biography": [
+   "society.history"
+  ],
+  "fluid dynamics": [
+   "science.hydraulics"
+  ],
+  "artillery": [
+   "war.artillery"
+  ],
+  "humanism": [
+   "philosophy.general"
+  ],
+  "historiated initial": [
+   "books.ornament"
+  ],
+  "kinematics": [
+   "science.mechanics"
+  ],
+  "Biblical scene": [
+   "religion.bible"
+  ],
+  "Chinese philosophy": [
+   "philosophy.general"
+  ],
+  "physiognomy": [
+   "esoteric.divination"
+  ],
+  "Renaissance technology": [
+   "science.machines"
+  ],
+  "construction": [
+   "architecture.plans"
+  ],
+  "transportation": [],
+  "history": [
+   "society.history"
+  ],
+  "manuscript": [
+   "books.manuscripts"
+  ],
+  "New Testament": [
+   "religion.bible"
+  ],
+  "human body": [
+   "medicine.anatomy"
+  ],
+  "sacrifice": [
+   "religion.liturgy"
+  ],
+  "sacred geometry": [
+   "mathematics.geometry",
+   "esoteric.numbers"
+  ],
+  "colonialism": [],
+  "fossils": [
+   "animals.earth"
+  ],
+  "parabola": [
+   "mathematics.conics"
+  ],
+  "instrumentation": [
+   "astronomy.instruments"
+  ],
+  "ferns": [
+   "plants.botany"
+  ],
+  "devotion": [
+   "religion.liturgy"
+  ],
+  "Saturn": [
+   "astronomy.planets"
+  ],
+  "narrative scene": [],
+  "initial letter": [
+   "books.ornament"
+  ],
+  "chronology": [
+   "astronomy.time"
+  ],
+  "Renaissance science": [
+   "philosophy.natural"
+  ],
+  "composition": [
+   "music.theory"
+  ],
+  "hymnody": [
+   "music.sacred"
+  ],
+  "hydrostatics": [
+   "science.hydraulics"
+  ],
+  "classical architecture": [
+   "architecture.classical"
+  ],
+  "Renaissance": [],
+  "military tactics": [
+   "war.battles"
+  ],
+  "spherical trigonometry": [
+   "mathematics.trigonometry"
+  ],
+  "Brazil": [],
+  "procession": [
+   "society.daily-life"
+  ],
+  "spherical geometry": [
+   "mathematics.geometry"
+  ],
+  "ceremonial magic": [
+   "esoteric.magic"
+  ],
+  "ballistics": [
+   "war.artillery"
+  ],
+  "biblical history": [
+   "religion.bible"
+  ],
+  "Catholic Church": [
+   "religion.christianity"
+  ],
+  "classical mythology": [
+   "religion.mythology"
+  ],
+  "Chinese medicine": [
+   "medicine.chinese"
+  ],
+  "martyrdom": [
+   "religion.saints"
+  ],
+  "virtue": [
+   "emblems.virtues"
+  ],
+  "landscape architecture": [
+   "plants.gardens"
+  ],
+  "Chinese architecture": [
+   "architecture.chinese"
+  ],
+  "death": [
+   "religion.death"
+  ],
+  "intervals": [
+   "music.theory"
+  ],
+  "Book of the Dead": [
+   "religion.egypt"
+  ],
+  "Chinese bookbinding": [
+   "books.ownership"
+  ],
+  "embryology": [
+   "medicine.embryology"
+  ],
+  "animals": [
+   "animals.zoology"
+  ],
+  "Taoism": [
+   "religion.taoism"
+  ],
+  "macrocosm": [
+   "esoteric.microcosm"
+  ],
+  "papacy": [
+   "religion.christianity"
+  ],
+  "reflection": [
+   "science.optics"
+  ],
+  "algebra": [
+   "mathematics.arithmetic"
+  ],
+  "Hermeticism": [
+   "esoteric.hermeticism"
+  ],
+  "calendar": [
+   "astronomy.time"
+  ],
+  "shipbuilding": [
+   "maps.navigation"
+  ],
+  "naval architecture": [
+   "maps.navigation"
+  ],
+  "medical instruments": [
+   "medicine.surgery"
+  ],
+  "flowers": [
+   "plants.flowers"
+  ],
+  "cosmography": [
+   "astronomy.cosmology"
+  ],
+  "Germany": [],
+  "timekeeping": [
+   "astronomy.time"
+  ],
+  "Traditional Chinese Medicine": [
+   "medicine.chinese"
+  ],
+  "smelting": [
+   "science.mining"
+  ],
+  "celestial sphere": [
+   "astronomy.cosmology"
+  ],
+  "sculpture": [
+   "arts.art"
+  ],
+  "pilgrimage": [
+   "religion.liturgy"
+  ],
+  "syllogism": [
+   "philosophy.logic"
+  ],
+  "justice": [
+   "emblems.virtues"
+  ],
+  "cuneiform": [
+   "books.inscriptions"
+  ],
+  "ancient technology": [
+   "science.machines"
+  ],
+  "physiology": [
+   "medicine.general"
+  ],
+  "garden": [
+   "plants.gardens"
+  ],
+  "light": [
+   "science.optics"
+  ],
+  "fugue": [
+   "music.harmony"
+  ],
+  "funerary rites": [
+   "religion.death"
+  ],
+  "deity": [
+   "religion.mythology"
+  ],
+  "catoptrics": [
+   "science.optics"
+  ],
+  "ceremony": [
+   "society.daily-life"
+  ],
+  "angelology": [
+   "religion.mysticism"
+  ],
+  "France": [],
+  "Nahua culture": [
+   "society.peoples"
+  ],
+  "satire": [
+   "emblems.fables"
+  ],
+  "vocal music": [
+   "music.sacred"
+  ],
+  "Epicurean philosophy": [
+   "philosophy.general"
+  ],
+  "Old Testament": [
+   "religion.bible"
+  ],
+  "number theory": [
+   "mathematics.arithmetic"
+  ],
+  "lineage": [
+   "society.heraldry"
+  ],
+  "industrial history": [
+   "society.history"
+  ],
+  "Virgin Mary": [
+   "religion.christ"
+  ],
+  "horticulture": [
+   "plants.gardens"
+  ],
+  "human anatomy": [
+   "medicine.anatomy"
+  ],
+  "wisdom": [
+   "philosophy.general"
+  ],
+  "Biblical narrative": [
+   "religion.bible"
+  ],
+  "Greek text": [
+   "books.manuscripts"
+  ],
+  "geocentrism": [
+   "astronomy.cosmology"
+  ],
+  "triangles": [
+   "mathematics.geometry"
+  ],
+  "monasticism": [
+   "religion.christianity"
+  ],
+  "emblem": [
+   "emblems.emblems"
+  ],
+  "military geography": [
+   "war.military-engineering"
+  ],
+  "experimental science": [
+   "philosophy.natural"
+  ],
+  "Jesus Christ": [
+   "religion.christ"
+  ],
+  "dissection": [
+   "medicine.anatomy"
+  ],
+  "monarchy": [
+   "society.royalty"
+  ],
+  "protection": [
+   "esoteric.magic"
+  ],
+  "hydraulic engineering": [
+   "science.hydraulics"
+  ],
+  "tools": [
+   "science.machines"
+  ],
+  "center of gravity": [
+   "science.mechanics"
+  ],
+  "osteology": [
+   "medicine.anatomy"
+  ],
+  "ancient Greek music": [
+   "music.theory"
+  ],
+  "pharmacy": [
+   "medicine.pharmacy"
+  ],
+  "flora of Pannonia": [
+   "plants.botany"
+  ],
+  "funerary art": [
+   "religion.death"
+  ],
+  "Roman Empire": [
+   "society.history"
+  ],
+  "poetry": [
+   "arts.poetry"
+  ],
+  "bookplate": [
+   "books.ownership"
+  ],
+  "Renaissance architecture": [
+   "architecture.general"
+  ],
+  "afterlife": [
+   "religion.death"
+  ],
+  "courtly life": [
+   "society.royalty"
+  ],
+  "fencing": [
+   "war.fencing"
+  ],
+  "stereometry": [
+   "mathematics.geometry"
+  ],
+  "deities": [
+   "religion.mythology"
+  ],
+  "religious orders": [
+   "religion.christianity"
+  ],
+  "courtly love": [
+   "society.royalty"
+  ],
+  "monsters": [
+   "animals.monsters"
+  ],
+  "Chinese bibliography": [
+   "books.manuscripts"
+  ],
+  "prayer": [
+   "religion.liturgy"
+  ],
+  "Kwakiutl": [],
+  "Russian literature": [
+   "arts.literature"
+  ],
+  "interior design": [
+   "architecture.general"
+  ],
+  "East Indies": [],
+  "Byzantine art": [
+   "arts.art"
+  ],
+  "ore processing": [
+   "science.mining"
+  ],
+  "social interaction": [
+   "society.daily-life"
+  ],
+  "Archimedes": [],
+  "Jewish mysticism": [
+   "esoteric.kabbalah",
+   "religion.mysticism"
+  ],
+  "figured bass": [
+   "music.notation"
+  ],
+  "Aztec mythology": [
+   "religion.americas"
+  ],
+  "creation": [
+   "religion.bible"
+  ],
+  "automata": [
+   "science.machines"
+  ],
+  "battle": [
+   "war.battles"
+  ],
+  "ritual objects": [
+   "religion.liturgy"
+  ],
+  "river": [],
+  "printing": [
+   "books.typography"
+  ],
+  "Maya mythology": [
+   "religion.americas"
+  ],
+  "paleography": [
+   "books.manuscripts"
+  ],
+  "milling": [
+   "science.machines"
+  ],
+  "American flora": [
+   "plants.botany"
+  ],
+  "conchology": [
+   "animals.shells"
+  ],
+  "human proportions": [
+   "mathematics.perspective"
+  ],
+  "Epicureanism": [
+   "philosophy.general"
+  ],
+  "gymnastics": [
+   "society.daily-life"
+  ],
+  "Ottoman Empire": [],
+  "Aristotelian philosophy": [
+   "philosophy.general"
+  ],
+  "pedagogy": [
+   "society.education"
+  ],
+  "history of science": [
+   "philosophy.natural"
+  ],
+  "New World flora": [
+   "plants.botany"
+  ],
+  "art theory": [
+   "arts.art"
+  ],
+  "Ancient Egypt": [],
+  "Netherlands": [],
+  "Jewish music": [
+   "music.sacred"
+  ],
+  "archery": [
+   "war.weapons"
+  ],
+  "military equipment": [
+   "war.weapons"
+  ],
+  "mortality": [
+   "religion.death"
+  ],
+  "Aesop's fables": [
+   "emblems.fables"
+  ],
+  "Amsterdam": [],
+  "motion": [
+   "science.physics"
+  ],
+  "Crucifixion": [
+   "religion.christ"
+  ],
+  "Renaissance art": [
+   "arts.art"
+  ],
+  "punishment": [
+   "society.daily-life"
+  ],
+  "fishing": [
+   "society.daily-life"
+  ],
+  "Assyriology": [
+   "books.archaeology"
+  ],
+  "fairy tale": [
+   "emblems.fables"
+  ],
+  "Journey to the West": [
+   "arts.literature"
+  ],
+  "birds of prey": [
+   "animals.birds"
+  ],
+  "caricature": [
+   "emblems.fables"
+  ],
+  "Jupiter": [
+   "astronomy.planets"
+  ],
+  "judicial duel": [
+   "war.fencing"
+  ],
+  "lunar eclipse": [
+   "astronomy.sun-moon"
+  ],
+  "psalmody": [
+   "music.sacred"
+  ],
+  "fern": [
+   "plants.botany"
+  ],
+  "iconography": [
+   "emblems.symbolism"
+  ],
+  "musculature": [
+   "medicine.anatomy"
+  ],
+  "anthropometry": [
+   "medicine.anatomy"
+  ],
+  "decorative arts": [
+   "books.ornament"
+  ],
+  "masonry": [
+   "architecture.plans"
+  ],
+  "Mallakhamb": [
+   "war.fencing"
+  ],
+  "publishing": [
+   "books.typography"
+  ],
+  "temple": [
+   "architecture.general"
+  ],
+  "Italy": [],
+  "wrestling": [
+   "war.fencing"
+  ],
+  "Genesis": [
+   "religion.bible"
+  ],
+  "writing": [
+   "books.calligraphy"
+  ],
+  "mandala": [
+   "religion.buddhism"
+  ],
+  "craftsmanship": [
+   "society.daily-life"
+  ],
+  "Pythagoreanism": [
+   "philosophy.general"
+  ],
+  "library": [
+   "books.ownership"
+  ],
+  "ancient Egypt": [],
+  "Turkish folklore": [
+   "arts.literature"
+  ],
+  "formation": [
+   "war.battles"
+  ],
+  "steganography": [
+   "books.ciphers"
+  ],
+  "Holy Roman Empire": [],
+  "naval warfare": [
+   "war.battles"
+  ],
+  "Indian music": [
+   "music.theory"
+  ],
+  "Exodus": [
+   "religion.bible"
+  ],
+  "resurrection": [
+   "religion.christ"
+  ],
+  "conjunction": [
+   "astronomy.planets"
+  ],
+  "constellation": [
+   "astronomy.stars"
+  ],
+  "mining technology": [
+   "science.mining"
+  ],
+  "sunspots": [
+   "astronomy.sun-moon"
+  ],
+  "experimental physics": [
+   "science.physics"
+  ],
+  "Song Dynasty": [],
+  "religious ceremony": [
+   "religion.liturgy"
+  ],
+  "indivisibles": [
+   "mathematics.general"
+  ],
+  "jyotisha": [
+   "esoteric.astrology"
+  ],
+  "diplomacy": [
+   "society.royalty"
+  ],
+  "combat": [
+   "war.battles"
+  ],
+  "woman": [
+   "society.daily-life"
+  ],
+  "military": [
+   "war.battles"
+  ],
+  "pulleys": [
+   "science.mechanics"
+  ],
+  "psychology": [
+   "philosophy.natural"
+  ],
+  "India": [],
+  "Renaissance design": [
+   "architecture.general"
+  ],
+  "plant": [
+   "plants.botany"
+  ],
+  "initial": [
+   "books.ornament"
+  ],
+  "circles": [
+   "mathematics.geometry"
+  ],
+  "crystallography": [
+   "animals.earth"
+  ],
+  "physician": [
+   "medicine.general"
+  ],
+  "meditation": [
+   "religion.mysticism"
+  ],
+  "putti": [
+   "emblems.allegory"
+  ],
+  "study": [
+   "society.education"
+  ],
+  "conflict": [
+   "war.battles"
+  ],
+  "salvation": [
+   "religion.christianity"
+  ],
+  "morality": [
+   "emblems.virtues"
+  ],
+  "memento mori": [
+   "religion.death"
+  ],
+  "love": [
+   "emblems.allegory"
+  ],
+  "Vajrayana": [
+   "religion.buddhism"
+  ],
+  "manuscript illumination": [
+   "books.manuscripts"
+  ],
+  "ruins": [
+   "books.archaeology"
+  ],
+  "water management": [
+   "science.hydraulics"
+  ],
+  "Confucianism": [
+   "religion.other"
+  ],
+  "leisure": [
+   "society.daily-life"
+  ],
+  "temple design": [
+   "architecture.plans"
+  ],
+  "fountain": [
+   "architecture.general"
+  ],
+  "witchcraft": [
+   "esoteric.magic"
+  ],
+  "healing": [
+   "medicine.general"
+  ],
+  "magic square": [
+   "esoteric.numbers"
+  ],
+  "orchid": [
+   "plants.flowers"
+  ],
+  "execution": [
+   "religion.death"
+  ],
+  "Iconography": [
+   "emblems.symbolism"
+  ],
+  "narrative": [
+   "arts.literature"
+  ],
+  "miracle": [
+   "religion.mysticism"
+  ],
+  "indigenous peoples": [
+   "society.peoples"
+  ],
+  "purification": [
+   "religion.liturgy"
+  ],
+  "siege engines": [
+   "war.military-engineering"
+  ],
+  "laboratory": [
+   "alchemy.laboratory"
+  ],
+  "lapidary": [
+   "animals.earth"
+  ],
+  "Mandala": [
+   "esoteric.numbers"
+  ],
+  "polyhedra": [
+   "mathematics.geometry"
+  ],
+  "mourning": [
+   "religion.death"
+  ],
+  "heliocentrism": [
+   "astronomy.cosmology"
+  ],
+  "triumph": [
+   "society.royalty"
+  ],
+  "hymnology": [
+   "music.sacred"
+  ],
+  "Aztec culture": [
+   "society.peoples"
+  ],
+  "equilibrium": [
+   "science.mechanics"
+  ],
+  "monastic life": [
+   "religion.christianity"
+  ],
+  "Japanese folklore": [
+   "arts.literature"
+  ],
+  "Vedic astrology": [
+   "esoteric.astrology"
+  ],
+  "magic squares": [
+   "esoteric.numbers"
+  ],
+  "fortifications": [
+   "architecture.fortification"
+  ],
+  "vortex theory": [
+   "science.physics"
+  ],
+  "civil engineering": [
+   "science.machines"
+  ],
+  "water power": [
+   "science.hydraulics"
+  ],
+  "Nativity": [
+   "religion.christ"
+  ],
+  "mantra": [
+   "religion.mysticism"
+  ],
+  "dioptrics": [
+   "science.optics"
+  ],
+  "romance": [
+   "arts.literature"
+  ],
+  "social life": [
+   "society.daily-life"
+  ],
+  "Greek mythology": [
+   "religion.mythology"
+  ],
+  "Biblical history": [
+   "religion.bible"
+  ],
+  "bird": [
+   "animals.birds"
+  ],
+  "Holy Family": [
+   "religion.christ"
+  ],
+  "social gathering": [
+   "society.daily-life"
+  ],
+  "Japanese art": [
+   "arts.art"
+  ],
+  "fruit": [
+   "plants.botany"
+  ],
+  "Apostles": [
+   "religion.saints"
+  ],
+  "Alexander the Great": [],
+  "insects": [
+   "animals.insects"
+  ],
+  "assaying": [
+   "science.mining"
+  ],
+  "marginalia": [
+   "books.ornament"
+  ],
+  "workshop": [
+   "society.daily-life"
+  ],
+  "Pannonia": [],
+  "falconry": [
+   "society.daily-life"
+  ],
+  "Aesop's Fables": [
+   "emblems.fables"
+  ],
+  "orchids": [
+   "plants.flowers"
+  ],
+  "Greek manuscript": [
+   "books.manuscripts"
+  ],
+  "antiquity": [
+   "books.archaeology"
+  ],
+  "temptation": [
+   "religion.christianity"
+  ],
+  "levers": [
+   "science.mechanics"
+  ],
+  "fire": [
+   "alchemy.elements"
+  ],
+  "runestone": [
+   "books.archaeology"
+  ],
+  "terrella": [
+   "science.magnetism"
+  ],
+  "dolmen": [
+   "books.archaeology"
+  ],
+  "star chart": [
+   "astronomy.stars"
+  ],
+  "coastal defense": [
+   "war.military-engineering"
+  ],
+  "amulets": [
+   "esoteric.magic"
+  ],
+  "hermetic philosophy": [
+   "esoteric.hermeticism"
+  ],
+  "percussion": [
+   "music.instruments"
+  ],
+  "thistle": [
+   "plants.botany"
+  ],
+  "philology": [
+   "books.language"
+  ],
+  "eclipse": [
+   "astronomy.sun-moon"
+  ],
+  "advertising": [],
+  "dynamic symmetry": [
+   "mathematics.perspective"
+  ],
+  "Islamic science": [
+   "philosophy.natural"
+  ],
+  "theatre": [
+   "arts.theatre"
+  ],
+  "knowledge": [
+   "philosophy.general"
+  ],
+  "orbital mechanics": [
+   "astronomy.planets"
+  ],
+  "divinity": [
+   "philosophy.theology"
+  ],
+  "vessel": [
+   "alchemy.laboratory"
+  ],
+  "siege": [
+   "war.battles"
+  ],
+  "scholasticism": [
+   "philosophy.general"
+  ],
+  "megaliths": [
+   "books.archaeology"
+  ],
+  "time": [
+   "astronomy.time"
+  ],
+  "traditional chinese medicine": [
+   "medicine.chinese"
+  ],
+  "academic institutions": [
+   "society.education"
+  ],
+  "rural life": [
+   "society.daily-life"
+  ],
+  "megalith": [
+   "books.archaeology"
+  ],
+  "rhetoric": [
+   "books.language"
+  ],
+  "comparative religion": [
+   "philosophy.theology"
+  ],
+  "Doric order": [
+   "architecture.classical"
+  ],
+  "idolatry": [
+   "religion.christianity"
+  ],
+  "Chinese antiquities": [
+   "books.archaeology"
+  ],
+  "Africa": [],
+  "seeds": [
+   "plants.botany"
+  ],
+  "horoscopy": [
+   "esoteric.astrology"
+  ],
+  "grotesque": [
+   "books.ornament"
+  ],
+  "Chinese folklore": [
+   "arts.literature"
+  ],
+  "Zhou Dynasty": [],
+  "polyhedron": [
+   "mathematics.geometry"
+  ],
+  "scientific illustration": [
+   "philosophy.natural"
+  ],
+  "Romance of the Three Kingdoms": [
+   "arts.literature"
+  ],
+  "monument": [
+   "books.archaeology"
+  ],
+  "illumination": [
+   "books.manuscripts"
+  ],
+  "social hierarchy": [
+   "society.daily-life"
+  ],
+  "Aristotelianism": [
+   "philosophy.general"
+  ],
+  "Renaissance humanism": [
+   "philosophy.general"
+  ],
+  "library history": [
+   "society.education"
+  ],
+  "South America": [],
+  "prosody": [
+   "arts.poetry"
+  ],
+  "aquatic plants": [
+   "plants.botany"
+  ],
+  "Roman architecture": [
+   "architecture.general"
+  ],
+  "parallax": [
+   "astronomy.general"
+  ],
+  "ancient history": [
+   "society.history"
+  ],
+  "cantorial music": [
+   "music.sacred"
+  ],
+  "University of Hong Kong": [],
+  "commerce": [
+   "society.daily-life"
+  ],
+  "colonial history": [
+   "society.history"
+  ],
+  "monochord": [
+   "music.instruments"
+  ],
+  "putrefaction": [
+   "alchemy.transmutation"
+  ],
+  "solid geometry": [
+   "mathematics.geometry"
+  ],
+  "vibration": [
+   "music.acoustics"
+  ],
+  "trees": [
+   "plants.trees"
+  ],
+  "abundance": [
+   "emblems.allegory"
+  ],
+  "Renaissance music": [
+   "music.theory"
+  ],
+  "dance": [
+   "society.daily-life"
+  ],
+  "antiquarianism": [
+   "books.archaeology"
+  ],
+  "Symbolism": [
+   "emblems.symbolism"
+  ],
+  "crustaceans": [
+   "animals.shells"
+  ],
+  "Gnosticism": [
+   "esoteric.hermeticism"
+  ],
+  "celestial spheres": [
+   "astronomy.cosmology"
+  ],
+  "marriage": [
+   "society.daily-life"
+  ],
+  "pathology": [
+   "medicine.general"
+  ],
+  "madrigal": [
+   "music.theory"
+  ],
+  "antiquities": [
+   "books.archaeology"
+  ],
+  "jewelry": [
+   "society.costume"
+  ],
+  "courtship": [
+   "society.daily-life"
+  ],
+  "Indian classical music": [
+   "music.theory"
+  ],
+  "authority": [
+   "society.royalty"
+  ],
+  "Reformation": [
+   "religion.christianity"
+  ],
+  "biblical": [
+   "religion.bible"
+  ],
+  "calculation": [
+   "mathematics.arithmetic"
+  ],
+  "China": [],
+  "Central Asia": [],
+  "Platonic solids": [
+   "mathematics.geometry",
+   "esoteric.numbers"
+  ],
+  "Chinese calligraphy": [
+   "books.calligraphy"
+  ],
+  "ritual bronze": [
+   "books.archaeology"
+  ],
+  "Apocalypse": [
+   "religion.bible",
+   "religion.death"
+  ],
+  "Sanskrit literature": [
+   "arts.literature"
+  ],
+  "divine love": [
+   "religion.mysticism"
+  ],
+  "metrology": [
+   "mathematics.surveying"
+  ],
+  "eschatology": [
+   "religion.death"
+  ],
+  "maritime technology": [
+   "maps.navigation"
+  ],
+  "fluid mechanics": [
+   "science.hydraulics"
+  ],
+  "planetary magic": [
+   "esoteric.astrology",
+   "esoteric.magic"
+  ],
+  "slime molds": [
+   "plants.fungi"
+  ],
+  "crustacean": [
+   "animals.shells"
+  ],
+  "maritime navigation": [
+   "maps.navigation"
+  ],
+  "ancient medicine": [
+   "medicine.general"
+  ],
+  "Florida": [],
+  "bronze vessel": [
+   "books.archaeology"
+  ],
+  "book design": [
+   "books.typography"
+  ],
+  "polygons": [
+   "mathematics.geometry"
+  ],
+  "enlightenment": [
+   "philosophy.general"
+  ],
+  "ore washing": [
+   "science.mining"
+  ],
+  "musicology": [
+   "music.theory"
+  ],
+  "Mithraism": [
+   "religion.mythology"
+  ],
+  "Chinese cosmology": [
+   "astronomy.cosmology"
+  ],
+  "Stonehenge": [
+   "books.archaeology"
+  ],
+  "Corinthian order": [
+   "architecture.classical"
+  ],
+  "projection": [
+   "mathematics.perspective"
+  ],
+  "solar observation": [
+   "astronomy.sun-moon"
+  ],
+  "musical instrument": [
+   "music.instruments"
+  ],
+  "apocalypse": [
+   "religion.bible",
+   "religion.death"
+  ],
+  "Venus": [
+   "astronomy.planets"
+  ],
+  "funerary monument": [
+   "religion.death"
+  ],
+  "scientific observation": [
+   "philosophy.natural"
+  ],
+  "medical education": [
+   "medicine.general"
+  ],
+  "Ptolemaic system": [
+   "astronomy.cosmology"
+  ],
+  "cartomancy": [
+   "esoteric.divination"
+  ],
+  "gravity": [
+   "science.physics"
+  ],
+  "industrial technology": [
+   "science.machines"
+  ],
+  "sigils": [
+   "esoteric.magic"
+  ],
+  "interior": [
+   "architecture.plans"
+  ],
+  "cultural encounter": [
+   "society.peoples"
+  ],
+  "fables": [
+   "emblems.fables"
+  ],
+  "court life": [
+   "society.royalty"
+  ],
+  "ballad illustration": [
+   "emblems.fables"
+  ],
+  "childhood": [
+   "society.daily-life"
+  ],
+  "Middle East": [],
+  "ritual vessel": [
+   "books.archaeology"
+  ],
+  "ephemeris": [
+   "astronomy.time"
+  ],
+  "foliage": [
+   "plants.flowers"
+  ],
+  "Chinese encyclopedia": [
+   "books.manuscripts"
+  ],
+  "predation": [
+   "animals.natural-history"
+  ],
+  "trade": [
+   "society.daily-life"
+  ],
+  "mineral veins": [
+   "animals.earth"
+  ],
+  "Chinese culture": [
+   "society.peoples"
+  ],
+  "ethnomusicology": [
+   "music.theory"
+  ],
+  "rhythm": [
+   "music.theory"
+  ],
+  "Last Judgment": [
+   "religion.death"
+  ],
+  "Theosophy": [
+   "esoteric.hermeticism"
+  ],
+  "tonalpohualli": [
+   "astronomy.time"
+  ],
+  "Persian literature": [
+   "arts.literature"
+  ],
+  "ex-libris": [
+   "books.ownership"
+  ],
+  "Greek pottery": [
+   "books.archaeology"
+  ],
+  "microbiology": [
+   "science.microscopy"
+  ],
+  "Mercury": [
+   "astronomy.planets"
+  ],
+  "material culture": [
+   "books.archaeology"
+  ],
+  "mountain": [
+   "maps.landscape"
+  ],
+  "law": [
+   "society.daily-life"
+  ],
+  "Tantra": [
+   "religion.hinduism"
+  ],
+  "Japan": [],
+  "judgment": [
+   "religion.death"
+  ],
+  "papyrus": [
+   "books.papyri"
+  ],
+  "light and shadow": [
+   "science.optics"
+  ],
+  "Lullian art": [
+   "esoteric.numbers"
+  ],
+  "soul": [
+   "philosophy.theology"
+  ],
+  "medieval science": [
+   "philosophy.natural"
+  ],
+  "Neoplatonism": [
+   "philosophy.general"
+  ],
+  "Edo period": [],
+  "Resurrection": [
+   "religion.christ"
+  ],
+  "four elements": [
+   "alchemy.elements"
+  ],
+  "Coptic art": [
+   "books.archaeology"
+  ],
+  "thermodynamics": [
+   "science.physics"
+  ],
+  "Aztec calendar": [
+   "astronomy.time"
+  ],
+  "solmization": [
+   "music.theory"
+  ],
+  "Switzerland": [],
+  "Europe": [],
+  "ritual diagram": [
+   "esoteric.numbers"
+  ],
+  "saints": [
+   "religion.saints"
+  ],
+  "Judaism": [
+   "religion.christianity"
+  ],
+  "anthropology": [
+   "society.peoples"
+  ],
+  "solar eclipse": [
+   "astronomy.sun-moon"
+  ],
+  "Rites of Zhou": [
+   "society.history"
+  ],
+  "hydrology": [
+   "science.hydraulics"
+  ],
+  "printer's mark": [
+   "books.typography"
+  ],
+  "industry": [
+   "society.daily-life"
+  ],
+  "social satire": [
+   "emblems.fables"
+  ],
+  "experiment": [
+   "philosophy.natural"
+  ],
+  "manuscript studies": [
+   "books.manuscripts"
+  ],
+  "Mesoamerican mythology": [
+   "religion.americas",
+   "religion.mythology"
+  ],
+  "classical literature": [
+   "arts.literature"
+  ],
+  "Asia": [],
+  "plant morphology": [
+   "plants.botany"
+  ],
+  "famine relief": [
+   "society.daily-life"
+  ],
+  "facade": [
+   "architecture.general"
+  ],
+  "maritime exploration": [
+   "maps.travel"
+  ],
+  "urban landscape": [
+   "maps.cities"
+  ],
+  "shadow": [
+   "mathematics.perspective"
+  ],
+  "man": [
+   "society.daily-life"
+  ],
+  "firearms": [
+   "war.weapons"
+  ],
+  "structural engineering": [
+   "architecture.plans"
+  ],
+  "ratios": [
+   "mathematics.perspective"
+  ],
+  "ventilation": [
+   "science.machines"
+  ],
+  "Mediterranean Sea": [],
+  "narrative illustration": [
+   "arts.literature"
+  ],
+  "fountain design": [
+   "architecture.general"
+  ],
+  "Euclidean mathematics": [
+   "mathematics.geometry"
+  ],
+  "pottery": [
+   "books.archaeology"
+  ],
+  "herbology": [
+   "plants.medicinal"
+  ],
+  "Dutch Golden Age": [],
+  "labyrinth": [
+   "emblems.symbolism"
+  ],
+  "Mars": [
+   "astronomy.planets"
+  ],
+  "neurology": [
+   "medicine.anatomy"
+  ],
+  "personification": [
+   "emblems.allegory"
+  ],
+  "strategy": [
+   "war.battles"
+  ],
+  "Ionic order": [
+   "architecture.classical"
+  ],
+  "Constantinople": [],
+  "Mesopotamia": [],
+  "military science": [
+   "war.military-engineering"
+  ],
+  "supernatural": [
+   "esoteric.magic"
+  ],
+  "Jataka tales": [
+   "religion.buddhism"
+  ],
+  "church": [
+   "religion.christianity"
+  ],
+  "classical design": [
+   "architecture.classical"
+  ],
+  "clergy": [
+   "religion.christianity"
+  ],
+  "Joseon Dynasty": [],
+  "Ireland": [],
+  "Ranunculus": [
+   "plants.flowers"
+  ],
+  "Lullian Art": [
+   "esoteric.numbers"
+  ],
+  "ceramics": [
+   "books.archaeology"
+  ],
+  "Platonic philosophy": [
+   "philosophy.general"
+  ],
+  "canal": [
+   "science.hydraulics"
+  ],
+  "conversation": [
+   "society.daily-life"
+  ],
+  "preaching": [
+   "religion.liturgy"
+  ],
+  "buoyancy": [
+   "science.physics"
+  ],
+  "Ancient Greek text": [
+   "books.manuscripts"
+  ],
+  "talismanic magic": [
+   "esoteric.magic"
+  ],
+  "classical studies": [
+   "books.language"
+  ],
+  "secret writing": [
+   "books.ciphers"
+  ],
+  "Tupinambá": [
+   "society.peoples"
+  ],
+  "armor": [
+   "war.weapons"
+  ],
+  "early modern science": [
+   "philosophy.natural"
+  ],
+  "Hindu mythology": [
+   "religion.hinduism"
+  ],
+  "planetary deities": [
+   "astronomy.planets",
+   "esoteric.astrology"
+  ],
+  "mercury": [
+   "alchemy.elements"
+  ],
+  "sublimation": [
+   "alchemy.laboratory"
+  ],
+  "Chinese antiquity": [
+   "books.archaeology"
+  ],
+  "Caucasus": [],
+  "Spain": [],
+  "printing history": [
+   "books.typography"
+  ],
+  "traditional dress": [
+   "society.costume"
+  ],
+  "vascular system": [
+   "medicine.anatomy"
+  ],
+  "reading": [
+   "society.daily-life"
+  ],
+  "Scandinavian antiquities": [
+   "books.archaeology"
+  ],
+  "spirals": [
+   "mathematics.geometry"
+  ],
+  "Buddhist art": [
+   "religion.buddhism"
+  ],
+  "Vitruvius": [
+   "architecture.general"
+  ],
+  "simple machines": [
+   "science.mechanics"
+  ],
+  "Imperial collection": [],
+  "drama": [
+   "society.daily-life"
+  ],
+  "banquet": [
+   "society.royalty"
+  ],
+  "land measurement": [
+   "mathematics.surveying"
+  ],
+  "ritual object": [
+   "religion.liturgy"
+  ],
+  "Aztec history": [
+   "religion.americas"
+  ],
+  "hyperbola": [
+   "mathematics.conics"
+  ],
+  "myology": [
+   "medicine.anatomy"
+  ],
+  "urban life": [
+   "society.daily-life"
+  ],
+  "ophthalmology": [
+   "medicine.surgery"
+  ],
+  "Mexican flora": [
+   "plants.botany"
+  ],
+  "charity": [
+   "religion.christianity"
+  ],
+  "Americas": [],
+  "West Africa": [],
+  "Zhou dynasty": [],
+  "tactics": [
+   "war.battles"
+  ],
+  "furniture": [
+   "society.daily-life"
+  ],
+  "dragon": [
+   "animals.monsters"
+  ],
+  "ephemerides": [
+   "astronomy.time"
+  ],
+  "Neo-Confucianism": [
+   "philosophy.general"
+  ],
+  "religious art": [
+   "religion.christianity"
+  ],
+  "gunpowder weapons": [
+   "war.artillery"
+  ],
+  "theater": [
+   "society.daily-life"
+  ],
+  "scholars": [
+   "society.education"
+  ],
+  "bamboo": [
+   "plants.trees"
+  ],
+  "military defense": [
+   "war.military-engineering"
+  ],
+  "figures": [
+   "society.portraits"
+  ],
+  "folly": [
+   "architecture.general"
+  ],
+  "author": [
+   "society.daily-life"
+  ],
+  "Hieroglyphs": [
+   "books.inscriptions"
+  ],
+  "serpent": [
+   "animals.reptiles"
+  ],
+  "chemical wedding": [
+   "alchemy.transmutation"
+  ],
+  "tantra": [
+   "religion.hinduism",
+   "religion.buddhism"
+  ],
+  "Japanese flora": [
+   "plants.botany"
+  ],
+  "Ethiopian art": [
+   "arts.art"
+  ],
+  "ancient Greek literature": [
+   "arts.literature"
+  ],
+  "Platonism": [
+   "philosophy.general"
+  ],
+  "New Spain flora": [
+   "plants.botany"
+  ],
+  "Chinese costume": [
+   "society.costume"
+  ],
+  "pendulum": [
+   "science.mechanics"
+  ],
+  "divine intervention": [
+   "religion.mysticism"
+  ],
+  "primatology": [
+   "animals.zoology"
+  ],
+  "contemplation": [
+   "religion.mysticism"
+  ],
+  "textiles": [
+   "society.daily-life"
+  ],
+  "Islamic art": [
+   "arts.art"
+  ],
+  "feng shui": [
+   "esoteric.magic"
+  ],
+  "Epicurus": [
+   "philosophy.general"
+  ],
+  "book ownership": [
+   "books.ownership"
+  ],
+  "equestrian": [
+   "society.royalty"
+  ],
+  "apparatus": [
+   "alchemy.laboratory"
+  ],
+  "Arthurian legend": [
+   "religion.mythology"
+  ],
+  "atmospheric phenomena": [
+   "science.meteorology"
+  ],
+  "water": [],
+  "Southeast Asia": [],
+  "interior scene": [
+   "society.daily-life"
+  ],
+  "ontology": [
+   "philosophy.theology"
+  ],
+  "Acts of the Apostles": [
+   "religion.bible"
+  ],
+  "uroscopy": [
+   "medicine.general"
+  ],
+  "viticulture": [
+   "plants.agriculture"
+  ],
+  "still life": [
+   "arts.art"
+  ],
+  "dream": [
+   "esoteric.magic"
+  ],
+  "Enuma Elish": [
+   "religion.mythology"
+  ],
+  "Renaissance printing": [
+   "books.typography"
+  ],
+  "phallic worship": [
+   "religion.mysticism"
+  ],
+  "King David": [
+   "religion.bible"
+  ],
+  "bellows": [
+   "alchemy.laboratory"
+  ],
+  "knighthood": [
+   "society.royalty"
+  ],
+  "elevation": [
+   "architecture.plans"
+  ],
+  "colonial encounter": [
+   "society.peoples"
+  ],
+  "17th-century fashion": [
+   "society.costume"
+  ],
+  "pyrotechnics": [
+   "war.artillery"
+  ],
+  "North Africa": [],
+  "Dante Alighieri": [],
+  "bridge": [
+   "architecture.general"
+  ],
+  "Chinese constellations": [
+   "astronomy.stars"
+  ],
+  "Moses": [
+   "religion.bible"
+  ],
+  "Indian flora": [
+   "plants.botany"
+  ],
+  "duality": [
+   "philosophy.theology"
+  ],
+  "board games": [
+   "society.daily-life"
+  ],
+  "revelation": [
+   "religion.mysticism"
+  ],
+  "Greek script": [
+   "books.calligraphy"
+  ],
+  "Evangelist": [
+   "religion.saints"
+  ],
+  "family": [
+   "society.daily-life"
+  ],
+  "human figure": [
+   "medicine.anatomy"
+  ],
+  "Sancai Tuhui": [],
+  "West Indies": [],
+  "Shanhai Jing": [
+   "animals.monsters"
+  ],
+  "Buddha": [
+   "religion.buddhism"
+  ],
+  "Byzantine architecture": [
+   "architecture.general"
+  ],
+  "opera": [
+   "music.theory"
+  ],
+  "coral": [
+   "animals.fish"
+  ],
+  "Nahuatl culture": [
+   "society.peoples"
+  ],
+  "Aztec ritual": [
+   "religion.americas"
+  ],
+  "medical history": [
+   "medicine.general"
+  ],
+  "currency": [
+   "books.coins"
+  ],
+  "shells": [
+   "animals.shells"
+  ],
+  "deception": [
+   "emblems.virtues"
+  ],
+  "Eucharist": [
+   "religion.liturgy"
+  ],
+  "chivalry": [
+   "society.royalty"
+  ],
+  "encounter": [
+   "society.daily-life"
+  ],
+  "Ajanta Caves": [],
+  "Roman antiquities": [
+   "books.archaeology"
+  ],
+  "columns": [
+   "architecture.classical"
+  ],
+  "metalwork": [
+   "science.mining"
+  ],
+  "Iron Age": [
+   "books.archaeology"
+  ],
+  "yoga": [
+   "religion.hinduism"
+  ],
+  "Christian mysticism": [
+   "religion.mysticism"
+  ],
+  "Chinese drama": [
+   "society.daily-life"
+  ],
+  "military training": [
+   "war.fencing"
+  ],
+  "celestial map": [
+   "astronomy.general"
+  ],
+  "classical motifs": [
+   "emblems.symbolism"
+  ],
+  "Roman antiquity": [
+   "books.archaeology"
+  ],
+  "Sumerian language": [
+   "books.language"
+  ],
+  "calcination": [
+   "alchemy.transmutation"
+  ],
+  "flora of Ambon": [
+   "plants.botany"
+  ],
+  "vanity": [
+   "emblems.virtues"
+  ],
+  "liberal arts": [
+   "society.education"
+  ],
+  "gardening": [
+   "plants.gardens"
+  ],
+  "occult philosophy": [
+   "esoteric.hermeticism"
+  ],
+  "irrigation": [
+   "plants.agriculture"
+  ],
+  "hummingbird": [
+   "animals.birds"
+  ],
+  "infantry tactics": [
+   "war.battles"
+  ],
+  "geophysics": [
+   "philosophy.natural"
+  ],
+  "tetrachords": [
+   "music.theory"
+  ],
+  "Indigenous art": [
+   "arts.art"
+  ],
+  "cycloid": [
+   "mathematics.conics"
+  ],
+  "yantra": [
+   "esoteric.numbers"
+  ],
+  "Noah's Ark": [
+   "religion.bible"
+  ],
+  "aura": [
+   "esoteric.magic"
+  ],
+  "Three Kings": [
+   "religion.bible"
+  ],
+  "pastoral scene": [
+   "maps.landscape"
+  ],
+  "comet": [
+   "astronomy.planets"
+  ],
+  "Japanese mythology": [
+   "religion.mythology"
+  ],
+  "Ancient Egyptian religion": [
+   "religion.egypt"
+  ],
+  "family history": [
+   "society.heraldry"
+  ],
+  "persecution": [
+   "religion.christianity"
+  ],
+  "Persian miniature": [
+   "arts.art"
+  ],
+  "Mediterranean": [],
+  "Egypt": [],
+  "England": [],
+  "quadrature": [
+   "mathematics.geometry"
+  ],
+  "weaving": [
+   "society.daily-life"
+  ],
+  "alphabet": [
+   "books.calligraphy"
+  ],
+  "institutional identity": [
+   "society.history"
+  ],
+  "fantasy": [
+   "emblems.allegory"
+  ],
+  "divine light": [
+   "religion.mysticism"
+  ],
+  "lily": [
+   "plants.flowers"
+  ],
+  "centrifugal force": [
+   "science.physics"
+  ],
+  "seasons": [
+   "science.meteorology"
+  ],
+  "citrus": [
+   "plants.botany"
+  ],
+  "flight": [
+   "science.mechanics"
+  ],
+  "brain": [
+   "medicine.anatomy"
+  ],
+  "life cycle": [
+   "medicine.embryology"
+  ],
+  "freemasonry": [
+   "esoteric.rosicrucian"
+  ],
+  "swordsmanship": [
+   "war.fencing"
+  ],
+  "Leonardo da Vinci": [],
+  "acupuncture": [
+   "medicine.chinese"
+  ],
+  "Egyptian architecture": [
+   "architecture.general"
+  ],
+  "laboratory apparatus": [
+   "alchemy.laboratory"
+  ],
+  "sundials": [
+   "astronomy.time"
+  ],
+  "Stone Age": [
+   "books.archaeology"
+  ],
+  "facade design": [
+   "architecture.plans"
+  ],
+  "horse": [
+   "animals.zoology"
+  ],
+  "ethics": [
+   "philosophy.general"
+  ],
+  "wildlife": [
+   "animals.natural-history"
+  ],
+  "talismans": [
+   "esoteric.magic"
+  ],
+  "occult chemistry": [
+   "alchemy.general"
+  ],
+  "flora of India": [
+   "plants.botany"
+  ],
+  "Christian symbolism": [
+   "emblems.symbolism"
+  ],
+  "lifting machinery": [
+   "science.machines"
+  ],
+  "monstrosity": [
+   "animals.monsters"
+  ],
+  "Chinese music": [
+   "music.theory"
+  ],
+  "court scene": [
+   "society.royalty"
+  ],
+  "chiaroscuro": [
+   "emblems.symbolism"
+  ],
+  "Daoism": [
+   "religion.taoism"
+  ],
+  "conoids": [
+   "mathematics.conics"
+  ],
+  "obelisk": [
+   "books.archaeology"
+  ],
+  "patronage": [
+   "society.royalty"
+  ],
+  "Scandinavia": [],
+  "Ming dynasty warfare": [
+   "war.battles"
+  ],
+  "forest": [
+   "plants.trees"
+  ],
+  "Greek mathematics": [
+   "mathematics.general"
+  ],
+  "iris": [
+   "plants.flowers"
+  ],
+  "tomb": [
+   "religion.death"
+  ],
+  "hospitality": [
+   "society.daily-life"
+  ],
+  "Christ Child": [
+   "religion.christ"
+  ],
+  "landscape design": [
+   "plants.gardens"
+  ],
+  "portal": [
+   "architecture.general"
+  ],
+  "cryptozoology": [
+   "animals.monsters"
+  ],
+  "ceremonial objects": [
+   "religion.liturgy"
+  ],
+  "learning": [
+   "society.education"
+  ],
+  "coat of arms": [
+   "society.heraldry"
+  ],
+  "woodworking": [
+   "society.daily-life"
+  ],
+  "Baltic Sea": [],
+  "Bronze Age": [
+   "books.archaeology"
+  ],
+  "sericulture": [
+   "society.daily-life"
+  ],
+  "funerary texts": [
+   "religion.death"
+  ],
+  "batik": [
+   "society.costume"
+  ],
+  "lion": [
+   "animals.zoology"
+  ],
+  "Hwaseong Fortress": [
+   "architecture.fortification"
+  ],
+  "church music": [
+   "music.sacred"
+  ],
+  "serpents": [
+   "animals.reptiles"
+  ],
+  "rebus": [
+   "emblems.emblems"
+  ],
+  "triangulation": [
+   "mathematics.surveying"
+  ],
+  "games": [
+   "society.daily-life"
+  ],
+  "Garden of Eden": [
+   "religion.bible"
+  ],
+  "Five Elements": [
+   "alchemy.elements"
+  ],
+  "Indian science": [
+   "philosophy.natural"
+  ],
+  "balance": [
+   "science.mechanics"
+  ],
+  "pavilion": [
+   "architecture.general"
+  ],
+  "Qing Dynasty": [],
+  "Chinese art": [
+   "arts.art"
+  ],
+  "Caribbean": [],
+  "perception": [
+   "philosophy.natural"
+  ],
+  "piety": [
+   "religion.liturgy"
+  ],
+  "Gospels": [
+   "religion.bible"
+  ],
+  "prognostication": [
+   "esoteric.divination"
+  ],
+  "computus": [
+   "astronomy.time"
+  ],
+  "ancient Greek science": [
+   "philosophy.natural"
+  ],
+  "Weiqi": [
+   "society.daily-life"
+  ],
+  "storytelling": [
+   "society.daily-life"
+  ],
+  "Cuneiform": [
+   "books.inscriptions"
+  ],
+  "lunar theory": [
+   "astronomy.sun-moon"
+  ],
+  "neuroscience": [
+   "medicine.anatomy"
+  ],
+  "castle": [
+   "architecture.fortification"
+  ],
+  "musical modes": [
+   "music.theory"
+  ],
+  "New World plants": [
+   "plants.botany"
+  ],
+  "World War I": [],
+  "Ancient Greek literature": [
+   "arts.literature"
+  ],
+  "classical mechanics": [
+   "science.mechanics"
+  ],
+  "scientific instrument": [
+   "astronomy.instruments"
+  ],
+  "harmony of the spheres": [
+   "astronomy.cosmology"
+  ],
+  "estate": [
+   "society.daily-life"
+  ],
+  "cavalry": [
+   "war.weapons"
+  ],
+  "deathbed": [
+   "religion.death"
+  ],
+  "gears": [
+   "science.machines"
+  ],
+  "Tabernacle": [
+   "religion.bible"
+  ],
+  "Portuguese exploration": [
+   "maps.travel"
+  ],
+  "ceremonial regalia": [
+   "society.royalty"
+  ],
+  "automation": [
+   "science.machines"
+  ],
+  "Annunciation": [
+   "religion.christ"
+  ],
+  "Korean history": [
+   "society.history"
+  ],
+  "toxicology": [
+   "medicine.pharmacy"
+  ],
+  "sea monster": [
+   "animals.monsters"
+  ],
+  "Mughal Empire": [],
+  "Greek rhetoric": [
+   "books.language"
+  ],
+  "Byzantine science": [
+   "philosophy.natural"
+  ],
+  "tragedy": [
+   "emblems.fables"
+  ],
+  "anthropomorphism": [
+   "emblems.allegory"
+  ],
+  "Holy Trinity": [
+   "religion.christianity"
+  ],
+  "demons": [
+   "esoteric.magic"
+  ],
+  "fourth dimension": [
+   "mathematics.geometry"
+  ],
+  "Greek uncial script": [
+   "books.calligraphy"
+  ],
+  "logistics": [
+   "war.military-engineering"
+  ],
+  "biblical figures": [
+   "religion.bible"
+  ],
+  "Greece": [],
+  "Rome": [],
+  "lunar motion": [
+   "astronomy.sun-moon"
+  ],
+  "Feng Shui": [
+   "esoteric.magic"
+  ],
+  "natural magic": [
+   "esoteric.magic"
+  ],
+  "water pump": [
+   "science.hydraulics"
+  ],
+  "funeral rites": [
+   "religion.death"
+  ],
+  "vessels": [
+   "alchemy.laboratory"
+  ],
+  "planetary observation": [
+   "astronomy.planets"
+  ],
+  "mammals": [
+   "animals.zoology"
+  ],
+  "village life": [
+   "society.daily-life"
+  ],
+  "poverty": [
+   "society.daily-life"
+  ],
+  "quadrature of the circle": [
+   "mathematics.geometry"
+  ],
+  "indigenous culture": [
+   "society.peoples"
+  ],
+  "governance": [
+   "society.royalty"
+  ],
+  "ritual magic": [
+   "esoteric.magic"
+  ],
+  "Nyingma": [
+   "religion.buddhism"
+  ],
+  "Roman archaeology": [
+   "books.archaeology"
+  ],
+  "Egyptian hieroglyphs": [
+   "books.inscriptions"
+  ],
+  "carpentry": [
+   "society.daily-life"
+  ],
+  "harmonic proportions": [
+   "mathematics.perspective"
+  ],
+  "color theory": [
+   "science.optics"
+  ],
+  "eagle": [
+   "animals.birds"
+  ],
+  "Pythagorean theorem": [
+   "mathematics.geometry"
+  ],
+  "Enlightenment": [
+   "philosophy.general"
+  ],
+  "Adoration of the Magi": [
+   "religion.christ"
+  ],
+  "religious iconography": [
+   "religion.liturgy"
+  ],
+  "Japanese culture": [
+   "society.peoples"
+  ],
+  "Pentecost": [
+   "religion.christianity"
+  ],
+  "shadows": [
+   "mathematics.perspective"
+  ],
+  "ritual dance": [
+   "religion.liturgy"
+  ],
+  "Florence": [],
+  "Jerusalem": [],
+  "Denmark": [],
+  "Low Countries": [],
+  "ancient Greece": [],
+  "fame": [
+   "emblems.allegory"
+  ],
+  "teaching": [
+   "society.education"
+  ],
+  "Flight into Egypt": [
+   "religion.bible"
+  ],
+  "angles": [
+   "mathematics.geometry"
+  ],
+  "Dante's Inferno": [
+   "religion.death"
+  ],
+  "water lifting": [
+   "science.hydraulics"
+  ],
+  "indigenous art": [
+   "arts.art"
+  ],
+  "Balkans": [],
+  "Portugal": [],
+  "Virginia": [],
+  "Mexico": [],
+  "medieval music": [
+   "music.notation"
+  ],
+  "cardiology": [
+   "medicine.anatomy"
+  ],
+  "monastery": [
+   "religion.christianity"
+  ],
+  "mollusks": [
+   "animals.shells"
+  ],
+  "Greek science": [
+   "philosophy.natural"
+  ],
+  "Go (game)": [
+   "society.daily-life"
+  ],
+  "Palladianism": [
+   "architecture.general"
+  ],
+  "instruction": [
+   "society.education"
+  ],
+  "Chinese science": [
+   "philosophy.natural"
+  ],
+  "atomic structure": [
+   "science.physics"
+  ],
+  "angel": [
+   "religion.mysticism"
+  ],
+  "self-defense": [
+   "war.fencing"
+  ],
+  "burial": [
+   "religion.death"
+  ],
+  "lunar mansions": [
+   "esoteric.astrology"
+  ],
+  "eternity": [
+   "emblems.allegory"
+  ],
+  "military formation": [
+   "war.battles"
+  ],
+  "figure study": [
+   "mathematics.perspective"
+  ],
+  "kingship": [
+   "society.royalty"
+  ],
+  "domestic scene": [
+   "society.daily-life"
+  ],
+  "Creation": [
+   "religion.bible"
+  ],
+  "nigredo": [
+   "alchemy.transmutation"
+  ],
+  "electromagnetism": [
+   "science.magnetism"
+  ],
+  "Cornwall": [],
+  "animal power": [
+   "plants.agriculture"
+  ],
+  "baptism": [
+   "religion.liturgy"
+  ],
+  "traditional costume": [
+   "society.costume"
+  ],
+  "Native American": [
+   "society.peoples"
+  ],
+  "trinity": [
+   "religion.christianity"
+  ],
+  "chant": [
+   "music.notation"
+  ],
+  "ceremonial dress": [
+   "society.costume"
+  ],
+  "hieratic script": [
+   "books.calligraphy"
+  ],
+  "sea monsters": [
+   "animals.monsters"
+  ],
+  "animal husbandry": [
+   "plants.agriculture"
+  ],
+  "Latin script": [
+   "books.calligraphy"
+  ],
+  "asceticism": [
+   "religion.mysticism"
+  ],
+  "animal allegory": [
+   "emblems.fables"
+  ],
+  "divine providence": [
+   "philosophy.theology"
+  ],
+  "Cosmology": [
+   "astronomy.cosmology"
+  ],
+  "mathematical proportions": [
+   "mathematics.perspective"
+  ],
+  "refining": [
+   "alchemy.laboratory"
+  ],
+  "industrial machinery": [
+   "science.machines"
+  ],
+  "quadrivium": [
+   "mathematics.general"
+  ],
+  "typology": [
+   "religion.christianity"
+  ],
+  "Mesopotamian mythology": [
+   "religion.mythology"
+  ],
+  "palm tree": [
+   "plants.trees"
+  ],
+  "Hell": [
+   "religion.death"
+  ],
+  "rebirth": [
+   "religion.mysticism"
+  ],
+  "art history": [
+   "society.history"
+  ],
+  "planetary rings": [
+   "astronomy.planets"
+  ],
+  "harvest": [
+   "plants.agriculture"
+  ],
+  "astrolabe": [
+   "astronomy.instruments"
+  ],
+  "women": [
+   "society.daily-life"
+  ],
+  "runology": [
+   "books.inscriptions"
+  ],
+  "Holy Spirit": [
+   "religion.christianity"
+  ],
+  "heresy": [
+   "religion.christianity"
+  ],
+  "repentance": [
+   "religion.liturgy"
+  ],
+  "Norway": [],
+  "Hero of Alexandria": [],
+  "university emblem": [
+   "emblems.emblems"
+  ],
+  "journey": [
+   "maps.travel"
+  ],
+  "street scene": [
+   "maps.cities"
+  ],
+  "tides": [
+   "science.physics"
+  ],
+  "dining": [
+   "society.daily-life"
+  ],
+  "hygiene": [
+   "medicine.general"
+  ],
+  "Renaissance art theory": [
+   "mathematics.perspective"
+  ],
+  "Mount Athos": [
+   "maps.cities"
+  ],
+  "wolf": [
+   "animals.zoology"
+  ],
+  "Gougu theorem": [
+   "mathematics.geometry"
+  ],
+  "conics": [
+   "mathematics.conics"
+  ],
+  "Adam and Eve": [
+   "religion.bible"
+  ],
+  "pyramids": [
+   "books.archaeology"
+  ],
+  "mechanical music": [
+   "music.instruments"
+  ],
+  "folk religion": [
+   "religion.mysticism"
+  ],
+  "Narcissus": [
+   "religion.mythology"
+  ],
+  "Chinese calendar": [
+   "astronomy.time"
+  ],
+  "siphon": [
+   "science.hydraulics"
+  ],
+  "North America": [],
+  "Bavaria": [],
+  "Arabic literature": [
+   "arts.literature"
+  ],
+  "philosopher's stone": [
+   "alchemy.transmutation"
+  ],
+  "gold washing": [
+   "science.mining"
+  ],
+  "Life of Christ": [
+   "religion.christ"
+  ],
+  "conquest": [
+   "war.battles"
+  ],
+  "initiation": [
+   "esoteric.magic"
+  ],
+  "Christ": [
+   "religion.christ"
+  ],
+  "echo": [
+   "music.acoustics"
+  ],
+  "equine anatomy": [
+   "medicine.anatomy"
+  ],
+  "Indian Ocean": [
+   "maps.geography"
+  ],
+  "canon": [
+   "religion.liturgy"
+  ],
+  "comparative anatomy": [
+   "medicine.anatomy"
+  ],
+  "epistemology": [
+   "philosophy.general"
+  ],
+  "canon law": [
+   "religion.christianity"
+  ],
+  "stereotomy": [
+   "architecture.plans"
+  ],
+  "Theology": [
+   "philosophy.theology"
+  ],
+  "manuscripts": [
+   "books.manuscripts"
+  ],
+  "obstetrics": [
+   "medicine.embryology"
+  ],
+  "chariot": [
+   "war.weapons"
+  ],
+  "Egyptian art": [
+   "books.archaeology"
+  ],
+  "spheroids": [
+   "mathematics.geometry"
+  ],
+  "chess": [
+   "society.daily-life"
+  ],
+  "sundial construction": [
+   "astronomy.time"
+  ],
+  "disciples": [
+   "religion.christ"
+  ],
+  "motherhood": [
+   "society.daily-life"
+  ],
+  "storm": [
+   "science.meteorology"
+  ],
+  "victory": [
+   "emblems.allegory"
+  ],
+  "fountains": [
+   "science.hydraulics"
+  ],
+  "ecclesiastical history": [
+   "religion.christianity"
+  ],
+  "17th century": [],
+  "Imperial library": [],
+  "Borobudur": [],
+  "tulip": [
+   "plants.flowers"
+  ],
+  "evangelist": [
+   "religion.christianity"
+  ],
+  "cranes": [
+   "animals.birds"
+  ],
+  "sphere": [
+   "mathematics.geometry"
+  ],
+  "Chinese traditional medicine": [
+   "medicine.chinese"
+  ],
+  "coastal geography": [
+   "maps.geography"
+  ],
+  "salt production": [
+   "society.daily-life"
+  ],
+  "parallel lines": [
+   "mathematics.geometry"
+  ],
+  "Trinity": [
+   "religion.christianity"
+  ],
+  "lever": [
+   "science.mechanics"
+  ],
+  "shipwreck": [
+   "maps.navigation"
+  ],
+  "scientific experiment": [
+   "philosophy.natural"
+  ],
+  "Amsterdam Town Hall": [
+   "architecture.general"
+  ],
+  "faith": [
+   "religion.liturgy"
+  ],
+  "military drill": [
+   "war.battles"
+  ],
+  "Jyotish": [
+   "esoteric.astrology"
+  ],
+  "lunar phases": [
+   "astronomy.sun-moon"
+  ],
+  "hymn": [
+   "music.sacred"
+  ],
+  "parable": [
+   "emblems.fables"
+  ],
+  "textile design": [
+   "society.daily-life"
+  ],
+  "Orientalism": [],
+  "textual criticism": [
+   "books.language"
+  ],
+  "song": [
+   "music.notation"
+  ],
+  "winds": [
+   "science.meteorology"
+  ],
+  "land surveying": [
+   "mathematics.surveying"
+  ],
+  "reptiles": [
+   "animals.reptiles"
+  ],
+  "Revelation": [
+   "religion.bible"
+  ],
+  "Hieroglyphics": [
+   "books.inscriptions"
+  ],
+  "virtues": [
+   "emblems.virtues"
+  ],
+  "history of medicine": [
+   "medicine.general"
+  ],
+  "tangents": [
+   "mathematics.conics"
+  ],
+  "world map": [
+   "maps.cartography"
+  ],
+  "forestry": [
+   "plants.trees"
+  ],
+  "nymphs": [
+   "religion.mythology"
+  ],
+  "deer": [
+   "animals.zoology"
+  ],
+  "Christian Kabbalah": [
+   "esoteric.kabbalah"
+  ],
+  "divine inspiration": [
+   "religion.mysticism"
+  ],
+  "moral philosophy": [
+   "philosophy.general"
+  ],
+  "epicycles": [
+   "astronomy.planets"
+  ],
+  "emblems": [
+   "emblems.emblems"
+  ],
+  "Javanese culture": [
+   "society.peoples"
+  ],
+  "ancient China": [],
+  "Japanese literature": [
+   "arts.literature"
+  ],
+  "spiritual warfare": [
+   "religion.mysticism"
+  ],
+  "Lama": [
+   "religion.buddhism"
+  ],
+  "unity": [
+   "esoteric.numbers"
+  ],
+  "Book of Revelation": [
+   "religion.bible"
+  ],
+  "selenography": [
+   "astronomy.sun-moon"
+  ],
+  "city view": [
+   "maps.cities"
+  ],
+  "colonization": [
+   "maps.travel"
+  ],
+  "warrior": [
+   "war.weapons"
+  ],
+  "geodesy": [
+   "mathematics.surveying"
+  ],
+  "moral instruction": [
+   "emblems.virtues"
+  ],
+  "Ars moriendi": [
+   "religion.death"
+  ],
+  "maritime travel": [
+   "maps.navigation"
+  ],
+  "megalithic tomb": [
+   "books.archaeology"
+  ],
+  "biblical figure": [
+   "religion.bible"
+  ],
+  "Roman engineering": [
+   "architecture.general"
+  ],
+  "pulse diagnosis": [
+   "medicine.general"
+  ],
+  "Indian mathematics": [
+   "mathematics.general"
+  ],
+  "correspondences": [
+   "esoteric.hermeticism"
+  ],
+  "clairvoyance": [
+   "esoteric.divination"
+  ],
+  "vaulting": [
+   "architecture.plans"
+  ],
+  "orthopedics": [
+   "medicine.surgery"
+  ],
+  "rustication": [
+   "architecture.plans"
+  ],
+  "altar": [
+   "religion.liturgy"
+  ],
+  "amphibians": [
+   "animals.reptiles"
+  ],
+  "Vajrayana Buddhism": [
+   "religion.buddhism"
+  ],
+  "cauterization": [
+   "medicine.surgery"
+  ],
+  "Ark of the Covenant": [
+   "religion.bible"
+  ],
+  "physics of sound": [
+   "music.acoustics"
+  ],
+  "New World": [],
+  "violence": [],
+  "Northern Europe": [],
+  "classical philology": [
+   "books.language"
+  ],
+  "betrayal": [
+   "emblems.virtues"
+  ],
+  "Atlantic Ocean": [],
+  "Roman Britain": [],
+  "Scandinavian history": [
+   "society.history"
+  ],
+  "nervous system": [
+   "medicine.anatomy"
+  ],
+  "biblical allegory": [
+   "religion.bible",
+   "emblems.allegory"
+  ],
+  "Aztec medicine": [
+   "medicine.general"
+  ],
+  "Ming dynasty technology": [
+   "science.machines"
+  ],
+  "devotional art": [
+   "religion.liturgy"
+  ],
+  "palace": [
+   "architecture.general"
+  ],
+  "pyramid": [
+   "books.archaeology"
+  ],
+  "Trial of Jesus": [
+   "religion.christ"
+  ],
+  "gematria": [
+   "esoteric.kabbalah"
+  ],
+  "religious ritual": [
+   "religion.liturgy"
+  ],
+  "author portrait": [
+   "society.portraits"
+  ],
+  "celestial bodies": [
+   "astronomy.planets"
+  ],
+  "conifer": [
+   "plants.trees"
+  ],
+  "monogram": [
+   "books.ornament"
+  ],
+  "ancient manuscripts": [
+   "books.manuscripts"
+  ],
+  "waterfall": [
+   "maps.landscape"
+  ],
+  "melancholy": [
+   "philosophy.natural"
+  ],
+  "Bodhisattva": [
+   "religion.buddhism"
+  ],
+  "perpetual motion": [
+   "science.mechanics"
+  ],
+  "chakras": [
+   "esoteric.microcosm"
+  ],
+  "Aristotelian logic": [
+   "philosophy.logic"
+  ],
+  "musical intervals": [
+   "music.theory"
+  ],
+  "occult": [
+   "esoteric.magic"
+  ],
+  "Sweden": [],
+  "angels": [
+   "religion.christianity"
+  ],
+  "light refraction": [
+   "science.optics"
+  ],
+  "medieval life": [
+   "society.daily-life"
+  ],
+  "Cupid": [
+   "religion.mythology"
+  ],
+  "coinage": [
+   "books.coins"
+  ],
+  "Splendor Solis": [
+   "alchemy.general"
+  ],
+  "vexillology": [
+   "society.heraldry"
+  ],
+  "Mycetozoa": [
+   "plants.fungi"
+  ],
+  "textile industry": [
+   "society.daily-life"
+  ],
+  "sound reflection": [
+   "music.acoustics"
+  ],
+  "celestial mapping": [
+   "astronomy.general",
+   "maps.cartography"
+  ],
+  "germination": [
+   "plants.botany"
+  ],
+  "elephant": [
+   "animals.zoology"
+  ],
+  "animal behavior": [
+   "animals.natural-history"
+  ],
+  "calendrics": [
+   "astronomy.time"
+  ],
+  "Norse mythology": [
+   "religion.mythology"
+  ],
+  "Japanese architecture": [
+   "architecture.general"
+  ],
+  "Famous Women": [
+   "society.portraits"
+  ],
+  "metalworking": [
+   "science.mining"
+  ],
+  "clothing": [
+   "society.costume"
+  ],
+  "Spanish conquest": [
+   "society.history"
+  ],
+  "Greek inscriptions": [
+   "books.inscriptions"
+  ],
+  "industrial process": [
+   "science.machines"
+  ],
+  "headwear": [
+   "society.costume"
+  ],
+  "Ars Moriendi": [
+   "religion.death"
+  ],
+  "Persia": [],
+  "Zhuge Liang": [],
+  "Korea": [],
+  "ancient Rome": [],
+  "decadence": [],
+  "On Rhetoric": [
+   "books.language"
+  ],
+  "bibliophilia": [
+   "books.ownership"
+  ],
+  "Deity": [
+   "religion.mythology"
+  ],
+  "Renaissance warfare": [
+   "war.battles"
+  ],
+  "offerings": [
+   "religion.liturgy"
+  ],
+  "tropical plants": [
+   "plants.botany"
+  ],
+  "Samson": [
+   "religion.bible"
+  ],
+  "observation": [
+   "philosophy.natural"
+  ],
+  "owl": [
+   "animals.birds"
+  ],
+  "Ethiopian Christianity": [
+   "religion.christianity"
+  ],
+  "Mixtec history": [
+   "society.history"
+  ],
+  "topiary": [
+   "plants.gardens"
+  ],
+  "Kabuki": [
+   "society.peoples"
+  ],
+  "meter": [
+   "music.theory"
+  ],
+  "Cartesian philosophy": [
+   "philosophy.general"
+  ],
+  "gemstones": [
+   "animals.earth"
+  ],
+  "moral allegory": [
+   "emblems.allegory"
+  ],
+  "divine judgment": [
+   "religion.mysticism"
+  ],
+  "performance": [
+   "society.daily-life"
+  ],
+  "circle": [
+   "mathematics.geometry"
+  ],
+  "planetary orbits": [
+   "astronomy.planets"
+  ],
+  "Osiris": [
+   "religion.egypt"
+  ],
+  "spiritual journey": [
+   "religion.mysticism"
+  ],
+  "leverage": [
+   "science.mechanics"
+  ],
+  "Last Supper": [
+   "religion.christ"
+  ],
+  "country house": [
+   "architecture.general"
+  ],
+  "Catholicism": [
+   "religion.christianity"
+  ],
+  "conjoined twins": [
+   "medicine.anatomy"
+  ],
+  "politics": [],
+  "Suriname": [],
+  "Brazilian flora": [
+   "plants.botany"
+  ],
+  "Russian history": [
+   "society.history"
+  ],
+  "multiplication": [
+   "mathematics.arithmetic"
+  ],
+  "Roman technology": [
+   "science.machines"
+  ],
+  "ritual offerings": [
+   "religion.liturgy"
+  ],
+  "exotic plants": [
+   "plants.botany"
+  ],
+  "saint": [
+   "religion.saints"
+  ],
+  "immortality": [
+   "religion.death"
+  ],
+  "divine revelation": [
+   "religion.mysticism"
+  ],
+  "ecclesiastical dress": [
+   "religion.liturgy"
+  ],
+  "parrot": [
+   "animals.birds"
+  ],
+  "flower": [
+   "plants.flowers"
+  ],
+  "cooking": [
+   "society.daily-life"
+  ],
+  "Sephiroth": [
+   "esoteric.kabbalah"
+  ],
+  "roots": [
+   "plants.botany"
+  ],
+  "farming": [
+   "plants.agriculture"
+  ],
+  "generation": [
+   "medicine.embryology"
+  ],
+  "experimentation": [
+   "philosophy.natural"
+  ],
+  "ancient Greek text": [
+   "books.manuscripts"
+  ],
+  "skeletal system": [
+   "medicine.anatomy"
+  ],
+  "heliophysics": [
+   "astronomy.sun-moon"
+  ],
+  "cipher": [
+   "books.ciphers"
+  ],
+  "shrine": [
+   "architecture.general"
+  ],
+  "Neolithic": [
+   "books.archaeology"
+  ],
+  "physical education": [
+   "society.education"
+  ],
+  "Islam": [
+   "religion.islam"
+  ],
+  "Wales": [],
+  "Maqamat": [
+   "arts.literature"
+  ],
+  "Shijing": [
+   "arts.literature"
+  ],
+  "Hieratic script": [
+   "books.calligraphy"
+  ],
+  "religious narrative": [
+   "religion.christianity"
+  ],
+  "triumphal arch": [
+   "architecture.classical"
+  ],
+  "traveler": [
+   "maps.travel"
+  ],
+  "cabalism": [
+   "esoteric.kabbalah"
+  ],
+  "wonders of the world": [
+   "books.archaeology"
+  ],
+  "Biblical figures": [
+   "religion.bible"
+  ],
+  "instrumental music": [
+   "music.instruments"
+  ],
+  "biblical story": [
+   "religion.bible"
+  ],
+  "rose": [
+   "plants.flowers"
+  ],
+  "bronze inscription": [
+   "books.inscriptions"
+  ],
+  "Spanish conquest of Peru": [
+   "society.history"
+  ],
+  "Greek inscription": [
+   "books.inscriptions"
+  ],
+  "syncretism": [
+   "religion.mysticism"
+  ],
+  "Mesoamerican ritual": [
+   "religion.americas"
+  ],
+  "dissonance": [
+   "music.harmony"
+  ],
+  "internal alchemy": [
+   "alchemy.general"
+  ],
+  "pastoral": [
+   "maps.landscape"
+  ],
+  "library provenance": [
+   "books.ownership"
+  ],
+  "urban topography": [
+   "maps.cities"
+  ],
+  "family tree": [
+   "society.heraldry"
+  ],
+  "Solomonic magic": [
+   "esoteric.magic"
+  ],
+  "parhelia": [
+   "science.meteorology"
+  ],
+  "Alps": [
+   "maps.landscape"
+  ],
+  "nature study": [
+   "animals.natural-history"
+  ],
+  "Catholic liturgy": [
+   "religion.liturgy"
+  ],
+  "Islamic calligraphy": [
+   "books.calligraphy"
+  ],
+  "courtyard": [
+   "architecture.general"
+  ],
+  "omens": [
+   "esoteric.divination"
+  ],
+  "phonetics": [
+   "books.language"
+  ],
+  "Tibetan medicine": [
+   "medicine.chinese"
+  ],
+  "pumps": [
+   "science.hydraulics"
+  ],
+  "inclined plane": [
+   "science.mechanics"
+  ],
+  "sigillography": [
+   "society.heraldry"
+  ],
+  "harbor": [
+   "maps.navigation"
+  ],
+  "maze": [
+   "mathematics.geometry"
+  ],
+  "confrontation": [
+   "war.battles"
+  ],
+  "Allegory": [
+   "emblems.allegory"
+  ],
+  "theater design": [
+   "architecture.general"
+  ],
+  "astral body": [
+   "esoteric.microcosm"
+  ],
+  "administration": [
+   "society.daily-life"
+  ],
+  "prison": [
+   "society.daily-life"
+  ],
+  "parasitology": [
+   "animals.natural-history"
+  ],
+  "plant pathology": [
+   "plants.botany"
+  ],
+  "Sephirot": [
+   "esoteric.kabbalah"
+  ],
+  "Armenian manuscript": [
+   "books.manuscripts"
+  ],
+  "lifting machines": [
+   "science.machines"
+  ],
+  "social customs": [
+   "society.daily-life"
+  ],
+  "superstition": [
+   "esoteric.magic"
+  ],
+  "Jewish liturgy": [
+   "religion.liturgy"
+  ],
+  "Anabaptism": [
+   "religion.christianity"
+  ],
+  "edible plants": [
+   "plants.medicinal"
+  ],
+  "horography": [
+   "astronomy.time"
+  ],
+  "sheep": [
+   "animals.zoology"
+  ],
+  "mythical creature": [
+   "animals.monsters"
+  ],
+  "administrative divisions": [],
+  "Renaissance literature": [
+   "arts.literature"
+  ],
+  "African art": [
+   "arts.art"
+  ],
+  "Vietnamese literature": [
+   "arts.literature"
+  ],
+  "Prussia": [],
+  "Ritual": [
+   "religion.liturgy"
+  ],
+  "cleric": [
+   "religion.christianity"
+  ],
+  "regalia": [
+   "society.royalty"
+  ],
+  "Baptism of Christ": [
+   "religion.christ"
+  ],
+  "lodestone": [
+   "science.magnetism"
+  ],
+  "Greek music": [
+   "music.theory"
+  ],
+  "early modern technology": [
+   "science.machines"
+  ],
+  "Temple of Jerusalem": [
+   "religion.bible"
+  ],
+  "social history": [
+   "society.history"
+  ],
+  "Phaseolus": [
+   "plants.botany"
+  ],
+  "academia": [
+   "society.education"
+  ],
+  "biomechanics": [
+   "medicine.anatomy",
+   "science.mechanics"
+  ],
+  "fairy tales": [
+   "emblems.fables"
+  ],
+  "thermometry": [
+   "science.physics"
+  ],
+  "grass": [
+   "plants.botany"
+  ],
+  "Ming Dynasty technology": [
+   "science.machines"
+  ],
+  "clouds": [
+   "science.meteorology"
+  ],
+  "insignia": [
+   "society.heraldry"
+  ],
+  "ancient philosophy": [
+   "philosophy.general"
+  ],
+  "San rock art": [
+   "arts.art"
+  ],
+  "British Isles": [],
+  "communication": [],
+  "Holy Land": [],
+  "Paracelsus": [],
+  "Zoroastrianism": [
+   "religion.other"
+  ],
+  "rescue": [],
+  "soldiers": [
+   "war.weapons"
+  ],
+  "Virgin and Child": [
+   "religion.christ"
+  ],
+  "weights and measures": [
+   "mathematics.surveying"
+  ],
+  "dialogue": [
+   "philosophy.general"
+  ],
+  "narcissus": [
+   "plants.flowers"
+  ],
+  "putto": [
+   "emblems.allegory"
+  ],
+  "lighting": [
+   "science.optics"
+  ],
+  "devotional literature": [
+   "religion.liturgy"
+  ],
+  "Euclidean elements": [
+   "mathematics.geometry"
+  ],
+  "ritual calendar": [
+   "astronomy.time"
+  ],
+  "Ming dynasty military": [
+   "war.battles"
+  ],
+  "pharmacopoeia": [
+   "medicine.pharmacy"
+  ],
+  "ancient science": [
+   "philosophy.natural"
+  ],
+  "Muhurta": [
+   "esoteric.astrology"
+  ],
+  "evolution": [
+   "animals.natural-history"
+  ],
+  "solitude": [
+   "religion.mysticism"
+  ],
+  "garden scene": [
+   "plants.gardens"
+  ],
+  "Greek uncial": [
+   "books.calligraphy"
+  ],
+  "spiritual transformation": [
+   "religion.mysticism"
+  ],
+  "Apollo": [
+   "religion.mythology"
+  ],
+  "parrots": [
+   "animals.birds"
+  ],
+  "maritime trade": [
+   "maps.navigation"
+  ],
+  "Archimedean spiral": [
+   "mathematics.conics"
+  ],
+  "moth": [
+   "animals.insects"
+  ],
+  "basso continuo": [
+   "music.harmony"
+  ],
+  "Jainism": [
+   "religion.other"
+  ],
+  "Aegean Sea": [],
+  "Scotland": [],
+  "Malay Peninsula": [],
+  "Art Nouveau": [
+   "arts.art"
+  ],
+  "Three Kingdoms": [],
+  "Han dynasty": [],
+  "Imperial Library": [],
+  "athletics": [
+   "society.daily-life"
+  ],
+  "ritual music": [
+   "music.sacred"
+  ],
+  "Native American culture": [
+   "society.peoples"
+  ],
+  "suffering": [
+   "religion.mysticism"
+  ],
+  "peace": [
+   "emblems.allegory"
+  ],
+  "Jesuit science": [
+   "philosophy.natural"
+  ],
+  "Ethiopian illumination": [
+   "books.ornament"
+  ],
+  "infantry formations": [
+   "war.battles"
+  ],
+  "tactical formation": [
+   "war.battles"
+  ],
+  "pendulum motion": [
+   "science.mechanics"
+  ],
+  "hybrid creatures": [
+   "animals.monsters"
+  ],
+  "ancient warfare": [
+   "war.battles"
+  ],
+  "maritime defense": [
+   "war.military-engineering"
+  ],
+  "aerodynamics": [
+   "science.physics"
+  ],
+  "celestial hierarchy": [
+   "esoteric.microcosm"
+  ],
+  "funeral": [
+   "religion.death"
+  ],
+  "glassmaking": [
+   "science.mining"
+  ],
+  "hermaphrodite": [
+   "medicine.anatomy"
+  ],
+  "tree": [
+   "plants.trees"
+  ],
+  "hyacinth": [
+   "plants.flowers"
+  ],
+  "cosmogony": [
+   "astronomy.cosmology"
+  ],
+  "Ayurveda": [
+   "medicine.chinese"
+  ],
+  "Tower of Babel": [
+   "religion.bible"
+  ],
+  "encyclopedia": [
+   "books.manuscripts"
+  ],
+  "garden architecture": [
+   "plants.gardens"
+  ],
+  "arachnology": [
+   "animals.insects"
+  ],
+  "reproduction": [
+   "medicine.embryology"
+  ],
+  "winter": [
+   "science.meteorology"
+  ],
+  "Eastern Europe": [],
+  "Dutch East India Company": [],
+  "Sanskrit": [
+   "books.language"
+  ],
+  "Javanese art": [
+   "arts.art"
+  ],
+  "egyptology": [
+   "books.archaeology"
+  ],
+  "ceremonial object": [
+   "religion.liturgy"
+  ],
+  "church design": [
+   "architecture.plans"
+  ],
+  "Aesop": [
+   "emblems.fables"
+  ],
+  "textile production": [
+   "society.daily-life"
+  ],
+  "filial piety": [
+   "society.daily-life"
+  ],
+  "stela": [
+   "books.archaeology"
+  ],
+  "Great Flood": [
+   "religion.bible"
+  ],
+  "book decoration": [
+   "books.ornament"
+  ],
+  "coronation": [
+   "society.royalty"
+  ],
+  "wave theory": [
+   "science.physics",
+   "science.optics"
+  ],
+  "opera comique": [
+   "music.theory"
+  ],
+  "inclined planes": [
+   "science.mechanics"
+  ],
+  "moldings": [
+   "architecture.general"
+  ],
+  "bathing": [
+   "society.daily-life"
+  ],
+  "expedition": [
+   "maps.travel"
+  ],
+  "cannibalism": [
+   "society.peoples"
+  ],
+  "vacuum": [
+   "science.physics",
+   "science.hydraulics"
+  ],
+  "land management": [
+   "plants.agriculture"
+  ],
+  "petroglyphs": [
+   "books.archaeology"
+  ],
+  "furnaces": [
+   "alchemy.laboratory"
+  ],
+  "playing cards": [
+   "society.daily-life"
+  ],
+  "epitaph": [
+   "books.inscriptions"
+  ],
+  "Tartary": [],
+  "Brittany": [],
+  "colonial Mexico": [],
+  "South Africa": [],
+  "firefighting": [
+   "society.daily-life"
+  ],
+  "chromaticism": [
+   "music.harmony"
+  ],
+  "Kanjur": [
+   "religion.buddhism"
+  ],
+  "Vedic science": [
+   "religion.hinduism"
+  ],
+  "carriage": [
+   "society.daily-life"
+  ],
+  "jade": [
+   "animals.earth"
+  ],
+  "university": [
+   "society.education"
+  ],
+  "water wheel": [
+   "science.machines"
+  ],
+  "waterfowl": [
+   "animals.birds"
+  ],
+  "Coronation of the Virgin": [
+   "religion.christ"
+  ],
+  "costume history": [
+   "society.costume"
+  ],
+  "legumes": [
+   "plants.agriculture"
+  ],
+  "lichenology": [
+   "plants.botany"
+  ],
+  "Alchemy": [
+   "alchemy.general"
+  ],
+  "peony": [
+   "plants.flowers"
+  ],
+  "watermarks": [
+   "books.typography"
+  ],
+  "Tibetan astrology": [
+   "esoteric.astrology"
+  ],
+  "art of memory": [
+   "books.ciphers"
+  ],
+  "chemical notation": [
+   "science.chemistry"
+  ],
+  "millet": [
+   "plants.agriculture"
+  ],
+  "divine proportion": [
+   "mathematics.perspective",
+   "esoteric.numbers"
+  ],
+  "horses": [
+   "animals.zoology"
+  ],
+  "necromancy": [
+   "esoteric.magic"
+  ],
+  "Israelites": [
+   "religion.bible"
+  ],
+  "hell": [
+   "religion.death"
+  ],
+  "excavation": [
+   "books.archaeology"
+  ],
+  "mandrake": [
+   "plants.medicinal"
+  ],
+  "legendary creatures": [
+   "animals.monsters"
+  ],
+  "collision": [
+   "science.mechanics"
+  ],
+  "painting": [
+   "arts.art"
+  ],
+  "Java": [],
+  "pre-Columbian art": [
+   "arts.art"
+  ],
+  "Chinese poetry": [
+   "arts.poetry"
+  ],
+  "nomenclature": [
+   "books.language"
+  ],
+  "Yoshiwara": [],
+  "atrium": [
+   "architecture.general"
+  ],
+  "exotic animals": [
+   "animals.zoology"
+  ],
+  "planetary theory": [
+   "astronomy.planets"
+  ],
+  "Madonna and Child": [
+   "religion.christ"
+  ],
+  "dermatology": [
+   "medicine.general"
+  ],
+  "greed": [
+   "emblems.virtues"
+  ],
+  "Saints": [
+   "religion.saints"
+  ],
+  "Ascension of Christ": [
+   "religion.christ"
+  ],
+  "Byzantine manuscript": [
+   "books.manuscripts"
+  ],
+  "audience": [
+   "society.daily-life"
+  ],
+  "Protestant Reformation": [
+   "religion.christianity"
+  ],
+  "vice": [
+   "emblems.virtues"
+  ],
+  "Chinese characters": [
+   "books.calligraphy"
+  ],
+  "Jesus": [
+   "religion.christ"
+  ],
+  "Arab music": [
+   "music.theory"
+  ],
+  "glassware": [
+   "science.chemistry"
+  ],
+  "iatrochemistry": [
+   "alchemy.general",
+   "medicine.pharmacy"
+  ],
+  "Isis": [
+   "religion.egypt"
+  ],
+  "secret societies": [
+   "esoteric.rosicrucian"
+  ],
+  "mensuration": [
+   "mathematics.surveying"
+  ],
+  "gnosticism": [
+   "religion.mysticism"
+  ],
+  "kinship": [
+   "society.peoples"
+  ],
+  "Byzantine history": [
+   "society.history"
+  ],
+  "flora of Indonesia": [
+   "plants.botany"
+  ],
+  "climbing plant": [
+   "plants.botany"
+  ],
+  "seaweed": [
+   "plants.botany"
+  ],
+  "blacksmithing": [
+   "science.mining"
+  ],
+  "biblical prophecy": [
+   "religion.bible"
+  ],
+  "female figure": [
+   "society.portraits"
+  ],
+  "Alexander Romance": [
+   "arts.literature"
+  ],
+  "Roman administration": [],
+  "Avebury": [],
+  "Red Sea": [],
+  "Han Dynasty": [],
+  "Persian poetry": [
+   "arts.poetry"
+  ],
+  "figure": [
+   "society.portraits"
+  ],
+  "Iberian Peninsula": [],
+  "Portuguese Empire": [],
+  "Renaissance engineering": [
+   "science.machines"
+  ],
+  "Knights Templar": [
+   "religion.christianity"
+  ],
+  "incendiary weapons": [
+   "war.weapons"
+  ],
+  "royal audience": [
+   "society.royalty"
+  ],
+  "cherubs": [
+   "emblems.symbolism"
+  ],
+  "Epiphany": [
+   "religion.liturgy"
+  ],
+  "funerary text": [
+   "religion.death"
+  ],
+  "youth": [
+   "society.daily-life"
+  ],
+  "gemology": [
+   "animals.earth"
+  ],
+  "projectile motion": [
+   "war.artillery"
+  ],
+  "silver refining": [
+   "science.mining"
+  ],
+  "Horus": [
+   "religion.egypt"
+  ],
+  "Rhetoric": [
+   "philosophy.general"
+  ],
+  "biblical archaeology": [
+   "religion.bible",
+   "books.archaeology"
+  ],
+  "Passover": [
+   "religion.bible"
+  ],
+  "solar symbolism": [
+   "astronomy.sun-moon",
+   "emblems.symbolism"
+  ],
+  "sound propagation": [
+   "music.acoustics"
+  ],
+  "battle scene": [
+   "war.battles"
+  ],
+  "analemma": [
+   "astronomy.instruments"
+  ],
+  "supernova": [
+   "astronomy.stars"
+  ],
+  "wilderness": [
+   "maps.landscape"
+  ],
+  "electricity": [
+   "science.physics"
+  ],
+  "Christian allegory": [
+   "emblems.allegory",
+   "religion.christianity"
+  ],
+  "Bagua": [
+   "religion.taoism"
+  ],
+  "monstrous races": [
+   "animals.monsters"
+  ],
+  "Neidan": [
+   "religion.taoism",
+   "alchemy.general"
+  ],
+  "Renaissance fashion": [
+   "society.costume"
+  ],
+  "silk production": [
+   "society.daily-life"
+  ],
+  "pentagon": [
+   "mathematics.geometry"
+  ],
+  "ritual attire": [
+   "society.costume"
+  ],
+  "exorcism": [
+   "esoteric.magic"
+  ],
+  "camera obscura": [
+   "science.optics"
+  ],
+  "fate": [
+   "philosophy.general"
+  ],
+  "Gentiana": [
+   "plants.botany"
+  ],
+  "Dutch Classicism": [
+   "architecture.general"
+  ],
+  "Ancient Greek": [
+   "books.language"
+  ],
+  "Qing dynasty": [],
+  "design": [
+   "arts.art"
+  ],
+  "Sumerian": [
+   "books.language"
+  ],
+  "Rhine River": [],
+  "Tang Dynasty": [],
+  "Russia": [],
+  "Arabia": [],
+  "arts": [
+   "arts.art"
+  ],
+  "health": [
+   "medicine.general"
+  ],
+  "Maya hieroglyphs": [
+   "books.inscriptions"
+  ],
+  "classical temple": [
+   "architecture.classical"
+  ],
+  "Hebrew alphabet": [
+   "books.calligraphy"
+  ],
+  "ritual diagrams": [
+   "esoteric.numbers"
+  ],
+  "ritual sacrifice": [
+   "religion.liturgy"
+  ],
+  "travelers": [
+   "maps.travel"
+  ],
+  "bridge construction": [
+   "architecture.plans"
+  ],
+  "New World fauna": [
+   "animals.natural-history"
+  ],
+  "character study": [
+   "society.portraits"
+  ],
+  "solfège": [
+   "music.notation"
+  ],
+  "knight": [
+   "society.daily-life"
+  ],
+  "cactus": [
+   "plants.botany"
+  ],
+  "wrathful deity": [
+   "religion.mythology"
+  ],
+  "sea": [
+   "animals.fish"
+  ],
+  "humoral theory": [
+   "medicine.general"
+  ],
+  "Epic of Gilgamesh": [
+   "religion.mythology"
+  ],
+  "Dutch history": [
+   "society.history"
+  ],
+  "industrial labor": [
+   "society.daily-life"
+  ],
+  "eclipses": [
+   "astronomy.sun-moon"
+  ],
+  "fireplace": [
+   "alchemy.laboratory"
+  ],
+  "harvesting": [
+   "plants.agriculture"
+  ],
+  "Sakai people": [
+   "society.peoples"
+  ],
+  "night scene": [
+   "maps.landscape"
+  ],
+  "Avalokiteshvara": [
+   "religion.buddhism"
+  ],
+  "childbirth": [
+   "medicine.embryology"
+  ],
+  "lacquerware": [
+   "society.daily-life"
+  ],
+  "biblical geography": [
+   "religion.bible"
+  ],
+  "centripetal force": [
+   "science.physics"
+  ],
+  "landscape painting": [
+   "maps.landscape"
+  ],
+  "flora of Brazil": [
+   "plants.botany"
+  ],
+  "Nyingma tradition": [
+   "religion.buddhism"
+  ],
+  "wealth": [
+   "emblems.virtues"
+  ],
+  "Abraham": [
+   "religion.bible"
+  ],
+  "pastoral life": [
+   "society.daily-life"
+  ],
+  "desert landscape": [
+   "maps.landscape"
+  ],
+  "Maya civilization": [],
+  "historical figure": [],
+  "Sicily": [],
+  "phonology": [
+   "books.language"
+  ],
+  "Renaissance ornament": [
+   "books.ornament"
+  ],
+  "crucifixion": [
+   "religion.christ"
+  ],
+  "Roman religion": [
+   "religion.mythology"
+  ],
+  "Geranium": [
+   "plants.botany"
+  ],
+  "neuroanatomy": [
+   "medicine.anatomy"
+  ],
+  "worship": [
+   "religion.liturgy"
+  ],
+  "Native Americans": [
+   "society.peoples"
+  ],
+  "social classes": [
+   "society.daily-life"
+  ],
+  "Spanish Conquest": [
+   "society.history"
+  ],
+  "Hercules": [
+   "religion.mythology"
+  ],
+  "wind": [
+   "science.meteorology"
+  ],
+  "planetary aspects": [
+   "esoteric.astrology"
+  ],
+  "steam power": [
+   "science.machines"
+  ],
+  "lunar cycles": [
+   "astronomy.sun-moon"
+  ],
+  "gravitation": [
+   "science.physics"
+  ],
+  "tablature": [
+   "music.notation"
+  ],
+  "ancient engineering": [
+   "science.machines"
+  ],
+  "transcription": [
+   "books.manuscripts"
+  ],
+  "Byzantine music": [
+   "music.sacred"
+  ],
+  "aquatic life": [
+   "animals.fish"
+  ],
+  "Teton Sioux": [
+   "society.peoples"
+  ],
+  "humility": [
+   "emblems.virtues"
+  ],
+  "scientific apparatus": [
+   "astronomy.instruments"
+  ],
+  "priesthood": [
+   "religion.christianity"
+  ],
+  "crane": [
+   "animals.zoology"
+  ],
+  "Angel": [
+   "religion.christianity"
+  ],
+  "motto": [
+   "emblems.emblems"
+  ],
+  "Ancient Egyptian literature": [
+   "books.inscriptions"
+  ],
+  "fortress": [
+   "architecture.fortification"
+  ],
+  "ancient sports": [
+   "society.daily-life"
+  ],
+  "Ashanti leadership": [
+   "society.royalty"
+  ],
+  "radiation": [
+   "science.physics"
+  ],
+  "camel": [
+   "animals.zoology"
+  ],
+  "paganism": [
+   "religion.mythology"
+  ],
+  "skull": [
+   "medicine.anatomy"
+  ],
+  "Renaissance philosophy": [
+   "philosophy.general"
+  ],
+  "circular motion": [
+   "mathematics.geometry"
+  ],
+  "Dzogchen": [
+   "religion.buddhism"
+  ],
+  "villa design": [
+   "architecture.general"
+  ],
+  "institutional history": [
+   "society.history"
+  ],
+  "tsuba": [
+   "war.weapons"
+  ],
+  "moral lesson": [
+   "emblems.virtues"
+  ],
+  "wind power": [
+   "science.machines"
+  ],
+  "classical figures": [
+   "religion.mythology"
+  ],
+  "military astrology": [
+   "esoteric.astrology"
+  ],
+  "crossbow": [
+   "war.weapons"
+  ],
+  "caterpillar": [
+   "animals.insects"
+  ],
+  "children": [
+   "society.daily-life"
+  ],
+  "poetic meter": [
+   "arts.poetry"
+  ],
+  "Mesopotamian literature": [
+   "arts.literature"
+  ],
+  "Fyodor Dostoevsky": [],
+  "Kim Vân Kiều": [
+   "arts.literature"
+  ],
+  "Flanders": [],
+  "juniper": [
+   "plants.trees"
+  ],
+  "Divine Comedy": [
+   "religion.mysticism"
+  ],
+  "amulet": [
+   "esoteric.magic"
+  ],
+  "Paradise": [
+   "religion.death"
+  ],
+  "spheres": [
+   "astronomy.cosmology"
+  ],
+  "signaling": [
+   "war.military-engineering"
+  ],
+  "Ten Commandments": [
+   "religion.bible"
+  ],
+  "Great Compassion Mantra": [
+   "religion.buddhism"
+  ],
+  "Chengde Mountain Resort": [
+   "architecture.general"
+  ],
+  "mint": [
+   "plants.medicinal"
+  ],
+  "minerals": [
+   "animals.earth"
+  ],
+  "rocketry": [
+   "war.artillery"
+  ],
+  "urology": [
+   "medicine.general"
+  ],
+  "heating": [
+   "science.physics"
+  ],
+  "Presentation in the Temple": [
+   "religion.christ"
+  ],
+  "moons": [
+   "astronomy.sun-moon"
+  ],
+  "mining tools": [
+   "science.mining"
+  ],
+  "Ritual Diagram": [
+   "esoteric.magic"
+  ],
+  "mathematical proof": [
+   "mathematics.general"
+  ],
+  "classical scene": [
+   "religion.mythology"
+  ],
+  "Arhat": [
+   "religion.buddhism"
+  ],
+  "Chinese astrology": [
+   "esoteric.astrology"
+  ],
+  "book ornamentation": [
+   "books.ornament"
+  ],
+  "triumphal procession": [
+   "society.royalty"
+  ],
+  "Allium": [
+   "plants.botany"
+  ],
+  "Qimen Dunjia": [
+   "esoteric.divination"
+  ],
+  "herbals": [
+   "plants.medicinal"
+  ],
+  "combinatorial logic": [
+   "philosophy.logic"
+  ],
+  "dome": [
+   "architecture.general"
+  ],
+  "imperial palace": [
+   "society.royalty"
+  ],
+  "banners": [
+   "war.weapons"
+  ],
+  "snakes": [
+   "animals.reptiles"
+  ],
+  "masquerade": [
+   "society.daily-life"
+  ],
+  "Indian gymnastics": [
+   "society.daily-life"
+  ],
+  "siphons": [
+   "science.hydraulics"
+  ],
+  "Ming Dynasty military": [
+   "war.battles"
+  ],
+  "planetary positions": [
+   "astronomy.planets"
+  ],
+  "unidentified plant": [
+   "plants.botany"
+  ],
+  "Virgo": [
+   "esoteric.astrology"
+  ],
+  "choral music": [
+   "music.sacred"
+  ],
+  "scientific study": [
+   "philosophy.natural"
+  ],
+  "succulent": [
+   "plants.botany"
+  ],
+  "ancient ships": [
+   "maps.navigation"
+  ],
+  "country estate": [
+   "plants.gardens"
+  ],
+  "religious order": [
+   "religion.christianity"
+  ],
+  "Roman ruins": [
+   "books.archaeology"
+  ],
+  "spiral": [
+   "mathematics.geometry"
+  ],
+  "cadence": [
+   "music.theory"
+  ],
+  "Archimedean solids": [
+   "mathematics.geometry"
+  ],
+  "meridians": [
+   "maps.cartography"
+  ],
+  "Ming Dynasty warfare": [
+   "war.battles"
+  ],
+  "devotional song": [
+   "music.sacred"
+  ],
+  "Welsh music": [
+   "music.theory"
+  ],
+  "star charts": [
+   "astronomy.stars"
+  ],
+  "shamanism": [
+   "esoteric.magic"
+  ],
+  "floral motifs": [
+   "books.ornament"
+  ],
+  "Roman land surveying": [
+   "mathematics.surveying"
+  ],
+  "runes": [
+   "books.inscriptions"
+  ],
+  "historical European martial arts": [
+   "war.fencing"
+  ],
+  "megalithic art": [
+   "books.archaeology"
+  ],
+  "glee": [],
+  "grammar": [
+   "books.language"
+  ],
+  "Asia Minor": [],
+  "torture": [],
+  "Giza": [],
+  "hierarchy": [],
+  "Yangtze River": [],
+  "Ambon": [],
+  "fertility": [
+   "emblems.symbolism"
+  ],
+  "Rijnland": [],
+  "Ptolemy": [],
+  "captivity": [
+   "religion.death"
+  ],
+  "classification of knowledge": [
+   "philosophy.general"
+  ],
+  "Baroque architecture": [
+   "architecture.general"
+  ],
+  "Chinese ritual": [
+   "religion.taoism"
+  ],
+  "separation": [
+   "alchemy.transmutation"
+  ],
+  "fox": [
+   "animals.zoology"
+  ],
+  "Roman mythology": [
+   "religion.mythology"
+  ],
+  "light reflection": [
+   "science.optics"
+  ],
+  "Japanese history": [
+   "society.history"
+  ],
+  "harp music": [
+   "music.instruments"
+  ],
+  "poppy": [
+   "plants.botany"
+  ],
+  "shepherd": [
+   "society.daily-life"
+  ],
+  "Magi": [
+   "religion.mythology"
+  ],
+  "penance": [
+   "religion.liturgy"
+  ],
+  "ritual iconography": [
+   "emblems.symbolism"
+  ],
+  "bibliography": [
+   "books.manuscripts"
+  ],
+  "mask": [
+   "society.costume"
+  ],
+  "pomegranate": [
+   "plants.botany"
+  ],
+  "Caribbean flora": [
+   "plants.botany"
+  ],
+  "herbs": [
+   "plants.medicinal"
+  ],
+  "beetle": [
+   "animals.insects"
+  ],
+  "anemone": [
+   "plants.flowers"
+  ],
+  "ritual practice": [
+   "religion.liturgy"
+  ],
+  "union of opposites": [
+   "alchemy.transmutation"
+  ],
+  "carmen figuratum": [
+   "books.calligraphy"
+  ],
+  "Chinese garden": [
+   "plants.gardens"
+  ],
+  "consonance": [
+   "music.harmony"
+  ],
+  "laboratory practice": [
+   "alchemy.laboratory"
+  ],
+  "Christ in Majesty": [
+   "religion.christ"
+  ],
+  "Guanyin": [
+   "religion.buddhism"
+  ],
+  "acceleration": [
+   "science.physics"
+  ],
+  "Hawaiian culture": [
+   "society.peoples"
+  ],
+  "Qabbalah": [
+   "esoteric.kabbalah"
+  ],
+  "fixation": [
+   "alchemy.transmutation"
+  ],
+  "cherub": [
+   "religion.christianity"
+  ],
+  "floral ornament": [
+   "books.ornament"
+  ],
+  "Chinese astronomy": [
+   "astronomy.general"
+  ],
+  "sundial": [
+   "astronomy.time"
+  ],
+  "joinery": [
+   "architecture.plans"
+  ],
+  "human motion": [
+   "medicine.anatomy"
+  ],
+  "Renaissance garden": [
+   "plants.gardens"
+  ],
+  "celebration": [
+   "society.daily-life"
+  ],
+  "Renaissance typography": [
+   "books.typography"
+  ],
+  "Native American history": [
+   "society.history"
+  ],
+  "planetary science": [
+   "astronomy.planets"
+  ],
+  "Antichrist": [
+   "religion.christianity"
+  ],
+  "imprisonment": [
+   "society.daily-life"
+  ],
+  "pastoral romance": [
+   "arts.literature"
+  ],
+  "Romanticism": [],
+  "Central America": [],
+  "ancient Greek philosophy": [
+   "philosophy.general"
+  ],
+  "parterre": [
+   "plants.gardens"
+  ],
+  "book cover": [
+   "books.ownership"
+  ],
+  "chimney piece": [
+   "architecture.general"
+  ],
+  "lichen": [
+   "plants.fungi"
+  ],
+  "conchoid": [
+   "mathematics.conics"
+  ],
+  "biblical verses": [
+   "religion.bible"
+  ],
+  "rainbow": [
+   "science.meteorology"
+  ],
+  "acrobatics": [
+   "society.daily-life"
+  ],
+  "ellipse": [
+   "mathematics.conics"
+  ],
+  "vigilance": [
+   "emblems.virtues"
+  ],
+  "Mixtec mythology": [
+   "religion.americas"
+  ],
+  "Celtic mythology": [
+   "religion.mythology"
+  ],
+  "Angels": [
+   "religion.christianity"
+  ],
+  "Zulu music": [
+   "music.theory"
+  ],
+  "chaos": [
+   "alchemy.elements"
+  ],
+  "Arabian Nights": [
+   "emblems.fables"
+  ],
+  "dissolution": [
+   "alchemy.transmutation"
+  ],
+  "Betrayal of Christ": [
+   "religion.christ"
+  ],
+  "planetary hours": [
+   "esoteric.astrology"
+  ],
+  "Office of the Dead": [
+   "religion.liturgy"
+  ],
+  "social status": [
+   "society.daily-life"
+  ],
+  "Yantra": [
+   "esoteric.numbers",
+   "esoteric.magic"
+  ],
+  "dougong": [
+   "architecture.chinese"
+  ],
+  "oceanography": [
+   "animals.fish"
+  ],
+  "maize": [
+   "plants.agriculture"
+  ],
+  "manual labor": [
+   "society.daily-life"
+  ],
+  "Shaker music": [
+   "music.sacred"
+  ],
+  "Dutch landscape": [
+   "maps.landscape"
+  ],
+  "sacred architecture": [
+   "architecture.general",
+   "religion.liturgy"
+  ],
+  "intercolumniation": [
+   "architecture.classical"
+  ],
+  "samurai": [
+   "war.fencing"
+  ],
+  "trades": [
+   "society.daily-life"
+  ],
+  "Mahayana": [
+   "religion.buddhism"
+  ],
+  "aqueducts": [
+   "science.hydraulics"
+  ],
+  "classical sculpture": [
+   "books.archaeology"
+  ],
+  "Aristotelian physics": [
+   "philosophy.natural"
+  ],
+  "Solomon's Temple": [
+   "religion.bible"
+  ],
+  "early Christianity": [
+   "religion.christianity"
+  ],
+  "funerary ritual": [
+   "religion.death"
+  ],
+  "village": [
+   "society.daily-life"
+  ],
+  "technical drawing": [
+   "mathematics.perspective"
+  ],
+  "whale": [
+   "animals.fish"
+  ],
+  "offering": [
+   "religion.liturgy"
+  ],
+  "foundations": [
+   "architecture.plans"
+  ],
+  "caravan": [
+   "maps.travel"
+  ],
+  "Ming Dynasty geography": [
+   "maps.geography"
+  ],
+  "Indian sports": [
+   "society.daily-life"
+  ],
+  "camp layout": [
+   "war.military-engineering"
+  ],
+  "polders": [
+   "plants.agriculture"
+  ],
+  "galls": [
+   "plants.botany"
+  ],
+  "French literature": [
+   "arts.literature"
+  ],
+  "Roman Emperor": [],
+  "London": [],
+  "dedication": [
+   "books.manuscripts"
+  ],
+  "authorship": [
+   "books.manuscripts"
+  ],
+  "assassination": [
+   "society.history"
+  ],
+  "Westphalia": [],
+  "William III": [],
+  "Tuscan order": [
+   "architecture.classical"
+  ],
+  "crocus": [
+   "plants.flowers"
+  ],
+  "Gemini": [
+   "esoteric.astrology"
+  ],
+  "volcano": [
+   "animals.earth"
+  ],
+  "wind instruments": [
+   "music.instruments"
+  ],
+  "dentistry": [
+   "medicine.surgery"
+  ],
+  "war": [
+   "war.battles"
+  ],
+  "spirits": [
+   "esoteric.magic"
+  ],
+  "grasses": [
+   "plants.botany"
+  ],
+  "spices": [
+   "plants.medicinal"
+  ],
+  "Asian flora": [
+   "plants.botany"
+  ],
+  "lotus": [
+   "plants.flowers"
+  ],
+  "corals": [
+   "animals.shells"
+  ],
+  "Christology": [
+   "religion.christ"
+  ],
+  "nude": [
+   "society.portraits"
+  ],
+  "defense": [
+   "war.military-engineering"
+  ],
+  "John the Baptist": [
+   "religion.saints"
+  ],
+  "longsword": [
+   "war.weapons"
+  ],
+  "area calculation": [
+   "mathematics.geometry"
+  ],
+  "cross": [
+   "religion.christianity"
+  ],
+  "discovery": [
+   "maps.travel"
+  ],
+  "Mythology": [
+   "religion.mythology"
+  ],
+  "temple architecture": [
+   "architecture.general"
+  ],
+  "parallelograms": [
+   "mathematics.geometry"
+  ],
+  "monastic architecture": [
+   "architecture.general"
+  ],
+  "microscopic anatomy": [
+   "medicine.anatomy",
+   "science.microscopy"
+  ],
+  "Yoruba culture": [
+   "society.peoples"
+  ],
+  "aristocracy": [
+   "society.royalty"
+  ],
+  "vulture": [
+   "animals.birds"
+  ],
+  "leadership": [
+   "society.royalty"
+  ],
+  "chemical processes": [
+   "science.chemistry"
+  ],
+  "physical culture": [
+   "society.daily-life"
+  ],
+  "human head": [
+   "medicine.anatomy"
+  ],
+  "Heian court life": [
+   "society.royalty"
+  ],
+  "Saint Luke": [
+   "religion.saints"
+  ],
+  "Egyptian archaeology": [
+   "books.archaeology"
+  ],
+  "apothecary": [
+   "medicine.pharmacy"
+  ],
+  "religious figure": [
+   "religion.christianity"
+  ],
+  "river landscape": [
+   "maps.landscape"
+  ],
+  "Ramayana": [
+   "religion.hinduism"
+  ],
+  "goat": [
+   "animals.zoology"
+  ],
+  "human biology": [
+   "medicine.anatomy"
+  ],
+  "Maya calendar": [
+   "astronomy.time"
+  ],
+  "planisphere": [
+   "astronomy.instruments"
+  ],
+  "foreign peoples": [
+   "society.peoples"
+  ],
+  "Ancient Egyptian language": [
+   "books.inscriptions"
+  ],
+  "Egyptian flora": [
+   "plants.botany"
+  ],
+  "patience": [
+   "emblems.virtues"
+  ],
+  "diagnosis": [
+   "medicine.general"
+  ],
+  "willow": [
+   "plants.trees"
+  ],
+  "Alexander Pushkin": [],
+  "New France": [],
+  "Dead Souls": [
+   "arts.literature"
+  ],
+  "University of Michigan": [],
+  "Decadent movement": [],
+  "Peru": [],
+  "Poliphile": [
+   "arts.literature"
+  ],
+  "classical history": [
+   "society.history"
+  ],
+  "Lullism": [
+   "philosophy.general"
+  ],
+  "seashells": [
+   "animals.shells"
+  ],
+  "structural design": [
+   "architecture.plans"
+  ],
+  "Diana": [
+   "religion.mythology"
+  ],
+  "pine tree": [
+   "plants.trees"
+  ],
+  "apostles": [
+   "religion.saints"
+  ],
+  "hexachords": [
+   "music.theory"
+  ],
+  "Indonesian flora": [
+   "plants.botany"
+  ],
+  "French history": [
+   "society.history"
+  ],
+  "animal": [
+   "animals.zoology"
+  ],
+  "livestock": [
+   "plants.agriculture"
+  ],
+  "Leo": [
+   "esoteric.astrology"
+  ],
+  "strength of materials": [
+   "science.mechanics"
+  ],
+  "memorial": [
+   "religion.death"
+  ],
+  "wheat": [
+   "plants.agriculture"
+  ],
+  "timber framing": [
+   "architecture.plans"
+  ],
+  "migration": [
+   "society.peoples"
+  ],
+  "succulents": [
+   "plants.botany"
+  ],
+  "stereographic projection": [
+   "mathematics.geometry"
+  ],
+  "Saint Peter": [
+   "religion.saints"
+  ],
+  "Irish music": [
+   "music.theory"
+  ],
+  "Martyrdom": [
+   "religion.saints"
+  ],
+  "Iris": [
+   "plants.flowers"
+  ],
+  "Gospel of John": [
+   "religion.bible"
+  ],
+  "beekeeping": [
+   "plants.agriculture"
+  ],
+  "fashion history": [
+   "society.costume"
+  ],
+  "Ambrosian rite": [
+   "religion.liturgy"
+  ],
+  "bronze mirror": [
+   "books.coins"
+  ],
+  "peacocks": [
+   "animals.birds"
+  ],
+  "Silk Road": [
+   "maps.travel"
+  ],
+  "cabbala": [
+   "esoteric.kabbalah"
+  ],
+  "comets": [
+   "astronomy.planets"
+  ],
+  "Indian astronomy": [
+   "astronomy.general"
+  ],
+  "Taurus": [
+   "esoteric.astrology"
+  ],
+  "warriors": [
+   "war.weapons"
+  ],
+  "garlic": [
+   "plants.medicinal"
+  ],
+  "Waldensians": [
+   "religion.christianity"
+  ],
+  "prefiguration": [
+   "emblems.allegory"
+  ],
+  "temperament": [
+   "philosophy.natural"
+  ],
+  "stone tools": [
+   "books.archaeology"
+  ],
+  "political satire": [
+   "emblems.fables"
+  ],
+  "The Fall of Man": [
+   "religion.bible"
+  ],
+  "freshwater fish": [
+   "animals.fish"
+  ],
+  "Sacred Geometry": [
+   "mathematics.geometry",
+   "esoteric.numbers"
+  ],
+  "scientific instrumentation": [
+   "astronomy.instruments"
+  ],
+  "Burgundy": [],
+  "cultural exchange": [
+   "society.history"
+  ],
+  "Belgium": [],
+  "catch": [],
+  "equipment": [
+   "science.machines"
+  ],
+  "Resurrection of Christ": [
+   "religion.christ"
+  ],
+  "Sanskrit manuscript": [
+   "books.manuscripts"
+  ],
+  "mathematical proportion": [
+   "mathematics.perspective"
+  ],
+  "giants": [
+   "animals.monsters"
+  ],
+  "Entry into Jerusalem": [
+   "religion.christ"
+  ],
+  "Holy Grail": [
+   "religion.mysticism"
+  ],
+  "Palm Sunday": [
+   "religion.liturgy"
+  ],
+  "prophet": [
+   "religion.bible"
+  ],
+  "floral arrangement": [
+   "plants.gardens"
+  ],
+  "scholar-official": [
+   "society.daily-life"
+  ],
+  "circulatory system": [
+   "medicine.anatomy"
+  ],
+  "pagoda": [
+   "architecture.chinese"
+  ],
+  "snake": [
+   "animals.reptiles"
+  ],
+  "Gethsemane": [
+   "religion.christ"
+  ],
+  "lute": [
+   "music.instruments"
+  ],
+  "rice cultivation": [
+   "plants.agriculture"
+  ],
+  "legend": [
+   "religion.mythology"
+  ],
+  "Protestantism": [
+   "religion.christianity"
+  ],
+  "classical ornament": [
+   "books.ornament"
+  ],
+  "boating": [
+   "maps.navigation"
+  ],
+  "Salome": [
+   "religion.bible"
+  ],
+  "nesting": [
+   "animals.birds"
+  ],
+  "Twelve Tribes of Israel": [
+   "religion.bible"
+  ],
+  "planets": [
+   "astronomy.planets"
+  ],
+  "hybrid creature": [
+   "animals.monsters"
+  ],
+  "oak tree": [
+   "plants.trees"
+  ],
+  "medical astrology": [
+   "medicine.general",
+   "esoteric.astrology"
+  ],
+  "divine wisdom": [
+   "religion.mysticism"
+  ],
+  "Renaissance symbolism": [
+   "emblems.symbolism"
+  ],
+  "Daoyin": [
+   "medicine.chinese"
+  ],
+  "Sefirot": [
+   "esoteric.kabbalah"
+  ],
+  "Harrowing of Hell": [
+   "religion.christ"
+  ],
+  "tropical flora": [
+   "plants.botany"
+  ],
+  "market": [
+   "society.daily-life"
+  ],
+  "triangular numbers": [
+   "mathematics.arithmetic"
+  ],
+  "memory palace": [
+   "books.ciphers"
+  ],
+  "Apostle": [
+   "religion.saints"
+  ],
+  "Ancient Greek philosophy": [
+   "philosophy.general"
+  ],
+  "desert": [
+   "maps.landscape"
+  ],
+  "tulips": [
+   "plants.flowers"
+  ],
+  "city gate": [
+   "architecture.fortification"
+  ],
+  "Japanese landscape": [
+   "maps.landscape"
+  ],
+  "proverb": [
+   "emblems.fables"
+  ],
+  "Annunciation to the Shepherds": [
+   "religion.bible"
+  ],
+  "folk tale": [
+   "religion.mythology"
+  ],
+  "tetragrammaton": [
+   "esoteric.kabbalah"
+  ],
+  "famous women": [
+   "society.portraits"
+  ],
+  "Gospel of Luke": [
+   "religion.bible"
+  ],
+  "instrument making": [
+   "science.machines"
+  ],
+  "midwifery": [
+   "medicine.embryology"
+  ],
+  "collision theory": [
+   "science.physics"
+  ],
+  "basilica": [
+   "architecture.general"
+  ],
+  "starfish": [
+   "animals.fish"
+  ],
+  "Yoga": [
+   "religion.hinduism"
+  ],
+  "religious figures": [
+   "religion.christianity"
+  ],
+  "ritual bronze vessel": [
+   "books.archaeology"
+  ],
+  "nun": [
+   "religion.christianity"
+  ],
+  "light rays": [
+   "science.optics"
+  ],
+  "angiosperms": [
+   "plants.botany"
+  ],
+  "ground plan": [
+   "architecture.plans"
+  ],
+  "Babylonian mythology": [
+   "religion.mythology"
+  ],
+  "crocodile": [
+   "animals.reptiles"
+  ],
+  "maritime engineering": [
+   "war.military-engineering"
+  ],
+  "Greek epigraphy": [
+   "books.inscriptions"
+  ],
+  "Baroque music": [
+   "music.theory"
+  ],
+  "grotesques": [
+   "books.ornament"
+  ],
+  "University of California": [],
+  "literary illustration": [
+   "arts.art"
+  ],
+  "institutional seal": [
+   "books.coins"
+  ],
+  "child": [
+   "society.daily-life"
+  ],
+  "grief": [
+   "emblems.virtues"
+  ],
+  "university seal": [
+   "books.coins"
+  ],
+  "Byzantine Empire": []
+ }
+}

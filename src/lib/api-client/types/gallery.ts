@@ -97,6 +97,8 @@ export interface GallerySearchParams {
   query?: string;
   type?: string;
   subject?: string;
+  /** Browse-vocabulary id (category or term) — see src/lib/image-subjects.ts */
+  topic?: string;
   figure?: string;
   symbol?: string;
   yearFrom?: number;

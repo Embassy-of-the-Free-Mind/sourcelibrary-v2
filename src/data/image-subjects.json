@@ -1,0 +1,621 @@
+{
+  "_about": "Controlled two-level vocabulary for browsing book illustrations by subject (#4856). The extractor writes free-text metadata.subjects (39K distinct strings); src/data/image-subject-map.json maps those raw strings onto the term ids below. Categories are for readers, in their words; they are not Iconclass. Edit a label here freely; changing an id breaks /gallery?topic= links.",
+  "categories": [
+    {
+      "id": "plants",
+      "label": "Plants & herbals",
+      "terms": [
+        {
+          "id": "plants.botany",
+          "label": "Botany"
+        },
+        {
+          "id": "plants.medicinal",
+          "label": "Medicinal plants & herbals"
+        },
+        {
+          "id": "plants.fungi",
+          "label": "Fungi & mushrooms"
+        },
+        {
+          "id": "plants.trees",
+          "label": "Trees"
+        },
+        {
+          "id": "plants.flowers",
+          "label": "Flowers"
+        },
+        {
+          "id": "plants.gardens",
+          "label": "Gardens & horticulture"
+        },
+        {
+          "id": "plants.agriculture",
+          "label": "Agriculture"
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "label": "Animals & natural history",
+      "terms": [
+        {
+          "id": "animals.natural-history",
+          "label": "Natural history"
+        },
+        {
+          "id": "animals.zoology",
+          "label": "Animals"
+        },
+        {
+          "id": "animals.birds",
+          "label": "Birds"
+        },
+        {
+          "id": "animals.fish",
+          "label": "Fish & sea life"
+        },
+        {
+          "id": "animals.shells",
+          "label": "Shells & molluscs"
+        },
+        {
+          "id": "animals.insects",
+          "label": "Insects"
+        },
+        {
+          "id": "animals.reptiles",
+          "label": "Reptiles & amphibians"
+        },
+        {
+          "id": "animals.monsters",
+          "label": "Monsters & fabulous beasts"
+        },
+        {
+          "id": "animals.earth",
+          "label": "Rocks, minerals & fossils"
+        }
+      ]
+    },
+    {
+      "id": "mathematics",
+      "label": "Mathematics & geometry",
+      "terms": [
+        {
+          "id": "mathematics.geometry",
+          "label": "Geometry"
+        },
+        {
+          "id": "mathematics.general",
+          "label": "Mathematics"
+        },
+        {
+          "id": "mathematics.arithmetic",
+          "label": "Arithmetic & algebra"
+        },
+        {
+          "id": "mathematics.trigonometry",
+          "label": "Trigonometry"
+        },
+        {
+          "id": "mathematics.conics",
+          "label": "Conic sections & curves"
+        },
+        {
+          "id": "mathematics.perspective",
+          "label": "Perspective & proportion"
+        },
+        {
+          "id": "mathematics.surveying",
+          "label": "Surveying & measurement"
+        }
+      ]
+    },
+    {
+      "id": "astronomy",
+      "label": "Astronomy & the heavens",
+      "terms": [
+        {
+          "id": "astronomy.general",
+          "label": "Astronomy"
+        },
+        {
+          "id": "astronomy.cosmology",
+          "label": "Cosmology & world systems"
+        },
+        {
+          "id": "astronomy.planets",
+          "label": "Planets & celestial motion"
+        },
+        {
+          "id": "astronomy.sun-moon",
+          "label": "Sun & moon"
+        },
+        {
+          "id": "astronomy.stars",
+          "label": "Stars & constellations"
+        },
+        {
+          "id": "astronomy.time",
+          "label": "Calendars, clocks & sundials"
+        },
+        {
+          "id": "astronomy.instruments",
+          "label": "Scientific instruments"
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "label": "Physics, machines & technology",
+      "terms": [
+        {
+          "id": "science.physics",
+          "label": "Physics"
+        },
+        {
+          "id": "science.mechanics",
+          "label": "Mechanics & statics"
+        },
+        {
+          "id": "science.optics",
+          "label": "Optics & light"
+        },
+        {
+          "id": "science.hydraulics",
+          "label": "Hydraulics & pneumatics"
+        },
+        {
+          "id": "science.magnetism",
+          "label": "Magnetism"
+        },
+        {
+          "id": "science.machines",
+          "label": "Machines & engineering"
+        },
+        {
+          "id": "science.mining",
+          "label": "Mining & metallurgy"
+        },
+        {
+          "id": "science.chemistry",
+          "label": "Chemistry"
+        },
+        {
+          "id": "science.microscopy",
+          "label": "Microscopy"
+        },
+        {
+          "id": "science.meteorology",
+          "label": "Weather & meteorology"
+        }
+      ]
+    },
+    {
+      "id": "alchemy",
+      "label": "Alchemy",
+      "terms": [
+        {
+          "id": "alchemy.general",
+          "label": "Alchemy"
+        },
+        {
+          "id": "alchemy.transmutation",
+          "label": "Transmutation & the Great Work"
+        },
+        {
+          "id": "alchemy.laboratory",
+          "label": "Furnaces, stills & apparatus"
+        },
+        {
+          "id": "alchemy.elements",
+          "label": "The elements"
+        }
+      ]
+    },
+    {
+      "id": "esoteric",
+      "label": "Astrology, magic & the occult",
+      "terms": [
+        {
+          "id": "esoteric.astrology",
+          "label": "Astrology & the zodiac"
+        },
+        {
+          "id": "esoteric.divination",
+          "label": "Divination"
+        },
+        {
+          "id": "esoteric.magic",
+          "label": "Magic, talismans & spirits"
+        },
+        {
+          "id": "esoteric.kabbalah",
+          "label": "Kabbalah"
+        },
+        {
+          "id": "esoteric.hermeticism",
+          "label": "Hermeticism & esotericism"
+        },
+        {
+          "id": "esoteric.rosicrucian",
+          "label": "Rosicrucians & Freemasons"
+        },
+        {
+          "id": "esoteric.numbers",
+          "label": "Number symbolism & sacred geometry"
+        },
+        {
+          "id": "esoteric.microcosm",
+          "label": "Macrocosm & microcosm"
+        }
+      ]
+    },
+    {
+      "id": "religion",
+      "label": "Religion & mythology",
+      "terms": [
+        {
+          "id": "religion.bible",
+          "label": "Bible scenes"
+        },
+        {
+          "id": "religion.christ",
+          "label": "Christ & the Virgin"
+        },
+        {
+          "id": "religion.saints",
+          "label": "Saints & martyrs"
+        },
+        {
+          "id": "religion.christianity",
+          "label": "Christianity & the Church"
+        },
+        {
+          "id": "religion.liturgy",
+          "label": "Liturgy & devotion"
+        },
+        {
+          "id": "religion.buddhism",
+          "label": "Buddhism"
+        },
+        {
+          "id": "religion.hinduism",
+          "label": "Hinduism"
+        },
+        {
+          "id": "religion.taoism",
+          "label": "Chinese religion"
+        },
+        {
+          "id": "religion.islam",
+          "label": "Islam"
+        },
+        {
+          "id": "religion.other",
+          "label": "Other religions"
+        },
+        {
+          "id": "religion.mythology",
+          "label": "Mythology"
+        },
+        {
+          "id": "religion.egypt",
+          "label": "Egyptian religion"
+        },
+        {
+          "id": "religion.americas",
+          "label": "Mesoamerican religion"
+        },
+        {
+          "id": "religion.death",
+          "label": "Death & the afterlife"
+        },
+        {
+          "id": "religion.mysticism",
+          "label": "Mysticism"
+        }
+      ]
+    },
+    {
+      "id": "emblems",
+      "label": "Emblems & allegory",
+      "terms": [
+        {
+          "id": "emblems.allegory",
+          "label": "Allegory"
+        },
+        {
+          "id": "emblems.emblems",
+          "label": "Emblems"
+        },
+        {
+          "id": "emblems.symbolism",
+          "label": "Symbolism"
+        },
+        {
+          "id": "emblems.virtues",
+          "label": "Virtues & vices"
+        },
+        {
+          "id": "emblems.fables",
+          "label": "Fables & satire"
+        }
+      ]
+    },
+    {
+      "id": "medicine",
+      "label": "Medicine & the body",
+      "terms": [
+        {
+          "id": "medicine.anatomy",
+          "label": "Anatomy"
+        },
+        {
+          "id": "medicine.general",
+          "label": "Medicine"
+        },
+        {
+          "id": "medicine.surgery",
+          "label": "Surgery & instruments"
+        },
+        {
+          "id": "medicine.pharmacy",
+          "label": "Pharmacy & remedies"
+        },
+        {
+          "id": "medicine.chinese",
+          "label": "Chinese medicine"
+        },
+        {
+          "id": "medicine.embryology",
+          "label": "Embryology & birth"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "terms": [
+        {
+          "id": "music.theory",
+          "label": "Music theory"
+        },
+        {
+          "id": "music.notation",
+          "label": "Notation & chant"
+        },
+        {
+          "id": "music.harmony",
+          "label": "Harmony & counterpoint"
+        },
+        {
+          "id": "music.instruments",
+          "label": "Musical instruments"
+        },
+        {
+          "id": "music.sacred",
+          "label": "Sacred music"
+        },
+        {
+          "id": "music.acoustics",
+          "label": "Acoustics"
+        }
+      ]
+    },
+    {
+      "id": "maps",
+      "label": "Maps, travel & places",
+      "terms": [
+        {
+          "id": "maps.cartography",
+          "label": "Maps"
+        },
+        {
+          "id": "maps.geography",
+          "label": "Geography"
+        },
+        {
+          "id": "maps.navigation",
+          "label": "Navigation & ships"
+        },
+        {
+          "id": "maps.travel",
+          "label": "Travel & exploration"
+        },
+        {
+          "id": "maps.cities",
+          "label": "Cities & views"
+        },
+        {
+          "id": "maps.landscape",
+          "label": "Landscape"
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture",
+      "terms": [
+        {
+          "id": "architecture.general",
+          "label": "Architecture"
+        },
+        {
+          "id": "architecture.classical",
+          "label": "Classical orders"
+        },
+        {
+          "id": "architecture.fortification",
+          "label": "Fortification"
+        },
+        {
+          "id": "architecture.plans",
+          "label": "Plans & construction"
+        },
+        {
+          "id": "architecture.chinese",
+          "label": "Chinese architecture"
+        }
+      ]
+    },
+    {
+      "id": "war",
+      "label": "War & arms",
+      "terms": [
+        {
+          "id": "war.military-engineering",
+          "label": "Military engineering"
+        },
+        {
+          "id": "war.artillery",
+          "label": "Artillery & ballistics"
+        },
+        {
+          "id": "war.weapons",
+          "label": "Weapons & armour"
+        },
+        {
+          "id": "war.battles",
+          "label": "Battles & sieges"
+        },
+        {
+          "id": "war.fencing",
+          "label": "Fencing & martial arts"
+        }
+      ]
+    },
+    {
+      "id": "society",
+      "label": "People & society",
+      "terms": [
+        {
+          "id": "society.portraits",
+          "label": "Portraits"
+        },
+        {
+          "id": "society.royalty",
+          "label": "Royalty & court life"
+        },
+        {
+          "id": "society.heraldry",
+          "label": "Heraldry & genealogy"
+        },
+        {
+          "id": "society.daily-life",
+          "label": "Daily life & work"
+        },
+        {
+          "id": "society.costume",
+          "label": "Costume & fashion"
+        },
+        {
+          "id": "society.peoples",
+          "label": "Peoples & cultures"
+        },
+        {
+          "id": "society.history",
+          "label": "History"
+        },
+        {
+          "id": "society.education",
+          "label": "Learning & education"
+        }
+      ]
+    },
+    {
+      "id": "books",
+      "label": "Writing, books & antiquities",
+      "terms": [
+        {
+          "id": "books.typography",
+          "label": "Typography & printing"
+        },
+        {
+          "id": "books.ornament",
+          "label": "Ornament & initials"
+        },
+        {
+          "id": "books.calligraphy",
+          "label": "Calligraphy & scripts"
+        },
+        {
+          "id": "books.manuscripts",
+          "label": "Manuscripts & palaeography"
+        },
+        {
+          "id": "books.ownership",
+          "label": "Bookplates & bindings"
+        },
+        {
+          "id": "books.inscriptions",
+          "label": "Inscriptions & hieroglyphs"
+        },
+        {
+          "id": "books.papyri",
+          "label": "Papyri"
+        },
+        {
+          "id": "books.archaeology",
+          "label": "Archaeology & antiquities"
+        },
+        {
+          "id": "books.coins",
+          "label": "Coins & medals"
+        },
+        {
+          "id": "books.ciphers",
+          "label": "Ciphers & memory arts"
+        },
+        {
+          "id": "books.language",
+          "label": "Language & rhetoric"
+        }
+      ]
+    },
+    {
+      "id": "arts",
+      "label": "Literature & the arts",
+      "terms": [
+        {
+          "id": "arts.literature",
+          "label": "Literature & stories"
+        },
+        {
+          "id": "arts.poetry",
+          "label": "Poetry"
+        },
+        {
+          "id": "arts.theatre",
+          "label": "Theatre"
+        },
+        {
+          "id": "arts.art",
+          "label": "Art & artists"
+        }
+      ]
+    },
+    {
+      "id": "philosophy",
+      "label": "Philosophy & logic",
+      "terms": [
+        {
+          "id": "philosophy.general",
+          "label": "Philosophy"
+        },
+        {
+          "id": "philosophy.logic",
+          "label": "Logic"
+        },
+        {
+          "id": "philosophy.natural",
+          "label": "Natural philosophy"
+        },
+        {
+          "id": "philosophy.theology",
+          "label": "Theology & metaphysics"
+        }
+      ]
+    }
+  ]
+}

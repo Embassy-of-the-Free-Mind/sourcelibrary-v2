@@ -28,6 +28,7 @@ export const gallery = {
     if (params?.query) queryParams.append('q', params.query);
     if (params?.type) queryParams.append('type', params.type);
     if (params?.subject) queryParams.append('subject', params.subject);
+    if (params?.topic) queryParams.append('topic', params.topic);
     if (params?.figure) queryParams.append('figure', params.figure);
     if (params?.symbol) queryParams.append('symbol', params.symbol);
     // /api/gallery reads these as yearStart/yearEnd. Sending yearFrom/yearTo
