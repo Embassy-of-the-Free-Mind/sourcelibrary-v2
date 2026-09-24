@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
-import { isHiddenBook } from '@/lib/book-access';
+import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { pickArtworkRecord } from '@/lib/artwork-slug';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 
@@ -41,7 +41,8 @@ async function getArtwork(slug: string) {
   // rendered fully via a direct /artwork/<slug> URL even though it's excluded
   // from search/gallery (hidden-readpath-gate invariant; this is how Julika's
   // "searched toltec → clicked → error" hit a record that should never resolve).
-  if (isHiddenBook(artwork)) return null;
+  // The page may still redirect a hidden duplicate to its keeper (#5029).
+  if (isHiddenBook(artwork)) return { hiddenId: String(artwork.id ?? '') };
 
   // Get collections this artwork belongs to
   const collectionSlugs = (artwork.collections as string[]) || [];
@@ -124,7 +125,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // No try/catch: letting a fetch failure throw here keeps ISR serving the
   // last good page instead of permanently caching noindex fallback metadata.
   const data = await getArtwork(slug);
-  if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
+  if (!data || 'hiddenId' in data) return { title: 'Not Found', robots: { index: false, follow: true } };
   const { artwork } = data;
   // The <h1> carries an AI badge and a "title on the source record" line, but a
   // social card carries neither — it travels off-site as a bare claim. So when
@@ -159,6 +160,11 @@ export default async function ArtworkPage({ params }: PageProps) {
   const { slug } = await params;
   const data = await getArtwork(slug);
   if (!data) notFound();
+  if ('hiddenId' in data) {
+    const keeper = data.hiddenId ? await findVisibleDuplicateKeeper(await getReadDb(), data.hiddenId) : null;
+    if (keeper) permanentRedirect(keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}` : `/book/${keeper.slug}`);
+    notFound();
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>

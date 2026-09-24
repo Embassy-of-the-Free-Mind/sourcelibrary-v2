@@ -10,7 +10,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
-import { isHiddenBook } from '@/lib/book-access';
+import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
@@ -2575,6 +2575,22 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // only by the dynamic, editor-gated /book/[id]/preview route. Gating here
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
+    // A hidden DUPLICATE sends readers to the copy dedup kept (#5029) instead of
+    // dead-ending. Not when embedded: /embed/[tenant]/book re-exports this
+    // component and a /book or /artwork target would leave the embed shell (same
+    // reason as the artwork canonicalisation below). The lookup runs only on
+    // this already-hidden branch, so the canonical path pays nothing.
+    if (!isEmbedded && !previewProposed) {
+      const hiddenId = (earlyBook as { id?: string }).id ?? id;
+      const keeper = await findVisibleDuplicateKeeper(await getReadDb(), hiddenId, ctx);
+      if (keeper) {
+        permanentRedirect(
+          keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}`
+            : lang !== 'en' ? `/${lang}/book/${keeper.slug}`
+            : `/book/${keeper.slug}`,
+        );
+      }
+    }
     notFound();
   }
 
