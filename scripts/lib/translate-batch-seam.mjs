@@ -55,6 +55,7 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { isHeld } from './pipeline-hold.mjs';
+import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 
@@ -142,9 +143,11 @@ export function blockPrompt({ prompts, book, pages }) {
 /**
  * Parse one block's response into Map<page_number, text>. Mirrors translate-worker
  * translateBatch: the 15%-of-OCR reject for a misparsed/truncated page and the positional
- * fallback when the model renumbers pages. A block of one takes the whole response.
+ * fallback when the model renumbers pages, and the #5021 drift reject (block-drift.mjs): a
+ * boundary whose opening clause landed on the previous page drops both its pages. A block of
+ * one takes the whole response.
  */
-export function parseBlockResponse(responseText, pages) {
+export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
   const out = new Map();
   if (!responseText) return out;
   if (pages.length === 1) {
@@ -168,6 +171,10 @@ export function parseBlockResponse(responseText, pages) {
     out.clear();
     pages.forEach((p, i) => { if (!tooShort(p, entries[i])) out.set(p.page_number, entries[i]); });
   }
+  // A clause moved across an in-block page break (#5021): both pages of the boundary are left
+  // undrafted, so they are not written from this block and go back to the queue.
+  const { drifted } = dropDriftedPages(pages, out);
+  if (drifted.length && onDrift) onDrift(drifted);
   return out;
 }
 
@@ -510,11 +517,12 @@ export async function advanceRun(db, run, deps) {
     for (const b of run.blocks) {
       const pages = b.pages.map(p => pageDocs.get(p.id)).filter(Boolean);
       const r = byKey.get(b.key);
-      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages);
+      let drifted = null;
+      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages, { onDrift: (d) => { drifted = d; } });
       for (const p of pages) if (parsed.has(p.page_number)) drafts.set(p.id, parsed.get(p.page_number));
       if (!r) blockNotes.push({ key: b.key, note: 'no-response' });
       else if (r.error) blockNotes.push({ key: b.key, note: 'request-error', error: r.error });
-      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason });
+      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason, ...(drifted ? { drifted } : {}) });
     }
     // A SUCCEEDED job is a statement about the job, not about its requests. Every request can
     // come back as an error (2026-09-24: 3 jobs × "The operation was cancelled."), and a run
