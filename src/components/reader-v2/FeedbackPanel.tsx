@@ -19,6 +19,8 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { MIN_FEEDBACK_MESSAGE, MAX_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import type { Book, Page } from '@/lib/types';
+import { useFeedbackImages } from '@/components/feedback/useFeedbackImages';
+import { FeedbackImageAttach } from '@/components/feedback/FeedbackImageAttach';
 
 const FIELD =
   'w-full border font-sans text-[16px] lg:text-[13px] px-2.5 py-2 outline-none transition-colors '
@@ -32,12 +34,14 @@ export function FeedbackPanel({ page, book, url }: { page: Page; book: Book; url
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const attachments = useFeedbackImages();
 
   const signedInEmail = session?.user?.email || '';
   const tooShort = message.trim().length < MIN_FEEDBACK_MESSAGE;
 
   async function send() {
     if (sending || tooShort) { setError(tooShort ? t.tooShort : null); return; }
+    if (attachments.uploading) return;
     setSending(true);
     setError(null);
     try {
@@ -50,10 +54,12 @@ export function FeedbackPanel({ page, book, url }: { page: Page; book: Book; url
           // halfway" is unusable without knowing which page it stopped on.
           page: url,
           email: (email.trim() || signedInEmail) || undefined,
+          images: attachments.urls,
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setSent(true);
+      attachments.reset();
     } catch {
       // Only claim it reached us when it did.
       setError(t.failed);
@@ -90,10 +96,14 @@ export function FeedbackPanel({ page, book, url }: { page: Page; book: Book; url
           placeholder={t.placeholder}
           rows={5}
           maxLength={MAX_FEEDBACK_MESSAGE}
+          onPaste={attachments.onPaste}
+          onDrop={attachments.onDrop}
+          onDragOver={attachments.onDragOver}
           className={`${FIELD} resize-y leading-relaxed`}
           style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
         />
       </label>
+      <FeedbackImageAttach attachments={attachments} strings={t} disabled={sending} />
 
       <label className="block mt-3">
         <span className="block font-sans text-[11.5px] pb-1" style={{ color: 'var(--text-muted)' }}>
@@ -117,7 +127,7 @@ export function FeedbackPanel({ page, book, url }: { page: Page; book: Book; url
         <button
           type="button"
           onClick={send}
-          disabled={sending || tooShort}
+          disabled={sending || tooShort || attachments.uploading}
           className="inline-flex items-center gap-2 h-9 px-3.5 border font-sans text-[12.5px] transition-opacity hover:opacity-85 disabled:opacity-45 disabled:cursor-default"
           style={{ background: 'var(--text-primary)', color: 'var(--bg-cream)', borderColor: 'var(--text-primary)' }}
         >

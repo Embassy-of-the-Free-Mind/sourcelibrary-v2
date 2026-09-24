@@ -20,6 +20,8 @@ interface FeedbackItem {
   reply_sent_at?: string | null;
   reply_recipient?: string | null;
   channel?: 'mcp' | 'web' | null;
+  /** Public R2 URLs written by /api/feedback/upload; absent on rows without pictures. */
+  images?: string[];
 }
 
 type Tab = 'unread' | 'read' | 'addressed';
@@ -177,6 +179,18 @@ export default function AdminFeedbackPage() {
               )}
             </header>
             <p className="text-sm whitespace-pre-wrap text-stone-800 leading-relaxed">{item.message}</p>
+            {item.images && item.images.length > 0 && (
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {item.images.map(src => (
+                  <li key={src}>
+                    <a href={src} target="_blank" rel="noopener noreferrer" title="Open full size">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- R2 URL, already validated at write time */}
+                      <img src={src} alt="Attached by the submitter" className="h-28 w-auto max-w-[240px] object-cover rounded border border-stone-200 bg-stone-50" loading="lazy" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             {item.addressed && (
               <div className="mt-3 pt-3 border-t border-stone-100 text-xs text-stone-600">

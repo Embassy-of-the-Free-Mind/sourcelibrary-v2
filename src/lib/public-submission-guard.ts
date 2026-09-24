@@ -26,6 +26,7 @@ import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 /** Shared-Mongo limiter is keyed on this name — changing it resets the window. */
 export type PublicSubmissionRoute =
   | 'feedback'
+  | 'feedback-upload'
   | 'share-findings'
   | 'collection-proposals';
 
@@ -33,6 +34,11 @@ const LIMITS: Record<PublicSubmissionRoute, number> = {
   // A reader flagging translation issues page by page is doing exactly what we
   // asked them to, so this is the loosest of the three.
   feedback: 10,
+  // Image attachments for the widget: up to four per message, and a reader
+  // who attaches, deletes, and re-attaches burns a few more. Each upload is
+  // also bounded in bytes by the route, so this caps R2 writes per address
+  // rather than reader patience.
+  'feedback-upload': 40,
   // A dossier and a collection proposal are both considered submissions; more
   // than a handful an hour from one address is not a person thinking.
   'share-findings': 5,

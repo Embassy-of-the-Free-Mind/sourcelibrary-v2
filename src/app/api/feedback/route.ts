@@ -6,6 +6,7 @@ import { guardPublicSubmission } from '@/lib/public-submission-guard';
 import { getClientIp } from '@/lib/rate-limit';
 
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
+import { sanitizeFeedbackImages } from '@/lib/feedback-images';
 
 /**
  * One constant, shared with the `submit_feedback` tool schema that advertises it.
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (limited) return limited;
 
     const body = await request.json();
-    const { message, page, name, email, wantsToHelp } = body;
+    const { message, page, name, email, wantsToHelp, images: rawImages } = body;
 
     if (!message || typeof message !== 'string' || message.trim().length < MIN_FEEDBACK_MESSAGE) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
@@ -61,6 +62,11 @@ export async function POST(request: NextRequest) {
     const userAgent = request.headers.get('user-agent') || null;
     const channel = userAgent?.startsWith('SourceLibrary-MCP') ? 'mcp' : 'web';
 
+    // Attachments arrive as URLs already written by /api/feedback/upload. Only
+    // URLs of that route's exact shape survive; anything else is dropped rather
+    // than rejected, so a stale attachment never costs the reader their message.
+    const images = sanitizeFeedbackImages(rawImages);
+
     const doc = {
       message: message.trim(),
       page: page || null,
@@ -72,6 +78,9 @@ export async function POST(request: NextRequest) {
       created_at: new Date(),
       read: false,
       wants_to_help: wantsHelp,
+      // Absent, never an empty array: rows without pictures stay shaped like
+      // every row before this field existed.
+      ...(images.length ? { images } : {}),
     };
 
     await db.collection('feedback').insertOne(doc);
