@@ -26,12 +26,14 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import zlib from 'zlib';
 import {
   catchwordBoundary, pageNumberBreaks, duplicateScan, truncationRatio, echoedSource, ocrReasoningLeak,
 } from '../lib/page-integrity.mjs';
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
 
 export const TRUNC_NORM_FLAG = 0.5;
+export const REPEATED_BOOK_SHARE = 0.2;
 const arg = (k, d) => process.argv.find(a => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
 const flag = (k) => process.argv.includes(`--${k}`);
 
@@ -49,8 +51,25 @@ function readBook(file) {
     .filter(r => r.p > 0).sort((a, b) => a.p - b.p);
 }
 
-/** All five signals for one book. Returns { lines } — flag rows then the book row. */
-export function scanBook(id, rows, { bookLang = 'unknown', medians = null } = {}) {
+/**
+ * Half the language's median is a usable truncation line only where translations of that
+ * language cluster tightly around the median (interquartile range <= TIGHT_IQR of it: Latin,
+ * English, German, French, Greek, Italian ...). In a language whose ratio varies widely -- Tibetan
+ * and Devanagari, whose subjoined letters and vowel signs are marks, not letters; Hebrew with
+ * and without pointing -- a complete translation can sit at half the median (3 of 4 Tibetan
+ * flags in the check were complete), so there the page must also fall below half the
+ * language's 5th percentile. A language with no calibration of its own is treated as variable.
+ */
+export const TIGHT_IQR = 0.2;
+export function extremeForLanguage(ratio, lang, detail) {
+  const d = detail?.[lang];
+  if (d && d.n >= 200 && (d.p75 - d.p25) / d.median <= TIGHT_IQR) return true;
+  const ref = d && d.n >= 200 ? d : detail?._all;
+  return ref ? ratio < 0.5 * ref.p05 : false;
+}
+
+/** All five signals for one book. Returns { lines } -- flag rows then the book row. */
+export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detail = null } = {}) {
   const lines = [];
   const bk = {
     kind: 'book', book: id, lang: bookLang, pages: rows.length, trPages: 0,
@@ -100,7 +119,7 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null } = {}
       const L = (bk.trunc.byLang[lang] ||= { n: 0, flagged: 0 }); L.n++;
       const med = medians?.[lang] ?? medians?._all ?? null;
       const norm = med ? t.ratio / med : null;
-      if (norm != null && norm < TRUNC_NORM_FLAG) {
+      if (norm != null && norm < TRUNC_NORM_FLAG && extremeForLanguage(t.ratio, lang, detail)) {
         bk.trunc.flagged++; L.flagged++;
         lines.push({ kind: 'trunc', book: id, p: A.p, lang, ratio: t.ratio, norm: +norm.toFixed(3), src: t.src, tr: t.tr, type: A.type || null });
       }
@@ -160,7 +179,8 @@ function walk(dir, out) {
   const list = arg('books', '') || (arg('books-file', '') && fs.readFileSync(arg('books-file'), 'utf8'));
   const only = list ? new Set(list.split(/[\s,]+/).filter(Boolean)) : null;
   const calPath = path.join(out, 'calibration.json');
-  const medians = fs.existsSync(calPath) ? JSON.parse(fs.readFileSync(calPath, 'utf8')).medians : null;
+  const cal = fs.existsSync(calPath) ? JSON.parse(fs.readFileSync(calPath, 'utf8')) : null;
+  const medians = cal?.medians ?? null, detail = cal?.detail ?? null;
   if (!medians) process.stderr.write('WARNING: no calibration.json — truncation will be judged but never flagged\n');
   const langs = loadBookLangs(dir);
   const shardFile = path.join(out, only ? 'books.jsonl' : `shard-${k}.jsonl`);
@@ -179,7 +199,7 @@ function walk(dir, out) {
     const id = f.slice(0, -6);
     if (done.has(id) && !only) continue;
     let rows; try { rows = readBook(path.join(dir, f)); } catch { rows = null; }
-    const { lines } = rows ? scanBook(id, rows, { bookLang: langs.get(id) || 'unknown', medians })
+    const { lines } = rows ? scanBook(id, rows, { bookLang: langs.get(id) || 'unknown', medians, detail })
       : { lines: [{ kind: 'book', book: id, unreadable: true }] }; // recorded, never silently skipped
     fs.appendFileSync(shardFile, lines.map(l => JSON.stringify(l)).join('\n') + '\n');
     ran++;
@@ -242,6 +262,7 @@ export function summarize(out) {
  * to a store: the lists are files for a human to review (--report-dir, default
  * scripts/eval/results). Classes:
  *   duplicate-scans   the same page (gap 1) or the same opening (gap 2) photographed twice
+ *   repeated-page-books  books where ≥ REPEATED_BOOK_SHARE of pages repeat an earlier one (per-book)
  *   leaf-order        printed-number jump/back/repeat NOT explained by a duplicate scan at that
  *                     boundary; `corroborated` when the catchword chain breaks there too
  *   truncated         translation under half the language's median length for its source
@@ -257,11 +278,13 @@ export function report(out, reportDir, date) {
     if (!line) continue;
     try { const b = JSON.parse(line); vis.set(b.id, { visible: !!b.visible, title: b.display_title || b.title || '' }); } catch {}
   }
-  const lists = { 'duplicate-scans': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [] };
+  const lists = { 'duplicate-scans': [], 'repeated-page-books': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [] };
+  const pagesOf = new Map();
   for (const f of files) {
     const byBook = new Map();
     for (const line of fs.readFileSync(path.join(out, f), 'utf8').split('\n')) {
-      if (!line || line.startsWith('{"kind":"book"')) continue;
+      if (!line) continue;
+      if (line.startsWith('{"kind":"book"')) { const b = JSON.parse(line); pagesOf.set(b.book, b.pages); continue; }
       const r = JSON.parse(line);
       (byBook.get(r.book) || byBook.set(r.book, []).get(r.book)).push(r);
     }
@@ -286,11 +309,23 @@ export function report(out, reportDir, date) {
       for (const r of rows.filter(x => x.kind === 'ocrleak')) lists['ocr-reasoning-leak'].push({ book, visible: v.visible, page: r.p });
     }
   }
+  // A book where a fifth or more of the pages repeat an earlier page is not a scan with a few
+  // double captures: its image source returns one picture for every page, or its OCR stuck.
+  // Those books leave the duplicate-scans list (a per-page repair) for their own (a per-book one).
+  const dupPages = new Map();
+  for (const r of lists['duplicate-scans']) (dupPages.get(r.book) || dupPages.set(r.book, new Set()).get(r.book)).add(r.page);
+  const repeated = new Set();
+  for (const [book, set] of dupPages) {
+    const pages = pagesOf.get(book) || 0, share = set.size / Math.max(1, pages);
+    if (share >= REPEATED_BOOK_SHARE) { repeated.add(book); lists['repeated-page-books'].push({ book, visible: vis.get(book)?.visible ?? null, repeatedPages: set.size, pages, share: +share.toFixed(3), title: vis.get(book)?.title || '' }); }
+  }
+  lists['duplicate-scans'] = lists['duplicate-scans'].filter(r => !repeated.has(r.book));
   const stats = {};
   fs.mkdirSync(reportDir, { recursive: true });
   for (const [cls, rows] of Object.entries(lists)) {
-    const file = path.join(reportDir, `page-integrity-repair-${cls}-${date}.jsonl`);
-    fs.writeFileSync(file, rows.map(r => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+    // gzipped: the lists run to millions of bytes and are data for review, not source to read in a diff
+    const file = path.join(reportDir, `page-integrity-repair-${cls}-${date}.jsonl.gz`);
+    fs.writeFileSync(file, zlib.gzipSync(rows.map(r => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : '')));
     const books = new Set(rows.map(r => r.book)), visibleBooks = new Set(rows.filter(r => r.visible).map(r => r.book));
     stats[cls] = { rows: rows.length, books: books.size, visibleBooks: visibleBooks.size, visibleRows: rows.filter(r => r.visible).length, file };
   }

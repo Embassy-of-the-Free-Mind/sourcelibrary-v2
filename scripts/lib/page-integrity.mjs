@@ -467,7 +467,8 @@ export function readingLength(t) {
  *  transcription … **1. Identify Language:**"). Not a transcription at all. */
 export function ocrReasoningLeak(ocr) {
   const head = String(ocr || '').slice(0, 600);
-  return /(^|\n)\s*thought\b|the user wants (?:a|me to)\b|\*\*\d\.\s*identify (?:the )?language/i.test(head);
+  // Not a line merely starting with the English word "thought" — 19 of 20 such hits were prose.
+  return /the user wants (?:a|me to|the)\b|\*\*\d\.\s*identify (?:the )?language|^\s*thought\s*\n+\s*(?:the user|okay|ok,|let me|i need|i will|\*\*)/i.test(head);
 }
 const DESCRIBED_PAGE = /^\W{0,3}(?:the image|this image|this page|the page (?:is|appears|shows|contains)|image (?:shows|of)|this (?:is a|appears)|a (?:blank|largely blank))/i;
 

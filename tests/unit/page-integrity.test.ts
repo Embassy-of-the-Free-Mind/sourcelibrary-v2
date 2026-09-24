@@ -18,6 +18,12 @@ import {
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/page-integrity.mjs';
 
+import {
+  extremeForLanguage, TRUNC_NORM_FLAG,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore — plain-JS module, no declarations
+} from '../../scripts/audit/page-integrity.mjs';
+
 const fx = (name: string) => JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/page-integrity', name), 'utf8'));
 const CW = fx('catchwords.json').cases as any[];
 const PN = fx('page-numbers.json').cases as any[];
@@ -107,11 +113,26 @@ describe('truncated translations', () => {
   it('recognises leaked model reasoning, and not ordinary text', () => {
     expect(ocrReasoningLeak('thought The user wants a transcription of a historical manuscript page')).toBe(true);
     expect(ocrReasoningLeak('<language>Latin</language>\nQuemadmodum in Palatio rotundo')).toBe(false);
+    // the hand-read's false shape: English prose whose first line starts with the word
+    expect(ocrReasoningLeak('thought by examination of the structure of a proposition.')).toBe(false);
+    expect(ocrReasoningLeak('164  ST. AMBROSE.\nthought that he was restored to us')).toBe(false);
   });
   it('counts the languages the OCR tag names, ignoring parentheticals', () => {
     expect(sourceLanguageCount('<language>Greek, Latin</language>')).toBe(2);
     expect(sourceLanguageCount('<language>Latin (with Greek)</language>')).toBe(1);
   });
+});
+
+describe('truncation needs an extreme ratio where a language varies widely', () => {
+  const R = TR.languageRule;
+  for (const c of R.cases) {
+    it(`${c.expect} — ${c.name}`, () => {
+      const ratio = c.ratio ?? truncationRatio(c.page).ratio;
+      const med = R.detail[c.lang].median;
+      const flagged = ratio / med < TRUNC_NORM_FLAG && extremeForLanguage(ratio, c.lang, R.detail);
+      expect(flagged).toBe(c.expect === 'flag');
+    });
+  }
 });
 
 describe('echoed source', () => {
