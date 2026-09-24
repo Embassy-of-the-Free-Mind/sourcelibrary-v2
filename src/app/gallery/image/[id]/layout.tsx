@@ -133,6 +133,8 @@ interface PageWithBook {
 interface Detection {
   description: string;
   type?: string;
+  /** Cropped + rotated plate JPEG in R2 (see DetectedImage in lib/types/page). */
+  extracted_url?: string;
   museum_description?: string;
   metadata?: {
     subjects?: string[];
@@ -182,6 +184,22 @@ const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; det
   }
 });
 
+/**
+ * The image this page is about: the plate's own cut-out (`extracted_url`, a
+ * cropped + rotated JPEG in R2, present on ~99.6% of public gallery images),
+ * falling back to the whole page scan. Search engines index whatever this
+ * returns — og:image, the ImageObject contentUrl, and the crawler-visible
+ * <img> — so the full-page fallback meant Google Images was offered a page of
+ * text with a small woodcut in the corner instead of the woodcut.
+ */
+function plateImageUrl(page: PageWithBook, detection: Detection): string | undefined {
+  return detection.extracted_url
+    || (page as { enhanced_photo?: string }).enhanced_photo
+    || page.cropped_photo
+    || page.archived_photo
+    || page.photo;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -211,7 +229,7 @@ export async function generateMetadata({
   const author = page.book?.author;
   const year = page.book?.published;
   const description = detection.description || 'Historical illustration';
-  const plateUrl = (page as { enhanced_photo?: string }).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo;
+  const plateUrl = plateImageUrl(page, detection);
 
   // Short title: first sentence (up to 70 chars) for social card headline
   const firstSentence = description.split(/\.\s/)[0];
@@ -280,7 +298,7 @@ export default async function ImageLayout({
   }
 
   const { page, detection } = data;
-  const imageUrl = (page as any).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo;
+  const imageUrl = plateImageUrl(page, detection);
 
   return (
     <div className="min-h-screen bg-black">
