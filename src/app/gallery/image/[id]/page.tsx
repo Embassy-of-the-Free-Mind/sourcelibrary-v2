@@ -30,6 +30,7 @@ import {
   Loader2,
   Eye,
   Search,
+  Globe,
   Map as MapIcon
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
@@ -961,6 +962,21 @@ export default function ImageDetailPage({
             {/* Allmaps (#5070) — georeference a map in the Allmaps Editor. The API
                 sets allmapsUrl only for type=map pages whose SOURCE library exposes
                 a IIIF image service; our marked R2 image cannot be tiled. */}
+            {/* When a volunteer has already georeferenced it (#5076, synced nightly from
+                Allmaps), offer the warped view first and relabel the editor link. */}
+            {data.type === 'map' && data.allmaps?.viewerUrl && (
+              <a
+                href={data.allmaps.viewerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sendGAEvent({ action: 'gallery_allmaps_view', label: imageId || undefined })}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/70 rounded-lg text-xs text-stone-300 hover:text-white transition-colors"
+                title={`See this map warped onto a modern map in the Allmaps Viewer (${data.allmaps.gcps} control points)`}
+              >
+                <Globe className="w-4 h-4" />
+                <span className="hidden sm:inline">View georeferenced</span>
+              </a>
+            )}
             {data.type === 'map' && data.allmapsUrl && (
               <a
                 href={data.allmapsUrl}
@@ -968,10 +984,12 @@ export default function ImageDetailPage({
                 rel="noopener noreferrer"
                 onClick={() => sendGAEvent({ action: 'gallery_allmaps_open', label: imageId || undefined })}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/70 rounded-lg text-xs text-stone-300 hover:text-white transition-colors"
-                title="Georeference this map in the Allmaps Editor (opens the holding library's IIIF image)"
+                title={data.allmaps?.viewerUrl
+                  ? 'Improve the georeferencing of this map in the Allmaps Editor'
+                  : "Georeference this map in the Allmaps Editor (opens the holding library's IIIF image)"}
               >
                 <MapIcon className="w-4 h-4" />
-                <span className="hidden sm:inline">Georeference</span>
+                <span className="hidden sm:inline">{data.allmaps?.viewerUrl ? 'Improve georeference' : 'Georeference'}</span>
               </a>
             )}
             {(brightness !== 100 || contrast !== 100) && (

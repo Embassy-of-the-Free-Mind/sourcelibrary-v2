@@ -44,6 +44,9 @@ export const DOMAIN_LIMITS = {
   // (~240k pages × 9 tiles = ~2.16M requests). Stays well below the rate
   // CloudFront serves for cached resources.
   'images.eap.bl.uk': 15,
+  // Allmaps annotations API (scripts/workers/allmaps-sync.mjs, #5076): a volunteer
+  // project's public read API, ~3.7K lookups a night. Asked for ≤2/s in the handoff.
+  'annotations.allmaps.org': 2,
 };
 
 const DEFAULT_LIMIT = 5;
