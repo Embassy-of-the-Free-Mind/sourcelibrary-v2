@@ -41,13 +41,13 @@ export const posts: BlogPost[] = [
     slug: 'techniques-of-the-body',
     title: 'Techniques of the Body',
     subtitle:
-      'Postures, breathing methods and exercises quoted from the manuals that prescribe them: the Ming seasonal exercises and Eight Brocades, Hua Tuo’s five animals, the seat and breath retentions of haṭha yoga, and the Greek, Arabic and Latin rites. Each original beside its translation.',
+      'Postures, breathing methods and exercises quoted from the books that prescribe them, in Chinese, Sanskrit, Tibetan, Greek, Latin, Hebrew, Arabic and the European vernaculars: seasonal exercises, haṭha yoga, breathing methods, the Pythagorean day, theurgy, penance, prayer, drill, the gymnasium and ritual. Each original beside its translation.',
     date: '15 September 2026',
     readTime: '25 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg',
-    imageAlt: 'Woodcut from the Sancai tuhui of 1609: a seated figure performing the exercise prescribed for one fortnight of the year.',
+    image: 'https://sourcelibrary.org/blog/techniques-of-the-body/hero-khrul-khor.jpg',
+    imageAlt: 'A Tibetan manuscript of the Nyang tradition: figures drawn in the sequence of the ’khrul ’khor exercises.',
   },
   {
     slug: 'free-reading',
