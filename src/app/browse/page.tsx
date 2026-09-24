@@ -103,7 +103,7 @@ export default async function BrowsePage() {
             By Subject
           </h2>
           <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-            Browse illustrations and artworks by visual subject using the Iconclass classification system.
+            Browse the illustrations in our books by what they show: alchemy, botany, geometry, emblems and more.
           </p>
           <Link
             href={`${base}/subjects`}

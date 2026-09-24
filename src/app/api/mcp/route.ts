@@ -806,7 +806,6 @@ async function searchImages(args: Record<string, unknown>) {
   params.set('limit', String(limit));
   const offset = Math.max(0, Math.floor(Number(args.offset) || 0));
   if (offset) params.set('offset', String(offset));
-  if (args.iconclass) params.set('iconclass', String(args.iconclass));
 
   // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
   // The artwork lane supports type/subject/figure/symbol/year filters and MUST
@@ -828,10 +827,7 @@ async function searchImages(args: Record<string, unknown>) {
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
     // The artwork lane has no offset support — include it on the first page
     // only, so paging doesn't re-serve the same artworks on every call.
-    // Also skip it when an iconclass filter is set: the artwork lane cannot
-    // apply it, and unfiltered results merged into a filtered request is the
-    // silent no-op disease #3936 was about.
-    args.query && !args.book_id && !args.iconclass && offset === 0
+    args.query && !args.book_id && offset === 0
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
@@ -842,11 +838,6 @@ async function searchImages(args: Record<string, unknown>) {
     // record, display/context only. Agents previously had to infer this from
     // which fields happened to be present.
     source_type: item.source === 'artwork' ? 'artwork' : 'book_illustration',
-    // Iconclass notations where the classifier has run (~2,500 of 206K images
-    // as of 2026-08 — sparse, so absence means unclassified, not unthemed).
-    ...((item.metadata as { iconclass?: string[] } | undefined)?.iconclass?.length
-      ? { iconclass: (item.metadata as { iconclass: string[] }).iconclass }
-      : {}),
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
@@ -963,6 +954,12 @@ async function searchImages(args: Record<string, unknown>) {
       : {}),
     images: allImages,
     ...(thumbNote ? { thumbnails_note: thumbNote } : {}),
+    // The iconclass filter was retired (#4856): the stored notations were
+    // model-recalled and largely wrong. A client holding the old schema may still
+    // send it — say it was ignored rather than silently returning unfiltered results.
+    ...(args.iconclass
+      ? { iconclass_note: 'The iconclass filter has been retired and was ignored: the stored codes were unreliable. Filter by subject, figure or symbol, or use a text query.' }
+      : {}),
     // An empty scoped result must SAY so — silently returning nothing (or,
     // worse, unscoped results) is how the book_id no-op went unnoticed.
     ...(allImages.length === 0
@@ -1207,7 +1204,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol/iconclass or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
     // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
     // resource and render the gallery grid in the conversation (#3978).
@@ -1223,7 +1220,6 @@ const TOOLS: Tool[] = [
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
-        iconclass: { type: 'string', description: 'Filter by Iconclass notation, prefix-matched ("49" matches 49G22, 49E39, …). Coverage is SPARSE: only ~2,500 of 206K images carry a notation, so an empty result means the classifier has not run on matching images, NOT that the subject is absent from the corpus — retry with a text query before concluding anything. Book-illustration lane only (artworks are excluded when this filter is set). Matching results return their notations in an iconclass array.' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
       },
     },

@@ -233,7 +233,7 @@ src/
 ├── components/             # 250 React components (.tsx files)
 │   ├── book/               # Book detail, reader, processing
 │   ├── layout/             # GlobalHeader, GlobalFooter, FeaturedCollections
-│   ├── gallery/            # Gallery views (+ IconclassFilter)
+│   ├── gallery/            # Gallery views
 │   ├── reader/             # Page reader, zoom, sidebar
 │   ├── search/             # Search results, filters
 │   ├── explore/            # Map, timeline
@@ -260,7 +260,6 @@ src/
 │   ├── import-utils.ts     # IIIF manifest parsing
 │   ├── page-revisions.ts   # createRevision() — MUST call before page writes
 │   ├── adaptive-limits.ts  # system_config.adaptive_limits read/write
-│   ├── iconclass-categories.ts # Iconclass visual classification
 │   ├── page-split/         # Split detection (dedup, ghost pages, ML detection)
 │   ├── rithmomachia/       # Game engine (35+ files)
 │   ├── taxonomy/           # Faceted vocabulary (6 facets), tagging

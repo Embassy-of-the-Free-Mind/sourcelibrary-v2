@@ -361,6 +361,13 @@ const nextConfig: NextConfig = {
         destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
+      // Iconclass division pages retired (#4856) — codes were model-recalled and
+      // largely wrong; subject browse now leads with plain subject terms.
+      {
+        source: '/browse/subjects/:code+',
+        destination: '/browse/subjects',
+        permanent: true,
+      },
       {
         source: '/library',
         destination: '/search',

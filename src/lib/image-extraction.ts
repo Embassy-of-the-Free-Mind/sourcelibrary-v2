@@ -48,8 +48,7 @@ For each significant illustration return ("rotation" is the clockwise turn in de
     "figures": ["old man", "serpent"],
     "symbols": ["ouroboros", "athanor"],
     "style": "Northern European Renaissance",
-    "technique": "woodcut",
-    "iconclass": ["49E39", "25FF41"]
+    "technique": "woodcut"
   },
   "museum_description": "A robed figure holds a serpent that bites its own tail while standing over a lit furnace. The ouroboros and the athanor identify the scene as one of alchemical transmutation."
 }
@@ -61,8 +60,6 @@ GALLERY QUALITY (0.0-1.0):
 - 0.4-0.6: Musical scores, alchemical symbols
 
 MUSEUM DESCRIPTION: Write 2-3 plain sentences for a museum label: first what the viewer sees, then what it depicts or means. Name concrete things. Do NOT use promotional or filler language. Avoid the words "serves as", "stands as", "a testament to", "renowned", "profound", "delve", "intricate", "vibrant", "compelling", "exemplifies", "masterful", and the construction "not only X but also Y". State what is shown, not how significant it is.
-
-ICONCLASS: Assign 2-5 Iconclass codes (iconclass.org) in metadata.iconclass. Use the most specific code that applies. Example: "49E39" for alchemy, "25F23(LION)" for a lion, "98C231" for Claudia Quinta. Parenthetical qualifiers add specificity. See the classification context appended below (if present) for guidance.
 
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 

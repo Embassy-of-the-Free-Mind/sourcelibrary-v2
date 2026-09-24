@@ -85,15 +85,6 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
       </Suspense>
       <SignUpCTA />
 
-      {/* Classification credits */}
-      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pb-12">
-        <p className="text-xs text-stone-400 text-center">
-          Image subjects classified using{' '}
-          <a href="https://iconclass.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-600">Iconclass</a>
-          {' '}and the{' '}
-          <a href="https://chineseiconography.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-600">Chinese Iconography Thesaurus</a>
-        </p>
-      </div>
     </div>
   );
 }
