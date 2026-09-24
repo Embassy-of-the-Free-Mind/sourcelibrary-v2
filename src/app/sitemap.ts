@@ -337,7 +337,7 @@ async function getGalleryImages(chunkIndex: number): Promise<MetadataRoute.Sitem
     const images = await db.collection('gallery_images').find(
       GALLERY_SITEMAP_FILTER,
       {
-        projection: { _id: 0, id: 1, image_url: 1, updated_at: 1 },
+        projection: { _id: 0, id: 1, image_url: 1, extracted_url: 1, updated_at: 1 },
         sort: { _id: 1 },
         skip: chunkIndex * GALLERY_PER_CHUNK,
         limit: GALLERY_PER_CHUNK,
@@ -360,7 +360,9 @@ async function getGalleryImages(chunkIndex: number): Promise<MetadataRoute.Sitem
           lastModified,
           changeFrequency: 'monthly' as const,
           priority: 0.6,
-          images: [img.image_url as string],
+          // The plate's own crop, not the page it sits on (image_url is the
+          // whole page scan); same preference as the landing page's og:image.
+          images: [(img.extracted_url || img.image_url) as string],
         };
       });
   }, [] as MetadataRoute.Sitemap);
