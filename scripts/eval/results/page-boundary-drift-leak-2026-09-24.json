@@ -1,0 +1,292 @@
+{
+ "date": "2026-09-24",
+ "issues": [
+  5021,
+  5026
+ ],
+ "mirror": {
+  "books": 64990,
+  "booksTranslated": 20996,
+  "note": "~/sl-corpus mirror; leak counts from walk v1, drift from walk v2 (final detector)"
+ },
+ "drift": {
+  "inBlockProseBoundaries": 3826063,
+  "flagged_thr075": 77775,
+  "rate_thr075": 0.0203,
+  "flagged_thr04": 98390,
+  "flagged_thr10": 59704,
+  "booksWithFlag": 9315,
+  "precisionFresh": {
+   "n": 20,
+   "real": 9,
+   "false": 8,
+   "unclear": 3
+  },
+  "precisionTuning_firstCut": {
+   "n": 20,
+   "real": 6,
+   "false": 13,
+   "unclear": 1
+  },
+  "byLanguageRate_thr075": {
+   "Latin": 0.0252,
+   "English": 0.0202,
+   "German": 0.0156,
+   "Greek": 0.0454,
+   "French": 0.0122,
+   "Italian": 0.0128,
+   "Russian": 0.0311,
+   "Dutch": 0.0135,
+   "Sanskrit": 0.0014,
+   "Chinese": 0.0008,
+   "Arabic": 0.0027,
+   "Hebrew": 0.0009,
+   "Tibetan": 0,
+   "Korean": 0
+  },
+  "knownCases": {
+   "production_30_31": "flagged",
+   "production_41_42": "flagged",
+   "production_58_59": "MISSED (absorbed 0.45)",
+   "lane_107_108": "MISSED (verse, capitalised lines)",
+   "lane_58_59": "MISSED",
+   "ambiguous_8_9": "no claim",
+   "lane_90_91": "out of class (dropped paragraph)"
+  }
+ },
+ "leak": {
+  "pairs": 5192319,
+  "flaggedGe200": 43250,
+  "sourceRepeatExcluded": 9476,
+  "classes": {
+   "forward_dup": 8092,
+   "n_head_reproduced": 4365,
+   "n_head_reproduced_ge500": 2313,
+   "both_heads": 8232,
+   "other": 22561
+  },
+  "precision": {
+   "random20": {
+    "forward_dup": "7/7 real",
+    "n_head": "2 real",
+    "shift": "2 real",
+    "legit_repeat": 5,
+    "unclear": 3
+   },
+   "n_head_10": {
+    "ge500_real": "4/4",
+    "lt500_real": "0/6"
+   }
+  },
+  "atalantaControl": "21/21 flagged; 12/21 classed n-head"
+ },
+ "segmentsSample1500Books": {
+  "ALL": {
+   "pairs": 374521,
+   "books": 1500,
+   "drift": 7166,
+   "fwd": 613,
+   "nhead": 229,
+   "nhead500": 131,
+   "leakAny": 2934
+  },
+  "model gemini-3-flash-preview": {
+   "pairs": 138594,
+   "books": 607,
+   "drift": 1221,
+   "fwd": 38,
+   "nhead": 141,
+   "nhead500": 85,
+   "leakAny": 697
+  },
+  "model gemini-3.1-flash-lite": {
+   "pairs": 60772,
+   "books": 307,
+   "drift": 1534,
+   "fwd": 133,
+   "nhead": 16,
+   "nhead500": 9,
+   "leakAny": 423
+  },
+  "model gemini-3.1-flash-lite-preview": {
+   "pairs": 168775,
+   "books": 724,
+   "drift": 4411,
+   "fwd": 442,
+   "nhead": 72,
+   "nhead500": 37,
+   "leakAny": 1814
+  },
+  "model none": {
+   "pairs": 6056,
+   "books": 560,
+   "drift": 0,
+   "fwd": 0,
+   "nhead": 0,
+   "nhead500": 0,
+   "leakAny": 0
+  },
+  "month 2026-02": {
+   "pairs": 25733,
+   "books": 205,
+   "drift": 124,
+   "fwd": 1,
+   "nhead": 60,
+   "nhead500": 44,
+   "leakAny": 224
+  },
+  "month 2026-03": {
+   "pairs": 78209,
+   "books": 375,
+   "drift": 1003,
+   "fwd": 65,
+   "nhead": 74,
+   "nhead500": 46,
+   "leakAny": 466
+  },
+  "month 2026-04": {
+   "pairs": 131039,
+   "books": 807,
+   "drift": 3307,
+   "fwd": 310,
+   "nhead": 53,
+   "nhead500": 22,
+   "leakAny": 1352
+  },
+  "month 2026-05": {
+   "pairs": 92014,
+   "books": 448,
+   "drift": 1783,
+   "fwd": 141,
+   "nhead": 25,
+   "nhead500": 14,
+   "leakAny": 544
+  },
+  "month 2026-06": {
+   "pairs": 32192,
+   "books": 221,
+   "drift": 615,
+   "fwd": 60,
+   "nhead": 16,
+   "nhead500": 5,
+   "leakAny": 281
+  },
+  "month 2026-08": {
+   "pairs": 3554,
+   "books": 53,
+   "drift": 89,
+   "fwd": 3,
+   "nhead": 0,
+   "nhead500": 0,
+   "leakAny": 5
+  },
+  "month 2026-09": {
+   "pairs": 11778,
+   "books": 41,
+   "drift": 245,
+   "fwd": 33,
+   "nhead": 1,
+   "nhead500": 0,
+   "leakAny": 62
+  },
+  "pv none": {
+   "pairs": 6780,
+   "books": 585,
+   "drift": 2,
+   "fwd": 0,
+   "nhead": 0,
+   "nhead500": 0,
+   "leakAny": 0
+  },
+  "pv v1": {
+   "pairs": 33606,
+   "books": 148,
+   "drift": 680,
+   "fwd": 43,
+   "nhead": 21,
+   "nhead500": 13,
+   "leakAny": 196
+  },
+  "pv v10": {
+   "pairs": 167043,
+   "books": 666,
+   "drift": 4042,
+   "fwd": 352,
+   "nhead": 67,
+   "nhead500": 29,
+   "leakAny": 1572
+  },
+  "pv v11": {
+   "pairs": 81149,
+   "books": 520,
+   "drift": 1608,
+   "fwd": 165,
+   "nhead": 30,
+   "nhead500": 14,
+   "leakAny": 631
+  },
+  "pv v12": {
+   "pairs": 3001,
+   "books": 40,
+   "drift": 76,
+   "fwd": 3,
+   "nhead": 0,
+   "nhead500": 0,
+   "leakAny": 9
+  },
+  "pv v13": {
+   "pairs": 6671,
+   "books": 21,
+   "drift": 54,
+   "fwd": 30,
+   "nhead": 0,
+   "nhead500": 0,
+   "leakAny": 47
+  },
+  "pv v2": {
+   "pairs": 47286,
+   "books": 286,
+   "drift": 332,
+   "fwd": 1,
+   "nhead": 74,
+   "nhead500": 52,
+   "leakAny": 273
+  },
+  "pv v5": {
+   "pairs": 24574,
+   "books": 176,
+   "drift": 212,
+   "fwd": 0,
+   "nhead": 30,
+   "nhead500": 17,
+   "leakAny": 129
+  },
+  "pv v6": {
+   "pairs": 4019,
+   "books": 16,
+   "drift": 146,
+   "fwd": 19,
+   "nhead": 7,
+   "nhead500": 6,
+   "leakAny": 77
+  },
+  "same-run no": {
+   "pairs": 14418,
+   "books": 898,
+   "drift": 44,
+   "fwd": 3,
+   "nhead": 20,
+   "nhead500": 11,
+   "leakAny": 65
+  },
+  "same-run yes(<10min)": {
+   "pairs": 360103,
+   "books": 1500,
+   "drift": 7122,
+   "fwd": 610,
+   "nhead": 209,
+   "nhead500": 120,
+   "leakAny": 2869
+  }
+ }
+}
