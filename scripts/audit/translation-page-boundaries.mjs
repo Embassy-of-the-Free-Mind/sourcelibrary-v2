@@ -32,10 +32,12 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { detectBlockDrift } from '../lib/block-drift.mjs';
+import { detectBlockDrift, MIN_ABSORBED_SHARE } from '../lib/block-drift.mjs';
 
 const MIN_OCR_CHARS_FOR_BLOCK = 200, BLOCK_SIZE = 8, MAX_BLOCK_OCR_CHARS = 20000; // translate-batch-seam mirrors
 export const LEAK_MIN_CHARS = 200;
+// --min-absorbed=x lowers the drift floor to record near-misses (each flag carries its score).
+const MIN_ABSORBED = Number(process.argv.find(a => a.startsWith('--min-absorbed='))?.split('=')[1] ?? MIN_ABSORBED_SHARE);
 const NON_PROSE = new Set(['index', 'toc', 'title-page', 'illustration', 'blank', 'errata', 'diagram', 'frontispiece',
   'colophon', 'map', 'archived-spread', 'digitizer-insert', 'digitizer-notice', 'exlibris', 'bookplate', 'cover']);
 
@@ -142,10 +144,10 @@ function main() {
       // DRIFT — prose pages only
       if (NON_PROSE.has(A.type) || NON_PROSE.has(B.type)) continue;
       b.eligible++; if (inBlock) b.eligibleInBlock = (b.eligibleInBlock || 0) + 1;
-      const d = detectBlockDrift({ ocrNext: B.ocr, trPrev: A.tr, trNext: B.tr });
+      const d = detectBlockDrift({ ocrPrev: A.ocr, ocrNext: B.ocr, trPrev: A.tr, trNext: B.tr, minAbsorbed: MIN_ABSORBED });
       if (d.drift) {
         if (inBlock) { b.driftInBlock++; pb.drift++; } else b.driftBlockStart++;
-        flagged.write(JSON.stringify({ kind: 'drift', book: id, lang: l, prev: A.p, next: B.p, inBlock, anchorVerdict: d.anchorVerdict, fragment: d.fragment.slice(0, 300) }) + '\n');
+        flagged.write(JSON.stringify({ kind: 'drift', book: id, lang: l, prev: A.p, next: B.p, inBlock, anchorVerdict: d.anchorVerdict, absorbed: d.absorbed == null ? null : +d.absorbed.toFixed(2), fragment: d.fragment.slice(0, 300) }) + '\n');
       }
     }
     summary.perBook[id] = pb;

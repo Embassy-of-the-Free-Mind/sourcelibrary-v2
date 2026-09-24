@@ -14,7 +14,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import {
-  detectBlockDrift, continuationFragment, dropDriftedPages, PAGE_BOUNDARY_RULE,
+  detectBlockDrift, continuationFragment, dropDriftedPages, duplicatedAcrossBoundary, PAGE_BOUNDARY_RULE,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/block-drift.mjs';
@@ -24,12 +24,12 @@ import {
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-seam.mjs';
 
-type Case = { name: string; expectDrift: boolean; note: string; ocrNext: string; trPrev: string; trNext: string };
+type Case = { name: string; expectDrift: boolean; note: string; ocrPrev: string; ocrNext: string; trPrev: string; trNext: string };
 const CASES: Case[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/block-drift/known-boundaries.json'), 'utf8'));
 
 describe('detectBlockDrift on the #5021 boundaries', () => {
   it('has both positives and negatives to judge (the fixture is not vacuous)', () => {
-    expect(CASES.filter(c => c.expectDrift).length).toBeGreaterThanOrEqual(4);
+    expect(CASES.filter(c => c.expectDrift).length).toBeGreaterThanOrEqual(2);
     expect(CASES.filter(c => !c.expectDrift).length).toBeGreaterThanOrEqual(4);
   });
   for (const c of CASES) {
@@ -37,6 +37,25 @@ describe('detectBlockDrift on the #5021 boundaries', () => {
       expect(detectBlockDrift(c).drift).toBe(c.expectDrift);
     });
   }
+});
+
+const DUP: Case[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/block-drift/duplicated-boundary.json'), 'utf8'));
+
+describe('duplicatedAcrossBoundary — N+1\'s opening on BOTH pages', () => {
+  it(`flags ${DUP[0].name}`, () => {
+    expect(duplicatedAcrossBoundary(DUP[0].trPrev, DUP[0].trNext)?.len).toBeGreaterThanOrEqual(150);
+  });
+  for (const c of CASES.filter(x => x.name.startsWith('production'))) {
+    it(`does not call the MOVED case ${c.name} a duplicate (the clause is on one page only)`, () => {
+      expect(duplicatedAcrossBoundary(c.trPrev, c.trNext)).toBeNull();
+    });
+  }
+  it('drops both pages of a duplicated boundary', () => {
+    const pages = [{ page_number: 19, ocr: { data: DUP[0].ocrPrev } }, { page_number: 20, ocr: { data: DUP[0].ocrNext } }];
+    const m = new Map([[19, DUP[0].trPrev], [20, DUP[0].trNext]]);
+    expect(dropDriftedPages(pages, m).drifted.map((d: any) => d.kind)).toEqual(['duplicated']);
+    expect(m.size).toBe(0);
+  });
 });
 
 describe('continuationFragment', () => {
@@ -63,7 +82,7 @@ describe('the parser reject', () => {
   const drifted = CASES.find(c => c.expectDrift && c.name.startsWith('production'))!;
   const clean = CASES.find(c => !c.expectDrift && c.name.includes('Formgefühl pp. 30'))!;
   const pages = [
-    { page_number: 30, ocr: { data: 'x'.repeat(300) } },
+    { page_number: 30, ocr: { data: drifted.ocrPrev } },
     { page_number: 31, ocr: { data: drifted.ocrNext } },
   ];
 

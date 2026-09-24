@@ -27,10 +27,21 @@
  *   4. the TRANSLATION of N ends on sentence-final punctuation (no trailing ellipsis or
  *      hyphen) — the sentence the source left open was closed on page N.
  *
- * All four together say: the source carries a clause across the break and the translation
- * does not. That is a MOVED clause or a DROPPED one; both leave N+1 without its opening. The
- * anchor check (numerals and capitalised words from the fragment, found verbatim in N's tail
- * and not in N+1's head) separates the two only when the fragment has anchors to find.
+ *   5. page N's last translated sentence grew by about the fragment's length
+ *      (absorbedShare ≥ MIN_ABSORBED_SHARE), or the fragment's numerals/proper names sit in
+ *      N's tail rather than N+1's head.
+ *
+ * Steps 1–4 alone flag every boundary where a translator re-opened N+1 with a capital (a
+ * rephrase, a running head) — 6 of 20 hand-read flags were real. Step 5 is the move itself.
+ *
+ * MEASURED (2026-09-24, local mirror, #5021): 2.03% of in-block prose boundaries flagged;
+ * on a fresh hand-read sample of 20 (one per book) 9 were real moves, 8 false, 3 unclear.
+ * The single-page lane (prompt v2/v5), which cannot move text, flags 0.7–0.9% — that is the
+ * floor; block-era prompts (v10/v11) flag 2.0–2.4%. A false positive costs a single-page
+ * re-translation of two pages, never a wrong text, which is why ~50% precision is enough for
+ * the parser to act on.
+ *
+ * The second shape, duplicatedAcrossBoundary(): N+1's opening on BOTH pages.
  *
  * Deliberately NOT caught: a German/Dutch fragment opening on a capitalised noun (reads as a
  * sentence start), a fragment with no full stop within FRAGMENT_WINDOW chars, caseless scripts.
@@ -146,16 +157,52 @@ export function anchorsOf(fragment) {
   return [...out];
 }
 
+// Bracketed editorial blocks a translator puts at a page edge ("[The manuscript begins in the
+// middle of a sentence …]", a trailing "[vocabulary: …]" list): not text of the page.
+const stripEdgeBrackets = (t) => t.replace(/^\s*\[[^\]]{0,400}\]\s*/u, '').replace(/\s*\[[^\]]{0,3000}\]\s*$/u, '').trim();
+
+const SENTENCE_ENDS = new RegExp(SENTENCE_END.source, 'gu');
+const flat = (t) => t.replace(/\s+/g, ' ').trim();
+
 /**
- * Judge one in-block boundary. `ocrPrev` is kept in the signature for callers that
- * log context; the decision reads the next page's source and both translations.
- * Returns { drift, fragment, anchors, anchorVerdict } — drift=false carries a `reason`.
+ * How much of the fragment's length page N's last translated sentence has absorbed.
+ * P = the source's unfinished sentence at the foot of page N, T = the last sentence of page
+ * N's translation, r = page N's translation/source length ratio. If the translation stopped
+ * where the source stops, T ≈ r·P and the score is ≈ 0; if it carried on through the
+ * fragment F, T ≈ r·(P + F) and the score is ≈ 1. Language-independent: lengths only.
  */
-export function detectBlockDrift({ ocrNext, trPrev, trNext }) {
+export function absorbedShare({ ocrPrev, trPrevTail, fragment }) {
+  const src = flat(sourceProse(ocrPrev)), tr = flat(trPrevTail);
+  if (!src || !tr) return 0;
+  const srcEnds = [...src.matchAll(SENTENCE_ENDS)];
+  const lastSrc = srcEnds[srcEnds.length - 1];
+  const P = src.length - (lastSrc ? lastSrc.index + lastSrc[0].length : 0);
+  const trEnds = [...tr.matchAll(SENTENCE_ENDS)];
+  const prevEnd = trEnds.length >= 2 ? trEnds[trEnds.length - 2] : null;
+  const T = tr.length - (prevEnd ? prevEnd.index + prevEnd[0].length : 0);
+  const r = tr.length / src.length;
+  return (T / r - P) / fragment.length;
+}
+export const MIN_ABSORBED_SHARE = 0.75;
+
+const words = (t) => t.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean);
+/** Three consecutive words of the fragment's opening, verbatim in `text` (same-language books). */
+function sharesOpening(fragment, text) {
+  const f = words(fragment).slice(0, 10), t = ` ${words(text).join(' ')} `;
+  for (let i = 0; i + 3 <= f.length; i++) if (t.includes(` ${f.slice(i, i + 3).join(' ')} `)) return true;
+  return false;
+}
+
+/**
+ * Judge one in-block boundary: page N (`ocrPrev`, `trPrev`) and page N+1 (`ocrNext`,
+ * `trNext`). Returns { drift, fragment, absorbed, anchorVerdict } — drift=false carries a
+ * `reason`.
+ */
+export function detectBlockDrift({ ocrPrev, ocrNext, trPrev, trNext, minAbsorbed = MIN_ABSORBED_SHARE }) {
   const fragment = continuationFragment(ocrNext);
   if (!fragment) return { drift: false, reason: 'source N+1 opens on a sentence (or no claim)' };
-  const trNextHead = dropLeadingFurniture(translationProse(trNext));
-  const trPrevTail = dropTrailingFurniture(translationProse(trPrev));
+  const trNextHead = stripEdgeBrackets(dropLeadingFurniture(translationProse(trNext)));
+  const trPrevTail = stripEdgeBrackets(dropTrailingFurniture(translationProse(trPrev)));
   if (!trNextHead || !trPrevTail) return { drift: false, reason: 'a translation is empty' };
   if (TR_ELLIPSIS_HEAD.test(trNextHead)) return { drift: false, reason: 'translation N+1 marks the continuation' };
   const first = trNextHead.match(/[\p{L}\p{N}]/u)?.[0];
@@ -165,6 +212,9 @@ export function detectBlockDrift({ ocrNext, trPrev, trNext }) {
   if (TR_ELLIPSIS_TAIL.test(trPrevTail) || !TR_TERMINAL.test(trPrevTail)) {
     return { drift: false, reason: 'translation N leaves its last sentence open' };
   }
+  // A translation that rephrases the opening with a capital ("The King showed … when he
+  // forbade") keeps the clause where it belongs; in a same-language book the words show it.
+  if (sharesOpening(fragment, trNextHead.slice(0, 400))) return { drift: false, reason: 'fragment opening found at the head of N+1', fragment };
   const anchors = anchorsOf(fragment);
   const tail = trPrevTail.slice(-600), head = trNextHead.slice(0, 400);
   const inTail = anchors.filter(a => tail.includes(a)), inHead = anchors.filter(a => head.includes(a));
@@ -172,15 +222,48 @@ export function detectBlockDrift({ ocrNext, trPrev, trNext }) {
     : inTail.length > inHead.length ? 'moved'
       : inHead.length > inTail.length ? 'at-head'
         : 'unknown';
-  // A fragment whose anchors are all at the head of N+1 was translated where it belongs.
   if (anchorVerdict === 'at-head') return { drift: false, reason: 'fragment anchors found at the head of N+1', fragment, anchors };
-  return { drift: true, fragment, anchors, anchorVerdict };
+  // The decisive test: did page N's last sentence grow by the fragment's length?
+  const absorbed = ocrPrev == null ? null : absorbedShare({ ocrPrev, trPrevTail, fragment });
+  if (absorbed != null && absorbed < minAbsorbed && anchorVerdict !== 'moved') {
+    return { drift: false, reason: 'page N\'s last sentence did not grow by the fragment', fragment, absorbed };
+  }
+  return { drift: true, fragment, anchors, anchorVerdict, absorbed };
+}
+
+/** Longest run two strings share (40-char shingles of b, extended both ways). */
+export function sharedRun(a, b) {
+  const K = 40, idx = new Map();
+  for (let i = 0; i + K <= b.length; i += 8) { const s = b.slice(i, i + K); if (!idx.has(s)) idx.set(s, i); }
+  let best = 0, bestA = -1;
+  for (let i = 0; i + K <= a.length; i++) {
+    const j = idx.get(a.slice(i, i + K)); if (j == null) continue;
+    let back = 0; while (i - back > 0 && j - back > 0 && a[i - back - 1] === b[j - back - 1]) back++;
+    let L = K; while (i + L < a.length && j + L < b.length && a[i + L] === b[j + L]) L++;
+    if (L + back > best) { best = L + back; bestA = i - back; }
+    i += Math.max(0, L - K);
+  }
+  return { len: best, text: bestA >= 0 ? a.slice(bestA, bestA + Math.min(best, 200)) : '' };
+}
+
+export const DUPLICATE_MIN_CHARS = 150;
+/**
+ * The other shape of the same failure (#5021/#5026): page N+1's opening translated at the end
+ * of page N AND again at the head of N+1. Measured on the corpus as a shared run between the
+ * last 40% of N and the first 10% of N+1 — 7 of 7 such flags hand-read were real, and the
+ * shape is absent from the single-page lane (prompt v2/v5), so it is a block artefact.
+ */
+export function duplicatedAcrossBoundary(trPrev, trNext) {
+  const a = flat(translationProse(trPrev)), b = flat(translationProse(trNext));
+  const tail = a.slice(Math.floor(a.length * 0.6)), head = b.slice(0, Math.max(600, Math.floor(b.length * 0.1)));
+  const run = sharedRun(tail, head);
+  return run.len >= DUPLICATE_MIN_CHARS ? run : null;
 }
 
 /**
  * Every drifted boundary inside one parsed block. `pages` in block order (page_number,
  * ocr.data); `translations` is the parser's Map<page_number, text>. Returns an array of
- * { prev, next, fragment, anchorVerdict } — empty when the block is clean.
+ * { prev, next, kind: 'moved'|'duplicated', fragment } — empty when the block is clean.
  */
 export function blockDriftBoundaries(pages, translations) {
   const found = [];
@@ -188,8 +271,10 @@ export function blockDriftBoundaries(pages, translations) {
     const a = pages[i], b = pages[i + 1];
     const trPrev = translations.get(a.page_number), trNext = translations.get(b.page_number);
     if (!trPrev || !trNext) continue;
-    const r = detectBlockDrift({ ocrNext: b.ocr?.data, trPrev, trNext });
-    if (r.drift) found.push({ prev: a.page_number, next: b.page_number, fragment: r.fragment, anchorVerdict: r.anchorVerdict });
+    const dup = duplicatedAcrossBoundary(trPrev, trNext);
+    if (dup) { found.push({ prev: a.page_number, next: b.page_number, kind: 'duplicated', fragment: dup.text }); continue; }
+    const r = detectBlockDrift({ ocrPrev: a.ocr?.data, ocrNext: b.ocr?.data, trPrev, trNext });
+    if (r.drift) found.push({ prev: a.page_number, next: b.page_number, kind: 'moved', fragment: r.fragment, anchorVerdict: r.anchorVerdict });
   }
   return found;
 }
