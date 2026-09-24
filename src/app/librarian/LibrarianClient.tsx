@@ -7,6 +7,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
+import { isTenantSubdomain } from '@/hooks/useEmbedContext';
 import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-fixes';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -321,6 +322,15 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
   const { data: session, status } = useSession();
   const params = useParams<{ tenant: string }>();
   const tenant = params?.tenant;
+  // The featured passage is picked from the WHOLE library, and this page is one
+  // ISR entry shared by every host — so on a partner subdomain it linked books
+  // that partner does not hold (#4222; the lockdown then bounces the click).
+  // Only the browser knows the host: render the card after mount, off partner
+  // hosts and iframes. Nothing is lost server-side — it is a random passage.
+  const [showFeatured, setShowFeatured] = useState(false);
+  useEffect(() => {
+    setShowFeatured(!tenant && window.self === window.top && !isTenantSubdomain(window.location.host));
+  }, [tenant]);
   const [messages, setMessages] = useState<Message[]>([]);
   // Seed deterministically so SSR and the first client render agree (a random
   // initial set caused a hydration mismatch — React #418). Shuffle for variety
@@ -1312,7 +1322,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                   );
                 })()}
 
-                {featuredPassage && (
+                {featuredPassage && showFeatured && (
                   <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
                     <p className="text-[11px] text-[#b0a89c] tracking-[0.15em] uppercase font-sans mb-2">
                       {t.librarianIsReading}

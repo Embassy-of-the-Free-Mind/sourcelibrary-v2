@@ -63,7 +63,8 @@ async function getFeaturedPassage() {
         // Resolve page _id for deep linking (notebook stores slug, pages use book.id)
         const notebookSlug = f.source.bookSlug || f.source.bookId;
         const bookDoc = await db.collection('books').findOne(
-          { $or: [{ slug: notebookSlug }, { id: notebookSlug }] },
+          // visible:true — a hidden book's passage must not be featured (and its link 404s).
+          { $or: [{ slug: notebookSlug }, { id: notebookSlug }], visible: true },
           { projection: { id: 1, slug: 1 }, maxTimeMS: 3000 }
         );
         // The whole passage is a LINK. A notebook slug that resolves to no book
@@ -99,7 +100,7 @@ async function getFeaturedPassage() {
 
     // Fallback: random translated page from a well-translated book
     const books = await db.collection('books').aggregate([
-      { $match: { pages_translated: { $gt: 20 } } },
+      { $match: { pages_translated: { $gt: 20 }, visible: true } },
       { $sample: { size: 1 } },
       { $project: { title: 1, display_title: 1, author: 1, year: 1, slug: 1, id: 1 } },
     ], { maxTimeMS: 5000 }).toArray();

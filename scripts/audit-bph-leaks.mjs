@@ -86,7 +86,10 @@ const ANCHOR_RE = /<a\b[^>]*\bhref\s*=\s*("([^"]*)"|'([^']*)')/gi;
 // Book identifiers referenced anywhere in the HTML — anchors, but also flight
 // data and embedded JSON, since a client-rendered list still tells the reader
 // which books exist. Trailing segments (/page/x, /overview) are dropped.
-const BOOK_REF_RE = /\/book\/([A-Za-z0-9][A-Za-z0-9-]{5,})/g;
+// An ABSOLUTE apex URL is skipped: as an <a href> it is already a hostname leak
+// (reported above), and as text it is documentation, not a link — /developers
+// shows `https://sourcelibrary.org/book/<example>` as a citation format (#4222).
+const BOOK_REF_RE = /(?<!\/\/(?:www\.)?sourcelibrary\.org)\/book\/([A-Za-z0-9][A-Za-z0-9-]{5,})/g;
 
 function extractBookRefs(html) {
   if (!html) return [];
@@ -166,10 +169,10 @@ async function fetchPage(url) {
         redirect: 'follow',
         headers: { 'User-Agent': 'BPH-Lockdown-Audit/1.0' },
       });
-      return { html: await followed.text(), finalUrl: followed.url };
+      return { html: await followed.text(), finalUrl: followed.url, status: followed.status };
     }
   }
-  return { html: await res.text(), finalUrl: res.url };
+  return { html: await res.text(), finalUrl: res.url, status: res.status };
 }
 
 while (queue.length > 0 && pagesFetched < MAX_PAGES) {
@@ -190,7 +193,8 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
   // a route can render fine on the surface (real title, real meta tags) while
   // the actual page body is the not-found fallback skeleton. Skip pages we
   // didn't actually fetch (e.g. redirect leaks).
-  if (!page.skipped && page.html && page.html.includes(NEXT_NOTFOUND_MARKER)) {
+  // A REAL 404 carries the same marker — only a 200 around it is silent (#4222).
+  if (!page.skipped && page.status === 200 && page.html && page.html.includes(NEXT_NOTFOUND_MARKER)) {
     silentNotFounds.push({ url: page.finalUrl || url });
   }
 
