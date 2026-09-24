@@ -125,7 +125,17 @@ function batchResponse(key: string, text: string, tokens = { in: 1000, out: 400,
 }
 
 /** Gemini mock: records submissions; answers the translate job with tagged drafts, the repair job with `repairText`. */
-function makeGemini({ repairText = (n: number) => repairFor(n), translateState = 'JOB_STATE_SUCCEEDED', draftText = (n: number) => draftFor(n) } = {}) {
+/** The shape the live Batch API returned for every request on 2026-09-24: no `response`, an `error` beside the key. */
+const CANCELLED = { code: 1, message: 'The operation was cancelled.' };
+function erroredResponse(key: string, error = CANCELLED) {
+  return { metadata: { key }, error };
+}
+
+function makeGemini({
+  repairText = (n: number) => repairFor(n), translateState = 'JOB_STATE_SUCCEEDED', draftText = (n: number) => draftFor(n),
+  /** Per request key: return an error object to have that request come back errored inside a SUCCEEDED job. */
+  errorFor = (_kind: 'translate' | 'repair', _key: string): any => null,
+} = {}) {
   const submitted: Array<{ model: string; requests: any[]; displayName: string; name: string }> = [];
   return {
     submitted,
@@ -141,6 +151,8 @@ function makeGemini({ repairText = (n: number) => repairFor(n), translateState =
         return {
           state: 'JOB_STATE_SUCCEEDED',
           responses: job.requests.map((r: any) => {
+            const err = errorFor('translate', r.metadata.key);
+            if (err) return erroredResponse(r.metadata.key, err);
             const nums = [...r.contents[0].parts[0].text.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
             const body = nums.map(n => `<translation page="${n}">${draftText(n)}</translation>`).join('\n');
             return batchResponse(r.metadata.key, body, { in: 2000, out: 800, thoughts: 5 });
@@ -149,7 +161,11 @@ function makeGemini({ repairText = (n: number) => repairFor(n), translateState =
       }
       return {
         state: 'JOB_STATE_SUCCEEDED',
-        responses: job.requests.map((r: any) => batchResponse(r.metadata.key, repairText(Number(r.metadata.key.slice(1))), { in: 900, out: 300, thoughts: 0 })),
+        responses: job.requests.map((r: any) => {
+          const err = errorFor('repair', r.metadata.key);
+          if (err) return erroredResponse(r.metadata.key, err);
+          return batchResponse(r.metadata.key, repairText(Number(r.metadata.key.slice(1))), { in: 900, out: 300, thoughts: 0 });
+        }),
       };
     },
   };
@@ -348,6 +364,56 @@ describe('a full run: translate job → repair job → write', () => {
     expect(gemini.submitted).toHaveLength(1);
     expect(db.data.pages.every((p: Doc) => p.translation === undefined)).toBe(true);
     expect(deps.completeBatchUsage.mock.calls[0][0]).toMatchObject({ status: 'failed', insertIfMissing: false });
+  });
+
+  // The first live run (2026-09-24, #4681): three jobs reached JOB_STATE_SUCCEEDED with every
+  // request inside them `{ error: "The operation was cancelled." }`. The lane parsed nothing,
+  // marked each run complete, and closed each meter row as `success` at $0.
+  it('a SUCCEEDED job whose every request errored is a FAILED run: nothing written, no repair job, meter row closed as failed with the message', async () => {
+    const gemini = makeGemini({ errorFor: (kind) => (kind === 'translate' ? CANCELLED : null) });
+    const deps = makeDeps(gemini);
+    await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    const run = await runToEnd(db, deps);
+    expect(run.phase).toBe(PHASE.FAILED);
+    expect(run.failure).toMatch(/no drafts: 3\/3 requests errored — 1 The operation was cancelled\. \(×3\)/);
+    expect(run.block_notes.map((n: Doc) => n.note)).toEqual(['request-error', 'request-error', 'request-error']);
+    expect(gemini.submitted).toHaveLength(1); // no repair job for drafts that do not exist
+    expect(db.data.pages.every((p: Doc) => p.translation === undefined)).toBe(true);
+    expect(deps.completeBatchUsage.mock.calls[0][0]).toMatchObject({ status: 'failed', error_message: expect.stringContaining('cancelled') });
+  });
+
+  it('a SUCCEEDED job whose every request errored is a FAILED run in shadow mode too (nothing on the run reads as complete)', async () => {
+    const gemini = makeGemini({ errorFor: (kind) => (kind === 'translate' ? CANCELLED : null) });
+    const deps = makeDeps(gemini);
+    await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true });
+    const run = await runToEnd(db, deps);
+    expect(run.phase).toBe(PHASE.FAILED);
+    expect(run.drafts).toBeUndefined();
+  });
+
+  it('a job with one errored block writes the other blocks, records the erroring block, and meters the job as partial', async () => {
+    const gemini = makeGemini({ errorFor: (kind, key) => (kind === 'translate' && key === 'b1' ? CANCELLED : null) });
+    const deps = makeDeps(gemini);
+    await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    const run = await runToEnd(db, deps);
+    expect(run.phase).toBe(PHASE.WRITTEN);
+    expect(run.block_notes).toEqual([{ key: 'b1', note: 'request-error', error: '1 The operation was cancelled.' }]);
+    expect(run.write_counts).toMatchObject({ written: 12, no_draft: 8 });
+    expect(pageText(db, 'p9')).toBeUndefined(); // block b1 (pages 9–16) came back errored
+    expect(pageText(db, 'p17')).toBe(draftFor(17)); // b2's seam page has no prev draft to repair against: draft written
+    expect(deps.completeBatchUsage.mock.calls[0][0]).toMatchObject({ status: 'partial', error_message: expect.stringContaining('1/3 requests errored') });
+  });
+
+  it('errored repair requests fall back to the draft and are recorded on the run and the meter row', async () => {
+    const gemini = makeGemini({ errorFor: (kind) => (kind === 'repair' ? CANCELLED : null) });
+    const deps = makeDeps(gemini);
+    await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    const run = await runToEnd(db, deps);
+    expect(run.phase).toBe(PHASE.WRITTEN);
+    expect(run.write_counts).toMatchObject({ written: 20, repaired: 0 });
+    expect(pageText(db, 'p9')).toBe(draftFor(9));
+    expect(run.repair_failure).toMatch(/2\/2 repair requests errored/);
+    expect(deps.completeBatchUsage.mock.calls[1][0]).toMatchObject({ status: 'failed', error_message: expect.stringContaining('cancelled') });
   });
 
   it('a job still running leaves the run where it is', async () => {

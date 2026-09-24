@@ -237,11 +237,28 @@ export function chooseSeamText({ ocr, draft, repaired }) {
 
 // ── Batch API response helpers ─────────────────────────────────────────────
 
-/** Text of one batch response (all parts joined), plus its finish reason. */
+/**
+ * Text of one batch response (all parts joined), plus its finish reason — and its per-request
+ * ERROR. A Batch job can reach JOB_STATE_SUCCEEDED with every request inside it failed
+ * (`{ metadata, error: { code, message } }` in place of `response`): the first live run
+ * (2026-09-24, #4681) got 3 jobs × "The operation was cancelled." that way, and a reader of
+ * `response` alone saw empty text, parsed nothing, and called the run complete.
+ */
 export function responseTextOf(r) {
   const cand = r?.response?.candidates?.[0];
   const text = (cand?.content?.parts || []).map(p => p?.text || '').join('');
-  return { key: r?.metadata?.key ?? r?.key ?? null, text, finishReason: cand?.finishReason || null };
+  const error = r?.error ? `${r.error.code ?? ''} ${r.error.message ?? JSON.stringify(r.error)}`.trim() : null;
+  return { key: r?.metadata?.key ?? r?.key ?? null, text, finishReason: cand?.finishReason || null, error };
+}
+
+/** One line for a run's failure record: how many requests errored and the commonest message. */
+export function summarizeResponseErrors(responses) {
+  const errors = (responses || []).map(responseTextOf).filter(t => t.error);
+  if (!errors.length) return null;
+  const counts = new Map();
+  for (const e of errors) counts.set(e.error, (counts.get(e.error) || 0) + 1);
+  const [top, n] = [...counts].sort((a, b) => b[1] - a[1])[0];
+  return { errored: errors.length, of: (responses || []).length, top: `${top} (×${n})` };
 }
 
 /** One inline Batch API request. thinkingBudget: 0 is mandatory (#4581) — never remove it. */
@@ -452,7 +469,6 @@ export async function advanceRun(db, run, deps) {
     }
     if (!DONE_STATES.has(state)) return { phase: run.phase, advanced: false, note: state };
 
-    await meterComplete(deps, db, { run, jobName: run.translate_job.name, pageCount: run.page_count, kind: 'translate', responses });
     const pageDocs = await loadPages(db, run);
     const byKey = new Map((responses || []).map(r => { const t = responseTextOf(r); return [t.key, t]; }));
     const drafts = new Map();
@@ -460,11 +476,30 @@ export async function advanceRun(db, run, deps) {
     for (const b of run.blocks) {
       const pages = b.pages.map(p => pageDocs.get(p.id)).filter(Boolean);
       const r = byKey.get(b.key);
-      const parsed = parseBlockResponse(r?.text, pages);
+      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages);
       for (const p of pages) if (parsed.has(p.page_number)) drafts.set(p.id, parsed.get(p.page_number));
       if (!r) blockNotes.push({ key: b.key, note: 'no-response' });
+      else if (r.error) blockNotes.push({ key: b.key, note: 'request-error', error: r.error });
       else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason });
     }
+    // A SUCCEEDED job is a statement about the job, not about its requests. Every request can
+    // come back as an error (2026-09-24: 3 jobs × "The operation was cancelled."), and a run
+    // that then marks itself ready/complete with zero drafts reports success for a lane that
+    // produced nothing. No draft at all is a FAILED run with the reason on it; some drafts
+    // missing is a partial run, recorded per block and on the meter row.
+    const responseErrors = summarizeResponseErrors(responses);
+    const errorNote = responseErrors ? `${responseErrors.errored}/${responseErrors.of} requests errored — ${responseErrors.top}` : null;
+    if (drafts.size === 0) {
+      const failure = `translate job returned no drafts: ${errorNote || `${(responses || []).length} responses, none parsed`}`;
+      await meterComplete(deps, db, { run, jobName: run.translate_job.name, pageCount: run.page_count, kind: 'translate', responses, status: 'failed', error: failure });
+      await setPhase(db, run, PHASE.FAILED, { failure, block_notes: blockNotes, response_errors: responseErrors }, deps);
+      log(`[translate-batch-seam] ${run.book_id}: FAILED — ${failure}`);
+      return { phase: run.phase, advanced: true, note: failure };
+    }
+    await meterComplete(deps, db, {
+      run, jobName: run.translate_job.name, pageCount: run.page_count, kind: 'translate', responses,
+      ...(errorNote ? { status: 'partial', error: errorNote } : {}),
+    });
     // A page deleted since submit has no source to show the repair; its boundary keeps its draft.
     const present = new Map([...drafts].filter(([id]) => pageDocs.has(id)));
     const { pairs, skipped } = seamPairs(run.blocks.map(b => b.pages), present);
@@ -499,12 +534,20 @@ export async function advanceRun(db, run, deps) {
       return { phase: run.phase, advanced: true, note: `repair job ${state} — writing drafts` };
     }
     if (!DONE_STATES.has(state)) return { phase: run.phase, advanced: false, note: state };
-    await meterComplete(deps, db, { run, jobName: run.repair_job.name, pageCount: run.seams.length, kind: 'repair', responses });
-    const repairs = (responses || []).map(responseTextOf)
-      .filter(t => t.key && run.seams.some(s => s.seamId === t.key))
+    const parsed = (responses || []).map(responseTextOf).filter(t => t.key && run.seams.some(s => s.seamId === t.key));
+    const repairs = parsed.filter(t => !t.error)
       .map(t => ({ id: t.key, text: cleanRepairResponse(t.text), finish_reason: t.finishReason }));
-    await setPhase(db, run, PHASE.READY_TO_WRITE, { repairs }, deps);
-    return { phase: run.phase, advanced: true, note: `${repairs.length}/${run.seams.length} repairs back` };
+    // An errored repair request costs that seam its repair (chooseSeamText falls back to the
+    // draft); it is recorded here so a run of all-errored repairs does not read as "0 repairs
+    // chosen" for no visible reason.
+    const repairErrors = summarizeResponseErrors(responses);
+    const errorNote = repairErrors ? `${repairErrors.errored}/${repairErrors.of} repair requests errored — ${repairErrors.top}` : null;
+    await meterComplete(deps, db, {
+      run, jobName: run.repair_job.name, pageCount: run.seams.length, kind: 'repair', responses,
+      ...(errorNote ? { status: repairs.length ? 'partial' : 'failed', error: errorNote } : {}),
+    });
+    await setPhase(db, run, PHASE.READY_TO_WRITE, { repairs, ...(errorNote ? { repair_failure: errorNote, repair_errors: repairErrors } : {}) }, deps);
+    return { phase: run.phase, advanced: true, note: `${repairs.length}/${run.seams.length} repairs back${errorNote ? ` (${errorNote})` : ''}` };
   }
 
   if (run.phase === PHASE.READY_TO_WRITE) {
