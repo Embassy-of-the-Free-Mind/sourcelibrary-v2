@@ -1,0 +1,39 @@
+{
+ "at": "2026-09-17T05:09:11.511Z",
+ "label": "HARNESS CONTROL — not an outcome",
+ "n_pages": 32,
+ "n_books": 4,
+ "sim_A_vs_stored": {
+  "median": 0.5714285714285714,
+  "p10": 0.2085048010973937,
+  "p90": 0.9864603481624759
+ },
+ "sim_A_vs_B_same_pages": {
+  "median": 0.696969696969697,
+  "p10": 0.31140939597315437,
+  "p90": 0.9845094664371773
+ },
+ "floor_A_vs_other_pages_stored": {
+  "median": 0.035483870967741936,
+  "p95": 0.0642570281124498
+ },
+ "by_language": {
+  "English": {
+   "pages": 8,
+   "median_A_vs_stored": 0.9864603481624759,
+   "median_A_vs_B": 0.9845094664371773
+  },
+  "Arabic": {
+   "pages": 16,
+   "median_A_vs_stored": 0.5714285714285714,
+   "median_A_vs_B": 0.696969696969697
+  },
+  "Malay": {
+   "pages": 8,
+   "median_A_vs_stored": 0.20869565217391303,
+   "median_A_vs_B": 0.3178621659634318
+  }
+ },
+ "criterion": "median sim(A,stored) >= 0.75 x median sim(A,B) AND > p95 of the floor",
+ "pass": true
+}

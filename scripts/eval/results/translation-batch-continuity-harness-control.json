@@ -1,0 +1,22 @@
+{
+ "at": "2026-09-17T05:08:50.337Z",
+ "label": "HARNESS CONTROL — not an outcome",
+ "n_pages": 8,
+ "n_books": 1,
+ "sim_A_vs_stored": {
+  "median": 0.9864603481624759,
+  "p10": 0.9315068493150684,
+  "p90": 1
+ },
+ "sim_A_vs_B_same_pages": {
+  "median": 0.9845094664371773,
+  "p10": 0.9576923076923077,
+  "p90": 1
+ },
+ "floor_A_vs_other_pages_stored": {
+  "median": 0.06477732793522267,
+  "p95": 0.08347826086956522
+ },
+ "criterion": "median sim(A,stored) >= 0.75 x median sim(A,B) AND > p95 of the floor",
+ "pass": true
+}
