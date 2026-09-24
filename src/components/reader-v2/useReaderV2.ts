@@ -342,6 +342,18 @@ export function useReaderV2(
       return next;
     });
   }, []);
+  /**
+   * Show one pane and nothing else. The phone's pane picker (#5062): a
+   * segmented row is a choice, not a set of switches, so a tap means "this
+   * one" even when the reader had stacked several from the sheet.
+   */
+  const showOnlyView = useCallback((key: keyof ViewState) => {
+    setViews(() => {
+      const next: ViewState = { scan: false, ocr: false, en: false, translit: false, [key]: true };
+      try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
+      return next;
+    });
+  }, []);
 
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
@@ -452,7 +464,7 @@ export function useReaderV2(
     book, bookPath, pageList, currentPage, currentPageId, currentIndex, totalPages,
     pageLoading, pageError, progress,
     goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage, applyPageUpdate,
-    views, toggleView,
+    views, toggleView, showOnlyView,
     settings, updateSettings, settingsOpen, setSettingsOpen,
     chapters, currentChapter,
   };
