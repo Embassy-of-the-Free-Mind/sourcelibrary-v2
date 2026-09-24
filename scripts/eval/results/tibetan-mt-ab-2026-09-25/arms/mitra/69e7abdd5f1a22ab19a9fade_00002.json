@@ -1,0 +1,21 @@
+{
+ "id": "69e7abdd5f1a22ab19a9fade_00002",
+ "src_chars": 343,
+ "sentences": 14,
+ "chunks": [
+  {
+   "src": "༄།🔽རྒྱ་གར་སྐད་དུ།🔽ཕྱག་འཚལ་ལོ།🔽འདས་དང་མ་བྱོན་ད་ལྟར་གྱི།🔽རྒྱལ་བ་གང་ལགས་དེ་ཀུན་གྱི།🔽ཡུམ་ནི་དགེ་མ་ཁྱོད་ལགས་ཏེ།🔽ཁྱོད་ནི་ལྷ་མོ་རྒྱལ་བའི་སྲས།🔽རང་བཞིན་མེད་པའི་རང་བཞིན་ཅན།🔽སངས་རྒྱས་ཡུམ་གྱུར་དེ་ཡི་མཚན།🔽དགེ་མ་བདག་གིས་བརྗོད་པར་བྱ།🔽འབྱོར་པར་འདོད་པས་མཉན་པར་གྱིས།🔽ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་དང་།🔽ཐམས་ཅད་མཁྱེན་པ་ཉིད་དང་།🔽ལམ་གྱི་རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ",
+   "out": "🔽In Sanskrit:🔽Salutations!🔽All the victors of the past, present, and future,🔽Their mother is you, the virtuous one.🔽You are the goddess, the Victorious One's child,🔽Possessing the nature of non-nature.🔽The mother of the buddhas, her name🔽I, the virtuous one, shall proclaim.🔽Listen, those who wish for prosperity!🔽The perfection of wisdom,🔽Omniscience,🔽The knowledge of all aspects of the path,",
+   "finish": "stop",
+   "prompt_tokens": 233,
+   "completion_tokens": 107,
+   "ms": 8881
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 8881,
+ "text": "In Sanskrit:\nSalutations!\nAll the victors of the past, present, and future,\nTheir mother is you, the virtuous one.\nYou are the goddess, the Victorious One's child,\nPossessing the nature of non-nature.\nThe mother of the buddhas, her name\nI, the virtuous one, shall proclaim.\nListen, those who wish for prosperity!\nThe perfection of wisdom,\nOmniscience,\nThe knowledge of all aspects of the path,",
+ "prompt_tokens": 233,
+ "completion_tokens": 107
+}

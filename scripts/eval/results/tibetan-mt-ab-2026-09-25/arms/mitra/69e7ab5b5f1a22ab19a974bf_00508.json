@@ -1,0 +1,37 @@
+{
+ "id": "69e7ab5b5f1a22ab19a974bf_00508",
+ "src_chars": 1202,
+ "sentences": 40,
+ "chunks": [
+  {
+   "src": "འབྲས་བུ་གང་གིས་གང་ཟག་རྒྱུན་དུ་ཞུགས་པ་དང་།🔽ལན་ཅིག་ཕྱིར་འོང་བ་དང་།🔽ཕྱིར་མྱི་འོང་བ་དང་།🔽དགྲ་བཅོམ་པ་དང་།🔽རང་སངས་རྒྱས་དང་།🔽དེ་བཞིན་གཤེགས་པ་དགྲ་བཅོམ་པ་ཡང་དག་པར་རྫོགས་པའི་སངས་རྒྱས་ཞེས་གང་ཟག་རྣམ་པར་དགོད་པའི་ཆོས་དེ་དག་ཀྱང་སྤྲུལ་པ་ལགས་སམ།🔽བཅོམ་ལྡན་འདས་ཀྱིས་བཀའ་སྩལ་པ།🔽རབ་འབྱོར་ཆོས་ཐམས་ཅད་ནི་སྤྲུལ་པ་སྟེ།🔽དེ་ལ་ལ་ལ་ནི་ཉན་ཐོས་ཀྱིས་སྤྲུལ་པའོ།🔽ལ་ལ་ནི་རང་སངས་རྒྱས་ཀྱིས་སྤྲུལ་པའོ།🔽ལ་ལ་ནི་བྱང་ཆུབ་སེམས་དཔས་སྤྲུལ་པའོ།🔽ལ་ལ་ནི་དེ་བཞིན་གཤེགས་པས་སྤྲུལ་པའོ།🔽ལ་ལ་ནི་ཉོན་མོངས་པས་སྤྲུལ་པའོ།🔽ལ་ལ་ལ་ནི་ལས་ཀྱིས་སྤྲུལ་པའོ།",
+   "out": " What are the results by which a person is classified as a stream-enterer,🔽a once-returner,🔽a non-returner,🔽a worthy one,🔽a pratyekabuddha,🔽or a tathāgata, an arhat, a perfectly enlightened buddha?🔽The Blessed One replied,🔽“Su­bhūti, all phenomena are magical creations.🔽Some are magical creations of śrāvakas,🔽some are magical creations of pratyekabuddhas,🔽some are magical creations of bodhisattvas,🔽some are magical creations of tathāgatas,🔽some are magical creations of afflictions,🔽and some are magical creations of karma.🔽",
+   "finish": "stop",
+   "prompt_tokens": 338,
+   "completion_tokens": 149,
+   "ms": 12798
+  },
+  {
+   "src": "རབ་འབྱོར་རྣམ་གྲངས་དེས་ན་ཆོས་ཐམས་ཅད་ནི་སྤྲུལ་བའོ།🔽གསོལ་པ།🔽བཅོམ་ལྡན་འདས་གང་སྤངས་པ་ཞེས་བགྱི་བ།🔽རྒྱུན་དུ་ཞུགས་པའི་འབྲས་བུའམ།🔽ལན་ཅིག་ཕྱིར་འོང་བའི་འབྲས་བུའམ།🔽ཕྱིར་མྱི་འོང་བའི་འབྲས་བུ་འམ།🔽ཕྱིར་མྱི་འོང་བའི་འབྲལ་བུ་འམ།🔽ཕྱིར་མྱི་འོང་བ་ཉིད་དམ།🔽རང་སངས་རྒྱས་ཀྱི་སའམ།🔽སངས་རྒྱས་ཀྱི་སའམ།🔽བག་ཆགས་ཀྱི་མཚམས་སྦྱོར་བ་ཐམས་ཅད་སྤངས་པའི་ཆོས་དེ་དག་ཐམས་ཅད་ཀྱང་སྤྲུལ་པ་ལགས་སམ།🔽བཅོམ་ལྡན་འདས་ཀྱིས་བཀའ་སྩལ་པ།🔽རབ་འབྱོར་བསྐྱེད་པའམ།🔽བཀག་པའི་ཆོས་གང་ཅི་ཡང་རུང་སྟེ།🔽དེ་ཐམས་ཅད་ནི་སྤྲུལ་པའོ།🔽གསོལ་པ།🔽བཅོམ་ལྡནའདས་གང་མ་སྤྲུལ་པའི་ཆོས་དེ་གང་ལགས།",
+   "out": "🔽Subhūti, because of this one of many explanations, all dharmas are magical creations.🔽He asked:🔽“Blessed One, what is called ‘abandoned’🔽is the result of stream enterer,🔽the result of once-returner,🔽the result of non-returner,🔽the state of non-returner,🔽the state of a pratyekabuddha,🔽the state of a buddha,🔽or the dharma of having abandoned all propensities to the latent formations of ignorance—are all those magical creations?”🔽The Blessed One replied:🔽“Subhūti, any dharma that is produced or stopped🔽is a magical creation.🔽He asked:🔽“Blessed One, what is a dharma that is not a magical creation?”",
+   "finish": "stop",
+   "prompt_tokens": 353,
+   "completion_tokens": 162,
+   "ms": 13957
+  },
+  {
+   "src": "བཅོམ་ལྡན་འདས་ཀྱིས་བཀའ་སྩལ་པ།🔽ཆོས་གང་ལ་སྐྱེ་བ་ཡང་མྱེད།🔽འགག་པ་ཡང་མྱེད་པ་དེ་ནི་མ་སྤྲུལ་པའོ།🔽གསོལ་བ།🔽དེ་གང་ལགས།🔽བཅོམ་ལྡནའདས་ཀྱིས་བཀའ་སྩལ་པ།🔽མྱི་མཉམ་པའི་མྱ་ངན་ལས་འདས་པ་སྟེ།🔽ཆོས་དེ་ནི་མ་སྤྲུལ་པའོ།🔽གསག་",
+   "out": " The Blessed One replied:🔽The Dharma that is neither born nor ceases is uncreated.🔽The Blessed One replied:🔽The unequalled nirvāṇa is uncreated.🔽The Blessed One replied:🔽",
+   "finish": "stop",
+   "prompt_tokens": 153,
+   "completion_tokens": 43,
+   "ms": 3810
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 30566,
+ "text": "What are the results by which a person is classified as a stream-enterer,\na once-returner,\na non-returner,\na worthy one,\na pratyekabuddha,\nor a tathāgata, an arhat, a perfectly enlightened buddha?\nThe Blessed One replied,\n“Su­bhūti, all phenomena are magical creations.\nSome are magical creations of śrāvakas,\nsome are magical creations of pratyekabuddhas,\nsome are magical creations of bodhisattvas,\nsome are magical creations of tathāgatas,\nsome are magical creations of afflictions,\nand some are magical creations of karma.\nSubhūti, because of this one of many explanations, all dharmas are magical creations.\nHe asked:\n“Blessed One, what is called ‘abandoned’\nis the result of stream enterer,\nthe result of once-returner,\nthe result of non-returner,\nthe state of non-returner,\nthe state of a pratyekabuddha,\nthe state of a buddha,\nor the dharma of having abandoned all propensities to the latent formations of ignorance—are all those magical creations?”\nThe Blessed One replied:\n“Subhūti, any dharma that is produced or stopped\nis a magical creation.\nHe asked:\n“Blessed One, what is a dharma that is not a magical creation?”\nThe Blessed One replied:\nThe Dharma that is neither born nor ceases is uncreated.\nThe Blessed One replied:\nThe unequalled nirvāṇa is uncreated.\nThe Blessed One replied:",
+ "prompt_tokens": 844,
+ "completion_tokens": 354
+}

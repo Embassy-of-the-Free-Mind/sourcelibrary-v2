@@ -1,0 +1,18 @@
+{
+ "id": "69e7abe75f1a22ab19aa00d4_00566",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "The Indian manuscript was received from the hand of the great wheel-turner <term>Chödrag Palzangpo</term> <gloss>Dharmakīrti Śrībhadra</gloss>, and in accordance with his command to fill in the lacunae and revise the conclusion, the following sections were addressed:\n\nIn the tenth volume, from the passage beginning \"It accomplishes all the purposes of action,\" to the passage ending \"by the supreme recitation of secret mantras.\"\n\nIn the twelfth volume, from the passage beginning \"Bhagavan, however, for the sake of a special purpose,\" to the passage ending \"the body of the mantra-holder will become ablaze.\"\n\nIn the thirteenth volume, from the passage beginning \"Merely hearing this ritual of the mandala,\" to the passage ending \"one should carve it to the measure of the person.\"\n\nIn the fourteenth volume, from the passage beginning \"Having fully recited over lotus, water, and white mustard seeds,\" to the passage ending \"one should wash it with white cotton cloth, seven times.\"\n\nBetween the fourteenth and fifteenth volumes, from the passage beginning \"Eight silver bowls,\" to the passage ending \"in all other places, one should perform all actions exactly as one has intended.\"\n\n<summary>This page records the editorial process of restoring and completing specific sections of the Neyphug Kanjur, based on an Indian manuscript provided by Chödrag Palzangpo.</summary>\n<keywords>Neyphug Kanjur, manuscript restoration, Chödrag Palzangpo, ritual instructions, mantra recitation, mandala rites</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2336,
+ "outputTokens": 332,
+ "thinkingTokens": 0,
+ "ms": 1877,
+ "cost_usd": 0.001082,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 792
+}

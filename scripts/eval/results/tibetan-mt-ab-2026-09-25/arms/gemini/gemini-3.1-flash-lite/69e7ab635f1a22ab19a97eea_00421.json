@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab635f1a22ab19a97eea_00421",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "The purity of form and the purity of omniscience are non-dual, they cannot be divided, they are not separate, and they are not distinct. The noble truths, the meditative concentrations, the immeasurables, the formless absorptions, the liberations, the successive meditative attainments, emptiness, signlessness, wishlessness, the superknowledges, the meditative stabilities, the gateways of retention, the powers of the Tathagata <note>original: \"de bzhin gshegs pa\" <gloss>Thus-Gone One</gloss></note>, the fearlessnesses, the analytical knowledges, great loving-kindness, great compassion, and the distinct qualities of a Buddha are pure. Because the mental contact and the resulting feelings are pure, and because the mental contact and the resulting feelings are pure, omniscience is pure. Thus, the distinct qualities of a Buddha are pure, the mental contact and the resulting feelings are pure, and omniscience is pure; these are non-dual, they cannot be divided, they are not separate, and they are not distinct.\n\nMay this virtue be for those who have attained and those who have not yet attained.\n\n<summary>This passage from the Prajnaparamita tradition explains the non-dual nature of form, mental experience, and the qualities of a Buddha, asserting their fundamental purity and indivisibility.</summary>\n<keywords>Purity, Non-duality, Omniscience, Buddha-qualities, Emptiness, Mental contact</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2402,
+ "outputTokens": 317,
+ "thinkingTokens": 0,
+ "ms": 4191,
+ "cost_usd": 0.0010760000000000001,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 927
+}

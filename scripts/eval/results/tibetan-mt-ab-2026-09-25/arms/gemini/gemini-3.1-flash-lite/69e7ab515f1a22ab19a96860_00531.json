@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab515f1a22ab19a96860_00531",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "That which is the purified knower is the purified consciousness of the body. That which is the purified consciousness of the body is the purified knower. Thus, regarding this purified knower and the purified consciousness of the body, there is no duality. They cannot be made into two; they are not separate; they are non-distinct. That which is the purified seer is the purified consciousness of the body. That which is the purified consciousness of the body is the purified seer. Thus, regarding this purified seer and the purified consciousness of the body, there is no duality. They cannot be made into two; they are not separate; they are non-distinct.\n\n<summary>This passage explains the non-dual nature of the knower, the seer, and the consciousness of the body, asserting their fundamental unity.</summary>\n<keywords>non-duality, consciousness, knower, seer, purification, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2163,
+ "outputTokens": 190,
+ "thinkingTokens": 0,
+ "ms": 1307,
+ "cost_usd": 0.00082575,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 559
+}

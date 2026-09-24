@@ -1,0 +1,21 @@
+{
+ "id": "69e7ab535f1a22ab19a96a78_00266",
+ "src_chars": 127,
+ "sentences": 5,
+ "chunks": [
+  {
+   "src": "སུ་དག་པ།🔽སྐྱེ་མཆེད་དྲུག་ཡོངས་སུ་དག་པས།🔽མཐོང་བ་པོ་ཡོངས་སུ་དག་པ་སྟེ།🔽དེ་ལྟར་ན་མཐོང་བ་པོ་ཡོངས་སུ་དག་བ་དང་།🔽སྐྱེ་མཆེད་དྲུག་ཡོངས་སུ་",
+   "out": "🔽The six sense bases are completely pure.🔽The seer is completely pure.🔽Thus, the seer is completely pure,🔽and the six sense bases are completely pure.🔽",
+   "finish": "stop",
+   "prompt_tokens": 97,
+   "completion_tokens": 37,
+   "ms": 3320
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 3320,
+ "text": "The six sense bases are completely pure.\nThe seer is completely pure.\nThus, the seer is completely pure,\nand the six sense bases are completely pure.",
+ "prompt_tokens": 97,
+ "completion_tokens": 37
+}

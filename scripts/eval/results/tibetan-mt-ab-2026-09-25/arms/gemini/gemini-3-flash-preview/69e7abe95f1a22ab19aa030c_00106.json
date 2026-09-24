@@ -1,0 +1,18 @@
+{
+ "id": "69e7abe95f1a22ab19aa030c_00106",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>pervading everywhere. One sees light of various colors like an emanation of all the world realms, and like an illusion, a rainbow, a mirage, the moon reflected in water, and a reflected image. From that blue lotus <note>original: utpala</note> arises the blue Tara, having two hands. The right hand holds a trident <note>original: trishula</note>, and the left hand holds a blue lotus together with its stem. Her beautiful body is adorned with jeweled necklaces, earrings, armlets, and various kinds of ornaments. She is in the prime of youth, with a smiling face, and sits in the balanced cross-legged posture <note>original: mnyam pa'i skyil mo krung</note> upon a moon and a lotus. To the south, upon a moon and a lotus, from the syllable <term>Re</term> arises a yellow lotus together with its seed, from which light pervades all the world realms. With light of various colors, the world <unclear>rest of line missing or obscured</unclear>\n\n<summary>This page describes the visualization of a blue Tara arising from a lotus, detailing her ornaments, posture, and symbolic attributes. It begins the transition to a second visualization of a yellow lotus in the southern direction.</summary>\n<keywords>Tara, blue lotus, trident, ornaments, visualization, world realms, yellow lotus, Buddhist ritual</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2215,
+ "outputTokens": 312,
+ "thinkingTokens": 0,
+ "ms": 2369,
+ "cost_usd": 0.0020435,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 627
+}

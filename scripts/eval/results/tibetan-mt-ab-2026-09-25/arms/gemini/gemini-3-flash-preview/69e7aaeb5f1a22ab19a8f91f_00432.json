@@ -1,0 +1,18 @@
+{
+ "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nNoble son, these two are the practices of the <term>Bodhisattvas</term> <gloss>heroic beings striving for enlightenment</gloss>, the great beings. Furthermore, noble son, there are two practices of the Bodhisattvas, the great beings. What are these two? They are as follows: the practice of completely abandoning the faults of the <term>bhumis</term> <gloss>levels or stages of spiritual progress</gloss>, and the practice of perfecting the skill of progressing from one stage to the next. Noble son, these two are the practices of the Bodhisattvas, the great beings.\n\nFurthermore, noble son, there are two practices of the Bodhisattvas, the great beings. What are these two? They are as follows: the practice of showing the path of the <term>Sravakas</term> <gloss>pious listeners</gloss> and <term>Pratyekabuddhas</term> <gloss>solitary realizers</gloss>, and the practice of skill in never turning back from the enlightenment of a Buddha. Noble son, these two are the practices of the Bodhisattvas, the great beings.\n\nNoble son, these are the practices of the Bodhisattvas, the great beings. In these, the Bodhisattvas, the great beings, should exert themselves. Noble son, for those Bodhisattvas, the great beings, who practice in this way, supreme and perfectly complete enlightenment is not difficult to find.\n\nThen the <term>Bhagavan</term> <gloss>Blessed One</gloss> spoke to <term>Manjushri</term> <gloss>the Youthful Prince of Wisdom</gloss>.\n\n<summary>This page outlines specific dual practices for Bodhisattvas, focusing on progressing through spiritual stages and maintaining the resolve to reach full Buddhahood. It concludes with the Buddha addressing Manjushri.</summary>\n<keywords>Bodhisattva, bhumi, Sravaka, Pratyekabuddhas, enlightenment, Manjushri, Buddhist stages, spiritual practice</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2510,
+ "outputTokens": 451,
+ "thinkingTokens": 0,
+ "ms": 2527,
+ "cost_usd": 0.002608,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1016
+}

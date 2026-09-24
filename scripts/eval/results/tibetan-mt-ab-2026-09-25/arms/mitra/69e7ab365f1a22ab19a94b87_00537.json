@@ -1,0 +1,37 @@
+{
+ "id": "69e7ab365f1a22ab19a94b87_00537",
+ "src_chars": 1064,
+ "sentences": 20,
+ "chunks": [
+  {
+   "src": "༄༅།🔽དྲིས་ཤིག །🔽དེ་ནས་ཚོང་དཔོན་གྱི་བུ་ནོར་བཟངས་བྱང་ཆུབ་སེམས་དཔའི་རྣམ་པར་གནོན་པ་དང་།🔽ནན་ཏན་རྣམ་པར་དག་པར་བྱ་བ་ལ་བརྩོན་པ།🔽བྱང་ཆུབ་སེམས་དཔའི་སྟོབས་སྣང་བས་སེམས་ཤིན་ཏུ་སྣང་བར་གྱུར་པ།🔽བྱང་ཆུབ་སེམས་དཔའ་བརྟན་པ་གཞན་གྱིས་མི་ཐུབ་ཅིང་བརྒལ་ཐག་ཆད་པའི་སྙིང་དང་ལྡན་པ།🔽བྱང་ཆུབ་སེམས་དཔ་དཔའི་སྨོན་གྱི་གོ་ཆ་བཟངས་པོས་སེམས་ཞུམ་པ་མེད་པ།🔽བྱང་ཆུབ་སེམས་དཔའིབསམ་པ་བརྟན་པས་ཀུན་ཏུ་གནས་ཤིང་ཡོངས་སུ་འཕེལ་བར་འགྱུར་བ་ལ་བརྩོན་པ།🔽བྱང་ཆུབསེམས་དཔའི་སྤྱོད་པའི་སྤྲིན་གྱི་ཆར་ཡོངས་སུ་འཛིན་པའི་བསམ་པ་དང་ལྡན་པ།",
+   "out": "🔽Ask!🔽Then Sudhana, the head merchant’s son, who was intent on the bodhisattva’s courage,🔽who was diligent in purifying his practice,🔽whose mind was illuminated by the bodhisattva’s power of illumination,🔽whose mind was firm, invincible, and unassailable by others,🔽whose mind was undaunted by the excellent armor of the bodhisattva’s aspiration,🔽who was diligent in abiding in and increasing the bodhisattva’s firm intention,🔽who had the intention of fully receiving the rain of the bodhisattva’s cloud of conduct,",
+   "finish": "stop",
+   "prompt_tokens": 314,
+   "completion_tokens": 122,
+   "ms": 9827
+  },
+  {
+   "src": "བྱང་ཆུབསེམས་དཔའ་ཆོས་ཀྱི་སྤྲིན་གྱི་ཆར་གྱིས་ཡོངས་སུ་མི་ངོམས་པའི་རྒྱུད་དང་ལྡན་པ།🔽བྱང་ཆུབ་བསེམས་དཔའི་ཡོན་ཏན་ཐམས་ཅད་ལ་འཇུག་པའི་སྨོན་ལམ་ལ་མངོན་དུ་གྱུར་པ།🔽འགྲོ་བ་ཐམས་ཅད་ཀྱི་བ་ལོ་བསྒྱུར་བས་ཡོངས་སུ་སྡུད་པར་བདག་ཉིད་ཡོངས་སུ་གཏོང་བར་འདོད་པ་འགྲོ་བ་ཐམས་ཅད་འཁོར་བའི་དགོན་པ་ཆེན་པོ་ལས་བཟུང་བར་འདོད་པ།🔽དགེ་བའི་བཤེས་གཉེན་བལྟ་བ་དང་།🔽མཉན་པ་དང་།🔽བསྙེན་བཀུར་བས་ཡོངས་སུ་མི་ངོམས་པ།🔽ཆོས་ཀྱི་རིམ་གྲོ་ཚད་མེད་པ་བསྐྱེད་པ་དང་ལྡན་པ་དེས།🔽དགེ་སློང་བལྟ་ན་སྡུག་པའི་རྐང་པ་གཉིས་ལ་སྤྱི་བོས་ཕྱག་འཚལ་ཏེ།",
+   "out": " He was endowed with an inexhaustible mind that was like a cloud of Dharma rain for bodhisattvas.🔽He had actualized the aspiration to enter all the qualities of bodhisattvas.🔽He was dedicated to giving himself to all beings, who were like his own children, and he wanted to rescue all beings from the great wilderness of saṃsāra.🔽He was never satisfied with seeing,🔽hearing,🔽or serving spiritual friends.🔽He was endowed with the generation of immeasurable service to the Dharma.🔽He bowed his head to the feet of the monk Lovely to Behold,",
+   "finish": "stop",
+   "prompt_tokens": 307,
+   "completion_tokens": 120,
+   "ms": 9783
+  },
+  {
+   "src": "དགེ་སློང་བལྟ་ན་སྡུག་བསྔལ་ལན་བརྒྱ་སྟོང་དུ་མར་གཡས་ཕྱོགས་སུ་བསྐོར་བ་བྱས་ནས།🔽ཡང་དང་ཡང་བལྟས་ཏེ།🔽དགེ་སློང་བལྟ་ན་སྡུད་པའི་དྲུང་ནས་སོང་ངོ་།།",
+   "out": " The monk Darśanamudgara circumambulated the monk Darśanārtha many hundreds of thousands of times,🔽and looked at him again and again.🔽Then he left the presence of the monk Darśanārtha.🔽",
+   "finish": "stop",
+   "prompt_tokens": 104,
+   "completion_tokens": 51,
+   "ms": 4208
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 23819,
+ "text": "Ask!\nThen Sudhana, the head merchant’s son, who was intent on the bodhisattva’s courage,\nwho was diligent in purifying his practice,\nwhose mind was illuminated by the bodhisattva’s power of illumination,\nwhose mind was firm, invincible, and unassailable by others,\nwhose mind was undaunted by the excellent armor of the bodhisattva’s aspiration,\nwho was diligent in abiding in and increasing the bodhisattva’s firm intention,\nwho had the intention of fully receiving the rain of the bodhisattva’s cloud of conduct,\nHe was endowed with an inexhaustible mind that was like a cloud of Dharma rain for bodhisattvas.\nHe had actualized the aspiration to enter all the qualities of bodhisattvas.\nHe was dedicated to giving himself to all beings, who were like his own children, and he wanted to rescue all beings from the great wilderness of saṃsāra.\nHe was never satisfied with seeing,\nhearing,\nor serving spiritual friends.\nHe was endowed with the generation of immeasurable service to the Dharma.\nHe bowed his head to the feet of the monk Lovely to Behold,\nThe monk Darśanamudgara circumambulated the monk Darśanārtha many hundreds of thousands of times,\nand looked at him again and again.\nThen he left the presence of the monk Darśanārtha.",
+ "prompt_tokens": 725,
+ "completion_tokens": 293
+}

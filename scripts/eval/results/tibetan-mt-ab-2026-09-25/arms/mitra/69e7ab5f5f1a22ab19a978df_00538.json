@@ -1,0 +1,37 @@
+{
+ "id": "69e7ab5f5f1a22ab19a978df_00538",
+ "src_chars": 1113,
+ "sentences": 21,
+ "chunks": [
+  {
+   "src": "དཔའ་ཆེན་པོ་ནི་ཕ་རོལ་དུ་ཕྱིན་པ་དྲུག་ཀྱང་ཡོངས་སུ་རྫོགས་པར་བྱེད།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དང་ཡང་ཉེ་བར་གྱུར་པ་ཡིན་ནོ།🔽རབ་འབྱོར་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་ཕ་རོལ་དུ་ཕྱིན་པ་དྲུག་ལ་སྤྱོད་པའི་ཚེ།🔽སེམས་ཅན་གནས་བཞིར་སྐྱེས་པ་སྒོ་ང་ལས་སྐྱེས་པ་དང་།🔽མངལ་ནས་སྐྱེས་པ་དང་།🔽དྲོད་གཤེར་ལས་སྐྱེས་པ་དང་།🔽རྫུས་ཏེ་སྐྱེས་པ་རྣམས་མཐོང་ན་འདི་ལྟར་ཡོངས་སུ་བརྟག་པར་བྱ་སྟེ།🔽ཅི་ནས་ཀྱང་བདག་བླ་ན་མེད་པ་ཡང་དག་པར་རྫོགས་པའི་བྱང་ཆུབ་ཏུ་མངོན་པར་རྫོགས་པར་སངས་རྒྱས་པའི་སངས་རྒྱས་ཀྱི་ཞིང་དེ་ན།🔽སྒོ་ང་ལས་སྐྱེས་པ་དང་།🔽མང་ལ་ནས་སྐྱེས་པ་དང་།",
+   "out": " The great hero also completes the six perfections.🔽He is close to omniscience.🔽“Furthermore, Subhūti, when bodhisattva great beings practicing the six perfections see beings born in the four abodes—those born from an egg,🔽those born from a womb,🔽those born from moisture,🔽and those born spontaneously—they should think like this:🔽‘In whatever way I may fully awaken to unsurpassed, perfect, complete awakening, in that buddhafield of mine there will be no beings born from an egg,🔽no beings born from a womb,🔽",
+   "finish": "stop",
+   "prompt_tokens": 337,
+   "completion_tokens": 120,
+   "ms": 9635
+  },
+  {
+   "src": "དྲ་ད་གཤེར་ལས་སྐྱེས་པའི་གནས་གསུམ་པོ་རྣམས་མི་འབྱུང་ཞིང་མི་སྲིད་པ་དང་།🔽གཞན་དུ་ན་སེམས་ཅན་ཐམས་ཅད་རྫུ་བ་བར་འགྱུར་བ་དེ་ལྟ་དེ་ལྟར་ཕ་རོལ་དུ་ཕྱིན་པ་དྲུག་ལས་སྤྱད་པར་བྱའོ།🔽སངས་རྒྱས་ཀྱི་ཞིང་ཡོངས་སུ་དག་པར་བྱའོ།🔽སེམས་ཅན་ཡོངས་སུ་སྨིན་པར་བྱའོ་ཞེས་དེ་ལྟར་ཡོངས་སུ་བརྟག་པར་བ་སྟེ།🔽རབ་འབྱོར་དེ་ལྟར་སྤྱོད་པའི་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་ནི་ཕ་རོལ་དུ་ཕྱིན་པ་དྲུག་ཀྱང་ཡོངས་སུ་རྫོགས་པར་བྱེད།🔽རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དང་ཡང་ཉེ་བར་གྱུར་པ་ཡིན་ནོ།🔽རབ་འབྱོར་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམས།",
+   "out": " The three places that arise from moisture would not occur and would not be possible.🔽Otherwise, all sentient beings would be born miraculously.🔽In that way, one should practice the six perfections.🔽One should purify a buddhafield.🔽One should bring sentient beings to maturity.’🔽Sūbhadra, a bodhisattva-mahasattva who practices in that way🔽completes the six perfections🔽and approaches omniscience.🔽“Furthermore, Sūbhadra, a bodhisattva-mahasattva who practices the perfection of wisdom should not stand in the notion that ‘form is empty.’🔽",
+   "finish": "stop",
+   "prompt_tokens": 322,
+   "completion_tokens": 124,
+   "ms": 10051
+  },
+  {
+   "src": "དཔའ་ཆེན་པོ་ཕ་རོལ་དུ་ཕྱིན་པ་དྲུག་པ་ལ་སྤྱོད་པའི་ཚེ།🔽སེམས་ཅན་མངོན་པར་ཤེས་པ་ལྔ་དང་མི་ལྡན་པ་དག་མཐོང་ན།🔽འདི་ལྟར་ཡོངས་སུ་བརྟག་པར་བྱ་སྟེ།🔽ཅི་ནས་ཀྱང་བདག་",
+   "out": " When the great hero practices the six perfections,🔽if he sees beings who lack the five superknowledges,🔽he should examine himself thus:🔽“In whatever way I may🔽",
+   "finish": "stop",
+   "prompt_tokens": 110,
+   "completion_tokens": 40,
+   "ms": 3327
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 23014,
+ "text": "The great hero also completes the six perfections.\nHe is close to omniscience.\n“Furthermore, Subhūti, when bodhisattva great beings practicing the six perfections see beings born in the four abodes—those born from an egg,\nthose born from a womb,\nthose born from moisture,\nand those born spontaneously—they should think like this:\n‘In whatever way I may fully awaken to unsurpassed, perfect, complete awakening, in that buddhafield of mine there will be no beings born from an egg,\nno beings born from a womb,\nThe three places that arise from moisture would not occur and would not be possible.\nOtherwise, all sentient beings would be born miraculously.\nIn that way, one should practice the six perfections.\nOne should purify a buddhafield.\nOne should bring sentient beings to maturity.’\nSūbhadra, a bodhisattva-mahasattva who practices in that way\ncompletes the six perfections\nand approaches omniscience.\n“Furthermore, Sūbhadra, a bodhisattva-mahasattva who practices the perfection of wisdom should not stand in the notion that ‘form is empty.’\nWhen the great hero practices the six perfections,\nif he sees beings who lack the five superknowledges,\nhe should examine himself thus:\n“In whatever way I may",
+ "prompt_tokens": 769,
+ "completion_tokens": 284
+}

@@ -1,0 +1,127 @@
+{
+ "seed": 4742,
+ "positive_control_page": "69e7abdd5f1a22ab19a9fade_00002",
+ "same_arm_pages": {
+  "69e7ab365f1a22ab19a94b87_00537": "mitra",
+  "69e7ab535f1a22ab19a96a78_00266": "lite",
+  "69e7abe75f1a22ab19aa00d4_00566": "mitra",
+  "69e7aaeb5f1a22ab19a8f91f_00432": "mitra"
+ },
+ "pages": {
+  "69e7aacb5f1a22ab19a8d7d8_00307": {
+   "T1": "flash",
+   "T2": "lite",
+   "T3": "mitra"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00518": {
+   "T1": "flash",
+   "T2": "lite",
+   "T3": "mitra"
+  },
+  "69e7aaf75f1a22ab19a907e7_00001": {
+   "T1": "mitra",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69e7ab345f1a22ab19a94976_00281": {
+   "T1": "mitra",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69e7ab365f1a22ab19a94b87_00537": {
+   "T1": "mitra#dup",
+   "T2": "flash",
+   "T3": "mitra",
+   "T4": "lite"
+  },
+  "69e7ab4a5f1a22ab19a96014_00001": {
+   "T1": "mitra",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69e7ab4f5f1a22ab19a96632_00556": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "mitra"
+  },
+  "69e7ab515f1a22ab19a96860_00531": {
+   "T1": "mitra",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69e7ab535f1a22ab19a96a78_00266": {
+   "T1": "flash",
+   "T2": "lite#dup",
+   "T3": "lite",
+   "T4": "mitra"
+  },
+  "69e7ab555f1a22ab19a96c7a_00001": {
+   "T1": "mitra",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69e7ab5b5f1a22ab19a974bf_00508": {
+   "T1": "lite",
+   "T2": "mitra",
+   "T3": "flash"
+  },
+  "69e7ab5f5f1a22ab19a978df_00538": {
+   "T1": "mitra",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69e7ab985f1a22ab19a9a963_00510": {
+   "T1": "lite",
+   "T2": "mitra",
+   "T3": "flash"
+  },
+  "69e7abce5f1a22ab19a9e719_00001": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "mitra"
+  },
+  "69e7abdd5f1a22ab19a9fade_00002": {
+   "T1": "reference",
+   "T2": "mitra",
+   "T3": "flash",
+   "T4": "lite"
+  },
+  "69e7abe75f1a22ab19aa00d4_00566": {
+   "T1": "mitra#dup",
+   "T2": "flash",
+   "T3": "lite",
+   "T4": "mitra"
+  },
+  "69e7abe95f1a22ab19aa030c_00106": {
+   "T1": "mitra",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69e7ab4c5f1a22ab19a9622c_00504": {
+   "T1": "mitra",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69e7aaeb5f1a22ab19a8f91f_00432": {
+   "T1": "flash",
+   "T2": "mitra",
+   "T3": "mitra#dup",
+   "T4": "lite"
+  },
+  "69e7ab095f1a22ab19a91c1c_00434": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "mitra"
+  },
+  "69e7abad5f1a22ab19a9c315_00404": {
+   "T1": "flash",
+   "T2": "lite",
+   "T3": "mitra"
+  },
+  "69e7ab635f1a22ab19a97eea_00421": {
+   "T1": "flash",
+   "T2": "mitra",
+   "T3": "lite"
+  }
+ }
+}

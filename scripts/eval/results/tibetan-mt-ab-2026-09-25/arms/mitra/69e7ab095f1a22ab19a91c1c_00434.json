@@ -1,0 +1,37 @@
+{
+ "id": "69e7ab095f1a22ab19a91c1c_00434",
+ "src_chars": 1334,
+ "sentences": 19,
+ "chunks": [
+  {
+   "src": "ཐོས་པ་ལས་བྱུང་བའི་ཤེས་པས་འདི་ལྟར་དུད་འགྲོའི་ཡུལ་ན་དུད་འགྲོ་ཀུན་ནས་ཉོན་མོངས་པ་ཅན་གྱི་དགའ་བའི་ཟས་ཀྱིས་འཚོ་བ་ཡོད་དེ་ནགས་ཁུང་ན་སྤྲུལ་པོ་ཆེ་ཨ་ཛ་ག་ར་ཞེས་པ་དགའ་བའི་ཟས་དང་རླུང་ཟ་ཞིང་འཚོ་བ་དང་།🔽སྲོག་ཆགས་ག་ལ་གོ་ལི་ཀ་དང་།🔽རི་ཞོལ་གནས་ཞེས་བྱ་བ་ལ་སོགས་པ་དང་གཞན་ཡང་ཡོད་དེ།🔽དེ་ལ་འོད་གསལ་གྱི་ལྷ་རྣམས་ཀྱི་དགའ་བའི་ཟས་ནི་གནོད་སེམས་མེད་པའི་དགའ་བའི་ཟས་ཀྱིས་འཚེ་བ་ཡིན་གྱི་རྐུད་འགྲོའི་དགའ་བའི་ཟས་ནི་འཁོན་གྱི་ལྟ་བ་དང་།🔽འཁོན་དམ་དུ་འཛིན་པའི་སེམས་དང་ལྡན་པ་ཡིན་ན་དེ་དག་ལས་གང་གིས་དེར་སྐྱེ་བར་འགྱུར་སྙམ་ནས།",
+   "out": "🔽The knowledge that comes from hearing explains that in the animal realm there are animals that live on the food of the afflictions. There is a large snake called ajagara that lives in the forest and lives on the food of the afflictions and wind.🔽There are also the creatures called galagola and ri shol ne.🔽There are others as well.🔽The food of the gods of the clear light is the food of the afflictions of non-aversion. The food of the animals is the food of the afflictions of hatred.🔽If one has the view of hatred and a mind that holds hatred firmly, one will be born there.🔽",
+   "finish": "stop",
+   "prompt_tokens": 311,
+   "completion_tokens": 136,
+   "ms": 10928
+  },
+  {
+   "src": "དེས་ཐོས་པ་ལས་བྱུང་བའི་ཤེས་བས་བརྟགས་ན།🔽ཞེ་སྡང་གི་ཤས་ཆེ་བའམ།🔽ཞེ་སྡང་གི་རང་བཞིན་ཅན་གང་ཡིན་པ་སྟེ།🔽འཁོན་གྱི་རྒྱུ་དང་འཐུན་པ་དང་།🔽གཏི་མུག་གི་ཤས་ཆེ་བ་དེས་སྲོག་གཅོད་པར་བྱས་ན།🔽དེ་ལུས་དང་བྲལ་ནས་ངན་འགྲོ་ལོག་པར་ལྟུང་བ་སེམས་ཅན་དམྱལ་བ་རྣམས་ཀྱི་ནང་དུ་སྐྱེ་བར་འགྱུར་རོ།🔽དེ་འཁོན་དང་དགའ་བའི་གཞི་ཡོད་པ་དེས་དུད་འགྲོ་རྣམས་ཀྱི་ནང་དུ་སྐྱེས་ན།🔽དགའ་བའི་ཟས་དང་རླུང་ཟ་བར་འགྱུར་རོ།🔽དེ་གལ་ཏེ་མི་རྣམས་དང་སྐལ་བ་མཉམ་པར་མིར་སྐྱེས་ན།🔽ལས་དེ་དང་རྒྱུ་འཐུན་པར་དེ་རྟག་པར་གློ་བུར་དུ་ཕ་རོལ་དང་།🔽ལྷན་ཅིག་རྒྱུ་མེད་པར་འཐབ་པ་དང་འབྲེལ་པར་འགྱུར་བ་མཐོང་ངོ་།",
+   "out": "🔽When he examines by means of knowledge derived from hearing,🔽he will see that he is dominated by anger,🔽or that he is of an angry nature,🔽that he is the cause of enmity,🔽and that he is dominated by delusion.🔽When he has killed, he will, when separating from his body, fall into the lower realms and be born in the hell of the Unrelenting Torment.🔽If, due to the basis of his enmity and joy, he is born among animals,🔽he will eat the food of joy and the wind.🔽If, with the likelihood of a sea turtle poking its head through a yoke floating on the ocean, he should be born with the general lot in life of a human,🔽he will, in accordance with his causal actions, be constantly and suddenly involved in fights with others,🔽without any reason.",
+   "finish": "stop",
+   "prompt_tokens": 344,
+   "completion_tokens": 176,
+   "ms": 14266
+  },
+  {
+   "src": "དེ་ནས་ཡང་དགེ་སློང་ལས་ཀྱི་འབྲས་བུ་རྣམ་པར་སྨིན་པ་ཤེས་པ་དེས་རྣམ་པ་གཞན་གྱིས་དུད་འགྲོའི་འཇིག་རྟེན་མཐའ་ཡས་པ་ལ་རྟོག་པར་བྱེད་པ་ཡང་ཆུའི་ནང་ན་རྒྱུ་བ་དག་ཇི་ལྟར་སྐྱེ་བར་འགྱུར་སྙམ་ནས།🔽དེས་ཐོས་པ་ལས་བྱུང་བའི་ཤེས་པས་བརྟགས་ན།🔽གང་བློ་ཞན་ཅིང་རྣམ་པར་ཤེས་པ་ཞན་པ་སྒོམ་གྱིས་གདུངས་བཞིན་དུ་འཆི་བའི་དུས་བྱེད་ན་དེ་ལུས་དང་བྲལ་ནས་ངན་འགྲོ་ལོག་པར་ལྟུང་བ་ཆུའི་ནང་ན་རྒྱུ་བར་འགྱུར་",
+   "out": "🔽“The monk who has knowledge of the ripening of karmic effects will now examine the infinite animal world in another way. He will ask himself, ‘How do animals come to live in the water?’🔽With knowledge derived from hearing he will then see, ‘When someone who is weak-minded and weak in wisdom dies while tormented by meditation, they will, when separating from their bodies, fall into the lower realms and be born as an animal living in the water.",
+   "finish": "stop",
+   "prompt_tokens": 235,
+   "completion_tokens": 95,
+   "ms": 7743
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 32938,
+ "text": "The knowledge that comes from hearing explains that in the animal realm there are animals that live on the food of the afflictions. There is a large snake called ajagara that lives in the forest and lives on the food of the afflictions and wind.\nThere are also the creatures called galagola and ri shol ne.\nThere are others as well.\nThe food of the gods of the clear light is the food of the afflictions of non-aversion. The food of the animals is the food of the afflictions of hatred.\nIf one has the view of hatred and a mind that holds hatred firmly, one will be born there.\nWhen he examines by means of knowledge derived from hearing,\nhe will see that he is dominated by anger,\nor that he is of an angry nature,\nthat he is the cause of enmity,\nand that he is dominated by delusion.\nWhen he has killed, he will, when separating from his body, fall into the lower realms and be born in the hell of the Unrelenting Torment.\nIf, due to the basis of his enmity and joy, he is born among animals,\nhe will eat the food of joy and the wind.\nIf, with the likelihood of a sea turtle poking its head through a yoke floating on the ocean, he should be born with the general lot in life of a human,\nhe will, in accordance with his causal actions, be constantly and suddenly involved in fights with others,\nwithout any reason.\n“The monk who has knowledge of the ripening of karmic effects will now examine the infinite animal world in another way. He will ask himself, ‘How do animals come to live in the water?’\nWith knowledge derived from hearing he will then see, ‘When someone who is weak-minded and weak in wisdom dies while tormented by meditation, they will, when separating from their bodies, fall into the lower realms and be born as an animal living in the water.",
+ "prompt_tokens": 890,
+ "completion_tokens": 407
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab5f5f1a22ab19a978df_00538",
+ "arm": "gemini-3-flash-preview",
+ "text": "The <term>Bodhisattva</term> <gloss>hero of awakening</gloss> <term>Mahasattva</term> <gloss>great being</gloss> also brings the six <term>paramitas</term> <gloss>perfections</gloss> to complete fulfillment. He also draws near to the state of <term>sarvakara-jnana</term> <gloss>omniscience in all aspects</gloss>. Furthermore, Subhuti, when a Bodhisattva Mahasattva practices the six perfections, if he sees sentient beings born in the four ways—born from an egg, born from a womb, born from heat and moisture, or born miraculously—he should investigate in this way: \"In the Buddha-field where I shall manifest complete and perfect awakening in unsurpassed, true, and complete enlightenment, may these three states of being born from an egg, born from a womb, and born from heat and moisture not occur and not exist. Instead, may all sentient beings be born miraculously.\" He should practice the six perfections in such a way. He should completely purify the Buddha-field. He should bring sentient beings to full maturity. Subhuti, a Bodhisattva Mahasattva who practices in that way brings the six perfections to complete fulfillment. He also draws near to the state of omniscience in all aspects. Furthermore, Subhuti, when a Bodhisattva Mahasattva practices the six perfections, if he sees sentient beings who do not possess the five <term>abhijna</term> <gloss>supernormal powers</gloss>, he should investigate in this way: \"How can I...\n\n<summary>This page describes the Bodhisattva's vow to purify their future Buddha-field by ensuring all inhabitants are born miraculously rather than through lower forms of birth. It emphasizes that such aspirations bring the practitioner closer to total omniscience.</summary>\n<keywords>Bodhisattva, Mahasattva, Subhuti, six perfections, paramitas, four types of birth, miraculous birth, Buddha-field, omniscience, supernormal powers</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2569,
+ "outputTokens": 437,
+ "thinkingTokens": 0,
+ "ms": 2654,
+ "cost_usd": 0.0025955,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1119
+}

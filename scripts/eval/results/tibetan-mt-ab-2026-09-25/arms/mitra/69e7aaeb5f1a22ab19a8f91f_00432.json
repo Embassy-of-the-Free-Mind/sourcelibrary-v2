@@ -1,0 +1,37 @@
+{
+ "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+ "src_chars": 1010,
+ "sentences": 17,
+ "chunks": [
+  {
+   "src": "ཀྱི་བུ་གཉིས་པོ་དེ་དག་ནི་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་རྣམས་ཀྱི་སྒྲུབ་པའོ།🔽རིགས་ཀྱི་བུ་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམ་དཔའ་ཆེན་པོ་རྣམས་ཀྱི་སྒྲུབ་པ་གཉིས་ཏེ།🔽གཉིས་གང་ཞེ་ན།🔽འདི་ལྟ་སྟེ།🔽སའི་ཉེས་པ་རྣམ་པར་སྤོང་བའི་སྒྲུབ་པ་དང་།🔽ས་ནས་སར་འཕར་བ་ལ་མཁས་པ་ཡོངས་སུ་རྫོགས་པར་བྱ་བའི་སྒྲུབ་པ་སྟེ།🔽རིགས་ཀྱི་བུ་གཉིས་པོ་དེ་དག་ནི་བྱུང་ཆུབ་སེམས་དཔའ་སེམས་པ་དཔའ་ཆེན་པོ་རྣམས་ཀྱིས་སྒྲུབ་པའོ།🔽རིགས་ཀྱི་བུ་བཞན་ཡང་བྱང་ཆུབ་སེམས་པའི་སེམས་དཔའ་ཆེན་པོ་རྣམས་ཀྱི་སྒྲུབ་པ་གཉིས་ཏེ།🔽གཉིད་གང་ཞེ་ན།🔽འདི་ལྟ་སྟེ་ཉན་ཐོས་དང་།",
+   "out": " These, son of noble family, are the two accomplishments of bodhisattva great beings.🔽“Son of noble family, there are two more accomplishments of bodhisattva great beings.🔽What are these two?🔽They are🔽the accomplishment of abandoning the faults of the levels🔽and the accomplishment of perfecting the skill of progressing from one level to the next.🔽Son of noble family, these are the two accomplishments of bodhisattva great beings.🔽“Son of noble family, there are two more accomplishments of bodhisattva great beings.🔽What are these two?🔽They are🔽the accomplishment of the hearers’ and",
+   "finish": "stop",
+   "prompt_tokens": 338,
+   "completion_tokens": 124,
+   "ms": 10109
+  },
+  {
+   "src": "རང་སངས་རྒྱས་ཀྱིས་བུ་བསྟན་པའི་སྒྲུབ་པ་དང་།🔽སངས་རྒྱས་ཀྱི་བྱང་ཆུབ་ལས་ཕྱིར་མི་ལྡོག་པ་ལ་མཁས་པའི་སྒྲུབ་པ་སྟེ།🔽རིགས་ཀྱི་བུ་གནིས་པོ་དེ་དག་ནི་བྱང་ཆུབ་ཀྱི་སེམས་དཔའ་སེམས་དཔའཆེན་པོ་རྣམས་ཀྱི་སྒྲུབ་པའོ་།🔽རིགས་ཀྱི་བུ་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ་རྣམས་ཀྱི་སྒྲུབ་པ་ནི་འདི་ལྟ་བུ་འདི་དག་སྟེ།🔽དེ་ལ་བྱང་ཆུབ་སེམས་དཔའ་སེམ་དཔའ་ཆེན་པོ་རྣམས་ཀྱི་འབད་པར་བྱའོ།🔽རིགས་ཀྱི་བུ་བྱང་ཆུབ་ཀྱི་སེམས་དཔའས་སེམས་དཔའ་ཆེན་པོ་དེ་ལྟར་སྒྲུབ་པ་རྣམས་ལ་བླ་ན་མེད་པ་ཡང་དག་པར་རྫོགས་པའི་བྱང་ཆུབ་རྙེད་དཀའ་བ་མ་ཡིན་ནོ།",
+   "out": " the practice of teaching the Dharma to one’s children,🔽and the practice of skill in not turning away from the enlightenment of buddhahood.🔽Noble son, these are the practices of bodhisattva great beings.🔽“Noble son, these are the practices of bodhisattva great beings.🔽Bodhisattva great beings should strive in these.🔽Noble son, bodhisattva great beings who practice in this way will not find it difficult to attain unsurpassed and perfect awakening.🔽",
+   "finish": "stop",
+   "prompt_tokens": 322,
+   "completion_tokens": 95,
+   "ms": 7793
+  },
+  {
+   "src": "དེ་ནས་བཅོམ་ལྡན་འདས་ཀྱིས་འཇམ་དཔལ་གཞོན་ནུར་གྱི་པ་ལ་བཀའ་སྩལ་པ།",
+   "out": " Then the Blessed One said to the youthful Mañjuśrī,🔽",
+   "finish": "stop",
+   "prompt_tokens": 51,
+   "completion_tokens": 16,
+   "ms": 1430
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 19333,
+ "text": "These, son of noble family, are the two accomplishments of bodhisattva great beings.\n“Son of noble family, there are two more accomplishments of bodhisattva great beings.\nWhat are these two?\nThey are\nthe accomplishment of abandoning the faults of the levels\nand the accomplishment of perfecting the skill of progressing from one level to the next.\nSon of noble family, these are the two accomplishments of bodhisattva great beings.\n“Son of noble family, there are two more accomplishments of bodhisattva great beings.\nWhat are these two?\nThey are\nthe accomplishment of the hearers’ and\nthe practice of teaching the Dharma to one’s children,\nand the practice of skill in not turning away from the enlightenment of buddhahood.\nNoble son, these are the practices of bodhisattva great beings.\n“Noble son, these are the practices of bodhisattva great beings.\nBodhisattva great beings should strive in these.\nNoble son, bodhisattva great beings who practice in this way will not find it difficult to attain unsurpassed and perfect awakening.\nThen the Blessed One said to the youthful Mañjuśrī,",
+ "prompt_tokens": 711,
+ "completion_tokens": 235
+}

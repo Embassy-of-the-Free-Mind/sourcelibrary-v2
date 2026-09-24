@@ -1,0 +1,29 @@
+{
+ "id": "69e7ab515f1a22ab19a96860_00531",
+ "src_chars": 555,
+ "sentences": 11,
+ "chunks": [
+  {
+   "src": "པོ་རྣམ་པར་དག་པ་གང་ཡིན་པ་དེ་ནི།🔽ལུས་ཀྱི་རྣམ་པར་ཤེས་པ་རྣམ་པར་དག་པ།🔽ལུས་ཀྱི་རྣམ་པར་ཤེས་པའི་རྣམ་པར་དག་པ་གང་ཡིན་པ་དེ་ནི།🔽ཤེས་པ་པོ་རྣམ་པར་དག་པ་སྟེ།🔽དེ་ལྟར་ན་ཤེས་པ་པོ་རྣམ་པར་དག་དང་།🔽ལུས་ཀྱི་རྣམ་པར་ཤེས་རྣམ་པར་དག་པ་འདི་ལ་གཉིས་སུ་མྱེད་དེ་གཉིས་སུ་བྱར་མྱེད་སོ་སོ་མ་ཡིན་ཐ་མྱི་དད་དོ།🔽མཐོང་བ་པོ་རྣམ་པར་དག་པ་གང་ཡི་པ་དེ་ནི།🔽ལུས་ཀྱི་རྣམ་བར་ཤེས་པ་རྣམ་པར་དག་བ་ལུས་ཀྱི་རྣམ་པར་ཤེས་པ་རྣམ་པར་དག་པ་གང་ཡིནཔ་དེ་ནི།🔽མཐོང་བ་པོ་རྣམ་པར་དག་བ་སྟེ།🔽དེ་ལྟར་ན་མཐོང་བ་པོ་རྣམ་པར་དག་དང་བ་དང་།",
+   "out": " The purity of the body is the purity of the body consciousness.🔽The purity of the body consciousness is the purity of the seer.🔽Thus, the purity of the seer and the purity of the body consciousness are not two, nor are they divided.🔽The purity of the seer is the purity of the body consciousness.🔽The purity of the body consciousness is the purity of the seer.🔽Thus, the purity of the seer and the purity of the body consciousness are not two, nor are they divided.🔽",
+   "finish": "stop",
+   "prompt_tokens": 313,
+   "completion_tokens": 105,
+   "ms": 9120
+  },
+  {
+   "src": "ལུས་ཀྱི་རྣམ་པར་ཞེས་པ་རྣམ་པར་དག་པ་འདི་ལ་གཉིས་དུ་མྱེད་དེ་གཉིས་སུ་བྱར་མྱེད་སོ་སོ་བ་ཡིན་ཐ་མྱི་དད་དོ།།",
+   "out": " The body’s purity is not two, not divided, not to be divided, not separate, and not different.",
+   "finish": "stop",
+   "prompt_tokens": 74,
+   "completion_tokens": 24,
+   "ms": 2242
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 11363,
+ "text": "The purity of the body is the purity of the body consciousness.\nThe purity of the body consciousness is the purity of the seer.\nThus, the purity of the seer and the purity of the body consciousness are not two, nor are they divided.\nThe purity of the seer is the purity of the body consciousness.\nThe purity of the body consciousness is the purity of the seer.\nThus, the purity of the seer and the purity of the body consciousness are not two, nor are they divided.\nThe body’s purity is not two, not divided, not to be divided, not separate, and not different.",
+ "prompt_tokens": 387,
+ "completion_tokens": 129
+}

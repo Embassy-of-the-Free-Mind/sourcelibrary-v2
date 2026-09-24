@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab985f1a22ab19a9a963_00510",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "in the same way, they will attain enlightenment. All of them reside here. I am able to express that much in words; therefore, practice these things here. If one does not take delight in the teachings of the Omniscient One, one will surely feel regret in the future. As for all the <term>paramitas</term> <gloss>perfections</gloss> I have taught, and the various paths of engagement with the ocean of wisdom, those whose physical basis remains in the conduct of the childish are unable to understand them. When the times are corrupt, sentient beings are wicked, the teachings are nearing their end, and the lower realms are increasing, the wise will become deeply disillusioned and, like a deer, will become fearful and vigilant.\n\nAny supreme and joyful king or bodhisattva who, for a thousand <term>kalpas</term> <gloss>eons</gloss>, has practiced the six <term>paramitas</term> <gloss>perfections</gloss> without the benefit of skillful means—the mass of merit from hearing this meditative concentration and rejoicing in it does not approach even a hundredth part of the former mass of merit, nor does it approach it by way of comparison or example. When this discourse on the Dharma was taught, countless bodhisattvas generated the mind for supreme, perfect, and complete enlightenment. All of them became irreversible from supreme, perfect, and complete enlightenment. Eight hundred thousand beings, both gods and humans, became free from dust and stainless.\n\n<summary>This passage emphasizes the importance of practicing the teachings of the Omniscient One and the superiority of hearing and rejoicing in this specific meditative concentration over long-term practice of the six perfections without skillful means. It concludes with the spiritual awakening of countless bodhisattvas and a vast number of gods and humans.</summary>\n<keywords>Enlightenment, Paramitas, Skillful Means, Bodhisattva, Meditative Concentration, Merit, Dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2512,
+ "outputTokens": 403,
+ "thinkingTokens": 0,
+ "ms": 2228,
+ "cost_usd": 0.0012325,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1061
+}

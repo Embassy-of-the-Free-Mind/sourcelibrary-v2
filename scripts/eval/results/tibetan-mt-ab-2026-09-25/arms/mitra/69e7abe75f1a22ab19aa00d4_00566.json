@@ -1,0 +1,29 @@
+{
+ "id": "69e7abe75f1a22ab19aa00d4_00566",
+ "src_chars": 786,
+ "sentences": 30,
+ "chunks": [
+  {
+   "src": "ཀྱི་འཁོར་ལོ་པ་ཆེན་པོ་ཆོས་གྲགས་དཔལ་བཟང་པོའི་ཕྱག་ནས་རྒྱ་དཔེ་བྱུང་ཞིང་།🔽ཆད་པ་གསོབ་པ་དང་མཇུག་སྒྱུར་ཅིག་ཅེས་བཀས་བསྐུལ་བ་ལ་བརྟེན་ནས།🔽བམ་པོ་བཅུ་པའི་ནང་དུ།🔽ལས་གྱི་དོན་ཀུན་སྒྲུབ་པར་བྱེད།🔽ཅེས་པ་ནས།🔽གསང་སྔགས་བཟླས་པ་མཆོག་གྱིས་ཤིང་།🔽ཅེས་པའི་བར་དང་།🔽བམ་པོ་བཅུ་གཉིས་པའི་ནང་དུ།🔽བཅོམ་ལྡན་འདས་འོན་ཀྱང་དོན་ཁྱད་པར་ཅན་གྱི་ཆེད་དུ།🔽ཞེས་པ་ནས།🔽རིག་སྔགས་འཆང་གི་ལུས་འབར་བར་འགྱུར་ཏེ།🔽ཞེས་པའི་བར་དང་།🔽བམ་པོ་བཅུ་གསུམ་པའི་ནང་དུ།🔽དཀྱིལ་འཁོར་གྱི་ཆོ་ག་འདི་ཐོས་པ་ཙམ་དང་།🔽ཞེས་པ་ནས།🔽མི་གང་ཚད་དུ་བརྐོ་བར་བྱ།🔽ཞེས་པའི་བར་དང་།🔽བམ་པོ་བཅུ་བཞི་པའི་ནང་དུ།",
+   "out": "🔽The Sanskrit text was obtained from the great Cakrasaṃvara practitioner Dharmakīrti Śrībhadra.🔽Based on the command to correct the text and make revisions,🔽in the tenth chapter,🔽it says, \"Accomplishes all activities.\"🔽Up to:🔽Recite the supreme mantra.🔽In the twelfth chapter,🔽it says, \"However, for the sake of a special purpose,🔽Up to:🔽The body of the vidyādhara will blaze.🔽In the thirteenth chapter,🔽it says, \"Merely hearing this ritual of the maṇḍala,🔽Up to:🔽One should dig to the proper depth.🔽In the fourteenth chapter,🔽",
+   "finish": "stop",
+   "prompt_tokens": 345,
+   "completion_tokens": 145,
+   "ms": 11751
+  },
+  {
+   "src": "པདྨ་དང་།🔽ཆུ་དང་།🔽ཡུངས་ཀར་ལ་ཡོངས་སུ་བཟླས་ཏེ།🔽ཞེས་པ་ནས།🔽རས་དཀར་པོས་བཀྲུ་བར་བྱ་ཞིང་།🔽ལན་བདུན་དུ།🔽ཞེས་པའི་བར་དང་།🔽པམ་པོ་བཅུ་བཞི་པ་དང་བཅོ་ལྔ་པའི་མཚམས་སུ།🔽དངུལ་གྱི་ཕོག་པོར་བརྒྱད་དང་།🔽ཞེས་པ་ནས།🔽གནས་རྣམ་པར་གཞན་ཐམས་ཅད་དུ་ཇི་ལྟར་ཡིད་ལ་བྱེད་པའི་བྱ་བ་ཐམས་ཅད་དུ་བྱེད་དོ།🔽ཞེས་པའི་བར་དང་།",
+   "out": " lotus,🔽water,🔽and white mustard seeds.🔽Recite this:🔽Wash with a white cloth.🔽Seven times.🔽Recite this:🔽At the juncture of the fourteenth and fifteenth days,🔽eight silver coins.🔽Recite this:🔽In all other places, perform all activities as intended.🔽Recite this:🔽",
+   "finish": "stop",
+   "prompt_tokens": 188,
+   "completion_tokens": 72,
+   "ms": 5885
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 17636,
+ "text": "The Sanskrit text was obtained from the great Cakrasaṃvara practitioner Dharmakīrti Śrībhadra.\nBased on the command to correct the text and make revisions,\nin the tenth chapter,\nit says, \"Accomplishes all activities.\"\nUp to:\nRecite the supreme mantra.\nIn the twelfth chapter,\nit says, \"However, for the sake of a special purpose,\nUp to:\nThe body of the vidyādhara will blaze.\nIn the thirteenth chapter,\nit says, \"Merely hearing this ritual of the maṇḍala,\nUp to:\nOne should dig to the proper depth.\nIn the fourteenth chapter,\nlotus,\nwater,\nand white mustard seeds.\nRecite this:\nWash with a white cloth.\nSeven times.\nRecite this:\nAt the juncture of the fourteenth and fifteenth days,\neight silver coins.\nRecite this:\nIn all other places, perform all activities as intended.\nRecite this:",
+ "prompt_tokens": 533,
+ "completion_tokens": 217
+}

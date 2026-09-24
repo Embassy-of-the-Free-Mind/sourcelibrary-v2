@@ -1,0 +1,12 @@
+{
+ "seed": 4742,
+ "positive_control_page": "69e7ab5f5f1a22ab19a978df_00538",
+ "pages": {
+  "69e7ab5f5f1a22ab19a978df_00538": {
+   "T1": "lite",
+   "T2": "reference",
+   "T3": "mitra",
+   "T4": "flash"
+  }
+ }
+}

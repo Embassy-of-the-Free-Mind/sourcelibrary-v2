@@ -1,0 +1,18 @@
+{
+ "id": "69e7abe95f1a22ab19aa030c_00106",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "pervading all, the realms of the world are seen as emanations, illusions, rainbows, mirages, reflections of the moon in water, and images, all appearing in various colors of light. From that <term>utpala</term> <gloss>blue lotus</gloss> arises the blue Tara with two hands. Her right hand holds a <term>trishula</term> <gloss>trident</gloss>, and her left hand holds an <term>utpala</term> <gloss>blue lotus</gloss> with a stem. Her beautiful body is adorned with precious necklaces, earrings, armlets, and various types of ornaments. She is in the bloom of youth, with a smiling face, and sits in the posture of equal meditation upon a moon and lotus seat. In the south, upon a moon and lotus seat, arises the yellow <term>utpala</term> <gloss>blue lotus</gloss> born from the syllable <term>re</term>, complete with its seed, which pervades all the realms of the world; with various colors of light, the world\n\n<summary>This passage describes the visualization of the blue and yellow forms of Tara, detailing their attributes, ornaments, and the symbolic nature of their appearance as illusory emanations.</summary>\n<keywords>Tara, utpala, visualization, iconography, Buddhist meditation, emanations</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2215,
+ "outputTokens": 290,
+ "thinkingTokens": 0,
+ "ms": 1758,
+ "cost_usd": 0.00098875,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 627
+}

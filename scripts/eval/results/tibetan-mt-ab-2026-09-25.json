@@ -1,0 +1,736 @@
+{
+ "generated": "2026-09-24T22:59:37.542Z",
+ "seed": 4742,
+ "pages": 22,
+ "test_pages": 21,
+ "judges": {
+  "opus": {
+   "file": "/Users/dereklomas/sourcelibrary-ops/handoffs/data/2026-09-25-mtab/packet/verdicts-opus.jsonl",
+   "pages_scored": 22,
+   "missing": []
+  },
+  "sonnet": {
+   "file": "/Users/dereklomas/sourcelibrary-ops/handoffs/data/2026-09-25-mtab/packet/verdicts-sonnet.jsonl",
+   "pages_scored": 22,
+   "missing": []
+  }
+ },
+ "controls": {
+  "positive": {
+   "opus": {
+    "fidelity": 1,
+    "invention": true,
+    "omission": true,
+    "rank": 2,
+    "pass": false
+   },
+   "sonnet": {
+    "fidelity": 1,
+    "invention": true,
+    "omission": true,
+    "rank": 2,
+    "pass": false
+   }
+  },
+  "same_arm": {
+   "opus": {
+    "pairs": [
+     {
+      "id": "69e7ab365f1a22ab19a94b87_00537",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       2,
+       2
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7ab535f1a22ab19a96a78_00266",
+      "engine": "lite",
+      "fidelity": [
+       5,
+       5
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7abe75f1a22ab19aa00d4_00566",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       2,
+       2
+      ],
+      "tie": true
+     }
+    ],
+    "n": 4,
+    "ties": 4,
+    "tie_rate": 1
+   },
+   "sonnet": {
+    "pairs": [
+     {
+      "id": "69e7ab365f1a22ab19a94b87_00537",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       2,
+       2
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7ab535f1a22ab19a96a78_00266",
+      "engine": "lite",
+      "fidelity": [
+       5,
+       5
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7abe75f1a22ab19aa00d4_00566",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       2,
+       2
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+      "engine": "mitra",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "n": 4,
+    "ties": 4,
+    "tie_rate": 1
+   }
+  },
+  "positive_supplementary": {
+   "attempt2-overwide": {
+    "page": "69e7ab5f5f1a22ab19a978df_00538",
+    "by_judge": {
+     "opus": {
+      "fidelity": 2,
+      "invention": true,
+      "omission": false,
+      "rank": 2,
+      "pass": false,
+      "reason": "T1 and T4 both render the page span (end of the refrain, four modes of birth, three lower births absent and all born miraculously, refrain, start of the five extrasensory powers) matching the reference; T3 adds a line that one should not stand in the notion that form is empty, with no counterpart in source or reference, and misnames Subhuti as Subhadra; T2 is the reference text itself, importing the five-pathways passage and the 37-factors list not on this page and running past the page end"
+     },
+     "sonnet": {
+      "fidelity": 3,
+      "invention": true,
+      "omission": false,
+      "rank": 1,
+      "pass": false,
+      "reason": "T1 and T4 render the four-birth passage and the five-abhijna opening completely and accurately, matching the reference; T2 is otherwise reference-accurate but imports the whole preceding pathways-of-beings/qualities paragraph, which has no counterpart on this page (invention); T3 garbles the three-birth-mode sentence, misnames Subhuti as Subhadra twice, and adds an unsupported sentence about form being empty (invention)."
+     }
+    }
+   },
+   "attempt3-exact": {
+    "page": "69e7ab5f5f1a22ab19a978df_00538",
+    "by_judge": {
+     "opus": {
+      "fidelity": 5,
+      "invention": false,
+      "omission": false,
+      "rank": 0,
+      "pass": true,
+      "reason": "Page = ref F.392.b closing formula, four modes of birth passage, opening of five extrasensory powers passage; T1, T2 (verbatim the reference span) and T4 render all of it with the three lower births excluded and miraculous birth for all, cannot be separated; T3 misnames Subhuti as Subhadra twice, garbles heat-and-moisture birth as three places that arise from moisture, and inserts should not stand in the notion that form is empty, which has no counterpart in source or reference"
+     },
+     "sonnet": {
+      "fidelity": 5,
+      "invention": false,
+      "omission": false,
+      "rank": 0,
+      "pass": true,
+      "reason": "T3 renders Subhuti as 'Subhadra' (a different figure), garbles the three lower birth-modes as all arising from moisture, and adds an unrelated 'form is empty' sentence with no counterpart in source or reference; T1, T2 and T4 render the birth-modes paragraph faithfully with correct terminology and no invention, T2 matching the reference almost verbatim."
+     }
+    }
+   }
+  }
+ },
+ "engines": {
+  "flash": {
+   "by_judge": {
+    "opus": {
+     "n": 21,
+     "fidelity_median": 5,
+     "fidelity_mean": 4.714,
+     "omission_rate": 0,
+     "invention_rate": 0.048,
+     "inversion_rate": 0,
+     "rank_mean": 1.048,
+     "first_place": 20
+    },
+    "sonnet": {
+     "n": 21,
+     "fidelity_median": 5,
+     "fidelity_mean": 4.857,
+     "omission_rate": 0,
+     "invention_rate": 0,
+     "inversion_rate": 0,
+     "rank_mean": 1.048,
+     "first_place": 20
+    }
+   },
+   "pooled": {
+    "n": 42,
+    "fidelity_median": 5,
+    "fidelity_mean": 4.786,
+    "invention_rate": 0.024,
+    "omission_rate": 0,
+    "inversion_rate": 0
+   },
+   "run": {
+    "pages": 21,
+    "ms_mean": 3073.381,
+    "in_tokens_mean": 2417.381,
+    "out_tokens_mean": 403.952,
+    "usd_per_page_realtime": 0.002,
+    "usd_per_page_batch": 0.001,
+    "finish": {
+     "STOP": 21
+    }
+   }
+  },
+  "lite": {
+   "by_judge": {
+    "opus": {
+     "n": 21,
+     "fidelity_median": 4,
+     "fidelity_mean": 4.286,
+     "omission_rate": 0.048,
+     "invention_rate": 0.048,
+     "inversion_rate": 0.048,
+     "rank_mean": 1.429,
+     "first_place": 14
+    },
+    "sonnet": {
+     "n": 21,
+     "fidelity_median": 5,
+     "fidelity_mean": 4.571,
+     "omission_rate": 0.048,
+     "invention_rate": 0.048,
+     "inversion_rate": 0,
+     "rank_mean": 1.238,
+     "first_place": 16
+    }
+   },
+   "pooled": {
+    "n": 42,
+    "fidelity_median": 5,
+    "fidelity_mean": 4.429,
+    "invention_rate": 0.048,
+    "omission_rate": 0.048,
+    "inversion_rate": 0.024
+   },
+   "run": {
+    "pages": 21,
+    "ms_mean": 2197.952,
+    "in_tokens_mean": 2417.381,
+    "out_tokens_mean": 334.476,
+    "usd_per_page_realtime": 0.001,
+    "usd_per_page_batch": 0.001,
+    "finish": {
+     "STOP": 21
+    }
+   }
+  },
+  "mitra": {
+   "by_judge": {
+    "opus": {
+     "n": 21,
+     "fidelity_median": 3,
+     "fidelity_mean": 2.762,
+     "omission_rate": 0.381,
+     "invention_rate": 0.571,
+     "inversion_rate": 0.095,
+     "rank_mean": 2.286,
+     "first_place": 0
+    },
+    "sonnet": {
+     "n": 21,
+     "fidelity_median": 3,
+     "fidelity_mean": 2.524,
+     "omission_rate": 0.286,
+     "invention_rate": 0.429,
+     "inversion_rate": 0.048,
+     "rank_mean": 2.19,
+     "first_place": 1
+    }
+   },
+   "pooled": {
+    "n": 42,
+    "fidelity_median": 3,
+    "fidelity_mean": 2.643,
+    "invention_rate": 0.5,
+    "omission_rate": 0.333,
+    "inversion_rate": 0.071
+   },
+   "run": {
+    "pages": 21,
+    "ms_mean": 38998.381,
+    "out_tokens_mean": 471.048,
+    "cost_note": "self-hosted; see engines.mitra.projection"
+   }
+  }
+ },
+ "rules": {
+  "issue": {
+   "rule": "MITRA wins fidelity on >= 15/20 pages → hold the $430 batch",
+   "by_judge": {
+    "opus": {
+     "mitra_wins": 0,
+     "flash_wins": 21,
+     "ties": 0,
+     "n": 21,
+     "threshold": 16,
+     "met": false
+    },
+    "sonnet": {
+     "mitra_wins": 0,
+     "flash_wins": 20,
+     "ties": 1,
+     "n": 21,
+     "threshold": 16,
+     "met": false
+    }
+   },
+   "met_by_any_judge": false
+  },
+  "handoff": {
+   "rule": "cheapest engine whose median fidelity is within 0.5 of the best AND invention rate <= best + 5pp (pooled over judges)",
+   "cost_order": [
+    "lite",
+    "flash",
+    "mitra"
+   ],
+   "best_fidelity_engine": "flash",
+   "eligible": [
+    "flash",
+    "lite"
+   ],
+   "pick": "lite",
+   "specialist_wins_by_1": false
+  }
+ },
+ "agreement": {
+  "judges": [
+   "opus",
+   "sonnet"
+  ],
+  "fidelity_exact": 0.683,
+  "fidelity_within_1": 0.968,
+  "fidelity_mean_abs_diff": 0.349,
+  "top_rank_shared": 1,
+  "n_cells": 63,
+  "n_pages": 21
+ },
+ "per_page": [
+  {
+   "id": "69e7aacb5f1a22ab19a8d7d8_00307",
+   "opus": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "reasons": {
+    "opus": "Reference (F.191.b painting rite) does not cover this page (Manjusri praise + urna light scene), judged against source; T1 and T2 follow the source throughout with minor slips (T2 renders rigs pa as possessing wisdom, folds the planets as addressees); T3 turns the sons ten in number into as numerous as the past buddhas, invents repeated called-Gentle-Splendor lines and may all beings be born in the higher realms for the truncated gro bai skye gnas",
+    "sonnet": "reference is a mismatched folio (painting/mandala instructions, unrelated to this page's Manjushri-praise/Shakyamuni-subdues-planets narrative), so judged candidates against source only; T3 mistranslates the sons 'ten in number' as 'as numerous as the past buddhas', garbles the Manjushri-naming lines into a confused repetition, and invents completions for two sentences the source leaves trailing (e.g. 'may all beings be born in the higher realms'), while T1 and T2 render both passages accurately and closely match each other."
+   }
+  },
+  {
+   "id": "69e7aae45f1a22ab19a8f1d1_00518",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "mitra": "3X"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "3",
+    "mitra": "2X"
+   },
+   "reasons": {
+    "opus": "Page = reference F.339b end (deer verse, merit comparison, Dharma eye, flowers). Source: the former merit (six perfections for 1000 eons) does not approach a hundredth of the merit of hearing and rejoicing; T1 renders this exactly; T2 gets the direction right but garbles the clause (exceeds by more than a hundredfold and would not approach it); T3 inverts it (the rejoicing merit does not come close to a hundredth of the previous merit), contradicting source and reference far greater",
+    "sonnet": "the source states the merit from HEARING this samadhi vastly exceeds (the old merit does not even reach a hundredth of it) the merit of six-paramita practice without skillful means, matching the reference (\"the merit that arises when hearing about this absorption ... is far greater\"); T1 renders the direction correctly; T2 muddles it into a near self-contradictory sentence (\"would exceed ... by more than a hundredfold, and would not even approach it\"); T3 flatly reverses which practice is superior (\"the merit of rejoicing ... does not come close to a hundredth of ... the previous merit\"), a doctrinal inversion."
+   }
+  },
+  {
+   "id": "69e7aaf75f1a22ab19a907e7_00001",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "1I"
+   },
+   "reasons": {
+    "opus": "Page = reference F.1.b palace setting + first seven Avikalpa names; T2 and T3 both render setting and names (Avikalpa, -prabhasa, -candra, Nirvikalpavira, -dharmanirdesakusala, -svabhava) matching the reference, indistinguishable; T1 mistranslates the fifth name (dharma-ksanti) and then degenerates into a loop of ~20 invented compound names (Nirvikalpa-jnana-prabhasa-svabhava...) with no counterpart",
+    "sonnet": "source lists about seven Nirvikalpa-prefixed bodhisattva names matching the reference names Avikalpa, Avikalpaprabhasa, Avikalpacandra, Nirvikalpaviira, Nirvikalpadharmanirdesakusala, Nirvikalpasvabhava, Nirvikalpamati; T2 and T3 render the setting and each name correctly and stop appropriately at the source truncation point, while T1 renders the first few names then degenerates into an escalating, nonsensical self-repeating compound with no counterpart in the source, a runaway fabrication."
+   }
+  },
+  {
+   "id": "69e7ab345f1a22ab19a94976_00281",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "mitra": "2IO"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "3",
+    "mitra": "1I"
+   },
+   "reasons": {
+    "opus": "Page = reference F.205a-206a exertions, four rddhipadas, powers, enlightenment factors (one OCR-dropped line treated as tie); T3 renders exertions, all four rddhipadas, powers and factors through diligence cleanly as in the reference; T2 covers the same span but garbles the diligence rddhipada (dwelling in cessation twice, detachment from diligent perseverance) and the mind/analysis bases; T1 drops the diligence/mind/analysis bases, invents a cultivation of the perfection of wisdom based on absence of hatred/delusion/passions looped dozens of times, then loops the seven factors repeatedly",
+    "sonnet": "this formulaic passage (four right exertions, four bases of miraculous power, five powers, enlightenment factors) is a known one-manuscript-line OCR-drop page (source_note), not scored as omission; T3 cleanly itemizes all four bases (aspiration, diligence, mind, investigation), the five powers, and the enlightenment factors matching the reference structure; T2 covers the same content but the third/fourth miraculous-power clauses collapse into a garbled, doubled sentence (\"dwelling in cessation, dwelling in cessation... abandonment of dwelling in detachment from diligent perseverance\"); T1 collapses into a runaway repeated phrase (\"based on the absence of the passions and the secondary passions\" dozens of times) and then cycles the same 7-8 enlightenment-limb items over and over well beyond the single pass in the source, a clear fabricated duplication."
+   }
+  },
+  {
+   "id": "69e7ab365f1a22ab19a94b87_00537",
+   "opus": {
+    "flash": "4I",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "5",
+    "mitra": "3"
+   },
+   "reasons": {
+    "opus": "Page = reference F.396a Sudhana qualities + departure from bhiksu Sudarsana; T4 follows the reference throughout and names Sudarsana correctly (minor slip: ba lo as transforming their paths, not charioteers); T2 matches the qualities but renames the monk Sagaradhvaja, a name imported from elsewhere in the sutra; T1 and T3 are identical text: beings like his own children for charioteers, and the monk Darsanamudgara circumambulated the monk Darsanartha, inventing names and making the monk the agent instead of Sudhana",
+    "sonnet": "all render the body content (Sudhana quality passage, bowing, circumambulation) faithfully to the reference; T4 names the monk consistently as Sudarshana matching the reference Sudarśana; T2 uses a consistent but seemingly invented name Sagaradhvaja, flagged with an honest note of the original; T1/T3 (identical text) name the same monk three different ways in one passage (Lovely to Behold, Darśanamudgara, Darśanārtha), confusing the single referent the source and reference keep as one person."
+   }
+  },
+  {
+   "id": "69e7ab4a5f1a22ab19a96014_00001",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "reasons": {
+    "opus": "Source page holds only the inner-emptiness clause and the outer-emptiness formula of the I/mine lack-of-skillful-means series (reference F.2b gives the same formula for later emptinesses); T2 and T3 both render exactly these two items and break off at Blessed One, indistinguishable; T1 renders them correctly then continues with outer-and-inner, emptiness of emptiness, the great, phenomena and more, ~4,000 characters with no counterpart on the page",
+    "sonnet": "the page (4 short source lines) covers only the inner-emptiness and start-of-outer-emptiness stanzas, cutting off mid-word; T2 and T3 render exactly that span and stop where the source stops (T3 flags the cutoff with <unclear>); T1 continues for twelve additional emptiness stanzas (emptiness of emptiness, the great, the ultimate, conditioned, unconditioned, inexpressible, non-things, intrinsic nature, all phenomena, self, phenomena...) that have no counterpart anywhere on this page."
+   }
+  },
+  {
+   "id": "69e7ab4f5f1a22ab19a96632_00556",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "mitra": "4I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "reasons": {
+    "opus": "T2 matches the reference list (emptinesses through dharani gateways) throughout; T1 renders ting nge dzin (meditative stabilities) as a second meditative concentrations; T3 inserts emptiness of the unborn, which has no counterpart in the source or the reference list of emptinesses",
+    "sonnet": "T3 splits source's single 'dor ba med pa' (undiscarded) into two invented items 'unborn' and 'unannihilated', adding a term with no counterpart in source or reference; T1 collapses bsam gtan and ting nge 'dzin into one repeated 'meditative concentrations', losing the distinction T2 keeps; T2 renders the source's 9-item emptiness list and the mindfulness-through-dharani sequence exactly, matching the reference."
+   }
+  },
+  {
+   "id": "69e7ab515f1a22ab19a96860_00531",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2IO"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2O"
+   },
+   "reasons": {
+    "opus": "Source = reference knower and viewer paragraphs (purity of knower/viewer = purity of tactile consciousness, not two); T2 and T3 render both fully; T1 drops the knower, substitutes purity of the body, and adds a closing line on the body purity with no counterpart",
+    "sonnet": "Source gives two distinct paragraphs — purity of the knower (shes pa po) equated with purity of body-consciousness, then purity of the seer (mthong ba po) likewise — matching the references purity-of-a-knower/purity-of-a-viewer items; T2 and T3 render both terms correctly and in order (T3 also correctly flags it continues from the prior page); T1 never names the knower at all, instead saying purity of the body and repeating seer for both paragraphs, dropping the knower distinction entirely."
+   }
+  },
+  {
+   "id": "69e7ab535f1a22ab19a96a78_00266",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "4"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2O"
+   },
+   "reasons": {
+    "opus": "Source is only a one-line OCR fragment of a 14-line two-leaf page (the rest missing from the source for every system, so not scored as omission); T1-T3 render it as the reference has it: owing to the purity of the six sense fields, the viewer is pure; T4 drops the causal instrumental (-s) and states the two purities as independent assertions",
+    "sonnet": "Source (one OCR line, mid-sentence) states a causal purity relation via -pas (because the six sense fields are pure, the viewer is pure); T1-T3 all preserve this because...therefore structure (T2 and T3 are byte-identical); T4 flattens it into two disconnected declarative statements and a repeated restatement, dropping the reciprocal causal logic that is the point of this Perfection of Wisdom passage."
+   }
+  },
+  {
+   "id": "69e7ab555f1a22ab19a96c7a_00001",
+   "opus": {
+    "flash": "5",
+    "lite": "4I",
+    "mitra": "4"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "4"
+   },
+   "reasons": {
+    "opus": "The 4-line source (path/form/omniscience not two; owing to the path, feeling is pure; owing to feeling, omniscience is pure; truncated mid-sentence) matches the reference formula; T2 keeps the owing-to (-s) causal relation and the truncation; T1 turns owing-to into an identity (path purity IS feeling purity); T3 completes the truncated sentence with are one, an assertion the source does not yet make",
+    "sonnet": "All three render the opening non-duality formula and the causal chain path purity leads to feeling purity leads to omniscience purity correctly; T1 and T2 stop appropriately at the sources mid-sentence cutoff, T2 flags it with a note, while T3 rounds the truncated final clause off to are one, a paraphrase of the formulas usual not-two closing rather than an added claim, so none is clearly better."
+   }
+  },
+  {
+   "id": "69e7ab5b5f1a22ab19a974bf_00508",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "3OX"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "3O"
+   },
+   "reasons": {
+    "opus": "T1 and T3 follow the reference from their fruits...also phantom emanations through peerless nirvana is not a phantom emanation; T2 turns the opening question into what are the results (dropping are these also emanations), drops Subhutis What is that?, and gives that question and the closing lines to the Blessed One (wrong speaker), leaving a dangling The Blessed One replied",
+    "sonnet": "T1 and T3 render the full Q&A on emanations completely and accurately through the sources stopping point (peerless nirvana is not an emanation), T3 additionally marking the page as a continuation; T2 drifts terminology at the close (uncreated instead of the passages consistent not an emanation) and its final lines are truncated into a dangling repeated The Blessed One replied: with no content, an omission of the closing exchange."
+   }
+  },
+  {
+   "id": "69e7ab5f5f1a22ab19a978df_00538",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "reasons": {
+    "opus": "T2 and T3 match the reference four-modes-of-birth passage (three lower births will not occur; instead all beings born miraculously) and the start of the five-extrasensory-powers paragraph; T1 garbles the three births (three places that arise from moisture; otherwise all beings would be born miraculously), calls Subhuti Subhadra, and inserts should not stand in the notion that form is empty, which has no counterpart in the source or reference",
+    "sonnet": "T2 and T3 render the full passage accurately, matching the source through the four modes of birth, buddha-field purification, and the transition to the five superknowledges, stopping at the sources own mid-sentence cutoff; T1 inserts a sentence with no counterpart in source or reference (a bodhisattva-mahasattva ... should not stand in the notion that form is empty) and also mislabels the interlocutor Subhuti as Subhadra partway through, a fabricated doctrinal addition."
+   }
+  },
+  {
+   "id": "69e7ab985f1a22ab19a9a963_00510",
+   "opus": {
+    "flash": "4",
+    "lite": "3X",
+    "mitra": "2IO"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "reasons": {
+    "opus": "Source: the FORMER merit (thousand eons of perfections) does not approach a hundredth of the merit of hearing/rejoicing (ref: far greater, beyond all comparison); T3 keeps this and the vocative Pramodyaraja; T1 reverses the comparison (rejoicing-merit does not approach the former) and makes Pramodyaraja a subject; T2 degenerates into a long invented quintillionth-part loop, drops the countless bodhisattvas resolve and irreversibility, and turns eight hundred thousand into hundreds of thousands",
+    "sonnet": "T2 replaces \"does not approach even a hundredth part... nor by way of comparison\" with dozens of invented quintillion/trillionth-part clauses with no counterpart in source or reference; T1 and T3 both render the full passage (dharma near end, deer simile, thousand-eon merit comparison, 800,000 gods/humans becoming stainless) faithfully and tie."
+   }
+  },
+  {
+   "id": "69e7abce5f1a22ab19a9e719_00001",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "1O"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "1O"
+   },
+   "reasons": {
+    "opus": "Title page: Tibetan title, homage to Vajrasattva, Sucandra requested: Teacher, the sevenfold and threefold empowerment (ref {1} opening); T1 and T2 both render all of it (Zla ba bzang po = Sucandra), differing only in rendering the title; T3 returns the Tibetan source untranslated",
+    "sonnet": "T3 returns the untranslated Tibetan source script verbatim instead of an English rendering, omitting all translated content; T1 and T2 both correctly render homage to Vajrasattva (matching the manuscripts own deity, which differs from the references Kalacakra) and Zla-ba bzang-pos/Suchandras request about the seven and threefold empowerments, and tie."
+   }
+  },
+  {
+   "id": "69e7abe75f1a22ab19aa00d4_00566",
+   "opus": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5I",
+    "mitra": "3"
+   },
+   "reasons": {
+    "opus": "Colophon listing added passages by book (ref: Kalacakra master Chodrak Pel Sangpo; books 10, 12, 13, 14, transition to 15); all miss Kalacakra (dus split across the page break), T2 as Chakravartin, T3 as wheel-turner; T2 and T3 otherwise match the reference span item by item; T1 and T4 are identical and call him a Cakrasamvara practitioner, render the book 14/15 transition as days, silver vessels as coins, and insert a repeated Recite this: with no counterpart",
+    "sonnet": "T1 and T4 are identical text and both mistranslate khor lo pa chen po (wheel-turner/cakravartin monarch Chodrak Palzangpo) as a Cakrasamvara practitioner, and mistranslate bam po (volume/section) as days in the fourteenth-fifteenth transition; T2 renders both correctly throughout. T3 also renders the colophon list correctly but its summary fabricates the specific attribution Neyphug Kanjur, a detail with no counterpart in source or reference."
+   }
+  },
+  {
+   "id": "69e7abe95f1a22ab19aa030c_00106",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "4O"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "4"
+   },
+   "reasons": {
+    "opus": "Image shows two leaves of 7 lines but the OCR source carries only 4 lines (east blue Tara to start of south yellow utpala), so the rest is a shared source gap, not scored; against the source and ref F.206.a, T2 and T3 render all of it (multicolored light, apparition/illusion/rainbow/mirage/moon in water/reflection, trident, utpala with stem, jewel ornaments, youth, smile, even cross-legged on moon and lotus, south re to yellow utpala); T1 drops the multicolored light (od kha dog sna tshogs pas) in the opening sentence",
+    "sonnet": "All three render the emanation simile, blue Tara with trident and utpala, and the start of the yellow Tara passage accurately; T1 drops mnyam pai (balanced/equal) from the cross-legged posture description that T2 and T3 both preserve, a minor term slip."
+   }
+  },
+  {
+   "id": "69e7ab4c5f1a22ab19a9622c_00504",
+   "opus": {
+    "flash": "5",
+    "lite": "2O",
+    "mitra": "3O"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "3O",
+    "mitra": "3O"
+   },
+   "reasons": {
+    "opus": "Source = ref F.393.b: four qualifiers of the emptiness of an essential nature of nonentities (nonexistent, emptiness, void, without essential nature) x future/middle, then why, Sharadvatiputra, the limit of the past is not apprehended; T3 keeps all four qualifiers in both series and the why-clause; T1 renders the first as emptiness is empty, garbles the last middle clause into is not the bodhisattva and drops the fourth why-item; T2 collapses the four qualifiers into repeated essence of non-existence is empty, losing nonexistent/without essential nature in both series and in the why-list",
+    "sonnet": "The source repeats a fourfold formula (emptiness of essential nature of nonentities is nonexistent / is emptiness / is void-isolated / is without essential nature) applied first to the future limit then to the middle, ending in a vocative to Sharadvatiputra restating all four for the past limit. T3 preserves all four qualifiers distinctly through both cycles and the closing vocative, matching the reference structure. T1 blurs the qualifiers and its penultimate clause (emptiness is not the bodhisattva, and the middle is not apprehended) garbles a comparison that belongs to a different part of the passage; T2 collapses most of the four qualifiers into repeated is emptiness clauses, losing the void/without-essential-nature distinctions in several repetitions."
+   }
+  },
+  {
+   "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "mitra": "3"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "3IO"
+   },
+   "reasons": {
+    "opus": "T1 = reference F.292.a throughout (flaws of the levels / advancing level to level; teaching of the levels of śrāvakas and pratyekabuddhas; irreversibility; closing exhortation); T4 same content but misparses rigs kyi bu gnyis po de dag as those two sons of noble family three times; T2 and T3 are identical and garble the śrāvaka/pratyekabuddha item into the hearers + teaching the Dharma to one’s children (OCR ས→བུ), breaking one practice into a garbled list",
+    "sonnet": "T2/T3 (identical) render the śrāvaka/pratyekabuddha teachings clause as teaching the Dharma to one's children, dropping pratyekabuddhas and inventing a child-teaching detail absent from source and reference; T1 and T4 render the full span (bhumi-fault practices, śrāvaka/pratyekabuddha practice, closing exhortation to Then the Bhagavat said to Manjushri) faithfully to the reference."
+   }
+  },
+  {
+   "id": "69e7ab095f1a22ab19a91c1c_00434",
+   "opus": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "2I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "2I"
+   },
+   "reasons": {
+    "opus": "T1 and T2 both follow reference F.317.b (ajagara on food of joy and wind, lizards and mountain dweller, Luminosity gods free of ill will, grudge-driven killers to hell, baseless fights as humans, water creatures) and share one slip on the OCR sgom for skom: reference tormented by thirst, T1 mental agitation, T2 tormented by meditations; T3 renders food of joy as food of the afflictions, garbles the Luminosity gods clause, and invents the hell of Unrelenting Torment and the blind-turtle-and-yoke simile, neither in source nor reference",
+    "sonnet": "T3 invents a specific hell name (hell of Unrelenting Torment, absent from source/reference which just say hell-beings) and inserts an entirely fabricated turtle-and-yoke simile with no counterpart in source or reference, and mistranslates dga bai zas (food of joy, correctly rendered by T1/T2) as food of the afflictions throughout; T1 and T2 render the full span (ajagara snake, gagolika/mountain dweller, gods of Luminosity, hatred causing hell-birth, animal/human rebirth, water-creature birth) faithfully to the reference."
+   }
+  },
+  {
+   "id": "69e7abad5f1a22ab19a9c315_00404",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "3O"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "3"
+   },
+   "reasons": {
+    "opus": "T1 and T2 both match reference F.168.b (Vipaśyin ninety-one eons ago, epithets, Bandhumat, plasterer builds monastery with flower and fruit trees and scent, goes forth, precious pillar at the reliquary foundation, retinue aspiration to please not displease); each slightly misreads the request shes par tshal (T1 you should know, T2 knowing that), neither adds content; T3 drops the monks request clause (zhus pa), turns the plasterer caste zhal zhal mkhan into painter and then temple builders, and renders rig pa dang zhabs su ldan pa as learned and virtuous",
+    "sonnet": "T3 mistranslates the plasterer caste (zhal zhal mkhan) inconsistently as painter then temple builders, diverging from the reference plasterers, though it usefully renders ga ge mo as the placeholder so-and-so which T1/T2 drop; T1 and T2 render the Vipasyin narrative (temple, ordination, parinirvana, relic pillar, followers aspiration) faithfully to the reference throughout."
+   }
+  },
+  {
+   "id": "69e7ab635f1a22ab19a97eea_00421",
+   "opus": {
+    "flash": "4",
+    "lite": "4",
+    "mitra": "3I"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "mitra": "4"
+   },
+   "reasons": {
+    "opus": "T1 and T3 both give the source/reference F.186.a chain (form and omniscience purity non-dual; noble truths through distinct qualities of a buddha; feelings conditioned by mental contact; omniscience; non-dual triad) and both flatten the bar du (up to) into a direct equation, with the lower-leaf scribal dedication rendered loosely; T2 inserts a chain on the mental faculty, mental phenomena and mental consciousness elements and contact from the coming together of the three that is not in the source page, puts mental contact where source and reference have feelings in the closing triad, and garbles the dedication as the killing of the step",
+    "sonnet": "All three render the full purity-chain (list of qualities, mental-contact-conditioned feeling, all-aspect omniscience, non-duality) and the complete list of qualities faithfully; the page-final fragmentary dedication (dge ba di theg pa bsad...) is honestly flagged as unclear by T1 and smoothed plausibly by T3, while T2 renders it as the nonsensical this virtue is the killing of the step, a minor fidelity slip."
+   }
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab535f1a22ab19a96a78_00266",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "...are completely pure. Because the six sense spheres <note>the eyes, ears, nose, tongue, body, and mind</note> are completely pure, the seer is completely pure. Thus, when the seer is completely pure and the six sense spheres are completely\n\n<summary>This passage explains the relationship between the purity of the six sense spheres and the purity of the observer or seer.</summary>\n<keywords>six sense spheres, purity, seer, perception, Thadrak Kanjur</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1871,
+ "outputTokens": 105,
+ "thinkingTokens": 0,
+ "ms": 856,
+ "cost_usd": 0.00062525,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 127
+}

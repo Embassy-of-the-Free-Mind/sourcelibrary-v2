@@ -1,0 +1,18 @@
+{
+ "id": "69e7abad5f1a22ab19a9c315_00404",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "[He] has become the supreme object of worship for humans. Knowing that he possesses great merit, [the assembly] made this request. The Blessed One replied: Monks, ninety-one aeons ago, the fully enlightened Buddha named <term>Vipaśyin</term> <gloss>the first of the seven past Buddhas</gloss>, who is endowed with knowledge and conduct, the Sugata, the knower of the world, the unsurpassed guide of beings to be tamed, the teacher of gods and humans, the Buddha, the Blessed One, appeared in the world. He resided in the capital of King Bandhumān. At that time, a certain plasterer from the plasterer caste built a temple for the sake of Vipaśyin. He planted trees of flowers and fruits well, and it became filled with the scent of fragrance everywhere. Having offered this, he also renounced the world under the teachings of that very Teacher. After the fully enlightened Buddha Vipaśyin passed into <term>nirvana</term> <gloss>the cessation of suffering</gloss>, a precious stone pillar was erected beneath the foundation of the stupa containing his relics. Many of the followers of the one who had renounced the world from the plasterer caste also rejoiced and became devoted. [They said:] Just as you have become devoted to the Teacher, I too shall have faith and devotion. I shall act according to the Teacher's instructions, and I shall please him and not displease him.\n\n<summary>This passage recounts the story of the Buddha Vipaśyin, describing his appearance in the world ninety-one aeons ago and the devotion of a plasterer who built a temple for him and subsequently entered the monastic life.</summary>\n<keywords>Buddha Vipaśyin, merit, stupa, devotion, monastic renunciation, past Buddhas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2521,
+ "outputTokens": 388,
+ "thinkingTokens": 0,
+ "ms": 2136,
+ "cost_usd": 0.00121225,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1049
+}

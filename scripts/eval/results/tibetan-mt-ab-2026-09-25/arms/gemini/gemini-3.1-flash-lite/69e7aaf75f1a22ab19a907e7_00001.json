@@ -1,0 +1,18 @@
+{
+ "id": "69e7aaf75f1a22ab19a907e7_00001",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "In the palace of the essence of the <term>dharmadhatu</term> <gloss>the realm of reality</gloss>, which is supreme above all in the three realms, he resides together with a great assembly of monks and a great assembly of <term>bodhisattvas</term> <gloss>enlightened beings</gloss>. These are: the <term>bodhisattva</term> <gloss>enlightened being</gloss> Great Being Non-Conceptual, and Non-Conceptual Radiance, and Non-Conceptual Moon, and Non-Conceptual Hero, and Non-Conceptual Master of Teaching the Dharma, and Non-Conceptual Essence, and Non-Conceptual\n\n<summary>This passage describes the assembly of monks and bodhisattvas residing with the Buddha in the supreme palace of the non-conceptual realm of reality.</summary>\n<keywords>dharmadhatu, bodhisattva, non-conceptual, three realms, assembly</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2077,
+ "outputTokens": 195,
+ "thinkingTokens": 0,
+ "ms": 1107,
+ "cost_usd": 0.00081175,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 414
+}

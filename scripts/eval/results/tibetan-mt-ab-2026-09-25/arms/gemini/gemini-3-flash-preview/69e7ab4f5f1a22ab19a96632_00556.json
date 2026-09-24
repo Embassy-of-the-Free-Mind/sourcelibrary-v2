@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab4f5f1a22ab19a96632_00556",
+ "arm": "gemini-3-flash-preview",
+ "text": "There is the emptiness of the end-less <note>original: \"tha ma myed pa stong pa nyid\"; refers to the emptiness of that which has no limit or conclusion</note>. There is the emptiness of that which is not to be discarded. There is the emptiness of nature. There is the emptiness of all phenomena. There is the emptiness of self-characteristics. There is the emptiness of non-apprehension <note>original: \"myi dmyigs pa stong pa nyid\"; the inability to perceive things as having inherent existence</note>. There is the emptiness of non-entities. There is the emptiness of essence. There is the emptiness of the essence of non-entities. There are the applications of mindfulness. There are the right abandonments. There are the bases of miraculous power. There are the faculties. There are the powers. There are the branches of enlightenment. There is the noble eightfold path. There are the noble truths. There are the meditative concentrations <term>dhyana</term> <gloss>states of deep mental focus</gloss>. There are the immeasurables. There are the formless meditative absorptions. There are the eight liberations. There are the nine serial meditative absorptions. There are the doors of liberation: emptiness, signlessness, and wishlessness. There are the super-knowledges. There are the meditative stabilizations <term>samadhi</term> <gloss>single-pointed concentration</gloss>. There are the doors of the <term>dharani</term> <gloss>incantations or mnemonic formulas</gloss>. The <term>Tathagata</term> <gloss>Thus Gone One; an epithet for a Buddha</gloss> <meta>continues on next page</meta>\n\n<summary>This page lists various categories of emptiness and fundamental Buddhist doctrinal frameworks, including the branches of enlightenment and meditative states. It serves as a systematic enumeration of the qualities and realizations within the Prajnaparamita tradition.</summary>\n<keywords>emptiness, sunyata, mindfulness, eightfold path, dhyana, samadhi, dharani, Buddhist philosophy, Prajnaparamita</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2392,
+ "outputTokens": 455,
+ "thinkingTokens": 0,
+ "ms": 3230,
+ "cost_usd": 0.002561,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 875
+}

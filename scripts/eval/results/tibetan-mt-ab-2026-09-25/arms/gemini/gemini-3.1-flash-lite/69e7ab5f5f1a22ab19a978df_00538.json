@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab5f5f1a22ab19a978df_00538",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "The great being also brings the six <term>paramitas</term> <gloss>perfections</gloss> to complete fulfillment. They also draw near to omniscience. Subhuti, furthermore, when a <term>bodhisattva</term> <gloss>enlightenment-being</gloss> and great being practices the six perfections, if they see sentient beings born in the four modes—born from eggs, born from wombs, born from heat and moisture, and born miraculously—they should contemplate them in this way: \"How can I, in the Buddha-field where I will attain supreme, perfect, and complete enlightenment, ensure that the three states of being born from eggs, born from wombs, and born from heat and moisture do not arise or exist? Rather, may all sentient beings be born miraculously.\" In this way, they should practice the six perfections. They should purify the Buddha-field. They should ripen sentient beings. By contemplating in this manner, Subhuti, a <term>bodhisattva</term> <gloss>enlightenment-being</gloss> and great being who practices thus brings the six perfections to complete fulfillment. They also draw near to omniscience. Subhuti, furthermore, when a <term>bodhisattva</term> <gloss>enlightenment-being</gloss> and great being practices the six perfections, if they see sentient beings who do not possess the five <term>abhijnas</term> <gloss>higher knowledges</gloss>, they should contemplate them in this way: \"How can I...\"\n\n<summary>This passage describes the practice of a bodhisattva who aspires to purify their future Buddha-field by ensuring all sentient beings are born miraculously, thereby perfecting the six paramitas and approaching omniscience.</summary>\n<keywords>Bodhisattva, Paramitas, Buddha-field, Sentient Beings, Omniscience, Subhuti</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2569,
+ "outputTokens": 404,
+ "thinkingTokens": 0,
+ "ms": 1990,
+ "cost_usd": 0.00124825,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1119
+}

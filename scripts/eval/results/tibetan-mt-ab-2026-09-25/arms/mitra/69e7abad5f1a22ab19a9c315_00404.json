@@ -1,0 +1,37 @@
+{
+ "id": "69e7abad5f1a22ab19a9c315_00404",
+ "src_chars": 1043,
+ "sentences": 19,
+ "chunks": [
+  {
+   "src": "མིས་མཆོད་པའི་མཆོག་ཏུ་གྱུར །🔽བསོད་ནམས་ཆེན་པོ་དང་ལྡན་པ་ཤེས་པར་འཚལ་ལགས་སོ་ཞེས་ཞུས་པ་དང་ །🔽བཅོམ་ལྡན་འདས་ཀྱིས་བཀའ་སྩལ་པ །🔽དགེ་སློང་དག་འདས་པའི་བསྐལ་པ་དགུ་བཅུ་རྩ་གཅིག་ན །🔽ཡང་དག་པར་རྫོགས་པའི་སངས་རྒྱས་རྣམ་པར་གཟིགས་ཞེས་བྱ་བ་རིག་པ་དང་ཞབས་སུ་ལྡན་པ །🔽བདེ་བར་གཤེགས་པ །🔽འཇིག་རྟེན་མཁྱེནཔ །🔽སྐྱེས་བུ་འདུལ་བའི་ཁ་ལོག་སྒྱུར་བ །🔽བླ་ན་མེད་པ །🔽ལྷ་དང་མི་རྣམས་ཀྱི་སྟོན་པ་སངས་རྒྱས་བཅོམ་ལྡན་འདས་འཇིག་རྟེན་དུ་བྱུང་སྟེ །🔽རྒྱལ་པོ་གཉེན་ལྡན་གྱི་ཁབ་ན་བཞུགྶ་ཏེ ༏ ༏ དུས་དེའི་ཚེ་ཞལ་ཞལ་མཁན་གྱི་་་རིགས་ལས་ཕྱག་པ་ག་གེ་མོ་ཞེས་བྱ་བ་ཞིག་གིས །",
+   "out": " He is the supreme object of worship for all people.🔽He is endowed with great merit.🔽The Blessed One replied:🔽\"Monks, ninety-one eons ago,🔽there appeared in the world a perfectly awakened buddha named Vipaśyin, who was learned and virtuous,🔽a blissful one,🔽a knower of the world,🔽a charioteer who guides beings,🔽an unsurpassed being,🔽a teacher of gods and humans, a buddha, a blessed one.🔽He resided in the palace of King Bandhumant.🔽At that time, a certain man named So-and-so, from the family of a painter,🔽",
+   "finish": "stop",
+   "prompt_tokens": 337,
+   "completion_tokens": 137,
+   "ms": 11702
+  },
+  {
+   "src": "རྣམ་པར་གཟིགས་ཀྱི་སླད་དུ་གཙུག་ལག་ཁང་བརྩིགས་ཏེ །🔽མེ་ཏོག་དང་འབྲས་བུའི་ཤིང་ལེགས་པར་བཙུགས་ཏེ །🔽ཀུན་ཏུ་དྲི་བསུང་གི་ངད་དང་ལྡན་པ་བྱུང་བར་གྱུར་ཏེ །🔽ཕུལ་ནས་སྟོན་པ་དེ་ཉིད་ཀྱི་བསྟན་པ་ལ་ཡང་རབ་ཏུ་བྱུང་ །🔽ཡང་དག་པར་རྫོགས་པའ་སངས་རྒྱས་རྣམ་པརགཟིགས་མྱ་ངན་ལས་འདས་ནས་སྐུ་གདུང་གི་མཆོད་རྟེན་གྱི་རྨང་གི་འོག་ཏུ་རིན་པོ་ཆེའི་རྡོ་རིང་གཅིག་བསྒྲེང་ངོ་།🔽ཞལ་ཞལ་མཁན་གྱི་རིགས་ལས་རབ་ཏུ་བྱུང་བ་དེའི་འཁོར་མང་པོ་ཡང་རྗེས་སུ་ཡི་རང་ཞིང་མོས་པར་གྱུར་ཏེ །🔽ཁྱེད་སྟོན་པ་ལ་མོས་པར་གྱུར་པ་དེ་བཞིན་དུ་བདག་ཀྱང་དད་ཅིང་མོས་པར་བགྱིད་དེ །",
+   "out": " He built a temple for Vipaśyin,🔽and planted many fruit trees.🔽The temple was fragrant with the scent of flowers.🔽After making these offerings, he went forth in the teachings of the Teacher.🔽After the parinirvāṇa of the perfectly awakened Vipaśyin, a pillar of jewels was erected at the base of his stūpa.🔽The many followers of the monk who was born into the family of temple builders also rejoiced and took faith.🔽“Just as you have faith in the Teacher, I too have faith and devotion.",
+   "finish": "stop",
+   "prompt_tokens": 332,
+   "completion_tokens": 116,
+   "ms": 9984
+  },
+  {
+   "src": "སྟོན་པའི་བཀའ་བཞིན་དུ་བགྱིད་ཅིང་མཉེས་པར་བགྱིད་ལ་མི་མཉེས་པར་མ",
+   "out": " I will do as the Teacher commands and please him, not displease him.",
+   "finish": "stop",
+   "prompt_tokens": 48,
+   "completion_tokens": 16,
+   "ms": 1520
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 23208,
+ "text": "He is the supreme object of worship for all people.\nHe is endowed with great merit.\nThe Blessed One replied:\n\"Monks, ninety-one eons ago,\nthere appeared in the world a perfectly awakened buddha named Vipaśyin, who was learned and virtuous,\na blissful one,\na knower of the world,\na charioteer who guides beings,\nan unsurpassed being,\na teacher of gods and humans, a buddha, a blessed one.\nHe resided in the palace of King Bandhumant.\nAt that time, a certain man named So-and-so, from the family of a painter,\nHe built a temple for Vipaśyin,\nand planted many fruit trees.\nThe temple was fragrant with the scent of flowers.\nAfter making these offerings, he went forth in the teachings of the Teacher.\nAfter the parinirvāṇa of the perfectly awakened Vipaśyin, a pillar of jewels was erected at the base of his stūpa.\nThe many followers of the monk who was born into the family of temple builders also rejoiced and took faith.\n“Just as you have faith in the Teacher, I too have faith and devotion.\nI will do as the Teacher commands and please him, not displease him.",
+ "prompt_tokens": 717,
+ "completion_tokens": 269
+}

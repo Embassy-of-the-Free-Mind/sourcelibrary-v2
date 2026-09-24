@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab365f1a22ab19a94b87_00537",
+ "arm": "gemini-3-flash-preview",
+ "text": "Ask! Then, the merchant's son Sudhana <note>original: Nor-bzangs</note>, who was diligent in the heroic power of a Bodhisattva and in the purification of earnest application, had a mind that became utterly radiant through the appearance of a Bodhisattva's power. He possessed a heart that was firm as a Bodhisattva, unconquerable by others, and beyond all doubt. With the excellent armor of a Bodhisattva's vow, his mind was without discouragement. Through the stability of a Bodhisattva's intention, he was diligent in remaining steadfast and in causing all things to increase. He possessed the intention to fully receive the rain from the clouds of a Bodhisattva's conduct. He possessed a mental continuum that was never satiated by the rain from the clouds of a Bodhisattva's Dharma. He manifested the aspiration to enter into all the qualities of a Bodhisattva. Desiring to give of himself entirely to gather all living beings by transforming their dispositions, he wished to seize all beings and lead them out from the great wilderness of <term>Samsara</term> <gloss>the cycle of suffering and rebirth</gloss>. He was never satiated by seeing, hearing, and serving spiritual friends <note>original: kalyanamitra</note>. Possessing the generation of immeasurable reverence for the Dharma, he prostrated with his head at the feet of the monk Sagaradhvaja <note>original: Blta-na-sdug-pa, meaning Beautiful to Behold</note>. After circumambulating the monk Sagaradhvaja hundreds of thousands of times to the right, and looking back at him again and again, he departed from the presence of the monk Sagaradhvaja.\n\n<summary>The merchant's son Sudhana reflects on the heroic qualities and vows of a Bodhisattva before departing from the monk Sagaradhvaja. He demonstrates deep reverence through prostration and circumambulation after receiving spiritual guidance.</summary>\n<keywords>Sudhana, Sagaradhvaja, Bodhisattva, Samsara, spiritual friend, Dharma, circumambulation, vows</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2517,
+ "outputTokens": 448,
+ "thinkingTokens": 0,
+ "ms": 3454,
+ "cost_usd": 0.0026024999999999998,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1070
+}

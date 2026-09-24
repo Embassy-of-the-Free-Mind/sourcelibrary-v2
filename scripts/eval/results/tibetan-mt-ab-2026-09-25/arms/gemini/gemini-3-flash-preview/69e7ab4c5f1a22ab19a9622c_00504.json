@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab4c5f1a22ab19a9622c_00504",
+ "arm": "gemini-3-flash-preview",
+ "text": "Because emptiness itself does not exist, the <term>Bodhisattva</term> <gloss>one who seeks awakening for the sake of all beings</gloss> is not perceived at the limit of the future. Because the emptiness of the nature of non-entities is empty, the Bodhisattva is not perceived at the limit of the future. Because the emptiness of the nature of non-entities is secluded <note>original: \"dben pa\", meaning isolated or void of inherent existence</note>, the Bodhisattva is not perceived at the limit of the future. Because the emptiness of the nature of non-entities does not exist, and because the emptiness of the nature of non-entities is without a nature, the Bodhisattva is not perceived at the limit of the future.\n\nBecause the emptiness of the nature of non-entities does not exist, the Bodhisattva is not perceived in the middle. Because the emptiness of the nature of non-entities is empty, the Bodhisattva is not perceived in the middle. Because the emptiness of the nature of non-entities is secluded, the Bodhisattva is not perceived in the middle. Because the emptiness of the nature of non-entities is without a nature, the Bodhisattva is not perceived in the middle.\n\nWhy is that so? Venerable <term>Sharadvatiputra</term> <gloss>Shariputra, one of the primary disciples of the Buddha</gloss>, in the non-existence of the emptiness of the nature of non-entities, in the emptiness of the emptiness of the nature of non-entities, in the seclusion of the emptiness of the nature of non-entities, and in the natureless nature of the emptiness of non-entities, the limit of the past is not perceived.\n\n<summary>This page discusses the philosophical concept of the emptiness of non-entities. It explains why a Bodhisattva cannot be found or perceived in the past, future, or middle when analyzed through the lens of ultimate reality.</summary>\n<keywords>Emptiness, Bodhisattva, Shariputra, Non-entities, Three Times, Buddhist Philosophy, Prajnaparamita</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2549,
+ "outputTokens": 446,
+ "thinkingTokens": 0,
+ "ms": 2729,
+ "cost_usd": 0.0026125000000000002,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1100
+}

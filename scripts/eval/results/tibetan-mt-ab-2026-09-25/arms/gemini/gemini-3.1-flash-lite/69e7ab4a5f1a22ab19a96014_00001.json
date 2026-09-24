@@ -1,0 +1,18 @@
+{
+ "id": "69e7ab4a5f1a22ab19a96014_00001",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "If one dwells in internal emptiness, one is practicing the manifestation of that internal emptiness, but one is not practicing the <term>Prajnaparamita</term> <gloss>Perfection of Wisdom</gloss>. Blessed One, if a <term>Bodhisattva Mahasattva</term> <gloss>a great being dedicated to awakening</gloss>, while practicing the <term>Prajnaparamita</term>, dwells in external emptiness with a mind that remains attached to the concepts of self and belonging due to a lack of skillful means, then one is practicing the manifestation of that external emptiness, but one is not practicing the <term>Prajnaparamita</term>. Blessed\n\n<summary>This passage explains that dwelling on the concepts of internal and external emptiness without skillful means constitutes a conceptual attachment rather than the true practice of the Perfection of Wisdom.</summary>\n<keywords>Prajnaparamita, emptiness, Bodhisattva, skillful means, non-attachment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2076,
+ "outputTokens": 203,
+ "thinkingTokens": 0,
+ "ms": 3496,
+ "cost_usd": 0.0008235,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 409
+}

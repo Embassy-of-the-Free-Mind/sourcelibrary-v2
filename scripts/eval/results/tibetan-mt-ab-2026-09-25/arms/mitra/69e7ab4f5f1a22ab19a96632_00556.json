@@ -1,0 +1,29 @@
+{
+ "id": "69e7ab4f5f1a22ab19a96632_00556",
+ "src_chars": 869,
+ "sentences": 28,
+ "chunks": [
+  {
+   "src": "ཐ་མ་མྱེད་པ་སྟོང་པ་ཉིད་ཡོད་དོ།🔽དོར་བ་མེད་པ་སྟོང་པ་ཉིད་ཡོད་དོ་།🔽རང་བཞིན་སྟོང་པ་ཉིད་ཡོད་དོ།🔽ཆོས་ཐམས་ཅད་སྟོང་པ་ཉིད་ཡོད་དོ།🔽རང་གི་མཚན་ཉིད་སྟོང་པ་ཉིད་ཡོད་དོ།🔽མྱི་དམྱིགས་པ་སྟོང་པ་ཉིད་ཡོད་དོ།།🔽དངོས་པོ་མྱེད་པ་སྟོང་པ་ཉིད་ཡོད་དེ།🔽ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་ཡོད་དོ།🔽དངོས་པོ་མྱེད་པའི་ངོ་བོ་ཉིད་སྟོང་པ་ཉིད་ཡོད་དེ།🔽དྲན་པ་ཉེ་བར་གཞག་པ་རྣམས་ཡོད་དེ།🔽ཡང་དག་པར་སྤོང་བ་རྣམས་ཡོད་དོ།🔽རྫུ་འཕྲུལ་གྱི་རྐང་པ་རྣམས་ཡོད་དོ།🔽དབང་པོ་རྣམས་ཡོད་དོ།🔽སྟོབས་རྣམས་ཡོད་དོ།🔽བྱང་ཆུབ་ཀྱི་ཡན་ལག་རྣམས་ཡོད་དོ།🔽འཕགས་པའི་ལམ་ཡན་ལག་བརྒྱད་པ་ཡོད་དོ།",
+   "out": "🔽There is the emptiness of the unlimited.🔽There is the emptiness of the unborn.🔽There is the emptiness of the unannihilated.🔽There is the emptiness of the intrinsic nature.🔽There is the emptiness of all phenomena.🔽There is the emptiness of characteristics.🔽There is the emptiness of nonapprehension.🔽There is the emptiness of nonthings.🔽There is the emptiness of the essential nature.🔽There is the emptiness of the essential nature of nonthings.🔽There are the applications of mindfulness.🔽There are the right efforts.🔽There are the legs of miraculous power.🔽There are the faculties.🔽There are the powers.🔽There are the branches of awakening.🔽There is the noble eightfold path.",
+   "finish": "stop",
+   "prompt_tokens": 344,
+   "completion_tokens": 152,
+   "ms": 12234
+  },
+  {
+   "src": "འཕགས་པའི་བདེན་པ་རྣམས་ཡོད་དོ།🔽བསམ་གཏན་རྣམས་ཡོད་དོ།🔽ཚད་མེད་པ་རྣམས་ཡོད་དོ།🔽གཟུགས་མྱེད་པའི་སྙོམས་པར་འཇུག་པ་རྣམས་ཡོད་དོ།🔽རྣམ་པར་ཐར་པ་བརྒྱད་ཡོད་དོ།🔽མཐར་ཀྱིས་གནས་པའི་སྙོམས་པར་འཇུག་པར་དགུ་ཡོད་དོ།🔽རྣམ་པར་ཐར་པའི་སྒོ་སྟོང་པ་ཉིད་དང་མཚན་མ་མྱེད་པ་དང་།🔽སྨོན་པ་མྱེད་པ་ཡོད་དོ།🔽མངོན་པར་ཤེས་པ་རྣམས་ཡོད་དོ།🔽ཏིང་ངེ་འཛིན་རྣམས་ཡོད་དོ།🔽གཟུངས་ཀྱི་སྒོ་རྣམས་ཡོད་དོ།🔽དེ་བཞིན་གཤེགས་",
+   "out": " The noble truths exist.🔽The concentrations exist.🔽The immeasurables exist.🔽The formless absorptions exist.🔽The eight deliverances exist.🔽The nine serial steps of meditative equipoise exist.🔽The emptiness, signlessness, and🔽wishlessness that are doors to liberation exist.🔽The superknowledges exist.🔽The meditative stabilities exist.🔽The dhāraṇī gateways exist.🔽The tathāgata powers exist.🔽",
+   "finish": "stop",
+   "prompt_tokens": 240,
+   "completion_tokens": 98,
+   "ms": 7981
+  }
+ ],
+ "joiner": "arrow",
+ "chunk_chars": 500,
+ "ms_total": 20216,
+ "text": "There is the emptiness of the unlimited.\nThere is the emptiness of the unborn.\nThere is the emptiness of the unannihilated.\nThere is the emptiness of the intrinsic nature.\nThere is the emptiness of all phenomena.\nThere is the emptiness of characteristics.\nThere is the emptiness of nonapprehension.\nThere is the emptiness of nonthings.\nThere is the emptiness of the essential nature.\nThere is the emptiness of the essential nature of nonthings.\nThere are the applications of mindfulness.\nThere are the right efforts.\nThere are the legs of miraculous power.\nThere are the faculties.\nThere are the powers.\nThere are the branches of awakening.\nThere is the noble eightfold path.\nThe noble truths exist.\nThe concentrations exist.\nThe immeasurables exist.\nThe formless absorptions exist.\nThe eight deliverances exist.\nThe nine serial steps of meditative equipoise exist.\nThe emptiness, signlessness, and\nwishlessness that are doors to liberation exist.\nThe superknowledges exist.\nThe meditative stabilities exist.\nThe dhāraṇī gateways exist.\nThe tathāgata powers exist.",
+ "prompt_tokens": 584,
+ "completion_tokens": 250
+}
