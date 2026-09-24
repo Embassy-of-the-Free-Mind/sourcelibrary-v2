@@ -90,7 +90,7 @@ as NEGATIVE results: do not rebuild them as leaf-order or translation-failure de
 Artifacts: `scripts/eval/results/page-integrity-handread-2026-09-24.json` (every label),
 `page-integrity-repair-<class>-2026-09-24.jsonl.gz` (six lists), `page-integrity-2026-09-24.summary.json`;
 the per-boundary flag file (109 MB) is regenerable in 7 minutes and is not committed.
-Issues: see the PR.
+Issues: truncated #5055, duplicate captures #5056, repeated-page books #5057, whole-page echo #5058, page-number breaks #5059.
 
 ---
 
