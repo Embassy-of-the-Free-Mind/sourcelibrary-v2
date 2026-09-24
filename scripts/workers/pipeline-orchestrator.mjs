@@ -44,6 +44,8 @@ import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
+import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
+import { interiorSpread } from '../lib/interior-sample.mjs';
 
 // Fields consolidated away from `books` (#3969). The warehouse copy of a book is
 // a snapshot taken before those consolidations, so promoting it verbatim puts
@@ -226,6 +228,15 @@ const PREVIEW_PAGE_COUNT = 25;
 // Bounded so a language translation genuinely cannot handle cannot ping-pong.
 const FINALIZE_TRANSLATE_REQUEUES = 3;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
+// Phase 1.45. The ingester's gate needs MIN_REF_PAGES = 5 (scripts/import/ia-ocr-ingest.mjs);
+// 8 buys margin for leaves that turn out blank or plate-only without approaching Phase 1.5's 25.
+const IA_REFERENCE_PAGES = 8;
+// Plus the first 2 pages. NOT for the gate — for the READER. Measured 2026-09-24: only 50.6% of
+// 330 real title pages carry enough Archive text (>=20 tokens) to be written at all, so an
+// interior-only sample would leave half of them blank, which today's 25-page preview happens to
+// prevent. The gate takes a median, and a median over 10 is unmoved by 2 front-matter values.
+const IA_REFERENCE_LEAD_PAGES = 2;
+let IA_REFERENCE_LIMIT = 20; // Books per run to seed a gate reference for
 // How long a submitted preview batch suppresses re-offering its book. Longer
 // than any healthy batch (measured p90 0.4h) so we never double-submit, short
 // enough that a submission which died is retried the same day.
@@ -1659,6 +1670,15 @@ const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-bo
  *   be uniform. Callers that mix scripts have to partition by
  *   `getOcrModelForBook` and call once per model. Defaults to flash-lite, which
  *   is what this function always used.
+ * @param opts.interiorSample   Take N pages spread across the BODY of the book
+ *   instead of the first N. Everything else here selects `sort({page_number:1})
+ *   .limit(n)`, i.e. front matter, which is what Phase 1.5 wants (it feeds
+ *   metadata classification) and what the free IA text gate does NOT: that gate
+ *   scores the Archive's reading against ours and then writes the whole book on
+ *   the verdict, so judging it on title pages, prefaces and dot-leader contents
+ *   measures the least representative part of the book. Measured on #5014: a
+ *   book scored 0.624 on its front matter (REJECTED at the 0.80 English gate)
+ *   whose body text agreed at 0.987. Mutually exclusive with maxPagesPerBook.
  */
 async function submitCrossBookOcrBatches(db, books, opts = {}) {
   const {
@@ -1666,7 +1686,9 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     advanceStatus = true,
     ocrSource = null,
     model = OCR_MODEL_LITE,
+    interiorSample = null,
   } = opts;
+  if (interiorSample && maxPagesPerBook) throw new Error('submitCrossBookOcrBatches: interiorSample and maxPagesPerBook select different pages; pass one');
   const ocrModel = model;
   const basePromptRef = await getOcrPromptFromDb(db);
   const basePrompt = basePromptRef.text;
@@ -1705,27 +1727,40 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
 
     const poolRoom = CROSS_BOOK_BATCH_SIZE - allDownloaded.length;
     const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : poolRoom;
-    const pages = await db.collection('pages')
-      .find({
-        book_id: book.id,
-        page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
-        'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
-        $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
-        $and: [
-          {
-            $or: [
-              { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-              { cropped_photo: { $exists: true, $nin: [null, ''] } },
-              { photo: { $exists: true, $ne: null } },
-            ]
-          },
-          notBlockedForModel(model),
-        ]
-      })
-      .sort({ page_number: 1 })
-      .limit(remaining)
-      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
-      .toArray();
+    const pageFilter = {
+      book_id: book.id,
+      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
+      $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
+      $and: [
+        {
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+          ]
+        },
+        notBlockedForModel(model),
+      ]
+    };
+    const pageProjection = { _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 };
+    let pages;
+    if (interiorSample) {
+      // Two light queries rather than one: pull the candidate page NUMBERS (a few KB even for a
+      // 900-page book), choose the sample, then fetch only those documents. Picking with $sample
+      // or a random skip would cluster; the gate takes a MEDIAN over these pages, so an even
+      // spread across the body is what makes that median mean anything.
+      const nums = (await db.collection('pages').find(pageFilter)
+        .sort({ page_number: 1 }).project({ _id: 0, page_number: 1 }).toArray()).map((p) => p.page_number);
+      const picked = interiorSpread(nums, Math.min(interiorSample, poolRoom), IA_REFERENCE_LEAD_PAGES);
+      pages = picked.length
+        ? await db.collection('pages').find({ ...pageFilter, page_number: { $in: picked } })
+            .sort({ page_number: 1 }).project(pageProjection).toArray()
+        : [];
+    } else {
+      pages = await db.collection('pages').find(pageFilter)
+        .sort({ page_number: 1 }).limit(remaining).project(pageProjection).toArray();
+    }
 
     if (pages.length === 0) continue;
 
@@ -3234,6 +3269,137 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       }
     }
 
+    // ── Phase 1.45: IA reference seeding — 8 INTERIOR pages, pooled into a flash-lite batch ──
+    // For books whose text we intend to take FREE from the Internet Archive.
+    //
+    // WHY A SEPARATE PHASE. Phase 1.5 exists to feed metadata classification, so it reads the
+    // front of the book. The free IA text gate has a different job: it scores the Archive's
+    // reading against ours on some sample and then writes EVERY REMAINING PAGE on that verdict.
+    // Front matter is the worst possible sample for that second job — measured on #5014, a book
+    // scored 0.624 on its title page, preface and dot-leader contents (REJECTED at the 0.80
+    // English gate) while its body text agreed at 0.987.
+    //
+    // WHY IT IS ALSO CHEAPER, which is the part that made it worth doing now. Measured over 140
+    // books of the #4966 cohort (2026-09-24, free dry run): the gate ACCEPTED 134 and REJECTED 4,
+    // with agreement p10 0.907 against a 0.80 cutoff and exactly ONE book within ±0.05 of the
+    // line. Paying for 25 pages a book to draw a line nothing sits near is a bad trade. The
+    // ingester needs `MIN_REF_PAGES = 5`; this sends 8, for margin against unreadable leaves.
+    //
+    // WHY IT IS SAFE TO SKIP THE FRONT MATTER HERE, and ONLY here: the candidates are restricted
+    // to books that already carry title, author AND year from the Archive's own catalogue
+    // (`ia-manifest-direct.mjs` writes them at import), so the metadata job Phase 1.5 is doing is
+    // already done for them. A book missing any of those is left to Phase 1.5 and gets the
+    // ordinary preview.
+    //
+    // NOT a cheaper preview. These pages are a measuring stick for a gate, and `advanceStatus:
+    // false` keeps the book at `archive_complete` — 8 pages is not an OCR pass.
+    if (shouldRun(1.45) && await budgetAllowsDispatchForPhase('Phase 1.45 (IA reference seeding)')) {
+      console.log(`\n--- Phase 1.45: IA reference seeding (flash-lite batch, ${IA_REFERENCE_PAGES} interior + ${IA_REFERENCE_LEAD_PAGES} front pages) ---`);
+      const iaRefProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, needs_splitting: 1, 'image_source.provider': 1 };
+      let iaCandidates = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.split_checked': true,
+          'pipeline_auto.preview_ocr_done': { $ne: true },
+          // The lane's own re-entry guard: a book it has already decided about (seeded, waved
+          // through, or excluded by language) is not reconsidered. This is NOT the field Phase 1.5
+          // filters on — see the note there.
+          'pipeline_auto.ia_reference_at': { $exists: false },
+          'pipeline_auto.recitation_retry': { $ne: true },
+          'pipeline_auto.recitation_blocked': { $ne: true },
+          // An IA item, by either spelling the importers use.
+          $or: [
+            { ia_identifier: { $type: 'string', $ne: '' } },
+            { 'image_source.identifier': { $type: 'string', $ne: '' } },
+          ],
+          // Catalogue metadata already present, so skipping front matter costs nothing.
+          title: { $type: 'string', $ne: '' },
+          author: { $type: 'string', $ne: '' },
+          year: { $exists: true, $ne: null },
+          $and: [
+            { $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }] },
+          ],
+        })
+        .sort({ hidden: 1 })
+        .project(iaRefProjection)
+        .limit(IA_REFERENCE_LIMIT)
+        .toArray();
+      if (SCOPE_ACTIVE) iaCandidates = await applyBookOverride(db, iaCandidates, iaRefProjection);
+
+      // A book that already carries enough model OCR needs no reference bought for it. Count the
+      // pages the gate would actually accept as reference — model-written text, not IA text —
+      // because filling a book with `ia_djvu` pages must never look like its own justification.
+      const needReference = [];
+      let skippedLanguage = 0;
+      for (const book of iaCandidates) {
+        const have = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          'ocr.data': { $exists: true, $ne: null, $ne: '' },
+          'ocr.source': { $nin: ['ia_djvu'] },
+        });
+        // A language the gate will NEVER fill (cutoff null — Greek today) cannot use a reference,
+        // so buying one for it is pure waste. This is the one place the lane spends on a book it
+        // can predict nothing will come of; everywhere else the gate's verdict is the thing being
+        // bought. Recorded rather than silently dropped, so the book does not simply vanish from
+        // both lanes (`lesson_absence_is_not_failure_no_silent_skips`).
+        if (iaOcrMinAgreement(book.language).cutoff === null) {
+          if (!DRY_RUN) {
+            await db.collection('books').updateOne({ id: book.id },
+              { $set: { 'pipeline_auto.ia_reference_at': new Date(), 'pipeline_auto.ia_reference_source': 'language_never_filled', updated_at: new Date() } });
+          }
+          skippedLanguage++;
+          continue;
+        }
+        if (have >= IA_REFERENCE_PAGES) {
+          if (!DRY_RUN) {
+            await db.collection('books').updateOne({ id: book.id },
+              { $set: { 'pipeline_auto.ia_reference_at': new Date(), 'pipeline_auto.ia_reference_pages': have, 'pipeline_auto.ia_reference_source': 'already_present', updated_at: new Date() } });
+          }
+          continue;
+        }
+        needReference.push(book);
+      }
+      console.log(`  IA books needing a gate reference: ${needReference.length} of ${iaCandidates.length} candidates${skippedLanguage ? ` (${skippedLanguage} skipped: language is never filled by the gate)` : ''}`);
+
+      if (DRY_RUN) {
+        console.log(`  Would submit ${IA_REFERENCE_PAGES} interior + ${IA_REFERENCE_LEAD_PAGES} front pages each for ${needReference.length} books (${OCR_MODEL_LITE})`);
+      } else if (needReference.length) {
+        // Same model-partitioning rule as Phase 1.5: one batch carries one model, and sending a
+        // non-Latin book to flash-lite does not fail loudly, it invents plausible text.
+        const byModel = new Map();
+        for (const book of needReference) {
+          const m = getOcrModelForBook(book);
+          if (!byModel.has(m)) byModel.set(m, []);
+          byModel.get(m).push(book);
+        }
+        let seeded = 0;
+        for (const [model, group] of byModel) {
+          try {
+            const res = await submitCrossBookOcrBatches(db, group, {
+              interiorSample: IA_REFERENCE_PAGES,
+              advanceStatus: false,
+              ocrSource: 'ia_reference',
+              model,
+            });
+            seeded += res.bookIds.length;
+            console.log(`  IA reference submitted (${model}): ${res.submitted} pages from ${res.bookIds.length}/${group.length} books`);
+            if (res.bookIds.length) {
+              await db.collection('books').updateMany(
+                { id: { $in: res.bookIds } },
+                { $set: { 'pipeline_auto.ia_reference_at': new Date(), 'pipeline_auto.ia_reference_source': 'seeded', updated_at: new Date() } },
+              );
+            }
+          } catch (err) {
+            log.errors.push(`IA reference batch (${model}): ${err.message}`);
+            console.log(`  IA reference batch FAILED (${model}): ${err.message}`);
+          }
+        }
+        // Name what did not go, so a pool that stopped at its page cap does not read as "all done".
+        const deferred = needReference.length - seeded;
+        if (deferred > 0) console.log(`  Deferred to a later run (pool full): ${deferred} books`);
+      }
+    }
+
     // ── Phase 1.5: Preview OCR — first 25 pages, pooled into a flash-lite batch ──
     // Transcribes the title page, TOC and opening pages so Phase 1.6 can
     // classify metadata before the full pass. Prioritises likely first
@@ -3264,6 +3430,15 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           'pipeline_auto.preview_ocr_done': { $ne: true },
+          // Claimed AND SEEDED by the IA reference lane (Phase 1.45): those books got interior +
+          // front pages instead of 25 front-matter ones, and paying for both would defeat it.
+          //
+          // Only `seeded`. An earlier version excluded every book the lane had TOUCHED, including
+          // the ones it waved through as `already_present` — measured at 96.7% of candidates, so
+          // it would have silently starved ~687 books of a preview they still wanted. Having 8
+          // model-OCR pages somewhere in a book is enough to CALIBRATE the free gate; it is not
+          // the same as having read the front, which is what Phase 1.6's metadata pass needs.
+          'pipeline_auto.ia_reference_source': { $ne: 'seeded' },
           'pipeline_auto.recitation_retry': { $ne: true },
           'pipeline_auto.recitation_blocked': { $ne: true },
           $and: [
