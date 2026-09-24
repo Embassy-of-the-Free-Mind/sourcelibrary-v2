@@ -70,17 +70,28 @@ function laneTexts(run) {
   return out;
 }
 
+/**
+ * The two shadow runs that stand for the lane. The Batch API cancels whole repair jobs at random
+ * (2026-09-24: 2 of 3), and a run with drafts but no repairs is PLAIN batch (arm B), not the
+ * seam-repair design (arm E) — so runs with repairs are preferred, and the key records whether
+ * S1 was repaired so --score can keep "repaired lane vs production" apart from "plain batch vs
+ * production". A book with only one usable run gets no A/A pairs.
+ */
 async function loadBook(db, bookId) {
-  const runs = await db.collection(RUNS_COLLECTION)
-    .find({ book_id: bookId, shadow: true, phase: 'shadow_complete' }).sort({ created_at: 1 }).toArray();
-  if (runs.length < 2) throw new Error(`${bookId}: need two shadow_complete runs, found ${runs.length}`);
-  const [r1, r2] = runs;
+  const runs = (await db.collection(RUNS_COLLECTION)
+    .find({ book_id: bookId, shadow: true, phase: 'shadow_complete' }).sort({ created_at: 1 }).toArray())
+    .filter((r) => (r.drafts || []).length > 0);
+  if (!runs.length) throw new Error(`${bookId}: no shadow_complete run with drafts`);
+  const repaired = runs.filter((r) => (r.repairs || []).length > 0);
+  const r1 = repaired[0] ?? runs[0];
+  const r2 = repaired.find((r) => r !== r1) ?? null;
   const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, language: 1 } });
   const ids = r1.blocks.flatMap((b) => b.pages.map((p) => p.id));
   const pages = await db.collection('pages')
     .find({ id: { $in: ids } }, { projection: { id: 1, page_number: 1, 'translation.data': 1, 'translation.model': 1, 'translation.updated_at': 1 } }).toArray();
   const prod = new Map(pages.filter((p) => p.translation?.data).map((p) => [p.id, p.translation.data]));
-  return { book, r1, r2, s1: laneTexts(r1), s2: laneTexts(r2), prod, ids };
+  console.log(`${bookId}: S1 ${r1.id} (${r1.drafts.length} drafts, ${(r1.repairs || []).length} repairs)${r2 ? `, S2 ${r2.id} (${r2.drafts.length} drafts, ${(r2.repairs || []).length} repairs)` : ', no S2 — no A/A pairs for this book'}, production text on ${prod.size}/${ids.length} pages`);
+  return { book, r1, r2, s1: laneTexts(r1), s2: r2 ? laneTexts(r2) : new Map(), prod, ids, s1Repaired: (r1.repairs || []).length > 0 };
 }
 
 // ── --packet ────────────────────────────────────────────────────────────────
@@ -89,18 +100,18 @@ async function buildPacket(db, bookIds) {
   resetSeed(SEED);
   const entries = [], key = [], body = [], skipped = [];
   for (const bookId of bookIds) {
-    const { book, r1, s1, s2, prod, ids } = await loadBook(db, bookId);
+    const { book, r1, r2, s1, s2, prod, ids, s1Repaired } = await loadBook(db, bookId);
     const seamIds = new Set((r1.seams || []).map((s) => s.seamId));
     for (const { prevId, seamId } of r1.seams || []) {
       const lanes = { S1: [s1.get(prevId), s1.get(seamId)], S2: [s2.get(prevId), s2.get(seamId)], P: [prod.get(prevId), prod.get(seamId)] };
-      for (const pair of ['S1/P', 'S1/S2']) {
+      for (const pair of r2 ? ['S1/P', 'S1/S2'] : ['S1/P']) {
         const [x, y] = pair.split('/');
         if (!lanes[x].every(Boolean) || !lanes[y].every(Boolean)) { skipped.push({ bookId, seamId, pair, reason: `missing text in ${!lanes[x].every(Boolean) ? x : y}` }); continue; }
         const flip = seededRand() < 0.5;
         const jx = junction(...lanes[x]), jy = junction(...lanes[y]);
         const id = `${bookId.slice(-6)}-${seamId.slice(-6)}-${pair.replace('/', '')}`;
         entries.push({ id, language: book.language, left: flip ? jy : jx, right: flip ? jx : jy });
-        key.push({ id, book_id: bookId, seam_id: seamId, pair, left: flip ? y : x, right: flip ? x : y });
+        key.push({ id, book_id: bookId, seam_id: seamId, pair, s1_repaired: s1Repaired, left: flip ? y : x, right: flip ? x : y });
       }
     }
     // Body pages (never repaired, never seeded): the lane should be indistinguishable from itself
@@ -138,9 +149,14 @@ function score() {
   const unknown = verdicts.filter((v) => !byId.has(v.id));
   if (unknown.length) console.log(`WARNING: ${unknown.length} verdict ids not in the key (ignored): ${unknown.map((u) => u.id).join(', ')}`);
   const report = {};
-  for (const pair of ['S1/S2', 'S1/P']) {
+  // Three rows: the A/A floor, the design (repaired lane vs production), and the control that
+  // #4912 already measured (plain batch vs production, expected to lose at the seam).
+  const ROWS = { 'S1/S2': (k) => k.pair === 'S1/S2', 'S1/P': (k) => k.pair === 'S1/P' && k.s1_repaired !== false, 'S1/P (unrepaired, plain batch)': (k) => k.pair === 'S1/P' && k.s1_repaired === false };
+  for (const [label, sel] of Object.entries(ROWS)) {
+    const pair = label.split(' ')[0];
     const [x, y] = pair.split('/');
-    const rows = verdicts.filter((v) => byId.get(v.id)?.pair === pair);
+    const rows = verdicts.filter((v) => byId.has(v.id) && sel(byId.get(v.id)));
+    if (!rows.length && !key.some(sel)) continue;
     const wins = { [x]: 0, [y]: 0 }; let ties = 0, left = 0;
     for (const v of rows) {
       const side = String(v.verdict).trim().toUpperCase();
@@ -149,21 +165,24 @@ function score() {
       wins[byId.get(v.id)[side.toLowerCase()]]++;
     }
     const decided = wins[x] + wins[y];
-    report[pair] = {
-      judged: rows.length, expected: key.filter((k) => k.pair === pair).length, ties, tie_rate: rows.length ? +(ties / rows.length).toFixed(3) : null,
+    report[label] = {
+      judged: rows.length, expected: key.filter(sel).length, ties, tie_rate: rows.length ? +(ties / rows.length).toFixed(3) : null,
       wins, decided, [`${y}_share_of_decided`]: decided ? +(wins[y] / decided).toFixed(3) : null,
       split_p_two_sided: decided ? +binomTwoSided(Math.min(wins[x], wins[y]), decided).toFixed(3) : null,
       left_share_of_decided: decided ? +(left / decided).toFixed(3) : null,
     };
   }
-  const floor = report['S1/S2'], test = report['S1/P'];
+  const floor = report['S1/S2'], test = report['S1/P'], control = report['S1/P (unrepaired, plain batch)'];
   console.log(JSON.stringify(report, null, 1));
   console.log('\nRead the noise floor first:');
-  console.log(`  S1/S2 (same lane twice): tie rate ${floor.tie_rate}, split ${floor.wins.S1}–${floor.wins.S2} (p=${floor.split_p_two_sided}), LEFT picked ${floor.left_share_of_decided} of decided`);
-  console.log(`  S1/P  (lane vs production): tie rate ${test.tie_rate}, production preferred ${test.wins.P}, lane ${test.wins.S1} (p=${test.split_p_two_sided}); production share of decided ${test.P_share_of_decided} (the #4912 limit was 60%)`);
-  const verdict = test.P_share_of_decided == null ? 'no decided verdicts'
-    : test.P_share_of_decided <= 0.6 ? 'lane holds against production at the seam (production share ≤ 60%), read against the A/A row above'
-      : 'production preferred beyond the 60% limit — do not flip';
+  if (floor) console.log(`  S1/S2 (same lane twice): tie rate ${floor.tie_rate}, split ${floor.wins.S1}–${floor.wins.S2} (p=${floor.split_p_two_sided}), LEFT picked ${floor.left_share_of_decided} of decided`);
+  else console.log('  S1/S2: no A/A pairs judged — no noise floor; do not quote a non-inferiority number');
+  if (test) console.log(`  S1/P  (repaired lane vs production): tie rate ${test.tie_rate}, production preferred ${test.wins.P}, lane ${test.wins.S1} (p=${test.split_p_two_sided}); production share of decided ${test.P_share_of_decided} (the #4912 limit was 60%)`);
+  if (control) console.log(`  S1/P  (UNREPAIRED lane = plain batch, control): production preferred ${control.wins.P}, lane ${control.wins.S1}, ties ${control.ties}; production share ${control.P_share_of_decided} (#4912 measured 41–11 for this pair)`);
+  const verdict = !test || test.P_share_of_decided == null ? 'no decided verdicts for the repaired lane'
+    : !floor ? 'repaired lane judged, but no A/A floor — result is unquotable until an S2 exists'
+      : test.P_share_of_decided <= 0.6 ? 'lane holds against production at the seam (production share ≤ 60%), read against the A/A row above'
+        : 'production preferred beyond the 60% limit — do not flip';
   console.log(`\n${verdict}`);
   fs.writeFileSync(path.join(RESULTS, `${TAG}-report-${new Date().toISOString().slice(0, 10)}.json`), JSON.stringify({ report, verdict }, null, 1));
 }
