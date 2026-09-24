@@ -29,6 +29,8 @@ import {
   stripIllustrationBoilerplate,
   isTranslatablePageForCount,
   isBlockedForModel,
+  computeTranslationMetrics,
+  FULL_TRANSLATION_MIN_OCR_COVERAGE,
 } from '../../scripts/lib/page-counts.mjs';
 import { NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS } from '../../src/lib/page-counts';
 
@@ -372,5 +374,55 @@ describe('illustration text-free guard (#4685)', () => {
     const group = buildVisiblePageCountPipeline('b1')[1].$group;
     expect(JSON.stringify(group.translatable)).toContain('text_free');
     expect(JSON.stringify(group.translatable)).toContain('illustration');
+  });
+});
+
+describe('is_fully_translated requires OCR coverage, not just completion (#5063)', () => {
+  // The shape that produced 1,369 visible false badges: the 25-page preview is the
+  // only OCR, and every preview page is translated. Completion is 100% of what was
+  // read; coverage is 4% of the book.
+  it('a preview-only book (25 translated / 25 ocr / 694 pages) is NOT fully translated', () => {
+    const m = computeTranslationMetrics({ pages_count: 694, pages_ocr: 25, pages_translated: 25, pages_blank: 0 });
+    expect(m.is_fully_translated).toBe(false);
+    expect(m.over_90_translated).toBe(false);
+    // and the stored percentage says what a reader would find, not 100
+    expect(m.translation_pct).toBeCloseTo(3.6, 1);
+  });
+
+  it('a finished book with an untranslated tail inside coverage (300 / 310 / 320, 10 blank) IS fully translated', () => {
+    // readable = 310 - 10 = 300 = translated → complete; ocr 310 >= 0.9 * 310 → covered.
+    const m = computeTranslationMetrics({ pages_count: 320, pages_ocr: 310, pages_translated: 300, pages_blank: 10 });
+    expect(m.is_fully_translated).toBe(true);
+    expect(m.over_90_translated).toBe(true);
+    expect(m.translation_pct).toBeCloseTo(96.77, 1);
+  });
+
+  it('the coverage bar is exactly 90% of the non-blank book', () => {
+    expect(FULL_TRANSLATION_MIN_OCR_COVERAGE).toBe(0.9);
+    // 100 non-blank pages: 89 OCR'd and translated fails, 90 passes.
+    expect(computeTranslationMetrics({ pages_count: 100, pages_ocr: 89, pages_translated: 89, pages_blank: 0 }).is_fully_translated).toBe(false);
+    expect(computeTranslationMetrics({ pages_count: 100, pages_ocr: 90, pages_translated: 90, pages_blank: 0 }).is_fully_translated).toBe(true);
+  });
+
+  it('completion is still measured against READABLE pages (pages_ocr - pages_blank)', () => {
+    // Fully covered, but 20 of 100 readable pages not yet translated: neither flag.
+    expect(computeTranslationMetrics({ pages_count: 100, pages_ocr: 100, pages_translated: 80, pages_blank: 0 }))
+      .toMatchObject({ is_fully_translated: false, over_90_translated: false });
+    expect(computeTranslationMetrics({ pages_count: 100, pages_ocr: 100, pages_translated: 92, pages_blank: 0 }))
+      .toMatchObject({ is_fully_translated: false, over_90_translated: true });
+  });
+
+  it('translation_pct prefers pages_translatable (the #4442 denominator) and never exceeds 100', () => {
+    // Recounted book: 50 translatable of 80 pages, all 50 done → 100, not 62.5.
+    expect(computeTranslationMetrics({ pages_count: 80, pages_ocr: 80, pages_translated: 50, pages_blank: 0, pages_translatable: 50 }).translation_pct).toBe(100);
+    // A stale numerator above the denominator is clamped, not reported as 1000%.
+    expect(computeTranslationMetrics({ pages_count: 60, pages_ocr: 60, pages_translated: 60, pages_blank: 54, pages_translatable: 6 }).translation_pct).toBe(100);
+  });
+
+  it('a book with nothing translated is never flagged and reads 0%', () => {
+    expect(computeTranslationMetrics({ pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0 }))
+      .toEqual({ translation_pct: 0, is_fully_translated: false, over_90_translated: false });
+    expect(computeTranslationMetrics({}))
+      .toEqual({ translation_pct: 0, is_fully_translated: false, over_90_translated: false });
   });
 });
