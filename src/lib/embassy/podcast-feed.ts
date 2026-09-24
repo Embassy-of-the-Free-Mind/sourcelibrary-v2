@@ -99,6 +99,8 @@ export function buildPodcastFeed(episodes: FeedEpisode[], locale: Locale): strin
     </itunes:category>
     <itunes:category text="History" />
     <itunes:explicit>false</itunes:explicit>
+    <!-- Retired and archived (#5007): no further episodes. Apps show the show as finished. -->
+    <itunes:complete>Yes</itunes:complete>
 ${items}
   </channel>
 </rss>`;

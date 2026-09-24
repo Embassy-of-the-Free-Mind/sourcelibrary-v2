@@ -30,7 +30,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'identify', href: '/identify' },
       { key: 'collections', href: '/collections' },
       { key: 'search', href: '/search' },
-      { key: 'podcast', href: '/podcast' },
     ],
   },
   {

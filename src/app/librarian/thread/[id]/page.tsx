@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, use } from 'react';
+import { useState, useEffect, useCallback, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -401,340 +401,105 @@ function SourceCards({ threadId }: { threadId: string }) {
   );
 }
 
-// ── Interactive Mode — Ask the Hosts ──────────────────────────────────
-
-interface InteractiveExchange {
-  question: string;
-  script: string;
-  audioUrl: string | null;
-}
-
-function AskWhileListening({ threadId }: { threadId: string }) {
-  const [open, setOpen] = useState(false);
-  const [question, setQuestion] = useState('');
-  const [exchanges, setExchanges] = useState<InteractiveExchange[]>([]);
-  const [loading, setLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    if (open && inputRef.current) inputRef.current.focus();
-  }, [open]);
-
-  const handleAsk = useCallback(async () => {
-    if (!question.trim() || loading) return;
-    const q = question.trim();
-    setLoading(true);
-    setQuestion('');
-
-    try {
-      const res = await fetch(`/api/embassy/threads/${threadId}/podcast/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: q }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: 'Failed' }));
-        setExchanges(prev => [...prev, { question: q, script: err.error || 'Could not generate response.', audioUrl: null }]);
-        return;
-      }
-
-      const data = await res.json();
-      const exchange: InteractiveExchange = {
-        question: q,
-        script: data.script || '',
-        audioUrl: data.audioUrl || null,
-      };
-      setExchanges(prev => [...prev, exchange]);
-
-      // Auto-play the audio response
-      if (data.audioUrl && audioRef.current) {
-        audioRef.current.src = data.audioUrl;
-        audioRef.current.play().catch(() => {});
-      }
-    } catch {
-      setExchanges(prev => [...prev, { question: q, script: 'Network error — please try again.', audioUrl: null }]);
-    } finally {
-      setLoading(false);
-    }
-  }, [question, loading, threadId]);
-
-  if (!open) {
-    return (
-      <button
-        onClick={() => setOpen(true)}
-        className="mt-3 text-[12px] text-[#9e4a3a] font-sans hover:underline flex items-center gap-1"
-      >
-        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-        </svg>
-        Ask Elena &amp; Marcus a question
-      </button>
-    );
-  }
-
-  return (
-    <div className="mt-3 p-3 bg-white rounded-lg border border-[#e0d9cc]">
-      <div className="flex gap-2">
-        <input
-          ref={inputRef}
-          type="text"
-          value={question}
-          onChange={e => setQuestion(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleAsk()}
-          placeholder="Ask Elena & Marcus anything..."
-          className="flex-1 text-sm font-body px-3 py-2 border border-[#ddd] rounded-lg focus:outline-none focus:border-[#9e4a3a] text-[#1a1612]"
-          disabled={loading}
-        />
-        <button
-          onClick={handleAsk}
-          disabled={loading || !question.trim()}
-          className="px-3 py-2 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-50"
-        >
-          {loading ? (
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-          ) : 'Ask'}
-        </button>
-        <button
-          onClick={() => { setOpen(false); setExchanges([]); setQuestion(''); }}
-          className="px-2 py-2 text-[#8a8480] hover:text-[#444] text-sm"
-        >
-          x
-        </button>
-      </div>
-      {/* Hidden audio element for playing responses */}
-      <audio ref={audioRef} className="hidden" />
-      {loading && (
-        <p className="mt-2 text-[12px] text-[#8a8480] font-sans animate-pulse">
-          Elena and Marcus are thinking... <span className="opacity-60">(this can take up to a minute)</span>
-        </p>
-      )}
-      {exchanges.map((ex, i) => (
-        <div key={i} className="mt-3 pt-3 border-t border-[#e8e4dc]">
-          <p className="text-[12px] text-[#8a8480] font-sans mb-2">You asked: &ldquo;{ex.question}&rdquo;</p>
-          <div className="space-y-1.5">
-            {formatTranscript(ex.script).map((entry, j) => (
-              <p key={j} className="text-[13px] font-body leading-relaxed text-[#333]">
-                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
-                {entry.text}
-              </p>
-            ))}
-          </div>
-          {ex.audioUrl && (
-            <audio controls src={ex.audioUrl} className="w-full mt-2" preload="metadata" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ── Podcast Player ────────────────────────────────────────────────────
+// ── Podcast archive ───────────────────────────────────────────────────
+// The podcast is retired and archived (#5007): a thread that already has an
+// episode keeps playing it here, but nothing new can be generated, published,
+// or asked of the hosts. Threads without an episode render nothing.
 
 function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boolean }) {
   const [podcasts, setPodcasts] = useState<Record<string, PodcastData>>({});
   const [selectedFormat, setSelectedFormat] = useState<PodcastFormat>('deep-dive');
-  const [generating, setGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [checked, setChecked] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
 
   const activePodcast = podcasts[selectedFormat] || null;
+  const available = FORMAT_OPTIONS.filter(opt => !!podcasts[opt.value]);
 
-  // Load all existing podcasts on mount
   useEffect(() => {
     fetch(`/api/embassy/threads/${threadId}/podcast?all=true`)
       .then(r => r.ok ? r.json() : { podcasts: {} })
       .then(data => {
         setPodcasts(data.podcasts || {});
-        // Select first available format
-        const available = Object.keys(data.podcasts || {});
-        if (available.length > 0) {
-          setSelectedFormat(available[0] as PodcastFormat);
-        }
-        setChecked(true);
+        const first = Object.keys(data.podcasts || {})[0];
+        if (first) setSelectedFormat(first as PodcastFormat);
       })
-      .catch(() => setChecked(true));
+      .catch(() => {});
   }, [threadId]);
 
-  const handleGenerate = useCallback(async () => {
-    setGenerating(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/embassy/threads/${threadId}/podcast`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ format: selectedFormat }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || 'Generation failed');
-        return;
-      }
-      setPodcasts(prev => ({ ...prev, [selectedFormat]: data.podcast }));
-    } catch {
-      setError('Network error — please try again');
-    } finally {
-      setGenerating(false);
-    }
-  }, [threadId, selectedFormat]);
-
-  const handlePublish = useCallback(async (publish: boolean) => {
-    await fetch(`/api/embassy/threads/${threadId}/podcast`, {
+  // Owners can still take a published episode out of the public archive.
+  const handleUnpublish = useCallback(async () => {
+    const res = await fetch(`/api/embassy/threads/${threadId}/podcast`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ format: selectedFormat, published: publish }),
+      body: JSON.stringify({ format: selectedFormat, published: false }),
     });
+    if (!res.ok) return;
     setPodcasts(prev => ({
       ...prev,
-      [selectedFormat]: { ...prev[selectedFormat], published: publish },
+      [selectedFormat]: { ...prev[selectedFormat], published: false },
     }));
   }, [threadId, selectedFormat]);
 
-  if (!checked) return null;
+  if (!activePodcast) return null;
 
   return (
     <div className="mt-8">
-      {/* Format selector */}
-      <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1">
-        {FORMAT_OPTIONS.map(opt => {
-          const hasEpisode = !!podcasts[opt.value];
-          return (
+      {available.length > 1 && (
+        <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1">
+          {available.map(opt => (
             <button
               key={opt.value}
               onClick={() => { setSelectedFormat(opt.value); setShowTranscript(false); }}
               className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[12px] font-sans transition-colors ${
                 selectedFormat === opt.value
                   ? 'bg-[#1a1612] text-white'
-                  : hasEpisode
-                    ? 'bg-[#f5f0e8] text-[#1a1612] hover:bg-[#ebe5d8]'
-                    : 'bg-[#f5f0e8]/50 text-[#8a8480] hover:bg-[#f5f0e8]'
+                  : 'bg-[#f5f0e8] text-[#1a1612] hover:bg-[#ebe5d8]'
               }`}
               title={opt.desc}
             >
               {opt.label}
-              {hasEpisode && selectedFormat !== opt.value && (
-                <span className="ml-1 w-1.5 h-1.5 bg-[#9e4a3a] rounded-full inline-block" />
-              )}
             </button>
-          );
-        })}
-      </div>
-
-      {/* Active podcast or generate prompt */}
-      {activePodcast ? (
-        <div className="p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-[#9e4a3a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-              </svg>
-              <p className="text-sm font-sans font-medium text-[#1a1612]">
-                {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label} — {activePodcast.topic}
-              </p>
-            </div>
-            <button
-              onClick={() => handlePublish(!activePodcast.published)}
-              className={`text-[11px] font-sans px-2 py-0.5 rounded ${
-                activePodcast.published
-                  ? 'bg-[#9e4a3a]/10 text-[#9e4a3a]'
-                  : 'bg-[#e8e4dc] text-[#6b6560] hover:bg-[#ddd]'
-              }`}
-              title={activePodcast.published ? 'Published to podcast feed' : 'Publish to podcast feed'}
-            >
-              {activePodcast.published ? 'Published' : 'Publish'}
-            </button>
-          </div>
-          <audio
-            controls
-            src={activePodcast.audioUrl}
-            className="w-full"
-            preload="metadata"
-          />
-          <div className="flex items-center justify-between mt-2">
-            <p className="text-[11px] text-[#8a8480] font-sans">
-              {activePodcast.findingCount} findings
-              {activePodcast.published && (
-                <span className="ml-2">
-                  <a
-                    href="/api/podcast/feed.xml"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#9e4a3a] hover:underline"
-                  >
-                    RSS feed
-                  </a>
-                </span>
-              )}
-            </p>
-            {activePodcast.script && (
-              <button
-                onClick={() => setShowTranscript(!showTranscript)}
-                className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
-              >
-                {showTranscript ? 'Hide transcript' : 'Show transcript'}
-              </button>
-            )}
-          </div>
-          {showTranscript && activePodcast.script && (
-            <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
-              {formatTranscript(activePodcast.script).map((entry, i) => (
-                <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
-                  <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
-                  {entry.text}
-                </p>
-              ))}
-            </div>
-          )}
-
-          {/* Interactive mode */}
-          <AskWhileListening threadId={threadId} />
-        </div>
-      ) : (
-        <div className="p-5 bg-[#f5f0e8]/50 rounded-xl border border-[#e0d9cc] border-dashed text-center">
-          <p className="text-sm font-sans font-medium text-[#1a1612] mb-1">
-            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label}
-          </p>
-          <p className="text-[13px] text-[#6b6560] font-body mb-3">
-            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
-          </p>
-          {isOwner ? (
-            <>
-            <button
-              onClick={handleGenerate}
-              disabled={generating}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {generating ? (
-                <>
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                  </svg>
-                  Elena &amp; Marcus are writing...
-                </>
-              ) : (
-                'Generate'
-              )}
-            </button>
-            {generating && (
-              <p className="text-[11px] text-[#8a8480] font-sans mt-2">This usually takes 30–60 seconds</p>
-            )}
-            {error && (
-              <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
-            )}
-          </>
-          ) : (
-            <p className="text-[12px] text-[#8a8480] font-sans">
-              Only the thread creator can generate podcasts.
-            </p>
-          )}
+          ))}
         </div>
       )}
+
+      <div className="p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm font-sans font-medium text-[#1a1612]">
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label} — {activePodcast.topic}
+          </p>
+          {isOwner && activePodcast.published && (
+            <button
+              onClick={handleUnpublish}
+              className="text-[11px] font-sans px-2 py-0.5 rounded bg-[#e8e4dc] text-[#6b6560] hover:bg-[#ddd]"
+              title="Remove this episode from the public podcast archive"
+            >
+              Unpublish
+            </button>
+          )}
+        </div>
+        <audio controls src={activePodcast.audioUrl} className="w-full" preload="metadata" />
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-[11px] text-[#8a8480] font-sans">Podcast archive. No new episodes are being made.</p>
+          {activePodcast.script && (
+            <button
+              onClick={() => setShowTranscript(!showTranscript)}
+              className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+            >
+              {showTranscript ? 'Hide transcript' : 'Show transcript'}
+            </button>
+          )}
+        </div>
+        {showTranscript && activePodcast.script && (
+          <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
+            {formatTranscript(activePodcast.script).map((entry, i) => (
+              <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
+                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                {entry.text}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

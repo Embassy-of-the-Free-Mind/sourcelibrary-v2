@@ -630,69 +630,6 @@ const BLOG_POSTS: HomeBlogPost[] = [
   },
 ];
 
-// ---------- Featured podcast episode (both homepages) ----------
-
-export interface PodcastSource {
-  bookId: string;
-  slug?: string;
-  title: string;
-  author?: string;
-  origin?: string;
-}
-
-export interface FeaturedPodcast {
-  threadId: string;
-  title: string;
-  topic: string;
-  audioUrl: string;
-  heroImageUrl: string | null;
-  sources: PodcastSource[];
-}
-
-// Latest published deep-dive episode in the homepage's own language.
-//
-// This began as a Spanish-only feature. It is now rendered on both homepages
-// because the measurement said the placement is the thing that works: in the
-// 30 days to 2026-08-13 the podcast drew 113 plays, and 66 of them (58%) were
-// this one featured Spanish episode — which also had the best completion rate
-// of any episode (33% vs 29% overall). The other ten-plus episodes, reachable
-// only from the header nav, averaged about five plays each. So the nav item was
-// retired (SiteHeader) and English got the placement that actually earns
-// listens. A language with no published episode simply renders nothing.
-//
-// The language match is NOT `{ language }`. English threads carry no `language`
-// field at all — measured 2026-08-13, all six published English deep-dives have
-// it absent while the single Spanish one has `language: 'es'`. `language: 'en'`
-// therefore matches zero documents, and the English feature would have rendered
-// nothing forever while looking perfectly correct in code review. Absent means
-// English here, so `en` has to accept the missing field.
-async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast | null> {
-  const db = await getReadDb();
-  const languageMatch =
-    language === 'en'
-      ? { $or: [{ language: 'en' }, { language: { $exists: false } }, { language: null }] }
-      : { language };
-  const thread = await db.collection('embassy_threads').findOne(
-    { ...languageMatch, 'podcasts.deep-dive.published': true, 'podcasts.deep-dive.audioUrl': { $exists: true } },
-    {
-      projection: { title: 1, heroImage: 1, 'podcasts.deep-dive': 1 },
-      sort: { 'podcasts.deep-dive.generatedAt': -1 },
-      maxTimeMS: 5000,
-    } as any,
-  );
-  const p = thread?.podcasts?.['deep-dive'];
-  if (!thread || !p?.audioUrl) return null;
-
-  return {
-    threadId: thread._id.toString(),
-    title: thread.title || p.topic || '',
-    topic: p.topic || '',
-    audioUrl: p.audioUrl,
-    heroImageUrl: thread.heroImage?.url || null,
-    sources: Array.isArray(p.sources) ? p.sources : [],
-  };
-}
-
 // ---------- The Spanish collection card (the /es "Leer en español" band) ----------
 // One card linking to /es/collections/en-espanol, the same block /es/collections
 // leads with. The band used to be a 15-cover slider plus counts; a single
@@ -730,7 +667,6 @@ export interface HomeData {
   counts: HomeCounts;
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
-  featuredPodcast: FeaturedPodcast | null;
   /** The `en-espanol` collection card. Null on the English homepage. */
   spanishCollection: EsSpanishCollectionCard | null;
   /**
@@ -741,24 +677,23 @@ export interface HomeData {
   localizedCollectionCounts: Record<string, number>;
 }
 
-// `lang` selects the podcast episode's language and the Spanish-edition band,
+// `lang` selects the Spanish-edition band and the localized counts,
 // and nothing else — every other query is language-agnostic, which is what
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishCollection, localizedCollectionCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, spanishCollection, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
-    withTimeout(getFeaturedPodcast(lang), 8000, null),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishCollection, localizedCollectionCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
 }

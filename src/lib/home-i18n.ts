@@ -125,12 +125,6 @@ export interface HomeStrings {
   byYear: string;
   byImages: string;
 
-  // Featured podcast episode (rendered on both homepages)
-  podcastEyebrow: string;
-  podcastListen: string;
-  podcastSourcesLabel: string;
-  podcastFullEpisode: string;
-
   // Footer essay
   inSpiritOf: string;
   ficinoRole: string;
@@ -234,12 +228,6 @@ const en: HomeStrings = {
   byYear: 'year',
   byImages: 'images',
 
-  podcastEyebrow: 'Deep dive podcast',
-  podcastListen: 'Listen to the episode',
-  // Not "the four books" — the source count varies per episode, and the label
-  // is rendered from whatever `sources` the thread actually carries.
-  podcastSourcesLabel: 'The books in this episode',
-  podcastFullEpisode: 'Full episode & transcript',
 
   inSpiritOf: 'In the spirit of',
   ficinoRole: '1433–1499 · Philosopher & Translator',
@@ -346,10 +334,6 @@ const es: HomeStrings = {
   byYear: 'año',
   byImages: 'imágenes',
 
-  podcastEyebrow: 'Pódcast en español',
-  podcastListen: 'Escuchar el episodio',
-  podcastSourcesLabel: 'Los libros de este episodio',
-  podcastFullEpisode: 'Episodio completo y transcripción',
 
   inSpiritOf: 'En el espíritu de',
   ficinoRole: '1433–1499 · Filósofo y traductor',

@@ -87,9 +87,6 @@ export interface FooterStrings {
   identify: string;
   collections: string;
   search: string;
-  // Kept reachable here after the header nav item was retired — the podcast is
-  // otherwise only linked from the homepage feature and its librarian thread.
-  podcast: string;
   favorites: string;
   // About column
   about: string;
@@ -199,7 +196,6 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     identify: 'Identify an Artwork',
     collections: 'Collections',
     search: 'Search',
-    podcast: 'Podcast',
     favorites: 'Favorites',
     about: 'About',
     vision: 'Our Vision',
@@ -231,7 +227,6 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     identify: 'Identificar una obra',
     collections: 'Colecciones',
     search: 'Buscar',
-    podcast: 'Pódcast',
     favorites: 'Favoritos',
     about: 'Acerca de',
     vision: 'Nuestra visión',

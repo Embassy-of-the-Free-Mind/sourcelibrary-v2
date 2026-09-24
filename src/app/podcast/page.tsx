@@ -106,18 +106,11 @@ export default async function PodcastPage() {
             the 15th-18th centuries. Two hosts explore alchemy, Hermetica, death rites,
             celestial beings, and the hidden connections between ancient traditions.
           </p>
+          {/* Retired and archived (#5007). */}
+          <p className="mt-4 text-[13px] font-sans text-[#8a8480]">
+            This podcast is no longer produced. The episodes below remain available as an archive.
+          </p>
           <div className="mt-4 flex items-center justify-center gap-4 text-[12px] font-sans text-[#8a8480]">
-            <a
-              href="/api/podcast/feed.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[#9e4a3a] hover:underline"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-              </svg>
-              RSS Feed
-            </a>
             <span>{episodes.length} episode{episodes.length !== 1 ? 's' : ''}</span>
           </div>
         </div>
