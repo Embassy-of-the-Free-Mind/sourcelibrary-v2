@@ -61,9 +61,15 @@ for (const id of ids) {
   const labels = cands.map((_, i) => `T${i + 1}`);
   key.pages[id] = Object.fromEntries(labels.map((l, i) => [l, cands[i].arm]));
   const source = fs.readFileSync(path.join(DATA, 'yig', `mtab-yig-${id}.txt`), 'utf8').trim();
+  // Yigdzin drops one manuscript line on some two-leaf pages (peer finding, 2026-09-25): count the
+  // lines so the judge can attribute a one-line omission to the source, not to an engine
+  const sourceLines = source.split('\n').filter((l) => l.trim()).length;
+  const sourceNote = sourceLines === 13 ? 'two-leaf page with 13 lines where the book has 14: one manuscript line is probably missing from the OCR (source defect, not a translation omission)' : undefined;
   lines.push(JSON.stringify({
     id,
     image: path.resolve(DATA, 'img', `${id}.jpg`),
+    source_lines: sourceLines,
+    ...(sourceNote ? { source_note: sourceNote } : {}),
     text_title: refs[id].title_en,
     toh: refs[id].toh,
     reference_sides: refs[id].sides,

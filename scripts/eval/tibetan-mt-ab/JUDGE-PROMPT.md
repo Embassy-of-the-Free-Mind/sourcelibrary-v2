@@ -14,6 +14,15 @@ A translation may carry house-format tags (<summary>, <keywords>, <note>, <term>
 <unclear>, <warning>): those are not defects and not content, unless a <note> asserts a fact the
 source does not carry. Line-by-line layout vs paragraphs is not a criterion.
 
+Known source defect: the OCR sometimes drops ONE whole manuscript line (found by eye on 2026-09-25:
+the first line of the lower leaf, on about half of two-leaf pages). The same source went to every
+system, so an omission that spans exactly one manuscript line (one line of the image; roughly one
+fourteenth of a two-leaf page, one seventh of a single leaf) is the OCR's fault, not the translator's:
+do not flag it as omission for any candidate and do not let it separate candidates — score that span
+as a tie. Each page carries "source_lines" (non-empty OCR lines) and, where it is below the usual
+count for that book, a "source_note". An omission LARGER than one line, or of text that IS in the
+source, still counts.
+
 Method, per page: read the SOURCE, locate the page's span inside the REFERENCE (the manuscript is a
 different edition, so small variants are expected and are not errors of the translation), then read
 each candidate against the reference span and the source.
