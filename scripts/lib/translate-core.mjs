@@ -222,7 +222,14 @@ export function continuityContext(previousTranslation, { english = false } = {})
     : `\n\n**Previous page translation for continuity:**\n${seed}`;
 }
 
-export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }) {
+/**
+ * The part of a translation prompt that depends only on the book: the base
+ * prompt from the DB with its placeholders filled, the source-work line and the
+ * public-domain note. Shared by the single-page prompt below and the Batch API
+ * lane's multi-page block prompt (translate-batch-seam.mjs), so the two cannot
+ * drift apart.
+ */
+export function translationPromptHeader({ prompts, book }) {
   const english = isEnglishBook(book);
   const base = english ? prompts.english : prompts.translation;
   let prompt = base.text
@@ -240,6 +247,12 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
   if (year && year < 1930) {
     prompt += `\n\n**Note:** This is a public domain work published in ${year}. It is not under copyright.`;
   }
+  return { prompt, promptRef: base.ref, isEnglish: english };
+}
+
+export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }) {
+  const { prompt: header, promptRef, isEnglish: english } = translationPromptHeader({ prompts, book });
+  let prompt = header;
 
   prompt += english
     ? `\n\n**Text to modernize:**\n${ocrText}`
@@ -247,7 +260,7 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
 
   prompt += continuityContext(previousTranslation, { english });
 
-  return { prompt, promptRef: base.ref, isEnglish: english };
+  return { prompt, promptRef, isEnglish: english };
 }
 
 /** Close unterminated inline tags the model sometimes emits mid-stream. */
