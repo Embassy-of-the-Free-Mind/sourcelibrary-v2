@@ -4,6 +4,7 @@ import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
+import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import {
   shouldRedirectToCanonical,
   canonicalUrl,
@@ -363,6 +364,42 @@ async function resolveResourceOwnerTenantId(
 }
 
 /**
+ * May this book render on this partner's host? Lockdown (Derek, 2026-09-24,
+ * #5038): the partner's own books (`tenantId`) plus the global books its own
+ * catalogue links (#4218, tenantCatalogReferencesBook). A book assigned to
+ * ANOTHER tenant, or a global book the catalogue doesn't link, is refused.
+ *
+ * Before this, an untenanted book was allowed on every partner host, so
+ * bhutan.sourcelibrary.org rendered e.g. Kabbala Denudata's landing page in
+ * full while the (strict) page reader 404'd every page link on it.
+ *
+ * An unknown segment (no such book, or an old slug alias) is ADMITTED so the
+ * route itself answers — a 404, or an alias redirect whose target comes back
+ * through this check. A failed lookup also admits, matching the rest of this
+ * guard: a transient Atlas blip must not bounce a partner's own readers.
+ */
+async function isBookAdmittedOnTenant(
+  segment: string,
+  tenantSlug: string,
+  tenantId: string,
+): Promise<boolean> {
+  let book: { id?: string; _id?: { toString(): string }; tenantId?: string } | null;
+  try {
+    const db = await getDb();
+    book = await db.collection('books').findOne(
+      { $or: [{ slug: segment }, { id: segment }] },
+      { projection: { id: 1, tenantId: 1 } },
+    ) as typeof book;
+  } catch {
+    return true;
+  }
+  if (!book) return true;
+  if (book.tenantId) return book.tenantId === tenantId;
+  const bookId = book.id || book._id?.toString();
+  return !!bookId && tenantCatalogReferencesBook(tenantSlug, bookId);
+}
+
+/**
  * Generic tenant RLS guard for registered content routes.
  *
  * - Path-based  (/{tenant}/book/x):    checks ownership, returns rewritePath=/book/x.
@@ -405,6 +442,13 @@ async function guardTenantContentAccess(
   if (!resourceSlug) {
     // Bare prefix root (e.g. /book with no slug) — no ownership check needed.
     return { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null };
+  }
+
+  // Books follow the partner LOCKDOWN rule, not the overlay rule below (#5038).
+  if (route.prefix === 'book') {
+    return (await isBookAdmittedOnTenant(resourceSlug, tenantSlug, tenantId))
+      ? { matched: true, allow: true, rewritePath: needsRewrite ? contentPath : null }
+      : { matched: true, allow: false };
   }
 
   const ownerTenantId = await resolveResourceOwnerTenantId(resourceSlug, route);
@@ -869,6 +913,38 @@ export async function proxy(request: NextRequest) {
         : pathname.slice('/catalog/'.length);
       url.pathname = `/embed/${tenant}/catalog/${tail}`;
       needsRewrite = true;
+    }
+
+    // A book's landing page renders through the TENANT-AWARE embed route (#5038).
+    // `/book/[id]` is one ISR entry per path shared by the apex and every
+    // subdomain, so it can never know which partner is asking: on a subdomain it
+    // rendered the global page — related-book rails and all, 70 foreign book
+    // links on Bhutan's own book pages. `/embed/<tenant>/book/<slug>` is a
+    // separate path per tenant and passes the tenant context, so it applies the
+    // embed UI policy (cross-reference rails off). Deeper paths (/page/<id>,
+    // /overview, …) stay on the global routes; the lockdown guard below still
+    // covers them. The admission check runs HERE because this branch returns
+    // before that guard, and the embed route's own refusal would be a soft 200
+    // under /embed/[tenant]/loading.tsx.
+    let refuseBook = false;
+    const bookRoot = pathname.match(/^\/book\/([^/]+)\/?$/);
+    if (bookRoot && !request.nextUrl.searchParams.has('page')) {
+      const subdomainTenantForBook = await resolveTenantByExactSlug(tenant);
+      if (subdomainTenantForBook?.id) {
+        if (await isBookAdmittedOnTenant(decodeURIComponent(bookRoot[1]), tenant, subdomainTenantForBook.id)) {
+          url.pathname = `/embed/${tenant}/book/${bookRoot[1]}`;
+          needsRewrite = true;
+        } else {
+          refuseBook = true;
+        }
+      }
+    }
+    if (refuseBook) {
+      // Same answer the content guard gives a cross-tenant book: the partner's home.
+      const home = request.nextUrl.clone();
+      home.pathname = '/';
+      home.search = '';
+      return NextResponse.redirect(home, 307);
     }
 
     if (needsRewrite) {

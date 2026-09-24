@@ -222,6 +222,45 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
 // A tenant page is only sealed if the books it links to are the tenant's own.
 const foreignBooks = [];
 let bookCheckSkipped = null;
+let catalogueCheckNote = null;
+
+// Which of these book ids does the tenant's catalogue reference? Mirrors
+// src/lib/tenant-catalog-books.ts (bph_works for BPH, library_catalog_records
+// for the rest). Without Supabase credentials the admission is NOT applied and
+// the report says so — every catalogue-linked book then shows as foreign.
+async function catalogueLinkedIds(tenantSlug, ids) {
+  const found = new Set();
+  if (ids.length === 0) return found;
+  const base = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!base || !key) {
+    catalogueCheckNote = 'catalogue admission NOT applied (no Supabase credentials)';
+    return found;
+  }
+  const table = tenantSlug === 'bph' ? 'bph_works' : 'library_catalog_records';
+  for (let i = 0; i < ids.length; i += 50) {
+    const chunk = ids.slice(i, i + 50).filter(id => /^[A-Za-z0-9_-]{1,64}$/.test(id));
+    if (chunk.length === 0) continue;
+    const list = chunk.join(',');
+    const params = new URLSearchParams({
+      select: 'sl_book_id,sl_external_book_id',
+      or: `(sl_book_id.in.(${list}),sl_external_book_id.in.(${list}))`,
+    });
+    if (table === 'library_catalog_records') params.set('tenant_id', `eq.${tenantSlug}`);
+    const res = await fetch(`${base}/rest/v1/${table}?${params}`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+    });
+    if (!res.ok) {
+      catalogueCheckNote = `catalogue lookup failed (${res.status}) — admission NOT applied`;
+      return new Set();
+    }
+    for (const row of await res.json()) {
+      if (row.sl_book_id) found.add(row.sl_book_id);
+      if (row.sl_external_book_id) found.add(row.sl_external_book_id);
+    }
+  }
+  return found;
+}
 
 if (bookRefs.size === 0) {
   bookCheckSkipped = 'no /book/ links found in the crawled HTML';
@@ -250,8 +289,17 @@ if (bookRefs.size === 0) {
               { projection: { id: 1, slug: 1, title: 1, display_title: 1, tenantId: 1 } })
         .toArray();
 
+      // A global book the tenant's OWN catalogue links is admitted (#4218, #5038)
+      // — the same rule the proxy applies. Without this every legitimate
+      // catalogue link reads as a leak.
+      const catalogued = await catalogueLinkedIds(
+        tenantSlug,
+        books.filter(b => !b.tenantId).map(b => b.id).filter(Boolean),
+      );
+
       for (const b of books) {
         if (b.tenantId === tenantDoc.id) continue;
+        if (!b.tenantId && catalogued.has(b.id)) continue;
         const ref = bookRefs.has(b.id) ? b.id : b.slug;
         foreignBooks.push({
           ref,
@@ -279,7 +327,7 @@ process.stdout.write(`  book links:     ${bookRefs.size} seen`);
 process.stdout.write(
   bookCheckSkipped
     ? ` — NOT CHECKED (${bookCheckSkipped})\n`
-    : `, ${foreignBooks.length} not held by this tenant${unresolvedBookRefs ? `, ${unresolvedBookRefs} unresolved` : ''}\n`
+    : `, ${foreignBooks.length} not held by this tenant${unresolvedBookRefs ? `, ${unresolvedBookRefs} unresolved` : ''}${catalogueCheckNote ? ` — ${catalogueCheckNote}` : ''}\n`
 );
 
 if (redirectLeaks.length > 0) {
