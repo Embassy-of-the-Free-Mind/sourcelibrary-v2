@@ -49,12 +49,6 @@
  */
 
 export const MIN_FRAGMENT_LETTERS = 20;
-
-/**
- * The block prompt's page-boundary instruction, shared by the realtime worker and the batch
- * lane so the two stay byte-identical. Appended after the tag template.
- */
-export const PAGE_BOUNDARY_RULE = '\n**Each page\'s translation must contain exactly the text of that page, no more and no less. If a page ends in the middle of a sentence, end its translation at the same point (mark the break with "…") and begin the next page\'s translation with the rest of that sentence. Never finish a sentence on one page with words that are printed on the next.**\n';
 export const FRAGMENT_WINDOW = 400;
 
 const OCR_WRAPPERS = 'meta|vocab|language|lang|page-type|page-num|sig|scan-quality|script|columns|header|image-desc|folio|detected-images|catchword|warning|insert|margin|footnote|note';

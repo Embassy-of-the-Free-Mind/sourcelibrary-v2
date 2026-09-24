@@ -55,7 +55,7 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { isHeld } from './pipeline-hold.mjs';
-import { dropDriftedPages, PAGE_BOUNDARY_RULE } from './block-drift.mjs';
+import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 
@@ -135,7 +135,6 @@ export function blockPrompt({ prompts, book, pages }) {
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
   prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += PAGE_BOUNDARY_RULE;
   prompt += `\n**Pages to ${verb}:**\n`;
   for (const p of pages) prompt += `\n--- Page ${p.page_number} ---\n${p.ocr.data}\n`;
   return { prompt, promptRef, isEnglish };

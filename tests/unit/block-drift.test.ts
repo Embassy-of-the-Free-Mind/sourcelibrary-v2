@@ -15,12 +15,12 @@ import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import {
-  detectBlockDrift, continuationFragment, dropDriftedPages, duplicatedAcrossBoundary, PAGE_BOUNDARY_RULE,
+  detectBlockDrift, continuationFragment, dropDriftedPages, duplicatedAcrossBoundary,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/block-drift.mjs';
 import {
-  parseBlockResponse, blockPrompt,
+  parseBlockResponse,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-seam.mjs';
@@ -117,17 +117,12 @@ describe('the parser reject', () => {
   });
 });
 
-describe('the block prompt carries the page-boundary rule', () => {
-  it('in the batch lane', () => {
-    const prompts = { translation: { text: 'Translate {language}.', version: 1, id: 'p', name: 't' }, english: { text: 'Modernize.', version: 1, id: 'e', name: 'e' } };
-    const book = { id: 'b', title: 'T', language: 'German' };
-    const pages = [1, 2].map(n => ({ page_number: n, ocr: { data: 'Text '.repeat(60) } }));
-    const { prompt } = blockPrompt({ prompts, book, pages });
-    expect(prompt).toContain(PAGE_BOUNDARY_RULE);
-  });
-  it('in the realtime worker (source check — the worker runs main() on import)', () => {
+// No prompt change: a smoke of the three production boundaries with a "keep each page's text
+// on its page" instruction (2026-09-24, n=3) fixed none and turned one move into a duplicate.
+// The parser reject is the fix; this pins that the worker calls it (it runs main() on import).
+describe('the realtime worker applies the reject', () => {
+  it('translateBatch drops drifted pages before returning', () => {
     const src = fs.readFileSync(path.join(__dirname, '../../scripts/workers/translate-worker.mjs'), 'utf8');
-    expect(src).toMatch(/prompt \+= PAGE_BOUNDARY_RULE;/);
     expect(src).toMatch(/dropDriftedPages\(pages, translations\)/);
   });
 });

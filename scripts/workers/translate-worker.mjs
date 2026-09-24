@@ -44,7 +44,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
-import { dropDriftedPages, PAGE_BOUNDARY_RULE } from '../lib/block-drift.mjs';
+import { dropDriftedPages } from '../lib/block-drift.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -337,7 +337,6 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
   prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += PAGE_BOUNDARY_RULE;
   prompt += `\n**Pages to ${verb}:**\n`;
   for (const page of pages) {
     prompt += `\n--- Page ${page.page_number} ---\n${page.ocr.data}\n`;
