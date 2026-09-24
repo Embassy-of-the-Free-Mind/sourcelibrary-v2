@@ -55,7 +55,11 @@ export default function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-0 inset-x-0 z-[9999] animate-in slide-in-from-bottom duration-300"
+      className="fixed inset-x-0 z-[9999] animate-in slide-in-from-bottom duration-300"
+      // A page with its own bottom dock (the phone reader) sets this, so the
+      // banner sits above the controls instead of covering them. On a first
+      // visit it hid every reader tool until answered (#5062).
+      style={{ bottom: 'var(--sl-bottom-dock, 0px)' }}
       role="dialog"
       aria-label="Cookie consent"
     >

@@ -62,6 +62,11 @@ const INK = 'var(--bg-dark)';
  *  keeps for it. One number: the bar covers the top of the column, so
  *  anything that scrolls a pane to the top has to clear it. */
 const BAR_H = 52;
+/** Second row of the phone bar: the pane picker (Scan | German | English). */
+const SEG_H = 44;
+/** The phone bar's full height — title row plus the pane picker — and the
+ *  lead-in the column keeps for it. */
+const PHONE_BAR_H = BAR_H + SEG_H;
 /** How long a scroll up has to have been meant before the bar comes back. */
 const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
@@ -105,17 +110,17 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
 const MORE_GROUPS = [
   { key: 'groupRead', tools: ['contents', 'guide', 'search', 'librarian'] },
   { key: 'groupPage', tools: ['cite', 'downloads', 'info', 'history'] },
-  { key: 'groupReader', tools: ['settings', 'feedback'] },
+  { key: 'groupReader', tools: ['views', 'settings', 'feedback'] },
 ] as const;
 const MORE_TOOLS = [
   'contents', 'guide', 'search', 'librarian',
   'cite', 'downloads', 'info', 'history',
-  'settings', 'feedback',
+  'views', 'settings', 'feedback',
 ] as const;
 const MORE_ICONS: Record<(typeof MORE_TOOLS)[number], typeof List> = {
   contents: List, guide: BookOpen, search: Search, librarian: MessageCircle,
   cite: Quote, downloads: Download, info: Info, history: History,
-  settings: Settings2, feedback: MessageSquare,
+  views: Columns3, settings: Settings2, feedback: MessageSquare,
 };
 
 interface Reader2CProps {
@@ -195,11 +200,11 @@ function MobileToolbar({
   onToggleStrip: () => void;
 }) {
   const t = getReaderStrings(useLocale()).toolbar;
-  // Four slots. Pages, the pane picker and Search are what a reader reaches
-  // for constantly; everything else — contents, the librarian, settings, the
-  // guide — is one tap behind More, so nothing here competes for the thumb.
+  // Four slots. Pages, Share and Save are what a reader reaches for
+  // constantly; everything else — contents, the librarian, settings, the
+  // guide, the pane-stacking sheet — is one tap behind More, so nothing here
+  // competes for the thumb. Which pane shows is the bar's own second row.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
-    ['views', t.views, <Columns3 key="i" size={19} />],
     ['share', t.share, <Share2 key="i" size={19} />],
     ['save', t.save, <Heart key="i" size={19} />],
   ];
@@ -231,6 +236,60 @@ function MobileToolbar({
         active={panel === 'more' || MORE_TOOLS.some(k => k === panel)}
         onClick={() => onTogglePanel('more')}
       />
+    </div>
+  );
+}
+
+/**
+ * Phone pane picker: the second row of the phone bar. Scan | German | English
+ * (Romanised when the script calls for it); one tap shows that pane alone.
+ * Desktop has had these as buttons in its top bar all along; on the phone
+ * they were switches inside a sheet behind a tab called Views, which a new
+ * reader had no reason to open (#5062). More than one segment lights when the
+ * reader has stacked panes from the sheet; tapping any makes it the only one,
+ * so the row always tells the truth about what is on screen.
+ */
+function PhonePanePicker({
+  views, onPick, language, hasScan, showTranslit, translationLabel, hidden, transition,
+}: {
+  views: { scan: boolean; ocr: boolean; en: boolean; translit: boolean };
+  onPick: (key: 'scan' | 'ocr' | 'en' | 'translit') => void;
+  /** The book's language, as the label of the transcription segment. */
+  language: string;
+  /** No facsimile (a text edition): the scan segment is left out. */
+  hasScan: boolean;
+  showTranslit: boolean;
+  translationLabel: string;
+  /** Fades with the bar, like the title row above it. */
+  hidden: boolean;
+  transition: string;
+}) {
+  const t = getReaderStrings(useLocale()).panes;
+  const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
+    ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
+    { key: 'ocr', label: language },
+    ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
+    { key: 'en', label: translationLabel },
+  ];
+  return (
+    <div
+      className="flex items-center px-3"
+      role="group"
+      aria-label={t.pickPaneAria}
+      style={{ height: SEG_H, opacity: hidden ? 0 : 1, transition }}
+    >
+      {items.map((it, i) => (
+        <button
+          key={it.key}
+          type="button"
+          aria-pressed={views[it.key]}
+          onClick={() => onPick(it.key)}
+          className={`${BAR_CONTROL} flex-1 min-w-0 px-2 truncate`}
+          style={{ ...barControlStyle(views[it.key]), marginLeft: i === 0 ? 0 : -1 }}
+        >
+          {it.label}
+        </button>
+      ))}
     </div>
   );
 }
@@ -2224,10 +2283,12 @@ function PanelContent({
               <span className="min-w-0">
                 <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>{label}</span>
                 <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-                  {locked ? t.panes.lastPaneShowing : hint}
+                  {hint}
                 </span>
               </span>
-              <span className={locked ? 'opacity-40' : undefined}>
+              {/* The hint stays; the lock is the dimmed switch and its title,
+                  not a message in place of what the pane is. */}
+              <span className={locked ? 'opacity-40' : undefined} title={locked ? t.panes.lastPaneShowing : undefined}>
                 <SettingsSwitch
                   on={on}
                   onToggle={() => { if (!locked) r.toggleView(key); }}
@@ -2634,7 +2695,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         // Under the bar, not under the top edge of the column: the bar floats
         // over the column and is always back on screen for a new page, so
         // aligning to the edge would put the first line behind it.
-        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - BAR_H;
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - PHONE_BAR_H;
         el.scrollTop = Math.max(0, el.scrollTop + delta);
       } else {
         el.scrollTop = 0;
@@ -2707,6 +2768,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * with no height of its own snaps between sizes, so measure what the content
    * wants — the header plus its scroller's full content — and animate to it.
    */
+  /** The phone pane picker: one pane, and the column back at the top of it. */
+  const pickPane = (key: 'scan' | 'ocr' | 'en' | 'translit') => {
+    r.showOnlyView(key);
+    const el = mobileMainRef.current;
+    if (el) el.scrollTop = 0;
+  };
+  // The cookie banner is fixed to the bottom of the screen and sat on top of
+  // the phone dock on a first visit — a new reader could not tap a single
+  // tool until they had answered it (#5062). Tell it how far to stand off.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--sl-bottom-dock', isDesktop ? '0px' : `${MOBILE_TOOLBAR_H}px`);
+    return () => { root.style.removeProperty('--sl-bottom-dock'); };
+  }, [isDesktop]);
   const sheetOpen = !!leftPanel && !isDesktop;
   /**
    * Whether the sheet's list runs on past its bottom edge. On a 568px phone
@@ -3212,8 +3287,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     />
   );
 
+  // touch-action: manipulation keeps pinch but drops double-tap zoom. A
+  // double-tap on the text — the most natural thing to do to a page — zoomed
+  // iOS Safari in by a tenth and it never zooms back out, so every fixed
+  // control then clipped at the right edge (#5062).
   return (
-    <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
+    <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]" style={{ touchAction: 'manipulation' }}>
       {/* WebMCP only on the main site: get_citation emits /book/… URLs whose
           shape is wrong on tenant reading rooms, and embedded iframes would
           need an explicit allow="tools" grant from the partner page anyway. */}
@@ -3728,7 +3807,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <header
           className="absolute top-0 left-0 right-0 z-[60]"
           style={{
-            height: BAR_H,
+            height: PHONE_BAR_H,
             background: INK,
             color: '#fdfcf9',
             // Also away while a sheet is open. The sheet is a modal with its
@@ -3794,6 +3873,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             )}
           </div>
+          <PhonePanePicker
+            views={r.views}
+            onPick={pickPane}
+            language={r.book.language || t.panes.originalFallback}
+            hasScan={!!(scan.display || witness)}
+            showTranslit={translitEligible}
+            translationLabel={showingSpanish ? 'Español' : t.panes.viewEnglish}
+            hidden={barHidden}
+            transition={`opacity ${BAR_MS}ms ${BAR_EASE}`}
+          />
         </header>
 
         <main
@@ -3822,7 +3911,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           {/* The floating bar's share of the column. Fixed, so the reading
               area never changes size and the text never shifts. */}
-          <div className="shrink-0" style={{ height: BAR_H }} aria-hidden="true" />
+          <div className="shrink-0" style={{ height: PHONE_BAR_H }} aria-hidden="true" />
           {r.views.scan && !scan.display && !witness && (
             /* No facsimile: one quiet line instead of a scan-sized empty bed.
                The full-height placeholder read as an image that failed to
@@ -3961,6 +4050,29 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
+                {!r.views.scan && !r.views.ocr && (
+                  /* The translation is all a phone shows by default, and nothing
+                     said it was a translation of something you could look at.
+                     One quiet line, and a way over (#5062). */
+                  <p className="font-sans text-[11.5px] mb-3" style={{ color: 'var(--text-faint)' }}>
+                    {t.panes.translatedFrom(r.book.language || t.panes.originalFallback)}
+                    {(scan.display || witness || r.currentPage.ocr?.data) && (
+                      <>
+                        {' · '}
+                        <button
+                          type="button"
+                          className="underline underline-offset-2"
+                          style={{ color: 'var(--text-muted)' }}
+                          onClick={() => pickPane(scan.display || witness ? 'scan' : 'ocr')}
+                        >
+                          {scan.display || witness
+                            ? t.panes.viewTheScan
+                            : t.panes.viewTheText(r.book.language || t.panes.originalFallback)}
+                        </button>
+                      </>
+                    )}
+                  </p>
+                )}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />

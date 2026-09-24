@@ -140,6 +140,10 @@ export interface ReaderStrings {
     historyBlurb: string;
     settings: string;
     settingsBlurb: string;
+    /** The stacking sheet, reached from More since the pane picker took the
+     *  dock slot (#5062). */
+    views: string;
+    viewsBlurb: string;
     feedback: string;
     feedbackBlurb: string;
     menu: string;
@@ -160,6 +164,12 @@ export interface ReaderStrings {
     visiblePanesAria: string;
     showPane: (label: string) => string;
     lastPaneShowing: string;
+    /** Phone pane picker (#5062): the row's aria label, and the line under a
+     *  translation shown on its own — `Translated from the German · view the scan`. */
+    pickPaneAria: string;
+    translatedFrom: (language: string) => string;
+    viewTheScan: string;
+    viewTheText: (language: string) => string;
 
     /** Stands in for the book's language when the record has none, in the
      *  pane header and the Views row (`Original · OCR`). */
@@ -579,7 +589,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         cite: 'A citation that points at this exact page.',
         share: 'Copy a link to this page, or post it.',
         settings: 'How the text is set. Your choices are remembered on this device.',
-        views: 'Which panes are showing.',
+        views: 'Show more than one at once.',
         downloads: 'Take this page, or the whole book, away with you.',
         history: 'Every recorded change to this page’s transcription and translation.',
       },
@@ -605,6 +615,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       historyBlurb: 'Every recorded change to this page',
       settings: 'Reading settings',
       settingsBlurb: 'Theme, text size, typeface, notes',
+      views: 'Scan, text & translation',
+      viewsBlurb: 'Show more than one at once',
       feedback: 'Send feedback',
       feedbackBlurb: 'Tell us about this page or the reader',
       menu: 'Menu',
@@ -621,6 +633,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       visiblePanesAria: 'Visible panes',
       showPane: (label) => `Show the ${label.toLowerCase()}`,
       lastPaneShowing: 'The last pane showing',
+      pickPaneAria: 'Scan, text or translation',
+      translatedFrom: (language) => `Translated from the ${language}`,
+      viewTheScan: 'view the scan',
+      viewTheText: (language) => `view the ${language} text`,
 
       originalFallback: 'Original',
       romanisedHeader: 'Romanised',
@@ -956,7 +972,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         cite: 'Una cita que remite exactamente a esta página.',
         share: 'Copia un enlace a esta página, o compártelo.',
         settings: 'Cómo se presenta el texto. Tus preferencias se recuerdan en este dispositivo.',
-        views: 'Qué paneles se muestran.',
+        views: 'Muestra más de uno a la vez.',
         downloads: 'Llévate esta página, o el libro entero.',
         history: 'Todos los cambios registrados en la transcripción y la traducción de esta página.',
       },
@@ -982,6 +998,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       historyBlurb: 'Todos los cambios registrados en esta página',
       settings: 'Ajustes de lectura',
       settingsBlurb: 'Tema, tamaño de letra, tipografía, notas',
+      views: 'Escaneo, texto y traducción',
+      viewsBlurb: 'Muestra más de uno a la vez',
       feedback: 'Enviar comentarios',
       feedbackBlurb: 'Cuéntanos algo sobre esta página o sobre el lector',
       menu: 'Menú',
@@ -1000,6 +1018,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       visiblePanesAria: 'Paneles visibles',
       showPane: (label) => `Mostrar ${label.toLowerCase()}`,
       lastPaneShowing: 'El único panel visible',
+      pickPaneAria: 'Escaneo, texto o traducción',
+      translatedFrom: (language) => `Traducido del original (${language})`,
+      viewTheScan: 'ver el escaneo',
+      viewTheText: (language) => `ver el texto (${language})`,
 
       originalFallback: 'Original',
       romanisedHeader: 'Romanizada',
