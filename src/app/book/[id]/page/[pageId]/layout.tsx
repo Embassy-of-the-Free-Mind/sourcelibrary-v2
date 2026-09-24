@@ -21,7 +21,7 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   const { id, pageId } = await params;
   const rs = READER_STRINGS[lang];
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
 
   if (!book || !page) {
     // Self-referential canonical so this URL isn't seen as a duplicate of '/'
@@ -114,7 +114,7 @@ export default async function PageLayout({ children, params, lang = 'en' }: Layo
   // of (#3385).
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
-  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
+  const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
   if (!book || !page) notFound();
 
   // A localized URL is a promise the page is in that language, so a book with
