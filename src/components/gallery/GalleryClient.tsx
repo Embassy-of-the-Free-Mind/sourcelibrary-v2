@@ -14,7 +14,6 @@ import { canLoadMore } from '@/lib/gallery-pagination';
 import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
-import IconclassFilter from '@/components/gallery/IconclassFilter';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
@@ -152,7 +151,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const libraryFilter = searchParams.get('library') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
-  const iconclassFilter = searchParams.get('iconclass') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
   // Committed image search query (drives the fetch); comes from the URL only.
@@ -187,7 +185,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // filters at all, OR the URL's bookId equals what the server pre-filtered on
   // and no other filters are present.
   useEffect(() => {
-    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
@@ -224,7 +222,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
           subject: subjectFilter || undefined,
-          iconclass: iconclassFilter || undefined,
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -252,7 +249,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -272,7 +269,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
         subject: subjectFilter || undefined,
-        iconclass: iconclassFilter || undefined,
         yearFrom: yearStart ? parseInt(yearStart) : undefined,
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -299,7 +295,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
@@ -382,7 +378,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // ignores, since any of them can be the reason a view came back empty
   // (a hand-typed or shared `?type=` value that matches no facet, say).
   const hasActiveFilters = Boolean(
-    hasFilters || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive || sourceFilter !== 'all'
+    hasFilters || yearStart || yearEnd || qualityParam || includeArchive || sourceFilter !== 'all'
   );
 
   const clearAllFilters = useCallback(() => {
@@ -644,13 +640,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                   ))}
                 </select>
               </div>
-
-              {/* Iconclass Subject */}
-              <IconclassFilter
-                value={iconclassFilter}
-                onChange={(code) => updateParams({ iconclass: code })}
-                compact
-              />
 
               {/* Subjects */}
               {data.filters.subjects.length > 0 && (

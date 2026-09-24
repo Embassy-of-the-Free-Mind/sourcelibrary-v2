@@ -4,8 +4,10 @@
  * Iconclass: hierarchical alphanumeric system for Western art subjects (iconclass.org)
  * CIT: parallel system for Chinese visual culture (chineseiconography.org)
  *
- * Both are assigned by Gemini during image extraction — no external API calls needed.
- * Codes can be validated post-hoc via the Iconclass REST API.
+ * CIT codes are assigned by Gemini during image extraction. Iconclass codes no longer
+ * are (#4856): recalled from memory they were largely invalid or wrong. The Iconclass
+ * API helpers below (search, lookup, validate) are what a future constrained tagging
+ * pass should use.
  */
 
 const ICONCLASS_API = 'https://iconclass.org';
@@ -58,63 +60,6 @@ export async function validateIconclassCodes(codes: string[]): Promise<string[]>
 }
 
 // --- Prompt context for Gemini classification ---
-
-/**
- * Iconclass top-level divisions + key branches for Source Library content.
- * Used as prompt context so Gemini assigns valid codes.
- */
-export const ICONCLASS_CONTEXT = `
-ICONCLASS CLASSIFICATION — assign 2-5 codes from the Iconclass system (iconclass.org).
-Iconclass uses hierarchical alphanumeric codes. Be as specific as possible.
-
-Top-level divisions:
-0 - Abstract, Non-representational Art
-1 - Religion and Magic
-2 - Nature
-3 - Human Being, Man in General
-4 - Society, Civilization, Culture
-5 - Abstract Ideas and Concepts
-6 - History
-7 - Bible
-8 - Literature
-9 - Classical Mythology and Ancient History
-
-Key sub-branches for early modern / esoteric content:
-11H - saints
-12 - non-Christian religions
-14 - astrology, prophecy
-21 - four elements (earth, water, air, fire)
-22 - natural phenomena
-25F - animals (25F23 predatory, 25F3 birds, 25FF fabulous animals)
-25G - plants and trees
-31A - human figure, proportions
-41 - domestic life, housing
-42 - family
-44 - state, government
-46A1 - social classes
-48A98 - writing, calligraphy
-48C - art theory, emblems, allegories
-49 - handicrafts, technology
-49C - chemistry
-49E39 - alchemy (equipment, substances, processes, philosopher's stone)
-49E393 - alchemistic equipment
-52 - knowledge, learning
-53 - astrology in practice
-61B2 - personifications
-71-73 - Bible (Old Testament, New Testament, apocrypha)
-83 - Greek/Roman literature
-92 - gods and goddesses of classical antiquity
-94 - tales from Roman history
-95 - tales from Greek history
-96 - tales from Roman history (specific)
-97 - metamorphoses (Ovid)
-98 - classical history and historical persons
-
-Parenthetical qualifiers add specificity: 25F23(LION) = predatory animals: lion
-Structural keys with + prefix: 25F(+12) = group of animals
-
-Return codes as strings in an array, most specific first.
-Example: ["49E39", "25FF41", "48C901"]`.trim();
 
 /**
  * CIT (Chinese Iconography Thesaurus) top-level structure.
@@ -172,15 +117,21 @@ Return codes as strings: ["4.3", "1.7.2", "5.3"]`.trim();
 
 /**
  * Determine which classification system(s) to use based on book context.
- * Most Source Library books get Iconclass. Chinese/East Asian content gets CIT.
- * Some books may get both (e.g., Jesuit texts bridging both traditions).
+ * Only East Asian content gets CIT codes.
+ *
+ * Iconclass is deliberately NOT requested here (#4856). Asked to recall codes from
+ * memory, the model invented ~29% of them and mislabelled many real ones (a blind
+ * A/B on 39 images: 1 good of 39 recalled vs 22 good when picking from real
+ * candidates found via `iconclassSearch`). If Iconclass comes back, it comes back as
+ * a separate pass that chooses from `iconclassSearch` results and runs
+ * `validateIconclassCodes`, never as free recall in the extraction prompt.
  */
 export function getClassificationSystems(bookContext?: {
   language?: string;
   subjects?: string[];
   cultural_sphere?: string;
-}): ('iconclass' | 'cit')[] {
-  if (!bookContext) return ['iconclass'];
+}): 'cit'[] {
+  if (!bookContext) return [];
 
   const lang = (bookContext.language || '').toLowerCase();
   const subjects = (bookContext.subjects || []).map(s => s.toLowerCase());
@@ -191,31 +142,13 @@ export function getClassificationSystems(bookContext?: {
     sphere.includes('chinese') || sphere.includes('east asian') ||
     subjects.some(s => ['chinese', 'daoist', 'buddhist', 'confucian', 'zen'].includes(s));
 
-  const isWestern =
-    ['latin', 'la', 'de', 'en', 'fr', 'it', 'nl', 'es', 'greek', 'hebrew'].some(l => lang.includes(l)) ||
-    !isEastAsian; // default to Western
-
-  const systems: ('iconclass' | 'cit')[] = [];
-  if (isWestern) systems.push('iconclass');
-  if (isEastAsian) systems.push('cit');
-
-  return systems.length > 0 ? systems : ['iconclass'];
+  return isEastAsian ? ['cit'] : [];
 }
 
 /**
  * Build the iconographic classification section for the image extraction prompt.
  */
-export function buildClassificationPrompt(systems: ('iconclass' | 'cit')[]): string {
-  const parts: string[] = [];
-
-  if (systems.includes('iconclass')) {
-    parts.push(ICONCLASS_CONTEXT);
-  }
-  if (systems.includes('cit')) {
-    parts.push(CIT_CONTEXT);
-  }
-
-  if (parts.length === 0) return '';
-
-  return `\nICONOGRAPHIC CLASSIFICATION — In addition to the metadata fields above, classify each image using standardized iconographic codes.\n\n${parts.join('\n\n')}\n\nAdd to each image object:\n  "iconclass": ["49E39", "25FF41"]${systems.includes('cit') ? ',\n  "cit": ["4.3", "1.7.2"]' : ''}\n`;
+export function buildClassificationPrompt(systems: 'cit'[]): string {
+  if (!systems.includes('cit')) return '';
+  return `\nICONOGRAPHIC CLASSIFICATION — In addition to the metadata fields above, classify each image using standardized iconographic codes.\n\n${CIT_CONTEXT}\n\nAdd to each image object:\n  "cit": ["4.3", "1.7.2"]\n`;
 }
