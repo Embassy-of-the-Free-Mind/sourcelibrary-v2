@@ -77,6 +77,9 @@ export function artworkToGalleryItem(a: any) {
   };
 }
 
+/** Artworks interleaved into the unfiltered default browse: the library's own period. */
+export const DEFAULT_ARTWORK_YEARS = { from: 1400, to: 1800 } as const;
+
 export async function mergedGalleryBrowse(
   db: any,
   opts: MergedBrowseOpts,
@@ -146,6 +149,13 @@ export async function mergedGalleryBrowse(
     if (yearStart !== null) y.$gte = yearStart;
     if (yearEnd !== null) y.$lte = yearEnd;
     af.year = y;
+  } else if (source === 'all' && !imageType) {
+    // The mixed default browse sorts artworks by (year, title), so undated records
+    // came first, alphabetically: photographs of Vatican rooms titled "113e Sala…",
+    // "16 Estancia…", then canopic jars and modern murals and stamps. On the default
+    // view, interleave only dated artworks from the library's period. The Artworks
+    // facet (source=artwork) and an explicit year range still reach all of them.
+    af.year = { $gte: DEFAULT_ARTWORK_YEARS.from, $lte: DEFAULT_ARTWORK_YEARS.to };
   }
   const artDocs = await db.collection('books')
     .find(af, {
