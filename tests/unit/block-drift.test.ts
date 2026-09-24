@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- the plain-JS modules under test are untyped */
 /**
  * Intra-block page drift (#5021): a block translation that finishes page N's last sentence
  * with page N+1's opening words (scripts/lib/block-drift.mjs), and the parser reject in both
