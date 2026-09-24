@@ -73,6 +73,8 @@ const UNATTENDED = [
   { match: 'sync-worker.mjs', spends: false, gated: false, note: 'Mongo→Supabase sync' },
   { match: 'enrichment-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'suggest-vocabulary-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
+  { match: 'allmaps-sync.mjs', spends: false, gated: false,
+    note: 'reads annotations.allmaps.org, writes gallery_images.allmaps — no Gemini (#5076)' },
   { match: 'stage-coverage-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'pipeline-health-alert.mjs', spends: false, gated: false, note: 'reads control, alerts' },
   { match: 'status-output-drift.mjs', spends: false, gated: false,

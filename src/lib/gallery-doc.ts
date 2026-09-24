@@ -103,6 +103,9 @@ export const GALLERY_DOC_OPTIONAL_KEYS = [
   'book_rank',
   'scan_quality',
   'page_image_characteristics',
+  // Allmaps georeference link (#5076), written only by scripts/workers/allmaps-sync.mjs.
+  // Shape: { annotation_id, viewer_url, gcps, modified, target, checked_at }.
+  'allmaps',
 ] as const;
 
 /** Resolve the full-page display image for `image_url` (the source the lens

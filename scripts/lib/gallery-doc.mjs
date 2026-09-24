@@ -78,6 +78,11 @@ export const GALLERY_DOC_OPTIONAL_KEYS = [
   'book_rank',
   'scan_quality',
   'page_image_characteristics',
+  // Allmaps georeference link (#5076): { annotation_id, viewer_url, gcps, modified, target,
+  // checked_at }. Written ONLY by scripts/workers/allmaps-sync.mjs (nightly); present on
+  // `type: map` rows somebody has georeferenced. A re-materialised row loses it until the
+  // next nightly run — the sync is the source of truth, not this document.
+  'allmaps',
 ];
 
 /**
