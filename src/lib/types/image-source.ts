@@ -49,7 +49,7 @@ export type ImageSourceProvider =
   | 'bdrc'           // Buddhist Digital Resource Center
   | 'ndl'            // National Diet Library of Japan (alternate key)
   | 'met'            // Metropolitan Museum of Art
-  | 'oraec'          // Online Resource for Ancient Egyptian Coffin Texts
+  | 'oraec'          // Open Richly Annotated Egyptian Corpus (oraec.github.io)
   | 'bsb'            // Bayerische Staatsbibliothek (alternate key for mdz)
   | 'eap'            // British Library Endangered Archives Programme
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
