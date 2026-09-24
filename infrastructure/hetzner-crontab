@@ -107,5 +107,10 @@
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 
+# Picture-subject index behind /browse/subjects (#4856): counts per browse category
+# from metadata.subjects, so new extractions appear. Reads only; writes one
+# system_config doc. No Gemini calls. (daily 5:30am)
+30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
+
 # Catalog CSV snapshot: weekly static export to R2 (Sunday 4am)
 0 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-catalog-csv.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/catalog-csv-snapshot.mjs" >> /var/log/sourcelibrary/catalog-csv.log 2>&1
