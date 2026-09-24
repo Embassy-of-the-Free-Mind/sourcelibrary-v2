@@ -142,7 +142,12 @@ async function buildPacket(db, bookIds, { midflow = false } = {}) {
         // id would let a judge tell the A/A controls from the test pairs.
         const entry = { id: null, language: book.language, left: flip ? jy : jx, right: flip ? jx : jy };
         entries.push(entry);
-        key.push({ id: null, entry, book_id: bookId, seam_id: seamId, pair, s1_repaired: s1Repaired, left: flip ? y : x, right: flip ? x : y });
+        // Completeness, per side of the seam page: a junction judge sees fluency, not omission (2026-09-25,
+        // j009 — the draft dropped p.65's first sentence and WON). Reader-text length of each lane's seam
+        // page against the OCR; --score flags a side ≥15% shorter than the other for a hand read.
+        const seamLen = Object.fromEntries([x, y].map((l) => [l, readerText(lanes[l][1]).length]));
+        if (ocr) seamLen.ocr = String(ocr.get(seamId)?.ocr?.data || '').length;
+        key.push({ id: null, entry, book_id: bookId, seam_id: seamId, pair, s1_repaired: s1Repaired, left: flip ? y : x, right: flip ? x : y, seam_len: seamLen });
       }
     }
     // Body pages (never repaired, never seeded): the lane should be indistinguishable from itself
@@ -212,6 +217,12 @@ function score() {
   else console.log('  S1/S2: no A/A pairs judged — no noise floor; do not quote a non-inferiority number');
   if (test) console.log(`  S1/P  (repaired lane vs production): tie rate ${test.tie_rate}, production preferred ${test.wins.P}, lane ${test.wins.S1} (p=${test.split_p_two_sided}); production share of decided ${test.P_share_of_decided} (the #4912 limit was 60%)`);
   if (control) console.log(`  S1/P  (UNREPAIRED lane = plain batch, control): production preferred ${control.wins.P}, lane ${control.wins.S1}, ties ${control.ties}; production share ${control.P_share_of_decided} (#4912 measured 41–11 for this pair)`);
+  const vById = new Map(verdicts.map((v) => [v.id, v]));
+  const suspects = key.filter((k) => k.pair === 'S1/P' && k.seam_len && Math.min(k.seam_len.S1, k.seam_len.P) < 0.85 * Math.max(k.seam_len.S1, k.seam_len.P));
+  if (suspects.length) {
+    console.log(`\n  OMISSION-SUSPECT (one side's seam page ≥15% shorter — hand-read against the source before trusting the verdict):`);
+    for (const k of suspects) { const v = vById.get(k.id); const w = !v || v.verdict === 'TIE' ? 'TIE' : v.verdict === 'LEFT' ? k.left : k.right; console.log(`    ${k.id} S1 ${k.seam_len.S1} / P ${k.seam_len.P} chars (ocr ${k.seam_len.ocr ?? '?'}) → judged ${w}${w !== 'TIE' && k.seam_len[w] < k.seam_len[w === 'S1' ? 'P' : 'S1'] ? '  ← SHORTER SIDE WON' : ''}`); }
+  }
   const verdict = !test || test.P_share_of_decided == null ? 'no decided verdicts for the repaired lane'
     : !floor ? 'repaired lane judged, but no A/A floor — result is unquotable until an S2 exists'
       : test.P_share_of_decided <= 0.6 ? 'lane holds against production at the seam (production share ≤ 60%), read against the A/A row above'

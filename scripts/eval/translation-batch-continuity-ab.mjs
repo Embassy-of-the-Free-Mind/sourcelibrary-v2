@@ -691,8 +691,12 @@ function phaseScore() {
 // ── phase: judge packet ─────────────────────────────────────────────────────
 /** The junction as a reader meets it: page-level wrappers off, inline markup off, prose kept. */
 export function readerText(t) {
+  // Wrapper set mirrors scripts/lib/strip-editorial-wrappers.mjs (what the site quotes). Until
+  // 2026-09-25 this dropped only meta/summary/keywords/warning, so a seam REPAIR — which mirrors the
+  // OCR's front matter — showed the judge "good German printed text 65" where production showed
+  // nothing: an arm-identifying artifact that also breaks blinding. Strip the same set on every arm.
   return (t || '')
-    .replace(/<(meta|summary|keywords|warning)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<(meta|summary|keywords|vocab|language|lang|scan-quality|script|page-type|page-num|columns|warning|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<note\b[^>]*>[\s\S]*?<\/note>/gi, ' ')
     .replace(/<gloss\b[^>]*>[\s\S]*?<\/gloss>/gi, ' ')
     .replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/->|<-/g, ' ')
