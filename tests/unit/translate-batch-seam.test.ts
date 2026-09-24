@@ -16,7 +16,7 @@
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  planBlocks, parseBlockResponse, seamRepairPrompt, seamSeed, seamPairs, chooseSeamText,
+  planBlocks, parseBlockResponse, seamRepairPrompt, seamSeed, seamPairs, chooseSeamText, batchRequest, batchRequestToJsonlLine,
   startRun, advanceRun, gateAllowsBook, RUNS_COLLECTION, PHASE,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
@@ -477,5 +477,18 @@ describe('gateAllowsBook mirrors the realtime worker: envelopes open a closed di
     expect(gateAllowsBook({ allowed: true, envelopeIds: new Set(['bk2']) }, 'bk1')).toBe(false); // another lane's envelope is not ours
     expect(gateAllowsBook({ allowed: false, envelopeIds: null }, 'bk1')).toBe(false);
     expect(gateAllowsBook(undefined, 'bk1')).toBe(false);
+  });
+});
+
+describe('batchRequestToJsonlLine: the inline request as a Batch input-file line', () => {
+  it('moves config to generationConfig, keeps safetySettings beside it, keeps thinkingBudget 0 and the key', () => {
+    const req = batchRequest({ key: 'b3', prompt: 'translate this', maxOutputTokens: 4096 });
+    const line = batchRequestToJsonlLine(req);
+    expect(line.metadata).toEqual({ key: 'b3' });
+    expect(line.request.contents).toEqual(req.contents);
+    expect(line.request.generationConfig).toEqual({ maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } });
+    expect(line.request.safetySettings).toEqual(req.config.safetySettings);
+    expect(line.request).not.toHaveProperty('config');
+    expect(line.request.generationConfig).not.toHaveProperty('safetySettings');
   });
 });
