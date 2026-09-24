@@ -80,6 +80,8 @@ const UNATTENDED = [
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
+  { match: 'build-gallery-subject-index.mjs', spends: false, gated: false,
+    note: 'counts over gallery_images, writes one system_config doc; no model call (#4856)' },
   { match: 'cron-caller.mjs', spends: true, gated: false,
     note: 'CALLS VERCEL CRONS — social-post reaches tweet-generator (Gemini). Small and fixed-rate (8/day), but outside the dial.' },
   // Non-sourcelibrary lines on the same box.
