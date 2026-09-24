@@ -19,6 +19,15 @@ Re-OCR is not the end of a repair. Enumerate the derived artifacts and clear the
 re-derive: `display_title`, `year`, `summary`, `reading_summary`, `chapters`, `index`, `quality_score`,
 `ai_metadata`, the `book_indexes` collection, and embeddings.
 
+**A metadata CORRECTION hits the same lane, plus two stores that are not `books`.** Fixing an
+author or title on the `books` doc leaves the old value in three places the reader still sees. The
+first is the derived fields listed above. The second is `book_indexes`, which is merged over
+`books.index` on read (people, keywords, bookSummary). The third is the Supabase `books_catalog`
+mirror, whose `display_title` and `summary_text` the book page reads *before* Atlas.
+**Tell:** Mongo is clean and the page has been re-rendered, but "About this book" still says the old
+name. Worked example, all three stores plus `revalidate-book`:
+`scripts/maintenance/repair-pharar-author-2026-09-24.mjs` (#5001).
+
 **Clearing is required, not tidiness.** Phase satisfaction is by OUTPUT: in
 `pipeline-orchestrator.mjs`, `STATUS_OUTPUT_CLAIMS` defines `summary_indexed` as `!!b.summary` and
 `chapters_complete` as a non-empty `chapters` array. A stale artifact reads as "this phase is done", so
