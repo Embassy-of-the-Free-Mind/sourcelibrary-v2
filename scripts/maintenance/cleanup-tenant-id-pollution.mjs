@@ -23,6 +23,9 @@
  *      index in chunks. Cheap and predictable.
  *   3. collections is small (~350 docs), so we query it directly.
  *
+ *   3. `pageCount` on books — retired duplicate of pages_count (#4858). Unset
+ *      only where the two agree.
+ *
  * Dry-run by default; pass --apply to write.
  */
 
@@ -241,6 +244,30 @@ async function main() {
     console.log(`  requests unset                    : ${r.modifiedCount}`);
   }
 
+  // ── Part 3: retired `pageCount` on books (#4858) ──
+  // Duplicate of pages_count written by five import routes and by warehouse
+  // promotion. Unset only where it agrees with pages_count; a disagreeing or
+  // pages_count-less book is reported for a human, never guessed at.
+  console.log('\n── Part 3: unset retired pageCount on books ──');
+  const pageCountFilter = { pageCount: { $exists: true } };
+  const pageCountRedundant = { ...pageCountFilter, $expr: { $eq: ['$pageCount', '$pages_count'] } };
+  const pageCountTotal = await books.countDocuments(pageCountFilter);
+  const pageCountSafe = await books.countDocuments(pageCountRedundant);
+  const pageCountOdd = await books.find(
+    { ...pageCountFilter, $expr: { $ne: ['$pageCount', '$pages_count'] } },
+    { projection: { id: 1, pageCount: 1, pages_count: 1 } },
+  ).toArray();
+  console.log(`  books with pageCount              : ${pageCountTotal}`);
+  console.log(`  ...equal to pages_count (unset)   : ${pageCountSafe}`);
+  console.log(`  ...disagreeing/no pages_count     : ${pageCountOdd.length} (left for review)`);
+  for (const b of pageCountOdd.slice(0, 20)) {
+    console.log(`     ${b.id} pageCount=${b.pageCount} pages_count=${b.pages_count}`);
+  }
+  if (apply && pageCountSafe > 0) {
+    const r = await books.updateMany(pageCountRedundant, { $unset: { pageCount: '' } });
+    console.log(`  books unset                       : ${r.modifiedCount}`);
+  }
+
   // ── Verification ──
   if (apply) {
     console.log('\n── Verification ──');
@@ -254,6 +281,7 @@ async function main() {
     console.log(`  books with snake tenant_id        : ${residualSnakeBooks}`);
     console.log(`  collections with snake tenant_id  : ${residualSnakeColls}`);
     console.log(`  requests with snake tenant_id     : ${residualSnakeReqs}`);
+    console.log(`  books with pageCount              : ${await books.countDocuments(pageCountFilter)} (expected ${pageCountOdd.length})`);
   }
 
   console.log('\n---');

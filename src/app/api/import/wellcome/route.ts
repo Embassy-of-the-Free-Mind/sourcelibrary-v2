@@ -267,7 +267,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       wellcome_id: work_id,
       wellcome_b_number: bNumber,
       thumbnail: getThumbnailUrl(0),
-      pageCount,
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`WELLCOME:${work_id}`],

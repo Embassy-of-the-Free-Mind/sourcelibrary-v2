@@ -172,7 +172,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(work_id ? { work_id } : {}),
       gallica_ark: ark,
       thumbnail: getThumbnailUrl(0),
-      pageCount,
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`GALLICA:${ark}`],

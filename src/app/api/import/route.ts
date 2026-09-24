@@ -125,7 +125,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       image_source: image_source || null,
       source_fingerprint: sourceFingerprint({ ia_identifier, dublin_core, image_source }),
       source_fingerprints: gate.fingerprints,
-      pageCount: pageFiles.length,
       pages_count: pageFiles.length,
       status: 'draft',
       hidden: true, visible: false,

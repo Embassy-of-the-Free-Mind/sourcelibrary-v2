@@ -11,6 +11,11 @@
 
 import { Db, Document } from 'mongodb';
 import { deleteBookArchived } from './delete-book';
+import booksKnownFields from '../../scripts/lib/books-known-fields.json';
+
+// Fields consolidated away from `books` (#3969). Warehouse copies predate those
+// consolidations, so a verbatim promotion re-grows them on live books (#4858).
+const RETIRED_BOOK_FIELDS: readonly string[] = booksKnownFields.retired;
 
 /** Statuses that belong in the warehouse */
 export const WAREHOUSE_STATUSES = ['archiving', 'archive_complete'] as const;
@@ -76,6 +81,7 @@ export async function moveToWarehouse(db: Db, bookId: string): Promise<boolean> 
 export async function promoteFromWarehouse(db: Db, bookId: string): Promise<boolean> {
   const book = await db.collection('books_warehouse').findOne({ id: bookId });
   if (!book) return false;
+  for (const f of RETIRED_BOOK_FIELDS) delete book[f];
 
   // Insert into live (upsert for idempotency)
   await db.collection('books').replaceOne(
@@ -87,7 +93,8 @@ export async function promoteFromWarehouse(db: Db, bookId: string): Promise<bool
   // Move pages in bulk
   const pages = await db.collection('pages_warehouse').find({ book_id: bookId }).toArray();
   if (pages.length > 0) {
-    const bulkOps = pages.map(page => ({
+    // tenant_id is retired on pages too (#4858) — don't carry it over.
+    const bulkOps = pages.map(({ tenant_id: _retired, ...page }) => ({
       replaceOne: {
         filter: { _id: page._id },
         replacement: page,
