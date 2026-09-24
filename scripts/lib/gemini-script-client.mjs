@@ -115,6 +115,7 @@ function toImagePart(image) {
  * @param {string} [opts.promptVersion]
  * @param {string} [opts.triggeredBy='manual']
  * @param {string} [opts.apiKey] - override key rotation
+ * @param {object[]} [opts.safetySettings] - passed through verbatim (the translation lanes need BLOCK_NONE, translate-worker SAFETY_SETTINGS)
  * @returns {Promise<{text:string, model:string, inputTokens:number, outputTokens:number, thinkingTokens:number, finishReason:string, raw:object}>}
  */
 export async function callGemini(opts = {}) {
@@ -133,6 +134,7 @@ export async function callGemini(opts = {}) {
     promptVersion,
     triggeredBy = 'manual',
     apiKey,
+    safetySettings,
   } = opts;
 
   if (!endpoint) throw new Error('gemini-script-client: `endpoint` is required — label who is spending');
@@ -159,7 +161,7 @@ export async function callGemini(opts = {}) {
     const resp = await fetch(`${GEMINI_URL}/${model}:generateContent?key=${key}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts }], generationConfig }),
+      body: JSON.stringify({ contents: [{ parts }], generationConfig, ...(safetySettings ? { safetySettings } : {}) }),
       signal: AbortSignal.timeout(120_000),
     });
     if (!resp.ok) {
