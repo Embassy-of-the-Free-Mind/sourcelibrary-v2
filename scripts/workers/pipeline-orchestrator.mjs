@@ -249,6 +249,26 @@ const IA_REFERENCE_LEAD_PAGES = 2;
 // NUMBER or absent on every candidate (verified: 710 numeric, 0 string), so a numeric floor is
 // safe here — `books.published` is free text and must never be compared this way.
 const IA_REFERENCE_MIN_YEAR = 1800;
+
+/**
+ * "The free IA text lane will serve this book." ONE definition, used by Phase 1.45 to pick
+ * candidates and by Phase 2 to stand back from them. Two copies of this predicate would drift, and
+ * the drift would be invisible: Phase 2 would quietly start paying to OCR books the free lane was
+ * about to fill for nothing, and nothing would fail.
+ */
+const IA_FREE_TEXT_CANDIDATE = Object.freeze({
+  // An IA item, by either spelling the importers use.
+  $or: [
+    { ia_identifier: { $type: 'string', $ne: '' } },
+    { 'image_source.identifier': { $type: 'string', $ne: '' } },
+  ],
+  // Catalogue metadata already present, so skipping front matter costs nothing.
+  title: { $type: 'string', $ne: '' },
+  author: { $type: 'string', $ne: '' },
+  // A known year, and a modern one. A book with no year at all is left to Phase 1.5:
+  // undated here means unjudgeable, not old, and guessing either way spends real money.
+  year: { $type: 'number', $gte: IA_REFERENCE_MIN_YEAR },
+});
 let IA_REFERENCE_LIMIT = 20; // Books per run to seed a gate reference for
 // How long a submitted preview batch suppresses re-offering its book. Longer
 // than any healthy batch (measured p90 0.4h) so we never double-submit, short
@@ -3320,17 +3340,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.ia_reference_at': { $exists: false },
           'pipeline_auto.recitation_retry': { $ne: true },
           'pipeline_auto.recitation_blocked': { $ne: true },
-          // An IA item, by either spelling the importers use.
-          $or: [
-            { ia_identifier: { $type: 'string', $ne: '' } },
-            { 'image_source.identifier': { $type: 'string', $ne: '' } },
-          ],
-          // Catalogue metadata already present, so skipping front matter costs nothing.
-          title: { $type: 'string', $ne: '' },
-          author: { $type: 'string', $ne: '' },
-          // A known year, and a modern one. A book with no year at all is left to Phase 1.5:
-          // undated here means unjudgeable, not old, and guessing either way spends real money.
-          year: { $type: 'number', $gte: IA_REFERENCE_MIN_YEAR },
+          ...IA_FREE_TEXT_CANDIDATE,
           $and: [
             { $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }] },
           ],
@@ -4168,6 +4178,17 @@ Rules:
               'pipeline_auto.recitation_retry': { $ne: true }, // Recitation books go to Pass 2 w/ fallback model
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
               ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
+              // FREE TEXT FIRST. Do not pay to OCR a book the IA lane is about to fill for
+              // nothing. Phase 1.45 takes 20 books a run and this pass takes ~200, so without
+              // this clause Phase 2 simply outruns it: measured 2026-09-24, right after the
+              // #4966 books were released, 128 campaign books / 57,301 pages sat here and ALL
+              // 128 were free-text candidates. A book is released to this pass as soon as
+              // Phase 1.45 has had its turn (`ia_reference_at` is stamped on every outcome,
+              // including the ones it declines), so nothing can be stranded by this.
+              $or: [
+                { 'pipeline_auto.ia_reference_at': { $exists: true } },
+                { $nor: [IA_FREE_TEXT_CANDIDATE] },
+              ],
             }},
             { $addFields: {
               _priority: {
