@@ -17,7 +17,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   planBlocks, parseBlockResponse, seamRepairPrompt, seamSeed, seamPairs, chooseSeamText,
-  startRun, advanceRun, RUNS_COLLECTION, PHASE,
+  startRun, advanceRun, gateAllowsBook, RUNS_COLLECTION, PHASE,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-seam.mjs';
@@ -467,5 +467,15 @@ describe('nothing is sent to Gemini when a pre-flight refuses', () => {
     const res = await startRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
     expect(res.run.page_count).toBe(18);
     expect(res.run.excluded).toEqual({ 'ocr-loop': 1 });
+  });
+});
+
+describe('gateAllowsBook mirrors the realtime worker: envelopes open a closed dial for their books only', () => {
+  it('open dial covers every book; closed dial covers only envelope books; all closed covers none', () => {
+    expect(gateAllowsBook({ allowed: true, envelopeIds: null }, 'bk1')).toBe(true);
+    expect(gateAllowsBook({ allowed: true, envelopeIds: new Set(['bk1', 'bk2']) }, 'bk1')).toBe(true);
+    expect(gateAllowsBook({ allowed: true, envelopeIds: new Set(['bk2']) }, 'bk1')).toBe(false); // another lane's envelope is not ours
+    expect(gateAllowsBook({ allowed: false, envelopeIds: null }, 'bk1')).toBe(false);
+    expect(gateAllowsBook(undefined, 'bk1')).toBe(false);
   });
 });
