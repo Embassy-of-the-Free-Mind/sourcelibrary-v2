@@ -15,8 +15,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 
 const BHUTAN_ID = 'bhutan-uuid';
-const books: Record<string, { id: string; tenantId?: string }> = {
-  'own-book': { id: 'own', tenantId: BHUTAN_ID },
+const OWN_OBJECT_ID = '0123456789abcdef01234567';
+const books: Record<string, { id: string; slug?: string; tenantId?: string }> = {
+  'own-book': { id: 'own', slug: 'own-book', tenantId: BHUTAN_ID },
+  [OWN_OBJECT_ID]: { id: OWN_OBJECT_ID, slug: 'own-book', tenantId: BHUTAN_ID },
   'linked-book': { id: 'linked' },
   'kabbala-denudata': { id: 'kabbala' },
   'bph-book': { id: 'bphbook', tenantId: 'bph-uuid' },
@@ -31,7 +33,7 @@ function fakeCollection(name: string) {
         return async (q: { slug?: string; $or?: Array<Record<string, string>> }) => {
           if (name === 'tenants') return q.slug === 'bhutan' ? { id: BHUTAN_ID, slug: 'bhutan' } : null;
           if (name === 'books') {
-            const seg = q.$or?.[0]?.slug ?? '';
+            const seg = q.$or?.[0]?.slug ?? q.$or?.[0]?.id ?? '';
             return books[seg] ?? null;
           }
           return null;
@@ -98,5 +100,75 @@ describe('book lockdown on a partner subdomain', () => {
     }));
     expect(res.status).not.toBe(307);
     expect(rewriteTarget(res) ?? '').not.toContain('/embed/');
+  });
+});
+
+// The locale door (found 2026-09-25): `/es/*` routes are global and answered
+// on every host, so bph.sourcelibrary.org/es rendered the GLOBAL Spanish
+// homepage (23 foreign book links) and /es/book/<slug> the global landing
+// page — the #5038 leak again, one prefix over. Partner rooms have no
+// localized layout (i18n.md), so the prefix is stripped on-host.
+describe('locale prefix on a partner subdomain', () => {
+  const location = (res: Response) => new URL(res.headers.get('location')!);
+
+  it('strips /es from the homepage, staying on the subdomain', async () => {
+    const res = await proxy(req('/es'));
+    expect(res.status).toBe(308);
+    expect(location(res).pathname).toBe('/');
+    expect(location(res).host).toBe(HOST);
+  });
+
+  it('strips /es from a book URL so the lockdown sees /book/<slug>', async () => {
+    const res = await proxy(req('/es/book/kabbala-denudata'));
+    expect(res.status).toBe(308);
+    expect(location(res).pathname).toBe('/book/kabbala-denudata');
+    expect(location(res).host).toBe(HOST);
+  });
+
+  it('strips /es ahead of the corpus-wide refusal (one hop, then 404 there)', async () => {
+    const res = await proxy(req('/es/encyclopedia'));
+    expect(res.status).toBe(308);
+    expect(location(res).pathname).toBe('/encyclopedia');
+  });
+
+  it('keeps the query string', async () => {
+    const res = await proxy(req('/es/search?q=fludd'));
+    expect(res.status).toBe(308);
+    expect(location(res).pathname).toBe('/search');
+    expect(location(res).searchParams.get('q')).toBe('fludd');
+  });
+
+  it('does not strip a segment that merely starts with the locale (/escher)', async () => {
+    const res = await proxy(req('/escher'));
+    expect(res.status).not.toBe(308);
+  });
+
+  it('leaves the apex localized routes alone', async () => {
+    const res = await proxy(new NextRequest('https://sourcelibrary.org/es/book/kabbala-denudata', {
+      headers: { host: 'sourcelibrary.org', 'user-agent': 'Mozilla/5.0 Chrome/120' },
+    }));
+    expect(res.status).not.toBe(308);
+  });
+});
+
+// The apex /book/[id] page 301s an id-form URL to its slug; the embed route a
+// subdomain rewrites to did not, so a partner host served one book at two URLs.
+describe('id-form book URL on a partner subdomain', () => {
+  it('308s /book/<ObjectId> to /book/<slug> on-host before admission', async () => {
+    const res = await proxy(req(`/book/${OWN_OBJECT_ID}`));
+    expect(res.status).toBe(308);
+    const loc = new URL(res.headers.get('location')!);
+    expect(loc.pathname).toBe('/book/own-book');
+    expect(loc.host).toBe(HOST);
+  });
+
+  it('leaves an unknown id to the route', async () => {
+    const res = await proxy(req('/book/ffffffffffffffffffffffff'));
+    expect(res.status).not.toBe(308);
+  });
+
+  it('still rewrites the slug form to the embed route', async () => {
+    const res = await proxy(req('/book/own-book'));
+    expect(rewriteTarget(res)).toContain('/embed/bhutan/book/own-book');
   });
 });
