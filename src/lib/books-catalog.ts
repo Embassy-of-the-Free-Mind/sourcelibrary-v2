@@ -119,7 +119,14 @@ export const BOOK_SELECT = 'id, slug, title, display_title, author, year, langua
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Every sort ends on `id` so the order is total: offset pagination over a sort
+// with ties (two books sharing a sort_title, or a year and title) can otherwise
+// repeat a book on one page and skip another across the boundary.
 function applySort(query: any, sort: SortOption) {
+  return applySortKeys(query, sort).order('id', { ascending: true });
+}
+
+function applySortKeys(query: any, sort: SortOption) {
   switch (sort) {
     case 'title': return query.order('sort_title', { ascending: true });
     case 'year_asc': return query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
@@ -167,6 +174,12 @@ export async function browseBooks(opts: {
 }): Promise<{ books: CatalogBook[]; total: number }> {
   const limit = opts.limit || 60;
   const offset = opts.offset || 0;
+  // PostgREST silently caps every response at 1,000 rows, so a larger limit is
+  // not a request for more rows — it is a truncation nobody sees (the /browse
+  // letter pages asked for 2,000 and listed 1,000 for months). Page instead.
+  if (limit > 1000) {
+    throw new Error(`browseBooks: limit ${limit} exceeds the 1,000-row response cap — paginate with offset`);
+  }
 
   // Default to 'planned' (fast estimate) to avoid Supabase statement timeouts.
   // Only use 'exact' when explicitly requested (e.g. client-side pagination).

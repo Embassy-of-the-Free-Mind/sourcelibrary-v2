@@ -6,6 +6,12 @@ import { browseBooks } from '@/lib/books-catalog';
 import { tenantBrowseTitles } from '@/lib/tenant-browse';
 import { notFound } from 'next/navigation';
 import BrowseViewToggle from '@/components/browse/BrowseViewToggle';
+import BrowsePager, { browsePageHref } from '@/components/browse/BrowsePager';
+
+// One page must fit in a single Supabase response, which is silently capped at
+// 1,000 rows (a single 2,000-row request used to truncate every large letter —
+// T listed 1,000 of 3,745 books). Larger letters paginate via ?page=N.
+const PER_PAGE = 1000;
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 export const dynamic = 'force-dynamic';
@@ -18,20 +24,30 @@ export function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ letter: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+function parsePage(raw: string | undefined): number {
+  const n = Number.parseInt(raw ?? '1', 10);
+  return Number.isFinite(n) && n >= 1 ? n : 1;
+}
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { letter } = await params;
+  const page = parsePage((await searchParams).page);
   const l = letter.toUpperCase();
   return {
-    title: `Books starting with ${l} - Source Library`,
+    title: `Books starting with ${l}${page > 1 ? ` (page ${page})` : ''} - Source Library`,
     description: `Browse all translated books in Source Library whose titles begin with the letter ${l}.`,
-    alternates: { canonical: `/browse/titles/${l}` },
+    // Each page is its own canonical — pointing page 2+ at page 1 would tell
+    // crawlers to drop the books only those pages link to.
+    alternates: { canonical: browsePageHref(`/browse/titles/${l}`, page) },
   };
 }
 
-export default async function BrowseTitlesPage({ params }: PageProps) {
+export default async function BrowseTitlesPage({ params, searchParams }: PageProps) {
   const { letter } = await params;
+  const page = parsePage((await searchParams).page);
   const l = letter.toUpperCase();
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
@@ -56,16 +72,21 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
     is_first_translation: boolean;
     ft_disposition?: string;
   }> = [];
+  let total = 0;
   try {
     if (tenantId) {
       books = await tenantBrowseTitles(tenantId, l);
+      total = books.length;
     } else {
       const result = await browseBooks({
         titlePrefix: l,
         hasTranslation: true,
         sort: 'title',
-        limit: 2000,
+        offset: (page - 1) * PER_PAGE,
+        limit: PER_PAGE,
+        exactCount: true,
       });
+      total = result.total;
       books = result.books.map(b => ({
         id: b.id,
         slug: b.slug || undefined,
@@ -86,6 +107,8 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
   } catch {
     // Supabase error — render empty page
   }
+  const totalPages = tenantId ? 1 : Math.ceil(total / PER_PAGE);
+  if (page > 1 && page > totalPages) notFound();
 
   return (
     <>
@@ -95,7 +118,8 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
           Titles: {l}
         </h1>
         <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
-          {books.length.toLocaleString('en-US')} {books.length === 1 ? 'book' : 'books'}
+          {total.toLocaleString('en-US')} {total === 1 ? 'book' : 'books'}
+          {totalPages > 1 && ` · page ${page} of ${totalPages}`}
         </p>
 
         {/* Letter nav */}
@@ -117,7 +141,10 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
         </div>
 
         {books.length > 0 ? (
-          <BrowseViewToggle books={books} />
+          <>
+            <BrowseViewToggle books={books} />
+            <BrowsePager basePath={`${base}/titles/${l}`} currentPage={page} totalPages={totalPages} />
+          </>
         ) : (
           <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
             No books found starting with {l}.
