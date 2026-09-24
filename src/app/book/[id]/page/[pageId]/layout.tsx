@@ -41,7 +41,13 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
   // wrapper blocks first so <meta>/<summary>/… prose never lands in the OG
   // description / search snippet (#2232 invariant).
-  const textContent = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '').trim();
+  // Then drop the remaining inline tags (<note>, <term>, <sig>, …) but keep
+  // their words: they are body text, and a snippet is plain text — Google was
+  // showing the literal "<note>original: …" markup.
+  const textContent = stripEditorialWrappers(page.translation?.data || page.ocr?.data || '')
+    .replace(/<\/?[a-z][a-z-]*(?:\s[^>]*)?>/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   const excerpt = textContent.length > 200
     ? textContent.substring(0, 197) + '...'
     : textContent;
