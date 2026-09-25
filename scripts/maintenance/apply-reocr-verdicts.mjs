@@ -76,15 +76,17 @@ const BOOK_EVENT = 'tibetan_reocr_applied';
 
 /**
  * The recognizers whose text this lane serves. `engine` is copied onto every SERVE page.
- * Yigdzin's revision: the run loaded the weights from a local copy (no sha in its logs);
- * BDRC/tibetan-ocr `main` pointed at 50506eb6 from 2026-08-22 through the whole run
- * (2026-09-11 → 09-15), so that is the revision that was read.
+ * Yigdzin's revision is INFERRED, and the block says so (`revision_source`): the run loaded
+ * the weights from a local copy and logged no sha; BDRC/tibetan-ocr `main` pointed at
+ * 50506eb6 from 2026-08-22 through the whole run (2026-09-11 → 09-15), and the 2026-09-25
+ * re-read box's download metadata (10 files) records the same revision.
  */
 const ENGINES = {
   'bdrc-yigdzin-v1': {
     name: 'Yigdzin', version: 'v1', model: 'BDRC/tibetan-ocr',
     model_label: 'Yigdzin 1 — BDRC tibetan-ocr VLM',
     revision: '50506eb6d8ed8738df86b448f6f6cdc688de29ea',
+    revision_source: 'inferred: BDRC/tibetan-ocr main for the whole run (2026-09-11 to 09-15); the run loaded a local copy and logged no sha; corroborated by 10 HF download-metadata files on sl-mitra-1 (2026-09-25 re-read)',
     model_url: 'https://huggingface.co/BDRC/tibetan-ocr/tree/50506eb6d8ed8738df86b448f6f6cdc688de29ea',
     licence: 'Apache-2.0',
     read_mode: 'page',

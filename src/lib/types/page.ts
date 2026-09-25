@@ -248,6 +248,7 @@ export interface OcrData extends ProcessingMetadata {
     model_doi?: string;           // '10.5281/zenodo.17406773' (Kraken)
     model_url?: string;           // weights at the exact revision run (Hugging Face tree URL)
     revision?: string;            // model repository commit that was run
+    revision_source?: string;     // how `revision` is known: 'logged' | 'inferred: …' (never store an inference as observed)
     licence: string;
     route?: 'manuscript' | 'print';
     segmenter?: string;
