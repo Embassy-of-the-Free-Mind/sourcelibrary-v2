@@ -59,12 +59,24 @@ const TAG = 'translation-page-break-fix';
 const SOURCE_KEY = path.join(RESULTS, 'translation-batch-seam-fidelity-judge-key.json');
 const SAMPLE_FILE = path.join(RESULTS, `${TAG}-sample.json`);
 const ARMS_FILE = path.join(RESULTS, `${TAG}-arms.jsonl`);
-const PACKET_FILE = path.join(RESULTS, `${TAG}-judge-packet.jsonl`);
-const KEY_FILE = path.join(RESULTS, `${TAG}-judge-key.json`);
-const VERDICTS_GLOB = `${TAG}-judge-verdicts`;
+// --tag=NAME: file-name stem for a packet/key/verdicts/report set, so a second draw of pairs (the
+// 2026-09-25 night follow-up: F0 and FC against the same B) never overwrites a judged key.
+const PTAG = arg('tag', TAG);
+const PACKET_FILE = path.join(RESULTS, `${PTAG}-judge-packet.jsonl`);
+const KEY_FILE = path.join(RESULTS, `${PTAG}-judge-key.json`);
+const VERDICTS_GLOB = `${PTAG}-judge-verdicts`;
 const ENDPOINT = 'eval/translation-page-break-fix';
 const CEILING_USD = 3;                       // Derek, 2026-09-25: cap $3
 const ARMS = String(arg('arms', 'B,B2,F')).split(',');
+/** What each arm passes as `pageBreak`. B/B2: nothing (production's prompt). */
+const ARM_FIX = {
+  B: undefined, B2: undefined,
+  F: PAGE_BREAK_FIX,                                   // all four pieces, sentence-length lookahead
+  F0: { ...PAGE_BREAK_FIX, lookahead: false },        // edits + rule only, no lookahead
+  FC: { ...PAGE_BREAK_FIX, lookahead: 'clause' },     // edits + rule + clause-length lookahead
+};
+/** --pairs X/Y,...: the blinded pairs a packet draws (default the first measurement's). */
+const PAIRS = String(arg('pairs', 'F/B,B/B2')).split(',');
 const CONCURRENCY = Number(arg('concurrency', 4));
 const JUDGES = 8;
 const EXCERPT = 1200;                        // as the fidelity judge saw it (shadow-judge EXCERPT)
@@ -123,7 +135,8 @@ function estimate(sample, headerChars = 7600) {
   for (const s of sample) {
     const price = priceFor(s.model);
     for (const arm of ARMS) {
-      const extra = arm === 'F' ? 900 : 0;
+      if (!(arm in ARM_FIX)) throw new Error(`unknown arm ${arm}; known: ${Object.keys(ARM_FIX).join(',')}`);
+      const extra = ARM_FIX[arm] ? 900 : 0;
       const inTok = Math.ceil((headerChars + s.N.ocr.length + 2000 + extra) / 4) + Math.ceil((headerChars + s.X.ocr.length + 2000 + extra) / 4);
       const outTok = Math.ceil((s.N.ocr.length + s.X.ocr.length) * 0.35);
       inputTokens += inTok; outputTokens += outTok;
@@ -202,7 +215,7 @@ async function phaseRun() {
   console.log(`${jobs.length} seam-arms to run`);
   await pool(jobs, CONCURRENCY, async ({ s, arm }) => {
     if (spent >= approved) { console.log(`${s.id} ${arm}: skipped, spend reached $${approved}`); return; }
-    const fix = arm === 'F' ? PAGE_BREAK_FIX : undefined;
+    const fix = ARM_FIX[arm];
     // Page N: seeded with the STORED translation of N-1 (the same for every arm); under F it gets the
     // devices at its foot and the next page's opening, but never a head edit — its seed was made
     // without the fix, so a fragment N-1 carried is not removed here.
@@ -243,7 +256,7 @@ function phasePacket() {
   for (const s of sample) {
     const arms = Object.fromEntries(ARMS.map((a) => [a, byKey.get(`${s.id}:${a}`)]));
     const usable = (a) => !isDegenerate(arms[a]);
-    for (const pair of ['F/B', 'B/B2']) {
+    for (const pair of PAIRS) {
       const [x, y] = pair.split('/');
       if (!usable(x) || !usable(y)) { skipped.push({ seam: s.id, pair, reason: `missing or degenerate text in ${!usable(x) ? x : y}` }); continue; }
       const flip = seededRand() < 0.5;
@@ -270,9 +283,9 @@ function phasePacket() {
   const per = Math.ceil(entries.length / JUDGES);
   for (let c = 0; c < JUDGES; c++) {
     const slice = entries.slice(c * per, (c + 1) * per);
-    fs.writeFileSync(path.join(RESULTS, `${TAG}-judge-chunk-${c + 1}.jsonl`), slice.map((e) => JSON.stringify(e)).join('\n') + '\n');
+    fs.writeFileSync(path.join(RESULTS, `${PTAG}-judge-chunk-${c + 1}.jsonl`), slice.map((e) => JSON.stringify(e)).join('\n') + '\n');
   }
-  console.log(`wrote ${entries.length} blinded junctions (${key.filter((k) => k.pair === 'F/B').length} F/B, ${key.filter((k) => k.pair === 'B/B2').length} B/B2; ${skipped.length} skipped) in ${JUDGES} chunks of ≤${per}`);
+  console.log(`wrote ${entries.length} blinded junctions (${PAIRS.map((p) => `${key.filter((k) => k.pair === p).length} ${p}`).join(', ')}; ${skipped.length} skipped) in ${JUDGES} chunks of ≤${per}`);
   console.log(`key (do NOT give this to the judge): ${KEY_FILE}`);
   for (const s of skipped) console.log('  skipped', JSON.stringify(s));
 }
@@ -320,29 +333,34 @@ function phaseScore() {
       [`${x}_share_of_decided`]: decided ? +(wins[x] / decided).toFixed(3) : null, split_p_two_sided: decided ? +binomTwoSided(Math.min(wins[x], wins[y]), decided).toFixed(3) : null,
       left_share_of_decided: decided ? +(left / decided).toFixed(3) : null, defects, breaks_with_defect: withDefect };
   };
+  // One row set per pair the key holds: the A/A floor first (a pair of the same arm twice), then each
+  // test pair whole, on the device breaks the fix targets, and on the plain ones.
+  const pairs = [...new Set(key.map((k) => k.pair))].sort((a, b) => (a === 'B/B2' ? -1 : b === 'B/B2' ? 1 : a.localeCompare(b)));
   for (const field of ['fidelity', 'fluency']) {
-    report[field] = {
-      'B/B2 (A/A floor)': tally('B/B2', (k) => k.pair === 'B/B2', field),
-      'F/B all': tally('F/B', (k) => k.pair === 'F/B', field),
-      'F/B device breaks (catchword or split word)': tally('F/B', (k) => k.pair === 'F/B' && k.device, field),
-      'F/B plain breaks': tally('F/B', (k) => k.pair === 'F/B' && !k.device, field),
-      'B/B2 device breaks': tally('B/B2', (k) => k.pair === 'B/B2' && k.device, field),
-    };
+    report[field] = {};
+    for (const pair of pairs) {
+      const label = pair === 'B/B2' ? 'B/B2 (A/A floor)' : pair;
+      report[field][`${label} all`] = tally(pair, (k) => k.pair === pair, field);
+      report[field][`${label} device breaks (catchword or split word)`] = tally(pair, (k) => k.pair === pair && k.device, field);
+      report[field][`${label} plain breaks`] = tally(pair, (k) => k.pair === pair && !k.device, field);
+    }
   }
   console.log(JSON.stringify(report, null, 1));
-  const f = report.fidelity;
-  const floor = f['B/B2 (A/A floor)'], test = f['F/B all'], dev = f['F/B device breaks (catchword or split word)'];
   console.log('\nRead the noise floor first:');
-  if (floor) console.log(`  B/B2  (same prompt twice): fidelity ${floor.wins.B}–${floor.wins.B2}, ties ${floor.ties} (tie rate ${floor.tie_rate}); breaks with ≥1 defect B ${floor.breaks_with_defect.B}/${floor.judged}, B2 ${floor.breaks_with_defect.B2}/${floor.judged}`);
-  if (test) console.log(`  F/B   (fix vs production): fidelity F ${test.wins.F}, B ${test.wins.B}, ties ${test.ties} (p=${test.split_p_two_sided}); F share of decided ${test.F_share_of_decided}; breaks with ≥1 defect F ${test.breaks_with_defect.F}/${test.judged}, B ${test.breaks_with_defect.B}/${test.judged}`);
-  if (dev) console.log(`  F/B   device breaks only: F ${dev.wins.F}, B ${dev.wins.B}, ties ${dev.ties}; defective F ${dev.breaks_with_defect.F}/${dev.judged}, B ${dev.breaks_with_defect.B}/${dev.judged}`);
+  for (const pair of pairs) {
+    const [x, y] = pair.split('/');
+    const all = report.fidelity[`${pair === 'B/B2' ? 'B/B2 (A/A floor)' : pair} all`], dev = report.fidelity[`${pair === 'B/B2' ? 'B/B2 (A/A floor)' : pair} device breaks (catchword or split word)`];
+    if (!all) continue;
+    console.log(`  ${pair.padEnd(6)} fidelity ${x} ${all.wins[x]}, ${y} ${all.wins[y]}, ties ${all.ties} (tie rate ${all.tie_rate}, p=${all.split_p_two_sided}); breaks with ≥1 defect ${x} ${all.breaks_with_defect[x]}/${all.judged}, ${y} ${all.breaks_with_defect[y]}/${all.judged}`);
+    if (dev) console.log(`         device breaks only: ${x} ${dev.wins[x]}, ${y} ${dev.wins[y]}, ties ${dev.ties}; defective ${x} ${dev.breaks_with_defect[x]}/${dev.judged}, ${y} ${dev.breaks_with_defect[y]}/${dev.judged}`);
+  }
   const vById = new Map(uniq.map((v) => [v.id, v]));
-  const suspects = key.filter((k) => k.pair === 'F/B' && k.seam_len && Math.min(k.seam_len.F, k.seam_len.B) < 0.85 * Math.max(k.seam_len.F, k.seam_len.B));
+  const suspects = key.filter((k) => k.pair !== 'B/B2' && k.seam_len && Math.min(...Object.values(k.seam_len)) < 0.85 * Math.max(...Object.values(k.seam_len)));
   if (suspects.length) {
     console.log(`\n  OMISSION-SUSPECT (one side's seam page ≥15% shorter — hand-read before trusting):`);
-    for (const k of suspects) { const v = vById.get(k.id); const w = !v || !/^(LEFT|RIGHT)$/i.test(v.fidelity || '') ? 'TIE' : v.fidelity.toUpperCase() === 'LEFT' ? k.left : k.right; console.log(`    ${k.id} F ${k.seam_len.F} / B ${k.seam_len.B} chars → ${w}`); }
+    for (const k of suspects) { const v = vById.get(k.id); const w = !v || !/^(LEFT|RIGHT)$/i.test(v.fidelity || '') ? 'TIE' : v.fidelity.toUpperCase() === 'LEFT' ? k.left : k.right; console.log(`    ${k.id} ${k.pair} ${JSON.stringify(k.seam_len)} chars → ${w}`); }
   }
-  fs.writeFileSync(path.join(RESULTS, `${TAG}-report-${new Date().toISOString().slice(0, 10)}.json`), JSON.stringify(report, null, 1));
+  fs.writeFileSync(path.join(RESULTS, `${PTAG}-report-${new Date().toISOString().slice(0, 10)}.json`), JSON.stringify(report, null, 1));
 }
 
 // ── main ────────────────────────────────────────────────────────────────────

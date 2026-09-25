@@ -27,7 +27,7 @@ import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
-import { resolvePageBreak, lookaheadSnippet } from './page-break-devices.mjs';
+import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -323,8 +323,9 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
       // "Augspur-") is part of that word, not a separate device to warn about.
       const partOfJoin = foot.joined && foot.catchword && foot.joined.toLowerCase().includes(foot.catchword.toLowerCase().replace(/[^\p{L}]/gu, ''));
       if (foot.catchword && edits.catchwords && !partOfJoin) notes.push(`The catchword «${foot.catchword}» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.`);
+      // lookahead: true = the first sentence; 'clause' = only to the first clause boundary.
       if (pageBreak.lookahead) {
-        lookahead = lookaheadSnippet(foot.ocrNext);
+        lookahead = lookaheadSnippet(foot.ocrNext, pageBreak.lookahead === 'clause' ? LOOKAHEAD_CLAUSE : {});
         meta.lookahead = !!lookahead;
       }
     }

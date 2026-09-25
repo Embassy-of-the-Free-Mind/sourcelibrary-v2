@@ -197,16 +197,24 @@ export function resolvePageBreak(ocrN, ocrNext, { splitWords = true, catchwords 
 /** Longest lookahead sent as context, and the least before a sentence end is honoured. */
 export const LOOKAHEAD_MAX_CHARS = 400;
 export const LOOKAHEAD_MIN_CHARS = 60;
+/**
+ * The clause-length lookahead: only as far as the first clause boundary (comma, colon, semicolon or
+ * sentence end) past a short minimum — enough to see how the crossing clause ends, too little to be
+ * worth translating. The sentence-length one was translated on page N by flash-lite in the first
+ * measurement (EXPERIMENTS.md 2026-09-25 night: duplication 5 → 12).
+ */
+export const LOOKAHEAD_CLAUSE = Object.freeze({ max: 160, min: 12, clause: true });
 
 /**
  * The opening of the next page as prose: apparatus off, the first sentence (at least
  * LOOKAHEAD_MIN_CHARS, since incunabula punctuate abbreviations with a point), at most
- * LOOKAHEAD_MAX_CHARS, cut at a word. Empty when the page has no prose.
+ * LOOKAHEAD_MAX_CHARS, cut at a word. Empty when the page has no prose. With `clause`, the first
+ * clause boundary counts as an end too.
  */
-export function lookaheadSnippet(ocrNext, { max = LOOKAHEAD_MAX_CHARS, min = LOOKAHEAD_MIN_CHARS } = {}) {
+export function lookaheadSnippet(ocrNext, { max = LOOKAHEAD_MAX_CHARS, min = LOOKAHEAD_MIN_CHARS, clause = false } = {}) {
   const prose = maskApparatus(ocrNext).replace(/\s+/g, ' ').trim();
   if (!hasLetter(prose)) return '';
-  const end = prose.slice(min).search(/[.!?](?:\s|$)/u);
+  const end = prose.slice(min).search(clause ? /[.!?,;:](?:\s|$)/u : /[.!?](?:\s|$)/u);
   let cut = end === -1 ? prose.length : min + end + 1;
   if (cut > max) {
     const sp = prose.lastIndexOf(' ', max);

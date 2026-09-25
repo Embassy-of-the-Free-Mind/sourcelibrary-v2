@@ -10,7 +10,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus } from '../../scripts/lib/page-break-devices.mjs';
+import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus, LOOKAHEAD_CLAUSE } from '../../scripts/lib/page-break-devices.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildTranslationPrompt, PAGE_BREAK_FIX, PAGE_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
@@ -172,6 +172,16 @@ describe('lookaheadSnippet — the next page\'s opening as context', () => {
   });
   it('is empty for a page with no prose', () => {
     expect(lookaheadSnippet('<language>Latin</language>\n<page-num>3</page-num>')).toBe('');
+  });
+  it('the clause-length variant stops at the first clause boundary past a short minimum', () => {
+    const s = lookaheadSnippet(J046_X, LOOKAHEAD_CLAUSE);
+    expect(s).toBe('hil impetrare posset,');
+    // negative control: the sentence-length default runs on to the full stop
+    expect(lookaheadSnippet(J046_X)).toMatch(/abstinuit\.$/);
+    const p = buildTranslationPrompt({ prompts, book, ocrText: J111_N, nextOcrText: J111_X, pageBreak: { ...PAGE_BREAK_FIX, lookahead: 'clause' } }).prompt;
+    expect(p).toContain('The next page opens');
+    expect(p).toContain('Confession/ darunter er zu Görlitz commu- niciret/');
+    expect(p).not.toContain('gestorben');
   });
 });
 
