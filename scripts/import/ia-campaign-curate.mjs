@@ -111,10 +111,18 @@ async function probe(id) {
 }
 const REQUIRE_JP2 = cfg.require_jp2 !== false;      // page images are what the reader shows; a PDF-only item has none
 const REVIEW_IDS = rx(cfg.review_id_patterns);      // ids whose metadata is known-unreliable go to a separate REVIEW manifest
+// Language gate (added 2026-09-25, theosophy shelf). The manifest stamps every pick with cfg.lang, so a
+// candidate list that was enumerated without a language clause put 49 German/French/Finnish/Tamil scans
+// into the table labelled "English" — the importer would have written `language: English` on all of them
+// (invariants/language-fields.md). Refuse when the item's own `language` field is present and disagrees.
+// Match on the first three letters so "eng" / "english" / "English" all pass; `lang_codes` in the config
+// overrides the pattern for languages whose ISO code is not a prefix of the name (e.g. German → ger|deu).
+const LANG_RX = cfg.lang ? new RegExp(cfg.lang_codes || `^${String(cfg.lang).slice(0, 3)}`, 'i') : null;
 function rightsClass(c, p) {
   if (!p || p.http) return 'UNPROBED';
   if (p.access_restricted || p.lending) return 'REFUSE:restricted';
   if (REQUIRE_JP2 && !p.has_jp2) return 'REFUSE:no-jp2';
+  if (LANG_RX && p.language && !String(p.language).split(',').some((l) => LANG_RX.test(l.trim()))) return `REFUSE:lang ${p.language}`;
   const y = p.year || c.year || null;
   if (y && y > MAX_YEAR) return `REFUSE:year ${y}`;
   const stated = /publicdomain|public domain|cc0|creativecommons|not_in_copyright/i.test(`${p.licenseurl || ''} ${p.rights || ''} ${p.pcs || ''}`);

@@ -1,0 +1,2425 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-25 from cand-subject.json, cand-title.json, cand-creator.json, cand-subject2.json; config theosophy.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW:no year rows — confirm the imprint on the title page before --commit. Hand-pruned 2026-09-25: language gate on the probed IA language (the curator stamps cfg.lang without checking), Gandhi/mahatma noise, namesakes (Job, Rideal, Keightley, Mary Leadbeater, Kunz), JSTOR articles, Forgotten-Books isbn_ reprint scans, single periodical issues (Irish Theosophist, The Path/Theosophy), modern re-typeset Steiner CW lectures, fiction, and scans duplicating held editions (Thrice-Greatest Hermes, Pistis Sophia, Through the Gates of Gold, Studies in Occultism, Dewey).",
+  "campaign": "theosophy-2026-09-25",
+  "collections": [
+    "theosophical-tradition"
+  ],
+  "BOOKS": [
+    {
+      "id": "cu31924028954174",
+      "title": "People from the other world",
+      "author": "Henry Steel Olcott",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: peoplefromotherw00olco"
+    },
+    {
+      "id": "ghostlandorresea00brit",
+      "title": "Ghost land, or, Researches into the mysteries of occultism : illustrated in a series of autobiographical sketches",
+      "author": "William fl. 1876 Britten",
+      "year": 1876,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: ghostlandorresearchesintothemysteriesofoccultismemmahardingebritten, ghostlandorrese02britgoog, ghostlandorrese00britgoog"
+    },
+    {
+      "id": "kabbalatruescien00panc",
+      "title": "The Kabbala: the true science of light; an introduction to the philosophy and theosophy of the ancient sages. Together with a chapter on Light in the vegetable kingdom",
+      "author": "S. (Seth) Pancoast",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: kabbalaortruesc00pancgoog"
+    },
+    {
+      "id": "IsisUnveiledVolumeIIHelenaBlavatsky",
+      "title": "Isis Unveiled, Volume II",
+      "author": "Helena Blavatsky",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "b24886154_0001",
+      "title": "Isis unveiled : a master-key to the mysteries of ancient and modern science and theology",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: b24886154_0002, isisunveiled0001hpbl, isisunveiled0002hpbl, isis-unveiled-blavatsky, india.history.resource.85990, india.history.resource.85989, isisunveiledama09blavgoog, isisunveiledama06blavgoog, isisunveiled00unkngoog, isisunveiledama00blavgoog, isisunveiledama08blavgoog, isisunveiledama04blavgoog"
+    },
+    {
+      "id": "psychologyreinca00kidd",
+      "title": "Psychology, re-incarnation, soul, and its relations, or, The laws of being : showing the occult forces in man : that intelligence manifests without material : and the most important things to know",
+      "author": "Almira Kidd",
+      "year": 1878,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "occultismspiriti00kidd",
+      "title": "Occultism, spiritism, materialism",
+      "author": "Almira Kidd",
+      "year": 1879,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b24886269",
+      "title": "Theosophy and the higher life, or, Spiritual dynamics and the divine and miraculous man",
+      "author": "George Wyld",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: theosophyandhig00wyldgoog"
+    },
+    {
+      "id": "acollectionlect00olcogoog",
+      "title": "A Collection of Lectures on Theosophy and Archaic Religions, Delivered in ...",
+      "author": "Henry Steel Olcott",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "b24884650",
+      "title": "The occult world",
+      "author": "A. P Sinnett",
+      "year": 1884,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: occultworld00sinn_0, ult.occultworld0000apsi_y9y6, occultworld00sinn_1, theoccultworld00sinn, dli.ministry.18095, in.ernet.dli.2015.217519, occultworld04sinngoog"
+    },
+    {
+      "id": "theosophyreligio00olco",
+      "title": "Theosophy : religion and occult science",
+      "author": "Henry Steel Olcott",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "theosophyunveile00murd",
+      "title": "Theosophy unveiled / by John Murdoch.",
+      "author": "John Murdoch",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "jacobboehmehisli00mart",
+      "title": "Jacob Boehme: his life and teaching. Or Studies in theosophy",
+      "author": "H. (Hans) Martensen",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: bwb_C0-ANO-605, cu31924029355686, studiesintheoso00martgoog"
+    },
+    {
+      "id": "b28977245",
+      "title": "Autobiographical sketches",
+      "author": "Annie Besant",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "kuthumitruecompl00dods",
+      "title": "Kuthumi : the true and complete œconomy of human life, based on the system of theosophical ethics",
+      "author": "Robert Dodsley",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "b30478364",
+      "title": "The \"occult world phenomena\" and the Society for Psychical Research",
+      "author": "A. P. (Alfred Percy) Sinnett",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "karma00sinngoog",
+      "title": "Karma",
+      "author": "Alfred Percy Sinnett",
+      "year": 1886,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "guidetotheosophy0000tuka",
+      "title": "A guide to theosophy : containing select articles for the instructions [sic] of aspirants to the knowledge of theosophy",
+      "author": "Tukaram Tatya",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: aguidetotheosop00fundgoog"
+    },
+    {
+      "id": "mysteryofagescon00cait",
+      "title": "The mystery of the ages contained in the secret doctrine of all religions",
+      "author": "Marie (Mariategui) Sinclair countess of Caithness",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: mysteryofagescon00cait_0, mysteryagescont01caitgoog, mysteryagescont00caitgoog"
+    },
+    {
+      "id": "h.-p.-blavatsky-to-the-archbishop-of-canterbury-an-open-letter-1887-h.-p.-blavatsky",
+      "title": "H. P. Blavatsky To The Archbishop Of Canterbury; An Open Letter (1887) - H. P. Blavatsky",
+      "author": "H. P. Blavatsky",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "reincarnationstu00walk_0",
+      "title": "Reincarnation : a study of forgotten truth",
+      "author": "E. D. (Edward Dwight) Walker",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: reincarnationstu00walk, cu31924031244878, reincarnationast00walkuoft, reincarnationst00walk"
+    },
+    {
+      "id": "b24886142",
+      "title": "The secret doctrine : the synthesis of science, religion, and philosophy",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: secretdoctrine0002hpbl, bwb_C0-ADX-874, bwb_Y0-BMG-596, secretdoctrinesy0001hpbl_w8r1, secretdoctrinesy0002hpbl_o5q6, indxsecretdoctri00blav, secretdoctrine0012hpbl, ult.thesecretdoctrin0000hpbl, secretdoctrine00unkngoog, dli.bengal.10689.888, in.ernet.dli.2015.23961, the-secret-doctrine-abridged-by-katharine-hillard-1907, secretdoctrine01unkngoog, secretdoctrines06blavgoog, secretdoctrines05blavgoog, secretdoctrines03blavgoog"
+    },
+    {
+      "id": "keytotheosophy0000hpbl_a3x6",
+      "title": "The Key to Theosophy",
+      "author": "H. P. Blavatsky",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: keytotheosophybe00blavrich, rbanms774.keytotheosophy0000hpbl, keytotheosophybe00blavuoft, in.ernet.dli.2015.166760, keytotheosophyb00blavgoog"
+    },
+    {
+      "id": "natureaimoftheo00buck",
+      "title": "The nature and aim of theosophy : an essay",
+      "author": "J. D. (Jirah Dewey) Buck",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: natureandaimthe00buckgoog"
+    },
+    {
+      "id": "perfectmaninanth00buck",
+      "title": "The perfect man in the anthropomorphic God ..",
+      "author": "J. D. (Jirah Dewey) Buck",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "shortlessonsinth00colv",
+      "title": "Short lessons in theosophy ..",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "anepitomeoftheos0000judg",
+      "title": "[An epitome of theosophy",
+      "author": "William Quan Judge",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cultureofconcent0000judg",
+      "title": "Culture of concentration",
+      "author": "William Quan Judge",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "studiesintheosop00colv_0",
+      "title": "Studies in theosophy: historical and practical; a manual for the people",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign; alternate scans: studiesintheosop00colv"
+    },
+    {
+      "id": "echoesfromorien00fielgoog",
+      "title": "Echoes from the Orient: a broad outline of theosophical doctrines",
+      "author": "Kate Field William Quan Judge",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California"
+    },
+    {
+      "id": "ideaofrebirth0000fran",
+      "title": "The idea of re-birth",
+      "author": "Francesca Arundale",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "esotericbasisofc00king",
+      "title": "The esoteric basis of christianity, or, Theosophy and christian doctrine : a paper read before the Blavatsky Lodge of the Theosophical Society",
+      "author": "William Kingsland",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: esotericbasisch00kinggoog"
+    },
+    {
+      "id": "theosophy-and-ethics",
+      "title": "Theosophy And Ethics",
+      "author": "E. T. Sturdy",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "theosophicalglos0000hpbl_i1b3",
+      "title": "the theosophical glossary",
+      "author": "h. p. blavatsky",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: theosophicalglos0000blav, theosophical00blav, the-theosophical-glossary-1"
+    },
+    {
+      "id": "1892BurrMadameBlavatsky",
+      "title": "Madame Blavatsky",
+      "author": "William Henry Burr",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "theosophical-society-branch-work-paper-xxii",
+      "title": "Theosophical Society Branch Work Paper XXII",
+      "author": "N. P. Subramania Aiyar",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "morialmahatma00coll",
+      "title": "Morial the Mahatma",
+      "author": "Mabel Collins",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "rationalemesmer02sinngoog",
+      "title": "The rationale of mesmerism",
+      "author": "Alfred Percy Sinnett",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "fromcavesjungles0000blav",
+      "title": "From the caves and jungles of Hindostan",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: cu31924024113650"
+    },
+    {
+      "id": "b24885927",
+      "title": "Reincarnation",
+      "author": "Annie Besant",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: reincarnation00besarich"
+    },
+    {
+      "id": "reincarnationstu00anderich",
+      "title": "Reincarnation; a study of the human soul in its relation to re-birth, evolution, post-mortem states, the compound nature of man, hypnotism, &c",
+      "author": "Jerome A Anderson",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "reminiscencesofh00wachiala",
+      "title": "Reminiscences of H. P. Blavatsky and \"The secret doctrine\"",
+      "author": "Constance Wachtmeister",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924029173016"
+    },
+    {
+      "id": "theosophyappealt00satt",
+      "title": "Theosophy : an appeal to my countrymen / by S. Satthianadhan.",
+      "author": "S. (Samuel) Satthianadhan",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "oceanoftheosophy0000will_t0o0",
+      "title": "The Ocean Of Theosophy",
+      "author": "William Q. Judge",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: oceanoftheosophy0000will, oceanoftheosophy0000unse_i4i5, in.ernet.dli.2015.21449, oceantheosophyb00judggoog"
+    },
+    {
+      "id": "GeneralReport1893",
+      "title": "General Report Of 18th Convention Of Theosophical Society 1893",
+      "author": "Theosophical Society",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "theosophicalcong00theo",
+      "title": "The Theosophical congress held by the Theosophical Society at the Parliament of Religions, World's Fair of 1893, at Chicago, Ill., September 15, 16, 17. Report of proceedings and documents",
+      "author": "India) Theosophical Society (Madras",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924091077499",
+      "title": "Theosophy; or, Psychological religion; the Gifford lectures delivered before the University of Glasgow in 1892",
+      "author": "F. Max (Friedrich Max) Müller",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: theosophy00mlgoog, theosophyorpsyc01unkngoog, theosophyorpsyc00mlgoog, theosophyorpsyc01mlgoog, theosophyorpsyc00unkngoog"
+    },
+    {
+      "id": "theosophyorchris00hald",
+      "title": "Theosophy or Christianity - which ?",
+      "author": "I. M. (Isaac Massey) Haldeman",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "1893AnonymousTheosophyExposedBesantAndHerGuru",
+      "title": "Theosophy Exposed: or, Mrs. Besant and Her Guru",
+      "author": "Unknown",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "anniebesantautob00besaiala",
+      "title": "Annie Besant : an autobiography",
+      "author": "Annie Wood Besant",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: india.history.resource.117088"
+    },
+    {
+      "id": "cu31924095633248",
+      "title": "The building of the kosmos and other lectures: delivered at the eighteenth annual convention of the Theosophical Society at Adyar, Madras, Dec. 27,28,29,30, 1893",
+      "author": "Annie Wood Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "1894AnonymousTheTheosophicCraze",
+      "title": "The Theosophic Craze",
+      "author": "John Murdoch",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; alternate scans: theosophiccraze00murdgoog"
+    },
+    {
+      "id": "GeneralReport1894",
+      "title": "General Report Of 19th Convention Of Theosophical Society - 1894",
+      "author": "Theosophical Society",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "TheosophicalManualsNoIIIDeathAfter",
+      "title": "Theosophical Manuals No III Death & After",
+      "author": "Annie Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "b24884273",
+      "title": "Isis very much unveiled : being the story of the great Mahatma hoax",
+      "author": "Fydell Edmund Garrett",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library"
+    },
+    {
+      "id": "madameblavatskyh00unse",
+      "title": "Madame Blavatsky : her tricks and her dupes",
+      "author": "Unknown",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries"
+    },
+    {
+      "id": "modernpanarionco00blav",
+      "title": "A modern panarion : a collection of fugitive fragments",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: modernpanarionco0001blav"
+    },
+    {
+      "id": "madameblavatskyh00lill",
+      "title": "Madame Blavatsky and her \"theosophy\", a study",
+      "author": "Arthur Lillie",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Connecticut Libraries; alternate scans: madameblavatsky00unkngoog, madameblavatsky00lillgoog"
+    },
+    {
+      "id": "plotinus00mead",
+      "title": "Plotinus",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "septenarymanormi00ande",
+      "title": "Septenary man : or, The microcosm of the macrocosm : a study of the human soul in relation to the various vehicles, or avenues, of consciousness (technically known as the seven principles) by means of which it brings itself into relation with the outer cosmos : including a brief examination of dream and the problems of humanity",
+      "author": "Jerome A. Anderson",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b20425065",
+      "title": "The birth and evolution of the soul [electronic resource] : two lectures",
+      "author": "Annie Besant",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library; alternate scans: birthandevoluti00besagoog"
+    },
+    {
+      "id": "worldmysteryfour00mead",
+      "title": "The world-mystery : four essays",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: india.history.resource.110404"
+    },
+    {
+      "id": "GeneralReport1895",
+      "title": "General Report Of 20th Convention Of Theosophical Society - 1895",
+      "author": "Theosophical Society",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "1895BaldwinSecretsOfMahatmaLandExplained",
+      "title": "Secrets Of Mahatma Land Explained",
+      "author": "Samri Baldwin",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "TheosophicalManualsNoIVKarma",
+      "title": "Theosophical Manuals No IV Karma",
+      "author": "Annie Besant",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "christotheosophy00wyldiala",
+      "title": "Christo-theosophy, or, Spiritual dynamics and the divine and miraculous man",
+      "author": "George Wyld",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b24886294",
+      "title": "Karma",
+      "author": "Annie Besant",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Wellcome Library; alternate scans: karma00besa, karma0000besa, karma00besagoog"
+    },
+    {
+      "id": "dreamofravanmyst00mead",
+      "title": "The Dream of Ravan : a mystery",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "historyoftheosop00colv",
+      "title": "A history of theosophy",
+      "author": "W. J. (William Juvenal) Colville",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "thedevachanic00leaduoft",
+      "title": "The Devachanic plane : its characteristics and inhabitants",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: devachanicplane00lead"
+    },
+    {
+      "id": "transcendentalun00harr",
+      "title": "The transcendental universe; six lectures on occult science, theosophy, and the Catholic faith",
+      "author": "Charles George Harrison",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign; alternate scans: the-transcendental-universe-six-lectures-on-occult-science-theosophy-and-the-catholic-faith"
+    },
+    {
+      "id": "theosophy00unkngoog",
+      "title": "Theosophy",
+      "author": "Theosophical Society",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "posthumousmemoir00wade",
+      "title": "Posthumous memoirs of Helena Petrovna Blavatsky",
+      "author": "Joseph Marshall Wade",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "lifeofphilippust1896hart",
+      "title": "The life of Philippus Theophrastus Bombast of Hohenheim, known by the name of Paracelsus : and the substance of his teachings concerning cosmology, anthropology, pneumatology, magic and sorcery, medicine, alchemy and astrology, philosophy and theosophy",
+      "author": "Franz Hartmann",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Columbia University Libraries; alternate scans: lifeofphilippust00hart"
+    },
+    {
+      "id": "1896-Lewis-H-anderson-philosophy-of-occultism_202608",
+      "title": "Philosophy of Occultism or The key to mental and physical power 1896",
+      "author": "Lewis H. Anderson. L. H. Anderson",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "riddleoflifehowt00besarich",
+      "title": "The riddle of life : and how theosophy answers it",
+      "author": "Annie Wood Besant",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: dli.bengal.10689.9186"
+    },
+    {
+      "id": "GeneralReport1897",
+      "title": "General report of the anniversary and convention of the Theosophical Society 1897",
+      "author": "Theosophical Society",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "fourgreatreligio00besarich",
+      "title": "Four great religions, four lectures delivered on the twenty-first anniversary of the Theosophical society at Adyar, Madras:",
+      "author": "Annie Wood Besant",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "the-secret-doctrine-by-h.-p.-blavatsky-3rd-vol.-1897",
+      "title": "The Secret Doctrine By H. P. Blavatsky 3rd Vol. 1897",
+      "author": "H.P. Blavatsky",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "pentecostopening00dewe",
+      "title": "Pentecost; the opening of a new school of inspiration and brotherhood of the Christ life; a prophetic announcement from the spirit",
+      "author": "John Hamlin Dewey",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "zoroastrianismin00biliuoft",
+      "title": "Zoroastrianism in the light of theosophy : being a collection of selected articles from the theosophical literature",
+      "author": "Nasarvanji Framji Bilimoria",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: india.history.resource.87480"
+    },
+    {
+      "id": "introduction-to-theosophy",
+      "title": "An Introduction To Theosophy",
+      "author": "H. Arthur Wilson",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "memoryofpastbirt00johnrich",
+      "title": "The memory of past births",
+      "author": "Charles Johnston",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: memory-of-past-births"
+    },
+    {
+      "id": "loomis___V2-seven_essays_on_practical_occultism",
+      "title": "loomis___V2-seven_essays_on_practical_occultism",
+      "author": "Ernest Loomis",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "avatrasfourlec00besarich",
+      "title": "Avatâras : four lectures delivered at the twenty-fourth anniversary meeting of the Theosophical Society at Adyar, Madras, December, 1899",
+      "author": "Annie Wood Besant",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: avataras018313mbp, in.gov.ignca.17390, avatrasfourlect00besagoog, avatrasfourlect01besagoog"
+    },
+    {
+      "id": "evolutionoflifef00besarich",
+      "title": "Evolution of life and form : four lectures delivered at the twenty-third anniversary meeting of the Theosophical Society at Adyar, Madras, 1898",
+      "author": "Annie Wood Besant",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: evolutionlifean00britgoog"
+    },
+    {
+      "id": "gtu_32400007321650",
+      "title": "True Occultism",
+      "author": "Marjorie P. Cave",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "futurelifeinligh00bacl",
+      "title": "Future life : in the light of ancient wisdom and modern science",
+      "author": "Louis-Lucien Baclé",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "reincarnationorl00snel",
+      "title": "Re-incarnation or Life returns unceasingly",
+      "author": "Rendol Snell",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "ancientidealsinm0000besa",
+      "title": "Ancient ideals in modern life : four lectures delivered at the twenty-fifth anniversary meeting of the Theosophical Society, at Benares, December, 1900",
+      "author": "Annie Besant",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: b31366144, ancientidealsinm00besa"
+    },
+    {
+      "id": "apolloniusoftyan00mead",
+      "title": "Apollonius of Tyana, the philosopher-reformer of the first century, A.D.; a critical study of the only existing record of his life, with some account of the war of opinion concerning him, and an introduction on the religious associations and brotherhoods of the times and the possible influence of Indian thought on Greece ..",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "songoflife00johnrich",
+      "title": "The song of life",
+      "author": "Charles Johnston",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "natureoftheosoph00lead",
+      "title": "The nature of theosophical evidence",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "theothersideofdeath",
+      "title": "The Other Side Of Death",
+      "author": "C.w Leadbeater",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "scienceofpeaceat00dasbuoft",
+      "title": "The science of peace : an attempt at an exposition of the first principles of the science of the self, adhyatma-vidya",
+      "author": "Bhagavan Das",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: scienceofpeaceat00dasbiala, sciencepeaceana00dsgoog"
+    },
+    {
+      "id": "sevenprincipleso0000besa",
+      "title": "The seven principles of man",
+      "author": "Annie Besant",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: b33763616, in.ernet.dli.2015.163392, sevenprinciples02besagoog, sevenprinciples00besagoog, sevenprinciples01besagoog, sevenprinciples03besagoog"
+    },
+    {
+      "id": "workingglossaryf0000vari",
+      "title": "a working glossary for the use of students of theosophical literature",
+      "author": "various",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophynewpsyc0000anni",
+      "title": "Theosophy and the new psychology",
+      "author": "Annie Besant",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "hinduidealsforus00besa",
+      "title": "Hindu ideals, for the use of Hindu students in the schools of India",
+      "author": "Annie Wood Besant",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "mysticmasonryor00buck",
+      "title": "Mystic masonry; or, The symbols of freemasonry and the greater mysteries of antiquity",
+      "author": "J. D. (Jirah Dewey) Buck",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: mysticmasonryor00unkngoog"
+    },
+    {
+      "id": "lostlemuriawith00scotgoog",
+      "title": "The Lost Lemuria: with 2 maps showing distribution of land areas at ...",
+      "author": "W. Scott-Elliot",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "theosophyinrelat00besa",
+      "title": "Theosophy in relation to human life ..",
+      "author": "Annie Wood Besant",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.61852"
+    },
+    {
+      "id": "astralplaneitssc00leadiala",
+      "title": "The astral plane; its scenery, inhabitants, and phenomena",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: astralplane00leadgoog"
+    },
+    {
+      "id": "scientificoccult00hatcrich",
+      "title": "Scientific occultism, a hypothetical basis of life",
+      "author": "David Patterson Hatch",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: scientificoccult00hatc, scientificoccul00hatcgoog"
+    },
+    {
+      "id": "shrrmachandr00besauoft",
+      "title": "Shrî Râma Chandra; the ideal king. Some lessons from the Râmâyana, for the use of Hindu students in the schools of India. From notes of lectures originally delivered at the Central Hindu College, Benares",
+      "author": "Annie Wood Besant",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "thoughtforms00leadgoog",
+      "title": "Thought-forms",
+      "author": "Charles Webster Leadbeater",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library; alternate scans: thoughtforms01leadgoog"
+    },
+    {
+      "id": "thehymnofjesus04meaduoft",
+      "title": "Echoes from the Gnosis",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: thehymnsoftheher02meaduoft, gnosisofthemind01meaduoft"
+    },
+    {
+      "id": "inoutercourt00besa",
+      "title": "In the outer court",
+      "author": "Annie Wood Besant",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: inoutercourt00besarich, intheoutercourt020275mbp, intheoutercourt00besauoft, inoutercourt0000besa"
+    },
+    {
+      "id": "theosophy-and-modern-science",
+      "title": "Theosophy And Modern Science",
+      "author": "Edith Ward",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "anabridgmentbyk00unkngoog",
+      "title": "An abridgement by Katharine Hillard of The Secret doctrine, a synthesis of science, religion and philosophy",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University"
+    },
+    {
+      "id": "hpblavatskymaste00besa",
+      "title": "H.P. Blavatsky and the masters of the wisdom",
+      "author": "Annie Wood Besant",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: h.-p.-blavatsky-and-the-masters-of-the-wisdom-1907-annie-wood-besant"
+    },
+    {
+      "id": "astrallight0010unse",
+      "title": "The astral light",
+      "author": "Unknown",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cu31924029168305",
+      "title": "The elements of theosophy",
+      "author": "Lilian Edger",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: in.ernet.dli.2015.274951, elementstheosop00edgegoog"
+    },
+    {
+      "id": "flameclay0013unse",
+      "title": "The flame and the clay",
+      "author": "Katherine Tingley",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophicallect00besa",
+      "title": "Theosophical lectures and answers to theosophical questions;",
+      "author": "Annie Besant",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "theosophicalman09tinggoog",
+      "title": "Theosophical manuals",
+      "author": "Katherine Augusta Westcott Tingley Student",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: theosophicalman00neilgoog, theosophicalman04neilgoog, theosophicalman01neilgoog, theosophicalman02neilgoog, theosophicalman03neilgoog"
+    },
+    {
+      "id": "theosophicalman10tinggoog",
+      "title": "Theosophical manuals",
+      "author": "Student Katherine Augusta Westcott Tingley S. J. Neill",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Harvard University; alternate scans: theosophicalman01unkngoog, theosophicalman00tinggoog, theosophicalman05tinggoog, theosophicalman03tinggoog, theosophicalman04tinggoog, theosophicalman02tinggoog, theosophicalman06tinggoog, theosophicalman00unkngoog, theosophicalman08tinggoog, theosophicalman01tinggoog, theosophicalman07tinggoog"
+    },
+    {
+      "id": "theosophicalmanu0002unse",
+      "title": "Theosophical manuals",
+      "author": "Various Author",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophymothero0015unse",
+      "title": "Theosophy: the mother of religions",
+      "author": "Katherine Tingley",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "the-mysteries-of-mithra-theosophical-society-1907",
+      "title": "THE MYSTERIES OF MITHRA, Theosophical Society, 1907",
+      "author": "author; The Theosophical Publishing Society London and Benares. G.R.S. Mead",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "geniusoffreemaso00buckiala",
+      "title": "The genius of free-masonry and the twentieth-century crusade",
+      "author": "J. D. (Jirah Dewey) Buck",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: geniusfreemason00buckgoog"
+    },
+    {
+      "id": "australianlectur00besarich",
+      "title": "Australian lectures, 1908 ..",
+      "author": "Annie Wood Besant",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "fragmentsofthoug00coll",
+      "title": "Fragments of thought and life : being seven essays, and seven fables in illustration of the essays",
+      "author": "Mabel Collins",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "pedigreeofmanfou0000besa",
+      "title": "The pedigree of man : four lectures delivered at the twenty-eighth anniversary meetings of the Theosophical Society, at Adyar, December, 1903",
+      "author": "Annie Besant",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: pedigreeofmanfou00besarich, pedigreemanfour00besagoog"
+    },
+    {
+      "id": "scienceofemotion00dasbuoft",
+      "title": "The science of the emotions",
+      "author": "Bhagavan Das",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: b28056504, scienceoftheemot024532mbp, in.ernet.dli.2015.163356"
+    },
+    {
+      "id": "essaysontheosoph00tayliala",
+      "title": "Essays on theosophy",
+      "author": "I. E Taylor",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "scientificcorro00marqgoog",
+      "title": "Scientific Corroborations of Theosophy: A Vindication of the Secret Doctrine by the Latest ...",
+      "author": "A. Marques",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "lifeatpointloma00tinggoog",
+      "title": "The Life at Point Loma",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California"
+    },
+    {
+      "id": "occultscienceini00felt",
+      "title": "Occult science in India and among the ancients, with an account of their mystic initiations, and the history of spiritism",
+      "author": "Willard L. tr Felt",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "primeroftheosoph00theo",
+      "title": "A primer of theosophy: a very condensed outline",
+      "author": "India). American Section Theosophical Society (Madras",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library"
+    },
+    {
+      "id": "hpblavatskyoutli00whyt",
+      "title": "H.P. Blavatsky: an outline of her life",
+      "author": "Herbert Whyte",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Boston Public Library"
+    },
+    {
+      "id": "londonlecturesof00besa",
+      "title": "London lectures of 1907",
+      "author": "Annie Wood Besant",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "mrsanniebesantmo00fussrich",
+      "title": "Mrs. Annie Besant and the moral code: a protest",
+      "author": "Joseph H. (Joseph Hall) Fussell",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "christofholygrai00bainiala",
+      "title": "The Christ of the Holy Grail, or, The great Christ of the cosmos and the little Christ of the soul; being a word of spiritual doctrine to the practical mystics of our day, and supplementary to \"The brotherhood of healers\" ..",
+      "author": "James Leith Macbeth Bain",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924095631291",
+      "title": "The Christian creed : its origin and signification",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "cu31924032341327",
+      "title": "The magical message according to Iôannês (To kata Iōannon Euangelion) ; commonly called the Gospel according to [St.] John;",
+      "author": "James M. (James Morgan) ed. and tr Pryse",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: magicalmessagea00prysgoog"
+    },
+    {
+      "id": "religiousproblem00besa",
+      "title": "The religious problem in India : four lectures delivered during the twenty-sixth annual convention of the Theosophical Society at Adyar, Madras, 1901",
+      "author": "Annie Wood Besant",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophytheosop00brag",
+      "title": "Theosophy and the Theosophical Society",
+      "author": "Claude Fayette Bragdon",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "theosophyforbegi0000chri",
+      "title": "Theosophy for beginners : and for the use of Lotus circles",
+      "author": "Catherine W Christie",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.171007, in.ernet.dli.2015.201276"
+    },
+    {
+      "id": "sketch-of-theosophy",
+      "title": "A Sketch Of Theosophy",
+      "author": "Weller Van Hook",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "super-physical-laws-of-nature",
+      "title": "The super-physical laws of nature; together with an introductory address",
+      "author": "A. P. (Alfred Percy) Sinnett",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "theosophychristi0000unse",
+      "title": "Theosophy and Christianity",
+      "author": "Ernest R. Hull",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: theosophyandchr00hullgoog"
+    },
+    {
+      "id": "lostwordfounding00buck",
+      "title": "Lost Word Found in the Great Work (Magnum Opus) (1909) [Harmonic Booklet Series]",
+      "author": "J. D. [Jirah Dewey] (1838-1916) Buck",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Private collection of the works of the Great School of Natural Science (GSNS)"
+    },
+    {
+      "id": "lifeofjehoshuapr0000hart",
+      "title": "The life of Jehoshua : the prophet of Nazareth : an occult study and a key to the Bible : containing the history of an initiate",
+      "author": "Franz Hartmann",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cu31924060289034",
+      "title": "Thought power; its control and culture",
+      "author": "Annie Wood Besant",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: dli.ernet.163357, in.ernet.dli.2015.163357"
+    },
+    {
+      "id": "collectionofesot00subbiala",
+      "title": "A collection of esoteric writings",
+      "author": "Tiruvalum Subba Row",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "dictionaryofsome00houlrich",
+      "title": "A dictionary of some theosophical terms",
+      "author": "Powis Hoult",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: adictionarysome00houlgoog"
+    },
+    {
+      "id": "episodesfromunwr00brag",
+      "title": "Episodes from an unwritten history",
+      "author": "Claude Fayette Bragdon",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "expositionofdoct00atis",
+      "title": "Exposition of the doctrine of Karma",
+      "author": "Brother pseud Atisha",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "fiveyearsoftheos00unse",
+      "title": "Five years of theosophy; mystical, philosophical, theosophical, historical & scientific essays;",
+      "author": "Unknown",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "mansinvisiblebod00theo",
+      "title": "Man's invisible bodies",
+      "author": "Theosophical Society in America.",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Christian Theological Seminary"
+    },
+    {
+      "id": "cu31924029168247",
+      "title": "Popular lectures on theosophy. I. What is theosophy? II. The ladder of lives. III. Reincarnation: its necessity. IV. Reincarnation: its answers to life's problems. V. The law of action and reaction. VI. Man's life in the three worlds",
+      "author": "Annie Wood Besant",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: b3347025x"
+    },
+    {
+      "id": "changingworldlec00besauoft",
+      "title": "The changing world and Lectures to theosophical students",
+      "author": "Annie Wood Besant",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: changingworldlec00besarich, cu31924029168164, changingworldlec0000besa, dli.ministry.11035, in.ernet.dli.2015.200669, in.ernet.dli.2015.175682, in.ernet.dli.2015.219457, changingworldan00besagoog"
+    },
+    {
+      "id": "physicsofsecretd00king",
+      "title": "The physics of the secret doctrine",
+      "author": "William Kingsland",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "scienceofsocialo00dasbiala",
+      "title": "The science of social organisation; or, The laws of Manu in the light of theosophy",
+      "author": "Bhagavan Das",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "threepathstounio00besarich",
+      "title": "The three paths to union with God; lectures delivered at Benares, at the sixth annual convention of the Indian Section of the Theosophical Society, October 19th, 20th and 21st, 1896",
+      "author": "Annie Wood Besant",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "magicwhiteblacko00hart",
+      "title": "Magic, white and black; or, The science of finite and infinite life, containing practical knowledge, instruction and hints for all sincere students of magic and occultism",
+      "author": "Franz Hartmann",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "cu31924029295289",
+      "title": "The Apocalypse unsealed : being an esoteric interpretation of the initiation of Iôannês (Apokalypsis Iōannou) commonly called the Revelation of (St.) John : with a new translation",
+      "author": "James M. (James Morgan) Pryse",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "educationofchild00stei",
+      "title": "The education of children from the standpoint of theosophy",
+      "author": "Rudolf Steiner",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "immediatefutureo0000besa",
+      "title": "The immediate future : and other lectures",
+      "author": "Annie Besant",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "atfeetofmaster00krisrich",
+      "title": "At the feet of the master",
+      "author": "J. (Jiddu) Krishnamurti",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: atfeetofmaster00krisuoft"
+    },
+    {
+      "id": "newavatardestiny00buck",
+      "title": "New Avatar and the Destiny of the Soul: The Findings of Natural Science Reduced to Practical Studies in Psychology (1911) [Miscellaneous Works]",
+      "author": "J. D. [Jirah Dewey] (1838-1916) Buck",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Private collection of the works of the Great School of Natural Science (GSNS); alternate scans: newavatardestiny01buck, newavataranddes00buckgoog"
+    },
+    {
+      "id": "reincarnationinn0000prys",
+      "title": "Reincarnation in the New Testament",
+      "author": "James M. (James Morgan) Pryse",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: reincarnationin00unkngoog, reincarnationin01prysgoog, reincarnationin00prysgoog"
+    },
+    {
+      "id": "realityofmatterc00rich",
+      "title": "Reality of Matter: A Critical Correspondence Between Heinrich Hensoldt, Ph. D. of Columbia University and a Member of The Order of the Brotherhood of India (1911) [Supplemental Harmonic Series]",
+      "author": "Anonymous [John E. Richardson (1853-1935)]",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Private collection of the works of the Great School of Natural Science (GSNS)"
+    },
+    {
+      "id": "reincarnation-a-christian-doctrine",
+      "title": "Reincarnation: A Christian Doctrine",
+      "author": "A. Tranmer",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "textbookoftheoso0000lead",
+      "title": "A textbook of theosophy",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: textbookoftheoso00leadrich, textbookoftheoso0000cwle_v6v6, textbookoftheoso0000cwle_g2u3, in.ernet.dli.2015.115237, in.ernet.dli.2015.115295, in.ernet.dli.2015.31158, atextbooktheoso00leadgoog"
+    },
+    {
+      "id": "popularlectureso00besaiala",
+      "title": "Popular lectures on theosophy",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: popularlectureso00besa, india.history.resource.110606"
+    },
+    {
+      "id": "quotations00blav",
+      "title": "Quotations",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "b29011875",
+      "title": "The gates of knowledge : with an additional chapter entitled Philosophy and theosophy",
+      "author": "Rudolf Steiner",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Wellcome Library"
+    },
+    {
+      "id": "idealsoftheosoph00besaiala",
+      "title": "The ideals of theosophy",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: idealsoftheosoph00besa"
+    },
+    {
+      "id": "lawsofhigherlife00besa",
+      "title": "The laws of the higher life : being lectures delivered at the 12th annual convention of the Indian section of the Theosophical society, held at Benares in December 1902",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: in.ernet.dli.2015.47952"
+    },
+    {
+      "id": "spirituallife00besa",
+      "title": "The spiritual life",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophy00besauoft",
+      "title": "Theosophy",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Kelly - University of Toronto"
+    },
+    {
+      "id": "educationasservi00kris",
+      "title": "Education as service",
+      "author": "J. (Jiddu) Krishnamurti",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: educationasserv00krisgoog"
+    },
+    {
+      "id": "1912MaskelyneFraudOfModernTheosophy",
+      "title": "Fraud Of Modern Theosophy",
+      "author": "John Nevil Maskelyne",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "someproblemsofli00besaiala",
+      "title": "Some problems of life",
+      "author": "Annie Wood Besant",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "dharmaofmeaningo0000besa",
+      "title": "Dharma, or the meaning of right and wrong, three lectures delivered at the eight annual convention of the Indian section of the Theosophical Society",
+      "author": "Annie Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: b24885940"
+    },
+    {
+      "id": "investigationsin00besa",
+      "title": "Investigations into the super-physical",
+      "author": "Annie Wood Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "manwhencehowwhit00besa",
+      "title": "Man : whence, how and whither : a record of clairvoyant investigation",
+      "author": "Annie Wood Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "manslifeinthisot0000besa",
+      "title": "Man's life in this and other worlds",
+      "author": "Annie Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: india.history.resource.107720"
+    },
+    {
+      "id": "modernworldmovem00buck",
+      "title": "Modern World Movements: Theosophy and the School of Natural Science, \"The Venerable Brotherhood of India\" (1913) [Supplemental Harmonic Series]",
+      "author": "Jirah Dewey (1838-1916) Buck",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Private collection of the works of the Great School of Natural Science (GSNS); alternate scans: modernworldmove01buckgoog"
+    },
+    {
+      "id": "theosophytheosop0000anni",
+      "title": "theosophy and the theosophical society",
+      "author": "annie besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: theosophytheosop00besaiala, cu31924029168263, in.ernet.dli.2015.50307, theosophyandthe00besagoog, theosophyandthe02besagoog, theosophyandthe01besagoog"
+    },
+    {
+      "id": "bub_gb_rvwLAAAAIAAJ_2",
+      "title": "Theosophy and Christianity : a signpost for those who desire information concerning theosophy",
+      "author": "Max Seiling",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; held by unknown library"
+    },
+    {
+      "id": "vegetarianismandoccultismbyc.w.leadbeater",
+      "title": "Vegetarianism and Occultism by C. W. Leadbeater",
+      "author": "C. W. Leadbeater",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:stated; alternate scans: vegetarianism-and-occultism-by-c.-w.-leadbeater"
+    },
+    {
+      "id": "theosophy0000unse_j8b3",
+      "title": "Theosophy",
+      "author": "C.C. Martindale",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophysocialr0000unse",
+      "title": "Theosophy and Social Reconstruction (The Riddle of Life Series-No. 3.)",
+      "author": "Annie Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "nosegayofeverlas01ting",
+      "title": "A nosegay of everlastings from Katherine Tingley's garden of helpful thoughts",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: anosegayeverlas00calgoog"
+    },
+    {
+      "id": "deathandafter00besa",
+      "title": "Death--and after",
+      "author": "Annie Wood Besant",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: b29011863"
+    },
+    {
+      "id": "onmoods00besa",
+      "title": "On moods",
+      "author": "Annie Wood Besant",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "doctrineofhearte00besa",
+      "title": "The doctrine of the heart, extracts from Hindu letters",
+      "author": "Annie Wood Besant",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "smalloldpathbycl00brag",
+      "title": "The small old path / by Claude Bragdon",
+      "author": "Claude Fayette Bragdon",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "toabolishcapital00ting",
+      "title": "To abolish capital punishment; a plea to the citizens of every country",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "1914-brooks-neo-theosophy-exposed_202206",
+      "title": "Neo Theosophy Exposed - F.T.Brooks 1914",
+      "author": "F.T.Brooks",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "manualofoccultis01seph",
+      "title": "A manual of occultism,",
+      "author": "Sepharial",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "visittoastralpla00fisc",
+      "title": "A visit to the astral plane;",
+      "author": "Emily Lorena (Coleman) Mrs. Fischer",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "wartheosophicalv00cousrich",
+      "title": "War: a theosophical view",
+      "author": "James H Cousins",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "cu31924029305311",
+      "title": "The restored New Testament : the Hellenic fragments, freed from the pseudo-Jewish interpolations, harmonized, and done into English verse and prose",
+      "author": "James M. (James Morgan) Pryse",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: restorednewtesta00prys"
+    },
+    {
+      "id": "in-the-next-world.-actual-narratives-of-personal-experiences-from-the-afterlife",
+      "title": "In The Next World. Actual Narratives Of Personal Experiences From The Afterlife",
+      "author": "Alfred Percy Sinnett",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "reincarnation00chic",
+      "title": "Reincarnation",
+      "author": "Unknown",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Illinois Urbana-Champaign"
+    },
+    {
+      "id": "x-metempsychosis",
+      "title": "Metempsychosis",
+      "author": "George Foot Moore",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "basisofmorality00besa",
+      "title": "The basis of morality",
+      "author": "Annie Wood Besant",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophysimplif00cooprich",
+      "title": "Theosophy simplified",
+      "author": "Irving S. (Irving Steiger) Cooper",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: theosophysimpli00coopgoog"
+    },
+    {
+      "id": "hintstoyoungstud00rogerich",
+      "title": "Hints to young students of occultism",
+      "author": "L. W. (Louis William) Rogers",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophy-in-christianity",
+      "title": "Theosophy In Christianity",
+      "author": "Ernest Udny",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "memorytrainingpr01wood",
+      "title": "Memory Training: A Practical Course",
+      "author": "Ernest Wood",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Duke University Libraries"
+    },
+    {
+      "id": "outlineoftheosop00leadrich",
+      "title": "An outline of theosophy",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: outlineoftheosop021985mbp, india.history.resource.94129, in.ernet.dli.2015.163380, anoutlinetheoso00leadgoog"
+    },
+    {
+      "id": "selfdevelopmentw00rogerich",
+      "title": "Self development and the way to power",
+      "author": "L. W. (Louis William) Rogers",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophylifesde00besarich",
+      "title": "Theosophy and life's deeper problems; being the four convention lectures delivered in Bombay at the fortieth anniversary of the Theosophical Society, December, 1915",
+      "author": "Annie Wood Besant",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "principlesofoccu00burn",
+      "title": "The principles of occult healing; a working hypothesis which includes all cures; studies by a group of theosophical students",
+      "author": "Mary Weeks ed Burnett",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "fourdimensionalv00brag",
+      "title": "Four-dimensional vistas",
+      "author": "Claude Fayette Bragdon",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "unseen-aspects-of-the-war",
+      "title": "Unseen Aspects Of The War",
+      "author": "A. P. Sinnett",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "manhisbodies00besa",
+      "title": "Man and his bodies",
+      "author": "Annie Wood Besant",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: manandhisbodies01besagoog"
+    },
+    {
+      "id": "reincarnationdow00roge",
+      "title": "Reincarnation : do we live on earth again?",
+      "author": "L. W. (Louis William) Rogers",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Christian Theological Seminary"
+    },
+    {
+      "id": "starlightsevenad00lead",
+      "title": "Starlight : seven addresses given for love of the star",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library; alternate scans: india.history.resource.117459"
+    },
+    {
+      "id": "workofmasters00lazeuoft",
+      "title": "The work of the Masters",
+      "author": "Charles Lazenby",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "theosophychristi0000stur",
+      "title": "Theosophy and Christianity : a comparison",
+      "author": "M. Carta Sturge",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "christssecretdoc0000mori",
+      "title": "Christ's secret doctrine : and its rediscovery in modern thought and life",
+      "author": "A. S Mories",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "occultisminshake00rogeuoft",
+      "title": "The occultism in the Shakespeare plays",
+      "author": "Louis William Rogers",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto; alternate scans: occultisminshake00roge, occultisminshak00rogegoog"
+    },
+    {
+      "id": "super-physical-science",
+      "title": "Super Physical Science",
+      "author": "A. P. Sinnett",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "studyinconscious0000besa",
+      "title": "A study in consciousness : a contribution to the science of psychology",
+      "author": "Annie Besant",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "dharmadh00besarich",
+      "title": "Dharma",
+      "author": "Annie Wood Besant",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: dli.bengal.10689.8921, dli.ministry.11920"
+    },
+    {
+      "id": "naturesfinerforc00besa",
+      "title": "Nature's finer forces",
+      "author": "Annie Wood Besant",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University of Connecticut Libraries"
+    },
+    {
+      "id": "lifeafterdeathho00leadrich",
+      "title": "The life after death, and how theosophy unveils it",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "theosophists-beware-you-are-being-deceived",
+      "title": "Theosophists Beware! You Are Being Deceived!",
+      "author": "Arnold Harris Mathew",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "theousophiaeluci03samp",
+      "title": "Theou sophia, elucidating the science and philosophy of the divine mysteries. A complete epitome and analysis of cosmological science embodied in the ancient wisdom ...",
+      "author": "Holden E. (Holden Edward) Sampson",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Princeton Theological Seminary Library; alternate scans: theousophiaeluci02samp, theousophiaeluci01samp"
+    },
+    {
+      "id": "studyinkarma0000besa",
+      "title": "A study in karma",
+      "author": "Annie Besant",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: studyinkarma00besa"
+    },
+    {
+      "id": "karmareincarnati00blac",
+      "title": "Karma; a reincarnation play in prologue",
+      "author": "Algernon Blackwood",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "fromtheosophytoc00mcneuoft",
+      "title": "From theosophy to Christian faith, a comparison of theosophy with Christianity",
+      "author": "E. R McNeile",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "psychology00besarich",
+      "title": "Psychology",
+      "author": "Annie Wood Besant",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "devachanicplaneo0000lead",
+      "title": "The devachanic plane, or, The heaven world, its characteristics and inhabitants",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "an-outline-for-beginners-in-occultism",
+      "title": "An Outline For Beginners In Occultism",
+      "author": "Woodruff Sheppard",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "an-outline-of-solar-philosophy-based-on-ancient-wisdom",
+      "title": "An Outline Of Solar Philosophy Based On Ancient Wisdom",
+      "author": "Woodruff Sheppard",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "light-on-the-path",
+      "title": "Light On The Path",
+      "author": "Unknown",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "liberal-catholic-church-and-the-theosophical-society",
+      "title": "The Liberal Catholic Church And The Theosophical Society",
+      "author": "James Ingall Wedgwood",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "katherine-tingley-theosophist-and-humanitarian",
+      "title": "Katherine Tingley Theosophist And Humanitarian",
+      "author": "Lilian Whiting",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lettersfrommaste00jina",
+      "title": "Letters from the masters of the wisdom, 1881-1888",
+      "author": "Curuppumullage Jinarajadasa",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries"
+    },
+    {
+      "id": "doctrinesubtle00meaduoft",
+      "title": "The doctrine of the subtle body in Western tradition, an outline of what the philosophers thought and Christians taught on the subject",
+      "author": "G. R. S. (George Robert Stow) Mead",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "wood-concentration-a-practical-course",
+      "title": "Concentration: A Practical Course",
+      "author": "Ernest Wood",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "collectedfruitso00sinniala",
+      "title": "Collected fruits of occult teaching",
+      "author": "A. P. (Alfred Percy) Sinnett",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: india.history.resource.117376"
+    },
+    {
+      "id": "incidentsinhisto00fussrich",
+      "title": "Incidents in the history of the theosophical movement, founded in New York city in 1875 by H.P. Blavatsky, continued under William Q. Judge, and now under the direction of their successor, Katherine Tingley",
+      "author": "Joseph H. (Joseph Hall) Fussell",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: cu31924029167983, inhisto00fussincidentsrich"
+    },
+    {
+      "id": "manvisibleinvisi00unse",
+      "title": "Man visible and invisible : examples of different types of men as seen by means of trained clairvoyance",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by University Library, University of North Carolina at Chapel Hill; alternate scans: dli.ministry.16766"
+    },
+    {
+      "id": "hiddensideofchri00lead",
+      "title": "The hidden side of Christian festivals",
+      "author": "C. W. (Charles Webster) Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by New York Public Library; alternate scans: hiddensideofchri00leadrich"
+    },
+    {
+      "id": "science_of_the_sacrements",
+      "title": "The Science of the Sacraments",
+      "author": "C.W. Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "theosophygeneral0000judg",
+      "title": "Theosophy generally stated, from the official report of the World's parliament of religions, Chicago, 1893",
+      "author": "William Quan Judge",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "social-upheaval-in-progress",
+      "title": "Social Upheaval In Progress",
+      "author": "A. P. Sinnett",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "investigationsin0000rudo",
+      "title": "Investigations in Occultism : showing its practical value in daily life",
+      "author": "Rudolph Steiner",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cu31924074337852",
+      "title": "Sikhism : a convention lecture",
+      "author": "Annie Wood Besant",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "threefoldstatetr00steiuoft",
+      "title": "The threefold state, the true aspect of the social question",
+      "author": "Rudolf Steiner",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "THEFIRSTPRINCIPLESOFTHEOSOPHY",
+      "title": "THEFIRSTPRINCIPLESOFTHEOSOPHY",
+      "author": "Curuppumullage Jinarajadasa",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date"
+    },
+    {
+      "id": "theosophicalmanu0018unse",
+      "title": "Theosophical Manuals",
+      "author": "Unknown",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: theosophicalmanu0016unse, theosophicalmanu0000unse, theosophicalmanu0007unse, theosophicalmanu0009unse_q9f1, theosophicalmanu0013unse, theosophicalmanu0010unse_k0k9, theosophicalmanu0014unse, theosophicalmanupt1012unse, theosophicalman06unkngoog, theosophicalman05unkngoog, theosophicalman02unkngoog, theosophicalman04unkngoog, theosophicalman03unkngoog"
+    },
+    {
+      "id": "cu31924010667941",
+      "title": "Theosophy and modern thought; four lectures delivered at the thirty-ninth annual convention of the Theosophical Society, held at Adyar, Madras, December, 1914",
+      "author": "Curuppumullagē Jinarājadāsa",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library; alternate scans: theosophymodernt00jina, india.history.resource.94125"
+    },
+    {
+      "id": "helenapetrovnabl00tingrich",
+      "title": "Helena Petrovna Blavatsky : foundress of the original Theosophical Society in New York, 1875, the international headquarters of which are now at Point Loma, California",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: helenapetrovnabl0000ting, cu31924029173008"
+    },
+    {
+      "id": "katherinetingley00mertrich",
+      "title": "Katherine Tingley on marriage and the home; an interview with the theosophical leader",
+      "author": "Claire Merton",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: katherinetingle00mertgoog"
+    },
+    {
+      "id": "practicalocculti00keni",
+      "title": "Practical occultism",
+      "author": "Walter Winston Kenilworth",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress; alternate scans: cu31924028951338"
+    },
+    {
+      "id": "oracle00brag",
+      "title": "Oracle",
+      "author": "Claude Fayette Bragdon",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "demonosophyunmas00sloa",
+      "title": "Demonosophy unmasked in modern theosophy. Whence? What? whither? An exposition and a refutation with corrective Bible teaching",
+      "author": "Mersene Elon Sloan",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Princeton Theological Seminary Library; alternate scans: demonosophyunmas0000mers"
+    },
+    {
+      "id": "hpblavatskyherli00clearich",
+      "title": "H. P. Blavatsky; her life and work for humanity",
+      "author": "Alice Leighton Mrs Cleather",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: hpblavatskygreat00clearich"
+    },
+    {
+      "id": "someobservations00wadi",
+      "title": "Some observations on the study of the Secret doctrine",
+      "author": "B. P. (Bahman P.) Wadia",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of California Libraries; alternate scans: someobservation00wadigoog"
+    },
+    {
+      "id": "talkswithclass00besa",
+      "title": "Talks with a class",
+      "author": "Annie Wood Besant",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophyworldpr0000unse",
+      "title": "Theosophy and world-problems : being the four Convention lectures delivered in Benares at the Forty-sixth anniversry of the Theosophical Society, December, 1921",
+      "author": "Unknown",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophypathof00ting",
+      "title": "Theosophy, the path of the mystic : links for your own forging",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "bpw-letter",
+      "title": "To all Fellow Theosophists and Members of the Theosophical Society",
+      "author": "ultindia.org",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "jinarajadasa-curuppumullage-the-message-of-the-coming-religion-the-gospel-of-fel",
+      "title": "The Message of the Coming Religion: The Gospel of Fellowship and Beauty",
+      "author": "Curuppumullage Jinarajadasa",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "occultismtwolect00cloduoft",
+      "title": "Occultism: two lectures delivered in the Royal institution on May 17 and 24, 1921",
+      "author": "Edward Clodd",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:stated; held by Robarts - University of Toronto"
+    },
+    {
+      "id": "selfitsproblemsb0000char",
+      "title": "The Self and its Problems, The Blavatsky Lecture for 1919",
+      "author": "Charlotte E. Woods",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "cu31924028951882",
+      "title": "The East in the light of the West",
+      "author": "Rudolf Steiner",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Cornell University Library"
+    },
+    {
+      "id": "initiationperfec00besa",
+      "title": "Initiation : the perfecting of man",
+      "author": "Annie Wood Besant",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated; held by University of Connecticut Libraries; alternate scans: in.ernet.dli.2015.33131, dli.bengal.10689.8936"
+    },
+    {
+      "id": "theosophy-in-outline",
+      "title": "Theosophy In Outline",
+      "author": "F. Milton Willis",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "transactions-of-the-blavatsky-lodge-of-t",
+      "title": "Transactions Of The Blavatsky Lodge of the Theosophical Society",
+      "author": "Unknown",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "OesterreichOccultismAndModern",
+      "title": "Occultism and modern science",
+      "author": "T. Konstantin Oesterreich",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "dreamspremonitio00roge_0",
+      "title": "Dreams and premonitions /",
+      "author": "L. W. (Louis William) Rogers",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by The Library of Congress"
+    },
+    {
+      "id": "wood-destiny",
+      "title": "Destiny",
+      "author": "Ernest Wood",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "evolutionmansdes00besa",
+      "title": "Evolution and man's destiny",
+      "author": "Annie Besant",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Harold B. Lee Library"
+    },
+    {
+      "id": "1924-freeman-the-druids-and-theosophy",
+      "title": "1924 Freeman The Druids And Theosophy",
+      "author": "Peter Freeman",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "woodguidetotheosophy1924",
+      "title": "A Guide To Theosophy",
+      "author": "Ernest Wood",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "wineoflife0000ting",
+      "title": "The wine of life",
+      "author": "Katherine Augusta Westcott Tingley",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "progress-of-the-theosophical-society",
+      "title": "The Progress Of The Theosophical Society",
+      "author": "Annie Besant",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "oldlampsfornewan0000brag",
+      "title": "Old lamps for new ; the ancient wisdom in the modern world",
+      "author": "Claude Fayette Bragdon",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "goldenbookoftheo0000cjin",
+      "title": "The Golden Book of the Theosophical Society",
+      "author": "M.A. C. Jinarajadasa",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "theosophicalsoci0000anni",
+      "title": "the theosophical society and the occult hierarchy",
+      "author": "annie besant",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "mahatmalettersto0000unse_j4z0",
+      "title": "The Mahatma letters to A. P. Sinnett from the Mahatmas M. & K. H.",
+      "author": "Unknown",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "taking-of-a-body-by-the-world-teacher",
+      "title": "The Taking Of A Body By The World Teacher",
+      "author": "E. A. Wodehouose",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "lettersfrommaste0000cjin",
+      "title": "Letters From The Masters of the Wisdom",
+      "author": "Annie Besant C. Jinarajadasa",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "fragmentsfromtea0000blav",
+      "title": "Fragments from the teachings of H.P. Blavatsky",
+      "author": "H. P. (Helena Petrovna) Blavatsky",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "mindofanniebesan0000besa",
+      "title": "The mind of Annie Besant",
+      "author": "Annie Besant",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "the-beautiful-necessity",
+      "title": "The Beautiful Necessity",
+      "author": "Claude Fayette Bragdon",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "principlesoftheo0000theo",
+      "title": "Principles of Theosophy",
+      "author": "Theodore Mainage",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "mediatorotherthe0000unse",
+      "title": "the mediator and other theosophical essays",
+      "author": "C. Jinarajadasa",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "initiateconsciou0000stei",
+      "title": "Initiate consciousness; truth and error in spiritual research;",
+      "author": "Rudolf Steiner",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "lifegoal0000kris",
+      "title": "Life the goal",
+      "author": "J. (Jiddu) Krishnamurti",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "poolofwisdomwhob0000kris",
+      "title": "The pool of wisdom, Who brings the truth, By what authority, and three poems",
+      "author": "J. (Jiddu) Krishnamurti",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive"
+    },
+    {
+      "id": "essentials-of-theosophy",
+      "title": "Essentials Of Theosophy",
+      "author": "J. Walter Bell",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "philosophy-of-reincarnation",
+      "title": "The Philosophy Of Reincarnation",
+      "author": "Charlotte E. Woods",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "questions_we_all_ask",
+      "title": "Questions we all ask : lectures delivered in the Temple of Peace.",
+      "author": "Gottfried de Purucker",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "elementarytheoso0000roge",
+      "title": "Elementary theosophy",
+      "author": "L. W. (Louis William) Rogers",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: elementarytheoso0000lwro_e4t3, bwb_Y0-CGK-736, elementarytheoso00rogeiala, elementarytheos00rogegoog, elementarytheos01rogegoog"
+    },
+    {
+      "id": "the-new-theosophy",
+      "title": "The New Theosophy",
+      "author": "Ernest Wood",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "projectionofastr00muld_0",
+      "title": "The projection of the astral body",
+      "author": "Sylvan Joseph Muldoon",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Boston Public Library; alternate scans: in.ernet.dli.2015.173624, 1929MuldoonCarringtonTheProjectionOfTheAstralBody"
+    },
+    {
+      "id": "blavatskyletters",
+      "title": "Some unpublished letters of Helena Petrovna Blavatsky, with an introduction and commentary",
+      "author": "H. P. Blavatsky; Eugene Rollin Corson",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "selectworksofplo0000mead",
+      "title": "Select Works of Plotinus",
+      "author": "G. R. S. (editor) Thomas Taylor (translator) Plotinus Mead",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: in.ernet.dli.2015.21848"
+    },
+    {
+      "id": "theosophy0000alvi",
+      "title": "Theosophy",
+      "author": "Alvin Boyd Kuhn",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; held by Internet Archive; alternate scans: theosophymodernr00kuhn, theosophymodernr0000kuhn"
+    },
+    {
+      "id": "tibetan-initiate-on-world-problems",
+      "title": "A Tibetan Initiate On World Problems",
+      "author": "A. P. Sinnett",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    },
+    {
+      "id": "revelation-or-realization",
+      "title": "Revelation Or Realization: The Conflict in Theosophy",
+      "author": "J. J. van der Leeuw",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:stated"
+    }
+  ]
+}
