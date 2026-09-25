@@ -338,8 +338,8 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Lane:** translation (routing) · on-page.
 - **Seen in:** c19 3/6 (one book copied verbatim, correctly), illus 1/6, short 1/6, multicol 1/6, c17 2/6, dense 1/6 — 9 of 78, i.e. nearly every English-source book in the sample.
 - **Example:** https://sourcelibrary.org/book/the-book-of-the-thousand-nights-and-a-night-vol-5-burton/page/69a553c467a3da9e7ba5ab5c `[tr↔ocr]`; https://sourcelibrary.org/book/ante-nicene-fathers-vol-2-clement-of-alexandria-eds/page/69ad657f75811c30866e1da0.
-- **Detector / issue:** #3524, #4654 (English-tagged books and badges), #2761 (passthrough). The behaviour itself — paraphrase where the language already matches — had no issue.
-- **Fix:** when source language = target language, the translation *is* the corrected transcription: copy, modernise nothing, keep every note; the spend is zero.
+- **Detector / issue:** this is the deliberate **English modernization** lane (`english_modernization` prompt), not a routing accident: #4958 and PR #4959 (merged 2026-09-21) gate it to editions before 1820, the year the reader stops showing the panel (`englishOcrIsReadingView`), after a census found 2,279 English books carrying one and ~1,907 of them hidden. Of the nine books here, the post-1820 ones (Burton, Whinfield, Blavatsky, the Ante-Nicene Fathers) are therefore behind the display gate; Browne 1658, Jonson 1605, Philadelphia 1694 and Taylor 1820 are shown. Related: #3524, #4654, #2761.
+- **Fix — a decision for Derek, not a default:** either tighten modernization (keep every note and its attribution, no abridgement, no title changes, spelling only) or replace it with copy-through of the corrected transcription. The by-eye harms above (dropped notes, condensed commentary, "Brake"→"Broke") are the evidence for the choice; a per-page note-count and length check against the OCR would police either option.
 
 ### T13 · Apparatus stripped in translation — NEW · #5155
 - **Reader sees:** four of seven footnotes gone, the rest condensed into inline notes with the "L." attributions removed; an editor's emendation nullified so the note says nothing; a Greek textual-critical note rendered as meaningless English; note numbers renumbered so the commentary no longer keys to the text; a rubricated book incipit or chapter number lost so the structure is invisible; a marginal siglum moved to line 1.
@@ -456,7 +456,7 @@ Presence: number of books (of 6) in which the class was seen on at least one pag
 
 Ranked by classes covered per unit of work, all read-only or write-time:
 
-1. **Same-language mode** (T12, T13 for English books): copy, do not translate. Zero spend, removes a whole class from every English-source book.
+1. **Decide the English modernization lane** (T12, T13 for English books): it is deliberate (#4958, PR #4959, gated to pre-1820 editions). Derek's call between tightening it (every note kept, no abridgement) and copy-through; either way, a note-count and length check against the OCR polices it. Zero model spend for copy-through.
 2. **`<vocab>`-vs-body and identical-block checks** (O5, O4): two functions in `page-integrity.mjs`, no model.
 3. **`<page-num>` vs printed folio, catchword vs next opening** (I1, I6, O11): the second already exists; run it.
 4. **Write-time tag validation** (D1, T3, O15): `validateTranslation.ts` as a gate; a `<meta>` longer than the body is unwrapped.
