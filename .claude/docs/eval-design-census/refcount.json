@@ -1,0 +1,451 @@
+{
+  "perFile": [
+    {
+      "file": "armenian.json",
+      "stratum": "armenian",
+      "sealed_at": "2026-09-13T21:01:05.634Z",
+      "issue": 4746,
+      "n": 20,
+      "pages": 32,
+      "with_reference": 0,
+      "substrata": "manuscript:6,17th-18th-c-print:7,19th-20th-c-print:7"
+    },
+    {
+      "file": "chinese-ext.json",
+      "stratum": "chinese-ext",
+      "sealed_at": "2026-09-18T12:03:51.759Z",
+      "issue": 4925,
+      "n": 80,
+      "pages": 96,
+      "with_reference": 67,
+      "substrata": "skqs-manuscript:40,woodblock-canon:40"
+    },
+    {
+      "file": "chinese.json",
+      "stratum": "chinese",
+      "sealed_at": "2026-09-13T20:58:17.717Z",
+      "issue": 4743,
+      "n": 40,
+      "pages": 48,
+      "with_reference": 29,
+      "substrata": "buddhist-canon:20,other:20"
+    },
+    {
+      "file": "german-fraktur.json",
+      "stratum": "german-fraktur",
+      "sealed_at": "2026-09-13T21:02:38.668Z",
+      "issue": 4800,
+      "n": 20,
+      "pages": 24,
+      "with_reference": 0,
+      "substrata": "german-1500-1899:20"
+    },
+    {
+      "file": "greek-ext.json",
+      "stratum": "greek-ext",
+      "sealed_at": "2026-09-18T23:03:08.133Z",
+      "issue": 4925,
+      "n": 170,
+      "pages": 170,
+      "with_reference": 127,
+      "substrata": "greek-1450-1699:90,greek-1700-1799:80"
+    },
+    {
+      "file": "greek-ext2.json",
+      "stratum": "greek-ext2",
+      "sealed_at": "2026-09-21T14:29:32.098Z",
+      "issue": 4925,
+      "n": 10,
+      "pages": 10,
+      "with_reference": 8,
+      "substrata": "greek-1450-1699:10"
+    },
+    {
+      "file": "greek.json",
+      "stratum": "greek",
+      "sealed_at": "2026-09-13T20:58:53.226Z",
+      "issue": 4744,
+      "n": 30,
+      "pages": 38,
+      "with_reference": 11,
+      "substrata": "pre-1700-print:20,19th-c-print:10"
+    },
+    {
+      "file": "japanese-ext.json",
+      "stratum": "japanese-ext",
+      "sealed_at": "2026-09-15T17:14:42.600Z",
+      "issue": 4745,
+      "n": 120,
+      "pages": 130,
+      "with_reference": 0,
+      "substrata": "pre-1868-ext:120"
+    },
+    {
+      "file": "japanese.json",
+      "stratum": "japanese",
+      "sealed_at": "2026-09-13T20:59:49.204Z",
+      "issue": 4745,
+      "n": 40,
+      "pages": 48,
+      "with_reference": 0,
+      "substrata": "pre-1868:30,meiji-and-later:10"
+    },
+    {
+      "file": "latin-1700s.json",
+      "stratum": "latin-1700s",
+      "sealed_at": "2026-09-13T21:02:13.966Z",
+      "issue": 4800,
+      "n": 20,
+      "pages": 24,
+      "with_reference": 0,
+      "substrata": "latin-1700-1799:20"
+    },
+    {
+      "file": "latin-pre1700.json",
+      "stratum": "latin-pre1700",
+      "sealed_at": "2026-09-13T21:01:52.334Z",
+      "issue": 4800,
+      "n": 20,
+      "pages": 24,
+      "with_reference": 0,
+      "substrata": "latin-1450-1699:20"
+    },
+    {
+      "file": "longs-en-fr.json",
+      "stratum": "longs-en-fr",
+      "sealed_at": "2026-09-13T21:03:15.250Z",
+      "issue": 4800,
+      "n": 20,
+      "pages": 28,
+      "with_reference": 0,
+      "substrata": "english-1600-1779:10,french-1600-1779:10"
+    },
+    {
+      "file": "syriac.json",
+      "stratum": "syriac",
+      "sealed_at": "2026-09-13T21:00:41.889Z",
+      "issue": 4746,
+      "n": 20,
+      "pages": 28,
+      "with_reference": 0,
+      "substrata": "manuscript:10,print:10"
+    }
+  ],
+  "cells": [
+    {
+      "language": "Armenian",
+      "period": "unknown",
+      "registry_pages": 3,
+      "reference_pages": 0,
+      "books": 3
+    },
+    {
+      "language": "Armenian",
+      "period": "pre-1500",
+      "registry_pages": 6,
+      "reference_pages": 0,
+      "books": 6
+    },
+    {
+      "language": "Armenian; Armenian",
+      "period": "1500s",
+      "registry_pages": 1,
+      "reference_pages": 0,
+      "books": 1
+    },
+    {
+      "language": "Armenian",
+      "period": "1600s",
+      "registry_pages": 9,
+      "reference_pages": 0,
+      "books": 9
+    },
+    {
+      "language": "Armenian",
+      "period": "1700s",
+      "registry_pages": 2,
+      "reference_pages": 0,
+      "books": 2
+    },
+    {
+      "language": "Armenian",
+      "period": "1800s",
+      "registry_pages": 8,
+      "reference_pages": 0,
+      "books": 8
+    },
+    {
+      "language": "Armenian",
+      "period": "1900+",
+      "registry_pages": 3,
+      "reference_pages": 0,
+      "books": 3
+    },
+    {
+      "language": "Chinese",
+      "period": "unknown",
+      "registry_pages": 103,
+      "reference_pages": 73,
+      "books": 103
+    },
+    {
+      "language": "Chinese",
+      "period": "1700s",
+      "registry_pages": 19,
+      "reference_pages": 11,
+      "books": 19
+    },
+    {
+      "language": "Chinese",
+      "period": "1500s",
+      "registry_pages": 10,
+      "reference_pages": 5,
+      "books": 10
+    },
+    {
+      "language": "Chinese",
+      "period": "pre-1500",
+      "registry_pages": 3,
+      "reference_pages": 3,
+      "books": 3
+    },
+    {
+      "language": "Chinese",
+      "period": "1900+",
+      "registry_pages": 5,
+      "reference_pages": 2,
+      "books": 5
+    },
+    {
+      "language": "Chinese",
+      "period": "1600s",
+      "registry_pages": 4,
+      "reference_pages": 2,
+      "books": 4
+    },
+    {
+      "language": "German",
+      "period": "1600s",
+      "registry_pages": 9,
+      "reference_pages": 0,
+      "books": 9
+    },
+    {
+      "language": "German",
+      "period": "1700s",
+      "registry_pages": 7,
+      "reference_pages": 0,
+      "books": 7
+    },
+    {
+      "language": "German",
+      "period": "1500s",
+      "registry_pages": 3,
+      "reference_pages": 0,
+      "books": 3
+    },
+    {
+      "language": "German",
+      "period": "1800s",
+      "registry_pages": 5,
+      "reference_pages": 0,
+      "books": 5
+    },
+    {
+      "language": "Greek",
+      "period": "1500s",
+      "registry_pages": 89,
+      "reference_pages": 59,
+      "books": 89
+    },
+    {
+      "language": "Greek",
+      "period": "pre-1500",
+      "registry_pages": 17,
+      "reference_pages": 5,
+      "books": 17
+    },
+    {
+      "language": "Greek",
+      "period": "1600s",
+      "registry_pages": 16,
+      "reference_pages": 6,
+      "books": 16
+    },
+    {
+      "language": "grc",
+      "period": "1500s",
+      "registry_pages": 1,
+      "reference_pages": 1,
+      "books": 1
+    },
+    {
+      "language": "gre",
+      "period": "1500s",
+      "registry_pages": 1,
+      "reference_pages": 1,
+      "books": 1
+    },
+    {
+      "language": "Greek",
+      "period": "1700s",
+      "registry_pages": 80,
+      "reference_pages": 68,
+      "books": 80
+    },
+    {
+      "language": "Greek",
+      "period": "1800s",
+      "registry_pages": 13,
+      "reference_pages": 5,
+      "books": 13
+    },
+    {
+      "language": "Ancient Greek",
+      "period": "1800s",
+      "registry_pages": 1,
+      "reference_pages": 1,
+      "books": 1
+    },
+    {
+      "language": "Japanese",
+      "period": "1700s",
+      "registry_pages": 48,
+      "reference_pages": 0,
+      "books": 48
+    },
+    {
+      "language": "Japanese",
+      "period": "1800s",
+      "registry_pages": 72,
+      "reference_pages": 0,
+      "books": 72
+    },
+    {
+      "language": "Japanese; Chinese",
+      "period": "1600s",
+      "registry_pages": 1,
+      "reference_pages": 0,
+      "books": 1
+    },
+    {
+      "language": "Japanese",
+      "period": "1500s",
+      "registry_pages": 10,
+      "reference_pages": 0,
+      "books": 10
+    },
+    {
+      "language": "Japanese",
+      "period": "1600s",
+      "registry_pages": 40,
+      "reference_pages": 0,
+      "books": 40
+    },
+    {
+      "language": "Japanese",
+      "period": "1900+",
+      "registry_pages": 7,
+      "reference_pages": 0,
+      "books": 7
+    },
+    {
+      "language": "Latin",
+      "period": "1700s",
+      "registry_pages": 24,
+      "reference_pages": 0,
+      "books": 24
+    },
+    {
+      "language": "Latin",
+      "period": "1500s",
+      "registry_pages": 14,
+      "reference_pages": 0,
+      "books": 14
+    },
+    {
+      "language": "Latin",
+      "period": "1600s",
+      "registry_pages": 8,
+      "reference_pages": 0,
+      "books": 8
+    },
+    {
+      "language": "Latin",
+      "period": "pre-1500",
+      "registry_pages": 2,
+      "reference_pages": 0,
+      "books": 2
+    },
+    {
+      "language": "English",
+      "period": "1700s",
+      "registry_pages": 8,
+      "reference_pages": 0,
+      "books": 8
+    },
+    {
+      "language": "English",
+      "period": "1600s",
+      "registry_pages": 6,
+      "reference_pages": 0,
+      "books": 6
+    },
+    {
+      "language": "French",
+      "period": "1700s",
+      "registry_pages": 9,
+      "reference_pages": 0,
+      "books": 9
+    },
+    {
+      "language": "French",
+      "period": "1600s",
+      "registry_pages": 5,
+      "reference_pages": 0,
+      "books": 5
+    },
+    {
+      "language": "Syriac",
+      "period": "unknown",
+      "registry_pages": 11,
+      "reference_pages": 0,
+      "books": 11
+    },
+    {
+      "language": "Syriac",
+      "period": "pre-1500",
+      "registry_pages": 3,
+      "reference_pages": 0,
+      "books": 3
+    },
+    {
+      "language": "Syriac",
+      "period": "1700s",
+      "registry_pages": 2,
+      "reference_pages": 0,
+      "books": 2
+    },
+    {
+      "language": "Syriac",
+      "period": "1800s",
+      "registry_pages": 7,
+      "reference_pages": 0,
+      "books": 7
+    },
+    {
+      "language": "Syriac",
+      "period": "1900+",
+      "registry_pages": 4,
+      "reference_pages": 0,
+      "books": 4
+    },
+    {
+      "language": "Syriac, with many headings and subscriptions to the sections of the book in Arabic either alone or mixed with Syriac.",
+      "period": "1700s",
+      "registry_pages": 1,
+      "reference_pages": 0,
+      "books": 1
+    }
+  ]
+}

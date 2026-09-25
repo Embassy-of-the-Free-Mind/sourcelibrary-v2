@@ -1,0 +1,4204 @@
+{
+  "source": "./atlas-books.jsonl",
+  "total_books": 41928,
+  "live_books": 41928,
+  "live_pages": 8806456,
+  "strata": [
+    {
+      "language": "Chinese",
+      "period": "unknown",
+      "books": 11636,
+      "pages": 1755013
+    },
+    {
+      "language": "Latin",
+      "period": "1500s",
+      "books": 3179,
+      "pages": 929551
+    },
+    {
+      "language": "Latin",
+      "period": "1600s",
+      "books": 3214,
+      "pages": 789365
+    },
+    {
+      "language": "Latin",
+      "period": "unknown",
+      "books": 6990,
+      "pages": 491083
+    },
+    {
+      "language": "English",
+      "period": "1800s",
+      "books": 917,
+      "pages": 366570
+    },
+    {
+      "language": "German",
+      "period": "1700s",
+      "books": 847,
+      "pages": 326007
+    },
+    {
+      "language": "Latin",
+      "period": "pre-1500",
+      "books": 1405,
+      "pages": 322788
+    },
+    {
+      "language": "English",
+      "period": "1900+",
+      "books": 963,
+      "pages": 305595
+    },
+    {
+      "language": "Tibetan",
+      "period": "unknown",
+      "books": 1440,
+      "pages": 276691
+    },
+    {
+      "language": "Latin",
+      "period": "1700s",
+      "books": 676,
+      "pages": 253199
+    },
+    {
+      "language": "Latin",
+      "period": "1800s",
+      "books": 342,
+      "pages": 166081
+    },
+    {
+      "language": "German",
+      "period": "1600s",
+      "books": 731,
+      "pages": 163816
+    },
+    {
+      "language": "Greek",
+      "period": "1800s",
+      "books": 254,
+      "pages": 135844
+    },
+    {
+      "language": "English",
+      "period": "1700s",
+      "books": 357,
+      "pages": 128503
+    },
+    {
+      "language": "Greek",
+      "period": "1500s",
+      "books": 246,
+      "pages": 115354
+    },
+    {
+      "language": "Italian",
+      "period": "1500s",
+      "books": 320,
+      "pages": 108184
+    },
+    {
+      "language": "German",
+      "period": "1800s",
+      "books": 299,
+      "pages": 104729
+    },
+    {
+      "language": "French",
+      "period": "1700s",
+      "books": 280,
+      "pages": 97816
+    },
+    {
+      "language": "English",
+      "period": "1600s",
+      "books": 311,
+      "pages": 93229
+    },
+    {
+      "language": "Chinese",
+      "period": "1700s",
+      "books": 559,
+      "pages": 85245
+    },
+    {
+      "language": "Greek",
+      "period": "pre-1500",
+      "books": 171,
+      "pages": 75512
+    },
+    {
+      "language": "French",
+      "period": "1800s",
+      "books": 181,
+      "pages": 75470
+    },
+    {
+      "language": "German",
+      "period": "1500s",
+      "books": 333,
+      "pages": 74453
+    },
+    {
+      "language": "French",
+      "period": "1600s",
+      "books": 178,
+      "pages": 72465
+    },
+    {
+      "language": "Dutch",
+      "period": "1600s",
+      "books": 265,
+      "pages": 68381
+    },
+    {
+      "language": "Greek",
+      "period": "1900+",
+      "books": 158,
+      "pages": 67502
+    },
+    {
+      "language": "Greek",
+      "period": "unknown",
+      "books": 194,
+      "pages": 60356
+    },
+    {
+      "language": "Russian",
+      "period": "1800s",
+      "books": 112,
+      "pages": 52948
+    },
+    {
+      "language": "Dutch",
+      "period": "1700s",
+      "books": 190,
+      "pages": 46795
+    },
+    {
+      "language": "Russian",
+      "period": "1900+",
+      "books": 126,
+      "pages": 46654
+    },
+    {
+      "language": "Latin",
+      "period": "1900+",
+      "books": 104,
+      "pages": 42978
+    },
+    {
+      "language": "Sanskrit",
+      "period": "1900+",
+      "books": 126,
+      "pages": 38568
+    },
+    {
+      "language": "German",
+      "period": "1900+",
+      "books": 113,
+      "pages": 36969
+    },
+    {
+      "language": "Greek",
+      "period": "1600s",
+      "books": 68,
+      "pages": 35603
+    },
+    {
+      "language": "Chinese",
+      "period": "1600s",
+      "books": 299,
+      "pages": 34685
+    },
+    {
+      "language": "Sanskrit",
+      "period": "1800s",
+      "books": 120,
+      "pages": 33065
+    },
+    {
+      "language": "German",
+      "period": "unknown",
+      "books": 317,
+      "pages": 32249
+    },
+    {
+      "language": "French",
+      "period": "1500s",
+      "books": 104,
+      "pages": 31975
+    },
+    {
+      "language": "French",
+      "period": "1900+",
+      "books": 60,
+      "pages": 25435
+    },
+    {
+      "language": "Korean",
+      "period": "1800s",
+      "books": 60,
+      "pages": 24138
+    },
+    {
+      "language": "Sanskrit",
+      "period": "unknown",
+      "books": 108,
+      "pages": 23863
+    },
+    {
+      "language": "English",
+      "period": "1500s",
+      "books": 87,
+      "pages": 23590
+    },
+    {
+      "language": "Hebrew",
+      "period": "unknown",
+      "books": 98,
+      "pages": 21981
+    },
+    {
+      "language": "Chinese",
+      "period": "1800s",
+      "books": 131,
+      "pages": 21963
+    },
+    {
+      "language": "English",
+      "period": "unknown",
+      "books": 121,
+      "pages": 21613
+    },
+    {
+      "language": "Italian",
+      "period": "1600s",
+      "books": 74,
+      "pages": 20477
+    },
+    {
+      "language": "Arabic",
+      "period": "pre-1500",
+      "books": 74,
+      "pages": 18718
+    },
+    {
+      "language": "Korean",
+      "period": "unknown",
+      "books": 116,
+      "pages": 18687
+    },
+    {
+      "language": "Chinese",
+      "period": "1500s",
+      "books": 100,
+      "pages": 17849
+    },
+    {
+      "language": "Syriac",
+      "period": "1800s",
+      "books": 32,
+      "pages": 17253
+    },
+    {
+      "language": "Italian",
+      "period": "1800s",
+      "books": 45,
+      "pages": 16444
+    },
+    {
+      "language": "Syriac",
+      "period": "1900+",
+      "books": 25,
+      "pages": 16237
+    },
+    {
+      "language": "Arabic",
+      "period": "1800s",
+      "books": 42,
+      "pages": 14373
+    },
+    {
+      "language": "Armenian",
+      "period": "1800s",
+      "books": 26,
+      "pages": 13843
+    },
+    {
+      "language": "Japanese",
+      "period": "1900+",
+      "books": 25,
+      "pages": 13583
+    },
+    {
+      "language": "Italian",
+      "period": "pre-1500",
+      "books": 47,
+      "pages": 13559
+    },
+    {
+      "language": "German",
+      "period": "pre-1500",
+      "books": 57,
+      "pages": 12634
+    },
+    {
+      "language": "French",
+      "period": "unknown",
+      "books": 55,
+      "pages": 12314
+    },
+    {
+      "language": "Arabic",
+      "period": "unknown",
+      "books": 90,
+      "pages": 11904
+    },
+    {
+      "language": "Korean",
+      "period": "1700s",
+      "books": 37,
+      "pages": 10432
+    },
+    {
+      "language": "Italian",
+      "period": "1700s",
+      "books": 38,
+      "pages": 10088
+    },
+    {
+      "language": "Hebrew",
+      "period": "1500s",
+      "books": 28,
+      "pages": 9917
+    },
+    {
+      "language": "Spanish",
+      "period": "1600s",
+      "books": 28,
+      "pages": 9409
+    },
+    {
+      "language": "Hebrew",
+      "period": "1600s",
+      "books": 36,
+      "pages": 8250
+    },
+    {
+      "language": "Greek",
+      "period": "1700s",
+      "books": 19,
+      "pages": 8023
+    },
+    {
+      "language": "Hebrew",
+      "period": "1800s",
+      "books": 20,
+      "pages": 7843
+    },
+    {
+      "language": "Italian",
+      "period": "1900+",
+      "books": 34,
+      "pages": 7767
+    },
+    {
+      "language": "Dutch",
+      "period": "1500s",
+      "books": 36,
+      "pages": 7718
+    },
+    {
+      "language": "Chinese",
+      "period": "1900+",
+      "books": 27,
+      "pages": 7560
+    },
+    {
+      "language": "Sanskrit",
+      "period": "pre-1500",
+      "books": 15,
+      "pages": 7376
+    },
+    {
+      "language": "Arabic",
+      "period": "1900+",
+      "books": 27,
+      "pages": 6909
+    },
+    {
+      "language": "Italian",
+      "period": "unknown",
+      "books": 32,
+      "pages": 6848
+    },
+    {
+      "language": "Chinese",
+      "period": "pre-1500",
+      "books": 40,
+      "pages": 6738
+    },
+    {
+      "language": "Dutch",
+      "period": "1900+",
+      "books": 31,
+      "pages": 6664
+    },
+    {
+      "language": "Hebrew",
+      "period": "1700s",
+      "books": 23,
+      "pages": 6661
+    },
+    {
+      "language": "Spanish",
+      "period": "1500s",
+      "books": 20,
+      "pages": 5951
+    },
+    {
+      "language": "Syriac",
+      "period": "unknown",
+      "books": 15,
+      "pages": 5803
+    },
+    {
+      "language": "Pali",
+      "period": "1800s",
+      "books": 15,
+      "pages": 5780
+    },
+    {
+      "language": "Sumerian",
+      "period": "1600s",
+      "books": 373,
+      "pages": 5759
+    },
+    {
+      "language": "French",
+      "period": "pre-1500",
+      "books": 23,
+      "pages": 5455
+    },
+    {
+      "language": "Hebrew",
+      "period": "1900+",
+      "books": 8,
+      "pages": 5384
+    },
+    {
+      "language": "Latin-German",
+      "period": "1600s",
+      "books": 36,
+      "pages": 5327
+    },
+    {
+      "language": "Spanish",
+      "period": "1800s",
+      "books": 11,
+      "pages": 4796
+    },
+    {
+      "language": "Armenian",
+      "period": "pre-1500",
+      "books": 9,
+      "pages": 4795
+    },
+    {
+      "language": "Korean",
+      "period": "1600s",
+      "books": 20,
+      "pages": 4688
+    },
+    {
+      "language": "Armenian",
+      "period": "1600s",
+      "books": 16,
+      "pages": 4556
+    },
+    {
+      "language": "Japanese",
+      "period": "1800s",
+      "books": 46,
+      "pages": 4499
+    },
+    {
+      "language": "Unknown",
+      "period": "unknown",
+      "books": 27,
+      "pages": 4358
+    },
+    {
+      "language": "Ge'ez",
+      "period": "pre-1500",
+      "books": 2,
+      "pages": 4061
+    },
+    {
+      "language": "Hebrew",
+      "period": "pre-1500",
+      "books": 14,
+      "pages": 4040
+    },
+    {
+      "language": "Spanish",
+      "period": "1700s",
+      "books": 13,
+      "pages": 3938
+    },
+    {
+      "language": "Persian",
+      "period": "1800s",
+      "books": 12,
+      "pages": 3913
+    },
+    {
+      "language": "Latin-German",
+      "period": "1700s",
+      "books": 19,
+      "pages": 3913
+    },
+    {
+      "language": "Persian",
+      "period": "pre-1500",
+      "books": 15,
+      "pages": 3890
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "pre-1500",
+      "books": 8,
+      "pages": 3807
+    },
+    {
+      "language": "Greek/Latin",
+      "period": "1800s",
+      "books": 7,
+      "pages": 3612
+    },
+    {
+      "language": "Tamil",
+      "period": "1800s",
+      "books": 12,
+      "pages": 3507
+    },
+    {
+      "language": "Tibetan",
+      "period": "1900+",
+      "books": 9,
+      "pages": 3422
+    },
+    {
+      "language": "Ge'ez",
+      "period": "unknown",
+      "books": 10,
+      "pages": 3404
+    },
+    {
+      "language": "Arabic",
+      "period": "1500s",
+      "books": 12,
+      "pages": 3319
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "1500s",
+      "books": 8,
+      "pages": 3167
+    },
+    {
+      "language": "Middle English",
+      "period": "pre-1500",
+      "books": 10,
+      "pages": 3137
+    },
+    {
+      "language": "Armenian",
+      "period": "1900+",
+      "books": 7,
+      "pages": 3118
+    },
+    {
+      "language": "Danish",
+      "period": "1800s",
+      "books": 8,
+      "pages": 3065
+    },
+    {
+      "language": "Hindi",
+      "period": "1900+",
+      "books": 12,
+      "pages": 3057
+    },
+    {
+      "language": "Armenian",
+      "period": "unknown",
+      "books": 5,
+      "pages": 3042
+    },
+    {
+      "language": "Tibetan",
+      "period": "pre-1500",
+      "books": 9,
+      "pages": 3023
+    },
+    {
+      "language": "Persian",
+      "period": "1900+",
+      "books": 11,
+      "pages": 2961
+    },
+    {
+      "language": "Tamil",
+      "period": "1900+",
+      "books": 5,
+      "pages": 2924
+    },
+    {
+      "language": "Maori",
+      "period": "1800s",
+      "books": 5,
+      "pages": 2867
+    },
+    {
+      "language": "Hawaiian",
+      "period": "1800s",
+      "books": 3,
+      "pages": 2749
+    },
+    {
+      "language": "auto-detect",
+      "period": "1600s",
+      "books": 12,
+      "pages": 2700
+    },
+    {
+      "language": "auto-detect",
+      "period": "1700s",
+      "books": 6,
+      "pages": 2622
+    },
+    {
+      "language": "Old French",
+      "period": "pre-1500",
+      "books": 7,
+      "pages": 2574
+    },
+    {
+      "language": "Nahuatl-Spanish",
+      "period": "1500s",
+      "books": 3,
+      "pages": 2506
+    },
+    {
+      "language": "Arabic",
+      "period": "1600s",
+      "books": 10,
+      "pages": 2470
+    },
+    {
+      "language": "Ottoman Turkish",
+      "period": "1800s",
+      "books": 6,
+      "pages": 2426
+    },
+    {
+      "language": "Tibetan",
+      "period": "1800s",
+      "books": 3,
+      "pages": 2365
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "period": "1900+",
+      "books": 29,
+      "pages": 2325
+    },
+    {
+      "language": "Pali",
+      "period": "1900+",
+      "books": 9,
+      "pages": 2314
+    },
+    {
+      "language": "Persian",
+      "period": "1500s",
+      "books": 7,
+      "pages": 2213
+    },
+    {
+      "language": "Tibetan",
+      "period": "1500s",
+      "books": 3,
+      "pages": 2061
+    },
+    {
+      "language": "Arabic",
+      "period": "1700s",
+      "books": 10,
+      "pages": 2032
+    },
+    {
+      "language": "Syriac",
+      "period": "pre-1500",
+      "books": 8,
+      "pages": 2025
+    },
+    {
+      "language": "Zulu",
+      "period": "1800s",
+      "books": 3,
+      "pages": 2004
+    },
+    {
+      "language": "Hebrew and Judeo-Arabic",
+      "period": "unknown",
+      "books": 13,
+      "pages": 2004
+    },
+    {
+      "language": "Syriac",
+      "period": "1700s",
+      "books": 4,
+      "pages": 1997
+    },
+    {
+      "language": "Hebrew and Aramaic",
+      "period": "unknown",
+      "books": 6,
+      "pages": 1933
+    },
+    {
+      "language": "Javanese",
+      "period": "1800s",
+      "books": 4,
+      "pages": 1868
+    },
+    {
+      "language": "Middle English",
+      "period": "unknown",
+      "books": 8,
+      "pages": 1866
+    },
+    {
+      "language": "e",
+      "period": "1800s",
+      "books": 7,
+      "pages": 1860
+    },
+    {
+      "language": "Middle Dutch",
+      "period": "pre-1500",
+      "books": 5,
+      "pages": 1851
+    },
+    {
+      "language": "Old Norse",
+      "period": "1800s",
+      "books": 4,
+      "pages": 1817
+    },
+    {
+      "language": "German-English",
+      "period": "1900+",
+      "books": 7,
+      "pages": 1791
+    },
+    {
+      "language": "Ancient Greek",
+      "period": "1500s",
+      "books": 2,
+      "pages": 1717
+    },
+    {
+      "language": "Japanese",
+      "period": "1600s",
+      "books": 30,
+      "pages": 1696
+    },
+    {
+      "language": "Hebrew-Greek",
+      "period": "1800s",
+      "books": 2,
+      "pages": 1678
+    },
+    {
+      "language": "Persian",
+      "period": "unknown",
+      "books": 11,
+      "pages": 1588
+    },
+    {
+      "language": "ger",
+      "period": "1700s",
+      "books": 2,
+      "pages": 1546
+    },
+    {
+      "language": "Dutch",
+      "period": "1800s",
+      "books": 9,
+      "pages": 1546
+    },
+    {
+      "language": "Old French",
+      "period": "1800s",
+      "books": 4,
+      "pages": 1546
+    },
+    {
+      "language": "Burmese",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1534
+    },
+    {
+      "language": "Chinese-English",
+      "period": "1800s",
+      "books": 2,
+      "pages": 1530
+    },
+    {
+      "language": "Ge'ez",
+      "period": "1800s",
+      "books": 2,
+      "pages": 1521
+    },
+    {
+      "language": "Marathi",
+      "period": "1800s",
+      "books": 2,
+      "pages": 1481
+    },
+    {
+      "language": "Georgian",
+      "period": "pre-1500",
+      "books": 3,
+      "pages": 1471
+    },
+    {
+      "language": "Egyptian",
+      "period": "1900+",
+      "books": 4,
+      "pages": 1452
+    },
+    {
+      "language": "Latin-Dutch",
+      "period": "1600s",
+      "books": 2,
+      "pages": 1448
+    },
+    {
+      "language": "Spanish",
+      "period": "pre-1500",
+      "books": 4,
+      "pages": 1441
+    },
+    {
+      "language": "Middle English",
+      "period": "1800s",
+      "books": 4,
+      "pages": 1428
+    },
+    {
+      "language": "Japanese",
+      "period": "1700s",
+      "books": 17,
+      "pages": 1427
+    },
+    {
+      "language": "Korean",
+      "period": "1500s",
+      "books": 7,
+      "pages": 1409
+    },
+    {
+      "language": "Dutch",
+      "period": "pre-1500",
+      "books": 3,
+      "pages": 1393
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1376
+    },
+    {
+      "language": "Polish",
+      "period": "1800s",
+      "books": 4,
+      "pages": 1354
+    },
+    {
+      "language": "Lb",
+      "period": "1900+",
+      "books": 1,
+      "pages": 1345
+    },
+    {
+      "language": "Ge'ez",
+      "period": "1900+",
+      "books": 3,
+      "pages": 1342
+    },
+    {
+      "language": "Tibetan",
+      "period": "1700s",
+      "books": 2,
+      "pages": 1336
+    },
+    {
+      "language": "Welsh/English",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1334
+    },
+    {
+      "language": "English",
+      "period": "pre-1500",
+      "books": 11,
+      "pages": 1333
+    },
+    {
+      "language": "Coptic",
+      "period": "1900+",
+      "books": 3,
+      "pages": 1302
+    },
+    {
+      "language": "Akkadian",
+      "period": "1900+",
+      "books": 6,
+      "pages": 1287
+    },
+    {
+      "language": "Thai",
+      "period": "unknown",
+      "books": 1,
+      "pages": 1282
+    },
+    {
+      "language": "Malagasy",
+      "period": "1900+",
+      "books": 1,
+      "pages": 1270
+    },
+    {
+      "language": "Armenian",
+      "period": "1500s",
+      "books": 2,
+      "pages": 1250
+    },
+    {
+      "language": "Ge'ez",
+      "period": "1500s",
+      "books": 3,
+      "pages": 1234
+    },
+    {
+      "language": "Judeo-Arabic and Hebrew",
+      "period": "unknown",
+      "books": 6,
+      "pages": 1224
+    },
+    {
+      "language": "unknown",
+      "period": "unknown",
+      "books": 6,
+      "pages": 1180
+    },
+    {
+      "language": "Samoan",
+      "period": "1800s",
+      "books": 1,
+      "pages": 1162
+    },
+    {
+      "language": "Ne",
+      "period": "1900+",
+      "books": 3,
+      "pages": 1158
+    },
+    {
+      "language": "Unknown",
+      "period": "1800s",
+      "books": 6,
+      "pages": 1148
+    },
+    {
+      "language": "Multiple",
+      "period": "1900+",
+      "books": 14,
+      "pages": 1140
+    },
+    {
+      "language": "Swedish",
+      "period": "1800s",
+      "books": 2,
+      "pages": 1124
+    },
+    {
+      "language": "Bengali",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1112
+    },
+    {
+      "language": "Xhosa",
+      "period": "1800s",
+      "books": 1,
+      "pages": 1098
+    },
+    {
+      "language": "Tibetan",
+      "period": "1600s",
+      "books": 2,
+      "pages": 1092
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "1600s",
+      "books": 8,
+      "pages": 1086
+    },
+    {
+      "language": "Portuguese",
+      "period": "1500s",
+      "books": 3,
+      "pages": 1070
+    },
+    {
+      "language": "Ge'ez",
+      "period": "1600s",
+      "books": 2,
+      "pages": 1064
+    },
+    {
+      "language": "Maya hieroglyphs / French",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1048
+    },
+    {
+      "language": "Egyptian",
+      "period": "1800s",
+      "books": 3,
+      "pages": 1029
+    },
+    {
+      "language": "Danish",
+      "period": "1700s",
+      "books": 1,
+      "pages": 1016
+    },
+    {
+      "language": "Korean",
+      "period": "1900+",
+      "books": 5,
+      "pages": 1015
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic, and Ladino",
+      "period": "unknown",
+      "books": 2,
+      "pages": 1012
+    },
+    {
+      "language": "Malay",
+      "period": "1800s",
+      "books": 13,
+      "pages": 999
+    },
+    {
+      "language": "Avestan",
+      "period": "1800s",
+      "books": 3,
+      "pages": 993
+    },
+    {
+      "language": "Japanese",
+      "period": "unknown",
+      "books": 15,
+      "pages": 988
+    },
+    {
+      "language": "Swahili",
+      "period": "1800s",
+      "books": 2,
+      "pages": 944
+    },
+    {
+      "language": "Hebrew-Greek",
+      "period": "1600s",
+      "books": 1,
+      "pages": 940
+    },
+    {
+      "language": "Irish/English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 918
+    },
+    {
+      "language": "Russian",
+      "period": "1700s",
+      "books": 3,
+      "pages": 911
+    },
+    {
+      "language": "Greek/Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 910
+    },
+    {
+      "language": "Danish",
+      "period": "1600s",
+      "books": 1,
+      "pages": 904
+    },
+    {
+      "language": "Persian",
+      "period": "1700s",
+      "books": 3,
+      "pages": 900
+    },
+    {
+      "language": "Bengali",
+      "period": "1900+",
+      "books": 3,
+      "pages": 900
+    },
+    {
+      "language": "Vietnamese",
+      "period": "1800s",
+      "books": 4,
+      "pages": 887
+    },
+    {
+      "language": "Hebrew-Greek",
+      "period": "1900+",
+      "books": 1,
+      "pages": 886
+    },
+    {
+      "language": "Japanese",
+      "period": "pre-1500",
+      "books": 12,
+      "pages": 884
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "1600s",
+      "books": 5,
+      "pages": 882
+    },
+    {
+      "language": "Anglo-Saxon",
+      "period": "1800s",
+      "books": 3,
+      "pages": 880
+    },
+    {
+      "language": "Portuguese",
+      "period": "1800s",
+      "books": 3,
+      "pages": 879
+    },
+    {
+      "language": "Igbo",
+      "period": "1900+",
+      "books": 1,
+      "pages": 863
+    },
+    {
+      "language": "Polish",
+      "period": "1500s",
+      "books": 1,
+      "pages": 849
+    },
+    {
+      "language": "Nahuatl",
+      "period": "1500s",
+      "books": 7,
+      "pages": 840
+    },
+    {
+      "language": "Anglo-Norman",
+      "period": "1800s",
+      "books": 2,
+      "pages": 832
+    },
+    {
+      "language": "Coptic",
+      "period": "1800s",
+      "books": 2,
+      "pages": 826
+    },
+    {
+      "language": "Greek, Latin",
+      "period": "1800s",
+      "books": 1,
+      "pages": 805
+    },
+    {
+      "language": "Hindi",
+      "period": "1800s",
+      "books": 2,
+      "pages": 799
+    },
+    {
+      "language": "French/Greek",
+      "period": "1800s",
+      "books": 1,
+      "pages": 799
+    },
+    {
+      "language": "Chinese-English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 780
+    },
+    {
+      "language": "Hausa",
+      "period": "1900+",
+      "books": 3,
+      "pages": 774
+    },
+    {
+      "language": "Ottoman Turkish",
+      "period": "1500s",
+      "books": 2,
+      "pages": 772
+    },
+    {
+      "language": "Sumerian",
+      "period": "1900+",
+      "books": 2,
+      "pages": 766
+    },
+    {
+      "language": "Greek/Latin",
+      "period": "1700s",
+      "books": 1,
+      "pages": 750
+    },
+    {
+      "language": "Latin/English",
+      "period": "1600s",
+      "books": 2,
+      "pages": 732
+    },
+    {
+      "language": "Dutch",
+      "period": "unknown",
+      "books": 10,
+      "pages": 729
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "unknown",
+      "books": 6,
+      "pages": 725
+    },
+    {
+      "language": "Hebrew, Aramaic, and Judeo-Arabic",
+      "period": "1800s",
+      "books": 2,
+      "pages": 717
+    },
+    {
+      "language": "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)",
+      "period": "1900+",
+      "books": 1,
+      "pages": 710
+    },
+    {
+      "language": "Latin-English",
+      "period": "1600s",
+      "books": 4,
+      "pages": 709
+    },
+    {
+      "language": "Middle High German",
+      "period": "pre-1500",
+      "books": 5,
+      "pages": 702
+    },
+    {
+      "language": "Hebrew and Judeo-Italian",
+      "period": "unknown",
+      "books": 1,
+      "pages": 702
+    },
+    {
+      "language": "Portuguese",
+      "period": "1600s",
+      "books": 3,
+      "pages": 701
+    },
+    {
+      "language": "Czech",
+      "period": "1500s",
+      "books": 2,
+      "pages": 693
+    },
+    {
+      "language": "Persian",
+      "period": "1600s",
+      "books": 3,
+      "pages": 686
+    },
+    {
+      "language": "Italian-German",
+      "period": "1800s",
+      "books": 1,
+      "pages": 686
+    },
+    {
+      "language": "Javanese",
+      "period": "1900+",
+      "books": 4,
+      "pages": 683
+    },
+    {
+      "language": "English.",
+      "period": "1800s",
+      "books": 1,
+      "pages": 682
+    },
+    {
+      "language": "Quiché Maya",
+      "period": "1800s",
+      "books": 1,
+      "pages": 674
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic, and Aramaic",
+      "period": "unknown",
+      "books": 3,
+      "pages": 670
+    },
+    {
+      "language": "Irish/English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 659
+    },
+    {
+      "language": "Classical Armenian",
+      "period": "unknown",
+      "books": 1,
+      "pages": 656
+    },
+    {
+      "language": "Italian / German",
+      "period": "1800s",
+      "books": 1,
+      "pages": 646
+    },
+    {
+      "language": "Spanish / French",
+      "period": "1800s",
+      "books": 1,
+      "pages": 644
+    },
+    {
+      "language": "Punjabi",
+      "period": "1600s",
+      "books": 1,
+      "pages": 634
+    },
+    {
+      "language": "Latin/Hebrew",
+      "period": "1500s",
+      "books": 1,
+      "pages": 628
+    },
+    {
+      "language": "Irish/English",
+      "period": "1700s",
+      "books": 1,
+      "pages": 627
+    },
+    {
+      "language": "Pali",
+      "period": "unknown",
+      "books": 1,
+      "pages": 622
+    },
+    {
+      "language": "Aromanian (in Greek alphabet), Greek",
+      "period": "unknown",
+      "books": 1,
+      "pages": 622
+    },
+    {
+      "language": "Latin-German",
+      "period": "1500s",
+      "books": 4,
+      "pages": 613
+    },
+    {
+      "language": "Finnish",
+      "period": "1800s",
+      "books": 2,
+      "pages": 600
+    },
+    {
+      "language": "Old Javanese",
+      "period": "unknown",
+      "books": 2,
+      "pages": 595
+    },
+    {
+      "language": "Hebrew, Aramaic, and Judeo-Arabic",
+      "period": "1900+",
+      "books": 1,
+      "pages": 568
+    },
+    {
+      "language": "Chinese-Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 568
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic and Aramaic",
+      "period": "1700s",
+      "books": 1,
+      "pages": 558
+    },
+    {
+      "language": "Yoruba",
+      "period": "1800s",
+      "books": 3,
+      "pages": 556
+    },
+    {
+      "language": "Unknown",
+      "period": "1700s",
+      "books": 5,
+      "pages": 550
+    },
+    {
+      "language": "Malay",
+      "period": "1700s",
+      "books": 2,
+      "pages": 546
+    },
+    {
+      "language": "Swahili",
+      "period": "1900+",
+      "books": 2,
+      "pages": 538
+    },
+    {
+      "language": "Karaim and Hebrew",
+      "period": "unknown",
+      "books": 1,
+      "pages": 538
+    },
+    {
+      "language": "Burmese",
+      "period": "1900+",
+      "books": 1,
+      "pages": 537
+    },
+    {
+      "language": "Greek, English",
+      "period": "1900+",
+      "books": 2,
+      "pages": 537
+    },
+    {
+      "language": "Ancient Greek",
+      "period": "1800s",
+      "books": 3,
+      "pages": 534
+    },
+    {
+      "language": "Portuguese",
+      "period": "1700s",
+      "books": 1,
+      "pages": 514
+    },
+    {
+      "language": "Malay",
+      "period": "unknown",
+      "books": 7,
+      "pages": 503
+    },
+    {
+      "language": "Greek-German",
+      "period": "1700s",
+      "books": 2,
+      "pages": 500
+    },
+    {
+      "language": "Hebrew, Judeo-Persian, and Aramaic",
+      "period": "unknown",
+      "books": 1,
+      "pages": 492
+    },
+    {
+      "language": "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.",
+      "period": "unknown",
+      "books": 1,
+      "pages": 490
+    },
+    {
+      "language": "Old French",
+      "period": "1900+",
+      "books": 1,
+      "pages": 488
+    },
+    {
+      "language": "Irish/English",
+      "period": "unknown",
+      "books": 1,
+      "pages": 476
+    },
+    {
+      "language": "Middle English-English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 474
+    },
+    {
+      "language": "Occitan",
+      "period": "1800s",
+      "books": 1,
+      "pages": 470
+    },
+    {
+      "language": "Haida",
+      "period": "1900+",
+      "books": 1,
+      "pages": 469
+    },
+    {
+      "language": "Italian/Latin",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 468
+    },
+    {
+      "language": "Javanese",
+      "period": "unknown",
+      "books": 37,
+      "pages": 467
+    },
+    {
+      "language": "Latin-German",
+      "period": "1800s",
+      "books": 1,
+      "pages": 466
+    },
+    {
+      "language": "Gothic",
+      "period": "1700s",
+      "books": 1,
+      "pages": 464
+    },
+    {
+      "language": "Greek/English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 461
+    },
+    {
+      "language": "Kanuri",
+      "period": "1800s",
+      "books": 1,
+      "pages": 458
+    },
+    {
+      "language": "Punjabi",
+      "period": "1800s",
+      "books": 1,
+      "pages": 455
+    },
+    {
+      "language": "Hebrew, Judeo-Italian, and Judeo-Greek",
+      "period": "unknown",
+      "books": 1,
+      "pages": 452
+    },
+    {
+      "language": "Old English",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 439
+    },
+    {
+      "language": "Aramaic",
+      "period": "1900+",
+      "books": 1,
+      "pages": 437
+    },
+    {
+      "language": "Irish",
+      "period": "1800s",
+      "books": 1,
+      "pages": 432
+    },
+    {
+      "language": "Armenian",
+      "period": "1700s",
+      "books": 3,
+      "pages": 430
+    },
+    {
+      "language": "Old Norse",
+      "period": "1900+",
+      "books": 1,
+      "pages": 426
+    },
+    {
+      "language": "Turkish",
+      "period": "1900+",
+      "books": 1,
+      "pages": 422
+    },
+    {
+      "language": "K'iche' / French",
+      "period": "1800s",
+      "books": 1,
+      "pages": 414
+    },
+    {
+      "language": "K'iche' Maya",
+      "period": "1800s",
+      "books": 1,
+      "pages": 412
+    },
+    {
+      "language": "Sanskrit",
+      "period": "1700s",
+      "books": 6,
+      "pages": 411
+    },
+    {
+      "language": "Arabic-Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 409
+    },
+    {
+      "language": "Demotic",
+      "period": "1900+",
+      "books": 2,
+      "pages": 400
+    },
+    {
+      "language": "English/Sanskrit",
+      "period": "1800s",
+      "books": 1,
+      "pages": 398
+    },
+    {
+      "language": "Portuguese",
+      "period": "unknown",
+      "books": 1,
+      "pages": 394
+    },
+    {
+      "language": "Zulu",
+      "period": "1900+",
+      "books": 1,
+      "pages": 392
+    },
+    {
+      "language": "Telugu",
+      "period": "1900+",
+      "books": 1,
+      "pages": 388
+    },
+    {
+      "language": "Church Slavonic",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 386
+    },
+    {
+      "language": "Armenian; Armenian",
+      "period": "1500s",
+      "books": 1,
+      "pages": 386
+    },
+    {
+      "language": "Hebrew, Aramaic, and Judeo-Arabic",
+      "period": "unknown",
+      "books": 1,
+      "pages": 386
+    },
+    {
+      "language": "Old Spanish",
+      "period": "1800s",
+      "books": 1,
+      "pages": 384
+    },
+    {
+      "language": "Geez",
+      "period": "1700s",
+      "books": 1,
+      "pages": 383
+    },
+    {
+      "language": "English, Scottish Gaelic",
+      "period": "1900+",
+      "books": 1,
+      "pages": 382
+    },
+    {
+      "language": "Ottoman Turkish",
+      "period": "unknown",
+      "books": 2,
+      "pages": 374
+    },
+    {
+      "language": "Old English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 374
+    },
+    {
+      "language": "Icelandic",
+      "period": "1800s",
+      "books": 1,
+      "pages": 364
+    },
+    {
+      "language": "Ottoman Turkish",
+      "period": "1700s",
+      "books": 2,
+      "pages": 361
+    },
+    {
+      "language": "Provençal",
+      "period": "1900+",
+      "books": 1,
+      "pages": 360
+    },
+    {
+      "language": "Yucatec Maya",
+      "period": "1700s",
+      "books": 2,
+      "pages": 352
+    },
+    {
+      "language": "Middle French",
+      "period": "unknown",
+      "books": 1,
+      "pages": 351
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "1900+",
+      "books": 9,
+      "pages": 350
+    },
+    {
+      "language": "Greek-French",
+      "period": "1700s",
+      "books": 1,
+      "pages": 349
+    },
+    {
+      "language": "Hawaiian",
+      "period": "1900+",
+      "books": 1,
+      "pages": 346
+    },
+    {
+      "language": "Italian-English",
+      "period": "1600s",
+      "books": 1,
+      "pages": 346
+    },
+    {
+      "language": "Dzongkha",
+      "period": "1900+",
+      "books": 1,
+      "pages": 344
+    },
+    {
+      "language": "Arabic and Turkish",
+      "period": "1800s",
+      "books": 1,
+      "pages": 336
+    },
+    {
+      "language": "Uzbek",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 328
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "1700s",
+      "books": 2,
+      "pages": 321
+    },
+    {
+      "language": "Avestan",
+      "period": "unknown",
+      "books": 1,
+      "pages": 320
+    },
+    {
+      "language": "Old Javanese",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 318
+    },
+    {
+      "language": "German/Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 317
+    },
+    {
+      "language": "(none)",
+      "period": "unknown",
+      "books": 1,
+      "pages": 315
+    },
+    {
+      "language": "Old English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 312
+    },
+    {
+      "language": "French/English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 308
+    },
+    {
+      "language": "German and Hebrew",
+      "period": "1900+",
+      "books": 1,
+      "pages": 306
+    },
+    {
+      "language": "Turkish",
+      "period": "1500s",
+      "books": 1,
+      "pages": 301
+    },
+    {
+      "language": "Hebrew and Judeo-Arabic",
+      "period": "1600s",
+      "books": 1,
+      "pages": 300
+    },
+    {
+      "language": "Unknown",
+      "period": "1900+",
+      "books": 2,
+      "pages": 295
+    },
+    {
+      "language": "Yucatec Maya / English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 294
+    },
+    {
+      "language": "Welsh",
+      "period": "1900+",
+      "books": 1,
+      "pages": 292
+    },
+    {
+      "language": "Church Slavonic",
+      "period": "1700s",
+      "books": 1,
+      "pages": 283
+    },
+    {
+      "language": "Middle High German",
+      "period": "1800s",
+      "books": 1,
+      "pages": 280
+    },
+    {
+      "language": "Greek, Latin",
+      "period": "1500s",
+      "books": 1,
+      "pages": 280
+    },
+    {
+      "language": "Spanish / Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 276
+    },
+    {
+      "language": "Nahuatl",
+      "period": "pre-1500",
+      "books": 3,
+      "pages": 275
+    },
+    {
+      "language": "Middle Dutch",
+      "period": "1600s",
+      "books": 1,
+      "pages": 266
+    },
+    {
+      "language": "Arabic and Samaritan Hebrew",
+      "period": "pre-1500",
+      "books": 3,
+      "pages": 262
+    },
+    {
+      "language": "auto-detect",
+      "period": "1500s",
+      "books": 2,
+      "pages": 258
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic, and Ladino",
+      "period": "1700s",
+      "books": 1,
+      "pages": 257
+    },
+    {
+      "language": "French, Latin",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 254
+    },
+    {
+      "language": "Spanish",
+      "period": "1900+",
+      "books": 1,
+      "pages": 254
+    },
+    {
+      "language": "Norwegian",
+      "period": "1800s",
+      "books": 1,
+      "pages": 253
+    },
+    {
+      "language": "Sanskrit",
+      "period": "1500s",
+      "books": 3,
+      "pages": 252
+    },
+    {
+      "language": "Greek, Syriac",
+      "period": "1900+",
+      "books": 1,
+      "pages": 252
+    },
+    {
+      "language": "Arabic-English",
+      "period": "1900+",
+      "books": 2,
+      "pages": 252
+    },
+    {
+      "language": "Unknown",
+      "period": "1600s",
+      "books": 1,
+      "pages": 250
+    },
+    {
+      "language": "Yucatec Maya",
+      "period": "1900+",
+      "books": 1,
+      "pages": 250
+    },
+    {
+      "language": "Cakchiquel / English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 248
+    },
+    {
+      "language": "Hebrew and Ladino",
+      "period": "unknown",
+      "books": 1,
+      "pages": 246
+    },
+    {
+      "language": "Middle English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 244
+    },
+    {
+      "language": "English, Prakrit, Sanskrit",
+      "period": "1900+",
+      "books": 1,
+      "pages": 240
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "1900+",
+      "books": 1,
+      "pages": 240
+    },
+    {
+      "language": "Ne",
+      "period": "1800s",
+      "books": 1,
+      "pages": 227
+    },
+    {
+      "language": "Latin; Italian",
+      "period": "unknown",
+      "books": 1,
+      "pages": 226
+    },
+    {
+      "language": "Korean",
+      "period": "pre-1500",
+      "books": 6,
+      "pages": 224
+    },
+    {
+      "language": "Chagatai Turkish",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 224
+    },
+    {
+      "language": "Unknown",
+      "period": "1500s",
+      "books": 2,
+      "pages": 221
+    },
+    {
+      "language": "Am",
+      "period": "unknown",
+      "books": 1,
+      "pages": 220
+    },
+    {
+      "language": "Dutch-German",
+      "period": "1900+",
+      "books": 1,
+      "pages": 220
+    },
+    {
+      "language": "Catalan",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 220
+    },
+    {
+      "language": "Middle French",
+      "period": "pre-1500",
+      "books": 3,
+      "pages": 218
+    },
+    {
+      "language": "Hebrew and Judeo-Arabic",
+      "period": "1500s",
+      "books": 1,
+      "pages": 218
+    },
+    {
+      "language": "German/Arabic",
+      "period": "1800s",
+      "books": 1,
+      "pages": 215
+    },
+    {
+      "language": "Ga",
+      "period": "1500s",
+      "books": 1,
+      "pages": 211
+    },
+    {
+      "language": "Text on maps in latin and german",
+      "period": "unknown",
+      "books": 1,
+      "pages": 210
+    },
+    {
+      "language": "ger",
+      "period": "1600s",
+      "books": 2,
+      "pages": 209
+    },
+    {
+      "language": "Middle Dutch",
+      "period": "1500s",
+      "books": 1,
+      "pages": 208
+    },
+    {
+      "language": "Frm",
+      "period": "1500s",
+      "books": 1,
+      "pages": 206
+    },
+    {
+      "language": "Nahuatl",
+      "period": "1800s",
+      "books": 1,
+      "pages": 202
+    },
+    {
+      "language": "English/Gaelic",
+      "period": "1800s",
+      "books": 1,
+      "pages": 202
+    },
+    {
+      "language": "Middle Dutch",
+      "period": "1800s",
+      "books": 1,
+      "pages": 198
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "period": "pre-1500",
+      "books": 54,
+      "pages": 196
+    },
+    {
+      "language": "Latin-English",
+      "period": "1700s",
+      "books": 1,
+      "pages": 193
+    },
+    {
+      "language": "Ethiopic",
+      "period": "1800s",
+      "books": 1,
+      "pages": 192
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "unknown",
+      "books": 1,
+      "pages": 188
+    },
+    {
+      "language": "unknown",
+      "period": "1600s",
+      "books": 1,
+      "pages": 187
+    },
+    {
+      "language": "Classical Chinese / Japanese",
+      "period": "1900+",
+      "books": 3,
+      "pages": 184
+    },
+    {
+      "language": "Law French",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 184
+    },
+    {
+      "language": "Old Norse",
+      "period": "1600s",
+      "books": 1,
+      "pages": 184
+    },
+    {
+      "language": "Latin, Greek",
+      "period": "pre-1500",
+      "books": 2,
+      "pages": 182
+    },
+    {
+      "language": "Malay",
+      "period": "pre-1500",
+      "books": 4,
+      "pages": 173
+    },
+    {
+      "language": "Welsh",
+      "period": "1800s",
+      "books": 1,
+      "pages": 172
+    },
+    {
+      "language": "Gothic",
+      "period": "1800s",
+      "books": 1,
+      "pages": 171
+    },
+    {
+      "language": "Low German",
+      "period": "1500s",
+      "books": 1,
+      "pages": 170
+    },
+    {
+      "language": "Dutch-English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 169
+    },
+    {
+      "language": "Urdu",
+      "period": "1900+",
+      "books": 1,
+      "pages": 164
+    },
+    {
+      "language": "Greek-English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 164
+    },
+    {
+      "language": "Yiddish",
+      "period": "1600s",
+      "books": 1,
+      "pages": 162
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "period": "unknown",
+      "books": 36,
+      "pages": 160
+    },
+    {
+      "language": "Yucatec Maya",
+      "period": "1500s",
+      "books": 2,
+      "pages": 159
+    },
+    {
+      "language": "roa",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 157
+    },
+    {
+      "language": "Latin. German",
+      "period": "unknown",
+      "books": 1,
+      "pages": 156
+    },
+    {
+      "language": "Danish",
+      "period": "1900+",
+      "books": 1,
+      "pages": 152
+    },
+    {
+      "language": "Latin/German/English",
+      "period": "unknown",
+      "books": 1,
+      "pages": 146
+    },
+    {
+      "language": "Russian",
+      "period": "unknown",
+      "books": 1,
+      "pages": 145
+    },
+    {
+      "language": "Javanese",
+      "period": "1700s",
+      "books": 2,
+      "pages": 141
+    },
+    {
+      "language": "Arabic-English",
+      "period": "1800s",
+      "books": 1,
+      "pages": 141
+    },
+    {
+      "language": "Hausa",
+      "period": "1800s",
+      "books": 1,
+      "pages": 140
+    },
+    {
+      "language": "Sanskrit-English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 138
+    },
+    {
+      "language": "Latin, some Hebrew and Greek",
+      "period": "1700s",
+      "books": 1,
+      "pages": 137
+    },
+    {
+      "language": "Latin and German",
+      "period": "unknown",
+      "books": 1,
+      "pages": 134
+    },
+    {
+      "language": "K'iche' Maya-Spanish",
+      "period": "1700s",
+      "books": 1,
+      "pages": 132
+    },
+    {
+      "language": "Sanskrit-English",
+      "period": "unknown",
+      "books": 1,
+      "pages": 132
+    },
+    {
+      "language": "English, Old Irish",
+      "period": "1900+",
+      "books": 1,
+      "pages": 128
+    },
+    {
+      "language": "Ne",
+      "period": "unknown",
+      "books": 2,
+      "pages": 118
+    },
+    {
+      "language": "English and Hebrew",
+      "period": "unknown",
+      "books": 1,
+      "pages": 113
+    },
+    {
+      "language": "e",
+      "period": "1900+",
+      "books": 1,
+      "pages": 112
+    },
+    {
+      "language": "Sanskrit",
+      "period": "1600s",
+      "books": 3,
+      "pages": 105
+    },
+    {
+      "language": "lat",
+      "period": "1600s",
+      "books": 2,
+      "pages": 104
+    },
+    {
+      "language": "Marathi",
+      "period": "1900+",
+      "books": 1,
+      "pages": 104
+    },
+    {
+      "language": "Hebrew, German, French",
+      "period": "1800s",
+      "books": 1,
+      "pages": 104
+    },
+    {
+      "language": "gre",
+      "period": "1500s",
+      "books": 1,
+      "pages": 103
+    },
+    {
+      "language": "Chinese, Latin",
+      "period": "1900+",
+      "books": 1,
+      "pages": 100
+    },
+    {
+      "language": "Judeo-Occitan and Hebrew",
+      "period": "unknown",
+      "books": 1,
+      "pages": 100
+    },
+    {
+      "language": "Hebrew-German",
+      "period": "1700s",
+      "books": 1,
+      "pages": 100
+    },
+    {
+      "language": "Maithili",
+      "period": "1900+",
+      "books": 1,
+      "pages": 99
+    },
+    {
+      "language": "Classical Chinese",
+      "period": "1800s",
+      "books": 2,
+      "pages": 98
+    },
+    {
+      "language": "Hebrew, Yiddish and Ladino",
+      "period": "1700s",
+      "books": 1,
+      "pages": 98
+    },
+    {
+      "language": "Mixtec",
+      "period": "1900+",
+      "books": 1,
+      "pages": 94
+    },
+    {
+      "language": "lat",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 91
+    },
+    {
+      "language": "Latin. French. English",
+      "period": "unknown",
+      "books": 1,
+      "pages": 91
+    },
+    {
+      "language": "Maya hieroglyphs",
+      "period": "pre-1500",
+      "books": 2,
+      "pages": 90
+    },
+    {
+      "language": "Swedish",
+      "period": "1700s",
+      "books": 1,
+      "pages": 88
+    },
+    {
+      "language": "Bulgarian",
+      "period": "1700s",
+      "books": 1,
+      "pages": 87
+    },
+    {
+      "language": "Law French",
+      "period": "1500s",
+      "books": 1,
+      "pages": 84
+    },
+    {
+      "language": "Kannada",
+      "period": "1900+",
+      "books": 1,
+      "pages": 82
+    },
+    {
+      "language": "German-Latin",
+      "period": "1700s",
+      "books": 1,
+      "pages": 78
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "1700s",
+      "books": 1,
+      "pages": 76
+    },
+    {
+      "language": "French and Latin",
+      "period": "unknown",
+      "books": 1,
+      "pages": 75
+    },
+    {
+      "language": "German-Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 75
+    },
+    {
+      "language": "Maya Hieroglyphic Script",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 74
+    },
+    {
+      "language": "Arabic and Coptic",
+      "period": "unknown",
+      "books": 1,
+      "pages": 74
+    },
+    {
+      "language": "Greek-Latin",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 72
+    },
+    {
+      "language": "Mixtec",
+      "period": "1500s",
+      "books": 2,
+      "pages": 70
+    },
+    {
+      "language": "Greek-German",
+      "period": "1900+",
+      "books": 1,
+      "pages": 68
+    },
+    {
+      "language": "French. English. Latin",
+      "period": "unknown",
+      "books": 1,
+      "pages": 65
+    },
+    {
+      "language": "An",
+      "period": "1500s",
+      "books": 1,
+      "pages": 62
+    },
+    {
+      "language": "lat",
+      "period": "1700s",
+      "books": 2,
+      "pages": 62
+    },
+    {
+      "language": "Bugis",
+      "period": "1800s",
+      "books": 1,
+      "pages": 60
+    },
+    {
+      "language": "Yucatec Maya",
+      "period": "1800s",
+      "books": 1,
+      "pages": 59
+    },
+    {
+      "language": "Balinese",
+      "period": "unknown",
+      "books": 1,
+      "pages": 58
+    },
+    {
+      "language": "Russian",
+      "period": "1600s",
+      "books": 1,
+      "pages": 56
+    },
+    {
+      "language": "Navajo",
+      "period": "1900+",
+      "books": 1,
+      "pages": 56
+    },
+    {
+      "language": "Malay",
+      "period": "1600s",
+      "books": 1,
+      "pages": 55
+    },
+    {
+      "language": "Hebrew, Ladino, and English",
+      "period": "1900+",
+      "books": 1,
+      "pages": 54
+    },
+    {
+      "language": "Demotic",
+      "period": "unknown",
+      "books": 17,
+      "pages": 53
+    },
+    {
+      "language": "English and Hebrew",
+      "period": "1900+",
+      "books": 1,
+      "pages": 52
+    },
+    {
+      "language": "Hebrew-Latin",
+      "period": "1600s",
+      "books": 1,
+      "pages": 52
+    },
+    {
+      "language": "Den",
+      "period": "unknown",
+      "books": 1,
+      "pages": 48
+    },
+    {
+      "language": "zxx",
+      "period": "1500s",
+      "books": 2,
+      "pages": 47
+    },
+    {
+      "language": "Yucatec Maya",
+      "period": "1600s",
+      "books": 1,
+      "pages": 44
+    },
+    {
+      "language": "Catalan",
+      "period": "1500s",
+      "books": 1,
+      "pages": 44
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "period": "1500s",
+      "books": 11,
+      "pages": 44
+    },
+    {
+      "language": "Hebrew and Aramaic",
+      "period": "1800s",
+      "books": 3,
+      "pages": 44
+    },
+    {
+      "language": "Ancient Greek",
+      "period": "1600s",
+      "books": 1,
+      "pages": 42
+    },
+    {
+      "language": "Romanian",
+      "period": "1800s",
+      "books": 1,
+      "pages": 41
+    },
+    {
+      "language": "Sundanese",
+      "period": "1800s",
+      "books": 1,
+      "pages": 38
+    },
+    {
+      "language": "Church Slavonic, Greek",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 38
+    },
+    {
+      "language": "English & greek",
+      "period": "1900+",
+      "books": 1,
+      "pages": 34
+    },
+    {
+      "language": "Latin, French",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 29
+    },
+    {
+      "language": "und",
+      "period": "1600s",
+      "books": 2,
+      "pages": 20
+    },
+    {
+      "language": "Ardhamagadhi Prakrit",
+      "period": "unknown",
+      "books": 1,
+      "pages": 18
+    },
+    {
+      "language": "Ottoman Turkish",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 16
+    },
+    {
+      "language": "Tangut",
+      "period": "1900+",
+      "books": 1,
+      "pages": 15
+    },
+    {
+      "language": "Portuguese",
+      "period": "pre-1500",
+      "books": 1,
+      "pages": 11
+    },
+    {
+      "language": "Multiple",
+      "period": "1700s",
+      "books": 2,
+      "pages": 9
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "period": "1800s",
+      "books": 2,
+      "pages": 6
+    },
+    {
+      "language": "Hebrew and Arabic",
+      "period": "unknown",
+      "books": 2,
+      "pages": 4
+    },
+    {
+      "language": "Hebrew and Aramaic in Hebrew script",
+      "period": "unknown",
+      "books": 2,
+      "pages": 4
+    },
+    {
+      "language": "Demotic",
+      "period": "1500s",
+      "books": 1,
+      "pages": 3
+    },
+    {
+      "language": "Hebrew in Hebrew script, Arabic in Arabic script",
+      "period": "unknown",
+      "books": 1,
+      "pages": 2
+    },
+    {
+      "language": "Hebrew, Aramaic, and Arabic.",
+      "period": "unknown",
+      "books": 1,
+      "pages": 2
+    },
+    {
+      "language": "English, Greek, Hebrew, Latin",
+      "period": "1900+",
+      "books": 1,
+      "pages": 2
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic and Ladino in Hebrew script",
+      "period": "unknown",
+      "books": 1,
+      "pages": 2
+    },
+    {
+      "language": "Hebrew and Aramaic in Hebrew script",
+      "period": "1700s",
+      "books": 1,
+      "pages": 2
+    },
+    {
+      "language": "Undetermined",
+      "period": "1900+",
+      "books": 1,
+      "pages": 1
+    },
+    {
+      "language": "Coptic",
+      "period": "unknown",
+      "books": 1,
+      "pages": 1
+    },
+    {
+      "language": "Arabic and Hebrew",
+      "period": "unknown",
+      "books": 1,
+      "pages": 1
+    },
+    {
+      "language": "Italian in Italian script, Hebrew in Hebrew script",
+      "period": "unknown",
+      "books": 1,
+      "pages": 1
+    },
+    {
+      "language": "Hebrew and Aramaic",
+      "period": "1700s",
+      "books": 1,
+      "pages": 1
+    }
+  ],
+  "languages": [
+    {
+      "language": "Latin",
+      "books": 15910,
+      "pages": 2995045,
+      "unknownYearBooks": 6990
+    },
+    {
+      "language": "Chinese",
+      "books": 12792,
+      "pages": 1929053,
+      "unknownYearBooks": 11636
+    },
+    {
+      "language": "English",
+      "books": 2767,
+      "pages": 940433,
+      "unknownYearBooks": 121
+    },
+    {
+      "language": "German",
+      "books": 2697,
+      "pages": 750857,
+      "unknownYearBooks": 317
+    },
+    {
+      "language": "Greek",
+      "books": 1110,
+      "pages": 498194,
+      "unknownYearBooks": 194
+    },
+    {
+      "language": "French",
+      "books": 881,
+      "pages": 320930,
+      "unknownYearBooks": 55
+    },
+    {
+      "language": "Tibetan",
+      "books": 1468,
+      "pages": 289990,
+      "unknownYearBooks": 1440
+    },
+    {
+      "language": "Italian",
+      "books": 590,
+      "pages": 183367,
+      "unknownYearBooks": 32
+    },
+    {
+      "language": "Dutch",
+      "books": 544,
+      "pages": 133226,
+      "unknownYearBooks": 10
+    },
+    {
+      "language": "Sanskrit",
+      "books": 381,
+      "pages": 103640,
+      "unknownYearBooks": 108
+    },
+    {
+      "language": "Russian",
+      "books": 243,
+      "pages": 100714,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Hebrew",
+      "books": 227,
+      "pages": 64076,
+      "unknownYearBooks": 98
+    },
+    {
+      "language": "Korean",
+      "books": 251,
+      "pages": 60593,
+      "unknownYearBooks": 116
+    },
+    {
+      "language": "Arabic",
+      "books": 265,
+      "pages": 59725,
+      "unknownYearBooks": 90
+    },
+    {
+      "language": "Syriac",
+      "books": 84,
+      "pages": 43315,
+      "unknownYearBooks": 15
+    },
+    {
+      "language": "Armenian",
+      "books": 68,
+      "pages": 31034,
+      "unknownYearBooks": 5
+    },
+    {
+      "language": "Spanish",
+      "books": 77,
+      "pages": 25789,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Japanese",
+      "books": 145,
+      "pages": 23077,
+      "unknownYearBooks": 15
+    },
+    {
+      "language": "Persian",
+      "books": 62,
+      "pages": 16151,
+      "unknownYearBooks": 11
+    },
+    {
+      "language": "Ge'ez",
+      "books": 22,
+      "pages": 12626,
+      "unknownYearBooks": 10
+    },
+    {
+      "language": "Latin-German",
+      "books": 60,
+      "pages": 10319,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Pali",
+      "books": 25,
+      "pages": 8716,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Unknown",
+      "books": 43,
+      "pages": 6822,
+      "unknownYearBooks": 27
+    },
+    {
+      "language": "Middle English",
+      "books": 23,
+      "pages": 6675,
+      "unknownYearBooks": 8
+    },
+    {
+      "language": "Sumerian",
+      "books": 375,
+      "pages": 6525,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Tamil",
+      "books": 17,
+      "pages": 6431,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Classical Chinese",
+      "books": 35,
+      "pages": 6387,
+      "unknownYearBooks": 6
+    },
+    {
+      "language": "Greek-Latin",
+      "books": 20,
+      "pages": 6001,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "auto-detect",
+      "books": 20,
+      "pages": 5580,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek/Latin",
+      "books": 9,
+      "pages": 5272,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Danish",
+      "books": 11,
+      "pages": 5137,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Old French",
+      "books": 12,
+      "pages": 4608,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ottoman Turkish",
+      "books": 13,
+      "pages": 3949,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Hindi",
+      "books": 14,
+      "pages": 3856,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Portuguese",
+      "books": 12,
+      "pages": 3569,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Hebrew-Greek",
+      "books": 4,
+      "pages": 3504,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Javanese",
+      "books": 47,
+      "pages": 3159,
+      "unknownYearBooks": 37
+    },
+    {
+      "language": "Hawaiian",
+      "books": 4,
+      "pages": 3095,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Maori",
+      "books": 5,
+      "pages": 2867,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Egyptian hieroglyphs",
+      "books": 132,
+      "pages": 2731,
+      "unknownYearBooks": 36
+    },
+    {
+      "language": "Irish/English",
+      "books": 4,
+      "pages": 2680,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Middle Dutch",
+      "books": 8,
+      "pages": 2523,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew and Judeo-Arabic",
+      "books": 15,
+      "pages": 2522,
+      "unknownYearBooks": 13
+    },
+    {
+      "language": "Nahuatl-Spanish",
+      "books": 3,
+      "pages": 2506,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Egyptian",
+      "books": 7,
+      "pages": 2481,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Old Norse",
+      "books": 6,
+      "pages": 2427,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Zulu",
+      "books": 4,
+      "pages": 2396,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Chinese-English",
+      "books": 3,
+      "pages": 2310,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ancient Greek",
+      "books": 6,
+      "pages": 2293,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Malay",
+      "books": 27,
+      "pages": 2276,
+      "unknownYearBooks": 7
+    },
+    {
+      "language": "Polish",
+      "books": 5,
+      "pages": 2203,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Coptic",
+      "books": 6,
+      "pages": 2129,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Burmese",
+      "books": 4,
+      "pages": 2071,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Bengali",
+      "books": 6,
+      "pages": 2012,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew and Aramaic",
+      "books": 10,
+      "pages": 1978,
+      "unknownYearBooks": 6
+    },
+    {
+      "language": "e",
+      "books": 8,
+      "pages": 1972,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "German-English",
+      "books": 7,
+      "pages": 1791,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "ger",
+      "books": 4,
+      "pages": 1755,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Aramaic, and Judeo-Arabic",
+      "books": 4,
+      "pages": 1671,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Marathi",
+      "books": 3,
+      "pages": 1585,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ne",
+      "books": 6,
+      "pages": 1503,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Swahili",
+      "books": 4,
+      "pages": 1482,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Georgian",
+      "books": 3,
+      "pages": 1471,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin-Dutch",
+      "books": 2,
+      "pages": 1448,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "unknown",
+      "books": 7,
+      "pages": 1367,
+      "unknownYearBooks": 6
+    },
+    {
+      "language": "Lb",
+      "books": 1,
+      "pages": 1345,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Welsh/English",
+      "books": 3,
+      "pages": 1334,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Nahuatl",
+      "books": 11,
+      "pages": 1317,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Avestan",
+      "books": 4,
+      "pages": 1313,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Akkadian",
+      "books": 6,
+      "pages": 1287,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Thai",
+      "books": 1,
+      "pages": 1282,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Malagasy",
+      "books": 1,
+      "pages": 1270,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic, and Ladino",
+      "books": 3,
+      "pages": 1269,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Judeo-Arabic and Hebrew",
+      "books": 6,
+      "pages": 1224,
+      "unknownYearBooks": 6
+    },
+    {
+      "language": "Swedish",
+      "books": 3,
+      "pages": 1212,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Samoan",
+      "books": 1,
+      "pages": 1162,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Multiple",
+      "books": 16,
+      "pages": 1149,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Old English",
+      "books": 3,
+      "pages": 1125,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Xhosa",
+      "books": 1,
+      "pages": 1098,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Punjabi",
+      "books": 2,
+      "pages": 1089,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek, Latin",
+      "books": 2,
+      "pages": 1085,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Maya hieroglyphs / French",
+      "books": 3,
+      "pages": 1048,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Middle High German",
+      "books": 6,
+      "pages": 982,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hausa",
+      "books": 4,
+      "pages": 914,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Old Javanese",
+      "books": 3,
+      "pages": 913,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Latin-English",
+      "books": 5,
+      "pages": 902,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Vietnamese",
+      "books": 4,
+      "pages": 887,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Anglo-Saxon",
+      "books": 3,
+      "pages": 880,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Yucatec Maya",
+      "books": 7,
+      "pages": 864,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Igbo",
+      "books": 1,
+      "pages": 863,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Anglo-Norman",
+      "books": 2,
+      "pages": 832,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "French/Greek",
+      "books": 1,
+      "pages": 799,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin/English",
+      "books": 2,
+      "pages": 732,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Turkish",
+      "books": 2,
+      "pages": 723,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)",
+      "books": 1,
+      "pages": 710,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew and Judeo-Italian",
+      "books": 1,
+      "pages": 702,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Czech",
+      "books": 2,
+      "pages": 693,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Italian-German",
+      "books": 1,
+      "pages": 686,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English.",
+      "books": 1,
+      "pages": 682,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Quiché Maya",
+      "books": 1,
+      "pages": 674,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic, and Aramaic",
+      "books": 3,
+      "pages": 670,
+      "unknownYearBooks": 3
+    },
+    {
+      "language": "Church Slavonic",
+      "books": 2,
+      "pages": 669,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Classical Armenian",
+      "books": 1,
+      "pages": 656,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Italian / German",
+      "books": 1,
+      "pages": 646,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Spanish / French",
+      "books": 1,
+      "pages": 644,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Gothic",
+      "books": 2,
+      "pages": 635,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin/Hebrew",
+      "books": 1,
+      "pages": 628,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Aromanian (in Greek alphabet), Greek",
+      "books": 1,
+      "pages": 622,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Finnish",
+      "books": 2,
+      "pages": 600,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Middle French",
+      "books": 4,
+      "pages": 569,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Greek-German",
+      "books": 3,
+      "pages": 568,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Chinese-Latin",
+      "books": 1,
+      "pages": 568,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic and Aramaic",
+      "books": 1,
+      "pages": 558,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Yoruba",
+      "books": 3,
+      "pages": 556,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Karaim and Hebrew",
+      "books": 1,
+      "pages": 538,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Greek, English",
+      "books": 2,
+      "pages": 537,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Judeo-Persian, and Aramaic",
+      "books": 1,
+      "pages": 492,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.",
+      "books": 1,
+      "pages": 490,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Middle English-English",
+      "books": 1,
+      "pages": 474,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Occitan",
+      "books": 1,
+      "pages": 470,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Haida",
+      "books": 1,
+      "pages": 469,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Italian/Latin",
+      "books": 1,
+      "pages": 468,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Welsh",
+      "books": 2,
+      "pages": 464,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek/English",
+      "books": 1,
+      "pages": 461,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Kanuri",
+      "books": 1,
+      "pages": 458,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Demotic",
+      "books": 20,
+      "pages": 456,
+      "unknownYearBooks": 17
+    },
+    {
+      "language": "Hebrew, Judeo-Italian, and Judeo-Greek",
+      "books": 1,
+      "pages": 452,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Aramaic",
+      "books": 1,
+      "pages": 437,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Irish",
+      "books": 1,
+      "pages": 432,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "K'iche' / French",
+      "books": 1,
+      "pages": 414,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "K'iche' Maya",
+      "books": 1,
+      "pages": 412,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic-Latin",
+      "books": 1,
+      "pages": 409,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English/Sanskrit",
+      "books": 1,
+      "pages": 398,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic-English",
+      "books": 3,
+      "pages": 393,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Telugu",
+      "books": 1,
+      "pages": 388,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Armenian; Armenian",
+      "books": 1,
+      "pages": 386,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Old Spanish",
+      "books": 1,
+      "pages": 384,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Geez",
+      "books": 1,
+      "pages": 383,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English, Scottish Gaelic",
+      "books": 1,
+      "pages": 382,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Icelandic",
+      "books": 1,
+      "pages": 364,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Provençal",
+      "books": 1,
+      "pages": 360,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek-French",
+      "books": 1,
+      "pages": 349,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Italian-English",
+      "books": 1,
+      "pages": 346,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Dzongkha",
+      "books": 1,
+      "pages": 344,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic and Turkish",
+      "books": 1,
+      "pages": 336,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Uzbek",
+      "books": 1,
+      "pages": 328,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "German/Latin",
+      "books": 1,
+      "pages": 317,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "(none)",
+      "books": 1,
+      "pages": 315,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "French/English",
+      "books": 1,
+      "pages": 308,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "German and Hebrew",
+      "books": 1,
+      "pages": 306,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Yucatec Maya / English",
+      "books": 1,
+      "pages": 294,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Spanish / Latin",
+      "books": 1,
+      "pages": 276,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Sanskrit-English",
+      "books": 2,
+      "pages": 270,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Law French",
+      "books": 2,
+      "pages": 268,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Catalan",
+      "books": 2,
+      "pages": 264,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic and Samaritan Hebrew",
+      "books": 3,
+      "pages": 262,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "lat",
+      "books": 5,
+      "pages": 257,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "French, Latin",
+      "books": 1,
+      "pages": 254,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Norwegian",
+      "books": 1,
+      "pages": 253,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek, Syriac",
+      "books": 1,
+      "pages": 252,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Cakchiquel / English",
+      "books": 1,
+      "pages": 248,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew and Ladino",
+      "books": 1,
+      "pages": 246,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "English, Prakrit, Sanskrit",
+      "books": 1,
+      "pages": 240,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin; Italian",
+      "books": 1,
+      "pages": 226,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Chagatai Turkish",
+      "books": 1,
+      "pages": 224,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Am",
+      "books": 1,
+      "pages": 220,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Dutch-German",
+      "books": 1,
+      "pages": 220,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "German/Arabic",
+      "books": 1,
+      "pages": 215,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ga",
+      "books": 1,
+      "pages": 211,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Text on maps in latin and german",
+      "books": 1,
+      "pages": 210,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Frm",
+      "books": 1,
+      "pages": 206,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English/Gaelic",
+      "books": 1,
+      "pages": 202,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ethiopic",
+      "books": 1,
+      "pages": 192,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Classical Chinese / Japanese",
+      "books": 3,
+      "pages": 184,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin, Greek",
+      "books": 2,
+      "pages": 182,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Low German",
+      "books": 1,
+      "pages": 170,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Dutch-English",
+      "books": 1,
+      "pages": 169,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English and Hebrew",
+      "books": 2,
+      "pages": 165,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Mixtec",
+      "books": 3,
+      "pages": 164,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Urdu",
+      "books": 1,
+      "pages": 164,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Greek-English",
+      "books": 1,
+      "pages": 164,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Yiddish",
+      "books": 1,
+      "pages": 162,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "roa",
+      "books": 1,
+      "pages": 157,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin. German",
+      "books": 1,
+      "pages": 156,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "German-Latin",
+      "books": 2,
+      "pages": 153,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin/German/English",
+      "books": 1,
+      "pages": 146,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Latin, some Hebrew and Greek",
+      "books": 1,
+      "pages": 137,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin and German",
+      "books": 1,
+      "pages": 134,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "K'iche' Maya-Spanish",
+      "books": 1,
+      "pages": 132,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English, Old Irish",
+      "books": 1,
+      "pages": 128,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, German, French",
+      "books": 1,
+      "pages": 104,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "gre",
+      "books": 1,
+      "pages": 103,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Chinese, Latin",
+      "books": 1,
+      "pages": 100,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Judeo-Occitan and Hebrew",
+      "books": 1,
+      "pages": 100,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Hebrew-German",
+      "books": 1,
+      "pages": 100,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Maithili",
+      "books": 1,
+      "pages": 99,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Yiddish and Ladino",
+      "books": 1,
+      "pages": 98,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin. French. English",
+      "books": 1,
+      "pages": 91,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Maya hieroglyphs",
+      "books": 2,
+      "pages": 90,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Bulgarian",
+      "books": 1,
+      "pages": 87,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Kannada",
+      "books": 1,
+      "pages": 82,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "French and Latin",
+      "books": 1,
+      "pages": 75,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Maya Hieroglyphic Script",
+      "books": 1,
+      "pages": 74,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic and Coptic",
+      "books": 1,
+      "pages": 74,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "French. English. Latin",
+      "books": 1,
+      "pages": 65,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "An",
+      "books": 1,
+      "pages": 62,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Bugis",
+      "books": 1,
+      "pages": 60,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Balinese",
+      "books": 1,
+      "pages": 58,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Navajo",
+      "books": 1,
+      "pages": 56,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Ladino, and English",
+      "books": 1,
+      "pages": 54,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew-Latin",
+      "books": 1,
+      "pages": 52,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Den",
+      "books": 1,
+      "pages": 48,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "zxx",
+      "books": 2,
+      "pages": 47,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Romanian",
+      "books": 1,
+      "pages": 41,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Sundanese",
+      "books": 1,
+      "pages": 38,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Church Slavonic, Greek",
+      "books": 1,
+      "pages": 38,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "English & greek",
+      "books": 1,
+      "pages": 34,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Latin, French",
+      "books": 1,
+      "pages": 29,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "und",
+      "books": 2,
+      "pages": 20,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Ardhamagadhi Prakrit",
+      "books": 1,
+      "pages": 18,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Tangut",
+      "books": 1,
+      "pages": 15,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew and Aramaic in Hebrew script",
+      "books": 3,
+      "pages": 6,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Hebrew and Arabic",
+      "books": 2,
+      "pages": 4,
+      "unknownYearBooks": 2
+    },
+    {
+      "language": "Hebrew in Hebrew script, Arabic in Arabic script",
+      "books": 1,
+      "pages": 2,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Hebrew, Aramaic, and Arabic.",
+      "books": 1,
+      "pages": 2,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "English, Greek, Hebrew, Latin",
+      "books": 1,
+      "pages": 2,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Hebrew, Judeo-Arabic and Ladino in Hebrew script",
+      "books": 1,
+      "pages": 2,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Undetermined",
+      "books": 1,
+      "pages": 1,
+      "unknownYearBooks": 0
+    },
+    {
+      "language": "Arabic and Hebrew",
+      "books": 1,
+      "pages": 1,
+      "unknownYearBooks": 1
+    },
+    {
+      "language": "Italian in Italian script, Hebrew in Hebrew script",
+      "books": 1,
+      "pages": 1,
+      "unknownYearBooks": 1
+    }
+  ]
+}
