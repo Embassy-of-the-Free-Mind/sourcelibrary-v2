@@ -50,7 +50,7 @@ own "logged in EXPERIMENTS.md" line was never true until now.
 - *Replicated?* No; hand checks are one reader's. Reruns in minutes (README). *Artifact:*
   `results/syriac-vs-published-2026-09-16.md`, per-page classes and alignments in
   `results/syriac-vs-published-2026-09-16/`, scripts in `syriac-vs-published/`.
-||||||| parent of 5198fb0cc (eval(#4729): land the per-language lite-suitability study that never left its worktree)
+
 ## 2026-09-11 (logged 2026-09-25) — Which languages can OCR on flash-lite? Per-language suitability vs the script-family allowlist (#4729, #4735)
 
 *Logged two weeks late.* The run finished on 2026-09-11 in a worktree whose session died
@@ -716,7 +716,7 @@ score against. TongGuOCR is vapour.**
   agreement matrix), `results/scorecard-outputs-2026-09-13.jsonl` (Gemini arms on both tiers).
   Raw engine outputs: `hetzner:/root/ocr-bench/images/*/out/` (mirror of the L4's before it was
   powered off).
-||||||| ddd81573
+
 ## 2026-09-15 — Does `gemini-3.1-flash-lite` read early-modern manuscripts and incunables? (#4541) — RESULT
 
 **Headline: no. Flash-preview is better on 11/11 items read. Lite fails catastrophically
@@ -1606,7 +1606,7 @@ pixels" hypothesis was wrong and is withdrawn: the residual misses are not a con
 **Not measured.** Whether the screen finds pictures on free-filled books where there is no
 reference at all — by construction those have no labels. Recall here is measured against what
 production already found on books that went through the expensive path.
-||||||| parent of c1d17e798 (eval(batch-shadow): result — first live shadow run of the Batch API lane on three books (#4681 steps 3-4))
+
 ---
 ## 2026-09-24 — Batch API translation lane, first live shadow run on three books: A/A floor, blind judge vs production, and what the Batch API did (#4681 steps 3–4; PRs #5000/#5011/#5013)
 
@@ -1789,7 +1789,7 @@ A/A floor; send Sonnet only the junctions where Jev's margin exceeds the A/A ban
 tenth of the rest as its own control. For a corpus-scale seam audit of production (every block
 boundary of every book), the side form at ~$0.00003 per junction is the first instrument we have
 had that is affordable at that scale; calibrate it on this set before quoting any rate.
-||||||| parent of 4ca278852 (eval(#4681): decisive seam draw result — TIE (production 19 / lane 14 / 29 ties, n=62; A/A 14-9), Jev does not replicate)
+
 
 ## 2026-09-24 — Batch + seam-repair lane vs production at MID-FLOW seams: the decisive draw (#4681)
 
