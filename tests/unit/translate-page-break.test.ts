@@ -13,7 +13,7 @@ import { describe, it, expect } from 'vitest';
 import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus, LOOKAHEAD_CLAUSE } from '../../scripts/lib/page-break-devices.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { buildTranslationPrompt, PAGE_BREAK_FIX, PAGE_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
+import { buildTranslationPrompt, buildBlockTranslationPrompt, continuityContext, translationPromptHeader, PAGE_BREAK_FIX, PAGE_BREAK_SCOPED, PAGE_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
 
 const HEAD = '<language>German</language>\n<page-type>text</page-type>\n<page-num>17</page-num>\n<header>Vorrede.</header>\n\n';
 
@@ -272,5 +272,95 @@ describe('buildTranslationPrompt — the pageBreak option', () => {
     expect(prompt).toContain('Christi naturam illam suâ');
     expect(prompt).toContain('**Text to translate:**\n' + J103_N);
     expect(pageBreak.kind).toBeNull();
+  });
+});
+
+// ── the SCOPED form: production's bytes on every page that carries no device ──────────────────
+describe('PAGE_BREAK_SCOPED — applied only where a device is', () => {
+  const production = (ocrText: string, previousTranslation: string | null) => buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }).prompt;
+
+  it('a page with no device at either break is byte-identical to production, neighbours and all (j103)', () => {
+    const { prompt, pageBreak } = buildTranslationPrompt({ prompts, book, ocrText: J103_N, previousTranslation: PREV_TR, prevOcrText: J012_X, nextOcrText: J103_X, pageBreak: PAGE_BREAK_SCOPED });
+    expect(prompt).toBe(production(J103_N, PREV_TR));
+    expect(pageBreak).toMatchObject({ fired: false, applied: false });
+    expect(prompt).not.toContain('Page breaks');
+  });
+
+  it('negative control — the same page with scoped off carries the rule line, so the scope is doing the work', () => {
+    const { prompt, pageBreak } = buildTranslationPrompt({ prompts, book, ocrText: J103_N, previousTranslation: PREV_TR, prevOcrText: J012_X, nextOcrText: J103_X, pageBreak: { ...PAGE_BREAK_SCOPED, scoped: false } });
+    expect(prompt).not.toBe(production(J103_N, PREV_TR));
+    expect(prompt).toContain(PAGE_BREAK_RULE);
+    expect(pageBreak.applied).toBe(true);
+  });
+
+  it('a page that ends on a split word gets the edit, the note and the rule, and no lookahead (j111)', () => {
+    const { prompt, pageBreak } = buildTranslationPrompt({ prompts, book, ocrText: J111_N, previousTranslation: PREV_TR, nextOcrText: J111_X, pageBreak: PAGE_BREAK_SCOPED });
+    expect(prompt).toContain('Evangelischen Augspurgischen\n');
+    expect(prompt).toContain(PAGE_BREAK_RULE);
+    expect(prompt).not.toContain('The next page opens');
+    expect(pageBreak).toMatchObject({ fired: true, applied: true, joined: 'Augspurgischen' });
+  });
+
+  it('the page AFTER a split word fires too (its head loses the fragment) — and a tag-only catchword counts as a device (j012)', () => {
+    const after = buildTranslationPrompt({ prompts, book, ocrText: J111_X, previousTranslation: PREV_TR, prevOcrText: J111_N, pageBreak: PAGE_BREAK_SCOPED });
+    expect(after.pageBreak).toMatchObject({ fired: true, applied: true, headJoined: 'Augspurgischen' });
+    expect(after.prompt).toContain('<header>Vorrede.</header>\n\nConfession/');
+    const tagOnly = buildTranslationPrompt({ prompts, book, ocrText: J012_N, nextOcrText: J012_X, pageBreak: PAGE_BREAK_SCOPED });
+    expect(tagOnly.pageBreak).toMatchObject({ fired: true, applied: true, catchword: 'auch' });
+    expect(tagOnly.prompt).toContain('The catchword «auch»');
+  });
+});
+
+// ── the BLOCK prompt: production's 8-page shape, now built here ───────────────────────────────
+describe('buildBlockTranslationPrompt', () => {
+  const pages = [
+    { page_number: 16, ocr: { data: J111_N } },
+    { page_number: 17, ocr: J111_X },
+    { page_number: 18, ocr: J103_N },
+  ];
+
+  /** The worker's inline assembly as it stood before 2026-09-25, header from translate-core. */
+  function workerAssembly(previousTranslation: string | null) {
+    const { prompt: header, isEnglish } = translationPromptHeader({ prompts, book });
+    let prompt = header;
+    prompt += continuityContext(previousTranslation, { english: isEnglish });
+    const verb = isEnglish ? 'modernize' : 'translate';
+    prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
+    prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+    prompt += `\n**Pages to ${verb}:**\n`;
+    for (const p of pages) prompt += `\n--- Page ${p.page_number} ---\n${typeof p.ocr === 'string' ? p.ocr : p.ocr.data}\n`;
+    return prompt;
+  }
+
+  it('reproduces the worker\'s block prompt byte for byte when no option is passed', () => {
+    const { prompt, promptRef, isEnglish, pageBreak } = buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation: PREV_TR });
+    expect(prompt).toBe(workerAssembly(PREV_TR));
+    expect(promptRef.version).toBe(13);
+    expect(isEnglish).toBe(false);
+    expect(pageBreak).toBeNull();
+    expect(buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation: null }).prompt).toBe(workerAssembly(null));
+  });
+
+  it('scoped: a block with no device is byte-identical to production; one with a device edits only the pages that fired and adds the rule once', () => {
+    const plain = [{ page_number: 40, ocr: J103_N }, { page_number: 41, ocr: J103_X.replace('<meta>catchword: Panis</meta>\n', '') }];
+    const none = buildBlockTranslationPrompt({ prompts, book, pages: plain, previousTranslation: PREV_TR, pageBreak: PAGE_BREAK_SCOPED });
+    expect(none.prompt).toBe(buildBlockTranslationPrompt({ prompts, book, pages: plain, previousTranslation: PREV_TR }).prompt);
+    expect(none.pageBreak.applied).toBe(false);
+
+    const withDevice = buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation: PREV_TR, pageBreak: PAGE_BREAK_SCOPED });
+    expect(withDevice.pageBreak.applied).toBe(true);
+    expect(withDevice.prompt.split(PAGE_BREAK_RULE).length).toBe(2);
+    expect(withDevice.prompt).toContain('--- Page 16 ---\n' + J111_N.replace('Augspur-', 'Augspurgischen'));
+    expect(withDevice.prompt).toContain('**At the page break:** This page ends with the word «Augspurgischen»');
+    expect(withDevice.prompt).toContain('<header>Vorrede.</header>\n\nConfession/');
+    expect(withDevice.prompt).toContain('--- Page 18 ---\n' + J103_N + '\n');   // the plain page: untouched
+    expect(withDevice.prompt).not.toContain('The next page opens');            // never a lookahead in a block
+    expect(withDevice.pageBreak.pages.map((p: { fired: boolean }) => p.fired)).toEqual([true, true, false]);
+  });
+
+  it('negative control — scoped off annotates the block even without a device', () => {
+    const plain = [{ page_number: 40, ocr: J103_N }, { page_number: 41, ocr: J103_X.replace('<meta>catchword: Panis</meta>\n', '') }];
+    const { prompt } = buildBlockTranslationPrompt({ prompts, book, pages: plain, previousTranslation: PREV_TR, pageBreak: { ...PAGE_BREAK_SCOPED, scoped: false } });
+    expect(prompt).toContain(PAGE_BREAK_RULE);
   });
 });

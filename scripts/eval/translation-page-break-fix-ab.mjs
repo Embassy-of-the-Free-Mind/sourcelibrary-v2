@@ -31,6 +31,9 @@
  *   --run --approved-usd X PAID   the arms (resumable; refuses without approval ≥ estimate, cap $3)
  *   --packet               FREE   blinded F/B and B/B2 junction pairs with the source, 8 judge chunks
  *   --score                FREE   verdicts → fidelity tallies, defects by type, the device subset
+ *   --blocks               with --draw/--run/--packet: the BLOCK-shaped measurement — one production-
+ *                          shaped block (≤8 pages) around each seam, the worker's own block prompt,
+ *                          arms B / B2 / Fs (Fs = PAGE_BREAK_SCOPED, the flip candidate)
  *
  * Run --run on Hetzner (paid Gemini is geo-blocked on the laptop):
  *   set -a; source .env.production.local; set +a
@@ -40,7 +43,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import {
-  loadTranslationPrompts, buildTranslationPrompt, sanitizeTranslationTags, getTranslateModelForBook, PAGE_BREAK_FIX,
+  loadTranslationPrompts, buildTranslationPrompt, buildBlockTranslationPrompt, sanitizeTranslationTags, getTranslateModelForBook,
+  isTranslatablePage, PAGE_BREAK_FIX, PAGE_BREAK_SCOPED,
 } from '../lib/translate-core.mjs';
 import { resolvePageBreak } from '../lib/page-break-devices.mjs';
 import { priceFor } from '../lib/model-pricing.mjs';
@@ -48,7 +52,7 @@ import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { connect, disconnect } from './lib/sampling.mjs';
 import { resetSeed, seededRand, binomTwoSided } from './lib/paired-stats.mjs';
 import { gemini, pool } from './translation-prompt-ab.mjs';
-import { readerText } from './translation-batch-continuity-ab.mjs';
+import { readerText, parseBlock } from './translation-batch-continuity-ab.mjs';
 
 const args = process.argv.slice(2);
 const arg = (n, d = null) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
@@ -58,7 +62,12 @@ const RESULTS = new URL('./results/', import.meta.url).pathname;
 const TAG = 'translation-page-break-fix';
 const SOURCE_KEY = path.join(RESULTS, 'translation-batch-seam-fidelity-judge-key.json');
 const SAMPLE_FILE = path.join(RESULTS, `${TAG}-sample.json`);
-const ARMS_FILE = path.join(RESULTS, `${TAG}-arms.jsonl`);
+// --blocks: the BLOCK-shaped measurement (2026-09-25 late night, Derek's go): one production-shaped
+// block of up to 8 pages around each seam, translated with the worker's own block prompt
+// (buildBlockTranslationPrompt). Its rows live in their own file so the single-page rows stay intact.
+const BLOCKS = has('blocks');
+const BLOCK_SAMPLE_FILE = path.join(RESULTS, `${TAG}-block-sample.json`);
+const ARMS_FILE = path.join(RESULTS, BLOCKS ? `${TAG}-block-arms.jsonl` : `${TAG}-arms.jsonl`);
 // --tag=NAME: file-name stem for a packet/key/verdicts/report set, so a second draw of pairs (the
 // 2026-09-25 night follow-up: F0 and FC against the same B) never overwrites a judged key.
 const PTAG = arg('tag', TAG);
@@ -74,7 +83,10 @@ const ARM_FIX = {
   F: PAGE_BREAK_FIX,                                   // all four pieces, sentence-length lookahead
   F0: { ...PAGE_BREAK_FIX, lookahead: false },        // edits + rule only, no lookahead
   FC: { ...PAGE_BREAK_FIX, lookahead: 'clause' },     // edits + rule + clause-length lookahead
+  Fs: PAGE_BREAK_SCOPED,                              // F0 applied only where a device is (the flip candidate)
 };
+// Production's blocking rules (translate-worker.mjs BATCH_SIZE / MIN_OCR_CHARS_FOR_BATCH / MAX_BATCH_OCR_CHARS).
+const BLOCK = 8, MIN_PAGE_OCR_CHARS = 200, MAX_BLOCK_OCR_CHARS = 20000;
 /** --pairs X/Y,...: the blinded pairs a packet draws (default the first measurement's). */
 const PAIRS = String(arg('pairs', 'F/B,B/B2')).split(',');
 const CONCURRENCY = Number(arg('concurrency', 4));
@@ -144,6 +156,141 @@ function estimate(sample, headerChars = 7600) {
     }
   }
   return { calls: sample.length * ARMS.length * 2, inputTokens, outputTokens, usd };
+}
+
+// ── --draw --blocks ─────────────────────────────────────────────────────────
+/**
+ * One production-shaped block per seam: the 8-page window N-3..N+4, shrunk from its ends until it
+ * passes the worker's rules (every page translatable and ≥ MIN_PAGE_OCR_CHARS, ≤ MAX_BLOCK_OCR_CHARS in
+ * all) with N and N+1 still inside. Seeded like the worker: the STORED translation of the page before
+ * the block, the same for every arm. Device seams first, so a spend cap loses plain seams, not the
+ * targeted ones.
+ */
+async function phaseDrawBlocks() {
+  const { sample } = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
+  const { db } = await connect();
+  const out = [], dropped = [];
+  for (const s of sample) {
+    const lo = s.N.page_number - 3, hi = s.X.page_number + 4;
+    const rows = await db.collection('pages').find({ book_id: s.bookId, page_number: { $gte: lo - 1, $lte: hi } },
+      { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.unreadable': 1, 'translation.data': 1, 'translation.recitation_blocked': 1, 'translation.safety_blocked': 1 } }).sort({ page_number: 1 }).toArray();
+    const byNum = new Map(rows.map((p) => [p.page_number, p]));
+    const ok = (p) => p && isTranslatablePage(p).ok && (p.ocr?.data || '').length >= MIN_PAGE_OCR_CHARS;
+    let from = lo, to = hi;
+    const window = () => { const w = []; for (let n = from; n <= to; n++) w.push(byNum.get(n)); return w; };
+    const chars = (w) => w.reduce((t, p) => t + (p?.ocr?.data || '').length, 0);
+    // Shrink alternately from the far ends until the block is one production would send.
+    let side = 0;
+    while (to - from + 1 > 2 && (window().some((p) => !ok(p)) || chars(window()) > MAX_BLOCK_OCR_CHARS || to - from + 1 > BLOCK)) {
+      if (side === 0 && from < s.N.page_number) from++; else if (to > s.X.page_number) to--; else from++;
+      side ^= 1;
+    }
+    const w = window();
+    if (w.some((p) => !ok(p)) || from > s.N.page_number || to < s.X.page_number) { dropped.push({ id: s.id, reason: 'no production-shaped block holds both seam pages' }); continue; }
+    const before = byNum.get(from - 1);
+    out.push({
+      ...s,
+      block: { from, to, size: w.length, ocrChars: chars(w), pages: w.map((p) => ({ id: p.id, page_number: p.page_number, ocr: p.ocr.data })) },
+      blockSeed: typeof before?.translation?.data === 'string' ? before.translation.data : null,
+      blockPrevOcr: before?.ocr?.data || null,
+      blockNextOcr: byNum.get(to + 1)?.ocr?.data || null,
+    });
+  }
+  await disconnect();
+  out.sort((a, b) => Number(b.device) - Number(a.device));
+  const est = estimateBlocks(out);
+  const sizes = {};
+  for (const s of out) sizes[s.block.size] = (sizes[s.block.size] || 0) + 1;
+  fs.writeFileSync(BLOCK_SAMPLE_FILE, JSON.stringify({ drawn_at: new Date().toISOString(), arms: ARMS, n: out.length, device_seams: out.filter((s) => s.device).length, sizes, dropped, estimate: est, sample: out }, null, 1));
+  console.log(`n = ${out.length} blocks (${out.filter((s) => s.device).length} device seams first); block sizes ${JSON.stringify(sizes)}; ${out.filter((s) => !s.blockSeed).length} without a stored seed; dropped ${dropped.length}`);
+  for (const d of dropped) console.log('  dropped', JSON.stringify(d));
+  console.log(`ESTIMATE: ${est.calls} block calls, in ~${est.inputTokens.toLocaleString()} tok, out ~${est.outputTokens.toLocaleString()} tok = $${est.usd.toFixed(2)} (cap $${CEILING_USD})`);
+  console.log(`wrote ${BLOCK_SAMPLE_FILE}\nPAID STEP NOT RUN.`);
+}
+
+function estimateBlocks(sample, headerChars = 7600) {
+  let inputTokens = 0, outputTokens = 0, usd = 0;
+  for (const s of sample) {
+    const price = priceFor(s.model);
+    for (const arm of ARMS) {
+      if (!(arm in ARM_FIX)) throw new Error(`unknown arm ${arm}`);
+      const inTok = Math.ceil((headerChars + 2000 + s.block.ocrChars + 400 + (ARM_FIX[arm] ? 300 : 0)) / 4);
+      const outTok = Math.ceil(s.block.ocrChars * 0.35);
+      inputTokens += inTok; outputTokens += outTok;
+      usd += (inTok / 1e6) * price.input + (outTok / 1e6) * price.output;
+    }
+  }
+  return { calls: sample.length * ARMS.length, inputTokens, outputTokens, usd };
+}
+
+const maxOutForBlock = (pages) => Math.min(32768, Math.max(4096, pages.reduce((n, p) => n + p.ocr.length, 0) + 1200 * pages.length));
+
+/** --run --blocks: one block call per seam-arm, parsed as the worker parses (parseBlock mirrors it). */
+async function phaseRunBlocks() {
+  const { sample } = JSON.parse(fs.readFileSync(BLOCK_SAMPLE_FILE, 'utf8'));
+  const est = estimateBlocks(sample);
+  const approved = Number(arg('approved-usd', 0));
+  if (!(approved >= est.usd) || approved > CEILING_USD) {
+    console.error(`REFUSING TO SPEND. Estimate $${est.usd.toFixed(2)}; --approved-usd is ${approved || 'absent'}; cap $${CEILING_USD}.`);
+    process.exit(2);
+  }
+  const { db } = await connect();
+  const prompts = await loadTranslationPrompts(db);
+  console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} blocks`);
+  const onDisk = readRows();
+  const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
+  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
+  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  if (has('rerun-degenerate')) for (const [k, r] of done) if (isDegenerate(r)) { done.delete(k); console.log(`rerun ${k}: degenerate seam page`); }
+  const stream = fs.createWriteStream(ARMS_FILE, { flags: 'a' });
+  // Seam-major: every arm of one seam before the next seam, so a cap cutoff loses whole seams.
+  const jobs = [];
+  for (const s of sample) for (const arm of ARMS) if (!done.has(`${s.id}:${arm}`)) jobs.push({ s, arm });
+  console.log(`${jobs.length} block calls to run`);
+  await pool(jobs, CONCURRENCY, async ({ s, arm }) => {
+    if (spent >= approved) { console.log(`${s.id} ${arm}: skipped, spend reached $${approved}`); return; }
+    const pages = s.block.pages;
+    const { prompt, pageBreak } = buildBlockTranslationPrompt({ prompts, book: s.book, pages, previousTranslation: s.blockSeed, prevOcrText: s.blockPrevOcr, nextOcrText: s.blockNextOcr, pageBreak: ARM_FIX[arm] });
+    const price = priceFor(s.model);
+    const t0 = Date.now();
+    const call = async () => {
+      const res = await gemini(prompt, maxOutForBlock(pages), s.model);
+      const cost = res.error ? 0 : (res.inTok / 1e6) * price.input + (res.outTok / 1e6) * price.output;
+      const parsed = res.error ? new Map() : parseBlock(res.text, pages);
+      await logUsage({
+        type: 'translation', mode: 'realtime', model: s.model, book_id: s.bookId, page_count: pages.length,
+        input_tokens: res.inTok || 0, output_tokens: res.outTok || 0, cost_usd: cost,
+        status: res.error ? 'error' : parsed.size < pages.length ? 'partial' : 'success', error_message: res.error || null, duration_ms: Date.now() - t0,
+        prompt_version: `v${prompts.translation.ref.version}`, endpoint: ENDPOINT, triggered_by: 'manual',
+      }, db).catch((e) => console.warn(`usage log failed: ${e.message}`));
+      return { res, cost, parsed };
+    };
+    let { res, cost, parsed } = await call();
+    let retried = false;
+    // The worker re-translates a page missing from the block single-page; here one block retry when a seam page is missing.
+    if ((!parsed.has(s.N.page_number) || !parsed.has(s.X.page_number)) && spent + cost < approved) {
+      retried = true;
+      const second = await call();
+      cost += second.cost;
+      if (second.parsed.size > parsed.size) ({ res, parsed } = second);
+    }
+    spent += cost;
+    const row = {
+      id: s.id, arm, bookId: s.bookId, language: s.language, model: s.model, kind: s.break.kind, device: s.device, shape: 'block',
+      block: { from: s.block.from, to: s.block.to, size: pages.length, parsed: parsed.size, retried, applied: pageBreak?.applied ?? null, fired: pageBreak ? pageBreak.pages.filter((p) => p.fired).length : 0 },
+      pages: Object.fromEntries(parsed),
+      N: { id: s.N.id, text: parsed.get(s.N.page_number) || '', prompt_sha: sha(prompt) },
+      X: { id: s.X.id, text: parsed.get(s.X.page_number) || '', prompt_sha: sha(prompt) },
+      inTok: res.inTok || 0, outTok: res.outTok || 0, finish: res.finish || null, error: res.error || null,
+      cost_usd: cost, at: new Date().toISOString(),
+    };
+    stream.write(JSON.stringify(row) + '\n');
+    console.log(`${s.id} ${arm.padEnd(2)} ${s.language.padEnd(6)} block ${s.block.from}-${s.block.to} parsed ${parsed.size}/${pages.length}${pageBreak?.applied ? ' fix' : ''} N ${String(row.N.text.length).padStart(5)} X ${String(row.X.text.length).padStart(5)}  $${cost.toFixed(4)}  total $${spent.toFixed(3)}${res.error ? `  ERROR ${res.error}` : ''}`);
+  });
+  stream.end();
+  await disconnect();
+  const rows = readRows();
+  console.log(`\n${rows.length} block rows on disk; spent $${spent.toFixed(3)} of $${approved} approved; ${rows.filter((r) => !r.N.text || !r.X.text).length} with a missing seam page`);
 }
 
 // ── --run (PAID) ────────────────────────────────────────────────────────────
@@ -243,7 +390,7 @@ async function phaseRun() {
 // ── --packet ────────────────────────────────────────────────────────────────
 function phasePacket() {
   if (fs.existsSync(KEY_FILE)) throw new Error(`${KEY_FILE} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
-  const { sample } = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
+  const { sample } = JSON.parse(fs.readFileSync(BLOCKS ? BLOCK_SAMPLE_FILE : SAMPLE_FILE, 'utf8'));
   const rows = readRows();
   // The LAST row per seam-arm stands (a --rerun-degenerate retry appends); the collapses it replaced
   // are counted per arm — a whole page wrapped in <meta>continues from previous page: …</meta> is a
@@ -364,8 +511,8 @@ function phaseScore() {
 }
 
 // ── main ────────────────────────────────────────────────────────────────────
-if (has('draw')) await phaseDraw();
-else if (has('run')) await phaseRun();
+if (has('draw')) await (BLOCKS ? phaseDrawBlocks() : phaseDraw());
+else if (has('run')) await (BLOCKS ? phaseRunBlocks() : phaseRun());
 else if (has('packet')) phasePacket();
 else if (has('score')) phaseScore();
-else console.log('one of --draw | --run --approved-usd N | --packet | --score (see the header)');
+else console.log('one of --draw | --run --approved-usd N | --packet | --score, each with --blocks for the block-shaped measurement (see the header)');

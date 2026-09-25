@@ -290,58 +290,124 @@ export const PAGE_BREAK_FIX = Object.freeze({ splitWords: true, catchwords: true
 
 export const PAGE_BREAK_RULE = '**Page breaks:** a catchword (the next page\'s first word printed again at the foot of this page) is a printer\'s device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page\'s words are rendered here: never repeat or complete the next page\'s words.';
 
+/**
+ * The SCOPED form (#5103, the flip candidate): edits + rule line, no lookahead, and applied only to a
+ * page that actually ends on (or begins after) a split word or a catchword. On every other page the
+ * prompt is byte-identical to production — pinned by tests/unit/translate-page-break.test.ts. Measured
+ * 2026-09-25: the lookahead is where the duplications came from (flash-lite renders "context only"
+ * text), and the edits alone halved the share of device breaks carrying a defect.
+ */
+export const PAGE_BREAK_SCOPED = Object.freeze({ splitWords: true, catchwords: true, lookahead: false, rule: true, scoped: true });
+
+/**
+ * Resolve the devices around ONE page: the break before it (a word the previous page began, a
+ * catchword it repeats) and the break after it (its own foot). Pure; the prompt builders below
+ * decide whether to APPLY the result (`pageBreak.scoped` applies it only when something fired).
+ *
+ * @returns {{ text: string, notes: string[], lookahead: string, fired: boolean, meta: object }}
+ */
+export function resolvePageBreakForPage({ ocrText, prevOcrText, nextOcrText, pageBreak }) {
+  let text = ocrText;
+  const notes = [];
+  let lookahead = '';
+  const meta = { kind: null, joined: null, catchword: null, headJoined: null, headRemoved: null, lookahead: false };
+  const edits = { splitWords: !!pageBreak.splitWords, catchwords: !!pageBreak.catchwords };
+  // The break BEFORE this page: a word the previous page began is translated there.
+  if (prevOcrText && (edits.splitWords || edits.catchwords)) {
+    const head = resolvePageBreak(prevOcrText, text, edits);
+    text = head.ocrNext;
+    if (head.joined) {
+      meta.headJoined = head.joined;
+      notes.push(`The word «${head.joined}» was split across the break from the previous page and is translated there; this page's text begins after it.`);
+    } else if (head.removedFromNext) {
+      meta.headRemoved = head.removedFromNext;
+      notes.push(`The word «${head.removedFromNext}» at the head of this page repeats the previous page's catchword and has been removed; it is not translated twice.`);
+    }
+  }
+  // The break AFTER this page: the devices at its foot, and the next page's opening as context.
+  if (nextOcrText) {
+    const foot = resolvePageBreak(text, nextOcrText, edits);
+    if (edits.splitWords || edits.catchwords) text = foot.ocrN;
+    meta.kind = foot.kind;
+    meta.joined = foot.joined;
+    meta.catchword = foot.catchword;
+    if (foot.joined) notes.push(`This page ends with the word «${foot.joined}», completed from the top of the next page; translate it here.`);
+    // A tagged catchword that is the second half of the joined word ("gischen" under
+    // "Augspur-") is part of that word, not a separate device to warn about.
+    const partOfJoin = foot.joined && foot.catchword && foot.joined.toLowerCase().includes(foot.catchword.toLowerCase().replace(/[^\p{L}]/gu, ''));
+    if (foot.catchword && edits.catchwords && !partOfJoin) notes.push(`The catchword «${foot.catchword}» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.`);
+    // lookahead: true = the first sentence; 'clause' = only to the first clause boundary.
+    if (pageBreak.lookahead) {
+      lookahead = lookaheadSnippet(foot.ocrNext, pageBreak.lookahead === 'clause' ? LOOKAHEAD_CLAUSE : {});
+      meta.lookahead = !!lookahead;
+    }
+  }
+  const fired = !!(meta.headJoined || meta.headRemoved || meta.kind || meta.catchword);
+  return { text, notes, lookahead, fired, meta };
+}
+
 export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
   const { prompt: header, promptRef, isEnglish: english } = translationPromptHeader({ prompts, book });
   let prompt = header;
 
-  let text = ocrText;
-  const notes = [];
-  let lookahead = '';
-  const meta = { kind: null, joined: null, catchword: null, headJoined: null, lookahead: false };
-  if (pageBreak) {
-    const edits = { splitWords: !!pageBreak.splitWords, catchwords: !!pageBreak.catchwords };
-    // The break BEFORE this page: a word the previous page began is translated there.
-    if (prevOcrText && (edits.splitWords || edits.catchwords)) {
-      const head = resolvePageBreak(prevOcrText, text, edits);
-      text = head.ocrNext;
-      if (head.joined) {
-        meta.headJoined = head.joined;
-        notes.push(`The word «${head.joined}» was split across the break from the previous page and is translated there; this page's text begins after it.`);
-      } else if (head.removedFromNext) {
-        notes.push(`The word «${head.removedFromNext}» at the head of this page repeats the previous page's catchword and has been removed; it is not translated twice.`);
-      }
-    }
-    // The break AFTER this page: the devices at its foot, and the next page's opening as context.
-    if (nextOcrText) {
-      const foot = resolvePageBreak(text, nextOcrText, edits);
-      if (edits.splitWords || edits.catchwords) text = foot.ocrN;
-      meta.kind = foot.kind;
-      meta.joined = foot.joined;
-      meta.catchword = foot.catchword;
-      if (foot.joined) notes.push(`This page ends with the word «${foot.joined}», completed from the top of the next page; translate it here.`);
-      // A tagged catchword that is the second half of the joined word ("gischen" under
-      // "Augspur-") is part of that word, not a separate device to warn about.
-      const partOfJoin = foot.joined && foot.catchword && foot.joined.toLowerCase().includes(foot.catchword.toLowerCase().replace(/[^\p{L}]/gu, ''));
-      if (foot.catchword && edits.catchwords && !partOfJoin) notes.push(`The catchword «${foot.catchword}» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.`);
-      // lookahead: true = the first sentence; 'clause' = only to the first clause boundary.
-      if (pageBreak.lookahead) {
-        lookahead = lookaheadSnippet(foot.ocrNext, pageBreak.lookahead === 'clause' ? LOOKAHEAD_CLAUSE : {});
-        meta.lookahead = !!lookahead;
-      }
-    }
-    if (pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
-  }
+  const r = pageBreak ? resolvePageBreakForPage({ ocrText, prevOcrText, nextOcrText, pageBreak }) : null;
+  // Scoped: a page with no device at either break gets production's prompt, byte for byte.
+  const applied = !!r && (!pageBreak.scoped || r.fired);
+  const text = applied ? r.text : ocrText;
+  if (applied && pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
 
   prompt += english
     ? `\n\n**Text to modernize:**\n${text}`
     : `\n\n**Text to translate:**\n${text}`;
 
-  if (notes.length) prompt += `\n\n**At the page break:** ${notes.join(' ')}`;
-  if (lookahead) prompt += `\n\n**The next page opens (source, for context only; do NOT translate it, the next page carries it):**\n${lookahead}`;
+  if (applied && r.notes.length) prompt += `\n\n**At the page break:** ${r.notes.join(' ')}`;
+  if (applied && r.lookahead) prompt += `\n\n**The next page opens (source, for context only; do NOT translate it, the next page carries it):**\n${r.lookahead}`;
 
   prompt += continuityContext(previousTranslation, { english });
 
-  return { prompt, promptRef, isEnglish: english, pageBreak: pageBreak ? meta : null };
+  return { prompt, promptRef, isEnglish: english, pageBreak: r ? { ...r.meta, fired: r.fired, applied } : null };
+}
+
+/**
+ * THE block prompt: production translates BATCH_SIZE (8) consecutive pages in one call
+ * (translate-worker.mjs translateBatch), the previous block's last translation as continuity, each
+ * page wrapped in `<translation page="N">`. Moved here from the worker's inline assembly (2026-09-25)
+ * so the worker and the evals send the same bytes — the Batch-lane harness had carried a drifting
+ * copy. `pages` are `{ page_number, ocr }` with `ocr` a string or the page's `ocr` object.
+ *
+ * With `pageBreak`, every in-block break is resolved page against page (the block's first and last
+ * pages against `prevOcrText` / `nextOcrText`); the lookahead is never used in a block, the next
+ * page is already in the prompt. Under `scoped`, a block in which no page fired is byte-identical
+ * to production; in one that did, only the pages that fired are edited or annotated, and the rule
+ * line is added once.
+ */
+export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
+  const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
+  const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
+  const per = pages.map((p, i) => (pageBreak
+    ? resolvePageBreakForPage({
+      ocrText: ocrOf(p),
+      prevOcrText: i > 0 ? ocrOf(pages[i - 1]) : prevOcrText,
+      nextOcrText: i + 1 < pages.length ? ocrOf(pages[i + 1]) : nextOcrText,
+      pageBreak: { ...pageBreak, lookahead: false },
+    })
+    : null));
+  const applied = !!pageBreak && (!pageBreak.scoped || per.some((r) => r.fired));
+
+  let prompt = header;
+  prompt += continuityContext(previousTranslation, { english: isEnglish });
+  if (applied && pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
+
+  const verb = isEnglish ? 'modernize' : 'translate';
+  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
+  prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  prompt += `\n**Pages to ${verb}:**\n`;
+  pages.forEach((p, i) => {
+    prompt += `\n--- Page ${p.page_number} ---\n${applied ? per[i].text : ocrOf(p)}\n`;
+    if (applied && per[i].notes.length) prompt += `**At the page break:** ${per[i].notes.join(' ')}\n`;
+  });
+
+  return { prompt, promptRef, isEnglish, pageBreak: pageBreak ? { applied, pages: per.map((r) => ({ ...r.meta, fired: r.fired })) } : null };
 }
 
 /** Close unterminated inline tags the model sometimes emits mid-stream. */

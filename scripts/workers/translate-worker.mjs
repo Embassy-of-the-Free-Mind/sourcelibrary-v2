@@ -37,6 +37,7 @@ import {
   assessTranslationHealth,
   persistRefusedTranslation,
   continuityContext,
+  buildBlockTranslationPrompt,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -329,18 +330,17 @@ async function translatePageGuarded(db, page, book, prevTranslation) {
 
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
-  const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
-  let prompt = headerPrompt;
-
-  prompt += continuityContext(prevTranslation, { english: isEnglish });
-
-  const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += `\n**Pages to ${verb}:**\n`;
-  for (const page of pages) {
-    prompt += `\n--- Page ${page.page_number} ---\n${page.ocr.data}\n`;
-  }
+  // The block prompt is translate-core's (buildBlockTranslationPrompt, 2026-09-25): the worker and
+  // the evals send the same bytes. The one difference from the inline assembly this replaced is that
+  // the header now fills `{target_language}` (English) as translate-core's single-page path always
+  // did; the inline copy left the placeholder literal. No page-break option is passed: the fix
+  // (#5103) stays OFF here until it is flipped deliberately.
+  const translationPrompt = await getTranslationPromptFromDb(db);
+  const englishPrompt = await getEnglishModernizationPromptFromDb(db);
+  const { prompt, promptRef } = buildBlockTranslationPrompt({
+    prompts: { translation: { text: translationPrompt.text, ref: translationPrompt }, english: { text: englishPrompt.text, ref: englishPrompt } },
+    book, pages, previousTranslation: prevTranslation,
+  });
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
