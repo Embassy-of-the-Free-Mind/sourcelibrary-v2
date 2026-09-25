@@ -1,0 +1,637 @@
+2026-09-11T21:48:32.409Z   skip Algonquin: 1 books < 20
+2026-09-11T21:48:32.597Z   skip Am: 1 books < 20
+2026-09-11T21:48:32.769Z   skip An: 6 books < 20
+2026-09-11T21:48:36.686Z   Arabic             books=   340 sampled=20 misses=0
+2026-09-11T21:48:36.858Z   skip Arabic And Coptic: 1 books < 20
+2026-09-11T21:48:37.030Z   skip Arabic And Hebrew: 1 books < 20
+2026-09-11T21:48:37.202Z   skip Arabic And Samaritan Hebrew: 3 books < 20
+2026-09-11T21:48:37.375Z   skip Arabic And Turkish: 1 books < 20
+2026-09-11T21:48:37.550Z   skip Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:48:37.724Z   skip Arabic In Samaritan Characters: 1 books < 20
+2026-09-11T21:48:37.896Z   skip Arabic In Samaritan Script, Hebrew In Samaritan Script, Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:48:38.072Z   skip Arabic, Ottoman Turkish, Persian, Latin, Ternate (A Papuan Language), French And Dutch.: 1 books < 20
+2026-09-11T21:48:38.246Z   skip Aramaic: 1 books < 20
+2026-09-11T21:48:38.419Z   skip Ardhamagadhi Prakrit: 3 books < 20
+2026-09-11T21:48:42.300Z   Armenian           books=    85 sampled=20 misses=0
+2026-09-11T21:48:42.569Z   skip Aromanian (In Greek Alphabet), Greek: 1 books < 20
+2026-09-11T21:48:42.749Z   skip Avestan: 4 books < 20
+2026-09-11T21:48:42.920Z   skip Balinese: 1 books < 20
+2026-09-11T21:48:43.095Z   skip Bengali: 6 books < 20
+2026-09-11T21:48:43.267Z   skip Bugis: 1 books < 20
+2026-09-11T21:48:43.527Z   skip Bulgarian: 1 books < 20
+2026-09-11T21:48:43.777Z   skip Burmese: 9 books < 20
+2026-09-11T21:48:43.947Z   skip Cakchiquel / English: 1 books < 20
+2026-09-11T21:48:44.131Z   skip Catalan: 2 books < 20
+2026-09-11T21:48:44.305Z   skip Chagatai Turkish: 2 books < 20
+2026-09-11T21:48:52.066Z   Chinese            books= 13200 sampled=20 misses=0
+2026-09-11T21:48:52.239Z   skip Church Slavonic: 2 books < 20
+2026-09-11T21:48:52.410Z   skip Church Slavonic, Greek: 1 books < 20
+2026-09-11T21:48:52.586Z   skip Circassian: 1 books < 20
+2026-09-11T21:48:52.764Z   skip Classical Armenian: 1 books < 20
+2026-09-11T21:48:52.945Z   skip Classical Chinese / Japanese: 6 books < 20
+2026-09-11T21:48:53.119Z   skip Coptic: 19 books < 20
+2026-09-11T21:48:53.295Z   skip Czech: 7 books < 20
+2026-09-11T21:48:53.468Z   skip Danish: 11 books < 20
+2026-09-11T21:48:53.641Z   skip Den: 1 books < 20
+2026-09-11T21:48:57.736Z   Dutch              books=   555 sampled=20 misses=0
+2026-09-11T21:48:57.920Z   skip Dz: 2 books < 20
+2026-09-11T21:48:58.167Z   skip Dzongkha: 2 books < 20
+2026-09-11T21:48:58.344Z   skip E: 10 books < 20
+2026-09-11T21:48:58.516Z   skip Early New High German: 1 books < 20
+2026-09-11T21:48:58.692Z   skip Egyptian: 13 books < 20
+2026-09-11T21:49:02.710Z   Egyptian Hieroglyphs books=   142 sampled=20 misses=0
+2026-09-11T21:49:08.845Z   English            books=  3768 sampled=20 misses=0
+2026-09-11T21:49:09.019Z   skip English & Greek: 1 books < 20
+2026-09-11T21:49:09.197Z   skip English And Hebrew: 2 books < 20
+2026-09-11T21:49:09.369Z   skip English, Greek, Hebrew, Latin: 1 books < 20
+2026-09-11T21:49:09.540Z   skip English, Old Irish: 1 books < 20
+2026-09-11T21:49:09.713Z   skip English, Prakrit, Sanskrit: 1 books < 20
+2026-09-11T21:49:09.894Z   skip English, Scottish Gaelic: 1 books < 20
+2026-09-11T21:49:10.067Z   skip English.: 1 books < 20
+2026-09-11T21:49:10.240Z   skip English/Gaelic: 1 books < 20
+2026-09-11T21:49:10.417Z   skip English/Sanskrit: 1 books < 20
+2026-09-11T21:49:10.589Z   skip Ethiopic: 1 books < 20
+2026-09-11T21:49:10.761Z   skip Filipino: 2 books < 20
+2026-09-11T21:49:10.942Z   skip Finnish: 2 books < 20
+2026-09-11T21:49:15.579Z   French             books=  1618 sampled=20 misses=0
+2026-09-11T21:49:15.759Z   skip French And Latin: 1 books < 20
+2026-09-11T21:49:15.944Z   skip French, Latin: 1 books < 20
+2026-09-11T21:49:16.184Z   skip French. English. Latin: 1 books < 20
+2026-09-11T21:49:16.357Z   skip French/English: 1 books < 20
+2026-09-11T21:49:16.534Z   skip French/Greek: 1 books < 20
+2026-09-11T21:49:16.710Z   skip Frm: 2 books < 20
+2026-09-11T21:49:16.884Z   skip Ga: 1 books < 20
+2026-09-11T21:49:21.952Z   Ge'Ez              books=    28 sampled=20 misses=0
+2026-09-11T21:49:22.126Z   skip Geez: 1 books < 20
+2026-09-11T21:49:22.300Z   skip Georgian: 5 books < 20
+2026-09-11T21:49:31.915Z   German             books=  5911 sampled=20 misses=0
+2026-09-11T21:49:32.089Z   skip German And Hebrew: 1 books < 20
+2026-09-11T21:49:32.435Z   skip German/Arabic: 1 books < 20
+2026-09-11T21:49:32.611Z   skip German/Latin: 1 books < 20
+2026-09-11T21:49:32.784Z   skip GeʾEz (Ethiopic): 2 books < 20
+2026-09-11T21:49:32.962Z   skip Gothic: 1 books < 20
+2026-09-11T21:49:33.133Z   skip Gre: 2 books < 20
+2026-09-11T21:49:39.780Z   Greek              books=  5024 sampled=20 misses=0
+2026-09-11T21:49:39.953Z   skip Greek, Syriac: 1 books < 20
+2026-09-11T21:49:40.125Z   skip Greek/English: 1 books < 20
+2026-09-11T21:49:40.301Z   skip Greek/Latin: 9 books < 20
+2026-09-11T21:49:40.475Z   skip Greenlandic: 2 books < 20
+2026-09-11T21:49:40.827Z   skip Haida: 1 books < 20
+2026-09-11T21:49:40.999Z   skip Hausa: 4 books < 20
+2026-09-11T21:49:41.171Z   skip Hawaiian: 6 books < 20
+2026-09-11T21:49:46.910Z   Hebrew             books=   275 sampled=20 misses=0
+2026-09-11T21:49:47.114Z   skip Hebrew And Arabic: 3 books < 20
+2026-09-11T21:49:47.286Z   skip Hebrew And Aramaic: 12 books < 20
+2026-09-11T21:49:47.458Z   skip Hebrew And Aramaic In Hebrew Script: 5 books < 20
+2026-09-11T21:49:47.638Z   skip Hebrew And Ladino: 1 books < 20
+2026-09-11T21:49:47.809Z   skip Hebrew In Hebrew Script, Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:49:47.983Z   skip Hebrew, Aramaic, And Arabic.: 1 books < 20
+2026-09-11T21:49:48.155Z   skip Hebrew, German, French: 1 books < 20
+2026-09-11T21:49:48.386Z   skip Hebrew, Ladino, And English: 1 books < 20
+2026-09-11T21:49:48.558Z   skip Hebrew, Yiddish And Ladino: 1 books < 20
+2026-09-11T21:49:52.488Z   Hindi              books=    24 sampled=20 misses=0
+2026-09-11T21:49:52.663Z   skip Hopi: 1 books < 20
+2026-09-11T21:49:52.836Z   skip Hungarian: 1 books < 20
+2026-09-11T21:49:53.015Z   skip Icelandic: 1 books < 20
+2026-09-11T21:49:53.194Z   skip Igbo: 1 books < 20
+2026-09-11T21:49:53.367Z   skip Irish/English: 4 books < 20
+2026-09-11T21:49:53.541Z   skip Iroquoian: 1 books < 20
+2026-09-11T21:49:57.741Z   Italian            books=   679 sampled=20 misses=0
+2026-09-11T21:49:57.915Z   skip Italian / German: 1 books < 20
+2026-09-11T21:49:58.087Z   skip Italian In Italian Script, Hebrew In Hebrew Script: 1 books < 20
+2026-09-11T21:49:58.265Z   skip Italian/Latin: 1 books < 20
+2026-09-11T21:50:02.571Z   Japanese           books=   401 sampled=20 misses=0
+2026-09-11T21:50:06.749Z   Javanese           books=   313 sampled=20 misses=0
+2026-09-11T21:50:06.927Z   skip K'Iche': 1 books < 20
+2026-09-11T21:50:07.165Z   skip K'Iche' / French: 1 books < 20
+2026-09-11T21:50:07.341Z   skip K'Iche' Maya: 4 books < 20
+2026-09-11T21:50:07.515Z   skip Kannada: 1 books < 20
+2026-09-11T21:50:07.690Z   skip Kanuri: 1 books < 20
+2026-09-11T21:50:07.863Z   skip Karaim And Hebrew: 1 books < 20
+2026-09-11T21:50:08.050Z   skip Kok Turkic: 1 books < 20
+2026-09-11T21:50:12.064Z   Korean             books=   314 sampled=20 misses=0
+2026-09-11T21:50:12.242Z   skip Ladino And French: 1 books < 20
+2026-09-11T21:50:28.654Z   Latin              books= 45386 sampled=20 misses=0
+2026-09-11T21:50:28.827Z   skip Latin And German: 1 books < 20
+2026-09-11T21:50:29.001Z   skip Latin, English: 1 books < 20
+2026-09-11T21:50:29.175Z   skip Latin, French: 1 books < 20
+2026-09-11T21:50:29.348Z   skip Latin, German: 1 books < 20
+2026-09-11T21:50:29.524Z   skip Latin, Greek: 2 books < 20
+2026-09-11T21:50:29.722Z   skip Latin, Persian, And Ottoman Turkish: 1 books < 20
+2026-09-11T21:50:29.896Z   skip Latin, Some Hebrew And Greek: 1 books < 20
+2026-09-11T21:50:30.070Z   skip Latin. French. English: 1 books < 20
+2026-09-11T21:50:30.243Z   skip Latin. German: 1 books < 20
+2026-09-11T21:50:30.415Z   skip Latin/English: 2 books < 20
+2026-09-11T21:50:30.589Z   skip Latin/German/English: 1 books < 20
+2026-09-11T21:50:30.762Z   skip Latin/Hebrew: 1 books < 20
+2026-09-11T21:50:30.937Z   skip Lb: 1 books < 20
+2026-09-11T21:50:31.110Z   skip Lenape: 1 books < 20
+2026-09-11T21:50:31.307Z   skip Lit: 1 books < 20
+2026-09-11T21:50:31.479Z   skip Low German: 1 books < 20
+2026-09-11T21:50:31.684Z   skip Maithili: 1 books < 20
+2026-09-11T21:50:31.863Z   skip Malagasy: 1 books < 20
+2026-09-11T21:50:35.734Z   Malay              books=    29 sampled=20 misses=0
+2026-09-11T21:50:35.905Z   skip Mandinka: 1 books < 20
+2026-09-11T21:50:36.077Z   skip Manichaean: 2 books < 20
+2026-09-11T21:50:36.249Z   skip Maori: 8 books < 20
+2026-09-11T21:50:36.421Z   skip Marathi: 8 books < 20
+2026-09-11T21:50:36.595Z   skip Maya Hieroglyphs: 3 books < 20
+2026-09-11T21:50:36.781Z   skip Maya Hieroglyphs / French: 3 books < 20
+2026-09-11T21:50:41.491Z   Middle English     books=    29 sampled=20 misses=0
+2026-09-11T21:50:41.749Z   skip Middle French: 4 books < 20
+2026-09-11T21:50:41.921Z   skip Middle High German: 9 books < 20
+2026-09-11T21:50:42.108Z   skip Mixtec: 3 books < 20
+2026-09-11T21:50:42.281Z   skip Mongolian: 1 books < 20
+2026-09-11T21:50:42.455Z   skip Mul: 1 books < 20
+2026-09-11T21:50:42.630Z   skip Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic): 1 books < 20
+2026-09-11T21:50:42.803Z   skip Nahuatl: 14 books < 20
+2026-09-11T21:50:42.975Z   skip Navajo: 3 books < 20
+2026-09-11T21:50:43.148Z   skip Ne: 8 books < 20
+2026-09-11T21:50:43.388Z   skip New Persian: 10 books < 20
+2026-09-11T21:50:43.566Z   skip No Linguistic Content: 17 books < 20
+2026-09-11T21:50:43.737Z   skip Norwegian: 4 books < 20
+2026-09-11T21:50:43.913Z   skip Nuxalk: 1 books < 20
+2026-09-11T21:50:44.085Z   skip Nyanga: 1 books < 20
+2026-09-11T21:50:44.259Z   skip Occitan: 1 books < 20
+2026-09-11T21:50:44.437Z   skip Old English: 2 books < 20
+2026-09-11T21:50:44.610Z   skip Old French: 13 books < 20
+2026-09-11T21:50:44.783Z   skip Old Javanese: 4 books < 20
+2026-09-11T21:50:44.958Z   skip Old Norse: 12 books < 20
+2026-09-11T21:50:45.134Z   skip Old Spanish: 1 books < 20
+2026-09-11T21:50:48.997Z   Ottoman Turkish    books=    22 sampled=20 misses=0
+2026-09-11T21:50:49.176Z   skip Pahlavi: 1 books < 20
+2026-09-11T21:50:52.984Z   Pali               books=    54 sampled=20 misses=0
+2026-09-11T21:50:53.158Z   skip Pali, Written In Sinhalese Characters.: 2 books < 20
+2026-09-11T21:50:57.564Z   Persian            books=   253 sampled=20 misses=0
+2026-09-11T21:50:57.836Z   skip Persian And Hindustani: 1 books < 20
+2026-09-11T21:50:58.012Z   skip Persian And Ottoman Turkish: 1 books < 20
+2026-09-11T21:50:58.187Z   skip Persian, Arabic, And Chagatai Turkish: 1 books < 20
+2026-09-11T21:50:58.365Z   skip Persian, Urdu, And Arabic: 1 books < 20
+2026-09-11T21:50:58.539Z   skip Polish: 5 books < 20
+2026-09-11T21:51:04.144Z   Portuguese         books=    22 sampled=20 misses=0
+2026-09-11T21:51:04.335Z   skip Prakrit: 2 books < 20
+2026-09-11T21:51:04.508Z   skip Prakrit Languages: 1 books < 20
+2026-09-11T21:51:04.865Z   skip ProvençAl: 1 books < 20
+2026-09-11T21:51:05.096Z   skip Punjabi: 6 books < 20
+2026-09-11T21:51:05.343Z   skip Qhe: 1 books < 20
+2026-09-11T21:51:05.519Z   skip Qu: 1 books < 20
+2026-09-11T21:51:05.698Z   skip Quiché Maya: 1 books < 20
+2026-09-11T21:51:05.872Z   skip Roa: 2 books < 20
+2026-09-11T21:51:06.048Z   skip Romanian: 4 books < 20
+2026-09-11T21:51:10.416Z   Russian            books=   591 sampled=20 misses=0
+2026-09-11T21:51:10.592Z   skip Samaritan: 3 books < 20
+2026-09-11T21:51:10.771Z   skip Samaritan Hebrew: 9 books < 20
+2026-09-11T21:51:10.949Z   skip Samaritan Hebrew And Arabic: 4 books < 20
+2026-09-11T21:51:11.124Z   skip Samaritan Hebrew In Samaritan Script: 1 books < 20
+2026-09-11T21:51:11.296Z   skip Samaritan Hebrew, Arabic And Aramaic In Samaritan Script: 1 books < 20
+2026-09-11T21:51:11.470Z   skip Samoan: 1 books < 20
+2026-09-11T21:51:16.734Z   Sanskrit           books=  2110 sampled=20 misses=0
+2026-09-11T21:51:16.922Z   skip Scottish And English: 1 books < 20
+2026-09-11T21:51:17.097Z   skip Sinhala: 2 books < 20
+2026-09-11T21:51:17.280Z   skip Sotho: 1 books < 20
+2026-09-11T21:51:22.204Z   Spanish            books=   163 sampled=20 misses=0
+2026-09-11T21:51:22.394Z   skip Spanish / French: 1 books < 20
+2026-09-11T21:51:22.640Z   skip Spanish / Latin: 1 books < 20
+2026-09-11T21:51:22.816Z   skip Spanish In Hebrew Characters: 1 books < 20
+2026-09-11T21:51:23.004Z   skip Sundanese: 1 books < 20
+2026-09-11T21:51:23.185Z   skip Swahili: 6 books < 20
+2026-09-11T21:51:23.368Z   skip Swedish: 6 books < 20
+2026-09-11T21:51:23.552Z   skip Syc: 1 books < 20
+2026-09-11T21:51:28.102Z   Syriac             books=   105 sampled=20 misses=0
+2026-09-11T21:51:28.281Z   skip Syriac, With Many Headings And Subscriptions To The Sections Of The Book In Arabic Either Alone Or Mixed With Syriac.: 1 books < 20
+2026-09-11T21:51:28.474Z   skip Tamil: 19 books < 20
+2026-09-11T21:51:28.705Z   skip Telugu: 2 books < 20
+2026-09-11T21:51:28.934Z   skip Text On Maps In Latin And German: 1 books < 20
+2026-09-11T21:51:29.110Z   skip Thai: 2 books < 20
+2026-09-11T21:51:29.291Z   skip The Text Is Written In Spanish With Headings In Hebrew.: 1 books < 20
+2026-09-11T21:51:35.302Z   Tibetan            books=  2020 sampled=20 misses=0
+2026-09-11T21:51:35.601Z   skip Tsimshian: 1 books < 20
+2026-09-11T21:51:35.796Z   skip Turkish: 7 books < 20
+2026-09-11T21:51:36.042Z   skip Undetermined: 1 books < 20
+2026-09-11T21:51:36.304Z   skip Urdu: 3 books < 20
+2026-09-11T21:51:36.483Z   skip Uyghur: 2 books < 20
+2026-09-11T21:51:36.662Z   skip Various Caucasian: 1 books < 20
+2026-09-11T21:51:36.894Z   skip Vietnamese: 9 books < 20
+2026-09-11T21:51:37.476Z   skip Visual: 3 books < 20
+2026-09-11T21:51:37.687Z   skip Welsh: 2 books < 20
+2026-09-11T21:51:37.862Z   skip Welsh/English: 3 books < 20
+2026-09-11T21:51:38.038Z   skip Xhosa: 1 books < 20
+2026-09-11T21:51:38.241Z   skip Yid: 1 books < 20
+2026-09-11T21:51:38.523Z   skip Yiddish: 2 books < 20
+2026-09-11T21:51:38.731Z   skip Yiddish And German: 1 books < 20
+2026-09-11T21:51:38.906Z   skip Yiddish, French, And English: 1 books < 20
+2026-09-11T21:51:39.095Z   skip Yiddish, With Some Hebrew And German: 1 books < 20
+2026-09-11T21:51:39.367Z   skip Yiddish, With Some Hebrew, Latin And German: 1 books < 20
+2026-09-11T21:51:39.552Z   skip Yoruba: 3 books < 20
+2026-09-11T21:51:39.750Z   skip Yucatec Maya: 7 books < 20
+2026-09-11T21:51:39.925Z   skip Yucatec Maya / English: 1 books < 20
+2026-09-11T21:51:40.100Z   skip Zulu: 4 books < 20
+2026-09-11T21:51:40.305Z   skip Zxx: 2 books < 20
+2026-09-11T21:51:40.317Z sample: 28 languages, 560 pages → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-sample-2026-09-11.json
+2026-09-11T21:52:43.461Z   skip Algonquin: 1 books < 20
+2026-09-11T21:52:43.651Z   skip Am: 1 books < 20
+2026-09-11T21:52:43.984Z   skip An: 6 books < 20
+2026-09-11T21:52:49.834Z   Arabic             books=   340 sampled=20 misses=0
+2026-09-11T21:52:50.127Z   skip Arabic And Coptic: 1 books < 20
+2026-09-11T21:52:50.315Z   skip Arabic And Hebrew: 1 books < 20
+2026-09-11T21:52:50.624Z   skip Arabic And Samaritan Hebrew: 3 books < 20
+2026-09-11T21:52:50.812Z   skip Arabic And Turkish: 1 books < 20
+2026-09-11T21:52:51.106Z   skip Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:52:51.313Z   skip Arabic In Samaritan Characters: 1 books < 20
+2026-09-11T21:52:51.501Z   skip Arabic In Samaritan Script, Hebrew In Samaritan Script, Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:52:51.682Z   skip Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan Language), French And Dutch.: 1 books < 20
+2026-09-11T21:52:51.862Z   skip Aramaic: 1 books < 20
+2026-09-11T21:52:52.050Z   skip Ardhamagadhi Prakrit: 3 books < 20
+2026-09-11T21:52:56.624Z   Armenian           books=    85 sampled=20 misses=0
+2026-09-11T21:52:56.796Z   skip Aromanian (in Greek Alphabet), Greek: 1 books < 20
+2026-09-11T21:52:56.968Z   skip Avestan: 4 books < 20
+2026-09-11T21:52:57.141Z   skip Balinese: 1 books < 20
+2026-09-11T21:52:57.325Z   skip Bengali: 6 books < 20
+2026-09-11T21:52:57.498Z   skip Bugis: 1 books < 20
+2026-09-11T21:52:57.674Z   skip Bulgarian: 1 books < 20
+2026-09-11T21:52:57.853Z   skip Burmese: 9 books < 20
+2026-09-11T21:52:58.030Z   skip Cakchiquel / English: 1 books < 20
+2026-09-11T21:52:58.206Z   skip Catalan: 2 books < 20
+2026-09-11T21:52:58.379Z   skip Chagatai Turkish: 2 books < 20
+2026-09-11T21:53:05.306Z   Chinese            books= 13200 sampled=20 misses=0
+2026-09-11T21:53:05.492Z   skip Church Slavonic: 2 books < 20
+2026-09-11T21:53:05.681Z   skip Church Slavonic, Greek: 1 books < 20
+2026-09-11T21:53:05.859Z   skip Circassian: 1 books < 20
+2026-09-11T21:53:06.031Z   skip Classical Armenian: 1 books < 20
+2026-09-11T21:53:06.349Z   skip Classical Chinese / Japanese: 6 books < 20
+2026-09-11T21:53:06.529Z   skip Coptic: 19 books < 20
+2026-09-11T21:53:06.704Z   skip Czech: 7 books < 20
+2026-09-11T21:53:06.903Z   skip Danish: 11 books < 20
+2026-09-11T21:53:07.137Z   skip Den: 1 books < 20
+2026-09-11T21:53:12.113Z   Dutch              books=   555 sampled=20 misses=0
+2026-09-11T21:53:12.287Z   skip Dz: 2 books < 20
+2026-09-11T21:53:12.460Z   skip Dzongkha: 2 books < 20
+2026-09-11T21:53:12.699Z   skip E: 10 books < 20
+2026-09-11T21:53:12.956Z   skip Early New High German: 1 books < 20
+2026-09-11T21:53:13.159Z   skip Egyptian: 13 books < 20
+2026-09-11T21:53:19.494Z   English            books=  3768 sampled=20 misses=0
+2026-09-11T21:53:19.700Z   skip English & Greek: 1 books < 20
+2026-09-11T21:53:19.907Z   skip English And Hebrew: 2 books < 20
+2026-09-11T21:53:20.226Z   skip English, Greek, Hebrew, Latin: 1 books < 20
+2026-09-11T21:53:20.508Z   skip English, Old Irish: 1 books < 20
+2026-09-11T21:53:20.686Z   skip English, Prakrit, Sanskrit: 1 books < 20
+2026-09-11T21:53:20.861Z   skip English, Scottish Gaelic: 1 books < 20
+2026-09-11T21:53:21.036Z   skip English.: 1 books < 20
+2026-09-11T21:53:21.211Z   skip English/Gaelic: 1 books < 20
+2026-09-11T21:53:21.386Z   skip English/Sanskrit: 1 books < 20
+2026-09-11T21:53:21.562Z   skip Ethiopic: 1 books < 20
+2026-09-11T21:53:21.735Z   skip Filipino: 2 books < 20
+2026-09-11T21:53:21.910Z   skip Finnish: 2 books < 20
+2026-09-11T21:53:26.792Z   French             books=  1618 sampled=20 misses=0
+2026-09-11T21:53:26.965Z   skip French And Latin: 1 books < 20
+2026-09-11T21:53:27.138Z   skip French, Latin: 1 books < 20
+2026-09-11T21:53:27.316Z   skip French. English. Latin: 1 books < 20
+2026-09-11T21:53:27.489Z   skip French/English: 1 books < 20
+2026-09-11T21:53:27.661Z   skip French/Greek: 1 books < 20
+2026-09-11T21:53:27.840Z   skip Frm: 2 books < 20
+2026-09-11T21:53:28.019Z   skip Ga: 1 books < 20
+2026-09-11T21:53:32.819Z   Ge'ez              books=    28 sampled=20 misses=0
+2026-09-11T21:53:32.994Z   skip Geez: 1 books < 20
+2026-09-11T21:53:33.169Z   skip Georgian: 5 books < 20
+2026-09-11T21:53:39.211Z   German             books=  5911 sampled=20 misses=0
+2026-09-11T21:53:39.384Z   skip German And Hebrew: 1 books < 20
+2026-09-11T21:53:39.555Z   skip German/Arabic: 1 books < 20
+2026-09-11T21:53:39.732Z   skip German/Latin: 1 books < 20
+2026-09-11T21:53:39.965Z   skip Geʾez (Ethiopic): 2 books < 20
+2026-09-11T21:53:40.138Z   skip Gothic: 1 books < 20
+2026-09-11T21:53:40.492Z   skip Gre: 2 books < 20
+2026-09-11T21:53:48.291Z   Greek              books=  5024 sampled=20 misses=0
+2026-09-11T21:53:48.468Z   skip Greek, Syriac: 1 books < 20
+2026-09-11T21:53:48.815Z   skip Greek/English: 1 books < 20
+2026-09-11T21:53:48.990Z   skip Greek/Latin: 9 books < 20
+2026-09-11T21:53:49.164Z   skip Greenlandic: 2 books < 20
+2026-09-11T21:53:49.343Z   skip Haida: 1 books < 20
+2026-09-11T21:53:49.517Z   skip Hausa: 4 books < 20
+2026-09-11T21:53:49.691Z   skip Hawaiian: 6 books < 20
+2026-09-11T21:53:56.159Z   Hebrew             books=   275 sampled=20 misses=0
+2026-09-11T21:53:56.345Z   skip Hebrew And Arabic: 3 books < 20
+2026-09-11T21:53:56.525Z   skip Hebrew And Aramaic: 12 books < 20
+2026-09-11T21:53:56.701Z   skip Hebrew And Aramaic In Hebrew Script: 5 books < 20
+2026-09-11T21:53:56.875Z   skip Hebrew And Ladino: 1 books < 20
+2026-09-11T21:53:57.204Z   skip Hebrew In Hebrew Script, Arabic In Arabic Script: 1 books < 20
+2026-09-11T21:53:57.377Z   skip Hebrew, Aramaic, And Arabic.: 1 books < 20
+2026-09-11T21:53:57.550Z   skip Hebrew, German, French: 1 books < 20
+2026-09-11T21:53:57.730Z   skip Hebrew, Ladino, And English: 1 books < 20
+2026-09-11T21:53:57.903Z   skip Hebrew, Yiddish And Ladino: 1 books < 20
+2026-09-11T21:54:02.985Z   Hindi              books=    24 sampled=20 misses=0
+2026-09-11T21:54:03.160Z   skip Hopi: 1 books < 20
+2026-09-11T21:54:03.495Z   skip Hungarian: 1 books < 20
+2026-09-11T21:54:03.668Z   skip Icelandic: 1 books < 20
+2026-09-11T21:54:03.840Z   skip Igbo: 1 books < 20
+2026-09-11T21:54:04.021Z   skip Irish/English: 4 books < 20
+2026-09-11T21:54:04.195Z   skip Iroquoian: 1 books < 20
+2026-09-11T21:54:09.456Z   Italian            books=   679 sampled=20 misses=0
+2026-09-11T21:54:09.788Z   skip Italian / German: 1 books < 20
+2026-09-11T21:54:10.035Z   skip Italian In Italian Script, Hebrew In Hebrew Script: 1 books < 20
+2026-09-11T21:54:10.311Z   skip Italian/Latin: 1 books < 20
+2026-09-11T21:54:15.204Z   Japanese           books=   401 sampled=20 misses=0
+2026-09-11T21:54:19.458Z   Javanese           books=   313 sampled=20 misses=0
+2026-09-11T21:54:19.633Z   skip K'iche': 1 books < 20
+2026-09-11T21:54:19.805Z   skip K'iche' / French: 1 books < 20
+2026-09-11T21:54:19.977Z   skip K'iche' Maya: 4 books < 20
+2026-09-11T21:54:20.149Z   skip Kannada: 1 books < 20
+2026-09-11T21:54:20.322Z   skip Kanuri: 1 books < 20
+2026-09-11T21:54:20.494Z   skip Karaim And Hebrew: 1 books < 20
+2026-09-11T21:54:20.666Z   skip Kok Turkic: 1 books < 20
+2026-09-11T21:54:24.738Z   Korean             books=   314 sampled=20 misses=0
+2026-09-11T21:54:24.911Z   skip Ladino And French: 1 books < 20
+2026-09-11T21:54:43.519Z   Latin              books= 45386 sampled=20 misses=0
+2026-09-11T21:54:43.690Z   skip Latin And German: 1 books < 20
+2026-09-11T21:54:43.871Z   skip Latin, English: 1 books < 20
+2026-09-11T21:54:44.045Z   skip Latin, French: 1 books < 20
+2026-09-11T21:54:44.392Z   skip Latin, German: 1 books < 20
+2026-09-11T21:54:44.566Z   skip Latin, Greek: 2 books < 20
+2026-09-11T21:54:44.738Z   skip Latin, Persian, And Ottoman Turkish: 1 books < 20
+2026-09-11T21:54:44.918Z   skip Latin, Some Hebrew And Greek: 1 books < 20
+2026-09-11T21:54:45.090Z   skip Latin. French. English: 1 books < 20
+2026-09-11T21:54:45.439Z   skip Latin. German: 1 books < 20
+2026-09-11T21:54:45.615Z   skip Latin/English: 2 books < 20
+2026-09-11T21:54:45.788Z   skip Latin/German/English: 1 books < 20
+2026-09-11T21:54:45.966Z   skip Latin/Hebrew: 1 books < 20
+2026-09-11T21:54:46.139Z   skip Lb: 1 books < 20
+2026-09-11T21:54:46.359Z   skip Lenape: 1 books < 20
+2026-09-11T21:54:46.531Z   skip Lit: 1 books < 20
+2026-09-11T21:54:46.705Z   skip Low German: 1 books < 20
+2026-09-11T21:54:46.877Z   skip Maithili: 1 books < 20
+2026-09-11T21:54:47.050Z   skip Malagasy: 1 books < 20
+2026-09-11T21:54:51.035Z   Malay              books=    29 sampled=20 misses=0
+2026-09-11T21:54:51.213Z   skip Mandinka: 1 books < 20
+2026-09-11T21:54:51.386Z   skip Manichaean: 2 books < 20
+2026-09-11T21:54:51.559Z   skip Maori: 8 books < 20
+2026-09-11T21:54:51.736Z   skip Marathi: 8 books < 20
+2026-09-11T21:54:51.909Z   skip Maya Hieroglyphs: 3 books < 20
+2026-09-11T21:54:52.082Z   skip Maya Hieroglyphs / French: 3 books < 20
+2026-09-11T21:54:56.034Z   Middle English     books=    29 sampled=20 misses=0
+2026-09-11T21:54:56.205Z   skip Middle French: 4 books < 20
+2026-09-11T21:54:56.382Z   skip Middle High German: 9 books < 20
+2026-09-11T21:54:56.618Z   skip Mixtec: 3 books < 20
+2026-09-11T21:54:56.789Z   skip Mongolian: 1 books < 20
+2026-09-11T21:54:56.978Z   skip Mul: 1 books < 20
+2026-09-11T21:54:57.151Z   skip Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic): 1 books < 20
+2026-09-11T21:54:57.323Z   skip Nahuatl: 14 books < 20
+2026-09-11T21:54:57.507Z   skip Navajo: 3 books < 20
+2026-09-11T21:54:57.681Z   skip Ne: 8 books < 20
+2026-09-11T21:54:57.856Z   skip New Persian: 10 books < 20
+2026-09-11T21:54:58.118Z   skip No Linguistic Content: 17 books < 20
+2026-09-11T21:54:58.291Z   skip Norwegian: 4 books < 20
+2026-09-11T21:54:58.463Z   skip Nuxalk: 1 books < 20
+2026-09-11T21:54:58.636Z   skip Nyanga: 1 books < 20
+2026-09-11T21:54:58.810Z   skip Occitan: 1 books < 20
+2026-09-11T21:54:58.981Z   skip Old English: 2 books < 20
+2026-09-11T21:54:59.156Z   skip Old French: 13 books < 20
+2026-09-11T21:54:59.328Z   skip Old Javanese: 4 books < 20
+2026-09-11T21:54:59.500Z   skip Old Norse: 12 books < 20
+2026-09-11T21:54:59.672Z   skip Old Spanish: 1 books < 20
+2026-09-11T21:55:03.478Z   Ottoman Turkish    books=    22 sampled=20 misses=0
+2026-09-11T21:55:03.652Z   skip Pahlavi: 1 books < 20
+2026-09-11T21:55:07.634Z   Pali               books=    54 sampled=20 misses=0
+2026-09-11T21:55:07.808Z   skip Pali, Written In Sinhalese Characters.: 2 books < 20
+2026-09-11T21:55:13.211Z   Persian            books=   253 sampled=20 misses=0
+2026-09-11T21:55:13.384Z   skip Persian And Hindustani: 1 books < 20
+2026-09-11T21:55:13.587Z   skip Persian And Ottoman Turkish: 1 books < 20
+2026-09-11T21:55:13.771Z   skip Persian, Arabic, And Chagatai Turkish: 1 books < 20
+2026-09-11T21:55:13.951Z   skip Persian, Urdu, And Arabic: 1 books < 20
+2026-09-11T21:55:14.127Z   skip Polish: 5 books < 20
+2026-09-11T21:55:17.966Z   Portuguese         books=    22 sampled=20 misses=0
+2026-09-11T21:55:18.137Z   skip Prakrit: 2 books < 20
+2026-09-11T21:55:18.309Z   skip Prakrit Languages: 1 books < 20
+2026-09-11T21:55:18.490Z   skip Provençal: 1 books < 20
+2026-09-11T21:55:18.665Z   skip Punjabi: 6 books < 20
+2026-09-11T21:55:18.837Z   skip Qhe: 1 books < 20
+2026-09-11T21:55:19.021Z   skip Qu: 1 books < 20
+2026-09-11T21:55:19.194Z   skip Quiché Maya: 1 books < 20
+2026-09-11T21:55:19.366Z   skip Roa: 2 books < 20
+2026-09-11T21:55:19.542Z   skip Romanian: 4 books < 20
+2026-09-11T21:55:23.823Z   Russian            books=   591 sampled=20 misses=0
+2026-09-11T21:55:23.995Z   skip Samaritan: 3 books < 20
+2026-09-11T21:55:24.176Z   skip Samaritan Hebrew: 9 books < 20
+2026-09-11T21:55:24.352Z   skip Samaritan Hebrew And Arabic: 4 books < 20
+2026-09-11T21:55:24.528Z   skip Samaritan Hebrew In Samaritan Script: 1 books < 20
+2026-09-11T21:55:24.785Z   skip Samaritan Hebrew, Arabic And Aramaic In Samaritan Script: 1 books < 20
+2026-09-11T21:55:24.962Z   skip Samoan: 1 books < 20
+2026-09-11T21:55:30.999Z   Sanskrit           books=  2110 sampled=20 misses=0
+2026-09-11T21:55:31.232Z   skip Scottish And English: 1 books < 20
+2026-09-11T21:55:31.407Z   skip Sinhala: 2 books < 20
+2026-09-11T21:55:31.583Z   skip Sotho: 1 books < 20
+2026-09-11T21:55:37.368Z   Spanish            books=   163 sampled=20 misses=0
+2026-09-11T21:55:37.552Z   skip Spanish / French: 1 books < 20
+2026-09-11T21:55:37.740Z   skip Spanish / Latin: 1 books < 20
+2026-09-11T21:55:37.917Z   skip Spanish In Hebrew Characters: 1 books < 20
+2026-09-11T21:55:38.092Z   skip Sundanese: 1 books < 20
+2026-09-11T21:55:38.268Z   skip Swahili: 6 books < 20
+2026-09-11T21:55:38.444Z   skip Swedish: 6 books < 20
+2026-09-11T21:55:38.620Z   skip Syc: 1 books < 20
+2026-09-11T21:55:43.325Z   Syriac             books=   105 sampled=20 misses=0
+2026-09-11T21:55:43.500Z   skip Syriac, With Many Headings And Subscriptions To The Sections Of The Book In Arabic Either Alone Or Mixed With Syriac.: 1 books < 20
+2026-09-11T21:55:43.815Z   skip Tamil: 19 books < 20
+2026-09-11T21:55:43.991Z   skip Telugu: 2 books < 20
+2026-09-11T21:55:44.187Z   skip Text On Maps In Latin And German: 1 books < 20
+2026-09-11T21:55:44.361Z   skip Thai: 2 books < 20
+2026-09-11T21:55:44.533Z   skip The Text Is Written In Spanish With Headings In Hebrew.: 1 books < 20
+2026-09-11T21:55:50.544Z   Tibetan            books=  2020 sampled=20 misses=0
+2026-09-11T21:55:50.721Z   skip Tsimshian: 1 books < 20
+2026-09-11T21:55:50.893Z   skip Turkish: 7 books < 20
+2026-09-11T21:55:51.067Z   skip Undetermined: 1 books < 20
+2026-09-11T21:55:51.241Z   skip Urdu: 3 books < 20
+2026-09-11T21:55:51.417Z   skip Uyghur: 2 books < 20
+2026-09-11T21:55:51.590Z   skip Various Caucasian: 1 books < 20
+2026-09-11T21:55:51.766Z   skip Vietnamese: 9 books < 20
+2026-09-11T21:55:54.926Z   skip Visual: 3 books < 20
+2026-09-11T21:55:55.101Z   skip Welsh: 2 books < 20
+2026-09-11T21:55:55.275Z   skip Welsh/English: 3 books < 20
+2026-09-11T21:55:55.449Z   skip Xhosa: 1 books < 20
+2026-09-11T21:55:55.926Z   skip Yid: 1 books < 20
+2026-09-11T21:55:56.437Z   skip Yiddish: 2 books < 20
+2026-09-11T21:55:56.837Z   skip Yiddish And German: 1 books < 20
+2026-09-11T21:55:57.019Z   skip Yiddish, French, And English: 1 books < 20
+2026-09-11T21:55:57.296Z   skip Yiddish, With Some Hebrew And German: 1 books < 20
+2026-09-11T21:55:57.479Z   skip Yiddish, With Some Hebrew, Latin And German: 1 books < 20
+2026-09-11T21:55:57.823Z   skip Yoruba: 3 books < 20
+2026-09-11T21:55:58.000Z   skip Yucatec Maya: 7 books < 20
+2026-09-11T21:55:58.171Z   skip Yucatec Maya / English: 1 books < 20
+2026-09-11T21:55:58.350Z   skip Zulu: 4 books < 20
+2026-09-11T21:55:58.528Z   skip Zxx: 2 books < 20
+2026-09-11T21:55:58.530Z sample: 27 languages, 540 pages → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-sample-2026-09-11.json
+2026-09-11T21:56:10.602Z prompt Standard OCR v16 0203c2641e253ffbf17772ae1b30bf16
+2026-09-11T21:56:10.603Z run: 2700 calls pending, $0.00 already spent, cap $30
+2026-09-11T21:56:36.120Z   25/2700 calls, $0.04 Gemini, 5 Vision units
+2026-09-11T21:57:04.776Z   50/2700 calls, $0.10 Gemini, 8 Vision units
+2026-09-11T21:57:38.870Z   75/2700 calls, $0.13 Gemini, 11 Vision units
+2026-09-11T21:58:16.532Z   100/2700 calls, $0.19 Gemini, 17 Vision units
+2026-09-11T21:58:59.517Z   125/2700 calls, $0.24 Gemini, 21 Vision units
+2026-09-11T21:59:29.258Z   150/2700 calls, $0.29 Gemini, 26 Vision units
+2026-09-11T21:59:52.924Z   175/2700 calls, $0.37 Gemini, 31 Vision units
+2026-09-11T22:00:07.403Z prompt Standard OCR v16 0203c2641e253ffbf17772ae1b30bf16
+2026-09-11T22:00:07.412Z run: 1200 calls pending, $0.42 already spent, cap $30 (reverse order)
+2026-09-11T22:00:14.284Z   200/2700 calls, $0.43 Gemini, 36 Vision units
+2026-09-11T22:00:26.343Z   225/2700 calls, $0.48 Gemini, 41 Vision units
+2026-09-11T22:00:36.174Z   250/2700 calls, $0.52 Gemini, 46 Vision units
+2026-09-11T22:00:48.926Z   275/2700 calls, $0.56 Gemini, 50 Vision units
+2026-09-11T22:00:59.405Z   300/2700 calls, $0.60 Gemini, 56 Vision units
+2026-09-11T22:01:09.364Z   25/1200 calls, $0.56 Gemini, 5 Vision units
+2026-09-11T22:01:15.416Z   325/2700 calls, $0.65 Gemini, 61 Vision units
+2026-09-11T22:01:36.411Z   350/2700 calls, $0.72 Gemini, 65 Vision units
+2026-09-11T22:01:48.436Z   50/1200 calls, $0.69 Gemini, 10 Vision units
+2026-09-11T22:02:13.805Z   75/1200 calls, $0.74 Gemini, 15 Vision units
+2026-09-11T22:02:14.138Z   375/2700 calls, $0.78 Gemini, 71 Vision units
+2026-09-11T22:02:31.124Z   400/2700 calls, $0.84 Gemini, 76 Vision units
+2026-09-11T22:02:40.704Z   100/1200 calls, $0.79 Gemini, 20 Vision units
+2026-09-11T22:03:06.030Z   425/2700 calls, $0.90 Gemini, 81 Vision units
+2026-09-11T22:03:40.183Z   450/2700 calls, $0.93 Gemini, 85 Vision units
+2026-09-11T22:03:53.587Z   125/1200 calls, $1.03 Gemini, 25 Vision units
+2026-09-11T22:04:40.161Z   475/2700 calls, $0.97 Gemini, 90 Vision units
+2026-09-11T22:05:15.592Z   150/1200 calls, $1.18 Gemini, 30 Vision units
+2026-09-11T22:05:20.220Z   500/2700 calls, $1.03 Gemini, 94 Vision units
+2026-09-11T22:05:52.819Z   525/2700 calls, $1.08 Gemini, 100 Vision units
+2026-09-11T22:06:03.247Z   175/1200 calls, $1.26 Gemini, 35 Vision units
+2026-09-11T22:06:14.730Z   550/2700 calls, $1.14 Gemini, 104 Vision units
+2026-09-11T22:06:29.465Z   575/2700 calls, $1.20 Gemini, 109 Vision units
+2026-09-11T22:06:43.809Z   600/2700 calls, $1.25 Gemini, 114 Vision units
+2026-09-11T22:06:52.907Z   200/1200 calls, $1.45 Gemini, 40 Vision units
+2026-09-11T22:07:15.824Z   225/1200 calls, $1.51 Gemini, 45 Vision units
+2026-09-11T22:08:57.899Z   250/1200 calls, $1.57 Gemini, 50 Vision units
+2026-09-11T22:08:58.904Z   625/2700 calls, $1.36 Gemini, 118 Vision units
+2026-09-11T22:09:18.754Z   275/1200 calls, $1.62 Gemini, 55 Vision units
+2026-09-11T22:11:18.325Z   300/1200 calls, $1.67 Gemini, 58 Vision units
+2026-09-11T22:11:51.931Z   650/2700 calls, $1.51 Gemini, 122 Vision units
+2026-09-11T22:12:00.727Z   325/1200 calls, $1.74 Gemini, 63 Vision units
+2026-09-11T22:12:37.974Z   350/1200 calls, $1.79 Gemini, 68 Vision units
+2026-09-11T22:12:56.560Z   675/2700 calls, $1.57 Gemini, 128 Vision units
+2026-09-11T22:13:15.475Z   375/1200 calls, $1.87 Gemini, 73 Vision units
+2026-09-11T22:13:37.884Z   700/2700 calls, $1.65 Gemini, 130 Vision units
+2026-09-11T22:13:53.188Z   725/2700 calls, $1.70 Gemini, 131 Vision units
+2026-09-11T22:13:56.993Z   400/1200 calls, $2.01 Gemini, 74 Vision units
+2026-09-11T22:14:05.977Z   750/2700 calls, $1.74 Gemini, 132 Vision units
+2026-09-11T22:14:14.978Z   425/1200 calls, $2.07 Gemini, 74 Vision units
+2026-09-11T22:14:21.667Z   775/2700 calls, $1.80 Gemini, 132 Vision units
+2026-09-11T22:14:33.353Z   800/2700 calls, $1.84 Gemini, 132 Vision units
+2026-09-11T22:14:34.748Z   450/1200 calls, $2.15 Gemini, 74 Vision units
+2026-09-11T22:14:54.491Z   475/1200 calls, $2.21 Gemini, 74 Vision units
+2026-09-11T22:14:59.407Z   825/2700 calls, $1.91 Gemini, 132 Vision units
+2026-09-11T22:15:15.492Z   500/1200 calls, $2.26 Gemini, 74 Vision units
+2026-09-11T22:15:27.063Z   850/2700 calls, $1.99 Gemini, 132 Vision units
+2026-09-11T22:15:38.303Z   525/1200 calls, $2.31 Gemini, 74 Vision units
+2026-09-11T22:16:04.037Z   875/2700 calls, $2.05 Gemini, 132 Vision units
+2026-09-11T22:16:05.080Z   550/1200 calls, $2.35 Gemini, 74 Vision units
+2026-09-11T22:16:26.463Z   575/1200 calls, $2.42 Gemini, 74 Vision units
+2026-09-11T22:16:39.260Z   900/2700 calls, $2.13 Gemini, 132 Vision units
+2026-09-11T22:16:57.378Z   600/1200 calls, $2.48 Gemini, 74 Vision units
+2026-09-11T22:18:02.330Z   625/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:20.541Z   925/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.597Z   950/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.637Z   975/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.687Z   1000/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.764Z   1025/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.843Z   1050/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.899Z   1075/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:20.962Z   1100/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.015Z   1125/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.037Z   1150/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.075Z   1175/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.110Z   1200/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.155Z   1225/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.243Z   1250/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.294Z   1275/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.355Z   1300/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.390Z   1325/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.453Z   1350/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.541Z   1375/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.599Z   1400/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.653Z   1425/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.694Z   1450/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.731Z   1475/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.773Z   1500/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.800Z   1525/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.824Z   1550/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.850Z   1575/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.902Z   1600/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.953Z   1625/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:21.985Z   1650/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.013Z   1675/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.040Z   1700/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.068Z   1725/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.089Z   1750/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.107Z   1775/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.135Z   1800/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.167Z   1825/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.213Z   1850/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.241Z   1875/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.264Z   1900/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.283Z   1925/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.305Z   1950/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.333Z   1975/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.366Z   2000/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.487Z   2025/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.547Z   2050/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.628Z   2075/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:22.775Z   2100/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.005Z   2125/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.143Z   2150/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.333Z   2175/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.546Z   2200/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.702Z   2225/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:23.903Z   2250/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:24.075Z   2275/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:24.226Z   2300/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:24.620Z   2325/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:25.057Z   2350/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:25.449Z   2375/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:25.730Z   2400/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:25.948Z   2425/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.112Z   2450/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.296Z   2475/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.468Z   2500/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.579Z   2525/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.763Z   2550/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:26.898Z   2575/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.027Z   2600/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.159Z   2625/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.222Z   2650/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.330Z   2675/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.557Z   2700/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:27.559Z   2700/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:31.382Z   2700/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:33.261Z   650/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.300Z   675/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.340Z   700/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.380Z   725/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.417Z   750/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.463Z   775/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.505Z   800/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.559Z   825/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.619Z   850/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.657Z   2700/2700 calls, $2.19 Gemini, 132 Vision units
+2026-09-11T22:18:33.690Z   875/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.743Z   900/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.798Z   925/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.880Z   950/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:33.950Z   975/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:34.004Z   1000/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:34.041Z   1025/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:34.084Z   1050/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:34.140Z   1075/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:34.200Z   1100/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:46.723Z   1125/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:46.759Z   1150/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:51.726Z   1175/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:51.737Z   1200/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:51.739Z   1200/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:51.739Z   1200/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:18:54.227Z   1200/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:19:22.801Z   1200/1200 calls, $2.58 Gemini, 74 Vision units
+2026-09-11T22:19:22.802Z run complete: 1200/1200 calls this session, $2.58 Gemini total, 74 Vision units
+2026-09-11T23:11:07.159Z score → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.json
+      /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.md
+2026-09-11T23:15:47.327Z score → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.json
+      /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.md
+2026-09-11T23:24:47.503Z score → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.json
+      /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.md
+2026-09-11T23:33:44.211Z score → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.json
+      /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.md
+2026-09-11T23:40:39.940Z score → /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.json
+      /Users/dereklomas/sourcelibrary/.claude/worktrees/vision-ocr-test/scripts/eval/results/per-language-suitability-2026-09-11.md

@@ -611,6 +611,12 @@ export async function runGoogleVision(imageBuffer, opts = {}) {
     signal: AbortSignal.timeout(timeoutMs),
   });
   const elapsed = Date.now() - start;
+  if (resp.status === 401 && !process.env.GOOGLE_VISION_API_KEY && !opts._retried) {
+    // gcloud access tokens live ~1h; a run longer than that sees 401 on the cached
+    // token (measured: 91 rows of a 2h sweep). Refresh once and retry.
+    _gcloudToken = null;
+    return runGoogleVision(imageBuffer, { ...opts, _retried: true });
+  }
   if (!resp.ok) {
     const body = await resp.text().catch(() => '');
     throw new Error(`Vision HTTP ${resp.status}: ${body.slice(0, 300)}`);

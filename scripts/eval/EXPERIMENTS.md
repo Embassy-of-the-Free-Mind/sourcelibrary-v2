@@ -51,6 +51,59 @@ own "logged in EXPERIMENTS.md" line was never true until now.
   `results/syriac-vs-published-2026-09-16.md`, per-page classes and alignments in
   `results/syriac-vs-published-2026-09-16/`, scripts in `syriac-vs-published/`.
 
+## 2026-09-11 (logged 2026-09-25) — Which languages can OCR on flash-lite? Per-language suitability vs the script-family allowlist (#4729, #4735)
+
+*Logged two weeks late.* The run finished on 2026-09-11 in a worktree whose session died
+before committing; the result never reached an issue, this log, or main, while the allowlist
+it tests kept routing production. Landed as found, with the disclosed post-run metric
+amendment (PREREGISTRATION, Amendment 6).
+
+- **Question.** `LATIN_SCRIPT_LANGUAGES` (translate-core.mjs) sends a language's OCR to
+  flash-lite by script family. Is each listed language actually safe on lite?
+- **Design.** Preregistered (`PREREGISTRATION-per-language-ocr-suitability.md`). One page per
+  book, up to 20 books per language, lite and Cloud Vision each scored against production
+  flash on the same page. Rule, fixed before the run: lite allowed iff median character
+  agreement with flash >= **0.956** (letters+marks; calibrated so 0.956 = 1 pp CER on the
+  pinned set), catastrophic (loop/empty) <= 10%, **zero** invented pages (judge), coverage >= 80%.
+  Spend: Gemini $4.35, judge $0.07, Vision 206 units.
+- **Post-run amendment (disclosed).** First scoring used `agreementPrimary()`, whose word
+  tokenizer shreds combining marks and read Devanagari/Syriac/Ethiopic as ~0 (the
+  non-latin-text-operations failure shape). Primary metric switched to character agreement and
+  the threshold re-derived by the same pre-declared procedure. Both metrics are stored per page.
+- **Result (lite verdict).**
+
+  | language | n | lite agr | catastrophic | verdict | allowlist today |
+  |---|---:|---:|---:|---|---|
+  | English | 17 | 0.996 | 1 | allowed | lite |
+  | Russian | 19 | 0.996 | 0 | allowed | **flash** |
+  | Portuguese | 18 | 0.994 | 1 | allowed | lite |
+  | Spanish | 18 | 0.972 | 0 | allowed | lite |
+  | Armenian | 17 | 0.963 | 0 | allowed | **flash** |
+  | German | 19 | 0.972 | 1 | flash only: 1 invented page (veto) | **lite** |
+  | French | 20 | 0.951 | 0 | flash only: agreement < 0.956 | **lite** |
+  | Dutch | 17 | 0.921 | 0 | flash only: agreement < 0.956 | **lite** |
+  | Chinese | 19 | 0.932 | 4 | flash only | flash |
+  | Arabic | 15 | 0.929 | 0 | flash only | flash |
+  | Greek | 19 | 0.918 | 0 | flash only | flash |
+  | Ge'ez / Sanskrit / Syriac / Tibetan | 19-20 | 0.47 / 0.38 / 0.25 / 0.22 | 9 / 6 / 8 / 11 | flash only | flash |
+  | **Latin, Italian** | 0 | - | - | **undecided: sampler drew no scorable page** | lite |
+
+  Cloud Vision passed no language (consistent with the 2026-09-11 Vision entry below).
+- **What it says about production.** Three languages on the lite lane today did not pass
+  (German, French, Dutch); two on flash did (Russian, Armenian). **Latin, the bulk of the lite
+  lane, was never measured** here; the sampler returned no scorable Latin or Italian page,
+  which is itself a defect to fix before any re-run.
+- **Caveats.** n = 15-20 pages per language, one run. French missed the bar by 0.005; German
+  failed on a single judge-flagged page. Agreement with flash is not accuracy: where flash is
+  itself weak (Greek, see 2026-09-21) a language can "fail" by disagreeing with a wrong
+  reference. Treat the verdicts as the case for a decision, not the decision.
+- **No routing change made.** Editing `LATIN_SCRIPT_LANGUAGES` moves pages between the
+  $0.86/1K and $3.50/1K lanes; that call belongs to Derek.
+- *Replicated?* No. *Artifact:* `results/per-language-suitability-2026-09-11.{md,json}`,
+  raw outputs `...-raw-2026-09-11.jsonl`, judge calls `...-judge-2026-09-11.jsonl`, sample
+  `...-sample-2026-09-11.json`, calibrations `...-calibration{,-charM}-2026-09-11.json`, Tibetan
+  sub-run `...-tibetan-2026-09-11.jsonl`; runner `per-language-suitability.mjs`.
+
 ## 2026-09-25 — Which engine should retranslate the re-OCR'd Kanjur pages: Gemini flash, flash-lite, or the Dharmamitra specialist (MITRA-MT)? Blind A/B against 84000 (#4742, gates the #4523 $430 retranslation)
 
 **Question.** Nobody has published a specialist-vs-Gemini Tibetan translation comparison, and nothing
@@ -663,7 +716,7 @@ score against. TongGuOCR is vapour.**
   agreement matrix), `results/scorecard-outputs-2026-09-13.jsonl` (Gemini arms on both tiers).
   Raw engine outputs: `hetzner:/root/ocr-bench/images/*/out/` (mirror of the L4's before it was
   powered off).
-||||||| ddd81573
+
 ## 2026-09-15 — Does `gemini-3.1-flash-lite` read early-modern manuscripts and incunables? (#4541) — RESULT
 
 **Headline: no. Flash-preview is better on 11/11 items read. Lite fails catastrophically
@@ -1553,7 +1606,7 @@ pixels" hypothesis was wrong and is withdrawn: the residual misses are not a con
 **Not measured.** Whether the screen finds pictures on free-filled books where there is no
 reference at all — by construction those have no labels. Recall here is measured against what
 production already found on books that went through the expensive path.
-||||||| parent of c1d17e798 (eval(batch-shadow): result — first live shadow run of the Batch API lane on three books (#4681 steps 3-4))
+
 ---
 ## 2026-09-24 — Batch API translation lane, first live shadow run on three books: A/A floor, blind judge vs production, and what the Batch API did (#4681 steps 3–4; PRs #5000/#5011/#5013)
 
@@ -1736,7 +1789,7 @@ A/A floor; send Sonnet only the junctions where Jev's margin exceeds the A/A ban
 tenth of the rest as its own control. For a corpus-scale seam audit of production (every block
 boundary of every book), the side form at ~$0.00003 per junction is the first instrument we have
 had that is affordable at that scale; calibrate it on this set before quoting any rate.
-||||||| parent of 4ca278852 (eval(#4681): decisive seam draw result — TIE (production 19 / lane 14 / 29 ties, n=62; A/A 14-9), Jev does not replicate)
+
 
 ## 2026-09-24 — Batch + seam-repair lane vs production at MID-FLOW seams: the decisive draw (#4681)
 

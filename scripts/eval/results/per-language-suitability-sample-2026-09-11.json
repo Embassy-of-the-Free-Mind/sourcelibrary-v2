@@ -1,0 +1,4543 @@
+{
+ "date": "2026-09-11",
+ "seed": 4729,
+ "n": 20,
+ "min_books": 20,
+ "fold_table": {
+  "Sogdian; Chinese; Chinese (script); Sogdian (script)": null,
+  "Low German": "Low German",
+  "German and Hebrew": "German And Hebrew",
+  "Middle English-English": null,
+  "Sogdian; Sogdian (script); Parthian; Old Turkic": null,
+  "Punjabi": "Punjabi",
+  "Egyptian hieroglyphs": null,
+  "Chinese; Old Turkic; Sogdian; Sogdian (script); Chinese (script)": null,
+  "Chinese; Chinese (script)": "Chinese",
+  "Sogdian; Sogdian (script); Chinese; Chinese (script)": null,
+  "not applicable": null,
+  "K'iche' Maya": "K'iche' Maya",
+  "Sogdian (script); Old Turkic; Middle Persian": null,
+  "Chinese (script); Sogdian (script); Sogdian; Chinese": null,
+  "Chinese; Sogdian (script); Sogdian; Chinese (script)": null,
+  "Yucatec Maya / English": "Yucatec Maya / English",
+  "Sogdian; Middle Persian; Parthian": null,
+  "Sogdian; Sogdian (script); Old Turkic": null,
+  "Chinese; Chinese (script); Sogdian; Sogdian (script)": null,
+  "Qu": "Qu",
+  "syc": "Syc",
+  "Middle Persian; Sogdian; Parthian": null,
+  "Uyghur (script); Sogdian (script); Old Turkic; Sogdian": null,
+  "Parthian; Sogdian (script)": null,
+  "Sogdian (script)": null,
+  "Kok Turkic (script)": "Kok Turkic",
+  "Dz": "Dz",
+  "Undetermined": "Undetermined",
+  "Middle Persian; Sogdian; Parthian; Sogdian (script)": null,
+  "Sogdian; Manichaean (script); Sogdian (script)": null,
+  "Romanian": "Romanian",
+  "Italian in Italian script, Hebrew in Hebrew script": "Italian In Italian Script, Hebrew In Hebrew Script",
+  "Chinese; Middle Persian; Sogdian; Chinese (script)": null,
+  "lat;grc": null,
+  "Hebrew-Greek": null,
+  "Middle Persian; Old Turkic; Sogdian; Sogdian (script)": null,
+  "Hebrew with marginal glosses in Hebrew and Judeo-Persian, and Aramaic": null,
+  "Hebrew, Aramaic, and Arabic.": "Hebrew, Aramaic, And Arabic.",
+  "English & greek": "English & Greek",
+  "English/Gaelic": "English/Gaelic",
+  "Dutch-English": null,
+  "Chinese; Chinese (script); Sogdian (script); Sogdian": null,
+  "Russian": "Russian",
+  "Bulgarian": "Bulgarian",
+  "Akkadian": null,
+  "Parthian; Sogdian; Middle Persian": null,
+  "Middle Persian; Old Turkic": null,
+  "Sogdian (script); Chinese; Sogdian; Chinese (script)": null,
+  "unknown": null,
+  "Icelandic": "Icelandic",
+  "Prakrit": "Prakrit",
+  "Sogdian; Middle Persian": null,
+  "Greek-English": null,
+  "Sogdian; Chinese; Middle Persian; Chinese (script)": null,
+  "Xhosa": "Xhosa",
+  "Old Turkic; Parthian; Middle Persian": null,
+  "Chinese (script); Chinese; Sogdian (script); Middle Persian; Sogdian": null,
+  "Old Turkic; Middle Persian": null,
+  "Welsh": "Welsh",
+  "Arabic and Samaritan Hebrew": "Arabic And Samaritan Hebrew",
+  "Chinese; Chinese (script); Old Turkic; Uyghur (script)": null,
+  "Middle Persian; Parthian; Sogdian; Old Turkic": null,
+  "English, Greek, Hebrew, Latin": "English, Greek, Hebrew, Latin",
+  "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.": "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan Language), French And Dutch.",
+  "Spanish in Hebrew characters": "Spanish In Hebrew Characters",
+  "Avestan": "Avestan",
+  "Sogdian (script); Chinese (script); Chinese; Sogdian": null,
+  "Chinese; Parthian; Chinese (script)": null,
+  "Parthian; Middle Persian": null,
+  "Bactrian": null,
+  "Dutch-German": null,
+  "he": "Hebrew",
+  "Hopi": "Hopi",
+  "Samaritan Hebrew": "Samaritan Hebrew",
+  "Lenape": "Lenape",
+  "English and Hebrew": "English And Hebrew",
+  "Parthian; Chinese; Chinese (script)": null,
+  "Sotho": "Sotho",
+  "Syriac, with many headings and subscriptions to the sections of the book in Arabic either alone or mixed with Syriac.": "Syriac, With Many Headings And Subscriptions To The Sections Of The Book In Arabic Either Alone Or Mixed With Syriac.",
+  "Chinese (script); Sogdian (script); Chinese; Sogdian": null,
+  "Provençal": "Provençal",
+  "Italian / German": "Italian / German",
+  "Igbo": "Igbo",
+  "Yucatec Maya": "Yucatec Maya",
+  "Polish": "Polish",
+  "Kanuri": "Kanuri",
+  "Samaritan Hebrew, Arabic and Aramaic in Samaritan script": "Samaritan Hebrew, Arabic And Aramaic In Samaritan Script",
+  "Nahuatl-Spanish": null,
+  "Sogdian (script); Sogdian; Chinese; Uyghur (script); Chinese (script)": null,
+  "Sogdian; Sogdian (script); Chinese (script); Chinese": null,
+  "Middle Persian; Chinese; Chinese (script)": null,
+  "Middle Persian; Sogdian (script); Old Turkic; Parthian": null,
+  "Latin-Dutch": null,
+  "Tibetan (script); Tibetan": "Tibetan",
+  "Coptic": "Coptic",
+  "Hebrew-German": null,
+  "Sogdian; Sogdian (script); Manichaean (script)": null,
+  "Filipino": "Filipino",
+  "Ethiopic": "Ethiopic",
+  "No linguistic content": "No Linguistic Content",
+  "Sogdian; Chinese (script); Sogdian (script); Chinese": null,
+  "Greek-French": null,
+  "Chinese (script); Old Turkic; Uyghur (script); Chinese": null,
+  "Hebrew in Hebrew script, Arabic in Arabic script": "Hebrew In Hebrew Script, Arabic In Arabic Script",
+  "Marathi": "Marathi",
+  "Sogdian; Parthian; Middle Persian": null,
+  "Sogdian (script); Old Turkic": null,
+  "Spanish / Latin": "Spanish / Latin",
+  "Parthian; Chinese; Sogdian (script); Sogdian; Chinese (script)": null,
+  "Hebrew, Judeo-Persian, and Aramaic": null,
+  "Sogdian; Middle Persian; Sogdian (script); Parthian": null,
+  "Thai": "Thai",
+  "Old Norse": "Old Norse",
+  "Persian and Hindustani": "Persian And Hindustani",
+  "Hungarian": "Hungarian",
+  "Latin-German": null,
+  "Iroquoian": "Iroquoian",
+  "Old Spanish": "Old Spanish",
+  "Norwegian": "Norwegian",
+  "Latin/German/English": "Latin/German/English",
+  "Parthian; Chinese; Middle Persian; Sogdian; Chinese (script)": null,
+  "Chagatai Turkish": "Chagatai Turkish",
+  "Aromanian (in Greek alphabet), Greek": "Aromanian (in Greek Alphabet), Greek",
+  "Hebrew, Aramaic, and Judeo-Arabic": null,
+  "Geez": "Geez",
+  "Classical Armenian": "Classical Armenian",
+  "Chinese; Sogdian; Uyghur (script); Chinese (script)": null,
+  "Sumerian": null,
+  "Uyghur (script); Old Turkic; Chinese (script); Chinese": null,
+  "Chinese (script); Sogdian; Sogdian (script); Chinese": null,
+  "Judeo-Occitan and Hebrew": null,
+  "Frm": "Frm",
+  "Sogdian; Middle Persian; Sogdian (script)": null,
+  "Am": "Am",
+  "English": "English",
+  "Sogdian; Chinese (script); Chinese; Middle Persian; Sogdian (script)": null,
+  "Sogdian": null,
+  "Classical Chinese / Japanese": "Classical Chinese / Japanese",
+  "Ne": "Ne",
+  "Parthian; Sogdian": null,
+  "Chinese (script); Sogdian; Chinese; Sogdian (script)": null,
+  "Sogdian; Sogdian (script); Parthian": null,
+  "Unknown": null,
+  "Balinese": "Balinese",
+  "Arabic-English": null,
+  "Uyghur (script); Brahmi (script); Chinese; Chinese (script); Old Turkic": null,
+  "Hebrew and Yiddish in Hebrew script; German in Latin script.": null,
+  "Old Turkic; Uyghur (script); Chinese; Chinese (script)": null,
+  "Japanese; Chinese": null,
+  "Middle Persian; Parthian; New Persian": null,
+  "English/Sanskrit": "English/Sanskrit",
+  "Yiddish": "Yiddish",
+  "Middle High German": "Middle High German",
+  "Parthian; Middle Persian; Sogdian; Old Turkic": null,
+  "Uyghur (script); Old Turkic; Sogdian (script); Sogdian; Chinese; Chinese (script)": null,
+  "Pali": "Pali",
+  "Sogdian; Chinese; Chinese (script)": null,
+  "Chinese (script); Chinese": "Chinese",
+  "Old Turkic; Parthian; Middle Persian; Sogdian": null,
+  "Middle Persian; Sogdian (script); Old Turkic; Bactrian; Sogdian": null,
+  "Latin, some Hebrew and Greek": "Latin, Some Hebrew And Greek",
+  "Sogdian (script); Uyghur (script); Chinese; Chinese (script); Sogdian": null,
+  "Chinese (script); Chinese; Uyghur (script); Old Turkic": null,
+  "Latin. French. English": "Latin. French. English",
+  "Hebrew, Judeo-Arabic and Aramaic": null,
+  "Uyghur (script); Chinese; Old Turkic; Chinese (script)": null,
+  "Old Turkic; Chinese; Chinese (script); Uyghur (script)": null,
+  "English; Chinese": null,
+  "Uyghur (script); Sogdian; Old Turkic": null,
+  "Sogdian; Parthian; Sogdian (script)": null,
+  "Latin, Persian, and Ottoman Turkish": "Latin, Persian, And Ottoman Turkish",
+  "Middle Persian; Parthian; Sogdian": null,
+  "Chinese; Khotanese; Chinese (script)": null,
+  "Sogdian; Old Turkic; Uyghur (script)": null,
+  "Sogdian; Uyghur (script); Sogdian (script)": null,
+  "Manichaean (script); Sogdian; Sogdian (script)": null,
+  "Chinese; Old Turkic; Chinese (script); Uyghur (script)": null,
+  "Arabic and Coptic": "Arabic And Coptic",
+  "Nyanga": "Nyanga",
+  "Persian and Ottoman Turkish": "Persian And Ottoman Turkish",
+  "Sogdian (script); Parthian; Chinese (script); Chinese": null,
+  "Hebrew, Yiddish and Ladino": "Hebrew, Yiddish And Ladino",
+  "Middle English; Latin": null,
+  "Sogdian; Sogdian (script); Uyghur (script); Old Turkic": null,
+  "mul": "Mul",
+  "English, Scottish Gaelic": "English, Scottish Gaelic",
+  "Javanese": "Javanese",
+  "Hindi": "Hindi",
+  "Greek-Latin": null,
+  "Burmese": "Burmese",
+  "Old Turkic; Uyghur (script); Chinese (script); Chinese": null,
+  "Middle Persian; Sogdian (script); Chinese; Chinese (script)": null,
+  "Middle Persian; Parthian; Old Turkic": null,
+  "Yid": "Yid",
+  "Irish/English": "Irish/English",
+  "English.": "English.",
+  "Early New High German": "Early New High German",
+  "Chinese; Sogdian (script); Chinese (script); Sogdian": null,
+  "Spanish": "Spanish",
+  "Arabic and Turkish": "Arabic And Turkish",
+  "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)": "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)",
+  "Hausa": "Hausa",
+  "Samaritan Hebrew and Arabic": "Samaritan Hebrew And Arabic",
+  "Old Turkic; Sogdian": null,
+  "Latin, English": "Latin, English",
+  "Manichaean (script)": "Manichaean",
+  "Heb-Handwritten": null,
+  "Middle Persian": null,
+  "French and Latin": "French And Latin",
+  "Chinese-Latin": null,
+  "Algonquin": "Algonquin",
+  "Hebrew and Arabic": "Hebrew And Arabic",
+  "null": null,
+  "Persian, Urdu, and Arabic": "Persian, Urdu, And Arabic",
+  "Hebrew-Latin": null,
+  "Anglo-Norman": null,
+  "Prakrit languages": "Prakrit Languages",
+  "Sogdian (script); Chinese; Chinese (script); Sogdian": null,
+  "Middle Persian; Bactrian; Sogdian (script)": null,
+  "Chinese; Chinese (script); Old Turkic": null,
+  "English, Prakrit, Sanskrit": "English, Prakrit, Sanskrit",
+  "auto-detect": null,
+  "K'iche' / French": "K'iche' / French",
+  "Persian, Arabic, and Chagatai Turkish": "Persian, Arabic, And Chagatai Turkish",
+  "French/Greek": "French/Greek",
+  "Chinese; Chinese (script); Sanskrit": null,
+  "Yoruba": "Yoruba",
+  "Swedish": "Swedish",
+  "Sinhala": "Sinhala",
+  "Danish": "Danish",
+  "Parthian; Old Turkic; Chinese; Middle Persian; Chinese (script)": null,
+  "Anglo-Saxon": null,
+  "Old Turkic; Chinese (script); Chinese; Uyghur (script)": null,
+  "Pali, written in Sinhalese characters.": "Pali, Written In Sinhalese Characters.",
+  "Chinese; Sogdian; Sogdian (script); Chinese (script)": null,
+  "Sogdian; Chinese; Chinese (script); Sogdian (script); Old Turkic": null,
+  "Samaritan Hebrew in Samaritan script": "Samaritan Hebrew In Samaritan Script",
+  "Sogdian (script); Chinese; Sogdian; Chinese (script); Old Turkic": null,
+  "Dutch": "Dutch",
+  "Persian": "Persian",
+  "Parthian; Chinese; Chinese (script); Sogdian (script)": null,
+  "Chinese; Sogdian; Chinese (script)": null,
+  "Chinese (script); Chinese; Old Turkic; Uyghur (script)": null,
+  "Chinese (script); Chinese; Sogdian; Sogdian (script)": null,
+  "Greek": "Greek",
+  "Malagasy": "Malagasy",
+  "Latin, Greek": "Latin, Greek",
+  "Church Slavonic, Greek": "Church Slavonic, Greek",
+  "Old Turkic; Sogdian (script)": null,
+  "Bugis": "Bugis",
+  "Sogdian; Sogdian (script); Middle Persian; Parthian": null,
+  "Sogdian (script); Chinese (script); Uyghur (script); Old Turkic; Chinese; Sogdian": null,
+  "Chinese; Old Turkic; Uyghur (script); Chinese (script)": null,
+  "Middle Persian; Old Turkic; Sogdian; Parthian": null,
+  "German": "German",
+  "Chinese (script); Old Turkic; Chinese; Uyghur (script)": null,
+  "Telugu": "Telugu",
+  "Middle Persian; Sogdian": null,
+  "Old English": "Old English",
+  "Chinese (script); Parthian; Sogdian (script); Chinese": null,
+  "Visual": "Visual",
+  "Greek/English": "Greek/English",
+  "Sundanese": "Sundanese",
+  "Latin. German": "Latin. German",
+  "Sogdian (script); Old Turkic; Sogdian": null,
+  "Brahmi (script); Old Turkic; Uyghur (script); Chinese (script); Chinese": null,
+  "Samoan": "Samoan",
+  "Uyghur (script); Sogdian": null,
+  "Georgian": "Georgian",
+  "Chinese; English": null,
+  "Latin; Italian": null,
+  "Greek/Latin": "Greek/Latin",
+  "Old Turkic; Sogdian (script); Chinese (script); Sogdian; Chinese": null,
+  "Chinese; Sogdian; Old Turkic; Sogdian (script); Chinese (script)": null,
+  "Maya hieroglyphs": "Maya Hieroglyphs",
+  "Church Slavonic": "Church Slavonic",
+  "Greek-German": null,
+  "Chinese; Sogdian; Sogdian (script); Chinese (script); Old Turkic": null,
+  "Vietnamese": "Vietnamese",
+  "Parthian; Sogdian (script); Middle Persian; Sogdian": null,
+  "Hebrew and Ladino": "Hebrew And Ladino",
+  "Italian-English": null,
+  "Sogdian; Middle Persian; Old Turkic": null,
+  "Uyghur (script); Chinese (script); Chinese; Old Turkic": null,
+  "French. English. Latin": "French. English. Latin",
+  "Old Turkic; Chinese; Chinese (script)": null,
+  "Mandinka": "Mandinka",
+  "Tibetan (script); Tibetan; Chinese; Chinese (script)": null,
+  "French/English": "French/English",
+  "Yiddish and German": "Yiddish And German",
+  "Parthian; Manichaean (script)": null,
+  "Latin and German": "Latin And German",
+  "Latin, French": "Latin, French",
+  "qhe": "Qhe",
+  "Urdu": "Urdu",
+  "Ardhamagadhi Prakrit": "Ardhamagadhi Prakrit",
+  "Spanish / French": "Spanish / French",
+  "Hebrew and Judeo-Arabic in Hebrew script": null,
+  "Hebrew and Judeo-Arabic": null,
+  "e": "E",
+  "Sogdian (script); Parthian; Old Turkic": null,
+  "New Persian; Parthian; Sogdian": null,
+  "An": "An",
+  "German-English": null,
+  "Hebrew and Aramaic": "Hebrew And Aramaic",
+  "Uyghur (script)": "Uyghur",
+  "Classical Chinese": "Chinese",
+  "Old Turkic; Sogdian; Sogdian (script)": null,
+  "Parthian; Sogdian; Old Turkic; Middle Persian": null,
+  "Chinese; Sogdian; Chinese (script); Sogdian (script)": null,
+  "Hebrew, Judeo-Arabic and Ladino in Hebrew script": null,
+  "Greenlandic": "Greenlandic",
+  "Judeo-Arabic and Hebrew": null,
+  "New Persian": "New Persian",
+  "Tsimshian": "Tsimshian",
+  "grc": "Greek",
+  "Sogdian (script); Old Turkic; Sogdian; Chinese (script); Chinese": null,
+  "Parthian; Middle Persian; Sogdian": null,
+  "Parthian; Old Turkic": null,
+  "Aramaic": "Aramaic",
+  "Czech": "Czech",
+  "Tibetan; Tibetan (script)": "Tibetan",
+  "Mixtec": "Mixtec",
+  "Pahlavi": "Pahlavi",
+  "Sogdian; Chinese (script); Chinese; Sogdian (script)": null,
+  "Multiple": null,
+  "Den": "Den",
+  "Karaim and Hebrew": "Karaim And Hebrew",
+  "Sogdian (script); Sogdian": null,
+  "Middle English": "Middle English",
+  "ger": "German",
+  "Tibetan": "Tibetan",
+  "Italian-German": null,
+  "fr": "French",
+  "Yiddish, with some Hebrew and German": "Yiddish, With Some Hebrew And German",
+  "Sogdian; Chinese; Old Turkic; Chinese (script); Sogdian (script)": null,
+  "Sanskrit-English": null,
+  "Sogdian (script); Chinese (script); Sogdian; Chinese": null,
+  "Maithili": "Maithili",
+  "German/Latin": "German/Latin",
+  "Catalan": "Catalan",
+  "Occitan": "Occitan",
+  "Lb": "Lb",
+  "Sogdian; Manichaean (script)": null,
+  "Korean": "Korean",
+  "Middle Persian; Chinese; Parthian; Chinese (script)": null,
+  "Chinese-English": null,
+  "Chinese (script); Uyghur (script); Chinese; Old Turkic": null,
+  "Maya hieroglyphs / French": "Maya Hieroglyphs / French",
+  "Latin/English": "Latin/English",
+  "Arabic": "Arabic",
+  "Scottish and English": "Scottish And English",
+  "Parthian; Sogdian (script); Sogdian; Middle Persian": null,
+  "Dzongkha": "Dzongkha",
+  "Sogdian; Sogdian (script); Middle Persian": null,
+  "Sogdian; Chinese; Sogdian (script); Chinese (script)": null,
+  "Latin, German": "Latin, German",
+  "Malay": "Malay",
+  "Hawaiian": "Hawaiian",
+  "zxx": "Zxx",
+  "Sogdian (script); Sogdian; Parthian; Middle Persian": null,
+  "Middle Persian; Parthian": null,
+  "Sogdian; Chinese; Sogdian (script); Chinese (script); Old Turkic": null,
+  "Nahuatl": "Nahuatl",
+  "Hebrew and Judeo-Italian": null,
+  "Sogdian (script); Parthian": null,
+  "Chinese (script); Chinese (script); Sogdian; Chinese; Chinese": null,
+  "Old Turkic; Parthian; Sogdian": null,
+  "Middle Persian; Sogdian (script)": null,
+  "Haida": "Haida",
+  "Brahmi (script); Uyghur (script); Chinese (script); Old Turkic; Chinese": null,
+  "The text is written in Spanish with headings in Hebrew.": "The Text Is Written In Spanish With Headings In Hebrew.",
+  "Ottoman Turkish": "Ottoman Turkish",
+  "Geʾez (Ethiopic)": "Geʾez (Ethiopic)",
+  "Chinese; Sogdian (script); Chinese (script); Sogdian; Old Turkic": null,
+  "Bengali": "Bengali",
+  "Chinese; Sogdian (script); Parthian; Chinese (script)": null,
+  "Sogdian; Sogdian (script)": null,
+  "French": "French",
+  "Chinese; Parthian; Chinese (script); Sogdian (script)": null,
+  "English, Old Irish": "English, Old Irish",
+  "Sogdian (script); Sogdian; Parthian": null,
+  "Italian": "Italian",
+  "Yiddish, with some Hebrew, Latin and German": "Yiddish, With Some Hebrew, Latin And German",
+  "German/Arabic": "German/Arabic",
+  "Sogdian; Old Turkic": null,
+  "Quiché Maya": "Quiché Maya",
+  "Old Turkic; Chinese; Chinese (script); Sogdian (script); Sogdian": null,
+  "Sogdian (script); Sogdian; Chinese; Chinese (script)": null,
+  "Arabic in Samaritan script, Hebrew in Samaritan script, Arabic in Arabic script": "Arabic In Samaritan Script, Hebrew In Samaritan Script, Arabic In Arabic Script",
+  "Arabic and Hebrew": "Arabic And Hebrew",
+  "Uyghur (script); Old Turkic; Chinese; Chinese (script); Brahmi (script)": null,
+  "Hebrew, Judeo-Arabic, and Aramaic": null,
+  "Welsh/English": "Welsh/English",
+  "Ge'ez": "Ge'ez",
+  "Arabic-Latin": null,
+  "Middle French": "Middle French",
+  "Chinese; Old Turkic; Chinese (script)": null,
+  "Latin; Latin, with one section in Greek.": null,
+  "Old French": "Old French",
+  "Tamil": "Tamil",
+  "Ladino and French": "Ladino And French",
+  "Sogdian; Old Turkic; Sogdian (script)": null,
+  "frm": "Frm",
+  "Navajo": "Navajo",
+  "K'iche' Maya-Spanish": null,
+  "Hebrew, Judeo-Italian, and Judeo-Greek": null,
+  "Nuxalk": "Nuxalk",
+  "Finnish": "Finnish",
+  "gre": "Gre",
+  "Latin-English": null,
+  "French, Latin": "French, Latin",
+  "Chinese; Middle Persian; Chinese (script)": null,
+  "fre": "French",
+  "Old Turkic; Sogdian; Parthian": null,
+  "Sogdian; Chinese (script); Sogdian (script); Chinese; Old Turkic": null,
+  "Armenian; Armenian": "Armenian",
+  "Samaritan": "Samaritan",
+  "Hebrew, Judeo-Arabic, and Ladino": null,
+  "Kannada": "Kannada",
+  "Sogdian (script); Sogdian; Middle Persian; Parthian": null,
+  "Old Turkic; Sogdian (script); Parthian": null,
+  "Old Turkic": null,
+  "Hebrew, German, French": "Hebrew, German, French",
+  "Old Turkic; Chinese; Uyghur (script); Chinese (script)": null,
+  "Zulu": "Zulu",
+  "Italian/Latin": "Italian/Latin",
+  "Latin/Hebrew": "Latin/Hebrew",
+  "Japanese": "Japanese",
+  "ita": "Italian",
+  "Chinese; Chinese (script); Sogdian (script); Old Turkic; Sogdian": null,
+  "Parthian; Old Turkic; Sogdian; Middle Persian": null,
+  "Arabic in Arabic script": "Arabic In Arabic Script",
+  "Arabic in Samaritan characters": "Arabic In Samaritan Characters",
+  "Latin": "Latin",
+  "Cakchiquel / English": "Cakchiquel / English",
+  "Sogdian (script); Parthian; Sogdian": null,
+  "Hebrew and Aramaic in Hebrew script": "Hebrew And Aramaic In Hebrew Script",
+  "Parthian": null,
+  "Ancient Greek": "Greek",
+  "Turkish": "Turkish",
+  "Text on maps in latin and german": "Text On Maps In Latin And German",
+  "per": "Persian",
+  "und": null,
+  "Circassian": "Circassian",
+  "Old Javanese": "Old Javanese",
+  "Sogdian (script); Chinese (script); Old Turkic; Chinese; Sogdian": null,
+  "Uyghur (script); Sogdian; Sogdian (script)": null,
+  "Judeo-Arabic": null,
+  "Syriac": "Syriac",
+  "Parthian; Chinese; Middle Persian; Chinese (script)": null,
+  "Demotic": null,
+  "Various Caucasian": "Various Caucasian",
+  "Chinese; Sogdian (script); Sogdian; Chinese (script); Old Turkic": null,
+  "Sogdian (script); Syriac; Chinese (script); Sogdian; Chinese": null,
+  "Portuguese": "Portuguese",
+  "Yiddish, French, and English": "Yiddish, French, And English",
+  "Middle Persian; Sogdian (script); Sogdian; Parthian": null,
+  "Chinese (script); Middle Persian; Chinese; Sogdian (script)": null,
+  "Armenian": "Armenian",
+  "Parthian; Sogdian; Sogdian (script)": null,
+  "Uyghur (script); Old Turkic; Chinese; Chinese (script)": null,
+  "Sogdian; Old Turkic; Parthian; Sogdian (script)": null,
+  "Chinese": "Chinese",
+  "Hebrew": "Hebrew",
+  "Chinese (script); Uyghur (script); Old Turkic; Chinese; Brahmi (script)": null,
+  "Uyghur (script); Chinese (script); Old Turkic; Chinese": null,
+  "Gothic": "Gothic",
+  "German-Latin": null,
+  "Uyghur (script); Chinese; Chinese (script); Old Turkic": null,
+  "Sogdian (script); Sogdian; Old Turkic": null,
+  "Sanskrit": "Sanskrit",
+  "Old Turkic; Chinese (script); Uyghur (script); Chinese": null,
+  "heb": "Hebrew",
+  "Mongolian": "Mongolian",
+  "lat": "Latin",
+  "Hebrew, Ladino, and English": "Hebrew, Ladino, And English",
+  "Maori": "Maori",
+  "Lit": "Lit",
+  "roa": "Roa",
+  "K'iche'": "K'iche'",
+  "Sogdian (script); Middle Persian": null,
+  "Egyptian": "Egyptian",
+  "Chinese (script); Chinese; Sogdian (script); Sogdian": null,
+  "Parthian; Sogdian (script); Sogdian": null,
+  "Old Turkic; Sogdian (script); Brahmi (script); Sogdian": null,
+  "Swahili": "Swahili",
+  "Judeo-Arabic and Arabic": null,
+  "Chinese; Uyghur (script); Chinese (script); Old Turkic": null,
+  "Ga": "Ga",
+  "Parthian; Chinese; Old Turkic; Chinese (script)": null,
+  "Greek, Syriac": "Greek, Syriac",
+  "Sogdian; Parthian": null,
+  "Uyghur (script); Chinese; Chinese (script); Brahmi (script); Old Turkic": null
+ },
+ "languages": {
+  "Arabic": {
+   "raw_labels": [
+    "Arabic"
+   ],
+   "books": 340,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69c1b7acfe4b8f25b9200ccf",
+     "page_number": 453,
+     "pages_count": 980,
+     "title": "al-Shifa (The Cure) — Philosophy and Medicine",
+     "url": "https://images.sourcelibrary.org/archived/69c1b7acfe4b8f25b9200ccf/453.jpg"
+    },
+    {
+     "book_id": "6a20331d18654bf8e19042cb",
+     "page_number": 4,
+     "pages_count": 31,
+     "title": "Muqaddimah fi ʿilm al-ʿArabiyah (mutammimah) li masāʾil al-ajrrūmiyah Or. 8471",
+     "url": "https://images.sourcelibrary.org/archived/6a20331d18654bf8e19042cb/4.jpg"
+    },
+    {
+     "book_id": "6a2032b118654bf8e1903571",
+     "page_number": 32,
+     "pages_count": 43,
+     "title": "Dhikr Or. 7065",
+     "url": "https://images.sourcelibrary.org/archived/6a2032b118654bf8e1903571/32.jpg"
+    },
+    {
+     "book_id": "69e53454d48480a386965c84",
+     "page_number": 198,
+     "pages_count": 363,
+     "title": "Kalila wa Dimna (Arabic critical edition)",
+     "url": "https://images.sourcelibrary.org/archived/69e53454d48480a386965c84/198.jpg"
+    },
+    {
+     "book_id": "69d5abce4dc55b8478ddd014",
+     "page_number": 425,
+     "pages_count": 566,
+     "title": "Al-Futuhat al-Makkiyya",
+     "url": "https://images.sourcelibrary.org/archived/69d5abce4dc55b8478ddd014/425.jpg"
+    },
+    {
+     "book_id": "6a952a8ad5f269de866d62fd",
+     "page_number": 80,
+     "pages_count": 108,
+     "title": "Muḥammad ibn Muḥammad Naṣīr al-Dīn al-Ṭūsī, Taḥrīr usūl al-handasa wa-al-ḥisāb. ",
+     "url": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10030135f/f80/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a08c0da9b57265ed7f10cf3",
+     "page_number": 5,
+     "pages_count": 24,
+     "title": "Al-Iḥāṭa (The Comprehensive Treatise)",
+     "url": "https://images.sourcelibrary.org/archived/6a08c0da9b57265ed7f10cf3/5.jpg"
+    },
+    {
+     "book_id": "69b636242831a80d67f3ad98",
+     "page_number": 94,
+     "pages_count": 146,
+     "title": "Kitab Ara' Ahl al-Madina al-Fadila (On the Perfect State)",
+     "url": "https://images.sourcelibrary.org/archived/69b636242831a80d67f3ad98/94.jpg"
+    },
+    {
+     "book_id": "69ef3d4272c1376fdf2aff50",
+     "page_number": 92,
+     "pages_count": 105,
+     "title": "Tahdhib al-Akhlaq (The Refinement of Character)",
+     "url": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/92.jpg"
+    },
+    {
+     "book_id": "6a08c0de9b57265ed7f10d0c",
+     "page_number": 392,
+     "pages_count": 481,
+     "title": "Khalʿ al-Naʿlayn wa-Iqtibās al-Nūr min Mawḍiʿ al-Qadamayn (Removing the Two Sand",
+     "url": "https://images.sourcelibrary.org/archived/6a08c0de9b57265ed7f10d0c/392.jpg"
+    },
+    {
+     "book_id": "69b93eaf5a66bb81efc0636d",
+     "page_number": 155,
+     "pages_count": 581,
+     "title": "الفتوحات المكية (al-Futuhat al-Makkiyya — Meccan Revelations)",
+     "url": "https://archive.org/download/Al-FutuhatAl-makkiya/page/n154/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a952a66d5f269de866d604f",
+     "page_number": 71,
+     "pages_count": 148,
+     "title": "Le Traité des plantes de Dioscoride, traduction d'Étienne, revue par Ḥonaïn ibn ",
+     "url": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b11002636s/f71/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69e786b34a6785cfd60c8fbf",
+     "page_number": 188,
+     "pages_count": 770,
+     "title": "كتاب الفلاحة / Libro de Agricultura, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/69e786b34a6785cfd60c8fbf/188.jpg"
+    },
+    {
+     "book_id": "69a5efb5bfd8cafd91e44089",
+     "page_number": 15,
+     "pages_count": 128,
+     "title": "'Umdat al-muhtajj fi hukm al-shatranj (On the Legal Ruling of Chess)",
+     "url": "https://images.sourcelibrary.org/archived/69a5efb5bfd8cafd91e44089/15.jpg"
+    },
+    {
+     "book_id": "69c1b8898522835be844a8fb",
+     "page_number": 27,
+     "pages_count": 240,
+     "title": "Al-ṭibb al-rūḥānī",
+     "url": "https://images.sourcelibrary.org/archived/69c1b8898522835be844a8fb/27.jpg"
+    },
+    {
+     "book_id": "6a2032a118654bf8e19032fc",
+     "page_number": 24,
+     "pages_count": 51,
+     "title": "Daqāʾiq al-Ḥaqāʾiq Or. 7008",
+     "url": "https://images.sourcelibrary.org/archived/6a2032a118654bf8e19032fc/24.jpg"
+    },
+    {
+     "book_id": "6a2032af18654bf8e1903556",
+     "page_number": 5,
+     "pages_count": 26,
+     "title": "Juzʾ (part) of Qurʾān; from Java. Or. 7064",
+     "url": "https://images.sourcelibrary.org/archived/6a2032af18654bf8e1903556/5.jpg"
+    },
+    {
+     "book_id": "6a997b23b2c0cbae441cd102",
+     "page_number": 1,
+     "pages_count": 2,
+     "title": "Kitab al-Madkhal al-Kabir",
+     "url": "https://images.sourcelibrary.org/archived/6a997b23b2c0cbae441cd102/1.jpg"
+    },
+    {
+     "book_id": "6a952a78d5f269de866d6214",
+     "page_number": 67,
+     "pages_count": 147,
+     "title": "Le Traité des plantes de Dioscoride, traduction d'Étienne, revue par Ḥonaïn ibn ",
+     "url": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10884469r/f67/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6955761257e3b773024f28e3",
+     "page_number": 31,
+     "pages_count": 39,
+     "title": "كتاب الموسيقى الكبير (Kitab al-Musiqa al-Kabir)",
+     "url": "https://images.sourcelibrary.org/archived/6955761257e3b773024f28e3/31.jpg"
+    }
+   ]
+  },
+  "Armenian": {
+   "raw_labels": [
+    "Armenian; Armenian",
+    "Armenian"
+   ],
+   "books": 85,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69944861185a84ef595aae5b",
+     "page_number": 56,
+     "pages_count": 463,
+     "title": "Patmutiwn Hayots (History of the Armenians)",
+     "url": "https://images.sourcelibrary.org/archived/69944861185a84ef595aae5b/56.jpg"
+    },
+    {
+     "book_id": "69a5f059ac4e926899bd506c",
+     "page_number": 42,
+     "pages_count": 281,
+     "title": "Vasn Vardanay ew Hayots Paterazmin",
+     "url": "https://images.sourcelibrary.org/archived/69a5f059ac4e926899bd506c/42.jpg"
+    },
+    {
+     "book_id": "6953a82c77f38f6761bd0bc5",
+     "page_number": 139,
+     "pages_count": 329,
+     "title": "New Testament (Armenian-Greek-Italian trilingual)",
+     "url": "https://images.sourcelibrary.org/archived/6953a82c77f38f6761bd0bc5/139.jpg"
+    },
+    {
+     "book_id": "69e786c96846fc56c490ed8a",
+     "page_number": 269,
+     "pages_count": 311,
+     "title": "Girk' Vastakots' (Armenian Geoponica)",
+     "url": "https://images.sourcelibrary.org/archived/69e786c96846fc56c490ed8a/269.jpg"
+    },
+    {
+     "book_id": "69e72b92a409200ea79f2de3",
+     "page_number": 44,
+     "pages_count": 198,
+     "title": "Hovhannes Toumanian: Stories, Lyrics, and Epic Poems",
+     "url": "https://archive.org/download/hovhannestoumani0000tuma/page/n43/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "69b525a829577f283b57a06f",
+     "page_number": 99,
+     "pages_count": 162,
+     "title": "Girkh ašcharhac eu aṙaspelabanoutheanc orē Aghouēsagirkh.",
+     "url": "https://images.sourcelibrary.org/archived/69b525a829577f283b57a06f/99.jpg"
+    },
+    {
+     "book_id": "69a5f065b29703bc86eb55aa",
+     "page_number": 73,
+     "pages_count": 235,
+     "title": "Patmutiwn Hayots (History of Armenia)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f065b29703bc86eb55aa/73.jpg"
+    },
+    {
+     "book_id": "69c1bd308522835be8468096",
+     "page_number": 155,
+     "pages_count": 386,
+     "title": "Romance of Alexander",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd308522835be8468096/155.jpg"
+    },
+    {
+     "book_id": "69943cc3a668f66e6953c8a5",
+     "page_number": 180,
+     "pages_count": 440,
+     "title": "Collection des historiens de l'Arménie, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/69943cc3a668f66e6953c8a5/180.jpg"
+    },
+    {
+     "book_id": "69a5e9c2787d6e9b8d42e4db",
+     "page_number": 21,
+     "pages_count": 151,
+     "title": "Patmutiʿwn varutsʿ Mashtotsʿ (Life of Mashtots)",
+     "url": "https://images.sourcelibrary.org/archived/69a5e9c2787d6e9b8d42e4db/21.jpg"
+    },
+    {
+     "book_id": "6953a88577f38f6761bd1883",
+     "page_number": 9,
+     "pages_count": 75,
+     "title": "Armenian Psalter (Musée Arménien de France)",
+     "url": "https://images.sourcelibrary.org/archived/6953a88577f38f6761bd1883/9.jpg"
+    },
+    {
+     "book_id": "69a5ec4cda5d3ab76bee39f6",
+     "page_number": 242,
+     "pages_count": 437,
+     "title": "Deux historiens arméniens: Kiracos de Gantzac, XIIIe s., Histoire d'Arménie; Ouk",
+     "url": "https://images.sourcelibrary.org/archived/69a5ec4cda5d3ab76bee39f6/242.jpg"
+    },
+    {
+     "book_id": "69b525a42f891867c1ae4132",
+     "page_number": 166,
+     "pages_count": 397,
+     "title": "Eražštakan ergecmounkh hogeuorakankh, at̃s̃ajnoc eu erdžankac, srboc vardapetac,",
+     "url": "https://images.sourcelibrary.org/archived/69b525a42f891867c1ae4132/166.jpg"
+    },
+    {
+     "book_id": "69a5eaddd507939f0352d019",
+     "page_number": 766,
+     "pages_count": 941,
+     "title": "Eusebius: Ecclesiastical History (Armenian Translation)",
+     "url": "https://images.sourcelibrary.org/archived/69a5eaddd507939f0352d019/766.jpg"
+    },
+    {
+     "book_id": "69920b6ee0a548a13d8827e9",
+     "page_number": 1125,
+     "pages_count": 1309,
+     "title": "Astuatsashunch: Armenian Bible, Old Testament (Zohrab)",
+     "url": "https://images.sourcelibrary.org/archived/69920b6ee0a548a13d8827e9/1125.jpg"
+    },
+    {
+     "book_id": "6994493e185a84ef595abc3a",
+     "page_number": 262,
+     "pages_count": 401,
+     "title": "Eusebii Pamphili Chronicon Bipartitum, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/6994493e185a84ef595abc3a/262.jpg"
+    },
+    {
+     "book_id": "69a5f099b29703bc86eb5cf4",
+     "page_number": 170,
+     "pages_count": 749,
+     "title": "Vark ew Vkayabanutiwn Srbots, vol. 1 (Lives and Martyrdoms of the Saints)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f099b29703bc86eb5cf4/170.jpg"
+    },
+    {
+     "book_id": "69e72b82a409200ea79f2b10",
+     "page_number": 34,
+     "pages_count": 207,
+     "title": "Contes arméniens",
+     "url": "https://images.sourcelibrary.org/archived/69e72b82a409200ea79f2b10/34.jpg"
+    },
+    {
+     "book_id": "6994486d185a84ef595ab1fd",
+     "page_number": 170,
+     "pages_count": 274,
+     "title": "Patmutiwn Sebeos Episkoposi (History of Heraclius)",
+     "url": "https://images.sourcelibrary.org/archived/6994486d185a84ef595ab1fd/170.jpg"
+    },
+    {
+     "book_id": "69a5ec44da5d3ab76bee3957",
+     "page_number": 86,
+     "pages_count": 157,
+     "title": "Patmutʻiwn Aristakisi Lastiverttsʻwoy (History of Aristakes Lastivertts'i)",
+     "url": "https://images.sourcelibrary.org/archived/69a5ec44da5d3ab76bee3957/86.jpg"
+    }
+   ]
+  },
+  "Chinese": {
+   "raw_labels": [
+    "Chinese; Chinese (script)",
+    "Chinese (script); Chinese",
+    "Classical Chinese",
+    "Chinese"
+   ],
+   "books": 13200,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a3ced764701a906f10e075f",
+     "page_number": 133,
+     "pages_count": 170,
+     "title": "二程粹言·卷上 (vol 1)",
+     "url": "https://images.sourcelibrary.org/archived/6a3ced764701a906f10e075f/133.jpg"
+    },
+    {
+     "book_id": "6a3c6c4f39b4508b04e4862e",
+     "page_number": 42,
+     "pages_count": 122,
+     "title": "論衡·卷二~卷三 (vol 2)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c6c4f39b4508b04e4862e/42.jpg"
+    },
+    {
+     "book_id": "6a3cba923dce6cfad749cd2a",
+     "page_number": 103,
+     "pages_count": 171,
+     "title": "記纂淵海·卷八十二~卷八十三 (vol 55)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cba923dce6cfad749cd2a/103.jpg"
+    },
+    {
+     "book_id": "6a3cbaee3dce6cfad74a025a",
+     "page_number": 171,
+     "pages_count": 198,
+     "title": "五禮通考·卷八十一~卷八十二 (vol 58)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cbaee3dce6cfad74a025a/171.jpg"
+    },
+    {
+     "book_id": "6a3c752039b4508b04e5b53a",
+     "page_number": 65,
+     "pages_count": 138,
+     "title": "北夢瑣言·卷一~卷四 (vol 4)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c752039b4508b04e5b53a/65.jpg"
+    },
+    {
+     "book_id": "6a3ce9860a0011cb4bc104fa",
+     "page_number": 86,
+     "pages_count": 126,
+     "title": "儀禮集編·卷二十七 (vol 26)",
+     "url": "https://images.sourcelibrary.org/archived/6a3ce9860a0011cb4bc104fa/86.jpg"
+    },
+    {
+     "book_id": "6a3c7a7101fe4f593c21744c",
+     "page_number": 158,
+     "pages_count": 176,
+     "title": "續名醫類案·卷三十二~卷三十三 (vol 19)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c7a7101fe4f593c21744c/158.jpg"
+    },
+    {
+     "book_id": "6992caf8d4d545ae73feec07",
+     "page_number": 86,
+     "pages_count": 131,
+     "title": "河洛真數 (Helo Zhenshu: True Numbers of the River Luo) Vol 1",
+     "url": "https://images.sourcelibrary.org/archived/6992caf8d4d545ae73feec07/86.jpg"
+    },
+    {
+     "book_id": "6a3cb9513d799518cd71d0d0",
+     "page_number": 105,
+     "pages_count": 135,
+     "title": "朱子五經語類·卷二十五~卷二十八 (vol 7)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cb9513d799518cd71d0d0/105.jpg"
+    },
+    {
+     "book_id": "6a3cea65db5eb2b676735aac",
+     "page_number": 31,
+     "pages_count": 118,
+     "title": "日講春秋解義·卷六十三~卷六十四 (vol 22)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cea65db5eb2b676735aac/31.jpg"
+    },
+    {
+     "book_id": "6a3c7a7d01fe4f593c217a50",
+     "page_number": 115,
+     "pages_count": 132,
+     "title": "續名醫類案·卷五十八~卷五十九 (vol 30)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c7a7d01fe4f593c217a50/115.jpg"
+    },
+    {
+     "book_id": "6a3c7ab701fe4f593c2198f9",
+     "page_number": 59,
+     "pages_count": 208,
+     "title": "朱子語類·卷四十五~卷五十 (vol 25)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c7ab701fe4f593c2198f9/59.jpg"
+    },
+    {
+     "book_id": "6a3cba723dce6cfad749bb78",
+     "page_number": 87,
+     "pages_count": 136,
+     "title": "記纂淵海·卷四十三 (vol 28)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cba723dce6cfad749bb78/87.jpg"
+    },
+    {
+     "book_id": "6a3c715b39b4508b04e53ffa",
+     "page_number": 25,
+     "pages_count": 155,
+     "title": "御纂朱子全書·卷十三~卷十四 (vol 66)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c715b39b4508b04e53ffa/25.jpg"
+    },
+    {
+     "book_id": "69c31455a27f479ae0c07ceb",
+     "page_number": 9,
+     "pages_count": 46,
+     "title": "古写本抱朴子",
+     "url": "https://images.sourcelibrary.org/archived/69c31455a27f479ae0c07ceb/9.jpg"
+    },
+    {
+     "book_id": "6a3c774a01fe4f593c20101c",
+     "page_number": 96,
+     "pages_count": 139,
+     "title": "詩本音·卷一~卷三 (vol 1)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c774a01fe4f593c20101c/96.jpg"
+    },
+    {
+     "book_id": "6a3cbe76ec254ff6cae008a2",
+     "page_number": 68,
+     "pages_count": 110,
+     "title": "星學大成·卷三十 (vol 16)",
+     "url": "https://images.sourcelibrary.org/archived/6a3cbe76ec254ff6cae008a2/68.jpg"
+    },
+    {
+     "book_id": "6a3c74d001fe4f593c1f297b",
+     "page_number": 44,
+     "pages_count": 166,
+     "title": "萬姓統譜·卷七十三~卷七十五 (vol 26)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c74d001fe4f593c1f297b/44.jpg"
+    },
+    {
+     "book_id": "6a3c757201fe4f593c1f5d93",
+     "page_number": 150,
+     "pages_count": 168,
+     "title": "御覽經史講義·卷七 (vol 8)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c757201fe4f593c1f5d93/150.jpg"
+    },
+    {
+     "book_id": "6a3c6b6d39b4508b04e43efb",
+     "page_number": 22,
+     "pages_count": 165,
+     "title": "古今攷·卷三十六~卷三十八 (vol 14)",
+     "url": "https://images.sourcelibrary.org/archived/6a3c6b6d39b4508b04e43efb/22.jpg"
+    }
+   ]
+  },
+  "Dutch": {
+   "raw_labels": [
+    "Dutch"
+   ],
+   "books": 555,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69b525c72f891867c1ae523e",
+     "page_number": 6,
+     "pages_count": 20,
+     "title": "Beknopte aantekeningen van een Oost-Indische reys, gedaan uyt Engeland, met 3 sc",
+     "url": "https://images.sourcelibrary.org/archived/69b525c72f891867c1ae523e/6.jpg"
+    },
+    {
+     "book_id": "69c7bee025ec2ba5ccd7fa5d",
+     "page_number": 302,
+     "pages_count": 349,
+     "title": "De macrocosmus, en microcosmus, ofte de wonderen van de groote en kleyne werelt",
+     "url": "https://images.sourcelibrary.org/pages/69c7bee025ec2ba5ccd7fa5d/sp69f69acf1b4bcde537b1f5be.jpg"
+    },
+    {
+     "book_id": "69c285a7b82ba5d5beda6520",
+     "page_number": 67,
+     "pages_count": 191,
+     "title": "Algemeen wijsgeerig, geschiedkundig en biographisch Woordenboek voor Vrijmetsela",
+     "url": "https://images.sourcelibrary.org/books/69c285a7b82ba5d5beda6520/pages/0066.jpg"
+    },
+    {
+     "book_id": "69b525c36be6046083031d1e",
+     "page_number": 21,
+     "pages_count": 46,
+     "title": "Tweede scheeps-togt van Don Vasco da Gamma, zee-voogd van Arabien, Persien, Indi",
+     "url": "https://images.sourcelibrary.org/archived/69b525c36be6046083031d1e/21.jpg"
+    },
+    {
+     "book_id": "6a1964eb3e125aa8d6dfff3f",
+     "page_number": 29,
+     "pages_count": 70,
+     "title": "Inleiding tot een bestudeering van de Javaansche kris",
+     "url": "https://images.sourcelibrary.org/pages/6a1964eb3e125aa8d6dfff3f/0029-full.jpg"
+    },
+    {
+     "book_id": "69b525c12f891867c1ae4ac0",
+     "page_number": 42,
+     "pages_count": 62,
+     "title": "Twee bysondere scheeps-togten na Oost-Indien, van Pedralvarez Cabral, in het jaa",
+     "url": "https://images.sourcelibrary.org/archived/69b525c12f891867c1ae4ac0/42.jpg"
+    },
+    {
+     "book_id": "6a98d2e3e1d9448061e374c7",
+     "page_number": 48,
+     "pages_count": 294,
+     "title": "De nuttige planten van Nederlandsch-Indië, Eerste stuk",
+     "url": "https://images.sourcelibrary.org/archived/6a98d2e3e1d9448061e374c7/48.jpg"
+    },
+    {
+     "book_id": "697d9c999788c62e1238c882",
+     "page_number": 240,
+     "pages_count": 820,
+     "title": "Het heylige voor de heyligen",
+     "url": "https://images.sourcelibrary.org/cropped/697d9c999788c62e1238c882/697dc8e926c877ca374ffb29.jpg"
+    },
+    {
+     "book_id": "697c8e13036107d98b601005",
+     "page_number": 109,
+     "pages_count": 490,
+     "title": "Geestelyke natuurkunde",
+     "url": "https://images.sourcelibrary.org/cropped/697c8e13036107d98b601005/697cd5b05d321682c54c2c70.jpg"
+    },
+    {
+     "book_id": "69b525c32f891867c1ae4cfb",
+     "page_number": 50,
+     "pages_count": 102,
+     "title": "Naauwkeurig verhaal van een reys door Portugĳsen uyt Indien gedaan na Soez, in d",
+     "url": "https://images.sourcelibrary.org/archived/69b525c32f891867c1ae4cfb/50.jpg"
+    },
+    {
+     "book_id": "69b5259d2f891867c1ae3de6",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "Het nieuwe geboren pausdom, geteelt uit het laatst gehouden Menniste Sijnode van",
+     "url": "https://images.sourcelibrary.org/archived/69b5259d2f891867c1ae3de6/1.jpg"
+    },
+    {
+     "book_id": "69b52589cced70d8e6d72791",
+     "page_number": 32,
+     "pages_count": 40,
+     "title": "Voorne caart-boeck van alle de dorpen, en polders gelegen inden lande van Oost, ",
+     "url": "https://images.sourcelibrary.org/archived/69b52589cced70d8e6d72791/32.jpg"
+    },
+    {
+     "book_id": "69b525ca6be60460830325cb",
+     "page_number": 42,
+     "pages_count": 106,
+     "title": "De trotsmoedige scheeps-togt van Sebastiaan Gaboto, met 3 scheepen en veel adelĳ",
+     "url": "https://images.sourcelibrary.org/archived/69b525ca6be60460830325cb/42.jpg"
+    },
+    {
+     "book_id": "69b304751d880408995e0578",
+     "page_number": 32,
+     "pages_count": 36,
+     "title": "Korte Onderrichtinghe ende Discours (WIC prospectus)",
+     "url": "https://images.sourcelibrary.org/archived/69b304751d880408995e0578/32.jpg"
+    },
+    {
+     "book_id": "69b525d02f891867c1ae5c41",
+     "page_number": 12,
+     "pages_count": 22,
+     "title": "Hollands tempe verhérelykt, vertoond in dertig gezigten; beginnende van Amsterda",
+     "url": "https://images.sourcelibrary.org/archived/69b525d02f891867c1ae5c41/12.jpg"
+    },
+    {
+     "book_id": "69804b9019712623cff1088d",
+     "page_number": 50,
+     "pages_count": 82,
+     "title": "Joseph in Egypten",
+     "url": "https://images.sourcelibrary.org/cropped/69804b9019712623cff1088d/698059133a70573c49e9cee0.jpg"
+    },
+    {
+     "book_id": "69b525a495677df8153c6952",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "Ordonnantie van de Ed: Heeren Burgermeesteren der stad Amsterdam, waerna haer de",
+     "url": "https://images.sourcelibrary.org/archived/69b525a495677df8153c6952/1.jpg"
+    },
+    {
+     "book_id": "69a5d8d856c52e433d70a311",
+     "page_number": 69,
+     "pages_count": 81,
+     "title": "De beghinselen des waterwichts",
+     "url": "https://images.sourcelibrary.org/archived/69a5d8d856c52e433d70a311/69.jpg"
+    },
+    {
+     "book_id": "69b525c56be60460830320be",
+     "page_number": 9,
+     "pages_count": 30,
+     "title": "De reys van kapiteyn Johan Saris; behelsende sĳne aanmerkingen van 't geene, ten",
+     "url": "https://images.sourcelibrary.org/archived/69b525c56be60460830320be/9.jpg"
+    },
+    {
+     "book_id": "69c81fe46c6f3cc53c84a6d8",
+     "page_number": 688,
+     "pages_count": 1164,
+     "title": "[Greek: Logike Latreia], dat is redelyke godtsdienst",
+     "url": "https://images.sourcelibrary.org/pages/69c81fe46c6f3cc53c84a6d8/sp69f754676c2c06e1e3217687.jpg"
+    }
+   ]
+  },
+  "English": {
+   "raw_labels": [
+    "English"
+   ],
+   "books": 3768,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a51e1bd612243b27411a1f2",
+     "page_number": 449,
+     "pages_count": 513,
+     "title": "Proteus vinctus. Sive Æquivoca sermonis Anglicani, ordine alphabetico digesta, &",
+     "url": "https://images.sourcelibrary.org/archived/6a51e1bd612243b27411a1f2/449.jpg"
+    },
+    {
+     "book_id": "69c86d8c6c6f3cc53c856d5f",
+     "page_number": 21,
+     "pages_count": 67,
+     "title": "The book of wonders",
+     "url": "https://images.sourcelibrary.org/pages/69c86d8c6c6f3cc53c856d5f/spb3z9-0021.jpg"
+    },
+    {
+     "book_id": "6a3e77c5c7e5622c3d0bcbb6",
+     "page_number": 6,
+     "pages_count": 56,
+     "title": "The Platonist — ? (87_aug)",
+     "url": "https://images.sourcelibrary.org/archived/6a3e77c5c7e5622c3d0bcbb6/6.jpg"
+    },
+    {
+     "book_id": "6a3e775fc7e5622c3d0bc4ff",
+     "page_number": 309,
+     "pages_count": 424,
+     "title": "The Path — ? (00unse)",
+     "url": "https://images.sourcelibrary.org/archived/6a3e775fc7e5622c3d0bc4ff/309.jpg"
+    },
+    {
+     "book_id": "6992476c4c402ed78ad69d06",
+     "page_number": 270,
+     "pages_count": 465,
+     "title": "Pahlavi Texts, Part 3 (SBE Vol. 24)",
+     "url": "https://images.sourcelibrary.org/archived/6992476c4c402ed78ad69d06/270.jpg"
+    },
+    {
+     "book_id": "6a9fba6eabf09178b36591d3",
+     "page_number": 192,
+     "pages_count": 376,
+     "title": "Hawaiian Antiquities (Moolelo Hawaii)",
+     "url": "https://archive.org/download/hawaiianantiquit00malouoft/page/n191/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69ee89184501bec89654694b",
+     "page_number": 227,
+     "pages_count": 700,
+     "title": "Vedic Hymns, Part I (Sacred Books of the East, Vol. 32)",
+     "url": "https://images.sourcelibrary.org/archived/69ee89184501bec89654694b/227.jpg"
+    },
+    {
+     "book_id": "6a4a3eacf0f4a3b75e90d220",
+     "page_number": 218,
+     "pages_count": 449,
+     "title": "The History of Scotland, Vol. 1",
+     "url": "https://images.sourcelibrary.org/archived/6a4a3eacf0f4a3b75e90d220/218.jpg"
+    },
+    {
+     "book_id": "6a4a32e39ae8c432ae1606a4",
+     "page_number": 363,
+     "pages_count": 615,
+     "title": "The Writings of George Washington (Fitzpatrick ed.), Vol. 25",
+     "url": "https://images.sourcelibrary.org/archived/6a4a32e39ae8c432ae1606a4/363.jpg"
+    },
+    {
+     "book_id": "69b9a29a6ed9e0490990b7aa",
+     "page_number": 28,
+     "pages_count": 42,
+     "title": "Zen Buddhism and Its Relation to Art",
+     "url": "https://images.sourcelibrary.org/archived/69b9a29a6ed9e0490990b7aa/28.jpg"
+    },
+    {
+     "book_id": "6a0b2581620b66ad8f233bd6",
+     "page_number": 226,
+     "pages_count": 374,
+     "title": "The Microscope Made Easy",
+     "url": "https://images.sourcelibrary.org/archived/6a0b2581620b66ad8f233bd6/226.jpg"
+    },
+    {
+     "book_id": "69535b2277f38f6761bcdb4f",
+     "page_number": 316,
+     "pages_count": 682,
+     "title": "Divine Dialogues",
+     "url": "https://images.sourcelibrary.org/archived/69535b2277f38f6761bcdb4f/316.jpg"
+    },
+    {
+     "book_id": "69b418ee2b0edf3eaa2de472",
+     "page_number": 354,
+     "pages_count": 580,
+     "title": "Alchemical Texts — Hollandus, Llull, Ashmole, Ripley (PH435)",
+     "url": "https://images.sourcelibrary.org/pages/69b418ee2b0edf3eaa2de472/sp69f6e9113f61b8f6bf383cd3.jpg"
+    },
+    {
+     "book_id": "69c868986c6f3cc53c856721",
+     "page_number": 39,
+     "pages_count": 264,
+     "title": "Annales mac[onniques]",
+     "url": "https://images.sourcelibrary.org/pages/69c868986c6f3cc53c856721/sp69f5324d169dbc98da34a020.jpg"
+    },
+    {
+     "book_id": "69c8a2786c6f3cc53c85e42c",
+     "page_number": 10,
+     "pages_count": 12,
+     "title": "Time and space",
+     "url": "https://images.sourcelibrary.org/pages/69c8a2786c6f3cc53c85e42c/sp9jt5-0010.jpg"
+    },
+    {
+     "book_id": "6a4a34b3b49cf960c37df713",
+     "page_number": 191,
+     "pages_count": 555,
+     "title": "The History of America, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/6a4a34b3b49cf960c37df713/191.jpg"
+    },
+    {
+     "book_id": "699069ee1cf6ed5fbc8f4589",
+     "page_number": 86,
+     "pages_count": 666,
+     "title": "Witchcraft in Old and New England",
+     "url": "https://images.sourcelibrary.org/archived/699069ee1cf6ed5fbc8f4589/86.jpg"
+    },
+    {
+     "book_id": "6991bd4c70254d38471e3f81",
+     "page_number": 454,
+     "pages_count": 542,
+     "title": "Practical Instruction in Animal Magnetism (tr. Hartshorn)",
+     "url": "https://images.sourcelibrary.org/archived/6991bd4c70254d38471e3f81/454.jpg"
+    },
+    {
+     "book_id": "6a0a22c00eca358f15e83ad6",
+     "page_number": 293,
+     "pages_count": 537,
+     "title": "Passages from the Life of a Philosopher",
+     "url": "https://images.sourcelibrary.org/archived/6a0a22c00eca358f15e83ad6/293.jpg"
+    },
+    {
+     "book_id": "69b52c6b963cd7f9bde5bd54",
+     "page_number": 109,
+     "pages_count": 168,
+     "title": "Collectanea Chemica",
+     "url": "https://images.sourcelibrary.org/archived/69b52c6b963cd7f9bde5bd54/109.jpg"
+    }
+   ]
+  },
+  "French": {
+   "raw_labels": [
+    "fr",
+    "French",
+    "fre"
+   ],
+   "books": 1618,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69b525af29577f283b57aeb7",
+     "page_number": 65,
+     "pages_count": 80,
+     "title": "Relation du voyage de sa majesté Britannique en Hollande, et de la réception qui",
+     "url": "https://images.sourcelibrary.org/archived/69b525af29577f283b57aeb7/65.jpg"
+    },
+    {
+     "book_id": "698255f139a4ffd10d19f7c6",
+     "page_number": 145,
+     "pages_count": 171,
+     "title": "Nouveaux entretiens sur les sciences secrètes, ou le Comte de Gabalis",
+     "url": "https://images.sourcelibrary.org/cropped/698255f139a4ffd10d19f7c6/6982744ae5ec5cf26e656c07.jpg"
+    },
+    {
+     "book_id": "69b3029441bc4bc98613d8e0",
+     "page_number": 44,
+     "pages_count": 192,
+     "title": "Satyres et autres Oeuvres",
+     "url": "https://images.sourcelibrary.org/archived/69b3029441bc4bc98613d8e0/44.jpg"
+    },
+    {
+     "book_id": "69c272dfb82ba5d5beda31fc",
+     "page_number": 7,
+     "pages_count": 15,
+     "title": "Sublime Chevalier du Choix. Deuxième Grade. 34e de Mizraïm",
+     "url": "https://images.sourcelibrary.org/books/69c272dfb82ba5d5beda31fc/pages/0006.jpg"
+    },
+    {
+     "book_id": "69c22de4b82ba5d5bed9b71c",
+     "page_number": 8,
+     "pages_count": 14,
+     "title": "Ecossais des J.J.J. ou Ecossais d'Edimbourg",
+     "url": "https://images.sourcelibrary.org/books/69c22de4b82ba5d5bed9b71c/pages/0007.jpg"
+    },
+    {
+     "book_id": "69c2732db82ba5d5beda32ab",
+     "page_number": 9,
+     "pages_count": 45,
+     "title": "Grand Elu, dépositaire ou Chevalier de Jérusalem",
+     "url": "https://images.sourcelibrary.org/books/69c2732db82ba5d5beda32ab/pages/0008.jpg"
+    },
+    {
+     "book_id": "69793cdbdcf302c58a41a4c2",
+     "page_number": 207,
+     "pages_count": 310,
+     "title": "Les colomnes de la religion catholique inebranlables aux attaques de leurs aduer",
+     "url": "https://images.sourcelibrary.org/pages/69793cdbdcf302c58a41a4c2/0207-full.jpg"
+    },
+    {
+     "book_id": "698420e1f1fb376a3d580612",
+     "page_number": 259,
+     "pages_count": 480,
+     "title": "Oeuvres posthumes",
+     "url": "https://images.sourcelibrary.org/cropped/698420e1f1fb376a3d580612/69845d662b3a645e2d4534bf.jpg"
+    },
+    {
+     "book_id": "69c272edb82ba5d5beda321f",
+     "page_number": 5,
+     "pages_count": 15,
+     "title": "Souverain Commandeur du Temple, ou plutôt Noachite ou Chevalier Prussien. Clôtur",
+     "url": "https://images.sourcelibrary.org/books/69c272edb82ba5d5beda321f/pages/0004.jpg"
+    },
+    {
+     "book_id": "6a198c1dc07909cc79146c09",
+     "page_number": 50,
+     "pages_count": 142,
+     "title": "Cours entier & parfait de chymie escrit sous Monsieur Barlet professeur en cest ",
+     "url": "https://images.sourcelibrary.org/pages/6a198c1dc07909cc79146c09/0050-full.jpg"
+    },
+    {
+     "book_id": "69bda0bbf6d63c919748a5d9",
+     "page_number": 608,
+     "pages_count": 1541,
+     "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des ",
+     "url": "https://images.sourcelibrary.org/archived/69bda0bbf6d63c919748a5d9/608.jpg"
+    },
+    {
+     "book_id": "69c7ac9e92b884e4f8173e9c",
+     "page_number": 84,
+     "pages_count": 103,
+     "title": "Entretiens sur la pluralité des mondes",
+     "url": "https://images.sourcelibrary.org/pages/69c7ac9e92b884e4f8173e9c/sp69f49cc9e13f19e12acca405.jpg"
+    },
+    {
+     "book_id": "69bda11ff6d63c919748e5a3",
+     "page_number": 132,
+     "pages_count": 359,
+     "title": "La  théorie des songes",
+     "url": "https://images.sourcelibrary.org/archived/69bda11ff6d63c919748e5a3/132.jpg"
+    },
+    {
+     "book_id": "69e416cbaf506893f1182152",
+     "page_number": 34,
+     "pages_count": 340,
+     "title": "L'Agnistoma: Description complète du sacrifice de soma dans le culte védique",
+     "url": "https://images.sourcelibrary.org/archived/69e416cbaf506893f1182152/34.jpg"
+    },
+    {
+     "book_id": "69751591233423aeec9e88f4",
+     "page_number": 241,
+     "pages_count": 368,
+     "title": "L'Aurore naissante",
+     "url": "https://images.sourcelibrary.org/cropped/69751591233423aeec9e88f4/6976bebec05b8dd3dd355ad0.jpg"
+    },
+    {
+     "book_id": "69c87e076c6f3cc53c858c5a",
+     "page_number": 124,
+     "pages_count": 364,
+     "title": "Le livre intitule lart de bien vivre; et de bien mourir",
+     "url": "https://images.sourcelibrary.org/pages/69c87e076c6f3cc53c858c5a/sp69f69ce0924f123dfc5610b8.jpg"
+    },
+    {
+     "book_id": "6a4170cde906de1d7b3b9959",
+     "page_number": 239,
+     "pages_count": 640,
+     "title": "Les champignons de la France : histoire, description, culture, usages des espèce",
+     "url": "https://images.sourcelibrary.org/archived/6a4170cde906de1d7b3b9959/239.jpg"
+    },
+    {
+     "book_id": "69c277d7b82ba5d5beda3d0f",
+     "page_number": 87,
+     "pages_count": 289,
+     "title": "'Maçonnerie des Hommes' : Recueil de 65 grades maçonniques",
+     "url": "https://images.sourcelibrary.org/books/69c277d7b82ba5d5beda3d0f/pages/0086.jpg"
+    },
+    {
+     "book_id": "69c2705cb82ba5d5beda29a3",
+     "page_number": 27,
+     "pages_count": 51,
+     "title": "Regulateur du Juge philosophique. Grand Commandeur inconnu. 33e Degré. Premier e",
+     "url": "https://images.sourcelibrary.org/books/69c2705cb82ba5d5beda29a3/pages/0026.jpg"
+    },
+    {
+     "book_id": "6992c4c0e6620d6201e85f26",
+     "page_number": 59,
+     "pages_count": 88,
+     "title": "La Loi",
+     "url": "https://images.sourcelibrary.org/archived/6992c4c0e6620d6201e85f26/59.jpg"
+    }
+   ]
+  },
+  "Ge'ez": {
+   "raw_labels": [
+    "Ge'ez"
+   ],
+   "books": 28,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69e012414e6773d06085614a",
+     "page_number": 333,
+     "pages_count": 380,
+     "title": "The Book of Jubilees (Ethiopic text)",
+     "url": "https://images.sourcelibrary.org/archived/69e012414e6773d06085614a/333.jpg"
+    },
+    {
+     "book_id": "69d5ad114dc55b8478ddf79c",
+     "page_number": 17,
+     "pages_count": 164,
+     "title": "Enoch, Kings, Daniel, Tobit, Esdras (Ge'ez MS)",
+     "url": "https://images.sourcelibrary.org/archived/69d5ad114dc55b8478ddf79c/17.jpg"
+    },
+    {
+     "book_id": "69c1bd558522835be846949b",
+     "page_number": 97,
+     "pages_count": 404,
+     "title": "Ethiopic New Testament",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd558522835be846949b/97.jpg"
+    },
+    {
+     "book_id": "69c1bd5c8522835be84697ed",
+     "page_number": 238,
+     "pages_count": 564,
+     "title": "'Orit",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd5c8522835be84697ed/238.jpg"
+    },
+    {
+     "book_id": "69920b8ae0a548a13d88384b",
+     "page_number": 644,
+     "pages_count": 1099,
+     "title": "Biblia Veteris Testamenti Aethiopica",
+     "url": "https://images.sourcelibrary.org/archived/69920b8ae0a548a13d88384b/644.jpg"
+    },
+    {
+     "book_id": "6a31b2d38f67820f4a11d190",
+     "page_number": 62,
+     "pages_count": 282,
+     "title": "The Ethiopic version of the book of Enoch",
+     "url": "https://images.sourcelibrary.org\n/pages/6a31b2d38f67820f4a11d190/0062-full.jpg"
+    },
+    {
+     "book_id": "69c1bd578522835be8469631",
+     "page_number": 109,
+     "pages_count": 147,
+     "title": "Enoch, Job, and the Book of Kings",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd578522835be8469631/109.jpg"
+    },
+    {
+     "book_id": "69d5ad294dc55b8478ddfae6",
+     "page_number": 106,
+     "pages_count": 212,
+     "title": "Ethiopian Magical Writings",
+     "url": "https://images.sourcelibrary.org/archived/69d5ad294dc55b8478ddfae6/106.jpg"
+    },
+    {
+     "book_id": "69d5ad0c4dc55b8478ddf60b",
+     "page_number": 342,
+     "pages_count": 398,
+     "title": "Book of Enoch (Ge'ez MS)",
+     "url": "https://images.sourcelibrary.org/archived/69d5ad0c4dc55b8478ddf60b/342.jpg"
+    },
+    {
+     "book_id": "69d5ae22d0bd3547a5656c4d",
+     "page_number": 289,
+     "pages_count": 516,
+     "title": "Gadla Hawaryat",
+     "url": "https://images.sourcelibrary.org/archived/69d5ae22d0bd3547a5656c4d/289.jpg"
+    },
+    {
+     "book_id": "69dfda6f220eedf04e13b542",
+     "page_number": 438,
+     "pages_count": 516,
+     "title": "The Ethiopic Liturgy",
+     "url": "https://images.sourcelibrary.org/archived/69dfda6f220eedf04e13b542/438.jpg"
+    },
+    {
+     "book_id": "69c1bd4c8522835be8468de5",
+     "page_number": 370,
+     "pages_count": 516,
+     "title": "Gadla ḥawāryāt",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd4c8522835be8468de5/370.jpg"
+    },
+    {
+     "book_id": "69c1bd5a8522835be84696c6",
+     "page_number": 47,
+     "pages_count": 293,
+     "title": "Argānona Weddāsē",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd5a8522835be84696c6/47.jpg"
+    },
+    {
+     "book_id": "69d5ae2d4dc55b8478de11ea",
+     "page_number": 220,
+     "pages_count": 249,
+     "title": "Qerellos (Cyril)",
+     "url": "https://images.sourcelibrary.org/archived/69d5ae2d4dc55b8478de11ea/220.jpg"
+    },
+    {
+     "book_id": "69d5ad154dc55b8478ddf843",
+     "page_number": 36,
+     "pages_count": 362,
+     "title": "Psalms and Apocrypha (Ge'ez MS)",
+     "url": "https://images.sourcelibrary.org/archived/69d5ad154dc55b8478ddf843/36.jpg"
+    },
+    {
+     "book_id": "69c1bd4e8522835be8468feb",
+     "page_number": 176,
+     "pages_count": 292,
+     "title": "Dersāna Mikā'ēl",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd4e8522835be8468feb/176.jpg"
+    },
+    {
+     "book_id": "69c1bd538522835be84692a5",
+     "page_number": 258,
+     "pages_count": 500,
+     "title": "Gebra ḥemāmāt",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd538522835be84692a5/258.jpg"
+    },
+    {
+     "book_id": "69d5acf04dc55b8478dde728",
+     "page_number": 101,
+     "pages_count": 394,
+     "title": "Ge'ez Psalter",
+     "url": "https://images.sourcelibrary.org/archived/69d5acf04dc55b8478dde728/101.jpg"
+    },
+    {
+     "book_id": "69c1bd518522835be8469111",
+     "page_number": 41,
+     "pages_count": 402,
+     "title": "Dāwit",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd518522835be8469111/41.jpg"
+    },
+    {
+     "book_id": "69c1bd5e8522835be8469a23",
+     "page_number": 60,
+     "pages_count": 558,
+     "title": "Ethiopic MS 27",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd5e8522835be8469a23/60.jpg"
+    }
+   ]
+  },
+  "German": {
+   "raw_labels": [
+    "German",
+    "ger"
+   ],
+   "books": 5911,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a26bb8c4045b346e6ad23a5",
+     "page_number": 26,
+     "pages_count": 234,
+     "title": "Wundt- und Leibartznei",
+     "url": "https://images.sourcelibrary.org/archived/6a26bb8c4045b346e6ad23a5/26.jpg"
+    },
+    {
+     "book_id": "69ae8fe80cec1b9ab2cf01aa",
+     "page_number": 36,
+     "pages_count": 53,
+     "title": "Lohnarbeit und Kapital",
+     "url": "https://images.sourcelibrary.org/archived/69ae8fe80cec1b9ab2cf01aa/36.jpg"
+    },
+    {
+     "book_id": "695286feab34727b1f04cf28",
+     "page_number": 101,
+     "pages_count": 155,
+     "title": "Alle Theosophische Wercken",
+     "url": "https://images.sourcelibrary.org/archived/695286feab34727b1f04cf28/101.jpg"
+    },
+    {
+     "book_id": "69b51e7747b06ecd58190c50",
+     "page_number": 28,
+     "pages_count": 143,
+     "title": "Evangeliorum libri : mit Anmerkungen zum Autor aus Werken von Sophronius Eusebiu",
+     "url": "https://images.sourcelibrary.org/archived/69b51e7747b06ecd58190c50/28.jpg"
+    },
+    {
+     "book_id": "69c291aeb82ba5d5beda7a84",
+     "page_number": 34,
+     "pages_count": 64,
+     "title": "VII. Provinz. Präfectur Rittersfelde. VIII. Prov. u. Grosscomthurei Creutznach [",
+     "url": "https://images.sourcelibrary.org/books/69c291aeb82ba5d5beda7a84/pages/0033.jpg"
+    },
+    {
+     "book_id": "6a9059887f6818cc17cda383",
+     "page_number": 88,
+     "pages_count": 172,
+     "title": "Erster und andre theil der astronomischen schreiben",
+     "url": "https://images.sourcelibrary.org/archived/6a9059887f6818cc17cda383/88.jpg"
+    },
+    {
+     "book_id": "6a26fc9e7bf01744ebad1955",
+     "page_number": 21,
+     "pages_count": 39,
+     "title": "Der Röm: Käyserl: auch zu Hungern und Böhmen Königl: May: Ferdinandi II. außgang",
+     "url": "https://images.sourcelibrary.org/archived/6a26fc9e7bf01744ebad1955/21.jpg"
+    },
+    {
+     "book_id": "6a100a2af71729295096e40f",
+     "page_number": 735,
+     "pages_count": 960,
+     "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Keze",
+     "url": "https://images.sourcelibrary.org/archived/6a100a2af71729295096e40f/735.jpg"
+    },
+    {
+     "book_id": "6a26c08e0e247ebad6df1c3b",
+     "page_number": 11,
+     "pages_count": 94,
+     "title": "Ein edler vnd nützlicher Hermetischer oder chymischer Discurs",
+     "url": "https://images.sourcelibrary.org/archived/6a26c08e0e247ebad6df1c3b/11.jpg"
+    },
+    {
+     "book_id": "6a9057b3ab26ecd307a0d38d",
+     "page_number": 117,
+     "pages_count": 194,
+     "title": "Ethographia Mundi, ans Licht gebracht",
+     "url": "https://images.sourcelibrary.org/pages/6a9057b3ab26ecd307a0d38d/0117.jpg"
+    },
+    {
+     "book_id": "6a468458563a27b6e4fb34df",
+     "page_number": 113,
+     "pages_count": 212,
+     "title": "Rerum praeclare gestarum, intra et extra Moenia munitissimae civitatis Viennensi",
+     "url": "https://images.sourcelibrary.org/archived/6a468458563a27b6e4fb34df/113.jpg"
+    },
+    {
+     "book_id": "6a4923231bbf4176e1e85b02",
+     "page_number": 78,
+     "pages_count": 368,
+     "title": "Culpepers Testament Oder Letzter Wille, Welches er seiner Ehegemahlin dem gemein",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10253046_00078/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a425e8d744db9e3105a49eb",
+     "page_number": 64,
+     "pages_count": 84,
+     "title": "Eyn nutzliches Regiment sampt dem bericht der ertzney wider etzliche kranckheit ",
+     "url": "https://images.sourcelibrary.org/archived/6a425e8d744db9e3105a49eb/64.jpg"
+    },
+    {
+     "book_id": "6a26ce2d5ac5aecc53cf9064",
+     "page_number": 153,
+     "pages_count": 226,
+     "title": "Theosophia Revelata. Das ist: Alle Göttliche Schriften des Gottseligen und Hoche",
+     "url": "https://images.sourcelibrary.org/archived/6a26ce2d5ac5aecc53cf9064/153.jpg"
+    },
+    {
+     "book_id": "69751590233423aeec9e88f0",
+     "page_number": 155,
+     "pages_count": 384,
+     "title": "Auserlesene chymische Tractätlein",
+     "url": "https://images.sourcelibrary.org/cropped/69751590233423aeec9e88f0/6976d0efc69f33a5a1c795e3.jpg"
+    },
+    {
+     "book_id": "6a26bcd7d6b178e5aad865b4",
+     "page_number": 19,
+     "pages_count": 86,
+     "title": "Theophrasti von Hohenheim, des thewren, hochgelehrten unnd erfahrnen Philosophi ",
+     "url": "https://images.sourcelibrary.org/archived/6a26bcd7d6b178e5aad865b4/19.jpg"
+    },
+    {
+     "book_id": "6a42708428e9db2e39c0f167",
+     "page_number": 138,
+     "pages_count": 167,
+     "title": "Künstliche und rechtschaffene Feuerwerck zum schimpff, vormals im Druck nie außg",
+     "url": "https://images.sourcelibrary.org/archived/6a42708428e9db2e39c0f167/138.jpg"
+    },
+    {
+     "book_id": "69c88c706c6f3cc53c85ac11",
+     "page_number": 224,
+     "pages_count": 320,
+     "title": "Theoretischer und praktischer Unterricht ueber das Buch Thot",
+     "url": "https://images.sourcelibrary.org/pages/69c88c706c6f3cc53c85ac11/sp69f68bc305ebe79c516d63c9.jpg"
+    },
+    {
+     "book_id": "69b51d7cf23ccdcced3081da",
+     "page_number": 61,
+     "pages_count": 184,
+     "title": "Bergwerckschatz, Das ist, Außführlicher und vollkommener Bericht Von Bergwercken",
+     "url": "https://images.sourcelibrary.org/archived/69b51d7cf23ccdcced3081da-0061.jpg"
+    },
+    {
+     "book_id": "6985ca74e3007574295ea81b",
+     "page_number": 113,
+     "pages_count": 712,
+     "title": "Prozess gegen den Orden der Tempelherren. Aus den Originalacten der päpstlichen ",
+     "url": "https://images.sourcelibrary.org/cropped/6985ca74e3007574295ea81b/6985e35f02e5e44819053d5b.jpg"
+    }
+   ]
+  },
+  "Greek": {
+   "raw_labels": [
+    "Greek",
+    "grc",
+    "Ancient Greek"
+   ],
+   "books": 5024,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a50656e78825bd7fdddf241",
+     "page_number": 22,
+     "pages_count": 110,
+     "title": "De sensibus atque de his quae cadunt in sensum",
+     "url": "https://images.sourcelibrary.org/archived/6a50656e78825bd7fdddf241/22.jpg"
+    },
+    {
+     "book_id": "6a50814578825bd7fde4910f",
+     "page_number": 122,
+     "pages_count": 520,
+     "title": "In Porphyrii Isagogen, Aristotelis Categorias librosque de demonstratione :Absol",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11217345_00122/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6993838250654cbbe2916e4c",
+     "page_number": 338,
+     "pages_count": 631,
+     "title": "Polybius, Histories (MS, 10th c.)",
+     "url": "https://images.sourcelibrary.org/archived/6993838250654cbbe2916e4c/338.jpg"
+    },
+    {
+     "book_id": "6a5055be78825bd7fddac054",
+     "page_number": 341,
+     "pages_count": 432,
+     "title": "Ludovici Buccaferrae expositio in Aristotelis libros de generatione et corruptio",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00120410_00341/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6993794fb0a84a5763964777",
+     "page_number": 32,
+     "pages_count": 236,
+     "title": "Homeri Opera (Vol. 4)",
+     "url": "https://images.sourcelibrary.org/archived/6993794fb0a84a5763964777/32.jpg"
+    },
+    {
+     "book_id": "6a506fd178825bd7fddfdb31",
+     "page_number": 205,
+     "pages_count": 396,
+     "title": "Intsitvtio [!] Principis Christiani, saluberrimis referta præceptis, p[er] Erasm",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11301631_00205/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a508fde78825bd7fdeeb7c8",
+     "page_number": 618,
+     "pages_count": 756,
+     "title": "Pavli De Palacio Granatensis ... Enarrationes In Sacrosanctum Iesu Christi Euang",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11117367_00618/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a50890978825bd7fde8c91f",
+     "page_number": 113,
+     "pages_count": 908,
+     "title": "Tractatus in Aristotelis Summulas logicae, 8 libros Physicorum, libros de ortu e",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11191435_00113/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a5087b878825bd7fde7e18a",
+     "page_number": 17,
+     "pages_count": 84,
+     "title": "In libr. Aristotelis de Generatione comm.",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10138955_00017/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a50560e78825bd7fddadc62",
+     "page_number": 571,
+     "pages_count": 1070,
+     "title": "Aristotelis Stagiritae Omnia, Qvae Extant, Opera : Nvnc Primvm Selectis Translat",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10169650_00571/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a50762678825bd7fde206b0",
+     "page_number": 273,
+     "pages_count": 550,
+     "title": "Logica Aristotelis : Libri logicorum ad archetypos recogniti, cum novis ad liter",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11199059_00273/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a508cb678825bd7fdeba800",
+     "page_number": 14,
+     "pages_count": 88,
+     "title": "Paruorum Naturaliu[m] Aristotelis libri Francisco Vatablo interprete et doctissi",
+     "url": "https://images.sourcelibrary.org/archived/6a508cb678825bd7fdeba800/14.jpg"
+    },
+    {
+     "book_id": "6a50579d78825bd7fddba209",
+     "page_number": 186,
+     "pages_count": 224,
+     "title": "Opus de moribus ad Nicomachum filium",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10934165_00186/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69b4c09886a5921d5bc44a91",
+     "page_number": 121,
+     "pages_count": 240,
+     "title": "Aristotelis Moralia ad Eudemum. Ac praeterea Horapollinis Niloi Hieroglyphica",
+     "url": "https://images.sourcelibrary.org/archived/69b4c09886a5921d5bc44a91/121.jpg"
+    },
+    {
+     "book_id": "6a50562178825bd7fddae796",
+     "page_number": 210,
+     "pages_count": 390,
+     "title": "Aristotelis Rhetoricorum ad Theodecten, Georgio Trapezuntio interprete, libri II",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11088983_00210/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69c10d9a42741c656896364d",
+     "page_number": 594,
+     "pages_count": 889,
+     "title": "Patrologia Graeca vol. 78 — Isidore of Pelusium: Epistulae",
+     "url": "https://images.sourcelibrary.org/archived/69c10d9a42741c656896364d/594.jpg"
+    },
+    {
+     "book_id": "6a5070f678825bd7fde00ae2",
+     "page_number": 260,
+     "pages_count": 714,
+     "title": "Commentaria, una cum quaestionibus, in octo libros Aristotelis de physica auscul",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10215621_00260/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69b6667ab3f4fc044155c435",
+     "page_number": 35,
+     "pages_count": 48,
+     "title": "S. Gregorii Nazianzeni Definitiones Rervm Simplices",
+     "url": "https://images.sourcelibrary.org/archived/69b6667ab3f4fc044155c435/35.jpg"
+    },
+    {
+     "book_id": "6a508ff578825bd7fdeec902",
+     "page_number": 539,
+     "pages_count": 960,
+     "title": "Sicvti Antiqvarivm Lectionvm Commentarios Concinnarat Olim Vindex Ceselivs, Ita ",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10197880_00539/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a5057dd78825bd7fddbbe3b",
+     "page_number": 223,
+     "pages_count": 300,
+     "title": "Commentariorvm Collegii Conimbricensis Societatis Iesv, In Octo Libros Physicoru",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11726223_00223/full/full/0/default.jpg"
+    }
+   ]
+  },
+  "Hebrew": {
+   "raw_labels": [
+    "he",
+    "Hebrew",
+    "heb"
+   ],
+   "books": 275,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69c1bf338522835be846c26f",
+     "page_number": 1,
+     "pages_count": 2,
+     "title": "Prayers",
+     "url": "https://images.sourcelibrary.org/archived/69c1bf338522835be846c26f/1.jpg"
+    },
+    {
+     "book_id": "69c1bb538522835be845ee95",
+     "page_number": 195,
+     "pages_count": 394,
+     "title": "Hasidic discourses",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb538522835be845ee95/195.jpg"
+    },
+    {
+     "book_id": "69c1bb438522835be845df1f",
+     "page_number": 408,
+     "pages_count": 718,
+     "title": "Hasidic discourses",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb438522835be845df1f/408.jpg"
+    },
+    {
+     "book_id": "69b4cd3ad5b6c3815e1a4f1b",
+     "page_number": 160,
+     "pages_count": 302,
+     "title": "Ḥamišah ḥumše Torah (1630)",
+     "url": "https://images.sourcelibrary.org/archived/69b4cd3ad5b6c3815e1a4f1b/160.jpg"
+    },
+    {
+     "book_id": "6a26fc0a65df759218cd8b51",
+     "page_number": 7,
+     "pages_count": 41,
+     "title": "Antworten auf Anfragen zur Kabbala",
+     "url": "https://images.sourcelibrary.org/archived/6a26fc0a65df759218cd8b51/7.jpg"
+    },
+    {
+     "book_id": "69c1ba708522835be8458e0b",
+     "page_number": 41,
+     "pages_count": 128,
+     "title": "The Rylands Sephardi Haggadah",
+     "url": "https://images.sourcelibrary.org/archived/69c1ba708522835be8458e0b/41.jpg"
+    },
+    {
+     "book_id": "69c7b2da25ec2ba5ccd7f49a",
+     "page_number": 245,
+     "pages_count": 386,
+     "title": "[Hebrew: Sefer eshel Avraham]",
+     "url": "https://images.sourcelibrary.org/pages/69c7b2da25ec2ba5ccd7f49a/sp69f6a60bdf145ccaf40420c9.jpg"
+    },
+    {
+     "book_id": "69d5aca44dc55b8478dddf51",
+     "page_number": 1393,
+     "pages_count": 1579,
+     "title": "Siddur Ozar ha-Tefillot",
+     "url": "https://images.sourcelibrary.org/archived/69d5aca44dc55b8478dddf51/1393.jpg"
+    },
+    {
+     "book_id": "69c1bc7d8522835be84637c4",
+     "page_number": 47,
+     "pages_count": 54,
+     "title": "Sermons",
+     "url": "https://images.sourcelibrary.org/archived/69c1bc7d8522835be84637c4/47.jpg"
+    },
+    {
+     "book_id": "69c1bd708522835be846a1df",
+     "page_number": 124,
+     "pages_count": 342,
+     "title": "Astronomical calendar",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd708522835be846a1df/124.jpg"
+    },
+    {
+     "book_id": "69c1bf7e8522835be846c2a6",
+     "page_number": 1,
+     "pages_count": 2,
+     "title": "Liturgical manuscript? (fragment)",
+     "url": "https://images.sourcelibrary.org/archived/69c1bf7e8522835be846c2a6/1.jpg"
+    },
+    {
+     "book_id": "69c1bb218522835be845d0eb",
+     "page_number": 156,
+     "pages_count": 678,
+     "title": "Collection of responsa",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb218522835be845d0eb/156.jpg"
+    },
+    {
+     "book_id": "69c1bb5c8522835be845f2eb",
+     "page_number": 353,
+     "pages_count": 416,
+     "title": "Hasidic discourses",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb5c8522835be845f2eb/353.jpg"
+    },
+    {
+     "book_id": "69c1bb858522835be8460181",
+     "page_number": 13,
+     "pages_count": 18,
+     "title": "Book of the Soothing Tongue by Eliyahu ben Menaḥem",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb858522835be8460181/13.jpg"
+    },
+    {
+     "book_id": "69c1bbf78522835be8460e27",
+     "page_number": 35,
+     "pages_count": 184,
+     "title": "Prayers and litugical poems",
+     "url": "https://images.sourcelibrary.org/archived/69c1bbf78522835be8460e27/35.jpg"
+    },
+    {
+     "book_id": "69c1bb178522835be845ccc2",
+     "page_number": 171,
+     "pages_count": 597,
+     "title": "Maḥzor for the whole year, according to the rite of Burgundy and Mascone",
+     "url": "https://images.sourcelibrary.org/archived/69c1bb178522835be845ccc2/171.jpg"
+    },
+    {
+     "book_id": "6a7de037fd8615d37af98df8",
+     "page_number": 259,
+     "pages_count": 298,
+     "title": "Studies and Texts in Folklore, Magic, Medieval Romance, Hebrew Apocrypha and Sam",
+     "url": "https://images.sourcelibrary.org/archived/6a7de037fd8615d37af98df8/259.jpg"
+    },
+    {
+     "book_id": "6a26fbfb65df759218cd8a6b",
+     "page_number": 30,
+     "pages_count": 165,
+     "title": "Astrologische Schriften; Sammelhandschrift",
+     "url": "https://images.sourcelibrary.org/archived/6a26fbfb65df759218cd8a6b/30.jpg"
+    },
+    {
+     "book_id": "69c1ba738522835be8458e8d",
+     "page_number": 85,
+     "pages_count": 112,
+     "title": "The Rylands Ashkenazi Haggadah",
+     "url": "https://images.sourcelibrary.org/archived/69c1ba738522835be8458e8d/85.jpg"
+    },
+    {
+     "book_id": "69b3e5b8304c1c6b39509cc0",
+     "page_number": 101,
+     "pages_count": 280,
+     "title": "Collection of kabbalistic texts",
+     "url": "https://images.sourcelibrary.org/archived/69b3e5b8304c1c6b39509cc0/101.jpg"
+    }
+   ]
+  },
+  "Hindi": {
+   "raw_labels": [
+    "Hindi"
+   ],
+   "books": 24,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6990799759c453700d93c972",
+     "page_number": 64,
+     "pages_count": 471,
+     "title": "Jyotish Prashna Kundali Vichar",
+     "url": "https://images.sourcelibrary.org/archived/6990799759c453700d93c972/64.jpg"
+    },
+    {
+     "book_id": "6a410c29d95727ee3e0ee8ae",
+     "page_number": 333,
+     "pages_count": 558,
+     "title": "The Rasārṇava, or The Ocean of Mercury and Other Metals",
+     "url": "https://images.sourcelibrary.org/archived/6a410c29d95727ee3e0ee8ae/333.jpg"
+    },
+    {
+     "book_id": "6a08fa959c1b82475e159dae",
+     "page_number": 54,
+     "pages_count": 364,
+     "title": "Banarasi Vilas, contenant l'Ardha-Kathānaka (अर्धकथानक) — Banarasidas, 1641 (Old",
+     "url": "https://images.sourcelibrary.org/archived/6a08fa959c1b82475e159dae/54.jpg"
+    },
+    {
+     "book_id": "6a2199164b61907ea5ffb056",
+     "page_number": 438,
+     "pages_count": 502,
+     "title": "Saddharma Puṇḍarīka Sūtra",
+     "url": "https://images.sourcelibrary.org/archived/6a2199164b61907ea5ffb056/438.jpg"
+    },
+    {
+     "book_id": "6a2199954b61907ea5ffc656",
+     "page_number": 155,
+     "pages_count": 424,
+     "title": "Uttaradhyayana Sutra",
+     "url": "https://images.sourcelibrary.org/archived/6a2199954b61907ea5ffc656/155.jpg"
+    },
+    {
+     "book_id": "69e7929680b52390feb164a8",
+     "page_number": 394,
+     "pages_count": 526,
+     "title": "गोदान (Godān)",
+     "url": "https://images.sourcelibrary.org/archived/69e7929680b52390feb164a8/394.jpg"
+    },
+    {
+     "book_id": "6a08fabb9c1b82475e15a1e2",
+     "page_number": 565,
+     "pages_count": 726,
+     "title": "Bijak of Kabir (बीजक) with Sara Bodhini Tīkā of Hanuman Das — Kabir's collected ",
+     "url": "https://images.sourcelibrary.org/archived/6a08fabb9c1b82475e15a1e2/565.jpg"
+    },
+    {
+     "book_id": "69e75e1fcc48e59ad74ebd37",
+     "page_number": 417,
+     "pages_count": 1002,
+     "title": "भारतेन्दु ग्रन्थावली (Bharatendu Granthavali)",
+     "url": "https://images.sourcelibrary.org/archived/69e75e1fcc48e59ad74ebd37/417.jpg"
+    },
+    {
+     "book_id": "6a410c30d95727ee3e0eeb09",
+     "page_number": 275,
+     "pages_count": 368,
+     "title": "Kāmaratnam (कामरत्नम्) — Tantric Alchemy",
+     "url": "https://images.sourcelibrary.org/archived/6a410c30d95727ee3e0eeb09/275.jpg"
+    },
+    {
+     "book_id": "69e75e24cc48e59ad74ec124",
+     "page_number": 92,
+     "pages_count": 124,
+     "title": "आषाढ़ का एक दिन (Āṣāḍh kā Ek Din)",
+     "url": "https://images.sourcelibrary.org/archived/69e75e24cc48e59ad74ec124/92.jpg"
+    },
+    {
+     "book_id": "6a410c23d95727ee3e0ee847",
+     "page_number": 51,
+     "pages_count": 100,
+     "title": "Rasapaddhati (रसपद्धति) — A Manual of Mercurial Alchemy",
+     "url": "https://images.sourcelibrary.org/archived/6a410c23d95727ee3e0ee847/51.jpg"
+    },
+    {
+     "book_id": "6991d89d8c1030b12444c140",
+     "page_number": 1,
+     "pages_count": 10,
+     "title": "Chakra and Nadi in the Shaiva Tradition",
+     "url": "https://images.sourcelibrary.org/enhanced/6991d89d8c1030b12444c140/1.jpg"
+    },
+    {
+     "book_id": "6a21997f4b61907ea5ffbe44",
+     "page_number": 229,
+     "pages_count": 922,
+     "title": "Harivamsha with the Bharata-bhava-dipa commentary",
+     "url": "https://images.sourcelibrary.org/archived/6a21997f4b61907ea5ffbe44/229.jpg"
+    },
+    {
+     "book_id": "6a0f06d1900fb4799cef2757",
+     "page_number": 46,
+     "pages_count": 101,
+     "title": "Tantrik Texts Vol. XI (Hindi, 1922)",
+     "url": "https://images.sourcelibrary.org/archived/6a0f06d1900fb4799cef2757/46.jpg"
+    },
+    {
+     "book_id": "6a2199094b61907ea5ffad3a",
+     "page_number": 296,
+     "pages_count": 466,
+     "title": "Mahavagga (Nalanda Devanagari Pali Series)",
+     "url": "https://images.sourcelibrary.org/archived/6a2199094b61907ea5ffad3a/296.jpg"
+    },
+    {
+     "book_id": "6a410c35d95727ee3e0eecb5",
+     "page_number": 10,
+     "pages_count": 25,
+     "title": "Rasamañjarī Sandarbhakośa (रसमञ्जरी सन्दर्भकोशः)",
+     "url": "https://images.sourcelibrary.org/archived/6a410c35d95727ee3e0eecb5/10.jpg"
+    },
+    {
+     "book_id": "6a2199594b61907ea5ffb864",
+     "page_number": 440,
+     "pages_count": 614,
+     "title": "Yoga Vasistha",
+     "url": "https://images.sourcelibrary.org/archived/6a2199594b61907ea5ffb864/440.jpg"
+    },
+    {
+     "book_id": "6a21990f4b61907ea5ffaf0f",
+     "page_number": 237,
+     "pages_count": 324,
+     "title": "Digha Nikaya, Vol. 1",
+     "url": "https://images.sourcelibrary.org/archived/6a21990f4b61907ea5ffaf0f/237.jpg"
+    },
+    {
+     "book_id": "6a08f8fb9c1b82475e158eba",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "Mira Bai Ki Padavali — devotional songs of the Rajput princess-saint (Hindi/Raja",
+     "url": "https://images.sourcelibrary.org/archived/6a08f8fb9c1b82475e158eba/1.jpg"
+    },
+    {
+     "book_id": "69e7516210ee9075bcdcd7db",
+     "page_number": 141,
+     "pages_count": 258,
+     "title": "The Bijak of Kabir",
+     "url": "https://images.sourcelibrary.org/archived/69e7516210ee9075bcdcd7db/141.jpg"
+    }
+   ]
+  },
+  "Italian": {
+   "raw_labels": [
+    "Italian",
+    "ita"
+   ],
+   "books": 679,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a0b45dd1615109dc53b1eae",
+     "page_number": 30,
+     "pages_count": 141,
+     "title": "Lo Astrologo — comedia",
+     "url": "https://images.sourcelibrary.org/archived/6a0b45dd1615109dc53b1eae/30.jpg"
+    },
+    {
+     "book_id": "6952dbc477f38f6761bc75f1",
+     "page_number": 35,
+     "pages_count": 340,
+     "title": "Opere di Giordano Bruno Nolano",
+     "url": "https://images.sourcelibrary.org/archived/6952dbc477f38f6761bc75f1/35.jpg"
+    },
+    {
+     "book_id": "6a06ccc8c749b698e5b29c34",
+     "page_number": 349,
+     "pages_count": 656,
+     "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, ",
+     "url": "https://images.sourcelibrary.org/archived/6a06ccc8c749b698e5b29c34/349.jpg"
+    },
+    {
+     "book_id": "6a0b2c72620b66ad8f23481e",
+     "page_number": 25,
+     "pages_count": 205,
+     "title": "Idea del Tempio della Pittura",
+     "url": "https://images.sourcelibrary.org/archived/6a0b2c72620b66ad8f23481e/25.jpg"
+    },
+    {
+     "book_id": "6a22c1380f855a389c006373",
+     "page_number": 136,
+     "pages_count": 368,
+     "title": "Ricettario fiorentino, nuovamente compilato e ridotto all uso moderno",
+     "url": "https://images.sourcelibrary.org/archived/6a22c1380f855a389c006373/136.jpg"
+    },
+    {
+     "book_id": "6a426c1028e9db2e39c02d91",
+     "page_number": 41,
+     "pages_count": 314,
+     "title": "De natura humana",
+     "url": "https://images.sourcelibrary.org/archived/6a426c1028e9db2e39c02d91/41.jpg"
+    },
+    {
+     "book_id": "6a0b452e1615109dc53b1209",
+     "page_number": 851,
+     "pages_count": 1136,
+     "title": "Habiti Antichi et Moderni di Tutto il Mondo (500 costume woodcuts)",
+     "url": "https://images.sourcelibrary.org/archived/6a0b452e1615109dc53b1209/851.jpg"
+    },
+    {
+     "book_id": "6a98b9b3ec48f9ad103e2338",
+     "page_number": 86,
+     "pages_count": 469,
+     "title": "La prima parte dell'istorie del Perù",
+     "url": "https://images.sourcelibrary.org/archived/6a98b9b3ec48f9ad103e2338/86.jpg"
+    },
+    {
+     "book_id": "6970e3579b09d309d780a24c",
+     "page_number": 44,
+     "pages_count": 227,
+     "title": "Aelia laelia crispis non nata resurgens",
+     "url": "https://images.sourcelibrary.org/cropped/6970e3579b09d309d780a24c/69732b91813587d75bbbd425.jpg"
+    },
+    {
+     "book_id": "69de0cec80210ba13d79f998",
+     "page_number": 139,
+     "pages_count": 160,
+     "title": "I Ragionamenti",
+     "url": "https://images.sourcelibrary.org/archived/69de0cec80210ba13d79f998/139.jpg"
+    },
+    {
+     "book_id": "6a084e9e49638a50931b55af",
+     "page_number": 70,
+     "pages_count": 192,
+     "title": "Arcadia del Sannazaro.",
+     "url": "https://images.sourcelibrary.org/archived/6a084e9e49638a50931b55af/70.jpg"
+    },
+    {
+     "book_id": "69a5f6d81cf742c360414743",
+     "page_number": 26,
+     "pages_count": 138,
+     "title": "Gli artificiosi e curiosi moti spiritali di Herone",
+     "url": "https://images.sourcelibrary.org/archived/69a5f6d81cf742c360414743/26.jpg"
+    },
+    {
+     "book_id": "6991ead62f801130a473e8fc",
+     "page_number": 51,
+     "pages_count": 80,
+     "title": "Notes et croquis de geometrie",
+     "url": "https://images.sourcelibrary.org/archived/6991ead62f801130a473e8fc/51.jpg"
+    },
+    {
+     "book_id": "6a9093ceb7feee6e9c424cad",
+     "page_number": 175,
+     "pages_count": 195,
+     "title": "Argonautica diligenter accurateque emendata & suo nitori reddita in hoc volumine",
+     "url": "https://images.sourcelibrary.org/archived/6a9093ceb7feee6e9c424cad/175.jpg"
+    },
+    {
+     "book_id": "6a5142092ae5f7beb7ef38d8",
+     "page_number": 269,
+     "pages_count": 534,
+     "title": "Italia illustrata.",
+     "url": "https://images.sourcelibrary.org/archived/6a5142092ae5f7beb7ef38d8/269.jpg"
+    },
+    {
+     "book_id": "6984e84e6f1450a3574a387f",
+     "page_number": 198,
+     "pages_count": 452,
+     "title": "Opere",
+     "url": "https://images.sourcelibrary.org/cropped/6984e84e6f1450a3574a387f/69850ce63477944d1620d890.jpg"
+    },
+    {
+     "book_id": "6a22c194a71b5f5ffb2e4f82",
+     "page_number": 141,
+     "pages_count": 186,
+     "title": "Nuovo Receptario (Ricettario Fiorentino)",
+     "url": "https://images.sourcelibrary.org/archived/6a22c194a71b5f5ffb2e4f82/141.jpg"
+    },
+    {
+     "book_id": "6a0852b949638a50931bb52d",
+     "page_number": 236,
+     "pages_count": 340,
+     "title": "Dialoghi di m. Speron Speroni.",
+     "url": "https://images.sourcelibrary.org/archived/6a0852b949638a50931bb52d/236.jpg"
+    },
+    {
+     "book_id": "69de0e32006cdd4b9e56cbac",
+     "page_number": 46,
+     "pages_count": 220,
+     "title": "I Ragionamenti (Vol. 2)",
+     "url": "https://images.sourcelibrary.org/archived/69de0e32006cdd4b9e56cbac/46.jpg"
+    },
+    {
+     "book_id": "69b525d69658af9164709ee1",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "[Bologna] /, Augustino Carazzi.",
+     "url": "https://images.sourcelibrary.org/archived/69b525d69658af9164709ee1/1.jpg"
+    }
+   ]
+  },
+  "Japanese": {
+   "raw_labels": [
+    "Japanese"
+   ],
+   "books": 401,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69e787b64a6785cfd60ccf39",
+     "page_number": 10,
+     "pages_count": 52,
+     "title": "農業全書 (Nōgyō Zensho), Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/69e787b64a6785cfd60ccf39/10.jpg"
+    },
+    {
+     "book_id": "69e75adcb3d509fcb7a4917f",
+     "page_number": 162,
+     "pages_count": 274,
+     "title": "近松心中物 (Chikamatsu Shinjū Mono)",
+     "url": "https://archive.org/download/chikamatsushinju0000chik/page/n161/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a1ed99e09c2a0509efa50ca",
+     "page_number": 49,
+     "pages_count": 110,
+     "title": "Kōtei naikyō somon chūshō hatsubi, Volume 6",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed99e09c2a0509efa50ca/49.jpg"
+    },
+    {
+     "book_id": "69f328c3aeeee0fa38c65039",
+     "page_number": 20,
+     "pages_count": 79,
+     "title": "Ise monogatari",
+     "url": "https://images.sourcelibrary.org/archived/69f328c3aeeee0fa38c65039/20.jpg"
+    },
+    {
+     "book_id": "6a1ed94209c2a0509ef9e95a",
+     "page_number": 7,
+     "pages_count": 78,
+     "title": "Aiiku chadan",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed94209c2a0509ef9e95a/7.jpg"
+    },
+    {
+     "book_id": "6a1ed9f009c2a0509efaacca",
+     "page_number": 87,
+     "pages_count": 114,
+     "title": "Shinsō zenpen, Volume 1",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed9f009c2a0509efaacca/87.jpg"
+    },
+    {
+     "book_id": "69bd0507e26ef4b094821ccb",
+     "page_number": 9,
+     "pages_count": 24,
+     "title": "古語拾遺 (Kogo Shūi — Gleanings from Ancient Words)",
+     "url": "https://images.sourcelibrary.org/archived/69bd0507e26ef4b094821ccb/9.jpg"
+    },
+    {
+     "book_id": "69e75cd93f15c712bdb8f0f7",
+     "page_number": 26,
+     "pages_count": 52,
+     "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 4a",
+     "url": "https://images.sourcelibrary.org/archived/69e75cd93f15c712bdb8f0f7/26.jpg"
+    },
+    {
+     "book_id": "6a09fcb3edaf0f8bef57b793",
+     "page_number": 192,
+     "pages_count": 498,
+     "title": "Gunsho Ruiju (群書類従) — Classified Collection (incl. Igoshiki 囲碁式 by Genson, 1199)",
+     "url": "https://images.sourcelibrary.org/archived/6a09fcb3edaf0f8bef57b793/192.jpg"
+    },
+    {
+     "book_id": "6a088b0cbd8fc3beee8aab1c",
+     "page_number": 429,
+     "pages_count": 546,
+     "title": "The Nightless City, or, the History of the Yoshiwara Yūkwaku",
+     "url": "https://images.sourcelibrary.org/archived/6a088b0cbd8fc3beee8aab1c/429.jpg"
+    },
+    {
+     "book_id": "69e75d01cc48e59ad74eb392",
+     "page_number": 12,
+     "pages_count": 54,
+     "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 14",
+     "url": "https://images.sourcelibrary.org/archived/69e75d01cc48e59ad74eb392/12.jpg"
+    },
+    {
+     "book_id": "69dfede58d34461cbe7f4dde",
+     "page_number": 5,
+     "pages_count": 21,
+     "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 3",
+     "url": "https://images.sourcelibrary.org/archived/69dfede58d34461cbe7f4dde/5.jpg"
+    },
+    {
+     "book_id": "6a08a3b78fae3d3f19b79057",
+     "page_number": 13,
+     "pages_count": 20,
+     "title": "好色一代男 巻二 (Kōshoku Ichidai Otoko, Vol. 2, 1684 Moronobu ed.)",
+     "url": "https://images.sourcelibrary.org/archived/6a08a3b78fae3d3f19b79057/13.jpg"
+    },
+    {
+     "book_id": "69e75d23cc48e59ad74eb592",
+     "page_number": 6,
+     "pages_count": 54,
+     "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 19",
+     "url": "https://images.sourcelibrary.org/archived/69e75d23cc48e59ad74eb592/6.jpg"
+    },
+    {
+     "book_id": "6a1ed9a809c2a0509efa5c70",
+     "page_number": 68,
+     "pages_count": 90,
+     "title": "Myakushinhō : fu shishin taii zen",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed9a809c2a0509efa5c70/68.jpg"
+    },
+    {
+     "book_id": "69e8069cfdad300064d9fc55",
+     "page_number": 27,
+     "pages_count": 50,
+     "title": "解体新書 (Kaitai Shinsho), Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/69e8069cfdad300064d9fc55/27.jpg"
+    },
+    {
+     "book_id": "6a1ed97109c2a0509efa1bc8",
+     "page_number": 107,
+     "pages_count": 144,
+     "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 4",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed97109c2a0509efa1bc8/107.jpg"
+    },
+    {
+     "book_id": "69e75cf6cc48e59ad74eb2eb",
+     "page_number": 12,
+     "pages_count": 104,
+     "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 12a",
+     "url": "https://images.sourcelibrary.org/pages/69e75cf6cc48e59ad74eb2eb/sp69f6480d8a39cf3ee8573b54.jpg"
+    },
+    {
+     "book_id": "69e75cfacc48e59ad74eb323",
+     "page_number": 17,
+     "pages_count": 55,
+     "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13",
+     "url": "https://images.sourcelibrary.org/archived/69e75cfacc48e59ad74eb323/17.jpg"
+    },
+    {
+     "book_id": "6a1ed9d809c2a0509efa9392",
+     "page_number": 35,
+     "pages_count": 68,
+     "title": "Sanron yoku, Volume 1",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed9d809c2a0509efa9392/35.jpg"
+    }
+   ]
+  },
+  "Javanese": {
+   "raw_labels": [
+    "Javanese"
+   ],
+   "books": 313,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a1d84b14c9c6027f5e269c8",
+     "page_number": 9,
+     "pages_count": 90,
+     "title": "WM ID 008 0033 - Aji Piwelas",
+     "url": "https://images.sourcelibrary.org/pages/6a1d84b14c9c6027f5e269c8/0009-full.jpg"
+    },
+    {
+     "book_id": "6a1d82974c9c6027f5e25b8a",
+     "page_number": 61,
+     "pages_count": 73,
+     "title": "WM ID 009 0002 - Asramawasa",
+     "url": "https://images.sourcelibrary.org/pages/6a1d82974c9c6027f5e25b8a/0061-full.jpg"
+    },
+    {
+     "book_id": "6a1d714233ae1ac2657db551",
+     "page_number": 18,
+     "pages_count": 36,
+     "title": "WM ID 010 0026 - (Tafsir)",
+     "url": "https://images.sourcelibrary.org/pages/6a1d714233ae1ac2657db551/0018-full.jpg"
+    },
+    {
+     "book_id": "6a1d861f4c9c6027f5e273d1",
+     "page_number": 38,
+     "pages_count": 104,
+     "title": "WM ID 010 0010 (Kitab Tafsir)",
+     "url": "https://images.sourcelibrary.org/pages/6a1d861f4c9c6027f5e273d1/0038-full.jpg"
+    },
+    {
+     "book_id": "6a1d6b2333ae1ac2657daa40",
+     "page_number": 6,
+     "pages_count": 14,
+     "title": "WM ID 008 0011 - Kunti Sraya",
+     "url": "https://images.sourcelibrary.org/pages/6a1d6b2333ae1ac2657daa40/0006-full.jpg"
+    },
+    {
+     "book_id": "6a1d85044c9c6027f5e26bf9",
+     "page_number": 29,
+     "pages_count": 96,
+     "title": "MSS Jav 9 Carita satus and Serat Bratayuda, fragments, 1811",
+     "url": "https://images.sourcelibrary.org/pages/6a1d85044c9c6027f5e26bf9/0029-full.jpg"
+    },
+    {
+     "book_id": "6a1966e1bc198340eea93180",
+     "page_number": 2,
+     "pages_count": 7,
+     "title": "WM ID 001 0021 - Pangayam-ayaman - ᬧᬗᬬᬫ᭄ᬳᬬᬫ᭄᭟",
+     "url": "https://images.sourcelibrary.org/pages/6a1966e1bc198340eea93180/0002-full.jpg"
+    },
+    {
+     "book_id": "6a1d82e14c9c6027f5e25de0",
+     "page_number": 57,
+     "pages_count": 76,
+     "title": "WM ID 010 0063 - (Ilmu Qira’at)",
+     "url": "https://images.sourcelibrary.org/pages/6a1d82e14c9c6027f5e25de0/0057-full.jpg"
+    },
+    {
+     "book_id": "6a1d6f1e33ae1ac2657db00c",
+     "page_number": 21,
+     "pages_count": 28,
+     "title": "WM ID 008 0001 - Kuranta Bolong",
+     "url": "https://images.sourcelibrary.org/pages/6a1d6f1e33ae1ac2657db00c/0021-full.jpg"
+    },
+    {
+     "book_id": "6a1d82d24c9c6027f5e25d47",
+     "page_number": 14,
+     "pages_count": 76,
+     "title": "Add. 12337 Teachings of Sultan Hamengku Buwana I",
+     "url": "https://images.sourcelibrary.org/pages/6a1d82d24c9c6027f5e25d47/0014-full.jpg"
+    },
+    {
+     "book_id": "6a1d810c4c9c6027f5e251bf",
+     "page_number": 38,
+     "pages_count": 58,
+     "title": "WM ID 005 00004 - Tatakramaning Wwang",
+     "url": "https://images.sourcelibrary.org/pages/6a1d810c4c9c6027f5e251bf/0038-full.jpg"
+    },
+    {
+     "book_id": "6a1d97f04c9c6027f5e2f95a",
+     "page_number": 154,
+     "pages_count": 428,
+     "title": "WM ID 010 0003 - Tafsir Jalalain - تفسير جلالين",
+     "url": "https://images.sourcelibrary.org/pages/6a1d97f04c9c6027f5e2f95a/0154-full.jpg"
+    },
+    {
+     "book_id": "6a1d706633ae1ac2657db2e8",
+     "page_number": 5,
+     "pages_count": 31,
+     "title": "WM ID 010 0045 - Usul al-fiqh - أصول الفقه",
+     "url": "https://images.sourcelibrary.org/pages/6a1d706633ae1ac2657db2e8/0005-full.jpg"
+    },
+    {
+     "book_id": "6a1da5404c9c6027f5e373ed",
+     "page_number": 313,
+     "pages_count": 667,
+     "title": "MSS Jav 20 Wayang texts",
+     "url": "https://images.sourcelibrary.org/pages/6a1da5404c9c6027f5e373ed/0313-full.jpg"
+    },
+    {
+     "book_id": "6a1d81984c9c6027f5e2549f",
+     "page_number": 50,
+     "pages_count": 63,
+     "title": "WM ID 010 0015 - Ulumul Qur’an",
+     "url": "https://images.sourcelibrary.org/pages/6a1d81984c9c6027f5e2549f/0050-full.jpg"
+    },
+    {
+     "book_id": "6a1d6f8e33ae1ac2657db0f8",
+     "page_number": 7,
+     "pages_count": 30,
+     "title": "WM ID 008 0015 - Tutur Kuranta Bolong",
+     "url": "https://images.sourcelibrary.org/pages/6a1d6f8e33ae1ac2657db0f8/0007-full.jpg"
+    },
+    {
+     "book_id": "6a1d87874c9c6027f5e27de8",
+     "page_number": 14,
+     "pages_count": 132,
+     "title": "MSS Jav 60 Fragments of Panji texts",
+     "url": "https://images.sourcelibrary.org/pages/6a1d87874c9c6027f5e27de8/0014-full.jpg"
+    },
+    {
+     "book_id": "6a1daab34c9c6027f5e3ac1c",
+     "page_number": 494,
+     "pages_count": 1439,
+     "title": "Add. 12320 Babad Kraton",
+     "url": "https://images.sourcelibrary.org/pages/6a1daab34c9c6027f5e3ac1c/0494-full.jpg"
+    },
+    {
+     "book_id": "6a1d8e284c9c6027f5e2b115",
+     "page_number": 107,
+     "pages_count": 284,
+     "title": "WM ID 009 0032 - Wariga - ᬯᬭᬶᬕ᭟",
+     "url": "https://images.sourcelibrary.org/pages/6a1d8e284c9c6027f5e2b115/0107-full.jpg"
+    },
+    {
+     "book_id": "6a1d6e6933ae1ac2657daefd",
+     "page_number": 3,
+     "pages_count": 26,
+     "title": "WM ID 009 0008 - Wariga Dewa",
+     "url": "https://images.sourcelibrary.org/pages/6a1d6e6933ae1ac2657daefd/0003-full.jpg"
+    }
+   ]
+  },
+  "Korean": {
+   "raw_labels": [
+    "Korean"
+   ],
+   "books": 314,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69f3254f52a77bb28fdb4662",
+     "page_number": 66,
+     "pages_count": 142,
+     "title": "Tongpʻyŏng Kong samun kyŏnnok",
+     "url": "https://images.sourcelibrary.org/archived/69f3254f52a77bb28fdb4662/66.jpg"
+    },
+    {
+     "book_id": "69f32976aeeee0fa38c65936",
+     "page_number": 36,
+     "pages_count": 98,
+     "title": "Haedong sihwa",
+     "url": "https://images.sourcelibrary.org/archived/69f32976aeeee0fa38c65936/36.jpg"
+    },
+    {
+     "book_id": "69f33bc1876dd827cbc593cd",
+     "page_number": 44,
+     "pages_count": 168,
+     "title": "Sinpʻyŏn Sanhak kyemong",
+     "url": "https://images.sourcelibrary.org/archived/69f33bc1876dd827cbc593cd/44.jpg"
+    },
+    {
+     "book_id": "69f33dbb876dd827cbc5c68b",
+     "page_number": 22,
+     "pages_count": 32,
+     "title": "Pugyu rok",
+     "url": "https://images.sourcelibrary.org/archived/69f33dbb876dd827cbc5c68b/22.jpg"
+    },
+    {
+     "book_id": "69e009db38e6b96e05869ce7",
+     "page_number": 204,
+     "pages_count": 242,
+     "title": "Yenyom Mita Toryang Champop (念阿彌陀道場懺法, Pure Land Ritual)",
+     "url": "https://images.sourcelibrary.org/archived/69e009db38e6b96e05869ce7/204.jpg"
+    },
+    {
+     "book_id": "69f33d44876dd827cbc5bc2a",
+     "page_number": 203,
+     "pages_count": 486,
+     "title": "Pʻalgŏ To Ssi chokpo",
+     "url": "https://images.sourcelibrary.org/archived/69f33d44876dd827cbc5bc2a/203.jpg"
+    },
+    {
+     "book_id": "69f327a352a77bb28fdb760f",
+     "page_number": 67,
+     "pages_count": 487,
+     "title": "Sŏkchʻo manyŏng",
+     "url": "https://images.sourcelibrary.org/archived/69f327a352a77bb28fdb760f/67.jpg"
+    },
+    {
+     "book_id": "69f3260752a77bb28fdb6304",
+     "page_number": 299,
+     "pages_count": 424,
+     "title": "Hŏnjong kisa",
+     "url": "https://images.sourcelibrary.org/archived/69f3260752a77bb28fdb6304/299.jpg"
+    },
+    {
+     "book_id": "69f33f5f876dd827cbc61942",
+     "page_number": 82,
+     "pages_count": 112,
+     "title": "Tŏksindang sŏmok",
+     "url": "https://images.sourcelibrary.org/archived/69f33f5f876dd827cbc61942/82.jpg"
+    },
+    {
+     "book_id": "69f33da7876dd827cbc5c4f3",
+     "page_number": 28,
+     "pages_count": 102,
+     "title": "Tonghyŏn sŏngho po",
+     "url": "https://images.sourcelibrary.org/archived/69f33da7876dd827cbc5c4f3/28.jpg"
+    },
+    {
+     "book_id": "69f3291caeeee0fa38c653ac",
+     "page_number": 13,
+     "pages_count": 28,
+     "title": "Kogsŏng-hyŏn puse ijŏng chŏlmok",
+     "url": "https://images.sourcelibrary.org/archived/69f3291caeeee0fa38c653ac/13.jpg"
+    },
+    {
+     "book_id": "6a1ed9fc09c2a0509efab984",
+     "page_number": 39,
+     "pages_count": 118,
+     "title": "Tongŭi pogam, Volume 13",
+     "url": "https://images.sourcelibrary.org/archived/6a1ed9fc09c2a0509efab984/39.jpg"
+    },
+    {
+     "book_id": "69f33cbe876dd827cbc5adc8",
+     "page_number": 2,
+     "pages_count": 9,
+     "title": "Kŭmo kyechʻŏp",
+     "url": "https://images.sourcelibrary.org/archived/69f33cbe876dd827cbc5adc8/2.jpg"
+    },
+    {
+     "book_id": "6a1eda0109c2a0509efac073",
+     "page_number": 93,
+     "pages_count": 126,
+     "title": "Tongŭi pogam, Volume 2",
+     "url": "https://images.sourcelibrary.org/archived/6a1eda0109c2a0509efac073/93.jpg"
+    },
+    {
+     "book_id": "69f33f52876dd827cbc6188e",
+     "page_number": 21,
+     "pages_count": 50,
+     "title": "Kukcho hodang an",
+     "url": "https://images.sourcelibrary.org/archived/69f33f52876dd827cbc6188e/21.jpg"
+    },
+    {
+     "book_id": "69f3300c876dd827cbc4630a",
+     "page_number": 3,
+     "pages_count": 12,
+     "title": "Kamji kŭmni taebang kwangbul hwaŏmgyŏng Segan chŏnganpʻum",
+     "url": "https://images.sourcelibrary.org/archived/69f3300c876dd827cbc4630a/3.jpg"
+    },
+    {
+     "book_id": "6aa35cc7b8b2420aa5934abb",
+     "page_number": 20,
+     "pages_count": 38,
+     "title": "Tongmong Sonsup",
+     "url": "https://images.sourcelibrary.org/archived/6aa35cc7b8b2420aa5934abb/20.jpg"
+    },
+    {
+     "book_id": "69f33d83876dd827cbc5bfaf",
+     "page_number": 101,
+     "pages_count": 183,
+     "title": "Hagam surok",
+     "url": "https://images.sourcelibrary.org/archived/69f33d83876dd827cbc5bfaf/101.jpg"
+    },
+    {
+     "book_id": "69f3268852a77bb28fdb68da",
+     "page_number": 85,
+     "pages_count": 170,
+     "title": "Tongguk yŏktae chʻongmok, pu chiji",
+     "url": "https://images.sourcelibrary.org/archived/69f3268852a77bb28fdb68da/85.jpg"
+    },
+    {
+     "book_id": "69f33df8876dd827cbc5d7d8",
+     "page_number": 83,
+     "pages_count": 141,
+     "title": "Yŏngmun",
+     "url": "https://images.sourcelibrary.org/archived/69f33df8876dd827cbc5d7d8/83.jpg"
+    }
+   ]
+  },
+  "Latin": {
+   "raw_labels": [
+    "Latin",
+    "lat"
+   ],
+   "books": 45386,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69b63e431c1c21a3738632f5",
+     "page_number": 26,
+     "pages_count": 82,
+     "title": "Philiberti a Chalon illustris Aurengiorum principis rerum gestarum Commentariolu",
+     "url": "https://images.sourcelibrary.org/archived/69b63e431c1c21a3738632f5/26.jpg"
+    },
+    {
+     "book_id": "69b6ae04dc00a90e322ae5e9",
+     "page_number": 6,
+     "pages_count": 20,
+     "title": "Disputatio philosophica de vera logica, prima",
+     "url": "https://images.sourcelibrary.org/archived/69b6ae04dc00a90e322ae5e9/6.jpg"
+    },
+    {
+     "book_id": "69b68cd62368e1fad32240af",
+     "page_number": 22,
+     "pages_count": 168,
+     "title": "Iacobi Bidermani e Societate Iesu Herodiados libri tres : sive DD. innocentes Ch",
+     "url": "https://images.sourcelibrary.org/archived/69b68cd62368e1fad32240af/22.jpg"
+    },
+    {
+     "book_id": "69b6448318b87551bfc3982f",
+     "page_number": 232,
+     "pages_count": 707,
+     "title": "Dn. Ioachimi Mynsingeri a Frundeck, iureconsulti clarissimi Apotelesma, sive cor",
+     "url": "https://images.sourcelibrary.org/archived/69b6448318b87551bfc3982f/232.jpg"
+    },
+    {
+     "book_id": "69b648db18b87551bfc58e77",
+     "page_number": 252,
+     "pages_count": 560,
+     "title": "Josephus de Antiquitatibus ac de bello Judaico",
+     "url": "https://images.sourcelibrary.org/archived/69b648db18b87551bfc58e77/252.jpg"
+    },
+    {
+     "book_id": "6a90d859723952418ddd24e1",
+     "page_number": 165,
+     "pages_count": 217,
+     "title": "Sex quae extant: fabule. In metra legitima restitute.",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00014783_00165/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a4dcc601a5812b1c394b58d",
+     "page_number": 10,
+     "pages_count": 28,
+     "title": "Tabula contradictionum Lutheri xxxvi. super uno articulo. de communione Eucarist",
+     "url": "https://images.sourcelibrary.org/pages/6a4dcc601a5812b1c394b58d/0010.jpg"
+    },
+    {
+     "book_id": "6a4a5cbf9050f0b43431fb01",
+     "page_number": 136,
+     "pages_count": 556,
+     "title": "Arcana gallica : or The secret history of France for the last Century",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10416401_00136/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69b654c418b87551bfccddd9",
+     "page_number": 36,
+     "pages_count": 126,
+     "title": "Literae illustriss. principis, Ludovici Borbonii, principis Condaei, etc. ad Car",
+     "url": "https://images.sourcelibrary.org/archived/69b654c418b87551bfccddd9/36.jpg"
+    },
+    {
+     "book_id": "69b6b32796dc15d4a16d7b16",
+     "page_number": 4,
+     "pages_count": 36,
+     "title": "Ludicrorum epigrammatum manipulus",
+     "url": "https://images.sourcelibrary.org/archived/69b6b32796dc15d4a16d7b16/4.jpg"
+    },
+    {
+     "book_id": "6a940bb7d93a49483d44ff20",
+     "page_number": 377,
+     "pages_count": 480,
+     "title": "Historiarum sui temporis libri tredecim quibus res toto orbe gestae ab anno 1560",
+     "url": "https://images.sourcelibrary.org/pages/6a940bb7d93a49483d44ff20/0377.jpg"
+    },
+    {
+     "book_id": "6a4371250dc50ef3af261600",
+     "page_number": 13,
+     "pages_count": 46,
+     "title": "De Romanis magistratibus, sacerdotiis, juris, peritis, et legibus, ad Marcum Pan",
+     "url": "https://images.sourcelibrary.org/archived/6a4371250dc50ef3af261600/13.jpg"
+    },
+    {
+     "book_id": "69b63dfb1c1c21a373860eea",
+     "page_number": 42,
+     "pages_count": 174,
+     "title": "De conscribendis epistolis",
+     "url": "https://images.sourcelibrary.org/archived/69b63dfb1c1c21a373860eea/42.jpg"
+    },
+    {
+     "book_id": "6a94381b45a4780cb83da6f5",
+     "page_number": 208,
+     "pages_count": 450,
+     "title": "Una Fides, Unius Ecclesiae Romanae Contra Indifferentes Huius Saeculi, Tribus li",
+     "url": "https://images.sourcelibrary.org/archived/6a94381b45a4780cb83da6f5/208.jpg"
+    },
+    {
+     "book_id": "69dbca4c1040d1d5e20aad15",
+     "page_number": 35,
+     "pages_count": 111,
+     "title": "De imagine mundi",
+     "url": "https://images.sourcelibrary.org/archived/69dbca4c1040d1d5e20aad15-0035.jpg"
+    },
+    {
+     "book_id": "6a4ed2dd43c6bb883cc7ff75",
+     "page_number": 67,
+     "pages_count": 169,
+     "title": "Elogia virorum bellica laude illustrium carminé descripta: quibus praefixus hymn",
+     "url": "https://gallica.bnf.fr/iiif/ark:/12148/bpt6k857559f/f67/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69b6afc496dc15d4a16c7f8f",
+     "page_number": 2,
+     "pages_count": 10,
+     "title": "... Theses inaugurales iuridicae",
+     "url": "https://images.sourcelibrary.org/archived/69b6afc496dc15d4a16c7f8f/2.jpg"
+    },
+    {
+     "book_id": "6a4ac916eecacd70e47167c4",
+     "page_number": 21,
+     "pages_count": 40,
+     "title": "Theses medicae de somno et vigilia. Quas ab israele spachio D. Propositas M. Joh",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00029954_00021/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a90b91cfea824c806828bf0",
+     "page_number": 227,
+     "pages_count": 392,
+     "title": "In evangelium Lucae annotationes",
+     "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11004521_00227/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "69b68e41080b19f98fcd3101",
+     "page_number": 8,
+     "pages_count": 12,
+     "title": "... De procidentia uteri disputationem",
+     "url": "https://images.sourcelibrary.org/archived/69b68e41080b19f98fcd3101/8.jpg"
+    }
+   ]
+  },
+  "Malay": {
+   "raw_labels": [
+    "Malay"
+   ],
+   "books": 29,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a20327d18654bf8e1902e82",
+     "page_number": 5,
+     "pages_count": 29,
+     "title": "Kitab Obat-obatan Or. 3215",
+     "url": "https://images.sourcelibrary.org/archived/6a20327d18654bf8e1902e82/5.jpg"
+    },
+    {
+     "book_id": "6a20333218654bf8e1904897",
+     "page_number": 67,
+     "pages_count": 136,
+     "title": "Hikayat Kuda Semirang Or. 3384, Or. 3365 - part 2 (Or. 3365)",
+     "url": "https://images.sourcelibrary.org/archived/6a20333218654bf8e1904897/67.jpg"
+    },
+    {
+     "book_id": "6a20327718654bf8e1902de7",
+     "page_number": 34,
+     "pages_count": 55,
+     "title": "Hikayat Bayan Budiman Or. 3208",
+     "url": "https://iiif.universiteitleiden.nl/iiif/2/hdl:1887.1%252Fitem:3499332/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a20332618654bf8e19045e1",
+     "page_number": 26,
+     "pages_count": 35,
+     "title": "The first part only of a Panji story Or. 3252",
+     "url": "https://images.sourcelibrary.org/archived/6a20332618654bf8e19045e1/26.jpg"
+    },
+    {
+     "book_id": "69e792d980b52390feb16d3b",
+     "page_number": 163,
+     "pages_count": 288,
+     "title": "Hikayat Hang Tuah, Vol. I",
+     "url": "https://images.sourcelibrary.org/archived/69e792d980b52390feb16d3b/163.jpg"
+    },
+    {
+     "book_id": "6a20326a18654bf8e1902c86",
+     "page_number": 80,
+     "pages_count": 99,
+     "title": "[Collective volume with texts in Malay, Minangkabau and Arabic] - Or. 1915",
+     "url": "https://images.sourcelibrary.org/archived/6a20326a18654bf8e1902c86/80.jpg"
+    },
+    {
+     "book_id": "6a20332818654bf8e1904605",
+     "page_number": 50,
+     "pages_count": 110,
+     "title": "Hikayat Cekel Waningpati Or. 3378",
+     "url": "https://images.sourcelibrary.org/archived/6a20332818654bf8e1904605/50.jpg"
+    },
+    {
+     "book_id": "6a20332a18654bf8e1904674",
+     "page_number": 126,
+     "pages_count": 208,
+     "title": "A Panji story Or. 3238",
+     "url": "https://images.sourcelibrary.org/archived/6a20332a18654bf8e1904674/126.jpg"
+    },
+    {
+     "book_id": "6a20328418654bf8e1902f74",
+     "page_number": 10,
+     "pages_count": 55,
+     "title": "[Collective volume with texts in Malay, and some Arabic and Persian : Quotations",
+     "url": "https://images.sourcelibrary.org/archived/6a20328418654bf8e1902f74/10.jpg"
+    },
+    {
+     "book_id": "6a20326418654bf8e1902bec",
+     "page_number": 24,
+     "pages_count": 44,
+     "title": "[Collective volume with mostly Sufi texts in Malay, Arabic (and some Sundanese, ",
+     "url": "https://images.sourcelibrary.org/archived/6a20326418654bf8e1902bec/24.jpg"
+    },
+    {
+     "book_id": "6a20332018654bf8e1904357",
+     "page_number": 43,
+     "pages_count": 59,
+     "title": "Hikayat Jawa Ratu Emas Bunga Rampai : A Panji story Or. 2276 h",
+     "url": "https://images.sourcelibrary.org/archived/6a20332018654bf8e1904357/43.jpg"
+    },
+    {
+     "book_id": "6a20326818654bf8e1902c67",
+     "page_number": 8,
+     "pages_count": 30,
+     "title": "Hikayat Sultan Mughul mengajarkan anaknya Or. 1728",
+     "url": "https://images.sourcelibrary.org/archived/6a20326818654bf8e1902c67/8.jpg"
+    },
+    {
+     "book_id": "6a20326018654bf8e1902bab",
+     "page_number": 18,
+     "pages_count": 25,
+     "title": "Silsilah Syatariyah - Or. 7327",
+     "url": "https://images.sourcelibrary.org/archived/6a20326018654bf8e1902bab/18.jpg"
+    },
+    {
+     "book_id": "6a20328318654bf8e1902f3c",
+     "page_number": 25,
+     "pages_count": 55,
+     "title": "Hikayat Tanah Hitu : The History of Hitu between 1450-1643 - Or. 5448",
+     "url": "https://images.sourcelibrary.org/archived/6a20328318654bf8e1902f3c/25.jpg"
+    },
+    {
+     "book_id": "6a20326e18654bf8e1902cee",
+     "page_number": 13,
+     "pages_count": 30,
+     "title": "[Collective volume with texts in Malay (I-IV) : Fa’al. Divinatory text about har",
+     "url": "https://images.sourcelibrary.org/archived/6a20326e18654bf8e1902cee/13.jpg"
+    },
+    {
+     "book_id": "6a20333118654bf8e1904805",
+     "page_number": 91,
+     "pages_count": 145,
+     "title": "Syair Ken Tambuhan Or. 3375",
+     "url": "https://images.sourcelibrary.org/archived/6a20333118654bf8e1904805/91.jpg"
+    },
+    {
+     "book_id": "699259403d2d40d1b058bb2d",
+     "page_number": 322,
+     "pages_count": 380,
+     "title": "Malay Annals (Sejarah Melayu)",
+     "url": "https://images.sourcelibrary.org/archived/699259403d2d40d1b058bb2d/322.jpg"
+    },
+    {
+     "book_id": "6a20327118654bf8e1902d6e",
+     "page_number": 3,
+     "pages_count": 25,
+     "title": "[Collective volume with texts in Malay and Acehnese (I-VII) : A fragment on omin",
+     "url": "https://images.sourcelibrary.org/archived/6a20327118654bf8e1902d6e/3.jpg"
+    },
+    {
+     "book_id": "6a20332e18654bf8e190476c",
+     "page_number": 16,
+     "pages_count": 27,
+     "title": "Hikayat Kuda Semirang Or. 3384, Or. 3365 - part 1 (Or. 3384)",
+     "url": "https://images.sourcelibrary.org/archived/6a20332e18654bf8e190476c/16.jpg"
+    },
+    {
+     "book_id": "6a20333418654bf8e1904920",
+     "page_number": 31,
+     "pages_count": 37,
+     "title": "Or. 7326 ",
+     "url": "https://images.sourcelibrary.org/archived/6a20333418654bf8e1904920/31.jpg"
+    }
+   ]
+  },
+  "Middle English": {
+   "raw_labels": [
+    "Middle English"
+   ],
+   "books": 29,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69f33501876dd827cbc4df05",
+     "page_number": 303,
+     "pages_count": 432,
+     "title": "Compleynt of Cryst, Guy of Warwick ; etc.",
+     "url": "https://images.sourcelibrary.org/archived/69f33501876dd827cbc4df05/303.jpg"
+    },
+    {
+     "book_id": "69b3e686abb796bfd9de42ab",
+     "page_number": 1,
+     "pages_count": 4,
+     "title": "Texts on magic and fortune telling",
+     "url": "https://images.sourcelibrary.org/archived/69b3e686abb796bfd9de42ab/1.jpg"
+    },
+    {
+     "book_id": "69f332b8876dd827cbc4a31a",
+     "page_number": 380,
+     "pages_count": 482,
+     "title": "New Testament, in the English translation of John Wycliffe, revised by John Purv",
+     "url": "https://images.sourcelibrary.org/archived/69f332b8876dd827cbc4a31a/380.jpg"
+    },
+    {
+     "book_id": "6a08e38250bd891addfb6e5c",
+     "page_number": 203,
+     "pages_count": 420,
+     "title": "Confessio Amantis — John Gower; ed. Reinhold Pauli, Vol. III (Bell & Daldy, Lond",
+     "url": "https://images.sourcelibrary.org/archived/6a08e38250bd891addfb6e5c/203.jpg"
+    },
+    {
+     "book_id": "6a08e37850bd891addfb6cbd",
+     "page_number": 50,
+     "pages_count": 412,
+     "title": "Confessio Amantis — John Gower; ed. Reinhold Pauli, Vol. II (Bell & Daldy, Londo",
+     "url": "https://images.sourcelibrary.org/archived/6a08e37850bd891addfb6cbd/50.jpg"
+    },
+    {
+     "book_id": "69e750c060c089f2df48ecc5",
+     "page_number": 52,
+     "pages_count": 480,
+     "title": "Canterbury Tales (Ellesmere MS)",
+     "url": "https://images.sourcelibrary.org/archived/69e750c060c089f2df48ecc5/52.jpg"
+    },
+    {
+     "book_id": "69f333e4876dd827cbc4c134",
+     "page_number": 101,
+     "pages_count": 224,
+     "title": "Here bygynneth a boke in englysche tonge that Þat ys called Brute of ynglonde",
+     "url": "https://images.sourcelibrary.org/archived/69f333e4876dd827cbc4c134/101.jpg"
+    },
+    {
+     "book_id": "69f33138876dd827cbc48856",
+     "page_number": 114,
+     "pages_count": 218,
+     "title": "Treatise on arboriculture",
+     "url": "https://images.sourcelibrary.org/archived/69f33138876dd827cbc48856/114.jpg"
+    },
+    {
+     "book_id": "69de1c6ed10d4b0d3f6f2515",
+     "page_number": 243,
+     "pages_count": 562,
+     "title": "Poetical Works of Geoffrey Chaucer, Vol. 1 (Skeat)",
+     "url": "https://images.sourcelibrary.org/archived/69de1c6ed10d4b0d3f6f2515/243.jpg"
+    },
+    {
+     "book_id": "69f3313f876dd827cbc48932",
+     "page_number": 91,
+     "pages_count": 188,
+     "title": "Ye camandemetes, ye vii dedli synes ; ye werkes of mercy",
+     "url": "https://images.sourcelibrary.org/archived/69f3313f876dd827cbc48932/91.jpg"
+    },
+    {
+     "book_id": "69f331d5876dd827cbc495f0",
+     "page_number": 328,
+     "pages_count": 416,
+     "title": "Here bigyniÞ Þi p[ro]log on Þi sauter",
+     "url": "https://images.sourcelibrary.org/archived/69f331d5876dd827cbc495f0/328.jpg"
+    },
+    {
+     "book_id": "6a08e36f50bd891addfb6b10",
+     "page_number": 46,
+     "pages_count": 426,
+     "title": "Confessio Amantis — John Gower; ed. Reinhold Pauli, Vol. I (Bell & Daldy, London",
+     "url": "https://images.sourcelibrary.org/archived/6a08e36f50bd891addfb6b10/46.jpg"
+    },
+    {
+     "book_id": "69e7533669e8edc5cf05a184",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "The Towneley Plays",
+     "url": "https://images.sourcelibrary.org/archived/69e7533669e8edc5cf05a184/1.jpg"
+    },
+    {
+     "book_id": "69f3317d876dd827cbc48f18",
+     "page_number": 2,
+     "pages_count": 4,
+     "title": "The northern passion",
+     "url": "https://images.sourcelibrary.org/archived/69f3317d876dd827cbc48f18/2.jpg"
+    },
+    {
+     "book_id": "6a08e36850bd891addfb69a9",
+     "page_number": 272,
+     "pages_count": 356,
+     "title": "The Vision and Creed of Piers Ploughman — William Langland; ed. Thomas Wright, 2",
+     "url": "https://images.sourcelibrary.org/archived/6a08e36850bd891addfb69a9/272.jpg"
+    },
+    {
+     "book_id": "69f33149876dd827cbc489f0",
+     "page_number": 194,
+     "pages_count": 280,
+     "title": "Here bigyneþ a tretis þat suffisiþ to evry c[hri]sten man and woman to lyve afti",
+     "url": "https://images.sourcelibrary.org/archived/69f33149876dd827cbc489f0/194.jpg"
+    },
+    {
+     "book_id": "69e7533c69e8edc5cf05a589",
+     "page_number": 96,
+     "pages_count": 340,
+     "title": "The Chester Plays, Vol. 1",
+     "url": "https://images.sourcelibrary.org/archived/69e7533c69e8edc5cf05a589/96.jpg"
+    },
+    {
+     "book_id": "69f32e87876dd827cbc44259",
+     "page_number": 40,
+     "pages_count": 158,
+     "title": "Prick of conscience",
+     "url": "https://images.sourcelibrary.org/archived/69f32e87876dd827cbc44259/40.jpg"
+    },
+    {
+     "book_id": "69f333c2876dd827cbc4bd26",
+     "page_number": 46,
+     "pages_count": 145,
+     "title": "Ãžhe lyf and martirdom of seynt kateryne virgyne and martir",
+     "url": "https://images.sourcelibrary.org/archived/69f333c2876dd827cbc4bd26/46.jpg"
+    },
+    {
+     "book_id": "69b3e672304c1c6b3950b1f6",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "Symbolical representation of alchemical processes",
+     "url": "https://images.sourcelibrary.org/archived/69b3e672304c1c6b3950b1f6/1.jpg"
+    }
+   ]
+  },
+  "Ottoman Turkish": {
+   "raw_labels": [
+    "Ottoman Turkish"
+   ],
+   "books": 22,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a08fb089c1b82475e15b1fb",
+     "page_number": 131,
+     "pages_count": 944,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. VII — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fb089c1b82475e15b1fb/131.jpg"
+    },
+    {
+     "book_id": "6a08fafc9c1b82475e15afbe",
+     "page_number": 146,
+     "pages_count": 570,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. VI — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fafc9c1b82475e15afbe/146.jpg"
+    },
+    {
+     "book_id": "6a08e2d350bd891addfb5277",
+     "page_number": 47,
+     "pages_count": 144,
+     "title": "Hubanname ve Zenanname (حسن‌نامه و زنان‌نامه) — Enderunlu Fazıl Hüseyin Bey; ero",
+     "url": "https://images.sourcelibrary.org/archived/6a08e2d350bd891addfb5277/47.jpg"
+    },
+    {
+     "book_id": "6a08fb139c1b82475e15b5ae",
+     "page_number": 250,
+     "pages_count": 812,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. VIII — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fb139c1b82475e15b5ae/250.jpg"
+    },
+    {
+     "book_id": "69e792e480b52390feb16fd4",
+     "page_number": 128,
+     "pages_count": 213,
+     "title": "Seyahatname (Narrative of Travels)",
+     "url": "https://images.sourcelibrary.org/archived/69e792e480b52390feb16fd4/128.jpg"
+    },
+    {
+     "book_id": "6a09eab63ca4edcd1ef023af",
+     "page_number": 52,
+     "pages_count": 170,
+     "title": "Dīvān-i Nesīmī (Ḥurūfī martyr-poet, Istanbul ed.)",
+     "url": "https://images.sourcelibrary.org/archived/6a09eab63ca4edcd1ef023af/52.jpg"
+    },
+    {
+     "book_id": "6a08face9c1b82475e15a4bb",
+     "page_number": 397,
+     "pages_count": 698,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. I — Ottoman Turkish, Istanbul 1896 (İkdam Matb",
+     "url": "https://images.sourcelibrary.org/archived/6a08face9c1b82475e15a4bb/397.jpg"
+    },
+    {
+     "book_id": "69f32854aeeee0fa38c6444c",
+     "page_number": 7,
+     "pages_count": 16,
+     "title": "Hādhā Rūznāmah-ʼī maʻahu mīqāt layl wa-nahār wa-sāʼir al-awqāt al-maʻlūmah / naq",
+     "url": "https://images.sourcelibrary.org/archived/69f32854aeeee0fa38c6444c/7.jpg"
+    },
+    {
+     "book_id": "6a08fb229c1b82475e15b8dd",
+     "page_number": 747,
+     "pages_count": 1152,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. X — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fb229c1b82475e15b8dd/747.jpg"
+    },
+    {
+     "book_id": "6a08faeb9c1b82475e15ab96",
+     "page_number": 273,
+     "pages_count": 444,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. IV — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08faeb9c1b82475e15ab96/273.jpg"
+    },
+    {
+     "book_id": "69f33dfe876dd827cbc5d867",
+     "page_number": 11,
+     "pages_count": 14,
+     "title": "Takrîr-i İsagoci",
+     "url": "https://images.sourcelibrary.org/archived/69f33dfe876dd827cbc5d867/11.jpg"
+    },
+    {
+     "book_id": "6a08fad79c1b82475e15a778",
+     "page_number": 112,
+     "pages_count": 496,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. II — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fad79c1b82475e15a778/112.jpg"
+    },
+    {
+     "book_id": "6a08e2de50bd891addfb53a5",
+     "page_number": 114,
+     "pages_count": 347,
+     "title": "Nedîm Divânı — collected divan poetry of Nedim (Ottoman Turkish)",
+     "url": "https://images.sourcelibrary.org/archived/6a08e2de50bd891addfb53a5/114.jpg"
+    },
+    {
+     "book_id": "6a08fae29c1b82475e15a96b",
+     "page_number": 130,
+     "pages_count": 552,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. III — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08fae29c1b82475e15a96b/130.jpg"
+    },
+    {
+     "book_id": "6a16c91b0a44cfc867ce2236",
+     "page_number": 101,
+     "pages_count": 211,
+     "title": "Matali al-saadet",
+     "url": "https://images.sourcelibrary.org/archived/6a16c91b0a44cfc867ce2236/101.jpg"
+    },
+    {
+     "book_id": "6a08e2d850bd891addfb530a",
+     "page_number": 23,
+     "pages_count": 152,
+     "title": "Defter-i ʻAşşar (Lover's Register) — Enderunlu Fazıl; Istanbul lithograph, 1837",
+     "url": "https://images.sourcelibrary.org/archived/6a08e2d850bd891addfb530a/23.jpg"
+    },
+    {
+     "book_id": "69f32887aeeee0fa38c64839",
+     "page_number": 286,
+     "pages_count": 466,
+     "title": "Mevâhibü'l-hallâk fî merâtibi'l-ahlâk",
+     "url": "https://images.sourcelibrary.org/archived/69f32887aeeee0fa38c64839/286.jpg"
+    },
+    {
+     "book_id": "6a09eaa83ca4edcd1ef022ea",
+     "page_number": 151,
+     "pages_count": 194,
+     "title": "Ḥażreti Fażl-i Yezdāniñ — Ottoman Turkish translation of the Jāvidān-nāma",
+     "url": "https://images.sourcelibrary.org/archived/6a09eaa83ca4edcd1ef022ea/151.jpg"
+    },
+    {
+     "book_id": "69f3268052a77bb28fdb6856",
+     "page_number": 46,
+     "pages_count": 130,
+     "title": "Tevârîh-i Âl-i Osman",
+     "url": "https://images.sourcelibrary.org/archived/69f3268052a77bb28fdb6856/46.jpg"
+    },
+    {
+     "book_id": "6a08faf49c1b82475e15ad55",
+     "page_number": 527,
+     "pages_count": 614,
+     "title": "Evliya Çelebi Seyahatnâmesi, Vol. V — Ottoman Turkish, Istanbul 1896",
+     "url": "https://images.sourcelibrary.org/archived/6a08faf49c1b82475e15ad55/527.jpg"
+    }
+   ]
+  },
+  "Pali": {
+   "raw_labels": [
+    "Pali"
+   ],
+   "books": 54,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69c1bdc48522835be846bab6",
+     "page_number": 48,
+     "pages_count": 83,
+     "title": "Sāsanavaṃsappadīpikā",
+     "url": "https://images.sourcelibrary.org/archived/69c1bdc48522835be846bab6/48.jpg"
+    },
+    {
+     "book_id": "69bd00f7f403a9ca2380efbf",
+     "page_number": 86,
+     "pages_count": 209,
+     "title": "Buddha Jayanti Tripiṭaka — Sutta Piṭaka (Complete, Sinhala Script)",
+     "url": "https://archive.org/download/bjtsuttapitaka/page/n85/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a09ff5dfa20006dbaba9200",
+     "page_number": 333,
+     "pages_count": 446,
+     "title": "Aṅguttara Nikāya, Vol. V (Tens, Elevens) — PTS Pali",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff5dfa20006dbaba9200/333.jpg"
+    },
+    {
+     "book_id": "69c1bdcb8522835be846bb95",
+     "page_number": 173,
+     "pages_count": 559,
+     "title": "Manorathapūranī",
+     "url": "https://images.sourcelibrary.org/archived/69c1bdcb8522835be846bb95/173.jpg"
+    },
+    {
+     "book_id": "69b99eea76b9bab2de21a3d4",
+     "page_number": 481,
+     "pages_count": 676,
+     "title": "Kathāvatthu (Pali Text)",
+     "url": "https://images.sourcelibrary.org/archived/69b99eea76b9bab2de21a3d4/481.jpg"
+    },
+    {
+     "book_id": "69bd014bf403a9ca2380f091",
+     "page_number": 100,
+     "pages_count": 192,
+     "title": "Buddha Jayanti Tripiṭaka — Vinaya Piṭaka (Complete, Sinhala Script)",
+     "url": "https://archive.org/download/bjtvinayapitaka/page/n99/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a09ff65fa20006dbaba93c1",
+     "page_number": 102,
+     "pages_count": 216,
+     "title": "Aṅguttara Nikāya, Vol. VI: Indexes — PTS Pali",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff65fa20006dbaba93c1/102.jpg"
+    },
+    {
+     "book_id": "69b99e681f30176bf4d3798a",
+     "page_number": 381,
+     "pages_count": 447,
+     "title": "Aṅguttara-Nikāya (Pali Text)",
+     "url": "https://images.sourcelibrary.org/archived/69b99e681f30176bf4d3798a/381.jpg"
+    },
+    {
+     "book_id": "69bc7a3f8888fef520b73c1e",
+     "page_number": 411,
+     "pages_count": 463,
+     "title": "The Vinaya Pitakam, Vol. I",
+     "url": "https://archive.org/download/vinayapiakaonep01oldegoog/page/n410/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "69d5ae284dc55b8478de0f7a",
+     "page_number": 491,
+     "pages_count": 622,
+     "title": "Patthanapakarana",
+     "url": "https://images.sourcelibrary.org/archived/69d5ae284dc55b8478de0f7a/491.jpg"
+    },
+    {
+     "book_id": "69b99e9576b9bab2de21a0bc",
+     "page_number": 113,
+     "pages_count": 465,
+     "title": "The Jātaka Together With Its Commentary, Vol. II (Pali Text)",
+     "url": "https://images.sourcelibrary.org/archived/69b99e9576b9bab2de21a0bc/113.jpg"
+    },
+    {
+     "book_id": "69c1bdc98522835be846bb3a",
+     "page_number": 58,
+     "pages_count": 89,
+     "title": "Mahāsatipaṭṭhānasutta",
+     "url": "https://images.sourcelibrary.org/archived/69c1bdc98522835be846bb3a/58.jpg"
+    },
+    {
+     "book_id": "69c1bdae8522835be846b363",
+     "page_number": 204,
+     "pages_count": 320,
+     "title": "Dhammapadaṭṭhakathā",
+     "url": "https://images.sourcelibrary.org/archived/69c1bdae8522835be846b363/204.jpg"
+    },
+    {
+     "book_id": "6a09ff23fa20006dbaba89ae",
+     "page_number": 184,
+     "pages_count": 412,
+     "title": "Yamaka (Book of Pairs), Vol. 1 — PTS Pali",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff23fa20006dbaba89ae/184.jpg"
+    },
+    {
+     "book_id": "69bd01cdf403a9ca2380f152",
+     "page_number": 77,
+     "pages_count": 278,
+     "title": "Vinaya Piṭakaṃ Vol. V (Oldenberg Critical Edition)",
+     "url": "https://archive.org/download/in.ernet.dli.2015.292627/page/n76/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a09ff48fa20006dbaba8ee1",
+     "page_number": 252,
+     "pages_count": 310,
+     "title": "Aṅguttara Nikāya, Vol. II (Fours) — PTS Pali",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff48fa20006dbaba8ee1/252.jpg"
+    },
+    {
+     "book_id": "6a308280558372a29b371088",
+     "page_number": 458,
+     "pages_count": 786,
+     "title": "Visuddhimagga of Buddhaghosa (Pali, PTS)",
+     "url": "https://images.sourcelibrary.org/archived/6a308280558372a29b371088/458.jpg"
+    },
+    {
+     "book_id": "6a09ff1dfa20006dbaba89aa",
+     "page_number": 1,
+     "pages_count": 1,
+     "title": "Dhātukathā Prakaraṇa with Commentary (PTS Pali)",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff1dfa20006dbaba89aa/1.jpg"
+    },
+    {
+     "book_id": "69c1bda78522835be846afae",
+     "page_number": 516,
+     "pages_count": 737,
+     "title": "Paṭṭhānappakaraṇa",
+     "url": "https://images.sourcelibrary.org/archived/69c1bda78522835be846afae/516.jpg"
+    },
+    {
+     "book_id": "6a09ff43fa20006dbaba8d78",
+     "page_number": 111,
+     "pages_count": 358,
+     "title": "Aṅguttara Nikāya, Vol. I (Ones, Twos, Threes) — PTS Pali",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff43fa20006dbaba8d78/111.jpg"
+    }
+   ]
+  },
+  "Persian": {
+   "raw_labels": [
+    "Persian",
+    "per"
+   ],
+   "books": 253,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69c1b9f78522835be84554cd",
+     "page_number": 262,
+     "pages_count": 304,
+     "title": "Jung-i Bayāz̤",
+     "url": "https://images.sourcelibrary.org/archived/69c1b9f78522835be84554cd/262.jpg"
+    },
+    {
+     "book_id": "69c1b9d58522835be8454c03",
+     "page_number": 28,
+     "pages_count": 48,
+     "title": "Pandnāmah (Book of Wisdom)",
+     "url": "https://images.sourcelibrary.org/archived/69c1b9d58522835be8454c03/28.jpg"
+    },
+    {
+     "book_id": "69bf6965dd5a136c308e2721",
+     "page_number": 137,
+     "pages_count": 260,
+     "title": "گلستان (Gulistān)",
+     "url": "https://archive.org/download/gulistanofsady00sads/page/n136/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "69c1b94b8522835be8450347",
+     "page_number": 132,
+     "pages_count": 220,
+     "title": "Dīvān-i Amīr Shāhī",
+     "url": "https://images.sourcelibrary.org/archived/69c1b94b8522835be8450347/132.jpg"
+    },
+    {
+     "book_id": "69c1b9808522835be8451c8d",
+     "page_number": 390,
+     "pages_count": 842,
+     "title": "Khulāṣat al-kalām",
+     "url": "https://images.sourcelibrary.org/archived/69c1b9808522835be8451c8d/390.jpg"
+    },
+    {
+     "book_id": "6a08fdf7cba2f4fe3ad82fcf",
+     "page_number": 51,
+     "pages_count": 99,
+     "title": "Humāyūn-nāma (ہمایوں نامہ) — Gulbadan Begum, Persian memoir of Emperor Humayun b",
+     "url": "https://images.sourcelibrary.org/archived/6a08fdf7cba2f4fe3ad82fcf/51.jpg"
+    },
+    {
+     "book_id": "6a26fc1865df759218cd90c4",
+     "page_number": 85,
+     "pages_count": 281,
+     "title": "[Abhandlung über Alchemie]",
+     "url": "https://images.sourcelibrary.org/archived/6a26fc1865df759218cd90c4/85.jpg"
+    },
+    {
+     "book_id": "69f3284caeeee0fa38c643b8",
+     "page_number": 121,
+     "pages_count": 146,
+     "title": "Aḥvāl-ʼi chahār darvīsh",
+     "url": "https://images.sourcelibrary.org/archived/69f3284caeeee0fa38c643b8/121.jpg"
+    },
+    {
+     "book_id": "69b925093ef5a8d26942c545",
+     "page_number": 382,
+     "pages_count": 452,
+     "title": "مثنوی معنوی — دفتر ٥–٧ (Masnavi, Books V–VII, Bulaq 1851)",
+     "url": "https://images.sourcelibrary.org/archived/69b925093ef5a8d26942c545/382.jpg"
+    },
+    {
+     "book_id": "6a088afebd8fc3beee8aa59c",
+     "page_number": 301,
+     "pages_count": 367,
+     "title": "Kulliyāt-i ʿUbayd Zākānī (Complete Works)",
+     "url": "https://images.sourcelibrary.org/archived/6a088afebd8fc3beee8aa59c/301.jpg"
+    },
+    {
+     "book_id": "69c1b9648522835be84506eb",
+     "page_number": 224,
+     "pages_count": 574,
+     "title": "Sāqīʻnāmah",
+     "url": "https://images.sourcelibrary.org/archived/69c1b9648522835be84506eb/224.jpg"
+    },
+    {
+     "book_id": "69c1b96d8522835be8450a07",
+     "page_number": 483,
+     "pages_count": 682,
+     "title": "Dīvān-i Saʻdī",
+     "url": "https://images.sourcelibrary.org/archived/69c1b96d8522835be8450a07/483.jpg"
+    },
+    {
+     "book_id": "69e534bbd48480a386966f5c",
+     "page_number": 110,
+     "pages_count": 184,
+     "title": "Rubaiyat of Omar Khayyam (Pogany illustrated)",
+     "url": "https://images.sourcelibrary.org/archived/69e534bbd48480a386966f5c/110.jpg"
+    },
+    {
+     "book_id": "69f33c97876dd827cbc5a94f",
+     "page_number": 303,
+     "pages_count": 338,
+     "title": "Gulistān",
+     "url": "https://images.sourcelibrary.org/archived/69f33c97876dd827cbc5a94f/303.jpg"
+    },
+    {
+     "book_id": "69e729a7a409200ea79f0e08",
+     "page_number": 329,
+     "pages_count": 452,
+     "title": "مثنوی معنوی (Masnavī-yi Maʻnavī), Books 5-7",
+     "url": "https://images.sourcelibrary.org/archived/69e729a7a409200ea79f0e08/329.jpg"
+    },
+    {
+     "book_id": "69b90532cdb14f317fb51460",
+     "page_number": 551,
+     "pages_count": 696,
+     "title": "شاهنامه بایسنقری (Shahnameh-yi Baysonghori)",
+     "url": "https://images.sourcelibrary.org/archived/69b90532cdb14f317fb51460/551.jpg"
+    },
+    {
+     "book_id": "69e53481d48480a38696650a",
+     "page_number": 184,
+     "pages_count": 418,
+     "title": "The Shahnama, Vol. 4",
+     "url": "https://images.sourcelibrary.org/archived/69e53481d48480a38696650a/184.jpg"
+    },
+    {
+     "book_id": "69c1ba498522835be84579a2",
+     "page_number": 219,
+     "pages_count": 280,
+     "title": "Four Persian and Ottoman texts, the first three copied by Ciğālzade Dervîş Maḥmû",
+     "url": "https://images.sourcelibrary.org/archived/69c1ba498522835be84579a2/219.jpg"
+    },
+    {
+     "book_id": "6992548ad5d1c6dbb2bcdcb8",
+     "page_number": 270,
+     "pages_count": 304,
+     "title": "The Zand i javit sheda dad (Pahlavi Vendidad)",
+     "url": "https://images.sourcelibrary.org/archived/6992548ad5d1c6dbb2bcdcb8/270.jpg"
+    },
+    {
+     "book_id": "69c1ba2e8522835be8457063",
+     "page_number": 64,
+     "pages_count": 632,
+     "title": "Ḥadīqat al-Ḥaqīqat va Sharī‘at al-Ṭarīqat, Fakhrīnāmah, Ilāhīnāmah",
+     "url": "https://images.sourcelibrary.org/archived/69c1ba2e8522835be8457063/64.jpg"
+    }
+   ]
+  },
+  "Portuguese": {
+   "raw_labels": [
+    "Portuguese"
+   ],
+   "books": 22,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69b4cd33d5b6c3815e1a4dc4",
+     "page_number": 101,
+     "pages_count": 160,
+     "title": "Declaracao das 613 encomendanças",
+     "url": "https://images.sourcelibrary.org/archived/69b4cd33d5b6c3815e1a4dc4/101.jpg"
+    },
+    {
+     "book_id": "69591148ecb01322b3068e79",
+     "page_number": 168,
+     "pages_count": 514,
+     "title": "Historia das plantas da Europa e Asia Africa America",
+     "url": "https://images.sourcelibrary.org/archived/69591148ecb01322b3068e79/168.jpg"
+    },
+    {
+     "book_id": "6a426309dfbbb4d07aa68645",
+     "page_number": 68,
+     "pages_count": 133,
+     "title": "De nimis licentiosa ac liberaliore intempestiuaque sanguinis missione, a plaeris",
+     "url": "https://images.sourcelibrary.org/archived/6a426309dfbbb4d07aa68645/68.jpg"
+    },
+    {
+     "book_id": "6a356ee2ea27ed96662d790c",
+     "page_number": 173,
+     "pages_count": 426,
+     "title": "Colóquios dos simples e drogas da Índia",
+     "url": "https://images.sourcelibrary.org/archived/6a356ee2ea27ed96662d790c/173.jpg"
+    },
+    {
+     "book_id": "69f32daf876dd827cbc4326f",
+     "page_number": 7,
+     "pages_count": 11,
+     "title": "Contract, between Lorenzo Guncalvez and the Monastery of Santa Maria de Aguiar",
+     "url": "https://images.sourcelibrary.org/archived/69f32daf876dd827cbc4326f/7.jpg"
+    },
+    {
+     "book_id": "69ea0f3613a685002bb8d7eb",
+     "page_number": 24,
+     "pages_count": 96,
+     "title": "Carta de Pero Vaz de Caminha (Discovery of Brazil)",
+     "url": "https://images.sourcelibrary.org/archived/69ea0f3613a685002bb8d7eb/24.jpg"
+    },
+    {
+     "book_id": "6a9f499dd2c94fce82910855",
+     "page_number": 603,
+     "pages_count": 683,
+     "title": "História do Brasil (1500-1627)",
+     "url": "https://images.sourcelibrary.org/archived/6a9f499dd2c94fce82910855/603.jpg"
+    },
+    {
+     "book_id": "69ea0f3113a685002bb8d6ff",
+     "page_number": 206,
+     "pages_count": 233,
+     "title": "Roteiro da Viagem de Vasco da Gama",
+     "url": "https://images.sourcelibrary.org/archived/69ea0f3113a685002bb8d6ff/206.jpg"
+    },
+    {
+     "book_id": "69ea0f4613a685002bb8da9f",
+     "page_number": 86,
+     "pages_count": 413,
+     "title": "Peregrinação",
+     "url": "https://images.sourcelibrary.org/archived/69ea0f4613a685002bb8da9f/86.jpg"
+    },
+    {
+     "book_id": "6a48e2941e36bf8015227d52",
+     "page_number": 10,
+     "pages_count": 17,
+     "title": "Relaçam das festas de palacio,egrandesas de Londres, dedicada amagestade da sere",
+     "url": "https://images.sourcelibrary.org/archived/6a48e2941e36bf8015227d52/10.jpg"
+    },
+    {
+     "book_id": "6a9f499ad2c94fce82910789",
+     "page_number": 28,
+     "pages_count": 203,
+     "title": "Cartas do Brasil (1549-1560)",
+     "url": "https://images.sourcelibrary.org/archived/6a9f499ad2c94fce82910789/28.jpg"
+    },
+    {
+     "book_id": "69f33bcf876dd827cbc59588",
+     "page_number": 71,
+     "pages_count": 128,
+     "title": "Templo da fama, consagrado ao valor de Portugal & construido das ruinas de Caste",
+     "url": "https://images.sourcelibrary.org/archived/69f33bcf876dd827cbc59588/71.jpg"
+    },
+    {
+     "book_id": "69ea0f3e13a685002bb8d84e",
+     "page_number": 147,
+     "pages_count": 590,
+     "title": "Commentarios do Grande Afonso Dalboquerque",
+     "url": "https://images.sourcelibrary.org/archived/69ea0f3e13a685002bb8d84e/147.jpg"
+    },
+    {
+     "book_id": "6a9f4995d2c94fce8291057a",
+     "page_number": 117,
+     "pages_count": 421,
+     "title": "Tratado descritivo do Brasil em 1587",
+     "url": "https://images.sourcelibrary.org/archived/6a9f4995d2c94fce8291057a/117.jpg"
+    },
+    {
+     "book_id": "69e7929d80b52390feb1682e",
+     "page_number": 22,
+     "pages_count": 220,
+     "title": "Memórias Póstumas de Brás Cubas",
+     "url": "https://images.sourcelibrary.org/archived/69e7929d80b52390feb1682e/22.jpg"
+    },
+    {
+     "book_id": "6a9f4992d2c94fce8291050f",
+     "page_number": 37,
+     "pages_count": 106,
+     "title": "História da província Santa Cruz a que vulgarmente chamamos Brasil",
+     "url": "https://images.sourcelibrary.org/archived/6a9f4992d2c94fce8291050f/37.jpg"
+    },
+    {
+     "book_id": "6a9f4998d2c94fce82910720",
+     "page_number": 55,
+     "pages_count": 104,
+     "title": "Arte de grammatica da lingua mais usada na costa do Brasil",
+     "url": "https://images.sourcelibrary.org/archived/6a9f4998d2c94fce82910720/55.jpg"
+    },
+    {
+     "book_id": "6a905fa71da1ecc792bd3164",
+     "page_number": 64,
+     "pages_count": 124,
+     "title": "Oratio de corona græce",
+     "url": "https://images.sourcelibrary.org/archived/6a905fa71da1ecc792bd3164/64.jpg"
+    },
+    {
+     "book_id": "69e750b160c089f2df48e8d2",
+     "page_number": 162,
+     "pages_count": 384,
+     "title": "Os Lusíadas",
+     "url": "https://images.sourcelibrary.org/archived/69e750b160c089f2df48e8d2/162.jpg"
+    },
+    {
+     "book_id": "69e729e2a409200ea79f197a",
+     "page_number": 110,
+     "pages_count": 246,
+     "title": "Fairy Tales from Brazil: How and Why Tales from Brazilian Folk-Lore",
+     "url": "https://images.sourcelibrary.org/archived/69e729e2a409200ea79f197a/110.jpg"
+    }
+   ]
+  },
+  "Russian": {
+   "raw_labels": [
+    "Russian"
+   ],
+   "books": 591,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a423ac3c1f44d759e6cbbc9",
+     "page_number": 78,
+     "pages_count": 138,
+     "title": "De lucidis in sublimi ingenuarum exercitationum liber. In quo disseritur de radi",
+     "url": "https://images.sourcelibrary.org/archived/6a423ac3c1f44d759e6cbbc9/78.jpg"
+    },
+    {
+     "book_id": "69af2263f98f6eff774cc464",
+     "page_number": 122,
+     "pages_count": 182,
+     "title": "Почта духовъ, или Ученая, нравственная и критическая переписка арабскаго философ",
+     "url": "https://images.sourcelibrary.org/archived/69af2263f98f6eff774cc464/122.jpg"
+    },
+    {
+     "book_id": "69af42e93bd5f6f35ab89e25",
+     "page_number": 93,
+     "pages_count": 677,
+     "title": "Полное собрание сочинений К. С. Аксакова, том 3, часть 2",
+     "url": "https://images.sourcelibrary.org/archived/69af42e93bd5f6f35ab89e25/93.jpg"
+    },
+    {
+     "book_id": "69af48292a821385be062027",
+     "page_number": 37,
+     "pages_count": 125,
+     "title": "Свобода и культура",
+     "url": "https://images.sourcelibrary.org/archived/69af48292a821385be062027/37.jpg"
+    },
+    {
+     "book_id": "6a42b8f8466deeb51e561bae",
+     "page_number": 568,
+     "pages_count": 717,
+     "title": "Tractatuum Et Responsorum, Quae vulgo Consilia Iuris Appellantur, Pars ... , Per",
+     "url": "https://archive.org/download/bub_gb_bXda6Ox1XwQC/page/n567/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a43807b57a09c2c0fcb9fc2",
+     "page_number": 302,
+     "pages_count": 556,
+     "title": "Rerum Frisicarum historiae decas quinta",
+     "url": "https://images.sourcelibrary.org/archived/6a43807b57a09c2c0fcb9fc2/302.jpg"
+    },
+    {
+     "book_id": "6a43b7b33c91e2a63d4dc7c9",
+     "page_number": 29,
+     "pages_count": 56,
+     "title": "de Decimis Dissertationem, Quam Sub Praesidio Joh. Frischmuthi Placidae symphilo",
+     "url": "https://images.sourcelibrary.org/archived/6a43b7b33c91e2a63d4dc7c9/29.jpg"
+    },
+    {
+     "book_id": "6a436279f920db620cce2757",
+     "page_number": 60,
+     "pages_count": 335,
+     "title": "Astrologia Ecclesiastica, Hoc est, Disputatio De Claritate ac multiplici virtute",
+     "url": "https://images.sourcelibrary.org/archived/6a436279f920db620cce2757/60.jpg"
+    },
+    {
+     "book_id": "69af41c6eaef59aff2e0e6a4",
+     "page_number": 340,
+     "pages_count": 524,
+     "title": "Опавшие листья. Короб 2",
+     "url": "https://images.sourcelibrary.org/archived/69af41c6eaef59aff2e0e6a4/340.jpg"
+    },
+    {
+     "book_id": "6a4843270278a71dd77584cf",
+     "page_number": 520,
+     "pages_count": 776,
+     "title": "Dictionarium Annnamiticum []] Lusitanum, et Latinum ope Sacrae Congregationis de",
+     "url": "https://images.sourcelibrary.org/archived/6a4843270278a71dd77584cf/520.jpg"
+    },
+    {
+     "book_id": "69aec0ddfcf8bc92f9eff273",
+     "page_number": 27,
+     "pages_count": 176,
+     "title": "Dostoevskiĭ i Nitshe: Filosofiia tragedii",
+     "url": "https://images.sourcelibrary.org/archived/69aec0ddfcf8bc92f9eff273/27.jpg"
+    },
+    {
+     "book_id": "69af49624a5e5a377fef9dc6",
+     "page_number": 29,
+     "pages_count": 164,
+     "title": "Пророк русской революции",
+     "url": "https://images.sourcelibrary.org/archived/69af49624a5e5a377fef9dc6/29.jpg"
+    },
+    {
+     "book_id": "69ade9cb4b7218d97831ccd0",
+     "page_number": 327,
+     "pages_count": 828,
+     "title": "Stolp i utverzhdenie istiny",
+     "url": "https://images.sourcelibrary.org/archived/69ade9cb4b7218d97831ccd0/327.jpg"
+    },
+    {
+     "book_id": "6a483ef30278a71dd775718c",
+     "page_number": 599,
+     "pages_count": 790,
+     "title": "Observata Theoretico Practica, Ad Matthaei Wesenbecii in L. libros Digestorum co",
+     "url": "https://images.sourcelibrary.org/archived/6a483ef30278a71dd775718c/599.jpg"
+    },
+    {
+     "book_id": "6a42de5ce76baa13aa8636cb",
+     "page_number": 495,
+     "pages_count": 679,
+     "title": "Fundamenta punctationis linguæ sanctæ",
+     "url": "https://images.sourcelibrary.org/archived/6a42de5ce76baa13aa8636cb/495.jpg"
+    },
+    {
+     "book_id": "69af42653fd91d3991399718",
+     "page_number": 28,
+     "pages_count": 107,
+     "title": "Люди лунного света",
+     "url": "https://images.sourcelibrary.org/archived/69af42653fd91d3991399718/28.jpg"
+    },
+    {
+     "book_id": "69aff2fec83500af1dbf6b61",
+     "page_number": 219,
+     "pages_count": 408,
+     "title": "Творения Платона",
+     "url": "https://images.sourcelibrary.org/archived/69aff2fec83500af1dbf6b61/219.jpg"
+    },
+    {
+     "book_id": "69af200d3599b91c746230ec",
+     "page_number": 56,
+     "pages_count": 284,
+     "title": "Константин Леонтьев: Очерк из истории русской религиозной мысли",
+     "url": "https://images.sourcelibrary.org/archived/69af200d3599b91c746230ec/56.jpg"
+    },
+    {
+     "book_id": "69af1343199e32dea75f9cbd",
+     "page_number": 278,
+     "pages_count": 607,
+     "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 4. Благонамеренные речи. Культурны",
+     "url": "https://images.sourcelibrary.org/archived/69af1343199e32dea75f9cbd/278.jpg"
+    },
+    {
+     "book_id": "69af380405844800f9d80d60",
+     "page_number": 595,
+     "pages_count": 944,
+     "title": "Сочиненія Ломоносова. Том 3",
+     "url": "https://images.sourcelibrary.org/archived/69af380405844800f9d80d60/595.jpg"
+    }
+   ]
+  },
+  "Sanskrit": {
+   "raw_labels": [
+    "Sanskrit"
+   ],
+   "books": 2110,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a94ce218e2a2ffc91d26ec6",
+     "page_number": 1,
+     "pages_count": 2,
+     "title": "Manuscript 29 Puja Mantras ( Manuscript In Sharada)",
+     "url": "https://images.sourcelibrary.org/archived/6a94ce218e2a2ffc91d26ec6/1.jpg"
+    },
+    {
+     "book_id": "6a94dc36b24b5a49c27d8c6f",
+     "page_number": 17,
+     "pages_count": 62,
+     "title": "Sharada Manuscript From Kulgam 3 Of 4 Trust",
+     "url": "https://images.sourcelibrary.org/archived/6a94dc36b24b5a49c27d8c6f/17.jpg"
+    },
+    {
+     "book_id": "6a949d1c31b41d9c5744e781",
+     "page_number": 25,
+     "pages_count": 41,
+     "title": "MN 003317 Partially Damaged Sharada Manuscripts At Kurukshetra University",
+     "url": "https://images.sourcelibrary.org/archived/6a949d1c31b41d9c5744e781/25.jpg"
+    },
+    {
+     "book_id": "6a948df531b41d9c5744623b",
+     "page_number": 96,
+     "pages_count": 280,
+     "title": "Abhigyan Shakuntala With Subodhini Commentary By Gaurinath Sharma 1934 (bad Bind",
+     "url": "https://images.sourcelibrary.org/archived/6a948df531b41d9c5744623b/96.jpg"
+    },
+    {
+     "book_id": "6a949ed8bf723b215d8bc51a",
+     "page_number": 6,
+     "pages_count": 16,
+     "title": "Panchang 2 In",
+     "url": "https://images.sourcelibrary.org/archived/6a949ed8bf723b215d8bc51a/6.jpg"
+    },
+    {
+     "book_id": "6a948fbd31b41d9c57446dd7",
+     "page_number": 15,
+     "pages_count": 24,
+     "title": "Antyeshthi Devanagari Paper Manuscript Good Condition",
+     "url": "https://images.sourcelibrary.org/archived/6a948fbd31b41d9c57446dd7/15.jpg"
+    },
+    {
+     "book_id": "6a9490ec31b41d9c57447878",
+     "page_number": 16,
+     "pages_count": 67,
+     "title": "Bhagavat Dasham Skandha With Veda Stuti Bhavartha Tika From Uri Trust",
+     "url": "https://images.sourcelibrary.org/archived/6a9490ec31b41d9c57447878/16.jpg"
+    },
+    {
+     "book_id": "6a94913d31b41d9c57448405",
+     "page_number": 54,
+     "pages_count": 128,
+     "title": "Bhagavata Gita In Sharada Manuscript 2 Of 3 From The Residence Of Dr. Pierre Syl",
+     "url": "https://images.sourcelibrary.org/archived/6a94913d31b41d9c57448405/54.jpg"
+    },
+    {
+     "book_id": "6a94300252baa7aee625ba1e",
+     "page_number": 442,
+     "pages_count": 522,
+     "title": "1402 Amara Kosh Sharada Raghunath Temple Uncatalogued",
+     "url": "https://images.sourcelibrary.org/archived/6a94300252baa7aee625ba1e/442.jpg"
+    },
+    {
+     "book_id": "6a948bf831b41d9c57445375",
+     "page_number": 3,
+     "pages_count": 26,
+     "title": "436 Mriti Tattvanusandhan Darshan DAM Sharada Paper",
+     "url": "https://images.sourcelibrary.org/archived/6a948bf831b41d9c57445375/3.jpg"
+    },
+    {
+     "book_id": "6a94bd6956cac2f882c818f2",
+     "page_number": 57,
+     "pages_count": 97,
+     "title": "483 Vaishavasrij Chayan Shastra Tantra Shastra DAM Sharada Paper",
+     "url": "https://images.sourcelibrary.org/archived/6a94bd6956cac2f882c818f2/57.jpg"
+    },
+    {
+     "book_id": "6a94ca498e2a2ffc91d25b7f",
+     "page_number": 7,
+     "pages_count": 70,
+     "title": "Magh Mahatmya In Padma Purana Uttarakhanda Sharada Manuscript From Shopian Trust",
+     "url": "https://images.sourcelibrary.org/archived/6a94ca498e2a2ffc91d25b7f/7.jpg"
+    },
+    {
+     "book_id": "69e80662fdad300064d9ed7c",
+     "page_number": 190,
+     "pages_count": 542,
+     "title": "सुश्रुतसंहिता (Suśruta Saṃhitā)",
+     "url": "https://images.sourcelibrary.org/archived/69e80662fdad300064d9ed7c/190.jpg"
+    },
+    {
+     "book_id": "6a94b9bc56cac2f882c80946",
+     "page_number": 25,
+     "pages_count": 45,
+     "title": "Baramula 009 Shraaddha Brahmana – Prayashchita Snanam",
+     "url": "https://images.sourcelibrary.org/archived/6a94b9bc56cac2f882c80946/25.jpg"
+    },
+    {
+     "book_id": "6a94cea08e2a2ffc91d27551",
+     "page_number": 2,
+     "pages_count": 20,
+     "title": "Manuscript 35 – Mata Rupa Bhavani Rahasyopadesha ( Manuscript In Sharada)",
+     "url": "https://images.sourcelibrary.org/archived/6a94cea08e2a2ffc91d27551/2.jpg"
+    },
+    {
+     "book_id": "69dea5a74d19ec2e9ba76d61",
+     "page_number": 138,
+     "pages_count": 228,
+     "title": "The Taittiriya Samhita of the Krishna Yajur-Veda",
+     "url": "https://images.sourcelibrary.org/archived/69dea5a74d19ec2e9ba76d61/138.jpg"
+    },
+    {
+     "book_id": "6a94911a31b41d9c57447c79",
+     "page_number": 11,
+     "pages_count": 23,
+     "title": "Bhagavat Saptam Skandha Prahlad Stuti Sharada Manuscript From Kulgam Trust",
+     "url": "https://images.sourcelibrary.org/archived/6a94911a31b41d9c57447c79/11.jpg"
+    },
+    {
+     "book_id": "6a91bb1b43010201a1470ff3",
+     "page_number": 351,
+     "pages_count": 438,
+     "title": "Uṇādisūtravr̥ttiḥ = Ujjala Datta's commentary on the Unadisutras / Śrīmadujjvala",
+     "url": "https://iiif.wellcomecollection.org/image/b30093028_0351.jp2/full/full/0/default.jpg"
+    },
+    {
+     "book_id": "6a94c98d8e2a2ffc91d25985",
+     "page_number": 4,
+     "pages_count": 19,
+     "title": "M 18 This Manuscript Includes Veda Mantras ( Svasti Prayashchitta)",
+     "url": "https://images.sourcelibrary.org/archived/6a94c98d8e2a2ffc91d25985/4.jpg"
+    },
+    {
+     "book_id": "6a0a4f5a7cd8e1e3d0f4a905",
+     "page_number": 341,
+     "pages_count": 426,
+     "title": "Architecture of Mānasāra — Illustrations of Architectural and Sculptural Objects",
+     "url": "https://images.sourcelibrary.org/archived/6a0a4f5a7cd8e1e3d0f4a905/341.jpg"
+    }
+   ]
+  },
+  "Spanish": {
+   "raw_labels": [
+    "Spanish"
+   ],
+   "books": 163,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "6a90918d0f0bff48dccbca83",
+     "page_number": 78,
+     "pages_count": 295,
+     "title": "Consilia et responsa",
+     "url": "https://images.sourcelibrary.org/archived/6a90918d0f0bff48dccbca83/78.jpg"
+    },
+    {
+     "book_id": "6a9f497bd2c94fce8290f909",
+     "page_number": 407,
+     "pages_count": 546,
+     "title": "Historia de las Indias, Tomo I",
+     "url": "https://images.sourcelibrary.org/archived/6a9f497bd2c94fce8290f909/407.jpg"
+    },
+    {
+     "book_id": "6a9f3fe183c3b522416e74f4",
+     "page_number": 171,
+     "pages_count": 376,
+     "title": "Historia antigua de Méjico, Vol. 1",
+     "url": "https://images.sourcelibrary.org/archived/6a9f3fe183c3b522416e74f4/171.jpg"
+    },
+    {
+     "book_id": "6a09ff88fa20006dbaba9c29",
+     "page_number": 401,
+     "pages_count": 500,
+     "title": "Historia de las Indias de Nueva España e Islas de Tierra Firme, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/6a09ff88fa20006dbaba9c29/401.jpg"
+    },
+    {
+     "book_id": "69bf619d76287c6679d5eb6c",
+     "page_number": 394,
+     "pages_count": 612,
+     "title": "Amadís de Gaula",
+     "url": "https://archive.org/download/res-454-v_0000_capa-capa_t24-C-R0150/page/n393/full/pct:50/0/default.jpg"
+    },
+    {
+     "book_id": "6a463e45b000203b37d3e85a",
+     "page_number": 361,
+     "pages_count": 761,
+     "title": "Historia imperial y cesarea: en la qual en summa se contienen las vidas y hechos",
+     "url": "https://images.sourcelibrary.org/archived/6a463e45b000203b37d3e85a/361.jpg"
+    },
+    {
+     "book_id": "69f33a2c876dd827cbc57bc8",
+     "page_number": 75,
+     "pages_count": 91,
+     "title": "Carta executoria de hidalguía, 1556",
+     "url": "https://images.sourcelibrary.org/archived/69f33a2c876dd827cbc57bc8/75.jpg"
+    },
+    {
+     "book_id": "69f33d05876dd827cbc5b6aa",
+     "page_number": 36,
+     "pages_count": 132,
+     "title": "Dias felices, que inducen al escarmiento en los quales acreditan las Pierides à ",
+     "url": "https://images.sourcelibrary.org/archived/69f33d05876dd827cbc5b6aa/36.jpg"
+    },
+    {
+     "book_id": "6aa35d19e213def30d6c7f86",
+     "page_number": 108,
+     "pages_count": 303,
+     "title": "Aforismos",
+     "url": "https://images.sourcelibrary.org/archived/6aa35d19e213def30d6c7f86/108.jpg"
+    },
+    {
+     "book_id": "6a9f4985d2c94fce8290ff4c",
+     "page_number": 410,
+     "pages_count": 578,
+     "title": "Historia de las Indias, Tomo V",
+     "url": "https://images.sourcelibrary.org/archived/6a9f4985d2c94fce8290ff4c/410.jpg"
+    },
+    {
+     "book_id": "69e786f56846fc56c4910f97",
+     "page_number": 431,
+     "pages_count": 638,
+     "title": "Nueva Corónica y Buen Gobierno",
+     "url": "https://images.sourcelibrary.org/archived/69e786f56846fc56c4910f97/431.jpg"
+    },
+    {
+     "book_id": "69b525ce2f891867c1ae5742",
+     "page_number": 295,
+     "pages_count": 563,
+     "title": "Orden de las oraciones cotidianas por estilo seguido. Con Hanucà, Purim, Ayuno d",
+     "url": "https://images.sourcelibrary.org/archived/69b525ce2f891867c1ae5742/295.jpg"
+    },
+    {
+     "book_id": "69ea0f5413a685002bb8dc8a",
+     "page_number": 239,
+     "pages_count": 546,
+     "title": "Historia Verdadera de la Conquista de la Nueva España",
+     "url": "https://images.sourcelibrary.org/archived/69ea0f5413a685002bb8dc8a/239.jpg"
+    },
+    {
+     "book_id": "6aa35c32b8b2420aa5933ae3",
+     "page_number": 339,
+     "pages_count": 634,
+     "title": "Emblemas morales",
+     "url": "https://images.sourcelibrary.org/archived/6aa35c32b8b2420aa5933ae3/339.jpg"
+    },
+    {
+     "book_id": "6a9f3fe483c3b522416e766d",
+     "page_number": 359,
+     "pages_count": 456,
+     "title": "Historia antigua de Méjico, Vol. 2",
+     "url": "https://images.sourcelibrary.org/archived/6a9f3fe483c3b522416e766d/359.jpg"
+    },
+    {
+     "book_id": "695910f5ecb01322b306854d",
+     "page_number": 455,
+     "pages_count": 778,
+     "title": "Historia General y Natural de las Indias Vol. 1",
+     "url": "https://images.sourcelibrary.org/archived/695910f5ecb01322b306854d/455.jpg"
+    },
+    {
+     "book_id": "6a08f9209c1b82475e1592fa",
+     "page_number": 912,
+     "pages_count": 1190,
+     "title": "Primer Nueva Corónica y Buen Gobierno — Felipe Guamán Poma de Ayala (1615 illust",
+     "url": "https://images.sourcelibrary.org/archived/6a08f9209c1b82475e1592fa/912.jpg"
+    },
+    {
+     "book_id": "69e41216937ee36cf27c7554",
+     "page_number": 27,
+     "pages_count": 46,
+     "title": "La Vida es Sueño (c. 1650 ed.)",
+     "url": "https://images.sourcelibrary.org/archived/69e41216937ee36cf27c7554/27.jpg"
+    },
+    {
+     "book_id": "69a5e9fd787d6e9b8d42ea49",
+     "page_number": 71,
+     "pages_count": 219,
+     "title": "Libro de los juegos de ajedrez, dados y tablas",
+     "url": "https://images.sourcelibrary.org/archived/69a5e9fd787d6e9b8d42ea49/71.jpg"
+    },
+    {
+     "book_id": "6991e18e339ebc8509949bf0",
+     "page_number": 710,
+     "pages_count": 810,
+     "title": "Summa de Tratos y Contratos",
+     "url": "https://images.sourcelibrary.org/archived/6991e18e339ebc8509949bf0/710.jpg"
+    }
+   ]
+  },
+  "Syriac": {
+   "raw_labels": [
+    "Syriac"
+   ],
+   "books": 105,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69924718d263adc1aa7b0600",
+     "page_number": 262,
+     "pages_count": 317,
+     "title": "Apocryphal Acts of the Apostles, Vol. 1 (Syriac Texts)",
+     "url": "https://images.sourcelibrary.org/archived/69924718d263adc1aa7b0600/262.jpg"
+    },
+    {
+     "book_id": "69a5f2010a8b44a5d9dc89ba",
+     "page_number": 135,
+     "pages_count": 449,
+     "title": "Selected Memre; Commentary on the Psalms",
+     "url": "https://images.sourcelibrary.org/archived/69a5f2010a8b44a5d9dc89ba/135.jpg"
+    },
+    {
+     "book_id": "69e72ca3a409200ea79f535f",
+     "page_number": 148,
+     "pages_count": 346,
+     "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+     "url": "https://images.sourcelibrary.org/archived/69e72ca3a409200ea79f535f/148.jpg"
+    },
+    {
+     "book_id": "69920b90e0a548a13d883e43",
+     "page_number": 392,
+     "pages_count": 548,
+     "title": "Old Testament in Syriac (Peshitta)",
+     "url": "https://images.sourcelibrary.org/archived/69920b90e0a548a13d883e43/392.jpg"
+    },
+    {
+     "book_id": "69a5f365d4c2e3cf8ecb872d",
+     "page_number": 277,
+     "pages_count": 406,
+     "title": "Gospels (Peshitta)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f365d4c2e3cf8ecb872d/277.jpg"
+    },
+    {
+     "book_id": "69943f98338b1d7fd14deb17",
+     "page_number": 120,
+     "pages_count": 961,
+     "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 4",
+     "url": "https://images.sourcelibrary.org/archived/69943f98338b1d7fd14deb17/120.jpg"
+    },
+    {
+     "book_id": "69943e067e165aadb1c33276",
+     "page_number": 173,
+     "pages_count": 587,
+     "title": "Sancti Ephraem Syri Hymni et Sermones, Vol. 4",
+     "url": "https://images.sourcelibrary.org/archived/69943e067e165aadb1c33276/173.jpg"
+    },
+    {
+     "book_id": "69a5e3f5006a409842216b6c",
+     "page_number": 225,
+     "pages_count": 328,
+     "title": "Syriac Gospel Lectionary (Cambridge Oo.1.32)",
+     "url": "https://images.sourcelibrary.org/archived/69a5e3f5006a409842216b6c/225.jpg"
+    },
+    {
+     "book_id": "69a5f039b29703bc86eb51db",
+     "page_number": 48,
+     "pages_count": 326,
+     "title": "Chronicon Ecclesiasticum, vol. 3",
+     "url": "https://images.sourcelibrary.org/archived/69a5f039b29703bc86eb51db/48.jpg"
+    },
+    {
+     "book_id": "69a5f469d4c2e3cf8ecb9324",
+     "page_number": 543,
+     "pages_count": 871,
+     "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+     "url": "https://images.sourcelibrary.org/archived/69a5f469d4c2e3cf8ecb9324/543.jpg"
+    },
+    {
+     "book_id": "69a5ed7996d6dd816a56aae6",
+     "page_number": 725,
+     "pages_count": 862,
+     "title": "Anecdota Syriaca vols. 3-4",
+     "url": "https://images.sourcelibrary.org/archived/69a5ed7996d6dd816a56aae6/725.jpg"
+    },
+    {
+     "book_id": "69a5eb64aa8e0e4092147557",
+     "page_number": 345,
+     "pages_count": 708,
+     "title": "Acta Martyrum et Sanctorum, Tomus VI",
+     "url": "https://images.sourcelibrary.org/archived/69a5eb64aa8e0e4092147557/345.jpg"
+    },
+    {
+     "book_id": "69a5ea9a2c1720a023b0c9c0",
+     "page_number": 235,
+     "pages_count": 444,
+     "title": "Narsai: Homiliae et Carmina, Tomus I",
+     "url": "https://images.sourcelibrary.org/archived/69a5ea9a2c1720a023b0c9c0/235.jpg"
+    },
+    {
+     "book_id": "69a5eaa32c1720a023b0cb7e",
+     "page_number": 337,
+     "pages_count": 875,
+     "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Tomus I",
+     "url": "https://images.sourcelibrary.org/archived/69a5eaa32c1720a023b0cb7e/337.jpg"
+    },
+    {
+     "book_id": "69a5f358d4c2e3cf8ecb80e3",
+     "page_number": 428,
+     "pages_count": 478,
+     "title": "New Testament (Peshitta, 7th century)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f358d4c2e3cf8ecb80e3/428.jpg"
+    },
+    {
+     "book_id": "69c1bd328522835be846821a",
+     "page_number": 63,
+     "pages_count": 474,
+     "title": "Old Testament",
+     "url": "https://images.sourcelibrary.org/archived/69c1bd328522835be846821a/63.jpg"
+    },
+    {
+     "book_id": "69a5f2110a8b44a5d9dc9296",
+     "page_number": 200,
+     "pages_count": 382,
+     "title": "Cathedral Homilies (tr. Paul of Callinicum)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f2110a8b44a5d9dc9296/200.jpg"
+    },
+    {
+     "book_id": "69943c7813c9a0dce2757b20",
+     "page_number": 496,
+     "pages_count": 672,
+     "title": "De Perfectione Religiosa",
+     "url": "https://images.sourcelibrary.org/archived/69943c7813c9a0dce2757b20/496.jpg"
+    },
+    {
+     "book_id": "69a5f359d4c2e3cf8ecb82c3",
+     "page_number": 356,
+     "pages_count": 434,
+     "title": "Liturgical and Patristic Anthology",
+     "url": "https://images.sourcelibrary.org/archived/69a5f359d4c2e3cf8ecb82c3/356.jpg"
+    },
+    {
+     "book_id": "69a5f3e01cf742c360413635",
+     "page_number": 218,
+     "pages_count": 650,
+     "title": "Patrologia Syriaca, Pars I.2: Aphraatis Demonstrationes (cont.)",
+     "url": "https://images.sourcelibrary.org/archived/69a5f3e01cf742c360413635/218.jpg"
+    }
+   ]
+  },
+  "Tibetan": {
+   "raw_labels": [
+    "Tibetan (script); Tibetan",
+    "Tibetan; Tibetan (script)",
+    "Tibetan"
+   ],
+   "books": 2020,
+   "misses": 0,
+   "pages": [
+    {
+     "book_id": "69e788644a6785cfd60d0dbb",
+     "page_number": 105,
+     "pages_count": 117,
+     "title": "gur drag las byang sogs",
+     "url": "https://images.sourcelibrary.org/archived/69e788644a6785cfd60d0dbb/105.jpg"
+    },
+    {
+     "book_id": "6a37ca3406d55b107dad4b8e",
+     "page_number": 25,
+     "pages_count": 32,
+     "title": "blo gros rgya mtsho'i rtogs brjod/",
+     "url": "https://images.sourcelibrary.org/archived/6a37ca3406d55b107dad4b8e/25.jpg"
+    },
+    {
+     "book_id": "6a379f696b84dd3f2ea58223",
+     "page_number": 902,
+     "pages_count": 1685,
+     "title": "gsung thor bu/_bsod nams lhun grub/",
+     "url": "https://images.sourcelibrary.org/archived/6a379f696b84dd3f2ea58223/902.jpg"
+    },
+    {
+     "book_id": "6a37ca2306d55b107dad4819",
+     "page_number": 3,
+     "pages_count": 6,
+     "title": "pradz+nyA de wI swa ra swa ti stro tra paN+Di ta ma ti tsi ta wak+ki bi dza hraH",
+     "url": "https://images.sourcelibrary.org/archived/6a37ca2306d55b107dad4819/3.jpg"
+    },
+    {
+     "book_id": "6a14e12a2f45ee330c273abb",
+     "page_number": 143,
+     "pages_count": 462,
+     "title": "Tshamdrak rNying rgyud Tha",
+     "url": "https://images.sourcelibrary.org/archived/6a14e12a2f45ee330c273abb/143.jpg"
+    },
+    {
+     "book_id": "6a37d9cfd07939943b2576ff",
+     "page_number": 179,
+     "pages_count": 552,
+     "title": "gsung ngag lam 'bras snyan gsum rgyud gsum snying po'i legs bshad : a detailed p",
+     "url": "https://images.sourcelibrary.org/archived/6a37d9cfd07939943b2576ff/179.jpg"
+    },
+    {
+     "book_id": "69e789094a6785cfd60d2676",
+     "page_number": 7,
+     "pages_count": 16,
+     "title": "Kun mkhyen chos kyi rgyal po gter chen dri med ’od zer gyi rnam par thar pa cung",
+     "url": "https://images.sourcelibrary.org/archived/69e789094a6785cfd60d2676/7.jpg"
+    },
+    {
+     "book_id": "69e77a1f0fc6fc955e35dde9",
+     "page_number": 92,
+     "pages_count": 128,
+     "title": "Jo bo rje'i rnam thar",
+     "url": "https://images.sourcelibrary.org/archived/69e77a1f0fc6fc955e35dde9/92.jpg"
+    },
+    {
+     "book_id": "69e788484a6785cfd60d0434",
+     "page_number": 75,
+     "pages_count": 198,
+     "title": "she bya rab tu gsal ba'I bstan bcos dang seng gdong sgrub thabs sogs",
+     "url": "https://images.sourcelibrary.org/archived/69e788484a6785cfd60d0434/75.jpg"
+    },
+    {
+     "book_id": "69e761bdcc48e59ad74f15ce",
+     "page_number": 75,
+     "pages_count": 276,
+     "title": "mNga bdag myang gi guru drag po'i skor",
+     "url": "https://images.sourcelibrary.org/archived/69e761bdcc48e59ad74f15ce/75.jpg"
+    },
+    {
+     "book_id": "69e78b5a4a6785cfd60d5313",
+     "page_number": 14,
+     "pages_count": 20,
+     "title": "Legs par bshad pa'i rin po che'i gter",
+     "url": "https://images.sourcelibrary.org/archived/69e78b5a4a6785cfd60d5313/14.jpg"
+    },
+    {
+     "book_id": "6a37d70cd07939943b23ecf7",
+     "page_number": 358,
+     "pages_count": 1284,
+     "title": "同仁县志",
+     "url": "https://images.sourcelibrary.org/archived/6a37d70cd07939943b23ecf7/358.jpg"
+    },
+    {
+     "book_id": "69e787ff4a6785cfd60ce740",
+     "page_number": 132,
+     "pages_count": 190,
+     "title": "klong gsal skor gsum gyi spyi rgyud dam pa",
+     "url": "https://images.sourcelibrary.org/archived/69e787ff4a6785cfd60ce740/132.jpg"
+    },
+    {
+     "book_id": "69e7962980b52390feb18e3c",
+     "page_number": 23,
+     "pages_count": 29,
+     "title": "bcom ldan bong zhal can gyi zab khrid mkha’ ‘gro’i zhal lung h’ung bam rdo je’i ",
+     "url": "https://images.sourcelibrary.org/archived/69e7962980b52390feb18e3c/23.jpg"
+    },
+    {
+     "book_id": "69e789be4a6785cfd60d2e15",
+     "page_number": 1,
+     "pages_count": 4,
+     "title": "stag tshang gter ston rdo rje phur pa'i dam can mchod bskul dug mda' nag po",
+     "url": "https://images.sourcelibrary.org/archived/69e789be4a6785cfd60d2e15/1.jpg"
+    },
+    {
+     "book_id": "69e787d14a6785cfd60cdb41",
+     "page_number": 36,
+     "pages_count": 210,
+     "title": "pad gling gur drag chos sde yongs rdzogs",
+     "url": "https://images.sourcelibrary.org/archived/69e787d14a6785cfd60cdb41/36.jpg"
+    },
+    {
+     "book_id": "69e78a164a6785cfd60d2f7e",
+     "page_number": 2,
+     "pages_count": 4,
+     "title": "gu ru drag po’i las tshogs bgegs bskrad",
+     "url": "https://images.sourcelibrary.org/archived/69e78a164a6785cfd60d2f7e/2.jpg"
+    },
+    {
+     "book_id": "69e786b96846fc56c490e952",
+     "page_number": 211,
+     "pages_count": 356,
+     "title": "rNying ma rgyud 'bum Tha",
+     "url": "https://images.sourcelibrary.org/archived/69e786b96846fc56c490e952/211.jpg"
+    },
+    {
+     "book_id": "6a37da48d07939943b2664af",
+     "page_number": 63,
+     "pages_count": 164,
+     "title": "lam mchog rin po che'i 'phreng ba'i rtsa ba dang snyan rgyud yid bzhin gyi nor b",
+     "url": "https://images.sourcelibrary.org/archived/6a37da48d07939943b2664af/63.jpg"
+    },
+    {
+     "book_id": "69e7966b80b52390feb19653",
+     "page_number": 2,
+     "pages_count": 4,
+     "title": "lung ston pa rtsa ba sum cu pa dang rtags kyi 'jug pa",
+     "url": "https://images.sourcelibrary.org/archived/69e7966b80b52390feb19653/2.jpg"
+    }
+   ]
+  }
+ }
+}

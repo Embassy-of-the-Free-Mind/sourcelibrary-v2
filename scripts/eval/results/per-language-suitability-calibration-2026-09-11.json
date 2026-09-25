@@ -1,0 +1,236 @@
+{
+ "rows": [
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "agree": 0.014,
+   "dcer_pp": 4.28,
+   "lang": "latin"
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "agree": 0.025,
+   "dcer_pp": 5,
+   "lang": "chinese"
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "agree": 0.126,
+   "dcer_pp": -24.87,
+   "lang": "hebrew"
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "agree": 0.292,
+   "dcer_pp": 0.97,
+   "lang": "latin"
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-13",
+   "agree": 0.341,
+   "dcer_pp": 1.83,
+   "lang": "armenian"
+  },
+  {
+   "slug": "latin-aeneid-10-pallas",
+   "agree": 0.4,
+   "dcer_pp": 0.25,
+   "lang": "latin"
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "agree": 0.408,
+   "dcer_pp": 0,
+   "lang": "latin"
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "agree": 0.45,
+   "dcer_pp": -0.24,
+   "lang": "latin"
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "agree": 0.516,
+   "dcer_pp": 1.96,
+   "lang": "chinese"
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "agree": 0.619,
+   "dcer_pp": 1.13,
+   "lang": "chinese"
+  },
+  {
+   "slug": "greek-iliad-13-idomeneus",
+   "agree": 0.684,
+   "dcer_pp": 2.81,
+   "lang": "greek"
+  },
+  {
+   "slug": "german-herder-sprache-p44",
+   "agree": 0.71,
+   "dcer_pp": 0.9,
+   "lang": "german"
+  },
+  {
+   "slug": "armenian-zohrab-1chronicles-1",
+   "agree": 0.718,
+   "dcer_pp": 1.82,
+   "lang": "armenian"
+  },
+  {
+   "slug": "greek-iliad-1",
+   "agree": 0.739,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "agree": 0.8,
+   "dcer_pp": 2.16,
+   "lang": "hebrew"
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-3-35",
+   "agree": 0.84,
+   "dcer_pp": 0.7,
+   "lang": "armenian"
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "agree": 0.902,
+   "dcer_pp": 0.18,
+   "lang": "armenian"
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "agree": 0.91,
+   "dcer_pp": 0.66,
+   "lang": "armenian"
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "agree": 0.914,
+   "dcer_pp": 0,
+   "lang": "hebrew"
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-203",
+   "agree": 0.922,
+   "dcer_pp": -0.23,
+   "lang": "armenian"
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "agree": 0.924,
+   "dcer_pp": 1.23,
+   "lang": "latin"
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "agree": 0.93,
+   "dcer_pp": 0.5,
+   "lang": "armenian"
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-157",
+   "agree": 0.939,
+   "dcer_pp": 0.33,
+   "lang": "armenian"
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "agree": 0.956,
+   "dcer_pp": 0,
+   "lang": "chinese"
+  },
+  {
+   "slug": "greek-hero-pneumatica-306",
+   "agree": 0.96,
+   "dcer_pp": 0.3,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-philo-opificio-55",
+   "agree": 0.963,
+   "dcer_pp": 0.57,
+   "lang": "greek"
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "agree": 0.972,
+   "dcer_pp": 0,
+   "lang": "chinese"
+  },
+  {
+   "slug": "greek-simplicius-in-phys-300",
+   "agree": 0.982,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "agree": 0.984,
+   "dcer_pp": 0.19,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-philo-opificio-38",
+   "agree": 0.99,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-simplicius-in-phys-500",
+   "agree": 0.991,
+   "dcer_pp": 0.1,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-hero-pneumatica-266",
+   "agree": 0.992,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "german-hegel-logik-p148",
+   "agree": 0.993,
+   "dcer_pp": 0,
+   "lang": "german"
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "agree": 0.994,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "agree": 0.995,
+   "dcer_pp": 0,
+   "lang": "greek"
+  },
+  {
+   "slug": "german-boltzmann-gastheorie2-p128",
+   "agree": 1,
+   "dcer_pp": 0,
+   "lang": "german"
+  },
+  {
+   "slug": "german-hegel-phaenomenologie-p351",
+   "agree": 1,
+   "dcer_pp": 0,
+   "lang": "german"
+  },
+  {
+   "slug": "german-humboldt-kosmos1-p150",
+   "agree": 1,
+   "dcer_pp": 0,
+   "lang": "german"
+  }
+ ],
+ "within_p10": 0.408,
+ "within_p25": 0.84,
+ "within_median": 0.956,
+ "beyond_median": 0.516
+}
