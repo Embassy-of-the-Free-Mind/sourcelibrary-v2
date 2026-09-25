@@ -261,6 +261,22 @@ describe('seamPairs and chooseSeamText', () => {
     expect(choice).toMatchObject({ source: 'draft', reason: 'repair-runaway' });
     expect(chooseSeamText({ ocr, draft: draftFor(9), repaired: repairFor(9) }).source).toBe('repair');
   });
+
+  // #5085: a blind junction judge rewarded both of these; only a check against the source/draft sees them.
+  const latin = 'In principio erat verbum et verbum erat apud deum et deus erat verbum hoc erat in principio apud deum omnia per ipsum facta sunt et sine ipso factum est nihil quod factum est in ipso vita erat et vita erat lux hominum et lux in tenebris lucet et tenebrae eam non comprehenderunt fuit homo missus a deo cui nomen erat iohannes hic venit in testimonium ut testimonium perhiberet de lumine';
+  const english = 'In the beginning was the Word, and the Word was with God, and the Word was God. The same was in the beginning with God. All things were made by him, and without him was not any thing made that was made. In him was life, and the life was the light of men. And the light shineth in darkness, and the darkness comprehended it not. There was a man sent from God, whose name was John. The same came for a witness, to bear witness of the Light.';
+  it('falls back to the draft when the repair echoes the source the draft translated (repair-echo)', () => {
+    const ocr = `<language>Latin</language>\n${latin}`;
+    expect(chooseSeamText({ ocr, draft: english, repaired: latin })).toMatchObject({ source: 'draft', reason: 'repair-echo' });
+    expect(chooseSeamText({ ocr, draft: english, repaired: english.replace('Word', 'word') }).source).toBe('repair');
+  });
+  it('falls back to the draft when the repair drops a large part of the page (repair-short)', () => {
+    const ocr = `<language>Latin</language>\n${latin}`;
+    const cut = english.slice(0, Math.floor(english.length * 0.6));
+    expect(chooseSeamText({ ocr, draft: english, repaired: cut })).toMatchObject({ source: 'draft', reason: 'repair-short' });
+    // Removing one duplicated clause is a legitimate repair, not an omission.
+    expect(chooseSeamText({ ocr, draft: english, repaired: english.replace(' The same was in the beginning with God.', '') }).source).toBe('repair');
+  });
 });
 
 // ── A whole run, mocked ────────────────────────────────────────────────────
