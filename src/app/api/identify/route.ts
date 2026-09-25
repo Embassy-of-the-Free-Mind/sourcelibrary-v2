@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { CLIP_URL } from '@/lib/clip';
+import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import {
   getGalleryCandidatesByText,
   hydrateCandidates,
@@ -418,6 +419,21 @@ export async function POST(request: NextRequest) {
         if (book && book.visible === false) return { confirmed: null, candidateCount: candidates.length, ran: true };
         const slugOrId = (book?.slug as string) || picked.bookId;
         const h = picked._hydrated;
+        // The visitor wants the PAGE, not the book's front matter. Resolve the
+        // whole scan leaf for the card's thumbnail through the canonical
+        // resolver (image-host-allowlists invariant: never a raw stored host).
+        const pageDoc = h?.page_id
+          ? await db.collection('pages').findOne(
+            { id: h.page_id },
+            { projection: { _id: 0, photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, thumbnail: 1, split_from_spread: 1, crop: 1 }, maxTimeMS: 3000 },
+          ).catch(() => null)
+          : null;
+        const pageImageUrl = pageDoc ? getPageImageUrl(pageDoc as PageImageFields, 'display') : null;
+        const readUrl = h?.page_id
+          ? `/book/${slugOrId}/page/${h.page_id}`
+          : h?.page_number != null
+            ? `/book/${slugOrId}/page-number/${h.page_number}`
+            : `/book/${slugOrId}`;
         const confirmed: ConfirmedMatch = {
           book_id: picked.bookId,
           book_slug: book?.slug as string | undefined,
@@ -428,7 +444,8 @@ export async function POST(request: NextRequest) {
           page_number: h?.page_number,
           description: h?.description,
           image_url: picked.thumbnailUrl,
-          read_url: h?.page_id ? `/book/${slugOrId}/page/${h.page_id}` : `/book/${slugOrId}`,
+          page_image_url: pageImageUrl ?? undefined,
+          read_url: readUrl,
           gallery_url: picked.galleryId ? `/gallery/image/${picked.galleryId}` : undefined,
           source_type: picked.sourceType,
         };

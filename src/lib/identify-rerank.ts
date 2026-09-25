@@ -33,7 +33,20 @@ export interface ConfirmedMatch {
   page_id?: string;
   page_number?: number;
   description?: string;
+  /** The matched crop / gallery extract — what the visitor's photo was compared against. */
   image_url: string;
+  /**
+   * The whole scan page the match sits on, display size, from the canonical
+   * resolver (`getPageImageUrl`) — never a caller-supplied host. Absent when
+   * no page was hydrated or the page has no browser-safe image.
+   */
+  page_image_url?: string;
+  /**
+   * Page-first: `/book/<slug>/page/<page_id>` when the page was hydrated,
+   * `/book/<slug>/page-number/<n>` when only the number is known, and the book
+   * root only when neither is — the client labels that last case as "page not
+   * located" rather than pretending the button lands on the page.
+   */
   read_url: string;
   gallery_url?: string;
   source_type: string;

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { Camera, Upload, Loader2, ExternalLink } from 'lucide-react';
+import { Camera, Upload, Loader2, ExternalLink, Check } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { bookUrl } from '@/lib/slugify';
 
@@ -61,10 +61,75 @@ interface ConfirmedMatch {
   page_id?: string;
   page_number?: number;
   description?: string;
+  /** The matched crop — what the photo was compared against. */
   image_url: string;
+  /** The whole scan leaf the match sits on (display size), when the page was located. */
+  page_image_url?: string;
   read_url: string;
   gallery_url?: string;
   source_type: string;
+}
+
+/**
+ * Where each fact on the result came from — one vocabulary, real text (a
+ * screen reader reads the chip; an icon would say nothing). The visitor is
+ * deciding whether to trust an attribution, so a model's guess must never
+ * look like a catalogue entry.
+ */
+type Provenance = 'ai-reading' | 'web-check' | 'catalogue' | 'ai-description';
+const PROVENANCE: Record<Provenance, { label: string; className: string }> = {
+  'ai-reading': { label: 'AI reading of your photo', className: 'text-amber-800 bg-amber-50' },
+  'web-check': { label: 'Web check', className: 'text-blue-700 bg-blue-50' },
+  'catalogue': { label: 'Library catalogue', className: 'text-green-700 bg-green-50' },
+  'ai-description': { label: 'AI-generated description', className: 'text-stone-600 bg-stone-100' },
+};
+function ProvenanceChip({ kind, className = '' }: { kind: Provenance; className?: string }) {
+  const p = PROVENANCE[kind];
+  return (
+    <span className={`inline-block text-[10px] leading-4 rounded px-1.5 py-0.5 whitespace-nowrap ${p.className} ${className}`}>
+      {p.label}
+    </span>
+  );
+}
+
+/**
+ * Back/forward keeps the result. State lived only in React, so tapping a match
+ * and then pressing Back threw the identification away and the visitor paid
+ * for a second one. A completed result is parked in sessionStorage under a
+ * short id that rides on the URL (`?r=<id>`); the page restores from it on
+ * mount and on popstate without re-fetching. Session-scoped and client-only —
+ * a shareable result URL is a later step with its own photo-retention
+ * questions.
+ */
+const STORE_PREFIX = 'sl-identify:';
+const PHOTO_STORE_LIMIT = 1.5 * 1024 * 1024;
+interface StoredResult { result: Result; photoDataUrl?: string; ts: number }
+function storeResult(id: string, entry: StoredResult): void {
+  try {
+    sessionStorage.setItem(STORE_PREFIX + id, JSON.stringify(entry));
+  } catch {
+    // Quota: keep the result and drop the photo rather than keep nothing.
+    try { sessionStorage.setItem(STORE_PREFIX + id, JSON.stringify({ ...entry, photoDataUrl: undefined })); } catch { /* private mode */ }
+  }
+}
+function loadResult(id: string | null): StoredResult | null {
+  if (!id) return null;
+  try {
+    const raw = sessionStorage.getItem(STORE_PREFIX + id);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoredResult;
+    return parsed && parsed.result && Array.isArray(parsed.result.matches) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 }
 
 /** Client-side mirror of the server's bbox guard: malformed → no overlay. */
@@ -101,11 +166,45 @@ export default function IdentifyPage() {
   const lastFileRef = useRef<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  // The downscaled photo as a data URL, kept only when small enough to park
+  // in sessionStorage beside the result (see storeResult).
+  const photoForStoreRef = useRef<string | undefined>(undefined);
+
+  // Restore a parked result: on mount with `?r=`, and on every history
+  // traversal (Back from the reader lands here with the id still in the URL;
+  // Back once more, to the landing entry, has no id and clears the screen).
+  useEffect(() => {
+    const restore = () => {
+      const id = new URLSearchParams(window.location.search).get('r');
+      const stored = loadResult(id);
+      if (stored) {
+        setError(null);
+        setResult(stored.result);
+        setImage(stored.photoDataUrl ?? null);
+      } else if (id === null) {
+        setResult(null);
+        setImage(null);
+        setError(null);
+      }
+    };
+    restore();
+    window.addEventListener('popstate', restore);
+    return () => window.removeEventListener('popstate', restore);
+  }, []);
+
+  const parkResult = useCallback((final: Result) => {
+    const id = Math.random().toString(36).slice(2, 10);
+    storeResult(id, { result: final, photoDataUrl: photoForStoreRef.current, ts: Date.now() });
+    const url = new URL(window.location.href);
+    url.searchParams.set('r', id);
+    window.history.pushState({ identifyId: id }, '', url.pathname + url.search);
+  }, []);
 
   const submitFile = useCallback(async (file: File) => {
     setLoading(true);
     setError(null);
     setResult(null);
+    photoForStoreRef.current = undefined;
 
     // Fallback narration: if the stream is slow to open (or unsupported), the
     // spinner still tells the truth about what is happening and when.
@@ -134,6 +233,9 @@ export default function IdentifyPage() {
         // Fall through with original file if compression fails
       }
     }
+    if (imageFile.size < PHOTO_STORE_LIMIT) {
+      try { photoForStoreRef.current = await fileToDataUrl(imageFile); } catch { /* preview still works */ }
+    }
 
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -155,6 +257,7 @@ export default function IdentifyPage() {
           setError(data.detail || data.error || `Failed to identify (${res.status})`);
         } else {
           setResult(data);
+          parkResult(data);
         }
         return;
       }
@@ -163,27 +266,35 @@ export default function IdentifyPage() {
       // identified in ~6s; retrieval and visual confirmation follow — this is
       // what turns a ~25s opaque wait into visible progress.
       let sawTerminal = false;
+      // `acc` mirrors what setResult holds so the terminal event can park the
+      // finished result without waiting for a render.
+      let acc: Result | null = null;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const handleEvent = (evt: any) => {
         switch (evt.type) {
           case 'identification':
             clearTimers();
             setStageMessage('Searching the library…');
-            setResult({ identification: evt.data, matches: [], confirmed: null, page: null });
+            acc = { identification: evt.data, matches: [], confirmed: null, page: null };
+            setResult(acc);
             break;
           case 'matches':
             setStageMessage('Confirming the match visually…');
-            setResult(r => (r ? { ...r, matches: evt.data || [], visual_search: evt.visual_search } : r));
+            if (acc) acc = { ...acc, matches: evt.data || [], visual_search: evt.visual_search };
+            setResult(acc);
             break;
           case 'confirmed':
             setStageMessage('Checking catalogues…');
-            setResult(r => (r ? { ...r, confirmed: evt.data, page: evt.page ?? null, matches: evt.matches || r.matches } : r));
+            if (acc) acc = { ...acc, confirmed: evt.data, page: evt.page ?? null, matches: evt.matches || acc.matches };
+            setResult(acc);
             break;
           case 'verification':
-            setResult(r => (r ? { ...r, identification: evt.data, verified: true } : r));
+            if (acc) acc = { ...acc, identification: evt.data, verified: true };
+            setResult(acc);
             break;
           case 'done':
             sawTerminal = true;
+            if (acc) parkResult(acc);
             break;
           case 'error':
             sawTerminal = true;
@@ -221,7 +332,7 @@ export default function IdentifyPage() {
       setStageMessage(null);
       setLoading(false);
     }
-  }, []);
+  }, [parkResult]);
 
   const handleFile = useCallback(async (file: File) => {
     lastFileRef.current = file;
@@ -269,6 +380,30 @@ export default function IdentifyPage() {
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
     if (cameraInputRef.current) cameraInputRef.current.value = '';
+    // A new history entry, so Back returns to the result just left.
+    if (new URLSearchParams(window.location.search).has('r')) {
+      window.history.pushState({}, '', window.location.pathname);
+    }
+  }, []);
+
+  // "Copy citation": the quote endpoint mints the shortlink and the inline
+  // citation for the located page; both go on the clipboard as one block.
+  const [copyState, setCopyState] = useState<'idle' | 'busy' | 'done' | 'failed'>('idle');
+  const copyCitation = useCallback(async (bookId: string, pageNumber: number) => {
+    setCopyState('busy');
+    try {
+      const res = await fetch(`/api/books/${encodeURIComponent(bookId)}/quote?page=${pageNumber}`);
+      if (!res.ok) throw new Error(`quote ${res.status}`);
+      const data = await res.json();
+      const inline: string | undefined = data?.citation?.inline;
+      const shortUrl: string | undefined = data?.citation?.short_url;
+      if (!inline && !shortUrl) throw new Error('no citation');
+      await navigator.clipboard.writeText([inline, shortUrl].filter(Boolean).join('\n'));
+      setCopyState('done');
+    } catch {
+      setCopyState('failed');
+    }
+    setTimeout(() => setCopyState('idle'), 2500);
   }, []);
 
   return (
@@ -277,7 +412,7 @@ export default function IdentifyPage() {
           the landing hero speaks for itself */}
       <div className="bg-dark text-white">
         <SiteHeader variant="dark" />
-        {image && (
+        {(image || result) && (
           <div className="max-w-2xl mx-auto px-4 py-6">
             <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
             <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
@@ -381,7 +516,7 @@ export default function IdentifyPage() {
         </>
       )}
 
-      <div className={`max-w-2xl mx-auto px-4 space-y-6 ${image ? 'py-8' : ''}`}>
+      <div className={`max-w-2xl mx-auto px-4 space-y-6 ${image || result ? 'py-8' : ''}`}>
         {/* Preview + loading */}
         {image && (
           <div className="space-y-4">
@@ -430,6 +565,11 @@ export default function IdentifyPage() {
             )}
           </div>
         )}
+        {!image && result && !loading && (
+          <button onClick={reset} className="text-sm text-accent-rust hover:underline cursor-pointer">
+            Try another image
+          </button>
+        )}
 
         {/* Error */}
         {error && (
@@ -457,10 +597,17 @@ export default function IdentifyPage() {
               </div>
             )}
 
-            {/* Visually confirmed match — the answer, front and center */}
-            {result.confirmed && (
+            {/* Visually confirmed match — the answer, front and center. The
+                visitor photographed a print and wants to GET TO IT: the page in
+                the reader, with translation. So the primary action is the page,
+                and the card says which facts are the catalogue's. */}
+            {result.confirmed && (() => {
+              const c = result.confirmed;
+              const pageLocated = !!c.page_id || c.page_number != null;
+              const secondaryBtn = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-light text-xs text-secondary hover:border-accent-rust/30 hover:text-primary transition-colors cursor-pointer';
+              return (
               <div className="rounded-xl overflow-hidden bg-white border-2 border-accent-rust/40 shadow-sm">
-                <div className="flex items-center gap-2 px-5 py-3 bg-accent-rust/5 border-b border-accent-rust/20">
+                <div className="flex items-center gap-2 px-5 py-3 bg-accent-rust/5 border-b border-accent-rust/20 flex-wrap">
                   <span className="text-xs font-semibold uppercase tracking-wider text-accent-rust">Found in the library</span>
                   <span className="text-[10px] text-green-700 bg-green-50 rounded px-1.5 py-0.5">confirmed by visual comparison</span>
                 </div>
@@ -469,49 +616,97 @@ export default function IdentifyPage() {
                       stretching to row height and leaving a gray dead zone */}
                   <div className="w-24 sm:w-32 flex-shrink-0 self-start rounded overflow-hidden bg-stone-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={result.confirmed.image_url} alt="" className="w-full h-auto object-contain" />
+                    <img src={c.image_url} alt="The matched illustration" className="w-full h-auto object-contain" />
                   </div>
                   <div className="flex-1 min-w-0 space-y-1.5">
-                    {result.confirmed.description && (
-                      <p className="text-sm text-secondary line-clamp-3">{result.confirmed.description}</p>
-                    )}
+                    <ProvenanceChip kind="catalogue" />
                     <p className="font-display font-semibold text-primary">
-                      {result.confirmed.book_title}
+                      {c.book_title}
                       {/* "scan page", not "page": the work's own plate numbering
                           (e.g. the Codex Borgia's "Page 56") can differ from our
                           scan sequence, and the Analysis card may show it */}
-                      {result.confirmed.page_number != null && (
-                        <span className="text-sm font-normal text-muted ml-2">scan page {result.confirmed.page_number}</span>
+                      {c.page_number != null && (
+                        <span className="text-sm font-normal text-muted ml-2">scan page {c.page_number}</span>
                       )}
                     </p>
-                    {result.confirmed.book_author && (
-                      <p className="text-sm text-secondary">{result.confirmed.book_author}</p>
+                    {c.book_author && (
+                      <p className="text-sm text-secondary">{c.book_author}</p>
                     )}
-                    <div className="flex flex-wrap gap-2 pt-2">
+                    {c.description && (
+                      <div className="pt-1">
+                        <ProvenanceChip kind="ai-description" />
+                        <p className="text-sm text-secondary line-clamp-3 mt-1">{c.description}</p>
+                      </div>
+                    )}
+                    <div className="pt-2">
                       <Link
-                        href={result.confirmed.read_url}
+                        href={c.read_url}
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
                       >
-                        Read this book
+                        {pageLocated ? 'Go to the source' : 'Open the book (page not located)'}
                       </Link>
-                      {result.confirmed.gallery_url && (
-                        <Link
-                          href={result.confirmed.gallery_url}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-rust/30 transition-colors"
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {c.gallery_url && (
+                        <Link href={c.gallery_url} className={secondaryBtn}>View in gallery</Link>
+                      )}
+                      {c.page_image_url && (
+                        <a href={c.page_image_url} target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
+                          Open the scan
+                          <ExternalLink className="w-3 h-3" aria-hidden />
+                        </a>
+                      )}
+                      {c.page_number != null && (
+                        <button
+                          type="button"
+                          onClick={() => copyCitation(c.book_id, c.page_number as number)}
+                          disabled={copyState === 'busy'}
+                          className={`${secondaryBtn} disabled:opacity-60`}
+                          aria-live="polite"
                         >
-                          View in gallery
-                        </Link>
+                          {copyState === 'done' ? (
+                            <><Check className="w-3 h-3" aria-hidden /> Copied</>
+                          ) : copyState === 'failed' ? (
+                            'Could not copy'
+                          ) : copyState === 'busy' ? (
+                            'Copying…'
+                          ) : (
+                            'Copy citation'
+                          )}
+                        </button>
                       )}
                     </div>
                   </div>
                 </div>
+                {/* The whole leaf, not just the matched crop — this is the
+                    page the primary button lands on */}
+                {c.page_image_url && pageLocated && (
+                  <div className="border-t border-border-light bg-stone-50 px-5 py-4">
+                    <Link href={c.read_url} className="block group">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.page_image_url}
+                        alt={`Scan of ${c.book_title || 'the book'}${c.page_number != null ? `, page ${c.page_number}` : ''}`}
+                        loading="lazy"
+                        className="mx-auto max-h-72 w-auto h-auto rounded shadow-sm bg-white group-hover:shadow-md transition-shadow"
+                      />
+                      <p className="text-center text-xs text-muted mt-2 group-hover:text-accent-rust transition-colors">
+                        {c.page_number != null ? `Scan page ${c.page_number}` : 'The scan page'} — open in the reader
+                      </p>
+                    </Link>
+                  </div>
+                )}
               </div>
-            )}
+              );
+            })()}
 
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+                  <ProvenanceChip kind="ai-reading" />
+                </div>
                 {result.identification.confidence && (
                   <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                     result.identification.confidence === 'high'
@@ -524,6 +719,13 @@ export default function IdentifyPage() {
                   </span>
                 )}
               </div>
+              {/* Legend: one line, same vocabulary as every chip on the page */}
+              <p className="text-xs text-muted">
+                Labels say where each fact comes from: <span className="text-amber-800">AI reading of your photo</span> is a
+                model&apos;s guess from the image; <span className="text-blue-700">Web check</span> is what a web search
+                found for that guess; <span className="text-green-700">Library catalogue</span> is our own record of the
+                book; <span className="text-stone-600">AI-generated description</span> was written by a model, not a curator.
+              </p>
               {result.identification.confidence_reason && (
                 <p className="text-xs text-muted italic">{result.identification.confidence_reason}</p>
               )}
@@ -537,7 +739,7 @@ export default function IdentifyPage() {
                         {result.identification.artist && result.identification.artist !== result.identification.verified_artist && (
                           <span className="text-xs text-muted ml-2 line-through">{result.identification.artist}</span>
                         )}
-                        <span className="text-[10px] text-green-700 bg-green-50 rounded px-1 py-0.5 ml-1.5">verified</span>
+                        <ProvenanceChip kind="web-check" className="ml-1.5" />
                       </dd>
                     ) : (
                       <dd className="text-primary font-medium">{result.identification.artist}</dd>
@@ -553,7 +755,7 @@ export default function IdentifyPage() {
                         {result.identification.title && result.identification.title !== result.identification.verified_title && (
                           <span className="text-xs text-muted ml-2 line-through">{result.identification.title}</span>
                         )}
-                        <span className="text-[10px] text-green-700 bg-green-50 rounded px-1 py-0.5 ml-1.5">verified</span>
+                        <ProvenanceChip kind="web-check" className="ml-1.5" />
                       </dd>
                     ) : (
                       <dd className="text-primary">{result.identification.title}</dd>
@@ -599,7 +801,7 @@ export default function IdentifyPage() {
               {/* Catalog numbers */}
               {result.identification.catalog_numbers && result.identification.catalog_numbers.length > 0 && (
                 <div className="pt-3 border-t border-border-light">
-                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Catalogue references</h3>
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1 flex items-center gap-2">Catalogue references <ProvenanceChip kind="web-check" /></h3>
                   <div className="flex flex-wrap gap-1.5">
                     {result.identification.catalog_numbers.map((num, i) => (
                       <span key={i} className="text-xs bg-stone-100 text-stone-700 rounded px-2 py-0.5 font-mono">{num}</span>
@@ -611,7 +813,7 @@ export default function IdentifyPage() {
               {/* Web sources from Google Search verification */}
               {result.identification.web_sources && result.identification.web_sources.length > 0 && (
                 <div className="pt-3 border-t border-border-light">
-                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Sources</h3>
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1 flex items-center gap-2">Sources <ProvenanceChip kind="web-check" /></h3>
                   <div className="space-y-1">
                     {result.identification.web_sources.map((src, i) => (
                       <a
@@ -631,7 +833,7 @@ export default function IdentifyPage() {
               {/* Alternative identifications */}
               {result.identification.alternative_identifications && result.identification.alternative_identifications.length > 0 && (
                 <div className="pt-3 border-t border-border-light">
-                  <h3 className="text-xs uppercase tracking-wider text-muted mb-2">Other possibilities</h3>
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-2 flex items-center gap-2">Other possibilities <ProvenanceChip kind="ai-reading" /></h3>
                   <div className="space-y-2">
                     {result.identification.alternative_identifications.map((alt, i) => (
                       <div key={i} className="text-sm bg-stone-50 rounded-lg p-3">
@@ -654,6 +856,7 @@ export default function IdentifyPage() {
                       ? 'Related results'
                       : result.matches.length === 1 ? 'Closest Match' : `${result.matches.length} Possible Matches`}
                   </h2>
+                  <ProvenanceChip kind="catalogue" />
                   {result.visual_search && (
                     <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
                   )}
