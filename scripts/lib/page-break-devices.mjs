@@ -214,7 +214,8 @@ export const LOOKAHEAD_CLAUSE = Object.freeze({ max: 160, min: 12, clause: true 
 export function lookaheadSnippet(ocrNext, { max = LOOKAHEAD_MAX_CHARS, min = LOOKAHEAD_MIN_CHARS, clause = false } = {}) {
   const prose = maskApparatus(ocrNext).replace(/\s+/g, ' ').trim();
   if (!hasLetter(prose)) return '';
-  const end = prose.slice(min).search(clause ? /[.!?,;:](?:\s|$)/u : /[.!?](?:\s|$)/u);
+  // The virgule ("/ ") is the comma of Fraktur printing.
+  const end = prose.slice(min).search(clause ? /[.!?,;:/](?:\s|$)/u : /[.!?](?:\s|$)/u);
   let cut = end === -1 ? prose.length : min + end + 1;
   if (cut > max) {
     const sp = prose.lastIndexOf(' ', max);
