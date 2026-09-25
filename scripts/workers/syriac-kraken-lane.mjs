@@ -343,7 +343,7 @@ async function apply() {
       const pids = writes.map((w) => w.p.id);
       // saveRevisions stores nothing for an empty page or a bare marker — expect exactly the rest
       const withText = writes.filter((w) => w.p.ocr?.data && w.p.ocr.data !== '[RECITATION_BLOCKED]').length;
-      const nRev = await saveRevisionsBeforeOverwrite(db, pids, 'ocr', { reason: REVISION_REASON });
+      const nRev = await saveRevisionsBeforeOverwrite(db, pids, 'ocr', { reason: REVISION_REASON, keepMeta: true });
       if (nRev !== withText) { log(`ABORT ${bid}: saved ${nRev} revisions for ${withText} pages with text — not overwriting`); continue; }
       const now = new Date();
       let modified = 0;
