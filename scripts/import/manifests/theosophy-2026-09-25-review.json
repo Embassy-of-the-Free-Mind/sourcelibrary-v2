@@ -1,0 +1,1985 @@
+{
+  "note": "Curated by ia-campaign-curate.mjs on 2026-09-25 from cand-subject.json, cand-title.json, cand-creator.json, cand-subject2.json; config theosophy.json. Every id probed against archive.org/metadata: not access-restricted, not lending, page images present (jp2), imprint ≤ 1930. One scan per work; alternates listed per book. REVIEW manifest: ids matching review_id_patterns (metadata known-unreliable — e.g. Digital Library of India years are often the author's birth year). Confirm imprint and language on the title page before --commit.",
+  "campaign": "theosophy-2026-09-25",
+  "collections": [
+    "theosophical-tradition"
+  ],
+  "BOOKS": [
+    {
+      "id": "dli.pahar.0421",
+      "title": "Reflections Of A Journey Through Tartary Thibet And China By Huc Translated By Sinnett S.pdf",
+      "author": "Huc Translated By Sinnett S",
+      "year": 1852,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern"
+    },
+    {
+      "id": "67530490R.nlm.nih.gov",
+      "title": "Dr. Franz Hartmann's diseases of children and their homoeopathic treatment",
+      "author": "Franz Hartmann",
+      "year": 1853,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "in.ernet.dli.2015.502226",
+      "title": "From The Twelfth To The Sixteenth Century",
+      "author": "Percy Sinnett",
+      "year": 1854,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.179201",
+      "title": "An Account Of The Life, Options, And Writings Of John Milton.",
+      "author": "Thomas Keightley",
+      "year": 1855,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "bub_man_8224fbc81f5dfa58d39ba30e6e83f009",
+      "title": "Mahatma Bijay Krishna Goswami Jiban Brittanta",
+      "author": "Banku Bihari Dhar",
+      "year": 1864,
+      "lang": "English",
+      "note": "CLEAR:stated; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.291487"
+    },
+    {
+      "id": "india.history.resource.88953",
+      "title": "In Defence of Hinduism; a booklist written for Hindu Boys",
+      "author": "Annie Besant",
+      "year": 1867,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.61518",
+      "title": "Mahatma Vol I",
+      "author": "D.g. Tendulkar",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: MahatmavolI"
+    },
+    {
+      "id": "in.ernet.dli.2015.40167",
+      "title": "Mahatma Vol. 8",
+      "author": "D. G. Tendulkar",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.43350",
+      "title": "Mahatma Vol. 9",
+      "author": "D. G. Tendulkar",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.43349",
+      "title": "Mahatma Vol.10",
+      "author": "D. G. Tendulkar",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.63775",
+      "title": "Mahatma, Life Of Mohandas Karamchand Gandhi(1)",
+      "author": "D. G. Tendulkar",
+      "year": 1869,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.63777"
+    },
+    {
+      "id": "india.history.resource.85156",
+      "title": "Inaugural Address of the President Founder of the Theosophical Society; delivered at Mott Memorial Hall, New York City, at the First Regular Meeting of the Society, November 17th, 1875",
+      "author": "H. S. Col. Olcott",
+      "year": 1875,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.89131",
+      "title": "Isis Unveiled A Master Key To The Mysteries Of Ancient And Modern Science And Theology Vol Ii Theology",
+      "author": "H. P. Blavatsky",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.26049",
+      "title": "Jñānānanda padābalī : atmatattva o saṭacakra barṇana mahātmā tulsī dāsera doṁhā",
+      "author": "Rāmaprasāda Kabirañjana Sen",
+      "year": 1877,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.290451",
+      "title": "Mahatma Raja Rammohan Rayer Jibancharit",
+      "author": "Not Available",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.8492",
+      "title": "Mahatma Raja Rammohan Rayer Jibancharit মহাত্মা রাজা রামমোহন রায়ের জীবন চরিত",
+      "author": "Unknown",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.17168",
+      "title": "Mind in animals",
+      "author": "Annie; Büchner Ludwig Besant",
+      "year": 1880,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.69086",
+      "title": "Mahatma Voll I",
+      "author": "Not Available",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.06465",
+      "title": "The spirit of the Zoroastrain Religion",
+      "author": "Henry S. Olcott",
+      "year": 1882,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.69085",
+      "title": "Mahatma Voll Iii",
+      "author": "Not Available",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.96657",
+      "title": "Theosophical Miscellanies No. 2",
+      "author": "Eliphas Levi",
+      "year": 1883,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.19494"
+    },
+    {
+      "id": "in.ernet.dli.2015.42633",
+      "title": "The Purpose Of Theosophy",
+      "author": "A.p. Sinnett",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: purposetheosoph00sinngoog"
+    },
+    {
+      "id": "india.history.resource.89344",
+      "title": "Some Account of my Intercourse with Madame Blavatsky, from 1872 to 1884; with a number of additional Letters and a full explanation of the most marvellous Theosophical Phenomena",
+      "author": "Madame Coulomb",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: someaccountmyin00coulgoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.336102",
+      "title": "Mahatma Thiodor Parkarer Jibancharit",
+      "author": "Nagendranath Chattopadhyay",
+      "year": 1885,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.4294",
+      "title": "Mahatma Sent Pauler Jiban Brittanta মহাত্মা সেন্টপলের জীবন বৃত্তান্ত",
+      "author": "Debendranath Mukhopadhyay",
+      "year": 1887,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.62114",
+      "title": "Mahatma Gandi The World Signifcance",
+      "author": "John Haynes Holmes",
+      "year": 1888,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophicalsift0000unse.vol.I.1889",
+      "title": "Theosophical Sifting Vol-I : 1888-89",
+      "author": "Unknown",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.337087",
+      "title": "Mahatma Raja Rammohon Rayer Jibancharit",
+      "author": "Nagendranath Chattopadhyay",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.315614",
+      "title": "Sri Sri Nabadwip Dham Mahatma",
+      "author": "Kedar Nath Dutta",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "01620350R.nlm.nih.gov",
+      "title": "The law of population, its consequences and its bearing upon human conduct and morals",
+      "author": "Annie Besant",
+      "year": 1889,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "in.ernet.dli.2015.176133",
+      "title": "Mahatma Gandi",
+      "author": "Vincent Sheean",
+      "year": 1890,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.354140",
+      "title": "Mahatma Raja Ram Mohun Roy Ed. 2nd",
+      "author": "nanda Mohan Chattapadhaya",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.19396",
+      "title": "MAHATMA RAJA RAM MOHUN ROY ED. 2ND মহাত্মা রাজা রমমোহন রায় ২য় সংস্করণ",
+      "author": "NANDA MOHAN CHATERJE",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "101494017.nlm.nih.gov",
+      "title": "The life and doctrines of Jacob Boehme, the God-taught philosopher : an introduction to the study of his works",
+      "author": "Franz Hartmann",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by U.S. National Library of Medicine"
+    },
+    {
+      "id": "in.ernet.dli.2015.216436",
+      "title": "The Mystic Quest",
+      "author": "William Kingsland",
+      "year": 1891,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.280",
+      "title": "Theosophy or Psychological Religion",
+      "author": "F Max Muller K M",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.10983",
+      "title": "From the caves and Jungles of hindustan",
+      "author": "Helena Petrovna Blavatsky",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: fromcavesandjun00blavgoog"
+    },
+    {
+      "id": "india.history.resource.110833",
+      "title": "From the Caves and Jungles of Hindostan, Tr. from the Russian",
+      "author": "Helena Petrovna Blavatsky",
+      "year": 1892,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.213553",
+      "title": "Theosophy Or Psychological Religion",
+      "author": "Max Muller F",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.291488",
+      "title": "Mahatma John Howarder Jeebancharit, Ed. 2",
+      "author": "Sri Sricharan Chakraborty",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.175364",
+      "title": "The Secret Doctrine Vol-ii",
+      "author": "H. P. Blavatsky",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180593",
+      "title": "The Secret Doctrine Vol. 1",
+      "author": "H. P. Blavatsky",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.47965"
+    },
+    {
+      "id": "in.ernet.dli.2015.180594",
+      "title": "The Secret Doctrine Vol. 2",
+      "author": "H. P. Blavatsky",
+      "year": 1893,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.47966"
+    },
+    {
+      "id": "dli.ernet.277387",
+      "title": "Death-and after - Theosophical Manuals No.3",
+      "author": "Annie Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.163362",
+      "title": "Death Amp After.",
+      "author": "Annie Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.141292",
+      "title": "Methods Of Psychic Development",
+      "author": "C. W. Leadbeater",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.205041",
+      "title": "Place Of Peace.",
+      "author": "Annie Besant",
+      "year": 1894,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.277382",
+      "title": "Karma - Theosophical Manuals No.IV",
+      "author": "Annie Besant",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.43482",
+      "title": "The Secret Doctrine - Index Ed. 3",
+      "author": "H. P. Blavatsky",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.181207",
+      "title": "The Self And Its Sheaths",
+      "author": "Annie Besant",
+      "year": 1895,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.irishtheosophica0000dndu.vol.iv.1895",
+      "title": "The Irish Theosophical Volume IV 1895-96",
+      "author": "D.N.Dunlop",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "in.ernet.dli.2015.499852",
+      "title": "The Selected Works Mahatma Gandhi Vol.i",
+      "author": "Not Available",
+      "year": 1896,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.499843, in.ernet.dli.2015.115390, in.ernet.dli.2015.115392, in.ernet.dli.2015.499844, in.ernet.dli.2015.499853"
+    },
+    {
+      "id": "in.ernet.dli.2015.217385",
+      "title": "The Ancient Wisdom",
+      "author": "Annie Besant",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: ancientwisdoman00besagoog, ancientwisdoman01besagoog"
+    },
+    {
+      "id": "dli.ernet.237646",
+      "title": "The Ancient Wisdom (1897)",
+      "author": "Besant Annie",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.47967",
+      "title": "The Secret Doctrine Vol. 3",
+      "author": "H. P. Blavatsky",
+      "year": 1897,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.180616"
+    },
+    {
+      "id": "in.ernet.dli.2015.202580",
+      "title": "The Theosophic Gleaner A Popular Journal Of Theosophy Volume Vii 1897 98",
+      "author": "Not Available",
+      "year": 1898,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.203957",
+      "title": "Theosophy Psychological Religion",
+      "author": "The Gifford",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.163381",
+      "title": "Path To Discipleship",
+      "author": "Annie. Besant",
+      "year": 1899,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.359804",
+      "title": "Karkat Mahatma Mangal Charan",
+      "author": "Chand Kishan",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.115647",
+      "title": "Mahatma Maharhsi Ka Prasad",
+      "author": "Rama Rajan",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.168902",
+      "title": "Old Diary Leaves The Only Authentic History Of The Theosophical Society",
+      "author": "Henry Steel Olcott",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.548161",
+      "title": "The Mahatma Gandhi Universal Being",
+      "author": "Rolland Romain",
+      "year": 1900,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.152843",
+      "title": "Theosophy Religion And Occult Science",
+      "author": "Henry S. Olcott",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: TheosophyReligionAndOccultScience"
+    },
+    {
+      "id": "dli.ernet.163363",
+      "title": "Esoteric Christianity Or The Lesser Mysteries.",
+      "author": "annie. Besant",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: esotericchristi00besagoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.59700",
+      "title": "Shri Rama Chandra The Ideal King",
+      "author": "Annie. Besant",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.23079",
+      "title": "Sri Rama Chandra the ideal king",
+      "author": "Annie Besant",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.503603",
+      "title": "Thought Power Its Control And Culcture",
+      "author": "Annie Besant",
+      "year": 1901,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.88952",
+      "title": "Three Paths and Dharma, 2nd ed.",
+      "author": "Annie Besant",
+      "year": 1902,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.128004",
+      "title": "Some Glimpses Of Occultism Ancient And Modern",
+      "author": "c.w. Leadbeater",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.262350",
+      "title": "The Eliments Of Theosophy",
+      "author": "Lilian Edger",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.262274"
+    },
+    {
+      "id": "in.ernet.dli.2015.163527",
+      "title": "Clairvoyance",
+      "author": "C.w Leadbeater",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117125",
+      "title": "In the Outer Court, 3rd ed.",
+      "author": "Annie Besant",
+      "year": 1903,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.18114",
+      "title": "Old diary leaves : the only authentic history of the theosophical society",
+      "author": "Henry Steel Olcott",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.13177",
+      "title": "Fourteen lessons in Yogi philosophy and oriental occultism",
+      "author": "Yogi Ramacharaka",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.218696, fourteenlessons00ramagoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.74166",
+      "title": "The Works Of Edgar Allan Poe Volume Five Tales Mystery And Occultism",
+      "author": "Funk Amp Wagnalls Company",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.88365",
+      "title": "The Christian Creed Its Origin And Signification",
+      "author": "C. W. Leadbeater",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.222654",
+      "title": "The Lost Lemuria",
+      "author": "W Scott Elliot",
+      "year": 1904,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.204965",
+      "title": "First Steps In Theosophy",
+      "author": "Ethyl M Mallet",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.306153",
+      "title": "Mahatma Kajirana Aadyatmik Pado",
+      "author": "Moti Lal",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.93570",
+      "title": "Occult Essays",
+      "author": "A. P. Sinnett",
+      "year": 1905,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: occultessays00sinngoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.43983",
+      "title": "Theosophist (1906) Vol.27",
+      "author": "Not Available",
+      "year": 1906,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.05439",
+      "title": "Psychism and theosophy",
+      "author": "Dreamer",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.22485",
+      "title": "The Secret Doctrine Part, 1. 2",
+      "author": "Helena Petrovna Blavatsky",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.24427",
+      "title": "Indian Spirituality",
+      "author": "Mohini Mohan Chatterji",
+      "year": 1907,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.9187",
+      "title": "The Science of The Emotions - 2nd ed.",
+      "author": "Bhagavan Das",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.117588"
+    },
+    {
+      "id": "india.history.resource.93569",
+      "title": "The Way of Initiation; or, how to attain Knowledge of the higher Worlds",
+      "author": "Rudolf Steiner",
+      "year": 1908,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.7877",
+      "title": "An inquiry into the principles of modern theosophy with an appendix",
+      "author": "Pestonji Ardeshir Wadia",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.csl.3599, india.history.resource.107719"
+    },
+    {
+      "id": "in.ernet.dli.2015.38206",
+      "title": "The Story Of Atlantis Ed. 2",
+      "author": "W. Scott-elliot",
+      "year": 1909,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "pli.kerala.rare.10040",
+      "title": "The Science of social organisation or the Laws of Manu in the Light of Theosophy",
+      "author": "Bhagavan Das",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Kerala State Library; alternate scans: in.ernet.dli.2015.202563"
+    },
+    {
+      "id": "in.ernet.dli.2015.204999",
+      "title": "Laws Of Manu In The Light Of Theosophy.",
+      "author": "bhagvan Das",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.502863",
+      "title": "Lectures Delivered At Benares At The Sixth Annual Convention Of The Indian Section Of The Theosophical Society, October 19th - 21st,1896",
+      "author": "annie Besant",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.337225",
+      "title": "Mahatma Bijaykrishna Goswamir Jibanbrittanta",
+      "author": "Bankabihari Kar",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.23307",
+      "title": "The Astral Plane",
+      "author": "c.w. Leadbeter",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.8966"
+    },
+    {
+      "id": "in.ernet.dli.2015.41903",
+      "title": "Theosophy",
+      "author": "Not Available",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.170897",
+      "title": "The Growth Of National Consciousness In The Light Of Thesophy",
+      "author": "George S Arundale",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.201208"
+    },
+    {
+      "id": "in.ernet.dli.2015.22549",
+      "title": "The Universal Text Book Of Religion And Morals",
+      "author": "Annie Ed. Besant",
+      "year": 1910,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: india.history.resource.89107"
+    },
+    {
+      "id": "india.history.resource.94368",
+      "title": "Adyar: The Home of the Theosophical Society, Views taken Expresessly",
+      "author": "Alcyone (pseud.)",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.502833",
+      "title": "And How Theosophy Answers It",
+      "author": "annie Besant",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.545264",
+      "title": "Mahatma Gandhi Aur Unki Jeevan Katha",
+      "author": "Ram Nath Suman",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.454162",
+      "title": "Mahatma Raja Rammohun Royer Jibancharit Ed. 3rd",
+      "author": "Nagendranath Chattopadhyay",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.205046",
+      "title": "Patical Theosophy.",
+      "author": "O Hashnu Hara",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.200836",
+      "title": "The Mahatma And The Hare",
+      "author": "Haggard H Rider",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.217138",
+      "title": "Christ And Buddha",
+      "author": "C. Jinarajadasa",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.11137",
+      "title": "Christ and Buddha and other sketches",
+      "author": "Jinarajadasa. C.",
+      "year": 1911,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.42525",
+      "title": "The Fraud Of Modern Theosophy Exposed",
+      "author": "J.n. Maskelyne",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117565",
+      "title": "The Secret of Happiness (Manuals of Occultism, No. 3)",
+      "author": "Irving S. Cooper",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.201451",
+      "title": "Esoteric Buddhim",
+      "author": "A P Sinnett",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.9096",
+      "title": "Light On The Path and Karma",
+      "author": "Mabel Collins",
+      "year": 1912,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "39002053918125.med.yale.edu",
+      "title": "Hypnotism : including a study of the chief points of psycho-therapeutics and occultism",
+      "author": "Albert Moll",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Yale University, Cushing/Whitney Medical Library; alternate scans: hypnotismincludi0000albe"
+    },
+    {
+      "id": "ult.theosophyvol01no0000unse.vol01.12",
+      "title": "Theosophy Vol- 01 No - 12 October 1913",
+      "author": "Unknown",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvol01no0000unse.vol01.02, ult.theosophyvol01no0000unse.vol01.04, ult.theosophyvol01no0000unse.vol01.05, ult.theosophyvol01no0000unse.vol01.06, ult.theosophyvol01no0000unse.vol01.07, ult.theosophyvol01no0000unse.vol01.09, ult.theosophyvol01no0000unse.vol01.10, ult.theosophyvol01no0000unse.vol01.11, ult.theosophyvol01no0000unse.vol01.01, ult.theosophyvol01no0000unse.vol01.03, ult.theosophyvol01no000unse.vol01.08"
+    },
+    {
+      "id": "dli.bengal.10689.9280",
+      "title": "Incidents In The Life Of Madame Blavatsky",
+      "author": "A.P. ed. Sinnett",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.55065, incidentsinlife01sinngoog, incidentsinlife00sinngoog"
+    },
+    {
+      "id": "in.ernet.dli.2015.290644",
+      "title": "Bharatbarshiya Tirtha Samuher Mahatma Prakash",
+      "author": "Goshtha Bihari Dhar",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.290643"
+    },
+    {
+      "id": "india.history.resource.117428",
+      "title": "Essays and Addresses, Vol. III- Evolution and Occultism",
+      "author": "Annie Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.180711",
+      "title": "Evolution And Occultism",
+      "author": "Annie Besant",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.220535",
+      "title": "Theosophy And The Theosophical Society",
+      "author": "Not Available",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.201477",
+      "title": "Hidden Side Of Things",
+      "author": "C W Leadbeater",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.62080",
+      "title": "The Occult Word (1913)",
+      "author": "A.p. Sinnett",
+      "year": 1913,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvoliiin0000unse.vol.III.1",
+      "title": "Theosophy Vol-III,No-1,November 1914",
+      "author": "Unknown",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvoliiin0000unse.vol.III.12, ult.theosophyvoliiin0000unse.vol.III.10, ult.theosophyvoliiin0000unse.vol.III.2, ult.theosophyvoliiin0000unse.vol.III.3, ult.theosophyvoliiin0000unse.vol.III.4, ult.theosophyvoliiin0000unse.vol.III.5, ult.theosophyvoliiin0000unse.vol.III.6, ult.theosophyvoliiin0000unse_v6f4.vol.III.7, ult.theosophyvoliiin0000unse.vol.III.8, ult.theosophyvoliiin0000unse.vol.III.9, ult.theosophyvoliiin0000unse.vol.III.11"
+    },
+    {
+      "id": "in.ernet.dli.2015.201053",
+      "title": "Is Theosophy Anti-christian",
+      "author": "G Herbert Whyte",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.170568"
+    },
+    {
+      "id": "in.ernet.dli.2015.404697",
+      "title": "Mahatma Gandhi",
+      "author": "Shree Sitakant",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.404726"
+    },
+    {
+      "id": "india.history.resource.118310",
+      "title": "Three Essays on Haeckel and Karma",
+      "author": "Rudolf Steiner",
+      "year": 1914,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolivno0000unse.vol.IV.1",
+      "title": "Theosophy Vol-IV,No-1,November 1915",
+      "author": "Unknown",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolivno0000unse.vol.IV.12, ult.theosophyvolivno0000unse.vol.IV.10, ult.theosophyvolivno0000unse.vol.IV.11, ult.theosophyvolivno0000unse.vol-IV.2, ult.theosophyvolivno0000unse.vol.IV.3, ult.theosophyvolivno0000unse.vol.IV.4, ult.theosophyvolivno0000unse.vol.IV.5, ult.theosophyvolivno0000unse.vol.IV.6, ult.theosophyvolivno0000unse.vol.IV.7, ult.theosophyvolivno0000unse.vol.IV.8, ult.theosophyvolivno0000unse_g6k4.Vol.IV.9"
+    },
+    {
+      "id": "in.gov.ignca.7243",
+      "title": "Book of magical art, Hindu magic and Indian occultism",
+      "author": "L. W. De Laurence",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.56706"
+    },
+    {
+      "id": "in.ernet.dli.2015.308236",
+      "title": "Eingland Ma Mahatma G",
+      "author": "Mahadev Dahsahi",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.337067",
+      "title": "Mahatma Kali Prasanna Singha",
+      "author": "Manmathnath Ghosh",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.290450",
+      "title": "Mahatma Kaliprasanna Singha",
+      "author": "Manmatha Nath Ghosh",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.299173, dli.bengal.10689.5538"
+    },
+    {
+      "id": "dli.ministry.27110",
+      "title": "Śrī mata rāghava panḍita o srī pāṭa pānihātī māhātma",
+      "author": "Amūlyadhana Rāy",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.23788",
+      "title": "Theosophy and modern thought",
+      "author": "Jinarajadasa. C.",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.219437",
+      "title": "Theosophy And Modern Thought",
+      "author": "Jinarajadasa.c",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.200648"
+    },
+    {
+      "id": "dli.csl.7788",
+      "title": "How India wrought for freedom",
+      "author": "Annie Besant",
+      "year": 1915,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.39342, dli.csl.6179"
+    },
+    {
+      "id": "dli.ministry.17108",
+      "title": "The message of the future",
+      "author": "C. Jinarajadasa",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.222260"
+    },
+    {
+      "id": "ult.theosophyvolvno10000unse.vol.V.1",
+      "title": "Theosophy Vol-V,No-1,November 1916",
+      "author": "Unknown",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolvno10000unse.vol.V.12, ult.theosophyvolvno10000unse.vol.V.10, ult.theosophyvolvno10000unse.vol.V.11, ult.theosophyvolvno20000unse.vol.V.2, ult.theosophyvolvno30000unse.vol.V.3, ult.theosophyvolvno40000unse.vol.V.4, ult.theosophyvolvno50000unse.vol.V.5, ult.theosophyvolvno60000unse.vol.V.6, ult.theosophyvolvno70000unse.vol.V.7, ult.theosophyvolvno80000unse.vol.V.8, ult.theosophyvolvno90000unse.vol.V.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.451618",
+      "title": "Mahatma Gopal Karishna Gokhel",
+      "author": "Surjyakumar Bhuinya",
+      "year": 1916,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.88085",
+      "title": "Theosophy Or Psychological Religion The Gifford Lectures",
+      "author": "F. Max Muller",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvol06no0000unse.vol06.01",
+      "title": "Theosophy Vol - 06 No - 01 November 1917",
+      "author": "Unknown",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvol06no0000unse.vol06.12, ult.theosophyvol06no0000unse.vol06.02, ult.theosophyvol06no0000unse.vol06.03, ult.theosophyvol06no0000unse.vol06.04, ult.theosophyvol06no0000unse.vol06.05, ult.theosophyvol06no0000unse.vol06.06, ult.theosophyvol06no0000unse.vol06.07, ult.theosophyvol06no0000unse.vol06.08, ult.theosophyvol06no0000unse.vol06.09, ult.theosophyvol06no0000unse.vol06.10, ult.theosophyvol06no0000unse.vol06.11"
+    },
+    {
+      "id": "dli.ernet.247796",
+      "title": "Fourteen Lessons In Yogi Philosophy and Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.206230",
+      "title": "Advance Course In Yogi Philosophy And Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.343863",
+      "title": "Mahatma Hansaraj",
+      "author": "Sharma Dwivedi Satyavrat",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.376590",
+      "title": "Mahatma Talastaie Ki Kahani Khudussi Ki Zabani",
+      "author": "Not Available",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.262777",
+      "title": "Mahatma Talstoy",
+      "author": "Srinarayan Chaturvedi",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.262763"
+    },
+    {
+      "id": "india.history.resource.117395",
+      "title": "Occultism for Beginners, 3rd ed.",
+      "author": "William H. Dower",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.106471",
+      "title": "Theosophical Educational Trust Report 1916 Including An Article Indian Education And The Trust",
+      "author": "Annie Besant",
+      "year": 1917,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.163372",
+      "title": "Life After Death: And How Theosophy Unveils It.",
+      "author": "C. W. Leadbeater",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolviin0000unse.vol.VII.1",
+      "title": "Theosophy Vol-VII,No-1,November 1918",
+      "author": "Unknown",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolviin0000unse.vol.VII.12, ult.theosophyvolviin00unse.vol.VII.10, ult.theosophyvolviin0000unse.vol.VII.11, ult.theosophyvolviin0000unse.vol.VII.2, ult.theosophyvolviin0000unse.vol.VII.3, ult.theosophyvolviin0000unse.vol.VII.4, ult.theosophyvolviin0000unse.vol.VII.5, ult.theosophyvolviin0000unse.vol.VII.6, ult.theosophyvolviin0000unse.vol.VII.7, ult.theosophyvolviin0000unse.vol.VII.8, ult.theosophyvolviin0000unse.vol.VII.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.30884",
+      "title": "General Report Of The Forty-second Anniversary And Convention Of The Theosophical Society",
+      "author": "Not Available",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.80338",
+      "title": "Mahatma Gandhi Life Writings And Speeches",
+      "author": "Mrs.sarojini Naidu",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.306210",
+      "title": "Mahatma Saryudasgi",
+      "author": "Manak Lal",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.446644",
+      "title": "Mahatma Tailanga Swamir Jeevan Charit O Tattwopadesh",
+      "author": "Umacharan Comp. Mukhopadhyay",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.337672"
+    },
+    {
+      "id": "in.ernet.dli.2015.294425",
+      "title": "What Theosophy Does For Us",
+      "author": "Sriman. Led’piid’d’ar",
+      "year": 1918,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolviii0000unse.vol.VIII.1",
+      "title": "Theosophy Vol-VIII,No-1,November 1919",
+      "author": "Unknown",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolviii0000unse.vol.VIII.12, ult.theosophyvolviii0000unse.vol.VIII.10, ult.theosophyvolviii0000unse.vol.VIII.11, ult.theosophyvolviii0000unse.vol.VIII.2, ult.theosophyvolviii0000unse.vol.VIII.3, ult.theosophyvolviii0000unse.vol.VIII.4, ult.theosophyvolviii0000unse.vol.VIII.5, ult.theosophyvolviii0000unse.vol.VIII.6, ult.theosophyvolviii0000unse.vol.VIII.7, ult.theosophyvolviii0000unse.vol.VIII.8, ult.theosophyvolviii0000unse.vol.VIII.9"
+    },
+    {
+      "id": "dli.bengal.10689.4292",
+      "title": "Mahatma Gandhi - 2nd ed. মহাত্মা গান্ধী - ২য় সং",
+      "author": "Jogesh Chandra Mukhopadhyay",
+      "year": 1919,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolixno0000unse.vol.IX.1",
+      "title": "Theosophy Vol-IX,No-1,November 1920",
+      "author": "Unknown",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolixno0000unse.vol.IX.12, ult.theosophyvolixno0000unse.vol.IX.11, ult.theosophyvolixno0000unse.vol.IX.2, ult.theosophyvolixno0000unse.vol.IX.3, ult.theosophyvolixno0000unse.vol.IX.4, ult.theosophyvolixno0000unse_x4q5.vol.IX.5, ult.theosophyvolixno0000unse.vol.IX.6, ult.theosophyvolixno0000unse.vol.IX.7, ult.theosophyvolixno0000unse.vol.IX.8, ult.theosophyvolixno00unse.vol.IX.9"
+    },
+    {
+      "id": "dli.ernet.15876",
+      "title": "An Encyclopedia Of Occultism (1920)",
+      "author": "Unknown",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.482012",
+      "title": "Mahatma Buddha",
+      "author": "Sukhsampati Roy Bhandari",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.338870",
+      "title": "Mahatma Shishirkumar Ghosh",
+      "author": "Anath Nath Basu",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.482"
+    },
+    {
+      "id": "in.ernet.dli.2015.297722",
+      "title": "Mahatma Shishirkumar Ghosh Ed. 2nd",
+      "author": "Anath Nath Basu",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.22347",
+      "title": "The Monad",
+      "author": "C. W. Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "india.history.resource.117272",
+      "title": "The Monad and Other Essays upon the Higher Consciousness",
+      "author": "C. W. Leadbeater",
+      "year": 1920,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.149474",
+      "title": "Mahatma Gandhi The Journalist",
+      "author": "S. N. Bhattacharyya",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolxno10000unse.vol.X.1",
+      "title": "Theosophy Vol-X,No-1,November 1921",
+      "author": "Unknown",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxno10000unse.vol.X.10, ult.theosophyvolxno10000unse.vol.X.11, ult.theosophyvolxno20000unse.vol.X.2, ult.theosophyvolxno30000unse.vol.X.3, ult.theosophyvolxno40000unse.vol.X.4, ult.theosophyvolxno50000unse.vol.X.5, ult.theosophyvolxno60000unse.vol.X.6, ult.theosophyvolxno70000unse.vol.X.7, ult.theosophyvolxno80000unse.vol.X.8, ult.theosophyvolxno90000unse.vol.X.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.399966",
+      "title": "Mahatma Gandhi Ane Hind Na Mahan Navratno",
+      "author": "j.d. Dave",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.399182"
+    },
+    {
+      "id": "in.ernet.dli.2015.338869",
+      "title": "Mahatma Gandhi O Tahar Mat",
+      "author": "Rajkumar Comp. Chakrabarty",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.4519"
+    },
+    {
+      "id": "in.ernet.dli.2015.81888",
+      "title": "Mahatma Gandhi The Journalist",
+      "author": "S_n_bhattacharyya",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.341884",
+      "title": "Mahatma Gvisep Mezini",
+      "author": "Keshava Prasad Singh Singh",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.540550",
+      "title": "Mahatma Gvisepmejini Ka Jivan Charitra",
+      "author": "Lala Lajpat Roy",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.404624"
+    },
+    {
+      "id": "in.ernet.dli.2015.381518",
+      "title": "Mahatma Shekhsadi",
+      "author": "Premchand",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.71711",
+      "title": "Swaraj In One Year Mahatma Gandhi Part Ii",
+      "author": "Prasad Ram",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.121713",
+      "title": "For Indias Uplift A Collection Of Speeches And Writings On Indian Questions",
+      "author": "Annie Wood Besant",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.79782",
+      "title": "The Meeting Of The East And The West",
+      "author": "Jinarajadasa G",
+      "year": 1921,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolxino0000unse.vol.XI.1",
+      "title": "Theosophy Vol-XI No-1 November 1922",
+      "author": "Unknown",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxino0000unse.vol.XI.12, ult.theosophyvolxino0000unse.vol.XI.7, ult.theosophyvolxino0000unse.vol.XI.10, ult.theosophyvolxino0000unse.vol.XI.11, ult.theosophyvolxino0000unse.vol.XI.2, ult.theosophyvolxino0000unse.vol.XI.3, ult.theosophyvolxino0000unse.vol.XI.4, ult.theosophyvolxino0000unse.vol.XI.5, ult.theosophyvolxino0000unse.vol.XI.6, ult.theosophyvolxino0000unse.vol.XI.8, ult.theosophyvolxino0000unse.vol.XI.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.56748",
+      "title": "Collected Works Of Mahatma Gandhi Vol.23",
+      "author": "India Ministry Of Inform",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.56749"
+    },
+    {
+      "id": "in.ernet.dli.2015.30893",
+      "title": "H. P. Blavatsky Her Life And Work For Humanity",
+      "author": "Alice Leighton Cleather",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.550728",
+      "title": "Mahatma Gandhi Ke Niji Patra",
+      "author": "Vajpaye Laxmidhar",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.12287",
+      "title": "MAHATMA GANDHIR KARAKAHINI মহাত্মা গান্ধীর কারাকাহিনি",
+      "author": "ANATH NATH TR. BASU",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: dli.bengal.10689.15533"
+    },
+    {
+      "id": "in.ernet.dli.2015.500452",
+      "title": "Theosophy And Christian Thought",
+      "author": "W. S. Urquhart",
+      "year": 1922,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.309381",
+      "title": "Aadars Jain Mahatma",
+      "author": "Pandit Molchand",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.30892",
+      "title": "H. P. Blavatsky As I Knew Her",
+      "author": "Alice Leighton Cleather",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.158947",
+      "title": "Mahatma Gandhi Speeches And Writings",
+      "author": "Digital Library Of India",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.324934",
+      "title": "Mahatma Tolustoye",
+      "author": "Not Available",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.484002",
+      "title": "Mahatma Vidur",
+      "author": "Pandit Narrotam Vyas",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.101919",
+      "title": "Occultism And Modern Science",
+      "author": "Methuen And Company Limited",
+      "year": 1923,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.16293",
+      "title": "DEBI MAHATMA ED. 2ND দেবী মাহাত্ন্য",
+      "author": "AMARBALA DEBI",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.318872",
+      "title": "Mahatma Gandhi Ka Paigam",
+      "author": "Not Available",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.375388",
+      "title": "Mahatma Gandhi Ko Dawat I Islam",
+      "author": "Khwaja Hasan Nizami",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.538229",
+      "title": "Mahatma Shekh Sadi",
+      "author": "Sadik",
+      "year": 1924,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.23857",
+      "title": "Thought-forms",
+      "author": "Annie; Leadbeater C.W. Besant",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.213512"
+    },
+    {
+      "id": "ult.theosophymagazin0000unse.vol14.01",
+      "title": "Theosophy A Magazine Devoted To The Path Vol - 14 No - 01 November 1925",
+      "author": "Unknown",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophymagazin0000unse.vol02.01, ult.theosophymagazin0000unse.vol12.01, ult.theosophymagazin0000unse.vol13.01, ult.theosophymagazin0000unse.vol02.12, ult.theosophymagazin0000unse.vol12.12, ult.theosophymagazin0000unse.vol13.12, ult.theosophymagazin0000unse.vol14.12, ult.theosophymagazin0000unse.vol02.02, ult.theosophymagazin0000unse.vol02.03, ult.theosophymagazin0000unsevol.02.04, ult.theosophymagazin0000unsevol.02.05, ult.theosophymagazin0000unse.vol02.07, ult.theosophymagazin0000unse.vol02.08, ult.theosophymagazin0000unse.vol02.09, ult.theosophymagazin0000unse.vol02.10, ult.theosophymagazin0000unse.vol02.11, ult.theosophymagazin0000unse.vol12.02, ult.theosophymagazin0000unse.vol12.03, ult.theosophymagazin0000unse.vol12.04, ult.theosophymagazin0000unse.vol12.05, ult.theosophymagazin0000unse.vol12.06, ult.theosophymagazin0000unse.vol12.07, ult.theosophymagazin0000unse.vol12.08, ult.theosophymagazin0000unse.vol12.09, ult.theosophymagazin0000unse.vol12.10, ult.theosophymagazin0000unse.vol12.11, ult.theosophymagazin0000unse.vol13.02, ult.theosophymagazin0000unse.vol13.03, ult.theosophymagazin0000unse.vol13.04, ult.theosophymagazin0000unse.vol13.05, ult.theosophymagazin0000unse.vol13.06, ult.theosophymagazin0000unse.vol13.07, ult.theosophymagazin0000unse.vol13.08, ult.theosophymagazin0000unse.vol13.09, ult.theosophymagazin0000unse.vol13.10, ult.theosophymagazin0000unse.vol13.11, ult.theosophymagazin0000unsevol14.02, ult.theosophymagazin0000unse.vol14.03, ult.theosophymagazin0000unse.vol14.04, ult.theosophymagazin0000unse.vol14.05, ult.theosophymagazin0000unse.vol14.06, ult.theosophymagazin0000unse.vol14.07, ult.theosophymagazin0000unse.vol14.08, ult.theosophymagazin0000unse.vol14.09, ult.theosophymagazin0000unse.vol14.10, ult.theosophymagazin0000unse.vol14.11, ult.theosophymagazin0000unse.vol02.06"
+    },
+    {
+      "id": "in.ernet.dli.2015.512890",
+      "title": "Mahatma Gandhir Jiban-charit Ed. 1st",
+      "author": "Baidyanath Mukhapadhyay",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.349299",
+      "title": "Mahatma Gotam Bodh Ka (jeevan Charitar)",
+      "author": "Not Available",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.237732",
+      "title": "The Golden Book Of The Theosophical Society (1925)",
+      "author": "Jinarajadasa C.",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.238074",
+      "title": "Theosophy As The Basic Unity Of National Life",
+      "author": "Jinarajadas",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.219453",
+      "title": "Theosophy Explained",
+      "author": "P Pavri",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.200665"
+    },
+    {
+      "id": "dli.ministry.23793",
+      "title": "Theosophy explained in questions and answers",
+      "author": "P. Pavri",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.162315, in.ernet.dli.2015.157053, TheosophyExplainedInQuestionsAndAnswers"
+    },
+    {
+      "id": "in.ernet.dli.2015.201747",
+      "title": "The Masters And The Path",
+      "author": "C W Leadbeater",
+      "year": 1925,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolxvja0000unsevol.XV.3",
+      "title": "Theosophy Vol-XV January 1926",
+      "author": "Unknown",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "ult.theosophyvolxvno0000unse.vol.XV.1",
+      "title": "Theosophy Vol-XV. No-1 November 1926",
+      "author": "Unknown",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxvno0000unse.vol.XV.12, ult.theosophyvolxvno0000unse.vol.XV.9, ult.theosophyvolxvno0000unse.vol.XV.10, ult.theosophyvolxvno0000unse.vol.XV.11, ult.theosophyvolxvfe0000unse.vol.XV.4, ult.theosophyvolxvno0000unse.vol.XV.5, ult.theosophyvolxvno0000unse_x2g8.vol.XV.6, ult.theosophyvolxvno0000unse_a0v7.vol.XV.7, ult.theosophyvolxvno0000unse.vol.XV.8, ult.theosophyvolxvno0000unse.vol.XV.2"
+    },
+    {
+      "id": "in.ernet.dli.2015.337224",
+      "title": "Mahatma Ashwinikumar",
+      "author": "Sharatkumar Ray",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.511201",
+      "title": "Mahatma Shashthecharan",
+      "author": "durgabar Majumder",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.155926",
+      "title": "An Introduction To Surface Chemistry",
+      "author": "Eric Keightley Rideal",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.59447",
+      "title": "Nirvana",
+      "author": "George S. Arundale",
+      "year": 1926,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvolxvln0000unse.vol.xvl.1",
+      "title": "Theosophy Vol-XVl No-1 November 1927",
+      "author": "Unknown",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxvln0000unse.vol.xvl.12, ult.theosophyvolxvln0000unse.vol.xvl.10, ult.theosophyvolxvln0000unse.vol.xvl.11, ult.theosophyvolxvln0000unse.vol.xvl.2, ult.theosophyvolxvln0000unse.vol.xvl.3, ult.theosophyvolxvln0000unse.vol.xvl.4, ult.theosophyvolxvln0000unse.vol.xvl.5, ult.theosophyvolxvln0000unse.vol.xvl.6, ult.theosophyvolxvln0000unse.vol.xvl.7, ult.theosophyvolxvln0000unse.vol.xvl.8, ult.theosophyvolxvln0000unse.vol.xvl.9"
+    },
+    {
+      "id": "dli.ernet.439951",
+      "title": "Bedari-e-hind ; Karnama-e-mahatma Gandhi",
+      "author": "Lala Mutasaddi Lal Hind",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.450207, in.ernet.dli.2015.435390"
+    },
+    {
+      "id": "in.ernet.dli.2015.340891",
+      "title": "Bhagwan Mahaveer Or Mahatma Buddh",
+      "author": "Kamataprasad Jain",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.12999",
+      "title": "First book of theosophy",
+      "author": "P. Pavri",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.200640",
+      "title": "First Book Of Theosophy",
+      "author": "C Jinarajadasa",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.219428"
+    },
+    {
+      "id": "in.ernet.dli.2015.538582",
+      "title": "Mahaveer Bhagwan Aur Mahatma Buddha",
+      "author": "Kamta Parshad Ji Jain",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.499842",
+      "title": "The Selected Works Mahatma Gandh Vol.i",
+      "author": "Not Available",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.171008",
+      "title": "Theosophy In India Vol Xxiv.",
+      "author": "C W Leadbeater",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.201277"
+    },
+    {
+      "id": "in.ernet.dli.2015.162147",
+      "title": "The Mediator",
+      "author": "c Jinarajadasa",
+      "year": 1927,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.162280"
+    },
+    {
+      "id": "in.ernet.dli.2015.72843",
+      "title": "The General Report Of The Theosophical Society",
+      "author": "nawab.a. Hydari",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.theosophyvol17no0000theo.vol.17.1",
+      "title": "Theosophy Vol-17. No-1. Nov-Oct 1928",
+      "author": "Theosophy",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvol17no0000theo.vol.17.12, ult.theosophyvol17ja0000theo.vol.17.3, ult.theosophyvol17no0000theo.vol.17.2, ult.theosophyvol17no0000theo.vol.17.10, ult.theosophyvol17no0000theo.vol.17.11, ult.theosophyvol17no0000theo.vol.17.4, ult.theosophyvol17no0000theo.vol.17.5, ult.theosophyvol17no0000theo.vol.17.7, ult.theosophyvol17no0000theo.vol.17.8, ult.theosophyvol17no0000theo.vol.17.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.114871",
+      "title": "3187 Seven Months With Mahatma Gandhi Vol.ii -(1928)",
+      "author": "Sir Walter Roper Lawrence",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ministry.04123",
+      "title": "Mahatma Gandhi",
+      "author": "Mademoiselle Juliette Veillier",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.bengal.10689.6727",
+      "title": "Mahatma Gandhijir Sange Sat Mas - Vol.1 মহাত্মা গান্ধীজীর সঙ্গে সাত মাস - খন্ড ১",
+      "author": "Krishnadas",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.339737"
+    },
+    {
+      "id": "in.ernet.dli.2015.299174",
+      "title": "Mahatma Raja Rammohan Ray Ed.5th",
+      "author": "Nagendranath Chattapadhyay",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.6927",
+      "title": "Seven months with Mahatma Gandhi being an inside view of the Non-co-operation movement (1921-22)",
+      "author": "Krishnadas",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.62519",
+      "title": "Seven Months With Mahatma Gandhi Vol.i (1928)",
+      "author": "krishan Das",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.62329",
+      "title": "Seven Months With Mahatma Gandhi Vol.ii -(1928)",
+      "author": "Krishandas",
+      "year": 1928,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "ult.eosophyvol17no0000theo.vol.17.6",
+      "title": "Theosophy Vol-17.No-6 Vol-17. April1929",
+      "author": "Unknown",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "dli.csl.5132",
+      "title": "Mahatma Gandh iʼs ideas including selections from his writings",
+      "author": "C.F. Andrews",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.54748",
+      "title": "Mahatma Gandhi Ideas Including Seletions From His Writings",
+      "author": "C.s Andrews",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.376589",
+      "title": "Mahatma Gandhi Ka Faisla",
+      "author": "Khaja Hasan Nizami",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.188566",
+      "title": "Mahatma Gandhis Ideal",
+      "author": "C F Andrews",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.4106",
+      "title": "Mahatma Gandhis Indeas",
+      "author": "Andrews C. F.",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.240457",
+      "title": "Mahatma Gandhis Indeas",
+      "author": "The Potato Association Of America",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.499835",
+      "title": "Mahatma Life Of Mohandas Karamchand Gandhi Vol.ii",
+      "author": "Not Available",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; alternate scans: in.ernet.dli.2015.499833"
+    },
+    {
+      "id": "in.ernet.dli.2015.33986",
+      "title": "An English Defends Mother India",
+      "author": "Ernest Wood",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.7937",
+      "title": "India bond of free a world problem",
+      "author": "Annie Besant",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "wg896",
+      "title": "1929 -Karma Mimansa Darshan -Part 2",
+      "author": "Shri Gurucharan Kamlatith Dayanand",
+      "year": 1929,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "kuh.ag.605.111216",
+      "title": "Sati Savitri Mahatma",
+      "author": "Thorave Raghavanka Kavi Virachita",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "kuh.ag.119.111462",
+      "title": "Satisavitri Mahatma Atava Pativratha Prabhava",
+      "author": "Raghavendra Kallo Thorave",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge"
+    },
+    {
+      "id": "ult.theosophyvolxixn0000unse.vol.XIX.1",
+      "title": "Theosophy Vol-XIX No-1 November 1930",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxixn0000unse.vol.XIX.2"
+    },
+    {
+      "id": "ult.theosophyvolxvii0000unse.vol.XVIII.3",
+      "title": "Theosophy Vol-XVIII No-3Januay 1930",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolxvii0000unse.vol.XVIII.4, ult.theosophyvolxvii0000unse.vol.XVIII.5, ult.theosophyvolxvii0000unse.vol.XVIII.6, ult.theosophyvolxvii0000unse.vol.XVIII.7, ult.theosophyvolxvii0000unse.vol.XVIII.8"
+    },
+    {
+      "id": "ult.theosophyvol18no0000vol18.12",
+      "title": "Theosophy Vol. 18, No. 12, October 1930",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvol18no0000vol18.03, ult.theosophyvol18no0000vol18.02, ult.theosophyvol18no0000vol18.04, ult.theosophyvol18no0000vol18.05, ult.theosophyvol18no0000vol18.06, ult.theosophyvol18no0000unse.vol18.07, ult.theosophyvol18no0000vol18.08, ult.theosophyvol18no0000vol18.09, ult.theosophyvol18no0000vol18.10, ult.theosophyvol18no0000vol18.11"
+    },
+    {
+      "id": "ult.theosophyvolumex0000unseVol.XVIII.12",
+      "title": "Theosophy Volume - XVIII No - 12 October 1930",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern; held by Servants of Knowledge; alternate scans: ult.theosophyvolumex0000unse.vol.XVIII..10, ult.theosophyvolumex0000unse.vol.XVIII.11, ult.theosophyvolumex0000unse.vol.XVIII.9"
+    },
+    {
+      "id": "in.ernet.dli.2015.205135",
+      "title": "Yogi Philosophy And Oriental Occultism",
+      "author": "Yogi Ramachareka",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.511199",
+      "title": "Mahatma Ashwinikumar Ed.3rd",
+      "author": "sharatkumar Ray",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.ernet.237357",
+      "title": "Mahatma Gandhi His Own Story (1930)",
+      "author": "Andrews C. F.",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "dli.csl.5112",
+      "title": "Mahatma Gandhi: his own story",
+      "author": "Unknown",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.321818",
+      "title": "Mahatma Isa",
+      "author": "Vishveshvar Siddhant Shiromani",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.341882",
+      "title": "Mahatma Shekhasadi",
+      "author": "Premchand",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.237422",
+      "title": "Natural Theosophy",
+      "author": "Wood Ernest",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.201564",
+      "title": "Natural Theosophy",
+      "author": "Ernest Wood",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.128295",
+      "title": "Talks On The Path Of Occultism Vol-ii",
+      "author": "annie Besant",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.78932",
+      "title": "Theosophy Explained In Questions And Answers",
+      "author": "Theosophical Publishing House Madras",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.524246",
+      "title": "Yogi Philosphy And Oriental Occultism",
+      "author": "Ramacharaka Yogi",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    },
+    {
+      "id": "in.ernet.dli.2015.462712",
+      "title": "An Introduction To Surface Chemistry Ed. 1st",
+      "author": "Eric Keightley Rideal",
+      "year": 1930,
+      "lang": "English",
+      "note": "CLEAR:by-date; REVIEW:id-pattern"
+    }
+  ]
+}
