@@ -48,11 +48,13 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { readerText, similarity, assessSeam } from './translation-batch-continuity-ab.mjs';
 import { resetSeed, seededRand, binomTwoSided } from './lib/paired-stats.mjs';
-import { RUNS_COLLECTION, SEAM_SOURCE_REPAIR } from '../lib/translate-batch-seam.mjs';
+import { RUNS_COLLECTION, SEAM_SOURCE_REPAIR, chooseSeamText } from '../lib/translate-batch-seam.mjs';
 
 const args = process.argv.slice(2);
 const arg = (n) => args.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
 const has = (n) => args.includes(`--${n}`);
+/** --field=NAME: score this verdict field instead of `verdict` (the fidelity packet returns `fidelity` and `fluency`). */
+const FIELD = arg('field') || 'verdict';
 
 const RESULTS = new URL('./results/', import.meta.url).pathname;
 const TAG = arg('tag') || 'translation-batch-shadow';
@@ -111,6 +113,18 @@ async function loadBook(db, bookId) {
     .find({ id: { $in: ids } }, { projection: { id: 1, page_number: 1, 'translation.data': 1, 'translation.model': 1, 'translation.updated_at': 1 } }).toArray();
   const prod = new Map(pages.filter((p) => p.translation?.data).map((p) => [p.id, p.translation.data]));
   console.log(`${bookId}: S1 ${r1.id} (${r1.drafts.length} drafts, ${(r1.repairs || []).length} repairs)${r2 ? `, S2 ${r2.id} (${r2.drafts.length} drafts, ${(r2.repairs || []).length} repairs)` : ', no S2 — no A/A pairs for this book'}, production text on ${prod.size}/${ids.length} pages`);
+  // --regate: re-choose repair vs draft with the CURRENT chooseSeamText (its gates, #5085) instead of
+  // the seam_outcomes the run stored when it ran. The stored choice predates the gates.
+  if (has('regate')) {
+    for (const r of [r1, r2].filter(Boolean)) {
+      const drafts = new Map((r.drafts || []).map((d) => [d.id, d.text]));
+      const repIds = (r.repairs || []).map((x) => x.id);
+      const ocrs = new Map((await db.collection('pages').find({ id: { $in: repIds } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
+      r.seam_outcomes = (r.repairs || []).map((x) => { const ch = chooseSeamText({ ocr: ocrs.get(x.id), draft: drafts.get(x.id), repaired: x.text }); return { id: x.id, source: ch.source, reason: ch.reason }; });
+      r.regated = r.seam_outcomes.filter((o) => o.source !== SEAM_SOURCE_REPAIR).map((o) => `${o.id}:${o.reason}`);
+      if (r.regated.length) console.log(`  ${r.id}: regate kept the draft on ${r.regated.join(', ')}`);
+    }
+  }
   return { book, r1, r2, s1: laneTexts(r1), s2: r2 ? laneTexts(r2) : new Map(), prod, ids, s1Repaired: (r1.repairs || []).length > 0 };
 }
 
@@ -141,6 +155,10 @@ async function buildPacket(db, bookIds, { midflow = false } = {}) {
         // Ids are assigned AFTER the shuffle and carry nothing: a book, seam or pair-type in the
         // id would let a judge tell the A/A controls from the test pairs.
         const entry = { id: null, language: book.language, left: flip ? jy : jx, right: flip ? jx : jy };
+        // --with-source: the OCR of the same two pages, arm-independent (blinding intact), so a judge can
+        // check FIDELITY across the break — a junction judge without it sees only fluency and rewarded an
+        // omission (j009) and two fabricated bridges (j040, j033).
+        if (has('with-source') && ocr) entry.source = `${tail(readerText(ocr.get(prevId)?.ocr?.data || ''))}\n\n———— page break ————\n\n${head(readerText(ocr.get(seamId)?.ocr?.data || ''))}`;
         entries.push(entry);
         // Completeness, per side of the seam page: a junction judge sees fluency, not omission (2026-09-25,
         // j009 — the draft dropped p.65's first sentence and WON). Reader-text length of each lane's seam
@@ -197,7 +215,7 @@ function score() {
     if (!rows.length && !key.some(sel)) continue;
     const wins = { [x]: 0, [y]: 0 }; let ties = 0, left = 0;
     for (const v of rows) {
-      const side = String(v.verdict).trim().toUpperCase();
+      const side = String(v[FIELD]).trim().toUpperCase();
       if (side !== 'LEFT' && side !== 'RIGHT') { ties++; continue; }
       if (side === 'LEFT') left++;
       wins[byId.get(v.id)[side.toLowerCase()]]++;
@@ -221,7 +239,7 @@ function score() {
   const suspects = key.filter((k) => k.pair === 'S1/P' && k.seam_len && Math.min(k.seam_len.S1, k.seam_len.P) < 0.85 * Math.max(k.seam_len.S1, k.seam_len.P));
   if (suspects.length) {
     console.log(`\n  OMISSION-SUSPECT (one side's seam page ≥15% shorter — hand-read against the source before trusting the verdict):`);
-    for (const k of suspects) { const v = vById.get(k.id); const w = !v || v.verdict === 'TIE' ? 'TIE' : v.verdict === 'LEFT' ? k.left : k.right; console.log(`    ${k.id} S1 ${k.seam_len.S1} / P ${k.seam_len.P} chars (ocr ${k.seam_len.ocr ?? '?'}) → judged ${w}${w !== 'TIE' && k.seam_len[w] < k.seam_len[w === 'S1' ? 'P' : 'S1'] ? '  ← SHORTER SIDE WON' : ''}`); }
+    for (const k of suspects) { const v = vById.get(k.id); const w = !v || v[FIELD] === 'TIE' ? 'TIE' : v[FIELD] === 'LEFT' ? k.left : k.right; console.log(`    ${k.id} S1 ${k.seam_len.S1} / P ${k.seam_len.P} chars (ocr ${k.seam_len.ocr ?? '?'}) → judged ${w}${w !== 'TIE' && k.seam_len[w] < k.seam_len[w === 'S1' ? 'P' : 'S1'] ? '  ← SHORTER SIDE WON' : ''}`); }
   }
   const verdict = !test || test.P_share_of_decided == null ? 'no decided verdicts for the repaired lane'
     : !floor ? 'repaired lane judged, but no A/A floor — result is unquotable until an S2 exists'
