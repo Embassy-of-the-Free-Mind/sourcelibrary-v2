@@ -1,0 +1,363 @@
+[
+ {
+  "id": "j081",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "spiritualis cyrologi",
+    "translation": "(dropped)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "by the feminine gaze"
+   },
+   {
+    "type": "OMISSION",
+    "source": "qz iuxta illud abacuk ... per oculos ad morte venit",
+    "translation": "(entire Habakkuk/gloss passage missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Staua [Octava] regla",
+    "translation": "A stable rule"
+   }
+  ],
+  "why": "RIGHT drops the spiritual-surgeon clause and the whole Habakkuk/Genesis gloss paragraph after the break; LEFT renders it."
+ },
+ {
+  "id": "j082",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render all interrogatories and the post-break paragraph faithfully; RIGHT only keeps the stray catchword Re."
+ },
+ {
+  "id": "j083",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Heyd",
+    "translation": "Heyd"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Cankel",
+    "translation": "Cankel"
+   },
+   {
+    "type": "DUPLICATION",
+    "source": "an Titum | Titum und Timotheum",
+    "translation": "epistle to Titus / to Titus and Timothy"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Titum und Timotheum, wie ein Bischoff seyn soll, so werdet ihr finden, dass ihr nicht eines rechten Bischoffs Herz habt",
+    "translation": "(sentence crossing the break missing)"
+   }
+  ],
+  "why": "RIGHT omits the sentence that completes the one crossing the break; LEFT has only untranslated words."
+ },
+ {
+  "id": "j084",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente | entschieden",
+    "translation": "then we are ente / decided"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ihr habt also mit Rothe der Laesterung ... besprühet",
+    "translation": "you have thus besmirched yourself"
+   },
+   {
+    "type": "OMISSION",
+    "source": "GOttes Gabe laestern",
+    "translation": "blaspheme against God"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente | entschieden",
+    "translation": "thus we are ente / decided"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "GOttes Gabelaestern",
+    "translation": "blaspheme the Gabelaestern of GOD"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none in 192)",
+    "translation": "the Stade"
+   }
+  ],
+  "why": "Both carry the ente fragment and garble section 192 in comparable ways."
+ },
+ {
+  "id": "j085",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "178. Dare",
+    "translation": "178. Dare"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "178. Dare",
+    "translation": "178. Dare"
+   }
+  ],
+  "why": "Both render the text faithfully and both retain the garbled catchword."
+ },
+ {
+  "id": "j086",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry the sentence across the break faithfully; RIGHT doubles the verb (lead / also live) awkwardly."
+ },
+ {
+  "id": "j087",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "per nostros Successores ... absque dolo & fraude observet",
+    "translation": "(opening clause missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "induciatus",
+    "translation": "beneficed"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT omits the opening clause and keeps a stray Ca- catchword; RIGHT renders all content."
+ },
+ {
+  "id": "j088",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "impatus nos omnibus rebus necessariis instructissimi ... doctior fieres. Vale",
+    "translation": "(rest of letter after break missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a vi copse nihil aliud q nre rei p restat",
+    "translation": "in strength they provide nothing else to our cause"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "quid spondere",
+    "translation": "what you ought to answer"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "impatus nos omnibus rebus necessariis instructissimi ... doctior fieres. Vale",
+    "translation": "(rest of letter after break missing)"
+   }
+  ],
+  "why": "Both drop the continuation after the break; LEFT has additional mistranslations before it."
+ },
+ {
+  "id": "j089",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "sanguinem suum | non dubitauerunt fundere",
+    "translation": "did not hesitate to shed their blood / they did not hesitate to shed their blood"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere z duxerunt animas suas ... in secula seculorum Amen",
+    "translation": "(martyrs, confessors, virgins passage and doxology missing)"
+   }
+  ],
+  "why": "RIGHT omits the whole remainder of the crossing prayer; LEFT only repeats one clause."
+ },
+ {
+  "id": "j090",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "sit peccatorum meorum remissio ... firmissima tuitio. Amen",
+    "translation": "(opening prayer ending missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "in terrorem",
+    "translation": "into the abyss"
+   }
+  ],
+  "why": "RIGHT omits the pre-break prayer ending; the break itself is clean in both."
+ },
+ {
+  "id": "j091",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua non negligeres prospiceresque tibi in futurum",
+    "translation": "(clause crossing the break missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua ... Wale (entire letter after break)",
+    "translation": "(jumps to next letter: Your obellarius...)"
+   }
+  ],
+  "why": "RIGHT drops the entire letter continuing across the break; LEFT drops only the crossing clause."
+ },
+ {
+  "id": "j092",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce, inquam ... temere iudicare",
+    "translation": "(missing; leaves authori- fragment)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "[accuse]"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "tam dure flagellas",
+    "translation": "scourge us so harshly ... that you scourge so harshly"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ab isto",
+    "translation": "by you"
+   }
+  ],
+  "why": "LEFT loses the sentence crossing the break; RIGHT renders it with a minor duplication."
+ },
+ {
+  "id": "j093",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry Augsburg Confession across the break and render the following text faithfully."
+ },
+ {
+  "id": "j094",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad me scribas. Putabo enim ... medela invenisse. Vale",
+    "translation": "(missing after break)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Diebus primis ad te accedam",
+    "translation": "strive to come to you"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad me scribas. Putabo enim ... medela invenisse. Vale",
+    "translation": "(missing after break)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Paternis bonis m[ihi] interdictum",
+    "translation": "As for my paternal goods, it has been said to me"
+   }
+  ],
+  "why": "Both omit the end of the letter crossing the break; other errors are comparable."
+ },
+ {
+  "id": "j095",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Vra autem aetas quae in meliori cursu est ... bonum consulam. Vale",
+    "translation": "(rest of letter after break missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Vra autem aetas quae in meliori cursu est",
+    "translation": "but rather the one that is in a better course"
+   }
+  ],
+  "why": "LEFT omits the whole continuation of the crossing letter; RIGHT renders it despite a meta phrase."
+ },
+ {
+  "id": "j096",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia, quam severa Regis jussione",
+    "translation": "such a vigilant Bishop- rum constancy of others, who were urged by the stern command"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "quam severa Regis jussione ad subscriptionem urgerentur ... ad aequivocationes atque restrictiones mentales confugiebant",
+    "translation": "(missing after break)"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Portum Regium, Campensem, Agnete a S. Paulo Arnaldi",
+    "translation": "Portum Regium, Campense, Agnes a S. Paulo Arnaldi"
+   }
+  ],
+  "why": "RIGHT omits the passage crossing the break on perjured subscription; LEFT renders it with a garbled join."
+ }
+]

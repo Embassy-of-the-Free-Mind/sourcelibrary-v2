@@ -1,0 +1,327 @@
+[
+ {
+  "id": "j097",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "De profundis clamaui ad te domina: domina exaudi vocem meam",
+    "translation": "(missing)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Domina non est exaltatum cor tuum: neque sublimati sunt oculi tui",
+    "translation": "(missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nos dña et conforta nos in gra tua: vt pte ante aspectu dni pntem",
+    "translation": "(missing; page opens at Remember, Lady)"
+   }
+  ],
+  "why": "Right drops the clause that completes Benedicta across the break; left has it, though left drops two verses earlier on the page."
+ },
+ {
+  "id": "j098",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing os / & instrumentum faithfully with no defect the other lacks."
+ },
+ {
+  "id": "j099",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Doctores waren. Wer war Moses? ein Schaffhirte! Wer war David? Ein Schaffhirt! Wer",
+    "translation": "(jumps from who also had no to were the prophets)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "welche auch keine Doctores waren",
+    "translation": "who were also not / the doctors were"
+   }
+  ],
+  "why": "Left omits the Moses and David questions across the break; right keeps them with only awkward wording."
+ },
+ {
+  "id": "j100",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad illud [convivium]",
+    "translation": "led to that vision"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "facietas [satietas] plena",
+    "translation": "the fullness of clarity"
+   }
+  ],
+  "why": "The break falls at a sentence end; each side has one comparable slip in the next sentences."
+ },
+ {
+  "id": "j101",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "so man zu ihm | ihm kommt",
+    "translation": "when one comes to / comes to him"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Pasquill / Responsio",
+    "translation": "Pasquil / Responsio"
+   }
+  ],
+  "why": "Left duplicates the catchword phrase comes to across the break; right joins it cleanly."
+ },
+ {
+  "id": "j102",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An (catchword) | An illis quoque diebus",
+    "translation": "Whether / Whether on those same days"
+   }
+  ],
+  "why": "Right renders the catchword An twice across the break."
+ },
+ {
+  "id": "j103",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Facies eius ventus urens",
+    "translation": "He will make his wind to blow"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ne a femina animo vulneretur spiritualis chirurgicus",
+    "translation": "as if by a spiritual surgeon"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ne a femina animo vulneretur spiritualis chirurgicus",
+    "translation": "by a woman, the spiritual surgeon"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Facies eius ventus urens",
+    "translation": "A burning wind will face him"
+   }
+  ],
+  "why": "Both garble the crossing sentence, but right keeps the burning wind of Habakkuk that left loses."
+ },
+ {
+  "id": "j104",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia, quam severa Regis jussione urgerentur",
+    "translation": "constancy of others, who were urged by the stern command of the King"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia, quam severa Regis jussione urgerentur",
+    "translation": "because of the consistency of the men, who were urged"
+   }
+  ],
+  "why": "Both mishandle the split word Episcopo-rum and lose the bishops as agents across the break."
+ },
+ {
+  "id": "j105",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui noualia aut alias decimas",
+    "translation": "who claim or otherwise withhold tithes"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "aialibus familiarium et pastorum suorum vel aliorum ... gregibus immiscentium",
+    "translation": "mixes the animals of the monastery and of its shepherds or of others with his own flocks"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Secundo / Item / Tertio / Uno",
+    "translation": "Secundo / Item / Tertio / Uno"
+   }
+  ],
+  "why": "Left has meaning errors on both sides of the break; right is closer but leaves ordinal words in Latin and ends the sentence at the break."
+ },
+ {
+  "id": "j106",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "autem aetas quae in meliori cursu est ... ego bonum consulam. Vale.",
+    "translation": "(entire remainder of the letter missing; jumps to the next letter)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Vestra autem aetas, quae in meliori cursu est",
+    "translation": "Yours, / but also he who is on a better course"
+   }
+  ],
+  "why": "Left drops the whole continuation of the letter after the break."
+ },
+ {
+  "id": "j107",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Tredecimus | principalis continet duos. et ambo pape reservantur",
+    "translation": "The thirteenth is / The first is"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "praeterquam in articulo mortis",
+    "translation": "to be absolved only at the point of death"
+   }
+  ],
+  "why": "Left omits the crossing clause saying the thirteenth contains two cases reserved to the Pope."
+ },
+ {
+  "id": "j108",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce, inquam ... nequaquam temere iudicare",
+    "translation": "(missing; jumps to But nevertheless)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "qui nos de neglecta auctoritate",
+    "translation": "you who [accuse] us"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "de neglecta auctoritate Magistratus tam dure flagellas",
+    "translation": "accuse us of neglecting authority / and lash out so harshly against the Magistrate"
+   },
+   {
+    "type": "ADDITION",
+    "source": "qui nos de neglecta",
+    "translation": "who accuse us"
+   }
+  ],
+  "why": "Left omits the whole sentence that completes auctorita-toritate across the break."
+ },
+ {
+  "id": "j109",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata. Per gloriosum ... partum homines angelorum fiunt socii et concives. Gloria",
+    "translation": "(missing; that which is above / Clap your hands)"
+   }
+  ],
+  "why": "Right drops the completion of the crossing sentence and the next verse."
+ },
+ {
+  "id": "j110",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium",
+    "translation": "the power of the shipwrecked"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "separatrix ac terror demonum et superborum",
+    "translation": "the separator and terror of demons from the proud"
+   }
+  ],
+  "why": "Each side has one comparable mistranslation right after the break."
+ },
+ {
+  "id": "j111",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut mutuo inter se officio alter alteri suum studium accommodet ... Vale",
+    "translation": "(rest of the letter missing; jumps to the next letter)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Nisi rei p. et amicis satis a me factum putarem, non expectassem",
+    "translation": "Not that I would consider that I had done enough ... if I had not expected"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the continuation of the crossing sentence and the rest of the letter."
+ },
+ {
+  "id": "j112",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "quibus | quibus (catchword)",
+    "translation": "to whom / to whom"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(no Ioan. reference in source)",
+    "translation": "Ioan. 3. 5."
+   }
+  ],
+  "why": "Left renders the catchword quibus twice across the break; right joins it once."
+ }
+]

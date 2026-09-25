@@ -1,0 +1,307 @@
+[
+ {
+  "id": "j065",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "si pcuratores",
+    "translation": "if pcuratores"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "si pcuratores eum (ut oportebat) advigilassent",
+    "translation": "by those who, if they had been vigilant as procurators as was proper, would have flattered your interests"
+   },
+   {
+    "type": "DUPLICATION",
+    "source": "Sed inde periculum factum est unde praesidium expectabam",
+    "translation": "But the danger arose from that very place... (rendered before and after the break)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page: ...protected [themselves], and since they had not kept watch"
+   }
+  ],
+  "why": "Right restructures the crossing conditional wrongly, then adds a bridging label and renders the next sentence twice; left only leaves one word unexpanded."
+ },
+ {
+  "id": "j066",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An / An illis quoque diebus",
+    "translation": "Whether / Whether on those same days"
+   }
+  ],
+  "why": "Right renders the catchword An twice across the break; left joins it once."
+ },
+ {
+  "id": "j067",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damna-mnatur ab Episcopis haec instructio",
+    "translation": "Condemning this instruction is demanded of the Bishops"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damna-mnatur ab Episcopis haec instructio",
+    "translation": "The condemnation this instruction is demanded by the Bishops"
+   }
+  ],
+  "why": "Both mistranslate the split verb damnatur the same way."
+ },
+ {
+  "id": "j068",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a nobis pastoribus",
+    "translation": "from our pastors"
+   },
+   {
+    "type": "DUPLICATION",
+    "source": "conatur",
+    "translation": "[tries to separate] ... he attempts to tear away"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "diuellere conatur",
+    "translation": "tries to tear ... he attempts to tear asunder"
+   }
+  ],
+  "why": "Both double the verb across the break, but left also inserts a bridging label and mistranslates us pastors as our pastors."
+ },
+ {
+  "id": "j069",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both handle the Re/Reliqua catchword once and render the text across the break faithfully."
+ },
+ {
+  "id": "j070",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nosipsos placabiles, sed etiam inimicis exorabiles",
+    "translation": "offer ourselves not only to those... but also be conciliatory to them, and excusable to enemies"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Nisi ... putarem, non expectassem",
+    "translation": "I would have thought that I had done enough ... had I not expected"
+   }
+  ],
+  "why": "Both cross the break cleanly; right garbles the following sentences where left is accurate."
+ },
+ {
+  "id": "j071",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iuste non / dedi",
+    "translation": "I did not justly give to each one what was his. / I gave."
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "sapientia, intellectus, consilium, scientia, pietas, timor dei",
+    "translation": "sapientia, intellectus, consilium, scientia, pietas, timor dei"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "7 (et)",
+    "translation": "7"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "charitas quae super omnia diligit deum",
+    "translation": "charity, which is loved above all things as God"
+   }
+  ],
+  "why": "Left renders the crossing verb dedi twice and leaves the gifts in Latin; right splits the sentence correctly though with residual defects."
+ },
+ {
+  "id": "j072",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "zum Schaffen eingehet",
+    "translation": "enter into the creation"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Enthusiastinn",
+    "translation": "Enthusiastinn"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "sie meinen nicht Macht und Gewalt",
+    "translation": "they do not have power and might of their own"
+   }
+  ],
+  "why": "The break falls between paragraphs and both handle it; left has more mistranslations nearby."
+ },
+ {
+  "id": "j073",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Titum und Timotheum, wie ein Bischoff seyn soll, so werdet ihr finden, dass ihr nicht eines rechten Bischoffs Herz habt",
+    "translation": "(missing; jumps from Titus to paragraph 50)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the entire continuation of the crossing sentence; right completes it."
+ },
+ {
+  "id": "j074",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "noualia aut alias decimas",
+    "translation": "claim or otherwise withhold tithes"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "appropriare sibi presumpserint aut exquisitis fraudibus siue coloribus usurpare",
+    "translation": "rendered before the break and again after it"
+   }
+  ],
+  "why": "Right completes the crossing clause before the break and then renders it a second time; left joins it once."
+ },
+ {
+  "id": "j075",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry the Ca-/Camerario hyphen across once and render the list faithfully."
+ },
+ {
+  "id": "j076",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "verisimiliter",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nostri Capi-/Capituli Patronis hunc eligere",
+    "translation": "the patrons of our / to elect as Patron of the Chapter the one"
+   }
+  ],
+  "why": "Right breaks the crossing phrase and mistranslates it as electing a Patron; left joins it correctly."
+ },
+ {
+  "id": "j077",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "quod intulit",
+    "translation": "that they incurred"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "quod intulit",
+    "translation": "that he intended"
+   }
+  ],
+  "why": "Both join the crossing clause the same way and have comparable minor errors nearby."
+ },
+ {
+  "id": "j078",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "und fuehre / auch selbst",
+    "translation": "and lead / lead also"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left repeats the crossing verb lead; right continues cleanly."
+ },
+ {
+  "id": "j079",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "cum nihil / hil impetrare posset",
+    "translation": "when nothing / could obtain anything"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left renders the split word nihil twice and breaks the grammar; right joins it."
+ },
+ {
+  "id": "j080",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "et quandoque sine illis fieri potest, ut apertum est quod manes defuncti ... se reuelarunt sine istis premissis",
+    "translation": "(missing; jumps from because to But where)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a superbis tanquam a montibus aqua defluere solet",
+    "translation": "grace is not accustomed to flow down upon the proud"
+   }
+  ],
+  "why": "Right drops the whole sentence that completes the crossing clause after the break."
+ }
+]

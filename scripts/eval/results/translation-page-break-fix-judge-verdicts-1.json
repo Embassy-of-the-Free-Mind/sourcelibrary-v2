@@ -1,0 +1,324 @@
+[
+ {
+  "id": "j001",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens / patiens legebatur (catchword)",
+    "translation": "capable of excuse / it was read with patience"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens / patiens legebatur (catchword)",
+    "translation": "capable of excuse / was read with patience"
+   }
+  ],
+  "why": "Both render the repeated catchword patiens twice; the rest of the crossing is equally faithful."
+ },
+ {
+  "id": "j002",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "hin / O nein",
+    "translation": "there, oh no"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "hin / O nein",
+    "translation": "down, oh no"
+   }
+  ],
+  "why": "Both mishandle the carried-over hin at the break in the same way; otherwise equivalent."
+ },
+ {
+  "id": "j003",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "tn gram tibi / habuissem",
+    "translation": "nonetheless great thanks to you ... (no verb)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "... and that"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ceteris pecuniis incolumis",
+    "translation": "alone among the others, carried our goods safely"
+   }
+  ],
+  "why": "Left completes the sentence that crosses the break (gratiam habuissem ... gessisti); right leaves a verbless fragment and adds a bridging ellipsis."
+ },
+ {
+  "id": "j004",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "scio enim ... suo piculo se absoluere. Ad si res ... Vale",
+    "translation": "proverb content and rest of the letter dropped"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "si maiorem de maioribus tuis ... rationem habueris",
+    "translation": "if you take more account of your own virtues"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me ratio habita fuerit. scio enim ... Vale",
+    "translation": "in whom... (entire end of letter dropped)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a meipsum et item alios ... preter bonum et equum sustinuisse",
+    "translation": "other citizens ... similarly stripped of their rights, even though they had sustained the good and the fair"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "de maioribus tuis",
+    "translation": "the greater woes of others"
+   }
+  ],
+  "why": "Both drop the end of the letter that crosses the break, but right drops more, including the crossing clause itself."
+ },
+ {
+  "id": "j005",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "angelica / protectione prohiberentur. Sicut refert cirillus ... dicens.",
+    "translation": "if the angelic / [jumps to Behold, I am given]"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "obnixius ceperunt orare",
+    "translation": "began to pray, weeping"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "angelica / protectione prohiberentur. Sicut refert cirillus ... dicens.",
+    "translation": "if angelic / [jumps to Behold, I am given]"
+   },
+   {
+    "type": "OMISSION",
+    "source": "obnixius",
+    "translation": "began to pray"
+   }
+  ],
+  "why": "Both drop the same large passage across the break; remaining differences are minor."
+ },
+ {
+  "id": "j006",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua recipe / reculabant inherentes legalibus ceremoniis",
+    "translation": "which he was receiving / they were rejecting the legal ceremonies of Moses"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "recipere recusabant",
+    "translation": "which they / remained clinging"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non minime imo etiam maxime",
+    "translation": "By no means do I say this; rather"
+   }
+  ],
+  "why": "Left inverts the meaning of the crossing clause (receiving/rejecting); right keeps clinging to the ceremonies correct and only drops refused to receive."
+ },
+ {
+  "id": "j007",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "178. Dare (catchword)",
+    "translation": "178. Dare"
+   },
+   {
+    "type": "ADDITION",
+    "source": "Schutz Rede",
+    "translation": "Apology or Defense Speech"
+   },
+   {
+    "type": "OMISSION",
+    "source": "pfuy und Koth",
+    "translation": "filth and dung"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Schutz Rede",
+    "translation": "Apology or Defense Speech"
+   }
+  ],
+  "why": "Differences are a leftover catchword and small word choices; right reads cleaner across the break."
+ },
+ {
+  "id": "j008",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry fides unicum est os / et instrumentum across the break faithfully."
+ },
+ {
+  "id": "j009",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "tibi celesti sponso desponsare voluisti. z hodie corpus z sanguinem tuum ad donum noue desponsationis ... ptulisti",
+    "translation": "who in the laver of baptism / Blessed are You, most generous God"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "psumatione legitime tue dilectionis",
+    "translation": "valid consumption of Your love"
+   }
+  ],
+  "why": "Left drops the completion of the crossing sentence (betrothal clause); right renders it."
+ },
+ {
+  "id": "j010",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "dwelling place of the holy ones of God"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "dwelling place of the holy of holies"
+   }
+  ],
+  "why": "Both mistranslate the phrase completing the crossing sentence in comparable ways."
+ },
+ {
+  "id": "j011",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "[Domine] tui qui causam doloris mei assumpsisti",
+    "translation": "I, who have taken up the cause of my sorrow"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left turns the address to Christ (You who took up) into a first-person clause in the sentence leading to the break; the crossing itself is handled the same."
+ },
+ {
+  "id": "j012",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "sanguinem suum / non dubitauerunt fundere ... Confessorum ... virginum ... Amen",
+    "translation": "shed their blood / O sweetest"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "sanguinem suum / non dubitauerunt fundere ... Confessorum ... virginum ... Amen",
+    "translation": "shed their blood / O sweetest"
+   }
+  ],
+  "why": "Both drop the rest of the litany after the break identically."
+ },
+ {
+  "id": "j013",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The break falls between prayers and both render both sides faithfully."
+ },
+ {
+  "id": "j014",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Alterum est / est (catchword)",
+    "translation": "The other is / is"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Alterum est / est (catchword)",
+    "translation": "The other is / is"
+   }
+  ],
+  "why": "Both duplicate the catchword est; otherwise equivalent."
+ },
+ {
+  "id": "j015",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Break falls between versicles and both render the adjacent sentences faithfully (right lacks the opening line, far from the break)."
+ },
+ {
+  "id": "j016",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "wollet schlecht haben",
+    "translation": "desire only to have ,"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "wollet schlecht haben",
+    "translation": "only want to have goods"
+   }
+  ],
+  "why": "Break falls at a paragraph boundary; both render it cleanly with minor flaws elsewhere."
+ }
+]
