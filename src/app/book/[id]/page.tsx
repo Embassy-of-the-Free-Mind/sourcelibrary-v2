@@ -1879,7 +1879,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 : digitizer
                   ? t.pagesDigitizedBy(digitizer)
                   : t.pagesInReadingOrder;
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} readHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/read` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -2512,15 +2512,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             counterpart. Following it from a partner iframe would navigate
             the frame to the global site and hit X-Frame-Options: DENY. */}
         {pages.length > 0 && embedPolicy.showBookOverviewLink && (
-          <div className="flex items-center justify-end gap-5">
-            {/* The whole book as one reflowing document — no panes, no scan.
-                For screen readers, magnification and phones (#5115). */}
-            <Link
-              href={`/book/${book.slug || book.id}/read`}
-              className="text-sm text-stone-400 hover:text-accent-gold transition-colors"
-            >
-              Read as one document
-            </Link>
+          <div className="flex items-center justify-end">
             <Link
               href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"

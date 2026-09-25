@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, LayoutGrid } from 'lucide-react';
+import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, LayoutGrid, BookOpenText } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useEmbedHref } from '@/lib/EmbedContext';
@@ -67,6 +67,8 @@ interface PagesGridProps {
   onLoadMore: () => void;
   getImageUrl: (page: Page) => string | null;
   overviewHref?: string;
+  /** The whole book as one reflowing document — screen readers, magnification, phones (#5115). */
+  readHref?: string;
   subtitle?: string;
   /**
    * Stand-in images for pages that have none (#4350): CDLI tablet-witness
@@ -97,6 +99,7 @@ export default function PagesGrid({
   getImageUrl,
   totalCount,
   overviewHref,
+  readHref,
   subtitle,
   fallbackImages,
 }: PagesGridProps) {
@@ -252,8 +255,8 @@ export default function PagesGrid({
         </div>
       )}
 
-      {/* Load more, then Overview stacked below it — both white-on-black. */}
-      {(visibleCount < displayTotal || overviewHref) && (
+      {/* Load more, then Overview and Read-as-one-document stacked below it — all white-on-black. */}
+      {(visibleCount < displayTotal || overviewHref || readHref) && (
         <div className="mt-6 flex flex-col items-center gap-3">
           {visibleCount < displayTotal && (
             <button
@@ -271,6 +274,17 @@ export default function PagesGrid({
             >
               <LayoutGrid className="w-4 h-4" />
               {t.overview}
+            </a>
+          )}
+          {readHref && (
+            // Not localePath: /es/book/[id]/read does not exist yet (#5115), and
+            // the /es prefix would send a Spanish reader to a 404.
+            <a
+              href={embedHref(readHref)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
+            >
+              <BookOpenText className="w-4 h-4" />
+              {t.readAsOneDocument}
             </a>
           )}
         </div>
