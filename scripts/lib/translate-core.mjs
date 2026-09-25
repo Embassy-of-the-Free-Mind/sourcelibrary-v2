@@ -591,11 +591,33 @@ export const isExcess = (ocr, tr) => {
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
-  if (lang) {
+  if (lang && !echoExempt(ocrText, lang)) {
     const e = echoedSource({ ocr: ocrText, tr: translationText, lang });
     if (e.judged && e.wholePage) return { healthy: false, reason: 'echo' };
   }
   return { healthy: true, reason: null };
+}
+
+/**
+ * Pages the echo tier does not judge — sized on the local mirror before shipping (1,000 books,
+ * 225,583 judged pages, 229 whole-page flags, 20 hand-read one per book; EXPERIMENTS.md
+ * "2026-09-25 (round 4, guards)"): 12 of the 20 flags were pages a translator RIGHTLY hands back
+ * verbatim, in three shapes. (1) The book is English in any form — "English", "Middle English",
+ * "Middle English-English" — and its pages are modernised, not translated. (2) The PAGE is in
+ * English inside a non-English book (a bookplate, a modern editor's title page, an appendix of
+ * selling agents): the OCR's own `<language>` tag says so. (3) A structural page whose content
+ * is names, numbers or symbols — a title page, index, table of contents, colophon, diagram or
+ * table — where the "translation" is the same table with its headings rendered. Together these
+ * took the flags from 229 to 166 and the hand-read precision from 8/20 to 8/11.
+ */
+export const ECHO_EXEMPT_PAGE_TYPES = new Set(['title-page', 'toc', 'index', 'colophon', 'diagram', 'table', 'cover', 'errata']);
+export function echoExempt(ocrText, lang) {
+  if (/english/i.test(String(lang || ''))) return true;
+  const o = String(ocrText || '');
+  const pageLang = o.match(/<language>([^<]*)<\/language>/i)?.[1] || '';
+  if (/english/i.test(pageLang)) return true;
+  const pageType = (o.match(/<page-type>([^<]*)<\/page-type>/i)?.[1] || '').trim().toLowerCase();
+  return ECHO_EXEMPT_PAGE_TYPES.has(pageType);
 }
 
 /**
