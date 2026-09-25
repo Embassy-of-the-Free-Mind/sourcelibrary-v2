@@ -1,0 +1,397 @@
+[
+ {
+  "id": "j073",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "huiffem. q maiori studio negotia tua geri n potuiffe ... q nauib; roftratis omittas. Vale.",
+    "translation": "(rest of the letter skipped; jumps to next letter I wish to know from me...)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the entire continuation of the letter after the break; right renders it."
+ },
+ {
+  "id": "j074",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "huiffem. q maiori studio negotia tua geri n potuiffe ... q nauib; roftratis omittas. Vale.",
+    "translation": "(rest of the letter skipped; jumps to next letter I am asked by you to know...)"
+   }
+  ],
+  "why": "Right drops the entire continuation of the letter after the break; left renders it."
+ },
+ {
+  "id": "j075",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "De profundis clamaui ad te domina: domina exaudi vocem meam.",
+    "translation": "(not rendered)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Domina non est exaltatum cor tuum: neque sublimati sunt oculi tui.",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nos dña et conforta nos in gra tua : vt pte ante aspectu dni pntem",
+    "translation": "(Blessed / Remember, Lady... - crossing sentence dropped)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "cor tuum",
+    "translation": "my heart"
+   }
+  ],
+  "why": "Right drops the sentence crossing the break while left drops two verses in the final pre-break paragraphs; the defects weigh about the same."
+ },
+ {
+  "id": "j076",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua n negligeres. prospiceresqz tibi i futurum.",
+    "translation": "(Often I have admonished you, / Truly, you have handled... - clause dropped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua n negligeres ... Wale;",
+    "translation": "(rest of the letter skipped; jumps to next letter Your obellarius...)"
+   }
+  ],
+  "why": "Left drops one crossing clause, right drops the whole rest of the letter."
+ },
+ {
+  "id": "j077",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "pcuratores",
+    "translation": "pcuratores"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Sed inde periculum factu e / unde pfidiu expectabam",
+    "translation": "But did danger arise from where I expected protection?"
+   }
+  ],
+  "why": "Right leaves the crossing noun untranslated and turns the next statement into a question."
+ },
+ {
+  "id": "j078",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad me scibas. Putabo eni ut cu feceis / m aliqua huic morbo ... medela iueniffe. Vale.",
+    "translation": "(some / How much your letters... - end of letter dropped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad me scibas. Putabo eni ut cu feceis / m aliqua huic morbo ... medela iueniffe. Vale.",
+    "translation": "(something / How much your letter... - end of letter dropped)"
+   }
+  ],
+  "why": "Both drop the same end of the letter after the break."
+ },
+ {
+  "id": "j079",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the dues table and following paragraph across the break equally."
+ },
+ {
+  "id": "j080",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "noualia",
+    "translation": "(omitted: claim or otherwise withhold tithes)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Quartus principalis de statu cler.",
+    "translation": "Title 4, Principal, on the state of the clergy (merged into citation)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "m cle. / Auia vero",
+    "translation": "m. cle. / Auia vero"
+   }
+  ],
+  "why": "Left drops noualia at the crossing clause and garbles the fourth-principal heading into a citation; right only leaves citation fragments untranslated."
+ },
+ {
+  "id": "j081",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing litany fully and faithfully."
+ },
+ {
+  "id": "j082",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damnatur ab Episcopis haec instructio",
+    "translation": "The condemnation / this instruction is demanded by the Bishops"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damnatur ab Episcopis haec instructio",
+    "translation": "Condemning / this instruction is demanded of the Bishops"
+   }
+  ],
+  "why": "Both misread the hyphenated Damna-mnatur as a demand."
+ },
+ {
+  "id": "j083",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "so man zu ihm / ihm kommt",
+    "translation": "But when one comes to / comes to him"
+   }
+  ],
+  "why": "Right renders the catchword twice across the break."
+ },
+ {
+  "id": "j084",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "glorifica illa terra cum omnibz habitatonibz tuis. Gloria",
+    "translation": "(page-opening line not rendered)"
+   }
+  ],
+  "right_defects": [],
+  "why": "The break itself is rendered equally by both; left only drops the page-opening line far from the break."
+ },
+ {
+  "id": "j085",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the section across the running head faithfully."
+ },
+ {
+  "id": "j086",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "terror demonu a superboz",
+    "translation": "terror of demons to the proud"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium",
+    "translation": "the power of the shipwrecked"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui ... redempti sumus",
+    "translation": "whom you have redeemed"
+   }
+  ],
+  "why": "Small misreadings on each side near the break roughly balance."
+ },
+ {
+  "id": "j087",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "pabius (precibus)",
+    "translation": "vows, and [blank]"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "omnem sensum supat",
+    "translation": "calms every sense"
+   }
+  ],
+  "why": "Right drops prayers in the verse after the break and misreads superat."
+ },
+ {
+  "id": "j088",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(paragraph skipped; jumps to To pass over other fragments)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the whole paragraph that completes the crossing sentence."
+ },
+ {
+  "id": "j089",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Vestra autem aetas, quae in meliori cursu est",
+    "translation": "Yours / moreover for the one who is on a better course. He looks"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "aute eras / q i meliori cursu est ... ego bom consulam. Vale.",
+    "translation": "(rest of the letter skipped; jumps to next letter On the public utility...)"
+   }
+  ],
+  "why": "Right drops the entire remainder of the letter; left renders it with a garbled opening."
+ },
+ {
+  "id": "j090",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damnatur ab Episcopis haec instructio",
+    "translation": "Condemning / this instruction is demanded of the Bishops"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ab Episcopis haec instructio",
+    "translation": "by the Bishops in this instruction"
+   }
+  ],
+  "why": "Right gets the crossing verb right (is condemned by the Bishops) while left turns it into a demand."
+ },
+ {
+  "id": "j091",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the hymn across the break fully."
+ },
+ {
+  "id": "j092",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia",
+    "translation": "such a vigilant Bishop- / because of the consistency of the men"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia",
+    "translation": "such a vigilant Bishop- / constancy of others"
+   }
+  ],
+  "why": "Both misconstrue the hyphenated crossing phrase similarly."
+ },
+ {
+  "id": "j093",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Und da je der Medicus mit Fleiss einen unrechten Namen angegeben",
+    "translation": "And whenever the physician diligently provided a wrong name, / asked. And whenever the physician diligently provided a wrong name"
+   }
+  ],
+  "why": "Right renders the sentence twice across the break, with a stray asked."
+ },
+ {
+  "id": "j094",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "zum Schaffen",
+    "translation": "into the creation"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Enthusiastinn",
+    "translation": "Enthusiastinn"
+   }
+  ],
+  "right_defects": [],
+  "why": "The break itself is rendered equally; left has defects only earlier in the passage."
+ },
+ {
+  "id": "j095",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the list end and following paragraph faithfully."
+ },
+ {
+  "id": "j096",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Si quis de me e alie dixerit: ut plus amico veteri q hominibus credas. Vale.",
+    "translation": "(end of letter skipped; jumps to next letter)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the sentence completing the crossing clause; right renders it."
+ }
+]

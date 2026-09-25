@@ -1,0 +1,448 @@
+[
+ {
+  "id": "j097",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "vel domos suas incenditibus",
+    "translation": "or their houses with fire"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both render the crossing clause adequately; later untranslated tags in LEFT fall outside the junction and the break region is equivalent."
+ },
+ {
+  "id": "j098",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Afferte dne nostre",
+    "translation": "Bring to the Lord"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "the dwelling place of the holy of holies"
+   }
+  ],
+  "why": "Each side has one mistranslation of similar weight at the junction."
+ },
+ {
+  "id": "j099",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "si procuratores eum advigilassent",
+    "translation": "had you watched over them"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "unde praesidium expectabamus",
+    "translation": "from where I expected treachery"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT garbles the crossing clause into \"had you watched\" and reverses praesidium to treachery; RIGHT is faithful."
+ },
+ {
+  "id": "j100",
+  "fidelity": "LEFT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "nach den Griechischen gefraget",
+    "translation": "he would [seek them] according to the Greek | questioned"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mit Fleiss einen unrechten Namen",
+    "translation": "diligently provided an incorrect name"
+   },
+   {
+    "type": "ADDITION",
+    "source": "Griechischen",
+    "translation": "Greek | language"
+   }
+  ],
+  "why": "RIGHT mistranslates mit Fleiss (on purpose) as diligently; LEFT is clumsy at the catchword but accurate."
+ },
+ {
+  "id": "j101",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Si ego pena fidei mee perfero",
+    "translation": "If I prefer the penalty"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ceteri maxime | hoc factum admirantur",
+    "translation": "Most others | they wonder at this act"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT mistranslates perfero and garbles the crossing subject; RIGHT carries the sentence across cleanly."
+ },
+ {
+  "id": "j102",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Tredecimus | principalis",
+    "translation": "The thirteenth. | The thirteenth principal"
+   }
+  ],
+  "why": "RIGHT renders the crossing word twice; LEFT joins it cleanly."
+ },
+ {
+  "id": "j103",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "disce, inquam, ipse non modo de nostris Magistratibus & Principibus bene sentire: sed etiam ... nequaquam temere iudicare",
+    "translation": "(missing)"
+   }
+  ],
+  "why": "RIGHT drops the whole sentence that completes the crossing clause; LEFT renders it."
+ },
+ {
+  "id": "j104",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "unde praesidium expectabamus",
+    "translation": "whence I expected loyalty"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui mortuo medicum accersiunt",
+    "translation": "call for a physician only when they are dying"
+   }
+  ],
+  "why": "Each side has one small mistranslation near the break; the crossing clause is correct in both."
+ },
+ {
+  "id": "j105",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "aliquid | ad me scribas. Putabo enim ut cum feceris ... medelam invenisse. Vale.",
+    "translation": "some | (missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad me scribas",
+    "translation": "you should know"
+   }
+  ],
+  "why": "LEFT drops the completion of the crossing sentence and the letter close; RIGHT keeps it despite one slip."
+ },
+ {
+  "id": "j106",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iuste non | dedi",
+    "translation": "did not justly give to each ... what was his. | I gave."
+   },
+   {
+    "type": "OMISSION",
+    "source": "Quicquid ego contra septem virtutes peccavi dico meam culpam et reddo me culpabilem",
+    "translation": "(missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iuste non | dedi",
+    "translation": "did not justly give to each one what was his. | I gave."
+   },
+   {
+    "type": "ADDITION",
+    "source": "Quicquid",
+    "translation": "Therefore, whatever"
+   }
+  ],
+  "why": "Both duplicate dedi, but LEFT also omits the confession formula right after the break."
+ },
+ {
+  "id": "j107",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing correctly without defects."
+ },
+ {
+  "id": "j108",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "inventricem gratie et salutis",
+    "translation": "the mediatrix of grace and salvation"
+   },
+   {
+    "type": "ADDITION",
+    "source": "Respiret ad indulgentiam",
+    "translation": "breathe in the air of indulgence"
+   }
+  ],
+  "why": "RIGHT mistranslates inventrix just before the break; LEFT renders it as finder."
+ },
+ {
+  "id": "j109",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "the dwelling place of the holy of holies"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "propitiationis & habitaculum sanctum dei",
+    "translation": "(missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Afferte domine nostre",
+    "translation": "Bring to the Lord, our Lady"
+   }
+  ],
+  "why": "RIGHT drops the completion of the crossing sentence; LEFT has only a smaller mistranslation."
+ },
+ {
+  "id": "j110",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a nobis pastoribus",
+    "translation": "from | our pastors"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT injects a meta note and misrenders nobis at the break; RIGHT continues cleanly."
+ },
+ {
+  "id": "j111",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Benedic | nos domina et conforta nos in gratia tua: ut pure ante aspectum domini appareamus",
+    "translation": "Blessed | (missing)"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT drops the completion of the crossing sentence; RIGHT renders it."
+ },
+ {
+  "id": "j112",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "protectione prohiberentur. Sicut refert Cirillus ... Et clamavit fratribus religiosis presentibus dicens",
+    "translation": "(missing, jumps to the dragon quotation)"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT omits the whole passage after the break including the completion of the crossing clause."
+ },
+ {
+  "id": "j113",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(missing)"
+   }
+  ],
+  "why": "Both omit the same paragraph after the break."
+ },
+ {
+  "id": "j114",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "quibus | quibus (catchword)",
+    "translation": "to whom Gen. 17. Math. 28. | to whom"
+   }
+  ],
+  "why": "RIGHT renders the catchword twice with marginal references spliced in; LEFT joins cleanly."
+ },
+ {
+  "id": "j115",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Ron ... Sequit excla R calce matio",
+    "translation": "Ron ... Sequit excla R calce mation"
+   },
+   {
+    "type": "OMISSION",
+    "source": "recusabant",
+    "translation": "which he was receiving | while clinging"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua recipere recusabant inherentes legalibus ceremoniis",
+    "translation": "which he was receiving | they were rejecting the legal ceremonies"
+   }
+  ],
+  "why": "Both garble the crossing clause, but LEFT also leaves untranslated fragments just before the break."
+ },
+ {
+  "id": "j116",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Achilleum et validissimum Osiandri praesidium",
+    "translation": "Osiander s Achilles heel and his strongest defense"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam suam, neque mutat, neque amittit ... Subijcit autem aduersum nos.",
+    "translation": "(missing)"
+   }
+  ],
+  "why": "RIGHT omits the sentence completing the crossing clause; LEFT renders it with one slip."
+ },
+ {
+  "id": "j117",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "appropriare sibi presumpserint aut exquisitis fraudibus siue coloribus usurpare",
+    "translation": "rendered before and after the break"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "novalia aut alias decimas",
+    "translation": "claim or otherwise withhold tithes"
+   }
+  ],
+  "why": "LEFT renders the post-break clause twice; RIGHT has only a minor slip."
+ },
+ {
+  "id": "j118",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "si vadunt",
+    "translation": "If they go [to rob]"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "secundum",
+    "translation": "(missing Second)"
+   }
+  ],
+  "why": "The crossing clause is correct in both; minor defects of similar weight."
+ },
+ {
+  "id": "j119",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Schutz Rede",
+    "translation": "Apology or Defense Speech"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Dare (catchword)",
+    "translation": "178. Dare"
+   }
+  ],
+  "why": "RIGHT adds to the running head and keeps the catchword; LEFT is clean."
+ },
+ {
+  "id": "j120",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "si vadunt",
+    "translation": "If they go [to rob]"
+   }
+  ],
+  "why": "Both render the crossing clause correctly; differences are minor."
+ }
+]

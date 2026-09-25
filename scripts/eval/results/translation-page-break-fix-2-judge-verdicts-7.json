@@ -1,0 +1,500 @@
+[
+ {
+  "id": "j145",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "trunco arboris Ecclesiae",
+    "translation": "the trunk of the Church"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops arboris (tree) after the break; otherwise both render the crossing est and the letter faithfully."
+ },
+ {
+  "id": "j146",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Ad si res m i itegru rediret ... Interi ego pena pedo ... Scripsi b ad te ... Vale",
+    "translation": "(absent)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me rato hiea fuerit scio eni ... in veteri proubio ... Vale",
+    "translation": "in whom..."
+   }
+  ],
+  "why": "Both drop most of the post-break page, but right drops the crossing clause and proverb entirely, leaving a dangling fragment."
+ },
+ {
+  "id": "j147",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the litany across the break fully and correctly."
+ },
+ {
+  "id": "j148",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus",
+    "translation": "a bridge-jumper"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Anony-",
+    "translation": "Anony-"
+   }
+  ],
+  "why": "Right mistranslates depontanus literally and leaves the catchword fragment Anony- before rendering the sentence again."
+ },
+ {
+  "id": "j149",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens || patiens",
+    "translation": "capable of excuse || patiently"
+   },
+   {
+    "type": "OMISSION",
+    "source": "legebatur",
+    "translation": "(absent)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens || patiens",
+    "translation": "capable of excuse || it was read with patience"
+   }
+  ],
+  "why": "Both double the catchword patiens, but only right renders legebatur."
+ },
+ {
+  "id": "j150",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua n negligeres ... Sta eni de te narrauit mihi claudi ...",
+    "translation": "(absent)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(not in source)",
+    "translation": "Your obellarius recently brought your letters to me ..."
+   }
+  ],
+  "why": "Right replaces the post-break page with unrelated content from another letter."
+ },
+ {
+  "id": "j151",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "min gre et magis m commodi",
+    "translation": "neither credit nor any great advantage"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "suos ... peteret",
+    "translation": "seek out his own people"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "psidia weturij",
+    "translation": "protection of Vecturius"
+   },
+   {
+    "type": "DUPLICATION",
+    "source": "Ceteri maxime || hoc factu admirant",
+    "translation": "The others, greatly || they wonder"
+   }
+  ],
+  "why": "Left inverts the sense of the surety maxim (more trouble); right has lesser slips and a doubled subject at the break."
+ },
+ {
+  "id": "j152",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere ... Confessor oiones ... Subueniat mihi ... Amen",
+    "translation": "(absent)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere ... Confessor oiones ... Subueniat mihi ... Amen",
+    "translation": "(absent)"
+   }
+  ],
+  "why": "Both drop the same post-break prayer ending and jump to Dulcissime."
+ },
+ {
+  "id": "j153",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Tu mater oim beatoz",
+    "translation": "(absent)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Tu mater oim beatoz",
+    "translation": "(absent)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "advocata",
+    "translation": "the advocate of the needy"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "terror demonu a supboz",
+    "translation": "terror of demons for the proud"
+   }
+  ],
+  "why": "Right adds of the needy and misreads the demons and the proud; both drop mater."
+ },
+ {
+  "id": "j154",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "tibi celesti sponso desponsare voluisti. z hodie corpus z sanguine tuu ad donu noue desponsationis ...",
+    "translation": "(absent)"
+   }
+  ],
+  "why": "Right drops the clause that completes the crossing sentence about baptismal betrothal."
+ },
+ {
+  "id": "j155",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "t. r. a. n.",
+    "translation": "we beseech you"
+   },
+   {
+    "type": "ADDITION",
+    "source": "Ab ho dixi",
+    "translation": "But from this"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left omits audi nos in the litany response; after the break both match."
+ },
+ {
+  "id": "j156",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing clause and following sentences identically in substance."
+ },
+ {
+  "id": "j157",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua n negligeres. prospiceresq tibi i futurum",
+    "translation": "(absent)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua n negligeres ... Sta eni de te narrauit mihi claudi ...",
+    "translation": "(absent)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(not in source)",
+    "translation": "Your obellarius recently brought your letters to me ..."
+   }
+  ],
+  "why": "Left drops the crossing clause; right replaces the whole post-break page with unrelated content."
+ },
+ {
+  "id": "j158",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "magis manifestatus",
+    "translation": "He was made manifest"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "voluisti ... fuisti (second person)",
+    "translation": "He was ... He was"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "magis manifestatus",
+    "translation": "made manifest"
+   }
+  ],
+  "why": "Both miss the Magi; left shifts the address to third person after the break, which is mainly a continuity fault."
+ },
+ {
+  "id": "j159",
+  "fidelity": "LEFT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Vn",
+    "translation": "Therefore"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "noualia aut alias decimas",
+    "translation": "claim or otherwise withhold tithes"
+   },
+   {
+    "type": "DUPLICATION",
+    "source": "appropriare sibi",
+    "translation": "claim ... || appropriate them for themselves"
+   }
+  ],
+  "why": "Left is garbled but keeps novalia; right invents claim/withhold, doubling the appropriation verb."
+ },
+ {
+  "id": "j160",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "protectione prohiberentur",
+    "translation": "protection from being prevented"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "protectione prohiberentur. Sicut refert cirillus ... Remedium ...",
+    "translation": "(absent)"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(not in source)",
+    "translation": "Behold, I am given to the dragon ..."
+   }
+  ],
+  "why": "Right replaces the post-break page with a later passage; left only garbles the crossing verb."
+ },
+ {
+  "id": "j161",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "[tries to separate]"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "a nobis pastoribus",
+    "translation": "to us pastors"
+   }
+  ],
+  "why": "Left inserts a bracketed verb duplicated after the break plus a label; right only has a preposition slip."
+ },
+ {
+  "id": "j162",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua recipe || reculabant",
+    "translation": "which he was receiving || they were rejecting"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "inherentes legalibus ceremoniis",
+    "translation": "rejecting the legal ceremonies"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "reculabant inherentes legalib ceremoniis moysi que christo prefereb",
+    "translation": "rendered both before and after the break"
+   }
+  ],
+  "why": "Left inverts the meaning across the break; right is correct but duplicates the clause."
+ },
+ {
+  "id": "j163",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the response and the post-break passage faithfully."
+ },
+ {
+  "id": "j164",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "arbitror illa ad nros ciues ptine ... Vale",
+    "translation": "(absent)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Nputo dubitadu",
+    "translation": "I think one must doubt"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "arbitror",
+    "translation": "I think it much || I believe"
+   }
+  ],
+  "why": "Left drops the rest of the crossing letter and jumps to the next; right renders it with a doubled verb."
+ },
+ {
+  "id": "j165",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "per modum planet",
+    "translation": "after the manner of ... the planets"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua recipe",
+    "translation": "which he received"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua recipe || reculabant",
+    "translation": "which he was receiving || they were rejecting"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "inherentes legalibus ceremoniis",
+    "translation": "rejecting the legal ceremonies"
+   }
+  ],
+  "why": "Right inverts the meaning of the crossing sentence; left gets the post-break half right."
+ },
+ {
+  "id": "j166",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Sit queso",
+    "translation": "Be present, I beseech you ... for this sacrament to be"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left adds be present to the opening Sit; right renders it faithfully."
+ },
+ {
+  "id": "j167",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mutuo inter se offitio",
+    "translation": "mutually (officio dropped)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry the crossing clause; right keeps mutual service."
+ },
+ {
+  "id": "j168",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Facies ei vent vrens",
+    "translation": "A burning wind will face him"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "mmuda mens in cogitatone suet",
+    "translation": "a clean mind ... is drawn away"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "spiritualis cyrologi",
+    "translation": "like a spiritual surgeon"
+   }
+  ],
+  "why": "Left misreads the Habakkuk quote and servetur after the break; right is closer."
+ }
+]
