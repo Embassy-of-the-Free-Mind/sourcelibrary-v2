@@ -302,10 +302,21 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
             ? <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />
             : <p className="text-muted italic">Not transcribed.</p>;
 
-          const primary = mode === 'original' ? originalBlock : translationBlock;
-          const secondaryLabel = mode === 'original' ? 'Translation' : `Original (${languageLabel})`;
-          const secondary = mode === 'original' ? translationBlock : originalBlock;
           const hasAnyText = !!(translationHtml || originalHtml);
+          // A page with no translation shows the ORIGINAL as its text, not a
+          // "not yet translated" line with the words folded away — for an
+          // English original that line is simply false, and for a Latin one
+          // the reader still wants the Latin rather than nothing. Measured on
+          // the preview: 79 pages of an English book hid behind that line.
+          const primaryIsOriginal = mode === 'original' || !translationHtml;
+          const primary = primaryIsOriginal ? originalBlock : translationBlock;
+          const primaryNote = primaryIsOriginal && mode !== 'original' && originalHtml
+            ? <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">{withheld ? 'Translation withheld' : 'Not yet translated'} · original ({languageLabel})</p>
+            : null;
+          const secondaryLabel = primaryIsOriginal ? 'Translation' : `Original (${languageLabel})`;
+          const secondary = primaryIsOriginal ? translationBlock : originalBlock;
+          // No point folding a "not yet translated" line under the original.
+          const showSecondary = primaryIsOriginal ? !!translationHtml : !!originalHtml;
 
           return (
             <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
@@ -332,11 +343,14 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
                 </>
               ) : (
                 <>
+                  {primaryNote}
                   {primary}
-                  <details className="mt-3">
-                    <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">{secondaryLabel}</summary>
-                    <div className="mt-3">{secondary}</div>
-                  </details>
+                  {showSecondary && (
+                    <details className="mt-3">
+                      <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">{secondaryLabel}</summary>
+                      <div className="mt-3">{secondary}</div>
+                    </details>
+                  )}
                 </>
               )}
             </section>
