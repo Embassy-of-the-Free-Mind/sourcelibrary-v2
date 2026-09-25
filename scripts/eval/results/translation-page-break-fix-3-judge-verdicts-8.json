@@ -1,0 +1,227 @@
+[
+ {
+  "id": "j113",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ille | impat?",
+    "translation": "He | is impatient"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Pre aute urbes qtidie viribz nroz socoz auget",
+    "translation": "The strength of our allies increases daily before the cities"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ille | impat?",
+    "translation": "He | is impatient"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Pre aute urbes qtidie viribz nroz socoz auget",
+    "translation": "the city grows daily with the strength of our allies"
+   }
+  ],
+  "why": "Both split the crossing sentence identically and share the imparatus error; remaining differences are minor and balanced."
+ },
+ {
+  "id": "j114",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi spem ventis ad pupe flatibus",
+    "translation": "except the hope of winds for the sails"
+   },
+   {
+    "type": "OMISSION",
+    "source": "trasigant a te oia",
+    "translation": "it might be handled by you"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi rones suas ... in alia regione tuta contulerint",
+    "translation": "as many have betaken their own resources to the beginnings of new things in another region"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Aiebat autem rege ipsum nihil tale suspicate",
+    "translation": "The king himself, however, was saying that he had suspected nothing"
+   }
+  ],
+  "why": "Left garbles the winds-at-the-stern clause just before the break and the safe-transfer clause after it; right errs only on the subject of aiebat."
+ },
+ {
+  "id": "j115",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry que supra | mundum sunt across the break faithfully with no differing defects."
+ },
+ {
+  "id": "j116",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Wer Abel / Seth / Enoch und Noah? Wer waren die Erzvaeter?",
+    "translation": "Were Abel, Seth, Enoch, and Noah, who were the patriarchs?"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left fuses the two questions before the break into a wrong statement; right is faithful though its rendered running head interrupts the crossing sentence."
+ },
+ {
+  "id": "j117",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "vel omnipotentiam Dei recipit ... ut praeclare definiuit concilium Chalcedonense",
+    "translation": "(entire passage after the break omitted; jumps to Pag. 29)"
+   }
+  ],
+  "why": "Right drops the whole post-break passage including the completion of the crossing sentence."
+ },
+ {
+  "id": "j118",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Fecique tanti setentia tuam ut nullius magis",
+    "translation": "You have valued your own opinion so much that there is none higher"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "hoies ut placeant diligant",
+    "translation": "I love men so that they may be pleased"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Nullu (initial N)",
+    "translation": "NI have never"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui postea e schola discessimus nra amicitia sep cum annis creuit",
+    "translation": "who, after we departed from school, lived with our friendship"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ut rerum oium ita consiliorum magnam in nos societatem",
+    "translation": "a great partnership of advice toward each other, just as the king of all"
+   }
+  ],
+  "why": "Right continues the ut-clause across the break (that you trust the old friend) and has fewer mistranslations around it."
+ },
+ {
+  "id": "j119",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi divino munere nra illa nauis ... portum subiisset",
+    "translation": "nor was it by divine favor that that ship of ours ... reached the port unharmed"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(page break placement)",
+    "translation": "page-two content of the reply letter rendered before the break, displacing the break"
+   }
+  ],
+  "right_defects": [],
+  "why": "Right places gratiam tibi | habuissem correctly at the break and renders nisi divino munere correctly; left misplaces the break and inverts the divine-favor clause."
+ },
+ {
+  "id": "j120",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "de penuria paupertatis mee",
+    "translation": "from the poverty of my meager knowledge"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "R (initial) calce matio",
+    "translation": "the R Exclamation"
+   }
+  ],
+  "why": "Both handle recipe | reculabant identically; each has one trivial slip."
+ },
+ {
+  "id": "j121",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the catchword An and the following An the same way with no differing defects."
+ },
+ {
+  "id": "j122",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry attollite | triumphatori dicite across the break faithfully."
+ },
+ {
+  "id": "j123",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "In dnam confido propter dulcedinem nominis sui. Oculi eius",
+    "translation": "In you, Lady, I trust because of the sweetness of your name. Your eyes"
+   }
+  ],
+  "why": "Right turns the third-person antiphon after the break into second person."
+ },
+ {
+  "id": "j124",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Querunt oms",
+    "translation": "Everyone asks ... why"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Opus est itaque maturatione",
+    "translation": "There is need, therefore, of maturation"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi fuissem maximis rebus detentus",
+    "translation": "and would not have been detained by the greatest matters"
+   }
+  ],
+  "why": "Both cross si procuratores | eum advigilassent correctly; left has two mistranslations in the region to right one."
+ }
+]

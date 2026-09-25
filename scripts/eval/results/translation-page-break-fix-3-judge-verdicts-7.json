@@ -1,0 +1,205 @@
+[
+ {
+  "id": "j097",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the sentence before the break and Benedicta sis ... in aspectu tuo after it completely and correctly."
+ },
+ {
+  "id": "j098",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The fee list continues correctly on both sides (Camerario pro Chirothecis 1 fl.); the catchword Ca- is correctly dropped by both."
+ },
+ {
+  "id": "j099",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Wer Abel / Seth / Enoch und Noah? Wer waren die Erzvaeter?",
+    "translation": "Were Abel, Seth, Enoch, and Noah, who were the patriarchs?"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left merges the two questions before the break into one garbled question; both handle keine | Doctores waren correctly."
+ },
+ {
+  "id": "j100",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both close the petition list and open Sit queso sancte pater ... faithfully."
+ },
+ {
+  "id": "j101",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render so man zu ihm | ihm kommt once and translate the following sentences correctly."
+ },
+ {
+  "id": "j102",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "der Herz Primarius saget",
+    "translation": "the heart Primarius says"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "hin / O nein!",
+    "translation": "down; Oh no!"
+   }
+  ],
+  "why": "In the sentence crossing the break, right takes the OCR Herz (Herr) literally as heart and renders the particle hin as down; left has neither error."
+ },
+ {
+  "id": "j103",
+  "fidelity": "LEFT",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Primus de pe. in cle. c. si qs",
+    "translation": "The first in Clementinae, c. si quis"
+   }
+  ],
+  "why": "Right drops the de poenis title in the citation just after the break; left punctuates The thirteenth. as a separate sentence, which breaks the flow but loses no content."
+ },
+ {
+  "id": "j104",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus 82. annorum",
+    "translation": "the 82-year-old man, deprived of his censorship"
+   }
+  ],
+  "why": "Right invents a meaning for depontanus (an aged man) in the sentence before the break; left renders it simply as the old man."
+ },
+ {
+  "id": "j105",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "facere profecto quod vice hac doleret",
+    "translation": "I would certainly regret having done this"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "diligendis nulla de me ratio habita fuerit",
+    "translation": "in loving them, there was no gratitude toward me"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "facere profecto quod vice hac doleret",
+    "translation": "I would certainly do what I would regret at this time"
+   }
+  ],
+  "why": "Right turns ratio into gratitude in the clause crossing the break and inserts an ellipsis there; both garble the at-si sentence."
+ },
+ {
+  "id": "j106",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Ceteri maxime | hoc factum admirantur and the following sentences are rendered correctly on both sides."
+ },
+ {
+  "id": "j107",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "noualium aut alias decimas",
+    "translation": "tithes owed to churches"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Secundus seu qui",
+    "translation": "...or those who"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "noualium aut alias decimas",
+    "translation": "by novel or other ways"
+   }
+  ],
+  "why": "Left pulls the post-break verb back before the break, drops the novalia tithes, and drops the Secundus label; right keeps the structure and mistranslates only novalia."
+ },
+ {
+  "id": "j108",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the last interrogatory and Reliqua interrogatoria ... correctly and drop the catchword."
+ },
+ {
+  "id": "j109",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry locus | propitiationis across the break as one clause, with no losses."
+ },
+ {
+  "id": "j110",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both close the Laudate sequence and open Cantate ... canticum nouum faithfully."
+ },
+ {
+  "id": "j111",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Quid est quod ullo tempore apud te magno studio contenderim, nisi a te hoc etiam atque etiam exigo",
+    "translation": "What is it that I have contended for ...? I demand this from you again and again"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left breaks up the rhetorical question before the break and adds an ellipsis at admonui | ut; right keeps the construction intact."
+ },
+ {
+  "id": "j112",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An (catchword) | An illis quoque diebus",
+    "translation": "Whether | Whether he also publishes"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left translates the catchword An as well as the real An, which leaves a stray duplicated Whether at the break."
+ }
+]

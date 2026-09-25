@@ -1,0 +1,309 @@
+[
+ {
+  "id": "j049",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "dicit ra[p] si vadunt nihil",
+    "translation": "says for himself \"I am going\""
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nec emet aliquis dominus alteri",
+    "translation": "nor did any lord buy from another"
+   }
+  ],
+  "why": "Both carry the crossing clause (spoliantibus | vel domos suas incendentibus) intact; remaining differences are readings of corrupt OCR of similar weight."
+ },
+ {
+  "id": "j050",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the end of the Quesnel paragraph and the Tandem vero Archiepiscopus sentence completely; differences are stylistic."
+ },
+ {
+  "id": "j051",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "dicit ra[p] si vadunt nihil",
+    "translation": "says for himself \"I am going\""
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "si incimauerunt aduersarijs",
+    "translation": "if they did not warn the adversaries"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "dicit ra[p] si vadunt nihil",
+    "translation": "each says for himself: \"I go.\""
+   }
+  ],
+  "why": "The crossing clause is intact on both sides; each has comparable misreadings of the corrupt text after the break."
+ },
+ {
+  "id": "j052",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nouam hanc tuam Pappanamque Charitatem",
+    "translation": "this new charity of yours"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce, inquam, ipse non modo de nostris Magistratibus et Principibus bene sentire: sed etiam de iis, quae in eorum actionibus non intelligis ... nequaquam temere iudicare",
+    "translation": "(entire passage absent; right jumps from \"neglected authority-\" to \"But yet, so that everyone may understand\")"
+   }
+  ],
+  "why": "Right drops the whole sentence that completes the word and clause crossing the break, leaving it dangling; left renders it."
+ },
+ {
+  "id": "j053",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry the stanza across the break (attollite | triumphatori dicite) faithfully."
+ },
+ {
+  "id": "j054",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "coram quoque",
+    "translation": "heard the same from Quesnel own mouth not only once"
+   },
+   {
+    "type": "OMISSION",
+    "source": "annorum 85. senex",
+    "translation": "the old man lived on until December 2"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "annorum 85. senex",
+    "translation": "the old man lived on December 2"
+   }
+  ],
+  "why": "Both join Alterum est | est insigne correctly and share the dropped age, but left also omits coram (in person)."
+ },
+ {
+  "id": "j055",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus 82. annorum",
+    "translation": "the 82-year-old man, deprived of his censorship"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Anony-",
+    "translation": "Anony-"
+   }
+  ],
+  "why": "Right leaves the catchword standing (trivial) while left invents deprived of his censorship for depontanus; left reads more smoothly across the break."
+ },
+ {
+  "id": "j056",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Paternis bonis interdictum est",
+    "translation": "It has been said to me concerning my paternal goods"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Toties enim tecum esse videor ... Neminem hodierno tempore viuere puto ... (pre-break page)",
+    "translation": "pre-break letters rendered after the break marker"
+   },
+   {
+    "type": "OMISSION",
+    "source": "ad me scribas. Putabo enim ut cum feceris, me aliqua huic morbo ... medela invenisse. Vale. Quanto me dolore litterae tuae affecerunt",
+    "translation": "(post-break page not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Paternis bonis interdictum est",
+    "translation": "Regarding my paternal property, it has been said to me"
+   }
+  ],
+  "why": "Right is misaligned: the pre-break page appears after the break and the post-break content (ad me scribas, Putabo enim...) is missing; left joins aliquid | ad me scribas correctly."
+ },
+ {
+  "id": "j057",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "si mors viventium per oculos ad mortem venit",
+    "translation": "if the matter of the living comes to death through the eyes, one must be cautious"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "maxime raro confitentibus",
+    "translation": "which is very rare with those confessing"
+   }
+  ],
+  "why": "Both carry spiritualis chirurgus | quia iuxta illud Abacuk correctly; each has one comparable defect further on."
+ },
+ {
+  "id": "j058",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Gloria",
+    "translation": "Glory to the Father and to the Son"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Benedicta sit que tibi obumbrauit et sua gratia te fecundauit",
+    "translation": "Blessed be He who overshadowed you and made you fruitful by His grace"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "maria diligere nomen tuum",
+    "translation": "to love the name of Mary, your Mother"
+   }
+  ],
+  "why": "Right turns the feminine Benedicta sit quae into He/His in the sentence leading into the break and adds your Mother; left only expands one Gloria."
+ },
+ {
+  "id": "j059",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Theologia Familiaris, seu brevis explicatio mysteriorum Fidei",
+    "translation": "Theologia Familiaris, seu brevis explicatio mysteriorum Fidei"
+   }
+  ],
+  "why": "Both join the title crossing the break (Fi- | Dei) correctly; right keeps the book title in Latin, which is conventional rather than a real loss."
+ },
+ {
+  "id": "j060",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi quod me litteris tuis admoneas",
+    "translation": "unless I should admonish you with your own letters"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "expectatione decipies",
+    "translation": "nor will you deceive the expectation"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi quod me litteris tuis admoneas",
+    "translation": "unless to remind you of your letters"
+   }
+  ],
+  "why": "Both carry hominum gratia | ut mutuo inter se officio intact; pre-break misreadings are of similar weight."
+ },
+ {
+  "id": "j061",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both complete nisi angelica | protectione prohiberentur and the Cyril sentence faithfully."
+ },
+ {
+  "id": "j062",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Trauben lesen von den Disteln, noch Feigen von den Dornen",
+    "translation": "gather grapes of thorns, or figs of thistles"
+   }
+  ],
+  "why": "Both carry so man zu ihm | ihm kommt correctly; right swaps thistles and thorns by importing the KJV wording."
+ },
+ {
+  "id": "j063",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi quod me litteris tuis admoneas",
+    "translation": "unless to remind you of your letters"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "inimicis exorabiles",
+    "translation": "but also placable to enemies"
+   }
+  ],
+  "why": "Both carry the crossing sentence correctly; each has one minor defect elsewhere."
+ },
+ {
+  "id": "j064",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nisi rationes suas ... in aliam regionem tutam contulerint",
+    "translation": "as many have betaken their own resources to the beginnings of new things in another region"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non puto dubitandum",
+    "translation": "I think it must be doubted ... whether"
+   },
+   {
+    "type": "OMISSION",
+    "source": "nisi rationes suas ... in aliam regionem tutam contulerint",
+    "translation": "for they have committed their reasons to the beginnings of new things in another region"
+   }
+  ],
+  "why": "Both join multum | arbitror correctly; right drops the negation of Non puto dubitandum, reversing the meaning."
+ }
+]
