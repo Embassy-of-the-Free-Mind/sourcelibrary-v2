@@ -78,6 +78,8 @@ export interface BookStrings {
   pagesInReadingOrder: string;
   loadMore: (remaining: number) => string;
   overview: string;
+  /** Link to /book/[id]/read — the whole book as one reflowing document (#5115). */
+  readAsOneDocument: string;
   noPagesYet: string;
 
   // ---- sections ----
@@ -172,6 +174,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pagesInReadingOrder: 'Every page of the original scan, in reading order.',
     loadMore: (remaining) => `Load more (${remaining} remaining)`,
     overview: 'Overview',
+    readAsOneDocument: 'Read as one document',
     noPagesYet: 'No pages yet',
 
     illustrations: 'Illustrations',
@@ -260,6 +263,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pagesInReadingOrder: 'Todas las páginas del escaneo original, en orden de lectura.',
     loadMore: (remaining) => `Cargar más (quedan ${remaining})`,
     overview: 'Vista general',
+    readAsOneDocument: 'Leer como un solo documento',
     noPagesYet: 'Todavía no hay páginas',
 
     illustrations: 'Ilustraciones',

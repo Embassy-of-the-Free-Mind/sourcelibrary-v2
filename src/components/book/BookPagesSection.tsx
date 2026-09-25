@@ -22,6 +22,7 @@ interface BookPagesSectionProps {
   totalPageCount?: number;
   displayBrightness?: number;
   overviewHref?: string;
+  readHref?: string;
   subtitle?: string;
   /** Stand-in images for imageless pages (#4350) — see PagesGrid. */
   fallbackImages?: Array<{ src: string; alt: string }>;
@@ -29,7 +30,7 @@ interface BookPagesSectionProps {
 
 const PAGES_PER_LOAD = 20; // 2 rows on the 10-col grid
 
-export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, subtitle, fallbackImages }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, readHref, subtitle, fallbackImages }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -551,6 +552,7 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         getImageUrl={getImageUrl}
         totalCount={totalPages}
         overviewHref={overviewHref}
+        readHref={readHref}
         subtitle={subtitle}
         fallbackImages={fallbackImages}
       />
