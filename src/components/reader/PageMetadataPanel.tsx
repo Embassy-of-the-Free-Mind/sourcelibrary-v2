@@ -465,8 +465,21 @@ export default function PageMetadataPanel({
                     }
                   />
                 )}
+                {!page.ocr.engine.model_doi && page.ocr.engine.model_url && (
+                  <MetadataRow
+                    label="Model weights"
+                    value={
+                      <a href={page.ocr.engine.model_url} target="_blank" rel="noopener noreferrer" className="underline">
+                        {page.ocr.engine.model}{page.ocr.engine.revision ? ` @ ${page.ocr.engine.revision.slice(0, 8)}` : ''}
+                      </a>
+                    }
+                  />
+                )}
                 {page.ocr.engine.licence && <MetadataRow label="Model licence" value={page.ocr.engine.licence} />}
                 {page.ocr.engine.segmenter && <MetadataRow label="Segmentation" value={`${page.ocr.engine.segmenter} · ${page.ocr.engine.direction}`} />}
+                {page.ocr.verdict && (
+                  <MetadataRow label="Adjudication" value={`${page.ocr.verdict.verdict === 'SERVE' ? 'served' : 'marked unreadable'} · ${page.ocr.verdict.rule}`} />
+                )}
               </>
             )}
             {page.ocr?.updated_at && (
