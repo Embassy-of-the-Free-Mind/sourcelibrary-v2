@@ -38,6 +38,7 @@ import {
   persistRefusedTranslation,
   continuityContext,
   buildBlockTranslationPrompt,
+  parseBlockTranslations,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -355,44 +356,13 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const responseText = result.response.text();
   const usage = result.response.usageMetadata || {};
 
-  // Parse individual translations from response
-  const translations = new Map();
-  const regex = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
-  let match;
-  const parsedEntries = []; // preserve order for positional fallback
-  while ((match = regex.exec(responseText)) !== null) {
-    const pageNum = parseInt(match[1], 10);
-    const text = sanitizeTranslationTags(match[2].trim());
-
-    // Validate: reject suspiciously short translations (could indicate misparsing
-    // from OCR text containing </translation> tags or truncated output)
-    const sourcePage = pages.find(p => p.page_number === pageNum);
-    if (sourcePage) {
-      const ocrLen = (sourcePage.ocr?.data || '').length;
-      // Translation should be at least 15% of OCR length (translations are usually
-      // similar length or longer). Very short = likely truncated by a stray closing tag.
-      if (ocrLen > 100 && text.length < ocrLen * 0.15) {
-        continue; // Skip — will fall back to single-page
-      }
-    }
-
-    translations.set(pageNum, text);
-    parsedEntries.push(text);
-  }
-
-  // Positional fallback: if model renumbered pages (e.g. 1-5 instead of 491-495),
-  // map translations to batch pages by position when count matches exactly.
-  if (parsedEntries.length === pages.length && parsedEntries.length > 0) {
-    const matchedByNum = pages.filter(p => translations.has(p.page_number)).length;
-    if (matchedByNum < pages.length) {
-      // Remap by position — validate lengths against actual source pages
-      translations.clear();
-      for (let i = 0; i < pages.length; i++) {
-        const ocrLen = (pages[i].ocr?.data || '').length;
-        if (ocrLen > 100 && parsedEntries[i].length < ocrLen * 0.15) continue;
-        translations.set(pages[i].page_number, parsedEntries[i]);
-      }
-    }
+  // Parse (translate-core parseBlockTranslations: the 15% truncation check, the positional
+  // fallback, and the BLOCK-SHIFT guard — a block that came back short is discarded whole, since
+  // its page labels cannot be trusted; every page then takes the missing-from-batch path below).
+  const parsed = parseBlockTranslations(responseText, pages);
+  const { translations } = parsed;
+  if (parsed.discarded) {
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: returned ${parsed.returned}/${pages.length} entries — ${parsed.discarded}, labels untrusted, re-translating all ${pages.length} pages single-page`);
   }
 
   // A clause moved across an in-block page break (#5021): the model finished page N's last
@@ -405,6 +375,8 @@ async function translateBatch(db, pages, book, prevTranslation) {
 
   return {
     translations, // Map<pageNumber, translatedText>
+    returned: parsed.returned, // entries the model gave back — 0 is a parse failure, fewer than sent a discarded block
+    discarded: parsed.discarded,
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: outputTokensFrom(usage),
     durationMs,
@@ -448,7 +420,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
   // translation — stamp the page for the benchmark lane and move on. The
   // page stays untranslated, which is the honest state.
-  const health = assessTranslationHealth(page.ocr?.data, text);
+  const health = assessTranslationHealth(page.ocr?.data, text, { lang: book?.language });
   if (!health.healthy) {
     await db.collection('pages').updateOne(
       { id: page.id },
@@ -486,7 +458,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
-    const h = assessTranslationHealth(page.ocr?.data, text);
+    const h = assessTranslationHealth(page.ocr?.data, text, { lang: book?.language });
     if (!h.healthy) { unhealthy.push({ page, text, reason: h.reason, len: (text || '').length }); return false; }
     return true;
   });
@@ -807,8 +779,10 @@ async function processBook(db, book, job, globalCounter, deadline) {
           console.log(`  [${label}] Batch ${batch[0].page_number}-${batch[batch.length - 1].page_number}: parsed ${result.translations.size}/${batch.length}, falling back for ${missing.length}`);
         }
 
-        // Track batch parse failure rate
-        if (result.translations.size === 0) {
+        // Track batch parse failure rate. A block DISCARDED for coming back short (#5103 block-shift
+        // guard) is not a parse failure — its pages are translated single-page right below — so
+        // only a response with no entries at all counts towards parking the book.
+        if (result.returned === 0) {
           consecutiveBatchFailures++;
         } else {
           consecutiveBatchFailures = 0;
