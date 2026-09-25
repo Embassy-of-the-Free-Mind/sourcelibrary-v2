@@ -55,7 +55,8 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { isHeld } from './pipeline-hold.mjs';
-import { dropDriftedPages } from './block-drift.mjs';
+import { dropDriftedPages, translationProse } from './block-drift.mjs';
+import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 
@@ -232,15 +233,28 @@ export function seamPairs(blocks, drafts) {
   return { pairs, skipped };
 }
 
+/** A repair whose translated prose is this much shorter than the draft's lost text (#5085). */
+export const SEAM_REPAIR_MIN_LENGTH_RATIO = 0.85;
+
 /**
  * What goes on the seam page: the repair when there is one and it passes the same health
  * gate the write door applies, otherwise the draft. A bad repair never costs the page its
  * translation.
+ *
+ * Two more gates, both measured against the DRAFT (#5085, rejudge of 2026-09-25): a blind
+ * junction judge cannot see either defect and rewarded both.
+ *  - repair-echo: the repair carries the source verbatim (echoedSource) where the draft did
+ *    not. 2 of 63 judged seams; the draft was a translation on both.
+ *  - repair-short: the repair's translated prose is under 85% of the draft's — it dropped the
+ *    sentence carried across the break. Removing a duplicated fragment costs far less.
  */
 export function chooseSeamText({ ocr, draft, repaired }) {
   if (!repaired) return { text: draft, source: 'draft', reason: 'repair-missing' };
   const health = assessTranslationHealth(ocr, repaired);
   if (!health.healthy) return { text: draft, source: 'draft', reason: `repair-${health.reason}` };
+  if (echoedSource({ ocr, tr: repaired }).echo && !echoedSource({ ocr, tr: draft }).echo) return { text: draft, source: 'draft', reason: 'repair-echo' };
+  const lenDraft = readingLength(translationProse(draft)), lenRepair = readingLength(translationProse(repaired));
+  if (lenDraft > 0 && lenRepair < SEAM_REPAIR_MIN_LENGTH_RATIO * lenDraft) return { text: draft, source: 'draft', reason: 'repair-short' };
   return { text: repaired, source: SEAM_SOURCE_REPAIR, reason: repaired === draft ? 'repair-unchanged' : 'repair-changed' };
 }
 
