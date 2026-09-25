@@ -25,7 +25,11 @@ const MARKER_TEXTS = new Set(['[RECITATION_BLOCKED]']);
  * Returns the number of revisions written.
  */
 export async function saveRevisionsBeforeOverwrite(db, pageIds, field, opts = {}) {
-  const { jobId, reason } = opts;
+  // keepMeta: also keep every OTHER key of the field (prompt ids/hashes, token counts, flags,
+  // engine…) under `meta`. The named columns below were chosen for Gemini re-runs; a writer
+  // that REPLACES the whole provenance block (a re-OCR lane unsetting the old model's prompt
+  // fields) must opt in, or those fields are lost with no copy (#4722, 2026-09-25).
+  const { jobId, reason, keepMeta = false } = opts;
   if (!pageIds || pageIds.length === 0) return 0;
   try {
     const pages = await db.collection('pages')
@@ -53,6 +57,7 @@ export async function saveRevisionsBeforeOverwrite(db, pageIds, field, opts = {}
         ...(reason ? { reason } : {}),
         original_date: fieldData.updated_at || fieldData.edited_at,
         created_at: now,
+        ...(keepMeta ? { meta: Object.fromEntries(Object.entries(fieldData).filter(([k]) => k !== 'data')) } : {}),
       });
     }
     if (docs.length > 0) {
