@@ -17,7 +17,7 @@ import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
-import { getPageThumbUrl } from '@/lib/utils';
+import { getPageDisplayUrl, getPageThumbUrl, swapToFallback } from '@/lib/utils';
 import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
@@ -2082,7 +2082,10 @@ function Filmstrip({
   }, []);
   const thumbW = Math.round(thumbH * aspect);
   const thumbs = useMemo(
-    () => pageList.map(p => ({ p, thumb: getPageThumbUrl(p as unknown as Record<string, unknown>) })),
+    () => pageList.map(p => {
+      const rec = p as unknown as Record<string, unknown>;
+      return { p, thumb: getPageThumbUrl(rec), fallback: getPageDisplayUrl(rec) };
+    }),
     [pageList],
   );
   return (
@@ -2105,7 +2108,7 @@ function Filmstrip({
             settings change and every scroll that flips the bar, and this map
             ran getPageThumbUrl for all 4,198 pages of the largest book each
             time. */}
-        {thumbs.map(({ p, thumb }) => {
+        {thumbs.map(({ p, thumb, fallback }) => {
           const isCurrent = p.id === currentPageId;
           return (
             <button
@@ -2136,6 +2139,7 @@ function Filmstrip({
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={thumb} alt="" loading="lazy" decoding="async"
                     onLoad={onThumbLoad}
+                    onError={e => swapToFallback(e.currentTarget, fallback)}
                     className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
                     style={{ opacity: isCurrent ? 1 : 0.72 }} />
                 )}

@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import BookOverview, { getThumbUrl, type OverviewPage } from './BookOverview';
+import BookOverview, { getThumbUrl, getHiresUrl, type OverviewPage } from './BookOverview';
+import { swapToFallback } from '@/lib/utils';
 
 interface OverviewChapter {
   title: string;
@@ -180,6 +181,7 @@ export default function BookOverviewShell({ bookId, bookSlug, bookTitle, pages, 
             <div className="grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(128px,1fr))] gap-3">
               {section.pages.map(page => {
                 const thumb = getThumbUrl(page);
+                const fallback = getHiresUrl(page);
                 return (
                   <Link
                     key={page.id}
@@ -195,6 +197,7 @@ export default function BookOverviewShell({ bookId, bookSlug, bookTitle, pages, 
                           alt={`Page ${page.page_number}`}
                           loading="lazy"
                           decoding="async"
+                          onError={e => swapToFallback(e.currentTarget, fallback)}
                           className="w-full h-full object-contain"
                         />
                       )}
