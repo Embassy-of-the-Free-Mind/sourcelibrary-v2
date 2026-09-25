@@ -249,8 +249,10 @@ async function phaseRunBlocks() {
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} blocks`);
   const onDisk = readRows();
   const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
-  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
-  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  // The approval covers the arms being run NOW; rows of other arms already on disk (an earlier
+  // round's B / B2 / Fs) were approved then and do not eat this run's budget.
+  let spent = onDisk.filter((r) => ARMS.includes(r.arm)).reduce((s, r) => s + (r.cost_usd || 0), 0);
+  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on ${ARMS.join(',')}, ${done.size} seam-arms on disk`);
   if (has('rerun-degenerate')) for (const [k, r] of done) if (isDegenerate(r)) { done.delete(k); console.log(`rerun ${k}: degenerate seam page`); }
   const stream = fs.createWriteStream(ARMS_FILE, { flags: 'a' });
   // Seam-major: every arm of one seam before the next seam, so a cap cutoff loses whole seams.
@@ -332,8 +334,8 @@ async function phaseRun() {
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} seams`);
   const onDisk = readRows();
   const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
-  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
-  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  let spent = onDisk.filter((r) => ARMS.includes(r.arm)).reduce((s, r) => s + (r.cost_usd || 0), 0);
+  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on ${ARMS.join(',')}, ${done.size} seam-arms on disk`);
   // --rerun-degenerate: a page whose whole translation came back inside <meta>continues from previous
   // page: …</meta> (or otherwise under 120 chars of reader text) is a collapse the production worker's
   // health gate would refuse and retry (translatePageGuarded); give every arm that same one retry. The
