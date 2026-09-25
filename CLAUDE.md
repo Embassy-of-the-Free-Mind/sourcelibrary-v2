@@ -163,6 +163,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, using a model as a judge/screen, or **any ranked/related list a reader reads as meaningful** (connections, recommendations, "see also") → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
+- Naming a page defect, or designing an OCR/translation detector, prompt or judge → `../page-error-taxonomy.md` (44 classes, by eye)
 
 **PRs, git & the shared checkout**
 - Judging a PR's checks (red Vercel, missing/stale CI, backlog sweeps, batch merges) → `pr-checks.md`
