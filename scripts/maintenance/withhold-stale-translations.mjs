@@ -50,6 +50,9 @@
  *   … --books-file=PATH   newline-separated book ids
  *   … --loop-arm          also withhold translations made from a LOOPING transcription
  *                         (#4765/#4850); needs --book/--books-file, see LOOP_ARM below
+ *   … --unverified-script-arm  also withhold translations made from an unverified Gemini
+ *                         read of Tibetan/Syriac script (#4523/#4883); needs
+ *                         --book/--books-file, see UNVERIFIED_SCRIPT_ARM below
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
@@ -60,7 +63,8 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import {
-  STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER, WITHHOLD_REVISION_SOURCE,
+  STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER, UNVERIFIED_SCRIPT_CANDIDATE_FILTER,
+  WITHHOLD_REVISION_SOURCE,
   staleTranslationReason, withholdUpdate, translationText,
 } from '../lib/stale-translation.mjs';
 
@@ -79,12 +83,26 @@ const SKIP_MIRROR = process.argv.includes('--skip-supabase-mirror');
  *   jq -r 'select(.band=="loop" and .translated) | .book_id' loops.jsonl | sort -u > books.txt
  */
 const LOOP_ARM = process.argv.includes('--loop-arm');
-const CANDIDATE_FILTER = LOOP_ARM
-  ? { $or: [STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER] }
-  : STALE_CANDIDATE_FILTER;
-if (LOOP_ARM && !ONLY_BOOK && !BOOKS_FILE) {
-  console.error('--loop-arm needs --book or --books-file: its candidate set is every translated page (see LOOP_CANDIDATE_FILTER).');
-  process.exit(2);
+/**
+ * Arm 4 (#4523/#4883, Derek 2026-09-25): also withhold English made from a Gemini
+ * read of Tibetan or Syriac script that no specialist lane has checked. Opt-in and
+ * book-scoped for the same reason as the loop arm — nothing indexed marks these
+ * pages. Drive it from the cohort lists (Tibetan re-OCR cohort, Syriac Kraken books).
+ */
+const UNVERIFIED_SCRIPT_ARM = process.argv.includes('--unverified-script-arm');
+const CANDIDATE_FILTER = {
+  $or: [
+    STALE_CANDIDATE_FILTER,
+    ...(LOOP_ARM ? [LOOP_CANDIDATE_FILTER] : []),
+    ...(UNVERIFIED_SCRIPT_ARM ? [UNVERIFIED_SCRIPT_CANDIDATE_FILTER] : []),
+  ],
+};
+for (const [on, flag, filter] of [[LOOP_ARM, '--loop-arm', 'LOOP_CANDIDATE_FILTER'],
+  [UNVERIFIED_SCRIPT_ARM, '--unverified-script-arm', 'UNVERIFIED_SCRIPT_CANDIDATE_FILTER']]) {
+  if (on && !ONLY_BOOK && !BOOKS_FILE) {
+    console.error(`${flag} needs --book or --books-file: nothing indexed narrows its candidate set (see ${filter}).`);
+    process.exit(2);
+  }
 }
 const BATCH = 250;
 
@@ -206,7 +224,7 @@ async function stripTextFromWithheldObjects(bookId) {
 
 const T = {
   books: 0, booksChanged: 0, pendingBooks: 0, candidates: 0, stale: 0, withheld: 0,
-  quotesWithdrawn: 0, stripped: 0, stripSkipped: 0,
+  quotesWithdrawn: 0, stripped: 0, stripSkipped: 0, keptOtherScript: 0,
   revisions: 0, chars: 0, byReason: {}, countersResynced: 0, mirrorSynced: 0, aborted: 0,
 };
 
@@ -223,10 +241,21 @@ for (const bookId of bookIds) {
   // nothing left to withhold — a re-run must still be able to clean up quotes
   // the first run missed, and on a re-run `targets` is empty by design.
   const withheldPageNumbers = new Set();
+  const keptOther = [];
   for (const p of candidates) {
     if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
-    const reason = staleTranslationReason(p);
-    if (!reason) continue;
+    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM });
+    if (!reason) {
+      // Arm 4 keeps the English on other-script pages of the same books (Latin,
+      // Hebrew, Arabic in a Syriac book). Count them, so the report shows what
+      // the script rule spared as well as what it took.
+      if (UNVERIFIED_SCRIPT_ARM && !p.ocr?.pipeline && String(p.ocr?.model || '').startsWith('gemini')
+        && translationText(p.translation)) {
+        T.keptOtherScript++;
+        keptOther.push(p.page_number);
+      }
+      continue;
+    }
     targets.push({ page: p, reason });
     withheldPageNumbers.add(p.page_number);
   }
@@ -239,7 +268,12 @@ for (const bookId of bookIds) {
   T.chars += chars;
 
   if (!APPLY) {
-    rec({ book: bookId, status: 'dry-run', stale: targets.length, chars });
+    // Page numbers by reason, and the kept other-script pages, so a by-eye check
+    // can sample exactly what the dry run would take and what it would spare.
+    const byReason = {};
+    for (const t of targets) (byReason[t.reason] ||= []).push(t.page.page_number);
+    rec({ book: bookId, status: 'dry-run', stale: targets.length, chars, pages_by_reason: byReason,
+      ...(UNVERIFIED_SCRIPT_ARM ? { kept_other_script: keptOther } : {}) });
     await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
     await stripTextFromWithheldObjects(bookId);
     continue;

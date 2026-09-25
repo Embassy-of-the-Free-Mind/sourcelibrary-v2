@@ -58,9 +58,13 @@
  *      tools all read `translation.data` and see no flag.
  *   3. `source_loop` — the transcription is a degeneration loop (#4850); opt-in
  *      and book-scoped, see `LOOP_CANDIDATE_FILTER`.
+ *   4. `unverified_script_ocr` — a Tibetan- or Syriac-script page whose only
+ *      transcription is a generalist Gemini read that no specialist lane has
+ *      checked (#4523, #4883); opt-in and book-scoped, see
+ *      `UNVERIFIED_SCRIPT_CANDIDATE_FILTER`.
  *
  * All arms are SELF-HEALING: retranslate the page and arm 1 stops holding;
- * give the page a transcription we trust and arms 2 and 3 stop holding. None
+ * give the page a transcription we trust and arms 2, 3 and 4 stop holding. None
  * needs a frozen id list — the sweeps re-derive the set every run. (A frozen
  * list is how the Kloss takedown leaked for six weeks.)
  *
@@ -87,6 +91,7 @@
  */
 
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { stripOcrMetadata } from './language-content-classify.mjs';
 
 /** Is this page's transcription a degeneration loop? The #4850 gate's own verdict. */
 function isDegenerateSource(ocrText) {
@@ -214,6 +219,7 @@ export const WITHHOLD_REASONS = {
   STALE_AFTER_REOCR: 'stale_after_reocr',
   OCR_UNREADABLE: 'ocr_unreadable',
   SOURCE_LOOP: 'source_loop',
+  UNVERIFIED_SCRIPT_OCR: 'unverified_script_ocr',
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */
@@ -231,25 +237,30 @@ export const STALE_PREDICATE_PROJECTION = {
   // degeneration loop is only visible in the transcription itself. Leaving it out
   // would not make arm 3 cheap — it would make it silently never fire.
   'ocr.data': 1,
-  'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
+  'ocr.pipeline': 1, 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
   'translation.updated_at': 1, 'translation.edited_at': 1, 'translation.source': 1,
   translation_withheld: 1,
 };
 
 /**
  * Re-OCR lanes whose stale translations are WITHHELD by the hourly sweep.
- * Withholding is a per-lane decision, not a property of staleness: Derek,
- * 2026-09-18, on the Syriac Kraken lane (#4883) — "don't withhold individual
- * pages though". Its disposition is re-translation (#4927), so it stamps
- * `ocr.pipeline` for provenance and is deliberately NOT in this list. Add a
- * lane here only when its pages should go dark until retranslated.
+ * Withholding is a per-lane decision, not a property of staleness. Add a lane
+ * here only when its pages should go dark until retranslated.
+ *
+ * `syriac-kraken-2026-09` (#4883): on 2026-09-18 Derek ruled "don't withhold
+ * individual pages though" and the lane was left out, its disposition
+ * re-translation (#4927). On 2026-09-25 he REVERSED that: "i want the
+ * translation to be low priority, just get the ocr done and remove the current
+ * translation that is bad." From then on the hourly sweep withholds every page
+ * the Kraken lane rewrites, with no list — the English on those pages was made
+ * from a Gemini read of Syriac that invented text (#4746/#4901).
  *
  * The list is checked in BOTH places a withhold can start: the candidate query
  * (`STALE_CANDIDATE_FILTER`) and the verdict (`staleTranslationReason`), so a
  * caller that reaches the verdict by another route — `--loop-arm`, the restore
  * script, a book-scoped run — cannot widen it.
  */
-export const WITHHOLD_LANES = Object.freeze(['reocr_bdrc_4523']);
+export const WITHHOLD_LANES = Object.freeze(['reocr_bdrc_4523', 'syriac-kraken-2026-09']);
 
 /**
  * A Mongo filter that is a SUPERSET of the withhold set — it selects every page
@@ -282,6 +293,86 @@ export const LOOP_CANDIDATE_FILTER = {
   'translation.data': { $exists: true, $nin: [null, ''] },
 };
 
+// ── Arm 4: unverified Gemini reads of Tibetan and Syriac script ─────────────
+
+/**
+ * Scripts whose generalist Gemini reads are measured to invent text: Tibetan
+ * (#4523 — old reads locate the right Derge folio 14% of the time, median
+ * identity 0.182) and Syriac (#4746/#4901 — "kings of Assyria" on a page whose
+ * running head says "the Arab kings"). Each is read by a specialist lane
+ * (Yigdzin / `reocr_bdrc_4523`; Kraken / `syriac-kraken-2026-09`) that stamps
+ * `ocr.pipeline`, which is how arm 4 hands a page over to arm 1.
+ */
+export const UNVERIFIED_SCRIPTS = Object.freeze({
+  tibetan: /[\u0F00-\u0FFF]/u,
+  syriac: /[\u0700-\u074F]/u,
+});
+
+/**
+ * The share of a page's LETTERS that must be in one of those scripts. A Syriac
+ * book also carries Latin, Hebrew and Arabic pages (the Kraken plan kept 6,976
+ * other-script and 7,571 mixed pages out of its lane); their Gemini reads are
+ * not the measured failure and their English stays. 30%: a page that is mostly
+ * a Latin commentary around a Syriac lemma keeps its English; a page that is
+ * mostly Syriac with a Latin gloss does not.
+ *
+ * Deliberately lower than `classifyScript` in `syriac-kraken-lane.mjs`, which
+ * RE-READS a page only at ≥ 0.6 Syriac (a Syriac model over a Latin column
+ * writes junk). That is a question about the OCR; this one is about the
+ * English: a 0.3–0.6 page's Gemini read is still mostly an invention of the
+ * script Gemini cannot read, so its translation comes down even though the lane
+ * will not re-read it.
+ */
+export const UNVERIFIED_SCRIPT_MIN_SHARE = 0.3;
+
+/**
+ * Which unverified script dominates this OCR text, and by how much.
+ * Counts letters only (`\p{L}` — digits, punctuation, Tibetan tsheg and the
+ * page's markup never vote), after dropping the OCR metadata block so a
+ * `<language>Tibetan</language>` tag cannot count as Latin letters.
+ * Pure; returns `{ script: null, share: 0 }` for text with no letters.
+ *
+ * @param {string} ocrText
+ * @returns {{ script: 'tibetan'|'syriac'|null, share: number, letters: number }}
+ */
+export function unverifiedScriptShare(ocrText) {
+  const letters = stripOcrMetadata(ocrText || '').match(/\p{L}/gu) || [];
+  if (!letters.length) return { script: null, share: 0, letters: 0 };
+  let best = null;
+  let bestN = 0;
+  for (const [name, re] of Object.entries(UNVERIFIED_SCRIPTS)) {
+    const n = letters.reduce((k, ch) => k + (re.test(ch) ? 1 : 0), 0);
+    if (n > bestN) { best = name; bestN = n; }
+  }
+  return { script: best, share: bestN / letters.length, letters: letters.length };
+}
+
+/**
+ * Is this page's transcription an unverified Gemini read of Tibetan or Syriac?
+ * All must hold: no specialist lane has read it (`ocr.pipeline` absent), the
+ * read is Gemini's, and the text is at least `UNVERIFIED_SCRIPT_MIN_SHARE` of
+ * one of those scripts. Self-healing: the lane's rewrite sets `ocr.pipeline`.
+ */
+export function isUnverifiedScriptOcr(ocr) {
+  if (!ocr || ocr.pipeline) return false;
+  if (typeof ocr.model !== 'string' || !ocr.model.startsWith('gemini')) return false;
+  return unverifiedScriptShare(ocr.data).share >= UNVERIFIED_SCRIPT_MIN_SHARE;
+}
+
+/**
+ * Arm 4's candidate filter, kept SEPARATE like `LOOP_CANDIDATE_FILTER` and for
+ * the same reason: nothing indexed marks these pages — the script share is only
+ * visible in the text. So the arm is opt-in and book-scoped
+ * (`withhold-stale-translations.mjs --unverified-script-arm --books-file=…`),
+ * never part of the hourly sweep's default selection. `{ $in: [null, ''] }`
+ * matches a missing `ocr.pipeline` too, which is the case it exists for.
+ */
+export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
+  'ocr.pipeline': { $in: [null, ''] },
+  'ocr.model': { $regex: '^gemini' },
+  'translation.data': { $exists: true, $nin: [null, ''] },
+};
+
 /**
  * Why this page's translation should be WITHHELD, or null if it should not.
  *
@@ -292,10 +383,15 @@ export const LOOP_CANDIDATE_FILTER = {
  * rule holds but no withholding lane rewrote it) returns null here — it is
  * flagged for re-translation by `translationStaleness`, not taken dark.
  *
+ * Arm 4 is evaluated only when the caller opts in (`unverifiedScriptArm`), so
+ * the hourly sweep — which reaches this verdict for every indexed candidate —
+ * cannot widen into it by accident.
+ *
  * @param {object} page
- * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|null}
+ * @param {{ unverifiedScriptArm?: boolean }} [opts]
+ * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|null}
  */
-export function staleTranslationReason(page) {
+export function staleTranslationReason(page, { unverifiedScriptArm = false } = {}) {
   const tr = page?.translation;
   if (!translationText(tr)) return null;
 
@@ -313,6 +409,12 @@ export function staleTranslationReason(page) {
   // withholding; the staleness rule itself is not gated on any lane.
   if (WITHHOLD_LANES.includes(page?.ocr?.pipeline) && translationStaleness(page).stale) {
     return WITHHOLD_REASONS.STALE_AFTER_REOCR;
+  }
+
+  // Arm 4 (#4523/#4883, Derek 2026-09-25): the English was made from a Gemini
+  // read of Tibetan or Syriac that no specialist lane has checked.
+  if (unverifiedScriptArm && isUnverifiedScriptOcr(page?.ocr)) {
+    return WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR;
   }
   return null;
 }
