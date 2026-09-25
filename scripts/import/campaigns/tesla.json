@@ -1,0 +1,52 @@
+{
+  "_why": "Nikola Tesla, everything published in his lifetime and before the 1931 US public-domain line (2026-09-25, Derek: 'and then tesla, we need everything'): the 1892 London/Paris lecture (English, and the 1894 German edition), Martin's 1894 Inventions Researches and Writings (already held), the Westinghouse 'Transmission of Power' patent collection, Century 1900 'Problem of Increasing Human Energy', the 1916–1919 Electrical Experimenter pieces (My Inventions, The True Wireless, Telautomatics, Egg of Columbus), the 1898 electrotherapy paper, Johnson's Songs of Liberty (Tesla co-translated the Zmaj poems), and every individual patent scan. OUT: post-1930 editions and compilations (Colorado Springs Notes 1978, Complete Patents 1979/1994, Leland Anderson's 1992 edition, 'Tesla Papers', 'Very Truly Yours'), the Czechoslovak electronics firm TESLA's manuals, Tesla Inc., arXiv authors named Tesla, and the 'Tesla Leila Kh' self-publications.",
+  "campaign": "tesla-2026-09-25",
+  "collections": ["natural-philosophy", "mechanical-engineering"],
+  "lang": "English",
+  "max_year": 1930,
+  "title_terms": [
+    "^nikola tesla - patent",
+    "tesla patents|tesla us patents",
+    "electrical experimenter.*tesla|tesla.*electrical experimenter",
+    "century magazine 1900",
+    "problem of increasing human energy",
+    "experiments with alternate currents",
+    "experimente mit str|untersuchen uber mehrphasen|untersuchungen",
+    "true wireless|telautomatics|egg of columbus|my early years|on light and other",
+    "my inventions",
+    "transmission of power|polyphase",
+    "high frequency oscillators for electro|electrotherapeutics",
+    "electrical world 07 may 1892",
+    "tesla's oscillator",
+    "songs of liberty",
+    "nikola tesla papers|^letters$"
+  ],
+  "author_allow": [
+    "tesla, nikola",
+    "nikola tesla",
+    "nicola tesla",
+    "martin, thomas commerford",
+    "thomas commerford martin",
+    "fodor"
+  ],
+  "author_deny": [
+    "jeltema", "leila", "tesla, inc", "tesla brno", "tesla elektro", "tesla litovel", "tesla bratislava",
+    "tesla orava", "tesla eltos", "tesla \\(musical", "faculty of", "twitter", "swus|sovereign", "berserker",
+    "nyx tesla", "edison tesla", "tesla dolmo", "tesla graves", "tesla express", "tesla cad", "tesla stropkov",
+    "tesla vráble", "tesla rožnov|tesla rožňov", "tesla pardubic", "tesla kolín", "tesla liberec", "tesla lanškrou",
+    "tesla piešťany", "tesla radio", "tesla přelouč", "tesla strašnic", "tesla op$", "^tesla$", "monell",
+    "stead asquith", "margaret", "kenneth swezey", "ebookz"
+  ],
+  "title_deny": [
+    "model 3|model s|master plan|annual report|charging standard|service manual|thermostatic",
+    "complete patents|all published|colorado springs|articles pdf|lectures pdf|very truly yours",
+    "on his work with alternating|tesla papers|fantastic inventions|x-ray vision|ultimate hacker",
+    "murder of|moria|gospel|epstein|holy war|antichrist|facebook|fairytale|hebrew prophets|laughter|chivalry|gazdanov|scientific (formulas|revolution)|another five books|all emails|starship",
+    "niagara falls photobook|bulbs|steam clock|letter to alice|swezey|l\\. i\\. notes|generalized electric wave",
+    "high frequency currents in medicine|waltham|economic doctrines|little prince|vocal works|light and shadows|return of the dove|five man|packing list|tales of gnosis|the viking|book of proceedings|^vol|^volume|international journal|acoustical",
+    "lecture before the new york academy",
+    "the inventions, researches and writings|the inventions : researches"
+  ],
+  "require_jp2": true,
+  "review_id_patterns": ["^bwb_", "^bub_gb_"]
+}

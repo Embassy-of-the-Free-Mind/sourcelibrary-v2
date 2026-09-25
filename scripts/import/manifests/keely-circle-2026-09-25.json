@@ -1,0 +1,146 @@
+{
+ "note": "Curated 2026-09-25 (Derek: 'get everything from Clara Bloomfield-Moore, and similar'). Keely Motor circle: Bloomfield-Moore's complete works (Keely and His Discoveries already held), the company's Minority Report, the 1899 exposé, Trowbridge's 1875 critique, Colville's Keely novel, MacVicar's ether philosophy, Theosophical Siftings 1–2. NOT imported (Google scans without jp2): Social Ethics and Society Duties 1892 (socialethicsand00moorgoog), Miscellaneous Poems 1875 (miscellaneouspo00bloogoog), MacVicar's Elements of the Economy of Nature 1856 (elementseconomy01macvgoog) — retry via HathiTrust or pdf-direct.",
+ "campaign": "keely-circle-2026-09-25",
+ "collections": [
+  "natural-philosophy",
+  "mechanical-engineering"
+ ],
+ "BOOKS": [
+  {
+   "id": "keely-motor-company-minority-report",
+   "title": "Keely Motor Company: Minority Report to the Stockholders from the Board of Directors",
+   "author": "Keely Motor Company",
+   "year": 1881,
+   "lang": "English",
+   "note": "Year assumed from the 1881 Lorimer report quoted as 'The Keely Motor Bubble' in Bloomfield-Moore 1893 — CONFIRM on title page. Jeff Behary scan (Electrotherapy Museum)."
+  },
+  {
+   "id": "the-secret-of-the-keely-motor-literary-digest-11-feb-1899",
+   "title": "The Secret of the Keely Motor (Literary Digest, 11 Feb 1899)",
+   "author": "Literary Digest",
+   "year": 1899,
+   "lang": "English",
+   "note": "Post-mortem exposé after the compressed-air discovery. Jeff Behary scan."
+  },
+  {
+   "id": "jstor-20021466",
+   "title": "Brief Contributions from the Physical Laboratory of Harvard College: On the So-Called Keely Motor",
+   "author": "John Trowbridge",
+   "year": 1875,
+   "lang": "English",
+   "note": "Early scientific critique; JSTOR early journal content (public domain). 9 pages."
+  },
+  {
+   "id": "ondangerousgroun00bloo",
+   "title": "On Dangerous Ground; or, Agatha's Friendship",
+   "author": "Clara Sophia Jessup Bloomfield-Moore",
+   "year": 1876,
+   "lang": "English",
+   "note": ""
+  },
+  {
+   "id": "cu31924031448958",
+   "title": "Sensible Etiquette of the Best Society, Customs, Manners, Morals, and Home Culture",
+   "author": "Clara Sophia Jessup Bloomfield-Moore",
+   "year": 1878,
+   "lang": "English",
+   "note": "Cornell scan; six alternate scans on IA (sensibleetiquet00bloo etc.) — one edition suffices."
+  },
+  {
+   "id": "gondalineslesson00mooriala",
+   "title": "Gondaline's Lesson; The Warden's Tale; Stories for Children and Other Poems",
+   "author": "Clara Sophia Jessup Bloomfield-Moore",
+   "year": 1881,
+   "lang": "English",
+   "note": "Rights stated on item; alternates cu31924022456325, gondalineslesson00moor."
+  },
+  {
+   "id": "poemschapterfrom00bloo",
+   "title": "Poems: A Chapter from The Modern Pilgrim's Progress",
+   "author": "Clara Sophia Jessup Bloomfield-Moore",
+   "year": 1882,
+   "lang": "English",
+   "note": ""
+  },
+  {
+   "id": "martyrofkolinsto0000unse",
+   "title": "The Martyr of Kolin: A Story of the Bohemian Persecution",
+   "author": "Clara Sophia Jessup Bloomfield-Moore",
+   "year": 1899,
+   "lang": "English",
+   "note": ""
+  },
+  {
+   "id": "theosophicalsift0001unse",
+   "title": "Theosophical Siftings, Vol. 1 (1888–89)",
+   "author": "Theosophical Publishing Society",
+   "year": 1889,
+   "lang": "English",
+   "note": "Carries Bloomfield-Moore's 'Keely's Secrets' (TPS pamphlet no. 9, 1888). Alternate Google scan theosophicalsif01unkngoog."
+  },
+  {
+   "id": "ult.theosophicalsift0000unse.vol.ii.1889",
+   "title": "Theosophical Siftings, Vol. 2 (1889–90)",
+   "author": "Theosophical Publishing Society",
+   "year": 1890,
+   "lang": "English",
+   "note": "ULT scan; review_id_pattern ^ult. — confirm imprint on title page. Continues the Keely pamphlets."
+  },
+  {
+   "id": "dashedagainsttherock00colviala",
+   "title": "Dashed Against the Rock: A Romance of the Coming Age",
+   "author": "W. J. Colville",
+   "year": 1894,
+   "lang": "English",
+   "note": "Novel built on Keely's 'forty laws' of sympathetic vibratory physics; rights stated on item."
+  },
+  {
+   "id": "sketchofphilosop00macv",
+   "title": "A Sketch of a Philosophy",
+   "author": "John Gibson MacVicar",
+   "year": 1868,
+   "lang": "English",
+   "note": "The ether/'law of assimilation' theory Bloomfield-Moore aligned Keely with (ch. 'Ether the True Protoplasm'). Alternates asketchaphiloso00/01macvgoog."
+  },
+  {
+   "id": "supplementtosket00macv",
+   "title": "A Supplement to a Sketch of a Philosophy",
+   "author": "John Gibson MacVicar",
+   "year": 1881,
+   "lang": "English",
+   "note": "15 pages, microform."
+  },
+  {
+   "id": "b21974226",
+   "title": "A Science Primer: On the Nature of Things",
+   "author": "John Gibson MacVicar",
+   "year": 1878,
+   "lang": "English",
+   "note": "Wellcome scan; alternate ascienceprimero00macvgoog is Google, no jp2."
+  },
+  {
+   "id": "philosophybeaut00macvgoog",
+   "title": "Philosophy of the Beautiful",
+   "author": "John Gibson MacVicar",
+   "year": 1855,
+   "lang": "English",
+   "note": ""
+  },
+  {
+   "id": "b30561577",
+   "title": "An Enquiry into Human Nature",
+   "author": "John Gibson MacVicar",
+   "year": 1853,
+   "lang": "English",
+   "note": "14-page Wellcome item though catalogue says xi+228 pp — likely a partial; full Google scan anenquiryintohu00macvgoog has no jp2. CHECK page count after import."
+  },
+  {
+   "id": "b21452027",
+   "title": "The Motions of the Heart, the Circulation of the Blood, etc., Viewed Morphologically",
+   "author": "John Gibson MacVicar",
+   "year": 1871,
+   "lang": "English",
+   "note": "Offprint from Edinburgh Medical Journal, 14 pages."
+  }
+ ]
+}

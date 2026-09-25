@@ -1,0 +1,1186 @@
+{
+ "note": "Curated 2026-09-25: the 147 distinct Tesla patents (US, UK, CA; 1885–1928) scanned by Jeff Behary, one item per patent (duplicate uploads noted per book).",
+ "campaign": "tesla-patents-2026-09-25",
+ "collections": [
+  "natural-philosophy",
+  "mechanical-engineering"
+ ],
+ "BOOKS": [
+  {
+   "id": "nikola-tesla-patent-us-00336961-regulator-for-dynamo-electric-machines-1886-03-02",
+   "title": "Regulator for Dynamo Electric Machines (US Patent 336,961, 1886-03-02)",
+   "author": "Nikola Tesla",
+   "year": 1885,
+   "lang": "English",
+   "note": "Patent US-00336961; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-024033-dynamo-electric-machine-1886-05-10",
+   "title": "Dynamo Electric Machine (CA Patent 24,033, 1886-05-10)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent CA-024033; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-024348-electric-arc-lamp-1886-01-18",
+   "title": "Electric Arc Lamp (CA Patent 24,348, 1886-01-18)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent CA-024348; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-001877-improvements-in-electric-lamps-1886-09-16",
+   "title": "Improvements in Electric Lamps (UK Patent 1,877, 1886-09-16)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent UK-001877; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00334823-commutator-for-dynamo-electric-machines-1886-01-26",
+   "title": "Commutator for Dynamo-Electric Machines (US Patent 334,823, 1886-01-26)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent US-00334823; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00335786-electric-arc-lamp-1886-02-09",
+   "title": "Electric Arc Lamp (US Patent 335,786, 1886-02-09)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent US-00335786; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00335787-electric-arc-lamp-1886-02-09",
+   "title": "Electric Arc Lamp (US Patent 335,787, 1886-02-09)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent US-00335787; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00336962-regulator-for-dynamo-electric-machines-1886-03-02",
+   "title": "Regulator for Dynamo Electric Machines (US Patent 336,962, 1886-03-02)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent US-00336962; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00350954-regulator-for-dynamo-electric-machines-1886-10-19",
+   "title": "Regulator for Dynamo-Electric Machines (US Patent 350,954, 1886-10-19)",
+   "author": "Nikola Tesla",
+   "year": 1886,
+   "lang": "English",
+   "note": "Patent US-00350954; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-002975-improvements-in-dynamo-electric-machines-1887-02-01",
+   "title": "Improvements in Dynamo Electric Machines (UK Patent 2,975, 1887-02-01)",
+   "author": "Nikola Tesla",
+   "year": 1887,
+   "lang": "English",
+   "note": "Patent UK-002975; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00359748-dynamo-electric-machine-1887-03-22",
+   "title": "Dynamo-Electric Machine (US Patent 359,748, 1887-03-22)",
+   "author": "Nikola Tesla",
+   "year": 1887,
+   "lang": "English",
+   "note": "Patent US-00359748; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-030172-converting-and-distributing-electric-currents-1888-05-02",
+   "title": "Converting and Distributing Electric Currents (CA Patent 30,172, 1888-05-02)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent CA-030172; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-006481-improvements-to-the-electrical-transmission-of-power-1888-06-01",
+   "title": "Improvements to the Electrical Transmission of Power (UK Patent 6,481, 1888-06-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent UK-006481; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-006502-improvements-in-generation-and-distribution-of-ele",
+   "title": "Improvements in Generation and Distribution of Electric Currents (UK Patent 6,502, 1888-06-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent UK-006502; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00381968-electro-magnetic-motor-1888-05-01",
+   "title": "Electro-Magnetic Motor (US Patent 381,968, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00381968; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00381969-electro-magnetic-motor-1888-05-01",
+   "title": "Electro-Magnetic Motor (US Patent 381,969, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00381969; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00381970-system-of-electrical-distribution-1888-05-01",
+   "title": "System of Electrical Distribution (US Patent 381,970, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00381970; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00382279-electro-magnetic-motor-1888-05-01",
+   "title": "Electro-Magnetic Motor (US Patent 382,279, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00382279; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00382280-electrical-transmission-of-power-1888-05-01-2",
+   "title": "Electrical Transmission of Power (US Patent 382,280, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00382280; Jeff Behary scan (Electrotherapy Museum), public domain by date. Duplicate uploads: nikola-tesla-patent-us-00382280-electrical-transmission-of-power-1888-05-01-1."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00382281-electrical-transmission-of-power-1888-05-01",
+   "title": "Electrical Transmission of Power (US Patent 382,281, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00382281; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00382282-method-of-converting-and-distributing-electric-currents-1888-05-01",
+   "title": "Method of Converting and Distributing Electric Currents (US Patent 382,282, 1888-05-01)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00382282; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00382845-commutator-for-dynamo-electric-machines-1888-05-15",
+   "title": "Commutator for Dynamo-Electric Machines (US Patent 382,845, 1888-05-15)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00382845; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00390413-system-of-electrical-distribution-1888-10-02",
+   "title": "System of Electrical Distribution (US Patent 390,413, 1888-10-02)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00390413; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00390414-dynamo-electric-machine-1888-10-02",
+   "title": "Dynamo-Electric Machine (US Patent 390,414, 1888-10-02)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00390414; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00390415-dynamo-electric-machine-or-motor-1888-10-02",
+   "title": "Dynamo-Electric Machine or Motor (US Patent 390,415, 1888-10-02)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00390415; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00390721-dynamo-electric-machine-1888-10-09",
+   "title": "Dynamo-Electric Machine (US Patent 390,721, 1888-10-09)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00390721; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00390820-regulator-for-alternate-current-motors-1888-10-09",
+   "title": "Regulator for Alternate-Current Motors (US Patent 390,820, 1888-10-09)",
+   "author": "Nikola Tesla",
+   "year": 1888,
+   "lang": "English",
+   "note": "Patent US-00390820; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-033317-converting-alternating-into-direct-currents-1889-12-19",
+   "title": "Converting Alternating into Direct Currents (CA Patent 33,317, 1889-12-19)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent CA-033317; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-006527-improvements-relating-to-electro-motors-1889-05-18",
+   "title": "Improvements relating to Electro-Motors (UK Patent 6,527, 1889-05-18)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent UK-006527; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-016709-improvements-relating-to-the-conversion-of-alterna",
+   "title": "Improvements relating to the Conversion of Alternating into Direct Electric Currents (UK Patent 16,709, 1889-12-07)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent UK-016709; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00396121-thermo-magnetic-motor-1889-01-15",
+   "title": "Thermo-Magnetic Motor (US Patent 396,121, 1889-01-15)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00396121; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00401520-method-of-operating-electro-magnetic-motors-1889-04-16",
+   "title": "Method of Operating Electro-Magnetic Motors (US Patent 401,520, 1889-04-16)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00401520; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00405858-electro-magnetic-motor-1889-06-25",
+   "title": "Electro-Magnetic Motor (US Patent 405,858, 1889-06-25)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00405858; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00405859-method-of-electrical-power-transmission-1889-06-25",
+   "title": "Method of Electrical Power Transmission (US Patent 405,859, 1889-06-25)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00405859; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00406968-dynamo-electric-machine-1889-07-16",
+   "title": "Dynamo-Electric Machine (US Patent 406,968, 1889-07-16)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00406968; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00413353-method-of-obtaining-direct-from-alternating-currents-1889-10-22",
+   "title": "Method of Obtaining Direct from Alternating Currents (US Patent 413,353, 1889-10-22)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00413353; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00416191-electro-magnetic-motor-1889-12-03",
+   "title": "Electro-Magnetic Motor (US Patent 416,191, 1889-12-03)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00416191; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00416192-method-of-operating-electro-magnetic-motors-1889-12-03",
+   "title": "Method of Operating Electro-Magnetic Motors (US Patent 416,192, 1889-12-03)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00416192; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00416193-electro-magnetic-motor-1889-12-03",
+   "title": "Electro-Magnetic Motor (US Patent 416,193, 1889-12-03)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00416193; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00416194-electric-motor-1889-12-03",
+   "title": "Electric Motor (US Patent 416,194, 1889-12-03)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00416194; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00416195-electro-magnetic-motor-1889-12-03",
+   "title": "Electro-Magnetic Motor (US Patent 416,195, 1889-12-03)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00416195; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00417794-armature-for-electric-machines-1889-12-24",
+   "title": "Armature for Electric Machines (US Patent 417,794, 1889-12-24)",
+   "author": "Nikola Tesla",
+   "year": 1889,
+   "lang": "English",
+   "note": "Patent US-00417794; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-019420-improvements-in-alternating-current-electro-magnetic-motors-1890-01-11",
+   "title": "Improvements in Alternating Current Electro-Magnetic Motors (UK Patent 19,420, 1890-01-11)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent UK-019420; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-019426-improvements-in-the-construction-and-mode-of-opera",
+   "title": "Improvements in the Construction and Mode of Operating Alternating Current Motors (UK Patent 19,426, 1890-01-11)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent UK-019426; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00424036-electro-magnetic-motor-1890-03-25",
+   "title": "Electro-Magnetic Motor (US Patent 424,036, 1890-03-25)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00424036; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00428057-pyromagneto-electric-generator-1890-05-13",
+   "title": "Pyromagneto-Electric Generator (US Patent 428,057, 1890-05-13)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00428057; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00433700-alternating-current-electro-magnetic-motor-1890-08-05",
+   "title": "Alternating-Current Electro-Magnetic Motor (US Patent 433,700, 1890-08-05)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00433700; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00433701-alternating-current-motor-1890-08-05",
+   "title": "Alternating-Current Motor (US Patent 433,701, 1890-08-05)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00433701; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00433702-electrical-transformer-or-induction-device-1890-08-05",
+   "title": "Electrical Transformer or Induction Device (US Patent 433,702, 1890-08-05)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00433702; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00433703-electro-magnetic-motor-1890-08-05",
+   "title": "Electro-Magnetic Motor (US Patent 433,703, 1890-08-05)",
+   "author": "Nikola Tesla",
+   "year": 1890,
+   "lang": "English",
+   "note": "Patent US-00433703; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-008575-generating-and-utilizing-electric-energy-for-light",
+   "title": "Generating and Utilizing Electric Energy for Lighting Purposes (UK Patent 8,575, 1891-06-20)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent UK-008575; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-011473-improvements-in-alternating-current-electro-magnetic-motors-1891-08-22",
+   "title": "Improvements in Alternating Current Electro-Magnetic Motors (UK Patent 11,473, 1891-08-22)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent UK-011473; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00445207-electro-magnetic-motor-1891-01-27_202202",
+   "title": "Electro-Magnetic Motor (US Patent 445,207, 1891-01-27)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00445207; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00447920-method-of-operating-arc-lamps-1891-03-10",
+   "title": "Method of Operating Arc Lamps (US Patent 447,920, 1891-03-10)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00447920; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00447921-alternating-electric-current-generator-1891-03-10",
+   "title": "Alternating-Electric-Current Generator (US Patent 447,921, 1891-03-10)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00447921; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00454622-system-of-electric-lighting-1891-06-23",
+   "title": "System of Electric Lighting (US Patent 454,622, 1891-06-23)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00454622; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00455067-electro-magnetic-motor-1891-06-30",
+   "title": "Electro-Magnetic Motor (US Patent 455,067, 1891-06-30)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00455067; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00455068-electrical-meter-1891-06-30",
+   "title": "Electrical Meter (US Patent 455,068, 1891-06-30)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00455068; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00455069-electric-incandescent-lamp-1891-06-30",
+   "title": "Electric Incandescent Lamp (US Patent 455,069, 1891-06-30)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00455069; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00459772-electro-magnetic-motor-1891-09-22",
+   "title": "Electro-Magnetic Motor (US Patent 459,772, 1891-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00459772; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00462418-method-of-and-apparatus-for-electrical-conversio",
+   "title": "Method of and Apparatus for Electrical Conversion and Distribution (US Patent 462,418, 1891-11-03)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00462418; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00464666-electro-magnetic-motor-1891-12-08",
+   "title": "Electro-Magnetic Motor (US Patent 464,666, 1891-12-08)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00464666; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00464667-electrical-condenser-1891-12-08",
+   "title": "Electrical Condenser (US Patent 464,667, 1891-12-08)",
+   "author": "Nikola Tesla",
+   "year": 1891,
+   "lang": "English",
+   "note": "Patent US-00464667; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-029537-electrical-transmission-of-power-1892-04-04",
+   "title": "Electrical Transmission of Power (CA Patent 29,537, 1892-04-04)",
+   "author": "Nikola Tesla",
+   "year": 1892,
+   "lang": "English",
+   "note": "Patent CA-029537; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00487796-system-of-electrical-transmission-of-power-1892-12-13",
+   "title": "System of Electrical Transmission of Power (US Patent 487,796, 1892-12-13)",
+   "author": "Nikola Tesla",
+   "year": 1892,
+   "lang": "English",
+   "note": "Patent US-00487796; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00511559-electrical-transmission-of-power-1893-12-26",
+   "title": "Electrical Transmission of Power (US Patent 511,559, 1893-12-26)",
+   "author": "Nikola Tesla",
+   "year": 1893,
+   "lang": "English",
+   "note": "Patent US-00511559; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00511560-system-of-electrical-power-transmission-1893-12-26",
+   "title": "System of Electrical Power Transmission (US Patent 511,560, 1893-12-26)",
+   "author": "Nikola Tesla",
+   "year": 1893,
+   "lang": "English",
+   "note": "Patent US-00511560; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-002801-improvements-in-reciprocating-engines-1894-04-14",
+   "title": "Improvements in Reciprocating Engines (UK Patent 2,801, 1894-04-14)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent UK-002801; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-002812-improvements-in-generation-of-electric-currents-1894-03-10",
+   "title": "Improvements in Generation of Electric Currents (UK Patent 2,812, 1894-03-10)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent UK-002812; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00511915-electrical-transmission-of-power-1894-01-02",
+   "title": "Electrical Transmission of Power (US Patent 511,915, 1894-01-02)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00511915; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00511916-electric-generator-1894-01-02",
+   "title": "Electric Generator (US Patent 511,916, 1894-01-02)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00511916; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00512340-coil-for-electro-magnets-1894-01-09",
+   "title": "Coil for Electro-Magnets (US Patent 512,340, 1894-01-09)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00512340; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514167-electrical-conductor-1894-02-06",
+   "title": "Electrical Conductor (US Patent 514,167, 1894-02-06)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514167; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514168-means-for-generating-electric-currents-1894-02-06",
+   "title": "Means for Generating Electric Currents (US Patent 514,168, 1894-02-06)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514168; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514169-reciprocating-engine-1894-02-06",
+   "title": "Reciprocating Engine (US Patent 514,169, 1894-02-06)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514169; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514170-incandescent-electric-light-1894-02-06",
+   "title": "Incandescent Electric Light (US Patent 514,170, 1894-02-06)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514170; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514972-electric-railway-system-1894-02-20",
+   "title": "Electric-Railway System (US Patent 514,972, 1894-02-20)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514972; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00514973-electrical-meter-1894-02-20",
+   "title": "Electrical Meter (US Patent 514,973, 1894-02-20)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00514973; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00517900-steam-engine-1894-04-10",
+   "title": "Steam-Engine (US Patent 517,900, 1894-04-10)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00517900; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00524426-electromagnetic-motor-1894-08-14",
+   "title": "Electromagnetic Motor (US Patent 524,426, 1894-08-14)",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "English",
+   "note": "Patent US-00524426; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-020981-production-regulation-and-utilization-of-electric-",
+   "title": "Production, Regulation, and Utilization of Electric Currents of High Frequency (UK Patent 20,981, 1896-11-21)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent UK-020981; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00555190-alternating-motor-1896-02-25",
+   "title": "Alternating Motor (US Patent 555,190, 1896-02-25)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00555190; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00567818-electrical-condenser-1896-09-15",
+   "title": "Electrical Condenser (US Patent 567,818, 1896-09-15)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00567818; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00568176-apparatus-for-producing-electric-currents-of-hig",
+   "title": "Apparatus for Producing Electric Currents of High Frequency and Potential (US Patent 568,176, 1896-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00568176; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00568177-apparatus-for-producing-ozone-1896-09-22",
+   "title": "Apparatus for Producing Ozone (US Patent 568,177, 1896-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00568177; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00568178-method-of-regulating-apparatus-for-producing-cur",
+   "title": "Method of Regulating Apparatus for Producing Currents of High Frequency (US Patent 568,178, 1896-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00568178; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00568179-method-of-and-apparatus-for-producing-currents-o",
+   "title": "Method of and Apparatus for Producing Currents of High Frequency (US Patent 568,179, 1896-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00568179; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00568180-apparatus-for-producing-electrical-currents-of-h",
+   "title": "Apparatus for Producing Electrical Currents of High Frequency (US Patent 568,180, 1896-09-22)",
+   "author": "Nikola Tesla",
+   "year": 1896,
+   "lang": "English",
+   "note": "Patent US-00568180; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00577670-apparatus-for-producing-electric-currents-of-hig",
+   "title": "Apparatus for Producing Electric Currents of High Frequency (US Patent 577,670, 1897-02-23)",
+   "author": "Nikola Tesla",
+   "year": 1897,
+   "lang": "English",
+   "note": "Patent US-00577670; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00577671-manufacture-of-electrical-condensers-coils-c-1897-02-23",
+   "title": "Manufacture of Electrical Condensers, Coils, &c. (US Patent 577,671, 1897-02-23)",
+   "author": "Nikola Tesla",
+   "year": 1897,
+   "lang": "English",
+   "note": "Patent US-00577671; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00583953-apparatus-for-producing-currents-of-high-frequency-1897-06-08",
+   "title": "Apparatus for Producing Currents of High Frequency (US Patent 583,953, 1897-06-08)",
+   "author": "Nikola Tesla",
+   "year": 1897,
+   "lang": "English",
+   "note": "Patent US-00583953; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00593138-electrical-transformer-1897-11-02",
+   "title": "Electrical Transformer (US Patent 593,138, 1897-11-02)",
+   "author": "Nikola Tesla",
+   "year": 1897,
+   "lang": "English",
+   "note": "Patent US-00593138; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-024421-improvements-in-systems-for-the-transmission-of-el",
+   "title": "Improvements in Systems for the Transmission of Electrical Energy and Apparatus (UK Patent 24,421, 1898-03-26)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent UK-024421; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609245-electrical-circuit-controller-1898-08-16",
+   "title": "Electrical-Circuit Controller (US Patent 609,245, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609245; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609246-electric-circuit-controller-1898-08-16",
+   "title": "Electric-Circuit Controller (US Patent 609,246, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609246; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609247-electric-circuit-controller-1898-08-16",
+   "title": "Electric-Circuit Controller (US Patent 609,247, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609247; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609248-electric-circuit-controller-1898-08-16",
+   "title": "Electric-Circuit Controller (US Patent 609,248, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609248; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609249-electric-circuit-controller-1898-08-16",
+   "title": "Electric-Circuit Controller (US Patent 609,249, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609249; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609250-electrical-igniter-for-gas-engines-1898-08-16",
+   "title": "Electrical Igniter for Gas-Engines (US Patent 609,250, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609250; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00609251-electrical-circuit-controller-1898-08-16",
+   "title": "Electrical-Circuit Controller (US Patent 609,251, 1898-08-16)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00609251; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00611719-electrical-circuit-controller-1898-10-04",
+   "title": "Electrical-Circuit Controller (US Patent 611,719, 1898-10-04)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00611719; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00613735-electric-circuit-controller-1898-11-08",
+   "title": "Electric-Circuit Controller (US Patent 613,735, 1898-11-08)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00613735; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00613809-method-of-and-apparatus-for-controlling-mechanis",
+   "title": "Method of and Apparatus for Controlling Mechanism of Moving Vessels or Vehicles (US Patent 613,809, 1898-11-08)",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Patent US-00613809; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-026371-improvements-in-controlling-the-mechanism-of-float",
+   "title": "Improvements in Controlling the Mechanism of Floating Vessels or Moving Vehicles (UK Patent 26,371, 1899-12-09)",
+   "author": "Nikola Tesla",
+   "year": 1899,
+   "lang": "English",
+   "note": "Patent UK-026371; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00418248-electro-magnetic-motor-1889-12-31",
+   "title": "Electro-Magnetic Motor (US Patent 418,248, 1889-12-31)",
+   "author": "Nikola Tesla",
+   "year": 1899,
+   "lang": "English",
+   "note": "Patent US-00418248; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00011865-method-of-insulating-electric-conductors-1900-10-23",
+   "title": "Method of Insulating Electric Conductors (US Patent 11,865, 1900-10-23)",
+   "author": "Nikola Tesla",
+   "year": 1900,
+   "lang": "English",
+   "note": "Patent US-00011865; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00645576-system-of-transmission-of-electrical-energy-1900-03-20",
+   "title": "System of Transmission of Electrical Energy (US Patent 645,576, 1900-03-20)",
+   "author": "Nikola Tesla",
+   "year": 1900,
+   "lang": "English",
+   "note": "Patent US-00645576; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00649621-apparatus-for-transmission-of-electrical-energy-1900-05-15",
+   "title": "Apparatus for Transmission of Electrical Energy (US Patent 649,621, 1900-05-15)",
+   "author": "Nikola Tesla",
+   "year": 1900,
+   "lang": "English",
+   "note": "Patent US-00649621; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00655838-method-of-insulating-electric-conductors-1900-08-14",
+   "title": "Method of Insulating Electric Conductors (US Patent 655,838, 1900-08-14)",
+   "author": "Nikola Tesla",
+   "year": 1900,
+   "lang": "English",
+   "note": "Patent US-00655838; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-011293-utilization-of-electromagnetic-radiations-transmit",
+   "title": "Utilization of Electromagnetic Radiations Transmitted through Natural Media (UK Patent 11,293, 1901-11-02)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent UK-011293; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-013563-improvements-in-and-relating-to-the-transmission-o",
+   "title": "Improvements in, and relating to, the Transmission of Electrical Energy (UK Patent 13,563, 1901-11-09)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent UK-013563; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-014550-improvements-relating-to-the-insulation-of-electri",
+   "title": "Improvements relating to the Insulation of Electric Conductors (UK Patent 14,550, 1901-01-12)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent UK-014550; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685012-means-for-increasing-the-intensity-of-electrical",
+   "title": "Means for Increasing the Intensity of Electrical Oscillations (US Patent 685,012, 1901-10-22)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685012; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685953-method-of-intensifying-and-utilizing-effects-tra",
+   "title": "Method of Intensifying and Utilizing Effects Transmitted Through Natural Media (US Patent 685,953, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685953; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685954-method-of-utilizing-effects-transmitted-through-",
+   "title": "Method of Utilizing Effects Transmitted Through Natural Media (US Patent 685,954, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685954; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685955-apparatus-for-utilizing-effects-transmitted-from",
+   "title": "Apparatus for Utilizing Effects Transmitted from a Distance to a Receiving Device Through Natural Media (US Patent 685,955, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685955; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685956-apparatus-for-utilizing-effects-transmitted-thro",
+   "title": "Apparatus for Utilizing Effects Transmitted Through Natural Media (US Patent 685,956, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685956; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685957-apparatus-for-the-utilization-of-radiant-energy-1901-11-05",
+   "title": "Apparatus for the Utilization of Radiant Energy (US Patent 685,957, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685957; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00685958-method-of-utilizing-radiant-energy-1901-11-05",
+   "title": "Method of Utilizing Radiant Energy (US Patent 685,958, 1901-11-05)",
+   "author": "Nikola Tesla",
+   "year": 1901,
+   "lang": "English",
+   "note": "Patent US-00685958; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-014579-improvements-in-and-relating-to-the-transmission-o",
+   "title": "Improvements in and relating to the Transmission of Electrical Energy (UK Patent 14,579, 1902-04-24)",
+   "author": "Nikola Tesla",
+   "year": 1902,
+   "lang": "English",
+   "note": "Patent UK-014579; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00723188-method-of-signaling-1903-03-17",
+   "title": "Method of Signaling (US Patent 723,188, 1903-03-17)",
+   "author": "Nikola Tesla",
+   "year": 1903,
+   "lang": "English",
+   "note": "Patent US-00723188; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00725605-system-of-signaling-1903-04-14",
+   "title": "System of Signaling (US Patent 725,605, 1903-04-14)",
+   "author": "Nikola Tesla",
+   "year": 1903,
+   "lang": "English",
+   "note": "Patent US-00725605; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-00787412-art-of-transmitting-electrical-energy-through-th",
+   "title": "Art of Transmitting Electrical Energy Through the Natural Mediums (US Patent 787,412, 1905-04-18)",
+   "author": "Nikola Tesla",
+   "year": 1905,
+   "lang": "English",
+   "note": "Patent US-00787412; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-008200-improvements-relating-to-the-transmission-of-elect",
+   "title": "Improvements relating to the Transmission of Electrical Energy (UK Patent 8,200, 1906-04-17)",
+   "author": "Nikola Tesla",
+   "year": 1906,
+   "lang": "English",
+   "note": "Patent UK-008200; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-135174-fluid-propulsion-1911-08-14",
+   "title": "Fluid Propulsion (CA Patent 135,174, 1911-08-14)",
+   "author": "Nikola Tesla",
+   "year": 1911,
+   "lang": "English",
+   "note": "Patent CA-135174; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-024001-improved-method-of-imparting-energy-to-or-deriving",
+   "title": "Improved Method of Imparting Energy to or Deriving Energy from a Fluid and Apparatus (UK Patent 24,001, 1911-07-06)",
+   "author": "Nikola Tesla",
+   "year": 1911,
+   "lang": "English",
+   "note": "Patent UK-024001; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-ca-142352-electrical-energy-transmission-1912-08-03",
+   "title": "Electrical Energy Transmission (1912-08-03)) (CA Patent 142,352)",
+   "author": "Nikola Tesla",
+   "year": 1912,
+   "lang": "English",
+   "note": "Patent CA-142352; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01061142-fluid-propulsion-1913-05-06",
+   "title": "Fluid Propulsion (US Patent 1,061,142, 1913-05-06)",
+   "author": "Nikola Tesla",
+   "year": 1913,
+   "lang": "English",
+   "note": "Patent US-01061142; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01061206-turbine-1913-05-06",
+   "title": "Turbine (US Patent 1,061,206, 1913-05-06)",
+   "author": "Nikola Tesla",
+   "year": 1913,
+   "lang": "English",
+   "note": "Patent US-01061206; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01113716-fountain-1914-10-13",
+   "title": "Fountain (US Patent 1,113,716, 1914-10-13)",
+   "author": "Nikola Tesla",
+   "year": 1914,
+   "lang": "English",
+   "note": "Patent US-01113716; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01119732-apparatus-for-transmitting-electrical-energy-1914-12-01",
+   "title": "Apparatus for Transmitting Electrical Energy (US Patent 1,119,732, 1914-12-01)",
+   "author": "Nikola Tesla",
+   "year": 1914,
+   "lang": "English",
+   "note": "Patent US-01119732; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01209359-speed-indicator-1916-12-19",
+   "title": "Speed-Indicator (US Patent 1,209,359, 1916-12-19)",
+   "author": "Nikola Tesla",
+   "year": 1916,
+   "lang": "English",
+   "note": "Patent US-01209359; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01266175-lightning-protector-1918-05-14",
+   "title": "Lightning-Protector (US Patent 1,266,175, 1918-05-14)",
+   "author": "Nikola Tesla",
+   "year": 1918,
+   "lang": "English",
+   "note": "Patent US-01266175; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01274816-speed-indicator-1918-08-06",
+   "title": "Speed-Indicator (US Patent 1,274,816, 1918-08-06)",
+   "author": "Nikola Tesla",
+   "year": 1918,
+   "lang": "English",
+   "note": "Patent US-01274816; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01314718-ships-log-1919-09-02",
+   "title": "Ship's Log (US Patent 1,314,718, 1919-09-02)",
+   "author": "Nikola Tesla",
+   "year": 1919,
+   "lang": "English",
+   "note": "Patent US-01314718; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01329559-valvular-conduit-1920-02-03",
+   "title": "Valvular Conduit (US Patent 1,329,559, 1920-02-03)",
+   "author": "Nikola Tesla",
+   "year": 1920,
+   "lang": "English",
+   "note": "Patent US-01329559; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01365547-flow-meter-1921-01-11",
+   "title": "Flow-Meter (US Patent 1,365,547, 1921-01-11)",
+   "author": "Nikola Tesla",
+   "year": 1921,
+   "lang": "English",
+   "note": "Patent US-01365547; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-174544-improvements-in-generation-of-electric-power-by-el",
+   "title": "Improvements in Generation of Electric Power by Elastic Fluid Turbines (UK Patent 174,544, 1922-02-02)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-174544; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-179043-improved-process-of-and-apparatus-for-production-o",
+   "title": "Improved Process of and Apparatus for Production of High Vacua (UK Patent 179,043, 1922-05-04)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-179043; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-185446-method-of-and-apparatus-for-aerial-transportation-1922-09-04",
+   "title": "Method of and Apparatus for Aerial Transportation (UK Patent 185,446, 1922-09-04)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-185446; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-186082-improvements-in-the-construction-of-steam-and-gas-turbines-1922-09-25",
+   "title": "Improvements in the Construction of Steam and Gas Turbines (UK Patent 186,082, 1922-09-25)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-186082; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-186083-economic-transformation-of-the-energy-of-steam-by-turbines-1922-09-25",
+   "title": "Economic Transformation of the Energy of Steam by Turbines (UK Patent 186,083, 1922-09-25)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-186083; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-186084-improved-process-of-and-apparatus-for-deriving-mot",
+   "title": "Improved Process of and Apparatus for Deriving Motive Power from Steam (UK Patent 186,084, 1922-09-25)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-186084; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-uk-186799-process-of-and-apparatus-for-balancing-rotating-ma",
+   "title": "Process of and Apparatus for Balancing Rotating Machine Parts (UK Patent 186,799, 1922-10-12)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent UK-186799; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01402025-frequency-meter-1922-01-03",
+   "title": "Frequency Meter (US Patent 1,402,025, 1922-01-03)",
+   "author": "Nikola Tesla",
+   "year": 1922,
+   "lang": "English",
+   "note": "Patent US-01402025; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01655113-method-of-aerial-transportation-1928-01-03",
+   "title": "Method of Aerial Transportation (US Patent 1,655,113, 1928-01-03)",
+   "author": "Nikola Tesla",
+   "year": 1928,
+   "lang": "English",
+   "note": "Patent US-01655113; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  },
+  {
+   "id": "nikola-tesla-patent-us-01655114-apparatus-for-aerial-transportation-1928-01-03",
+   "title": "Apparatus for Aerial Transportation (US Patent 1,655,114, 1928-01-03)",
+   "author": "Nikola Tesla",
+   "year": 1928,
+   "lang": "English",
+   "note": "Patent US-01655114; Jeff Behary scan (Electrotherapy Museum), public domain by date."
+  }
+ ]
+}
