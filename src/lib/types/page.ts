@@ -281,7 +281,7 @@ export interface OcrData extends ProcessingMetadata {
     at: Date;
   };
   source_url?: string;
-  content_hash?: string;      // SHA-256 of data field for provenance verification
+  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/translate-core.mjs
   image_urls?: string[];
   updated_at?: Date;
   prompt_name?: string;
@@ -306,7 +306,7 @@ export interface TranslationData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
-  content_hash?: string;      // SHA-256 of data field for provenance verification
+  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/translate-core.mjs
   updated_at?: Date;
   prompt_name?: string;
   prompt_version?: string;

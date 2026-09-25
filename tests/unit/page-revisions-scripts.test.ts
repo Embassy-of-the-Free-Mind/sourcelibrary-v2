@@ -83,6 +83,20 @@ describe('saveRevisionsBeforeOverwrite', () => {
     expect(doc.original_date).toEqual(new Date('2026-01-01'));
   });
 
+  it('keepMeta keeps every other key of the superseded field, and only when asked', async () => {
+    const page = {
+      id: 'p1', book_id: 'b1',
+      ocr: { data: 'old text', model: 'gemini-flash-lite', prompt_id: 'pr1', prompt_hash: 'h1', input_tokens: 900, unreadable: true },
+    };
+    const kept = fakeDb([page]);
+    await saveRevisionsBeforeOverwrite(kept.db, ['p1'], 'ocr', { reason: 'reocr_bdrc_4523', keepMeta: true });
+    expect(kept.inserted[0].meta).toEqual({ model: 'gemini-flash-lite', prompt_id: 'pr1', prompt_hash: 'h1', input_tokens: 900, unreadable: true });
+    expect(kept.inserted[0].meta).not.toHaveProperty('data');
+    const plain = fakeDb([page]);
+    await saveRevisionsBeforeOverwrite(plain.db, ['p1'], 'ocr', { reason: 'reocr_bdrc_4523' });
+    expect(plain.inserted[0]).not.toHaveProperty('meta');
+  });
+
   it('is a no-op for first writes and missing pages', async () => {
     const { db, inserted } = fakeDb([
       { id: 'p1', book_id: 'b1' }, // no ocr at all

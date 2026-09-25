@@ -228,7 +228,7 @@ for (const [bookId, verdicts] of byBook) {
 
   // SERVE: version old text, then write new with provenance + clear unreadable.
   if (serveIds.length) {
-    const n = await saveRevisionsBeforeOverwrite(db, serveIds, 'ocr', { reason: REASON });
+    const n = await saveRevisionsBeforeOverwrite(db, serveIds, 'ocr', { reason: REASON, keepMeta: true });
     if (n !== serveIds.length) {
       rec({ book: bookId, status: 'ABORT-revision-mismatch', want: serveIds.length, got: n });
       console.error(`ABORT ${bookId}: revisions ${n} != ${serveIds.length}`);

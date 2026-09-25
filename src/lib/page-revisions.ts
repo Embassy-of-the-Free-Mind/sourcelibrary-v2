@@ -25,6 +25,10 @@ export interface PageRevision {
   job_id?: string;
   created_at: Date; // when this revision was saved (i.e. when the content was superseded)
   original_date?: Date; // when this content was originally written
+  /** Every other key of the superseded field (prompt ids/hashes, token counts, flags, engine…),
+   *  kept when the writer opted in (`keepMeta`, scripts/lib/page-revisions.mjs) because it
+   *  replaced the whole provenance block. */
+  meta?: Record<string, unknown>;
 }
 
 /**
