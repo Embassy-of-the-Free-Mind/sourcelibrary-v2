@@ -53,6 +53,8 @@
  *   … --unverified-script-arm  also withhold translations made from an unverified Gemini
  *                         read of Tibetan/Syriac script (#4523/#4883); needs
  *                         --book/--books-file, see UNVERIFIED_SCRIPT_ARM below
+ *   … --cohort-script=tibetan  with the arm above: every listed book is in that script,
+ *                         so any Gemini read of it is unverified (see COHORT_SCRIPT)
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
@@ -90,6 +92,17 @@ const LOOP_ARM = process.argv.includes('--loop-arm');
  * pages. Drive it from the cohort lists (Tibetan re-OCR cohort, Syriac Kraken books).
  */
 const UNVERIFIED_SCRIPT_ARM = process.argv.includes('--unverified-script-arm');
+/**
+ * `--cohort-script=tibetan`: assert that EVERY book in --books-file is written in that
+ * script, so a Gemini read of any page is unverified whatever script it came out in
+ * (see `isUnverifiedScriptOcr`). For the Tibetan re-OCR cohort only; never for the
+ * Syriac books, which carry real Latin, Greek and Arabic pages.
+ */
+const COHORT_SCRIPT = ARG('--cohort-script', null);
+if (COHORT_SCRIPT && !UNVERIFIED_SCRIPT_ARM) {
+  console.error('--cohort-script only means something with --unverified-script-arm.');
+  process.exit(2);
+}
 const CANDIDATE_FILTER = {
   $or: [
     STALE_CANDIDATE_FILTER,
@@ -244,7 +257,7 @@ for (const bookId of bookIds) {
   const keptOther = [];
   for (const p of candidates) {
     if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
-    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM });
+    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT });
     if (!reason) {
       // Arm 4 keeps the English on other-script pages of the same books (Latin,
       // Hebrew, Arabic in a Syriac book). Count them, so the report shows what

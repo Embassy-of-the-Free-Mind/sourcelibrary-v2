@@ -289,6 +289,27 @@ describe('staleTranslationReason — arm 4, unverified Tibetan/Syriac Gemini OCR
     expect(staleTranslationReason({ ...p, translation: { data: '' } }, ARM)).toBe(null);
   });
 
+  it('cohort mode: in a Tibetan cohort, a Gemini read in the WRONG script is withheld too', () => {
+    // Read by eye 2026-09-25: Tibetan dbu-med leaves came back as Gujarati, Javanese,
+    // Devanagari, romanised Sanskrit, and English descriptions naming the wrong script.
+    const COHORT = { unverifiedScriptArm: true, cohortScript: 'tibetan' };
+    for (const wrong of ['પુન પાશાવણ ગુલાબદાસજી', 'ꦪꦸꦱꦸꦥ꧀ ꦥꦸꦤꦶꦏ ꦱꦼꦫꦠ꧀', 'नमो रत्रत्रयाय प्रज्ञापारमिता',
+      'ya na va ci na sa pra ya ya na śā śva ta', 'Three palm-leaf strips inscribed with Balinese script.']) {
+      expect(staleTranslationReason(gem(wrong), ARM)).toBe(null);
+      expect(staleTranslationReason(gem(wrong), COHORT)).toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+    }
+    // Still hands over to the lane, still needs a served translation, still Gemini-only.
+    expect(staleTranslationReason(gem(TIB, { pipeline: 'reocr_bdrc_4523' }), COHORT)).toBe(null);
+    expect(staleTranslationReason({ ...gem(TIB), translation: undefined }, COHORT)).toBe(null);
+    expect(staleTranslationReason(gem(TIB, { model: 'kraken' }), COHORT)).toBe(null);
+    // And without the arm, cohort mode does nothing.
+    expect(staleTranslationReason(gem('नमो'), { cohortScript: 'tibetan' })).toBe(null);
+  });
+
+  it('cohort mode refuses a script it does not know', () => {
+    expect(() => staleTranslationReason(gem(TIB), { unverifiedScriptArm: true, cohortScript: 'latin' })).toThrow();
+  });
+
   it('the candidate filter matches a missing ocr.pipeline and requires a Gemini model', () => {
     expect(UNVERIFIED_SCRIPT_CANDIDATE_FILTER['ocr.pipeline']).toEqual({ $in: [null, ''] });
     expect(UNVERIFIED_SCRIPT_CANDIDATE_FILTER['ocr.model']).toEqual({ $regex: '^gemini' });

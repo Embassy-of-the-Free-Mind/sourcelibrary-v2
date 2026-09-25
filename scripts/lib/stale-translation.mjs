@@ -353,9 +353,17 @@ export function unverifiedScriptShare(ocrText) {
  * read is Gemini's, and the text is at least `UNVERIFIED_SCRIPT_MIN_SHARE` of
  * one of those scripts. Self-healing: the lane's rewrite sets `ocr.pipeline`.
  */
-export function isUnverifiedScriptOcr(ocr) {
+export function isUnverifiedScriptOcr(ocr, { cohortScript = null } = {}) {
   if (!ocr || ocr.pipeline) return false;
   if (typeof ocr.model !== 'string' || !ocr.model.startsWith('gemini')) return false;
+  // COHORT mode: the caller asserts every book in scope is written in this script
+  // (the Tibetan re-OCR cohort). Then the share test is the wrong question: read by
+  // eye 2026-09-25, Gemini wrote Devanagari, Gujarati, Javanese and romanised
+  // Sanskrit for Tibetan dbu-med leaves, and English descriptions naming the script
+  // as Balinese or Tai Tham — 10,820 such pages in the cohort, 7,795 of them
+  // Devanagari. Whatever script the read came out in, it is not a reading of the
+  // page. Not for the Syriac books, whose Latin, Greek and Arabic pages are real.
+  if (cohortScript) return true;
   return unverifiedScriptShare(ocr.data).share >= UNVERIFIED_SCRIPT_MIN_SHARE;
 }
 
@@ -387,11 +395,18 @@ export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
  * the hourly sweep — which reaches this verdict for every indexed candidate —
  * cannot widen into it by accident.
  *
+ * `cohortScript` (one of `UNVERIFIED_SCRIPTS`) widens arm 4 to every Gemini read in
+ * a single-script cohort; see `isUnverifiedScriptOcr`. It has no effect without
+ * `unverifiedScriptArm`.
+ *
  * @param {object} page
- * @param {{ unverifiedScriptArm?: boolean }} [opts]
+ * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|null }} [opts]
  * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|null}
  */
-export function staleTranslationReason(page, { unverifiedScriptArm = false } = {}) {
+export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null } = {}) {
+  if (cohortScript && !Object.hasOwn(UNVERIFIED_SCRIPTS, cohortScript)) {
+    throw new Error(`cohortScript must be one of ${Object.keys(UNVERIFIED_SCRIPTS).join(', ')}; got ${cohortScript}`);
+  }
   const tr = page?.translation;
   if (!translationText(tr)) return null;
 
@@ -413,7 +428,7 @@ export function staleTranslationReason(page, { unverifiedScriptArm = false } = {
 
   // Arm 4 (#4523/#4883, Derek 2026-09-25): the English was made from a Gemini
   // read of Tibetan or Syriac that no specialist lane has checked.
-  if (unverifiedScriptArm && isUnverifiedScriptOcr(page?.ocr)) {
+  if (unverifiedScriptArm && isUnverifiedScriptOcr(page?.ocr, { cohortScript })) {
     return WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR;
   }
   return null;
