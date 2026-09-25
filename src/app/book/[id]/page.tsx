@@ -2512,7 +2512,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             counterpart. Following it from a partner iframe would navigate
             the frame to the global site and hit X-Frame-Options: DENY. */}
         {pages.length > 0 && embedPolicy.showBookOverviewLink && (
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-end gap-5">
+            {/* The whole book as one reflowing document — no panes, no scan.
+                For screen readers, magnification and phones (#5115). */}
+            <Link
+              href={`/book/${book.slug || book.id}/read`}
+              className="text-sm text-stone-400 hover:text-accent-gold transition-colors"
+            >
+              Read as one document
+            </Link>
             <Link
               href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"

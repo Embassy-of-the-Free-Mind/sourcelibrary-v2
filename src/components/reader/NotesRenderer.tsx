@@ -7,6 +7,7 @@ import remarkBreaks from 'remark-breaks';
 import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
+import { languageToBcp47 } from '@/lib/language-code';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
@@ -40,20 +41,11 @@ interface NotesRendererProps {
   pageType?: string; // Page type from OCR (frontispiece, illustration, etc.). When non-text type, all content is treated as notes.
 }
 
-/**
- * Get ISO 639-1 language code for lang attribute
- */
-function getLanguageCode(language: string | undefined): string | undefined {
-  if (!language) return undefined;
-  const lower = language.toLowerCase();
-  if (lower.includes('arabic')) return 'ar';
-  if (lower.includes('hebrew')) return 'he';
-  if (lower.includes('aramaic')) return 'arc';
-  if (lower.includes('syriac')) return 'syr';
-  if (lower.includes('persian') || lower.includes('farsi')) return 'fa';
-  if (lower.includes('urdu')) return 'ur';
-  return undefined;
-}
+// The `lang` attribute comes from @/lib/language-code. This file used to keep
+// a six-language helper here (Arabic, Hebrew, Aramaic, Syriac, Persian, Urdu)
+// that existed to pick a FONT; it doubled as the language attribute, so every
+// other language — Latin above all — inherited `lang="en"` from <html> and a
+// screen reader spoke it with English pronunciation rules (#5115).
 
 interface ExtractedMetadata {
   language?: string;
@@ -1024,7 +1016,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   // Determine text direction from language prop or extracted metadata
   const effectiveLanguage = language || metadata.language;
   const isRTL = isRTLLanguage(effectiveLanguage);
-  const langCode = getLanguageCode(effectiveLanguage);
+  const langCode = languageToBcp47(effectiveLanguage);
 
   if (!text) {
     return (

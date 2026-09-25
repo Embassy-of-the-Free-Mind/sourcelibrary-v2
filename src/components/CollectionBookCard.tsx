@@ -14,6 +14,7 @@ import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
+import { languageToBcp47, titleLang } from '@/lib/language-code';
 
 export interface CollectionBook {
   bookId?: string;
@@ -240,11 +241,14 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
 
       {/* Info */}
       <div className="flex flex-col flex-1 p-3">
-        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
+        {/* `lang` only when the ORIGINAL title is what's shown — display_title
+            is usually an English rendering, and the surface language is
+            already on an ancestor. Assistive tech picks its voice from this. */}
+        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }} lang={titleLang(shownTitle, book)}>
           {shownTitle}
         </h3>
         {originalLine && (
-          <p className="text-[11px] text-muted italic mt-0.5 line-clamp-1">{originalLine}</p>
+          <p className="text-[11px] text-muted italic mt-0.5 line-clamp-1" lang={languageToBcp47(book.language)}>{originalLine}</p>
         )}
         <p className="text-xs text-muted mt-0.5 line-clamp-1">
           {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
