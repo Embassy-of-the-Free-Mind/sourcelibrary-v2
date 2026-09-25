@@ -277,8 +277,10 @@ export default function PagesGrid({
             </a>
           )}
           {readHref && (
+            // Not localePath: /es/book/[id]/read does not exist yet (#5115), and
+            // the /es prefix would send a Spanish reader to a 404.
             <a
-              href={localePath(embedHref(readHref))}
+              href={embedHref(readHref)}
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
             >
               <BookOpenText className="w-4 h-4" />
