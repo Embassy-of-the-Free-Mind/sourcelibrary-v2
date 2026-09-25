@@ -78,7 +78,8 @@ jobs:
           BODY=$(printf '%s\n\n```\n%s\n```\n' \
             "Either the field count exceeded the ceiling (a sweep wrote a COLUMN again) or a retired field reappeared (a consolidation is being undone by a reused writer). See issue #3969 for the playbook: find the writer, strip it, re-clean — do not just raise the ceiling." \
             "$(tail -60 report.txt)")
-          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+          printf '%s\n' "$BODY" > issue-body.md
+          .github/scripts/file-or-update-issue.sh "Field sprawl breach on books — " "$TITLE" issue-body.md pipeline
       - name: Fail if the census could not run
         if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
         run: |

@@ -50,7 +50,8 @@ jobs:
           BODY=$(printf '%s\n\n```\n%s\n```\n' \
             "Provider keys with visible books but no LIBRARY_PARTNERS entry — those books are invisible on /libraries. Add a registry entry, or fold the key into an existing partner via aliasProviderKeys (see PR #4615 for both patterns). Playbook: issue #4627." \
             "$(tail -40 report.txt)")
-          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+          printf '%s\n' "$BODY" > issue-body.md
+          .github/scripts/file-or-update-issue.sh "Unmapped library providers on /libraries — " "$TITLE" issue-body.md pipeline
       - name: Fail if the audit could not run
         if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
         run: |

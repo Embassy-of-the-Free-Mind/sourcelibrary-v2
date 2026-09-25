@@ -63,7 +63,8 @@ jobs:
           BODY=$(printf '%s\n\n```\n%s\n```\n' \
             "These pages render entirely from our own CDN while the only full-resolution copy lives on the source institution's server. Repair costs bandwidth and storage and crawls a partner's infrastructure — treat this as a prompt to decide, not an instruction to run." \
             "$(cat report.txt)")
-          gh issue create --title "$TITLE" --body "$BODY"
+          printf '%s\n' "$BODY" > issue-body.md
+          .github/scripts/file-or-update-issue.sh "Pages served from R2 with no master held — " "$TITLE" issue-body.md archive
       # Exit 2 means the detector never reached the database. Fail loudly: a
       # silent green run is indistinguishable from "checked, found nothing"
       # (#4071 — three detectors sat blind behind a missing secret).
