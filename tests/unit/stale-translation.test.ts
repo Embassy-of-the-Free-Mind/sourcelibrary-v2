@@ -24,6 +24,7 @@ import { describe, it, expect } from 'vitest';
 import {
   staleTranslationReason, translationStaleness, withholdUpdate, restoreUpdate,
   WITHHOLD_REASONS, WITHHOLD_LANES, STALE_CANDIDATE_FILTER, STALE_MARGIN_MS, STALE_REASONS,
+  unverifiedScriptShare, UNVERIFIED_SCRIPT_CANDIDATE_FILTER,
 } from '../../scripts/lib/stale-translation.mjs';
 
 const OCR_AT = new Date('2026-09-10T07:25:47Z');
@@ -84,9 +85,11 @@ describe('staleTranslationReason', () => {
     expect(translationStaleness(page({ translation: { data: '[Illustration page — no translatable content]', updated_at: BEFORE } }))).toEqual({ stale: false });
   });
 
-  it('withholding is per lane: stale + a lane in WITHHOLD_LANES withholds; stale alone only flags (Derek 2026-09-18: "don\'t withhold individual pages though")', () => {
+  it('withholding is per lane: stale + a lane in WITHHOLD_LANES withholds; stale alone only flags', () => {
     expect(WITHHOLD_LANES).toContain('reocr_bdrc_4523');
-    expect(WITHHOLD_LANES).not.toContain('syriac-kraken-2026-09');
+    // Syriac Kraken: left out 2026-09-18 ("don't withhold individual pages though"),
+    // opted in 2026-09-25 ("remove the current translation that is bad").
+    expect(WITHHOLD_LANES).toContain('syriac-kraken-2026-09');
     // The lane check lives in the VERDICT, not only in the candidate query, so a
     // caller that reaches the verdict by another route (--loop-arm, the restore
     // script, a book-scoped run) cannot widen what gets withheld.
@@ -95,7 +98,10 @@ describe('staleTranslationReason', () => {
     expect(staleTranslationReason(noLane)).toBeNull();
     const syriac = page({ ocr: { pipeline: 'syriac-kraken-2026-09', updated_at: OCR_AT, data: 'ܣܘܪܝܝܐ' } });
     expect(translationStaleness(syriac).stale).toBe(true);
-    expect(staleTranslationReason(syriac)).toBeNull();
+    expect(staleTranslationReason(syriac)).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    const otherLane = page({ ocr: { pipeline: 'some-other-lane', updated_at: OCR_AT, data: 'x' } });
+    expect(translationStaleness(otherLane).stale).toBe(true);
+    expect(staleTranslationReason(otherLane)).toBeNull();
     expect(staleTranslationReason(page())).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
     // And the hourly sweep's candidate query is scoped to the same list.
     expect(STALE_CANDIDATE_FILTER.$or[0]).toEqual({ 'ocr.pipeline': { $in: [...WITHHOLD_LANES] } });
@@ -219,5 +225,99 @@ describe('staleTranslationReason — arm 3, looping source', () => {
   it('is self-healing: a re-OCR that removed the loop clears the arm', () => {
     const repaired = clean({ ocr: { data: 'ᬦᬶᬫᬸᬦ᭄ᬬᬗ᭄ᬓᬯᬾᬦ᭄ᬢᭂᬦᬦ᭄ᬳᬶᬓᬶᬯᬾᬦ᭄ᬢᭂᬦ᭄ᬳᬾᬮᬶᬗ᭄ᬩ ᬲᬫᬸᬤ᭄ᬭ ᬯᬶᬤᬶ ᬢᬦ᭄ᬢ᭄ᬭ ᬧᬸᬦᬧᬦᭂᬫ᭄ᬧᬸ', updated_at: OCR_AT }, translation: { data: 'English', updated_at: AFTER } });
     expect(staleTranslationReason(repaired)).toBe(null);
+  });
+});
+
+/**
+ * Arm 4 (#4523/#4883, Derek 2026-09-25: "just get the ocr done and remove the
+ * current translation that is bad"): English made from a Gemini read of Tibetan
+ * or Syriac that no specialist lane has checked. The failure modes are the usual
+ * two — too narrow keeps invented English up; too wide takes down the English of
+ * a Latin or Hebrew page that happens to sit in a Syriac book.
+ */
+describe('staleTranslationReason — arm 4, unverified Tibetan/Syriac Gemini OCR', () => {
+  const ARM = { unverifiedScriptArm: true };
+  const TIB = 'བཅོམ་ལྡན་འདས་ཀྱིས་བཀའ་སྩལ་པ། རབ་འབྱོར་དེ་ཇི་སྙམ་དུ་སེམས། ';
+  const SYR = 'ܒܪܫܝܬ ܐܝܬܘܗܝ ܗܘܐ ܡܠܬܐ ܘܗܘ ܡܠܬܐ ܐܝܬܘܗܝ ܗܘܐ ܠܘܬ ܐܠܗܐ ';
+  const LAT = 'Quod autem in hoc negotio de quo agimus non solum iuris sed etiam facti ';
+  const gem = (data: string, over: Record<string, unknown> = {}) => page({
+    ocr: { model: 'gemini-3.1-flash-lite-preview', updated_at: BEFORE, data, ...over },
+    translation: { data: 'Thus have I heard.', updated_at: AFTER },
+  });
+  /** `latin` + `script` letters, exactly — the share is measured over letters only. */
+  const mixed = (scriptLetters: number, latinLetters: number) =>
+    `<language>Syriac</language>${'ܐ'.repeat(scriptLetters)} ${'a'.repeat(latinLetters)} 123 .,;`;
+
+  it('withholds a Tibetan page read only by Gemini', () => {
+    expect(staleTranslationReason(gem(TIB.repeat(3)), ARM)).toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+  });
+
+  it('withholds a Syriac page read only by Gemini', () => {
+    expect(staleTranslationReason(gem(SYR.repeat(3), { model: 'gemini-3-flash-preview' }), ARM))
+      .toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+  });
+
+  it('is off unless the caller opts in — the hourly sweep never reaches it', () => {
+    expect(staleTranslationReason(gem(TIB.repeat(3)))).toBe(null);
+  });
+
+  it('hands over to the lane: the same page with ocr.pipeline set is not this arm', () => {
+    const laned = gem(TIB.repeat(3), { pipeline: 'reocr_bdrc_4523' });
+    // Translation newer than the lane read → not stale, and arm 4 no longer applies.
+    expect(staleTranslationReason(laned, ARM)).toBe(null);
+  });
+
+  it('keeps a Latin page in a Syriac book', () => {
+    expect(staleTranslationReason(gem(LAT.repeat(3)), ARM)).toBe(null);
+  });
+
+  it('counts letters only, after the metadata block: 25% Syriac is kept, 35% is withheld', () => {
+    expect(unverifiedScriptShare(mixed(25, 75)).share).toBeCloseTo(0.25);
+    expect(staleTranslationReason(gem(mixed(25, 75)), ARM)).toBe(null);
+    expect(unverifiedScriptShare(mixed(35, 65)).share).toBeCloseTo(0.35);
+    expect(staleTranslationReason(gem(mixed(35, 65)), ARM)).toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+  });
+
+  it('only judges Gemini reads', () => {
+    expect(staleTranslationReason(gem(TIB.repeat(3), { model: 'kraken' }), ARM)).toBe(null);
+    expect(staleTranslationReason(gem(TIB.repeat(3), { model: undefined }), ARM)).toBe(null);
+  });
+
+  it('negative control: a page with no translation is never withheld', () => {
+    const p = gem(TIB.repeat(3));
+    expect(staleTranslationReason({ ...p, translation: undefined }, ARM)).toBe(null);
+    expect(staleTranslationReason({ ...p, translation: { data: '' } }, ARM)).toBe(null);
+  });
+
+  it('cohort mode: in a Tibetan cohort, a Gemini read in the WRONG script is withheld too', () => {
+    // Read by eye 2026-09-25: Tibetan dbu-med leaves came back as Gujarati, Javanese,
+    // Devanagari, romanised Sanskrit, and English descriptions naming the wrong script.
+    const COHORT = { unverifiedScriptArm: true, cohortScript: 'tibetan' };
+    for (const wrong of ['પુન પાશાવણ ગુલાબદાસજી', 'ꦪꦸꦱꦸꦥ꧀ ꦥꦸꦤꦶꦏ ꦱꦼꦫꦠ꧀', 'नमो रत्रत्रयाय प्रज्ञापारमिता',
+      'ya na va ci na sa pra ya ya na śā śva ta', 'Three palm-leaf strips inscribed with Balinese script.']) {
+      expect(staleTranslationReason(gem(wrong), ARM)).toBe(null);
+      expect(staleTranslationReason(gem(wrong), COHORT)).toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+    }
+    // Still hands over to the lane, still needs a served translation, still Gemini-only.
+    expect(staleTranslationReason(gem(TIB, { pipeline: 'reocr_bdrc_4523' }), COHORT)).toBe(null);
+    expect(staleTranslationReason({ ...gem(TIB), translation: undefined }, COHORT)).toBe(null);
+    expect(staleTranslationReason(gem(TIB, { model: 'kraken' }), COHORT)).toBe(null);
+    // And without the arm, cohort mode does nothing.
+    expect(staleTranslationReason(gem('नमो'), { cohortScript: 'tibetan' })).toBe(null);
+  });
+
+  it('cohort mode refuses a script it does not know', () => {
+    expect(() => staleTranslationReason(gem(TIB), { unverifiedScriptArm: true, cohortScript: 'latin' })).toThrow();
+  });
+
+  it('the candidate filter matches a missing ocr.pipeline and requires a Gemini model', () => {
+    expect(UNVERIFIED_SCRIPT_CANDIDATE_FILTER['ocr.pipeline']).toEqual({ $in: [null, ''] });
+    expect(UNVERIFIED_SCRIPT_CANDIDATE_FILTER['ocr.model']).toEqual({ $regex: '^gemini' });
+  });
+});
+
+describe('WITHHOLD_LANES', () => {
+  it('includes the Syriac Kraken lane (Derek 2026-09-25 reversed the 2026-09-18 rule)', () => {
+    expect(WITHHOLD_LANES).toContain('syriac-kraken-2026-09');
   });
 });

@@ -20,7 +20,10 @@
  * model) and omnisyr / Qoruyo (print, agreement 0.83–0.96 with each other and with the
  * page by eye). So the disposition Derek chose (2026-09-18) is RE-TRANSCRIPTION with the
  * specialist models, not suppression: "don't withhold individual pages". Nothing in this
- * lane hides a page or a book.
+ * lane hides a page or a book. REVERSED 2026-09-25 for the English only: "i want the
+ * translation to be low priority, just get the ocr done and remove the current
+ * translation that is bad." `LANE` is now in `WITHHOLD_LANES` (stale-translation.mjs),
+ * so the hourly withhold sweep takes the stale English off every page this lane rewrites.
  *
  * ROUTING IS PER BOOK, POLICY IS PER PAGE
  * A book is a manuscript or a printed edition, and that decides the model (Sophro for
