@@ -145,6 +145,9 @@ function readRows() {
 }
 
 const maxOutFor = (ocr) => Math.min(32768, Math.max(4096, Math.ceil(ocr.length) + 1200));
+/** Under 120 chars of reader text on either page: nothing a judge (or a reader) can see. */
+const MIN_HALF = 120;
+const isDegenerate = (r) => !r?.N?.text || !r?.X?.text || readerText(r.N.text).trim().length < MIN_HALF || readerText(r.X.text).trim().length < MIN_HALF;
 
 async function phaseRun() {
   const { sample } = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
@@ -157,9 +160,17 @@ async function phaseRun() {
   const { db } = await connect();
   const prompts = await loadTranslationPrompts(db);
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} seams`);
-  const done = new Map(readRows().map((r) => [`${r.id}:${r.arm}`, r]));
-  let spent = [...done.values()].reduce((s, r) => s + (r.cost_usd || 0), 0);
+  const onDisk = readRows();
+  const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
+  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
   if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  // --rerun-degenerate: a page whose whole translation came back inside <meta>continues from previous
+  // page: …</meta> (or otherwise under 120 chars of reader text) is a collapse the production worker's
+  // health gate would refuse and retry (translatePageGuarded); give every arm that same one retry. The
+  // first try stays on disk — the packet takes the LAST row per seam-arm and counts the collapses.
+  if (has('rerun-degenerate')) {
+    for (const [k, r] of done) if (isDegenerate(r)) { done.delete(k); console.log(`rerun ${k}: collapsed first try (N ${readerText(r.N.text || '').trim().length}, X ${readerText(r.X.text || '').trim().length} reader chars)`); }
+  }
   const stream = fs.createWriteStream(ARMS_FILE, { flags: 'a' });
 
   /** One page call, with one retry when nothing came back. Logs usage; never touches `pages`. */
@@ -221,12 +232,17 @@ function phasePacket() {
   if (fs.existsSync(KEY_FILE)) throw new Error(`${KEY_FILE} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
   const { sample } = JSON.parse(fs.readFileSync(SAMPLE_FILE, 'utf8'));
   const rows = readRows();
+  // The LAST row per seam-arm stands (a --rerun-degenerate retry appends); the collapses it replaced
+  // are counted per arm — a whole page wrapped in <meta>continues from previous page: …</meta> is a
+  // reader-facing empty page, and the first draw showed it clustering on the device seams.
   const byKey = new Map(rows.map((r) => [`${r.id}:${r.arm}`, r]));
+  const collapsedFirstTry = Object.fromEntries(ARMS.map((a) => [a, []]));
+  for (const r of rows) if (isDegenerate(r)) collapsedFirstTry[r.arm]?.push(r.id);
   resetSeed(SEED);
   const entries = [], key = [], skipped = [];
   for (const s of sample) {
     const arms = Object.fromEntries(ARMS.map((a) => [a, byKey.get(`${s.id}:${a}`)]));
-    const usable = (a) => arms[a]?.N?.text && arms[a]?.X?.text && readerText(arms[a].N.text).trim().length >= 120 && readerText(arms[a].X.text).trim().length >= 120;
+    const usable = (a) => !isDegenerate(arms[a]);
     for (const pair of ['F/B', 'B/B2']) {
       const [x, y] = pair.split('/');
       if (!usable(x) || !usable(y)) { skipped.push({ seam: s.id, pair, reason: `missing or degenerate text in ${!usable(x) ? x : y}` }); continue; }
@@ -248,7 +264,8 @@ function phasePacket() {
   entries.forEach((e, i) => { e.id = `j${String(i + 1).padStart(3, '0')}`; });
   for (const k of key) { k.id = k.entry.id; delete k.entry; }
   fs.writeFileSync(PACKET_FILE, entries.map((e) => JSON.stringify(e)).join('\n') + '\n');
-  fs.writeFileSync(KEY_FILE, JSON.stringify({ seed: SEED, arms: ARMS, skipped, key }, null, 1));
+  fs.writeFileSync(KEY_FILE, JSON.stringify({ seed: SEED, arms: ARMS, skipped, collapsed_first_try: collapsedFirstTry, key }, null, 1));
+  console.log(`collapsed translations (whole page inside <meta>, or under ${MIN_HALF} reader chars), per arm: ${ARMS.map((a) => `${a} ${collapsedFirstTry[a].length}${collapsedFirstTry[a].length ? ` (${collapsedFirstTry[a].join(',')})` : ''}`).join('; ')}`);
   // Eight chunks, interleaved so every judge sees both pair types and every book.
   const per = Math.ceil(entries.length / JUDGES);
   for (let c = 0; c < JUDGES; c++) {
