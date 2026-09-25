@@ -331,7 +331,9 @@ export function resolvePageBreakForPage({ ocrText, prevOcrText, nextOcrText, pag
     meta.kind = foot.kind;
     meta.joined = foot.joined;
     meta.catchword = foot.catchword;
-    if (foot.joined) notes.push(`This page ends with the word «${foot.joined}», completed from the top of the next page; translate it here.`);
+    // "ordinary text … like any other word": round 3 (EXPERIMENTS.md 2026-09-26) counted untranslated
+    // words on the fix arm; the joined word, set apart in «», must not read as a term to preserve.
+    if (foot.joined) notes.push(`This page ends with the word «${foot.joined}», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.`);
     // A tagged catchword that is the second half of the joined word ("gischen" under
     // "Augspur-") is part of that word, not a separate device to warn about.
     const partOfJoin = foot.joined && foot.catchword && foot.joined.toLowerCase().includes(foot.catchword.toLowerCase().replace(/[^\p{L}]/gu, ''));
@@ -380,15 +382,21 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * page is already in the prompt. Under `scoped`, a block in which no page fired is byte-identical
  * to production; in one that did, only the pages that fired are edited or annotated, and the rule
  * line is added once.
+ *
+ * A break is only resolved between pages whose `page_number`s are consecutive: the worker's block
+ * is drawn from the pages still to translate, so two neighbours in the array can be pages 16 and
+ * 18, and a hyphen at the foot of 16 must not be "completed" from the head of 18. `prevOcrText` /
+ * `nextOcrText` are the caller's promise of the pages adjacent to the block's ends.
  */
 export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
   const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
   const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
+  const adjacent = (a, b) => a?.page_number == null || b?.page_number == null || Number(a.page_number) + 1 === Number(b.page_number);
   const per = pages.map((p, i) => (pageBreak
     ? resolvePageBreakForPage({
       ocrText: ocrOf(p),
-      prevOcrText: i > 0 ? ocrOf(pages[i - 1]) : prevOcrText,
-      nextOcrText: i + 1 < pages.length ? ocrOf(pages[i + 1]) : nextOcrText,
+      prevOcrText: i > 0 ? (adjacent(pages[i - 1], p) ? ocrOf(pages[i - 1]) : undefined) : prevOcrText,
+      nextOcrText: i + 1 < pages.length ? (adjacent(p, pages[i + 1]) ? ocrOf(pages[i + 1]) : undefined) : nextOcrText,
       pageBreak: { ...pageBreak, lookahead: false },
     })
     : null));
