@@ -80,7 +80,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** `image-classifiers-and-splits.md`; #2454 (split at detection time), #3593, #4796 (RTL split backwards).
 - **Fix:** split before OCR; where a spread is kept deliberately (Loeb openings), tag it as an opening and transcribe both pages in order.
 
-### I4 · Neighbour strip in the frame, read as content — NEW
+### I4 · Neighbour strip in the frame, read as content — NEW · #5131
 - **Reader sees:** a "second column" of half-words (`the / eius / pau / tate / pro`) beside the real text, sometimes "translated" into a vertical list of English stubs; or the strip reported as water-damaged, illegible text; or the strip's line-ends transcribed as this page's marginalia and translated; or, worst, the line openings reconstructed into fluent invented Latin.
 - **Lane:** image → OCR (→ translation) · on-page.
 - **Seen in:** multicol 2/6, short 2/6, illus 1/6, incun 2/6, rtl 1/6 (correctly ignored), music 0 — 8 of 78 books with a strip, 7 mishandled.
@@ -88,7 +88,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none. `<columns>2</columns>` on a one-column page is the tell; #3088 (gutter re-crop) is adjacent.
 - **Fix:** crop-time strip detection (a narrow column of ragged line-ends at one edge); an OCR rule that a column whose tokens are mostly fragments is not a column.
 
-### I5 · Several leaves in one photograph (pecha boards) — NEW
+### I5 · Several leaves in one photograph (pecha boards) — NEW · #5132
 - **Reader sees:** three loose Tibetan leaves on a board as one "page"; the next image holds their three versos, so page N→N+1 on the site is recto A, B, C then verso A, B, C — not a reading order in principle; the OCR mixes or duplicates the leaves.
 - **Lane:** image · cross-page (structural).
 - **Seen in:** ms 2/6, cjk 1/6 — every Tibetan book in the sample.
@@ -104,7 +104,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #4796 (41 books split backwards). `catchwordBoundary()` in `page-integrity.mjs` detects it cheaply and was not run here.
 - **Fix:** re-sequence from catchwords; RTL-aware split.
 
-### I7 · Catalogue identity or format wrong — NEW
+### I7 · Catalogue identity or format wrong — NEW · #5133
 - **Reader sees:** a "1561 print" that is a manuscript; a "Prognosticon for Leipzig, 1490 [German]" whose leaves are a Latin Suetonius with commentary; a manuscript in the incunabula. The OCR's own `<script>handwritten</script>` contradicts the record.
 - **Lane:** derived (catalogue) · book-wide.
 - **Seen in:** greek 2/6, incun 2/6.
@@ -131,7 +131,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #4523 (529 books); Unicode block of the OCR vs the book's script is free and catches it.
 - **Fix:** in flight (#4722 Yigdzin lane, held cohort).
 
-### O3 · Canonical-text substitution — NEW
+### O3 · Canonical-text substitution — NEW · #5134
 - **Reader sees:** for a famous text, lines that are not on the leaf and lines on the leaf that are missing: the OCR (or the translator) recites the remembered standard version. Gurbani lines inserted into a Guru Granth Sahib leaf; the Unetanneh Tokef translated with the printed prayer book's "drought" where the manuscript reads "pestilence"; a Diogenes Laertius page "translated" at five times the OCR's length from memory of Book VII.
 - **Lane:** OCR and translation · on-page.
 - **Seen in:** ms 1/6, rtl 2/6, incun 1/6.
@@ -139,7 +139,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none. Tell: translation length ≫ OCR length on a well-known text; refrain present on the image and absent from the OCR.
 - **Fix:** for canonical works, a diff against the standard text is the *detector*, not the target; prompt rule that variants are the point; withhold translation where OCR anchors are few.
 
-### O4 · Repetition: token-level (KNOWN) and block-level (NEW)
+### O4 · Block-level repetition — NEW (the token-level loop is KNOWN) · #5135
 - **Reader sees:** thousands of lines of `|` or `...`; or the same 40-word dharani seven times; the same paragraph for three different leaves; a stanza twice; "and the secret of the Shekhinah and the secret of the Shekhinah…" for 3,500 characters, faithfully translated.
 - **Lane:** OCR (→ translation) · on-page.
 - **Seen in:** short 1/6 (token-level), ms 2/6, rtl 1/6, cjk 1/6, tables 1/6 (line duplicated) — 6 of 78.
@@ -147,7 +147,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** type/token ratio < 0.15 (PR #3273) catches the token-level loop only; block-level repeats have a normal ratio. #5004.
 - **Fix:** an identical-block check within one page's OCR (shingles ≥ 20 tokens repeated); refuse to translate a page that fails it.
 
-### O5 · Silent omission inside the page — NEW
+### O5 · Silent omission inside the page — NEW · #5136
 - **Reader sees:** nothing — that is the point. A clause, a line, 13 lines, half a column, or the last three lines are gone with no marker, and the two sentences either side are fused into one fluent false sentence ("it has milk within, and it will become copper"; "he was called to Toulouse" where the bishop of Toulouse was summoned to the Curia; Augustus' funeral instructions vanish by homeoteleuton).
 - **Lane:** OCR → translation · on-page.
 - **Seen in:** short 1/6, greek 1/6, dense 1/6, c17 2/6, multicol 3/6, ms 1/6, tables 1/6, incun 4/6, cjk 1/6 — 15 of 78 books; the readers rated it high on most.
@@ -155,7 +155,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none for mid-page loss (`truncationRatio()` measures translation vs OCR, not OCR vs leaf). Free tells: `<vocab>` tokens absent from the body; line count vs the book's modal line count; translation longer than the OCR (T14).
 - **Fix:** ship the `<vocab>`-vs-body check; a line-count-per-leaf sanity check per book; a source-grounded judge for the rest.
 
-### O6 · Meaning-changing misread, carried into a fluent translation — NEW as a class
+### O6 · Meaning-changing misread, carried into a fluent translation — NEW as a class · #5137
 - **Reader sees:** a plausible sentence that is wrong. "Brother Facius was healed" (the saint becomes the patient); "by-laws" become "land" and "set at liberty" becomes "lost"; "the soldiers argue with their commanders" for *become used to obeying*; 隧道葬父 read as "recommend his father-in-law"; "Are they fitting now?" for *sitting*; sin read as life throughout a page. No uncertainty marker, ever.
 - **Lane:** OCR → translation · on-page.
 - **Seen in:** every stratum: dense 4/6, c17 3/6, greek 3/6, rtl 3/6, ms 5/6, cjk 5/6, incun 6/6, tables 3/6, music 3/6, multicol 3/6, short 2/6, illus 2/6, c19 1/6 — ~43 of 78 books had at least one instance the reader judged meaning-changing.
@@ -164,7 +164,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none possible from text alone; `ocr-difficulty-taxonomy.md` locates the unstable pages, which is where this lives. #4790 measured the IA band; #1323.
 - **Fix:** the source-grounded fidelity judge (image + OCR + translation) at scale for the flagged pages; per-script prompt exemplars at the known failure points; show the reader the OCR's `<unclear>` rate.
 
-### O7 · Numerals, dates, doses and units — NEW
+### O7 · Numerals, dates, doses and units — NEW · #5138
 - **Reader sees:** "190" soldiers become 150; five years become "[several]"; the 7th day before the end of January becomes the 15th; ʒ ij becomes iij in a recipe; every 萬 and 億 rendered "hundred million" so the value cannot be recovered; a cyclical ganzhi year resolved to a Gregorian year the source does not fix.
 - **Lane:** OCR and translation · on-page.
 - **Seen in:** ms 2/6, cjk 3/6, music 1/6, incun 1/6, dense 1/6 (citation "fen 3 of book 4" → "third or fourth").
@@ -172,7 +172,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none.
 - **Fix:** numerals are a separate check in the judge (every number in the translation must trace to a token in the OCR); a prompt rule for CJK place-value and for cyclical dates (keep the source form, gloss the conversion).
 
-### O8 · Silent normalisation toward the expected — NEW
+### O8 · Silent normalisation toward the expected — NEW · #5139
 - **Reader sees:** the corrupt reading an editor quotes *in order to correct it* silently corrected; variant spellings that an apparatus exists to record replaced by standard ones; a grammar paradigm's cells reordered and the author's forms swapped for textbook forms; transliteration letters differing only by a diacritic conflated (Ȧ/Ā/A); abbreviations expanded without a mark; modern CJK punctuation added inconsistently; stanza closers dropped.
 - **Lane:** OCR · on-page.
 - **Seen in:** short 1/6, tables 3/6, multicol 1/6, incun 2/6, music 2/6, cjk 1/6, ms 1/6, dense 1/6 — 12 of 78.
@@ -180,7 +180,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; #1323 (20–26% agreement across editions) is the corpus-level symptom.
 - **Fix:** a diplomatic-transcription policy per book (declared once, applied to every page, see O9); prompt rule "transcribe what is printed, mark expansions"; for tables, forms are data.
 
-### O9 · Convention flips between adjacent pages — NEW
+### O9 · Convention flips between adjacent pages — NEW · #5140
 - **Reader sees:** nothing on one page; across a break, ſ kept / ſ→s / ſ→f, diplomatic vs fully expanded, line-broken vs reflowed, `^a` vs `$^a$` note keys, a vocalised Syriac page next to an unvocalised one from the same edition. Search and quoting break; a Syriacist takes the vowels as the printer's.
 - **Lane:** OCR · cross-page.
 - **Seen in:** dense 3/6, c17 1/6, rtl 1/6, incun 2/6 — 7 of 78.
@@ -188,7 +188,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; a per-book ſ-ratio and expansion-ratio by page would show it.
 - **Fix:** one declared convention per book, checked at write time (a page that disagrees with its neighbours' convention is re-run with the book's setting).
 
-### O10 · Secondary script on the page dropped or garbled — NEW
+### O10 · Secondary script on the page dropped or garbled — NEW · #5141
 - **Reader sees:** the Greek quotation inside a Latin commentary replaced by garbage or absorbed into the translation; Hebrew in Kircher dropped; a hieroglyphic marginal column neither transcribed nor described; Devanagari dropped; Yoruba tone marks and Hebrew vowel points dropped.
 - **Lane:** OCR (→ translation) · on-page.
 - **Seen in:** dense 2/6, tables 2/6, incun 1/6, illus 1/6, c19 2/6, multicol 1/6, short 1/6 — 10 of 78.
@@ -196,7 +196,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; `sourceLanguageCount()` in `page-integrity.mjs` counts languages but not their survival. #4780 (Unicode-aware gate tokenizer) is adjacent.
 - **Fix:** the judge checks each script block separately; a per-page script census (image-side classifier vs OCR Unicode blocks).
 
-### O11 · Page furniture mis-tagged — NEW
+### O11 · Page furniture mis-tagged — NEW · #5142
 - **Reader sees:** the running head as the first sentence (or as an `# H1` in the translation, sometimes merged with the facing page's head); the catchword as the page's last word and translated ("rough, which…"); a signature `-> Θ <-` in the text; the block-heart (版心) title tagged as catchword or page number, or hallucinated as a different classic (金匱要略 for 欽定四庫全書); an edition banner read as the work's title; `<page-num>` taken from a photographer's mount number, a reversed bleed-through numeral, a chapter number in red, or an old-edition margin reference; "Digitized by Google" recorded as the catchword.
 - **Lane:** OCR (→ display) · on-page; corrupts cross-page detectors.
 - **Seen in:** c19 5/6, greek 4/6, music 4/6, cjk 3/6, dense 3/6, c17 3/6, incun 3/6, rtl 3/6, short 2/6, tables 2/6, ms 2/6, illus 1/6 — ~35 of 78.
@@ -204,7 +204,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** `parseCatchword()`, `parsePageNum()`, `pageNumberBreaks()` in `page-integrity.mjs` *consume* these tags; #5059's 45% precision is partly this class. The `<page-num>`-vs-printed-folio check needs the image.
 - **Fix:** a furniture schema with a place for each element (header, catchword, signature, block-heart, foliation source); prompt exemplars per book type; renderer never promotes a header to a heading.
 
-### O12 · Marginalia and apparatus dropped, merged, or mis-tagged — NEW
+### O12 · Marginalia and apparatus dropped, merged, or mis-tagged — NEW · #5143
 - **Reader sees:** a marginal note dropped, or merged mid-sentence into the body, or moved to the top of the page; body text wrapped in `<margin>` (and so styled as a note); a superscript footnote number at a line-end hyphen wrapped as `<margin>95. ἐπι-</margin>` so the split word is doubled; interlinear small characters detached as margin; a marginal keyword index fused with the body into a table; note key letters drifting N places so every gloss points to the wrong term; a footnote's attribution dropped; a manuscript's marginal folio labels not recorded while "Folio 1/2/3" is invented.
 - **Lane:** OCR (→ translation, display) · on-page.
 - **Seen in:** dense 4/6, c17 3/6, greek 2/6, c19 2/6, cjk 2/6, multicol 1/6, tables 1/6, incun 1/6, ms 2/6, rtl 1/6, music 1/6 — ~20 of 78.
@@ -212,7 +212,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; #2709 (distinguish annotations in the reader), #3825 (closed tag vocabulary).
 - **Fix:** define `<margin>` as *position*, `<note>` as *apparatus*, `<fn n>` for footnote anchors; a write-time check that a `<margin>` block is not longer than the body; the judge reads margins as a separate block.
 
-### O13 · Later hands read as text — NEW
+### O13 · Later hands read as text — NEW · #5144
 - **Reader sees:** words a reader underlined in pencil tagged `<insert>` and the translation asserting they are later additions; a later reader's alchemical doodles flagged `significance="high"` and given a doctrinal meaning; faint annotations spliced into printed sentences with `<unclear>` guesses; a library stamp labelled "printer's mark".
 - **Lane:** OCR → translation · on-page.
 - **Seen in:** c17 3/6, dense 1/6, tables 1/6.
@@ -220,7 +220,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none.
 - **Fix:** an `<annotation hand="later">` tag with no translation; prompt rule that manuscript marks on print are not the text.
 
-### O14 · Non-linear content described, not transcribed — NEW
+### O14 · Non-linear content described, not transcribed — NEW · #5145
 - **Reader sees:** the ~40 Latin labels on a Lullian plate exist only as an `<image-desc>` paraphrase, unsearchable and unquotable; a staff summarised as "eight diamond-shaped notes" with clef and accidentals lost, then replaced in the translation by "[Diagram showing a musical cadence.]"; an inline alchemical glyph turned into an `<image-desc>` so the sentence loses its noun; a lone mark given a confident English meaning; diagram letters invented in sequence.
 - **Lane:** OCR (→ translation) · on-page.
 - **Seen in:** illus 3/6, music 3/6, c19 1/6, ms 1/6 (mounting pins described as rivets and glossed).
@@ -236,7 +236,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** `ocrReasoningLeak()`, `DESCRIBED_PAGE` (#5055 side-find, 25 pages); the `<meta>`-wrapped form is not counted.
 - **Fix:** already on the list; extend the regex to `<meta>` bodies.
 
-### O16 · Self-reported tags wrong — NEW as a page-level class
+### O16 · Self-reported tags wrong — NEW as a page-level class · #5146
 - **Reader sees:** `<language>French</language>` on a half-Syriac page; "Greek" and "Ancient Greek" on facing pages; "Gurmukhi" (a script) then "Punjabi"; `<columns>2` on a one-column page whose second column is the facing page's edge; `<script>` Kurrent on lithographed Latin script; `page_type` illustration on a text page; a rubric number as `<page-num>`. Routing, search filters, this sample's strata, and the `lang=` attribute a screen reader speaks (#5115) all trust these.
 - **Lane:** OCR → derived · on-page.
 - **Seen in:** greek 6/6, multicol 5/6, ms 4/6, rtl 2/6, cjk 2/6, c19 1/6, illus 1/6, dense 1/6 — ~22 of 78 books with at least one wrong tag.
@@ -244,7 +244,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #4654, #4766 (book-level `language`); nothing page-level.
 - **Fix:** derive page tags from evidence (Unicode census for language/script; a layout classifier for columns), and make the model's tag a *hint*; never gate behaviour on one page's tag.
 
-### O17 · Table structure invented or lost — NEW
+### O17 · Table structure invented or lost — NEW · #5147
 - **Reader sees:** a marginal keyword index fused with the body into a row-aligned table; `| X | X |` rows for a single list; a paradigm's cells scrambled; a genealogy grid mis-mapped; an over-long row whose last cell the renderer drops; spanning cells lost; column mismatch in a printed table; prose forced into a `| Right | Left |` table that stops after seven rows.
 - **Lane:** OCR and translation → display · on-page.
 - **Seen in:** tables 2/6, cjk 1/6, music 1/6, c19 1/6, illus 1/6, multicol 1/6, short 1/6 — 8 of 78. The well-formed tables in the sample rendered fine; the damage was to their contents (O8).
@@ -265,7 +265,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Reader sees:** the original left untranslated (here, one word on one page).
 - **Seen in:** short 1/6. **Detector / issue:** `echoedSource()`, #5058.
 
-### T3 · Translation hidden inside a `<meta>` or `<note>` wrapper — NEW
+### T3 · Translation hidden inside a `<meta>` or `<note>` wrapper — NEW · #5148
 - **Reader sees:** an empty or near-empty page; the translation exists but the renderer files it under metadata (or styles it as apparatus). `tr_len` far below `ocr_len` with a long `<meta>` is the tell.
 - **Lane:** translation → display · on-page.
 - **Seen in:** c17 1/6, incun 1/6.
@@ -293,7 +293,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** `catchwordBoundary()`, `parseCatchword()`; #5103 (F0 measured 71%→42% device-break defects, flip is Derek's call).
 - **Fix:** the deterministic pre-model join in #5103; prompt rule "never add words to bridge the break, never write an ellipsis for a word half".
 
-### T7 · Fluent-over-garble: no uncertainty floor — NEW
+### T7 · Fluent-over-garble: no uncertainty floor — NEW · #5149
 - **Reader sees:** confident English built on OCR gibberish, on lines the OCR itself marked `<unclear>`, on word stubs from a facing-page strip, on a repetition loop, on an isolated glyph — with no uncertainty marker. Or its inverse on Tibetan: the translator refuses to compose and ships a syllable-by-syllable gloss ("Body, hundred, abandon, again, six, abandon, that, take.") as the page.
 - **Lane:** translation · on-page. This is the amplifier for O1, O4, O5, O6: every OCR failure reaches the reader as fluent prose because the translator never declines.
 - **Seen in:** ms 3/6, rtl 2/6, illus 1/6, short 1/6, cjk 1/6, greek 1/6, incun 1/6 — 10 of 78.
@@ -301,7 +301,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; #5004 is one instance; #4883's withhold-by-default is the policy answer for whole scripts.
 - **Fix:** the translator inherits `<unclear>` (translate inside the tag or not at all); a translatability gate (share of OCR tokens that are dictionary-plausible for the language) before spending on translation; "no translation yet" is a valid output.
 
-### T8 · Sense inverted or a qualifier dropped, with correct OCR — NEW
+### T8 · Sense inverted or a qualifier dropped, with correct OCR — NEW · #5150
 - **Reader sees:** cold and hot drugs reversed; a praeteritio read straight; "lucis magnæ" dropped; a negation dropped in Greek; "each guest fearing for his own life" becomes "fearing for the bridegroom's life"; a hedge removed.
 - **Lane:** translation · on-page.
 - **Seen in:** cjk 3/6, c17 2/6, c19 3/6, dense 1/6, short 1/6, music 1/6 — 11 of 78. Only a source-grounded read catches it; the English is fluent.
@@ -309,7 +309,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; the seam judges of #4681/#5104 reward fluency and cannot see it.
 - **Fix:** the fidelity judge (#5104's source-grounded design) run on-page, not only at seams; polarity items (negation, comparatives, qualifiers) as explicit checks.
 
-### T9 · Quiet omission below the truncation threshold — NEW
+### T9 · Quiet omission below the truncation threshold — NEW · #5151
 - **Reader sees:** five lines of the Unetanneh Tokef (the shepherd simile and the verdict) gone between two fluent sentences; an opening clause dropped; footnotes dropped; a Greek passage absorbed; a commentary replaced by a one-line note.
 - **Lane:** translation · on-page.
 - **Seen in:** rtl 2/6, ms 1/6, dense 1/6, greek 1/6, c19 1/6, short 2/6, incun 1/6 — 9 of 78.
@@ -317,7 +317,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** `truncationRatio()` needs a large ratio; these are 5–20% losses.
 - **Fix:** sentence-level alignment (OCR sentence count vs translation sentence count per paragraph) as a cheap screen; the judge for the rest.
 
-### T10 · Invented scholarship in notes and glosses — NEW
+### T10 · Invented scholarship in notes and glosses — NEW · #5152
 - **Reader sees:** `<note>` and `<gloss>` that explain an OCR misread with confident, false learning: "Saint Rotoi <note>likely a reference to a local feast day</note>" (St Christopher, five years); "Vishnu <note>the Preserver</note>" inserted into Gurbani; "λωθηκαὶ… likely referring to dummy figures or decoys" (loricati); "Kupfer" glossed as counterfeiters; a ratio named the wrong interval; a footnote invented when its text is on the next page; "Chao clan" as "lineage of ancient artisans"; a ganzhi year resolved to a Gregorian date; facts asserted about the previous page.
 - **Lane:** translation · on-page.
 - **Seen in:** ms 3/6, greek 2/6, music 4/6, illus 3/6, tables 2/6, cjk 2/6, short 2/6, incun 4/6, c17 1/6, c19 1/6 — ~24 of 78. Readers noted that notes lend *authority* to misreads: the wrong reading arrives footnoted.
@@ -325,7 +325,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #2709 (reader distinguishes annotations); #3825 (verbatim original notes). Nothing checks note *content*. The v15 measurement (`project_translation_prompt_v15_ab`) found interpretive notes fall 36% under a stricter prompt: fewer notes is the direction, not more.
 - **Fix:** notes may gloss, never explain a reading; a note that contains "likely", "possibly", "may refer" on a token the OCR marks `<unclear>` is dropped at write time; the judge scores notes against the image.
 
-### T11 · Parallel edition mishandled — NEW
+### T11 · Parallel edition mishandled — NEW · #5153
 - **Reader sees:** in a Greek/Latin Didot, a smooth complete "translation of the Greek" that is really Dübner's Latin reconstruction, so the editor's printed lacunae vanish; in a Loeb, a degraded paraphrase of Perrin's facing English presented as the translation; in a Syriac/French edition, one blended English that switches between the Syriac and the French and invents where it follows the Syriac; both columns translated in full, separated by a raw `<column-break/>`, so the reader gets two English versions of one passage.
 - **Lane:** translation · on-page.
 - **Seen in:** greek 2/6, rtl 1/6, tables 1/6 — 4 of 78 (all the parallel editions in the sample).
@@ -333,7 +333,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #2784 (surface the existing facing English, no re-translation) names the right answer for six Greek editions; `sourceLanguageCount()` ≥ 2 on most pages of a book is the free detector.
 - **Fix:** a `parallel-edition` book mode: transcribe both, translate the source column only, and *surface* a printed translation as the edition's own (attributed), never re-translate it.
 
-### T12 · Same-language source rewritten — NEW
+### T12 · Same-language source rewritten — NEW · #5154
 - **Reader sees:** Burton, Taylor, Whinfield, Blavatsky, Browne, Jonson, the Ante-Nicene Fathers "translated" from English into abridged, modernised, interpretively drifted English: "How Abu Hasan Brake Wind" becomes "Broke Wind", "our pleasure was troubled" becomes "ruined", a Sappho commentary condensed to a summary, citations replaced by generic phrases, scholarly footnotes dropped (see T13). A reader of the translation panel never reads the author's prose, and the searchable layer under it may be a bad OCR that the paraphrase silently repaired.
 - **Lane:** translation (routing) · on-page.
 - **Seen in:** c19 3/6 (one book copied verbatim, correctly), illus 1/6, short 1/6, multicol 1/6, c17 2/6, dense 1/6 — 9 of 78, i.e. nearly every English-source book in the sample.
@@ -341,7 +341,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #3524, #4654 (English-tagged books and badges), #2761 (passthrough). The behaviour itself — paraphrase where the language already matches — had no issue.
 - **Fix:** when source language = target language, the translation *is* the corrected transcription: copy, modernise nothing, keep every note; the spend is zero.
 
-### T13 · Apparatus stripped in translation — NEW
+### T13 · Apparatus stripped in translation — NEW · #5155
 - **Reader sees:** four of seven footnotes gone, the rest condensed into inline notes with the "L." attributions removed; an editor's emendation nullified so the note says nothing; a Greek textual-critical note rendered as meaningless English; note numbers renumbered so the commentary no longer keys to the text; a rubricated book incipit or chapter number lost so the structure is invisible; a marginal siglum moved to line 1.
 - **Lane:** translation · on-page.
 - **Seen in:** c19 2/6, short 2/6, greek 1/6, rtl 1/6, incun 3/6, music 1/6 — 10 of 78.
@@ -349,7 +349,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** #3825 (verbatim original notes) is the prompt-side rule; nothing measures survival of notes.
 - **Fix:** footnote and rubric counts on OCR vs translation as a write-time check; apparatus is translated verbatim and numbered as printed.
 
-### T14 · The two panes come from different reads — NEW
+### T14 · The two panes come from different reads — NEW · #5156
 - **Reader sees:** the translation contains a passage the OCR panel lacks (translated from the image, from memory, or from an earlier OCR revision); a legacy raw-engine OCR with no tags beside an LLM translation that silently corrects it; a translation five times the OCR's length.
 - **Lane:** translation ↔ OCR provenance · on-page.
 - **Seen in:** greek 1/6, short 1/6, illus 1/6, incun 2/6 — 5 of 78.
@@ -357,7 +357,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; `page_revisions` carries the provenance (`data-provenance.md`) but nothing asserts that the served translation was made from the served OCR.
 - **Fix:** store the OCR `content_hash` the translation was made from (the Syriac-lane standard, `feedback_provenance_standard_for_every_writer`) and flag pages where it no longer matches.
 
-### T15 · Continuity meta wrong — NEW
+### T15 · Continuity meta wrong — NEW · #5157
 - **Reader sees:** "continues from previous page" at the start of a new section; "after the previous page's Coptic" on a page with no Coptic anywhere; a meta that summarises the facing half of an unsplit spread; the previous page's English repeated inside the meta.
 - **Lane:** translation → display · cross-page.
 - **Seen in:** cjk 1/6, illus 1/6, c17 1/6, music 3/6, rtl 1/6 — 7 of 78.
@@ -365,7 +365,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Detector / issue:** none; the `<meta>continues from previous page</meta>` collapse noted in the handoff is the display side of the same tag.
 - **Fix:** continuity is a boolean derived from the OCR seam (T6), not free text; drop the sentence.
 
-### T16 · Form imposed or lost — NEW
+### T16 · Form imposed or lost — NEW · #5158
 - **Reader sees:** manuscript line breaks carried mid-sentence into English prose so it reads as broken verse; verse flattened to prose; running heads as `#` headings and invented "## PAGE 85" headings; prose forced into a two-column table; inline quotations turned into blockquotes; invented italics.
 - **Lane:** translation → display · on-page.
 - **Seen in:** rtl 1/6, greek 1/6, c19 6/6 (heading promotion), short 1/6, multicol 1/6, music 1/6 — 11 of 78.
@@ -375,7 +375,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 
 ### Display lane
 
-### D1 · Markup the renderer does not know, or broken — NEW as a class (pieces known)
+### D1 · Markup the renderer does not know, or broken — NEW as a class (pieces known) · #5159
 - **Reader sees:** raw `<sig>ff 2</sig>`, `<page-num>27</page-num>`, `<column-break/>`, `<language>Latin</language>` mid-text; pseudo-HTML footnote keys `<a>`, `<b>` that collide with real tags; a split or orphan `<insert>`/`<margin>` (`<margin></margin>` + content + `</margin>`); `$\ast$`, `->…<-`, `&amp;`; "[repeated text]" elision markers; invented bold; an `<image-desc>` or "A small decorative initial 'E'…" note in the reading flow. The renderer (`src/lib/validateTranslation.ts` VALID_XML_TAGS, `sanitize-translation-tags.ts`, `NotesRenderer.extractMetadata`) knows the annotation tags and moves `page-num`/`sig`/`meta` to a metadata box; anything else is text.
 - **Lane:** display · on-page.
 - **Seen in:** every stratum; ≥ 35 pages in the sample carried something on this list. Readers checked the payload, not the screen, except where noted.
@@ -388,7 +388,7 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 ### E1 · Poisoned derived metadata — KNOWN
 - The books in O1 and O2 have summaries, keywords and index entries derived from invented text (the Hebrew recipe book's summary describes "The Unity of the Night"). Not measured here; consequence of every OCR class above. → `derived-metadata-lane.md`.
 
-### E2 · The instruments lie — NEW
+### E2 · The instruments lie — NEW · #5160
 - **What was found:** `ocr_len` = 108 for a page holding 8,100 lines of `|`; `tr_len` = 0 for a page with a translation; `page_type` illustration on a text page; "music", "multicol" and "short" strata that mostly are not; four catalogue records with the wrong format or work. Anyone sampling, gating, or reporting by these fields inherits the error.
 - **Fix:** reading length must strip tags and collapse runs (`readingLength()` in `page-integrity.mjs` does; the mirror's field does not); page type from a classifier; format from `<script>` consensus; every count in this doc is by eye for that reason.
 
@@ -469,4 +469,37 @@ Ranked by classes covered per unit of work, all read-only or write-time:
 - Sample and draw: `scripts/eval/results/page-error-taxonomy-2026-09-25/` (`sample.json`, `sample-strata.mjs`, `findings/*.md`).
 - Handoff: `~/sourcelibrary-ops/handoffs/2026-09-25-page-error-taxonomy.md` (private repo).
 - Known-class sources: #5055–#5059, #5021, #5026, #5103, #4681/#5085, #3368/#4790/#5095, #4149, #3918, #4523, #4883, #3591, #4195, #3273, #3108, #2393, #2761, #4796, #2454, #2784, #3825, #2709, #3811; `page-integrity.mjs`, `block-drift.mjs`, `translation-page-boundaries.mjs`; `quote-and-snippet-integrity.md`, `paired-artifacts.md`, `derived-metadata-lane.md`, `image-classifiers-and-splits.md`, `ocr-difficulty-taxonomy.md`.
-- Issues filed for the new classes: see the list appended at the end of this file.
+- Issues filed for the new classes: #5131–#5160, listed below.
+
+## Issues filed (2026-09-25, one per new class, label `data-quality`)
+
+- I4 · Neighbour strip in the frame, read as content — #5131
+- I5 · Several leaves in one photograph (pecha boards) — #5132
+- I7 · Catalogue identity or format wrong — #5133
+- O3 · Canonical-text substitution — #5134
+- O4 · Block-level repetition — #5135
+- O5 · Silent omission inside the page — #5136
+- O6 · Meaning-changing misread, carried into a fluent translation — #5137
+- O7 · Numerals, dates, doses and units — #5138
+- O8 · Silent normalisation toward the expected — #5139
+- O9 · Convention flips between adjacent pages — #5140
+- O10 · Secondary script on the page dropped or garbled — #5141
+- O11 · Page furniture mis-tagged — #5142
+- O12 · Marginalia and apparatus dropped, merged, or mis-tagged — #5143
+- O13 · Later hands read as text — #5144
+- O14 · Non-linear content described, not transcribed — #5145
+- O16 · Self-reported tags wrong — #5146
+- O17 · Table structure invented or lost — #5147
+- T3 · Translation hidden inside a `<meta>` or `<note>` wrapper — #5148
+- T7 · Fluent-over-garble: no uncertainty floor — #5149
+- T8 · Sense inverted or a qualifier dropped, with correct OCR — #5150
+- T9 · Quiet omission below the truncation threshold — #5151
+- T10 · Invented scholarship in notes and glosses — #5152
+- T11 · Parallel edition mishandled — #5153
+- T12 · Same-language source rewritten — #5154
+- T13 · Apparatus stripped in translation — #5155
+- T14 · The two panes come from different reads — #5156
+- T15 · Continuity meta wrong — #5157
+- T16 · Form imposed or lost — #5158
+- D1 · Markup the renderer does not know, or broken — #5159
+- E2 · The instruments lie — #5160
