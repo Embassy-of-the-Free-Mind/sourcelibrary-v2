@@ -114,8 +114,20 @@ describe('translation routing parity (TS router vs .mjs router)', () => {
     }
   });
 
-  it('routes every non-BPH book to lite — Latin, non-Latin, unknown (#4759)', () => {
-    for (const language of ['latin', 'english', 'malay', ...NON_LATIN, null, '', 'klingon']) {
+  it('routes Tibetan to full flash — the measured exception (#4742)', () => {
+    for (const language of ['tibetan', 'Tibetan', '  Tibetan ', 'Tibetan (script); Tibetan; Chinese; Chinese (script)']) {
+      expect(translateMjs({ language })).toBe(MODEL_FLASH);
+      expect(translateTs({ language })).toBe(MODEL_FLASH);
+    }
+    // Negative controls: a word that merely CONTAINS "tibetan" is not Tibetan.
+    for (const language of ['sino-tibetan', 'chinese; tibetan', 'tibetanish-unknown']) {
+      expect(translateMjs({ language })).toBe(MODEL_LITE);
+      expect(translateTs({ language })).toBe(MODEL_LITE);
+    }
+  });
+
+  it('routes every other non-BPH book to lite — Latin, non-Latin, unknown (#4759)', () => {
+    for (const language of ['latin', 'english', 'malay', ...NON_LATIN.filter((l) => l !== 'tibetan'), null, '', 'klingon']) {
       expect(translateMjs({ language })).toBe(MODEL_LITE);
       expect(translateTs({ language })).toBe(MODEL_LITE);
     }
@@ -128,8 +140,8 @@ describe('translation routing parity (TS router vs .mjs router)', () => {
 // moves translation back onto the allowlist, or drops the allowlist from OCR —
 // this block goes red, and the comment at the top says why it must not.
 describe('OCR and translation routing DIFFER on purpose (#4759)', () => {
-  it('a Tibetan book: OCR on flash, translation on lite', () => {
-    const book = { language: 'tibetan' };
+  it('a Syriac book: OCR on flash, translation on lite', () => {
+    const book = { language: 'syriac' };
     expect(ocrTs(book)).toBe(MODEL_FLASH);
     expect(ocrMjs(book, scriptAware)).toBe(MODEL_FLASH);
     expect(translateTs(book)).toBe(MODEL_LITE);
@@ -150,10 +162,12 @@ describe('OCR and translation routing DIFFER on purpose (#4759)', () => {
     expect(translateMjs(book)).toBe(MODEL_LITE);
   });
 
-  it('every non-Latin or unknown language splits; every allowlisted language and BPH agree', () => {
-    for (const language of [...NON_LATIN, 'malay', null, '']) {
+  it('every non-Latin or unknown language splits (except Tibetan, #4742); every allowlisted language and BPH agree', () => {
+    for (const language of [...NON_LATIN.filter((l) => l !== 'tibetan'), 'malay', null, '']) {
       expect(translateTs({ language })).not.toBe(ocrTs({ language }));
     }
+    // Tibetan is flash on both sides — the measured exception, not a re-sync.
+    expect(translateTs({ language: 'tibetan' })).toBe(ocrTs({ language: 'tibetan' }));
     for (const language of LATIN_SCRIPT_LANGUAGES as Set<string>) {
       expect(translateTs({ language })).toBe(ocrTs({ language }));
     }

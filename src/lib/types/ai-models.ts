@@ -114,7 +114,8 @@ export function getModelForBook(book: RoutableBook | null): string {
  * tests/unit/translate-core-parity.test.ts.
  *
  * - BPH books: full flash.
- * - Everything else, INCLUDING non-Latin scripts: flash-lite.
+ * - Tibetan: full flash (#4742, measured on 21 Kanjur pages against 84000).
+ * - Everything else, INCLUDING other non-Latin scripts: flash-lite.
  *
  * Why this differs from getModelForBook (issue #4759): #1726 carved non-Latin
  * scripts out to full flash on evidence that was entirely about visual
@@ -126,6 +127,11 @@ export function getModelForBook(book: RoutableBook | null): string {
  */
 export function getTranslateModelForBook(book: RoutableBook | null): string {
   if (book?.image_source?.provider === 'bph') {
+    return DEFAULT_MODEL;
+  }
+  // Tibetan is the one measured exception (#4742) — see isTibetanBook in
+  // scripts/lib/translate-core.mjs for the evidence.
+  if (/^\s*tibetan\b/i.test(String(book?.language ?? ''))) {
     return DEFAULT_MODEL;
   }
   return DEFAULT_LITE_MODEL;

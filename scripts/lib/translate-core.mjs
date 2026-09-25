@@ -95,7 +95,8 @@ export function isLatinScriptLanguage(language) {
  * ocr-routing.mjs / getModelForBook in ai-models.ts) — issue #4759:
  *
  * - BPH books: full flash (partner institution's manuscripts).
- * - Everything else, INCLUDING non-Latin scripts: flash-lite.
+ * - Tibetan: full flash (#4742 — measured exception, see isTibetanBook).
+ * - Everything else, INCLUDING other non-Latin scripts: flash-lite.
  *
  * OCR keeps its non-Latin carve-out because flash-lite hallucinates when
  * VISUAL decoding is hard (#1726: a Bhutanese astrological text read as a
@@ -109,7 +110,22 @@ export function isLatinScriptLanguage(language) {
  */
 export function getTranslateModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
+  if (isTibetanBook(book)) return MODEL_FLASH;
   return MODEL_LITE;
+}
+
+/**
+ * Tibetan is the one measured exception to "non-Latin translates on lite" (#4742,
+ * 2026-09-25). On 21 Kanjur pages judged blind against the 84000 English, lite
+ * inverted a comparative negation ("does not approach a hundredth of the merit")
+ * on both pages carrying it, collapsed a four-fold emptiness enumeration, and
+ * misparsed the ṛddhipāda formula; flash-preview got all three right (median
+ * fidelity 5 vs lite 5/4, invention 2.4% vs 4.8%). #4759's evidence was general
+ * and did not include Buddhist canonical Tibetan. Matches "Tibetan" and the
+ * compound labels that start with it ("Tibetan (script); Tibetan; Chinese").
+ */
+export function isTibetanBook(book) {
+  return /^\s*tibetan\b/i.test(String(book?.language ?? ''));
 }
 
 /**
