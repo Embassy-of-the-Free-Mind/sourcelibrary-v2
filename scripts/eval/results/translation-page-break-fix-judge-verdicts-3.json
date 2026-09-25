@@ -1,0 +1,376 @@
+[
+ {
+  "id": "j033",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Provincialis Augustinianorum",
+    "translation": "Provincial of the Augustinianorum"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "delatis anno sequente",
+    "translation": "the previous year"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "memoria cartarum ... revocatus a latentibus custodiis ... interceptus",
+    "translation": "recalled by his hidden keepers due to the importance of the papers"
+   },
+   {
+    "type": "ADDITION",
+    "source": "deinde ipse",
+    "translation": "later apprehended in the same manner"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "casu conscientiae",
+    "translation": "casus conscientiae"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "delatis anno sequente",
+    "translation": "reported the previous year"
+   }
+  ],
+  "why": "Left garbles the recall-and-arrest sentence after the break and leaves a Latin word; right is faithful apart from the shared year error."
+ },
+ {
+  "id": "j034",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ab ho dixi",
+    "translation": "From this, I have said"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "illius ascensione",
+    "translation": "your ascension"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ab ho dixi",
+    "translation": "From this, I have said"
+   }
+  ],
+  "why": "Both render the break identically; right mistranslates illius as your."
+ },
+ {
+  "id": "j035",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "huiffem. q maiori studio negotia tua geri n potuiffe ... nisi ut q pmum ptéis ad nos nauiges ... Vale.",
+    "translation": "(entire reply letter after the break missing; jumps to next letter)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the whole page-two continuation of the letter; right renders it."
+ },
+ {
+  "id": "j036",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(Trinity and Church quotations missing after the break)"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Augustini",
+    "translation": "Augustini"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Augustini",
+    "translation": "Augustini"
+   }
+  ],
+  "why": "Left omits the entire paragraph that continues the crossing title; right renders it."
+ },
+ {
+  "id": "j037",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nos dna et conforta nos in gra tua: vt pte ante aspectu dni pntem",
+    "translation": "(continuation of Benedicta... after the break missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "De profundis clamaui ad te domina: domina exaudi vocem meam",
+    "translation": "(missing before break)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Domina non est exaltatum cor tuum: neque sublimati sunt oculi tui",
+    "translation": "(missing before break)"
+   }
+  ],
+  "why": "At the break itself left drops the crossing continuation while right renders it, though right drops two verses earlier on the page."
+ },
+ {
+  "id": "j038",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium",
+    "translation": "the power of the shipwrecked"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui pretioso sanguine filii tui redempti sumus",
+    "translation": "whom you have redeemed with the precious blood"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "pauperum miseratrix",
+    "translation": "advocate of the poor, the pitier of the miserable"
+   }
+  ],
+  "why": "Left mistranslates port as power and makes Mary the redeemer; right has only a minor rearrangement."
+ },
+ {
+  "id": "j039",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "vnicuique qd suum erat iuste non / dedi",
+    "translation": "I did not justly give to each one what was his. / I gave."
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "sapia, intellectus, consilium, scientia, fortitudo, pietas, timor dei",
+    "translation": "sapientia, intellectus, consilium, scientia, fortitudo, pietas, timor dei"
+   }
+  ],
+  "why": "Right renders the crossing verb twice and leaves the gifts in Latin; left carries the split sentence across."
+ },
+ {
+  "id": "j040",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "[tries to separate]"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a nobis pastoribus",
+    "translation": "our pastors"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "a nobis pastoribus",
+    "translation": "to us pastors"
+   }
+  ],
+  "why": "Left inserts a meta note and a bracketed bridge not in the source; both slightly misrender a nobis."
+ },
+ {
+  "id": "j041",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "cum nihil / hil impetrare posset",
+    "translation": "when he could achieve nothing / able to obtain"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "[his way]"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left duplicates the crossing clause and adds a bracketed bridge; right joins it cleanly."
+ },
+ {
+  "id": "j042",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "carne c(i)rc(um)cisus. magis manifestatus",
+    "translation": "flesh crucified. More manifested"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "carne c(i)rc(um)cisus. magis manifestatus",
+    "translation": "crucified in the flesh, made manifest"
+   }
+  ],
+  "why": "Both share the same misreading at the break; right reads as a continuous sentence."
+ },
+ {
+  "id": "j043",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "delatis anno sequente",
+    "translation": "reported the previous year"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "casu conscientiae",
+    "translation": "casus conscientiae"
+   }
+  ],
+  "why": "Left gets the following year right and translates everything; right errs on the year and leaves Latin."
+ },
+ {
+  "id": "j044",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "ne irascaris satis",
+    "translation": "Do not be angry enough to destroy us"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "De illo inquam fonte",
+    "translation": "I ask from that fountain"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "sanctispiritus",
+    "translation": "sanctispiritus"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "sancti spiritus / spusancto",
+    "translation": "Sancti Spiritus / Spiritus Sanctus"
+   }
+  ],
+  "why": "Left adds a phrase and misreads inquam; right only leaves the Spirit name in Latin."
+ },
+ {
+  "id": "j045",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damna-/mnatur ab Episcopis haec instructio",
+    "translation": "Condemning / this instruction is demanded of the Bishops"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Damna-/mnatur ab Episcopis haec instructio",
+    "translation": "This instruction is condemned / from the Bishops, this instruction"
+   }
+  ],
+  "why": "Left changes the meaning of the crossing word; right keeps it but duplicates the subject."
+ },
+ {
+  "id": "j046",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundu sunt se gaudent restaurata. Per gloriosum tue virginitatis ... partus homines angelorum fiunt socii et conciues. Gloria",
+    "translation": "(missing after the break)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundu sunt se gaudent restaurata. Per gloriosum tue virginitatis ... conciues. Gloria",
+    "translation": "(missing after the break)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "penetrant et inferna",
+    "translation": "penetrate both the heights and the depths"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "sponsi amantissimi filii eius",
+    "translation": "the bridegroom, your most beloved son"
+   }
+  ],
+  "why": "Both drop the crossing sentence; right adds two mistranslations nearby."
+ },
+ {
+  "id": "j047",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "durch andere Leute darzu angetrieben, damit fortzufahren",
+    "translation": "be driven forward by other people"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry Augsburg Confession across the break correctly; left has a minor earlier slip that does not touch the junction."
+ },
+ {
+  "id": "j048",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "pro omnibus beatificatis",
+    "translation": "for all Your blessings"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "satietas plena",
+    "translation": "the fullness of clarity"
+   }
+  ],
+  "why": "Right misreads beatificatis and satietas after the break; left renders both correctly."
+ }
+]

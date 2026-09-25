@@ -1,0 +1,297 @@
+[
+ {
+  "id": "j017",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "de pe. (de poenis)",
+    "translation": "regarding persons"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "pterq in articulo mortis (praeterquam)",
+    "translation": "to be absolved only at the point of death"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Tredecimus / principalis",
+    "translation": "The thirteenth / The thirteenth principal"
+   }
+  ],
+  "why": "Right repeats the heading word across the break, but Left inverts the death-bed exception and misreads de poenis, which weighs more."
+ },
+ {
+  "id": "j018",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "hypostatice unita",
+    "translation": "hypostatically hypostatice united"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both render the crossing sentence fully; Left leaves a stray untranslated hypostatice, while Right closes the sentence with a period before the continuing or-clause."
+ },
+ {
+  "id": "j019",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "sanctispiritus",
+    "translation": "sanctispiritus"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "sanctispiritus",
+    "translation": "Sancti Spiritus"
+   }
+  ],
+  "why": "The break falls between two prayers and both render the last and first sentences faithfully."
+ },
+ {
+  "id": "j020",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(paragraph missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ut caeteros errores taceam, de Trinitate ait ... an ergo non sunt de Ecclesia?",
+    "translation": "(paragraph missing)"
+   }
+  ],
+  "why": "Both complete the split title word Fi-dei but both drop the whole opening paragraph of the next page."
+ },
+ {
+  "id": "j021",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "arbitror illa ad nostros cives pertinere ... faciam te de omnibus rebus certiorem. Vale",
+    "translation": "(skipped; jumps to next letter)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non puto dubitandum",
+    "translation": "I think one must doubt"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi rationes suas inter initia rerum novarum in aliam regionem tutam contulerint",
+    "translation": "Many have placed their funds in the initiation of new ventures"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the end of the crossing letter and reverses the opening of the next; Right renders both."
+ },
+ {
+  "id": "j022",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Achilleum, et validissimum praesidium",
+    "translation": "Achilles heel and his strongest defense"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam suam neque mutat ... Subijcit autem aduersum nos.",
+    "translation": "(paragraph missing; jumps to Pag. 41)"
+   }
+  ],
+  "why": "Right drops the paragraph that completes the sentence crossing the break (ipsa tamen caro / Christi naturam...)."
+ },
+ {
+  "id": "j023",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "consumatione legitime tue dilectionis",
+    "translation": "as a valid consumption of Your love"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry the betrothal sentence across the break; Left renders consummatio as consumption in the first sentence after it."
+ },
+ {
+  "id": "j024",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the last sentence and the (textually discontinuous) resumption identically in substance."
+ },
+ {
+  "id": "j025",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente / entschieden",
+    "translation": "thus we are ente / decided"
+   },
+   {
+    "type": "ADDITION",
+    "source": "mit Rothe der Lasterung",
+    "translation": "besprinkled the Stade with the redness of slander"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "GOttes Gabe lastern",
+    "translation": "blaspheme the Gabelastern of GOD"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mit Rothe der Lasterung wegen des Schusters besprühet",
+    "translation": "besprinkled the shoemaker with red because of blasphemy"
+   }
+  ],
+  "why": "Left leaves the catchword fragment ente in the crossing sentence and garbles 192; Right joins entschieden cleanly."
+ },
+ {
+  "id": "j026",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Pater noster ae",
+    "translation": "Our Father, ,"
+   }
+  ],
+  "why": "Near the break both render the Pater noster close and the resumption Ab ho dixi equally uncertainly; Right blanks an abbreviation Left guesses."
+ },
+ {
+  "id": "j027",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tui qui causam doloris mei assumpsisti",
+    "translation": "I, who have taken up the cause of my sorrow"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "co[m]unione",
+    "translation": "union of sorrow"
+   }
+  ],
+  "why": "Both render Dies mei / Recordare and the first sentences after it faithfully; each has one earlier misreading."
+ },
+ {
+  "id": "j028",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "gedencket einem andern geschehe als ihm",
+    "translation": "attributing to another what happens to him"
+   },
+   {
+    "type": "ADDITION",
+    "source": "hin",
+    "translation": "down"
+   }
+  ],
+  "right_defects": [],
+  "why": "Right keeps the crossing sentence open and renders gedencket correctly; Left closes it with a mistranslation and an odd down."
+ },
+ {
+  "id": "j029",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "protectione prohiberentur. Sicut refert cirillus ... Et clamauit fratribus religiosis presentibus dicens.",
+    "translation": "(entire passage missing; crossing sentence left unfinished at if angelic)"
+   }
+  ],
+  "why": "Right drops the completion of the crossing sentence and the following paragraph."
+ },
+ {
+  "id": "j030",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the psalm verses across the break faithfully; Left reproduces source line breaks and hyphens mid-word."
+ },
+ {
+  "id": "j031",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam suam neque mutat ... Subijcit autem aduersum nos.",
+    "translation": "(paragraph missing)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam suam neque mutat ... Subijcit autem aduersum nos.",
+    "translation": "(paragraph missing)"
+   }
+  ],
+  "why": "Both drop the paragraph completing the crossing sentence ipsa tamen caro / Christi."
+ },
+ {
+  "id": "j032",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua[m] recipe/re recusabant",
+    "translation": "which he received / they resisted"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qua[m] recipe/re recusabant",
+    "translation": "which he was receiving / they were rejecting"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "inherentes legalibus ceremoniis",
+    "translation": "rejecting the legal ceremonies of Moses"
+   }
+  ],
+  "why": "Both miss the split recipere/recusabant, but Right also inverts inherentes (clinging) into rejecting."
+ }
+]

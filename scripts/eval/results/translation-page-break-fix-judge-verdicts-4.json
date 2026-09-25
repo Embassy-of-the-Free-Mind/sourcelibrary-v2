@@ -1,0 +1,364 @@
+[
+ {
+  "id": "j049",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ne moreris",
+    "translation": "Do not let me perish"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "inventricem",
+    "translation": "the mediatrix"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad pupillam",
+    "translation": "to the pupil"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "species castitatis",
+    "translation": "the hope of chastity"
+   },
+   {
+    "type": "OMISSION",
+    "source": "domina adiutorium tuum",
+    "translation": "your aid"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "domina adiutorium tuum",
+    "translation": "the help of your grace"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "species castitatis",
+    "translation": "the light of chastity"
+   }
+  ],
+  "why": "Left mistranslates moreris, inventricem and pupillam where right is correct; the break itself is handled cleanly by both."
+ },
+ {
+  "id": "j050",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus",
+    "translation": "a bridge-jumper"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry Anony-/Anonymus across the break correctly; left mistranslates depontanus just before it."
+ },
+ {
+  "id": "j051",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ne moreris",
+    "translation": "Do not let me perish"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "inventricem",
+    "translation": "the mediatrix"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad pupillam",
+    "translation": "to the pupil"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "species castitatis",
+    "translation": "the hope of chastity"
+   },
+   {
+    "type": "OMISSION",
+    "source": "domina adiutorium tuum",
+    "translation": "your aid"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad pupillam",
+    "translation": "to the pupil"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "species castitatis",
+    "translation": "the hope of chastity"
+   }
+  ],
+  "why": "Right renders moreris, domina and inventricem correctly; left does not; shared errors on pupillam and species."
+ },
+ {
+  "id": "j052",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "vel omnipotentiam Dei recipit ... ut praeclare definiuit concilium Chalcedonense",
+    "translation": "(entire opening of the next page skipped; jumps to Pag. 29)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "se ad unionem hypostaticam, vel omnipotentiam Dei recipit",
+    "translation": "turns himself toward the hypostatic union. / or receives the omnipotence of God"
+   }
+  ],
+  "why": "Left drops the whole first paragraph after the break; right renders it, with only a slightly garbled crossing verb."
+ },
+ {
+  "id": "j053",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tibi laus honor numinis",
+    "translation": "to You be praise, honor, and divinity"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry the hymn stanza across the break completely; the only difference is a minor misreading far from it."
+ },
+ {
+  "id": "j054",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "est insigne veritatis testimonium ab ipsomet datum ... in suis Reflexionibus consolatoriis.",
+    "translation": "The other / But from the time that fury..."
+   },
+   {
+    "type": "ADDITION",
+    "source": "(source ends at quod erudition...)",
+    "translation": "which, having begun for the sake of learning and courtesy... The conditions were"
+   }
+  ],
+  "why": "Right skips the crossing sentence and the whole Pinson anecdote after the break; left renders it fully."
+ },
+ {
+  "id": "j055",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Anony- / Anonymus continuator Brietii ... sic ergo habet.",
+    "translation": "(skipped; jumps straight to the quoted eulogy)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus",
+    "translation": "a bridge-jumper"
+   }
+  ],
+  "why": "Left omits the crossing word and the introductory sentence of the new page; right renders it."
+ },
+ {
+  "id": "j056",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me ratio habita fuerit ... tecum loquor. Vale;",
+    "translation": "in whom... / It is not a new thing"
+   },
+   {
+    "type": "ADDITION",
+    "source": "alios saepenumero cives et viros egregios pro bono et aequo sustinuisse",
+    "translation": "when I have often seen other citizens... similarly stripped of their rights"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me ratio habita fuerit ... tecum loquor. Vale;",
+    "translation": "in whom / It is not a new matter"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "alios saepenumero cives et viros egregios pro bono et aequo sustinuisse",
+    "translation": "endured this from other citizens and those I considered outstanding"
+   }
+  ],
+  "why": "Both omit the completion of the crossing sentence and the rest of that letter; post-break errors are comparable."
+ },
+ {
+  "id": "j057",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "vel domos suas incendentibus ... si incitaverunt adversariis",
+    "translation": "rendered before the break (or setting fire to their houses... Second, if they incited... Fifth: who was...) and again after it"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left renders the next page content before the break and again after it; right is clean."
+ },
+ {
+  "id": "j058",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Gloria",
+    "translation": "Glory to the Father and"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "fine sua te impinguat, pacemque donat terminis tuis",
+    "translation": "She makes your borders fat, and gives peace to your ends"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "fine sua te impinguat, pacemque donat terminis tuis",
+    "translation": "makes your borders peaceful, and gives you the fat of the wheat"
+   }
+  ],
+  "why": "The break falls between psalms and both render both sides fully; minor comparable errors elsewhere."
+ },
+ {
+  "id": "j059",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "des ihnen eingesprochenen und zugegebenen Namens",
+    "translation": "of the name to them"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry Gri-/chischen and the following sentences correctly; left has a small omission two sentences before the break."
+ },
+ {
+  "id": "j060",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Si quis de me aliter dixerit: ut plus amico veteri quam hominibus credas. Vale.",
+    "translation": "(skipped; jumps to the next letter)"
+   }
+  ],
+  "why": "Right drops the sentence that completes Videbis itaque pro tua sapientia across the break; left renders it."
+ },
+ {
+  "id": "j061",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ii. reg. i",
+    "translation": "(citation dropped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "defuncti proximis viventi",
+    "translation": "the souls of the deceased reveal themselves to the living"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "volo esse praemonitum",
+    "translation": "I wish to be prompt to the pious reader"
+   }
+  ],
+  "why": "Both carry quoniam / et quandoque across; right drops proximis and misreads praemonitum, left only drops a citation."
+ },
+ {
+  "id": "j062",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "so man zu ihm / ihm kommt",
+    "translation": "if one goes to him / to him, and angers him"
+   }
+  ],
+  "why": "Right translates the catchword ihm twice across the break; left joins it cleanly."
+ },
+ {
+  "id": "j063",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Si quis de me aliter dixerit: ut plus amico veteri quam hominibus credas. Vale.",
+    "translation": "(skipped; jumps to the next letter)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the sentence completing the crossing clause; right renders it."
+ },
+ {
+  "id": "j064",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Sic res evenit ut fides illis ... praestatur. Ceteri maxime hoc factum admirantur.",
+    "translation": "So the matter turns out, that when trust is granted..., others are greatly astonished"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "paulo minus hac tua iactura esse animo commotum quam si",
+    "translation": "little moved in spirit by this loss of yours, just as if"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Ceteri maxime / hoc factum admirantur",
+    "translation": "Others are most... / they marvel at this action"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "si ego poenam fidei meae perfero",
+    "translation": "If I prefer the penalty to my own good faith"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "minus gratiae et magis incommodi afferat hominibus quam ea quae docet",
+    "translation": "less gracious and less profitable to men than that which teaches"
+   }
+  ],
+  "why": "Left carries the crossing sentence as one clause; right breaks it with a doubled subject and misreads two sentences right after the break."
+ }
+]

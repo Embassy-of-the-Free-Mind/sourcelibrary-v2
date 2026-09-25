@@ -1,0 +1,297 @@
+[
+ {
+  "id": "j113",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "multum / arbitror illa ad nostros cives pertinere ... Vale",
+    "translation": "(completion of the crossing sentence and the rest of the letter not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non puto dubitandum",
+    "translation": "I think one must doubt"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi rationes suas ... in aliam regionem tutam contulerint",
+    "translation": "Many have placed their funds ... in other, safer regions"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "multum / arbitror illa ad nostros cives pertinere ... Vale",
+    "translation": "(completion of the crossing sentence and the rest of the letter not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi rationes suas ... in aliam regionem tutam contulerint",
+    "translation": "as they have placed their own wealth ... in another region"
+   }
+  ],
+  "why": "Both drop the crossing sentence and the end of the letter, but LEFT also reverses the negation of Non puto dubitandum."
+ },
+ {
+  "id": "j114",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "quae minus gratiae et magis incommodi afferat hominibus quam ea quae docet",
+    "translation": "brings neither credit nor any great advantage to men, namely that which teaches"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Ceteri maxime / hoc factum admirantur",
+    "translation": "Others are very / they wonder at this act"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Si ego poenam fidei meae profero",
+    "translation": "If I prefer my own honor"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "quae minus gratiae et magis incommodi afferat",
+    "translation": "less graceful and brings less advantage ... than the one"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "dies contracti aeris",
+    "translation": "the day of the trial"
+   }
+  ],
+  "why": "LEFT joins the crossing sentence correctly and renders poena fidei; RIGHT breaks the sentence and mistranslates it."
+ },
+ {
+  "id": "j115",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "date honorificentia",
+    "translation": "give honor and magnificence"
+   }
+  ],
+  "why": "The break falls between prayers and both render both sides fully; differences are minor wording."
+ },
+ {
+  "id": "j116",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Doctores waren. Wer war Moses? ein Schaffhirte! Wer war David? Ein Schaffhirt! Wer",
+    "translation": "(not rendered; jumps to were the prophets)"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT drops the completion of the crossing sentence plus the Moses and David questions; RIGHT renders them."
+ },
+ {
+  "id": "j117",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Capituli Patronis hunc eligere, quem credam ... Sic me Deus adjuvet, & haec sancta Dei Evangelia.",
+    "translation": "(the rest of the electors oath not rendered)"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT omits the whole second half of the electors oath that crosses the break; RIGHT renders it."
+ },
+ {
+  "id": "j118",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "ad me scribas",
+    "translation": "you may know"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "me aliqua huic morbo ... medelam invenisse",
+    "translation": "you have found a remedy"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad me scribas. Putabo enim ut cum feceris, me aliqua huic morbo ... medelam invenisse. Vale.",
+    "translation": "(crossing sentence and letter close not rendered)"
+   }
+  ],
+  "why": "RIGHT drops the end of the crossing sentence and letter close; LEFT renders it, albeit with errors."
+ },
+ {
+  "id": "j119",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut sententia tua non negligeres ... Vale",
+    "translation": "(entire next-page letter continuation omitted; jumps to the following letter)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "a quo familiarissimus fuit patri tuo qui ad vixit",
+    "translation": "He is a very close friend to whom he was close while he lived"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "subornaverunt L. Sullam",
+    "translation": "are led by L. Sulla"
+   }
+  ],
+  "why": "LEFT omits the whole continuation of the crossing letter; RIGHT renders it with minor errors."
+ },
+ {
+  "id": "j120",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "procuratores",
+    "translation": "pcuratores"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "procuratorum",
+    "translation": "procuratorum"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Sed inde periculum factum est unde praesidium expectabamus",
+    "translation": "But did danger arise from where I expected protection?"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "procuratores",
+    "translation": "pcuratores"
+   },
+   {
+    "type": "ADDITION",
+    "source": "eum advigilassent",
+    "translation": "had you watched over them"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "unde praesidium expectabamus",
+    "translation": "from where I expected treachery"
+   }
+  ],
+  "why": "Both leave procuratores untranslated at the break, but RIGHT adds a subject and turns praesidium into treachery."
+ },
+ {
+  "id": "j121",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iis solis, quibus / quibus",
+    "translation": "to those to whom / to whom"
+   },
+   {
+    "type": "ADDITION",
+    "source": "locum illum Ioannis",
+    "translation": "John 3:5"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "locum illum Ioannis & Christi dictum",
+    "translation": "that saying of Christ to John"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Aquam",
+    "translation": "Aqua"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iis solis, quibus / quibus",
+    "translation": "to those to whom / to whom"
+   }
+  ],
+  "why": "Both double the catchword, but LEFT also adds a verse reference and misrenders the John/Christ phrase."
+ },
+ {
+  "id": "j122",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The crossing verse is rendered completely and correctly on both sides."
+ },
+ {
+  "id": "j123",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "propitiationis & habitaculum sanctum dei",
+    "translation": "(completion of the crossing sentence not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Afferte dominae nostrae",
+    "translation": "Bring to the Lord, our Lady"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "the dwelling place of the holy of holies"
+   }
+  ],
+  "why": "LEFT leaves the crossing sentence unfinished; RIGHT completes it with only a small slip."
+ },
+ {
+  "id": "j124",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "imparatus, nos omnibus rebus necessariis instructissimi ... Vale;",
+    "translation": "(the whole next-page continuation omitted; jumps to the following letter)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "imparatus",
+    "translation": "He is struggling with his own affairs"
+   }
+  ],
+  "why": "LEFT omits the whole continuation of the crossing letter; RIGHT renders it despite a meta artifact."
+ }
+]
