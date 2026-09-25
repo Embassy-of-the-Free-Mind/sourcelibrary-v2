@@ -1,0 +1,410 @@
+[
+ {
+  "id": "j001",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Primus de pe. in cle.",
+    "translation": "The first is regarding persons"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "principalis otinet duos. z ambo pape reseruant",
+    "translation": "The thirteenth is / The first is"
+   }
+  ],
+  "why": "RIGHT drops the clause crossing the break (principal contains two, both reserved to the Pope); LEFT renders it."
+ },
+ {
+  "id": "j002",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Domine Iesu christe pie misericordissime",
+    "translation": "most merciful Father"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT inserts Father for pie; otherwise both render the prayers across the break faithfully."
+ },
+ {
+  "id": "j003",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "dwelling place of the holy of holies"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "habitaculum sanctum dei",
+    "translation": "dwelling place of the holy ones of God"
+   }
+  ],
+  "why": "Both slightly misrender the phrase crossing the break; otherwise equivalent."
+ },
+ {
+  "id": "j004",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata. Per gloriosum ... partus homines angelorum fiunt socii et concives. Gloria",
+    "translation": "(jumps to All nations)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata. Per gloriosum ... partus homines angelorum fiunt socii et concives. Gloria",
+    "translation": "(jumps to Clap your hands)"
+   }
+  ],
+  "why": "Both drop the sentence that completes across the break and the following verse."
+ },
+ {
+  "id": "j005",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata ... concives. Gloria",
+    "translation": "those who are above the / All peoples"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata ... concives. Gloria",
+    "translation": "that which is above / Clap your hands"
+   }
+  ],
+  "why": "Same shared omission of the break-crossing sentence on both sides."
+ },
+ {
+  "id": "j006",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Facies eius ventus urens",
+    "translation": "He will make his wind to blow"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "mens in cogitatione servetur a lascivia voluptatis",
+    "translation": "a pure mind ... is accustomed to be filled by the lascivious delight"
+   }
+  ],
+  "right_defects": [],
+  "why": "RIGHT renders the Habakkuk citation opening the next page correctly; LEFT garbles it and the following gloss."
+ },
+ {
+  "id": "j007",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "und auch darauff gestorben",
+    "translation": "and also died shortly thereafter"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "darzu angetrieben / damit fortzufahren",
+    "translation": "be driven forward by other people"
+   }
+  ],
+  "why": "The sentence crossing the break is faithful in RIGHT; LEFT turns died in that confession into died shortly thereafter."
+ },
+ {
+  "id": "j008",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Vestra autem aetas, quae in meliori cursu est",
+    "translation": "Your / but rather that which is in a better course"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "autem eras q in meliori cursu est ... ego bonum consulam. Vale.",
+    "translation": "Yours / On the public utility"
+   }
+  ],
+  "why": "RIGHT drops the whole remainder of the letter after the break."
+ },
+ {
+  "id": "j009",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "protectione prohiberentur. Sicut refert cirillus ... dicens.",
+    "translation": "angelic / Behold, I am given"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "obnixe",
+    "translation": "weeping"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "protectione prohiberentur. Sicut refert cirillus ... dicens.",
+    "translation": "angelic / Behold, I am given"
+   },
+   {
+    "type": "ADDITION",
+    "source": "neque permittant intemptatum moriturum",
+    "translation": "nor do they permit them to die in peace"
+   }
+  ],
+  "why": "Both drop the opening of the next page; remaining defects are minor and comparable."
+ },
+ {
+  "id": "j010",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "so man zu ihm / ihm kommt",
+    "translation": "goes to him / to him"
+   }
+  ],
+  "why": "RIGHT duplicates to him across the break."
+ },
+ {
+  "id": "j011",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both faithful; LEFT interleaves the marginal references mid-sentence at the break."
+ },
+ {
+  "id": "j012",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Doctores waren. Wer war Moses? ein Schaffhirte! Wer war David? Ein Schaffhirt! Wer",
+    "translation": "had no / were the prophets"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT drops the Moses and David questions crossing the break."
+ },
+ {
+  "id": "j013",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "arbitror illa ad nros ciues ptine ... Vale.",
+    "translation": "much / I do not doubt"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "arbitror illa ad nros ciues ptine ... Vale.",
+    "translation": "much / I think one must doubt"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non puto dubitandum",
+    "translation": "I think one must doubt"
+   }
+  ],
+  "why": "Both drop the end of the letter crossing the break; RIGHT also reverses the opening of the next letter."
+ },
+ {
+  "id": "j014",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Ad extremum deposita omni verecundia ... Sicque terminata fuit Cavalerii negotiatio.",
+    "translation": "(page begins at section 4)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Break junction identical in quality; LEFT omits the preceding paragraph on the same page."
+ },
+ {
+  "id": "j015",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Capituli Patronis hunc eligere, quem credam futurum ... Sic me Deus adjuvet",
+    "translation": "our / THE OATH OF THE ELECTED"
+   }
+  ],
+  "why": "RIGHT drops the completion of the electors oath that crosses the break."
+ },
+ {
+  "id": "j016",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the os / et instrumentum crossing faithfully."
+ },
+ {
+  "id": "j017",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "hil impetrare posset, facta secessione cum novem aliis Episcopis a congressibus abstinuit, donec ... compulsus fuit",
+    "translation": "when nothing / In these"
+   }
+  ],
+  "why": "RIGHT drops the completion of the sentence crossing the break."
+ },
+ {
+  "id": "j018",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Doctores waren. Wer war Moses? ein Schaffhirte! Wer war David? Ein Schaffhirt! Wer",
+    "translation": "had no / were the prophets"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT drops the Moses and David questions crossing the break."
+ },
+ {
+  "id": "j019",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "sie meinen nicht Macht und Gewalt",
+    "translation": "for they do not have power and might of their own"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "sie meinen nicht Macht und Gewalt",
+    "translation": "not by their might and power, but by His Spirit"
+   }
+  ],
+  "why": "Both handle the break cleanly; minor comparable misreadings before it."
+ },
+ {
+  "id": "j020",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ris testimonium non agnoscas ... dignatus es esse redemptio",
+    "translation": "(page begins at Therefore, O Lord)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "ne irascaris satis",
+    "translation": "Do not be angry enough to destroy us"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "De illo inquam fonte",
+    "translation": "I ask from that fountain"
+   }
+  ],
+  "why": "Break junction equivalent; LEFT omits the opening of the page, RIGHT has smaller additions."
+ },
+ {
+  "id": "j021",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ad diuina contemplanda; ad nouissima mortis ... consideranda; ad bonum eligendum ...",
+    "translation": "In me, there is no wisdom sapientia."
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "charitas qua super omnia diligitur deus",
+    "translation": "charity which is loved above all things in God"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT strips the purpose clauses from all seven gifts after the break."
+ },
+ {
+  "id": "j022",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both faithful; LEFT leaves the stray catchword Re at the break."
+ },
+ {
+  "id": "j023",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum constantia, quam severa Regis jussione",
+    "translation": "such a vigilant Bishop- rum / constancy of others, who were urged"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT misparses the sentence crossing the break (constancy of others); RIGHT keeps bishops constancy and king command together."
+ },
+ {
+  "id": "j024",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "date honorificentia",
+    "translation": "give honor and magnificence"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both render the break faithfully; differences are minor."
+ }
+]

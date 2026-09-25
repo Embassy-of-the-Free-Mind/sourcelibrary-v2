@@ -1,0 +1,636 @@
+{
+ "fidelity": {
+  "B/B2 (A/A floor) all": {
+   "pair": "B/B2",
+   "judged": 61,
+   "expected": 61,
+   "wins": {
+    "B": 15,
+    "B2": 23
+   },
+   "ties": 23,
+   "tie_rate": 0.377,
+   "decided": 38,
+   "B_share_of_decided": 0.395,
+   "split_p_two_sided": 0.256,
+   "left_share_of_decided": 0.526,
+   "defects": {
+    "B": {
+     "OMISSION": 23,
+     "ADDITION": 10,
+     "MISTRANSLATION": 24,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 2
+    },
+    "B2": {
+     "OMISSION": 21,
+     "ADDITION": 5,
+     "MISTRANSLATION": 21,
+     "UNTRANSLATED": 5,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "B": 43,
+    "B2": 42
+   }
+  },
+  "B/B2 (A/A floor) device breaks (catchword or split word)": {
+   "pair": "B/B2",
+   "judged": 22,
+   "expected": 22,
+   "wins": {
+    "B": 4,
+    "B2": 9
+   },
+   "ties": 9,
+   "tie_rate": 0.409,
+   "decided": 13,
+   "B_share_of_decided": 0.308,
+   "split_p_two_sided": 0.267,
+   "left_share_of_decided": 0.538,
+   "defects": {
+    "B": {
+     "OMISSION": 8,
+     "ADDITION": 5,
+     "MISTRANSLATION": 5,
+     "UNTRANSLATED": 3,
+     "DUPLICATION": 1
+    },
+    "B2": {
+     "OMISSION": 3,
+     "ADDITION": 1,
+     "MISTRANSLATION": 7,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "B": 14,
+    "B2": 14
+   }
+  },
+  "B/B2 (A/A floor) plain breaks": {
+   "pair": "B/B2",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "B": 11,
+    "B2": 14
+   },
+   "ties": 14,
+   "tie_rate": 0.359,
+   "decided": 25,
+   "B_share_of_decided": 0.44,
+   "split_p_two_sided": 0.69,
+   "left_share_of_decided": 0.52,
+   "defects": {
+    "B": {
+     "OMISSION": 15,
+     "ADDITION": 5,
+     "MISTRANSLATION": 19,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    },
+    "B2": {
+     "OMISSION": 18,
+     "ADDITION": 4,
+     "MISTRANSLATION": 14,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 0
+    }
+   },
+   "breaks_with_defect": {
+    "B": 29,
+    "B2": 28
+   }
+  },
+  "F0/B all": {
+   "pair": "F0/B",
+   "judged": 63,
+   "expected": 63,
+   "wins": {
+    "F0": 30,
+    "B": 17
+   },
+   "ties": 16,
+   "tie_rate": 0.254,
+   "decided": 47,
+   "F0_share_of_decided": 0.638,
+   "split_p_two_sided": 0.079,
+   "left_share_of_decided": 0.511,
+   "defects": {
+    "F0": {
+     "OMISSION": 20,
+     "ADDITION": 5,
+     "MISTRANSLATION": 25,
+     "UNTRANSLATED": 3,
+     "DUPLICATION": 3
+    },
+    "B": {
+     "OMISSION": 20,
+     "ADDITION": 9,
+     "MISTRANSLATION": 20,
+     "UNTRANSLATED": 6,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 42,
+    "B": 45
+   }
+  },
+  "F0/B device breaks (catchword or split word)": {
+   "pair": "F0/B",
+   "judged": 24,
+   "expected": 24,
+   "wins": {
+    "F0": 15,
+    "B": 5
+   },
+   "ties": 4,
+   "tie_rate": 0.167,
+   "decided": 20,
+   "F0_share_of_decided": 0.75,
+   "split_p_two_sided": 0.041,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "F0": {
+     "OMISSION": 3,
+     "ADDITION": 2,
+     "MISTRANSLATION": 4,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    },
+    "B": {
+     "OMISSION": 6,
+     "ADDITION": 4,
+     "MISTRANSLATION": 6,
+     "UNTRANSLATED": 5,
+     "DUPLICATION": 2
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 10,
+    "B": 17
+   }
+  },
+  "F0/B plain breaks": {
+   "pair": "F0/B",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "F0": 15,
+    "B": 12
+   },
+   "ties": 12,
+   "tie_rate": 0.308,
+   "decided": 27,
+   "F0_share_of_decided": 0.556,
+   "split_p_two_sided": 0.701,
+   "left_share_of_decided": 0.519,
+   "defects": {
+    "F0": {
+     "OMISSION": 17,
+     "ADDITION": 3,
+     "MISTRANSLATION": 21,
+     "UNTRANSLATED": 2,
+     "DUPLICATION": 2
+    },
+    "B": {
+     "OMISSION": 14,
+     "ADDITION": 5,
+     "MISTRANSLATION": 14,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 32,
+    "B": 28
+   }
+  },
+  "FC/B all": {
+   "pair": "FC/B",
+   "judged": 63,
+   "expected": 63,
+   "wins": {
+    "FC": 27,
+    "B": 21
+   },
+   "ties": 15,
+   "tie_rate": 0.238,
+   "decided": 48,
+   "FC_share_of_decided": 0.563,
+   "split_p_two_sided": 0.471,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "FC": {
+     "OMISSION": 18,
+     "ADDITION": 4,
+     "MISTRANSLATION": 20,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 10
+    },
+    "B": {
+     "OMISSION": 23,
+     "ADDITION": 8,
+     "MISTRANSLATION": 17,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 5
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 40,
+    "B": 41
+   }
+  },
+  "FC/B device breaks (catchword or split word)": {
+   "pair": "FC/B",
+   "judged": 24,
+   "expected": 24,
+   "wins": {
+    "FC": 13,
+    "B": 8
+   },
+   "ties": 3,
+   "tie_rate": 0.125,
+   "decided": 21,
+   "FC_share_of_decided": 0.619,
+   "split_p_two_sided": 0.383,
+   "left_share_of_decided": 0.524,
+   "defects": {
+    "FC": {
+     "OMISSION": 3,
+     "ADDITION": 0,
+     "MISTRANSLATION": 5,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 6
+    },
+    "B": {
+     "OMISSION": 6,
+     "ADDITION": 4,
+     "MISTRANSLATION": 6,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 4
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 10,
+    "B": 16
+   }
+  },
+  "FC/B plain breaks": {
+   "pair": "FC/B",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "FC": 14,
+    "B": 13
+   },
+   "ties": 12,
+   "tie_rate": 0.308,
+   "decided": 27,
+   "FC_share_of_decided": 0.519,
+   "split_p_two_sided": 1,
+   "left_share_of_decided": 0.481,
+   "defects": {
+    "FC": {
+     "OMISSION": 15,
+     "ADDITION": 4,
+     "MISTRANSLATION": 15,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 4
+    },
+    "B": {
+     "OMISSION": 17,
+     "ADDITION": 4,
+     "MISTRANSLATION": 11,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 1
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 30,
+    "B": 25
+   }
+  }
+ },
+ "fluency": {
+  "B/B2 (A/A floor) all": {
+   "pair": "B/B2",
+   "judged": 61,
+   "expected": 61,
+   "wins": {
+    "B": 15,
+    "B2": 11
+   },
+   "ties": 35,
+   "tie_rate": 0.574,
+   "decided": 26,
+   "B_share_of_decided": 0.577,
+   "split_p_two_sided": 0.557,
+   "left_share_of_decided": 0.654,
+   "defects": {
+    "B": {
+     "OMISSION": 23,
+     "ADDITION": 10,
+     "MISTRANSLATION": 24,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 2
+    },
+    "B2": {
+     "OMISSION": 21,
+     "ADDITION": 5,
+     "MISTRANSLATION": 21,
+     "UNTRANSLATED": 5,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "B": 43,
+    "B2": 42
+   }
+  },
+  "B/B2 (A/A floor) device breaks (catchword or split word)": {
+   "pair": "B/B2",
+   "judged": 22,
+   "expected": 22,
+   "wins": {
+    "B": 5,
+    "B2": 5
+   },
+   "ties": 12,
+   "tie_rate": 0.545,
+   "decided": 10,
+   "B_share_of_decided": 0.5,
+   "split_p_two_sided": 1,
+   "left_share_of_decided": 0.7,
+   "defects": {
+    "B": {
+     "OMISSION": 8,
+     "ADDITION": 5,
+     "MISTRANSLATION": 5,
+     "UNTRANSLATED": 3,
+     "DUPLICATION": 1
+    },
+    "B2": {
+     "OMISSION": 3,
+     "ADDITION": 1,
+     "MISTRANSLATION": 7,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "B": 14,
+    "B2": 14
+   }
+  },
+  "B/B2 (A/A floor) plain breaks": {
+   "pair": "B/B2",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "B": 10,
+    "B2": 6
+   },
+   "ties": 23,
+   "tie_rate": 0.59,
+   "decided": 16,
+   "B_share_of_decided": 0.625,
+   "split_p_two_sided": 0.454,
+   "left_share_of_decided": 0.625,
+   "defects": {
+    "B": {
+     "OMISSION": 15,
+     "ADDITION": 5,
+     "MISTRANSLATION": 19,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    },
+    "B2": {
+     "OMISSION": 18,
+     "ADDITION": 4,
+     "MISTRANSLATION": 14,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 0
+    }
+   },
+   "breaks_with_defect": {
+    "B": 29,
+    "B2": 28
+   }
+  },
+  "F0/B all": {
+   "pair": "F0/B",
+   "judged": 63,
+   "expected": 63,
+   "wins": {
+    "F0": 23,
+    "B": 13
+   },
+   "ties": 27,
+   "tie_rate": 0.429,
+   "decided": 36,
+   "F0_share_of_decided": 0.639,
+   "split_p_two_sided": 0.132,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "F0": {
+     "OMISSION": 20,
+     "ADDITION": 5,
+     "MISTRANSLATION": 25,
+     "UNTRANSLATED": 3,
+     "DUPLICATION": 3
+    },
+    "B": {
+     "OMISSION": 20,
+     "ADDITION": 9,
+     "MISTRANSLATION": 20,
+     "UNTRANSLATED": 6,
+     "DUPLICATION": 3
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 42,
+    "B": 45
+   }
+  },
+  "F0/B device breaks (catchword or split word)": {
+   "pair": "F0/B",
+   "judged": 24,
+   "expected": 24,
+   "wins": {
+    "F0": 13,
+    "B": 5
+   },
+   "ties": 6,
+   "tie_rate": 0.25,
+   "decided": 18,
+   "F0_share_of_decided": 0.722,
+   "split_p_two_sided": 0.096,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "F0": {
+     "OMISSION": 3,
+     "ADDITION": 2,
+     "MISTRANSLATION": 4,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    },
+    "B": {
+     "OMISSION": 6,
+     "ADDITION": 4,
+     "MISTRANSLATION": 6,
+     "UNTRANSLATED": 5,
+     "DUPLICATION": 2
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 10,
+    "B": 17
+   }
+  },
+  "F0/B plain breaks": {
+   "pair": "F0/B",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "F0": 10,
+    "B": 8
+   },
+   "ties": 21,
+   "tie_rate": 0.538,
+   "decided": 18,
+   "F0_share_of_decided": 0.556,
+   "split_p_two_sided": 0.815,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "F0": {
+     "OMISSION": 17,
+     "ADDITION": 3,
+     "MISTRANSLATION": 21,
+     "UNTRANSLATED": 2,
+     "DUPLICATION": 2
+    },
+    "B": {
+     "OMISSION": 14,
+     "ADDITION": 5,
+     "MISTRANSLATION": 14,
+     "UNTRANSLATED": 1,
+     "DUPLICATION": 1
+    }
+   },
+   "breaks_with_defect": {
+    "F0": 32,
+    "B": 28
+   }
+  },
+  "FC/B all": {
+   "pair": "FC/B",
+   "judged": 63,
+   "expected": 63,
+   "wins": {
+    "FC": 22,
+    "B": 15
+   },
+   "ties": 26,
+   "tie_rate": 0.413,
+   "decided": 37,
+   "FC_share_of_decided": 0.595,
+   "split_p_two_sided": 0.324,
+   "left_share_of_decided": 0.486,
+   "defects": {
+    "FC": {
+     "OMISSION": 18,
+     "ADDITION": 4,
+     "MISTRANSLATION": 20,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 10
+    },
+    "B": {
+     "OMISSION": 23,
+     "ADDITION": 8,
+     "MISTRANSLATION": 17,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 5
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 40,
+    "B": 41
+   }
+  },
+  "FC/B device breaks (catchword or split word)": {
+   "pair": "FC/B",
+   "judged": 24,
+   "expected": 24,
+   "wins": {
+    "FC": 11,
+    "B": 7
+   },
+   "ties": 6,
+   "tie_rate": 0.25,
+   "decided": 18,
+   "FC_share_of_decided": 0.611,
+   "split_p_two_sided": 0.481,
+   "left_share_of_decided": 0.5,
+   "defects": {
+    "FC": {
+     "OMISSION": 3,
+     "ADDITION": 0,
+     "MISTRANSLATION": 5,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 6
+    },
+    "B": {
+     "OMISSION": 6,
+     "ADDITION": 4,
+     "MISTRANSLATION": 6,
+     "UNTRANSLATED": 4,
+     "DUPLICATION": 4
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 10,
+    "B": 16
+   }
+  },
+  "FC/B plain breaks": {
+   "pair": "FC/B",
+   "judged": 39,
+   "expected": 39,
+   "wins": {
+    "FC": 11,
+    "B": 8
+   },
+   "ties": 20,
+   "tie_rate": 0.513,
+   "decided": 19,
+   "FC_share_of_decided": 0.579,
+   "split_p_two_sided": 0.648,
+   "left_share_of_decided": 0.474,
+   "defects": {
+    "FC": {
+     "OMISSION": 15,
+     "ADDITION": 4,
+     "MISTRANSLATION": 15,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 4
+    },
+    "B": {
+     "OMISSION": 17,
+     "ADDITION": 4,
+     "MISTRANSLATION": 11,
+     "UNTRANSLATED": 0,
+     "DUPLICATION": 1
+    }
+   },
+   "breaks_with_defect": {
+    "FC": 30,
+    "B": 25
+   }
+  }
+ }
+}

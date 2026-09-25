@@ -1,0 +1,503 @@
+[
+ {
+  "id": "j025",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Anony-",
+    "translation": "Anony-"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "senex depontanus",
+    "translation": "a bridge-jumper"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Anony-",
+    "translation": "Anony-"
+   }
+  ],
+  "why": "Right renders depontanus literally as bridge-jumper; the Anony- fragment is shared."
+ },
+ {
+  "id": "j026",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ne ofites erubescat et ne a femia animo vulneret spiritualis cyrologi",
+    "translation": "lest the confessor blush and lest the woman be wounded in spirit by the gaze of the confessor"
+   },
+   {
+    "type": "OMISSION",
+    "source": "spiritualis cyrologi",
+    "translation": "(spiritual surgeon not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Staua regla",
+    "translation": "A constant rule"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mat viuentii",
+    "translation": "the matter of the living"
+   }
+  ],
+  "why": "Left garbles the clause crossing the break and misreads the eighth rule; Right carries spiritual surgeon across correctly."
+ },
+ {
+  "id": "j027",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "delatis anno sequente",
+    "translation": "reported the previous year"
+   },
+   {
+    "type": "OMISSION",
+    "source": "primum",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "primum",
+    "translation": "finally"
+   }
+  ],
+  "why": "Left reverses the following year to previous year; both mishandle primum."
+ },
+ {
+  "id": "j028",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Ca-",
+    "translation": "Ca-"
+   }
+  ],
+  "why": "Right leaves the split-word fragment Ca- before the break; otherwise equal."
+ },
+ {
+  "id": "j029",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "volo esse pmomtum",
+    "translation": "I wish to be prompt to the pious reader"
+   },
+   {
+    "type": "OMISSION",
+    "source": "prozi viuenti",
+    "translation": "to the living"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ii.reg.i",
+    "translation": "(citation dropped)"
+   }
+  ],
+  "why": "Left drops the relative and mistranslates praemonitum; Right only drops a citation."
+ },
+ {
+  "id": "j030",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the prayer and the next page faithfully; differences are word choice on an uncertain OCR word."
+ },
+ {
+  "id": "j031",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An || An",
+    "translation": "Whether || Whether"
+   },
+   {
+    "type": "OMISSION",
+    "source": "quoque",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left renders the catchword and the question word twice and drops quoque; Right is clean."
+ },
+ {
+  "id": "j032",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "delatis anno sequente",
+    "translation": "reported the previous year"
+   },
+   {
+    "type": "OMISSION",
+    "source": "primum",
+    "translation": "(not rendered)"
+   }
+  ],
+  "why": "Right reverses the year and loses primum; Left renders both correctly."
+ },
+ {
+  "id": "j033",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "impat? nos oibz rebz necessarijs instructissimi ... Vale",
+    "translation": "(rest of letter skipped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nihil aliud q nre rei p. restat",
+    "translation": "desire nothing else but to submit to our state"
+   },
+   {
+    "type": "OMISSION",
+    "source": "impat? nos oibz rebz necessarijs instructissimi ... Vale",
+    "translation": "(rest of letter skipped)"
+   }
+  ],
+  "why": "Both skip the continuation after the break; Right also mistranslates the pre-break sentence."
+ },
+ {
+  "id": "j034",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "z dies perditos",
+    "translation": "I confess the lost days"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "plenaria imo superflua satisfactio tua",
+    "translation": "(not rendered)"
+   }
+  ],
+  "why": "Right omits the plenary, superabundant satisfaction clause; Left only repeats I confess."
+ },
+ {
+  "id": "j035",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An || An",
+    "translation": "Whether || Whether"
+   },
+   {
+    "type": "OMISSION",
+    "source": "quoque",
+    "translation": "(not rendered)"
+   }
+  ],
+  "why": "Left joins the catchword question cleanly with quoque; Right duplicates Whether and drops quoque."
+ },
+ {
+  "id": "j036",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Dare",
+    "translation": "Dare"
+   },
+   {
+    "type": "ADDITION",
+    "source": "Schuß Rede",
+    "translation": "Apology or Defense Speech"
+   }
+  ],
+  "why": "Right leaves the catchword Dare untranslated and expands the running head."
+ },
+ {
+  "id": "j037",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "durch andere Leute darzu angetrieben / damit fortzufahren",
+    "translation": "be driven forward by other people"
+   },
+   {
+    "type": "OMISSION",
+    "source": "damit fortzufahren",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left loses to continue and misattributes the driving; Right renders the sentence, though it keeps the running head."
+ },
+ {
+  "id": "j038",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "beatoy angeloz custodia",
+    "translation": "(protection of the angels not rendered)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere ... Amen (confessors, virgins)",
+    "translation": "(skipped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere ... Amen (confessors, virgins)",
+    "translation": "(skipped)"
+   }
+  ],
+  "why": "Both skip the post-break litany; Left also drops the angels protection."
+ },
+ {
+  "id": "j039",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "gratulabor tibi",
+    "translation": "I sympathize with you"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut mutuo ... Vale",
+    "translation": "(entire continuation of the letter skipped)"
+   }
+  ],
+  "why": "Right skips the whole continuation of the sentence crossing the break."
+ },
+ {
+  "id": "j040",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Alterum est || est insigne",
+    "translation": "The other is || is"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left doubles the verb repeated across the break; Right renders it once."
+ },
+ {
+  "id": "j041",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "magis manifestatus",
+    "translation": "manifested all the more"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "magis manifestatus",
+    "translation": "made manifest"
+   }
+  ],
+  "why": "Both miss the Magi and otherwise render the break equally."
+ },
+ {
+  "id": "j042",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Si quis de me aliter dixerit ut plus amico veteri q hominibus credas. Vale.",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "postea e schola discessim?",
+    "translation": "after he departed from the school"
+   }
+  ],
+  "why": "Left drops the sentence completing the one that crosses the break."
+ },
+ {
+  "id": "j043",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "et quandoq sine illis fieri potest ... se reuelazūt sine istis pmissis",
+    "translation": "(entire sentence skipped)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "volo esse pmomtum",
+    "translation": "I wish to be prompt"
+   }
+  ],
+  "why": "Left skips the sentence that completes quoniam across the break."
+ },
+ {
+  "id": "j044",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "verachtestu Gottes Diener und schmähest sie?",
+    "translation": "You despise God’s servants and slander them."
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "führe || auch selbst ein exemplarisch Leben",
+    "translation": "lead || and live an exemplary life"
+   }
+  ],
+  "why": "Right splits führe into lead and live across the break; Left carries the verb over correctly."
+ },
+ {
+  "id": "j045",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Heyden",
+    "translation": "Heyd"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "und Timotheum/wie ein Bischoff seyn soll/ so werdet ihr finden/ daß ihr nicht eines rechten Bischoffs Herz habt",
+    "translation": "(not rendered)"
+   }
+  ],
+  "why": "Right drops the whole sentence completing the Epistle reference after the break."
+ },
+ {
+  "id": "j046",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ab ho dixi",
+    "translation": "From this, I have said"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "t. r. a. n.",
+    "translation": "(hear us not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ab ho dixi",
+    "translation": "As I have said"
+   }
+  ],
+  "why": "Both stumble on the opening words after the break; defects weigh the same."
+ },
+ {
+  "id": "j047",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Titum || Titum",
+    "translation": "Titus || to Titus"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Heyden; Cankel",
+    "translation": "Heyd; Cankel"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "und Timotheum/wie ein Bischoff seyn soll/ so werdet ihr finden/ daß ihr nicht eines rechten Bischoffs Herz habt",
+    "translation": "(not rendered)"
+   }
+  ],
+  "why": "Right drops the sentence after the break; Left only repeats the catchword Titus."
+ },
+ {
+  "id": "j048",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "terror demonu a supboz",
+    "translation": "terror of demons for the proud"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "advocata: pauperum miseratrix",
+    "translation": "the advocate of the poor, the compassionate one"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium",
+    "translation": "the power of the shipwrecked"
+   }
+  ],
+  "why": "Left misparses the phrase that crosses the break and a pre-break phrase; Right has one misreading."
+ }
+]

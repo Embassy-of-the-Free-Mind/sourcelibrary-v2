@@ -1,0 +1,402 @@
+[
+ {
+  "id": "j121",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "welchen mit voll sauffen dienet ist",
+    "translation": "who have no use for heavy drinking"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both render the crossing clause (gencket ... / hin) the same way; only difference is an unrelated mistranslation in para 165 on the left."
+ },
+ {
+  "id": "j122",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "pro refetione susceptus confrater dat",
+    "translation": "a newly accepted confrater gives"
+   }
+  ],
+  "why": "Both carry the Ca-/Camerario break cleanly; right drops pro refectione in the first sentence after the break."
+ },
+ {
+  "id": "j123",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "multum / arbitror illa ad nros ciues ptine ... Vale",
+    "translation": "(entire first paragraph of page 2 missing)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Non puto dubitandum",
+    "translation": "I think one must doubt"
+   }
+  ],
+  "why": "Right drops the sentence completing multum and the whole paragraph after the break, and inverts non puto dubitandum."
+ },
+ {
+  "id": "j124",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "gratiam tibi / habuissem",
+    "translation": "great thanks to you / ... and"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Plurimum tamen gaudeo ... Vale (rest of the letter on page 2)",
+    "translation": "(skipped; page 2 jumps to the next letter)"
+   }
+  ],
+  "why": "Left leaves habuissem implicit but renders page 2; right completes the sentence then omits the rest of the letter."
+ },
+ {
+  "id": "j125",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ris testimonium non agnoscas ... dignatus es esse redemptio",
+    "translation": "(page begins at Therefore)"
+   }
+  ],
+  "why": "Both handle the clean eternaliter/Oramus break; right omits the opening sentences of page 1."
+ },
+ {
+  "id": "j126",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "vnicuiqz qd suum erat iuste non / dedi",
+    "translation": "I did not justly give to each one what was his. / I gave."
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "sapientia, intellectus, consilium, scientia, pietas, timor dei",
+    "translation": "sapientia, intellectus, consilium ..."
+   }
+  ],
+  "why": "Right renders dedi twice across the break and leaves the gifts untranslated; left splits the sentence correctly."
+ },
+ {
+  "id": "j127",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "se ad unionem hypostaticam, / vel omnipotentiam Dei recipit",
+    "translation": "turns himself toward the hypostatic union. / or receives the omnipotence of God"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "se ... vel omnipotentiam Dei recipit",
+    "translation": "or receives the omnipotence of God"
+   }
+  ],
+  "why": "Both mistranslate recipit the same way; right keeps the sentence open with a comma, left closes it with a period."
+ },
+ {
+  "id": "j128",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render fides unicum est os / et instrumentum correctly with no defects at the break."
+ },
+ {
+  "id": "j129",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry gencket ... / hin across the break equivalently; differences are stylistic."
+ },
+ {
+  "id": "j130",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "aliquid / ad me scribas. Putabo enim ... medelam invenisse. Vale.",
+    "translation": "some / (sentence and closing omitted)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad me scribas",
+    "translation": "you know"
+   }
+  ],
+  "why": "Left drops the whole closing sentence of the letter after the break; right keeps it but mistranslates scribas."
+ },
+ {
+  "id": "j131",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "inventricem gratiae",
+    "translation": "mediatrix of grace"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ne moreris",
+    "translation": "Do not let me perish"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ad pupillam",
+    "translation": "to the pupil"
+   }
+  ],
+  "right_defects": [],
+  "why": "Clean break for both; left has several meaning errors near it that right avoids."
+ },
+ {
+  "id": "j132",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tam vigili Episcoporum / constantia, quam severa Regis jussione",
+    "translation": "such a vigilant Bishop- rum / constancy of others, who were urged by the stern command"
+   },
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "of others"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "rum",
+    "translation": "rum"
+   }
+  ],
+  "why": "Right breaks the crossing word Episcopo-rum and garbles the sentence; left joins it correctly."
+ },
+ {
+  "id": "j133",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "hymnis votis et precibus",
+    "translation": "hymns, and vows"
+   }
+  ],
+  "why": "Clean break for both; right drops precibus in the first lines after it."
+ },
+ {
+  "id": "j134",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "cum nihil / impetrare posset",
+    "translation": "when he could obtain nothing / could be obtained"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ceu factam",
+    "translation": "despite deeming it deceptive"
+   }
+  ],
+  "why": "Right renders the crossing nihil impetrare twice; left once."
+ },
+ {
+  "id": "j135",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Dei, in quo ... an ergo non sunt de Ecclesia?",
+    "translation": "(paragraph after the break omitted)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left skips the continuation of the crossing title and the Trinity/Church paragraph; right renders it."
+ },
+ {
+  "id": "j136",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both handle the Anony-/Anonymus catchword and the following eulogy without defects at the break."
+ },
+ {
+  "id": "j137",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "vel omnipotentiam Dei recipit ... definivit concilium Chalcedonense",
+    "translation": "(page 2 jumps to Page 29)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "vel omnipotentiam Dei recipit",
+    "translation": "or receives the omnipotence of God"
+   }
+  ],
+  "why": "Left omits the whole first paragraph of page 2 that completes the crossing sentence."
+ },
+ {
+  "id": "j138",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Tredecimus / principalis continet duos et ambo papae reservantur",
+    "translation": "The thirteenth / The first is"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the completion of the thirteenth-case heading; right renders it."
+ },
+ {
+  "id": "j139",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "continues from previous page:"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "a / nobis pastoribus",
+    "translation": "from / our pastors"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left inserts a bridging label and misrenders nobis; right joins the sentence cleanly."
+ },
+ {
+  "id": "j140",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "hora tremenda mortis mee non deneges ... Amen.",
+    "translation": "(page begins at Other useful ...)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "pro omnibus beatificatis",
+    "translation": "for all Your blessings"
+   }
+  ],
+  "why": "Both handle the clean break; left omits the opening prayer ending of page 1, a larger loss than right mistranslation."
+ },
+ {
+  "id": "j141",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(none)",
+    "translation": "may we receive"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nec per me indignum ... dignatus es esse redemptio",
+    "translation": "(page begins at Therefore)"
+   }
+  ],
+  "why": "Clean break for both; right omits the opening sentences of page 1."
+ },
+ {
+  "id": "j142",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Ille / imparatus, nos ... Vale",
+    "translation": "That man / (omitted)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Ille / imparatus, nos ... Vale",
+    "translation": "He... / (omitted)"
+   }
+  ],
+  "why": "Both drop the continuation of the crossing sentence and the rest of the letter."
+ },
+ {
+  "id": "j143",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nostri Capi- / Capituli Patronis hunc eligere",
+    "translation": "patrons of our / to elect as Patron of the Chapter"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left breaks the crossing Capituli and turns Patronis into the object; right renders it correctly."
+ },
+ {
+  "id": "j144",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Alterum est / est insigne",
+    "translation": "The other is / is a significant"
+   }
+  ],
+  "why": "Right keeps the OCR duplicated est on both sides of the break."
+ }
+]

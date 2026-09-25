@@ -1,0 +1,377 @@
+[
+ {
+  "id": "j169",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "autem eras",
+    "translation": "continues from previous page: but rather"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Vra autem [res publica] q i meliori cursu est",
+    "translation": "but rather the one that is in a better course"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "autem eras / q i meliori cursu est ... ego bom consulam. Vale.",
+    "translation": "(entire remainder of the letter after the break omitted; jumps to next letter)"
+   }
+  ],
+  "why": "Right drops the whole rest of the crossing letter after the break; Left renders it, with only a stray bridging label."
+ },
+ {
+  "id": "j170",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Si quis de me e alie dixerit: ut plus amico veteri q hominibus credas. Vale.",
+    "translation": "(omitted)"
+   }
+  ],
+  "why": "Right omits the sentence that completes the letter across the break; Left renders it."
+ },
+ {
+  "id": "j171",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me rato hiea fuerit ... loquoz. Vale;",
+    "translation": "(end of letter omitted)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "diligendis nulla de me rato hiea fuerit ... loquoz. Vale;",
+    "translation": "(end of letter omitted)"
+   }
+  ],
+  "why": "Both drop the end of the crossing letter identically; other differences are minor."
+ },
+ {
+  "id": "j172",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Capituli Patronis hunc eligere, quem credam futurum ... Sic me Deus adjuvet",
+    "translation": "(rest of the electors oath omitted; jumps to oath of the elected)"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left omits the continuation of the electors oath that crosses the break; Right renders it."
+ },
+ {
+  "id": "j173",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the break region fully; Right also translates the running head, which is permitted."
+ },
+ {
+  "id": "j174",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "De profundis clamaui ad te domina: domina exaudi vocem meam",
+    "translation": "(omitted)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Domina non est exaltatum cor tuum: neque sublimati sunt oculi tui",
+    "translation": "(omitted)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "nos dna et conforta nos in gra tua: vt pte ante aspectu dni pntem",
+    "translation": "(omitted after the break)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Optine",
+    "translation": "Ob"
+   }
+  ],
+  "why": "Left omits two verses before the break; Right omits only the line that completes the crossing verse, so Right loses less content, though Left reads on more continuously."
+ },
+ {
+  "id": "j175",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "li n. / libera n.",
+    "translation": "deliver us, O mistress (repeated)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "de illius ascensione",
+    "translation": "your ascension"
+   },
+   {
+    "type": "ADDITION",
+    "source": "t. r. a. n.",
+    "translation": "we beseech you, hear us, O mistress"
+   }
+  ],
+  "why": "Right expands the litany abbreviations with an added vocative and mistranslates illius; the break itself is handled equally."
+ },
+ {
+  "id": "j176",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "volo esse pmomtum [lectorem]",
+    "translation": "I wish to be prompt to the pious reader"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ii.reg.i",
+    "translation": "(citation omitted)"
+   },
+   {
+    "type": "OMISSION",
+    "source": "gregorii",
+    "translation": "(Gregory omitted)"
+   }
+  ],
+  "why": "Both handle the crossing sentence well; each has small unrelated defects of similar weight."
+ },
+ {
+  "id": "j177",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "entschieden/er darff mir nicht die alten Secten auffdringen / ich habe derer Schrifften keine gesehen / es ist nur seine Bosheit.",
+    "translation": "(omitted; thus we are ... then Pasquil)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Gabe lastern",
+    "translation": "blaspheme God fork"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Gabelastern",
+    "translation": "blaspheme the Gabelastern of GOD"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Stade",
+    "translation": "the Stade"
+   }
+  ],
+  "why": "Left drops the words that complete the crossing sentence of paragraph 190; Right renders them."
+ },
+ {
+  "id": "j178",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Ne moreris",
+    "translation": "Do not let me perish"
+   }
+  ],
+  "right_defects": [],
+  "why": "Break handled identically; Left mistranslates moreris (delay) before the break."
+ },
+ {
+  "id": "j179",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "impat? nos oibz rebz necessarijs instructissimi ... Vale;",
+    "translation": "(rest of letter omitted)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Magni estat? oscibut",
+    "translation": "He is busy with great affairs"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "impat? nos oibz rebz necessarijs instructissimi ... Vale;",
+    "translation": "(rest of letter omitted)"
+   }
+  ],
+  "why": "Both omit the end of the crossing letter; Left adds a mistranslation of the ships clause."
+ },
+ {
+  "id": "j180",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "paulomine hac tua iactura eē animo cōmotū q si",
+    "translation": "I am little moved ... just as if"
+   }
+  ],
+  "why": "Break handled equally; Right inverts paulominus ... quam."
+ },
+ {
+  "id": "j181",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "beneficiorum / Parochus / fabricae",
+    "translation": "inline Latin glosses beneficium, parochus, fabrica"
+   }
+  ],
+  "why": "Both render the break fully; Right only adds harmless Latin glosses."
+ },
+ {
+  "id": "j182",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ante co[mmunionem]",
+    "translation": "before the / union of sorrow"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "dicto facto cogitatu",
+    "translation": "(omitted)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "tui qui causam doloris mei assumpsisti",
+    "translation": "I, who have taken up the cause of my sorrow"
+   }
+  ],
+  "why": "Break equal; Right misreads the address to Christ and drops word/deed/thought."
+ },
+ {
+  "id": "j183",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "pie misericordissime",
+    "translation": "most merciful Father"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "penam p eis affligas",
+    "translation": "that You do not punish me for them"
+   }
+  ],
+  "why": "Break equal; Right inverts the petition to be punished in this life."
+ },
+ {
+  "id": "j184",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Gloria",
+    "translation": "Glory to the Father and"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "pacemque donat terminis tuis",
+    "translation": "gives you the fat of the wheat"
+   }
+  ],
+  "why": "Both render the crossing canticle fully; Left switches to line-by-line layout after the break."
+ },
+ {
+  "id": "j185",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam sua, neque mutat ... Subijcit autem aduersum nos.",
+    "translation": "(omitted)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam sua, neque mutat ... Subijcit autem aduersum nos.",
+    "translation": "(omitted)"
+   }
+  ],
+  "why": "Both drop the completion of the crossing sentence identically."
+ },
+ {
+  "id": "j186",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "durch andere Leute darzu angetrieben / damit fortzufahren",
+    "translation": "be driven forward by other people"
+   }
+  ],
+  "right_defects": [],
+  "why": "Crossing sentence equal; Left garbles the clause about being urged to continue."
+ },
+ {
+  "id": "j187",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "pro oibus beatificatis",
+    "translation": "for all Your blessings"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "facietas plena",
+    "translation": "the fullness of clarity"
+   }
+  ],
+  "why": "Break equal; Right mistranslates beatificatis and satietas after the break."
+ }
+]

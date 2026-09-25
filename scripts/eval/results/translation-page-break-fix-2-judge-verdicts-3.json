@@ -1,0 +1,433 @@
+[
+ {
+  "id": "j049",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing clause se ad vnionem hypostaticam / vel omnipotentiam Dei recipit fully; left only closes the sentence with a period before or receives."
+ },
+ {
+  "id": "j050",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui me in lauacro baptismatis / tibi celesti sponso desponsare voluisti",
+    "translation": "who in the washing of baptism / you wished to be betrothed to your heavenly spouse"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops me and turns the crossing clause into God betrothing himself; right renders it correctly."
+ },
+ {
+  "id": "j051",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "cum nihil / hil impetrare posset",
+    "translation": "when nothing / could obtain anything"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "cum nihil / impetrare posset",
+    "translation": "when he found nothing / could be obtained"
+   }
+  ],
+  "why": "Left garbles the split nihil impetrare posset into nonsense; right keeps the meaning with a small bridging verb."
+ },
+ {
+  "id": "j052",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Damna- / mnatur ab Episcopis haec instructio",
+    "translation": "Condemning / this instruction is demanded of the Bishops"
+   }
+  ],
+  "why": "Right misreads the hyphenated damnatur across the break; left renders this instruction was condemned by the bishops."
+ },
+ {
+  "id": "j053",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the psalm verses on either side of the break fully; left switches to the source line layout with split words after the break."
+ },
+ {
+  "id": "j054",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ihr habt also mit Rothe der Laesterung ... besprühet",
+    "translation": "you have thus besmirched yourself with the redness of slander"
+   },
+   {
+    "type": "OMISSION",
+    "source": "GOttes Gabe laestern",
+    "translation": "blaspheme against God"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente / entschieden",
+    "translation": "then we are ente / decided"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente / entschieden",
+    "translation": "thus we are ente / ... decided"
+   },
+   {
+    "type": "ADDITION",
+    "source": "besprühet",
+    "translation": "besprinkled the Stade"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "GOttes Gabelästern",
+    "translation": "blaspheme the Gabelästern of GOD"
+   }
+  ],
+  "why": "Both leave the split ente fragment and garble paragraph 192 differently; right also puts the running head in the middle of the sentence."
+ },
+ {
+  "id": "j055",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "et duxerunt animas suas vsq ad mortem vt mortis auctorem superarent",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "non dubitauerunt fundere ... Confessorum orationes expostulo ... in secula seculorum Amen",
+    "translation": "who for the sake of Your name shed their blood / O sweetest ..."
+   }
+  ],
+  "why": "Right skips the entire confessors and virgins passage and the doxology after the break; left drops only one clause about the martyrs."
+ },
+ {
+  "id": "j056",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "An / 41 An illis quoque diebus",
+    "translation": "Whether / 41 Whether on those same days"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left translates the catchword An and then starts the next question again, leaving Whether dangling."
+ },
+ {
+  "id": "j057",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Christi naturam illam suam, neque mutat, neque amittit ... Subijcit autem aduersum nos.",
+    "translation": "ipsa tamen caro / Page 41"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ipsa tamen caro / Christi naturam illam suam neque mutat",
+    "translation": "yet the flesh itself / Christ neither changes"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Achilleum, & validissimum praesidium",
+    "translation": "Achilles heel and his most powerful defense"
+   }
+  ],
+  "why": "Left leaves out the whole passage after the break that finishes the sentence; right renders it with small errors."
+ },
+ {
+  "id": "j058",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce, inquam, ipse non modo ... temere iudicare.",
+    "translation": "authori- / But nevertheless"
+   },
+   {
+    "type": "ADDITION",
+    "source": "qui nos de neglecta auctorita-",
+    "translation": "you who [accuse] us"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "qui nos de neglecta auctoritate Magistratus tam dure flagellas",
+    "translation": "who accuse us of neglecting authority / and lash out so harshly against the Magistrate"
+   }
+  ],
+  "why": "Left omits the rest of the crossing sentence and the learn, I say clause; right renders it, with the object of the lashing misread."
+ },
+ {
+  "id": "j059",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "in quibus / diligendis nulla de me ratio habita fuerit ... Vale",
+    "translation": "in whom / It is not a new matter"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "in quibus / diligendis nulla de me ratio habita fuerit ... Vale",
+    "translation": "in whom... / It is not a new thing"
+   }
+  ],
+  "why": "Both drop the end of the letter after the break and jump to the next letter."
+ },
+ {
+  "id": "j060",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Titum und Timotheum, wie ein Bischoff seyn soll, so werdet ihr finden, dass ihr nicht eines rechten Bischoffs Herz habt.",
+    "translation": "Epistle to Titus / 50."
+   }
+  ],
+  "why": "Right drops the rest of paragraph 49 after the break; left completes it."
+ },
+ {
+  "id": "j061",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "so man zu ihm / ihm kommt",
+    "translation": "if one to / him"
+   }
+  ],
+  "why": "Right drops kommt, so the crossing clause makes no sense; left renders it fully."
+ },
+ {
+  "id": "j062",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "und führe / auch selbst ein exemplarisch Leben",
+    "translation": "and lead / also lead an exemplary life"
+   }
+  ],
+  "why": "Right translates führe twice across the break; left joins it cleanly."
+ },
+ {
+  "id": "j063",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "tibi celesti sponso desponsare voluisti. z hodie corpus z sanguine tuu ad donu noue desponsationis ... ptulisti.",
+    "translation": "who in the laver of baptism / Blessed are You, most generous God"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left drops the clause that finishes the crossing sentence and the next sentence; right renders both."
+ },
+ {
+  "id": "j064",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "plenaria imo superflua satisfactio tua",
+    "translation": "May your bitter death ... be perfected for me"
+   }
+  ],
+  "why": "Right drops your plenary, nay superabundant satisfaction just after the break; left keeps it."
+ },
+ {
+  "id": "j065",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry fides vnicum est os / & instrumentum across the break faithfully."
+ },
+ {
+  "id": "j066",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "que supra / mundum sunt se gaudent restaurata",
+    "translation": "which is above / the world, they rejoice that they are restored"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "angelorum",
+    "translation": "the angeli"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "mundum sunt se gaudent restaurata. Per gloriosum tue virginitatis sanctissime partum homines angelorum fiunt socii et concives. Gloria",
+    "translation": "that which is above / Clap your hands"
+   }
+  ],
+  "why": "Right drops the end of the crossing sentence and the next verse; left renders them with a small misattachment."
+ },
+ {
+  "id": "j067",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce, inquam, ... temere iudicare.",
+    "translation": "authori- / But nevertheless"
+   },
+   {
+    "type": "ADDITION",
+    "source": "qui nos de neglecta auctorita-",
+    "translation": "you who [accuse] us"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "tam dure flagellas",
+    "translation": "who whip us so harshly ... / You, who lash the magistrates so harshly"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Magistratus tam dure flagellas",
+    "translation": "lash the magistrates"
+   }
+  ],
+  "why": "Left omits the whole learn, I say clause after the break; right keeps it but renders the lashing twice."
+ },
+ {
+  "id": "j068",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "ut mutuo ... alter alteri suum studium accomodet. Nec aut labor ... Vale",
+    "translation": "(skips to next letter) Not that I did not think"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "omnium civium tuorum expectationem decipies",
+    "translation": "nor will you fail the expectation"
+   }
+  ],
+  "why": "Right skips the end of the Stoic sentence and the rest of the letter after the break; left renders them."
+ },
+ {
+  "id": "j069",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The break falls at a sentence end; both render both sides fully."
+ },
+ {
+  "id": "j070",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "und führe / auch selbst ein exemplarisch Leben",
+    "translation": "and lead / lead also a life as an example"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left translates führe twice across the break; right joins it cleanly."
+ },
+ {
+  "id": "j071",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "besprühet",
+    "translation": "splattered the city"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "GOttes Gabelästern",
+    "translation": "blaspheme GOD forks"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "so sind wir ente / entschieden",
+    "translation": "thus we are ente / ... decided"
+   },
+   {
+    "type": "ADDITION",
+    "source": "besprühet",
+    "translation": "besprinkled the Stade"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "GOttes Gabelästern",
+    "translation": "blaspheme the Gabelästern of GOD"
+   }
+  ],
+  "why": "Right also leaves the split fragment ente untranslated across the break and puts the running head inside the sentence."
+ },
+ {
+  "id": "j072",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Doctores waren. Wer war Moses? ein Schaffhirte! Wer war David? Ein Schaffhirt! Wer",
+    "translation": "who also had no / were the prophets"
+   }
+  ],
+  "why": "Right drops the end of the crossing sentence and the Moses and David questions; left renders them."
+ }
+]
