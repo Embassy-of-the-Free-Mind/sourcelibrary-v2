@@ -27,7 +27,13 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/apply-reocr-verdicts.mjs \
  *     --verdicts /root/tibetan-reocr/verdicts.jsonl --textdir /root/tibetan-reocr/txt-wood \
- *     [--book <id>] [--apply]
+ *     [--book <id>] [--model <ocr.model>] [--apply]
+ *
+ * --model names the recognizer that produced --textdir (written to ocr.model).
+ * Default is the Woodblock ONNX model of the first pass; the Yigdzin-primary
+ * pass (#4722) runs with --model=bdrc-yigdzin-v1 --textdir=.../txt-yigdzin.
+ * Keep --reason at its default: WITHHOLD_LANES (scripts/lib/stale-translation.mjs)
+ * keys on it to withhold the English made from the text this overwrites.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -44,7 +50,7 @@ const REASON = ARG('--reason', 'reocr_bdrc_4523');
 const REPORT = ARG('--report', `scripts/output/apply-verdicts-${new Date().toISOString().slice(0, 10)}.jsonl`);
 if (!VERDICTS || !TEXTDIR) { console.error('--verdicts and --textdir required'); process.exit(1); }
 
-const MODEL = 'bdrc-woodblock-easter2';
+const MODEL = ARG('--model', 'bdrc-woodblock-easter2');
 const MIN_SYL = 20;
 
 const mongo = new MongoClient(process.env.MONGODB_URI);
@@ -61,7 +67,7 @@ const rows = fs.readFileSync(VERDICTS, 'utf8').trim().split('\n')
 const byBook = new Map();
 for (const r of rows) { if (!byBook.has(r.book)) byBook.set(r.book, []); byBook.get(r.book).push(r); }
 
-const totals = { serve: 0, mark: 0, textless: 0, skipped: 0, alreadyApplied: 0, books: 0 };
+const totals = { serve: 0, mark: 0, textless: 0, skipped: 0, alreadyApplied: 0, loopRefused: 0, books: 0 };
 for (const [bookId, verdicts] of byBook) {
   const pageDocs = await db.collection('pages')
     .find({ book_id: bookId }, { projection: { id: 1, page_number: 1, ocr: 1 } })
@@ -121,7 +127,8 @@ for (const [bookId, verdicts] of byBook) {
   for (const { page, text } of servePlan) {
     // Degeneration-loop guard (#4850) — never promote a looping read to SERVE.
     if (loopVerdict(text || '').refuse) {
-      rec({ book: page.book_id, page: page.id, status: 'SKIP-repetition-loop' });
+      rec({ book: bookId, page: page.page_number, status: 'SKIP-repetition-loop' });
+      totals.loopRefused++;
       continue;
     }
     await db.collection('pages').updateOne({ id: page.id }, {
