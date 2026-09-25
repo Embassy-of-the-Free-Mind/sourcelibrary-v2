@@ -46,7 +46,7 @@ export function getThumbUrl(page: OverviewPage): string | null {
 // display_photo (the reader's display copy, a few hundred KB) comes first —
 // the archival master (archived_photo, multi-MB at native res) is overkill
 // for overview zoom and saturates bandwidth when several pages load at once.
-function getHiresUrl(page: OverviewPage): string | null {
+export function getHiresUrl(page: OverviewPage): string | null {
   if (page.split_from_spread || page.crop) {
     return page.cropped_photo || page.photo || null;
   }

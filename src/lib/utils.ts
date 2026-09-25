@@ -341,6 +341,27 @@ export function getPageGridUrl(page: Record<string, any>): string | null {
 }
 
 /**
+ * `onError` handler for a pre-sized R2 thumbnail `<img>`: swap once to the
+ * page's display-size image, and hide the element if that fails too.
+ *
+ * `-thumb.jpg` is DERIVED from the page's photo URL (page-image-url.ts
+ * `deriveVariant`), not read from a field, so nothing upstream can know the
+ * sibling exists. It does for ~99.6% of books (250-book sample, 2026-09-25),
+ * but direct uploads that skipped the archiver (ORAEC Egyptian corpus, some
+ * PDF imports) have only the bare `.jpg`, and every reader tray slot for
+ * those books rendered a broken-image icon (broken_image_reports, #5165).
+ * A missing thumbnail should cost bandwidth, never the page.
+ */
+export function swapToFallback(img: HTMLImageElement, fallback: string | null): void {
+  if (fallback && img.dataset.fallbackApplied !== '1' && img.src !== fallback) {
+    img.dataset.fallbackApplied = '1';
+    img.src = fallback;
+    return;
+  }
+  img.style.visibility = 'hidden';
+}
+
+/**
  * Get the best thumbnail (150px) URL for a page.
  * Prefers pre-rendered thumbnail from R2 CDN.
  */
