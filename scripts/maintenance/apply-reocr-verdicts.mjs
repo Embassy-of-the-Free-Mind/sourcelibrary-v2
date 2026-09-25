@@ -206,6 +206,16 @@ for (const [bookId, verdicts] of byBook) {
   }
 
   if (!APPLY) {
+    // --show-page=N prints the exact fields a SERVE/MARK write would set on page N (text elided)
+    const show = Number(ARG('--show-page', NaN));
+    const hit = servePlan.find((x) => x.page.page_number === show) || markOps.find((x) => x.page.page_number === show);
+    if (hit) {
+      const now = new Date();
+      const planned = hit.text
+        ? { 'ocr.data': `<${hit.text.length} chars>`, 'ocr.language': 'Tibetan', 'ocr.model': MODEL, 'ocr.source': 'bdrc', 'ocr.pipeline': REASON, 'ocr.content_hash': contentHash(hit.text), 'ocr.engine': ENGINE_BLOCK, 'ocr.verdict': verdictBlock(hit.v, now), $unset: STALE_OCR_FIELDS }
+        : { 'ocr.unreadable': true, 'ocr.unreadable_reason': REASON, 'ocr.verdict': verdictBlock(hit.v, now) };
+      console.log(JSON.stringify({ book: bookId, page: show, page_id: hit.page.id, write: planned }, null, 2));
+    }
     totals.serve += servePlan.length;
     totals.mark += markOps.length;
     rec({ book: bookId, status: 'dry-run', serve: servePlan.length, mark: markOps.length });
