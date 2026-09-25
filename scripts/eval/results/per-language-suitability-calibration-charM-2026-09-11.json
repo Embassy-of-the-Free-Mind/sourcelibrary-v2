@@ -1,0 +1,230 @@
+[
+ {
+  "slug": "chinese-shijing-guan-ju",
+  "word": 0.025,
+  "charM": 0.025,
+  "dcer_pp": 5
+ },
+ {
+  "slug": "hebrew-genesis-1",
+  "word": 0.126,
+  "charM": 0.178,
+  "dcer_pp": -24.87
+ },
+ {
+  "slug": "latin-vita-vergilii-donatus-auctus",
+  "word": 0.014,
+  "charM": 0.227,
+  "dcer_pp": 4.28
+ },
+ {
+  "slug": "armenian-xorenatsi-patmutiwn-2-13",
+  "word": 0.341,
+  "charM": 0.409,
+  "dcer_pp": 1.83
+ },
+ {
+  "slug": "latin-aeneid-10-pallas",
+  "word": 0.4,
+  "charM": 0.491,
+  "dcer_pp": 0.25
+ },
+ {
+  "slug": "chinese-zhuangzi-xiaoyaoyou",
+  "word": 0.516,
+  "charM": 0.516,
+  "dcer_pp": 1.96
+ },
+ {
+  "slug": "latin-hieronymus-epistola-ad-paulinum",
+  "word": 0.292,
+  "charM": 0.519,
+  "dcer_pp": 0.97
+ },
+ {
+  "slug": "latin-aeneid-1",
+  "word": 0.408,
+  "charM": 0.531,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "latin-vulgate-genesis-1",
+  "word": 0.45,
+  "charM": 0.563,
+  "dcer_pp": -0.24
+ },
+ {
+  "slug": "chinese-daodejing-1",
+  "word": 0.619,
+  "charM": 0.619,
+  "dcer_pp": 1.13
+ },
+ {
+  "slug": "greek-iliad-1",
+  "word": 0.739,
+  "charM": 0.708,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "greek-iliad-13-idomeneus",
+  "word": 0.684,
+  "charM": 0.805,
+  "dcer_pp": 2.81
+ },
+ {
+  "slug": "armenian-zohrab-1chronicles-1",
+  "word": 0.718,
+  "charM": 0.914,
+  "dcer_pp": 1.82
+ },
+ {
+  "slug": "hebrew-sefer-hayirah-blessings",
+  "word": 0.8,
+  "charM": 0.93,
+  "dcer_pp": 2.16
+ },
+ {
+  "slug": "german-herder-sprache-p44",
+  "word": 0.71,
+  "charM": 0.939,
+  "dcer_pp": 0.9
+ },
+ {
+  "slug": "chinese-xunzi-quan-xue",
+  "word": 0.956,
+  "charM": 0.956,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "armenian-eznik-elc-alandoc-70",
+  "word": 0.91,
+  "charM": 0.957,
+  "dcer_pp": 0.66
+ },
+ {
+  "slug": "armenian-eznik-elc-alandoc-203",
+  "word": 0.922,
+  "charM": 0.958,
+  "dcer_pp": -0.23
+ },
+ {
+  "slug": "armenian-eznik-elc-alandoc-109",
+  "word": 0.93,
+  "charM": 0.961,
+  "dcer_pp": 0.5
+ },
+ {
+  "slug": "hebrew-psalms-1",
+  "word": 0.914,
+  "charM": 0.962,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "armenian-eznik-elc-alandoc-157",
+  "word": 0.939,
+  "charM": 0.962,
+  "dcer_pp": 0.33
+ },
+ {
+  "slug": "armenian-xorenatsi-patmutiwn-3-35",
+  "word": 0.84,
+  "charM": 0.962,
+  "dcer_pp": 0.7
+ },
+ {
+  "slug": "latin-hieronymus-prologus-galeatus",
+  "word": 0.924,
+  "charM": 0.973,
+  "dcer_pp": 1.23
+ },
+ {
+  "slug": "armenian-xorenatsi-patmutiwn-2-60",
+  "word": 0.902,
+  "charM": 0.976,
+  "dcer_pp": 0.18
+ },
+ {
+  "slug": "greek-philo-opificio-55",
+  "word": 0.963,
+  "charM": 0.988,
+  "dcer_pp": 0.57
+ },
+ {
+  "slug": "greek-hero-pneumatica-306",
+  "word": 0.96,
+  "charM": 0.992,
+  "dcer_pp": 0.3
+ },
+ {
+  "slug": "greek-philo-opificio-45",
+  "word": 0.984,
+  "charM": 0.994,
+  "dcer_pp": 0.19
+ },
+ {
+  "slug": "greek-simplicius-in-phys-300",
+  "word": 0.982,
+  "charM": 0.994,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "chinese-analects-xue-er",
+  "word": 0.972,
+  "charM": 0.996,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "greek-philo-opificio-38",
+  "word": 0.99,
+  "charM": 0.996,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "greek-simplicius-in-phys-150",
+  "word": 0.994,
+  "charM": 0.997,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "greek-simplicius-in-phys-500",
+  "word": 0.991,
+  "charM": 0.997,
+  "dcer_pp": 0.1
+ },
+ {
+  "slug": "greek-hero-pneumatica-266",
+  "word": 0.992,
+  "charM": 0.998,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "greek-hero-pneumatica-60",
+  "word": 0.995,
+  "charM": 0.999,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "german-boltzmann-gastheorie2-p128",
+  "word": 1,
+  "charM": 1,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "german-hegel-logik-p148",
+  "word": 0.993,
+  "charM": 1,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "german-hegel-phaenomenologie-p351",
+  "word": 1,
+  "charM": 1,
+  "dcer_pp": 0
+ },
+ {
+  "slug": "german-humboldt-kosmos1-p150",
+  "word": 1,
+  "charM": 1,
+  "dcer_pp": 0
+ }
+]
