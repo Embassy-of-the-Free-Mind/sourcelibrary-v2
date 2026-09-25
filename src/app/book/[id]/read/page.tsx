@@ -50,8 +50,13 @@ import { isRTLLanguage } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'fra1';
 
-/** Pages per part. 120 pages of Latin + English is roughly 0.5 MB of HTML. */
-const PART_SIZE = 120;
+/**
+ * Pages per part. Measured on the Fludd anatomy (Latin + English, both in the
+ * DOM because the folded original is still markup): 120 pages was 2.1 MB of
+ * HTML, so 60 keeps a part near 1 MB — still one document per sitting, but
+ * one a phone on a slow connection can open.
+ */
+const PART_SIZE = 60;
 
 type TextMode = 'translation' | 'original' | 'both';
 
