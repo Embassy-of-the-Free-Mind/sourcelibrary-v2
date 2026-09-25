@@ -1,0 +1,242 @@
+[
+ {
+  "id": "j081",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Tredecimus | principalis rendered once and completely by both; R moves thirteenth to the next page without loss."
+ },
+ {
+  "id": "j082",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "vt alio quam plane spirituali ore ... edi possit",
+    "translation": "so that it can be eaten ... by a mouth and mode that is plain and spiritual"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Achilleum & validissimum Osiandri praesidium",
+    "translation": "Osiander’s Achilles’ heel"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ipsa tamen caro | Christi naturam illam suam",
+    "translation": "the flesh itself / does not change ... that nature of Christ"
+   }
+  ],
+  "why": "Left drops alio quam and turns Achilleum into Achilles heel; right only misattaches Christi across the break."
+ },
+ {
+  "id": "j083",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render Titum | Titum und Timotheum once as Titus / and Timothy with no loss."
+ },
+ {
+  "id": "j084",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "J.B. den er einsmals zu sich ... erfordert",
+    "translation": "prominent learned men ... whom he had once invited"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "des J.B. gewesenen Freunden",
+    "translation": "friends of J.B. whom I have known"
+   }
+  ],
+  "why": "Both handle the Gri-chischen/Griechischen catchword identically; each has one minor mistranslation of similar weight."
+ },
+ {
+  "id": "j085",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the catchword 78. Dar- and paragraph 78 in the same way with no loss."
+ },
+ {
+  "id": "j086",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "und fuehre | auch selbst ein exemplarisch Leben is carried across correctly by both."
+ },
+ {
+  "id": "j087",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Capi- | Capituli Patronis hunc eligere ... procurasse",
+    "translation": "electors oath rendered in full before the break and again after it"
+   }
+  ],
+  "why": "Right renders the electors oath on both sides of the break; left splits it once at Chap-/Chapter."
+ },
+ {
+  "id": "j088",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ab his qui semper commodis tuis adulati fuerint, si procuratores | eum (ut oportebat) advigilassent",
+    "translation": "if those who had fawned upon your comforts had acted as curators / as they ought to have watched"
+   },
+   {
+    "type": "OMISSION",
+    "source": "eum",
+    "translation": "(not rendered)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "adulati fuerint",
+    "translation": "had been flattered by"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "expectabam",
+    "translation": "we were expecting"
+   }
+  ],
+  "why": "Left garbles the clause crossing the break (drops ab his and the agents), right keeps its structure with minor slips."
+ },
+ {
+  "id": "j089",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "sanguinem suum | non dubitauerunt fundere rendered faithfully by both."
+ },
+ {
+  "id": "j090",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Break falls between prayers; both render both sides fully with only word-choice differences."
+ },
+ {
+  "id": "j091",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Nihil ad hanc tuam sollicitudinem ... tamen gratiam tibi | habuissem",
+    "translation": "not rendered; the post-break letter appears before the break instead"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "nisi divino munere nostra illa navis ... incolumis portum subiisset",
+    "translation": "nor was it by divine favor that that ship of ours ... reached the port unharmed"
+   }
+  ],
+  "why": "Right shifts page-two content before the break, loses the crossing sentence and reverses the divine-favor clause; left is faithful."
+ },
+ {
+  "id": "j092",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "List ends before the break and the catchword Re- is dropped by both; no defects."
+ },
+ {
+  "id": "j093",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "und durch andere Leute darzu angetrieben, damit fortzufahren",
+    "translation": "and He urged others to proceed with it"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry Augspur-|gischen Confession across, but left misreads who was urged by other people."
+ },
+ {
+  "id": "j094",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "non nisi bonos homines",
+    "translation": "should not love through good men"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "homines ut placeant diligant",
+    "translation": "I love men so that they may be pleased"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "non numquam me fefellerit",
+    "translation": "has not once deceived me"
+   }
+  ],
+  "why": "Break sentence rendered by both; right has several meaning reversals before it."
+ },
+ {
+  "id": "j095",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Sed tarde in re mea perspexi. Vale.",
+    "translation": "But I perceived this late in my own affair. Farewell. (rendered before and after the break)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "de perfidia Vecturii",
+    "translation": "about the guards of Vecturius"
+   }
+  ],
+  "why": "Right pulls page-two text before the break and then repeats its last sentence after it; left splits cleanly at Ceteri maxime | admirantur."
+ },
+ {
+  "id": "j096",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Episcopo-|rum constantia",
+    "translation": "by the vigilance of the Bishops (constantia not rendered)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "dirae ... devoventium",
+    "translation": "curses upon whatever sacred and profane dignity there was"
+   }
+  ],
+  "why": "Right drops constantia from the phrase crossing the break; left renders it."
+ }
+]

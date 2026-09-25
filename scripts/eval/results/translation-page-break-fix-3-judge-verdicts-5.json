@@ -1,0 +1,252 @@
+[
+ {
+  "id": "j065",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "qua recipe|reculabant (recipere recusabant)",
+    "translation": "which they refused"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "qua recipe|reculabant (recipere recusabant)",
+    "translation": "which they were refusing."
+   }
+  ],
+  "why": "Both drop \"to receive\" in the word split across the break; LEFT carries the sentence over more naturally, while RIGHT ends the page with a full stop."
+ },
+ {
+  "id": "j066",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "wir Armen haben sie nicht zu bezahlen",
+    "translation": "We poor people do not have to pay for them"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "gencket einem andern geschehe als ihm",
+    "translation": "hopes the same happens to another as to him"
+   },
+   {
+    "type": "ADDITION",
+    "source": "hin",
+    "translation": "down;"
+   }
+  ],
+  "why": "RIGHT misreads gedencket as hopes and turns the fragment hin into an invented word at the break."
+ },
+ {
+  "id": "j067",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "Damna-|mnatur ab Episcopis haec instructio",
+    "translation": "They condemn- | this instruction is condemned"
+   }
+  ],
+  "why": "RIGHT leaves a dangling They condemn- and then gives the verb again after the break."
+ },
+ {
+  "id": "j068",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "(nothing in source)",
+    "translation": "and not to break the peace."
+   }
+  ],
+  "why": "RIGHT opens the second page with a phrase that is not in the source."
+ },
+ {
+  "id": "j069",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ut alio quam plane spirituali ore, & modo etiam in sacramento ipso edi possit",
+    "translation": "so that it can be eaten ... by a mouth other than a purely spiritual one, and in a spiritual manner"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "Achilleum, & validissimum praesidium",
+    "translation": "Achilles heel and most valid defense"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT inverts the sense of the clause just after the break and renders Achilleum as a weakness."
+ },
+ {
+  "id": "j070",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "de bonis paternis",
+    "translation": "concerning your property"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "socium atque participem",
+    "translation": "companion and a student"
+   }
+  ],
+  "why": "Both render the break itself correctly; their small defects nearby weigh about the same."
+ },
+ {
+  "id": "j071",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the litany faithfully across a clean break."
+ },
+ {
+  "id": "j072",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The break falls between numbered paragraphs, and both render it faithfully."
+ },
+ {
+  "id": "j073",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Cankel",
+    "translation": "Cankel"
+   },
+   {
+    "type": "UNTRANSLATED",
+    "source": "Morgenroehte",
+    "translation": "Morgenroethe"
+   }
+  ],
+  "why": "Both handle the Titum catchword correctly, but RIGHT leaves Cankel (pulpit) untranslated just after the break."
+ },
+ {
+  "id": "j074",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nulla de me ratio habita fuerit",
+    "translation": "there was no deliberation on my part"
+   }
+  ],
+  "why": "RIGHT misreads the regard owed to him in the clause that crosses the break."
+ },
+ {
+  "id": "j075",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "nostri Capi-|tuli Patronis",
+    "translation": "the patrons of our Chap- | Chapter"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT gives Chapter twice across the hyphenated break; RIGHT joins it cleanly."
+ },
+ {
+  "id": "j076",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "vel omnipotentiam Dei recipit ... ut praeclare definiuit concilium Chalcedonense",
+    "translation": "(whole passage missing; jumps to Pag. 29)"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "Osiander, qui Deitatem carni Christi ... attribuit",
+    "translation": "Apollinarian heretics, who attribute"
+   }
+  ],
+  "why": "LEFT leaves out the whole passage after the break, including the end of the sentence that crosses it."
+ },
+ {
+  "id": "j077",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "maxime raro confitentibus",
+    "translation": "but very rarely to the penitent"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "refrenandi sunt oculi quasi quidam raptores ad culpam",
+    "translation": "the eyes are to be filled by the delight of its pleasure"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "maxime raro confitentibus",
+    "translation": "which is very rare with those confessing"
+   }
+  ],
+  "why": "RIGHT reverses the sense of the gloss on the eyes just after the break."
+ },
+ {
+  "id": "j078",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render und fuehre | auch selbst ein exemplarisch Leben faithfully."
+ },
+ {
+  "id": "j079",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens | patiens legebatur",
+    "translation": "one patient of excuse | patient."
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT translates the catchword patiens twice; RIGHT places was read correctly."
+ },
+ {
+  "id": "j080",
+  "fidelity": "TIE",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render nisi angelica | protectione correctly; RIGHT breaks the flow with ellipses."
+ }
+]

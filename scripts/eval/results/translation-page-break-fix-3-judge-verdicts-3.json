@@ -1,0 +1,221 @@
+[
+ {
+  "id": "j033",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "memoria cartarum ... revocatus a latentibus custodiis mense Majo interceptus",
+    "translation": "because of the papers ... he was recalled by hidden guards and intercepted"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "anno 1700. ... subjecit",
+    "translation": "who was spreading dangerous principles of faith in the year 1700"
+   }
+  ],
+  "why": "RIGHT makes the hidden guards the ones who recalled Quesnel and moves the date; LEFT renders the post-break sentence correctly."
+ },
+ {
+  "id": "j034",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium",
+    "translation": "the power for the shipwrecked"
+   },
+   {
+    "type": "OMISSION",
+    "source": "Eterna ... gloria munerari",
+    "translation": "to be gifted with glory"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both cross the break well, but LEFT misreads portus as power and drops eternal after the break."
+ },
+ {
+  "id": "j035",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "in futurum spectat multa, que iure sibi possit ... promittere",
+    "translation": "looks to the future, for which it can rightly promise itself"
+   }
+  ],
+  "right_defects": [],
+  "why": "The sentence crossing the break (Vra / autem etas ... multa) loses multa in LEFT and is complete in RIGHT, though RIGHT places the whole next page before the break marker."
+ },
+ {
+  "id": "j036",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "mysteriorum Fi- / dei, in quo",
+    "translation": "mysteries of the Faith / God, in which"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT renders the split word Fi-dei twice, as Faith and again as God; RIGHT joins it correctly."
+ },
+ {
+  "id": "j037",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the sentences on each side of the break (sine angustia te parturiuit / Benedicta sis) faithfully."
+ },
+ {
+  "id": "j038",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "The break falls between psalms and both render the adjoining verses fully; the differences (sola luna, impinguat) fall outside the junction region."
+ },
+ {
+  "id": "j039",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Clean break between litany and prayer; both render Sed libera / Ego dixi domina faithfully."
+ },
+ {
+  "id": "j040",
+  "fidelity": "RIGHT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "id a vobis accurate factum",
+    "translation": "that you had done"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both join the crossing sentence (ouibus ... a / nobis pastoribus); LEFT drops accurate just after, while RIGHT inserts the marginal refs Act. 17 / Ioan. 5 mid-sentence, which hurts only flow."
+ },
+ {
+  "id": "j041",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "qui, cum nihil / hil impetrare posset",
+    "translation": "since he could obtain nothing... / he could obtain nothing"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT renders the split clause twice across the break; RIGHT renders it once."
+ },
+ {
+  "id": "j042",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "carne crucifixus. magis manifestatus",
+    "translation": "in the flesh, crucified, manifested in the flesh"
+   },
+   {
+    "type": "OMISSION",
+    "source": "magis manifestatus",
+    "translation": "manifested"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "ducentos(angetos) dies indulgentiarum",
+    "translation": "individual days of indulgences"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "sed utinam devotas et gratas",
+    "translation": "yet desiring and beseeching you"
+   }
+  ],
+  "why": "Right after the break LEFT repeats in the flesh and drops magis while RIGHT renders it literally; each has one mistranslation before the break."
+ },
+ {
+  "id": "j043",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "qui, cum nihil / hil impetrare posset",
+    "translation": "since he could obtain nothing... / he could obtain nothing"
+   }
+  ],
+  "right_defects": [],
+  "why": "LEFT duplicates the clause split across the break; RIGHT carries it over once (since nothing / could be obtained)."
+ },
+ {
+  "id": "j044",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "Oramus dne clementiam tuam",
+    "translation": "We pray, O Lord, that"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "tu nobis preces suggerens ipse audire propitius et exaudire digneris",
+    "translation": "hear propitiously those who suggest prayers to us"
+   }
+  ],
+  "why": "In the first sentences after the break RIGHT drops clementiam tuam and inverts who suggests the prayers."
+ },
+ {
+  "id": "j045",
+  "fidelity": "TIE",
+  "fluency": "RIGHT",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the hyphenated Damna-/mnatur once and faithfully; LEFT keeps the hyphen split (con- / demned), which reads less continuously."
+ },
+ {
+  "id": "j046",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry locus / propitiationis across the break faithfully."
+ },
+ {
+  "id": "j047",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "und durch andere Leute darzu angetrieben / damit fortzufahren",
+    "translation": "and He urged others to proceed with it"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both join Augspur-/gischen Confession correctly, but shortly before the break LEFT turns J.B. being urged by others into God urging others."
+ },
+ {
+  "id": "j048",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Clean sentence break; both render consummatio / Sit queso faithfully, and their other differences fall outside the junction."
+ }
+]

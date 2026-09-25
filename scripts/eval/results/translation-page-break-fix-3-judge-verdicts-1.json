@@ -1,0 +1,218 @@
+[
+ {
+  "id": "j001",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "excusationis patiens / patiens legebatur",
+    "translation": "patient of excuse / patient of excuse"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "patiens / patiens",
+    "translation": "patient of excuse / patient"
+   }
+  ],
+  "why": "Both render the catchword patiens twice across the break; neither has a defect the other lacks of real weight."
+ },
+ {
+  "id": "j002",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both join ente/entschieden as so we are / decided with no fidelity defect at the break."
+ },
+ {
+  "id": "j003",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "melius possit a nobis agi",
+    "translation": "can best be conducted"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "quid ... sentiam",
+    "translation": "write to you about the public utility"
+   }
+  ],
+  "why": "Each has one minor defect in the letter opening after the break; they weigh the same."
+ },
+ {
+  "id": "j004",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "me ... medelam invenisse",
+    "translation": "you have found some remedy"
+   }
+  ],
+  "right_defects": [],
+  "why": "Right keeps the finder as the writer and joins aliquid / ad me scribas naturally; left shifts the subject and splits awkwardly."
+ },
+ {
+  "id": "j005",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Pagina 39",
+    "translation": "Pagina 39"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry os / et instrumentum across correctly; left leaves Pagina untranslated."
+ },
+ {
+  "id": "j006",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "ex coniecturis et signis",
+    "translation": "from prayers and signs"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "capillando vestes abstrahendo",
+    "translation": "pulling their clothes, abstracting"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "a superbis",
+    "translation": "For just as water is accustomed to flow down from mountains"
+   }
+  ],
+  "why": "After the break left mistranslates conjectures and drops the hair-pulling; right only drops a phrase before the break."
+ },
+ {
+  "id": "j007",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "178. Dare (catchword) / 78. Darum",
+    "translation": "78. There / 78. Therefore"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left renders the catchword as a duplicated paragraph opening; right correctly drops it."
+ },
+ {
+  "id": "j008",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "UNTRANSLATED",
+    "source": "Ca- / Camerario",
+    "translation": "Ca- / [To the] Chamberlain"
+   },
+   {
+    "type": "OMISSION",
+    "source": "fideliter absque dolo & fraude observet",
+    "translation": "by our Successors to be confirmed by ordinary authority."
+   }
+  ],
+  "right_defects": [],
+  "why": "Left leaves the hyphenated catchword fragment Ca- before the break and drops the observe clause; right joins cleanly."
+ },
+ {
+  "id": "j009",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "in dulci et largiter infudisti",
+    "translation": "have infused new and singular grace"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both carry in lavacro baptismatis / desponsare voluisti across correctly; left small omission before the break is minor."
+ },
+ {
+  "id": "j010",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "propter dulcedinem nominis sui. Oculi eius ... manus eius",
+    "translation": "your name. Your eyes ... your hands"
+   }
+  ],
+  "why": "Both handle the break, but right turns the third-person verse into second person just after it."
+ },
+ {
+  "id": "j011",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render iuste non / dedi as one sentence before the break and continue identically."
+ },
+ {
+  "id": "j012",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry sanguinem suum / non dubitaverunt fundere across correctly."
+ },
+ {
+  "id": "j013",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Break falls between prayers; both render both sides fully."
+ },
+ {
+  "id": "j014",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "coram quoque",
+    "translation": "not only once"
+   }
+  ],
+  "right_defects": [],
+  "why": "Both handle Alterum est / est insigne without duplication; left drops that Pinfon heard it in person."
+ },
+ {
+  "id": "j015",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both join quae supra / mundum identically and faithfully."
+ },
+ {
+  "id": "j016",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Break is at a paragraph boundary; both render it faithfully."
+ }
+]

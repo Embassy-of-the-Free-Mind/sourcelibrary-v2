@@ -1,0 +1,309 @@
+[
+ {
+  "id": "j017",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "appropriare sibi presumpserint",
+    "translation": "appropriate to themselves (presume omitted)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "noualia",
+    "translation": "by novel or other ways"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "appropriare sibi presumpserint",
+    "translation": "appropriate to themselves ... | presuming to appropriate them"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "alioz etiaz aialia ipa eoz gregibus immiscentium",
+    "translation": "mingle their own animals ... with the flocks of others"
+   }
+  ],
+  "why": "Right renders appropriate twice across the break and reverses whose flocks the animals are mixed into."
+ },
+ {
+  "id": "j018",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "OMISSION",
+    "source": "toritate Magistratus tam dure flagellas, disce ... nequaquam temere iudicare",
+    "translation": "(entire sentence after the break missing)"
+   }
+  ],
+  "why": "Right drops the whole sentence that completes the crossing clause after the break."
+ },
+ {
+  "id": "j019",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "in iustificationibus nostris",
+    "translation": "trusting in our justifications"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "tu nobis preces suggerens ipse audire propitius",
+    "translation": "hear propitiously those who suggest prayers to us"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "sit illis hodie magnum et plenum convivium de te pane vivo",
+    "translation": "May my God be to them today great and full of that living bread"
+   }
+  ],
+  "why": "Right garbles two sentences after the break; left has only a minor gloss."
+ },
+ {
+  "id": "j020",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both carry the crossing Episcoporum constantia / Regis jussione clause correctly with no substantive defect."
+ },
+ {
+  "id": "j021",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "nihil aliud quam nostrae reipublicae restat quam ut",
+    "translation": "their strength is nothing other than what remains of our republic"
+   },
+   {
+    "type": "OMISSION",
+    "source": "prudentioribus aut fortioribus ducibus",
+    "translation": "more prudent or stronger men"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "imparatus",
+    "translation": "impatient"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "imparatus",
+    "translation": "impatient"
+   }
+  ],
+  "why": "Left misconstrues the pre-break clause and drops leaders; both share impatient."
+ },
+ {
+  "id": "j022",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iis solis, quibus | quibus praedicandi",
+    "translation": "to anyone except those to whom... | ...to whom He gave"
+   }
+  ],
+  "why": "Right renders the catchword quibus twice across the break."
+ },
+ {
+  "id": "j023",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "decore imaginis tue misericorditer illustrasti",
+    "translation": "illustrated me with the beauty of your image (mercifully omitted)"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "consummatione",
+    "translation": "consumption"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "consummatione",
+    "translation": "consumption"
+   }
+  ],
+  "why": "Left omits misericorditer before the break; both share consumption."
+ },
+ {
+  "id": "j024",
+  "fidelity": "LEFT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "vbi b lactat",
+    "translation": "suckled by the beast"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "licet indignas, sed utinam devotas et gratas",
+    "translation": "though unworthy, yet desiring and beseeching you"
+   }
+  ],
+  "why": "Right mistranslates the thanksgiving clause before the break; left adds only a small gloss."
+ },
+ {
+  "id": "j025",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "nach den Gri-|chischen / Griechischen gefraget",
+    "translation": "asked after the Greek | Greek."
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mit Fleiss",
+    "translation": "diligently"
+   }
+  ],
+  "why": "Left renders the catchword Greek twice across the break; right only softens deliberately to diligently."
+ },
+ {
+  "id": "j026",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "portus naufragantium, miserorum solatium, pereuntium refugium",
+    "translation": "the power for the miserable, the solace for those perishing, the refuge for the wandering"
+   },
+   {
+    "type": "MISTRANSLATION",
+    "source": "terror demonum et superborum",
+    "translation": "terror of demons from the proud"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "terror demonum et superborum",
+    "translation": "terror of demons to the proud"
+   }
+  ],
+  "why": "Left drops harbor for the shipwrecked and shifts the following epithets; both mishandle superborum."
+ },
+ {
+  "id": "j027",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [],
+  "right_defects": [],
+  "why": "Both render the crossing iuste non | dedi and the following text faithfully."
+ },
+ {
+  "id": "j028",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mit Rothe der Laesterung",
+    "translation": "the red of slander"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "mit Rothe der Laesterung",
+    "translation": "the rot of slander"
+   }
+  ],
+  "why": "Both carry so sind wir ent|schieden across the break correctly; remaining differences are shared uncertainties."
+ },
+ {
+  "id": "j029",
+  "fidelity": "RIGHT",
+  "fluency": "RIGHT",
+  "left_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "vnicum est os | & instrumentum",
+    "translation": "the only mouth and instrument | and instrument"
+   }
+  ],
+  "right_defects": [],
+  "why": "Left renders and instrument twice across the break."
+ },
+ {
+  "id": "j030",
+  "fidelity": "RIGHT",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "ADDITION",
+    "source": "Gloria",
+    "translation": "Glory to the Father and to the Son."
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "ADDITION",
+    "source": "maria diligere nomen tuum",
+    "translation": "name of Mary, Lady"
+   }
+  ],
+  "why": "Left expands the Gloria formula; right adds only a minor vocative."
+ },
+ {
+  "id": "j031",
+  "fidelity": "LEFT",
+  "fluency": "LEFT",
+  "left_defects": [],
+  "right_defects": [
+   {
+    "type": "DUPLICATION",
+    "source": "iis solis, quibus | quibus praedicandi",
+    "translation": "to anyone except those to whom... | ...to whom He gave"
+   }
+  ],
+  "why": "Right renders the catchword quibus twice across the break."
+ },
+ {
+  "id": "j032",
+  "fidelity": "TIE",
+  "fluency": "TIE",
+  "left_defects": [
+   {
+    "type": "OMISSION",
+    "source": "manes defuncti proximi",
+    "translation": "the spirit of a deceased person"
+   }
+  ],
+  "right_defects": [
+   {
+    "type": "MISTRANSLATION",
+    "source": "manes defuncti proximi viventi",
+    "translation": "a departed spirit reveals itself to a living relative"
+   }
+  ],
+  "why": "Both carry the crossing quoniam | et quandoque clause correctly and have comparable minor slips on proximi."
+ }
+]
