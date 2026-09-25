@@ -27,6 +27,7 @@ import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
+import { resolvePageBreak, lookaheadSnippet } from './page-break-devices.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -266,17 +267,80 @@ export function translationPromptHeader({ prompts, book }) {
   return { prompt, promptRef: base.ref, isEnglish: english };
 }
 
-export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation }) {
+/**
+ * Page-break devices (#5103) — OFF by default; production is unchanged until a measured flip.
+ *
+ * The source-grounded seam judge (EXPERIMENTS.md 2026-09-25 late) found production defective at
+ * 10 of 12 breaks where the page ends on a catchword or a split word, and at 3 in 4 mid-flow breaks
+ * overall. The translator is told nothing about either device and sees only the previous page's
+ * translation, never the next page's source. Four pieces, each switchable so a test can prove it
+ * carries weight (tests/unit/translate-page-break.test.ts):
+ *
+ *   splitWords   "Augspur-" | "gischen" is joined onto the page where it begins and the fragment is
+ *                removed from the next page's translatable text          (page-break-devices.mjs)
+ *   catchwords   a trailing catchword is removed from the page's text and named as a printer's device
+ *   lookahead    the SOURCE of the next page's first sentence is sent as context, so a sentence that
+ *                crosses the break is translated knowing how it ends
+ *   rule         one prompt line naming catchwords and split words
+ *
+ * Pass `pageBreak: PAGE_BREAK_FIX` with `prevOcrText` / `nextOcrText` to enable. With `pageBreak`
+ * absent the prompt is byte-identical to what it was before this option existed.
+ */
+export const PAGE_BREAK_FIX = Object.freeze({ splitWords: true, catchwords: true, lookahead: true, rule: true });
+
+export const PAGE_BREAK_RULE = '**Page breaks:** a catchword (the next page\'s first word printed again at the foot of this page) is a printer\'s device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page\'s words are rendered here: never repeat or complete the next page\'s words.';
+
+export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
   const { prompt: header, promptRef, isEnglish: english } = translationPromptHeader({ prompts, book });
   let prompt = header;
 
+  let text = ocrText;
+  const notes = [];
+  let lookahead = '';
+  const meta = { kind: null, joined: null, catchword: null, headJoined: null, lookahead: false };
+  if (pageBreak) {
+    const edits = { splitWords: !!pageBreak.splitWords, catchwords: !!pageBreak.catchwords };
+    // The break BEFORE this page: a word the previous page began is translated there.
+    if (prevOcrText && (edits.splitWords || edits.catchwords)) {
+      const head = resolvePageBreak(prevOcrText, text, edits);
+      text = head.ocrNext;
+      if (head.joined) {
+        meta.headJoined = head.joined;
+        notes.push(`The word «${head.joined}» was split across the break from the previous page and is translated there; this page's text begins after it.`);
+      } else if (head.removedFromNext) {
+        notes.push(`The word «${head.removedFromNext}» at the head of this page repeats the previous page's catchword and has been removed; it is not translated twice.`);
+      }
+    }
+    // The break AFTER this page: the devices at its foot, and the next page's opening as context.
+    if (nextOcrText) {
+      const foot = resolvePageBreak(text, nextOcrText, edits);
+      if (edits.splitWords || edits.catchwords) text = foot.ocrN;
+      meta.kind = foot.kind;
+      meta.joined = foot.joined;
+      meta.catchword = foot.catchword;
+      if (foot.joined) notes.push(`This page ends with the word «${foot.joined}», completed from the top of the next page; translate it here.`);
+      // A tagged catchword that is the second half of the joined word ("gischen" under
+      // "Augspur-") is part of that word, not a separate device to warn about.
+      const partOfJoin = foot.joined && foot.catchword && foot.joined.toLowerCase().includes(foot.catchword.toLowerCase().replace(/[^\p{L}]/gu, ''));
+      if (foot.catchword && edits.catchwords && !partOfJoin) notes.push(`The catchword «${foot.catchword}» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.`);
+      if (pageBreak.lookahead) {
+        lookahead = lookaheadSnippet(foot.ocrNext);
+        meta.lookahead = !!lookahead;
+      }
+    }
+    if (pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
+  }
+
   prompt += english
-    ? `\n\n**Text to modernize:**\n${ocrText}`
-    : `\n\n**Text to translate:**\n${ocrText}`;
+    ? `\n\n**Text to modernize:**\n${text}`
+    : `\n\n**Text to translate:**\n${text}`;
+
+  if (notes.length) prompt += `\n\n**At the page break:** ${notes.join(' ')}`;
+  if (lookahead) prompt += `\n\n**The next page opens (source, for context only; do NOT translate it, the next page carries it):**\n${lookahead}`;
 
   prompt += continuityContext(previousTranslation, { english });
 
-  return { prompt, promptRef, isEnglish: english };
+  return { prompt, promptRef, isEnglish: english, pageBreak: pageBreak ? meta : null };
 }
 
 /** Close unterminated inline tags the model sometimes emits mid-stream. */
