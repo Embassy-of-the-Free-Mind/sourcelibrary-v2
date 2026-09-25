@@ -130,6 +130,53 @@ export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<stri
   };
 }
 
+/** The slice of a Mongo `Db` the indexed filter needs — kept narrow so tests can fake it. */
+export interface LanguageSpellingsSource {
+  collection(name: 'books'): { distinct(key: 'language', filter?: Record<string, unknown>, options?: { maxTimeMS?: number }): Promise<unknown[]> };
+}
+
+/**
+ * `localizedEditionFilter` for a query that is NOT already scoped by another
+ * indexed field — a corpus-wide "which books exist in `lang`" (#5073, #5074).
+ *
+ * Same set, different shape. The regex branch above is `/…/i`, and a
+ * case-insensitive regex has no index bounds: the planner can only serve it by
+ * walking every key of `books_language_idx`, so it rejects the `$or` index
+ * union and instead walks `visible` and FETCHES all ~57K visible books to
+ * post-filter them — 1.4 s quiet, a 500 or a failed build under a peer bulk
+ * sweep. Measured 2026-09-25: winning plan IXSCAN(visible…) → FETCH 57,678
+ * docs; the OR plan over the language index + the partial counter index sat in
+ * `rejectedPlans`.
+ *
+ * So resolve the regex FIRST against the live spellings — `distinct('language')`
+ * is a DISTINCT_SCAN over the language index, ~500 keys, 0 documents, 1 ms —
+ * and hand Mongo an `$in` of the spellings that matched. Point lookups are
+ * indexable, the `$or` becomes the index union it was meant to be (277 docs
+ * examined, 16 ms), and the JS regex is still the ONE rule: it is applied to
+ * every stored value, so the set is exactly what the sync filter would select.
+ *
+ * Falls back to the sync filter if `distinct` fails: slower, never wrong.
+ * Use the sync `localizedEditionFilter` when the query already carries an
+ * indexed selector (`collections: slug`); there the regex is a cheap
+ * post-filter on a small set and the extra round trip buys nothing.
+ */
+export async function localizedEditionFilterIndexed(db: LanguageSpellingsSource, lang: Exclude<Locale, 'en'>): Promise<Record<string, unknown>> {
+  const pattern = NATIVE_EDITION_LANGUAGE[lang];
+  let spellings: string[];
+  try {
+    const values = await db.collection('books').distinct('language', {}, { maxTimeMS: 3000 });
+    spellings = values.filter((v): v is string => typeof v === 'string' && pattern.test(v));
+  } catch {
+    return localizedEditionFilter(lang);
+  }
+  return {
+    $or: [
+      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
+      { language: { $in: spellings } },
+    ],
+  };
+}
+
 /**
  * Does this book actually EXIST in `lang`?
  *
