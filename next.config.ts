@@ -241,6 +241,14 @@ const nextConfig: NextConfig = {
         source: '/book/:id/page/:pageId/preview',
         headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
       },
+      // The one-document reading mode (#5115) is force-dynamic because what it
+      // serves depends on who asks — signed-in readers get the whole book,
+      // anonymous readers the free sample. Edge-cached, one visitor's render
+      // would be served to everyone for a day (the #3646 failure shape).
+      {
+        source: '/book/:id/read',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
+      },
       {
         source: '/collections/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
