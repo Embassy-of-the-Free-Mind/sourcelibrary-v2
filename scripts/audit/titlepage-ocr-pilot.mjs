@@ -96,10 +96,10 @@ function pageProse(raw) {
     // shatters exactly the word that matters: "GVER- RA DI NICOLO MACHIAVEL-".
     // Join before any whitespace collapse, or the newline is already gone.
     .replace(/([A-Za-zÀ-ÿ])[-‐‑—]\s*\n\s*([A-Za-zÀ-ÿ])/g, '$1$2')
-    .replace(/<[^>]+>/g, ' ')
+    .replace(/->|<-/g, ' ') // centring markers BEFORE the tag strip (#4815, #5105)
+    .replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
     .replace(/^#+\s*/gm, ' ')
     .replace(/[*_`>]+/g, ' ')
-    .replace(/->|<-/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
