@@ -1,0 +1,2836 @@
+{
+ "dense": [
+  {
+   "book": {
+    "id": "6a21985ef11c08f10b202ad4",
+    "slug": "theophrasti-characteres-ethici-theophrastus",
+    "title": "Theophrasti Characteres ethici",
+    "author": "Theophrastus",
+    "language": "Latin",
+    "year": 1712,
+    "published": "1712",
+    "pages_count": 622
+   },
+   "pages": [
+    {
+     "p": 225,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2716,
+     "tr_len": 3122,
+     "pageId": "6a21985ef11c08f10b202bb5",
+     "image": "https://images.sourcelibrary.org/pages/6a21985ef11c08f10b202ad4/0225.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a21985ef11c08f10b202ad4/225.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/theophrasti-characteres-ethici-theophrastus/page/6a21985ef11c08f10b202bb5"
+    },
+    {
+     "p": 226,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2671,
+     "tr_len": 2822,
+     "pageId": "6a21985ef11c08f10b202bb6",
+     "image": "https://images.sourcelibrary.org/pages/6a21985ef11c08f10b202ad4/0226.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a21985ef11c08f10b202ad4/226.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/theophrasti-characteres-ethici-theophrastus/page/6a21985ef11c08f10b202bb6"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "697e23c8bb80b2397e771e23",
+    "slug": "hypnerotomachia-or-the-dream-of-poliphilus-colonna",
+    "title": "Hypnerotomachie, ou discours du songe de Poliphile",
+    "author": "[Colonna, Francesco]",
+    "language": "French",
+    "year": 1561,
+    "published": "1561",
+    "pages_count": 380
+   },
+   "pages": [
+    {
+     "p": 104,
+     "type": "text",
+     "lang": "French",
+     "ocr_len": 2895,
+     "tr_len": 1718,
+     "pageId": "697e406ba5a10b72f95e03b1",
+     "image": "https://images.sourcelibrary.org/pages/697e23c8bb80b2397e771e23/0104.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/697e23c8bb80b2397e771e23/697e4015a5a10b72f95e03a5.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/hypnerotomachia-or-the-dream-of-poliphilus-colonna/page/697e406ba5a10b72f95e03b1"
+    },
+    {
+     "p": 105,
+     "type": "text",
+     "lang": "French",
+     "ocr_len": 2969,
+     "tr_len": 3274,
+     "pageId": "697e40ce6ede056bd5354c8b",
+     "image": "https://images.sourcelibrary.org/pages/697e23c8bb80b2397e771e23/0105.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/697e23c8bb80b2397e771e23/697e40886ede056bd5354c85.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/hypnerotomachia-or-the-dream-of-poliphilus-colonna/page/697e40ce6ede056bd5354c8b"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a22da4468f6a1498e3003a1",
+    "slug": "practica-nova-medicine-concoregio",
+    "title": "Practica nova medicine",
+    "author": "Giovanni da Concoregio",
+    "language": "Latin",
+    "year": 1521,
+    "published": "1521",
+    "pages_count": 214
+   },
+   "pages": [
+    {
+     "p": 76,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 6884,
+     "tr_len": 7750,
+     "pageId": "6a22da4468f6a1498e3003ed",
+     "image": "https://images.sourcelibrary.org/pages/6a22da4468f6a1498e3003a1/0076.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a22da4468f6a1498e3003a1/76.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/practica-nova-medicine-concoregio/page/6a22da4468f6a1498e3003ed"
+    },
+    {
+     "p": 77,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 7073,
+     "tr_len": 8125,
+     "pageId": "6a22da4468f6a1498e3003ee",
+     "image": "https://images.sourcelibrary.org/pages/6a22da4468f6a1498e3003a1/0077.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a22da4468f6a1498e3003a1/77.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/practica-nova-medicine-concoregio/page/6a22da4468f6a1498e3003ee"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b1cad0a282e3475aab3794",
+    "slug": "de-nagelate-schriften-spinoza",
+    "title": "De nagelate schriften",
+    "author": "Baruch Spinoza",
+    "language": "Dutch",
+    "year": 1677,
+    "published": "1677",
+    "pages_count": 728
+   },
+   "pages": [
+    {
+     "p": 488,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2662,
+     "tr_len": 2577,
+     "pageId": "69b1cad0a282e3475aab397c",
+     "image": "https://images.sourcelibrary.org/pages/69b1cad0a282e3475aab3794/0488.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b1cad0a282e3475aab3794/488.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-nagelate-schriften-spinoza/page/69b1cad0a282e3475aab397c"
+    },
+    {
+     "p": 489,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2650,
+     "tr_len": 2477,
+     "pageId": "69b1cad0a282e3475aab397d",
+     "image": "https://images.sourcelibrary.org/pages/69b1cad0a282e3475aab3794/0489.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b1cad0a282e3475aab3794/489.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-nagelate-schriften-spinoza/page/69b1cad0a282e3475aab397d"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69aec19cdd3c98abc0da86b6",
+    "slug": "pseudodoxia-epidemica-or-enquiries-into-very-many-received-browne",
+    "title": "Pseudodoxia Epidemica: Or, Enquiries into Very Many Received Tenents",
+    "author": "Sir Thomas Browne",
+    "language": "English",
+    "year": 1658,
+    "published": "1658",
+    "pages_count": 360
+   },
+   "pages": [
+    {
+     "p": 246,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 3432,
+     "tr_len": 3319,
+     "pageId": "69aec19cdd3c98abc0da87ac",
+     "image": "https://images.sourcelibrary.org/pages/69aec19cdd3c98abc0da86b6/0246.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69aec19cdd3c98abc0da86b6/246.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/pseudodoxia-epidemica-or-enquiries-into-very-many-received-browne/page/69aec19cdd3c98abc0da87ac"
+    },
+    {
+     "p": 247,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 3405,
+     "tr_len": 3285,
+     "pageId": "69aec19cdd3c98abc0da87ad",
+     "image": "https://images.sourcelibrary.org/pages/69aec19cdd3c98abc0da86b6/0247.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69aec19cdd3c98abc0da86b6/247.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/pseudodoxia-epidemica-or-enquiries-into-very-many-received-browne/page/69aec19cdd3c98abc0da87ad"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69af0a2069627f8eeaa1b8ac",
+    "slug": "mundus-subterraneus-tomus-ii-kircher",
+    "title": "Mundus Subterraneus Tomus II",
+    "author": "Athanasius Kircher",
+    "language": "Latin",
+    "year": 1678,
+    "published": "1678",
+    "pages_count": 538
+   },
+   "pages": [
+    {
+     "p": 316,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4433,
+     "tr_len": 5381,
+     "pageId": "69af0a2069627f8eeaa1b9e8",
+     "image": "https://images.sourcelibrary.org/pages/69af0a2069627f8eeaa1b8ac/0316.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af0a2069627f8eeaa1b8ac/316.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mundus-subterraneus-tomus-ii-kircher/page/69af0a2069627f8eeaa1b9e8"
+    },
+    {
+     "p": 317,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4270,
+     "tr_len": 4969,
+     "pageId": "69af0a2069627f8eeaa1b9e9",
+     "image": "https://images.sourcelibrary.org/pages/69af0a2069627f8eeaa1b8ac/0317.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af0a2069627f8eeaa1b8ac/317.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mundus-subterraneus-tomus-ii-kircher/page/69af0a2069627f8eeaa1b9e9"
+    }
+   ]
+  }
+ ],
+ "multicol": [
+  {
+   "book": {
+    "id": "69c786706a0f3d112faf992b",
+    "slug": "histoire-de-la-condannation-des-templiers-celle-du-schisme-dupuy",
+    "title": "Histoire de la condannation des Templiers, celle du schisme des Papes tenans le Siege en Avignon & quelques Procès criminels",
+    "author": "Dupuy, Pierre|Guertler, Nicolaus",
+    "language": "French",
+    "year": 1713,
+    "published": "1713",
+    "pages_count": 346
+   },
+   "pages": [
+    {
+     "p": 227,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2329,
+     "tr_len": 1666,
+     "pageId": "69f69640aee36685de86487d",
+     "image": "https://images.sourcelibrary.org/pages/69c786706a0f3d112faf992b/sp69f69640aee36685de86487d.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c786706a0f3d112faf992b/69f69640aee36685de86487d.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/histoire-de-la-condannation-des-templiers-celle-du-schisme-dupuy/page/69f69640aee36685de86487d"
+    },
+    {
+     "p": 228,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1944,
+     "tr_len": 2367,
+     "pageId": "69f69640aee36685de864880",
+     "image": "https://images.sourcelibrary.org/pages/69c786706a0f3d112faf992b/sp69f69640aee36685de864880.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c786706a0f3d112faf992b/69f69640aee36685de864880.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/histoire-de-la-condannation-des-templiers-celle-du-schisme-dupuy/page/69f69640aee36685de864880"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69ad657f75811c30866e1cf4",
+    "slug": "ante-nicene-fathers-vol-2-clement-of-alexandria-eds",
+    "title": "Ante-Nicene Fathers, Vol. 2 (Clement of Alexandria)",
+    "author": "Alexander Roberts & James Donaldson (eds.)",
+    "language": "English",
+    "year": 1913,
+    "published": "1913",
+    "pages_count": 650
+   },
+   "pages": [
+    {
+     "p": 172,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4388,
+     "tr_len": 2600,
+     "pageId": "69ad657f75811c30866e1da0",
+     "image": "https://images.sourcelibrary.org/pages/69ad657f75811c30866e1cf4/0172.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ad657f75811c30866e1cf4/172.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ante-nicene-fathers-vol-2-clement-of-alexandria-eds/page/69ad657f75811c30866e1da0"
+    },
+    {
+     "p": 173,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4290,
+     "tr_len": 3386,
+     "pageId": "69ad657f75811c30866e1da1",
+     "image": "https://images.sourcelibrary.org/pages/69ad657f75811c30866e1cf4/0173.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ad657f75811c30866e1cf4/173.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ante-nicene-fathers-vol-2-clement-of-alexandria-eds/page/69ad657f75811c30866e1da1"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6911cf678cb6d2ae494a1061",
+    "slug": "the-book-of-brightness-hakana",
+    "title": "Sefer ha-bahir",
+    "author": "Nechunja ben haKana",
+    "language": "Hebrew",
+    "year": 1651,
+    "published": "1651",
+    "pages_count": 62
+   },
+   "pages": [
+    {
+     "p": 15,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2295,
+     "tr_len": 4414,
+     "pageId": "6911cf898cb6d2ae494a106d",
+     "image": "https://images.sourcelibrary.org/pages/6911cf678cb6d2ae494a1061/sp0010.jpg",
+     "image_full": "https://images.sourcelibrary.org/pages/6911cf678cb6d2ae494a1061/sp0010-full.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-book-of-brightness-hakana/page/6911cf898cb6d2ae494a106d"
+    },
+    {
+     "p": 16,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 2586,
+     "tr_len": 1169,
+     "pageId": "69531ab477f38f6761bcd7c3",
+     "image": "https://images.sourcelibrary.org/pages/6911cf678cb6d2ae494a1061/0011.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6911cf678cb6d2ae494a1061/11.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-book-of-brightness-hakana/page/69531ab477f38f6761bcd7c3"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69af0a25dc4c98c65a3d4e79",
+    "slug": "musaeum-kircherianum-kircher",
+    "title": "Musaeum Kircherianum",
+    "author": "Athanasius Kircher",
+    "language": "Latin",
+    "year": 1709,
+    "published": "1709",
+    "pages_count": 774
+   },
+   "pages": [
+    {
+     "p": 611,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4007,
+     "tr_len": 4488,
+     "pageId": "69af0a25dc4c98c65a3d50dc",
+     "image": "https://images.sourcelibrary.org/pages/69af0a25dc4c98c65a3d4e79/0611.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af0a25dc4c98c65a3d4e79/611.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/musaeum-kircherianum-kircher/page/69af0a25dc4c98c65a3d50dc"
+    },
+    {
+     "p": 612,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 3962,
+     "tr_len": 4243,
+     "pageId": "69af0a25dc4c98c65a3d50dd",
+     "image": "https://images.sourcelibrary.org/pages/69af0a25dc4c98c65a3d4e79/0612.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af0a25dc4c98c65a3d4e79/612.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/musaeum-kircherianum-kircher/page/69af0a25dc4c98c65a3d50dd"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c72caa6a0f3d112faf6f71",
+    "slug": "preclara-francorum-facinora-varia-montfort",
+    "title": "Preclara Francorum facinora varia",
+    "author": "[Montfort, Simon de]",
+    "language": "Latin",
+    "year": 1520,
+    "published": "[1520?]",
+    "pages_count": 132
+   },
+   "pages": [
+    {
+     "p": 68,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1188,
+     "tr_len": 1153,
+     "pageId": "69f5067ef708eae99d702fb3",
+     "image": "https://images.sourcelibrary.org/pages/69c72caa6a0f3d112faf6f71/sp69f5067ef708eae99d702fb3.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c72caa6a0f3d112faf6f71/69f5067ef708eae99d702fb3.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/preclara-francorum-facinora-varia-montfort/page/69f5067ef708eae99d702fb3"
+    },
+    {
+     "p": 69,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1210,
+     "tr_len": 1130,
+     "pageId": "69f5067ef708eae99d702fb4",
+     "image": "https://images.sourcelibrary.org/pages/69c72caa6a0f3d112faf6f71/sp69f5067ef708eae99d702fb4.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c72caa6a0f3d112faf6f71/69f5067ef708eae99d702fb4.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/preclara-francorum-facinora-varia-montfort/page/69f5067ef708eae99d702fb4"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6953cc4077f38f6761be180a",
+    "slug": "zenon-papyri-vol-iii-cairo-museum-edgar",
+    "title": "Zenon Papyri Vol. III - Cairo Museum",
+    "author": "Campbell Cowan Edgar",
+    "language": "Greek",
+    "year": 1928,
+    "published": "1928",
+    "pages_count": 185
+   },
+   "pages": [
+    {
+     "p": 69,
+     "type": "text",
+     "lang": "Greek",
+     "ocr_len": 875,
+     "tr_len": 1554,
+     "pageId": "6953cc4077f38f6761be184f",
+     "image": "https://images.sourcelibrary.org/pages/6953cc4077f38f6761be180a/0069.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6953cc4077f38f6761be180a/69.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/zenon-papyri-vol-iii-cairo-museum-edgar/page/6953cc4077f38f6761be184f"
+    },
+    {
+     "p": 70,
+     "type": "text",
+     "lang": "Greek",
+     "ocr_len": 1649,
+     "tr_len": 2030,
+     "pageId": "6953cc4077f38f6761be1850",
+     "image": "https://images.sourcelibrary.org/pages/6953cc4077f38f6761be180a/0070.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6953cc4077f38f6761be180a/70.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/zenon-papyri-vol-iii-cairo-museum-edgar/page/6953cc4077f38f6761be1850"
+    }
+   ]
+  }
+ ],
+ "manuscript": [
+  {
+   "book": {
+    "id": "69e787ae4a6785cfd60cccbd",
+    "slug": "ratna-gling-pa-i-rnam-thar-legs-bshad-bdud-rtsi-i-rgya-mtsho-collection",
+    "title": "ratna gling pa'i rnam thar legs bshad bdud rtsi'i rgya mtsho",
+    "author": "Drametse Monastery Collection",
+    "language": "Tibetan",
+    "year": 1700,
+    "published": "1700",
+    "pages_count": 154
+   },
+   "pages": [
+    {
+     "p": 38,
+     "type": "",
+     "lang": "",
+     "ocr_len": 1223,
+     "tr_len": 1140,
+     "pageId": "69e787ae4a6785cfd60ccce3",
+     "image": "https://images.sourcelibrary.org/pages/69e787ae4a6785cfd60cccbd/0038.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e787ae4a6785cfd60cccbd/38.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ratna-gling-pa-i-rnam-thar-legs-bshad-bdud-rtsi-i-rgya-mtsho-collection/page/69e787ae4a6785cfd60ccce3"
+    },
+    {
+     "p": 39,
+     "type": "",
+     "lang": "",
+     "ocr_len": 737,
+     "tr_len": 1374,
+     "pageId": "69e787ae4a6785cfd60ccce4",
+     "image": "https://images.sourcelibrary.org/pages/69e787ae4a6785cfd60cccbd/0039.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e787ae4a6785cfd60cccbd/39.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ratna-gling-pa-i-rnam-thar-legs-bshad-bdud-rtsi-i-rgya-mtsho-collection/page/69e787ae4a6785cfd60ccce4"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6992ce7477d26f9321776f69",
+    "slug": "sri-guru-granth-sahib-1691-manuscript-chand",
+    "title": "Sri Guru Granth Sahib (1691 Manuscript)",
+    "author": "Guru Gobind Singh; scribed by Fateh Chand",
+    "language": "Punjabi",
+    "year": 1691,
+    "published": "1691",
+    "pages_count": 634
+   },
+   "pages": [
+    {
+     "p": 504,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 708,
+     "tr_len": 1957,
+     "pageId": "6992ce7477d26f9321777162",
+     "image": "https://images.sourcelibrary.org/pages/6992ce7477d26f9321776f69/0504.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6992ce7477d26f9321776f69/504.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/sri-guru-granth-sahib-1691-manuscript-chand/page/6992ce7477d26f9321777162"
+    },
+    {
+     "p": 505,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 781,
+     "tr_len": 1951,
+     "pageId": "6992ce7477d26f9321777163",
+     "image": "https://images.sourcelibrary.org/pages/6992ce7477d26f9321776f69/0505.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6992ce7477d26f9321776f69/505.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/sri-guru-granth-sahib-1691-manuscript-chand/page/6992ce7477d26f9321777163"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f33a7b876dd827cbc57e7c",
+    "slug": "legal-commonplace-book-1574-1639-bull",
+    "title": "Legal commonplace book, 1574-1639",
+    "author": "Unknown",
+    "language": "English",
+    "year": 1574,
+    "published": "1574",
+    "pages_count": 237
+   },
+   "pages": [
+    {
+     "p": 65,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1080,
+     "tr_len": 962,
+     "pageId": "69f33a7b876dd827cbc57ebd",
+     "image": "https://images.sourcelibrary.org/pages/69f33a7b876dd827cbc57e7c/0065.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33a7b876dd827cbc57e7c/65.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/legal-commonplace-book-1574-1639-bull/page/69f33a7b876dd827cbc57ebd"
+    },
+    {
+     "p": 66,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1226,
+     "tr_len": 1055,
+     "pageId": "69f33a7b876dd827cbc57ebe",
+     "image": "https://images.sourcelibrary.org/pages/69f33a7b876dd827cbc57e7c/0066.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33a7b876dd827cbc57e7c/66.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/legal-commonplace-book-1574-1639-bull/page/69f33a7b876dd827cbc57ebe"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a878ac1d71f2514794f9e40",
+    "slug": "chilam-balam-de-kaua-maler-photographs-1887",
+    "title": "Libro de Chilam Balam de Kaua — Tratado de las 7 planetas ytr de medecinarvm, sygno, de sangrar (Maler photographs, 1887)",
+    "author": "Anonymous Yucatec Maya scribes",
+    "language": "Yucatec Maya",
+    "year": 1789,
+    "published": "1789",
+    "pages_count": 288
+   },
+   "pages": [
+    {
+     "p": 162,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 532,
+     "tr_len": 912,
+     "pageId": "6a879ba86f4a03d5d89ad55a",
+     "image": "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0162.jpg",
+     "image_full": "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0162-full.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/chilam-balam-de-kaua-maler-photographs-1887/page/6a879ba86f4a03d5d89ad55a"
+    },
+    {
+     "p": 163,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1170,
+     "tr_len": 1385,
+     "pageId": "6a879ba86f4a03d5d89ad55b",
+     "image": "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0163.jpg",
+     "image_full": "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0163-full.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/chilam-balam-de-kaua-maler-photographs-1887/page/6a879ba86f4a03d5d89ad55b"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69e782a4d93c1f60075041e6",
+    "slug": "mdo-sde-brtags-sna-rgyas-pa-collection",
+    "title": "mDo sde brtags sna rgyas pa",
+    "author": "Gangtey Monastery Collection",
+    "language": "Tibetan",
+    "year": 1700,
+    "published": "1700",
+    "pages_count": 147
+   },
+   "pages": [
+    {
+     "p": 80,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 993,
+     "tr_len": 1831,
+     "pageId": "69e782a4d93c1f6007504236",
+     "image": "https://images.sourcelibrary.org/pages/69e782a4d93c1f60075041e6/0080.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e782a4d93c1f60075041e6/80.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mdo-sde-brtags-sna-rgyas-pa-collection/page/69e782a4d93c1f6007504236"
+    },
+    {
+     "p": 81,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 950,
+     "tr_len": 1819,
+     "pageId": "69e782a4d93c1f6007504237",
+     "image": "https://images.sourcelibrary.org/pages/69e782a4d93c1f60075041e6/0081.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e782a4d93c1f60075041e6/81.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mdo-sde-brtags-sna-rgyas-pa-collection/page/69e782a4d93c1f6007504237"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f32e4e876dd827cbc43daa",
+    "slug": "vita-s-facii-de-cremona-manuscript-13-riant",
+    "title": "Vita S. Facii de Cremona",
+    "author": "Unknown",
+    "language": "Latin",
+    "year": 1350,
+    "published": "13uu",
+    "pages_count": 50
+   },
+   "pages": [
+    {
+     "p": 38,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1378,
+     "tr_len": 1448,
+     "pageId": "69f32e4e876dd827cbc43dd0",
+     "image": "https://images.sourcelibrary.org/pages/69f32e4e876dd827cbc43daa/0038.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f32e4e876dd827cbc43daa/38.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vita-s-facii-de-cremona-manuscript-13-riant/page/69f32e4e876dd827cbc43dd0"
+    },
+    {
+     "p": 39,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1504,
+     "tr_len": 1401,
+     "pageId": "69f32e4e876dd827cbc43dd1",
+     "image": "https://images.sourcelibrary.org/pages/69f32e4e876dd827cbc43daa/0039.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f32e4e876dd827cbc43daa/39.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vita-s-facii-de-cremona-manuscript-13-riant/page/69f32e4e876dd827cbc43dd1"
+    }
+   ]
+  }
+ ],
+ "short": [
+  {
+   "book": {
+    "id": "69af20221e41710a29f5fbe9",
+    "slug": "de-re-rustica-cato-varro-columella-palladius-1514-varro",
+    "title": "De Re Rustica (Cato, Varro, Columella, Palladius, 1514)",
+    "author": "Columella; Marcus Cato; Varro",
+    "language": "Latin",
+    "year": 1514,
+    "published": "1514",
+    "pages_count": 692
+   },
+   "pages": [
+    {
+     "p": 148,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 159,
+     "tr_len": 1471,
+     "pageId": "69af20221e41710a29f5fc7d",
+     "image": "https://images.sourcelibrary.org/pages/69af20221e41710a29f5fbe9/0148.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af20221e41710a29f5fbe9/148.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-re-rustica-cato-varro-columella-palladius-1514-varro/page/69af20221e41710a29f5fc7d"
+    },
+    {
+     "p": 149,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 469,
+     "tr_len": 2055,
+     "pageId": "69af20221e41710a29f5fc7e",
+     "image": "https://images.sourcelibrary.org/pages/69af20221e41710a29f5fbe9/0149.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69af20221e41710a29f5fbe9/149.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-re-rustica-cato-varro-columella-palladius-1514-varro/page/69af20221e41710a29f5fc7e"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b3039c5facc83a9a3da194",
+    "slug": "de-l-interest-des-princes-rohan",
+    "title": "De l'Interest des Princes",
+    "author": "Henri de Rohan",
+    "language": "French",
+    "year": 1644,
+    "published": "1644",
+    "pages_count": 390
+   },
+   "pages": [
+    {
+     "p": 249,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 200,
+     "tr_len": 230,
+     "pageId": "69b3039c5facc83a9a3da28d",
+     "image": "https://images.sourcelibrary.org/pages/69b3039c5facc83a9a3da194/0249.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b3039c5facc83a9a3da194/249.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-l-interest-des-princes-rohan/page/69b3039c5facc83a9a3da28d"
+    },
+    {
+     "p": 250,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 706,
+     "tr_len": 673,
+     "pageId": "69b3039c5facc83a9a3da28e",
+     "image": "https://images.sourcelibrary.org/pages/69b3039c5facc83a9a3da194/0250.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b3039c5facc83a9a3da194/250.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-l-interest-des-princes-rohan/page/69b3039c5facc83a9a3da28e"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69affb67abb6b46e8cb66bf6",
+    "slug": "theonis-smyrnaei-liber-de-astronomia-1849-smyrna",
+    "title": "Theonis Smyrnaei Liber de Astronomia (1849)",
+    "author": "Theon of Smyrna",
+    "language": "Latin",
+    "year": 1849,
+    "published": "1849",
+    "pages_count": 528
+   },
+   "pages": [
+    {
+     "p": 362,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 207,
+     "tr_len": 428,
+     "pageId": "69affb67abb6b46e8cb66d60",
+     "image": "https://images.sourcelibrary.org/pages/69affb67abb6b46e8cb66bf6/0362.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69affb67abb6b46e8cb66bf6/362.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/theonis-smyrnaei-liber-de-astronomia-1849-smyrna/page/69affb67abb6b46e8cb66d60"
+    },
+    {
+     "p": 363,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 874,
+     "tr_len": 1587,
+     "pageId": "69affb67abb6b46e8cb66d61",
+     "image": "https://images.sourcelibrary.org/pages/69affb67abb6b46e8cb66bf6/0363.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69affb67abb6b46e8cb66bf6/363.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/theonis-smyrnaei-liber-de-astronomia-1849-smyrna/page/69affb67abb6b46e8cb66d61"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c83f236c6f3cc53c850396",
+    "slug": "de-medicinali-materia-libri-sex-dioscorides-2",
+    "title": "De medicinali materia libri sex",
+    "author": "Dioscorides",
+    "language": "Latin",
+    "year": 1552,
+    "published": "1552",
+    "pages_count": 854
+   },
+   "pages": [
+    {
+     "p": 455,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 204,
+     "tr_len": 999,
+     "pageId": "69f73817116fbf7193f95d27",
+     "image": "https://images.sourcelibrary.org/pages/69c83f236c6f3cc53c850396/sp69f73817116fbf7193f95d27.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c83f236c6f3cc53c850396/69f73817116fbf7193f95d27.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-medicinali-materia-libri-sex-dioscorides-2/page/69f73817116fbf7193f95d27"
+    },
+    {
+     "p": 456,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 699,
+     "tr_len": 616,
+     "pageId": "69f73818116fbf7193f95d2a",
+     "image": "https://images.sourcelibrary.org/pages/69c83f236c6f3cc53c850396/sp69f73818116fbf7193f95d2a.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c83f236c6f3cc53c850396/69f73818116fbf7193f95d2a.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-medicinali-materia-libri-sex-dioscorides-2/page/69f73818116fbf7193f95d2a"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69d66635bf5afe33937f922b",
+    "slug": "collection-of-cabalistic-texts-multi-language-kabbalistic-anonymous",
+    "title": "Collection of Cabalistic Texts",
+    "author": "Anonymous",
+    "language": "Italian",
+    "year": 1700,
+    "published": "1700",
+    "pages_count": 129
+   },
+   "pages": [
+    {
+     "p": 79,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 108,
+     "tr_len": 460,
+     "pageId": "69d66635bf5afe33937f927a",
+     "image": "https://images.sourcelibrary.org/pages/69d66635bf5afe33937f922b/0079.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69d66635bf5afe33937f922b/79.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/collection-of-cabalistic-texts-multi-language-kabbalistic-anonymous/page/69d66635bf5afe33937f927a"
+    },
+    {
+     "p": 80,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 324,
+     "tr_len": 448,
+     "pageId": "69d66635bf5afe33937f927b",
+     "image": "https://images.sourcelibrary.org/pages/69d66635bf5afe33937f922b/0080.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69d66635bf5afe33937f922b/80.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/collection-of-cabalistic-texts-multi-language-kabbalistic-anonymous/page/69d66635bf5afe33937f927b"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f080be883d181634179c88",
+    "slug": "the-mimes-of-herodas-nairn",
+    "title": "The Mimes of Herodas",
+    "author": "Herodas; J. Arbuthnot Nairn",
+    "language": "Greek",
+    "year": 1904,
+    "published": "1904",
+    "pages_count": 241
+   },
+   "pages": [
+    {
+     "p": 114,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 175,
+     "tr_len": 1219,
+     "pageId": "69f080be883d181634179cfa",
+     "image": "https://images.sourcelibrary.org/pages/69f080be883d181634179c88/0114.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f080be883d181634179c88/114.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-mimes-of-herodas-nairn/page/69f080be883d181634179cfa"
+    },
+    {
+     "p": 115,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 481,
+     "tr_len": 633,
+     "pageId": "69f080be883d181634179cfb",
+     "image": "https://images.sourcelibrary.org/pages/69f080be883d181634179c88/0115.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f080be883d181634179c88/115.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-mimes-of-herodas-nairn/page/69f080be883d181634179cfb"
+    }
+   ]
+  }
+ ],
+ "illustrated": [
+  {
+   "book": {
+    "id": "6953e32f77f38f6761bebc95",
+    "slug": "secret-doctrine-vol-iii-esoterica-blavatsky",
+    "title": "Secret Doctrine Vol. III - Esoterica",
+    "author": "H.P. Blavatsky",
+    "language": "English",
+    "year": 1897,
+    "published": "1893",
+    "pages_count": 634
+   },
+   "pages": [
+    {
+     "p": 480,
+     "type": "diagram",
+     "lang": "",
+     "ocr_len": 1844,
+     "tr_len": 459,
+     "pageId": "6953e32f77f38f6761bebe75",
+     "image": "https://images.sourcelibrary.org/pages/6953e32f77f38f6761bebc95/0480.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6953e32f77f38f6761bebc95/480.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/secret-doctrine-vol-iii-esoterica-blavatsky/page/6953e32f77f38f6761bebe75"
+    },
+    {
+     "p": 481,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2140,
+     "tr_len": 2023,
+     "pageId": "6953e32f77f38f6761bebe76",
+     "image": "https://images.sourcelibrary.org/pages/6953e32f77f38f6761bebc95/0481.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6953e32f77f38f6761bebc95/481.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/secret-doctrine-vol-iii-esoterica-blavatsky/page/6953e32f77f38f6761bebe76"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6993881574305116d72cef37",
+    "slug": "vat-gr-190-pt-1-euclid",
+    "title": "Euclid, Elements (Books I-XIII)",
+    "author": "Euclid",
+    "language": "Greek",
+    "year": 888,
+    "published": "888",
+    "pages_count": 370
+   },
+   "pages": [
+    {
+     "p": 94,
+     "type": "diagram",
+     "lang": "",
+     "ocr_len": 420,
+     "tr_len": 395,
+     "pageId": "6993881574305116d72cef95",
+     "image": "https://images.sourcelibrary.org/pages/6993881574305116d72cef37/0094.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993881574305116d72cef37/94.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vat-gr-190-pt-1-euclid/page/6993881574305116d72cef95"
+    },
+    {
+     "p": 95,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 862,
+     "tr_len": 823,
+     "pageId": "6993881574305116d72cef96",
+     "image": "https://images.sourcelibrary.org/pages/6993881574305116d72cef37/0095.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993881574305116d72cef37/95.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vat-gr-190-pt-1-euclid/page/6993881574305116d72cef96"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c809c06c6f3cc53c84624a",
+    "slug": "opera-omnia-quibus-tradidit-artis-raymundi-lulliu-lavinheta",
+    "title": "Opera omnia quibus tradidit Artis Raymundi Lulliu compendiosam explicationem",
+    "author": "Lavinheta, Bernardus de",
+    "language": "Latin",
+    "year": 1612,
+    "published": "1612",
+    "pages_count": 700
+   },
+   "pages": [
+    {
+     "p": 673,
+     "type": "diagram",
+     "lang": "",
+     "ocr_len": 965,
+     "tr_len": 1370,
+     "pageId": "69f71626a971c4a8e969ff1b",
+     "image": "https://images.sourcelibrary.org/pages/69c809c06c6f3cc53c84624a/sp69f71626a971c4a8e969ff1b.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c809c06c6f3cc53c84624a/69f71626a971c4a8e969ff1b.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/opera-omnia-quibus-tradidit-artis-raymundi-lulliu-lavinheta/page/69f71626a971c4a8e969ff1b"
+    },
+    {
+     "p": 674,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 822,
+     "tr_len": 1096,
+     "pageId": "69f71626a971c4a8e969ff22",
+     "image": "https://images.sourcelibrary.org/pages/69c809c06c6f3cc53c84624a/sp69f71626a971c4a8e969ff22.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c809c06c6f3cc53c84624a/69f71626a971c4a8e969ff22.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/opera-omnia-quibus-tradidit-artis-raymundi-lulliu-lavinheta/page/69f71626a971c4a8e969ff22"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69e53443d48480a3869658be",
+    "slug": "supplemental-nights-vol-5",
+    "title": "Supplemental Nights, Vol. 5",
+    "author": "trans. Richard Francis Burton",
+    "language": "English",
+    "year": 1886,
+    "published": "1886",
+    "pages_count": 420
+   },
+   "pages": [
+    {
+     "p": 321,
+     "type": "illustration",
+     "lang": "",
+     "ocr_len": 334,
+     "tr_len": 0,
+     "pageId": "69e53443d48480a3869659ff",
+     "image": "https://images.sourcelibrary.org/pages/69e53443d48480a3869658be/0321.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e53443d48480a3869658be/321.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/supplemental-nights-vol-5/page/69e53443d48480a3869659ff"
+    },
+    {
+     "p": 322,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1803,
+     "tr_len": 1177,
+     "pageId": "69e53443d48480a386965a00",
+     "image": "https://images.sourcelibrary.org/pages/69e53443d48480a3869658be/0322.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e53443d48480a3869658be/322.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/supplemental-nights-vol-5/page/69e53443d48480a386965a00"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a3cc17eec254ff6cae0cc41",
+    "slug": "vol-2-1782366590261",
+    "title": "遵生八牋·卷二~卷三 (vol 2)",
+    "author": "高濂",
+    "language": "Chinese",
+    "year": null,
+    "published": "Unknown",
+    "pages_count": 227
+   },
+   "pages": [
+    {
+     "p": 120,
+     "type": "diagram",
+     "lang": "",
+     "ocr_len": 945,
+     "tr_len": 62,
+     "pageId": "6a3cc17eec254ff6cae0ccb9",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc17eec254ff6cae0cc41/0120.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc17eec254ff6cae0cc41/120.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-2-1782366590261/page/6a3cc17eec254ff6cae0ccb9"
+    },
+    {
+     "p": 121,
+     "type": "illustration",
+     "lang": "",
+     "ocr_len": 376,
+     "tr_len": 89,
+     "pageId": "6a3cc17eec254ff6cae0ccba",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc17eec254ff6cae0cc41/0121.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc17eec254ff6cae0cc41/121.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-2-1782366590261/page/6a3cc17eec254ff6cae0ccba"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69d006cf7d7491182a2325da",
+    "slug": "a-history-of-hindu-chemistry-vol-2-ray",
+    "title": "A History of Hindu Chemistry, vol. 2",
+    "author": "Prafulla Chandra Ray",
+    "language": "English",
+    "year": 1909,
+    "published": "1907",
+    "pages_count": 598
+   },
+   "pages": [
+    {
+     "p": 132,
+     "type": "illustration",
+     "lang": "auto-detect",
+     "ocr_len": 762,
+     "tr_len": 670,
+     "pageId": "69d006cf7d7491182a23265e",
+     "image": "https://images.sourcelibrary.org/pages/69d006cf7d7491182a2325da/0132.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69d006cf7d7491182a2325da/132.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/a-history-of-hindu-chemistry-vol-2-ray/page/69d006cf7d7491182a23265e"
+    },
+    {
+     "p": 133,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 764,
+     "tr_len": 801,
+     "pageId": "69d006cf7d7491182a23265f",
+     "image": "https://images.sourcelibrary.org/pages/69d006cf7d7491182a2325da/0133.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69d006cf7d7491182a2325da/133.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/a-history-of-hindu-chemistry-vol-2-ray/page/69d006cf7d7491182a23265f"
+    }
+   ]
+  }
+ ],
+ "music": [
+  {
+   "book": {
+    "id": "69c6613501a26ccff09f4ec6",
+    "slug": "complete-works-on-music-and-tuning-vol-1",
+    "title": "Yuelü Quanshu (樂律全書) — Complete Works on Music and Tuning, Vol. 1",
+    "author": "Zhu Zaiyu (朱載堉)",
+    "language": "Chinese",
+    "year": 1596,
+    "published": "1596",
+    "pages_count": 186
+   },
+   "pages": [
+    {
+     "p": 124,
+     "type": "diagram",
+     "lang": "",
+     "ocr_len": 380,
+     "tr_len": 615,
+     "pageId": "69c6613601a26ccff09f4f42",
+     "image": "https://images.sourcelibrary.org/pages/69c6613501a26ccff09f4ec6/0124.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c6613501a26ccff09f4ec6/124.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/complete-works-on-music-and-tuning-vol-1/page/69c6613601a26ccff09f4f42"
+    },
+    {
+     "p": 125,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 219,
+     "tr_len": 1051,
+     "pageId": "69c6613601a26ccff09f4f43",
+     "image": "https://images.sourcelibrary.org/pages/69c6613501a26ccff09f4ec6/0125.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c6613501a26ccff09f4ec6/125.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/complete-works-on-music-and-tuning-vol-1/page/69c6613601a26ccff09f4f43"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69520516ab34727b1f04245b",
+    "slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+    "title": "Musurgia universalis Tomus II",
+    "author": "Athanasius Kircher",
+    "language": "Latin",
+    "year": 1650,
+    "published": "1650",
+    "pages_count": 545
+   },
+   "pages": [
+    {
+     "p": 224,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 3570,
+     "tr_len": 5054,
+     "pageId": "69520517ab34727b1f04253b",
+     "image": "https://images.sourcelibrary.org/pages/69520516ab34727b1f04245b/0224.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69520516ab34727b1f04245b/224.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/universal-musical-work-volume-ii-musurgia-universalis-kircher/page/69520517ab34727b1f04253b"
+    },
+    {
+     "p": 225,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 2811,
+     "tr_len": 3346,
+     "pageId": "69520517ab34727b1f04253c",
+     "image": "https://images.sourcelibrary.org/pages/69520516ab34727b1f04245b/0225.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69520516ab34727b1f04245b/225.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/universal-musical-work-volume-ii-musurgia-universalis-kircher/page/69520517ab34727b1f04253c"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6fc11c7d-782a-47c3-a855-f3b4415e797b",
+    "slug": "harmonices-mundi-1619-first-edition-kepler",
+    "title": "Harmonices Mundi",
+    "author": "Johannes Kepler",
+    "language": "Latin",
+    "year": 1619,
+    "published": "1619",
+    "pages_count": 354
+   },
+   "pages": [
+    {
+     "p": 119,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 1398,
+     "tr_len": 2030,
+     "pageId": "695004e6f426a210d109a5ed",
+     "image": "https://images.sourcelibrary.org/pages/6fc11c7d-782a-47c3-a855-f3b4415e797b/0119.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/119.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/harmonices-mundi-1619-first-edition-kepler/page/695004e6f426a210d109a5ed"
+    },
+    {
+     "p": 120,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 2041,
+     "tr_len": 2678,
+     "pageId": "695004e6f426a210d109a5ee",
+     "image": "https://images.sourcelibrary.org/pages/6fc11c7d-782a-47c3-a855-f3b4415e797b/0120.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/120.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/harmonices-mundi-1619-first-edition-kepler/page/695004e6f426a210d109a5ee"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69ef2b7985daccce30f2e810",
+    "slug": "the-music-and-musical-instruments-of-southern-india-and-the-day",
+    "title": "The Music and Musical Instruments of Southern India and the Deccan",
+    "author": "C.R. Day",
+    "language": "English",
+    "year": 1891,
+    "published": "1891",
+    "pages_count": 256
+   },
+   "pages": [
+    {
+     "p": 87,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2303,
+     "tr_len": 2267,
+     "pageId": "69ef2b7985daccce30f2e867",
+     "image": "https://images.sourcelibrary.org/pages/69ef2b7985daccce30f2e810/0087.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ef2b7985daccce30f2e810/87.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-music-and-musical-instruments-of-southern-india-and-the-day/page/69ef2b7985daccce30f2e867"
+    },
+    {
+     "p": 88,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2260,
+     "tr_len": 2171,
+     "pageId": "69ef2b7985daccce30f2e868",
+     "image": "https://images.sourcelibrary.org/pages/69ef2b7985daccce30f2e810/0088.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ef2b7985daccce30f2e810/88.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-music-and-musical-instruments-of-southern-india-and-the-day/page/69ef2b7985daccce30f2e868"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a08551415c643eb1af54b17",
+    "slug": "m-antonii-flaminii-in-librum-psalmorum-breuis-explanatio-ad-",
+    "title": "M. Antonii Flaminii In librum Psalmorum breuis explanatio ad Alexandrum Farnesium, cardinalem amplissimum",
+    "author": "Marco Antonio Flaminio",
+    "language": "Latin",
+    "year": 1545,
+    "published": "1545",
+    "pages_count": 558
+   },
+   "pages": [
+    {
+     "p": 185,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1102,
+     "tr_len": 1406,
+     "pageId": "6a08551415c643eb1af54bd0",
+     "image": "https://images.sourcelibrary.org/pages/6a08551415c643eb1af54b17/0185.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a08551415c643eb1af54b17/185.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/m-antonii-flaminii-in-librum-psalmorum-breuis-explanatio-ad-/page/6a08551415c643eb1af54bd0"
+    },
+    {
+     "p": 186,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1209,
+     "tr_len": 1118,
+     "pageId": "6a08551415c643eb1af54bd1",
+     "image": "https://images.sourcelibrary.org/pages/6a08551415c643eb1af54b17/0186.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a08551415c643eb1af54b17/186.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/m-antonii-flaminii-in-librum-psalmorum-breuis-explanatio-ad-/page/6a08551415c643eb1af54bd1"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6991d64b8c1030b12444a9d0",
+    "slug": "opus-mago-cabbalisticum-et-theosophicum-1735-edition-welling",
+    "title": "Opus Mago-Cabbalisticum et Theosophicum (1735 edition)",
+    "author": "Georg von Welling",
+    "language": "German",
+    "year": 1735,
+    "published": "1735",
+    "pages_count": 652
+   },
+   "pages": [
+    {
+     "p": 434,
+     "type": "text",
+     "lang": "German",
+     "ocr_len": 2147,
+     "tr_len": 2351,
+     "pageId": "6991d64b8c1030b12444ab82",
+     "image": "https://images.sourcelibrary.org/pages/6991d64b8c1030b12444a9d0/0434.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6991d64b8c1030b12444a9d0/434.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/opus-mago-cabbalisticum-et-theosophicum-1735-edition-welling/page/6991d64b8c1030b12444ab82"
+    },
+    {
+     "p": 435,
+     "type": "text",
+     "lang": "German",
+     "ocr_len": 989,
+     "tr_len": 1055,
+     "pageId": "6991d64b8c1030b12444ab83",
+     "image": "https://images.sourcelibrary.org/pages/6991d64b8c1030b12444a9d0/0435.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6991d64b8c1030b12444a9d0/435.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/opus-mago-cabbalisticum-et-theosophicum-1735-edition-welling/page/6991d64b8c1030b12444ab83"
+    }
+   ]
+  }
+ ],
+ "tables": [
+  {
+   "book": {
+    "id": "69dbcb161040d1d5e20b1cfc",
+    "slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus-1",
+    "title": "Cornucopiae linguae latinae (Ed: Pyrrhus Perottus. Rev: Ludovicus Odaxius). Add: Commentariolus in prohemium Historiae naturalis Plinii",
+    "author": "Perottus, Nicolaus",
+    "language": "Latin",
+    "year": 1494,
+    "published": "1494",
+    "pages_count": 657
+   },
+   "pages": [
+    {
+     "p": 158,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 5322,
+     "tr_len": 6236,
+     "pageId": "69dbcb161040d1d5e20b1d9a",
+     "image": "https://images.sourcelibrary.org/pages/69dbcb161040d1d5e20b1cfc/0158.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbcb161040d1d5e20b1cfc/158.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus-1/page/69dbcb161040d1d5e20b1d9a"
+    },
+    {
+     "p": 159,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 5891,
+     "tr_len": 5631,
+     "pageId": "69dbcb161040d1d5e20b1d9b",
+     "image": "https://images.sourcelibrary.org/pages/69dbcb161040d1d5e20b1cfc/0159.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbcb161040d1d5e20b1cfc/159.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus-1/page/69dbcb161040d1d5e20b1d9b"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6970e3579b09d309d780a24c",
+    "slug": "aelia-laelia-crispis-not-born-rising-again-malvasia",
+    "title": "Aelia laelia crispis non nata resurgens",
+    "author": "Malvasia, Carlo Cesare",
+    "language": "Latin",
+    "year": 1683,
+    "published": "1683",
+    "pages_count": 227
+   },
+   "pages": [
+    {
+     "p": 57,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 457,
+     "tr_len": 1012,
+     "pageId": "6973312fd4e1ef1b55380016",
+     "image": "https://images.sourcelibrary.org/pages/6970e3579b09d309d780a24c/0057.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6970e3579b09d309d780a24c/697330d9d4e1ef1b55380015.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/aelia-laelia-crispis-not-born-rising-again-malvasia/page/6973312fd4e1ef1b55380016"
+    },
+    {
+     "p": 58,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 746,
+     "tr_len": 1062,
+     "pageId": "6973312fd4e1ef1b55380017",
+     "image": "https://images.sourcelibrary.org/pages/6970e3579b09d309d780a24c/0058.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6970e3579b09d309d780a24c/697330d9d4e1ef1b55380015.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/aelia-laelia-crispis-not-born-rising-again-malvasia/page/6973312fd4e1ef1b55380017"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b2f3d7a9a500a45e5e8d46",
+    "slug": "institutiones-linguae-syriacae-assyriacae-atque-thalmudicae-estienne",
+    "title": "Institutiones linguae Syriacae, Assyriacae atque Thalmudicae",
+    "author": "Angelo Canini (printed by Robert Estienne)",
+    "language": "Latin",
+    "year": 1554,
+    "published": "1554",
+    "pages_count": 160
+   },
+   "pages": [
+    {
+     "p": 87,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 372,
+     "tr_len": 1270,
+     "pageId": "69b2f3d7a9a500a45e5e8d9d",
+     "image": "https://images.sourcelibrary.org/pages/69b2f3d7a9a500a45e5e8d46/0087.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b2f3d7a9a500a45e5e8d46/87.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/institutiones-linguae-syriacae-assyriacae-atque-thalmudicae-estienne/page/69b2f3d7a9a500a45e5e8d9d"
+    },
+    {
+     "p": 88,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1358,
+     "tr_len": 1771,
+     "pageId": "69b2f3d7a9a500a45e5e8d9e",
+     "image": "https://images.sourcelibrary.org/pages/69b2f3d7a9a500a45e5e8d46/0088.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b2f3d7a9a500a45e5e8d46/88.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/institutiones-linguae-syriacae-assyriacae-atque-thalmudicae-estienne/page/69b2f3d7a9a500a45e5e8d9e"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b52fab1a04ee0f3b4180e9",
+    "slug": "an-egyptian-hieroglyphic-dictionary-vol-2-budge",
+    "title": "An Egyptian Hieroglyphic Dictionary Vol. 2",
+    "author": "E.A. Wallis Budge",
+    "language": "English",
+    "year": 1920,
+    "published": "1920",
+    "pages_count": 778
+   },
+   "pages": [
+    {
+     "p": 494,
+     "type": "index",
+     "lang": "",
+     "ocr_len": 1629,
+     "tr_len": 1739,
+     "pageId": "69b52fab1a04ee0f3b4182d7",
+     "image": "https://images.sourcelibrary.org/pages/69b52fab1a04ee0f3b4180e9/0494.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b52fab1a04ee0f3b4180e9/494.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/an-egyptian-hieroglyphic-dictionary-vol-2-budge/page/69b52fab1a04ee0f3b4182d7"
+    },
+    {
+     "p": 495,
+     "type": "index",
+     "lang": "",
+     "ocr_len": 1416,
+     "tr_len": 1513,
+     "pageId": "69b52fab1a04ee0f3b4182d8",
+     "image": "https://images.sourcelibrary.org/pages/69b52fab1a04ee0f3b4180e9/0495.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b52fab1a04ee0f3b4180e9/495.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/an-egyptian-hieroglyphic-dictionary-vol-2-budge/page/69b52fab1a04ee0f3b4182d8"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c7fdea6c6f3cc53c84359c",
+    "slug": "leben-antichristi-luxemburg",
+    "title": "Leben Antichristi",
+    "author": "Luxemburg, Dionysius von",
+    "language": "German",
+    "year": 1686,
+    "published": "1686",
+    "pages_count": 510
+   },
+   "pages": [
+    {
+     "p": 504,
+     "type": "index",
+     "lang": "",
+     "ocr_len": 560,
+     "tr_len": 501,
+     "pageId": "69f6d3f66b3ca298d0191095",
+     "image": "https://images.sourcelibrary.org/pages/69c7fdea6c6f3cc53c84359c/sp69f6d3f66b3ca298d0191095.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c7fdea6c6f3cc53c84359c/69f6d3f66b3ca298d0191095.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/leben-antichristi-luxemburg/page/69f6d3f66b3ca298d0191095"
+    },
+    {
+     "p": 505,
+     "type": "index",
+     "lang": "",
+     "ocr_len": 686,
+     "tr_len": 568,
+     "pageId": "69f6d3f66b3ca298d0191096",
+     "image": "https://images.sourcelibrary.org/pages/69c7fdea6c6f3cc53c84359c/sp69f6d3f66b3ca298d0191096.jpg",
+     "image_full": "https://images.sourcelibrary.org/cropped/69c7fdea6c6f3cc53c84359c/69f6d3f66b3ca298d0191096.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/leben-antichristi-luxemburg/page/69f6d3f66b3ca298d0191096"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b1deccca46fa60ea1ee439",
+    "slug": "alexander-von-tralles-original-text-und-ubersetzung-vol-1-tralles",
+    "title": "Alexander von Tralles: Original-Text und Übersetzung, Vol. 1",
+    "author": "Alexander of Tralles",
+    "language": "Greek",
+    "year": 1878,
+    "published": "1878",
+    "pages_count": 640
+   },
+   "pages": [
+    {
+     "p": 470,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1615,
+     "tr_len": 830,
+     "pageId": "69b1deccca46fa60ea1ee60f",
+     "image": "https://images.sourcelibrary.org/pages/69b1deccca46fa60ea1ee439/0470.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b1deccca46fa60ea1ee439/470.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/alexander-von-tralles-original-text-und-ubersetzung-vol-1-tralles/page/69b1deccca46fa60ea1ee60f"
+    },
+    {
+     "p": 471,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 318,
+     "tr_len": 439,
+     "pageId": "69b1deccca46fa60ea1ee610",
+     "image": "https://images.sourcelibrary.org/pages/69b1deccca46fa60ea1ee439/0471.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b1deccca46fa60ea1ee439/471.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/alexander-von-tralles-original-text-und-ubersetzung-vol-1-tralles/page/69b1deccca46fa60ea1ee610"
+    }
+   ]
+  }
+ ],
+ "greek": [
+  {
+   "book": {
+    "id": "69de100b5cedf736edb84e84",
+    "slug": "loukianou-hapanta-luciani-opera",
+    "title": "Loukianou Hapanta / Luciani Opera",
+    "author": "Lucian of Samosata",
+    "language": "Greek",
+    "year": 1545,
+    "published": "1545",
+    "pages_count": 651
+   },
+   "pages": [
+    {
+     "p": 458,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1106,
+     "tr_len": 1420,
+     "pageId": "69de100b5cedf736edb8504e",
+     "image": "https://images.sourcelibrary.org/pages/69de100b5cedf736edb84e84/0458.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69de100b5cedf736edb84e84/458.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/loukianou-hapanta-luciani-opera/page/69de100b5cedf736edb8504e"
+    },
+    {
+     "p": 459,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1080,
+     "tr_len": 1312,
+     "pageId": "69de100b5cedf736edb8504f",
+     "image": "https://images.sourcelibrary.org/pages/69de100b5cedf736edb84e84/0459.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69de100b5cedf736edb84e84/459.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/loukianou-hapanta-luciani-opera/page/69de100b5cedf736edb8504f"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6993895dce15387065946a95",
+    "slug": "cologny-fondation-martin-bodmer-cod-bodmer-115-africanus",
+    "title": "Strategicon; De velitatione bellica; Apparatus bellicus",
+    "author": "Ps.-Maurice; Ps.-Nicephorus; Ps.-Julius Africanus",
+    "language": "Greek",
+    "year": 1561,
+    "published": "1561",
+    "pages_count": 355
+   },
+   "pages": [
+    {
+     "p": 128,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1389,
+     "tr_len": 1445,
+     "pageId": "6993895dce15387065946b15",
+     "image": "https://images.sourcelibrary.org/pages/6993895dce15387065946a95/0128.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993895dce15387065946a95/128.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/cologny-fondation-martin-bodmer-cod-bodmer-115-africanus/page/6993895dce15387065946b15"
+    },
+    {
+     "p": 129,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1356,
+     "tr_len": 1424,
+     "pageId": "6993895dce15387065946b16",
+     "image": "https://images.sourcelibrary.org/pages/6993895dce15387065946a95/0129.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993895dce15387065946a95/129.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/cologny-fondation-martin-bodmer-cod-bodmer-115-africanus/page/6993895dce15387065946b16"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69942e97d607f8e57e4b98ab",
+    "slug": "de-operatione-daemonum-dialogus-1688-greek-latin-psellos",
+    "title": "De Operatione Daemonum Dialogus (1688 Greek/Latin)",
+    "author": "Michael Psellos",
+    "language": "Greek-Latin",
+    "year": 1688,
+    "published": "1688",
+    "pages_count": 179
+   },
+   "pages": [
+    {
+     "p": 97,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 912,
+     "tr_len": 1423,
+     "pageId": "69942e97d607f8e57e4b990c",
+     "image": "https://images.sourcelibrary.org/pages/69942e97d607f8e57e4b98ab/0097.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69942e97d607f8e57e4b98ab/97.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-operatione-daemonum-dialogus-1688-greek-latin-psellos/page/69942e97d607f8e57e4b990c"
+    },
+    {
+     "p": 98,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 903,
+     "tr_len": 1456,
+     "pageId": "69942e97d607f8e57e4b990d",
+     "image": "https://images.sourcelibrary.org/pages/69942e97d607f8e57e4b98ab/0098.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69942e97d607f8e57e4b98ab/98.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/de-operatione-daemonum-dialogus-1688-greek-latin-psellos/page/69942e97d607f8e57e4b990d"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b21e58dbaba63c46019745",
+    "slug": "plutarchi-chaeronensis-scripta-moralia-vol-3-didot-greek-dubner",
+    "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 3 (Didot, Greek/Latin)",
+    "author": "Plutarch; ed. Friedrich Dübner",
+    "language": "Greek",
+    "year": 1868,
+    "published": "1841",
+    "pages_count": 737
+   },
+   "pages": [
+    {
+     "p": 495,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4730,
+     "tr_len": 5588,
+     "pageId": "69b21e58dbaba63c46019934",
+     "image": "https://images.sourcelibrary.org/pages/69b21e58dbaba63c46019745/0495.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b21e58dbaba63c46019745/495.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/plutarchi-chaeronensis-scripta-moralia-vol-3-didot-greek-dubner/page/69b21e58dbaba63c46019934"
+    },
+    {
+     "p": 496,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4698,
+     "tr_len": 5305,
+     "pageId": "69b21e58dbaba63c46019935",
+     "image": "https://images.sourcelibrary.org/pages/69b21e58dbaba63c46019745/0496.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b21e58dbaba63c46019745/496.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/plutarchi-chaeronensis-scripta-moralia-vol-3-didot-greek-dubner/page/69b21e58dbaba63c46019935"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b21edfa66227125eb0632d",
+    "slug": "plutarch-s-lives-vol-7-loeb-99-demosthenes-cicero-alexander-perrin",
+    "title": "Plutarch's Lives, Vol. 7 (Loeb 99: Demosthenes, Cicero, Alexander, Caesar)",
+    "author": "Plutarch; trans. Bernadotte Perrin",
+    "language": "Greek",
+    "year": 1919,
+    "published": "1919",
+    "pages_count": 333
+   },
+   "pages": [
+    {
+     "p": 149,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2540,
+     "tr_len": 1523,
+     "pageId": "69b21edfa66227125eb063c2",
+     "image": "https://images.sourcelibrary.org/pages/69b21edfa66227125eb0632d/0149.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b21edfa66227125eb0632d/149.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/plutarch-s-lives-vol-7-loeb-99-demosthenes-cicero-alexander-perrin/page/69b21edfa66227125eb063c2"
+    },
+    {
+     "p": 150,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2458,
+     "tr_len": 1405,
+     "pageId": "69b21edfa66227125eb063c3",
+     "image": "https://images.sourcelibrary.org/pages/69b21edfa66227125eb0632d/0150.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69b21edfa66227125eb0632d/150.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/plutarch-s-lives-vol-7-loeb-99-demosthenes-cicero-alexander-perrin/page/69b21edfa66227125eb063c3"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6993890274305116d72d0a1c",
+    "slug": "hippocrates-twenty-seven-treatises-hippocrates",
+    "title": "Hippocrates, Twenty-Seven Treatises",
+    "author": "Hippocrates",
+    "language": "Greek",
+    "year": 1550,
+    "published": "1550",
+    "pages_count": 360
+   },
+   "pages": [
+    {
+     "p": 208,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1597,
+     "tr_len": 1882,
+     "pageId": "6993890274305116d72d0aec",
+     "image": "https://images.sourcelibrary.org/pages/6993890274305116d72d0a1c/0208.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993890274305116d72d0a1c/208.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/hippocrates-twenty-seven-treatises-hippocrates/page/6993890274305116d72d0aec"
+    },
+    {
+     "p": 209,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 3593,
+     "tr_len": 4204,
+     "pageId": "6993890274305116d72d0aed",
+     "image": "https://images.sourcelibrary.org/pages/6993890274305116d72d0a1c/0209.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6993890274305116d72d0a1c/209.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/hippocrates-twenty-seven-treatises-hippocrates/page/6993890274305116d72d0aed"
+    }
+   ]
+  }
+ ],
+ "rtl": [
+  {
+   "book": {
+    "id": "69a99d0a510aaf87d0635bfc",
+    "slug": "patrologia-orientalis-tome-ii-inc-vie-de-severe-scholasticus",
+    "title": "Patrologia Orientalis, Tome II (inc. Vie de Sévère)",
+    "author": "Zacharias Scholasticus",
+    "language": "Syriac",
+    "year": 1907,
+    "published": "1907",
+    "pages_count": 706
+   },
+   "pages": [
+    {
+     "p": 244,
+     "type": "text",
+     "lang": "Syriac",
+     "ocr_len": 2167,
+     "tr_len": 1449,
+     "pageId": "69a99d0a510aaf87d0635cf0",
+     "image": "https://images.sourcelibrary.org/pages/69a99d0a510aaf87d0635bfc/0244.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69a99d0a510aaf87d0635bfc/244.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/patrologia-orientalis-tome-ii-inc-vie-de-severe-scholasticus/page/69a99d0a510aaf87d0635cf0"
+    },
+    {
+     "p": 245,
+     "type": "text",
+     "lang": "Syriac",
+     "ocr_len": 2017,
+     "tr_len": 1369,
+     "pageId": "69a99d0a510aaf87d0635cf1",
+     "image": "https://images.sourcelibrary.org/pages/69a99d0a510aaf87d0635bfc/0245.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69a99d0a510aaf87d0635bfc/245.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/patrologia-orientalis-tome-ii-inc-vie-de-severe-scholasticus/page/69a99d0a510aaf87d0635cf1"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a20329d18654bf8e190328a",
+    "slug": "al-alfiyah-or-6991",
+    "title": "al- Alfiyah Or. 6991",
+    "author": "Ibn Mālik, Muḥammad ibn ʿAbd Allāh; Ṣuyūtī, Jalāl al-Dīn al-",
+    "language": "Arabic",
+    "year": 1850,
+    "published": "[Place of manufacture not identified], [19th century]",
+    "pages_count": 69
+   },
+   "pages": [
+    {
+     "p": 25,
+     "type": "text",
+     "lang": "Arabic",
+     "ocr_len": 1384,
+     "tr_len": 2550,
+     "pageId": "6a20329d18654bf8e19032a3",
+     "image": "https://images.sourcelibrary.org/pages/6a20329d18654bf8e190328a/0025.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a20329d18654bf8e190328a/25.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/al-alfiyah-or-6991/page/6a20329d18654bf8e19032a3"
+    },
+    {
+     "p": 26,
+     "type": "text",
+     "lang": "Arabic",
+     "ocr_len": 1429,
+     "tr_len": 2988,
+     "pageId": "6a20329d18654bf8e19032a4",
+     "image": "https://images.sourcelibrary.org/pages/6a20329d18654bf8e190328a/0026.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a20329d18654bf8e190328a/26.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/al-alfiyah-or-6991/page/6a20329d18654bf8e19032a4"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c1bafc8522835be845bffa",
+    "slug": "sifre-mada-segulot-anonymous",
+    "title": "Sifre madaʿ segulot",
+    "author": "Anonymous",
+    "language": "Hebrew",
+    "year": 1720,
+    "published": "18th century",
+    "pages_count": 276
+   },
+   "pages": [
+    {
+     "p": 54,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1092,
+     "tr_len": 2275,
+     "pageId": "69c1bafc8522835be845c030",
+     "image": "https://images.sourcelibrary.org/pages/69c1bafc8522835be845bffa/0054.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bafc8522835be845bffa/54.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/sifre-mada-segulot-anonymous/page/69c1bafc8522835be845c030"
+    },
+    {
+     "p": 55,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1070,
+     "tr_len": 2346,
+     "pageId": "69c1bafc8522835be845c031",
+     "image": "https://images.sourcelibrary.org/pages/69c1bafc8522835be845bffa/0055.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bafc8522835be845bffa/55.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/sifre-mada-segulot-anonymous/page/69c1bafc8522835be845c031"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c1bc148522835be846161f",
+    "slug": "tikun-shetarot-anonymous",
+    "title": "Tiḳun sheṭarot",
+    "author": "Anonymous",
+    "language": "Hebrew",
+    "year": 1750,
+    "published": "late 18th-early 19th century",
+    "pages_count": 182
+   },
+   "pages": [
+    {
+     "p": 127,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1508,
+     "tr_len": 3506,
+     "pageId": "69c1bc148522835be846169e",
+     "image": "https://images.sourcelibrary.org/pages/69c1bc148522835be846161f/0127.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bc148522835be846161f/127.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/tikun-shetarot-anonymous/page/69c1bc148522835be846169e"
+    },
+    {
+     "p": 128,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1596,
+     "tr_len": 3306,
+     "pageId": "69c1bc148522835be846169f",
+     "image": "https://images.sourcelibrary.org/pages/69c1bc148522835be846161f/0128.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bc148522835be846161f/128.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/tikun-shetarot-anonymous/page/69c1bc148522835be846169f"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c1bade8522835be845b016",
+    "slug": "pocket-size-jewish-prayer-book-anonymous",
+    "title": "Pocket-size Jewish prayer book",
+    "author": "Anonymous",
+    "language": "Hebrew",
+    "year": 1450,
+    "published": "15th-16th century",
+    "pages_count": 478
+   },
+   "pages": [
+    {
+     "p": 333,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 472,
+     "tr_len": 874,
+     "pageId": "69c1bade8522835be845b163",
+     "image": "https://images.sourcelibrary.org/pages/69c1bade8522835be845b016/0333.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bade8522835be845b016/333.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/pocket-size-jewish-prayer-book-anonymous/page/69c1bade8522835be845b163"
+    },
+    {
+     "p": 334,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 448,
+     "tr_len": 1008,
+     "pageId": "69c1bade8522835be845b164",
+     "image": "https://images.sourcelibrary.org/pages/69c1bade8522835be845b016/0334.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c1bade8522835be845b016/334.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/pocket-size-jewish-prayer-book-anonymous/page/69c1bade8522835be845b164"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f33c97876dd827cbc5a94f",
+    "slug": "gulistan-manuscript-1722-or-1723-sa-di",
+    "title": "Gulistān",
+    "author": "Saʻdī",
+    "language": "Persian",
+    "year": 1727,
+    "published": "1722",
+    "pages_count": 338
+   },
+   "pages": [
+    {
+     "p": 121,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 538,
+     "tr_len": 733,
+     "pageId": "69f33c97876dd827cbc5a9c8",
+     "image": "https://images.sourcelibrary.org/pages/69f33c97876dd827cbc5a94f/0121.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33c97876dd827cbc5a94f/121.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/gulistan-manuscript-1722-or-1723-sa-di/page/69f33c97876dd827cbc5a9c8"
+    },
+    {
+     "p": 122,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 485,
+     "tr_len": 707,
+     "pageId": "69f33c97876dd827cbc5a9c9",
+     "image": "https://images.sourcelibrary.org/pages/69f33c97876dd827cbc5a94f/0122.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33c97876dd827cbc5a94f/122.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/gulistan-manuscript-1722-or-1723-sa-di/page/69f33c97876dd827cbc5a9c9"
+    }
+   ]
+  }
+ ],
+ "cjk_tib": [
+  {
+   "book": {
+    "id": "6a3cc18bec254ff6cae0d3e5",
+    "slug": "vol-15-1782366603779",
+    "title": "遵生八牋·卷十八 (vol 15)",
+    "author": "高濂",
+    "language": "Chinese",
+    "year": null,
+    "published": "Unknown",
+    "pages_count": 154
+   },
+   "pages": [
+    {
+     "p": 78,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 179,
+     "tr_len": 935,
+     "pageId": "6a3cc18bec254ff6cae0d433",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc18bec254ff6cae0d3e5/0078.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc18bec254ff6cae0d3e5/78.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-15-1782366603779/page/6a3cc18bec254ff6cae0d433"
+    },
+    {
+     "p": 79,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 179,
+     "tr_len": 1141,
+     "pageId": "6a3cc18bec254ff6cae0d434",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc18bec254ff6cae0d3e5/0079.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc18bec254ff6cae0d3e5/79.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-15-1782366603779/page/6a3cc18bec254ff6cae0d434"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f33e96876dd827cbc5fb2c",
+    "slug": "ponjo-sebo-kinyon",
+    "title": "Ponjo sebo kinyŏn",
+    "author": "Unknown",
+    "language": "Korean",
+    "year": 1800,
+    "published": "1800",
+    "pages_count": 250
+   },
+   "pages": [
+    {
+     "p": 68,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 363,
+     "tr_len": 1527,
+     "pageId": "69f33e96876dd827cbc5fb70",
+     "image": "https://images.sourcelibrary.org/pages/69f33e96876dd827cbc5fb2c/0068.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33e96876dd827cbc5fb2c/68.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ponjo-sebo-kinyon/page/69f33e96876dd827cbc5fb70"
+    },
+    {
+     "p": 69,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 390,
+     "tr_len": 1430,
+     "pageId": "69f33e96876dd827cbc5fb71",
+     "image": "https://images.sourcelibrary.org/pages/69f33e96876dd827cbc5fb2c/0069.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f33e96876dd827cbc5fb2c/69.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/ponjo-sebo-kinyon/page/69f33e96876dd827cbc5fb71"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69e787a04a6785cfd60cc997",
+    "slug": "nyang-gter-thugs-sgrub-bde-bshegs-dus-pa-collection",
+    "title": "nyang gter thugs sgrub bde bshegs 'dus pa",
+    "author": "Drametse Monastery Collection",
+    "language": "Tibetan",
+    "year": 1700,
+    "published": "1700",
+    "pages_count": 166
+   },
+   "pages": [
+    {
+     "p": 90,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 737,
+     "tr_len": 1346,
+     "pageId": "69e787a04a6785cfd60cc9f1",
+     "image": "https://images.sourcelibrary.org/pages/69e787a04a6785cfd60cc997/0090.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e787a04a6785cfd60cc997/90.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/nyang-gter-thugs-sgrub-bde-bshegs-dus-pa-collection/page/69e787a04a6785cfd60cc9f1"
+    },
+    {
+     "p": 91,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 750,
+     "tr_len": 1210,
+     "pageId": "69e787a04a6785cfd60cc9f2",
+     "image": "https://images.sourcelibrary.org/pages/69e787a04a6785cfd60cc997/0091.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e787a04a6785cfd60cc997/91.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/nyang-gter-thugs-sgrub-bde-bshegs-dus-pa-collection/page/69e787a04a6785cfd60cc9f2"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69f3248552a77bb28fdb32c0",
+    "slug": "mubo",
+    "title": "Mubo",
+    "author": "Unknown",
+    "language": "Korean",
+    "year": 1900,
+    "published": "1900",
+    "pages_count": 467
+   },
+   "pages": [
+    {
+     "p": 239,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 448,
+     "tr_len": 881,
+     "pageId": "69f3248552a77bb28fdb33af",
+     "image": "https://images.sourcelibrary.org/pages/69f3248552a77bb28fdb32c0/0239.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f3248552a77bb28fdb32c0/239.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mubo/page/69f3248552a77bb28fdb33af"
+    },
+    {
+     "p": 240,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 478,
+     "tr_len": 1743,
+     "pageId": "69f3248552a77bb28fdb33b0",
+     "image": "https://images.sourcelibrary.org/pages/69f3248552a77bb28fdb32c0/0240.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f3248552a77bb28fdb32c0/240.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/mubo/page/69f3248552a77bb28fdb33b0"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a3cc17fec254ff6cae0cd27",
+    "slug": "vol-4-1782366591974",
+    "title": "遵生八牋·卷五~卷六 (vol 4)",
+    "author": "高濂",
+    "language": "Chinese",
+    "year": null,
+    "published": "Unknown",
+    "pages_count": 163
+   },
+   "pages": [
+    {
+     "p": 97,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 163,
+     "tr_len": 1023,
+     "pageId": "6a3cc17fec254ff6cae0cd88",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc17fec254ff6cae0cd27/0097.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc17fec254ff6cae0cd27/97.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-4-1782366591974/page/6a3cc17fec254ff6cae0cd88"
+    },
+    {
+     "p": 98,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 274,
+     "tr_len": 1277,
+     "pageId": "6a3cc17fec254ff6cae0cd89",
+     "image": "https://images.sourcelibrary.org/pages/6a3cc17fec254ff6cae0cd27/0098.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3cc17fec254ff6cae0cd27/98.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vol-4-1782366591974/page/6a3cc17fec254ff6cae0cd89"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69dea7c3914eeed04ca4b4db",
+    "slug": "journey-to-the-west-vol-34-wu-cheng-en-li",
+    "title": "李卓吾先生批評西遊記 (Journey to the West), Vol. 34",
+    "author": "Wu Cheng'en (吳承恩); Li Zhuowu (李卓吾), ed.",
+    "language": "Chinese",
+    "year": 1592,
+    "published": "1592",
+    "pages_count": 80
+   },
+   "pages": [
+    {
+     "p": 55,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 257,
+     "tr_len": 1156,
+     "pageId": "69dea7c3914eeed04ca4b512",
+     "image": "https://images.sourcelibrary.org/pages/69dea7c3914eeed04ca4b4db/0055.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dea7c3914eeed04ca4b4db/55.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/journey-to-the-west-vol-34-wu-cheng-en-li/page/69dea7c3914eeed04ca4b512"
+    },
+    {
+     "p": 56,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 242,
+     "tr_len": 1119,
+     "pageId": "69dea7c3914eeed04ca4b513",
+     "image": "https://images.sourcelibrary.org/pages/69dea7c3914eeed04ca4b4db/0056.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dea7c3914eeed04ca4b4db/56.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/journey-to-the-west-vol-34-wu-cheng-en-li/page/69dea7c3914eeed04ca4b513"
+    }
+   ]
+  }
+ ],
+ "incunabula": [
+  {
+   "book": {
+    "id": "69f3313f876dd827cbc48932",
+    "slug": "camandemetes-ye-vii-dedli-synes-ye-werkes-of-mercy-kempe",
+    "title": "Ye camandemetes, ye vii dedli synes ; ye werkes of mercy",
+    "author": "Unknown",
+    "language": "Middle English",
+    "year": 1450,
+    "published": "14uu",
+    "pages_count": 188
+   },
+   "pages": [
+    {
+     "p": 45,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1026,
+     "tr_len": 1190,
+     "pageId": "69f3313f876dd827cbc4895f",
+     "image": "https://images.sourcelibrary.org/pages/69f3313f876dd827cbc48932/0045.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f3313f876dd827cbc48932/45.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/camandemetes-ye-vii-dedli-synes-ye-werkes-of-mercy-kempe/page/69f3313f876dd827cbc4895f"
+    },
+    {
+     "p": 46,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1009,
+     "tr_len": 1178,
+     "pageId": "69f3313f876dd827cbc48960",
+     "image": "https://images.sourcelibrary.org/pages/69f3313f876dd827cbc48932/0046.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69f3313f876dd827cbc48932/46.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/camandemetes-ye-vii-dedli-synes-ye-werkes-of-mercy-kempe/page/69f3313f876dd827cbc48960"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69dbc9e01040d1d5e20a7b3e",
+    "slug": "prognosticon-for-leipzig-1490-german-faber-de-budweis",
+    "title": "Prognosticon for Leipzig, 1490 [German]",
+    "author": "Faber de Budweis, Wenceslaus",
+    "language": "German",
+    "year": 1490,
+    "published": "1490",
+    "pages_count": 287
+   },
+   "pages": [
+    {
+     "p": 105,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4079,
+     "tr_len": 4464,
+     "pageId": "69dbc9e01040d1d5e20a7ba7",
+     "image": "https://images.sourcelibrary.org/pages/69dbc9e01040d1d5e20a7b3e/0105.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbc9e01040d1d5e20a7b3e/105.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/prognosticon-for-leipzig-1490-german-faber-de-budweis/page/69dbc9e01040d1d5e20a7ba7"
+    },
+    {
+     "p": 106,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4125,
+     "tr_len": 5111,
+     "pageId": "69dbc9e01040d1d5e20a7ba8",
+     "image": "https://images.sourcelibrary.org/pages/69dbc9e01040d1d5e20a7b3e/0106.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbc9e01040d1d5e20a7b3e/106.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/prognosticon-for-leipzig-1490-german-faber-de-budweis/page/69dbc9e01040d1d5e20a7ba8"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69dbc9b71040d1d5e20a597e",
+    "slug": "vitae-et-sententiae-philosophorum-tr-ambrosius-traversarius-diogenes-laertius-2",
+    "title": "Vitae et sententiae philosophorum (Tr: Ambrosius Traversarius. Ed: Benedictus Brognolus)",
+    "author": "Diogenes Laertius",
+    "language": "Latin",
+    "year": 1493,
+    "published": "1493",
+    "pages_count": 229
+   },
+   "pages": [
+    {
+     "p": 136,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 3015,
+     "tr_len": 3391,
+     "pageId": "69dbc9b71040d1d5e20a5a06",
+     "image": "https://images.sourcelibrary.org/pages/69dbc9b71040d1d5e20a597e/0136.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbc9b71040d1d5e20a597e/136.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vitae-et-sententiae-philosophorum-tr-ambrosius-traversarius-diogenes-laertius-2/page/69dbc9b71040d1d5e20a5a06"
+    },
+    {
+     "p": 137,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2977,
+     "tr_len": 15361,
+     "pageId": "69dbc9b71040d1d5e20a5a07",
+     "image": "https://images.sourcelibrary.org/pages/69dbc9b71040d1d5e20a597e/0137.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbc9b71040d1d5e20a597e/137.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/vitae-et-sententiae-philosophorum-tr-ambrosius-traversarius-diogenes-laertius-2/page/69dbc9b71040d1d5e20a5a07"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69dbca641040d1d5e20abdd6",
+    "slug": "poetica-astronomica-ed-jacobus-sentinus-and-johannes-luciliu-hyginus-1",
+    "title": "Poetica astronomica. Ed: Jacobus Sentinus and Johannes Lucilius Santritter",
+    "author": "Hyginus, Gaius Julius",
+    "language": "Latin",
+    "year": 1485,
+    "published": "1485",
+    "pages_count": 121
+   },
+   "pages": [
+    {
+     "p": 46,
+     "type": "",
+     "lang": "",
+     "ocr_len": 1782,
+     "tr_len": 1973,
+     "pageId": "69dbca641040d1d5e20abe04",
+     "image": "https://images.sourcelibrary.org/pages/69dbca641040d1d5e20abdd6/0046.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbca641040d1d5e20abdd6/46.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/poetica-astronomica-ed-jacobus-sentinus-and-johannes-luciliu-hyginus-1/page/69dbca641040d1d5e20abe04"
+    },
+    {
+     "p": 47,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2009,
+     "tr_len": 2504,
+     "pageId": "69dbca641040d1d5e20abe05",
+     "image": "https://images.sourcelibrary.org/pages/69dbca641040d1d5e20abdd6/0047.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbca641040d1d5e20abdd6/47.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/poetica-astronomica-ed-jacobus-sentinus-and-johannes-luciliu-hyginus-1/page/69dbca641040d1d5e20abe05"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69ef2f6672c1376fdf2af248",
+    "slug": "liber-teisir-kitab-al-taysir-avenzoar",
+    "title": "Liber Teisir (Kitab al-Taysir)",
+    "author": "Ibn Zuhr (Avenzoar)",
+    "language": "Latin",
+    "year": 1496,
+    "published": "1496",
+    "pages_count": 234
+   },
+   "pages": [
+    {
+     "p": 58,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 5898,
+     "tr_len": 7582,
+     "pageId": "69ef2f6672c1376fdf2af282",
+     "image": "https://images.sourcelibrary.org/pages/69ef2f6672c1376fdf2af248/0058.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ef2f6672c1376fdf2af248/58.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/liber-teisir-kitab-al-taysir-avenzoar/page/69ef2f6672c1376fdf2af282"
+    },
+    {
+     "p": 59,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 5775,
+     "tr_len": 35,
+     "pageId": "69ef2f6672c1376fdf2af283",
+     "image": "https://images.sourcelibrary.org/pages/69ef2f6672c1376fdf2af248/0059.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69ef2f6672c1376fdf2af248/59.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/liber-teisir-kitab-al-taysir-avenzoar/page/69ef2f6672c1376fdf2af283"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69dbca3a1040d1d5e20aa385",
+    "slug": "herbarius-latinus-with-german-synonyms-1",
+    "title": "Herbarius latinus (with German synonyms)",
+    "author": "Unknown",
+    "language": "Latin",
+    "year": 1484,
+    "published": "1484",
+    "pages_count": 344
+   },
+   "pages": [
+    {
+     "p": 85,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 620,
+     "tr_len": 557,
+     "pageId": "69dbca3a1040d1d5e20aa3da",
+     "image": "https://images.sourcelibrary.org/pages/69dbca3a1040d1d5e20aa385/0085.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbca3a1040d1d5e20aa385/85.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/herbarius-latinus-with-german-synonyms-1/page/69dbca3a1040d1d5e20aa3da"
+    },
+    {
+     "p": 86,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1431,
+     "tr_len": 1394,
+     "pageId": "69dbca3a1040d1d5e20aa3db",
+     "image": "https://images.sourcelibrary.org/pages/69dbca3a1040d1d5e20aa385/0086.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69dbca3a1040d1d5e20aa385/86.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/herbarius-latinus-with-german-synonyms-1/page/69dbca3a1040d1d5e20aa3db"
+    }
+   ]
+  }
+ ],
+ "c17": [
+  {
+   "book": {
+    "id": "6984e84f99e67a12430e0685",
+    "slug": "philadelphia-or-brotherly-love-to-the-studious-in-the-anonymous",
+    "title": "Philadelphia, or brotherly love to the studious in the hermetick art",
+    "author": "Anonymous",
+    "language": "English",
+    "year": 1694,
+    "published": "1694",
+    "pages_count": 116
+   },
+   "pages": [
+    {
+     "p": 90,
+     "type": "text",
+     "lang": "English",
+     "ocr_len": 618,
+     "tr_len": 874,
+     "pageId": "6984f5ebe07982a8f8ab9179",
+     "image": "https://images.sourcelibrary.org/pages/6984e84f99e67a12430e0685/0090.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6984e84f99e67a12430e0685/6984f589e07982a8f8ab9172.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/philadelphia-or-brotherly-love-to-the-studious-in-the-anonymous/page/6984f5ebe07982a8f8ab9179"
+    },
+    {
+     "p": 91,
+     "type": "text",
+     "lang": "English",
+     "ocr_len": 621,
+     "tr_len": 938,
+     "pageId": "6984f5ebe07982a8f8ab917a",
+     "image": "https://images.sourcelibrary.org/pages/6984e84f99e67a12430e0685/0091.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6984e84f99e67a12430e0685/6984f589e07982a8f8ab9172.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/philadelphia-or-brotherly-love-to-the-studious-in-the-anonymous/page/6984f5ebe07982a8f8ab917a"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a08fd2625e3a402b23b3b5c",
+    "slug": "seianus-his-fall-ben-jonson",
+    "title": "Seianus his Fall",
+    "author": "Ben Jonson",
+    "language": "English",
+    "year": 1605,
+    "published": "1605",
+    "pages_count": 109
+   },
+   "pages": [
+    {
+     "p": 26,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1502,
+     "tr_len": 1438,
+     "pageId": "6a08fd2625e3a402b23b3b76",
+     "image": "https://images.sourcelibrary.org/pages/6a08fd2625e3a402b23b3b5c/0026.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a08fd2625e3a402b23b3b5c/26.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/seianus-his-fall-ben-jonson/page/6a08fd2625e3a402b23b3b76"
+    },
+    {
+     "p": 27,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1643,
+     "tr_len": 1569,
+     "pageId": "6a08fd2625e3a402b23b3b77",
+     "image": "https://images.sourcelibrary.org/pages/6a08fd2625e3a402b23b3b5c/0027.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a08fd2625e3a402b23b3b5c/27.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/seianus-his-fall-ben-jonson/page/6a08fd2625e3a402b23b3b77"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69b51e1c47b06ecd5818a033",
+    "slug": "henrici-cornelii-agrippae-ab-nettesheym-armatae-militiae-agrippa-von-2",
+    "title": "Henrici Cornelii Agrippae Ab Nettesheym Armatae Militiae Eqvitis Avrati ... Opera : In Dvos Tomos Concinne Digesta. 1",
+    "author": "Agrippa von Nettesheim, Heinrich Cornelius",
+    "language": "Latin",
+    "year": 1600,
+    "published": "1600",
+    "pages_count": 722
+   },
+   "pages": [
+    {
+     "p": 233,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2206,
+     "tr_len": 242,
+     "pageId": "69b51e1c47b06ecd5818a11c",
+     "image": "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a033/0233.jpg",
+     "image_full": "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a033/0233.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/henrici-cornelii-agrippae-ab-nettesheym-armatae-militiae-agrippa-von-2/page/69b51e1c47b06ecd5818a11c"
+    },
+    {
+     "p": 234,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2186,
+     "tr_len": 2509,
+     "pageId": "69b51e1c47b06ecd5818a11d",
+     "image": "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a033/0234.jpg",
+     "image_full": "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a033/0234.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/henrici-cornelii-agrippae-ab-nettesheym-armatae-militiae-agrippa-von-2/page/69b51e1c47b06ecd5818a11d"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6970e3579b09d309d780a24c",
+    "slug": "aelia-laelia-crispis-not-born-rising-again-malvasia",
+    "title": "Aelia laelia crispis non nata resurgens",
+    "author": "Malvasia, Carlo Cesare",
+    "language": "Latin",
+    "year": 1683,
+    "published": "1683",
+    "pages_count": 227
+   },
+   "pages": [
+    {
+     "p": 135,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 1330,
+     "tr_len": 1873,
+     "pageId": "6973479ec4c6c16f3cabbff1",
+     "image": "https://images.sourcelibrary.org/pages/6970e3579b09d309d780a24c/0135.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6970e3579b09d309d780a24c/6973471ec4c6c16f3cabbfee.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/aelia-laelia-crispis-not-born-rising-again-malvasia/page/6973479ec4c6c16f3cabbff1"
+    },
+    {
+     "p": 136,
+     "type": "text",
+     "lang": "auto-detect",
+     "ocr_len": 1420,
+     "tr_len": 1965,
+     "pageId": "69734901ae2bd5b13218bf73",
+     "image": "https://images.sourcelibrary.org/pages/6970e3579b09d309d780a24c/0136.jpg",
+     "image_full": "https://images.sourcelibrary.org/uploads/6970e3579b09d309d780a24c/697348b2ae2bd5b13218bf72.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/aelia-laelia-crispis-not-born-rising-again-malvasia/page/69734901ae2bd5b13218bf73"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69c870736c6f3cc53c8572dc",
+    "slug": "clavis-ofte-sleutel-boehme",
+    "title": "Clavis ofte sleutel",
+    "author": "Boehme, Jacob",
+    "language": "Dutch",
+    "year": 1642,
+    "published": "1642",
+    "pages_count": 64
+   },
+   "pages": [
+    {
+     "p": 37,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1511,
+     "tr_len": 1707,
+     "pageId": "69c870956c6f3cc53c85734c",
+     "image": "https://images.sourcelibrary.org/pages/69c870736c6f3cc53c8572dc/0037.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c870736c6f3cc53c8572dc/37.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/clavis-ofte-sleutel-boehme/page/69c870956c6f3cc53c85734c"
+    },
+    {
+     "p": 38,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1608,
+     "tr_len": 1592,
+     "pageId": "69c870d72236c5344dfa9859",
+     "image": "https://images.sourcelibrary.org/pages/69c870736c6f3cc53c8572dc/0038.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69c870736c6f3cc53c8572dc/38.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/clavis-ofte-sleutel-boehme/page/69c870d72236c5344dfa9859"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "699065793dc2ed39a49f18f3",
+    "slug": "atheismus-triumphatus-campanella",
+    "title": "Atheismus Triumphatus",
+    "author": "Tommaso Campanella",
+    "language": "Latin",
+    "year": 1631,
+    "published": "1631",
+    "pages_count": 208
+   },
+   "pages": [
+    {
+     "p": 85,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 3560,
+     "tr_len": 4383,
+     "pageId": "699065793dc2ed39a49f1948",
+     "image": "https://images.sourcelibrary.org/pages/699065793dc2ed39a49f18f3/0085.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699065793dc2ed39a49f18f3/85.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/atheismus-triumphatus-campanella/page/699065793dc2ed39a49f1948"
+    },
+    {
+     "p": 86,
+     "type": "text",
+     "lang": "Latin",
+     "ocr_len": 3321,
+     "tr_len": 4168,
+     "pageId": "699065793dc2ed39a49f1949",
+     "image": "https://images.sourcelibrary.org/pages/699065793dc2ed39a49f18f3/0086.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699065793dc2ed39a49f18f3/86.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/atheismus-triumphatus-campanella/page/699065793dc2ed39a49f1949"
+    }
+   ]
+  }
+ ],
+ "c19": [
+  {
+   "book": {
+    "id": "69a553c467a3da9e7ba5aaec",
+    "slug": "the-book-of-the-thousand-nights-and-a-night-vol-5-burton",
+    "title": "The Book of the Thousand Nights and a Night, Vol. 5",
+    "author": "Richard F. Burton",
+    "language": "English",
+    "year": 1894,
+    "published": "1894",
+    "pages_count": 441
+   },
+   "pages": [
+    {
+     "p": 112,
+     "type": "text",
+     "lang": "Unknown",
+     "ocr_len": 2102,
+     "tr_len": 2490,
+     "pageId": "69a553c467a3da9e7ba5ab5c",
+     "image": "https://images.sourcelibrary.org/pages/69a553c467a3da9e7ba5aaec/0112.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69a553c467a3da9e7ba5aaec/112.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-book-of-the-thousand-nights-and-a-night-vol-5-burton/page/69a553c467a3da9e7ba5ab5c"
+    },
+    {
+     "p": 113,
+     "type": "text",
+     "lang": "Unknown",
+     "ocr_len": 2274,
+     "tr_len": 2547,
+     "pageId": "69a553c467a3da9e7ba5ab5d",
+     "image": "https://images.sourcelibrary.org/pages/69a553c467a3da9e7ba5aaec/0113.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69a553c467a3da9e7ba5aaec/113.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/the-book-of-the-thousand-nights-and-a-night-vol-5-burton/page/69a553c467a3da9e7ba5ab5d"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "699067e58da6face82f777b5",
+    "slug": "commentary-on-the-timaeus-proclus-thomas",
+    "title": "The Commentaries of Proclus on the Timaeus of Plato",
+    "author": "Proclus (Thomas Taylor, trans.)",
+    "language": "English",
+    "year": 1820,
+    "published": "1820",
+    "pages_count": 496
+   },
+   "pages": [
+    {
+     "p": 304,
+     "type": "text",
+     "lang": "English",
+     "ocr_len": 2446,
+     "tr_len": 2525,
+     "pageId": "699067e68da6face82f778e5",
+     "image": "https://images.sourcelibrary.org/pages/699067e58da6face82f777b5/0304.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699067e58da6face82f777b5/304.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/commentary-on-the-timaeus-proclus-thomas/page/699067e68da6face82f778e5"
+    },
+    {
+     "p": 305,
+     "type": "text",
+     "lang": "English",
+     "ocr_len": 927,
+     "tr_len": 1356,
+     "pageId": "699067e68da6face82f778e6",
+     "image": "https://images.sourcelibrary.org/pages/699067e58da6face82f777b5/0305.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699067e58da6face82f777b5/305.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/commentary-on-the-timaeus-proclus-thomas/page/699067e68da6face82f778e6"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69e011714e6773d06085529e",
+    "slug": "a-grammar-of-the-yoruba-language",
+    "title": "A Grammar of the Yoruba Language",
+    "author": "Samuel Ajayi Crowther",
+    "language": "Yoruba",
+    "year": 1852,
+    "published": "1852",
+    "pages_count": 73
+   },
+   "pages": [
+    {
+     "p": 29,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 968,
+     "tr_len": 866,
+     "pageId": "69e011724e6773d0608552bb",
+     "image": "https://images.sourcelibrary.org/pages/69e011714e6773d06085529e/0029.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e011714e6773d06085529e/29.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/a-grammar-of-the-yoruba-language/page/69e011724e6773d0608552bb"
+    },
+    {
+     "p": 30,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1090,
+     "tr_len": 1013,
+     "pageId": "69e011724e6773d0608552bc",
+     "image": "https://images.sourcelibrary.org/pages/69e011714e6773d06085529e/0030.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e011714e6773d06085529e/30.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/a-grammar-of-the-yoruba-language/page/69e011724e6773d0608552bc"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "6a3f02bb97e91e1768f68204",
+    "slug": "fragmenta-philosophorum-graecorum-mullach",
+    "title": "Fragmenta philosophorum graecorum",
+    "author": "Mullach, F. W. A. (Friedrich Wilhelm August), b. 1807",
+    "language": "Greek",
+    "year": 1881,
+    "published": "1881",
+    "pages_count": 562
+   },
+   "pages": [
+    {
+     "p": 320,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4919,
+     "tr_len": 4746,
+     "pageId": "6a3f02bb97e91e1768f68344",
+     "image": "https://images.sourcelibrary.org/pages/6a3f02bb97e91e1768f68204/0320.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3f02bb97e91e1768f68204/320.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/fragmenta-philosophorum-graecorum-mullach/page/6a3f02bb97e91e1768f68344"
+    },
+    {
+     "p": 321,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 4833,
+     "tr_len": 6138,
+     "pageId": "6a3f02bb97e91e1768f68345",
+     "image": "https://images.sourcelibrary.org/pages/6a3f02bb97e91e1768f68204/0321.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/6a3f02bb97e91e1768f68204/321.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/fragmenta-philosophorum-graecorum-mullach/page/6a3f02bb97e91e1768f68345"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "69e0138c93b116d24238b125",
+    "slug": "denkmler-aus-aegypten-und-aethiopien-lepsius-894-plates",
+    "title": "Denkmäler aus Aegypten und Aethiopien (Lepsius, 894 plates)",
+    "author": "Carl Richard Lepsius",
+    "language": "German",
+    "year": 1849,
+    "published": "1849",
+    "pages_count": 566
+   },
+   "pages": [
+    {
+     "p": 396,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 636,
+     "tr_len": 301,
+     "pageId": "69e0138d93b116d24238b2b1",
+     "image": "https://images.sourcelibrary.org/pages/69e0138c93b116d24238b125/0396.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e0138c93b116d24238b125/396.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/denkmler-aus-aegypten-und-aethiopien-lepsius-894-plates/page/69e0138d93b116d24238b2b1"
+    },
+    {
+     "p": 397,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1953,
+     "tr_len": 1675,
+     "pageId": "69e0138d93b116d24238b2b2",
+     "image": "https://images.sourcelibrary.org/pages/69e0138c93b116d24238b125/0397.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/69e0138c93b116d24238b125/397.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/denkmler-aus-aegypten-und-aethiopien-lepsius-894-plates/page/69e0138d93b116d24238b2b2"
+    }
+   ]
+  },
+  {
+   "book": {
+    "id": "699356a983378b7aed7ce7b9",
+    "slug": "gulshan-i-raz-the-mystic-rose-garden-whinfield",
+    "title": "Gulshan-i Raz (The Mystic Rose Garden)",
+    "author": "Mahmud Shabistari (tr. E.H. Whinfield)",
+    "language": "English",
+    "year": 1880,
+    "published": "1880",
+    "pages_count": 186
+   },
+   "pages": [
+    {
+     "p": 37,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 2094,
+     "tr_len": 771,
+     "pageId": "699356a983378b7aed7ce7de",
+     "image": "https://images.sourcelibrary.org/pages/699356a983378b7aed7ce7b9/0037.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699356a983378b7aed7ce7b9/37.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/gulshan-i-raz-the-mystic-rose-garden-whinfield/page/699356a983378b7aed7ce7de"
+    },
+    {
+     "p": 38,
+     "type": "text",
+     "lang": "",
+     "ocr_len": 1486,
+     "tr_len": 888,
+     "pageId": "699356a983378b7aed7ce7df",
+     "image": "https://images.sourcelibrary.org/pages/699356a983378b7aed7ce7b9/0038.jpg",
+     "image_full": "https://images.sourcelibrary.org/archived/699356a983378b7aed7ce7b9/38.jpg",
+     "readerUrl": "https://sourcelibrary.org/book/gulshan-i-raz-the-mystic-rose-garden-whinfield/page/699356a983378b7aed7ce7df"
+    }
+   ]
+  }
+ ]
+}
