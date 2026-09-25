@@ -28,6 +28,7 @@ import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
+import { echoedSource } from './page-integrity.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -573,12 +574,65 @@ export const isExcess = (ocr, tr) => {
 
 /**
  * THE semantic health check for a freshly generated translation.
- * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|null}}
+ *
+ * Three refusals. `collapsed` and `runaway` need only the two texts. `echo` — the "translation"
+ * is the source reproduced (#5103 round 4: flash-lite completed an oath from the next page and
+ * then handed page 68's Latin back as its translation; the 2026-08 batch-lane repair echoed a
+ * garbled index page) — needs the BOOK's language, because an English source is modernised, not
+ * translated, and shares runs with its "translation" by design. Pass `{ lang }` to arm that tier;
+ * without it the echo tier is skipped, never guessed (page-integrity `echoedSource`, wholePage:
+ * the shared run is at least half the translation's prose).
+ *
+ * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|'echo'|null}}
  */
-export function assessTranslationHealth(ocrText, translationText) {
+export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
+  if (lang) {
+    const e = echoedSource({ ocr: ocrText, tr: translationText, lang });
+    if (e.judged && e.wholePage) return { healthy: false, reason: 'echo' };
+  }
   return { healthy: true, reason: null };
+}
+
+/**
+ * Parse a block response (`<translation page="N">…</translation>` per page) as the worker does —
+ * moved here from translate-worker.mjs (2026-09-25) so the shape can be tested and the
+ * Batch-lane harness stops carrying its own copy.
+ *
+ * The block-shift guard (#5103 round 4): a block that comes back with FEWER entries than pages
+ * sent is discarded whole. Measured on a real block (pp. 6–13 of the Apologia, EXPERIMENTS.md
+ * "2026-09-25 (round 4)"): the model dropped page 13 and labelled page 9's text
+ * `<translation page="8">`, and so on down the block — seven correctly-formed entries, every
+ * one on the wrong page. Labels on a short block cannot be trusted, and the caller's
+ * missing-from-batch path re-translates every page single-page. Production logs 2026-09-11 →
+ * 09-25: ~5% of blocks came back short (473 of ~9,400, the drift drops aside).
+ *
+ * @returns {{ translations: Map<number,string>, returned: number, discarded: null|'short-block' }}
+ */
+export function parseBlockTranslations(responseText, pages) {
+  const translations = new Map();
+  const regex = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
+  const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
+  // A translation under 15% of its OCR is a truncation (a stray closing tag) — the page falls back.
+  const tooShort = (p, text) => p && ocrOf(p).length > 100 && text.length < ocrOf(p).length * 0.15;
+  const entries = []; // in order, for the positional fallback
+  let match;
+  while ((match = regex.exec(responseText || '')) !== null) {
+    const pageNum = parseInt(match[1], 10);
+    const text = sanitizeTranslationTags(match[2].trim());
+    entries.push(text);
+    if (tooShort(pages.find((p) => p.page_number === pageNum), text)) continue;
+    translations.set(pageNum, text);
+  }
+  if (entries.length < pages.length) return { translations: new Map(), returned: entries.length, discarded: 'short-block' };
+  // Positional fallback: the model renumbered the pages (1–8 for 491–498); the count matches, so
+  // the order is trusted and each entry is checked against its own page's length.
+  if (entries.length === pages.length && pages.filter((p) => translations.has(p.page_number)).length < pages.length) {
+    translations.clear();
+    pages.forEach((p, i) => { if (!tooShort(p, entries[i])) translations.set(p.page_number, entries[i]); });
+  }
+  return { translations, returned: entries.length, discarded: null };
 }
 
 // Refused output is stored truncated — a 350K-char loop is evidence of a loop,
@@ -753,7 +807,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // page_revisions (source: 'health-gate-refused', #3826) — it cost real money
   // and tunes the detector; only the reader-facing write is refused.
   if (refuseUnhealthy) {
-    const health = assessTranslationHealth(page?.ocr?.data, clean);
+    const health = assessTranslationHealth(page?.ocr?.data, clean, { lang: book?.language });
     if (!health.healthy) {
       await persistRefusedTranslation(db, page, clean, health.reason, { jobId, model });
       return { written: false, protected: false, unhealthy: true, reason: health.reason, text: clean };

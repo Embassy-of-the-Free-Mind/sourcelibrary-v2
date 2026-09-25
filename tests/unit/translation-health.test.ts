@@ -163,3 +163,48 @@ describe('writePageTranslation refuseUnhealthy', () => {
     expect(calls.updates.length).toBe(1);
   });
 });
+
+/**
+ * The echo tier (#5103 round 4): a "translation" that is the source handed back. The fixture is
+ * the shape that reached the gate: page 68 of the Neukirch chapter statutes, whose Latin oath the
+ * model had already completed on page 67 and then echoed verbatim as page 68's translation. The
+ * tier is armed only by the book's language — an English source is modernised and shares runs
+ * with its "translation" by design.
+ */
+const OATH_LATIN = 'Capituli Patronis hunc eligere, quem credam futurum eidem Capitulo in spiritualibus & temporalibus utiliorem, nec illi vocem dare, quem verisimiliter, si verò promissione, aut datione alicujus rei temporalis seu portio per se, aut interpositam personam, aut aliàs qualitercunque directè vel indirectè pro se Electionem procurâsse. Sic me Deus adjuvet, & hæc sancta Dei Evangelia. Ego NN. in Decanum hujus Capituli canonicè electus spondeo, voveo, & juro, Deo Omnipotenti, Beatissimæ Mariæ Virgini, sanctis Apostolis Petro & Paulo Patronis ejusdem, me Jura, Privilegia, consuetudines antedicti Capituli pro viribus contra quoscunque defensurum.';
+const OATH_OCR = `<language>Latin</language>\n<page-num>57</page-num>\n\n${OATH_LATIN}`;
+const OATH_ENGLISH = 'of the Chapter, to elect him whom I believe will be more useful to the same Chapter in spiritual and temporal matters, and not to give my vote to him who, in my judgment, has procured the election for himself by promise or by the giving of some temporal thing or portion, either by himself or through an intermediary person, or otherwise in any way directly or indirectly. So help me God, and these holy Gospels of God. I, N.N., canonically elected as Dean of this Chapter, promise, vow, and swear to God Almighty, to the most Blessed Virgin Mary, and to the holy Apostles Peter and Paul, patrons of the same, that I will defend the rights, privileges and customs of the aforesaid Chapter with all my strength against anyone.';
+
+describe('echo tier (#5103): the source handed back as the translation', () => {
+  it('a Latin page whose "translation" is its own source is refused as echo', () => {
+    const echoed = `<page-num>57</page-num>\n\n${OATH_LATIN}`;
+    expect(assessTranslationHealth(OATH_OCR, echoed, { lang: 'Latin' })).toEqual({ healthy: false, reason: 'echo' });
+  });
+
+  it('the real translation of the same page is healthy', () => {
+    expect(assessTranslationHealth(OATH_OCR, OATH_ENGLISH, { lang: 'Latin' })).toEqual({ healthy: true, reason: null });
+  });
+
+  it('negative control — without the book language the echo tier is skipped, never guessed', () => {
+    const echoed = `<page-num>57</page-num>\n\n${OATH_LATIN}`;
+    expect(assessTranslationHealth(OATH_OCR, echoed)).toEqual({ healthy: true, reason: null });
+  });
+
+  it('an English source is exempt: its modernisation shares the text by design', () => {
+    const english = 'Whosoever therefore shall be ashamed of me and of my words in this adulterous and sinful generation, of him also shall the Son of man be ashamed, when he cometh in the glory of his Father with the holy angels. And he said unto them, Verily I say unto you, that there be some of them that stand here, which shall not taste of death, till they have seen the kingdom of God come with power.';
+    const modernised = english.replace('Whosoever', 'Whoever').replace('cometh', 'comes').replace('unto', 'to');
+    expect(assessTranslationHealth(`<language>English</language>\n\n${english}`, modernised, { lang: 'English' })).toEqual({ healthy: true, reason: null });
+    expect(assessTranslationHealth(`<language>English</language>\n\n${english}`, modernised, { lang: 'en' })).toEqual({ healthy: true, reason: null });
+  });
+
+  it('a list-like run kept in the original (an index of names with page numbers) is not an echo while it is part of the page', () => {
+    const names = 'Vitalianus Bapst 175. Marggraff Ottho von Wit. 282. Wittichius der Gotthen König 170. Vladislaus König in Ungern vnd Behem 381. Vlid Saracenisch. Amyr. 180. Vlpianus ein fürnemer Rechtsgelehrt 131. Vlm kompt an das Gottshauß Reichenaw 195. S. Ulrich 210. Valentinianus Keyser 88. Valerius Maximus 34. Varro 77. Vespasianus Keyser 12. Vitellius Keyser 11.';
+    const ocr = `<language>German</language>\n<page-type>index</page-type>\n\n${names}`;
+    const tr = `Register of names. ${names} These are the persons and places named in the foregoing chronicle, with the leaf on which each is treated, so that the reader may find any king, bishop or town without turning the whole book; the compiler has followed the order of the alphabet as far as the old spellings allow it, and has added the emperors of Rome at the end for the convenience of those who read the histories of the ancients beside the histories of the Germans.`;
+    expect(assessTranslationHealth(ocr, tr, { lang: 'German' })).toEqual({ healthy: true, reason: null });
+  });
+
+  it('collapse and runaway still come first', () => {
+    expect(assessTranslationHealth(latinOcr, 'tiny.', { lang: 'Latin' }).reason).toBe('collapsed');
+  });
+});
