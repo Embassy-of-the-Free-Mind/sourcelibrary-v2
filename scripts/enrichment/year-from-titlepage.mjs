@@ -74,8 +74,8 @@ function cleanOcr(raw) {
   if (!raw) return '';
   let s = typeof raw === 'string' ? raw : (raw.data || raw.text || '');
   s = s.replace(WRAPPER_CONTENT, ' ').replace(SELF_CLOSING, ' ');
-  s = s.replace(/<[^>]+>/g, ' ');           // strip any remaining tags
-  s = s.replace(/->|<-/g, ' ');             // SL centering marks
+  s = s.replace(/->|<-/g, ' ');             // SL centering marks, BEFORE the tag strip (#4815, #5105)
+  s = s.replace(/<\/?[a-zA-Z][^<>]*>/g, ' '); // strip any remaining tags
   return s.replace(/\s+/g, ' ').trim();
 }
 

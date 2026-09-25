@@ -68,8 +68,10 @@ export const MIN_TRANSLATABLE_BODY = 24;
 export function translatableBodyLen(text: string | null | undefined): number {
   if (!text) return 0;
   let out = String(text)
-    .replace(/<[^>]+>/g, ' ')
+    // Centring markers first, and a tag starts with a letter; see bodyLen in
+    // scripts/lib/translate-core.mjs (#5105).
     .replace(/->|<-/g, ' ')
+    .replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
     .replace(WS_ENTITY, ' ')
     .replace(LEADER_RUN, ' ');
   for (const [re, ch] of TEXT_ENTITIES) out = out.replace(re, ch);

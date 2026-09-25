@@ -78,8 +78,8 @@ function bodyLen(text) {
   let t = String(text);
   t = t.replace(blockRe, ' ');
   t = t.replace(looseRe, ' ');
-  t = t.replace(/<[^>]+>/g, ' ');        // any remaining inline tags (term/gloss/etc.) -> keep inner text already
-  t = t.replace(/->|<-/g, ' ');           // verse/centering markers
+  t = t.replace(/->|<-/g, ' ');           // verse/centering markers, BEFORE the tag strip (#5105)
+  t = t.replace(/<\/?[a-zA-Z][^<>]*>/g, ' '); // any remaining inline tags (term/gloss/etc.) -> keep inner text already
   t = t.replace(/\s+/g, ' ').trim();
   return t.length;
 }

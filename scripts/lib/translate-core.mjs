@@ -409,7 +409,10 @@ const LEADER_RUN = /([.\u00b7\u2022\u2024\u2027_\-–—=~*])\1{3,}/g;
 export function bodyLen(text) {
   if (!text) return 0;
   let out = String(text).replace(blockRe, ' ').replace(looseRe, ' ')
-    .replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ')
+    // Centring markers go BEFORE the tag strip, and a tag must start with a letter:
+    // otherwise the `<` of a closing `<-` opens a "tag" that runs to the next `>` and
+    // deletes everything between (#5105; the same bug on title pages was #4815).
+    .replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
     .replace(WS_ENTITY, ' ')
     .replace(LEADER_RUN, ' ');
   for (const [re, ch] of TEXT_ENTITIES) out = out.replace(re, ch);
