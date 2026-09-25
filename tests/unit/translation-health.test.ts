@@ -12,6 +12,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   assessTranslationHealth,
+  echoExempt,
   bodyLen,
   isCollapsed,
   isExcess,
@@ -206,5 +207,31 @@ describe('echo tier (#5103): the source handed back as the translation', () => {
 
   it('collapse and runaway still come first', () => {
     expect(assessTranslationHealth(latinOcr, 'tiny.', { lang: 'Latin' }).reason).toBe('collapsed');
+  });
+
+  // The three exemptions the mirror sizing found (12 of 20 flags were pages rightly handed back).
+  it('a book that is English in any form is exempt ("Middle English": its pages are modernised)', () => {
+    const echoed = `<page-num>57</page-num>\n\n${OATH_LATIN}`;
+    expect(assessTranslationHealth(OATH_OCR, echoed, { lang: 'Middle English' })).toEqual({ healthy: true, reason: null });
+    expect(assessTranslationHealth(OATH_OCR, echoed, { lang: 'Middle English-English' })).toEqual({ healthy: true, reason: null });
+  });
+
+  it('a PAGE in English inside a non-English book is exempt — the OCR language tag decides (a modern editor\'s bookplate, a list of selling agents)', () => {
+    const agents = 'SELLING AGENTS OF THE ORIENTAL SERIES. England: Messrs. Luzac and Co., 46 Great Russell Street, London. Messrs. Arthur Probsthain, 41 Great Russell Street, London. Messrs. Deighton Bell and Co., 13 and 30 Trinity Street, Cambridge. Germany: Messrs. Otto Harrassowitz, Querstrasse 14, Leipzig. Austria: Messrs. Gerold and Co., Stefansplatz 8, Vienna.';
+    const ocr = `<language>English</language>\n<page-type>appendix</page-type>\n\n${agents}`;
+    expect(assessTranslationHealth(ocr, agents, { lang: 'Sanskrit' })).toEqual({ healthy: true, reason: null });
+    expect(echoExempt(ocr, 'Sanskrit')).toBe(true);
+    // negative control: with the page tagged in the book's own language the exemption does not fire —
+    // the page is then judged by the detector (which has its own, narrower, English-in-source rule).
+    expect(echoExempt(ocr.replace('English', 'Sanskrit'), 'Sanskrit')).toBe(false);
+    expect(echoExempt(`<language>Latin</language>\n<page-type>text</page-type>\n\n${OATH_LATIN}`, 'Latin')).toBe(false);
+  });
+
+  it('a structural page (title page, index, diagram, table…) is exempt; a text page is not', () => {
+    const echoed = `<page-num>57</page-num>\n\n${OATH_LATIN}`;
+    for (const t of ['title-page', 'index', 'toc', 'colophon', 'diagram', 'table']) {
+      expect(assessTranslationHealth(`<language>Latin</language>\n<page-type>${t}</page-type>\n\n${OATH_LATIN}`, echoed, { lang: 'Latin' })).toEqual({ healthy: true, reason: null });
+    }
+    expect(assessTranslationHealth(`<language>Latin</language>\n<page-type>text</page-type>\n\n${OATH_LATIN}`, echoed, { lang: 'Latin' }).reason).toBe('echo');
   });
 });
