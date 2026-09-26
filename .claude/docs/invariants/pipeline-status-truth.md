@@ -1,8 +1,8 @@
 # Pipeline status must not claim work the book cannot show
 
 **Read this when:** writing or changing a pipeline phase, calling `setPipelineStatus`,
-advancing `pipeline_auto.status` from anywhere, or adding a guard that asserts some stage
-"really did its job."
+advancing `pipeline_auto.status` from anywhere, adding a guard that asserts some stage
+"really did its job," or **bulk-writing OCR onto books that are already translated**.
 
 *Added 2026-08-08 from #3740 / PR #3765.*
 
@@ -106,6 +106,25 @@ the OCR count is still growing, or the state machine is an infinite loop.
 The 13,329 existing books are NOT repaired by that fix — finalize only revisits
 `cover_selected`. Requeuing them queues ~$8,000 of OCR and translation behind the next
 open valve, which is actuation two hops upstream of the spend and belongs to a human.
+
+## A bulk OCR rewrite of finished books queues their retranslation (#4523, 2026-09-25)
+
+Gap-fill (orchestrator, `partialBooks`) re-dispatches any book at `translate_partial` /
+`translate_complete` / `chapters_complete` / `complete` whose `pages_translated` is under
+90% of `pages_ocr − pages_blank`. It translates pages whose translation is older than the
+OCR or that carry `translation_stale`, using `getTranslateModelForBook`. So **writing new
+OCR onto finished books is a decision to retranslate them**, at the dial's pace and on the
+router's model, and nobody has to approve it. It happened: 145 flash-lite jobs, 2,336 pages,
+32 Tibetan books between 2026-09-12 and 09-25, all from a transcription about to be
+replaced, while the memory said "retranslation not approved, no lane exists."
+
+- Before a bulk OCR apply on finished books, decide whether retranslation should follow.
+  If it needs approval, **hold the books first**
+  (`hold-pipeline-books.mjs --ids … --reason <x>-awaits-<who> --issue N --release "…" --apply`).
+  Page-level writers never touch status, so the apply is unaffected.
+- Release with **`--to ocr_complete`**. A plain release restores the prior status, and
+  `loop_quarantine_hold` (common in re-OCR cohorts) is selected by no translate phase.
+- "Nothing is running" is a count, not a belief: `jobs.countDocuments({type:'translation', book_id:{$in:…}, created_at:{$gte:…}})`.
 
 ## `held` — the one status a worker may never write (#4790)
 
