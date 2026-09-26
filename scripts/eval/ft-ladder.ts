@@ -56,6 +56,8 @@ import {
 // @ts-expect-error — plain .mjs modules without type declarations (tsx resolves them)
 import { screenDemoteCandidate } from '../lib/ft-demote-screen.mjs';
 // @ts-expect-error — plain .mjs module without type declarations
+import { openGroundingBudget } from '../lib/grounding-budget.mjs';
+// @ts-expect-error — plain .mjs module without type declarations
 import { costOf, searchCostOf, GROUNDED_SEARCH_USD_PER_QUERY } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -227,6 +229,8 @@ async function main() {
   const rung4Queue: Array<Record<string, unknown>> = [];
   let spent = 0;
   let searchSpent = 0;
+  // Monthly ceiling on grounded-search spend across ALL scripts (default $100, GROUNDING_MONTHLY_CAP_USD).
+  const GB = RUN ? await openGroundingBudget({ endpoint: 'scripts/eval/ft-ladder.ts' }) : null;
   const runaway: Array<{ id: string; title?: string; queries: number; cost: number }> = [];
   let rung1Applied = 0, rung2Logged = 0;
 
@@ -316,6 +320,7 @@ async function main() {
       /* rung 2 — grounded skeptic */
       if (!RUN) { row.rung = 2; row.outcome = 'skeptic_pending (--run to execute)'; continue; }
       if (spent >= BUDGET) { row.rung = 2; row.outcome = 'skeptic_skipped:budget_exhausted'; continue; }
+      if (GB && !GB.allows()) { row.rung = 2; row.outcome = 'skeptic_skipped:monthly_grounding_cap'; continue; }
 
       const direction: SkepticDirection = QUEUE === 'contradictions' && priors.length
         ? { kind: 'verify_prior', claimedPriors: priors.slice(0, 6) }
@@ -329,6 +334,7 @@ async function main() {
       }
       spent += res.cost;
       searchSpent += res.searchCost;
+      if (GB) await GB.record({ model: MODEL, queries: res.queries.length, book_id: b.id });
       row.cost_usd = res.cost;
       row.search_queries = res.queries.length;
       if (res.queries.length > SEARCH_FLAG) {
@@ -355,7 +361,9 @@ async function main() {
           // as UNMETERED spend in the billed-vs-metered check, which is the
           // opposite of what a recorded row should do (#4599).
           input_tokens: res.inputTokens, output_tokens: res.outputTokens,
-          cost_usd: res.cost, status: 'ok', endpoint: 'script/ft-ladder',
+          // Token cost only: the search fee is its own `grounded_search` row, written by
+          // the grounding budget (GB.record) — putting it here too would double-count.
+          cost_usd: res.tokenCost, status: 'ok', endpoint: 'script/ft-ladder',
         });
       }
 

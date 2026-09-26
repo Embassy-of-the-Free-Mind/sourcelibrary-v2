@@ -13,6 +13,7 @@
  *   node scripts/works-catalog/calibrate-chinese-local.mjs [--sample 40]
  */
 import { readFileSync, writeFileSync } from 'fs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 const args = process.argv.slice(2);
 const N = args.includes('--sample') ? parseInt(args[args.indexOf('--sample') + 1], 10) : 40;
@@ -41,7 +42,9 @@ Respond with JSON only (no markdown): {"status":"full"|"partial"|"none","transla
     catch { await sleep(2500); continue; }
     if (r.status === 429 || r.status >= 500) { await sleep(3000); continue; }
     if (!r.ok) return null;
-    const txt = (await r.json())?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join('') || '';
+    const resp = await r.json();
+    await GB.record({ model: MODEL, queries: (resp?.candidates?.[0]?.groundingMetadata?.webSearchQueries || []).length });
+    const txt = resp?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join('') || '';
     const m = txt.match(/\{[\s\S]*\}/);
     if (m) { try { return JSON.parse(m[0]); } catch { /* parse-inside-retry */ } }
     await sleep(1500);
@@ -49,6 +52,7 @@ Respond with JSON only (no markdown): {"status":"full"|"partial"|"none","transla
   return null;
 }
 
+const GB = await openGroundingBudget({ endpoint: 'scripts/works-catalog/calibrate-chinese-local.mjs' });
 const all = await pageAll('works?tradition=eq.chinese&select=id,title,title_english,author');
 const rng = mulberry32(SEED);
 const ordered = [...all].map(w => [rng(), w]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
@@ -58,6 +62,7 @@ console.log(`chinese: calibration stratum = first ${stratum.length} of seeded ce
 const rows = [];
 let bareTr = 0, deepTr = 0, gainedTr = 0, errors = 0;
 for (const w of stratum) {
+  if (!GB.allows()) { console.warn('grounding budget exhausted — stopping'); break; }
   const bare = bareVerdicts[w.id]?.state || 'unknown';
   const bareYes = bare === 'translated';
   const g = await groundedVerify(w);

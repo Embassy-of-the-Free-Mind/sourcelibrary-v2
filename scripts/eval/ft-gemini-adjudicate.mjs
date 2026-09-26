@@ -18,6 +18,7 @@
 import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (#spend-audit 2026-09-26)
 import { GoogleGenAI } from '@google/genai';
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'fs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 // model overridable via --model=; default keeps the build-lane's validated choice.
 // (Tested 2026-06-20: gemini-3-flash-preview grounds aggressively — 18 search queries on an
@@ -106,6 +107,7 @@ async function adjudicate(b) {
       // not the model's self-report. Captured even on parse failure so we never lose the search trail.
       const gm = resp.candidates?.[0]?.groundingMetadata || {};
       const queries = Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [];
+      await GB.record({ model: MODEL, queries: queries.length, book_id: b.id });
       // NB: c.web.uri is a vertexaisearch *redirect* for every chunk — useless to dedup on.
       // The REAL source domain is in c.web.title (verified 2026-06-20: worldcat.org, abebooks.com…).
       const sources_checked = [...new Set((gm.groundingChunks || [])
@@ -152,9 +154,10 @@ const todo = work.filter(b => !doneIds.has(String(b.id)));
 console.error(`Gemini adjudication: ${work.length} books (${doneIds.size} already done, ${todo.length} to do), model=${MODEL}, concurrency=${CONC}`);
 console.error(`  → evidence-bearing JSONL: ${jsonlFile}`);
 
+const GB = await openGroundingBudget({ endpoint: 'scripts/eval/ft-gemini-adjudicate.mjs' });
 let done = 0, cost = 0, next = 0;
 async function worker() {
-  while (next < todo.length) {
+  while (next < todo.length && GB.allows()) {
     const i = next++;
     const r = await adjudicate(todo[i]);
     appendFileSync(jsonlFile, JSON.stringify(r) + '\n');   // persist immediately

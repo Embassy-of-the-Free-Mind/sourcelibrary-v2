@@ -25,7 +25,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
-import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (spend audit 2026-09-26)
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 import { createRequire } from 'module';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -306,6 +306,7 @@ Respond JSON only:
 }`;
 }
 
+let GB = null; // opened just before the paid tier-2 loop
 async function searchWithGrounding(book) {
   const prompt = buildSearchPrompt(book);
 
@@ -341,6 +342,7 @@ async function searchWithGrounding(book) {
   const candidate = response.candidates?.[0];
   const groundingMeta = candidate?.groundingMetadata;
   const searchQueries = groundingMeta?.webSearchQueries || [];
+  await GB.record({ model: SEARCH_MODEL, queries: searchQueries.length, book_id: book.id });
   const groundingChunks = groundingMeta?.groundingChunks || [];
   const urls = groundingChunks
     .filter(c => c.web?.uri)
@@ -385,6 +387,7 @@ async function searchWithGrounding(book) {
 async function processInBatches(items, fn, concurrency) {
   const results = [];
   for (let i = 0; i < items.length; i += concurrency) {
+    if (GB && !GB.allows()) { console.warn('grounding budget exhausted — stopping'); break; }
     const batch = items.slice(i, i + concurrency);
     const batchResults = await Promise.allSettled(batch.map(fn));
     results.push(...batchResults);
@@ -574,6 +577,7 @@ async function main() {
   if (!TIER1_ONLY && tier2Queue.length > 0) {
     console.log('── Tier 2: Google Search Grounding ──\n');
 
+    GB = await openGroundingBudget({ endpoint: 'scripts/enrichment/verify-translation-claims.mjs' });
     const results = await processInBatches(tier2Queue, async (book) => {
       const title = (book.display_title || book.title || '').substring(0, 55);
 
@@ -694,8 +698,7 @@ async function main() {
             input_tokens: result.tokens?.input || 0,
             output_tokens: result.tokens?.output || 0,
             cost_usd: ((result.tokens?.input || 0) / 1_000_000) * 0.15 +
-                      ((result.tokens?.output || 0) / 1_000_000) * 3.50 +
-                      searchCostOf(SEARCH_MODEL, (result.searchQueries || []).length),
+                      ((result.tokens?.output || 0) / 1_000_000) * 3.50, // search fee is its own grounded_search row (GB.record)
             status: 'success',
             endpoint: 'script/verify-translation-claims',
           });

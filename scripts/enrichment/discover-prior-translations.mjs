@@ -59,6 +59,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 // ── Config ──────────────────────────────────────────────────────────
 const MODEL = 'gemini-3.1-flash-lite'; // per CLAUDE.md AI-models policy; -preview suffix is retired
@@ -196,6 +197,7 @@ function tryParse(text) {
   try { return JSON.parse((m ? m[1] || m[0] : text).trim()); } catch { return null; }
 }
 
+let GB = null; // opened in main() just before the paid pool runs
 async function callDiscovery(book) {
   let resp, text = '', cand, parsed = null;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -215,8 +217,10 @@ async function callDiscovery(book) {
         thinkingConfig: { thinkingBudget: -1 }, // dynamic; a FIXED budget (0/2048) reliably truncates
       };
       if (!lastAttempt) config.tools = [{ googleSearch: {} }];
+      if (config.tools && !GB.allows()) throw new Error('grounding budget exhausted');
       resp = await ai.models.generateContent({ model: MODEL, contents: buildPrompt(book), config });
       cand = resp.candidates?.[0];
+      if (config.tools) await GB.record({ model: MODEL, queries: (cand?.groundingMetadata?.webSearchQueries || []).length, book_id: book.id });
       // Thinking-capable models + grounding can leave resp.text empty while the
       // answer sits in non-"thought" content parts — gather both, prefer resp.text.
       const partText = (cand?.content?.parts || []).filter((p) => p && p.text && !p.thought).map((p) => p.text).join('\n');
@@ -417,6 +421,7 @@ async function processBook(book) {
 async function pool(items, fn, n) {
   const out = [];
   for (let i = 0; i < items.length; i += n) {
+    if (GB && !GB.allows()) { console.warn('grounding budget exhausted — stopping'); break; }
     const r = await Promise.allSettled(items.slice(i, i + n).map(fn));
     out.push(...r.map((x) => (x.status === 'fulfilled' ? x.value : { error: x.reason?.message || 'rejected' })));
     if (i + n < items.length) await new Promise((r) => setTimeout(r, DELAY_MS));
@@ -503,6 +508,7 @@ async function main() {
   console.log(`Candidates: ${candidates.length}\n`);
   if (!candidates.length) { await client.close(); return; }
 
+  GB = await openGroundingBudget({ endpoint: 'scripts/enrichment/discover-prior-translations.mjs' });
   const results = await pool(candidates, processBook, CONCURRENCY);
 
   // ── Report ──
