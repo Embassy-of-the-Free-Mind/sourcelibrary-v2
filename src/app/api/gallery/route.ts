@@ -8,6 +8,7 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
+import { queryTerms, termVariants, isNoSpaceTerm, evidenceScore, plateFields, artworkFields, EVIDENCE_WEIGHTS } from '@/lib/search-grounding';
 import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
 export const maxDuration = 30;
@@ -304,7 +305,29 @@ export async function GET(request: NextRequest) {
     // the same $search + $match so pagination bounds are real.
     let atlasSearchCount: Promise<number | null> | null = null;
 
-    if (searchQuery) {
+    // GROUNDING (src/lib/search-grounding.ts): every item a search returns must
+    // contain the query's words in its OWN text. `evidence` holds the score of
+    // each item that passed, keyed like GalleryItem (pageId-detectionIndex); the
+    // response keeps ONLY keys in it. A lane that forgets to ground its results
+    // therefore contributes nothing, instead of leaking unrelated images.
+    const qTerms = searchQuery ? queryTerms(searchQuery) : null;
+    const evidence = new Map<string, number>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const groundPlates = (docs: any[]) => docs.filter(d => {
+      const s = qTerms ? evidenceScore(plateFields(d), qTerms) : 0;
+      if (s > 0) evidence.set(`${d.page_id}-${d.detection_index}`, s);
+      return s > 0;
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const groundArtworks = (docs: any[]) => docs.filter(d => {
+      const s = qTerms ? evidenceScore(artworkFields(d), qTerms) : 0;
+      if (s > 0) evidence.set(`artwork-${d.id}-0`, s);
+      return s > 0;
+    });
+
+    // A query with no checkable words (punctuation only) is unjudgeable: it
+    // returns nothing rather than everything.
+    if (searchQuery && qTerms?.judgeable) {
       // Primary: Atlas Search (gallery_search index) — searches description,
       // museum_description, subjects, figures. Same index used by unified search.
       // Shared $search + $match stages so the count pipeline can't drift from
@@ -313,13 +336,32 @@ export async function GET(request: NextRequest) {
         $search: {
           index: 'gallery_search',
           compound: {
-            should: [
-              { autocomplete: { query: searchQuery, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-              { text: { query: searchQuery, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-              { text: { query: searchQuery, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-              { text: { query: searchQuery, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
-            ],
-            minimumShouldMatch: 1,
+            // Every query term must match (AND), each as a whole word or its
+            // plural in some field — the same rule the grounding check applies,
+            // so this lane is grounded by construction and its $count is the
+            // real total. No fuzzy (edits turned "rose" into "rosy"/"rise") and
+            // no autocomplete (prefixes turned "cat" into "cathedral").
+            // Boosts are the grounding module's evidence weights, so "Best match"
+            // ranks an image TAGGED with the term above one that mentions it.
+            must: qTerms!.terms.map(t => {
+              const fields: [string, number][] = [
+                ['metadata.subjects', EVIDENCE_WEIGHTS.tags],
+                ['metadata.figures', EVIDENCE_WEIGHTS.tags],
+                ['description', EVIDENCE_WEIGHTS.description],
+                ['museum_description', EVIDENCE_WEIGHTS.secondary],
+              ];
+              // Scripts without word spaces: the standard analyzer splits them
+              // per character, so a text match would OR the characters. Phrase
+              // keeps them contiguous.
+              return {
+                compound: {
+                  should: fields.map(([path, boost]) => isNoSpaceTerm(t)
+                    ? { phrase: { query: t, path, score: { boost: { value: boost } } } }
+                    : { text: { query: termVariants(t), path, score: { boost: { value: boost } } } }),
+                  minimumShouldMatch: 1,
+                },
+              };
+            }),
             filter: [
               { range: { path: 'gallery_quality', gte: minQuality } },
             ],
@@ -494,6 +536,10 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Every lane above (Atlas, $text fallback, book-context, CLIP) is grounded
+    // here. Atlas already is by construction; the others are not.
+    if (searchQuery) items = groundPlates(items);
+
     // Deduplicate visually identical images within the same book (e.g., repeated woodcuts)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items = deduplicateByDHash(items as any) as any;
@@ -611,7 +657,8 @@ export async function GET(request: NextRequest) {
         // artworkToGalleryItem has nothing to fall back to and every search-lane
         // artwork tile reads as its own title (the #4798 fix covered the browse
         // lane's projection in gallery-merge.ts only — same bug, second call site).
-        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
+        // ...and the enrichment fields grounding scores (tags, inscriptions, prose).
+        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, 'enrichment.subject': 1, 'enrichment.figures_depicted': 1, 'enrichment.symbols': 1, 'enrichment.inscriptions': 1, 'enrichment.inscriptions_translation': 1, 'enrichment.museum_description': 1, 'enrichment.significance': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
         const bboxAspect = (b: any) => b && b.width > 0 && b.height > 0 ? Math.min(3, Math.max(0.33, (b.width / b.height) * 0.72)) : 0.72; // eslint-disable-line @typescript-eslint/no-explicit-any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mapPlate = (d: any) => ({
@@ -647,35 +694,51 @@ export async function GET(request: NextRequest) {
           : [];
         // (3) Semantically relevant artworks (related, not necessarily titled)
         const { semanticArtworkSearch } = await import('@/lib/semantic-search');
-        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 }).catch(() => []);
+        // Candidates only: grounding below decides. 0.60 (was 0.25) just trims
+        // obvious noise before the DB fetch — at 0.25 the lane always returned
+        // its 12 (calibrated: real hits 0.62-0.68, unrelated 0.54-0.59), and no
+        // threshold separates "smartphone" from armillary clocks, which is why
+        // grounding, not the score, is the gate.
+        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.60 }).catch(() => []);
         const semIds = artHits.map(a => a.book_id);
         const semArtDocs = semIds.length > 0
           ? await db.collection('books').find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, artProj).toArray().catch(() => [])
           : [];
-        const semById = new Map(semArtDocs.map(d => [d.id, d]));
+        const semById = new Map(groundArtworks(semArtDocs).map(d => [d.id, d]));
 
         // Assemble: title artworks + title plates lead, then semantic artworks, then the illustration search.
         const seenBooks = new Set<string>();
         const seenPages = new Set<string>();
         const lead: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-        for (const d of titleArtDocs) if (!seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); }
-        for (const d of titlePlateDocs) { const k = `${d.page_id}-${d.detection_index}`; if (!seenPages.has(k)) { seenPages.add(k); lead.push(mapPlate(d)); } }
+        for (const d of groundArtworks(titleArtDocs)) if (!seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); }
+        for (const d of groundPlates(titlePlateDocs)) { const k = `${d.page_id}-${d.detection_index}`; if (!seenPages.has(k)) { seenPages.add(k); lead.push(mapPlate(d)); } }
         for (const a of artHits) { const d = semById.get(a.book_id); if (d && !seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); } }
         const rest = mappedItems.filter((it: any) => !seenPages.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
         outItems = [...lead, ...rest];
         // An explicit sort orders the whole first page, lead items included —
         // otherwise the lead block sat on top in a fixed order and changing the
-        // sort visibly did nothing.
+        // sort visibly did nothing. "Best match" ranks the page by grounding
+        // evidence (stable, so Atlas order breaks ties): an image TAGGED with the
+        // term outranks an artwork whose only mention is in its inscription.
         const cmp = compareGalleryItems(sort, seed);
-        if (cmp) outItems = [...outItems].sort(cmp);
+        const key = (it: any) => `${it.pageId}-${it.detectionIndex}`; // eslint-disable-line @typescript-eslint/no-explicit-any
+        outItems = cmp ? [...outItems].sort(cmp) : [...outItems].sort((a, b) => (evidence.get(key(b)) ?? 0) - (evidence.get(key(a)) ?? 0));
 
-        // Real result count: text-matching illustrations + the lead (title/semantic) items.
-        const illCount = await db.collection('gallery_images').countDocuments(
-          { $text: { $search: searchQuery }, gallery_quality: { $gte: minQuality }, book_visible: true, ...tenantF },
-          { maxTimeMS: 5000 },
-        ).catch(() => null);
-        if (illCount !== null) { displayTotal = illCount + lead.length; searchHasMore = outItems.length < displayTotal; }
+        // The total is the grounded Atlas count plus the grounded lead items it
+        // doesn't already contain. (It used to add a $text count — stemmed,
+        // OR-ed, matching book titles — which counted results never shown.)
+        const leadExtra = lead.filter(it => evidence.has(key(it))).length;
+        displayTotal = total + leadExtra;
       } catch { /* non-critical — search still returns illustrations */ }
+    }
+
+    // Response boundary: a search returns ONLY items a lane grounded. This is
+    // the guarantee — a new lane that skips grounding is silently empty here,
+    // not a leak. (Keys: plates pageId-detectionIndex; artworks artwork-<id>-0.)
+    if (searchQuery) {
+      const before = outItems.length;
+      outItems = outItems.filter((it: any) => evidence.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
+      if (outItems.length !== before) displayTotal = Math.max(outItems.length, displayTotal - (before - outItems.length));
     }
 
     // Get filters (cached for 30 min, only compute on first page)
