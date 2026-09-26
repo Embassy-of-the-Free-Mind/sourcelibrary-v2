@@ -37,6 +37,12 @@ describe('gallery scope', () => {
     expect(galleryFilter({ bookIds: ['a'], maxPerBook: NO_PER_BOOK_CAP })).not.toHaveProperty('book_rank');
   });
 
+  it('keeps every book of a large library or collection', () => {
+    // A 200-id slice showed BPH (2,404 books) as 1,469 of its 17,871 images.
+    const ids = Array.from({ length: 2404 }, (_, i) => `b${i}`);
+    expect((galleryFilter({ bookIds: ids }).book_id as { $in: string[] }).$in).toHaveLength(2404);
+  });
+
   it('never caps per book when scoped to a single book', () => {
     // A book's own gallery shows all of that book; the cap exists for variety
     // across books and would silently truncate it to three.
