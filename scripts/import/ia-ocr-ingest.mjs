@@ -138,6 +138,35 @@ const CACHE = arg('--cache', null);
 const IDS_FILE = arg('--ids', null);
 const SOURCE = 'ia_djvu';
 
+// BY-EYE REFERENCE (2026-09-26, Derek: "or, you could look at them manually… find the title page
+// and evaluate the ocr quality"; "dont use tesseract"). A held book has no model pages, so the
+// agreement gate above cannot calibrate it without first paying for the 25-page Gemini preview.
+// `--by-eye <verdicts.jsonl>` lets a READ stand in for that sample: a reader opened N leaves of the
+// book (built by scripts/import/ia-ocr-by-eye-pack.mjs), compared the Archive's text with the
+// image, and recorded accept/reject per leaf. The book is filled only if EVERY read leaf was
+// accepted, and the read — reader, date, leaves, notes — is written into `ocr.agreement_ref` on
+// every page (`method: 'by_eye'`, `min_agreement: null`), so a by-eye fill is never mistaken for a
+// measured one. Books in the file are the only candidates in a by-eye run.
+const BY_EYE_FILE = arg('--by-eye', null);
+const BY_EYE = new Map();
+if (BY_EYE_FILE) {
+  for (const [i, line] of fs.readFileSync(BY_EYE_FILE, 'utf8').split(/\r?\n/).entries()) {
+    if (!line.trim()) continue;
+    const v = JSON.parse(line);
+    const bad = !v.book_id ? 'book_id' : !v.reader ? 'reader' : !v.read_at ? 'read_at' : !['accept', 'reject'].includes(v.verdict) ? 'verdict'
+      : !Array.isArray(v.leaves) || !v.leaves.length ? 'leaves' : v.leaves.some((l) => !Number.isInteger(l.leaf) || !['accept', 'reject', 'skip'].includes(l.verdict)) ? 'leaves[].leaf/verdict' : null;
+    if (!bad && v.skip_leaves !== undefined && (!Array.isArray(v.skip_leaves) || v.skip_leaves.some((k) => !Number.isInteger(k)))) { console.error(`${BY_EYE_FILE}:${i + 1}: skip_leaves must be an array of leaf integers`); process.exit(2); }
+    if (bad) { console.error(`${BY_EYE_FILE}:${i + 1}: missing or invalid ${bad}`); process.exit(2); }
+    // Leaf verdicts: accept (the text is a faithful reading of the image), reject (it is not), skip
+    // (the leaf is not text — a cover, a patent drawing sheet, a plate — so it is evidence neither
+    // way and is never written; pilot 2026-09-26: drawing sheets read as ~100 junk tokens). A book
+    // accept needs at least one accepted leaf and no rejected one.
+    if (v.verdict === 'accept' && (v.leaves.some((l) => l.verdict === 'reject') || !v.leaves.some((l) => l.verdict === 'accept'))) { console.error(`${BY_EYE_FILE}:${i + 1}: verdict accept needs >= 1 accepted leaf and none rejected (${v.book_id})`); process.exit(2); }
+    BY_EYE.set(v.book_id, v);
+  }
+  if (!BY_EYE.size) { console.error(`${BY_EYE_FILE}: no verdicts`); process.exit(2); }
+}
+
 /**
  * Leaf texts for an item. The cache stores the PARSED leaves (`<id>.leaves.json`, ~1/10 the
  * size of the word-boxed XML): the 2,076-book English run filled 23 GB of XML on a 150 GB
@@ -207,14 +236,20 @@ await withMongo(async (db) => {
   if (COLLECTION) q.collections = COLLECTION;
   if (LANGUAGE) q.language = new RegExp(`^${LANGUAGE}$`, 'i');
   if (BOOK) q.$and = [{ $or: [{ id: BOOK }, ...(ObjectId.isValid(BOOK) ? [{ _id: new ObjectId(BOOK) }] : [])] }];
-  if (IDS_FILE) {
+  if (BY_EYE.size) {
+    // By-eye run: exactly the books that were read. Still only books with untranscribed pages, and
+    // still never a book with a hidden_reason (a takedown is not a reading problem).
+    const ids = [...BY_EYE.keys()];
+    q.$and = [{ $or: [{ id: { $in: ids } }, { _id: { $in: ids.filter((x) => ObjectId.isValid(x)).map((x) => new ObjectId(x)) } }] }];
+  } else if (IDS_FILE) {
     // Re-score mode: the listed books, whether or not they still have untranscribed pages.
     const ids = fs.readFileSync(IDS_FILE, 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
     delete q.$expr; delete q.hidden_reason;
     q.$and = [{ $or: [{ id: { $in: ids } }, { _id: { $in: ids.filter((x) => ObjectId.isValid(x)).map((x) => new ObjectId(x)) } }] }];
   }
   const projection = { id: 1, title: 1, language: 1, languages: 1, published: 1, ia_identifier: 1, image_source: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1 };
-  const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
+  const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE || BY_EYE.size ? 100000 : LIMIT).toArray();
+  if (BY_EYE.size) console.log(`by-eye reference: ${BY_EYE.size} verdicts from ${BY_EYE_FILE}; ${books.length} of those books still have untranscribed pages`);
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
   const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, script_loss: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0 };
@@ -236,6 +271,39 @@ await withMongo(async (db) => {
     const bookLangs = [b.language, ...(Array.isArray(b.languages) ? b.languages : [])].map(normalizeLanguageToken).filter(Boolean);
     const langMismatch = !!(detectedLang && bookLangs.length && !bookLangs.includes(detectedLang));
     const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
+
+    const eye = BY_EYE.get(bid);
+    if (eye) {
+      const title = (b.title || '').slice(0, 44);
+      const leafTokE = leaves.map((l) => tokens(l));
+      // The reader attests that the image at pages.photo for each read leaf IS that leaf. Check the
+      // record agrees: the page with that page_number must index to that leaf (offset 0, #4790).
+      const misaligned = eye.leaves.filter((l) => { const p = pages.find((x) => x.page_number === l.page_number); return !p || leafIndex(p) !== l.leaf; });
+      const accepted = eye.verdict === 'accept' && !misaligned.length && !langMismatch;
+      // Guards that need a reference vocabulary use the leaves the reader ACCEPTED: their text is the
+      // one text in the book a person has confirmed. Two leaves are a small vocabulary, so the word
+      // cut stays relative to the book's own median (as above) and the trigram test mostly abstains.
+      const vocab = new Set(eye.leaves.filter((l) => l.verdict === 'accept').flatMap((l) => leafTokE[l.leaf] || []));
+      const share = (k) => leafTokE[k].filter((w) => vocab.has(w)).length / leafTokE[k].length;
+      const shares = leafTokE.map((t, k) => (t.length >= 20 ? share(k) : null)).filter((x) => x !== null);
+      const cut = 0.4 * median(shares);
+      const cand = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k >= 0 && k < leaves.length && leafTokE[k].length >= 20);
+      const wordOk = cand.filter(({ k }) => share(k) >= cut);
+      const refSetE = referenceTrigramSet(eye.leaves.filter((l) => l.verdict === 'accept').map((l) => leaves[l.leaf] || ''));
+      // Skipped = read leaves marked skip + every leaf the reader listed from the contact sheets.
+      const skipped = new Set([...eye.leaves.filter((l) => l.verdict === 'skip').map((l) => l.leaf), ...(eye.skip_leaves || [])]);
+      const notSkipped = wordOk.filter(({ k }) => !skipped.has(k));
+      const fill = notSkipped.filter(({ k }) => !isImplausible(leaves[k], refSetE, DEFAULT_MIN_PLAUSIBILITY));
+      const v = !accepted ? (eye.verdict !== 'accept' ? 'REJECT_BY_EYE' : misaligned.length ? 'MISALIGNED' : 'LANG_MISMATCH') : 'ACCEPT_BY_EYE';
+      console.log(`  ${v} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | read by ${eye.reader} on ${String(eye.read_at).slice(0, 10)}, leaves ${eye.leaves.map((l) => `${l.leaf}:${l.verdict}`).join(',')}${misaligned.length ? ` | leaf/page mismatch on ${misaligned.map((l) => l.leaf).join(',')}` : ''} | IA leaves ${leaves.length}/${pages.length} | fillable ${fill.length} (reader-skipped ${wordOk.length - notSkipped.length}, garbage skipped ${cand.length - wordOk.length}, implausible skipped ${notSkipped.length - fill.length}) | ${eye.note || ''}`);
+      if (!accepted) { summary.rejected++; continue; }
+      summary.accepted++; summary.scored++;
+      if (!APPLY) { summary.pages_written += fill.length; continue; }
+      const agreementRef = { method: 'by_eye', reader: eye.reader, read_at: eye.read_at, verdict_file: path.basename(BY_EYE_FILE), min_agreement: null, offset: 0,
+        leaves: eye.leaves.map(({ leaf, page_number, verdict, note }) => ({ leaf, page_number: page_number ?? null, verdict, note: note || '' })), skip_leaves: eye.skip_leaves || [], note: eye.note || '' };
+      summary.pages_written += await writeFill(db, b, bid, iaId, meta, leaves, fill, agreementRef, { by_eye: true, reader: eye.reader, read_at: eye.read_at, leaves_read: eye.leaves.length });
+      continue;
+    }
 
     // reference: pages that already carry model OCR, scored at every leaf offset in ±MAX_OFFSET.
     // The book's offset is the one most reference pages prefer; it must be shared by
@@ -329,34 +397,46 @@ await withMongo(async (db) => {
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
 
-    const now = new Date();
-    await saveRevisionsBeforeOverwrite(db, fillable.map(({ p }) => p.id), 'ocr', { reason: 'ia_ocr_ingest' });
-    let n = 0;
-    for (const { p, k } of fillable) {
-      // Pipeline update: `ocr` is literally null on many never-OCR'd pages, and a dotted
-      // $set cannot create fields inside null (MongoServerError 28 — crashed the first
-      // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
-      const ocrFields = {
-        data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
-        source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
-        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2) },
-        ia: iaProvenance(iaId, meta),
-      };
-      const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
-        [{ $set: { ocr: { $mergeObjects: [{ $ifNull: ['$ocr', {}] }, { $literal: ocrFields }] }, updated_at: now } }]);
-      n += r.modifiedCount;
-    }
-    summary.pages_written += n;
-    const [counts] = await P.aggregate(buildVisiblePageCountPipeline(bookId(b))).toArray();
-    const set = { updated_at: now };
-    if (counts) Object.assign(set, { pages_count: counts.total, pages_ocr: counts.with_ocr, pages_translated: counts.with_translation });
-    const full = counts && counts.with_ocr >= counts.total;
-    if (full && b.pipeline_auto?.status === 'archive_complete') set['pipeline_auto.status'] = 'ocr_complete', set['pipeline_auto.last_updated'] = now;
-    await B.updateOne({ _id: b._id }, { $set: set });
-    await db.collection('book_events').insertOne({ book_id: bid, type: 'ia_ocr_ingest', at: now, source: 'ia-ocr-ingest', details: { ia_identifier: iaId, pages_written: n, agreement_median: +med.toFixed(3), ref_pages: scores.length, engine: meta.engine, version: meta.version, pages_ocr_after: counts?.with_ocr ?? null, status_after: set['pipeline_auto.status'] || b.pipeline_auto?.status || null } });
-    console.log(`     wrote ${n} pages → pages_ocr ${counts?.with_ocr}/${counts?.total}${full ? ' (complete)' : ''}`);
+    summary.pages_written += await writeFill(db, b, bid, iaId, meta, leaves, fillable,
+      { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2) },
+      { agreement_median: +med.toFixed(3), ref_pages: scores.length });
   }
   console.log(JSON.stringify(summary));
 }, { timeoutMs: 6 * 60 * 60 * 1000 });
+
+/**
+ * Write the Archive's text into the fillable pages of one book, refresh its counts, log the event.
+ * `agreementRef` is what admitted the book (a measured median, or a by-eye read) and is written on
+ * every page; `eventExtra` is merged into the book_events row. Returns pages written.
+ */
+async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef, eventExtra) {
+  const B = db.collection('books'), P = db.collection('pages');
+  const now = new Date();
+  await saveRevisionsBeforeOverwrite(db, fillable.map(({ p }) => p.id), 'ocr', { reason: 'ia_ocr_ingest' });
+  let n = 0;
+  for (const { p, k } of fillable) {
+    // Pipeline update: `ocr` is literally null on many never-OCR'd pages, and a dotted
+    // $set cannot create fields inside null (MongoServerError 28 — crashed the first
+    // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
+    const ocrFields = {
+      data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
+      source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
+      agreement_ref: agreementRef,
+      ia: iaProvenance(iaId, meta),
+    };
+    const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
+      [{ $set: { ocr: { $mergeObjects: [{ $ifNull: ['$ocr', {}] }, { $literal: ocrFields }] }, updated_at: now } }]);
+    n += r.modifiedCount;
+  }
+  const [counts] = await P.aggregate(buildVisiblePageCountPipeline(bookId(b))).toArray();
+  const set = { updated_at: now };
+  if (counts) Object.assign(set, { pages_count: counts.total, pages_ocr: counts.with_ocr, pages_translated: counts.with_translation });
+  const full = counts && counts.with_ocr >= counts.total;
+  if (full && b.pipeline_auto?.status === 'archive_complete') set['pipeline_auto.status'] = 'ocr_complete', set['pipeline_auto.last_updated'] = now;
+  await B.updateOne({ _id: b._id }, { $set: set });
+  await db.collection('book_events').insertOne({ book_id: bid, type: 'ia_ocr_ingest', at: now, source: 'ia-ocr-ingest', details: { ia_identifier: iaId, pages_written: n, ...eventExtra, engine: meta.engine, version: meta.version, pages_ocr_after: counts?.with_ocr ?? null, status_after: set['pipeline_auto.status'] || b.pipeline_auto?.status || null } });
+  console.log(`     wrote ${n} pages → pages_ocr ${counts?.with_ocr}/${counts?.total}${full ? ' (complete)' : ''}`);
+  return n;
+}
 
 function bookId(b) { return b.id || String(b._id); }
