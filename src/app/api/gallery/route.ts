@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
 import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
@@ -7,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
-import { mergedGalleryBrowse, artworkToGalleryItem } from '@/lib/gallery-merge';
+import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
 
 export const maxDuration = 30;
@@ -68,6 +67,35 @@ function escapeAndNormalizeRegex(query: string): string {
   return escaped;
 }
 
+/**
+ * Shared-cache policy for gallery responses.
+ *
+ * Cloudflare caches /api/* on sourcelibrary.org whenever the origin says
+ * `public` (the zone's "Cache page routes" rule overrides the earlier /api
+ * bypass; subdomains don't match it), keyed on the URL ONLY. So a response may
+ * be shared only when its body depends on nothing but the URL:
+ *
+ *  - no tenant. Tenant context can arrive by header or referer, which the
+ *    cache key cannot see; a tenant-scoped body stored under a plain URL would
+ *    serve BPH's subset to everyone (and a client-sent x-tenant-slug could do
+ *    it on purpose). Tenant responses are never stored.
+ *  - no visitor. `visitor_id` makes likedByVisitor personal. The gallery page
+ *    doesn't send it (LikeButton reads liked state from localStorage), so its
+ *    URLs are the same for every reader and actually get reused.
+ *  - not degraded. A count or lookup that fell back to a placeholder must not
+ *    be served to everyone for 15 minutes.
+ *
+ * 15 minutes: a book hidden now can linger that long in API results (the
+ * /gallery HTML itself is already cached 24h). Vercel strips
+ * stale-while-revalidate and caches nothing without s-maxage, so max-age is
+ * the whole story at both layers.
+ */
+const SHARED_CACHE_CONTROL = 'public, max-age=900';
+const NO_STORE = 'private, no-store';
+function galleryCacheControl(opts: { tenantScoped: boolean; personal: boolean; degraded: boolean }): string {
+  return opts.tenantScoped || opts.personal || opts.degraded ? NO_STORE : SHARED_CACHE_CONTROL;
+}
+
 // In-memory cache for filter aggregations (types, subjects, yearRange)
 const FILTER_CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { minYear: number | null; maxYear: number | null } }; timestamp: number } | null = null;
@@ -105,6 +133,12 @@ export async function GET(request: NextRequest) {
     }
     // Gallery is a global view — skip tenant filter when no context (e.g. /gallery root path)
     const tenantFilter = tenantId ? { tenantId } : {};
+    // Conservative: ANY tenant signal (even a slug that didn't resolve) keeps
+    // this response out of shared caches. See galleryCacheControl.
+    const tenantScoped = Boolean(tenantId || tenantCtx.id || tenantCtx.slug);
+    // likedByVisitor is only computed for an explicit visitor_id — never from
+    // the session cookie, which the URL-keyed cache cannot see.
+    const visitorId = searchParams.get('visitor_id');
 
     // Visual search mode — uses CLIP image embeddings (text→image)
     const visual = searchParams.get('visual') === 'true';
@@ -170,11 +204,9 @@ export async function GET(request: NextRequest) {
       && !subjectFilter && !figureFilter && !symbolFilter && !iconclassFilter;
     const sourceParam = searchParams.get('source') || 'all';
     if (isPlainBrowse && (sourceParam === 'all' || sourceParam === 'artwork')) {
-      const sessionForMerge = await auth();
-      const visitorIdForMerge = sessionForMerge?.user?.id || searchParams.get('visitor_id');
       const merged = await mergedGalleryBrowse(db, {
         tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
-        imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId: visitorIdForMerge,
+        imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId,
         // Honour an explicitly-requested floor instead of silently clamping it.
         qualityExplicit: searchParams.get('minQuality') !== null,
       });
@@ -183,30 +215,35 @@ export async function GET(request: NextRequest) {
         items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset, bookInfo: null,
         filters: { ...mergedFilters, sources: ['illustration', 'artwork'] },
       }, {
-        headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
+        headers: { 'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded: merged.degraded }) },
       });
     }
 
     // If filtering by collection, resolve to book IDs
     let collectionBookIds: string[] | null = null;
     if (collectionSlug) {
-      collectionBookIds = await db.collection('books').distinct('id', {
-        ...(tenantId ? { tenantId } : {}),
-        collections: collectionSlug,
-        visible: true,
-        pages_count: { $gt: 0 },
-      }, { maxTimeMS: 10000 }) as string[];
+      // Memoized: a failed lookup throws out of the route (500, uncached),
+      // never caches an empty list. Hidden books are also excluded downstream
+      // by gallery_images.book_visible, so a 10-min-old list can't leak one.
+      collectionBookIds = await galleryMemo(`coll-ids:${tenantId || ''}:${collectionSlug}`, () =>
+        db.collection('books').distinct('id', {
+          ...(tenantId ? { tenantId } : {}),
+          collections: collectionSlug,
+          visible: true,
+          pages_count: { $gt: 0 },
+        }, { maxTimeMS: 10000 }) as Promise<string[]>);
     }
 
     // If filtering by library/provider, resolve to book IDs
     let libraryBookIds: string[] | null = null;
     if (libraryFilter) {
-      libraryBookIds = await db.collection('books').distinct('id', {
-        ...(tenantId ? { tenantId } : {}),
-        'image_source.provider': libraryFilter,
-        visible: true,
-        pages_count: { $gt: 0 },
-      }, { maxTimeMS: 10000 }) as string[];
+      libraryBookIds = await galleryMemo(`lib-ids:${tenantId || ''}:${libraryFilter}`, () =>
+        db.collection('books').distinct('id', {
+          ...(tenantId ? { tenantId } : {}),
+          'image_source.provider': libraryFilter,
+          visible: true,
+          pages_count: { $gt: 0 },
+        }, { maxTimeMS: 10000 }) as Promise<string[]>);
     }
 
     // The core of the filter comes from the shared scope (src/lib/gallery-scope),
@@ -460,6 +497,7 @@ export async function GET(request: NextRequest) {
     // gallery returned the corpus-wide estimate: Lister's 192 plates reported as
     // 206,230 results while correctly showing only Lister's.
     let total: number;
+    let degraded = false;
     if (!hasMore && offset === 0) {
       total = items.length; // we have everything
     } else if (!hasMore) {
@@ -475,18 +513,18 @@ export async function GET(request: NextRequest) {
           ? counted
           : offset + items.length + (hasMore ? 1 : 0);
       } else {
-        total = await db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }).catch(() => offset + items.length + 1);
+        // Memoized per filter so each "load more" doesn't recount (~1s on a
+        // 23k-book library). The fallback is a placeholder: mark degraded.
+        total = await galleryMemo(filterKey('gi-count', filter), () =>
+          db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }) as Promise<number>,
+        ).catch(() => { degraded = true; return offset + items.length + 1; });
       }
     } else {
       // Unfiltered browsing — estimated count is fine
       total = await db.collection('gallery_images').estimatedDocumentCount();
     }
 
-    // Fetch like counts (and visitor's liked status) for these images.
-    // Prefer the authenticated user id so likedByVisitor stays correct
-    // even when the client hasn't hydrated its session yet.
-    const session = await auth();
-    const visitorId = session?.user?.id || searchParams.get('visitor_id');
+    // Fetch like counts (and, for an explicit visitor_id, liked status).
     const imageIds = items.map(doc => `${doc.page_id}-${doc.detection_index}`);
     let likesMap: Record<string, { count: number; liked: boolean }> = {};
     if (imageIds.length > 0) {
@@ -502,7 +540,8 @@ export async function GET(request: NextRequest) {
           };
         }
       } catch {
-        // Non-critical — proceed without like data
+        // Non-critical — proceed without like data, but don't share it.
+        degraded = true;
       }
     }
 
@@ -647,7 +686,7 @@ export async function GET(request: NextRequest) {
       bookInfo,
       filters,
     }, {
-      headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
+      headers: { 'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded }) },
     });
   } catch (error) {
     console.error('Gallery error:', error);
