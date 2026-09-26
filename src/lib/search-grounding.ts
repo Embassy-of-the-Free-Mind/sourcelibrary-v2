@@ -24,6 +24,8 @@
  *    rather than everything.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any -- raw Mongo docs of two shapes (gallery_images, artworks) */
+
 import { normalizeNeedle } from '@/lib/align-text';
 
 // Function words in the library's main catalogue languages. Dropped from a
