@@ -10,7 +10,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus, LOOKAHEAD_CLAUSE } from '../../scripts/lib/page-break-devices.mjs';
+import { resolvePageBreak, lookaheadSnippet, overlapLength, maskApparatus, continuationPlausible, LOOKAHEAD_CLAUSE } from '../../scripts/lib/page-break-devices.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildTranslationPrompt, buildBlockTranslationPrompt, continuityContext, translationPromptHeader, PAGE_BREAK_FIX, PAGE_BREAK_SCOPED, PAGE_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
@@ -362,5 +362,107 @@ describe('buildBlockTranslationPrompt', () => {
     const plain = [{ page_number: 40, ocr: J103_N }, { page_number: 41, ocr: J103_X.replace('<meta>catchword: Panis</meta>\n', '') }];
     const { prompt } = buildBlockTranslationPrompt({ prompts, book, pages: plain, previousTranslation: PREV_TR, pageBreak: { ...PAGE_BREAK_SCOPED, scoped: false } });
     expect(prompt).toContain(PAGE_BREAK_RULE);
+  });
+
+  it('a break between NON-consecutive pages is never resolved: pages 16 and 18 leave "Augspur-" as production sends it', () => {
+    const gapped = [{ page_number: 16, ocr: J111_N }, { page_number: 18, ocr: J111_X }];
+    const { prompt, pageBreak } = buildBlockTranslationPrompt({ prompts, book, pages: gapped, previousTranslation: PREV_TR, pageBreak: PAGE_BREAK_SCOPED });
+    expect(prompt).toBe(buildBlockTranslationPrompt({ prompts, book, pages: gapped, previousTranslation: PREV_TR }).prompt);
+    expect(pageBreak.applied).toBe(false);
+    // control: the same two pages numbered consecutively fire
+    const consecutive = [{ page_number: 16, ocr: J111_N }, { page_number: 17, ocr: J111_X }];
+    expect(buildBlockTranslationPrompt({ prompts, book, pages: consecutive, previousTranslation: PREV_TR, pageBreak: PAGE_BREAK_SCOPED }).pageBreak.applied).toBe(true);
+  });
+});
+
+/**
+ * Round 4 (2026-09-25 evening): the join must be PLAUSIBLE. The round-3 block sample carried four
+ * garbage joins, each a hyphen the OCR read where the printer set a point or a dash, followed by a new
+ * unit of text — and flash-lite rendered one of them ("Responchristus") verbatim. Every fixture below is
+ * the real break, cut down.
+ */
+// j065 — "Respon-" (Respon[sio], the point read as a hyphen) | "101. O Herr": a section number before the "continuation"
+const J065_N = 'Christus hat die Menschen die Göttliche Gebot gelehret/ dieser aber lehret mit grossen ernsten Verzuckung. Respon-\n\n<vocab>Primarius</vocab>';
+const J065_X = '<language>German</language>\n<page-type>text</page-type>\n\n101. O Herr Primarius! wo stehet diß in meinem Buche / daß ich die Menschen die eusserliche Gebot nicht lehre?';
+// j029 — "Respon-" | "199. Christus sprach": a section number AND a capitalised first word
+const J029_N = 'nimm lieber einen Schue/ als eine Feder in die Hand. Respon-\n\n<vocab>Pasquil</vocab>';
+const J029_X = '<language>German</language>\n<page-type>text</page-type>\n\n199. Christus sprach/ wann sie euch fluchen/ so segnet sie/ so seyd ihr Kinder des höchsten.';
+// j079 — "Scrip-" | "(m) Scripsit": a footnote sigil, one letter in brackets
+const J079B_N = 'librum de freq. commun. circa veterem Eccl. Diſciplinam, adde monumenta Barcofii. Scrip-\n\n<vocab>Barcosius</vocab>';
+const J079B_X = '<language>Latin</language>\n<page-type>text</page-type>\n\n(m) Scripsit Arnaldus egregium tractatum de Perpetuitate fidei Ecclesiæ Catholicæ circa Eucharistiam.';
+// j002 — "præter-" | a blank page's placeholder
+const J002_N = 'vt in eo quoque argumento multa desiderare cogamur, siue prudens ea præter-\n\n<vocab>Danaeus</vocab>';
+const J002_X = '<language>Latin</language>\n<page-type>blank</page-type>\n\n(This page is blank.)';
+// j081 — "Fi-" | "Dei,": capitalised by the OCR, but the catchword tag says «dei,»
+const J081_N = 'probavit in libro 23. Apr. 1654. damnato: Theologia Familiaris, seu brevis explicatio mysteriorum Fi-\n\n<meta>catchword: dei,</meta>\n\n<vocab>Jansenius</vocab>';
+const J081_X = '<language>Latin</language>\n<page-num>9</page-num>\n<sig>A 5</sig>\n\nDei, in quo ut caeteros errores taceam, de Trinitate ait: Deus non erat solus ante creationem.';
+// j081 — "Vi-" | ",, xit annos 52.": quotation marks before the continuation are fine
+const J081B_N = 'inciſis marmori hiſce verbis: ,, Hic jacet Cornel. Janſenius, ,, ſeptimus Epiſcopus Yprenſis. Satis dixi. Vi-\n\n<vocab>Jansenius</vocab>';
+const J081B_X = '<language>Latin</language>\n<page-num>7</page-num>\n\n,, xit annos 52. obiit 6. Maji 1638. Die Viator: ,, Requiescat in pace. Amen.';
+// j079 — "institutio-" | "36 ” ne, quique": a bare page number before the continuation is fine
+const J079C_N = 'nempe, quem verba cuique statim offerunt in ea significatione, quam habent ex hominum institutio-\n\n<vocab>Arnaldus</vocab>';
+const J079C_X = '<language>Latin</language>\n<page-type>text</page-type>\n\n36 ” ne, quique est quasi prædominans, ac statim se legentibus ingerit.';
+
+describe('resolvePageBreak — the split-word join is guarded (round 4)', () => {
+  it('refuses a "continuation" that stands after a section number, a footnote sigil or a bracketed placeholder, and leaves both pages untouched', () => {
+    for (const [n, x] of [[J065_N, J065_X], [J029_N, J029_X], [J079B_N, J079B_X], [J002_N, J002_X]]) {
+      const r = resolvePageBreak(n, x);
+      expect(r.kind).toBeNull();
+      expect(r.joined).toBeNull();
+      expect(r.ocrN).toBe(n);
+      expect(r.ocrNext).toBe(x);
+    }
+  });
+
+  it('negative control — with the guard off the same breaks produce the garbage joins the round-3 sample carried', () => {
+    expect(resolvePageBreak(J065_N, J065_X, { guard: false }).joined).toBe('Respono');
+    expect(resolvePageBreak(J029_N, J029_X, { guard: false }).joined).toBe('Responchristus');
+    expect(resolvePageBreak(J079B_N, J079B_X, { guard: false }).joined).toBe('Scripm');
+    expect(resolvePageBreak(J002_N, J002_X, { guard: false }).joined).toBe('præterthis');
+  });
+
+  it('a capitalised continuation is a split word only when the catchword tag names it ("Fi-" | "Dei," with «dei,»)', () => {
+    const tagged = resolvePageBreak(J081_N, J081_X);
+    expect(tagged.kind).toBe('split');
+    expect(tagged.joined).toBe('Fidei');
+    expect(tagged.ocrNext).toContain('<sig>A 5</sig>\n\n, in quo ut caeteros');   // the word is gone, its comma stays
+    // control: the same break without the tag is refused — "Respon-" | "Christus" is the shape it would otherwise share
+    const untagged = resolvePageBreak(J081_N.replace('<meta>catchword: dei,</meta>\n\n', ''), J081_X);
+    expect(untagged.kind).toBeNull();
+    expect(untagged.joined).toBeNull();
+  });
+
+  it('quotation marks or a bare page number before the continuation do not stop the join (",, xit", "36 ” ne")', () => {
+    expect(resolvePageBreak(J081B_N, J081B_X).joined).toBe('Vixit');
+    expect(resolvePageBreak(J081B_N, J081B_X).ocrNext).toContain('<page-num>7</page-num>\n\n,,annos 52.');
+    expect(resolvePageBreak(J079C_N, J079C_X).joined).toBe('institutione');
+    expect(resolvePageBreak(J079C_N, J079C_X).ocrNext).toContain('\n\n36 ”, quique');
+  });
+
+  it('continuationPlausible: one letter, a section number, a bracket, or a bare capital each refuse; overlap or the tag rescue a capital', () => {
+    const first = (word: string, lead = '') => ({ word, start: lead.length, end: lead.length + word.length, hyphen: false });
+    expect(continuationPlausible(first('gischen'), 'gischen Confession')).toBe(true);
+    expect(continuationPlausible(first('O', '101. '), '101. O Herr')).toBe(false);
+    expect(continuationPlausible(first('Christus', '199. '), '199. Christus sprach')).toBe(false);
+    expect(continuationPlausible(first('m', '('), '(m) Scripsit')).toBe(false);
+    expect(continuationPlausible(first('This', '('), '(This page is blank.)')).toBe(false);
+    expect(continuationPlausible(first('Dei'), 'Dei, in quo')).toBe(false);
+    expect(continuationPlausible(first('Dei'), 'Dei, in quo', { tagAgrees: true })).toBe(true);
+    expect(continuationPlausible(first('Mnatur'), 'Mnatur ab Episcopis', { overlap: 3 })).toBe(true);
+    expect(continuationPlausible(first('XIT'), 'XIT annos')).toBe(true);           // an all-capitals line
+    expect(continuationPlausible(first('ne', '36 ” '), '36 ” ne, quique')).toBe(true);
+  });
+});
+
+describe('the joined word is sent as ordinary text (round 4)', () => {
+  it('the foot note tells the model the joined word is ordinary text of this page, not a term to preserve', () => {
+    const { prompt } = buildTranslationPrompt({ prompts, book, ocrText: J111_N, previousTranslation: PREV_TR, nextOcrText: J111_X, pageBreak: PAGE_BREAK_SCOPED });
+    expect(prompt).toContain('This page ends with the word «Augspurgischen», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.');
+  });
+
+  it('a refused join leaves the page byte-identical to production under the scoped option (j065)', () => {
+    const { prompt, pageBreak } = buildTranslationPrompt({ prompts, book, ocrText: J065_N, previousTranslation: PREV_TR, nextOcrText: J065_X, pageBreak: PAGE_BREAK_SCOPED });
+    expect(prompt).toBe(buildTranslationPrompt({ prompts, book, ocrText: J065_N, previousTranslation: PREV_TR }).prompt);
+    expect(pageBreak).toMatchObject({ fired: false, applied: false });
   });
 });

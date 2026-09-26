@@ -34,6 +34,8 @@
  *   --blocks               with --draw/--run/--packet: the BLOCK-shaped measurement — one production-
  *                          shaped block (≤8 pages) around each seam, the worker's own block prompt,
  *                          arms B / B2 / Fs (Fs = PAGE_BREAK_SCOPED, the flip candidate)
+ *   --device-only          with --run/--packet: only the seams that carry a device (round 4: one new
+ *                          arm, Fs2, on the 24 device seams against the round-3 B / B2 rows)
  *
  * Run --run on Hetzner (paid Gemini is geo-blocked on the laptop):
  *   set -a; source .env.production.local; set +a
@@ -84,7 +86,15 @@ const ARM_FIX = {
   F0: { ...PAGE_BREAK_FIX, lookahead: false },        // edits + rule only, no lookahead
   FC: { ...PAGE_BREAK_FIX, lookahead: 'clause' },     // edits + rule + clause-length lookahead
   Fs: PAGE_BREAK_SCOPED,                              // F0 applied only where a device is (the flip candidate)
+  // Round 4 (2026-09-25 evening): the same option after the hardening — a plausibility gate on the
+  // split-word join (continuationPlausible) and the "ordinary text" note wording. A new arm name so
+  // the round-3 Fs rows stay intact beside it.
+  Fs2: PAGE_BREAK_SCOPED,
 };
+// --device-only: only the seams that carry a device (round 4 re-runs one arm on those 24 and reuses
+// the round-3 B / B2 rows for the pairs).
+const DEVICE_ONLY = has('device-only');
+const selectSeams = (sample) => (DEVICE_ONLY ? sample.filter((s) => s.device) : sample);
 // Production's blocking rules (translate-worker.mjs BATCH_SIZE / MIN_OCR_CHARS_FOR_BATCH / MAX_BATCH_OCR_CHARS).
 const BLOCK = 8, MIN_PAGE_OCR_CHARS = 200, MAX_BLOCK_OCR_CHARS = 20000;
 /** --pairs X/Y,...: the blinded pairs a packet draws (default the first measurement's). */
@@ -227,7 +237,7 @@ const maxOutForBlock = (pages) => Math.min(32768, Math.max(4096, pages.reduce((n
 
 /** --run --blocks: one block call per seam-arm, parsed as the worker parses (parseBlock mirrors it). */
 async function phaseRunBlocks() {
-  const { sample } = JSON.parse(fs.readFileSync(BLOCK_SAMPLE_FILE, 'utf8'));
+  const sample = selectSeams(JSON.parse(fs.readFileSync(BLOCK_SAMPLE_FILE, 'utf8')).sample);
   const est = estimateBlocks(sample);
   const approved = Number(arg('approved-usd', 0));
   if (!(approved >= est.usd) || approved > CEILING_USD) {
@@ -239,8 +249,10 @@ async function phaseRunBlocks() {
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} blocks`);
   const onDisk = readRows();
   const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
-  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
-  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  // The approval covers the arms being run NOW; rows of other arms already on disk (an earlier
+  // round's B / B2 / Fs) were approved then and do not eat this run's budget.
+  let spent = onDisk.filter((r) => ARMS.includes(r.arm)).reduce((s, r) => s + (r.cost_usd || 0), 0);
+  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on ${ARMS.join(',')}, ${done.size} seam-arms on disk`);
   if (has('rerun-degenerate')) for (const [k, r] of done) if (isDegenerate(r)) { done.delete(k); console.log(`rerun ${k}: degenerate seam page`); }
   const stream = fs.createWriteStream(ARMS_FILE, { flags: 'a' });
   // Seam-major: every arm of one seam before the next seam, so a cap cutoff loses whole seams.
@@ -322,8 +334,8 @@ async function phaseRun() {
   console.log(`prompt: ${prompts.translation.ref.name} v${prompts.translation.ref.version}; arms ${ARMS.join(',')}; ${sample.length} seams`);
   const onDisk = readRows();
   const done = new Map(onDisk.map((r) => [`${r.id}:${r.arm}`, r]));
-  let spent = onDisk.reduce((s, r) => s + (r.cost_usd || 0), 0);
-  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent, ${done.size} seam-arms on disk`);
+  let spent = onDisk.filter((r) => ARMS.includes(r.arm)).reduce((s, r) => s + (r.cost_usd || 0), 0);
+  if (spent) console.log(`resuming: $${spent.toFixed(3)} already spent on ${ARMS.join(',')}, ${done.size} seam-arms on disk`);
   // --rerun-degenerate: a page whose whole translation came back inside <meta>continues from previous
   // page: …</meta> (or otherwise under 120 chars of reader text) is a collapse the production worker's
   // health gate would refuse and retry (translatePageGuarded); give every arm that same one retry. The
@@ -390,7 +402,7 @@ async function phaseRun() {
 // ── --packet ────────────────────────────────────────────────────────────────
 function phasePacket() {
   if (fs.existsSync(KEY_FILE)) throw new Error(`${KEY_FILE} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
-  const { sample } = JSON.parse(fs.readFileSync(BLOCKS ? BLOCK_SAMPLE_FILE : SAMPLE_FILE, 'utf8'));
+  const sample = selectSeams(JSON.parse(fs.readFileSync(BLOCKS ? BLOCK_SAMPLE_FILE : SAMPLE_FILE, 'utf8')).sample);
   const rows = readRows();
   // The LAST row per seam-arm stands (a --rerun-degenerate retry appends); the collapses it replaced
   // are counted per arm — a whole page wrapped in <meta>continues from previous page: …</meta> is a

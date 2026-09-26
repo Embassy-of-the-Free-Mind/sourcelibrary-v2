@@ -34,6 +34,9 @@
  *                   page loses it
  *   merged          "cum nihil" | "hil impetrare" — the catchword "hil" was merged into "nihil" by
  *                   OCR; the next page loses "hil"
+ *   refused         "Respon-" | "101. O Herr", "Scrip-" | "(m) Scripsit", "præter-" | "(This page is
+ *                   blank.)" — a point or dash read as a hyphen before a NEW unit of text; the join is
+ *                   refused (continuationPlausible) and both pages go to the model untouched
  *
  * Everything returns an explicit `kind: null` when nothing fires; a page with no letters at either
  * side is left untouched (non-latin-text-operations.md — silence is never counted as clean).
@@ -93,6 +96,32 @@ export function overlapLength(fragment, next) {
 }
 
 /**
+ * What may stand before a split word's continuation at the head of the next page, once the apparatus
+ * is masked: whitespace, quotation marks, dashes and virgules (",, xit", "» mittelst", "--- tur"),
+ * and a bare page number ("36 ” ne", "53 nes"). NOT a section number with its point ("101. O Herr",
+ * "199. Christus"), not a footnote sigil or a placeholder in brackets ("(m) Scripsit", "(This page
+ * is blank.)") — each of those opens a new unit of text, and the hyphen before it was a point or a
+ * dash the OCR misread. Measured on the 38 joins of the round-3 block sample (EXPERIMENTS.md
+ * 2026-09-26): all four garbage joins had one of these before the "continuation".
+ */
+const LEAD_RE = /^[\s,"'“”„»«‚‘’\-‐‑–—⸗=¬|/]*(?:\d{1,4}\s+[\s,"'“”„»«‚‘’\-‐‑–—⸗=¬|/]*)?$/u;
+
+/**
+ * Is `first` (the next page's first letter-bearing token) a plausible completion of a word that ended
+ * page N in a hyphen? Refuses when the token is a single letter, when a new unit of text stands before
+ * it (LEAD_RE), or when it is capitalised without either an OCR overlap with the fragment or the
+ * catchword tag naming it — a continuation is never capitalised in print ("Fi-" | "Dei," passes only
+ * because the tag says «dei,»). Pure; exported for the tests.
+ */
+export function continuationPlausible(first, maskedNext, { overlap = 0, tagAgrees = false } = {}) {
+  if (!first || first.word.replace(/[^\p{L}]/gu, '').length < 2) return false;
+  if (!LEAD_RE.test(maskedNext.slice(0, first.start))) return false;
+  const capitalised = /^\p{Lu}/u.test(first.word) && !/^\p{Lu}{2,}$/u.test(first.word);
+  if (capitalised && !overlap && !tagAgrees) return false;
+  return true;
+}
+
+/**
  * Resolve the devices at the break between page N (`ocrN`) and page N+1 (`ocrNext`).
  *
  * @param {string} ocrN      OCR of the page that ends at the break
@@ -100,6 +129,8 @@ export function overlapLength(fragment, next) {
  * @param {object} [opts]
  * @param {boolean} [opts.splitWords=true]  join a word broken by the break onto page N
  * @param {boolean} [opts.catchwords=true]  remove a trailing catchword from page N's text
+ * @param {boolean} [opts.guard=true]       refuse a split-word join whose continuation is implausible
+ *                                          (continuationPlausible); off only in the tests' negative control
  * @returns {{
  *   kind: null|'catchword'|'split'|'split+catchword'|'merged-catchword',
  *   catchword: string|null,   the device found (printed form), whether removed from the body or only tagged
@@ -108,20 +139,22 @@ export function overlapLength(fragment, next) {
  *   ocrN: string, ocrNext: string,   the edited texts (unchanged when nothing fired)
  * }}
  */
-export function resolvePageBreak(ocrN, ocrNext, { splitWords = true, catchwords = true } = {}) {
+export function resolvePageBreak(ocrN, ocrNext, { splitWords = true, catchwords = true, guard = true } = {}) {
   let rawN = String(ocrN || ''), rawX = String(ocrNext || '');
   const res = { kind: null, catchword: null, joined: null, removedFromN: null, removedFromNext: null, ocrN: rawN, ocrNext: rawX };
   if (!rawN.trim() || !rawX.trim()) return res;
 
-  const first = tokens(maskApparatus(rawX))[0];
+  const maskedX = maskApparatus(rawX);
+  const first = tokens(maskedX)[0];
   if (!first) return res;
   const ff = foldWord(first.word);
   if (!ff) return res;
   const meta = parseCatchword(rawN);
   const metaWord = meta?.judged ? meta.tokens[0] : null;
+  const tagAgrees = !!(metaWord && tokenMatches(metaWord, ff));
   // A tagged catchword that the next page opens with is a device worth naming even when the body
   // does not repeat it (the model translates the tag's word too, see j111 "Augsburg Confession").
-  if (metaWord && tokenMatches(metaWord, ff)) res.catchword = meta.printed;
+  if (tagAgrees) res.catchword = meta.printed;
 
   let toks = tokens(maskApparatus(rawN));
   let last = toks[toks.length - 1];
@@ -154,15 +187,19 @@ export function resolvePageBreak(ocrN, ocrNext, { splitWords = true, catchwords 
 
   if (last && splitWords) {
     // ── 2. a word broken at the break: "Augspur-" | "gischen"
+    // Guarded: "Respon-" | "101. O Herr" is an abbreviation point read as a hyphen before a new
+    // section, not a split word — refused, and the pages go to the model as production sends them.
     if (last.hyphen) {
       const k = overlapLength(last.word, first.word);
-      const joined = last.word + (k ? first.word.slice(k) : asContinuation(first.word));
-      res.joined = joined;
-      res.removedFromNext = first.word;
-      res.kind = res.kind === 'catchword' ? 'split+catchword' : 'split';
-      rawN = splice(rawN, last.start, last.end, joined);
-      rawX = splice(rawX, first.start, first.end, '');
-      nextConsumed = true;
+      if (!guard || continuationPlausible(first, maskedX, { overlap: k, tagAgrees })) {
+        const joined = last.word + (k ? first.word.slice(k) : asContinuation(first.word));
+        res.joined = joined;
+        res.removedFromNext = first.word;
+        res.kind = res.kind === 'catchword' ? 'split+catchword' : 'split';
+        rawN = splice(rawN, last.start, last.end, joined);
+        rawX = splice(rawX, first.start, first.end, '');
+        nextConsumed = true;
+      }
     } else if (toks.length >= 2 && toks[toks.length - 2].hyphen && res.kind == null) {
       // ── 3. the catchword completed the split word on this page and the next page repeats the whole
       //       word: "Gri-⏎chischen" | "Griechischen"
