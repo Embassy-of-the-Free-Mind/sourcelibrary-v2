@@ -12,6 +12,19 @@
  * - Writes detected_images to pages + gallery_images collection
  * - Advances pipeline status to 'images_complete'
  * - Runs on Hetzner cron via scheduler
+ *
+ * Explicit-list mode (operator run, #5197):
+ *   node scripts/workers/image-extract-worker.mjs --books-file ids.txt [--since <ISO>] [--sweep-tag <kebab>]
+ * Processes exactly the listed books (one id per line) instead of the status-driven
+ * selection. Still gated by the dial / a scope envelope: ids outside an open envelope
+ * are dropped, never run. A listed book whose status the normal selection would not
+ * pick (parked, failed, archive_complete, ...) KEEPS its status — the worker writes
+ * pages.detected_images + gallery_images but never rewrites `pipeline_auto.status`
+ * for it (pipeline-status-truth.md). `--since` skips books already run after that
+ * instant (page marker `image_extraction_updated_at`), so a re-invocation resumes.
+ * `--sweep-tag` records one `sweep_log` row per book attempted (pages sent, images,
+ * prior status) so "attempted, found nothing" is a row, not silence.
+ * Env overrides for a long operator run: IMAGE_EXTRACT_BOOKS_PER_RUN, IMAGE_EXTRACT_DEADLINE_MIN.
  */
 
 import { MongoClient } from 'mongodb';
@@ -26,6 +39,19 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
+import fs from 'fs';
+
+// ── CLI (explicit-list mode, see header) ──
+const ARGV = process.argv.slice(2);
+const argVal = (name) => { const i = ARGV.indexOf(`--${name}`); return i >= 0 ? ARGV[i + 1] : null; };
+const BOOKS_FILE = argVal('books-file');
+const SINCE = argVal('since') ? new Date(argVal('since')) : null;
+const SWEEP_TAG = argVal('sweep-tag');
+if (SINCE && Number.isNaN(SINCE.getTime())) { console.error('--since must be an ISO date'); process.exit(2); }
+if ((SINCE || SWEEP_TAG) && !BOOKS_FILE) { console.error('--since / --sweep-tag need --books-file'); process.exit(2); }
+// Statuses the normal selection picks; anything else keeps its status in explicit mode.
+const STATUS_ADVANCEABLE = new Set(['chapters_complete', 'complete', undefined, null]);
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -104,8 +130,8 @@ sharp.concurrency(1);
 const CONCURRENCY = 25;           // Books processed simultaneously
 const PAGE_CONCURRENCY = 10;      // Pages per book processed simultaneously
 const IMAGE_DOWNLOAD_CONCURRENCY = 40;
-const BOOKS_PER_RUN = 250;
-const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
+const BOOKS_PER_RUN = Number(process.env.IMAGE_EXTRACT_BOOKS_PER_RUN) || 250;
+const RUN_DEADLINE_MS = (Number(process.env.IMAGE_EXTRACT_DEADLINE_MIN) || 25) * 60 * 1000; // 25 min default (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
 const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
@@ -792,7 +818,7 @@ async function processBook(db, book) {
   }
 
   if (candidatePages.length === 0) {
-    await setPipelineStatus(db, book.id, 'images_complete');
+    if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete');
     return { title: book.title, pages: 0, images: 0, skipped: true };
   }
 
@@ -1003,8 +1029,10 @@ async function processBook(db, book) {
     { $set: bookUpdate },
   );
 
-  // Advance pipeline
-  await setPipelineStatus(db, book.id, 'images_complete');
+  // Advance pipeline — unless this is an explicit-list book whose status the
+  // normal selection would never have picked (parked/failed/mid-pipeline):
+  // extraction is a side lane for it, not a stage it has reached.
+  if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete');
   revalidateBookPage(book.id).catch(() => {});
 
   // Log usage
@@ -1061,11 +1089,39 @@ async function main() {
     console.log(`[IMAGE-EXTRACT] Global dial closed, scope envelope open — confining to ${_gate.envelopeIds.size} envelope book(s).`);
   }
 
+  const PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 };
+  let books;
+  if (BOOKS_FILE) {
+    // Explicit-list mode: the file names the books; the envelope/scope still
+    // decides which of them may run. Never widen past the gate.
+    const listed = [...new Set(fs.readFileSync(BOOKS_FILE, 'utf8').split(/\r?\n/).map(s => s.trim()).filter(Boolean))];
+    const allowed = SCOPE_FILTER.id ? new Set(SCOPE_FILTER.id.$in) : null;
+    const runnable = allowed ? listed.filter(id => allowed.has(id)) : listed;
+    console.log(`[IMAGE-EXTRACT] Explicit list: ${listed.length} ids, ${runnable.length} inside the open scope/envelope${SINCE ? `, skipping books run since ${SINCE.toISOString()}` : ''}`);
+    let skippedDone = 0;
+    if (SINCE) {
+      const done = new Set((await db.collection('pages').distinct('book_id', { book_id: { $in: runnable }, image_extraction_updated_at: { $gte: SINCE } })));
+      skippedDone = runnable.filter(id => done.has(id)).length;
+      for (let i = runnable.length - 1; i >= 0; i--) if (done.has(runnable[i])) runnable.splice(i, 1);
+    }
+    const found = await db.collection('books')
+      .find({ id: { $in: runnable } })
+      .project({ ...PROJECTION, 'pipeline_auto.status': 1 })
+      .toArray();
+    const byId = new Map(found.map(b => [b.id, b]));
+    books = runnable.map(id => byId.get(id)).filter(Boolean).slice(0, BOOKS_PER_RUN);
+    for (const b of books) {
+      b._priorStatus = b.pipeline_auto?.status ?? null;
+      b._preserveStatus = !STATUS_ADVANCEABLE.has(b._priorStatus);
+    }
+    const preserved = books.filter(b => b._preserveStatus).length;
+    console.log(`[IMAGE-EXTRACT] Explicit list: ${books.length} to run this invocation (${skippedDone} already run, ${runnable.length - found.length} ids not found, ${preserved} keep their status)`);
+  } else {
   // Find books ready for image extraction
-  const books = await db.collection('books')
+  books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'chapters_complete', ...SCOPE_FILTER })
     .sort({ processing_priority: -1, hidden: 1 })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, subjects: 1, summary: 1, visible: 1, hidden: 1, 'image_source.provider': 1 })
+    .project(PROJECTION)
     .limit(BOOKS_PER_RUN)
     .toArray();
 
@@ -1090,6 +1146,7 @@ async function main() {
       console.log(`[IMAGE-EXTRACT] Catch-up: ${catchUp.length} books (complete or pre-pipeline)`);
     }
   }
+  } // end status-driven selection
 
   console.log(`[IMAGE-EXTRACT] Books to process: ${books.length}`);
 
@@ -1119,6 +1176,12 @@ async function main() {
           console.log(`  [skip] ${result.title} — no candidates`);
         } else {
           console.log(`  [done] ${result.title} — ${result.pages}pp, ${result.images} images`);
+        }
+        if (SWEEP_TAG) {
+          await recordSweepAction(db, {
+            sweep: SWEEP_TAG, book_id: book.id, action: 'image-extract-explicit',
+            detail: { pages_sent: result.pages, images: result.images, no_candidates: !!result.skipped, prior_status: book._priorStatus, status_preserved: !!book._preserveStatus },
+          }).catch(e => console.error(`  sweep_log write failed for ${book.id}: ${e.message}`));
         }
       } catch (err) {
         errors++;
