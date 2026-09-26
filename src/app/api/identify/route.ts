@@ -400,7 +400,22 @@ export async function POST(request: NextRequest) {
               _hydrated: h,
             };
           })
-          .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
+          .filter(c => !!c.thumbnailUrl);
+
+        // Visibility comes from `books`, not from the gallery row's cached
+        // `book_visible`: that flag is stale in BOTH directions (sampled
+        // 2026-09-26 — a hidden duplicate's copy of a woodcut carried no flag,
+        // was picked over the visible copy, and the answer became "not
+        // found"; two visible books' rows said false). One $in over ≤16 ids.
+        const candBookIds = [...new Set(candidates.map(c => c.bookId).filter(Boolean))];
+        const hiddenBooks = new Set(
+          (await db.collection('books')
+            .find({ id: { $in: candBookIds }, visible: false }, { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 })
+            .toArray()
+            .catch(() => []))
+            .map(b => b.id as string),
+        );
+        candidates = candidates.filter(c => !hiddenBooks.has(c.bookId));
 
         mark('rerank: candidates hydrated');
         const t0 = Date.now();
