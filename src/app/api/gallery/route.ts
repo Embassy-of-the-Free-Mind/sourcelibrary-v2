@@ -587,7 +587,15 @@ export async function GET(request: NextRequest) {
           : [];
         // (3) Semantically relevant artworks (related, not necessarily titled)
         const { semanticArtworkSearch } = await import('@/lib/semantic-search');
-        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.25 }).catch(() => []);
+        // 0.60, not 0.25: at 0.25 this lane ALWAYS returned its 12, whatever the
+        // query — "mushroom" put twelve Balinese wayang figures and Shiva reliefs
+        // into the results. Calibrated 2026-09-26 on /api/artwork/search (same
+        // embeddings): genuine hits 0.62-0.68 (alchemical furnace, tarot,
+        // skeleton, Madonna of the Rose); unrelated best-matches 0.54-0.59
+        // (mushroom's top hit was Shiva at 0.55). Same band as book search's
+        // "real 0.67+, nonsense 0.57-0.63". Title/inscription matches above
+        // are a separate lane and unaffected.
+        const artHits = await semanticArtworkSearch(searchQuery, 12, { threshold: 0.60 }).catch(() => []);
         const semIds = artHits.map(a => a.book_id);
         const semArtDocs = semIds.length > 0
           ? await db.collection('books').find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, artProj).toArray().catch(() => [])
