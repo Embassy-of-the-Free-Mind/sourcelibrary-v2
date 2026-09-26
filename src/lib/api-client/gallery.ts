@@ -43,6 +43,7 @@ export const gallery = {
     if (params?.includeArchive) queryParams.append('includeArchive', 'true');
     if (params?.maxPerBook) queryParams.append('maxPerBook', params.maxPerBook.toString());
     if (params?.sort) queryParams.append('sort', params.sort);
+    if (params?.seed !== undefined) queryParams.append('seed', params.seed.toString());
     if (params?.visitorId) queryParams.append('visitor_id', params.visitorId);
     if (params?.iconclass) queryParams.append('iconclass', params.iconclass);
     if (params?.source) queryParams.append('source', params.source);

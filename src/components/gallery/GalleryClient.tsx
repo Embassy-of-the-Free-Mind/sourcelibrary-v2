@@ -17,6 +17,7 @@ import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import { SUBJECT_CATEGORIES, topicLabel } from '@/lib/image-subjects';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
+import { RANDOM_SEEDS } from '@/lib/gallery-sort';
 import {
   gallery,
   books,
@@ -165,6 +166,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const maxPerBookParam = searchParams.get('maxPerBook');
   const maxPerBook = maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined;
 
+  // Reader-chosen order (src/lib/gallery-sort.ts). '' = the default: best
+  // quality for a browse, best match for a search. seed picks one of the
+  // RANDOM_SEEDS shuffles and lives in the URL so a shuffled view can be shared.
+  const sortParam = searchParams.get('sort') || '';
+  const seedParam = searchParams.get('seed');
+  const seed = seedParam !== null ? parseInt(seedParam, 10) : undefined;
+
   const limit = 48;
 
   // Update URL params
@@ -186,7 +194,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // filters at all, OR the URL's bookId equals what the server pre-filtered on
   // and no other filters are present.
   useEffect(() => {
-    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || topicFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasNonBookFilters = collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || topicFilter || yearStart || yearEnd || qualityParam || includeArchive || sortParam;
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
@@ -229,10 +237,15 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
           source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
+          sort: sortParam || undefined,
+          seed,
         });
         if (requestId !== fetchSeqRef.current) return;
-        setData(json);
-        setAllItems(json.items);
+        // The default browse opens on a shuffled first screen (the order below
+        // it stays best-first). Any explicit order, or a search, is shown as-is.
+        const firstPage = !sortParam && !imageSearchQuery ? shuffle([...json.items]) : json.items;
+        setData({ ...json, items: firstPage });
+        setAllItems(firstPage);
         // Paginate by page boundary, NOT cumulative item count. The merged
         // browse derives its page from `floor(offset / limit)`, so the next
         // offset must be a clean multiple of `limit`. Tracking the running
@@ -251,7 +264,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter, sortParam, seed]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -276,6 +289,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
         source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
+        sort: sortParam || undefined,
+        seed,
       });
       // Advance by a full page (see initial-fetch note). Dedup on append is a
       // belt-and-suspenders guard against any residual overlap (e.g. the
@@ -297,7 +312,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, limit, sourceFilter, sortParam, seed]);
 
   // Book search with debounce
   useEffect(() => {
@@ -450,6 +465,30 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
             )}
           </div>
+
+          {/* Sort. 16px text so iOS doesn't zoom on focus. */}
+          <label className="sr-only" htmlFor="gallery-sort">Sort</label>
+          <select
+            id="gallery-sort"
+            value={sortParam}
+            onChange={(e) => {
+              const next = e.target.value;
+              // A fresh shuffle each time Random is chosen; the seed stays in the
+              // URL so the same shuffle survives paging and can be shared.
+              updateParams({
+                sort: next,
+                seed: next === 'random' ? String(Math.floor(Math.random() * RANDOM_SEEDS)) : '',
+              });
+            }}
+            className="px-3 py-2 text-base rounded-lg border bg-white text-stone-600 border-stone-300 hover:bg-stone-50"
+          >
+            <option value="">{imageSearchQuery ? 'Best match' : 'Best quality'}</option>
+            <option value="oldest">Oldest first</option>
+            <option value="newest">Newest first</option>
+            <option value="book">By book</option>
+            <option value="recent">Recently added</option>
+            <option value="random">Random</option>
+          </select>
 
           {/* Filters Toggle */}
           <button
