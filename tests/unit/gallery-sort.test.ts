@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- in-memory fake collection rows */
 import { describe, it, expect } from 'vitest';
 import {
   GALLERY_SORTS, RANDOM_SEEDS, parseGallerySort, parseSeed, seedToDhashStart,
