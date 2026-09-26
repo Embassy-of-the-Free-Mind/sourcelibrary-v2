@@ -9,6 +9,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+
+/** What the research-context builder reads off `book.index` (#5184). */
+const SOCIAL_INDEX_FIELDS: readonly BookIndexProjectionField[] = ['bookSummary', 'sectionSummaries'];
 import {
   generateTweet,
   generateTweetVariations,
@@ -70,12 +74,10 @@ async function fetchResearchContext(
       ),
   ]);
 
-  // Merge full index from dedicated collection
+  // Merge from the dedicated index collection — this builder reads
+  // `bookSummary.brief` and `sectionSummaries` (#5184).
   if (bookDoc) {
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: bookId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    const indexDoc = await getBookIndexFields(db, bookId, SOCIAL_INDEX_FIELDS);
     if (indexDoc) {
       (bookDoc as any).index = { ...(bookDoc as any).index, ...indexDoc };
     }

@@ -14,6 +14,7 @@
 
 import { ImageResponse } from 'next/og';
 import { getReadDb } from '@/lib/mongodb';
+import { galleryPageWithBookPipeline } from '@/lib/gallery-page-lookup';
 import { getPageImageUrl } from '@/lib/utils';
 
 export const alt = 'Image from Source Library';
@@ -62,18 +63,7 @@ async function getImageData(id: string): Promise<{ page: PageWithBook; detection
     const index = parseInt(indexStr, 10);
 
     const db = await getReadDb();
-    const pages = await db.collection('pages').aggregate([
-      { $match: { id: pageId } },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book'
-        }
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } }
-    ]).toArray();
+    const pages = await db.collection('pages').aggregate(galleryPageWithBookPipeline({ id: pageId })).toArray();
 
     if (!pages.length) return null;
 

@@ -4,6 +4,7 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
+import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 
 // Shared server loader for the v2 reader design previews (/v2a, /v2c).
 // Mirrors the (reader)/page.tsx fetch: current page + book + nav page list.
@@ -26,9 +27,11 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
   const ctx = await getTenantContext();
   const db = await getReadDb();
 
+  // Same inclusion list as the production reader (reader-page-projection.ts),
+  // so the previews render from the same field set.
   const currentPage = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { detected_images: 0 } }
+    { projection: READER_PAGE_PROJECTION }
   );
   if (!currentPage) notFound();
 

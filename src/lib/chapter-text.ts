@@ -266,20 +266,51 @@ export async function materializeChapterTexts(
   return { chapters: docs.length, totalTokens };
 }
 
+/** The columns of a chapter_texts row, minus the two text bodies. */
+const CHAPTER_TEXT_META_FIELDS = [
+  'book_id', 'chapter_index', 'part', 'parts_total', 'title', 'titleEn', 'level',
+  'pageStart', 'pageEnd', 'token_estimate', 'materialized_at',
+] as const;
+
+/**
+ * Field lists for `getChapterTexts` (#5184). A row averages ~76 KB and carries
+ * BOTH `text` (the translation) and `ocr_text` (the original); every caller
+ * reads one or the other, never both. Callers that read the translation pass
+ * `CHAPTER_TEXT_FIELDS_TRANSLATION`; a caller serving the original passes
+ * `CHAPTER_TEXT_FIELDS_ORIGINAL`. Omitting the argument returns whole rows.
+ */
+export const CHAPTER_TEXT_FIELDS_TRANSLATION: readonly (keyof ChapterText)[] = [
+  ...CHAPTER_TEXT_META_FIELDS, 'text',
+];
+export const CHAPTER_TEXT_FIELDS_ORIGINAL: readonly (keyof ChapterText)[] = [
+  ...CHAPTER_TEXT_META_FIELDS, 'ocr_text',
+];
+
 /**
  * Get chapter texts for a book, optionally filtered by chapter index.
+ *
+ * `fields` is an inclusion list (see the constants above). The return type is
+ * unchanged for convenience, so a caller that passes a list and then reads a
+ * field it left out gets `undefined` at runtime, not a type error — pick the
+ * constant that matches what the caller reads (#4603).
  */
 export async function getChapterTexts(
   db: Db,
   bookId: string,
   chapterIndex?: number,
+  fields?: readonly (keyof ChapterText)[],
 ): Promise<ChapterText[]> {
   const filter: Record<string, unknown> = { book_id: bookId };
   if (chapterIndex !== undefined) {
     filter.chapter_index = chapterIndex;
   }
-  return db.collection('chapter_texts')
-    .find(filter)
+  let cursor = db.collection('chapter_texts').find(filter);
+  if (fields && fields.length > 0) {
+    const projection: Record<string, 0 | 1> = { _id: 0 };
+    for (const f of fields) projection[f] = 1;
+    cursor = cursor.project(projection);
+  }
+  return cursor
     .sort({ chapter_index: 1, part: 1 })
     .toArray() as unknown as ChapterText[];
 }
