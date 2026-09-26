@@ -505,7 +505,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             )}
             {libraryFilter && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Library: {getPartnerByProvider(libraryFilter)?.shortName || libraryFilter}
+                Library: {getPartnerByProvider(libraryFilter)?.name || libraryFilter}
                 <button onClick={() => updateParams({ library: '' })} className="hover:text-stone-900">
                   <X className="w-3 h-3" />
                 </button>
@@ -610,12 +610,15 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                 <select
                   value={libraryFilter}
                   onChange={(e) => updateParams({ library: e.target.value })}
-                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                  className="w-full px-2 py-1 text-base border border-stone-300 rounded"
                 >
                   <option value="">All libraries</option>
-                  {Object.values(LIBRARY_PARTNERS).map((p) => (
-                    <option key={p.providerKey} value={p.providerKey}>{p.shortName}</option>
-                  ))}
+                  {/* Full names: acronyms like BPH or NDL mean nothing to most readers. */}
+                  {Object.values(LIBRARY_PARTNERS)
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((p) => (
+                      <option key={p.providerKey} value={p.providerKey}>{p.name}</option>
+                    ))}
                 </select>
               </div>
 
