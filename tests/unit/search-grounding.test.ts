@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- fake Mongo docs and response items */
 import { describe, it, expect, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import {
