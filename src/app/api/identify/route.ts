@@ -285,8 +285,14 @@ export async function POST(request: NextRequest) {
     // degrades to null on ANY failure — the pipeline then behaves as before.
     const cropPromise: Promise<{ matches: ClipMatch[]; cropBase64: string } | null> = (async () => {
       try {
-        const b = parseArtworkBbox(identification.artwork_bbox);
-        if (!b) return null;
+        // No usable box (the model returns null when the artwork fills the
+        // frame) used to mean no crop lane at all. But a photo that is
+        // 'nearly all artwork' still carries a rim of wall/mat/page that
+        // costs CLIP dearly: sampled 2026-09-26, a woodcut with ~10% wall
+        // ranked 26th on the full photo and 1st on an 8%-margin centre crop.
+        // So fall back to that centre crop — one extra CLIP embed, already
+        // concurrent with the text lanes.
+        const b = parseArtworkBbox(identification.artwork_bbox) ?? { ymin: 80, xmin: 80, ymax: 920, xmax: 920 };
         const img = sharp(Buffer.from(base64, 'base64'));
         const meta = await img.metadata();
         if (!meta.width || !meta.height) return null;
