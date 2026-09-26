@@ -16,8 +16,33 @@ import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 import { toPublicPageImages } from '@/lib/public-image-fields';
 import { getPartnerByProvider } from '@/lib/library-partners';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
 export const preferredRegion = 'fra1';
+
+/**
+ * `book_indexes` fields served per mode (#5184). A doc averages ~145 KB and
+ * this route used to ship all of it on every call.
+ *
+ * nav — the MCP `get_book` backend (mcp-server/src/api.ts reads
+ * `index.{concepts,people,places,keywords}.length` for its has_index card).
+ * Term-only sub-paths keep those arrays and their lengths while dropping each
+ * entry's page list, which is where the bytes are.
+ *
+ * default — what the in-app callers of `books.get()` read: ExpandableGuide and
+ * the /guide page (`sectionSummaries`, `bookSummary`, `generatedAt`), plus the
+ * entity/entry arrays. Drops `vocabulary` (~38 KB) and `pageSummaries` (~6 KB),
+ * which nothing in src/ or mcp-server/ reads off this response.
+ *
+ * full (`?full=true`, admin/processing) keeps the whole doc.
+ */
+const NAV_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
+  'concepts.term', 'people.term', 'places.term', 'keywords.term',
+];
+const DEFAULT_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
+  'bookSummary', 'sectionSummaries', 'entries', 'people', 'places', 'concepts', 'keywords',
+  'generatedAt', 'pagesCovered', 'totalPages',
+];
 
 export const GET = withApiAuth(async (
   request: NextRequest,
@@ -140,11 +165,14 @@ export const GET = withApiAuth(async (
       ? 'private, no-cache'
       : 'public, max-age=60, stale-while-revalidate=300';
 
-    // Merge full index data from dedicated collection (heavy fields moved out of book docs)
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: bookId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    // Merge index data from the dedicated collection (heavy fields moved out
+    // of book docs). Field list by mode — see the constants above.
+    const indexDoc = includeFull
+      ? await db.collection('book_indexes').findOne(
+        { book_id: bookId },
+        { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+      ).catch(() => null)
+      : await getBookIndexFields(db, bookId, pagesMode === 'nav' ? NAV_INDEX_FIELDS : DEFAULT_INDEX_FIELDS);
     if (indexDoc) {
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }

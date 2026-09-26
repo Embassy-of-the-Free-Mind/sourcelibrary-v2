@@ -2,10 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { withAuth } from '@/lib/auth-helpers';
-import { getChapterTexts } from '@/lib/chapter-text';
+import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { z } from 'zod';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { isBookReadable } from '@/lib/book-access';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+
+// Twins of the projections in src/app/api/books/[id]/chat/route.ts (#5184).
+// Each list is the complete set of fields its code path reads (#4603).
+const CHAT_PAGE_PROJECTION = { _id: 0, id: 1, book_id: 1, page_number: 1, 'translation.data': 1 } as const;
+const CHAT_CONTEXT_BOOK_PROJECTION = {
+  _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, pages_count: 1,
+  'index.bookSummary': 1,
+} as const;
+const CHAT_GREETING_BOOK_PROJECTION = {
+  _id: 0, id: 1, title: 1, display_title: 1, author: 1, visible: 1,
+  'summary.data': 1, 'index.bookSummary.brief': 1,
+} as const;
+const CHAT_INDEX_FIELDS: readonly BookIndexProjectionField[] = ['bookSummary'];
 
 // Validation schema for chat messages
 const messageSchema = z.object({
@@ -92,6 +106,7 @@ async function searchBookPages(
     // No meaningful keywords - return first few pages
     return await db.collection('pages')
       .find({ book_id: bookId, tenantId, 'translation.data': { $exists: true } })
+      .project(CHAT_PAGE_PROJECTION)
       .sort({ page_number: 1 })
       .limit(limit)
       .toArray() as unknown as PageData[];
@@ -101,6 +116,8 @@ async function searchBookPages(
   const regexPatterns = keywords.map(k => new RegExp(k, 'i'));
 
   // Search for pages containing any of the keywords
+  // Projected and bounded — this used to return every matching page as a
+  // full page doc per chat turn (#5184); see the main-site twin.
   const pages = await db.collection('pages')
     .find({
       book_id: bookId,
@@ -108,6 +125,9 @@ async function searchBookPages(
       'translation.data': { $exists: true },
       $or: regexPatterns.map(r => ({ 'translation.data': r }))
     })
+    .project(CHAT_PAGE_PROJECTION)
+    .sort({ page_number: 1 })
+    .limit(limit * 10)
     .toArray() as unknown as PageData[];
 
   // Score pages by keyword matches
@@ -134,7 +154,7 @@ async function searchChapterTexts(
   limit: number = 3,
 ): Promise<Array<{ index: number; title: string; titleEn?: string; pageStart: number; pageEnd: number; text: string; score: number }>> {
   const db = await getDb();
-  const chapters = await getChapterTexts(db, bookId);
+  const chapters = await getChapterTexts(db, bookId, undefined, CHAPTER_TEXT_FIELDS_TRANSLATION);
   if (chapters.length === 0) return [];
 
   const keywords = extractKeywords(query);
@@ -184,14 +204,14 @@ async function buildBookContext(
 ): Promise<{ context: string; pageCount: number }> {
   const db = await getDb();
 
-  const book = await db.collection('books').findOne({ id: bookId, tenantId }) as unknown as BookData | null;
+  const book = await db.collection('books').findOne(
+    { id: bookId, tenantId },
+    { projection: CHAT_CONTEXT_BOOK_PROJECTION },
+  ) as unknown as BookData | null;
   if (!book) throw new Error('Book not found');
 
-  // Merge full index from dedicated collection
-  const indexDoc = await db.collection('book_indexes').findOne(
-    { book_id: bookId, tenantId },
-    { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-  ).catch(() => null);
+  // Merge the summary from the dedicated index collection
+  const indexDoc = await getBookIndexFields(db, bookId, CHAT_INDEX_FIELDS, { tenantId });
   if (indexDoc) {
     (book as any).index = { ...(book as any).index, ...indexDoc };
   }
@@ -362,7 +382,10 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    const book = await db.collection('books').findOne({ id, tenantId });
+    const book = await db.collection('books').findOne(
+      { id, tenantId },
+      { projection: CHAT_GREETING_BOOK_PROJECTION },
+    );
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
@@ -372,11 +395,8 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Merge full index from dedicated collection
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: id, tenantId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    // Merge the summary from the dedicated index collection
+    const indexDoc = await getBookIndexFields(db, id, CHAT_INDEX_FIELDS, { tenantId });
     if (indexDoc) {
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }

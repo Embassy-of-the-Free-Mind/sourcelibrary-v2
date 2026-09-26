@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
-import { getChapterTexts } from '@/lib/chapter-text';
+import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
@@ -208,7 +208,12 @@ export const GET = withApiAuth(async (
         }
       }
 
-      const allParts = await getChapterTexts(db, resolvedBookId, chapterIndex);
+      // `both` and `ocr` read `ocr_text` (ocr falls back to `text`); only a
+      // translation-only request can leave the ~half-row original behind (#5184).
+      const allParts = await getChapterTexts(
+        db, resolvedBookId, chapterIndex,
+        content === 'translation' ? CHAPTER_TEXT_FIELDS_TRANSLATION : undefined,
+      );
 
       if (allParts.length === 0) {
         // Fall back: check if chapters exist but aren't materialized yet

@@ -11,8 +11,20 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
 export const preferredRegion = 'fra1';
+
+// Twin of the constants in src/app/api/books/[id]/route.ts — see the
+// rationale there (#5184). nav keeps term-only arrays for the MCP has_index
+// counts; default drops `vocabulary` and `pageSummaries`, which nothing reads.
+const NAV_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
+  'concepts.term', 'people.term', 'places.term', 'keywords.term',
+];
+const DEFAULT_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
+  'bookSummary', 'sectionSummaries', 'entries', 'people', 'places', 'concepts', 'keywords',
+  'generatedAt', 'pagesCovered', 'totalPages',
+];
 
 export async function GET(
   request: NextRequest,
@@ -97,11 +109,14 @@ export async function GET(
       ? 'private, no-cache'
       : 'public, max-age=60, stale-while-revalidate=300';
 
-    // Merge full index data from dedicated collection (heavy fields moved out of book docs)
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: bookId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    // Merge index data from the dedicated collection (heavy fields moved out
+    // of book docs). Same per-mode field lists as /api/books/[id] (#5184).
+    const indexDoc = includeFull
+      ? await db.collection('book_indexes').findOne(
+        { book_id: bookId },
+        { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+      ).catch(() => null)
+      : await getBookIndexFields(db, bookId, pagesMode === 'nav' ? NAV_INDEX_FIELDS : DEFAULT_INDEX_FIELDS);
     if (indexDoc) {
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }
