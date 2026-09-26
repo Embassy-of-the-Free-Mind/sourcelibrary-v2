@@ -50,6 +50,11 @@ export interface ConfirmedMatch {
   read_url: string;
   gallery_url?: string;
   source_type: string;
+  /**
+   * A confirmed ARTWORK record with a verified `source_book` (#4037): the book
+   * the print comes from. `read_url` already points there (page when known).
+   */
+  source_book?: { book_id: string; book_slug?: string; book_title?: string; book_author?: string; page_id?: string; page_number?: number };
 }
 
 interface GalleryTextMatch {
@@ -92,7 +97,7 @@ export async function getGalleryCandidatesByText(queryText: string, limit = 10):
  * drop candidates whose book is not publicly visible.
  */
 export async function hydrateCandidates(db: Db, candidates: IdentifyCandidate[]): Promise<Map<string, {
-  thumbnail_url?: string; page_id?: string; page_number?: number; description?: string;
+  thumbnail_url?: string; book_id?: string; page_id?: string; page_number?: number; description?: string;
   book_title?: string; book_author?: string; book_visible?: boolean;
 }>> {
   const galleryIds = [...new Set(candidates.filter(c => c.galleryId).map(c => c.galleryId as string))];
@@ -100,15 +105,18 @@ export async function hydrateCandidates(db: Db, candidates: IdentifyCandidate[])
     ? await db.collection('gallery_images')
       .find(
         { id: { $in: galleryIds } },
-        { projection: { id: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, page_id: 1, page_number: 1, description: 1, book_title: 1, book_author: 1, book_visible: 1 }, maxTimeMS: 5000 },
+        { projection: { id: 1, book_id: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1, page_id: 1, page_number: 1, description: 1, book_title: 1, book_author: 1, book_visible: 1 }, maxTimeMS: 5000 },
       )
       .toArray()
       .catch(() => [])
     : [];
-  const map = new Map<string, { thumbnail_url?: string; page_id?: string; page_number?: number; description?: string; book_title?: string; book_author?: string; book_visible?: boolean }>();
+  const map = new Map<string, { thumbnail_url?: string; book_id?: string; page_id?: string; page_number?: number; description?: string; book_title?: string; book_author?: string; book_visible?: boolean }>();
   for (const d of docs) {
     map.set(d.id as string, {
       thumbnail_url: (d.thumbnail_url || d.extracted_url || d.image_url) as string | undefined,
+      // The gallery row's book is the authority; the CLIP index copied
+      // book_id at embed time and 3,711 rows have drifted since (#5195).
+      book_id: d.book_id as string | undefined,
       page_id: d.page_id as string | undefined,
       page_number: d.page_number as number | undefined,
       description: d.description as string | undefined,
@@ -127,6 +135,13 @@ export async function hydrateCandidates(db: Db, candidates: IdentifyCandidate[])
  * guess — critical for museum use, where a confident wrong answer is worse
  * than none).
  */
+/** Labels the rerank prompt uses for each candidate's origin (see the prompt's preference rule). */
+const CANDIDATE_KIND: Record<IdentifyCandidate['sourceType'], string> = {
+  gallery_image: 'book page',
+  artwork: 'print record',
+  book_cover: 'book cover',
+};
+
 export async function rerankByVisualComparison(
   photoBase64: string,
   photoMime: string,
@@ -152,12 +167,12 @@ export async function rerankByVisualComparison(
 
   const parts: Array<{ text: string } | { inline_data: { mime_type: string; data: string } }> = [
     {
-      text: `The FIRST image is a visitor's photograph of an artwork, print, or book illustration (possibly on a wall, framed, at an angle, or a page in a physical book). The following ${kept.length} numbered images are candidate matches from a library catalog. Identify which candidate shows THE SAME work — the same plate, engraving, painting, or illustration — allowing for photo distortion, framing, cropping, and differences between print states or copies. A candidate that merely depicts a similar subject is NOT the same work. Return JSON only: {"best": <candidate number 1-${kept.length}, or null if no candidate is the same work>, "sure": true|false}`,
+      text: `The FIRST image is a visitor's photograph of an artwork, print, or book illustration (possibly on a wall, framed, at an angle, or a page in a physical book). The following ${kept.length} numbered images are candidate matches from a library catalog. Identify which candidate shows THE SAME work — the same plate, engraving, painting, or illustration — allowing for photo distortion, framing, cropping, and differences between print states or copies. A candidate that merely depicts a similar subject is NOT the same work. Each candidate is labelled: "book page" is an illustration extracted from a scanned book in the library, "print record" is a standalone image of a print or painting, "book cover" is a cover. When MORE THAN ONE candidate shows the same work, choose the "book page" — the visitor wants the book the picture comes from, and a print record is often a reproduction of that very page. Return JSON only: {"best": <candidate number 1-${kept.length}, or null if no candidate is the same work>, "sure": true|false}`,
     },
     { inline_data: { mime_type: photoMime, data: photoBase64 } },
   ];
   kept.forEach((t, i) => {
-    parts.push({ text: `Candidate ${i + 1}:` }, { inline_data: { mime_type: t.mime, data: t.base64 } });
+    parts.push({ text: `Candidate ${i + 1} (${CANDIDATE_KIND[t.candidate.sourceType] || 'image'}):` }, { inline_data: { mime_type: t.mime, data: t.base64 } });
   });
 
   // Raw REST rather than the SDK, so the metering that rides on

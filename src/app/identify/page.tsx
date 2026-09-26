@@ -20,7 +20,7 @@ interface Match {
   subject?: string;
   score: number;
   visual_similarity?: number;
-  match_source?: 'text' | 'visual';
+  match_source?: 'text' | 'visual' | 'visual_confirmed' | 'semantic_artwork';
   page_number?: number;
   page_score?: number;
 }
@@ -68,6 +68,11 @@ interface ConfirmedMatch {
   read_url: string;
   gallery_url?: string;
   source_type: string;
+  /**
+   * A confirmed ARTWORK record with a verified `source_book` (#4037): the book
+   * the print comes from. `read_url` already points there (page when known).
+   */
+  source_book?: { book_id: string; book_slug?: string; book_title?: string; book_author?: string; page_id?: string; page_number?: number };
 }
 
 /**
@@ -284,7 +289,9 @@ export default function IdentifyPage() {
             setResult(acc);
             break;
           case 'confirmed':
-            setStageMessage('Checking catalogues…');
+            // A confirmed match cancels the web check server-side; nothing
+            // else is coming that changes the answer, so stop narrating.
+            setStageMessage(evt.data ? null : 'Checking the web…');
             if (acc) acc = { ...acc, confirmed: evt.data, page: evt.page ?? null, matches: evt.matches || acc.matches };
             setResult(acc);
             break;
@@ -590,7 +597,7 @@ export default function IdentifyPage() {
           <div className="space-y-6">
             {/* Streaming: analysis is already on screen while retrieval and
                 visual confirmation continue — say so instead of overlaying */}
-            {loading && (
+            {loading && stageMessage && (
               <div className="flex items-center gap-2.5 text-sm text-secondary" role="status">
                 <Loader2 className="w-4 h-4 animate-spin text-accent-rust" />
                 <span>{stageMessage || 'Searching the library…'}</span>
@@ -621,7 +628,7 @@ export default function IdentifyPage() {
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <ProvenanceChip kind="catalogue" />
                     <p className="font-display font-semibold text-primary">
-                      {c.book_title}
+                      {c.source_book?.book_title || c.book_title}
                       {/* "scan page", not "page": the work's own plate numbering
                           (e.g. the Codex Borgia's "Page 56") can differ from our
                           scan sequence, and the Analysis card may show it */}
@@ -629,8 +636,16 @@ export default function IdentifyPage() {
                         <span className="text-sm font-normal text-muted ml-2">scan page {c.page_number}</span>
                       )}
                     </p>
-                    {c.book_author && (
-                      <p className="text-sm text-secondary">{c.book_author}</p>
+                    {(c.source_book?.book_author || c.book_author) && (
+                      <p className="text-sm text-secondary">{c.source_book?.book_author || c.book_author}</p>
+                    )}
+                    {c.source_book && (
+                      <p className="text-xs text-muted">
+                        Matched through the print record{' '}
+                        {c.book_slug
+                          ? <Link href={`/artwork/${c.book_slug}`} className="underline hover:text-accent-rust">{c.book_title}</Link>
+                          : c.book_title}
+                      </p>
                     )}
                     {c.description && (
                       <div className="pt-1">
@@ -720,12 +735,15 @@ export default function IdentifyPage() {
                 )}
               </div>
               {/* Legend: one line, same vocabulary as every chip on the page */}
-              <p className="text-xs text-muted">
+              <details className="text-xs text-muted">
+                <summary className="cursor-pointer select-none">What the labels mean</summary>
+                <p className="mt-1">
                 Labels say where each fact comes from: <span className="text-amber-800">AI reading of your photo</span> is a
                 model&apos;s guess from the image; <span className="text-blue-700">Web check</span> is what a web search
                 found for that guess; <span className="text-green-700">Library catalogue</span> is our own record of the
                 book; <span className="text-stone-600">AI-generated description</span> was written by a model, not a curator.
-              </p>
+                </p>
+              </details>
               {result.identification.confidence_reason && (
                 <p className="text-xs text-muted italic">{result.identification.confidence_reason}</p>
               )}
@@ -736,10 +754,10 @@ export default function IdentifyPage() {
                     {result.identification.verified_artist ? (
                       <dd>
                         <span className="text-primary font-medium">{result.identification.verified_artist}</span>
-                        {result.identification.artist && result.identification.artist !== result.identification.verified_artist && (
-                          <span className="text-xs text-muted ml-2 line-through">{result.identification.artist}</span>
-                        )}
                         <ProvenanceChip kind="web-check" className="ml-1.5" />
+                        {result.identification.artist && result.identification.artist !== result.identification.verified_artist && (
+                          <span className="block text-xs text-muted">AI read: {result.identification.artist}</span>
+                        )}
                       </dd>
                     ) : (
                       <dd className="text-primary font-medium">{result.identification.artist}</dd>
@@ -752,10 +770,10 @@ export default function IdentifyPage() {
                     {result.identification.verified_title ? (
                       <dd>
                         <span className="text-primary">{result.identification.verified_title}</span>
-                        {result.identification.title && result.identification.title !== result.identification.verified_title && (
-                          <span className="text-xs text-muted ml-2 line-through">{result.identification.title}</span>
-                        )}
                         <ProvenanceChip kind="web-check" className="ml-1.5" />
+                        {result.identification.title && result.identification.title !== result.identification.verified_title && (
+                          <span className="block text-xs text-muted">AI read: {result.identification.title}</span>
+                        )}
                       </dd>
                     ) : (
                       <dd className="text-primary">{result.identification.title}</dd>
@@ -790,10 +808,21 @@ export default function IdentifyPage() {
                 )}
                 {result.identification.inscriptions && (
                   <div>
-                    <dt className="text-muted text-xs uppercase tracking-wider">Inscriptions</dt>
-                    <dd className="text-secondary whitespace-pre-line font-serif text-xs mt-1">
-                      {result.identification.inscriptions}
-                    </dd>
+                    {/* The full transcription is a screenful on a phone; once the
+                        library has the page it is reference material, not the answer */}
+                    {result.confirmed && result.identification.inscriptions.length > 160 ? (
+                      <details>
+                        <summary className="text-muted text-xs uppercase tracking-wider cursor-pointer select-none">Inscriptions (transcribed)</summary>
+                        <p className="text-secondary whitespace-pre-line font-serif text-xs mt-1">{result.identification.inscriptions}</p>
+                      </details>
+                    ) : (
+                      <>
+                        <dt className="text-muted text-xs uppercase tracking-wider">Inscriptions</dt>
+                        <dd className="text-secondary whitespace-pre-line font-serif text-xs mt-1">
+                          {result.identification.inscriptions}
+                        </dd>
+                      </>
+                    )}
                   </div>
                 )}
               </dl>
@@ -804,7 +833,7 @@ export default function IdentifyPage() {
                   <h3 className="text-xs uppercase tracking-wider text-muted mb-1 flex items-center gap-2">Catalogue references <ProvenanceChip kind="web-check" /></h3>
                   <div className="flex flex-wrap gap-1.5">
                     {result.identification.catalog_numbers.map((num, i) => (
-                      <span key={i} className="text-xs bg-stone-100 text-stone-700 rounded px-2 py-0.5 font-mono">{num}</span>
+                      <span key={i} className="text-xs bg-stone-100 text-stone-700 rounded px-2 py-0.5">{num}</span>
                     ))}
                   </div>
                 </div>
@@ -831,7 +860,7 @@ export default function IdentifyPage() {
               )}
 
               {/* Alternative identifications */}
-              {result.identification.alternative_identifications && result.identification.alternative_identifications.length > 0 && (
+              {!result.confirmed && result.identification.alternative_identifications && result.identification.alternative_identifications.length > 0 && (
                 <div className="pt-3 border-t border-border-light">
                   <h3 className="text-xs uppercase tracking-wider text-muted mb-2 flex items-center gap-2">Other possibilities <ProvenanceChip kind="ai-reading" /></h3>
                   <div className="space-y-2">
@@ -848,19 +877,21 @@ export default function IdentifyPage() {
             </div>
 
             {/* Matches */}
-            {result.matches.length > 0 ? (
-              <div>
-                <div className="flex items-center gap-2 mb-3">
+            {result.matches.filter(m => !result.confirmed || m.id !== result.confirmed.book_id).length > 0 ? (
+              /* With a confirmed answer the rail is the OTHER candidates the
+                 comparison saw — mostly look-alikes — so it folds away */
+              <details open={!result.confirmed}>
+                <summary className="flex items-center gap-2 mb-3 cursor-pointer select-none">
                   <h2 className="text-lg font-display font-semibold text-primary">
                     {result.confirmed
-                      ? 'Related results'
+                      ? `Other candidates we compared (${result.matches.filter(m => m.id !== result.confirmed!.book_id).length})`
                       : result.matches.length === 1 ? 'Closest Match' : `${result.matches.length} Possible Matches`}
                   </h2>
                   <ProvenanceChip kind="catalogue" />
                   {result.visual_search && (
                     <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
                   )}
-                </div>
+                </summary>
                 <div className="space-y-2">
                   {result.matches.filter(m => !result.confirmed || m.id !== result.confirmed.book_id).map((match, i) => {
                     const pageUrl = match.page_number
@@ -915,7 +946,7 @@ export default function IdentifyPage() {
                     );
                   })}
                 </div>
-              </div>
+              </details>
             ) : loading ? null : (
               <div className="card p-5 text-center">
                 <p className="text-secondary">Not found in Source Library</p>

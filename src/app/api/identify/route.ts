@@ -384,6 +384,10 @@ export async function POST(request: NextRequest) {
             const h = c.galleryId ? hydration.get(c.galleryId) : undefined;
             return {
               ...c,
+              // A gallery candidate's book is whatever gallery_images says NOW —
+              // the CLIP row's book_id is a stale copy for 3,711 rows and sent a
+              // confirmed Böhme plate to a Michael Scot 404 (#5195).
+              bookId: h?.book_id || c.bookId,
               thumbnailUrl: c.thumbnailUrl || h?.thumbnail_url || '',
               title: c.title || h?.book_title,
               author: c.author || h?.book_author,
@@ -414,35 +418,60 @@ export async function POST(request: NextRequest) {
         const picked = verdict.picked as IdentifyCandidate & { _hydrated?: { page_id?: string; page_number?: number; description?: string; book_title?: string; book_author?: string } };
         const book = await db.collection('books').findOne(
           { id: picked.bookId },
-          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1 } },
+          { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1, source_book: 1 } },
         );
         if (book && book.visible === false) return { confirmed: null, candidateCount: candidates.length, ran: true };
         const slugOrId = (book?.slug as string) || picked.bookId;
         const h = picked._hydrated;
+        // A confirmed ARTWORK record (a standalone print, usually a Commons
+        // reproduction) is not what the visitor wants — they want the book the
+        // picture comes from. When the artwork carries a verified `source_book`
+        // (#4037), the card links there; a page on it beats the book root.
+        const sbRaw = picked.sourceType === 'artwork' ? (book?.source_book as { id?: string; slug?: string; title?: string; page_id?: string; page_number?: number } | undefined) : undefined;
+        const sourceBook = sbRaw?.id
+          ? await db.collection('books').findOne(
+            { id: sbRaw.id },
+            { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1 }, maxTimeMS: 3000 },
+          ).catch(() => null)
+          : null;
+        const sourceLink = sourceBook && sourceBook.visible !== false
+          ? {
+            book_id: sourceBook.id as string,
+            book_slug: sourceBook.slug as string | undefined,
+            book_title: (sourceBook.display_title || sourceBook.title || sbRaw?.title) as string | undefined,
+            book_author: sourceBook.author as string | undefined,
+            page_id: sbRaw?.page_id,
+            page_number: sbRaw?.page_number,
+          }
+          : undefined;
         // The visitor wants the PAGE, not the book's front matter. Resolve the
         // whole scan leaf for the card's thumbnail through the canonical
         // resolver (image-host-allowlists invariant: never a raw stored host).
-        const pageDoc = h?.page_id
+        const pageId = h?.page_id || sourceLink?.page_id;
+        const pageDoc = pageId
           ? await db.collection('pages').findOne(
-            { id: h.page_id },
+            { id: pageId },
             { projection: { _id: 0, photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, thumbnail: 1, split_from_spread: 1, crop: 1 }, maxTimeMS: 3000 },
           ).catch(() => null)
           : null;
         const pageImageUrl = pageDoc ? getPageImageUrl(pageDoc as PageImageFields, 'display') : null;
-        const readUrl = h?.page_id
-          ? `/book/${slugOrId}/page/${h.page_id}`
-          : h?.page_number != null
-            ? `/book/${slugOrId}/page-number/${h.page_number}`
-            : `/book/${slugOrId}`;
+        const readSlug = sourceLink ? (sourceLink.book_slug || sourceLink.book_id) : slugOrId;
+        const readPageNumber = sourceLink ? sourceLink.page_number : h?.page_number;
+        const readUrl = pageId
+          ? `/book/${readSlug}/page/${pageId}`
+          : readPageNumber != null
+            ? `/book/${readSlug}/page-number/${readPageNumber}`
+            : `/book/${readSlug}`;
         const confirmed: ConfirmedMatch = {
           book_id: picked.bookId,
           book_slug: book?.slug as string | undefined,
           book_title: (book?.display_title || book?.title || picked.title) as string | undefined,
           book_author: (book?.author || picked.author) as string | undefined,
           gallery_image_id: picked.galleryId,
-          page_id: h?.page_id,
-          page_number: h?.page_number,
+          page_id: pageId,
+          page_number: readPageNumber,
           description: h?.description,
+          source_book: sourceLink,
           image_url: picked.thumbnailUrl,
           page_image_url: pageImageUrl ?? undefined,
           read_url: readUrl,
@@ -459,6 +488,11 @@ export async function POST(request: NextRequest) {
 
     // Promise 4: Google Search verification (runs after initial ID, in parallel with DB search)
     // Uses grounding to verify/correct the identification against museum catalogs
+    // The web check is the pipeline's tail (~6-7 s on gemini-2.5-flash with
+    // grounding). Once the library has visually confirmed the work, the
+    // catalogue is the authority and the check is cancelled — measured
+    // 2026-09-26: confirmed at ~10 s, verification at ~16.6 s.
+    const verifyAbort = new AbortController();
     const verifyPromise: Promise<{ corrected_artist?: string; corrected_title?: string; sources?: WebSource[]; catalog_numbers?: string[] } | null> = (async () => {
       try {
         // google_search grounding requires gemini-2.5-flash (v3 models don't support it yet)
@@ -503,7 +537,7 @@ Return JSON only:
               // suppress grounding (see gemini-thinking-and-meter.mjs header).
               generationConfig: { temperature: 0.1 },
             }),
-            signal: AbortSignal.timeout(20000),
+            signal: AbortSignal.any([verifyAbort.signal, AbortSignal.timeout(20000)]),
           },
         );
 
@@ -543,6 +577,7 @@ Return JSON only:
           return groundingSources.length > 0 ? { sources: groundingSources } : null;
         }
       } catch (e) {
+        if (verifyAbort.signal.aborted) return null;
         console.warn('[identify] Google Search verification failed:', e instanceof Error ? e.message : String(e));
         return null;
       }
@@ -965,6 +1000,10 @@ Return JSON only:
       ),
     ]);
     const confirmed = rerank.confirmed;
+    if (confirmed && (rerank as { sure?: boolean }).sure) {
+      verifyAbort.abort();
+      mark('verification cancelled (confirmed)');
+    }
 
     if (confirmed) {
       // The visually confirmed book is the answer — put it first.
