@@ -157,6 +157,14 @@ Since every merge to `main` is a production build, this interlock applies at MER
   "/explore"` in the build log — it reads like a code error; it isn't. The collision is intermittent,
   so one green deploy with a sweep running proves nothing.
 - Real fix is precomputing the counts like `system_config.homepage_stats` — #3373.
+- **The slow cousin (2026-09-25):** a build stuck in `Generating static pages (5xx/660)` for
+  15–25 minutes with `Sitemap book-count failed: … MaxTimeMSExpired` and
+  `Failed to build /sitemap/[__metadata_id__]/route … took more than 180 seconds. Retrying` is the
+  SAME mechanism without a sweep: general Atlas load (several apply/re-read jobs at once) makes the
+  sitemap's `books` counts crawl. Tell it apart from a code fault by timing a `countDocuments` over
+  `books` yourself — 3 s where it should be ~0.1 s means load. It is retried and usually completes
+  (25 min on 2026-09-25, merge of #5117); don't cancel or redeploy on top of it, and don't read the
+  PR as broken — `entities-sweep-active.mjs` was quiet, because nothing was sweeping `entities`.
 
 ## Reading the Vercel bill as a diagnostic
 
