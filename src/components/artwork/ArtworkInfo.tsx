@@ -123,7 +123,10 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
       : '');
   const fullWidth = (book as any).full_width || commonsWidth;
   const fullHeight = (book as any).full_height || commonsHeight;
-  const sourceBook = (book as any).source_book as { id: string; slug: string; title: string } | undefined;
+  // `page_id` / `page_number` are optional (#4037 Phase 1 wrote book-level links;
+  // hand-set rows and /identify's artwork resolution carry the page): a page
+  // beats the book root — the reader wants the plate, not the title page.
+  const sourceBook = (book as any).source_book as { id: string; slug: string; title: string; page_id?: string; page_number?: number } | undefined;
   // What the <h1> is, and what may be cited (#4288). On ~12.2K artwork records
   // `display_title` holds a label a vision model wrote from the image.
   const titleInfo = resolveTitle(book);
@@ -371,7 +374,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
         {/* Source Manuscript — links artwork to its parent codex/book */}
         {sourceBook && (
           <Link
-            href={`/book/${sourceBook.slug}`}
+            href={sourceBook.page_id ? `/book/${sourceBook.slug}/page/${sourceBook.page_id}` : sourceBook.page_number != null ? `/book/${sourceBook.slug}/page-number/${sourceBook.page_number}` : `/book/${sourceBook.slug}`}
             className="card p-6 sm:p-8 flex items-center gap-4 group hover:border-accent-rust/30 transition-colors"
             style={{ borderColor: 'var(--border-light)' }}
           >
@@ -390,7 +393,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
                 {sourceBook.title}
               </p>
               <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                Read the full text with translation →
+                {sourceBook.page_number != null ? `Open scan page ${sourceBook.page_number} with translation →` : 'Read the full text with translation →'}
               </p>
             </div>
           </Link>
