@@ -14,6 +14,54 @@ import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
 import { languageApparatusFields } from '@/lib/edition-language';
+import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
+
+/**
+ * Projections for this route (#5184). Each is the complete field set its
+ * consumers read, traced through the helper chain (#4603):
+ *
+ * Book — this handler: id, slug, title, display_title, author, published,
+ * language, visible (isBookReadable), pages_count (botMaxPage), editions
+ * (published edition → DOI/version/date); languageApparatusFields:
+ * language, original_language, text_role, is_translation; generateCitations:
+ * author, doi, format, language, published, publisher, slug, ustc_id +
+ * citationTitle (title, display_title, content_type, resource_type,
+ * field_provenance), resolveImprintPlace (IMPRINT_PLACE_FIELDS),
+ * resolveHoldingCopy (contributing_library, shelfmark and their
+ * image_source twins), readerPageUrl (slug, id).
+ */
+const QUOTE_BOOK_PROJECTION = {
+  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+  language: 1, original_language: 1, text_role: 1, is_translation: 1,
+  visible: 1, pages_count: 1, doi: 1, format: 1, publisher: 1, ustc_id: 1,
+  content_type: 1, resource_type: 1, field_provenance: 1,
+  ...IMPRINT_PLACE_PROJECTION,
+  contributing_library: 1, shelfmark: 1,
+  'image_source.contributing_library': 1, 'image_source.shelfmark': 1,
+  // generateCitations reads doi / version / published_at off the published
+  // edition; the handler picks it by status. Front matter and the rest of
+  // the edition record stay behind.
+  'editions.id': 1, 'editions.status': 1, 'editions.doi': 1, 'editions.version': 1, 'editions.published_at': 1,
+} as const;
+
+/**
+ * Page — resolveQuoteText: translation.data, ocr.data, translations,
+ * translation_es; romanizedForQuote: transliteration, ocr.data;
+ * containsMarginalia: ocr.data; getPageImageUrl(page, 'display') for
+ * ?include_image=true: the image-field family below; citation: id.
+ */
+const QUOTE_PAGE_PROJECTION = {
+  _id: 0, id: 1, page_number: 1,
+  'ocr.data': 1, 'translation.data': 1, translations: 1, translation_es: 1, transliteration: 1,
+  photo: 1, photo_original: 1, archived_photo: 1, display_photo: 1, cropped_photo: 1, enhanced_photo: 1,
+  thumbnail: 1, thumbnail_blob: 1, image_thumb: 1, crop: 1, split_from_spread: 1,
+} as const;
+
+/** Neighbours go through resolveQuoteText only. */
+const QUOTE_CONTEXT_PAGE_PROJECTION = {
+  _id: 0, id: 1, page_number: 1,
+  'ocr.data': 1, 'translation.data': 1, translations: 1, translation_es: 1,
+} as const;
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -129,13 +177,14 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     const db = await getReadDb();
 
     // Get book by id, slug, or _id
-    let book = await db.collection('books').findOne({ id: bookId }) as unknown as Book | null;
+    const bookOpts = { projection: QUOTE_BOOK_PROJECTION };
+    let book = await db.collection('books').findOne({ id: bookId }, bookOpts) as unknown as Book | null;
     if (!book) {
-      book = await db.collection('books').findOne({ slug: bookId }) as unknown as Book | null;
+      book = await db.collection('books').findOne({ slug: bookId }, bookOpts) as unknown as Book | null;
     }
     if (!book && /^[a-f0-9]{24}$/i.test(bookId)) {
       const { ObjectId } = await import('mongodb');
-      book = await db.collection('books').findOne({ _id: new ObjectId(bookId) }) as unknown as Book | null;
+      book = await db.collection('books').findOne({ _id: new ObjectId(bookId) }, bookOpts) as unknown as Book | null;
     }
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -160,10 +209,10 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       }
     }
 
-    const page = await db.collection('pages').findOne({
-      book_id: resolvedBookId,
-      page_number: pageNumber,
-    }) as unknown as Page | null;
+    const page = await db.collection('pages').findOne(
+      { book_id: resolvedBookId, page_number: pageNumber },
+      { projection: QUOTE_PAGE_PROJECTION },
+    ) as unknown as Page | null;
 
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
@@ -261,14 +310,14 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // Include context (adjacent pages) if requested
     if (includeContext) {
       const [prevPage, nextPage] = await Promise.all([
-        db.collection('pages').findOne({
-          book_id: resolvedBookId,
-          page_number: pageNumber - 1,
-        }),
-        db.collection('pages').findOne({
-          book_id: resolvedBookId,
-          page_number: pageNumber + 1,
-        }),
+        db.collection('pages').findOne(
+          { book_id: resolvedBookId, page_number: pageNumber - 1 },
+          { projection: QUOTE_CONTEXT_PAGE_PROJECTION },
+        ),
+        db.collection('pages').findOne(
+          { book_id: resolvedBookId, page_number: pageNumber + 1 },
+          { projection: QUOTE_CONTEXT_PAGE_PROJECTION },
+        ),
       ]);
 
       // Same resolution as the cited page: on an English-original book the
