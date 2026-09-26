@@ -25,12 +25,14 @@
  *   node scripts/eval/ft-search-unexamined.mjs --sample 20                 # list 20 targets (free)
  *   node scripts/eval/ft-search-unexamined.mjs --run --apply --sample 20   # search + log 20 (paid, ~$0.5)
  */
+import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (#spend-audit 2026-09-26)
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import { withMongo } from '../lib/mongo.mjs';
 import { appendAttempt } from '../lib/ft-attempt-log.mjs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -82,6 +84,7 @@ Respond with ONLY JSON (you may wrap in \`\`\`json fences):
 "prior_translations_found" is [] when no prior exists; when non-empty EVERY entry needs a real translator+year you actually found (never a placeholder).`;
 }
 
+let GB = null; // opened just before the paid search loop
 async function search(b) {
   for (let attempt = 0; attempt <= 2; attempt++) {
     try {
@@ -90,10 +93,11 @@ async function search(b) {
       const text = resp.text || '';
       const gm = resp.candidates?.[0]?.groundingMetadata || {};
       const queries = Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [];
+      await GB.record({ model: MODEL, queries: queries.length, book_id: b.id });
       const sources_checked = [...new Set((gm.groundingChunks || []).map((c) => c?.web?.title || c?.web?.uri).filter(Boolean))];
       const m = text.match(/```(?:json)?\s*([\s\S]*?)```/) || text.match(/(\{[\s\S]*\})/);
       let parsed; try { parsed = JSON.parse((m ? m[1] : text).trim()); } catch { const mm = text.match(/\{[\s\S]*\}/); if (mm) try { parsed = JSON.parse(mm[0]); } catch {} }
-      const cost = costOf(resp.usageMetadata || {});
+      const cost = costOf(resp.usageMetadata || {}) + searchCostOf(MODEL, queries.length);
       if (parsed?.verdict) return { ...parsed, queries, sources_checked, raw: text.slice(0, 800), cost_usd: cost };
       if (attempt === 2) return { verdict: 'needs_review', error: 'parse_failed', queries, sources_checked, raw: text.slice(0, 200), cost_usd: cost };
     } catch (err) {
@@ -126,9 +130,10 @@ async function main() {
 
     console.log(`\nSearching ${targets.length} target(s) with ${MODEL} (grounded, concurrency ${CONC})…\n`);
     const out = []; let cost = 0, found = 0, logged = 0;
+    GB = await openGroundingBudget({ endpoint: 'scripts/eval/ft-search-unexamined.mjs' });
     const queue = [...targets];
     async function worker() {
-      while (queue.length) {
+      while (queue.length && GB.allows()) {
         const b = queue.shift();
         const v = await search(b); cost += v.cost_usd || 0;
         const priors = Array.isArray(v.prior_translations_found) ? v.prior_translations_found : [];

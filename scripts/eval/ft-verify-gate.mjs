@@ -23,6 +23,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 const args = process.argv.slice(2);
 const getArg = (k, d) => { const i = args.indexOf(k); return i > -1 ? args[i + 1] : d; };
@@ -60,13 +61,15 @@ async function one(s) { for (let a = 0; a < 3; a++) { try {
   const r = await ai.models.generateContent({ model: 'gemini-3-flash-preview', contents: prompt(s), config: { tools: [{ googleSearch: {} }], temperature: 0.1 } });
   const gm = r.candidates?.[0]?.groundingMetadata || {};
   const queries = gm.webSearchQueries || [];
+  await GB.record({ model: 'gemini-3-flash-preview', queries: queries.length, book_id: s.book_id });
   const sources_checked = [...new Set((gm.groundingChunks || []).map(c => c?.web?.title || c?.web?.uri).filter(Boolean))];
   const m = (r.text || '').match(/\{[\s\S]*\}/); const j = m ? JSON.parse(m[0]) : { result: 'FAIL' };
   return { ...j, queries, sources_checked };
 } catch { await new Promise(r => setTimeout(r, 1500)); } } return { result: 'FAIL', queries: [], sources_checked: [] }; }
 
+const GB = await openGroundingBudget({ endpoint: 'scripts/eval/ft-verify-gate.mjs' });
 let i = 0;
-async function w() { while (i < todo.length) { const s = todo[i++]; const v = await one(s); fs.appendFileSync(OUT, JSON.stringify({ ...s, ...v, date: RUN_DATE }) + '\n'); } }
+async function w() { while (i < todo.length && GB.allows()) { const s = todo[i++]; const v = await one(s); fs.appendFileSync(OUT, JSON.stringify({ ...s, ...v, date: RUN_DATE }) + '\n'); } }
 await Promise.all(Array.from({ length: Math.min(CONC, todo.length || 1) }, w));
 
 // append verification attempts to the provenance log

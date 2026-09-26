@@ -150,6 +150,31 @@ export function costOf(model, inputTokens = 0, outputTokens = 0) {
 }
 
 /**
+ * Grounded search (`tools: [{ googleSearch: {} }]`) is billed SEPARATELY from tokens,
+ * and on Gemini 3.x it is billed per search query the model issues, not per request.
+ *
+ * MEASURED 2026-09-26 from the BigQuery billing export: SKU "Generate content search
+ * query gemini 3 paid one" = $3,228.79 for 230,628 queries = $0.0140 per query. The
+ * model decides how many queries to fire: the FT skeptic prompt averaged ~16 per book
+ * on gemini-3-flash-preview and one call fired 1,290. A cost figure built from
+ * `costOf()` alone therefore reads ~70x low on a grounded call — which is how the
+ * 2026-08 FT runs logged ~$30 while the bill said $3,229, and why their budget cap
+ * never tripped. Count `groundingMetadata.webSearchQueries` and add this.
+ *
+ * Not measured here: 2.5-series grounding, which Google lists per grounded PROMPT
+ * ($35/1,000) rather than per query; the fallback below prices it that way.
+ */
+export const GROUNDED_SEARCH_USD_PER_QUERY = 0.014;
+export const GROUNDED_PROMPT_USD_2_5 = 0.035;
+
+/** Search cost in USD for one grounded call that issued `queries` search queries. */
+export function searchCostOf(model, queries = 0) {
+  if (!queries) return 0;
+  if (/^gemini-2\.5/.test(model)) return GROUNDED_PROMPT_USD_2_5;
+  return queries * GROUNDED_SEARCH_USD_PER_QUERY;
+}
+
+/**
  * Can this model be sent `thinkingConfig: { thinkingBudget: 0 }`?
  *
  * Allow-list, not deny-list: a model with no reasoning stage (2.0, 1.5, TTS, embedding,

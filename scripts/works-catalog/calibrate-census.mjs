@@ -22,6 +22,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { pgClient, sleep } from './lib.mjs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 const args = process.argv.slice(2);
 const TRADITION = args[args.indexOf('--tradition') + 1];
@@ -47,6 +48,7 @@ function mulberry32(a) {
 }
 
 // grounded verification: Gemini + googleSearch, thinkingBudget:-1, parse-inside-retry
+const GB = await openGroundingBudget({ endpoint: 'scripts/works-catalog/calibrate-census.mjs' });
 async function groundedVerify(w) {
   const desc = TRADITION === 'islamicate'
     ? `Arabic title: ${w.title}; romanized: ${w.title_romanized || ''}; author: ${w.author || '?'} (d. ${w.extra?.author_death_ce || '?'} CE)`
@@ -73,7 +75,9 @@ Respond with JSON only (no markdown): {"status":"full"|"partial"|"none","transla
     catch { await sleep(2000); continue; }
     if (r.status === 429 || r.status >= 500) { await sleep(3000); continue; }
     if (!r.ok) return null;
-    const txt = (await r.json())?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join('') || '';
+    const resp = await r.json();
+    await GB.record({ model: MODEL, queries: (resp?.candidates?.[0]?.groundingMetadata?.webSearchQueries || []).length });
+    const txt = resp?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join('') || '';
     const m = txt.match(/\{[\s\S]*\}/);
     if (m) { try { return JSON.parse(m[0]); } catch { /* parse-inside-retry */ } }
     await sleep(1500);
@@ -96,6 +100,7 @@ console.log(`${TRADITION}: calibration stratum = first ${stratum.length} of seed
 const rows = [];
 let bareTr = 0, deepTr = 0, gainedTr = 0, errors = 0;
 for (const w of stratum) {
+  if (!GB.allows()) { console.warn('grounding budget exhausted — stopping'); break; }
   const bare = bareVerdicts[w.id]?.state || 'unknown';
   const bareYes = bare === 'translated';
   const g = await groundedVerify(w);

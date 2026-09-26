@@ -64,7 +64,9 @@
  *   1  usage error / could not run at all / a usage store was unreadable
  *   2  PRICE DRIFT: MODEL_PRICING disagrees with Google's catalogue, or a model
  *      with real traffic has no price entry. This is the CI-usable signal.
- *   3  METER GAP: with --check-gap, billed output tokens exceed metered output
+ *   3  METER GAP (with --check-gap, billed output tokens exceed metered output), OR the
+ *      grounded-search bill is at 75%+ of its monthly cap (GROUNDING_MONTHLY_CAP_USD, default $100)
+ *      — METER GAP detail:
  *      tokens by more than the tolerance. The unattended-detector signal.
  *
  * THE DAILY DETECTOR (--days=N --check-gap)
@@ -435,6 +437,25 @@ async function billedFromInvoice(token) {
     byFamily[r.family] = (byFamily[r.family] || 0) + cost;
   }
   return { byDay, byFamily, total, days: Object.keys(byDay).sort() };
+}
+
+/**
+ * Month-to-date GROUNDED SEARCH dollars from the invoice, for the monthly ceiling
+ * (scripts/lib/grounding-budget.mjs, default $100, GROUNDING_MONTHLY_CAP_USD). The code
+ * guard only stops scripts that import it; this reads Google's own bill, so it also
+ * catches any grounded path the guard does not cover. Runs regardless of the report
+ * window, because the ceiling is monthly.
+ */
+async function groundingMonthToDate(token, now = new Date()) {
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const sql = `
+    SELECT SUM(cost) AS cost, SUM(usage.amount) AS queries
+    FROM ${BILLING_EXPORT.table}
+    WHERE LOWER(sku.description) LIKE '%search quer%'
+      AND usage_start_time >= TIMESTAMP('${start.toISOString()}')`;
+  const { rows, error } = await bigQuery(token, sql);
+  if (error) return { unreadable: error };
+  return { cost: Number(rows?.[0]?.cost || 0), queries: Number(rows?.[0]?.queries || 0), since: start.toISOString().slice(0, 10) };
 }
 
 // ─────────────────────────────────────────── billed tokens (Cloud Monitoring)
@@ -990,6 +1011,25 @@ async function main() {
       if (invoice.byFamily.other) {
         log(`  NB "other" is ${money(invoice.byFamily.other)} of SKU descriptions this classifier did not`);
         log('    recognise — named rather than folded silently into a bucket that would hide it.');
+      }
+    }
+
+    // ---- grounded-search monthly ceiling (invoice, month to date) ----------
+    {
+      const cap = Number(process.env.GROUNDING_MONTHLY_CAP_USD || 100) || 100;
+      const g = await groundingMonthToDate(token);
+      out.groundingMonthToDate = { ...g, cap };
+      if (g.unreadable) {
+        log(`\nGROUNDED SEARCH, MONTH TO DATE — UNREADABLE (${g.unreadable})`);
+        exitCode = Math.max(exitCode, 1);
+      } else {
+        const pct = (g.cost / cap) * 100;
+        log(`\nGROUNDED SEARCH, MONTH TO DATE (since ${g.since}): ${money(g.cost)} of the ${money(cap)} monthly cap ` +
+          `(${pct.toFixed(0)}%, ${Math.round(g.queries).toLocaleString()} queries)`);
+        if (g.cost >= cap * 0.75) {
+          log('  → GROUNDING ALERT: at or above 75% of the monthly cap. Find the grounded caller before it crosses.');
+          exitCode = Math.max(exitCode, 3);
+        }
       }
     }
 

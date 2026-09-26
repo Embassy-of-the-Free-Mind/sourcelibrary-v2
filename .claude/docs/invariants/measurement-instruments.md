@@ -701,8 +701,15 @@ The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan
 measured 2026-08-10 — **while the response prose claims it made "extensive searches".** The prose is
 not evidence that a search happened; it is the failure mode.
 
-- Use `gemini-3-flash-preview` with an explicit **positive** `thinkingBudget` (512 → 6/6 grounded,
-  ~$0.003/book; unbounded ≈ $0.19/book). `thinkingBudget: -1` silently suppresses grounding.
+- Use `gemini-3-flash-preview` with an explicit **positive** `thinkingBudget` (512 → 6/6 grounded).
+  `thinkingBudget: -1` silently suppresses grounding.
+- **A grounded call's price is its SEARCH COUNT, not its tokens.** Gemini 3.x bills every search
+  query the model issues at $0.014 (measured from the billing export 2026-09-26: 230,628 queries,
+  $3,228.79). On the FT skeptic prompt flash-preview fired a median ~16 per book and up to 1,290 in
+  one call, so the real price was ~$0.22/book — the "~$0.003/book" this line used to quote was the
+  token cost alone, and it is how two runs logged ~$30 while billing $3,229 with a budget cap that
+  never tripped. Price grounded calls with `searchCostOf(model, queries.length)` from
+  `scripts/lib/model-pricing.mjs` added to `costOf()`, and count it against any budget.
 - **Verify groundedness from `queries[]` on the written rows, never from the response text.** Same
   shape as every other entry in this file: read the artifact the mechanism produces, not the
   narration of it.

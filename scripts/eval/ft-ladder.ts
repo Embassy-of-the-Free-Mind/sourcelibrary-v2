@@ -5,7 +5,11 @@
  *
  *   rung 0  history      — the attempt ledger already answers → skip (free)
  *   rung 1  registry     — deterministic tier-0 catalog match → log it (free)
- *   rung 2  skeptic      — grounded Gemini refutation attempt (~$0.005–0.03/book)
+ *   rung 2  skeptic      — grounded Gemini refutation attempt. Search queries are
+ *                          billed per query ($0.014 on 3.x), so the model decides the
+ *                          price: measured 2026-08/09 at ~$0.20/book on flash-preview
+ *                          (median ~16 queries, one call 1,290), tokens ~$0.003.
+ *                          flash-lite does not search on this prompt at all.
  *   rung 3  claude queue — hard classes + rung-2 residue, emitted as a queue
  *                          file for the ft-verify skill (NOT executed here)
  *   rung 4  human queue  — policy holds (practitioner PDFs etc.), emitted
@@ -23,7 +27,9 @@
  * the same queue duplicate spend and collide in the ledger (the 08-08 lesson).
  *
  * SAFE/COST: free and read-only by default. --run performs the paid rung-2
- * searches (requires --budget-usd, hard cap). --apply persists ledger rows +
+ * searches (requires --budget-usd, hard cap — the cap counts SEARCH QUERIES as
+ * well as tokens; before 2026-09-26 it counted tokens only and a $1,030 run read as
+ * ~$14). --apply persists ledger rows +
  * transcripts. Never flips a badge, never writes a verdict.
  *
  * Usage:
@@ -50,7 +56,9 @@ import {
 // @ts-expect-error — plain .mjs modules without type declarations (tsx resolves them)
 import { screenDemoteCandidate } from '../lib/ft-demote-screen.mjs';
 // @ts-expect-error — plain .mjs module without type declarations
-import { costOf } from '../lib/model-pricing.mjs';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs';
+// @ts-expect-error — plain .mjs module without type declarations
+import { costOf, searchCostOf, GROUNDED_SEARCH_USD_PER_QUERY } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -71,6 +79,20 @@ const idsRaw = idsFile ? fs.readFileSync(idsFile, 'utf8') : arg('ids');
 const IDS = idsRaw?.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
 const LIMIT = parseInt(arg('limit') ?? '0', 10);
 const MODEL = arg('model') ?? 'gemini-3.1-flash-lite';
+/**
+ * What a grounded skeptic call actually costs, for the pre-run estimate. Measured on the
+ * 2026-08/09 transcripts: gemini-3-flash-preview averaged ~16 search queries per book
+ * ($0.22) plus ~$0.003 of tokens. flash-lite is not a cheaper substitute — it answers
+ * this prompt WITHOUT searching (0 queries on all 825 v1 calls; see
+ * .claude/docs/invariants/measurement-instruments.md), so its rows are ungrounded.
+ */
+const EST_USD_PER_BOOK = /flash-lite/.test(MODEL) ? 0.003 : 0.22;
+/**
+ * A call that fires more than this many searches is flagged in the report and the
+ * transcript. The API offers no way to cap searches mid-call, so this cannot stop a
+ * runaway call; the budget (which now counts searches) is what stops the RUN.
+ */
+const SEARCH_FLAG = parseInt(arg('search-flag') ?? '40', 10);
 const BUDGET = parseFloat(arg('budget-usd') ?? '0');
 /**
  * Explicit positive thinking cap (tokens). Unset → the API default (dynamic).
@@ -87,6 +109,10 @@ const TRANSCRIPTS = 'first_translation_transcripts'; // pure archive: no automat
 if (RUN && !(BUDGET > 0)) {
   console.error('--run is a paid operation and requires an explicit --budget-usd=<cap>.');
   process.exit(1);
+}
+if (RUN && /flash-lite/.test(MODEL)) {
+  console.warn(`⚠ --model=${MODEL} does not search on this prompt (0 queries on 825 measured calls): `
+    + 'the rows will be ungrounded. Use gemini-3-flash-preview for a real skeptic pass.');
 }
 
 const keys: string[] = [];
@@ -105,6 +131,7 @@ interface LadderRow {
   reasons: string[];
   skeptic_result?: string;
   cost_usd?: number;
+  search_queries?: number;
 }
 
 async function main() {
@@ -143,6 +170,10 @@ async function main() {
   if (LIMIT) cursor.limit(LIMIT);
   const queue = await cursor.toArray();
   console.log(`queue=${IDS ? `ids(${IDS.length})` : QUEUE} → ${queue.length} book(s)  [run=${RUN} apply=${APPLY} model=${MODEL} budget=$${BUDGET || 0}]`);
+  if (RUN) {
+    console.log(`  estimate if every book reaches rung 2: ~$${(queue.length * EST_USD_PER_BOOK).toFixed(2)} `
+      + `(~$${EST_USD_PER_BOOK}/book; search queries bill $${GROUNDED_SEARCH_USD_PER_QUERY} each and count against the budget)`);
+  }
 
   /* ---------- rung-1 registry index (loaded once) ---------- */
   const norm = (s?: string) =>
@@ -197,9 +228,13 @@ async function main() {
   const rung3Queue: Array<Record<string, unknown>> = [];
   const rung4Queue: Array<Record<string, unknown>> = [];
   let spent = 0;
+  let searchSpent = 0;
+  // Monthly ceiling on grounded-search spend across ALL scripts (default $100, GROUNDING_MONTHLY_CAP_USD).
+  const GB = RUN ? await openGroundingBudget({ endpoint: 'scripts/eval/ft-ladder.ts' }) : null;
+  const runaway: Array<{ id: string; title?: string; queries: number; cost: number }> = [];
   let rung1Applied = 0, rung2Logged = 0;
 
-  async function skepticCall(prompt: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number; inputTokens: number; outputTokens: number } | { error: string }> {
+  async function skepticCall(prompt: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number; tokenCost: number; searchCost: number; inputTokens: number; outputTokens: number } | { error: string }> {
     for (let attempt = 0; attempt <= 2; attempt++) {
       try {
         const ai = new GoogleGenAI({ apiKey: nextKey() });
@@ -216,13 +251,16 @@ async function main() {
         // Grounded search needs a POSITIVE thinking budget, so reasoning tokens are
         // real here and Google bills them at the output rate.
         const outputTokens = (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0);
-        const cost = costOf(MODEL, inputTokens, outputTokens);
+        const queries = Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [];
+        const tokenCost = costOf(MODEL, inputTokens, outputTokens);
+        const searchCost = searchCostOf(MODEL, queries.length);
+        const cost = tokenCost + searchCost;
         return {
           text: resp.text ?? '',
-          queries: Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [],
+          queries,
           sources: [...new Set((gm.groundingChunks ?? []).map((c) => c?.web?.title || c?.web?.uri).filter((s): s is string => !!s))],
           chunks: (gm.groundingChunks ?? []).map((c) => ({ uri: c?.web?.uri, title: c?.web?.title })),
-          cost, inputTokens, outputTokens,
+          cost, tokenCost, searchCost, inputTokens, outputTokens,
         };
       } catch (err) {
         const msg = String((err as Error).message ?? err);
@@ -282,6 +320,7 @@ async function main() {
       /* rung 2 — grounded skeptic */
       if (!RUN) { row.rung = 2; row.outcome = 'skeptic_pending (--run to execute)'; continue; }
       if (spent >= BUDGET) { row.rung = 2; row.outcome = 'skeptic_skipped:budget_exhausted'; continue; }
+      if (GB && !GB.allows()) { row.rung = 2; row.outcome = 'skeptic_skipped:monthly_grounding_cap'; continue; }
 
       const direction: SkepticDirection = QUEUE === 'contradictions' && priors.length
         ? { kind: 'verify_prior', claimedPriors: priors.slice(0, 6) }
@@ -294,7 +333,14 @@ async function main() {
         continue;
       }
       spent += res.cost;
+      searchSpent += res.searchCost;
+      if (GB) await GB.record({ model: MODEL, queries: res.queries.length, book_id: b.id });
       row.cost_usd = res.cost;
+      row.search_queries = res.queries.length;
+      if (res.queries.length > SEARCH_FLAG) {
+        runaway.push({ id: b.id, title: b.title, queries: res.queries.length, cost: res.cost });
+        console.warn(`⚠ ${b.id} fired ${res.queries.length} searches ($${res.cost.toFixed(2)}) — over the ${SEARCH_FLAG} flag`);
+      }
 
       const attemptId = makeAttemptId(b.id, 'gemini_grounded_search', RUN_DATE);
       // Only reference a transcript that was actually persisted.
@@ -306,7 +352,7 @@ async function main() {
           attempt_id: attemptId, book_id: b.id, date: RUN_DATE, rung: 2,
           prompt_version: SKEPTIC_PROMPT_VERSION, model: MODEL, prompt,
           raw_response: res.text, grounding: { queries: res.queries, chunks: res.chunks },
-          cost_usd: res.cost,
+          cost_usd: res.cost, search_cost_usd: res.searchCost, token_cost_usd: res.tokenCost,
         });
         await db.collection('gemini_usage').insertOne({
           timestamp: new Date(), type: 'ft_ladder_skeptic', model: MODEL, book_id: b.id,
@@ -315,7 +361,9 @@ async function main() {
           // as UNMETERED spend in the billed-vs-metered check, which is the
           // opposite of what a recorded row should do (#4599).
           input_tokens: res.inputTokens, output_tokens: res.outputTokens,
-          cost_usd: res.cost, status: 'ok', endpoint: 'script/ft-ladder',
+          // Token cost only: the search fee is its own `grounded_search` row, written by
+          // the grounding budget (GB.record) — putting it here too would double-count.
+          cost_usd: res.tokenCost, status: 'ok', endpoint: 'script/ft-ladder',
         });
       }
 
@@ -379,7 +427,10 @@ async function main() {
   console.log('\n── ladder summary ──');
   for (const [k, v] of [...byOutcome.entries()].sort()) console.log(`  ${k.padEnd(40)} ${String(v).padStart(4)}`);
   console.log(`  rung-3 (claude) queue: ${rung3Queue.length} | rung-4 (human) queue: ${rung4Queue.length}`);
-  if (RUN) console.log(`  rung-2 spend: $${spent.toFixed(4)} of $${BUDGET} budget${spent >= BUDGET ? '  ← BUDGET EXHAUSTED, queue truncated' : ''}`);
+  if (RUN) {
+    console.log(`  rung-2 spend: $${spent.toFixed(4)} of $${BUDGET} budget (search $${searchSpent.toFixed(4)}, tokens $${(spent - searchSpent).toFixed(4)})${spent >= BUDGET ? '  ← BUDGET EXHAUSTED, queue truncated' : ''}`);
+    if (runaway.length) console.log(`  ${runaway.length} call(s) over the ${SEARCH_FLAG}-search flag, costing $${runaway.reduce((a, r) => a + r.cost, 0).toFixed(2)} together`);
+  }
 
   // RUN REPORTS, not queues (#3881 pass 2). Timestamped so same-day runs never
   // clobber each other. The canonical rung-3/-4 worklist is rebuilt from the
@@ -388,7 +439,7 @@ async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const RUN_STAMP = RUN_DATE.replace(/[:.]/g, '-');
   const reportPath = path.join(OUT_DIR, `ft-ladder-report-${RUN_STAMP}.json`);
-  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, rows, rung3: rung3Queue, rung4: rung4Queue }, null, 1));
+  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, search_spent_usd: searchSpent, runaway_calls: runaway, rows, rung3: rung3Queue, rung4: rung4Queue }, null, 1));
   console.log(`\nWrote ${reportPath} (run report — the canonical queue is \`npx tsx scripts/eval/ft-rung3-queue.ts\`).`);
 
   if (APPLY && (rung1Applied || rung2Logged)) {

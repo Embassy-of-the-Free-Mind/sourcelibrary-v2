@@ -22,6 +22,7 @@ import { GoogleGenAI } from '@google/genai';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { openGroundingBudget } from '../lib/grounding-budget.mjs'; // monthly cap on grounded-search spend (default $100)
 
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 const EVAL = path.join(__dir, 'eval-data');
@@ -71,6 +72,7 @@ Answer TWO questions:
 Return ONLY JSON:
 {"composition_era":"antiquity|medieval|renaissance_early_modern|unknown","composition_year_est":<int|null>,"translation_verdict":"translated|untranslated|uncertain","relationship":"same_work|different_source_language|partial|container|none","prior":"<translator, year, title — or empty>","evidence_url":"<real url or empty>","evidence_strength":"strong|moderate|weak","reasoning":"<=3 sentences"}`;
 
+const GB = await openGroundingBudget({ endpoint: 'scripts/analysis/gap-validation-gemini-adjudicate.mjs' });
 async function one(w) {
   for (let a = 0; a < 5; a++) {
     const ai = clients[(rr++) % clients.length];
@@ -82,6 +84,7 @@ async function one(w) {
       });
       const gm = r.candidates?.[0]?.groundingMetadata || {};
       const queries = gm.webSearchQueries || [];
+      await GB.record({ model: MODEL, queries: queries.length });
       const sources = [...new Set((gm.groundingChunks || []).map((c) => c?.web?.uri || c?.web?.title).filter(Boolean))];
       const m = (r.text || '').match(/\{[\s\S]*\}/);
       if (!m) throw new Error('no json');
@@ -96,7 +99,7 @@ async function one(w) {
 
 let i = 0;
 async function worker() {
-  while (i < todo.length) {
+  while (i < todo.length && GB.allows()) {
     const w = todo[i++];
     const v = await one(w);
     fs.appendFileSync(OUT, JSON.stringify({ key: w.key, model: MODEL, date: RUN_DATE, ...v }) + '\n');
