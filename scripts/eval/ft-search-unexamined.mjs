@@ -25,6 +25,7 @@
  *   node scripts/eval/ft-search-unexamined.mjs --sample 20                 # list 20 targets (free)
  *   node scripts/eval/ft-search-unexamined.mjs --run --apply --sample 20   # search + log 20 (paid, ~$0.5)
  */
+import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (#spend-audit 2026-09-26)
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -93,7 +94,7 @@ async function search(b) {
       const sources_checked = [...new Set((gm.groundingChunks || []).map((c) => c?.web?.title || c?.web?.uri).filter(Boolean))];
       const m = text.match(/```(?:json)?\s*([\s\S]*?)```/) || text.match(/(\{[\s\S]*\})/);
       let parsed; try { parsed = JSON.parse((m ? m[1] : text).trim()); } catch { const mm = text.match(/\{[\s\S]*\}/); if (mm) try { parsed = JSON.parse(mm[0]); } catch {} }
-      const cost = costOf(resp.usageMetadata || {});
+      const cost = costOf(resp.usageMetadata || {}) + searchCostOf(MODEL, queries.length);
       if (parsed?.verdict) return { ...parsed, queries, sources_checked, raw: text.slice(0, 800), cost_usd: cost };
       if (attempt === 2) return { verdict: 'needs_review', error: 'parse_failed', queries, sources_checked, raw: text.slice(0, 200), cost_usd: cost };
     } catch (err) {

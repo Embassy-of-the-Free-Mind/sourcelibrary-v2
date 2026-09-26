@@ -15,6 +15,7 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/eval/ft-gemini-adjudicate.mjs <worklist.json> <out.json> [--concurrency=6]
  */
+import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (#spend-audit 2026-09-26)
 import { GoogleGenAI } from '@google/genai';
 import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'fs';
 
@@ -116,9 +117,9 @@ async function adjudicate(b) {
       catch { const mm = text.match(/\{[\s\S]*\}/); if (mm) { try { parsed = JSON.parse(mm[0]); } catch {} } }
       if (!parsed || !parsed.verdict) {
         if (attempt < MAX_RETRIES) continue;
-        return { book_id: b.id, verdict: 'needs_review', error: 'parse_failed', raw: text.slice(0, 200), ...evidence, cost_usd: costOf(usage) };
+        return { book_id: b.id, verdict: 'needs_review', error: 'parse_failed', raw: text.slice(0, 200), ...evidence, cost_usd: costOf(usage) + searchCostOf(MODEL, queries.length) };
       }
-      return { ...parsed, book_id: b.id, ...evidence, cost_usd: costOf(usage) };
+      return { ...parsed, book_id: b.id, ...evidence, cost_usd: costOf(usage) + searchCostOf(MODEL, queries.length) };
     } catch (err) {
       const msg = String(err.message || err);
       if (attempt < MAX_RETRIES && /fetch failed|ECONNRESET|timeout|503|500|overloaded|RESOURCE_EXHAUSTED|429/i.test(msg)) {

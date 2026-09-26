@@ -25,6 +25,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { searchCostOf } from '../lib/model-pricing.mjs'; // grounded search bills per query (spend audit 2026-09-26)
 import { createRequire } from 'module';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -693,7 +694,8 @@ async function main() {
             input_tokens: result.tokens?.input || 0,
             output_tokens: result.tokens?.output || 0,
             cost_usd: ((result.tokens?.input || 0) / 1_000_000) * 0.15 +
-                      ((result.tokens?.output || 0) / 1_000_000) * 3.50,
+                      ((result.tokens?.output || 0) / 1_000_000) * 3.50 +
+                      searchCostOf(SEARCH_MODEL, (result.searchQueries || []).length),
             status: 'success',
             endpoint: 'script/verify-translation-claims',
           });
