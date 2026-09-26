@@ -8,7 +8,8 @@
  * fire-and-forget, which silently no-ops on new books.
  *
  * This worker reads MongoDB as the source of truth and upserts pages whose
- * `updated_at` is newer than `now - WINDOW_MIN`. Idempotent on `id`.
+ * `updated_at` is newer than the last successful run (see checkpointSince; the
+ * `--window-min` ceiling, default 15, bounds how far back it reaches). Idempotent on `id`.
  *
  * Crontab entry (Hetzner, every 5 minutes):
  *   *\/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync-pages-content.lock \
@@ -87,6 +88,43 @@ function flattenPage(doc) {
   };
 }
 
+/**
+ * Where to start reading. The cron fires every 5 minutes but WINDOW_MIN is 15,
+ * so with a fixed window every changed page was fetched three times (#5184).
+ * Instead, derive the window from the cadence: start 2 minutes before the last
+ * SUCCESSFUL run began, and never earlier than the WINDOW_MIN ceiling. When runs
+ * are regular this reads ~7 minutes; when one is skipped (flock) or slow it
+ * stretches back to the last run that actually covered the pages, up to the
+ * ceiling — the same safety margin the fixed window gave.
+ *
+ * Runs that hit MAX_PAGES did not cover their whole window, so they never
+ * advance the checkpoint; nor do failed runs (their rows get retried by the
+ * next run as before). cron_runs only records runs that saw pages, so a quiet
+ * stretch keeps the last productive run as the checkpoint — which re-reads
+ * nothing extra, because nothing changed. Any error reading the record falls
+ * back to the ceiling.
+ */
+const CHECKPOINT_OVERLAP_MS = 2 * 60 * 1000;
+
+async function checkpointSince(db, ceilingMs) {
+  try {
+    const last = await db.collection('cron_runs')
+      .find({ cron: 'sync-pages-content', status: 'success' })
+      .sort({ timestamp: -1 }) // cron_runs_cron_ts_idx
+      .limit(1)
+      .project({ _id: 0, timestamp: 1, duration_ms: 1, 'actions.seen': 1 })
+      .maxTimeMS(10_000)
+      .next();
+    if (!last?.timestamp || !Number.isFinite(last.duration_ms)) return new Date(ceilingMs);
+    if ((last.actions?.seen ?? 0) >= MAX_PAGES) return new Date(ceilingMs);
+    const lastStart = new Date(last.timestamp).getTime() - last.duration_ms;
+    return new Date(Math.max(ceilingMs, lastStart - CHECKPOINT_OVERLAP_MS));
+  } catch (e) {
+    console.warn(`  Could not read sync checkpoint, using ${WINDOW_MIN}-min window: ${e.message}`);
+    return new Date(ceilingMs);
+  }
+}
+
 async function upsertBatch(rows) {
   const resp = await fetch(`${SUPABASE_URL}/rest/v1/pages`, {
     method: 'POST',
@@ -130,11 +168,23 @@ async function main() {
   const db = client.db('bookstore');
 
   // Page rows MUST have id + book_id + page_number to satisfy NOT NULL constraints.
+  // The list is exactly what flattenPage() reads — nothing else leaves Atlas.
+  // `ocr: 1, translation: 1` used to ship the whole subdocs, which carry
+  // provenance (prompt_hash/prompt_id/prompt_name, content_hash, code_version,
+  // source_url, recitation counters) that never reaches Supabase (#5184).
+  // Add a field to flattenPage → add it here, or the column silently goes null.
   const projection = {
     _id: 0,
     id: 1, book_id: 1, page_number: 1,
     photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1,
-    ocr: 1, translation: 1,
+    'ocr.data': 1, 'ocr.model': 1, 'ocr.language': 1, 'ocr.source': 1,
+    'ocr.prompt_version': 1, 'ocr.batch_job_id': 1,
+    'ocr.input_tokens': 1, 'ocr.output_tokens': 1, 'ocr.updated_at': 1,
+    'translation.data': 1, 'translation.model': 1, 'translation.language': 1,
+    'translation.source_language': 1, 'translation.source': 1,
+    'translation.prompt_version': 1, 'translation.batch_job_id': 1,
+    'translation.input_tokens': 1, 'translation.output_tokens': 1, 'translation.updated_at': 1,
+    'translation.recitation_blocked': 1, 'translation.safety_blocked': 1, 'translation.safety_reason': 1,
     page_type: 1, columns: 1, script_type: 1,
     detected_images: 1, image_extraction_updated_at: 1,
     created_at: 1, updated_at: 1,
@@ -143,6 +193,7 @@ async function main() {
   const stats = { seen: 0, skipped: 0, synced: 0, failed: 0 };
   const seenIds = new Set();
   let batch = [];
+  let effectiveWindowMin = String(WINDOW_MIN);
 
   async function flush() {
     if (batch.length === 0) return;
@@ -181,7 +232,8 @@ async function main() {
   } else {
     const since = SINCE_ARG
       ? new Date(SINCE_ARG)
-      : new Date(Date.now() - WINDOW_MIN * 60 * 1000);
+      : await checkpointSince(db, Date.now() - WINDOW_MIN * 60 * 1000);
+    effectiveWindowMin = ((Date.now() - since.getTime()) / 60000).toFixed(1);
 
     const indexedScans = [
       { field: 'ocr.updated_at', index: 'pages_ocr_updated_idx' },
@@ -209,7 +261,7 @@ async function main() {
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   const mode = BOOK_ID ? `book=${BOOK_ID}`
     : SINCE_ARG ? `since=${SINCE_ARG}`
-    : `window=${WINDOW_MIN}min`;
+    : `window=${effectiveWindowMin}min (ceiling ${WINDOW_MIN})`;
 
   if (stats.seen > 0 || stats.failed > 0) {
     console.log(`[${new Date().toISOString()}] sync-pages-content ${mode}: seen=${stats.seen} synced=${stats.synced} skipped=${stats.skipped} failed=${stats.failed} in ${elapsed}s${DRY_RUN ? ' (dry-run)' : ''}`);
@@ -226,7 +278,7 @@ async function main() {
         duration_ms: Date.now() - startTime,
         status: stats.failed > 0 ? 'failed' : 'success',
         actions: stats,
-        summary: `Synced ${stats.synced} pages (${stats.failed} failed) from ${WINDOW_MIN}-min window`,
+        summary: `Synced ${stats.synced} pages (${stats.failed} failed) from ${effectiveWindowMin}-min window`,
       });
       await cronClient.close();
     } catch (e) {

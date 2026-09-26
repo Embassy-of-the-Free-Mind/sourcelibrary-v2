@@ -630,13 +630,15 @@ async function processBook(db, book, job, globalCounter, deadline) {
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
 
-  // Get previous page's translation for context continuity
+  // Get previous page's translation for context continuity. Only the text is
+  // read, so only the text is fetched (#5184) — unprojected this shipped the
+  // whole page doc (OCR, transliteration, image fields) once per job.
   if (pages[0].page_number > 1) {
     const prev = await db.collection('pages').findOne({
       book_id: book.id,
       page_number: pages[0].page_number - 1,
       'translation.data': { $exists: true },
-    });
+    }, { projection: { _id: 0, 'translation.data': 1 } });
     if (prev?.translation?.data) prevTranslation = prev.translation.data;
   }
 
