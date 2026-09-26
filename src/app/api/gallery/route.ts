@@ -70,10 +70,13 @@ function escapeAndNormalizeRegex(query: string): string {
 /**
  * Shared-cache policy for gallery responses.
  *
- * Cloudflare caches /api/* on sourcelibrary.org whenever the origin says
- * `public` (the zone's "Cache page routes" rule overrides the earlier /api
- * bypass; subdomains don't match it), keyed on the URL ONLY. So a response may
- * be shared only when its body depends on nothing but the URL:
+ * TWO shared caches store a `public, max-age` response, both keyed on the URL
+ * (host + path + query) and neither on request headers or cookies:
+ *  - Cloudflare, on sourcelibrary.org only (the zone's "Cache page routes"
+ *    rule overrides the earlier /api bypass; subdomains don't match it);
+ *  - Vercel's edge, on every host (measured 2026-09-26: x-vercel-cache HIT on
+ *    max-age alone; keyed by host — bph.sourcelibrary.org got its own entry).
+ * So a response may be shared only when its body depends on nothing but the URL:
  *
  *  - no tenant. Tenant context can arrive by header or referer, which the
  *    cache key cannot see; a tenant-scoped body stored under a plain URL would
@@ -87,8 +90,13 @@ function escapeAndNormalizeRegex(query: string): string {
  *
  * 15 minutes: a book hidden now can linger that long in API results (the
  * /gallery HTML itself is already cached 24h). Vercel strips
- * stale-while-revalidate and caches nothing without s-maxage, so max-age is
- * the whole story at both layers.
+ * stale-while-revalidate before Cloudflare sees it, so max-age is the TTL.
+ *
+ * Residual: a request whose tenant arrives by header/referer, for a URL already
+ * cached from a global request, gets the global body — the origin never sees
+ * it. No page does that today (referer-tenant callers are all bookId-scoped).
+ * A new tenant page calling an UNSCOPED /api/gallery URL on the apex must put
+ * the tenant in the URL, or it will be served global results.
  */
 const SHARED_CACHE_CONTROL = 'public, max-age=900';
 const NO_STORE = 'private, no-store';
