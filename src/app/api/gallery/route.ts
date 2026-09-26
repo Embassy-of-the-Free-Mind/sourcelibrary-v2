@@ -8,7 +8,7 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
-import { parseGallerySort, parseSeed, findSorted, searchSortStage } from '@/lib/gallery-sort';
+import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
 export const maxDuration = 30;
 
@@ -352,15 +352,14 @@ export async function GET(request: NextRequest) {
       };
       try {
         // Relevance unless the reader picked an explicit order.
-        const explicitSort = searchSortStage(sort);
         textItems = await db.collection('gallery_images').aggregate([
           searchStage,
           matchStage,
-          ...(explicitSort ? [{ $sort: explicitSort }] : []),
+          ...searchSortStages(sort, seed),
           { $project: { _id: 0 } },
           { $skip: offset },
           { $limit: limit + 1 },
-        ], { maxTimeMS: 8000 }).toArray();
+        ], { maxTimeMS: 8000, allowDiskUse: true }).toArray();
         // Kick off the count in parallel (only meaningful when Atlas Search ran,
         // not the $text fallback). Guarded so a slow/failed count degrades to the
         // old estimate rather than breaking the request.
@@ -664,6 +663,11 @@ export async function GET(request: NextRequest) {
         for (const a of artHits) { const d = semById.get(a.book_id); if (d && !seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); } }
         const rest = mappedItems.filter((it: any) => !seenPages.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
         outItems = [...lead, ...rest];
+        // An explicit sort orders the whole first page, lead items included —
+        // otherwise the lead block sat on top in a fixed order and changing the
+        // sort visibly did nothing.
+        const cmp = compareGalleryItems(sort, seed);
+        if (cmp) outItems = [...outItems].sort(cmp);
 
         // Real result count: text-matching illustrations + the lead (title/semantic) items.
         const illCount = await db.collection('gallery_images').countDocuments(

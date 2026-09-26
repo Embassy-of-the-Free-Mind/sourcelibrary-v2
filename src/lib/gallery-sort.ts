@@ -106,6 +106,66 @@ export function searchSortStage(sort: GallerySort): Record<string, 1 | -1> | nul
   }
 }
 
+/**
+ * Aggregation stages that order SEARCH results (which come out of $search, so
+ * no index sort applies). Unlike searchSortStage this handles every order,
+ * with the same null placement as browsing: undated last for oldest/book,
+ * seeded dhash walk for random. Empty = keep relevance.
+ */
+export function searchSortStages(sort: GallerySort, seed = 0): Record<string, unknown>[] {
+  const undatedLast = { $addFields: { _undated: { $cond: [{ $eq: [{ $ifNull: ['$book_year', null] }, null] }, 1, 0] } } };
+  switch (sort) {
+    case 'oldest':
+      return [undatedLast, { $sort: { _undated: 1, book_year: 1, book_rank: 1, book_id: 1, page_number: 1 } }, { $project: { _undated: 0 } }];
+    case 'book':
+      return [undatedLast, { $sort: { _undated: 1, book_year: 1, book_id: 1, page_number: 1, detection_index: 1 } }, { $project: { _undated: 0 } }];
+    case 'newest':
+    case 'recent':
+      return [{ $sort: searchSortStage(sort)! }];
+    case 'random': {
+      const start = seedToDhashStart(seed);
+      return [
+        { $addFields: { _seg: { $cond: [{ $eq: [{ $type: '$dhash' }, 'string'] }, { $cond: [{ $gte: ['$dhash', start] }, 0, 1] }, 2] } } },
+        { $sort: { _seg: 1, dhash: 1, id: 1 } },
+        { $project: { _seg: 0 } },
+      ];
+    }
+    default:
+      return [];
+  }
+}
+
+/** FNV-1a, for a seeded, stable order of items that carry no dhash (e.g. artworks). */
+function seededHash(s: string, seed: number): number {
+  let h = 2166136261 ^ seed;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+
+/**
+ * Orders one page of mapped GalleryItems (plates AND artworks) by an explicit
+ * sort. Search page 1 prepends "lead" items (title/semantic matches) to the
+ * database page; without this they sat on top in a fixed order and no sort
+ * changed the first screen. Returns null for the default (keep relevance).
+ */
+export function compareGalleryItems(sort: GallerySort, seed = 0): ((a: any, b: any) => number) | null {
+  const year = (x: any) => (typeof x.year === 'number' ? x.year : null);
+  const byYear = (dir: 1 | -1) => (a: any, b: any) => {
+    const ya = year(a), yb = year(b);
+    if (ya === null || yb === null) return ya === yb ? 0 : ya === null ? 1 : -1; // undated last
+    return (ya - yb) * dir;
+  };
+  const tie = (a: any, b: any) => String(a.bookId).localeCompare(String(b.bookId)) || (a.pageNumber ?? 0) - (b.pageNumber ?? 0) || (a.detectionIndex ?? 0) - (b.detectionIndex ?? 0);
+  switch (sort) {
+    case 'oldest': return (a, b) => byYear(1)(a, b) || tie(a, b);
+    case 'newest': return (a, b) => byYear(-1)(a, b) || tie(a, b);
+    case 'book': return (a, b) => byYear(1)(a, b) || tie(a, b);
+    case 'recent': return (a, b) => String(b.bookId).localeCompare(String(a.bookId)) || (a.pageNumber ?? 0) - (b.pageNumber ?? 0);
+    case 'random': return (a, b) => seededHash(`${a.pageId}-${a.detectionIndex}`, seed) - seededHash(`${b.pageId}-${b.detectionIndex}`, seed);
+    default: return null;
+  }
+}
+
 interface FindableCollection {
   find(filter: Record<string, unknown>, opts?: Record<string, unknown>): {
     sort(s: Record<string, 1 | -1>): { skip(n: number): { limit(n: number): { toArray(): Promise<any[]> } } };

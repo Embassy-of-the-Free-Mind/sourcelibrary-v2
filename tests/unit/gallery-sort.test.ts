@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   GALLERY_SORTS, RANDOM_SEEDS, parseGallerySort, parseSeed, seedToDhashStart,
-  gallerySegments, findSorted, searchSortStage, artworkRotation, type GallerySort,
+  gallerySegments, findSorted, searchSortStage, searchSortStages, compareGalleryItems, artworkRotation, type GallerySort,
 } from '@/lib/gallery-sort';
 
 // ---- in-memory collection that really filters, sorts, skips ----------------
@@ -164,5 +164,38 @@ describe('sort parsing', () => {
     expect(artworkRotation('quality', 30, 1000)).toBe(0);
     expect(artworkRotation('random', 32, 1000)).toBe(500);
     expect(artworkRotation('random', 5, 0)).toBe(0);
+  });
+});
+
+describe('search ordering', () => {
+  // A search page = lead items (artworks, title plates) + database rows. Every
+  // explicit sort must reorder ALL of it, or the first screen never changes.
+  const page = [
+    { pageId: 'artwork-a', detectionIndex: 0, bookId: 'art-a', year: 1700, source: 'artwork' },
+    { pageId: 'p1', detectionIndex: 0, bookId: '66aaaaaaaaaaaaaaaaaaaaaa', year: 1550, pageNumber: 3 },
+    { pageId: 'p2', detectionIndex: 0, bookId: '68bbbbbbbbbbbbbbbbbbbbbb', year: null, pageNumber: 1 },
+    { pageId: 'p3', detectionIndex: 0, bookId: '66aaaaaaaaaaaaaaaaaaaaaa', year: 1550, pageNumber: 1 },
+    { pageId: 'artwork-b', detectionIndex: 0, bookId: 'art-b', year: 1480, source: 'artwork' },
+  ];
+  const order = (s: GallerySort, seed = 0) => [...page].sort(compareGalleryItems(s, seed)!).map(i => i.pageId);
+
+  it('default keeps relevance (no comparator)', () => {
+    expect(compareGalleryItems('quality')).toBeNull();
+  });
+  it('oldest/newest order artworks and plates together, undated last', () => {
+    expect(order('oldest')).toEqual(['artwork-b', 'p3', 'p1', 'artwork-a', 'p2']);
+    expect(order('newest')).toEqual(['artwork-a', 'p3', 'p1', 'artwork-b', 'p2']);
+  });
+  it('book reads pages in order', () => {
+    expect(order('book').filter(id => id === 'p1' || id === 'p3')).toEqual(['p3', 'p1']);
+  });
+  it('random is stable per seed and differs across seeds', () => {
+    expect(order('random', 3)).toEqual(order('random', 3));
+    const differs = [1, 2, 4, 5, 6, 7, 8].some(s => order('random', s).join() !== order('random', 3).join());
+    expect(differs).toBe(true);
+  });
+  it('every sort but the default adds database stages to a search', () => {
+    expect(searchSortStages('quality')).toEqual([]);
+    for (const s of ['oldest', 'newest', 'book', 'recent', 'random'] as GallerySort[]) expect(searchSortStages(s, 5).length).toBeGreaterThan(0);
   });
 });
