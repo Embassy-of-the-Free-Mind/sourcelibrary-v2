@@ -160,13 +160,12 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
-  // At most 3 images per book, for variety, unless the URL asks otherwise or the
-  // view is one book. /api/gallery itself is uncapped by default since #4522, which
-  // said this page "passes 3 explicitly" — only the server render did; this client
-  // refetch replaced it uncapped, so one tarot deck or codex filled the first rows.
-  // Collection pages link here with maxPerBook=999 so "view all N plates" lands on all N.
+  // Every image is reachable by default. Variety no longer comes from a per-book
+  // cap (which hid ~3/4 of the gallery and made the count a lie) but from the
+  // sort: within a quality score, book_rank comes first, so every book's best
+  // image is shown before any book's second. A ?maxPerBook=N URL still caps.
   const maxPerBookParam = searchParams.get('maxPerBook');
-  const maxPerBook = maxPerBookParam ? parseInt(maxPerBookParam, 10) : (bookId ? undefined : 3);
+  const maxPerBook = maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined;
 
   const limit = 48;
 
