@@ -2203,3 +2203,25 @@ passes, magazines / camera photos / worn Google scans / spreads do not.
 **Not measured.** Delivered CER of the 626 written pages; whether a two-leaf read agrees with the
 paid gate on the same books (the paired comparison `eval-design.md` requires before this replaces
 anything). This is a pilot of a reference method, not a quality claim.
+
+**Full cohort (same day, 175 remaining books, Claude Opus 5.5 on the subscription, $0 Gemini).**
+Patents (146): contact sheets for all 144 with an XML (6 per montage, each leaf labelled with the
+Archive's word count and function-word share); 12 text leaves opened against high-resolution crops.
+Accepted 125, rejected 18, 3 unread (IA serves HTTP 500 for their `_djvu.xml`). Rejected: all 7
+Canadian patent-office typescripts (garbled: image "a main and a shunt magnet, an armature lever to
+draw the arc", IA "32 main Ind lever to driv the tre"); 1 UK patent with no IA words; 3 opened US
+patents (a 'best available copy' with interleaved columns and dropped lines; a worn 1928 print with
+dropped words; a 1916 print whose line fragments are displaced around the centre line numbers); and
+7 more US patents in the same **low function-word band (< 33 % on a body leaf)**, where all 3 opened
+ones failed and none of the 7 opened ones above it did. Books (28): 14 accepted (flatbed letterpress:
+novels, poems, Theosophical Siftings 1–2, MacVicar *Philosophy of the Beautiful*, Tesla's 1892
+lecture, the 1900 Century article), 12 rejected (magazines, camera photos, photocopied or microfilm
+spreads, worn Google scans of MacVicar's *Elements*, typed letters), 2 unread (XML HTTP 500). 3,372
+pages written (424 patent, 2,948 book); skipped leaves (drawing sheets, a destroyed numeric table,
+covers, plates, publisher's catalogues) verified empty in Mongo; all 184 books still held.
+Findings: (1) **the pack's reading text was not the ingest's text** — IA tags patent headers and
+running heads `<LINE x-struct="header">`, the pack's `<LINE>` regex dropped them while the ingest
+writes them; judged against the ingest's own parse and fixed in the pack. (2) The function-word share
+printed on each contact-sheet cell is a usable screen for which leaves to open. (3) A readable page
+can still hold a destroyed table: skip that leaf, don't reject the book. Still not measured: CER of
+the written pages and the paired comparison with the paid gate.
