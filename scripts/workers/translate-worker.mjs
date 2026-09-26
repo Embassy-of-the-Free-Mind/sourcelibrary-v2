@@ -36,9 +36,10 @@ import {
   SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
-  continuityContext,
+  buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
+  PAGE_BREAK_SCOPED,
 } from '../lib/translate-core.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -224,26 +225,29 @@ const SAFETY_SETTINGS = [
 // Returns the assembled prompt text plus the prompt reference of the BASE
 // prompt that produced it, so callers can stamp prompt_id/hash/name/version
 // on each page write.
-async function buildPromptHeader(db, book) {
-  const isEnglish = (book.language || '').toLowerCase() === 'english';
+/** The prompts translate-core's builders take, from the DB-managed prompt records. */
+async function loadPrompts(db) {
   const translationPrompt = await getTranslationPromptFromDb(db);
   const englishPrompt = await getEnglishModernizationPromptFromDb(db);
-  const baseRef = isEnglish ? englishPrompt : translationPrompt;
-  let prompt = baseRef.text.replace('{source_language}', book.language || 'Latin');
+  return { translation: { text: translationPrompt.text, ref: translationPrompt }, english: { text: englishPrompt.text, ref: englishPrompt } };
+}
 
-  const parts = [];
-  if (book.display_title || book.title) parts.push(`Title: ${book.display_title || book.title}`);
-  if (book.author) parts.push(`Author: ${book.author}`);
-  if (book.year || book.published) parts.push(`Date: ${book.year || book.published}`);
-  if (parts.length) prompt += `\n\n**Source work:** ${parts.join(' | ')}`;
-
-  // Copyright note — prevents RECITATION filter on public domain texts
-  const year = parseInt(book.year || book.published, 10);
-  if (year && year < 1930) {
-    prompt += `\n\n**Note:** This is a public domain work published in ${year}. It is not under copyright.`;
-  }
-
-  return { prompt, isEnglish, promptRef: baseRef };
+// ── Page-break devices (#5103) — ON since 2026-09-25 (round 4) ──
+// A page that ends on a split word ("Augspur-" | "gischen") or a catchword is resolved against its
+// NEIGHBOURS before the model sees it (translate-core PAGE_BREAK_SCOPED: the join, the catchword
+// mark, one rule line; byte-identical prompt on every page with no device). Measured twice in this
+// block shape on the 24 device breaks: 11–3–10 and 10–5–9 over the plain prompt, duplication 6 → 1–2
+// (EXPERIMENTS.md 2026-09-26 and "2026-09-25 (round 4)"). The neighbours are looked up by page
+// number: the pages list here holds only the pages still to translate, so the page before a block
+// is usually already translated and not in it.
+async function adjacentOcr(db, book, firstPageNumber, lastPageNumber) {
+  const wanted = [firstPageNumber - 1, lastPageNumber + 1].filter((n) => n > 0);
+  if (!wanted.length) return {};
+  const rows = await db.collection('pages')
+    .find({ book_id: book.id, page_number: { $in: wanted } }, { projection: { page_number: 1, 'ocr.data': 1 } })
+    .toArray();
+  const byNum = new Map(rows.map((p) => [p.page_number, p.ocr?.data || null]));
+  return { prevOcrText: byNum.get(firstPageNumber - 1) || undefined, nextOcrText: byNum.get(lastPageNumber + 1) || undefined };
 }
 
 // ── Translate a single page ──
@@ -263,14 +267,14 @@ function maxOutputTokensFor(pages) {
 }
 
 async function translatePage(db, page, book, prevTranslation) {
-  const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
-  let prompt = headerPrompt;
-
-  prompt += isEnglish
-    ? `\n\n**Text to modernize:**\n${page.ocr.data}`
-    : `\n\n**Text to translate:**\n${page.ocr.data}`;
-
-  prompt += continuityContext(prevTranslation, { english: isEnglish });
+  // translate-core's single-page prompt (the one the evals ran), with the page-break option. The one
+  // difference from the inline assembly this replaced: the header fills `{target_language}`, as the
+  // block path has since 2026-09-25.
+  const { prevOcrText, nextOcrText } = await adjacentOcr(db, book, page.page_number, page.page_number);
+  const { prompt, promptRef } = buildTranslationPrompt({
+    prompts: await loadPrompts(db), book, ocrText: page.ocr.data, previousTranslation: prevTranslation,
+    prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED,
+  });
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
@@ -332,15 +336,12 @@ async function translatePageGuarded(db, page, book, prevTranslation) {
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
   // The block prompt is translate-core's (buildBlockTranslationPrompt, 2026-09-25): the worker and
-  // the evals send the same bytes. The one difference from the inline assembly this replaced is that
-  // the header now fills `{target_language}` (English) as translate-core's single-page path always
-  // did; the inline copy left the placeholder literal. No page-break option is passed: the fix
-  // (#5103) stays OFF here until it is flipped deliberately.
-  const translationPrompt = await getTranslationPromptFromDb(db);
-  const englishPrompt = await getEnglishModernizationPromptFromDb(db);
+  // the evals send the same bytes. With PAGE_BREAK_SCOPED (#5103, ON since round 4) every in-block
+  // break is resolved page against page, and the block's ends against the pages adjacent to it.
+  const { prevOcrText, nextOcrText } = await adjacentOcr(db, book, pages[0].page_number, pages[pages.length - 1].page_number);
   const { prompt, promptRef } = buildBlockTranslationPrompt({
-    prompts: { translation: { text: translationPrompt.text, ref: translationPrompt }, english: { text: englishPrompt.text, ref: englishPrompt } },
-    book, pages, previousTranslation: prevTranslation,
+    prompts: await loadPrompts(db), book, pages, previousTranslation: prevTranslation,
+    prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED,
   });
 
   const ai = getClient();
