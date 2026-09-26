@@ -24,7 +24,12 @@
  *   no lease tag                     → email (once per 6 h per server); never stopped — another
  *                                      project's training run is legitimate, the nag is the cost
  *                                      of not tagging
- *   lease ok                         → one log line
+ *   lease ok + `progress=` tag       → IDLE CHECK: no new output for 30 min (after a 20-min
+ *                                      start-up grace) → poweroff via API, confirm, email.
+ *                                      A live lease no longer protects an idle GPU (2026-09-26:
+ *                                      September's GPUs billed ~12x their busy-rate cost).
+ *   lease ok, no progress tag        → one log line (the on-box watcher, scripts/gpu/
+ *                                      idle-poweroff.sh, is then the only idle guard)
  * --weekly adds a section on stopped/archived instances that still hold block volumes
  * (storage bills while compute does not), with an approximate monthly cost, so leftovers
  * get deleted deliberately.
@@ -37,10 +42,12 @@
  *   set -a; source .env.production.local; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs
  *   ... --apply            # stop expired leases, send emails
  *   ... --apply --weekly   # plus the leftover-volume section
- *   ... --lease <id> --zone <zone> --hours <n> --owner <issue>
+ *   ... --lease <id> --zone <zone> --hours <n> --owner <issue> [--progress mongo:<ocr.source>]
+ * Idle rule and tag grammar: scripts/lib/gpu-idle.mjs (GPU_IDLE_MINUTES, GPU_GRACE_MINUTES override).
  * Env: SCALEWAY_SECRET_KEY (required), RESEND_API_KEY + ALERT_EMAIL (email), GPU_WATCHDOG_STATE_DIR.
  */
 import fs from 'node:fs';
+import { idleDecision, parseProgressTag } from '../lib/gpu-idle.mjs';
 import path from 'node:path';
 import os from 'node:os';
 
@@ -96,9 +103,12 @@ if (opt('lease')) {
   if (!zone || !h || !owner) { console.error('--lease needs --zone <zone> --hours <n> --owner <issue>'); process.exit(1); }
   const s = await scw('GET', `/instance/v1/zones/${zone}/servers/${id}`).then(r => r.server);
   const until = new Date(Date.now() + h * 3.6e6).toISOString();
-  const tags = [...(s.tags || []).filter(t => !/^(lease-until|owner)=/.test(t)), `lease-until=${until}`, `owner=${owner}`];
+  const progress = opt('progress');
+  if (progress && parseProgressTag(progress)?.kind !== 'mongo') { console.error('--progress must look like mongo:<ocr.source>, e.g. mongo:bdrc'); process.exit(1); }
+  const keep = (s.tags || []).filter(t => !/^(lease-until|owner)=/.test(t) && !(progress && /^progress=/.test(t)));
+  const tags = [...keep, `lease-until=${until}`, `owner=${owner}`, ...(progress ? [`progress=${progress}`] : [])];
   await scw('PATCH', `/instance/v1/zones/${zone}/servers/${id}`, { tags });
-  console.log(`${s.name} (${s.commercial_type}, ${zone}): lease until ${until}, owner ${owner}`);
+  console.log(`${s.name} (${s.commercial_type}, ${zone}): lease until ${until}, owner ${owner}${progress ? `, idle-stop on ${progress}` : ' (no progress tag: lease-only)'}`);
   process.exit(0);
 }
 
@@ -125,6 +135,53 @@ fs.writeFileSync(path.join(STATE_DIR, 'heartbeat'), now.toISOString() + '\n');
 const watched = servers.filter(s => GPU_TYPE.test(s.commercial_type) || parseTags(s.tags)['lease-until']);
 console.log(`${now.toISOString()} ${APPLY ? 'APPLY' : 'DRY RUN'} · ${servers.length} instances in ${ZONES.length} zones · ${watched.length} watched`);
 
+/** Power off through the provider API and confirm; returns true when confirmed stopped. */
+async function poweroff(s, label, why) {
+  if (!APPLY) { console.log(`  [dry-run] would poweroff via API (${why})`); return false; }
+  try {
+    await scw('POST', `/instance/v1/zones/${s.zone}/servers/${s.id}/action`, { action: 'poweroff' });
+    let final = null;
+    const deadline = Date.now() + STOP_CONFIRM_MS;
+    while (Date.now() < deadline) {
+      await new Promise(r => setTimeout(r, 10000));
+      final = (await scw('GET', `/instance/v1/zones/${s.zone}/servers/${s.id}`)).server.state;
+      if (final === 'stopped') break;
+    }
+    if (final === 'stopped') {
+      console.log(`  stopped  ${label} · confirmed`);
+      await email(`stopped: ${s.name} (${why})`, [label, `${why}; poweroff confirmed, state=stopped.`, 'Volumes are kept. Delete them when the outputs are safe.']);
+      return true;
+    }
+    exitCode = 2;
+    console.log(`  UNCONFIRMED ${label} · state after ${STOP_CONFIRM_MS / 60000} min: ${final}`);
+    await email(`STOP NOT CONFIRMED: ${s.name}`, [label, `poweroff (${why}) was requested but the state is "${final}" after ${STOP_CONFIRM_MS / 60000} min. It may still be billing.`, `Check: scw instance server get ${s.id} zone=${s.zone}`]);
+  } catch (e) {
+    exitCode = 2;
+    console.log(`  FAILED   ${label} · ${e.message}`);
+    await email(`could not stop ${s.name}`, [label, e.message]);
+  }
+  return false;
+}
+
+// Newest output for a `progress=mongo:<ocr.source>` tag, inside the idle window.
+let mongoDb = null;
+async function newestOutput(progress, windowMin) {
+  if (!mongoDb) {
+    if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI not set');
+    const { MongoClient } = await import('mongodb');
+    const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
+    await client.connect();
+    mongoDb = { client, db: client.db(process.env.MONGODB_DB || 'bookstore') };
+  }
+  const since = new Date(Date.now() - windowMin * 60000);
+  const doc = await mongoDb.db.collection('pages').findOne(
+    { 'ocr.updated_at': { $gte: since }, 'ocr.source': progress.source },
+    { sort: { 'ocr.updated_at': -1 }, projection: { _id: 0, 'ocr.updated_at': 1 }, maxTimeMS: 20000 });
+  return doc?.ocr?.updated_at ? new Date(doc.ocr.updated_at) : null;
+}
+const IDLE_MIN = Number(process.env.GPU_IDLE_MINUTES) || undefined;
+const GRACE_MIN = Number(process.env.GPU_GRACE_MINUTES) || undefined;
+
 for (const s of watched) {
   const tags = parseTags(s.tags);
   const label = `${s.name} (${s.commercial_type}, ${s.zone}, ${s.id})`;
@@ -145,33 +202,28 @@ for (const s of watched) {
   }
   const until = new Date(tags['lease-until']);
   if (Number.isNaN(until.getTime())) { console.log(`  RUNNING  ${label} · UNPARSEABLE lease-until "${tags['lease-until']}" — treated as untagged`); continue; }
-  if (until > now) { console.log(`  ok       ${label} · lease ${hours(until - now)} h left · owner ${tags.owner || '?'}`); continue; }
+  if (until > now) {
+    const progress = parseProgressTag(tags.progress);
+    if (!progress) { console.log(`  ok       ${label} · lease ${hours(until - now)} h left · owner ${tags.owner || '?'} · no progress tag`); continue; }
+    if (progress.kind !== 'mongo') { console.log(`  ok       ${label} · lease ${hours(until - now)} h left · UNREADABLE progress tag "${progress.raw}" — idle check skipped`); continue; }
+    let lastOutputAt;
+    try { lastOutputAt = await newestOutput(progress, (IDLE_MIN || 30) + 5); }
+    catch (e) {
+      // An unreadable probe must not kill real work: keep running, say so. The lease still bounds it.
+      console.log(`  ok       ${label} · idle probe FAILED (${e.message}) — kept running until lease end`);
+      continue;
+    }
+    const d = idleDecision({ now, runningSince: new Date(s.modification_date), lastOutputAt, idleMinutes: IDLE_MIN, graceMinutes: GRACE_MIN });
+    if (d.action === 'keep') { console.log(`  ok       ${label} · lease ${hours(until - now)} h left · ${progress.source}: ${d.reason}`); continue; }
+    console.log(`  IDLE     ${label} · ${progress.source}: ${d.reason} · owner ${tags.owner || '?'}`);
+    await poweroff(s, label, `idle — ${d.reason} (progress ${progress.source}, owner ${tags.owner || '?'})`);
+    continue;
+  }
 
   console.log(`  EXPIRED  ${label} · lease ended ${hours(now - until)} h ago · owner ${tags.owner || '?'}`);
-  if (!APPLY) { console.log('  [dry-run] would poweroff via API'); continue; }
-  try {
-    await scw('POST', `/instance/v1/zones/${s.zone}/servers/${s.id}/action`, { action: 'poweroff' });
-    let final = null;
-    const deadline = Date.now() + STOP_CONFIRM_MS;
-    while (Date.now() < deadline) {
-      await new Promise(r => setTimeout(r, 10000));
-      final = (await scw('GET', `/instance/v1/zones/${s.zone}/servers/${s.id}`)).server.state;
-      if (final === 'stopped') break;
-    }
-    if (final === 'stopped') {
-      console.log(`  stopped  ${label} · confirmed`);
-      await email(`lease expired, stopped: ${s.name}`, [label, `lease ended ${until.toISOString()} (owner ${tags.owner || '?'}); poweroff confirmed, state=stopped.`, 'Volumes are kept. Delete them when the outputs are safe.']);
-    } else {
-      exitCode = 2;
-      console.log(`  UNCONFIRMED ${label} · state after ${STOP_CONFIRM_MS / 60000} min: ${final}`);
-      await email(`STOP NOT CONFIRMED: ${s.name}`, [label, `poweroff was requested but the state is "${final}" after ${STOP_CONFIRM_MS / 60000} min. It may still be billing.`, `Check: scw instance server get ${s.id} zone=${s.zone}`]);
-    }
-  } catch (e) {
-    exitCode = 2;
-    console.log(`  FAILED   ${label} · ${e.message}`);
-    await email(`could not stop ${s.name}`, [label, e.message]);
-  }
+  await poweroff(s, label, `lease expired ${until.toISOString()} (owner ${tags.owner || '?'})`);
 }
+if (mongoDb) await mongoDb.client.close().catch(() => {});
 
 // ── weekly: storage that bills while compute does not ────────────────────────
 if (WEEKLY) {
