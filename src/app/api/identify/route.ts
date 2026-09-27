@@ -292,19 +292,30 @@ export async function POST(request: NextRequest) {
         // ranked 26th on the full photo and 1st on an 8%-margin centre crop.
         // So fall back to that centre crop — one extra CLIP embed, already
         // concurrent with the text lanes.
-        const b = parseArtworkBbox(identification.artwork_bbox) ?? { ymin: 80, xmin: 80, ymax: 920, xmax: 920 };
         const img = sharp(Buffer.from(base64, 'base64'));
         const meta = await img.metadata();
         if (!meta.width || !meta.height) return null;
         const W = meta.width, H = meta.height;
-        const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
-        // 4% margin; reject implausible boxes (hallucinated slivers, or boxes
-        // so large the crop would change nothing).
-        const mx = px.w * 0.04, my = px.h * 0.04;
-        const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
-        const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
-        const frac = (width * height) / (W * H);
-        if (frac < 0.08 || frac > 0.95 || width < 40 || height < 40) return null;
+        // Box → pixel rect with a 4% margin, plus the fraction of the photo it covers.
+        const toRect = (b: { ymin: number; xmin: number; ymax: number; xmax: number }) => {
+          const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
+          const mx = px.w * 0.04, my = px.h * 0.04;
+          const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
+          const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
+          return { left, top, width, height, frac: (width * height) / (W * H) };
+        };
+        // The model's box, unless it is missing or covers (nearly) the whole
+        // photo — then the crop would change nothing, and a photo that is
+        // 'nearly all artwork' still has the rim of wall that costs CLIP
+        // dearly (sampled 2026-09-26: rank 26 on the full photo, rank 1 on an
+        // 8%-margin centre crop). Fall back to that centre crop in both cases.
+        const CENTRE = { ymin: 80, xmin: 80, ymax: 920, xmax: 920 };
+        const parsed = parseArtworkBbox(identification.artwork_bbox);
+        let rect = parsed ? toRect(parsed) : null;
+        if (!rect || rect.frac > 0.95) rect = toRect(CENTRE);
+        const { left, top, width, height, frac } = rect;
+        // Reject implausible boxes (hallucinated slivers).
+        if (frac < 0.08 || width < 40 || height < 40) return null;
         const cropBuf = await img.extract({ left, top, width, height }).jpeg({ quality: 85 }).toBuffer();
         mark('crop: extracted');
 
