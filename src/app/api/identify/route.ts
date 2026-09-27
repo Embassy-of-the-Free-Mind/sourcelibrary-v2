@@ -430,6 +430,7 @@ export async function POST(request: NextRequest) {
           return {
             confirmed: null as ConfirmedMatch | null,
             candidateCount: candidates.length,
+            candidateIds: candidates.map(c => c.id),
             ran: candidates.length > 0,
             ms: Date.now() - t0,
             error: verdict?.error,
@@ -499,7 +500,7 @@ export async function POST(request: NextRequest) {
           gallery_url: picked.galleryId ? `/gallery/image/${picked.galleryId}` : undefined,
           source_type: picked.sourceType,
         };
-        return { confirmed, candidateCount: candidates.length, ran: true, sure: verdict.sure, ms: Date.now() - t0 };
+        return { confirmed, candidateCount: candidates.length, candidateIds: candidates.map(c => c.id), ran: true, sure: verdict.sure, ms: Date.now() - t0 };
       } catch (e) {
         const msg = e instanceof Error ? e.message : String(e);
         console.warn('[identify] rerank pipeline failed:', msg);
@@ -1068,6 +1069,10 @@ Return JSON only:
       sure: (rerank as { sure?: boolean }).sure ?? false,
       ms: (rerank as { ms?: number }).ms,
       error: (rerank as { error?: string }).error,
+      // Which index rows the comparison saw (≤16 public gallery/artwork ids):
+      // a miss is either "never a candidate" or "compared and declined", and
+      // the two have different fixes (retrieval vs the comparison prompt).
+      candidate_ids: (rerank as { candidateIds?: string[] }).candidateIds,
     };
 
     // Third streamed stage: the verdict. Carries the final (possibly reordered
