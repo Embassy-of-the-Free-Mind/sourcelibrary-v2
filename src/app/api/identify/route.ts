@@ -317,25 +317,42 @@ export async function POST(request: NextRequest) {
         // Reject implausible boxes (hallucinated slivers).
         if (frac < 0.08 || width < 40 || height < 40) return null;
         const cropBuf = await img.extract({ left, top, width, height }).jpeg({ quality: 85 }).toBuffer();
+        // A second, tighter crop (~12% in from each edge). CLIP ViT-B/32 barely
+        // separates a woodcut from its stylistic neighbours, and the true
+        // image's rank swings with the margin (sampled 2026-09-26: ranks 2, 3,
+        // 1, 5, 37 at 5/8/10/12/15%). Two queries merged by best similarity
+        // is the cheap way to stop a single crop being a coin flip.
+        const tight = toRect({ ymin: 150, xmin: 150, ymax: 850, xmax: 850 });
+        const tightBuf = await sharp(Buffer.from(base64, 'base64')).extract({ left: tight.left, top: tight.top, width: tight.width, height: tight.height }).jpeg({ quality: 85 }).toBuffer();
         mark('crop: extracted');
 
-        const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ base64: cropBuf.toString('base64'), mime_type: 'image/jpeg' }),
-          signal: AbortSignal.timeout(8000),
-        });
-        if (!clipResp.ok) return null;
-        const { embedding } = await clipResp.json();
-        if (!embedding) return null;
-        const { data, error } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.25,
-          match_count: 12,
-        }).abortSignal(AbortSignal.timeout(8000));
-        if (error) return null;
+        const queryOne = async (buf: Buffer): Promise<ClipMatch[]> => {
+          const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64: buf.toString('base64'), mime_type: 'image/jpeg' }),
+            signal: AbortSignal.timeout(8000),
+          });
+          if (!clipResp.ok) return [];
+          const { embedding } = await clipResp.json();
+          if (!embedding) return [];
+          const { data, error } = await supabase.rpc('match_clip_images', {
+            query_embedding: embedding,
+            match_threshold: 0.25,
+            match_count: 12,
+          }).abortSignal(AbortSignal.timeout(8000));
+          return error ? [] : ((data || []) as ClipMatch[]);
+        };
+        const [a, b2] = await Promise.all([queryOne(cropBuf), queryOne(tightBuf).catch(() => [] as ClipMatch[])]);
+        if (a.length === 0 && b2.length === 0) return null;
+        const best = new Map<string, ClipMatch>();
+        for (const m of [...a, ...b2]) {
+          const prev = best.get(m.id);
+          if (!prev || m.similarity > prev.similarity) best.set(m.id, m);
+        }
+        const merged = [...best.values()].sort((x, y) => y.similarity - x.similarity).slice(0, 14);
         mark('crop: clip matches');
-        return { matches: (data || []) as ClipMatch[], cropBase64: cropBuf.toString('base64') };
+        return { matches: merged, cropBase64: cropBuf.toString('base64') };
       } catch (e) {
         console.warn('[identify] crop lane failed:', e instanceof Error ? e.message : String(e));
         return null;
@@ -385,7 +402,7 @@ export async function POST(request: NextRequest) {
           title: cm.title,
           author: cm.author,
         });
-        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 10).map(toCand);
+        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 14).map(toCand);
         const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(toCand);
 
         // Union, crop-CLIP first (its candidates saw the artwork without the
@@ -393,7 +410,7 @@ export async function POST(request: NextRequest) {
         // capped to keep the rerank call small
         const byId = new Map<string, IdentifyCandidate>();
         for (const c of [...cropCands, ...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
-        let candidates = [...byId.values()].slice(0, 16);
+        let candidates = [...byId.values()].slice(0, 20);
 
         const hydration = await hydrateCandidates(db, candidates);
         candidates = candidates
