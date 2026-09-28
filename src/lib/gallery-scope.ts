@@ -62,7 +62,10 @@ export function galleryFilter(scope: GalleryScope, opts: { tenantId?: string | n
   };
 
   if (scope.bookId) filter.book_id = scope.bookId;
-  else if (scope.bookIds) filter.book_id = { $in: scope.bookIds.slice(0, 200) };
+  // No slice: a 200-book cap silently dropped 90% of BPH (2,404 books → 1,469 of
+  // 17,871 images) and cut 16 libraries and 55 collections. Measured 2026-09-26,
+  // worst case (Internet Archive, 23k ids): count ~1s, first page ~0.6s.
+  else if (scope.bookIds) filter.book_id = { $in: scope.bookIds };
 
   // The per-book cap is part of what gets served, so it is part of the count.
   const cap = scope.maxPerBook ?? DEFAULT_MAX_PER_BOOK;

@@ -378,6 +378,14 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   };
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;
+  // Mirrors /api/gallery's isPlainBrowse: standalone artworks are only mixed in
+  // when no book/collection/library/subject/search scope is set. A scoped view
+  // is book plates only, so saying "plates & standalone artworks" there was wrong.
+  const artworksIncluded = !bookId && !collectionFilter && !libraryFilter && !subjectFilter && !topicFilter && !imageSearchQuery
+    && sourceFilter !== 'illustration';
+  const resultsKind = !artworksIncluded ? 'book plates'
+    : sourceFilter === 'artwork' ? 'standalone artworks'
+    : 'plates & standalone artworks';
   const showCollections = !hasFilters;
 
   // Every filter that narrows the query — including the ones `hasFilters`
@@ -763,8 +771,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
               <p className="text-stone-500 text-base">
                 {data.total > 0
-                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} — plates & standalone artworks`
-                  : 'Plates & standalone artworks'}
+                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} — ${resultsKind}`
+                  : resultsKind.charAt(0).toUpperCase() + resultsKind.slice(1)}
               </p>
             </div>
             {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
