@@ -10,6 +10,33 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { createHash } from 'crypto';
+
+/**
+ * Per-instance memo for gallery reads that are expensive and slow-moving:
+ * counts and a library's/collection's book-id list. Every "load more" used to
+ * redo both (Internet Archive: ~1.5s to resolve 23k ids + ~1s to count).
+ *
+ * Only a SUCCESSFUL result is stored — `fn` throwing propagates and caches
+ * nothing, so a timeout can never be remembered as a real zero. Keys must
+ * include every input that changes the result, tenant first.
+ */
+const GALLERY_MEMO_TTL_MS = 10 * 60_000;
+const galleryMemoStore = new Map<string, { value: unknown; expiresAt: number }>();
+export async function galleryMemo<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  const hit = galleryMemoStore.get(key);
+  if (hit && hit.expiresAt > Date.now()) return hit.value as T;
+  const value = await fn();
+  if (galleryMemoStore.size > 2000) galleryMemoStore.clear();
+  galleryMemoStore.set(key, { value, expiresAt: Date.now() + GALLERY_MEMO_TTL_MS });
+  return value;
+}
+
+/** Stable memo key for a Mongo filter (a library's $in list can be 23k ids). */
+export function filterKey(prefix: string, filter: unknown): string {
+  return `${prefix}:${createHash('sha1').update(JSON.stringify(filter)).digest('hex')}`;
+}
+
 export interface MergedBrowseOpts {
   tenantId: string | null;
   source: 'all' | 'artwork';
@@ -83,13 +110,16 @@ export const DEFAULT_ARTWORK_YEARS = { from: 1400, to: 1800 } as const;
 export async function mergedGalleryBrowse(
   db: any,
   opts: MergedBrowseOpts,
-): Promise<{ items: any[]; total: number; hasMore: boolean }> {
+): Promise<{ items: any[]; total: number; hasMore: boolean; degraded: boolean }> {
   const {
     tenantId, source, limit, offset,
     imageType = null, minQuality = 0.7, maxPerBook = 1000,
     yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
+  // Set when any read fell back to a placeholder. The route answers a degraded
+  // response with no-store, so a shared cache only ever holds a complete one.
+  let degraded = false;
   const pageIndex = Math.floor(offset / Math.max(1, limit));
   // The natural-aspect masonry shows full pages, so raise the quality floor for
   // the merged browse — blank/low-content plates the old square crop hid now
@@ -182,8 +212,8 @@ export async function mergedGalleryBrowse(
       db.collection('likes').aggregate([
         { $match: { target_type: 'image', target_id: { $in: ids } } },
         { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
-      ]).toArray().catch(() => []),
-      db.collection('pages').find({ id: { $in: pageIds } }, { projection: { id: 1, image_width: 1, image_height: 1 } }).toArray().catch(() => []),
+      ]).toArray().catch(() => { degraded = true; return []; }),
+      db.collection('pages').find({ id: { $in: pageIds } }, { projection: { id: 1, image_width: 1, image_height: 1 } }).toArray().catch(() => { degraded = true; return []; }),
     ]);
     for (const ld of likeDocs) likesMap[ld._id] = { count: ld.count, liked: visitorId ? ld.visitors.includes(visitorId) : false };
     for (const p of dimDocs) dimMap.set(p.id, p);
@@ -230,14 +260,21 @@ export async function mergedGalleryBrowse(
   // none (#4486): a count computed by a different query than the one that
   // serves the rows. Measured cost of counting honestly: 370–990ms, and the
   // filtered branch was already paying it.
+  //
+  // Counts are memoized (they move slowly and cost 0.4-1s each). A failed count
+  // falls back to a placeholder AND marks the response degraded, so the caller
+  // never lets a shared cache hold the wrong total.
   let illusTotal = 0;
   if (illusPerPage > 0 && illusFilter) {
-    illusTotal = await db.collection('gallery_images')
-      .countDocuments(illusFilter, { maxTimeMS: 8000 })
-      .catch(() => 0);
+    const f = illusFilter;
+    illusTotal = await galleryMemo(filterKey('gi-count', f), () =>
+      db.collection('gallery_images').countDocuments(f, { maxTimeMS: 8000 }) as Promise<number>,
+    ).catch(() => { degraded = true; return 0; });
   }
-  const artTotal = await db.collection('books').countDocuments(af, { maxTimeMS: 8000 }).catch(() => arts.length);
+  const artTotal = await galleryMemo(filterKey('art-count', af), () =>
+    db.collection('books').countDocuments(af, { maxTimeMS: 8000 }) as Promise<number>,
+  ).catch(() => { degraded = true; return arts.length; });
   const total = illusTotal + artTotal;
 
-  return { items, total, hasMore };
+  return { items, total, hasMore, degraded };
 }

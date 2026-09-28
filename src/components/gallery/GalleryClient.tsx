@@ -11,7 +11,6 @@ import {
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import LikeButton from '@/components/ui/LikeButton';
 import { canLoadMore } from '@/lib/gallery-pagination';
-import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
@@ -91,7 +90,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const identity = useIdentity();
   // The global SL header is rendered by the page shell via ConditionalSiteHeader,
   // which suppresses it on embedded/tenant surfaces (CLAUDE.md invariant #5).
   // Same shared signal the header/footer use to drop global-only links on
@@ -205,10 +203,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     setAllItems([]);
     setCurrentOffset(0);
 
-    // Only the newest request may write state. Two fetches overlap routinely
-    // here (the identity id resolves after mount and re-runs this effect), and
-    // an older one resolving last used to restore the previous filter's items
-    // over the current filter's empty result.
+    // Only the newest request may write state. Two fetches can overlap when
+    // filters change quickly, and an older one resolving last used to restore
+    // the previous filter's items over the current filter's empty result.
+    // No visitor id is sent: the list must be the same URL for every reader so
+    // the CDN can share it (liked state comes from LikeButton's own cache).
     const requestId = ++fetchSeqRef.current;
 
     const fetchGallery = async () => {
@@ -230,7 +229,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
           source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
-          visitorId: identity.id || undefined,
         });
         if (requestId !== fetchSeqRef.current) return;
         setData(json);
@@ -253,7 +251,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, identity.id, sourceFilter]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -278,7 +276,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
         source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
-        visitorId: identity.id || undefined,
       });
       // Advance by a full page (see initial-fetch note). Dedup on append is a
       // belt-and-suspenders guard against any residual overlap (e.g. the
@@ -300,7 +297,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, identity.id, limit, sourceFilter]);
+  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, limit, sourceFilter]);
 
   // Book search with debounce
   useEffect(() => {
