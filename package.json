@@ -70,7 +70,7 @@
     "next": "^16.3.6",
     "next-auth": "^5.0.0-beta.32",
     "nodemailer": "^9.1.1",
-    "openai": "^6.10.0",
+    "openai": "^7.23.0",
     "openseadragon": "^6.1.1",
     "pdfkit": "^0.20.2",
     "posthog-js": "^1.434.13",
