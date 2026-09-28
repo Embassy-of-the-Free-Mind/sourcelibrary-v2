@@ -206,6 +206,11 @@ async function main() {
   console.log(`gallery_images modified ${galleryModified} (expected ${todo.length}); pages twins modified ${twinModified}, twin mismatch/missing ${twinMismatch}; sweep_log rows ${logged}`);
   if (galleryModified !== todo.length) console.log(`  WARNING: modifiedCount != expected — ${todo.length - galleryModified} rows did not change (already at the target values, or moved under us)`);
 
+  // --- Downstream runs over rows retyped on ANY run, not just this one: a resumed run must
+  // still fix the rank and the CLIP row of what an interrupted run retyped (80 rows, 2026-09-28).
+  for (const r of alreadyDone) touchedBooks.add(r.book_id);
+  const allRetyped = [...todo, ...alreadyDone];
+
   // --- book_rank: same rule as recompute-gallery-book-rank.mjs / sync-worker, for the touched books only.
   let rankChanged = 0;
   for (const bookId of touchedBooks) {
@@ -221,7 +226,7 @@ async function main() {
 
   // --- clip_embeddings.resource_type (Supabase). Rows are keyed `gallery-<gallery id>`.
   const sb = createClient(supabaseUrl, supabaseKey, { auth: { persistSession: false } });
-  const clipIds = todo.map((r) => `gallery-${r.id}`);
+  const clipIds = allRetyped.map((r) => `gallery-${r.id}`);
   let clipUpdated = 0, clipErrors = 0;
   for (let i = 0; i < clipIds.length; i += 200) {
     const batch = clipIds.slice(i, i + 200);
