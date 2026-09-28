@@ -20,6 +20,7 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
+import { computeTranslationMetrics } from '../lib/page-counts.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -138,7 +139,7 @@ async function syncPageCounts(db) {
 
   // Fetch all books' cached values
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1, is_fully_translated: 1, over_90_translated: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1, pages_translatable: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1 } })
     .toArray();
 
   // Build bulk updates for mismatches
@@ -156,13 +157,16 @@ async function syncPageCounts(db) {
       pages_archived: book.pages_archived || 0,
     };
 
-    // Pre-compute translation metrics (avoids $expr queries on Atlas)
-    const denominator = actual.pages_ocr - actual.pages_blank;
-    const translation_pct = denominator > 0
-      ? Math.round((actual.pages_translated / denominator) * 10000) / 100  // 2 decimal places
-      : 0;
-    const is_fully_translated = actual.pages_translated > 0 && actual.pages_translated >= denominator;
-    const over_90_translated = actual.pages_translated > 0 && actual.pages_translated >= denominator * 0.9;
+    // Pre-compute translation metrics (avoids $expr queries on Atlas).
+    // The rule lives in computeTranslationMetrics() — see its comment for why
+    // the flag needs OCR COVERAGE as well as completion (#5063: 1,369 visible
+    // preview-only books read as fully translated because the denominator was
+    // OCR'd pages — the mirror of #3804). `pages_translatable` comes from the
+    // book document (written by the recount, #4442), not from this aggregation.
+    const { translation_pct, is_fully_translated, over_90_translated } = computeTranslationMetrics({
+      ...actual,
+      pages_translatable: book.pages_translatable,
+    });
 
     if (
       current.pages_count !== actual.pages_count ||
@@ -170,6 +174,9 @@ async function syncPageCounts(db) {
       current.pages_translated !== actual.pages_translated ||
       current.pages_blank !== actual.pages_blank ||
       current.pages_archived !== actual.pages_archived ||
+      // translation_pct is compared too: its denominator changed with #5063, and
+      // a book whose flags happen not to flip would otherwise keep a stale 100.
+      (book.translation_pct ?? 0) !== translation_pct ||
       book.is_fully_translated !== is_fully_translated ||
       book.over_90_translated !== over_90_translated
     ) {
