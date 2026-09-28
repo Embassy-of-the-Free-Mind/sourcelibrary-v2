@@ -10,7 +10,8 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
-import { contentHash } from '@/lib/steganographia';
+import { geminiEngine, imageInput, translationInput, ocrProvenance, translationProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
+import type { AICallRecord } from '@/lib/ai';
 import sharp from 'sharp';
 import { storagePut } from '@/lib/storage';
 
@@ -79,8 +80,8 @@ export const POST = withAuth(async (request: NextRequest) => {
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
     const metadata: {
-      ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; imageUrl?: string };
-      translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
+      ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; imageUrl?: string; call?: AICallRecord };
+      translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; call?: AICallRecord; sourceText?: string };
       summary?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
     } = {};
     let totalUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 };
@@ -261,6 +262,7 @@ export const POST = withAuth(async (request: NextRequest) => {
         costUsd: ocrResult.usage.costUsd,
         durationMs: Math.round(ocrDuration),
         imageUrl: finalImageUrl,
+        call: ocrResult.call,
       };
       await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
         pageId,
@@ -310,6 +312,8 @@ export const POST = withAuth(async (request: NextRequest) => {
         outputTokens: translationResult.usage.outputTokens,
         costUsd: translationResult.usage.costUsd,
         durationMs: Math.round(translationDuration),
+        call: translationResult.call,
+        sourceText: textToTranslate,
       };
       await recordProcessingMetric(db, 'translation_processing', translationDuration, {
         pageId,
@@ -364,9 +368,18 @@ export const POST = withAuth(async (request: NextRequest) => {
 
       if (results.ocr && promptRefs.ocr) {
         const ocrPromptRef = promptRefs.ocr.reference;
+        // What produced this text (#4613); the builder refuses a partial record.
+        const ocrEngine = geminiEngine({
+          call_site: 'src/app/api/process/route.ts', api: 'realtime', model,
+          prompt: { id: ocrPromptRef.id, name: ocrPromptRef.name, version: ocrPromptRef.version, hash: ocrPromptRef.content_hash, text: metadata.ocr?.call?.promptText, sent_hash: metadata.ocr?.call ? undefined : NOT_RECORDED },
+          generationConfig: metadata.ocr?.call?.generationConfig ?? notRecorded('performOCR returned no call record'),
+          run: { code_version: codeVersion(), host: host() },
+          input: metadata.ocr?.imageUrl ? imageInput({ url: metadata.ocr.imageUrl }) : notRecorded('image supplied as a buffer'),
+          response: { modelVersion: metadata.ocr?.call?.modelVersion ?? undefined },
+        });
         updateData['ocr'] = {
           data: results.ocr,
-          content_hash: contentHash(results.ocr),
+          ...ocrProvenance(results.ocr, ocrEngine),
           language: language || 'Latin',
           model,
           prompt: ocrPromptRef,
@@ -394,9 +407,17 @@ export const POST = withAuth(async (request: NextRequest) => {
 
       if (results.translation && promptRefs.translation && !translationProtected) {
         const translationPromptRef = promptRefs.translation.reference;
+        const translationEngine = geminiEngine({
+          call_site: 'src/app/api/process/route.ts', api: 'realtime', model,
+          prompt: { id: translationPromptRef.id, name: translationPromptRef.name, version: translationPromptRef.version, hash: translationPromptRef.content_hash, text: metadata.translation?.call?.promptText, sent_hash: metadata.translation?.call ? undefined : NOT_RECORDED },
+          generationConfig: metadata.translation?.call?.generationConfig ?? notRecorded('performTranslation returned no call record'),
+          run: { code_version: codeVersion(), host: host() },
+          input: translationInput({ ocrText: metadata.translation?.sourceText ?? '', context: {} }),
+          response: { modelVersion: metadata.translation?.call?.modelVersion ?? undefined },
+        });
         updateData['translation'] = {
           data: results.translation,
-          content_hash: contentHash(results.translation),
+          ...translationProvenance(results.translation, translationEngine),
           language: targetLanguage,
           model,
           prompt: translationPromptRef,

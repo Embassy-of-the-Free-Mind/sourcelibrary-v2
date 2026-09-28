@@ -62,20 +62,11 @@ const ALLOWED: Record<string, string> = {
 };
 
 /**
- * Gemini writers not yet routed through the builder, with the PR that does it. This list may
- * only SHRINK. When it is empty, delete it and this comment.
+ * Every Gemini writer is wired (parts 2, 3 and 5 of #4613). There is deliberately no "pending"
+ * list any more: a new writer either goes through the builder or names, in ALLOWED, why its text
+ * is not a Gemini reading.
  */
-const PENDING: Record<string, string> = {
-  // OCR writers wired in PR 2, translation writers in PR 3 (#4613). What remains are the
-  // Vercel/Lambda paths with 0 usage rows in 30 days, which call src/lib/ai.ts and need its
-  // results to carry the call record first — PR 4 (dormant TS paths):
-  'src/workers/write-processor-logic.ts': 'PR 4 — Lambda OCR write path, dormant, no CI deploy',
-  'src/workers/translation-processor-logic.ts': 'PR 4 — Lambda translation path, dormant',
-  'src/app/api/process/route.ts': 'PR 4 — Vercel realtime process route, dormant',
-  'src/app/api/process/batch/route.ts': 'PR 4 — dormant',
-  'src/app/api/batch-save/route.ts': 'PR 4 — dormant',
-  'src/app/api/books/[id]/stitch-translations/route.ts': 'PR 4 — Gemini stitching of translations, dormant',
-};
+const PENDING: Record<string, string> = {};
 
 function candidateFiles(): string[] {
   try {
