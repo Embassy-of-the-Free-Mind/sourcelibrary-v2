@@ -1,0 +1,42 @@
+{
+  "_why": "Keely Motor and its circle (2026-09-25, Derek: 'get everything from Clara Bloomfield-Moore, and similar'). Bloomfield-Moore's complete works (she was Keely's patron and chief apologist; her etiquette, fiction and poems included), the Keely Motor Company's own Minority Report and the 1899 Literary Digest exposé, Trowbridge's 1875 Harvard critique, Colville's Keely novel Dashed Against the Rock, J. G. MacVicar (the 'Sketch of a Philosophy' ether theory Bloomfield-Moore built on), and Theosophical Siftings vols 1–2 (carry 'Keely's Secrets'). Clarence Bloomfield Moore the archaeologist and the 1823 'Clara Moore' novelist are namesakes. Photos, stock certificates and glass plates are not texts.",
+  "campaign": "keely-circle-2026-09-25",
+  "collections": ["natural-philosophy", "mechanical-engineering"],
+  "lang": "English",
+  "max_year": 1930,
+  "title_terms": [
+    "keely",
+    "etheric force",
+    "dashed against the rock",
+    "sketch of a philosophy",
+    "theosophical siftings",
+    "brief contributions from the physical laboratory"
+  ],
+  "author_allow": [
+    "bloomfield-moore",
+    "moore, bloomfield",
+    "clara sophia",
+    "clara jessup",
+    "macvicar, john",
+    "john gibson macvicar",
+    "john g\\. macvicar",
+    "colville, w",
+    "keely motor company"
+  ],
+  "author_deny": [
+    "clarence bloomfield",
+    "moore, clarence",
+    "roussel",
+    "berserker"
+  ],
+  "title_deny": [
+    "isabella",
+    "photo|negative|certificate|stock|of mexico|newspaper|cleveland leader|keely motor file",
+    "catholic spirit",
+    "universal laws never before revealed",
+    "aesthetic ideal|æsthetic ideal",
+    "shell heaps|urn-burial"
+  ],
+  "require_jp2": true,
+  "review_id_patterns": ["^ult\\.", "^cihm_", "^micro_"]
+}

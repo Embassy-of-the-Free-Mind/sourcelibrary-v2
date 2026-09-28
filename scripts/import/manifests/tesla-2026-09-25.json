@@ -1,0 +1,130 @@
+{
+ "note": "Curated 2026-09-25 (Derek: 'and then tesla, we need everything'). Every Tesla text published before 1931 with page images on IA. NOT imported: post-1930 editions (Colorado Springs Notes 1978, Complete Patents 1979/1994, Leland Anderson 1992, Very Truly Yours 2009), lending-restricted reprints, and Google no-jp2 scans of Transmission of Power: Polyphase System (transmissionpow00teslgoog, 1893, Westinghouse) — retry via HathiTrust or pdf-direct.",
+ "campaign": "tesla-2026-09-25",
+ "collections": [
+  "natural-philosophy",
+  "mechanical-engineering"
+ ],
+ "BOOKS": [
+  {
+   "id": "experimentswitha00tesl_0",
+   "title": "Experiments with Alternate Currents of High Potential and High Frequency",
+   "author": "Nikola Tesla",
+   "year": 1892,
+   "lang": "English",
+   "note": "The 1892 London/Paris lecture, W. J. Johnston Co. book edition. Alternates experimentswith00teslgoog (Google, no jp2), bwb_S0-DTZ-663 (1904 reprint)."
+  },
+  {
+   "id": "the-electrical-world-07-may-1892-nikola-tesla-experiments-with-alternate-currents",
+   "title": "The Electrical World, 7 May 1892: Tesla's Experiments with Alternate Currents",
+   "author": "The Electrical World",
+   "year": 1892,
+   "lang": "English",
+   "note": "Periodical printing of the London lecture. Jeff Behary scan."
+  },
+  {
+   "id": "experimente-mit-stromen-hoher-wechselzahl-und-frequenz-etienne-de-fodor-nikola-tesla",
+   "title": "Experimente mit Strömen hoher Wechselzahl und Frequenz",
+   "author": "Nikola Tesla",
+   "year": 1894,
+   "lang": "German",
+   "note": "Etienne de Fodor's German edition (Hartleben, 1894). Alternate Google scan bub_gb_8t9LAAAAYAAJ_2."
+  },
+  {
+   "id": "nikola-teslas-untersuchen-uber-mehrphasenstrome-und-uber-welchseltrome-hoher-spannung-und-frequenz",
+   "title": "Nikola Tesla's Untersuchungen über Mehrphasenströme und über Wechselströme hoher Spannung und Frequenz",
+   "author": "Nikola Tesla",
+   "year": 1895,
+   "lang": "German",
+   "note": "German edition of Martin's Inventions, Researches and Writings (Halle: Knapp, 1895). Year assumed — CONFIRM on title page."
+  },
+  {
+   "id": "nikola-tesla-on-light",
+   "title": "On Light and Other High Frequency Phenomena",
+   "author": "Nikola Tesla",
+   "year": 1893,
+   "lang": "English",
+   "note": "Franklin Institute / NELA lecture, Feb–Mar 1893; Tesla-family copy scanned by Jeff Behary. Year assumed — CONFIRM."
+  },
+  {
+   "id": "teslas-oscillator-and-other-inventions",
+   "title": "Tesla's Oscillator and Other Inventions (Century Magazine)",
+   "author": "Thomas Commerford Martin",
+   "year": 1895,
+   "lang": "English",
+   "note": "Martin's Century article (April 1895); IA item dated 1900-11-01 — CONFIRM date on the scan."
+  },
+  {
+   "id": "1898-tesla-electrotherapy",
+   "title": "High Frequency Oscillators for Electro-Therapeutic and Other Purposes",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Paper read before the American Electro-Therapeutic Association, Sept 1898. Behary scan."
+  },
+  {
+   "id": "nikola-tesla-electrotherapeutics",
+   "title": "Tesla on Electrotherapeutics",
+   "author": "Nikola Tesla",
+   "year": 1898,
+   "lang": "English",
+   "note": "Small Behary item (2 MB). Year assumed — CONFIRM."
+  },
+  {
+   "id": "tesla-1900-the-problem-of-increasing-human-energy",
+   "title": "The Problem of Increasing Human Energy, with Special Reference to the Harnessing of the Sun's Energy",
+   "author": "Nikola Tesla",
+   "year": 1900,
+   "lang": "English",
+   "note": "Century Magazine vol. 60 no. 2, June 1900. Duplicate Behary scan nikola-tesla-the-problem-of-increasing-human-energy not imported."
+  },
+  {
+   "id": "electrical-experimenter-november-1916-nikola-tesla",
+   "title": "Electrical Experimenter, November 1916: Tesla's Colorado Springs Experiments",
+   "author": "Nikola Tesla",
+   "year": 1916,
+   "lang": "English",
+   "note": "Behary scan."
+  },
+  {
+   "id": "TeslaArticlesElectricalExperimenter",
+   "title": "My Inventions: The Autobiography of Nikola Tesla (Electrical Experimenter, Feb–Oct 1919)",
+   "author": "Nikola Tesla",
+   "year": 1919,
+   "lang": "English",
+   "note": "Original serialised articles. The Behary excerpt items (my-early-years, egg-of-columbus, telautomatics, egg-of-columbus-and-my-inventions-march-1919) and my-inventions-and-other-works-jan.-oct.-1919 duplicate this text and were not imported."
+  },
+  {
+   "id": "nikola-tesla-the-true-wireless",
+   "title": "The True Wireless (Electrical Experimenter, May 1919)",
+   "author": "Nikola Tesla",
+   "year": 1919,
+   "lang": "English",
+   "note": "Behary scan."
+  },
+  {
+   "id": "electrical-experimenter-july-1919",
+   "title": "Electrical Experimenter, July 1919: Tesla's Electrical Oscillators",
+   "author": "Nikola Tesla",
+   "year": 1919,
+   "lang": "English",
+   "note": "Behary scan."
+  },
+  {
+   "id": "songsoflibertyot00johnuoft",
+   "title": "Songs of Liberty and Other Poems",
+   "author": "Robert Underwood Johnson",
+   "year": 1897,
+   "lang": "English",
+   "note": "Includes Tesla's co-translations of Zmaj Jovan Jovanović; IA lists Tesla as co-creator."
+  },
+  {
+   "id": "letters00tesl",
+   "title": "Letters of Nikola Tesla, 1895–1916",
+   "author": "Nikola Tesla",
+   "year": 1895,
+   "lang": "English",
+   "note": "Smithsonian Libraries: 8 manuscript/typescript letters, 13 leaves."
+  }
+ ]
+}
