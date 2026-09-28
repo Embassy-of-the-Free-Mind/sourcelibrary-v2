@@ -269,7 +269,7 @@ async function stagePairs(db) {
     let n = 0;
     for (const rev of revs) {
       const p = pages.get(rev.page_id); if (!p || p.ocr?.model !== OCR_MODEL_LITE) continue;
-      const slug = `a-${bookId.slice(0, 6)}-p${p.page_number}`;
+      const slug = `a-${bookId.slice(-8)}-p${p.page_number}`;   // the four ids share their first 10 chars — key by the tail
       if (done.has(slug) && done.get(slug).image_bytes) continue;
       const row = { slug, set: 'a', book_id: bookId, book: meta.short, ia: meta.ia, year: meta.year, page_id: p.id, page_number: p.page_number, leaf_hint: leafIndex(p), archive_model: rev.model || null, ia_meta: cov, lite_prompt_version: p.ocr.prompt_version || null, lite_updated_at: p.ocr.updated_at || null };
       // locate the leaf the ingester wrote: best bag-of-words match around the page's leaf index (should be ≈ 1)
@@ -324,7 +324,7 @@ async function stageDraw(db) {
     if (accepted >= BREADTH_BOOKS) break;
     if (prior.has(b.id)) continue;
     const ia = b.ia_identifier || b.image_source?.identifier;
-    const row = { slug: `b-${b.id.slice(0, 6)}`, set: 'b', book_id: b.id, ia, title: String(b.title || '').slice(0, 90), author: b.author || null, year: b.y, decade: Math.floor(b.y / 10) * 10, visible: !!b.visible };
+    const row = { slug: `b-${b.id.slice(-8)}`, set: 'b', book_id: b.id, ia, title: String(b.title || '').slice(0, 90), author: b.author || null, year: b.y, decade: Math.floor(b.y / 10) * 10, visible: !!b.visible };
     try {
       const cov = await iaCovariates(ia); row.ia_meta = cov;
       if (!cov?.xml_name) { row.skipped = 'no-ia-djvu-xml'; throw Object.assign(new Error('skip'), { skip: true }); }
