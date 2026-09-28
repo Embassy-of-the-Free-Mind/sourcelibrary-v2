@@ -22,6 +22,14 @@ export const dynamic = 'force-dynamic';
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
+// Ownership bookplates are provenance, not content. The BPH pastes its pelican
+// ex-libris into ~900 of the books it lends us, and the CLIP index holds every copy:
+// without this, an emblem-shaped photo's candidate list is a wall of the same plate
+// (#5200). `resource_type` on a gallery row is the gallery image's `type`.
+const PROVENANCE_TYPES = new Set(['exlibris', 'bookplate']);
+const isContentMatch = (m: { source_type: string; resource_type: string | null }) =>
+  !(m.source_type === 'gallery_image' && m.resource_type != null && PROVENANCE_TYPES.has(m.resource_type));
+
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 
 Analyze this photograph and extract identifying information. The image may be:
@@ -228,7 +236,7 @@ export async function POST(request: NextRequest) {
           console.error('[identify] CLIP search error:', error.message);
           return [];
         }
-        return (data || []) as ClipMatch[];
+        return ((data || []) as ClipMatch[]).filter(isContentMatch);
       } catch (e) {
         // CLIP search is optional — don't fail the whole request
         console.warn('[identify] CLIP search unavailable:', e instanceof Error ? e.message : String(e));
@@ -341,7 +349,7 @@ export async function POST(request: NextRequest) {
             match_threshold: 0.25,
             match_count: 12,
           }).abortSignal(AbortSignal.timeout(8000));
-          return error ? [] : ((data || []) as ClipMatch[]);
+          return error ? [] : ((data || []) as ClipMatch[]).filter(isContentMatch);
         };
         const [a, b2] = await Promise.all([queryOne(cropBuf), queryOne(tightBuf).catch(() => [] as ClipMatch[])]);
         if (a.length === 0 && b2.length === 0) return null;
