@@ -29,7 +29,7 @@ export const posts: BlogPost[] = [
     slug: 'archive-ocr-against-proofread-pages',
     title: 'Checking the Archive\u2019s OCR against proofread pages',
     subtitle:
-      'On 122 English pages with an independent proofread transcription, the Internet Archive\u2019s OCR text silently misreads about one printed number in seventy, and our own reader is better on the same page in every cohort. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
+      'On 122 English pages with an independent proofread transcription, our own reader is better on the same page in every cohort, and in a first, preliminary count the Internet Archive\u2019s OCR text silently misreads about one printed number in seventy. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
     date: '28 September 2026',
     readTime: '8 min read',
     tag: 'Methodology',

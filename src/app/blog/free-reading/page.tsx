@@ -55,10 +55,10 @@ export default function FreeReadingPage() {
           <p className="text-sm text-stone-700 leading-relaxed">
             <strong>Correction (28 September 2026):</strong> this note argued that where the
             Archive&apos;s reading and ours agree on nineteen words in twenty, the free text is at least
-            as reliable as ours. A later measurement of both readings against 122 independently
+            as reliable as ours. A first measurement of both readings against 122 independently
             proofread pages found that the Archive&apos;s text silently misreads about one printed
-            number in seventy, a 5180 written as 6180, and that a word-agreement score cannot see a
-            one-digit change. If you quote a date or a page reference from Archive text, check the
+            number in seventy (a preliminary figure, resting on ten paired cases), a 5180 written as
+            6180, and that a word-agreement score cannot see a one-digit change. If you quote a date or a page reference from Archive text, check the
             image. The measurement is in{' '}
             <Link href="/blog/archive-ocr-against-proofread-pages" className="text-accent-rust hover:underline">
               Checking the Archive&apos;s OCR against proofread pages

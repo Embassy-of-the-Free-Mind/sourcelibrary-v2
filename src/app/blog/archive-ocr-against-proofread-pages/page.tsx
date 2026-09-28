@@ -75,10 +75,10 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
           machines with each other. This note compares both of them with a third party: 122 English
           pages that volunteers have proofread letter by letter against the same scans. On the same
           page, our reader is better on 57, the Archive&apos;s on 5, and 43 are a tie. The result that
-          matters to anyone quoting from Archive text is smaller and worse. The Archive silently
-          misreads about 1.5 percent of the numbers printed on a page, a 5180 that comes out as 6180,
-          with nothing in the text to show that anything went wrong. If you are quoting a date, a page
-          reference or a sum from Archive OCR, open the image.
+          matters to anyone quoting from Archive text is smaller and worse, and it is preliminary. In
+          this first measurement the Archive silently misreads about 1.5 percent of the numbers printed
+          on a page, a 5180 that comes out as 6180, with nothing in the text to show that anything went
+          wrong. If you are quoting a date, a page reference or a sum from Archive OCR, open the image.
         </p>
         <p className={P}>
           This partly corrects{' '}
@@ -198,10 +198,18 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
             engine must have written a different number one glyph away.
           </p>
           <p className={P}>
-            Across the 122 pages the Archive&apos;s text does this to 13 of the 886 numbers printed, or
-            1.5 percent with a confidence interval from 0.6 to 2.5, on nine different pages. Our reader
-            produced no silent misread that survived the image check on any of its 750 numbers. On the
-            105 pages both readers produced, the count is 10 against 0.
+            This finding is preliminary, and the numbers should be read with their intervals. Across the
+            122 pages the Archive&apos;s text does this to 13 of the 886 numbers printed, or 1.5 percent
+            with a 95 percent interval from 0.6 to 2.5, on nine different pages. On the 105 pages both
+            readers produced, the count is 10 against 0. Ten events is a small base. Our reader produced
+            no silent misread that survived the image check on any of its 750 numbers, and zero observed
+            in 750 does not show that its rate is zero; it bounds the rate below about 0.4 percent at 95
+            percent confidence. The honest statement is that the Archive&apos;s rate is somewhere between
+            one in 170 and one in 40, and ours is below one in 250 and may be far lower. A dedicated
+            numbers test is underway, in which every disagreement between the two engines on a printed
+            number is adjudicated on the page image, together with an estimate of the errors both engines
+            could share; it is tracked as{' '}
+            <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5224" className={A} target="_blank" rel="noopener noreferrer">issue #5224</a>.
           </p>
           <p className={P}>
             The page at the top of this note is page 300 of Edward Sachau&apos;s 1879 translation of
@@ -304,8 +312,8 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
           <ol className="list-decimal pl-6 mb-6 space-y-3 text-secondary leading-relaxed font-body">
             <li>
               Our reader stays the default for English. The Archive lane earns no number-dense cohort
-              at all, because a 1.5 percent silent misread rate on printed numbers, against zero, is
-              disqualifying for exactly the pages where numbers are the content.
+              at all, because a silent misread rate on printed numbers of around 1.5 percent, against
+              none found in 750, is disqualifying for exactly the pages where numbers are the content.
             </li>
             <li>
               One candidate cohort, at the directional grade only: pages from 1880 to 1930 whose Archive
@@ -343,10 +351,11 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
             human to confirm. And the reference error is not zero, as the four Wikisource cases show.
           </p>
           <p className={P}>
-            None of that touches the direction of the result. On every kind of page measured, our reader
-            is closer to the printed text than the Archive&apos;s, and the Archive&apos;s misreads of
-            numbers are silent where ours, on this evidence, do not occur. What the caveats limit is the
-            size of the numbers, not their sign.
+            None of that touches the direction of the character-error result: on every kind of page
+            measured, our reader is closer to the printed text than the Archive&apos;s. The number
+            finding is weaker. It rests on ten paired events, and it shows that the Archive&apos;s
+            silent misreads exist at a rate worth acting on, not that ours are absent. The caveats
+            limit the size of the numbers; the sign holds for characters and is preliminary for digits.
           </p>
         </section>
 
