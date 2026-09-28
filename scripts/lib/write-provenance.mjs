@@ -409,3 +409,50 @@ export function missingProvenance(field, sub) {
   }
   return { missing, markers };
 }
+
+// ── Rows written before the writers went live ─────────────────────────────────
+//
+// Nothing was recorded on them, and nothing is backfilled (decided, #4613). But the settings
+// were CONSTANTS in code, and git dates the constants, so for many rows the settings can be
+// INFERRED from `source` + `updated_at` (+ whether `code_version` was stamped, which is what
+// separates the Lambda `ai` writer from the realtime scripts after 2026-06-01). The table is
+// scripts/lib/provenance-history.json; this reads it. The result is labelled `inferred` and
+// names its rule and basis — a measurement that segments page_revisions by generation settings
+// can use it, a reader can be shown it, and nobody can mistake it for an observation.
+//
+// A row the table cannot place (writer ambiguous, or before any dated constant) comes back
+// `not_recorded` with the reason. Never write the returned value onto a page as `engine`.
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+let _history;
+export function provenanceHistory() {
+  if (!_history) _history = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'provenance-history.json'), 'utf8'));
+  return _history;
+}
+
+/**
+ * @param {'ocr'|'translation'} field
+ * @param {object} sub  the page's ocr / translation subdocument (source, updated_at, code_version, engine)
+ * @returns {{ status: 'observed' } | { status: 'inferred', rule, writer, generation, basis, caveat } | { status: 'not_recorded', reason }}
+ */
+export function inferHistoricalGeneration(field, sub) {
+  if (!sub || typeof sub !== 'object') return notRecorded('no subdocument');
+  if (sub.engine?.schema === ENGINE_SCHEMA) return { status: 'observed' };
+  const at = sub.updated_at instanceof Date ? sub.updated_at : (sub.updated_at ? new Date(sub.updated_at) : null);
+  if (!at || Number.isNaN(at.getTime())) return notRecorded('no updated_at to place the row in time');
+  const hasCodeVersion = typeof sub.code_version === 'string' && sub.code_version.length > 0;
+  for (const r of provenanceHistory().rules) {
+    if (r.field !== field) continue;
+    const w = r.when || {};
+    if (w.source && !w.source.includes(sub.source)) continue;
+    if (w.code_version === 'present' && !hasCodeVersion) continue;
+    if (w.code_version === 'absent' && hasCodeVersion) continue;
+    if (w.from && at < new Date(w.from)) continue;
+    if (w.to && at >= new Date(w.to)) continue;
+    if (!r.generation) return notRecorded(`${r.id}: ${r.writer}`);
+    return { status: 'inferred', rule: r.id, writer: r.writer, generation: r.generation, basis: r.basis, caveat: r.caveat ?? null };
+  }
+  return notRecorded(`no dated rule covers ${field} source=${sub.source ?? 'none'} at ${at.toISOString()}`);
+}

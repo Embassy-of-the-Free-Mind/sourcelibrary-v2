@@ -536,6 +536,39 @@ const { data: bookCalls } = await supabaseAdmin
 - **Manual UI edits** are not audit-logged with the editing user's identity in `audit_log` (only
   `edited_by` on the page).
 
+## 8a. Rows before the floor — what can be INFERRED, and what cannot
+
+Nothing was recorded on pages written before 2026-09-28T16:21Z and nothing is backfilled. But
+the settings were constants in code, git dates the constants, and two fields old rows do carry
+(`source`, and whether `code_version` was stamped) narrow the writer. So for most of history the
+settings can be stated as an **inference with a named basis** — usable for segmenting
+`page_revisions` measurements, showable to a reader as "inferred", and impossible to mistake for an
+observation. The table is `scripts/lib/provenance-history.json`; the reader is
+`inferHistoricalGeneration(field, sub)` in `scripts/lib/write-provenance.mjs`, pinned by
+`tests/unit/write-provenance.test.ts`. It returns `observed` (a real block), `inferred` (rule,
+writer, settings, git commits, caveat) or `not_recorded` (writer ambiguous). **Never write its
+result onto a page as `engine`.**
+
+| rows | window (UTC, half-open) | inferred settings | basis |
+|---|---|---|---|
+| OCR `batch_api` / `pipeline_preview` | 2026-02-19 → floor | temperature 0.1, cap 16,384, thinking off | orchestrator 5e1f1d3d6; batch-ocr-async 8ca2d4fd3 (multi-page requests: cap 4,096 × pages) |
+| OCR `ai`, **no** `code_version` (realtime scripts) | 2026-06-01 → 2026-09-15 | 0.1, 16,384, off | realtime-ocr created ea0d2adeb; Lambda began stamping `code_version` 39068ef96 |
+| OCR `ai`, no `code_version` | 2026-09-15 → floor | 0.1, **cap unknown** (a flag), off | d3f373a55 |
+| OCR `ai`, **with** `code_version` (Lambda) | 2026-06-01 → 2026-09-03 | **temperature 1, cap 65,536, thinking ON** (all model defaults) | ai.ts set no config until ee6804c89 (#4591) — the #4581 population |
+| OCR `ai`, with `code_version` | 2026-09-03 → floor | 1, 65,536, off | ee6804c89 |
+| OCR `ai` | before 2026-06-01 | **not recorded** — Lambda and the realtime script stamped identical fields | per-page: Mongo `gemini_usage` endpoint `scripts/realtime-ocr.mjs` |
+| translation `batch_api` | 2026-02-19 → floor | 0.1, 16,384, off | eef05ed9c |
+| translation `ai` | 2026-03-22 → 2026-08-09 | temperature **not inferred** (worker 1.0 vs realtime-translate script 0.2), cap 65,536, thinking ON | translate-worker created with no config e91d2252f |
+| translation `ai` | 2026-08-09 → 2026-09-04 | temperature not inferred, cap per page, thinking ON | f1a5e0bcb |
+| translation `ai` | 2026-09-04 → floor | temperature not inferred, cap per page, thinking off (retranslate-pages.mjs excepted) | a5134cc8b |
+
+Two consequences worth stating plainly. First, every `page_revisions` pair that straddles
+2026-09-03/04 compares a thinking-on read with a thinking-off one, and the #4581 A/B says those
+differ by a quarter of the words on Latin pages: segment before quoting. Second, the Lambda OCR
+population ran at temperature 1.0 for its whole life; the realtime and batch populations at 0.1.
+Whether to ALSO write these inferences onto the rows (as an explicitly `inferred` block, never as
+`engine`) is a decision, not a default — it is a 20-million-row write to a store the workers read.
+
 ## 9. Audit Verification
 
 The standing check is `scripts/audit/provenance-coverage.mjs`: it samples the pages written in a
