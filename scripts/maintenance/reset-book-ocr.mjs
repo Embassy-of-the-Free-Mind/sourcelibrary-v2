@@ -42,7 +42,12 @@
  *                          the OCR path does; skips the ocr_generation bump, which is an OCR
  *                          concept, and skips the archive_complete requeue, which would re-OCR a
  *                          book whose text is fine.
- *   --pages 5-39           Only clear a page_number range (inclusive).
+ *   --pages 5-39           Only clear a page_number range (inclusive). Comma-separated ranges and
+ *                          single pages are accepted (`--pages 26-230,247,300-412`) so a book whose
+ *                          poisoned pages are scattered (#3391: 39 books, 101 runs) is one reset —
+ *                          one revision snapshot, one job cancel, one ocr_generation bump — instead
+ *                          of one run per range, each bumping the generation again.
+ *   --pages-file PATH      Same, read from a file: whitespace/comma-separated page numbers and ranges.
  *   --reason "..."         Recorded on the revision notes (default: manual reset).
  */
 
@@ -64,15 +69,36 @@ const target = args.find(a => !a.startsWith('--'));
 const reasonIdx = args.indexOf('--reason');
 const REASON = reasonIdx !== -1 ? args[reasonIdx + 1] : 'manual reset via reset-book-ocr.mjs';
 const pagesIdx = args.indexOf('--pages');
+const pagesFileIdx = args.indexOf('--pages-file');
+/**
+ * Page selection as a Mongo filter on page_number, or null for the whole book.
+ * "5-39" → a range; "26-230,247,300-412" → an $or of ranges and singles. Overlaps
+ * and order do not matter; an empty or malformed spec exits before any write.
+ */
+function parsePageSpec(spec) {
+  const parts = String(spec || '').split(/[\s,]+/).filter(Boolean);
+  const clauses = [];
+  for (const part of parts) {
+    const m = part.match(/^(-?\d+)(?:-(-?\d+))?$/) || part.match(/^(-?\d+)\.\.(-?\d+)$/);
+    if (!m) return null;
+    const a = parseInt(m[1]), b = m[2] === undefined ? a : parseInt(m[2]);
+    if (Number.isNaN(a) || Number.isNaN(b) || b < a) return null;
+    clauses.push(a === b ? { page_number: a } : { page_number: { $gte: a, $lte: b } });
+  }
+  if (!clauses.length) return null;
+  return clauses.length === 1 ? clauses[0] : { $or: clauses };
+}
 let pageRange = null;
-if (pagesIdx !== -1) {
-  const m = (args[pagesIdx + 1] || '').match(/^(\d+)-(\d+)$/);
-  if (!m) { console.error('--pages expects a range like 5-39'); process.exit(1); }
-  pageRange = { $gte: parseInt(m[1]), $lte: parseInt(m[2]) };
+let pageSpecText = null;
+if (pagesIdx !== -1 || pagesFileIdx !== -1) {
+  if (pagesIdx !== -1 && pagesFileIdx !== -1) { console.error('--pages and --pages-file are mutually exclusive'); process.exit(1); }
+  pageSpecText = pagesIdx !== -1 ? (args[pagesIdx + 1] || '') : (await import('node:fs')).readFileSync(args[pagesFileIdx + 1], 'utf8');
+  pageRange = parsePageSpec(pageSpecText);
+  if (!pageRange) { console.error('--pages expects a range like 5-39, or a comma-separated list of ranges and pages like 26-230,247,300-412'); process.exit(1); }
 }
 
 if (!target) {
-  console.log('Usage: node scripts/maintenance/reset-book-ocr.mjs <book-id-or-slug> [--dry-run] [--also-translation] [--pages N-M] [--reason "..."]');
+  console.log('Usage: node scripts/maintenance/reset-book-ocr.mjs <book-id-or-slug> [--dry-run] [--also-translation] [--pages N-M[,N,N-M...] | --pages-file PATH] [--reason "..."]');
   process.exit(1);
 }
 
@@ -125,12 +151,15 @@ const activeJobs = await db.collection('batch_jobs').countDocuments(activeJobFil
 console.log(`Outstanding ${JOB_TYPE} batch_jobs to cancel: ${activeJobs}`);
 
 // 2. Pages to clear — selected on the field this run actually destroys.
+// The page selection is a filter fragment ({page_number: …} or {$or: [...]}),
+// so it is merged with $and rather than assigned to page_number.
 const pageFilter = { book_id: book.id, [`${FIELDS[0]}.data`]: { $exists: true, $nin: [null, ''] } };
-if (pageRange) pageFilter.page_number = pageRange;
+if (pageRange) pageFilter.$and = [pageRange];
 const pages = await db.collection('pages').find(
   pageFilter, { projection: { id: 1, book_id: 1, ocr: 1, translation: 1 } }
 ).toArray();
-console.log(`Pages to clear: ${pages.length}${pageRange ? ` (page_number ${pageRange.$gte}-${pageRange.$lte})` : ''} (${FIELDS.join(' + ')} only)`);
+const specSummary = pageSpecText ? pageSpecText.trim().split(/[\s,]+/).filter(Boolean) : null;
+console.log(`Pages to clear: ${pages.length}${specSummary ? ` (page_number ${specSummary.length <= 6 ? specSummary.join(',') : `${specSummary.slice(0, 6).join(',')},… ${specSummary.length} parts`})` : ''} (${FIELDS.join(' + ')} only)`);
 
 if (DRY_RUN) { await client.close(); process.exit(0); }
 
@@ -173,7 +202,7 @@ if (!TRANSLATION_ONLY) {
 // 6. Clear page fields
 const unset = Object.fromEntries(FIELDS.map((f) => [f, '']));
 const clearFilter = { book_id: book.id };
-if (pageRange) clearFilter.page_number = pageRange;
+if (pageRange) clearFilter.$and = [pageRange];
 const clearRes = await db.collection('pages').updateMany(clearFilter, { $unset: unset });
 console.log(`Pages cleared: ${clearRes.modifiedCount}`);
 
