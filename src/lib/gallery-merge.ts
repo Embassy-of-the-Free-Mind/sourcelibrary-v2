@@ -86,7 +86,7 @@ export async function mergedGalleryBrowse(
 ): Promise<{ items: any[]; total: number; hasMore: boolean }> {
   const {
     tenantId, source, limit, offset,
-    imageType = null, minQuality = 0.7, maxPerBook = 3,
+    imageType = null, minQuality = 0.7, maxPerBook = 1000,
     yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
@@ -135,7 +135,12 @@ export async function mergedGalleryBrowse(
     illusFilter = f;
     const docs = await db.collection('gallery_images')
       .find(f, { projection: { _id: 0 } })
-      .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+      // Round-robin through books within each quality score. Scores are coarse
+      // (26k plates share 0.85, 13k share 0.95), so sorting by book next put a
+      // whole book in one block: 54 plates of one volume in a row. book_rank
+      // (1 = the book's best image) first means every book's best comes before
+      // any book's second. Backed by the matching compound index.
+      .sort({ gallery_quality: -1, book_rank: 1, book_year: 1, book_id: 1, page_number: 1 })
       .skip(pageIndex * illusPerPage).limit(illusPerPage + 1).toArray();
     illusHasMore = docs.length > illusPerPage;
     illusDocs = docs.slice(0, illusPerPage);

@@ -15,7 +15,7 @@ import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
   unstable_cache(
     () => fetchInitialGalleryData(tenantId, bookId),
-    ['gallery-initial-v1', tenantId || 'main', bookId || 'all'],
+    ['gallery-initial-v2', tenantId || 'main', bookId || 'all'],
     { revalidate: 3600 },
   )();
 
@@ -139,7 +139,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
     const db = await getReadDb();
     const limit = 48;
     const minQuality = 0.7;
-    const maxPerBook = 3;
+    const maxPerBook = 1000; // uncapped: variety comes from the book_rank sort
 
     // Check if materialized collection exists
     const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
@@ -162,11 +162,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
       extracted_url: { $ne: null },
       image_url: { $ne: null },
     };
-    if (!bookId) {
-      filter.book_rank = { $lte: maxPerBook };
-    } else {
-      filter.book_id = bookId;
-    }
+    if (bookId) filter.book_id = bookId;
     if (tenantId) {
       filter.tenantId = tenantId;
     }

@@ -343,7 +343,8 @@ export async function GET(request: NextRequest) {
           .toArray();
       }
     } else {
-      const sortOrder: Record<string, any> = { gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 };
+      // Round-robin through books within each quality score — see gallery-merge.ts.
+      const sortOrder: Record<string, any> = { gallery_quality: -1, book_rank: 1, book_year: 1, book_id: 1, page_number: 1 };
       textItems = await db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
         .sort(sortOrder)
