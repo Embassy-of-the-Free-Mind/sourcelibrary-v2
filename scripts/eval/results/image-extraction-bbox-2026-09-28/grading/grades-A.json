@@ -1,0 +1,914 @@
+{
+ "6a4b63b43029d1cf3f8e8ea3": {
+  "pictures": 1,
+  "note": "typeset bracket/dichotomy chart of magistrates; index text below",
+  "panels": {
+   "P1": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "",
+    "missed": 1
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "",
+    "missed": 1
+   }
+  }
+ },
+ "6a267ce06c1f37c9c4f37799": {
+  "pictures": 1,
+  "note": "title page with printer's cypher-monogram device above imprint",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "DT",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "",
+    "missed": 1
+   },
+   "P7": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "T",
+    "missed": 0
+   }
+  }
+ },
+ "6a4f3d3739ecc8e27dc655a4": {
+  "pictures": 1,
+  "note": "full-page engraved allegorical plate (canopy, putti, star) with engraved caption",
+  "panels": {
+   "P1": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "LD",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "C",
+    "missed": 0
+   }
+  }
+ },
+ "6a3c711239b4508b04e51705": {
+  "pictures": 0,
+  "note": "blue book cover with title label only; no illustration",
+  "panels": {
+   "P1": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "",
+    "missed": 0
+   }
+  }
+ },
+ "6a42eb1a06e6ead3ac541d37": {
+  "pictures": 1,
+  "note": "faint mirrored show-through of an engraved architectural title page filling the leaf",
+  "panels": {
+   "P1": {
+    "grades": "",
+    "missed": 1
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "T",
+    "missed": 0
+   }
+  }
+ },
+ "6a76d4be6ba8d6d1d3f8e529": {
+  "pictures": 1,
+  "note": "full-page framed engraving of an inscribed fragment (rotated), engraver signatures outside frame",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "T",
+    "missed": 0
+   }
+  }
+ },
+ "6a4f88a114134c1ad056da82": {
+  "pictures": 1,
+  "note": "printed music (5 staves with underlaid text) above verse text",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "L",
+    "missed": 0
+   }
+  }
+ },
+ "69f65d95753ef1ae77ca4856": {
+  "pictures": 0,
+  "note": "pastedown with Philosophia Hermetica pelican bookplate (library mark, excluded)",
+  "panels": {
+   "P1": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "WW",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "W",
+    "missed": 0
+   }
+  }
+ },
+ "6a3cec298642f0445b15a1ac": {
+  "pictures": 1,
+  "note": "Xiqing yanpu inkstone side-face drawing: small outlined panel with inscription",
+  "panels": {
+   "P1": {
+    "grades": "",
+    "missed": 1
+   },
+   "P2": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "L",
+    "missed": 0
+   }
+  }
+ },
+ "6a4a7e5d20c510eceebc56ab": {
+  "pictures": 1,
+  "note": "engraved frontispiece (Neptune with title cartouche), framed plate",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "L",
+    "missed": 0
+   }
+  }
+ },
+ "6a42714362d175ca9e4e262a": {
+  "pictures": 1,
+  "note": "title page with printer's device woodcut (Omnia ex uno) inside ornamental border",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "LD",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "",
+    "missed": 1
+   },
+   "P7": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "C",
+    "missed": 0
+   }
+  }
+ },
+ "6a42705a62d175ca9e4e1021": {
+  "pictures": 1,
+  "note": "engraved winter skating scene with two-line engraved caption",
+  "panels": {
+   "P1": {
+    "grades": "",
+    "missed": 1
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "C",
+    "missed": 0
+   }
+  }
+ },
+ "6a3c709c39b4508b04e4ff78": {
+  "pictures": 0,
+  "note": "Siku quanshu title label and seal; no illustration",
+  "panels": {
+   "P1": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "W",
+    "missed": 0
+   }
+  }
+ },
+ "6a42a71a831988adcb772cae": {
+  "pictures": 1,
+  "note": "engraving of martyrdom scene (Waldor fecit), blank page below",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "TD",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "",
+    "missed": 1
+   }
+  }
+ },
+ "6a492368a45b99e46af93b35": {
+  "pictures": 0,
+  "note": "pastedown bookplate of D.C.I. Lange (ouroboros emblem) - ownership mark, excluded",
+  "panels": {
+   "P1": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "W",
+    "missed": 0
+   }
+  }
+ },
+ "6a3c67c739b4508b04e390ab": {
+  "pictures": 0,
+  "note": "Siku quanshu title label and compiler names; no illustration",
+  "panels": {
+   "P1": {
+    "grades": "",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "",
+    "missed": 0
+   }
+  }
+ },
+ "6a20326018654bf8e1902bbc": {
+  "pictures": 1,
+  "note": "manuscript spread: drawn sword/heart diagram with radiating annotations on right page",
+  "panels": {
+   "P1": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "",
+    "missed": 1
+   },
+   "P5": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "L",
+    "missed": 0
+   }
+  }
+ },
+ "6a4b47e29f73a2728aaba0ea": {
+  "pictures": 1,
+  "note": "full page of printed music (6 staves with text)",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "L",
+    "missed": 0
+   }
+  }
+ },
+ "69f338d7876dd827cbc54353": {
+  "pictures": 0,
+  "note": "pastedown with Andre Ramet ex libris and Harvard Law Library bookplate (library marks)",
+  "panels": {
+   "P1": {
+    "grades": "WW",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "WW",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "WW",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "WW",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "WWW",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "WW",
+    "missed": 0
+   }
+  }
+ },
+ "6a4a5e9a4107674feb04d716": {
+  "pictures": 1,
+  "note": "figurative woodcut vignette (Fame with trumpet) after FINIS",
+  "panels": {
+   "P1": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "",
+    "missed": 1
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "T",
+    "missed": 0
+   }
+  }
+ },
+ "6a3c621040c88a541d8f2573": {
+  "pictures": 1,
+  "note": "drawn bronze-inscription facsimile (small cartouche) with caption text below",
+  "panels": {
+   "P1": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "L",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "C",
+    "missed": 0
+   }
+  }
+ },
+ "6a3c70c401fe4f593c1d49f1": {
+  "pictures": 0,
+  "note": "Siku quanshu title label and compiler names; no illustration",
+  "panels": {
+   "P1": {
+    "grades": "",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "W",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "W",
+    "missed": 0
+   }
+  }
+ },
+ "6a4bbedc6a8b1dab563dcd89": {
+  "pictures": 1,
+  "note": "full-bleed engraved allegorical frontispiece with captions top and bottom",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P3": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P8": {
+    "grades": "",
+    "missed": 1
+   }
+  }
+ },
+ "6a3cc146ec254ff6cae0ad6b": {
+  "pictures": 1,
+  "note": "pair of labelled hexagram diagrams in a text column",
+  "panels": {
+   "P1": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P2": {
+    "grades": "",
+    "missed": 1
+   },
+   "P3": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P4": {
+    "grades": "T",
+    "missed": 0
+   },
+   "P5": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P6": {
+    "grades": "C",
+    "missed": 0
+   },
+   "P7": {
+    "grades": "",
+    "missed": 1
+   },
+   "P8": {
+    "grades": "C",
+    "missed": 0
+   }
+  }
+ }
+}
