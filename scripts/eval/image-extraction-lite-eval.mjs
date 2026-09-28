@@ -82,7 +82,8 @@ const TAG = opt('tag', '');
 const ENGINES = {
   flash: { vendor: 'gemini', model: 'gemini-3-flash-preview', format: 'xywh' },
   lite: { vendor: 'gemini', model: 'gemini-3.1-flash-lite', format: 'xywh' },
-  lite35: { vendor: 'gemini', model: 'gemini-3.5-flash-lite', format: 'xywh' },
+  // 3.5-flash-lite 400s on thinkingBudget:0 (probed 2026-09-28); thinkingLevel 'minimal' is its lowest setting.
+  lite35: { vendor: 'gemini', model: 'gemini-3.5-flash-lite', format: 'xywh', thinking: { thinkingLevel: 'minimal' } },
   'lite-box2d': { vendor: 'gemini', model: 'gemini-3.1-flash-lite', format: 'box2d' },
   qwen235: { vendor: 'openrouter', model: 'qwen/qwen3-vl-235b-a22b-instruct', format: 'bbox2d' },
 };
@@ -370,6 +371,7 @@ async function callArm(eng, item, img, art) {
   const text = buildRequestText(item, art.prompt);
   if (eng.vendor === 'gemini') {
     const generationConfig = art.schema ? generationConfigFor(art.schema) : { temperature: 0.1, maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } };
+    if (eng.thinking) generationConfig.thinkingConfig = eng.thinking;
     const body = {
       contents: [{ parts: [{ text }, { inlineData: { mimeType: img.mimeType, data: img.buffer.toString('base64') } }] }],
       safetySettings: SAFETY,
