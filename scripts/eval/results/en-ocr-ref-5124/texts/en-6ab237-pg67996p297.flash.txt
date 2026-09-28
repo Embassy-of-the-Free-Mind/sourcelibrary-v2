@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>297</page-num>
+<header>THE ANGEL AND THE DEMON.</header>
+<meta>Significant bleed-through from the reverse side of the page is visible in the lower half.</meta>
+
+“I see; I see,” answered Mrs. Dainty, moodily. “But, when a thing has to be done, only fools hesitate. I will discipline my feelings to-night, and tomorrow put on toward this usurping girl a new exterior. Don’t fear but that I shall play my part.”
+
+“It may cost you a struggle,” said her husband, “but the strife will soon be over. I hope much from her gentle nature, and much from her clear perception of right. She will not, I am sure, take a mean advantage of this great diversion in her favor.”
+
+“Time will show,” was the almost sullen response.
+
+<vocab>Mrs. Dainty, discipline, usurping, struggle, perception, diversion</vocab>

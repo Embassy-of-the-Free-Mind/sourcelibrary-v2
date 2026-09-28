@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>The page contains a small checkmark or v-shaped ink mark above the word "CHAPTER".</meta>
+
+### CHAPTER XXIII.
+
+#### THE GILGAMESH EPIC.
+
+We have seen¹ that the religion of Babylonia permeates all branches of literature, so that it is not always possible to draw a sharp dividing line between sacred and secular productions.
+
+To account for this, it is but necessary to bear in mind what the previous chapters have aimed to make clear, that religion furnished the stimulus for the unfolding of intellectual life, and that the literary and scientific productions represent the work of men primarily interested in religion. The significance attached as omens to heavenly phenomena led by degrees to the elaborate astronomical system outlined in the previous chapter. But the astronomers of Babylonia were priests, and indeed the same priests who compiled the hymns and incantations. What is true of astronomy applies to medicine, so far as medicine had an existence independent of incantations, and also to law. The physician was a priest, as was the judge and likewise the scribe.
+
+It is natural, therefore, to find that what may be called the great national epic of the Babylonians was of a religious character. The interpretation given to the traditions of the past was religious. The distant past blended with the phenomena of nature in such a way as to form a strange combination of poetry and realism. But thanks to this combination, which is essentially a process of the popular mind, the production that we are about to consider brings us much closer to the popular phases of the Babylonian religion than does the cosmology or the zodiacal system.
+
+After all, a nation is much more interested in its heroes and
+
+---
+¹ See above, pp. 245–247.
+
+<vocab>Gilgamesh Epic, Babylonia, religion, astronomy, priests, medicine, law, scribe, national epic, cosmology, zodiacal system</vocab>

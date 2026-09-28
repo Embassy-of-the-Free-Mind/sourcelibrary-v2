@@ -1,0 +1,38 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>10</page-num>
+<header>TABLE OF CONTENTS</header>
+
+| CHAP. | | PAGE |
+|-------|---|------|
+| III. | THE ORIGIN OF PASSION. PASSION ARISING FROM OPINION | 70 |
+| IV. | WHAT COMES FROM BELIEF, AND ON THE GOOD AND EVIL OF MAN | 74 |
+| V. | ON LOVE | 78 |
+| VI. | ON HATRED | 82 |
+| VII. | ON JOY AND SORROW | 85 |
+| VIII. | ESTEEM AND CONTEMPT | 87 |
+| IX. | HOPE AND FEAR | 90 |
+| X. | ON REMORSE AND REPENTANCE | 94 |
+| XI. | ON DERISION AND JESTING | 95 |
+| XII. | ON GLORY, SHAME, AND SHAMELESSNESS | 96 |
+| XIII. | ON FAVOUR, GRATITUDE, AND INGRATITUDE | 98 |
+| XIV. | ON GRIEF | 99 |
+| XV. | ON THE TRUE AND THE FALSE | 102 |
+| XVI. | ON THE WILL | 105 |
+| XVII. | ON THE DISTINCTION BETWEEN WILL AND DESIRE | 112 |
+| XVIII. | ON THE USES OF THE FOREGOING | 115 |
+| XIX. | ON OUR HAPPINESS | 118 |
+| XX. | CONFIRMATION OF THE FOREGOING | 126 |
+| XXI. | ON REASON | 131 |
+| XXII. | ON TRUE KNOWLEDGE, REGENERATION, &C. | 133 |
+| XXIII. | ON THE IMMORTALITY OF THE SOUL | 136 |
+| XXIV. | ON GOD'S LOVE OF MAN | 138 |
+| XXV. | ON DEVILS | 143 |
+| XXVI. | ON TRUE FREEDOM | 144 |
+| | | |
+| [APPENDIX I.] | ON GOD | 153 |
+| [APPENDIX II.] | ON THE HUMAN SOUL | 157 |
+
+<vocab>Passion, Opinion, Belief, Good and Evil, Love, Hatred, Joy, Sorrow, Esteem, Contempt, Hope, Fear, Remorse, Repentance, Derision, Jesting, Glory, Shame, Shamelessness, Favour, Gratitude, Ingratitude, Grief, True, False, Will, Desire, Happiness, Reason, Knowledge, Regeneration, Immortality, Soul, God, Devils, Freedom</vocab>

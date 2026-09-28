@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>100</page-num>
+<header>NO CROSS, NO CROWN.</header>
+
+great dominion. Thus the wise man intimates, when he says, "The fear of the Lord is the instruction of wisdom, and before honour is humility." (Prov. xv. 33.) That is, before advancement or preferment is humility. Further, he has this saying, "As snow in summer, and as rain in harvest, so honour is not seemly for a fool:" (Prov. xxvi. 10:) that is, a fool is not capable of the dignity of trust, employment, or preferment: they require virtue, wisdom, integrity, diligence, with which fools are unfurnished. And yet if the respects and titles in use amongst us are to go for marks of honour, Solomon's proverb will take place, and doubtless doth, upon the practice of this age, that yields so much of that honour to a great many of Solomon's fools; who are not only silly men, but wicked too; such as refuse instruction, and hate the fear of the Lord; (Prov. xiii. 18;) which only maketh one of his wise men.
+
+XIV. And as virtue and wisdom are the same, so folly and wickedness. Thus Shechem's lying with Dinah, Jacob's daughter, is called: (Gen. xxxiv. 7:) so is the rebellion and wickedness of the Israelites in Joshua. (Josh. vii. 15.) The Psalmist expresses thus: "My wounds stink, because of my foolishness:" (Psalm xxxviii. 5:) that is, his sin. And, "The Lord will speak peace to his saints, but let them not turn again to folly:" (Psalm lxxxv. 8:) that is, to evil. "His own iniquities," says Solomon, "shall take the wicked himself, and he shall be holden with the cords of his sins: he shall die without instruction, and in the greatness of his folly he shall go astray." (Prov. v. 22, 23.) Christ puts foolishness with blasphemy, pride, theft, murders, adulteries, wickedness, &c. (Mark, vii. 10—12.) I was the more willing to add these passages, to show the difference that there is between the mind of the Holy Ghost, and the notion that those ages had of fools, that deserve not
+
+<vocab>humility, honour, Solomon, Shechem, Dinah, Jacob, Joshua, Psalmist, Holy Ghost, virtue, wisdom, folly, wickedness</vocab>
