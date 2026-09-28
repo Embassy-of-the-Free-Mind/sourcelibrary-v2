@@ -11,6 +11,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
+import { galleryPageWithBookPipeline } from '@/lib/gallery-page-lookup';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
 
 /** True if `books` has a doc for this id (string `id` field or Mongo `_id`). */
@@ -44,11 +45,7 @@ const imageResolves = cache(async (id: string): Promise<boolean> => {
     const index = parseInt(indexStr, 10);
     const db = await getReadDb();
 
-    const pages = await db.collection('pages').aggregate([
-      { $match: { id: pageId } },
-      { $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-    ]).toArray();
+    const pages = await db.collection('pages').aggregate(galleryPageWithBookPipeline({ id: pageId })).toArray();
 
     if (pages.length) {
       const p = pages[0] as { book?: { hidden?: boolean }; detected_images?: unknown[] };
@@ -155,18 +152,7 @@ const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; det
     const index = parseInt(indexStr, 10);
 
     const db = await getReadDb();
-    const pages = await db.collection('pages').aggregate([
-      { $match: { id: pageId } },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book'
-        }
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } }
-    ]).toArray();
+    const pages = await db.collection('pages').aggregate(galleryPageWithBookPipeline({ id: pageId })).toArray();
 
     if (!pages.length) return null;
 

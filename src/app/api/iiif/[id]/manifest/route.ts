@@ -22,6 +22,10 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { API_LIMITS } from '@/lib/api-limits';
 import { extractImageService } from '@/lib/iiif-image-service';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+
+/** The manifest's `summary` reads `index.bookSummary.brief` and nothing else off the index (#5184). */
+const MANIFEST_INDEX_FIELDS: readonly BookIndexProjectionField[] = ['bookSummary'];
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -199,11 +203,9 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Merge full index from dedicated collection
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: id },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    // Merge the summary from the dedicated index collection — the manifest
+    // reads only `index.bookSummary.brief` (#5184).
+    const indexDoc = await getBookIndexFields(db, id, MANIFEST_INDEX_FIELDS);
     if (indexDoc) {
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }

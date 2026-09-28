@@ -8,6 +8,7 @@ import { getPageImageUrl } from '@/lib/utils';
 import { remapBboxToMaster } from '@/lib/gallery-deepzoom-bbox';
 import { VALID_IMAGE_TYPES } from '@/lib/gallery-image-types';
 import { allmapsEditorUrl } from '@/lib/allmaps';
+import { galleryPageWithBookPipeline } from '@/lib/gallery-page-lookup';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -88,19 +89,11 @@ export async function GET(
 
     const db = await getDb();
 
-    // Fetch the page with book info
-    const page = await db.collection('pages').aggregate([
-      { $match: { id: pageId, ...tenantPageFilter } },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book'
-        }
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } }
-    ]).toArray();
+    // Fetch the page with book info — both sides projected (#5184), see
+    // src/lib/gallery-page-lookup.ts for the per-consumer field trace.
+    const page = await db.collection('pages').aggregate(
+      galleryPageWithBookPipeline({ id: pageId, ...tenantPageFilter }),
+    ).toArray();
 
     if (!page.length) {
       // Fallback: try gallery_images collection (handles orphaned pages gracefully)

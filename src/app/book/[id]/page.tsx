@@ -93,6 +93,19 @@ import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { markPageForReader } from '@/lib/provenance';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+
+/**
+ * What this page reads off `book.index` (#5184, starvation check per #4603):
+ * `bookSummary` (about section + summaryText), `entries` (BookIndex component,
+ * hasContents), `people`/`places`/`concepts` (buildEntityList → linkEntities).
+ * `sectionSummaries` is loaded client-side by ExpandableGuide via
+ * /api/books/[id]?full=true, not from here. `vocabulary`/`keywords`/
+ * `pageSummaries` (~64 KB of the ~145 KB doc) have no reader on this page.
+ */
+const BOOK_PAGE_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
+  'bookSummary', 'entries', 'people', 'places', 'concepts',
+];
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -678,10 +691,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     : null;
 
   const [bookIndexDoc, authorEntity] = await Promise.all([
-    db.collection('book_indexes').findOne(
-      { book_id: bookId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null),
+    getBookIndexFields(db, bookId, BOOK_PAGE_INDEX_FIELDS),
     authorEntityId
       ? db.collection('entities').findOne(
         { _id: new ObjectId(authorEntityId) },

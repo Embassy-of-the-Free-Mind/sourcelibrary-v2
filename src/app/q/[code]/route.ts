@@ -35,10 +35,13 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     const db = await getReadDb();
     const [page, book] = await Promise.all([
-      db.collection('pages').findOne({
-        book_id: bookId,
-        page_number: pageNumber,
-      }) as unknown as Promise<Page | null>,
+      // Only `page.id` is read below — the redirect target and the visit
+      // log. The whole page doc (text, thumbnails, detections) was being
+      // shipped for one string on every shortlink hit (#5184).
+      db.collection('pages').findOne(
+        { book_id: bookId, page_number: pageNumber },
+        { projection: { _id: 0, id: 1 } },
+      ) as unknown as Promise<Pick<Page, 'id'> | null>,
       db.collection('books').findOne(
         { id: bookId },
         // The counter decides whether the localized twin exists. Sending a

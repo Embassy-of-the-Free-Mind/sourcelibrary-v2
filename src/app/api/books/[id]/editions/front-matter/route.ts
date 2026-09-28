@@ -6,6 +6,10 @@ import { withAuth } from '@/lib/auth-helpers';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+
+/** What buildBookContext reads off `book.index` (#5184). */
+const FRONT_MATTER_INDEX_FIELDS: readonly BookIndexProjectionField[] = ['bookSummary', 'people', 'concepts'];
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -32,11 +36,9 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Merge full index from dedicated collection
-    const indexDoc = await db.collection('book_indexes').findOne(
-      { book_id: bookId },
-      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
-    ).catch(() => null);
+    // Merge from the dedicated index collection — buildBookContext reads
+    // `bookSummary`, `people` and `concepts` (#5184).
+    const indexDoc = await getBookIndexFields(db, bookId, FRONT_MATTER_INDEX_FIELDS);
     if (indexDoc) {
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }

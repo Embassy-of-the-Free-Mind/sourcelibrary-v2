@@ -3,6 +3,9 @@ import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
+
+/** book_indexes fields the index-term lane reads (#5184). */
+const SEARCH_INDEX_PROJECTION = { _id: 0, book_id: 1, concepts: 1, people: 1, places: 1, keywords: 1 } as const;
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
@@ -867,8 +870,9 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
     // Merge full index from dedicated collection
     const fallbackBookIds = books.map((b: any) => b.id || b._id?.toString()).filter(Boolean);
     if (fallbackBookIds.length > 0) {
+      // The loop below reads concepts/people/places/keywords only (#5184).
       const indexDocs = await db.collection('book_indexes')
-        .find({ book_id: { $in: fallbackBookIds } }, { projection: { _id: 0 }, maxTimeMS: 5000 })
+        .find({ book_id: { $in: fallbackBookIds } }, { projection: SEARCH_INDEX_PROJECTION, maxTimeMS: 5000 })
         .toArray().catch(() => []);
       const indexMap = new Map(indexDocs.map((d: any) => [d.book_id, d]));
       for (const book of books) {

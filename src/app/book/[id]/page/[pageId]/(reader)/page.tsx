@@ -18,6 +18,7 @@ import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
 import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
+import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -92,10 +93,11 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const ctx = await getTenantContext();
   const db = await getReadDb();
 
-  // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav)
+  // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav).
+  // Inclusion list, not `{ detected_images: 0 }` — see reader-page-projection.ts.
   const currentPage = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { detected_images: 0 } }
+    { projection: READER_PAGE_PROJECTION }
   );
 
   if (!currentPage) {
