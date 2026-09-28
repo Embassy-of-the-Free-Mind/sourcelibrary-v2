@@ -481,7 +481,7 @@ async function release() {
 
 // ── status ─────────────────────────────────────────────────────────────────────────────
 
-function status() {
+async function status() {
   const plan = readJsonl(F.plan);
   const applied = readJsonl(F.applied), fail = readJsonl(F.fail), refused = readJsonl(F.refused), skipped = readJsonl(F.skipped), runs = readJsonl(F.runs);
   const read = plan.filter((r) => fs.existsSync(outTxt(r.bid, r.pn))).length;
