@@ -712,10 +712,37 @@ function stageScore() {
   const tally = (slug, side, key, n = 1) => { if (!n) return; if (!perPage.has(slug)) perPage.set(slug, { archive: {}, lite: {} }); const t = perPage.get(slug)[side]; t[key] = (t[key] || 0) + n; };
   const conf = { archive: {}, lite: {} }, errConf = { archive: {}, lite: {} }, blind = { agreed_judged: 0, both_wrong_same: 0, both_wrong_diff: 0, agreed_unreadable: 0, agreed_none: 0 };
   const examples = { archive: [], lite: [] };
+  // The Archive SPLITS a printed number ("1916" → "19" "16"): two adjacent Archive tokens whose
+  // concatenation is a number lite read on the page. The WORD boxes are the Archive's own
+  // segmentation, so a blind reader confirms each half and the split would score as one Archive
+  // "right" plus one lite "misread" — backwards. Detect it structurally, count ONE Archive error
+  // (class "number split"), lite right, and consume the partner half.
+  const liteNums = new Map();
+  const liteNumsOf = (slug) => { if (!liteNums.has(slug)) { const r = rows.get(slug); const st = new Set(); if (r) for (const t of words(normalise(liteTextOf(r)))) if (isNum(t)) st.add(t); liteNums.set(slug, st); } return liteNums.get(slug); };
+  const byAi = new Map(events.filter((e) => e.ai != null).map((e) => [`${e.slug}|${e.ai}`, e]));
+  const consumed = new Set();
+  const splitPartner = (e) => {
+    if (e.kind === 'agree' || e.ai == null || !isNum(e.a)) return null;
+    const ctx = e.ctx.split(' '); const next = ctx[Math.min(e.ai, 3) + 1];
+    const partner = byAi.get(`${e.slug}|${e.ai + 1}`);
+    const joined = next ? e.a + next : '';
+    if (partner && partner.kind !== 'agree' && isNum(next) && partner.a === next && joined.length <= 4 && liteNumsOf(e.slug).has(joined)) return partner;
+    return null;
+  };
   for (const e of events) {
+    if (consumed.has(e.id)) continue;
     const c = adjById.get(e.id);
     if (c && c.crop_error === 'capped') continue;   // represented by the weight of a read sibling on the same page
     const w = c?.weight ?? 1;
+    const partner = splitPartner(e);
+    if (partner && c && c.printed != null && c.printed !== 'unreadable') {
+      consumed.add(partner.id);
+      tally(e.slug, 'archive', 'wrong-split', w); tally(e.slug, 'lite', 'right', w);
+      conf.archive['number split'] = +((conf.archive['number split'] || 0) + w).toFixed(2);
+      const cf = c.confidence || 'unstated'; errConf.archive[cf] = +((errConf.archive[cf] || 0) + w).toFixed(2);
+      if (examples.archive.length < 400) examples.archive.push({ id: e.id, engine: `${e.a} ${partner.a}`, printed: c.printed, kind: 'split', ctx: e.ctx, crop: c.crop });
+      continue;
+    }
     if (e.kind === 'agree') {
       if (c && c.printed != null && plan.get(e.slug).full) {
         if (c.printed === 'unreadable') { blind.agreed_unreadable++; tally(e.slug, 'archive', 'unjudged'); tally(e.slug, 'lite', 'unjudged'); continue; }
@@ -739,12 +766,12 @@ function stageScore() {
     const r = rows.get(slug); const p = plan.get(slug);
     for (const side of ['archive', 'lite']) {
       const x = t[side]; const right = (x.right || 0) + (x.agreed || 0);   // 'right-none' (no number printed, engine printed none) is not a printed number
-      const wrong = (x['wrong-misread'] || 0) + (x['wrong-dropped'] || 0), spurious = x.spurious || 0, unjudged = x.unjudged || 0;
+      const wrong = (x['wrong-misread'] || 0) + (x['wrong-dropped'] || 0) + (x['wrong-split'] || 0), spurious = x.spurious || 0, unjudged = x.unjudged || 0;
       const printed = right + wrong;   // printed numbers with a verdict (agreed ones counted as printed+right)
-      const metric = { numbers_printed: r4(printed), wrong: r4(wrong), misread: x['wrong-misread'] || 0, dropped: x['wrong-dropped'] || 0, spurious, unjudged, agreed_counted_correct: x.agreed || 0, digit_err: printed ? r4(wrong / printed) : null };
+      const metric = { numbers_printed: r4(printed), wrong: r4(wrong), misread: x['wrong-misread'] || 0, dropped: x['wrong-dropped'] || 0, split: x['wrong-split'] || 0, spurious, unjudged, agreed_counted_correct: x.agreed || 0, digit_err: printed ? r4(wrong / printed) : null };
       scores.push({ slug, book_id: r.book_id, set: r.set, engine: side === 'archive' ? 'ia-djvu' : 'gemini-lite-realtime', run_id: side === 'archive' ? `ia-djvu:${r.archive_model || r.ia_meta?.ocr_date || 'unknown'}` : (r.set === 'a' ? LITE_RUN_A : RUN_ID), measure: 'accuracy', against: { reference_id: `image-adjudication:numbers-5224 (model-eye, blind crops)` }, full_subset: !!p.full, scorer: SCORER, scorer_version: 1, normaliser_version: 'numbers-normalise@1', number_rule: NUM_RULE, leaf_check: r.leaf_check, abstain: false, metric, at: new Date().toISOString() });
       const key = `${side}|${r.book_id}`; if (!perBook.has(key)) perBook.set(key, { side, book_id: r.book_id, set: r.set, book: r.book || r.title, year: r.year, decade: r.decade ?? Math.floor((r.year || 0) / 10) * 10, archive_model: r.archive_model, pages: 0, printed: 0, wrong: 0, misread: 0, dropped: 0, spurious: 0, unjudged: 0 });
-      const b = perBook.get(key); b.pages++; b.printed += printed; b.wrong += wrong; b.misread += metric.misread; b.dropped += metric.dropped; b.spurious += spurious; b.unjudged += unjudged;
+      const b = perBook.get(key); b.pages++; b.printed += printed; b.wrong += wrong; b.misread += metric.misread; b.dropped += metric.dropped; b.split = (b.split || 0) + metric.split; b.spurious += spurious; b.unjudged += unjudged;
     }
   }
   const dir = path.join(STORE, 'scores', SCORER); fs.mkdirSync(dir, { recursive: true });
@@ -756,8 +783,8 @@ function stageScore() {
   const groups = { all: () => true, a: (b) => b.set === 'a', b: (b) => b.set === 'b' };
   for (const [g, f] of Object.entries(groups)) for (const side of ['archive', 'lite']) {
     const bs = [...perBook.values()].filter((b) => b.side === side && f(b)); if (!bs.length) continue;
-    const r = rate(bs), rm = rate(bs, 'misread'), rd = rate(bs, 'dropped');
-    summary.sets[`${g}|${side}`] = { books: bs.length, pages: bs.reduce((s, b) => s + b.pages, 0), printed: r.denom, wrong: bs.reduce((s, b) => s + b.wrong, 0), rate: r4(r.rate), ci: r.ci?.map(r4), misread_rate: r4(rm.rate), misread_ci: rm.ci?.map(r4), dropped_rate: r4(rd.rate), spurious: bs.reduce((s, b) => s + b.spurious, 0), unjudged: bs.reduce((s, b) => s + b.unjudged, 0) };
+    const r = rate(bs), rm = rate(bs, 'misread'), rd = rate(bs, 'dropped'), rs = rate(bs, 'split');
+    summary.sets[`${g}|${side}`] = { books: bs.length, pages: bs.reduce((s, b) => s + b.pages, 0), printed: r.denom, wrong: bs.reduce((s, b) => s + b.wrong, 0), rate: r4(r.rate), ci: r.ci?.map(r4), misread_rate: r4(rm.rate), misread_ci: rm.ci?.map(r4), dropped_rate: r4(rd.rate), split_rate: r4(rs.rate), spurious: bs.reduce((s, b) => s + b.spurious, 0), unjudged: bs.reduce((s, b) => s + b.unjudged, 0) };
   }
   const byKey = (keyOf, target) => { const m = new Map(); for (const b of perBook.values()) { const k = `${keyOf(b)}|${b.side}`; if (!m.has(k)) m.set(k, []); m.get(k).push(b); } for (const [k, bs] of m) { const r = rate(bs); target[k] = { books: bs.length, pages: bs.reduce((s, b) => s + b.pages, 0), printed: r.denom, wrong: bs.reduce((s, b) => s + b.wrong, 0), rate: r4(r.rate), ci: r.ci?.map(r4) }; } };
   byKey((b) => b.archive_model || 'unknown', summary.by_archive_model);
@@ -824,10 +851,10 @@ function stageReport() {
   L.push(`# Numbers test (#5224) — which engine reads printed numbers correctly\n`);
   L.push(`Generated ${new Date().toISOString().slice(0, 10)} by \`scripts/eval/numbers-5224.mjs\`. **measure: accuracy** (truth = the page image, read blind at the number). ${NUM_RULE}.\n`);
   L.push(`## Per-engine error on printed numbers (book-cluster bootstrap 95% CI)\n`);
-  L.push(`| set | engine | books | pages | numbers printed | wrong (misread + dropped) | **error rate** | misread only | dropped only | spurious | unreadable crops |`);
-  L.push(`|---|---|---|---|---|---|---|---|---|---|---|`);
+  L.push(`| set | engine | books | pages | numbers printed | wrong (misread + split + dropped) | **error rate** | misread | split | dropped | spurious | unreadable crops |`);
+  L.push(`|---|---|---|---|---|---|---|---|---|---|---|---|`);
   const label = { all: 'ALL', a: '(a) #5186 county histories', b: '(b) breadth English IA 1800–1930' };
-  for (const g of ['all', 'a', 'b']) for (const side of ['archive', 'lite']) { const s = S.sets[`${g}|${side}`]; if (!s) continue; L.push(`| ${label[g]} | ${side === 'archive' ? 'ia-djvu (Archive)' : 'gemini-lite-realtime'} | ${s.books} | ${s.pages} | ${s.printed} | ${s.wrong} | **${pct(s.rate)}** ${ci(s.ci)} | ${pct(s.misread_rate)} ${ci(s.misread_ci)} | ${pct(s.dropped_rate)} | ${s.spurious} | ${s.unjudged} |`); }
+  for (const g of ['all', 'a', 'b']) for (const side of ['archive', 'lite']) { const s = S.sets[`${g}|${side}`]; if (!s) continue; L.push(`| ${label[g]} | ${side === 'archive' ? 'ia-djvu (Archive)' : 'gemini-lite-realtime'} | ${s.books} | ${s.pages} | ${Math.round(s.printed)} | ${s.wrong.toFixed(1)} | **${pct(s.rate)}** ${ci(s.ci)} | ${pct(s.misread_rate)} ${ci(s.misread_ci)} | ${pct(s.split_rate)} | ${pct(s.dropped_rate)} | ${s.spurious.toFixed(1)} | ${s.unjudged.toFixed(1)} |`); }
   L.push(`\nNumbers the engines agree on are counted correct; the shared-blind-spot line below says how often that is wrong. "Spurious" = the engine printed a number where the image has none (not in the rate; a separate count). Grades by referenced books: (a) 4 books = exploratory as a cluster; (b) ${S.sets['b|archive']?.books || 0} books.\n`);
   L.push(`## Shared blind spot (both engines wrong identically) — fully adjudicated subset\n`);
   L.push(`| agreed numbers read on the image | both right | both wrong, same number | image has no number | unreadable | **P(both wrong \\| agree)** |\n|---|---|---|---|---|---|`);
