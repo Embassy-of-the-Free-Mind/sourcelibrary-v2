@@ -1,49 +1,34 @@
 #!/usr/bin/env node
 /**
- * #4747 — Image extraction on gemini-3.1-flash-lite (realtime + Batch API) vs
- * gemini-3-flash-preview, measured on 400 pages.
+ * Which cheap vision model draws accurate picture boxes? Image-extraction arms run with the
+ * production request on the same pages, boxes graded by eye against the page image (#4747).
  *
- * PRIOR ART: scripts/experiments/image-extraction-resolution-test.mjs (deleted; its
- * result is memory/experiment-image-extraction-resolution.md) — 5 pages, 4 resolutions,
- * lite-preview; measured bbox drift vs resolution, not lite vs flash on a sample that
- * can carry a decision. scripts/eval/lib/ has no vision/bbox scorer (all text metrics).
+ * PRIOR ART: scripts/experiments/image-extraction-resolution-test.mjs (deleted; result in
+ * memory/experiment-image-extraction-resolution.md) — 5 pages, lite-preview, bbox drift vs
+ * resolution only. scripts/eval/lib/ has no vision/bbox scorer. contact-sheet-screen.mjs
+ * measures recall of a cheap screen, not box accuracy.
  *
- * Reads only. Never writes to `pages`, `gallery_images`, or `books`.
+ * Reads only. Never writes to `pages`, `gallery_images`, or `books`. Prompt, schema,
+ * generationConfig and page-grounding are lifted from image-extract-worker.mjs at runtime.
+ * Written 2026-09-11 as lite-vs-flash agreement; widened 2026-09-28 — agreement with stored
+ * flash is now SECONDARY, the verdict is the by-eye grade (grade-sheets → grades.json →
+ * grade-score). Arms (--engine): flash, lite, lite35, lite-box2d (Gemini-native box_2d
+ * [ymin,xmin,ymax,xmax] 0–1000), qwen235 (Qwen3-VL via OpenRouter, native bbox_2d
+ * [x1,y1,x2,y2] relative 0–1000 per its 2d_grounding cookbook — NOT Qwen2.5's pixels);
+ * image-extraction-doclayout.py is the free CPU arm. `--tag r2` = re-run. Every paid call
+ * writes a gemini_usage row (type eval). xywh boxes go through scripts/lib/bbox.mjs.
  *
- * The prompt, generationConfig, response schema and page-grounding are lifted from
- * scripts/workers/image-extract-worker.mjs at runtime (the prompt is read out of the
- * worker's source text) so the experiment runs the production request, not a copy that
- * can drift.
+ * Sub-commands (state under --out, default scripts/eval/results/image-extraction-lite-<date>/):
+ *   sample          one page per book: --n-pos flash-positive + --n-neg flash-negative → sample.json
+ *   run --engine E  realtime on every sampled page → raw-<E>[-tag]-realtime.jsonl (--limit N pilot)
+ *   batch-submit / batch-collect --engine lite   Batch API arm → raw-lite-batch.jsonl
+ *   score           agreement with stored flash + flash re-run → results.json (secondary)
+ *   grade-sheets    blinded composites, one panel per arm → grading/ (key.json unblinds)
+ *   grade-score     --grades a.json,b.json: box accuracy, CI, W–L–T vs flash, grader agreement
  *
- * WIDENED 2026-09-28 (brief: ops handoffs/2026-09-28-image-extraction-bbox-eval-brief.md).
- * The question became "which cheap model draws ACCURATE boxes?", so agreement with stored
- * flash output is now the secondary number. The primary one is a by-eye grade of every box
- * against the page image (`grade-sheets` → hand-filled grades.json → `grade-score`).
- * Arms (--engine): flash, lite, lite35, lite-box2d (3.1-lite asked for Gemini's native
- * box_2d [ymin,xmin,ymax,xmax] 0–1000 instead of {x,y,width,height} fractions), qwen235
- * (Qwen3-VL via OpenRouter, native bbox_2d [x1,y1,x2,y2] 0–1000 — Qwen3-VL changed from
- * Qwen2.5's absolute pixels to relative 0–1000, per its 2d_grounding cookbook), and a free
- * layout detector (image-extraction-doclayout.py writes raw-doclayout-local.jsonl).
- * `--tag r2` names a re-run (flash test-retest). Every paid call writes a gemini_usage row
- * (type `eval`, endpoint this file). Boxes go through the PRODUCTION normaliser
- * (scripts/lib/bbox.mjs) — the 09-11 inline copy had the mixed-unit speck bug.
- *
- * Sub-commands (state lives under --out, default scripts/eval/results/image-extraction-lite-<date>/):
- *   sample                 draw 200 positive + 200 negative pages, one per book → sample.json
- *   run --engine flash|lite   realtime generateContent on every sampled page → raw-<engine>-realtime.jsonl
- *   batch-submit --engine lite   build JSONL, upload, create Batch API job → batch-<engine>.json
- *   batch-collect --engine lite  poll + download results → raw-<engine>-batch.jsonl
- *   score                  metrics for every raw-*.jsonl vs the stored flash reference → results.json
- *   sheets                 contact sheets (reference / flash / lite boxes) for the hand-read → sheets/
- *   grade-sheets           blinded per-page composites (one panel per arm, order shuffled) → grading/
- *   grade-score            box-accuracy table from grading/grades.json (the by-eye grades)
- *
- * Positives = pages extracted by the production flash worker in the last 90 d with ≥ 1
- * stored bbox (`detected_images[].model = gemini-3-flash-preview`). Negatives = pages the
- * same worker ran and returned no image on (real production candidates, i.e. page-typed
- * or OCR-marked-up pages — harder than pure text). The stored flash output is the
- * REFERENCE; flash is also re-run so its own test-retest agreement is the yardstick lite
- * is held to.
+ * Positives = pages the production flash worker gave ≥1 stored bbox in the last 90 d;
+ * negatives = pages it ran and found nothing on. Both come from flash, so recall here is
+ * bounded by what flash surfaced; the by-eye grade also catches flash's own errors.
  */
 
 import { MongoClient } from 'mongodb';
