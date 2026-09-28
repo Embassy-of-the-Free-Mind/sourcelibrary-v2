@@ -129,6 +129,9 @@ Baseline at 2026-05-26 (after first cleanup pass): 338 truly orphaned rows total
 
 `page_translations` (~3.9M rows) is **not cleaned** by the maintenance script. The table holds the actual translation text (column `translation`, Gemini Batch output) — deleting from it destroys readable content, unlike the embedding-only tables above. The script prints a COUNT query for visibility but no DELETE. If orphans there ever need cleaning, treat it as a deliberate one-off: derive the live set from `bookstore.books` (NOT `book_embeddings`, which only covers embedded books), cross-check `bookstore.deleted_books`, sample-inspect, archive before DELETE.
 
+### CLIP index truth (#5195)
+`clip_embeddings` is a CACHE of `gallery_images` (gallery rows) and `books` (covers, artworks). Its `book_id`/`title`/`author` are denormalised at embed time and are NOT rewritten when a book is re-minted, merged, or re-split — measured 2026-09-28: 3,711 gallery rows named the wrong book, 31,210 named a gallery row that no longer exists. The read side hydrates `book_id` from the gallery row (PR #5196) so a visitor can no longer be sent to a 404, but every other reader of the index trusts it. Standing detector: `scripts/audit/clip-index-integrity.mjs` (weekly on Hetzner, log `/var/log/sourcelibrary/clip-index-integrity.log`) — drift, classified orphans, and the missing-from-index gap in one run, exit 1 above threshold. Repair: `scripts/maintenance/clip-index-repair.mjs` (dry-run by default; `--apply` rewrites drift and logs one `sweep_log` row per book; orphan deletion is a separate, gated lane that needs a listed file and an OK). Both share `scripts/lib/clip-index-scan.mjs` so they cannot disagree on what drift is.
+
 ### Re-embedding
 - Page-level: `node scripts/workers/embed-gemini.mjs --book <id>` re-embeds a specific book.
 - Book-level: enrich-worker Phase 6.5 handles it during enrichment. To force, re-run enrichment for the book.
