@@ -45,6 +45,7 @@ import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { MODEL_PRICING } from '../lib/model-pricing.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -90,6 +91,10 @@ const PRICE = MODEL_PRICING[TARGET_MODEL];
 /** Computed estimate at the standard (realtime) rate, never billed truth — see model-pricing.mjs. */
 const costUsd = (inTok, outTok) => (PRICE ? (inTok * PRICE.input + outTok * PRICE.output) / 1e6 : null);
 const MAX_OUTPUT_TOKENS = parseInt(getArg('max-output-tokens') || '16384', 10);
+// Provenance identity of this writer (#4613).
+const CALL_SITE = 'scripts/batch/realtime-ocr.mjs';
+const CODE_VERSION = await codeVersion();
+const HOST = host();
 const MAX_PAGES = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '30', 10);
 const DRY_RUN = hasFlag('dry-run');
@@ -210,7 +215,7 @@ async function fetchImageBuffer(url) {
     else if (url.endsWith('.tif') || url.endsWith('.tiff')) mimeType = 'image/tiff';
     else mimeType = 'image/jpeg';
   }
-  return { data: Buffer.from(buffer).toString('base64'), mimeType };
+  return { data: Buffer.from(buffer).toString('base64'), mimeType, bytes: buffer.byteLength };
 }
 
 // --- OCR prompt ---
@@ -222,14 +227,27 @@ async function getOcrPrompt(db) {
   if (!prompt?.content) throw new Error('No default OCR prompt found in DB');
   console.log(`Prompt: ${prompt.name} v${prompt.version}`);
   const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
-  return prompt.content
-    .replace('{language_instruction}', languageInstruction)
-    .replace('{language}', '');
+  // The text SENT and the template it came from, kept apart (#4613): the block on the page
+  // hashes the sent text; `ref` cites the stored prompt. The `prompt_version` label this
+  // script has always stamped is NOT the DB version — the engine block carries the truth.
+  return {
+    text: prompt.content
+      .replace('{language_instruction}', languageInstruction)
+      .replace('{language}', ''),
+    ref: { id: prompt._id?.toString(), name: prompt.name, version: String(prompt.version ?? ''), hash: prompt.content_hash ?? null },
+  };
 }
 
 // --- Gemini API call ---
 async function callGemini(imageBase64, mimeType, promptText, apiKey) {
   const url = `${GEMINI_API_BASE}/models/${TARGET_MODEL}:generateContent?key=${apiKey}`;
+  // One object, sent AND recorded (#4613): the page's engine block is built from this
+  // same value, so the record cannot drift from the request.
+  const generationConfig = {
+    temperature: 0.1,
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
+    thinkingConfig: { thinkingBudget: 0 },
+  };
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -238,11 +256,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
         { text: promptText },
         { inlineData: { mimeType, data: imageBase64 } },
       ]}],
-      generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: MAX_OUTPUT_TOKENS,
-        thinkingConfig: { thinkingBudget: 0 },
-      },
+      generationConfig,
     }),
     signal: AbortSignal.timeout(180000),
   });
@@ -268,6 +282,8 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
     // no record (#4458). RECITATION in particular returns zero content parts.
     finishReason: candidate?.finishReason || null,
     usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: outputTokensFrom(usage) },
+    generationConfig,
+    modelVersion: result.modelVersion || null,
   };
 }
 
@@ -348,7 +364,7 @@ async function recordSkip(db, page, { reason, finishReason, chars, durationMs, m
 }
 
 // --- Process one page ---
-async function processPage(page, promptText, db) {
+async function processPage(page, ocrPrompt, db, runId) {
   const imageUrl = getPageImageUrl(page);
   if (!imageUrl) {
     await recordSkip(db, page, { reason: 'no-image', model: TARGET_MODEL });
@@ -360,7 +376,7 @@ async function processPage(page, promptText, db) {
 
   try {
     const image = await fetchImageBuffer(imageUrl);
-    const result = await callGemini(image.data, image.mimeType, promptText, keyInfo.key);
+    const result = await callGemini(image.data, image.mimeType, ocrPrompt.text, keyInfo.key);
     const durationMs = Date.now() - startTime;
 
     if (!result.text || result.text.length < 5) {
@@ -415,6 +431,17 @@ async function processPage(page, promptText, db) {
     // no-op in 'no-ocr' mode, fires in 'old-ocr'/'all' modes.
     await saveRevisionBeforeOverwrite(db, page.id, 'ocr', { reason: 'reocr_realtime' });
 
+    // What produced this text (#4613): the exact prompt sent, the settings sent, the
+    // image fetched, the run. Built by the one builder, which refuses a partial record.
+    const engine = geminiEngine({
+      call_site: CALL_SITE, api: 'realtime', model: TARGET_MODEL,
+      prompt: { ...ocrPrompt.ref, text: ocrPrompt.text },
+      generationConfig: result.generationConfig,
+      run: { job_id: runId || null, code_version: CODE_VERSION, host: HOST },
+      input: imageInput({ url: imageUrl, mime: image.mimeType, bytes: image.bytes }),
+      response: { modelVersion: result.modelVersion },
+    });
+
     await db.collection('pages').updateOne(
       { id: page.id },
       {
@@ -426,6 +453,7 @@ async function processPage(page, promptText, db) {
             updated_at: new Date(),
             source: 'ai',
             prompt_version: TARGET_PROMPT,
+            ...ocrProvenance(result.text, engine),
           },
           ...(isDigitizerPage(pageType, result.text) ? { page_type: 'digitizer-insert', hidden: true } : pageType ? { page_type: pageType } : {}),
           ...(columns && { columns }),
@@ -478,7 +506,7 @@ async function processPage(page, promptText, db) {
 }
 
 // --- Concurrent processor ---
-async function processBatch(pages, promptText, db, runId) {
+async function processBatch(pages, ocrPrompt, db, runId) {
   let completed = 0, failed = 0, skipped = 0;
   const skipReasons = {};
   let totalTokens = 0;
@@ -498,7 +526,7 @@ async function processBatch(pages, promptText, db, runId) {
 
     const chunk = pages.slice(i, i + CONCURRENCY);
     const results = await Promise.allSettled(
-      chunk.map(page => processPage(page, promptText, db))
+      chunk.map(page => processPage(page, ocrPrompt, db, runId))
     );
 
     for (let j = 0; j < results.length; j++) {
@@ -792,8 +820,8 @@ async function main() {
     });
     console.log(`Run ID: ${runId}\n`);
 
-    const promptText = await getOcrPrompt(db);
-    const result = await processBatch(pages, promptText, db, runId);
+    const ocrPrompt = await getOcrPrompt(db);
+    const result = await processBatch(pages, ocrPrompt, db, runId);
 
     // --- Finalize run record ---
     await db.collection('jobs').updateOne(

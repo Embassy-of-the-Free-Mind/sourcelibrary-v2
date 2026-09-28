@@ -251,10 +251,11 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
  * re-deriving anything. `prompt.text` here is the exact request text (before any per-page
  * prefix; a per-page prefix is recorded by the collector as `prompt.page_prefix_hash`).
  */
-export function batchJobProvenance({ call_site, model, prompt, generationConfig, run } = {}) {
+export function batchJobProvenance({ call_site, model, prompt, generationConfig, run, image_resized_to_px } = {}) {
   const e = geminiEngine({ call_site, api: 'batch', model, prompt, generationConfig, run, input: notRecorded('completed by the collector per page') });
   delete e.input;
   e.run.submitted_at = e.run.at;
+  if (num(image_resized_to_px) !== undefined) e.image_resized_to_px = image_resized_to_px; // the collector copies it into each page's input
   return e;
 }
 
@@ -263,16 +264,21 @@ export function batchJobProvenance({ call_site, model, prompt, generationConfig,
  * A job submitted before #4613 carries no `provenance`; its block says so explicitly rather
  * than inventing settings — see rule 3.
  */
-export function engineFromBatchJob(job, { batch_job_id, input, collected_by, response, now = new Date() } = {}) {
+export function engineFromBatchJob(job, { batch_job_id, input, collected_by, response, prompt_sent_hash, prompt_sent_chars, now = new Date() } = {}) {
   if (!input || typeof input !== 'object') throw new Error('write-provenance: engineFromBatchJob needs the page input');
   const id = batch_job_id || job?.id || (job?._id && String(job._id)) || NOT_RECORDED;
   if (job?.provenance?.schema === ENGINE_SCHEMA) {
-    const p = job.provenance;
+    const { image_resized_to_px, ...p } = job.provenance;
+    const pageInput = (num(image_resized_to_px) !== undefined && input.image_url && !('resized_to_px' in input)) ? { ...input, resized_to_px: image_resized_to_px } : input;
+    // A cross-book job sends a per-book prompt (document context appended): the page's own
+    // sent hash, recorded on the job's page_sources at submit, wins over the job-level one.
+    const prompt = HEX16.test(prompt_sent_hash || '') ? { ...p.prompt, sent_hash: prompt_sent_hash, sent_chars: num(prompt_sent_chars) ?? null } : p.prompt;
     return {
       ...p,
+      prompt,
       ...(response?.modelVersion ? { model_version: response.modelVersion, model_version_source: 'response' } : {}),
       run: { ...p.run, batch_job_id: id, collected_by: collected_by || NOT_RECORDED, collected_at: now },
-      input,
+      input: pageInput,
     };
   }
   const model = job?.model || NOT_RECORDED;

@@ -191,6 +191,22 @@ describe('the checker (missingProvenance) — proven red', () => {
     expect(e.input).toEqual({ image_url: 'https://x/2.jpg', resized_to_px: 1500 });
   });
 
+  it('a cross-book job: the page-level sent hash and the job-level resize both land on the page', () => {
+    const prov = mjs.batchJobProvenance({ call_site: 'scripts/workers/pipeline-orchestrator.mjs', model: 'gemini-3.1-flash-lite', prompt: { ...ocrArgs().prompt, text: 'BASE' }, generationConfig: { temperature: 0.1 }, run: FIXED, image_resized_to_px: 1500 });
+    expect(prov.image_resized_to_px).toBe(1500);
+    const perPage = mjs.contentHash('BASE\n\n**Document context:** "Title" by Author.');
+    const e = mjs.engineFromBatchJob({ id: 'job-3', provenance: prov }, { input: mjs.imageInput({ url: 'https://x/3.jpg' }), collected_by: 'c', prompt_sent_hash: perPage, prompt_sent_chars: 45 });
+    expect(e.prompt.sent_hash).toBe(perPage);
+    expect(e.prompt.sent_chars).toBe(45);
+    expect(e.prompt.hash).toBe(prov.prompt.hash);
+    expect(e.input).toEqual({ image_url: 'https://x/3.jpg', resized_to_px: 1500 });
+    expect(e).not.toHaveProperty('image_resized_to_px');
+    // no per-page hash → the job-level one stands
+    const e2 = mjs.engineFromBatchJob({ id: 'job-3', provenance: prov }, { input: mjs.imageInput({ url: 'https://x/3.jpg' }), collected_by: 'c' });
+    expect(e2.prompt.sent_hash).toBe(mjs.contentHash('BASE'));
+    expect(mjs.missingProvenance('ocr', { data: 't', source: 'batch_api', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: e })).toEqual({ missing: [], markers: [] });
+  });
+
   it('specialist and archive sources have their own required set; human text needs only the hash', () => {
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'kraken', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: { name: 'kraken', model: 'sophro-mhiro', run: 'r' } }).missing).toEqual([]);
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'kraken', updated_at: new Date(), engine: { name: 'kraken', model: 'sophro-mhiro' } }).missing).toEqual(['ocr.content_hash', 'ocr.engine.run']);

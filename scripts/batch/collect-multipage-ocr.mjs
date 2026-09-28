@@ -12,6 +12,10 @@
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../lib/write-provenance.mjs';
+
+/** Provenance identity of this collector (#4613). */
+const COLLECTOR_CALL_SITE = 'scripts/batch/collect-multipage-ocr.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
@@ -210,6 +214,17 @@ async function main() {
               'ocr.pages_per_request': job.pages_per_request,
               'ocr.input_tokens': usage?.promptTokenCount || 0,
               'ocr.output_tokens': outputTokensFrom(usage),
+              // What produced this text (#4613). Multi-page jobs record no per-page image;
+              // the block says so rather than guessing one.
+              ...(() => {
+                const pageSrc = (job.page_sources || []).find((s) => s.page_id === pageId);
+                const prov = ocrProvenance(ocrText, engineFromBatchJob(job, {
+                  batch_job_id: String(job._id), collected_by: COLLECTOR_CALL_SITE, now,
+                  input: pageSrc?.source_url ? imageInput({ url: pageSrc.source_url }) : notRecorded('multi-page batch job carried no page_sources'),
+                  prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+                }));
+                return { 'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine };
+              })(),
               ...(pageType && { page_type: pageType }),
               ...(columns && { columns }),
               ...(detectedImages.length > 0 && { detected_images: detectedImages }),

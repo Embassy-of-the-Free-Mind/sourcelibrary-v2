@@ -14,6 +14,10 @@
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../lib/write-provenance.mjs';
+
+/** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
+const COLLECTOR_CALL_SITE = 'scripts/batch/collect-batch-results.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
@@ -264,6 +268,19 @@ async function processOneJob(db, job) {
           updated_at: now,
         };
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
+        // What produced this text (#4613): the job's submit-time record completed with this
+        // page's image (when the submitter recorded page_sources) and the job id.
+        {
+          const pageSrc = (job.page_sources || []).find((s) => s.page_id === pageId);
+          const engine = engineFromBatchJob(job, {
+            batch_job_id: jobIdStr, collected_by: COLLECTOR_CALL_SITE, now,
+            input: pageSrc?.source_url ? imageInput({ url: pageSrc.source_url }) : notRecorded('batch job carried no page_sources'),
+            prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+          });
+          const prov = ocrProvenance(text, engine);
+          setObj['ocr.content_hash'] = prov.content_hash;
+          setObj['ocr.engine'] = prov.engine;
+        }
         // Trust the OCR model's page-type classification, with body-text fallback
         if (isDigitizerPage(pageType, text)) {
           setObj.page_type = 'digitizer-insert';

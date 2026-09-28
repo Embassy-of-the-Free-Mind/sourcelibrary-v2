@@ -229,6 +229,8 @@ export interface OcrData extends ProcessingMetadata {
     contributor: string | null;   // the scanning library
     detected_lang: string | null;
     item_url: string;
+    /** Which run of scripts/import/ia-ocr-ingest.mjs copied it (#4613): `ia-ocr-ingest/<ISO>/<host>@<sha>`. */
+    ingest_run?: string;
   };
   agreement_ref?: { median: number; n: number; min_agreement: number; offset?: number; offset_share?: number };
   /**

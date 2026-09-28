@@ -27,6 +27,10 @@ import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../lib/write-provenance.mjs';
+
+/** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
+const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
 import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
@@ -485,6 +489,8 @@ async function processOneJob(db, job) {
     // (the #2298 re-OCR set) instead of an aspect-ratio guess. Empty for jobs
     // submitted before this shipped — those pages stay pre-provenance (null).
     const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
+    // The same rows, whole — they also carry each page's sent-prompt hash (#4613).
+    const pageSourceByPage = new Map((job.page_sources || []).map(s => [s.page_id, s]));
 
     // ── Blank-page guard (#4149) ────────────────────────────────────────────
     // The model does not decline an unreadable leaf: it writes fluent invented
@@ -642,6 +648,18 @@ async function processOneJob(db, job) {
         const srcUrl = sourceUrlByPage.get(pageId);
         if (srcUrl) setObj['ocr.source_url'] = srcUrl;
         if (job.code_version) setObj['ocr.code_version'] = job.code_version;
+        // What produced this text (#4613): the job's submit-time record (prompt by content,
+        // settings sent, run) completed with this page's image and the job id. A job
+        // submitted before the record existed gets explicit `not_recorded` markers.
+        const pageSrc = pageSourceByPage.get(pageId);
+        const engine = engineFromBatchJob(job, {
+          batch_job_id: jobIdStr, collected_by: COLLECTOR_CALL_SITE, now,
+          input: srcUrl ? imageInput({ url: srcUrl }) : notRecorded('batch job carried no page_sources'),
+          prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+        });
+        const prov = ocrProvenance(text, engine);
+        setObj['ocr.content_hash'] = prov.content_hash;
+        setObj['ocr.engine'] = prov.engine;
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
         if (pageType) setObj.page_type = pageType;
         if (columns) setObj.columns = columns;
