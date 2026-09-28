@@ -4,7 +4,7 @@ import VisionView from './VisionView';
 
 const OG_TITLE = 'Bringing ancient wisdom into the future';
 const OG_DESCRIPTION =
-  'A letter from Source Library founder Derek Lomas on bringing the ancient wisdom of every civilization into the age of AI — and a brief plan for the institution we are building.';
+  'A letter from Source Library founder Derek Lomas on translating the world’s untranslated books, and the five-year budget to do it.';
 
 export const metadata: Metadata = {
   title: 'Our Vision — A Letter from the Founder | Source Library',
