@@ -108,7 +108,10 @@ export interface GallerySearchParams {
   minQuality?: number;
   includeArchive?: boolean;
   maxPerBook?: number;
+  /** quality (default) | oldest | newest | book | recent | random — src/lib/gallery-sort.ts */
   sort?: string;
+  /** Which shuffle, 0-63, for sort=random. */
+  seed?: number;
   visitorId?: string;
   iconclass?: string;
   /** Merged-gallery source filter. 'all' (default) interleaves both. */

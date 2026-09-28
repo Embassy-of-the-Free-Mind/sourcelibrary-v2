@@ -8,6 +8,7 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
+import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
 export const maxDuration = 30;
 
@@ -147,6 +148,10 @@ export async function GET(request: NextRequest) {
     // likedByVisitor is only computed for an explicit visitor_id — never from
     // the session cookie, which the URL-keyed cache cannot see.
     const visitorId = searchParams.get('visitor_id');
+    // Reader-chosen order (src/lib/gallery-sort.ts). Both are URL params, so each
+    // sort/shuffle is its own CDN entry and stays shareable.
+    const sort = parseGallerySort(searchParams.get('sort'));
+    const seed = parseSeed(searchParams.get('seed'));
 
     // Visual search mode — uses CLIP image embeddings (text→image)
     const visual = searchParams.get('visual') === 'true';
@@ -214,7 +219,7 @@ export async function GET(request: NextRequest) {
     if (isPlainBrowse && (sourceParam === 'all' || sourceParam === 'artwork')) {
       const merged = await mergedGalleryBrowse(db, {
         tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
-        imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId,
+        imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId, sort, seed,
         // Honour an explicitly-requested floor instead of silently clamping it.
         qualityExplicit: searchParams.get('minQuality') !== null,
       });
@@ -346,13 +351,15 @@ export async function GET(request: NextRequest) {
         },
       };
       try {
+        // Relevance unless the reader picked an explicit order.
         textItems = await db.collection('gallery_images').aggregate([
           searchStage,
           matchStage,
+          ...searchSortStages(sort, seed),
           { $project: { _id: 0 } },
           { $skip: offset },
           { $limit: limit + 1 },
-        ], { maxTimeMS: 8000 }).toArray();
+        ], { maxTimeMS: 8000, allowDiskUse: true }).toArray();
         // Kick off the count in parallel (only meaningful when Atlas Search ran,
         // not the $text fallback). Guarded so a slow/failed count degrades to the
         // old estimate rather than breaking the request.
@@ -378,7 +385,7 @@ export async function GET(request: NextRequest) {
           ? `"${searchQuery.replace(/"/g, '')}"`
           : searchQuery;
         filter.$text = { $search: phraseQuery };
-        const sortOrder: Record<string, any> = { score: { $meta: 'textScore' }, gallery_quality: -1 };
+        const sortOrder: Record<string, any> = searchSortStage(sort) ?? { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
         textItems = await db.collection('gallery_images')
           .find(filter, { projection })
@@ -388,14 +395,9 @@ export async function GET(request: NextRequest) {
           .toArray();
       }
     } else {
-      // Round-robin through books within each quality score — see gallery-merge.ts.
-      const sortOrder: Record<string, any> = { gallery_quality: -1, book_rank: 1, book_year: 1, book_id: 1, page_number: 1 };
-      textItems = await db.collection('gallery_images')
-        .find(filter, { projection: { _id: 0 } })
-        .sort(sortOrder)
-        .skip(offset)
-        .limit(limit + 1)
-        .toArray();
+      // Order from gallery-sort.ts (default: round-robin through books within each
+      // quality score). Segmented sorts page across undated / unhashed rows last.
+      textItems = await findSorted(db.collection('gallery_images'), filter, sort, seed, offset, limit + 1);
     }
 
     // Decide "is there another page?" from the RAW row count, before any
@@ -661,6 +663,11 @@ export async function GET(request: NextRequest) {
         for (const a of artHits) { const d = semById.get(a.book_id); if (d && !seenBooks.has(d.id)) { seenBooks.add(d.id); lead.push(artworkToGalleryItem(d)); } }
         const rest = mappedItems.filter((it: any) => !seenPages.has(`${it.pageId}-${it.detectionIndex}`)); // eslint-disable-line @typescript-eslint/no-explicit-any
         outItems = [...lead, ...rest];
+        // An explicit sort orders the whole first page, lead items included —
+        // otherwise the lead block sat on top in a fixed order and changing the
+        // sort visibly did nothing.
+        const cmp = compareGalleryItems(sort, seed);
+        if (cmp) outItems = [...outItems].sort(cmp);
 
         // Real result count: text-matching illustrations + the lead (title/semantic) items.
         const illCount = await db.collection('gallery_images').countDocuments(

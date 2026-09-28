@@ -11,6 +11,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createHash } from 'crypto';
+import { findSorted, artworkSort, artworkRotation, type GallerySort } from '@/lib/gallery-sort';
 
 /**
  * Per-instance memo for gallery reads that are expensive and slow-moving:
@@ -53,6 +54,10 @@ export interface MergedBrowseOpts {
   yearStart?: number | null;
   yearEnd?: number | null;
   visitorId?: string | null;
+  /** Order for plates and artworks — see src/lib/gallery-sort.ts. */
+  sort?: GallerySort;
+  /** Which of the RANDOM_SEEDS shuffles, for sort=random. */
+  seed?: number;
 }
 
 const clampAspect = (r: number) => Math.min(3, Math.max(0.33, r));
@@ -115,6 +120,7 @@ export async function mergedGalleryBrowse(
     tenantId, source, limit, offset,
     imageType = null, minQuality = 0.7, maxPerBook = 1000,
     yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
+    sort = 'quality', seed = 0,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
   // Set when any read fell back to a placeholder. The route answers a degraded
@@ -163,15 +169,10 @@ export async function mergedGalleryBrowse(
       f.book_year = y;
     }
     illusFilter = f;
-    const docs = await db.collection('gallery_images')
-      .find(f, { projection: { _id: 0 } })
-      // Round-robin through books within each quality score. Scores are coarse
-      // (26k plates share 0.85, 13k share 0.95), so sorting by book next put a
-      // whole book in one block: 54 plates of one volume in a row. book_rank
-      // (1 = the book's best image) first means every book's best comes before
-      // any book's second. Backed by the matching compound index.
-      .sort({ gallery_quality: -1, book_rank: 1, book_year: 1, book_id: 1, page_number: 1 })
-      .skip(pageIndex * illusPerPage).limit(illusPerPage + 1).toArray();
+    // Order comes from gallery-sort.ts. The default ('quality') round-robins
+    // through books within each quality score: scores are coarse (26k plates
+    // share 0.85), so sorting by book next put 54 plates of one volume in a row.
+    const docs = await findSorted(db.collection('gallery_images'), f, sort, seed, pageIndex * illusPerPage, illusPerPage + 1);
     illusHasMore = docs.length > illusPerPage;
     illusDocs = docs.slice(0, illusPerPage);
   }
@@ -192,14 +193,29 @@ export async function mergedGalleryBrowse(
     // facet (source=artwork) and an explicit year range still reach all of them.
     af.year = { $gte: DEFAULT_ARTWORK_YEARS.from, $lte: DEFAULT_ARTWORK_YEARS.to };
   }
-  const artDocs = await db.collection('books')
-    .find(af, {
-      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 },
-      allowDiskUse: true,
-    })
-    .sort({ year: 1, title: 1 })
-    .skip(pageIndex * artPerPage).limit(artPerPage + 1).toArray();
-  const artHasMore = artDocs.length > artPerPage;
+  const artProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 };
+  const artFind = (skip: number, n: number) => db.collection('books')
+    .find(af, { projection: artProjection, allowDiskUse: true })
+    .sort(artworkSort(sort))
+    .skip(skip).limit(n).toArray();
+  let artDocs: any[];
+  let artHasMore: boolean;
+  if (sort === 'random') {
+    // Rotate the title-ordered list by the seed and wrap once, so each shuffle
+    // starts somewhere different and still reaches every artwork exactly once.
+    const artCount = await galleryMemo(filterKey('art-count', af), () =>
+      db.collection('books').countDocuments(af, { maxTimeMS: 8000 }) as Promise<number>);
+    const pos = pageIndex * artPerPage;
+    const take = Math.max(0, Math.min(artPerPage, artCount - pos));
+    const start = (artworkRotation(sort, seed, artCount) + pos) % Math.max(1, artCount);
+    const first = take > 0 ? await artFind(start, take) : [];
+    const second = first.length < take ? await artFind(0, take - first.length) : [];
+    artDocs = [...first, ...second];
+    artHasMore = pos + artPerPage < artCount;
+  } else {
+    artDocs = await artFind(pageIndex * artPerPage, artPerPage + 1);
+    artHasMore = artDocs.length > artPerPage;
+  }
   const arts = artDocs.slice(0, artPerPage).map(artworkToGalleryItem);
 
   // ---- illustration likes + page dims (for exact aspect) ----
