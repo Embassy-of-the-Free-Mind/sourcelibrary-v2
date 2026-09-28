@@ -79,7 +79,10 @@ async function leafTexts(iaId) {
   if (!res.ok) return { meta, leaves: null, reason: `HTTP ${res.status} for ${xml}` };
   const t = await res.text();
   const leaves = [...t.matchAll(/<OBJECT[\s\S]*?<\/OBJECT>/g)].map((o) => {
-    const lines = [...o[0].matchAll(/<LINE>([\s\S]*?)<\/LINE>/g)].map((l) => [...l[1].matchAll(/<WORD[^>]*>([^<]*)<\/WORD>/g)].map((w) => w[1]).join(' '));
+    // `<LINE\b[^>]*>`, not `<LINE>`: IA tags running heads and patent header blocks as
+    // `<LINE x-struct="header">`. The bare pattern dropped them from the reading text while the
+    // ingest (which splits on `<LINE\b`) writes them, so the reader judged a different text (2026-09-26).
+    const lines = [...o[0].matchAll(/<LINE\b[^>]*>([\s\S]*?)<\/LINE>/g)].map((l) => [...l[1].matchAll(/<WORD[^>]*>([^<]*)<\/WORD>/g)].map((w) => w[1]).join(' '));
     return lines.join('\n').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
   });
   return { meta, leaves: leaves.map(dehyphenateLineBreaks), xml };
