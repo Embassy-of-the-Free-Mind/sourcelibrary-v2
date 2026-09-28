@@ -1,0 +1,32 @@
+{
+  "slug": "en-69a553-ws153",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AKorean%20folk%20tales-%20imps%2C%20ghosts%20and%20fairies%20(IA%20koreanfolktalesi00impaiala).pdf%2F153&oldid=15151079",
+  "source_revision": "oldid 15151079 (2025-06-22T20:42:35Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 4,
+  "unit": {
+    "kind": "page",
+    "chars": 1197
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

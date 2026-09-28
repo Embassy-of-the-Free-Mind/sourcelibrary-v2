@@ -1,0 +1,40 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>title-page</page-type>
+
+# THE
+# ANATOMY OF
+# MELANCHOLY,
+
+VVHAT IT IS.
+
+VVITH ALL THE KINDES,
+CAVSES, SYMPTOMES, PROG-
+NOSTICKES, AND SEVE-
+RALL CVRES OF IT.
+
+IN THREE MAINE PARTITIONS
+with their feuerall SECTIONS, MEM-
+BERS, and SVBSEC-
+TIONS.
+
+PHILOSOPHICALLY, MEDICI-
+NALLY, HISTORICALLY, OPE-
+NED AND CVT VP.
+
+BY
+DEMOCRITVS Iunior.
+
+With a Satyrical PREFACE, conducing to
+the following Difcourfe.
+
+MACROB.
+Omne meum, Nihil meum.
+
+AT OXFORD,
+Printed by IOHN LICHFIELD and IAMES
+SHORT, for HENRY CRIPPS.
+Anno Dom. 1621.
+
+<vocab>Anatomy of Melancholy, Democritus Junior, Robert Burton, Oxford, John Litchfield, James Short, Henry Cripps, Macrobius</vocab>

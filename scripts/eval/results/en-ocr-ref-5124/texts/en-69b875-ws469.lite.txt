@@ -1,0 +1,23 @@
+languages use the word *men* for the chessmen, and its use is confined to Anglo-French, English, and Icelandic. I do not think that this is sufficient evidence upon which to base an English parentage for Icelandic chess, and moreover, the form *skák* is opposed to such a theory. There seems no valid reason for supposing that chess arrived in Iceland by any different route from that taken by other adoptions of European customs.
+
+[*Hnefatafl*. There has been much speculation in the past as to the nature of this game, and Fiske, after devoting several years to the recovery of the game, gave the problem up as insoluble. The game became obsolete in Iceland soon after the introduction of chess, probably before the end of the thirteenth century.
+
+The only early references which throw any light upon this game are the riddles in the *Hervarar Saga*, and a passage in *Frithiof's Saga*. From the first we learn that the game (like the Welsh *tawlbwrdd*) was played between the sides composed, the one of sixteen 'fair' (white) men, the other of a King (called *hnefa* or *hunn*) and eight 'dark' (black) men. From the second we learn that a 'double attack' was possible.
+
+<image-desc size="medium" type="diagram" significance="high">A square grid board for the game of Tablut, showing a central square, four corner squares, and shaded areas for piece placement.</image-desc>
+
+->The board for *tablut*<-
+
+Game-pieces have been discovered in Scandinavia which probably belong to this game; some of these are plain and hemispherical in shape, others are shaped with a man's head or a dog's head.
+
+Now a game satisfying all the requirements of the early Icelandic references was still played in the eighteenth century by the Laplanders in the North of Sweden under the name of *Tablut*, and was seen and described by the botanist Linnaeus in 1732. I think that it is extremely probable that this game is identical with the old *hnefatafl*.
+
+*Tablut* is played on a board of eighty-one squares marked as in the diagram. One side consists of the King, who is stationed on the central square, and eight Swedes, who are placed upon the shaded squares. The other side consists of sixteen Russians, who occupy the crosscut squares. All the pieces have the same move—that of the Rook in chess. Play is by alternate moves, and the one player endeavours to bring his King to the edge of the board while the other tries to confine him so that he has no power of moving. In either case the game comes to an end. The King cannot be taken; any other man is taken when two of the opposing men occupy two squares adjacent to it and in the same straight line with it. No other piece than the King can ever play to the central square. If the King be on d5 and three Russians are on c5, d4 and d6, he is considered to be confined, and the Russians win. If the King be on e5, a Swede on f5, and Russians on d5, e4 and e6, the Russians can capture the Swede by playing a fourth man to g5. Whenever the King has a free road to the edge, the player must give notice to the enemy by saying
+
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>445</page-num>
+<header>CHAP. II CHESS IN THE MIDDLE AGES</header>
+<vocab>Hnefatafl, Tablut, chess, Hervarar Saga, Frithiof's Saga, tawlbwrdd, Linnaeus, Laplanders, Scandinavia</vocab>

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<page-num>vi</page-num>
+<header>PREFACE.</header>
+
+In his treatise on the Laws, he divides them into what he looks upon as unwritten laws, that is to say, the living patterns of a blameless life which the scripture sets before us in Enoch, Noah, Abraham, &c., and particular laws in the narrower technical common acceptation of the word.
+
+In the other treatises, he deduces an allegorical meaning from the plain historical account of Moses, which serves him as the foundation for his philosophical system.
+
+In all these works he exhibits profound and varied learning, showing himself deeply versed in Greek literature of every age and description, and of considerable skill in the sciences of music, geometry, and astronomy. His style is clear, and even though he may at times be open to the charge of an over-refined subtilty, it is impossible to deny him the praise of acuteness and ingenuity, set off to their best advantage by neatness of language and felicity of expression.
+
+For the Christian reader these treatises have a peculiar interest from the ample materials which many of them furnish for the illustration of St. Paul's Epistles; materials so copious and so valuable that an eminent divine of the present day has pronounced an opinion (referring probably more especially to the treatises on the Sacrifices of Abel and of Cain—on the Different Incidents in the Life of Noah—on Abraham—on the Life of Moses—on the Ten Commandments—and on Providence) that all the other ancient commentators on the Scriptures put together have not left works of greater value for that most important object. It is even asserted by Eusebius that he formed an acquaintance with St. Peter while at Rome, but that statement is generally looked upon as wanting confirmation. From his treatise against Flaccus, and in that which refers to his embassy to Rome, we likewise derive information with respect to the condition of the Jews in the time of our Saviour, and to the manner in which they were treated by the Roman governors, which supplies much incidental corroboration of some of the historical allusions contained in different parts of the New Testament.
+
+The text which has been used in this translation has been generally that of Mangey.
+
+<vocab>Laws, Enoch, Noah, Abraham, Moses, Greek literature, music, geometry, astronomy, St. Paul's Epistles, Sacrifices of Abel and of Cain, Providence, Eusebius, St. Peter, Flaccus, Jews, New Testament, Mangey</vocab>

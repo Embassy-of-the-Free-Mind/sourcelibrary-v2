@@ -1,0 +1,32 @@
+{
+  "slug": "en-699356-ws310",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AZhuang%20Zi%20-%20translation%20Giles%201889.djvu%2F310&oldid=8115882",
+  "source_revision": "oldid 8115882 (2018-08-27T16:26:59Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 4,
+  "unit": {
+    "kind": "page",
+    "chars": 1057
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

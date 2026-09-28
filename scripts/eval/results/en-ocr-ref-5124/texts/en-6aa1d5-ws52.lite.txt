@@ -1,0 +1,31 @@
+3. Lichtenstein (Abraham ben Eliezer). ספר הין צדק ותיקון המדות מיוסד על ח" פרקי רבינו משה בר מימון זצוק"ל. Wilna, 1799. 4°. (Contains only chapters I–V.)
+
+4. שמונה פרקים להר"מבם מיט דער דייטשען איבערסעצונג נייע גאנץ פערבעסערטע אוסגאבע. Basel, 1804. Printed by Wilhelm Haas.¹
+
+5. Salomon, Gotthold.² . . . חלקת מחקק כולל שמונה פרקים לר"מבם איבערזעצט אונד מיט טהעאלאגיש פהילאואפישן אנמערקונגען פערוועהן מאת שלמה זלמן בכה"ר ליפמן לבית הלוי. Dessau, Moses Philippsohn, 1809. 8°. With vowels.
+
+6. Beer, Michal. שמונה פרקים לרמבם. *Le huit Chapitres de Maïmonide, etc.*, trad. en franc. 8°. Paris, 1811.
+
+7. *Acht Abschnitte* . . . aus dem Arabischen. Braunschweig, 1824. 8°.
+
+8. Falkenheim, S. *Die Ethik des Maimonides oder Schemoneh Perakim; deutsch bearbeit.* Königsberg, 1832. 8°.
+
+9. שמונה פרקים לרמבם. *De Acht Hoofdstukken van Maimonides. Bevattende zijne Zielkundige Verhandeling. Het Hebreeuwsch op nieuw nagezien en in het Nederduitsch vertaald.*⁴ Groningen, S. J. Oppenheim, 1845.
+
+10. Slucki, David. חכמת ישראל שמונה פרקים להרמבם. Contains also a biography of Samuel Ibn Tibbon and notes. Warsaw, 1863.
+
+11. Wolf, Michal. שמונה פרקים לרמבם נעתק מחדש ללשון אשכנז והובא לדפוס מאת מיכל וואלף ונוסף עליו הערות חדשות עם ישנות. Lemberg, 1876 (Follows ed. Dessau, 1809). With vowels, but unreliable.
+
+COMMENTARIES, ANNOTATED EDITIONS, AND TRANSLATIONS
+
+The commentaries on the *Perakim* are found in some of the above-mentioned editions. They are the ספר חסד אברהם by
+
+¹ Haas was a member of the Acad. der mech. Künste in Berlin. ² HUb., p. 438. Salomon was a teacher at the Freischule in Dessau; Beer, Rabbi Moses ben Maimon, p. 72. ³ Catalogue of Hebrew Books in the British Museum, p. 587. ⁴ A copy is found in the Columbia University Library (N.Y.).
+
+<scan-quality>good</scan-quality>
+<language>English, Hebrew, Yiddish, German, French, Dutch</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>32</page-num>
+<header>THE ETHICS OF MAIMONIDES</header>
+<vocab>Maimonides, Ethics, Perakim, bibliography, Hebrew literature, translations</vocab>

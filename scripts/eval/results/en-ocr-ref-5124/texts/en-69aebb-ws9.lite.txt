@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+
+->CONTENTS.<-
+
+---
+
+| | PAGE |
+| :--- | :--- |
+| On the Confusion of Languages | 1 |
+| On the Migration of Abraham | 43 |
+| On the question, Who is the Heir of Divine Things | 94 |
+| On the Meeting for the sake of receiving Instruction | 157 |
+| On Fugitives | 194 |
+| On the question why certain Names in the Holy Scriptures are changed | 238 |
+| On the doctrine that Dreams are sent from God. Book I. | 292 |
+| Book II. | 344 |
+| On the Life of the Wise Man made perfect by Instruction; or, on the Unwritten Law, that is to say, on Abraham | 396 |
+| On the Life of a Man occupied with Affairs of State; or, on Joseph | 453 |
+
+<vocab>Contents, Confusion of Languages, Migration of Abraham, Heir of Divine Things, Instruction, Fugitives, Holy Scriptures, Dreams, Wise Man, Unwritten Law, Abraham, Affairs of State, Joseph</vocab>

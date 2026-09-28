@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>413</page-num>
+<header>AQUEDUCTS OF ROME, II. 82-84</header>
+
+Out of Tepula there were delivered outside the City in the name of Caesar 58 *quinariae*, to private parties 56 *quinariae*. The remaining 331 *quinariae* were distributed within the City through the fourth, fifth, sixth, and seventh wards among fourteen reservoirs. Of these there were furnished in the name of Caesar 34 *quinariae*, to private parties 237 *quinariae*, for public uses 50 *quinariae*,—namely, to one camp 12 *quinariae*, to three public structures 7 *quinariae*, to thirteen basins 32 *quinariae*.
+
+Out of Julia there flowed outside the City in the name of Caesar 85 *quinariae*, to private parties 121 *quinariae*. The remaining 548 *quinariae* were distributed within the City to the second, third, fifth, sixth, eighth, tenth, and twelfth wards, among seventeen reservoirs. Of these there were furnished in the name of Caesar 18 *quinariae*, to private parties 196 *quinariae*,<note>1</note> for public uses 383 *quinariae*,—namely, to . . .<note>2</note> camps 69 *quinariae*, to . . .<note>2</note> public structures 181 *quinariae*, to three ornamental fountains 67 *quinariae*, to twenty-eight basins 65 *quinariae*.
+
+Virgo delivered outside the City 200 *quinariae*. The remaining 2,304 *quinariae* were distributed within the City to the seventh, ninth, and fourteenth wards, among eighteen reservoirs. Of these there were furnished in the name of Caesar 509 *quinariae*, to private parties 338 *quinariae*, for public uses 1,167 *quinariae*,—namely, to two ornamental fountains 26 *quinariae*, to twenty-five basins 51 *quinariae*, to
+
+<note>1 The MS. says nothing of deliveries to private persons. Poleni, for the sake of arithmetic, would amend the text here.</note>
+<note>2 The MS. shows no gap, though a numeral is clearly called for.</note>
+
+<vocab>Aqueducts, Rome, Tepula, Julia, Virgo, quinariae, Caesar, reservoirs, wards, public structures, fountains, basins, Poleni</vocab>

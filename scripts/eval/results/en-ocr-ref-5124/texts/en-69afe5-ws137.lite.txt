@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English, Greek, German</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>cxxxiii</page-num>
+<header>CUBIC EQUATIONS. cxxxiii</header>
+
+I have purposely postponed, until the evidence respecting the Greek treatment of the cubic equation was complete, any allusion to an interesting hypothesis of Zeuthen’s* which, if it could be accepted as proved, would explain some difficulties involved in Pappus’ account of the orthodox classification of problems and loci. I have already quoted the passage in which Pappus distinguishes the problems which are *plane* (ἐπίπεδα), those which are *solid* (στερεά) and those which are *linear* (γραμμικά)†. Parallel to this division of problems into three orders or classes is the distinction between three classes of *loci*‡. The first class consists of *plane loci* (τόποι ἐπίπεδοι) which are exclusively straight lines and circles, the second of *solid loci* (τόποι στερεοί) which are conic sections§, and the third of *linear loci* (τόποι γραμμικοί). It is at the same time clearly implied by Pappus that problems were originally called plane, solid or linear respectively for the specific reason that they required for their solution the geometrical loci which bore the corresponding names. But there are some logical defects in the classification both as regards the problems and the loci.
+
+(1) Pappus speaks of its being a serious error on the part of geometers to solve a plane problem by means of conics (i.e. ‘solid loci’) or ‘linear’ curves, and generally to solve a problem “by means of a foreign kind” (ἐξ ἀνοικείου γένους). If this principle were applied strictly, the objection would surely apply equally to the solution of a ‘solid’ problem by means of a ‘linear’ curve. Yet, though e.g. Pappus mentions the conchoid and the cissoid as being ‘linear’ curves, he does not object to their employment in the solution of the problem of the two mean proportionals, which is a ‘solid’ problem.
+
+(2) The application of the term ‘solid loci’ to the three conic sections must have reference simply to the definition of the curves as sections of a solid figure, viz. the cone, and it was no doubt in contrast to the ‘solid locus’ that the ‘plane locus’ was so called. This agrees with the statement of Pappus that ‘plane’ problems may
+
+* *Die Lehre von den Kegelschnitten*, p. 226 sqq.
+† p. ciii.
+‡ Pappus vii. pp. 652, 662.
+§ It is true that Proclus (p. 394, ed. Friedlein) gives a wider definition of “solid lines” as those which arise “from some section of a solid figure, as the cylindrical helix and the conic curves”; but the reference to the cylindrical helix would seem to be due to some confusion.
+
+<vocab>Cubic equations, Zeuthen, Pappus, plane problems, solid problems, linear problems, plane loci, solid loci, linear loci, conic sections, conchoid, cissoid, two mean proportionals, Proclus, cylindrical helix</vocab>

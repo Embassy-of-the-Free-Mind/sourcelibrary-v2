@@ -1,0 +1,32 @@
+{
+  "slug": "en-6a3e6c-ws523",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AScribner's%20Monthly%2C%20Volume%2012%20(May%E2%80%93October%201876).djvu%2F523&oldid=13634755",
+  "source_revision": "oldid 13634755 (2023-11-16T18:07:01Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 4317
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

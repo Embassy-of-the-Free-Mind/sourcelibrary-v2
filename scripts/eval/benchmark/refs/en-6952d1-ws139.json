@@ -1,0 +1,32 @@
+{
+  "slug": "en-6952d1-ws139",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AThe%20alchemical%20writings%20of%20Edward%20Kelly%20(IA%20b24857300).pdf%2F139&oldid=15221982",
+  "source_revision": "oldid 15221982 (2025-07-25T01:43:25Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 991
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "matches start and end exactly"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

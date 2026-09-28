@@ -1,0 +1,17 @@
+Cambridge, Mass., U.S.A. . . Publication Agent of Harvard University.
+Boston, Mass., U.S.A. . . . . . . . . . . . . . . Ginn and Company.
+
+<image-desc size="medium" type="symbol" significance="high">The seal of Harvard University, featuring a shield with three open books bearing the letters V, E, R, I, T, A, S, surrounded by the Latin text "SIGILLVM ACADEMIAE HARVARDIANAE IN NOV ANGL".</image-desc>
+
+London: Ginn and Company . . . 37, Bedford Street, Strand, W.C.
+Leipzig: Otto Harrassowitz . . . . . . . . . . . Querstrasse 14.
+
+A copy of this volume, postage paid, may be obtained anywhere within the limits of the Universal Postal Union, by sending a Postal Order for one dollar and twenty cents, or its equivalent, to the Publishers.
+
+According to the conversion-tables used in the United States money-order system as the basis for international money-orders, one dollar and twenty cents ($1.20) = 4 shillings and 11 pence = 4 marks and 94 pfennigs = 6 francs or lire and 10 centimes = 4 kroner and 44 öre = 2 florins and 92 cents Netherlandish.
+
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<vocab>Harvard University, Ginn and Company, Otto Harrassowitz, Universal Postal Union, currency conversion</vocab>

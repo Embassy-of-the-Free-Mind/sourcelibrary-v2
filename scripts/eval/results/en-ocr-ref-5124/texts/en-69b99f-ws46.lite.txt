@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>THE SIKH RELIGION</header>
+
+It happened that one year there was a great drought in the land. The months of Har, Sawan, and even half of Bhadon—from the middle of June to the end of August—had passed, and the usual rains of the season had not appeared. Food stuffs became scarce and dear, and the people were greatly distressed. Cattle too suffered severely, and died in large numbers, for all the tanks were dry and no water came from heaven. The people went in a body to the Tapa and represented their condition. He said it was a small calamity in comparison with another which had befallen their town. ‘I am a monk,’ he said, ‘yet no one worshippeth me, but all worship the family man. Go now and tell the Guru to procure you rain.’ The cultivators replied: ‘The Guru telleth no one to worship him. He careth naught for king or emperor, he thinketh not of eating or drinking. Every offering made him is sent into his kitchen, whence the poor, the indigent, the traveller, and the stranger are fed. We have no power to compel the Guru.’
+
+The Tapa replied, ‘If you expel him from the city I will send you rain in less than twenty-four hours. If, on the other hand, you allow him to remain, let him cause rain to fall.’ On hearing this the ignorant Jats lost their heads, went to the Guru, and requested him to send rain. The Guru said, ‘Rest satisfied with God’s will. God hath no partner in His designs, and no one can influence Him.’ The Jats then delivered to the Guru the Tapa’s message. The Guru replied that if they thought they could thus gain their object, he would willingly leave their town. Bhai Budha was very angry with the Jats, but the Guru restrained him and said, ‘Our religion teacheth pardon for offences.’ Saying this the Guru turned his back on the town, proceeded some distance, and sat under a tree. The cultivators who lived in that neighbourhood were warned not to receive him. In this way he had to leave seven villages in suc-
+
+<vocab>Sikh religion, drought, Har, Sawan, Bhadon, Tapa, Guru, Jats, Bhai Budha</vocab>

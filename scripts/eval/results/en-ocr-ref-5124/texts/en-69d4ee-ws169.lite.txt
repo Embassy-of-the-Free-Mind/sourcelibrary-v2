@@ -1,0 +1,38 @@
+<scan-quality>good</scan-quality>
+<language>English, Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>147</page-num>
+<header>of a new World.</header>
+<sig>L 2</sig>
+
+that of the Poet :
+Provehimur portu, terraeque, urbesque,
+recedunt.
+And I doubt not but that inge-
+nuous Authour would easily have
+recanted if hee had beene but ac-
+quainted with those experiences
+which men of latter times have
+found out, for the confirmation of
+this truth.
+
+2. Unto him assents Macrobius,
+whose words are these; Terra ac-
+cepto solis lumine clarescit, tantum-
+modo, non relucet. "The earth
+"is by the Sunne-beames made
+"bright, but not able to enlighten
+"any thing so farre. And his
+reason is, because this being of a
+thicke and grosse matter, the light
+is terminated in its superficies,
+and cannot penetrate into the
+substance; whereas the moone
+doth therefore seeme so bright to
+us, because it receives the beames
+within it selfe. But the weaknesse
+of this assertion, may bee easily
+manifest by a common experience,
+
+<vocab>Macrobius, Sunne-beames, earth, moone, light, experience, new World</vocab>

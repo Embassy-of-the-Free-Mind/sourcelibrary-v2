@@ -1,0 +1,32 @@
+{
+  "slug": "en-69aebf-ws469",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AFrontinus%20-%20The%20stratagems%2C%20and%2C%20the%20aqueducts%20of%20Rome%20(Bennet%20et%20al%201925).djvu%2F469&oldid=11376297",
+  "source_revision": "oldid 11376297 (2021-06-08T19:02:23Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 1639
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

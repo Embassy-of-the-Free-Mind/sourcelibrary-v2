@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+
+->C O N T E N T S.<-
+
+---
+
+->PAGE<-
+
+I. THE SOUL OF THE GREAT BELL . . . 9
+
+II. THE STORY OF MING-Y . . . 25
+
+III. THE LEGEND OF TCHI-NIU . . . 65
+
+IV. THE RETURN OF YEN-TCHIN-KING . 89
+
+V. THE TRADITION OF THE TEA-PLANT . 107
+
+VI. THE TALE OF THE PORCELAIN-GOD . 135
+
+---
+
+APPENDIX . . . . . . . . 163
+
+NOTES . . . . . . . . . 165
+
+GLOSSARY . . . . . . . . 173
+
+<image-desc size="small" type="decorative" significance="low">A small, ornate printer's mark or tailpiece featuring stylized floral or cloud-like motifs surrounding a central circular element.</image-desc>
+
+<vocab>Contents, Soul of the Great Bell, Ming-Y, Tchi-Niu, Yen-Tchin-King, Tea-Plant, Porcelain-God, Appendix, Notes, Glossary</vocab>

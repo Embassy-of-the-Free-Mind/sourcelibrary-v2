@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>125</page-num>
+<header>THE "SPIRIT OF LIBERTY." 125</header>
+
+souls not sufficiently purified in this life undergo purgation until admitted to heaven.*
+
+We first hear of these sectaries as appearing among the Franciscans of Assisi, where, under active proceedings, seven of the friars confessed, abjured, and were sentenced to perpetual prison. When, in 1309, Clement V. sought to settle the points in dispute between the Spirituals and Conventuals, the first of the four preliminary questions which he put to the contending factions related to the connection between the Order and this heresy, of which both sides promptly sought to clear themselves. The next reference to them is in April, 1311, when they were said to be multiplying rapidly in Spoleto, among both ecclesiastics and laymen, and Clement sent thither Raimundo, Bishop of Cremona, to stamp out the new heresy. The effort was unavailing, for in 1327, at Florence, Donna Lapina, belonging to the sect "of the Spirit" whose members believed themselves impeccable, was condemned by Frà Accursio, the inquisitor, to confiscation and wearing crosses; and in 1329 Frà Bartolino da Perugia, in announcing a general inquisition to be made of the province of Assisi, enumerates the new heresy of the Spirit of Liberty among those which he proposes to suppress. More important was the case of Domenico Savi of Ascoli, who was regarded as a man of the most exemplary piety. In 1337 he abandoned wife and children for a hermit's life, and the bishop built for him a cell and oratory. This gave him still greater repute, and his influence was such that when he began to disseminate the doctrines of the Spirit of Liberty, which he undertook by means of circulating written tracts, the number of his followers is reckoned at ten thousand. It was not long before this attracted the attention of the Inquisition. He was tried, and recanted, while his writings were ordered to be burned. His convictions, however, were too strong to allow him to remain orthodox. He relapsed, was tried a second time, appealed to the pope, and was finally condemned by the Holy See in 1344, when he was handed over to the secular arm and burned at Ascoli. As nothing is said
+
+* MS. Bibl. Casanatense A. iv. 49.—I owe the communication of this document to the kindness of M. Charles Molinier. See also Amati, Archivio Storico Italiano, No. 38, p. 14.
+
+For the connection between these heretics and the Dolcinists, compare Archiv für Lit.- u. Kirchengeschichte, 1886, p. 131, with 1887, pp. 123–4.
+
+<vocab>Spirit of Liberty, Franciscans, Spirituals, Conventuals, Clement V., Raimundo Bishop of Cremona, Donna Lapina, Frà Accursio, Frà Bartolino da Perugia, Domenico Savi, Inquisition, heresy, Dolcinists</vocab>

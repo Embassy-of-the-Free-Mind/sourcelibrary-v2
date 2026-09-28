@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Tamil, English, Latin</language>
+<script>printed</script>
+<page-type>title-page</page-type>
+
+->திருவள்ளுவநாயனார் அருளிச்செய்த<-
+->திருக்குறள்.<-
+
+# THE 'SACRED' KURRAL
+### OF
+### TIRUVALLUVA-NÂYANÂR.
+
+WITH
+INTRODUCTION, GRAMMAR, TRANSLATION, NOTES
+(IN WHICH ARE REPRINTED FR. C. J. BESCHI'S AND F. W. ELLIS' VERSIONS),
+LEXICON, AND CONCORDANCE.
+
+BY THE
+REV. G. U. POPE, M.A., D.D.,
+SOMETIME FELLOW OF THE MADRAS UNIVERSITY, MEMBER OF THE ROYAL ASIATIC
+SOCIETY, AND OF THE GERMAN ORIENTAL SOCIETY.
+
+> 'Si quisquamst, qui placere se studeat bonis
+> Quam plurimis et minime multos laedere,
+> In his poeta hic nomen profitetur suom.'
+
+LONDON:
+W. H. ALLEN & CO., 13 WATERLOO PLACE, S.W.
+PUBLISHERS TO THE INDIA OFFICE.
+
+1886.
+
+(All rights reserved.)
+
+<insert>SEEN BY PRESERVATION SERVICES SEP 24 1992</insert>
+
+<vocab>Tiruvalluvar, Tirukkural, G. U. Pope, C. J. Beschi, F. W. Ellis, Tamil literature, Sacred Kurral</vocab>

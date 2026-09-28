@@ -1,0 +1,25 @@
+<scan-quality>poor</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>62</page-num>
+<header>THE EUTHYPHRO.</header>
+<warning>The text is extremely faint and difficult to read due to poor scan quality/fading.</warning>
+
+Soc. Now, therefore, you perceive that the holy is that which is loved by the gods? But is it any thing else than that which is dear to divinity?
+
+Euth. It is nothing.
+
+Soc. Neither then did we conclude well, or we did one present portion is not right.
+
+Euth. It seems so.
+
+Soc. From the beginning, therefore, we shall again consider what the holy is. For I am unwilling, before I have learned this, to cast it away. Do not then despise me, but applying your attention tell me the truth in the most degree. For you know it, if any man does; and I will not let you go, like Proteus, until you have told me. For you would never have attempted, if you were not well acquainted with what is holy and its opposite, to accuse your father of murder, when he is now advanced in years; but you would have feared (lest you should not act rightly in this affair) the anger of the gods, and would have been afraid of men. But now I know well that you clearly think that you have a knowledge of what is holy and its opposite. Tell me, therefore, Euthyphro, and do not conceal from me what that is.
+
+Euth. It may be at some other opportunity then, Socrates; for now I am in haste, and it is time for me to go.
+
+Soc. What do you do, my friend? You depart, and will show me from the great hope I had entertained of learning from you what things are holy and what are not, and of freeing myself from the accusation of Meletus, by showing that I had now learned from Euthyphro divine concerns; that I shall no longer live inconsiderately, nor—repeating them through ignorance; and also that I shall lead a better during the remainder of my life.
+
+<meta>catchword: THE</meta>
+
+<vocab>Euthyphro, Socrates, holy, divinity, gods, murder, Meletus</vocab>

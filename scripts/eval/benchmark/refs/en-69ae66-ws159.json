@@ -1,0 +1,32 @@
+{
+  "slug": "en-69ae66-ws159",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AEarly%20Greek%20philosophy%20by%20John%20Burnet%2C%203rd%20edition%2C%201920.djvu%2F159&oldid=8931968",
+  "source_revision": "oldid 8931968 (2018-11-16T16:56:56Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 2644
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "matches start and end exactly, p.145, footnote included"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

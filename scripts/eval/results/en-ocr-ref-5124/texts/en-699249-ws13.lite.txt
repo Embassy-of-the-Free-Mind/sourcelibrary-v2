@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>ix</page-num>
+<header>CONTENTS ix</header>
+
+### CHAPTER VII
+THE CELTIC DOCTRINE OF RE-BIRTH . . . 358-96
+
+Re-birth and Otherworld—As a Christian Doctrine—General Historical Survey—According to the Barddas MSS. ; according to Ancient and Modern Authorities—Re-incarnation of the Tuatha De Danann—King Mongan’s Re-birth—Etain’s Birth—Dermot’s Pre-existence—Tuan’s Re-birth—Re-birth among Brythons—Arthur as a Re-incarnate Hero—Non-Celtic Parallels—Re-birth among Modern Celts : in Ireland ; in Scotland ; in the Isle of Man ; in Wales ; in Cornwall ; in Brittany—Origin and Evolution of Celtic Re-birth Doctrine.
+
+---
+
+### SECTION III
+THE CULT OF GODS, SPIRITS, FAIRIES, AND THE DEAD
+
+### CHAPTER VIII
+THE TESTIMONY OF ARCHAEOLOGY . . . 397-426
+
+Inadequacy of Pygmy Theory—According to the Theories concerning Divine Images and Fetishes, Gods, Daemons, and Ancestral Spirits haunt Megaliths—Megaliths are religious and funereal, as shown chiefly by Cenn Cruaich, Stonehenge, Guernsey menhirs, Monuments in Brittany, by the Circular Fairy-Dance as an Ancient Initiatory Sun-Dance, by Breton Earthworks, Archaeological Excavations generally, and by present-day Worship at Indian Dolmens—New Grange and Celtic Mysteries : Evidence of manuscripts ; Evidence of Tradition—The Aengus Cult—New Grange compared with Great Pyramid : both have Astronomical Arrangement and same Internal Plan—Why they open to the Sunrise—Initiations in both—Great Pyramid as Model for Celtic Tumuli—Gavrinis and New Grange as Spirit Temples.
+
+### CHAPTER IX
+THE TESTIMONY OF PAGANISM . . . 427-41
+
+Edicts against Pagan Cults—Cult of Sacred Waters and its Absorption by Christianity—Celtic Water Divinities—Druidic Influence on Fairy-Faith—Cult of Sacred Trees—Cult of Fairies, Spirits, and the Dead—Feasts of the Dead—Conclusion.
+
+<vocab>Celtic, Re-birth, Otherworld, Barddas, Tuatha De Danann, King Mongan, Etain, Dermot, Tuan, Brythons, Arthur, Archaeology, Pygmy Theory, Megaliths, Cenn Cruaich, Stonehenge, Guernsey, Brittany, Fairy-Dance, New Grange, Aengus, Great Pyramid, Gavrinis, Paganism, Druidic, Fairy-Faith</vocab>

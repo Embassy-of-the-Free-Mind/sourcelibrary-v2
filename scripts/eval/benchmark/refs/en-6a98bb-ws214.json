@@ -1,0 +1,32 @@
+{
+  "slug": "en-6a98bb-ws214",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AChronicles%20of%20the%20Picts%2C%20chronicles%20of%20the%20Scots%2C%20and%20other%20early%20memorials%20of%20Scottish%20history.djvu%2F214&oldid=6410101",
+  "source_revision": "oldid 6410101 (2016-08-28T22:08:30Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 1356
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "Latin regnal list matches start and end"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

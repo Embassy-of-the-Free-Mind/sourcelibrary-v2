@@ -1,0 +1,32 @@
+{
+  "slug": "en-69ad74-ws199",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3ASelect%20works%20of%20Porphyry%20-%20containing%20his%20four%20books%20on%20abstinence%20from%20animal%20food%3B%20his%20treatise%20on%20the%20Homeric%20cave%20of%20the%20nymphs%3B%20and%20his%20Auxiliaries%20to%20the%20perception%20of%20intelligible%20natures%20(IA%20b28747197).pdf%2F199&oldid=16216396",
+  "source_revision": "oldid 16216396 (2026-08-11T16:23:33Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 2059
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

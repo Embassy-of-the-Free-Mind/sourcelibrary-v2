@@ -1,0 +1,32 @@
+{
+  "slug": "en-69aea6-ws321",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AWalden%2C%20or%2C%20Life%20in%20the%20Woods.djvu%2F321&oldid=6880987",
+  "source_revision": "oldid 6880987 (2017-06-22T13:12:08Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 4,
+  "unit": {
+    "kind": "page",
+    "chars": 1774
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "Walden p.315 matches exactly"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<page-num>xi</page-num>
+<header>PREFACE</header>
+
+closely to the text, and always translated literally the passages marked as quotations. In the imitation of a finished work of art, elaboration and polish are meet and due, but in a transcript from nature what is most required is fidelity. An 'untouched' photograph is in certain cases infinitely preferable to one which has been carefully 'worked upon.' And it is, as it were, a photograph of the Russian story-teller that I have tried to produce, and not an ideal portrait.
+
+The following are the principal Russian books to which reference has been made:—
+
+AFANASIEF (A. N.). Narodnuiya Russkiya Skazki¹ [Russian Popular Tales]. 8 pts. Moscow, 1863-60-63. Narodnuiya Russkiya Legendui² [Russian Popular Legends]. Moscow, 1859. Poeticheskiya Vozzryeniya Slavyan na Prirodu [Poetic Views of the Slavonians about Nature].³ 3 vols. Moscow, 1865-69.
+KHUDYAKOF (I. A.). Velikorusskiya Skazki [Great-Russian Tales]. Moscow, 1860.
+CHUDINSKY (E. A.). Russkiya Narodnuiya Skazki, etc. [Russian Popular Tales, etc.]. Moscow, 1864.
+ERLENVEIN (A. A.). Narodnuiya Skazki, etc. [Popular Tales, collected by village schoolmasters in the Government of Tula]. Moscow, 1863.
+RUDCHENKO (I.). Narodnuiya Yuzhnorusskiya Skazki [South-Russian Popular Tales].⁴ Kief, 1869.
+
+---
+
+¹ In my copy, pt. 1 and 2 are of the 3rd, and pt. 3 and 4 are of the 2nd edition. By such a note as 'Afanasief,' i. No. 2,' I mean to refer to the second story of the first part of this work.
+² This book is now out of print, and copies fetch a very high price. I refer to it in my notes as 'Afanasief, Legendui.'
+³ This work is always referred to in my notes as 'Afanasief, P. V. S.'
+⁴ There is one other recent collection of skazkas—that published last year at Geneva under the title of 'Russkiya Zavyetnuiya Skazki.' But upon its contents I have not found it necessary to draw.
+
+<vocab>Russian folklore, Afanasief, bibliography, folk tales, skazkas, literary translation</vocab>

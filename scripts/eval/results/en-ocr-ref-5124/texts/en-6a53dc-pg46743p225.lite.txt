@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>225</page-num>
+<header>CHAP. VIRTUE AND DUTY 225</header>
+<sig>Q</sig>
+
+wrong bent of natural impulse that we find it hard to do what is best, and it seems absurd to say that the more we cure ourselves of this wrong bent, the less virtuous we grow. Perhaps we may solve the difficulty by recognising that our common idea of Virtue includes two distinct elements, the one being the most perfect ideal of moral excellence that we are able to conceive for human beings, while the other is manifested in the effort of imperfect men to attain this ideal. Thus in proportion as a man comes to like any particular kind of good conduct and to do it without moral effort, we shall not say that his conduct becomes less virtuous but rather more in conformity with a true moral ideal; while at the same time we shall recognise that this department of his life he has less room to exhibit that other kind of virtue which is manifested in resistance to seductive impulses, and in the energetic striving of the will to get nearer to ideal perfection.
+
+So far I have been considering the manifestation of virtue in emotions and volitions, and have not expressly adverted to the intellectual conditions of virtuous acts: though in speaking of such acts it is of course implied that the volition is accompanied with an intellectual representation of the particular effects willed. It is not, however, implied that in willing such effects we must necessarily think of them as right or good: and I do not myself think that, in the view of common sense, this is an indispensable condition of the virtuousness of an act; for it seems that some kinds of virtuous acts may be done so entirely without deliberation that no moral judgment was passed on them by the agent. This might be the case, for instance, with an act of heroic courage, prompted by an impulse of sympathy with a fellow-creature in sudden peril. But it is, I conceive, clearly necessary that such an act should not be even vaguely thought to be bad. As I have already said, it is more doubtful how far an act which is conceived by the agent to be good, but which is really bad, is ever judged by common sense to be virtuous¹: but if we agree to restrict the term to acts which regard as right, it is again obvious
+
+¹ I have before said that decidedly wrong acts are frequently considered to exhibit in a high degree the tendencies which, when exhibited in right acts, we call particular virtues—generosity, courage, patriotism, etc. : and this is especially true of acts bad through ignorance.
+
+<vocab>Virtue, Duty, moral excellence, moral effort, moral ideal, volitions, intellectual conditions, common sense, virtuousness, moral judgment, heroic courage, sympathy, ignorance</vocab>

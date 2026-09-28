@@ -1,0 +1,32 @@
+{
+  "slug": "en-69b99f-ws176",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AThe%20Elder%20Edda%20and%20the%20Younger%20Edda%20-%20tr.%20Thorpe%20-%201907.djvu%2F176&oldid=12575254",
+  "source_revision": "oldid 12575254 (2022-09-03T23:48:16Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 4,
+  "unit": {
+    "kind": "page",
+    "chars": 1399
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "matches start and end exactly, p.150"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

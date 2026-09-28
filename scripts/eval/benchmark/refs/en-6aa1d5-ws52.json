@@ -1,0 +1,32 @@
+{
+  "slug": "en-6aa1d5-ws52",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AEight%20chapters%20of%20Maimonides%20on%20ethics.djvu%2F52&oldid=15383892",
+  "source_revision": "oldid 15383892 (2025-09-18T10:49:05Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 4,
+  "unit": {
+    "kind": "page",
+    "chars": 1722
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "matches, Hebrew text"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

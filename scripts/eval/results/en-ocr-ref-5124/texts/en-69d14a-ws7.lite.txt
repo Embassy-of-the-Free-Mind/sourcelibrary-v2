@@ -1,0 +1,61 @@
+<scan-quality>good</scan-quality>
+<language>English, Greek</language>
+<script>printed</script>
+<page-type>title-page</page-type>
+
+->THE<-
+->WORKS OF PLATO,<-
+
+->VIZ.<-
+
+->HIS FIFTY-FIVE DIALOGUES, AND TWELVE EPISTLES,<-
+
+->TRANSLATED FROM THE GREEK;<-
+
+->NINE OF THE DIALOGUES BY THE LATE FLOYER SYDENHAM,<-
+
+->AND THE REMAINDER<-
+
+->BY THOMAS TAYLOR:<-
+
+->WITH<-
+
+->OCCASIONAL ANNOTATIONS ON THE NINE DIALOGUES TRANSLATED BY SYDENHAM,<-
+
+->AND<-
+
+->COPIOUS NOTES,<-
+
+->BY THE LATTER TRANSLATOR;<-
+
+->IN WHICH IS GIVEN<-
+
+->THE SUBSTANCE OF NEARLY ALL THE EXISTING GREEK MS. COMMENTARIES ON<-
+->THE PHILOSOPHY OF PLATO,<-
+
+->AND A CONSIDERABLE PORTION OF SUCH AS ARE ALREADY PUBLISHED.<-
+
+<image-desc size="small" type="decorative" significance="low">ornamental rule</image-desc>
+
+->IN FIVE VOLUMES.<-
+->VOL. IV.<-
+
+<image-desc size="small" type="decorative" significance="low">ornamental rule</image-desc>
+
+> ΤΟΥΤΟΝ ΦΙΛΟΣΟΦΙΑΣ ΤΥΠΟΝ ΦΑΙΗΝ ΑΝ ΕΓΩ ΕΙΣ ΑΝΘΡΩΠΟΥΣ ΕΛΘΕΙΝ ΕΠ' ΕΥΕΡΓΕΣΙΑ
+> ΤΩΝ ΤΗΔΕ ΨΥΧΩΝ, ΑΝΤΙ ΤΩΝ ΑΓΑΛΜΑΤΩΝ, ΑΝΤΙ ΤΩΝ ΙΕΡΩΝ, ΑΝΤΙ ΤΗΣ ΟΛΗΣ ΑΓΙΣΤΕΙΑΣ ΑΥΤΗΣ, ΚΑΙ ΣΩΤΗΡΙΑΣ
+> ΑΡΧΗΓΟΝ ΤΟΙΣ ΓΕ ΝΥΝ ΑΝΘΡΩΠΟΙΣ, ΚΑΙ ΤΟΙΣ ΕΙΣΑΥΘΙΣ ΓΕΝΗΣΟΜΕΝΟΙΣ.
+> PROCL. MS. COMMENT. IN PARMENIDEM.
+
+<image-desc size="small" type="decorative" significance="low">ornamental rule</image-desc>
+
+->LONDON:<-
+->PRINTED FOR THOMAS TAYLOR,<-
+->BY R. WILKS, CHANCERY-LANE;<-
+->AND SOLD BY E. JEFFERY, AND R. H. EVANS, PALL-MALL.<-
+
+->1804.<-
+
+<image-desc size="small" type="symbol" significance="low">embossed library seal in bottom right corner</image-desc>
+
+<vocab>Plato, Thomas Taylor, Floyer Sydenham, Proclus, Philosophy, Greek Commentaries, Dialogues</vocab>
