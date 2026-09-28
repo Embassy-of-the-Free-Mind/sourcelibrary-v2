@@ -185,4 +185,13 @@ export interface GalleryImageDetail {
   citation: string;
   /** Allmaps Editor link for `type: map` images with a source IIIF service (#5070); null otherwise. */
   allmapsUrl?: string | null;
+  /** A volunteer's georeferencing of this map on Allmaps, synced nightly (#5076); null when none. */
+  allmaps?: {
+    /** Opens the annotation in the Allmaps Viewer (warped onto a modern map). */
+    viewerUrl: string;
+    annotationId: string;
+    /** Number of ground control points the volunteer placed. */
+    gcps: number;
+    checkedAt: string | null;
+  } | null;
 }

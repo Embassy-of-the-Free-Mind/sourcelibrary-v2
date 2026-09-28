@@ -1,0 +1,148 @@
+{
+  "id": "https://annotations.allmaps.org/manifests/ef8a028a5c8ea588",
+  "type": "AnnotationPage",
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "items": [
+    {
+      "id": "https://annotations.allmaps.org/maps/964600a0f33a5cd4",
+      "type": "Annotation",
+      "@context": [
+        "http://iiif.io/api/extension/georef/1/context.json",
+        "http://iiif.io/api/presentation/3/context.json"
+      ],
+      "created": "2025-07-19T22:34:43.462Z",
+      "modified": "2025-07-19T22:34:43.462Z",
+      "motivation": "georeferencing",
+      "target": {
+        "type": "SpecificResource",
+        "source": {
+          "id": "https://iiif.archive.org/image/iiif/3/map2002023007%2F2002-023-007.TIF",
+          "type": "ImageService3",
+          "height": 3633,
+          "width": 5373,
+          "partOf": [
+            {
+              "id": "https://iiif.archive.org/iiif/map2002023007/canvas",
+              "type": "Canvas",
+              "label": {
+                "none": [
+                  "1"
+                ]
+              },
+              "partOf": [
+                {
+                  "id": "https://iiif.archive.org/iiif/map2002023007/manifest.json",
+                  "type": "Manifest",
+                  "label": {
+                    "none": [
+                      "Shell Street Map of Sacramento"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "selector": {
+          "type": "SvgSelector",
+          "value": "<svg width=\"5373\" height=\"3633\"><polygon points=\"165,120 2419,119 2419,57 5238,57 5241,3459 5189,3505 172,3504 173,3473 125,3473 121,149 167,149\" /></svg>"
+        }
+      },
+      "body": {
+        "type": "FeatureCollection",
+        "transformation": {
+          "type": "polynomial",
+          "options": {
+            "order": 1
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "resourceCoords": [
+                2229,
+                1114
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -121.4935764,
+                38.576654
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "resourceCoords": [
+                4234,
+                2629
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -121.4075922,
+                38.5250856
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "resourceCoords": [
+                2285,
+                2098
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -121.4915957,
+                38.542206
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "resourceCoords": [
+                3897,
+                1328
+              ]
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -121.4228432,
+                38.5641952
+              ]
+            }
+          }
+        ],
+        "_allmaps": {
+          "id": "https://annotations.allmaps.org/maps/964600a0f33a5cd4",
+          "version": "https://annotations.allmaps.org/maps/964600a0f33a5cd4@4ffc1320e25822c4",
+          "image": {
+            "id": "https://annotations.allmaps.org/images/9b3bc0dc7543fd5d",
+            "version": "https://annotations.allmaps.org/images/9b3bc0dc7543fd5d@8145fbcb7ff41708",
+            "canvases": [
+              {
+                "id": "https://annotations.allmaps.org/canvases/5e1e15c44c6e3418",
+                "manifests": [
+                  {
+                    "id": "https://annotations.allmaps.org/manifests/ef8a028a5c8ea588"
+                  }
+                ]
+              }
+            ]
+          },
+          "scale": 0.276548,
+          "area": 228712758.21
+        }
+      }
+    }
+  ]
+}

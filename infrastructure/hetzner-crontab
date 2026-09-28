@@ -112,5 +112,11 @@
 # system_config doc. No Gemini calls. (daily 5:30am)
 30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
 
+# Allmaps sync (#5076): pull volunteer georeferencing back onto gallery map rows
+# (gallery_images.allmaps). Reads annotations.allmaps.org at 2 req/s, ~3.7K lookups,
+# ~35 min; Allmaps' 404 is "none", 5xx is counted separately in
+# system_config.allmaps_sync_snapshot. No Gemini, no Vercel function. (daily 3:40am)
+40 3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-allmaps-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/allmaps-sync.mjs" >> /var/log/sourcelibrary/allmaps-sync.log 2>&1
+
 # Catalog CSV snapshot: weekly static export to R2 (Sunday 4am)
 0 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-catalog-csv.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/catalog-csv-snapshot.mjs" >> /var/log/sourcelibrary/catalog-csv.log 2>&1

@@ -127,6 +127,7 @@ export async function GET(
           detectionSource: galleryDoc.detection_source ?? null,
           detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
+          allmaps: allmapsAnnotation(galleryDoc.allmaps),
           book: {
             id: galleryDoc.book_id,
             title: galleryDoc.book_title || 'Unknown',
@@ -180,6 +181,7 @@ export async function GET(
           detectionSource: galleryDoc.detection_source ?? null,
           detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
+          allmaps: allmapsAnnotation(galleryDoc.allmaps),
           book: {
             id: pageData.book_id,
             title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
@@ -228,6 +230,7 @@ export async function GET(
           detectionSource: galleryDoc.detection_source ?? null,
           detectedAt: galleryDoc.detected_at ?? null,
           bbox: galleryDoc.bbox,
+          allmaps: allmapsAnnotation(galleryDoc.allmaps),
           book: {
             id: pageData.book_id,
             title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
@@ -332,6 +335,16 @@ export async function GET(
       { projection: { count: 1 } }
     );
 
+    // Allmaps georeference annotation (#5076), written nightly by
+    // scripts/workers/allmaps-sync.mjs onto the materialised gallery row.
+    // Only maps can carry one, so only maps pay the extra read.
+    const allmapsDoc = detection.type === 'map'
+      ? await db.collection('gallery_images').findOne(
+          { id: `${pageId}-${detectionIndex}`, ...tenantGalleryFilter },
+          { projection: { allmaps: 1 } }
+        )
+      : null;
+
     // Build the response
     const response = {
       // Identity
@@ -387,6 +400,8 @@ export async function GET(
             iiifManifest: pageData.book?.image_source?.iiif_manifest,
           })
         : null,
+      // A volunteer's georeferencing of this map, if Allmaps holds one (#5076).
+      allmaps: allmapsAnnotation(allmapsDoc?.allmaps),
 
       // Source context
       book: {
@@ -681,6 +696,19 @@ export async function PATCH(
 /**
  * Build a scholarly citation for this image.
  */
+/**
+ * Public shape of a stored Allmaps annotation (#5076). The viewer opens the
+ * annotation itself; the editor URL stays `allmapsUrl` so "Improve" reopens the
+ * same IIIF resource the volunteer worked on.
+ */
+function allmapsAnnotation(stored: unknown): { viewerUrl: string; annotationId: string; gcps: number; checkedAt: string | null } | null {
+  if (!stored || typeof stored !== 'object') return null;
+  const a = stored as { annotation_id?: unknown; viewer_url?: unknown; gcps?: unknown; checked_at?: unknown };
+  if (typeof a.annotation_id !== 'string' || typeof a.viewer_url !== 'string') return null;
+  const checked = a.checked_at instanceof Date ? a.checked_at.toISOString() : typeof a.checked_at === 'string' ? a.checked_at : null;
+  return { viewerUrl: a.viewer_url, annotationId: a.annotation_id, gcps: typeof a.gcps === 'number' ? a.gcps : 0, checkedAt: checked };
+}
+
 function buildCitation(page: Record<string, unknown>, detection: Record<string, unknown>): string {
   const book = page.book as Record<string, unknown> | undefined;
   const parts: string[] = [];
