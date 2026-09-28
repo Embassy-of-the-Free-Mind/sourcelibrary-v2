@@ -171,7 +171,10 @@ async function main() {
   // Phase 3: Gallery images from image extraction pipeline
   if (!ARTWORKS_ONLY && !COVERS_ONLY) {
     const galleryImages = await db.collection('gallery_images').find(
-      { image_url: { $exists: true, $ne: null } },
+      // A crop is enough — 14,056 rows have an extracted_url and no image_url
+      // and were never scanned, which is most of the 14,135-row index gap
+      // measured 2026-09-28 (#5195). The embed below prefers the crop anyway.
+      { $or: [{ extracted_url: { $exists: true, $ne: null } }, { image_url: { $exists: true, $ne: null } }] },
       {
         projection: {
           id: 1, book_id: 1, book_title: 1, book_author: 1,
