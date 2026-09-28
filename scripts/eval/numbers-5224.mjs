@@ -611,6 +611,8 @@ function verdict(c, side) {
   const letterDigits = t != null && tn == null && /^[\dilIoOsSzZgGbB]+$/.test(t);   // 'loi' for 101, 'i3' for 13, 'ssi' for 551
   if (d === 'none') return tn == null ? 'right-none' : 'spurious';
   if (tn == null) return letterDigits ? 'wrong-misread' : 'wrong-dropped';
+  // an Archive WORD such as "144—12," yields two tokens in ONE box; the blind reader reports "14412"
+  if (c.word_ntok > 1 && d.includes(tn)) return 'right';
   return tn === d ? 'right' : 'wrong-misread';
 }
 function confusionClass(t, d) {
@@ -634,7 +636,7 @@ function stageScore() {
   // per page × engine tallies over the adjudicated pages
   const perPage = new Map();
   const tally = (slug, side, key, n = 1) => { if (!n) return; if (!perPage.has(slug)) perPage.set(slug, { archive: {}, lite: {} }); const t = perPage.get(slug)[side]; t[key] = (t[key] || 0) + n; };
-  const conf = { archive: {}, lite: {} }, blind = { agreed_judged: 0, both_wrong_same: 0, both_wrong_diff: 0, agreed_unreadable: 0, agreed_none: 0 };
+  const conf = { archive: {}, lite: {} }, errConf = { archive: {}, lite: {} }, blind = { agreed_judged: 0, both_wrong_same: 0, both_wrong_diff: 0, agreed_unreadable: 0, agreed_none: 0 };
   const examples = { archive: [], lite: [] };
   for (const e of events) {
     const c = adjById.get(e.id);
@@ -645,7 +647,7 @@ function stageScore() {
         if (c.printed === 'unreadable') { blind.agreed_unreadable++; tally(e.slug, 'archive', 'unjudged'); tally(e.slug, 'lite', 'unjudged'); continue; }
         blind.agreed_judged++;
         if (c.printed === 'none') { blind.agreed_none++; tally(e.slug, 'archive', 'spurious'); tally(e.slug, 'lite', 'spurious'); continue; }
-        if (c.printed === e.a) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
+        if (c.printed === e.a || (c.word_ntok > 1 && c.printed.includes(e.a))) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
         else { blind.both_wrong_same++; tally(e.slug, 'archive', 'wrong-misread'); tally(e.slug, 'lite', 'wrong-misread'); for (const s of ['archive', 'lite']) { const k = confusionClass(e.a, c.printed); conf[s][k] = (conf[s][k] || 0) + 1; examples[s].push({ id: e.id, engine: e.a, printed: c.printed, kind: 'agree', ctx: e.ctx }); } }
       } else { tally(e.slug, 'archive', 'agreed'); tally(e.slug, 'lite', 'agreed'); }   // counted correct (blind spot measured above)
       continue;
@@ -653,7 +655,7 @@ function stageScore() {
     if (!c || c.printed == null) { tally(e.slug, 'archive', 'unjudged', w); tally(e.slug, 'lite', 'unjudged', w); continue; }
     for (const side of ['archive', 'lite']) {
       const v = verdict(c, side); tally(e.slug, side, v, w);
-      if (v.startsWith('wrong') || v === 'spurious') { const k = confusionClass(sideTok(c, side), c.printed); conf[side][k] = +((conf[side][k] || 0) + w).toFixed(2); if (examples[side].length < 400) examples[side].push({ id: e.id, engine: sideTok(c, side), printed: c.printed, kind: e.kind, ctx: e.ctx, crop: c.crop }); }
+      if (v.startsWith('wrong') || v === 'spurious') { const k = confusionClass(sideTok(c, side), c.printed); conf[side][k] = +((conf[side][k] || 0) + w).toFixed(2); const cf = c.confidence || 'unstated'; errConf[side][cf] = +((errConf[side][cf] || 0) + w).toFixed(2); if (examples[side].length < 400) examples[side].push({ id: e.id, engine: sideTok(c, side), printed: c.printed, kind: e.kind, ctx: e.ctx, crop: c.crop }); }
     }
   }
   // per page rows → store scores; per book sums → cluster CIs
@@ -675,7 +677,7 @@ function stageScore() {
   // rates with book-cluster bootstrap
   resetSeed(SEED);
   const rate = (books, num = 'wrong') => bootstrapRatioCI(books.map((b) => b[num]), books.map((b) => b.printed));
-  const summary = { sets: {}, by_archive_model: {}, by_decade: {}, blind, confusion: conf };
+  const summary = { sets: {}, by_archive_model: {}, by_decade: {}, blind, confusion: conf, errors_by_confidence: errConf };
   const groups = { all: () => true, a: (b) => b.set === 'a', b: (b) => b.set === 'b' };
   for (const [g, f] of Object.entries(groups)) for (const side of ['archive', 'lite']) {
     const bs = [...perBook.values()].filter((b) => b.side === side && f(b)); if (!bs.length) continue;
@@ -770,6 +772,7 @@ function stageReport() {
   for (const b of S.per_book.sort((x, y) => (x.set + x.book_id + x.side).localeCompare(y.set + y.book_id + y.side))) L.push(`| ${b.book} | ${b.year} | ${b.archive_model || '?'} | ${b.side} | ${b.pages} | ${b.printed} | ${b.wrong} | ${pct(b.printed ? b.wrong / b.printed : null, 1)} |`);
   L.push(`\n## Instrument\n`);
   L.push(`- Crops: ${crops.filter((c) => c.crop).length} cut, ${crops.filter((c) => !c.crop).length} failed (${JSON.stringify(Object.fromEntries(Object.entries(crops.filter((c) => !c.crop).reduce((m, c) => { m[c.crop_error] = (m[c.crop_error] || 0) + 1; return m; }, {}))))}); adjudicated ${adj.filter((c) => c.printed != null).length}, unreadable ${adj.filter((c) => c.printed === 'unreadable').length}.`);
+  L.push(`- Errors by the reader's stated confidence (a low-confidence error is the crop's ambiguity as much as the engine's): Archive ${JSON.stringify(S.errors_by_confidence.archive)}, lite ${JSON.stringify(S.errors_by_confidence.lite)}.`);
   L.push(`- Adjudication is BLIND: the reader sees a red box on the page image and reports the digits; neither engine's reading is on the sheet. \`adjudicated_by: model-eye\` (Sonnet) unless a human row exists in \`human-queue.jsonl\`.`);
   L.push(`- Breadth pages were chosen as the number-densest interior Archive leaf per book, so (b) cannot see a page where the Archive dropped every number; the dropped-number rate in (b) is a lower bound.`);
   L.push(`- The lite text for (a) is production \`pages.ocr\` (realtime, prompt ${readJsonl(F('pairs.jsonl'))[0]?.lite_prompt_version || '?'}); for (b) it is a fresh read in the eval store (run_id \`${RUN_ID}\`).`);
