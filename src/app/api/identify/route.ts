@@ -285,40 +285,74 @@ export async function POST(request: NextRequest) {
     // degrades to null on ANY failure — the pipeline then behaves as before.
     const cropPromise: Promise<{ matches: ClipMatch[]; cropBase64: string } | null> = (async () => {
       try {
-        const b = parseArtworkBbox(identification.artwork_bbox);
-        if (!b) return null;
+        // No usable box (the model returns null when the artwork fills the
+        // frame) used to mean no crop lane at all. But a photo that is
+        // 'nearly all artwork' still carries a rim of wall/mat/page that
+        // costs CLIP dearly: sampled 2026-09-26, a woodcut with ~10% wall
+        // ranked 26th on the full photo and 1st on an 8%-margin centre crop.
+        // So fall back to that centre crop — one extra CLIP embed, already
+        // concurrent with the text lanes.
         const img = sharp(Buffer.from(base64, 'base64'));
         const meta = await img.metadata();
         if (!meta.width || !meta.height) return null;
         const W = meta.width, H = meta.height;
-        const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
-        // 4% margin; reject implausible boxes (hallucinated slivers, or boxes
-        // so large the crop would change nothing).
-        const mx = px.w * 0.04, my = px.h * 0.04;
-        const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
-        const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
-        const frac = (width * height) / (W * H);
-        if (frac < 0.08 || frac > 0.95 || width < 40 || height < 40) return null;
+        // Box → pixel rect with a 4% margin, plus the fraction of the photo it covers.
+        const toRect = (b: { ymin: number; xmin: number; ymax: number; xmax: number }) => {
+          const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
+          const mx = px.w * 0.04, my = px.h * 0.04;
+          const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
+          const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
+          return { left, top, width, height, frac: (width * height) / (W * H) };
+        };
+        // The model's box, unless it is missing or covers (nearly) the whole
+        // photo — then the crop would change nothing, and a photo that is
+        // 'nearly all artwork' still has the rim of wall that costs CLIP
+        // dearly (sampled 2026-09-26: rank 26 on the full photo, rank 1 on an
+        // 8%-margin centre crop). Fall back to that centre crop in both cases.
+        const CENTRE = { ymin: 80, xmin: 80, ymax: 920, xmax: 920 };
+        const parsed = parseArtworkBbox(identification.artwork_bbox);
+        let rect = parsed ? toRect(parsed) : null;
+        if (!rect || rect.frac > 0.95) rect = toRect(CENTRE);
+        const { left, top, width, height, frac } = rect;
+        // Reject implausible boxes (hallucinated slivers).
+        if (frac < 0.08 || width < 40 || height < 40) return null;
         const cropBuf = await img.extract({ left, top, width, height }).jpeg({ quality: 85 }).toBuffer();
+        // A second, tighter crop (~12% in from each edge). CLIP ViT-B/32 barely
+        // separates a woodcut from its stylistic neighbours, and the true
+        // image's rank swings with the margin (sampled 2026-09-26: ranks 2, 3,
+        // 1, 5, 37 at 5/8/10/12/15%). Two queries merged by best similarity
+        // is the cheap way to stop a single crop being a coin flip.
+        const tight = toRect({ ymin: 150, xmin: 150, ymax: 850, xmax: 850 });
+        const tightBuf = await sharp(Buffer.from(base64, 'base64')).extract({ left: tight.left, top: tight.top, width: tight.width, height: tight.height }).jpeg({ quality: 85 }).toBuffer();
         mark('crop: extracted');
 
-        const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ base64: cropBuf.toString('base64'), mime_type: 'image/jpeg' }),
-          signal: AbortSignal.timeout(8000),
-        });
-        if (!clipResp.ok) return null;
-        const { embedding } = await clipResp.json();
-        if (!embedding) return null;
-        const { data, error } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.25,
-          match_count: 12,
-        }).abortSignal(AbortSignal.timeout(8000));
-        if (error) return null;
+        const queryOne = async (buf: Buffer): Promise<ClipMatch[]> => {
+          const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64: buf.toString('base64'), mime_type: 'image/jpeg' }),
+            signal: AbortSignal.timeout(8000),
+          });
+          if (!clipResp.ok) return [];
+          const { embedding } = await clipResp.json();
+          if (!embedding) return [];
+          const { data, error } = await supabase.rpc('match_clip_images', {
+            query_embedding: embedding,
+            match_threshold: 0.25,
+            match_count: 12,
+          }).abortSignal(AbortSignal.timeout(8000));
+          return error ? [] : ((data || []) as ClipMatch[]);
+        };
+        const [a, b2] = await Promise.all([queryOne(cropBuf), queryOne(tightBuf).catch(() => [] as ClipMatch[])]);
+        if (a.length === 0 && b2.length === 0) return null;
+        const best = new Map<string, ClipMatch>();
+        for (const m of [...a, ...b2]) {
+          const prev = best.get(m.id);
+          if (!prev || m.similarity > prev.similarity) best.set(m.id, m);
+        }
+        const merged = [...best.values()].sort((x, y) => y.similarity - x.similarity).slice(0, 14);
         mark('crop: clip matches');
-        return { matches: (data || []) as ClipMatch[], cropBase64: cropBuf.toString('base64') };
+        return { matches: merged, cropBase64: cropBuf.toString('base64') };
       } catch (e) {
         console.warn('[identify] crop lane failed:', e instanceof Error ? e.message : String(e));
         return null;
@@ -368,7 +402,7 @@ export async function POST(request: NextRequest) {
           title: cm.title,
           author: cm.author,
         });
-        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 10).map(toCand);
+        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 14).map(toCand);
         const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(toCand);
 
         // Union, crop-CLIP first (its candidates saw the artwork without the
@@ -376,7 +410,7 @@ export async function POST(request: NextRequest) {
         // capped to keep the rerank call small
         const byId = new Map<string, IdentifyCandidate>();
         for (const c of [...cropCands, ...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
-        let candidates = [...byId.values()].slice(0, 16);
+        let candidates = [...byId.values()].slice(0, 20);
 
         const hydration = await hydrateCandidates(db, candidates);
         candidates = candidates
@@ -394,7 +428,22 @@ export async function POST(request: NextRequest) {
               _hydrated: h,
             };
           })
-          .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
+          .filter(c => !!c.thumbnailUrl);
+
+        // Visibility comes from `books`, not from the gallery row's cached
+        // `book_visible`: that flag is stale in BOTH directions (sampled
+        // 2026-09-26 — a hidden duplicate's copy of a woodcut carried no flag,
+        // was picked over the visible copy, and the answer became "not
+        // found"; two visible books' rows said false). One $in over ≤16 ids.
+        const candBookIds = [...new Set(candidates.map(c => c.bookId).filter(Boolean))];
+        const hiddenBooks = new Set(
+          (await db.collection('books')
+            .find({ id: { $in: candBookIds }, visible: false }, { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 })
+            .toArray()
+            .catch(() => []))
+            .map(b => b.id as string),
+        );
+        candidates = candidates.filter(c => !hiddenBooks.has(c.bookId));
 
         mark('rerank: candidates hydrated');
         const t0 = Date.now();
@@ -409,6 +458,7 @@ export async function POST(request: NextRequest) {
           return {
             confirmed: null as ConfirmedMatch | null,
             candidateCount: candidates.length,
+            candidateIds: candidates.map(c => c.id),
             ran: candidates.length > 0,
             ms: Date.now() - t0,
             error: verdict?.error,
@@ -478,7 +528,7 @@ export async function POST(request: NextRequest) {
           gallery_url: picked.galleryId ? `/gallery/image/${picked.galleryId}` : undefined,
           source_type: picked.sourceType,
         };
-        return { confirmed, candidateCount: candidates.length, ran: true, sure: verdict.sure, ms: Date.now() - t0 };
+        return { confirmed, candidateCount: candidates.length, candidateIds: candidates.map(c => c.id), ran: true, sure: verdict.sure, ms: Date.now() - t0 };
       } catch (e) {
         const msg = e instanceof Error ? e.message : String(e);
         console.warn('[identify] rerank pipeline failed:', msg);
@@ -1047,6 +1097,10 @@ Return JSON only:
       sure: (rerank as { sure?: boolean }).sure ?? false,
       ms: (rerank as { ms?: number }).ms,
       error: (rerank as { error?: string }).error,
+      // Which index rows the comparison saw (≤16 public gallery/artwork ids):
+      // a miss is either "never a candidate" or "compared and declined", and
+      // the two have different fixes (retrieval vs the comparison prompt).
+      candidate_ids: (rerank as { candidateIds?: string[] }).candidateIds,
     };
 
     // Third streamed stage: the verdict. Carries the final (possibly reordered
