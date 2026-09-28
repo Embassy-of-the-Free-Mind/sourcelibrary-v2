@@ -1,21 +1,31 @@
 # Data Provenance — How Every Piece of AI Output Traces Back to Its Source
 
-Every OCR transcription, translation, summary, index, chapter extraction, and image extraction in Source Library can be traced back to the exact prompt, model, trigger, and job that produced it. This document explains the full chain.
+Every OCR transcription and translation written since the #4613 writers went live carries a record
+of **what produced it**: the engine and model (and the served model version), the API path, the
+writer (`call_site`), the prompt **by content** (hash of the exact text sent, beside the stored
+template's hash), the generation settings **as sent** (with the model's defaults filled in and
+named), the run (job id, code version, host, time), the input (the image fetched, or the OCR text
+translated — by hash), and a content hash of the output. Summaries, indexes and image extraction
+carry the older, thinner record (model, prompt version, source). This document explains the chain
+and where it is thinner than that.
 
-> **GAP, open as of 2026-09-03 (#4613): the chain does NOT include generation parameters, and they
-> change the output.** `thinkingBudget`, `temperature` and `maxOutputTokens` are recorded nowhere.
-> Two production OCR paths ran the *same model and prompt* at temperature **1.0** (Lambda, unset →
-> model default, confirmed via the models API) and **0.1** (Hetzner), and the Lambda ran with
-> thinking ON until #4591. The #4581 A/B measured only **74%** word agreement (Latin) and **43%**
-> character agreement (Classical Chinese) between thinking-on and thinking-off arms **of the same
-> images** — so these are different populations, and `model` + `prompt_version` cannot tell them
-> apart.
+> **Status, 2026-09-28 (#4613).** Before this date no Gemini writer recorded temperature, thinking
+> budget, max output tokens or media resolution; realtime OCR recorded neither prompt text, run nor
+> input image; translations did not say which OCR text they were made from; `ocr.source: 'ai'`
+> named no call site. Two production OCR paths ran the *same model and prompt* at temperature
+> **1.0** (Lambda, unset → model default) and **0.1** (Hetzner), and the #4581 A/B measured only
+> **74%** word agreement (Latin) / **43%** character agreement (Classical Chinese) between
+> thinking-on and thinking-off reads of the same images — different populations that `model` +
+> `prompt_version` could not tell apart.
 >
-> **Consequence for anything measured over `page_revisions`:** two revisions of a page may differ
-> because of an unrecorded config change rather than model instability. Segment by `source` as a
-> rough proxy (`ai` → Lambda, `batch_api` → batch, `pipeline_preview` → orchestrator) — but that is
-> a correlation with the call site, not a record of what was sent. Treat any agreement or
-> calibration figure spanning 2026 as carrying this confound until #4613 lands.
+> **Rows written BEFORE the writers went live are not backfilled and carry no `engine` block.**
+> Their settings were not kept and are not guessed (rule 3 below). For a page with no `engine`,
+> `source` is the only proxy for the call path (`ai` → Lambda or a realtime script, `batch_api`
+> → batch, `pipeline_preview` → the orchestrator's preview pool), and any agreement or calibration
+> figure over `page_revisions` that spans 2026 carries the unrecorded-config confound. The floor
+> date per writer is the merge date of the PR that wired it (#5227 for OCR, #5229 for
+> translation) plus Hetzner's next hourly pull; `scripts/audit/provenance-coverage.mjs --since`
+> measures from any date you name.
 
 > **Last full audit:** 2026-05-05. See `.claude/handoffs/2026-05-05-provenance-audit.md` for the audit report and the gaps closed.
 
@@ -25,8 +35,9 @@ Every OCR transcription, translation, summary, index, chapter extraction, and im
 Page Image (IIIF source)
   → Prompt (DB-stored; full reference fetched at submission)
     → Gemini Model
-      → Page Text (with prompt_id + prompt_hash + prompt_name + prompt_version + source)
-        → Prior version snapshotted to page_revisions
+      → Page Text  ocr / translation: { data, source, model, prompt_version (label),
+                                        content_hash, engine: { … see §1 … } }
+        → Prior version snapshotted to page_revisions (with its content_hash + engine)
         → Gemini call logged to Supabase gemini_usage
             (with triggered_by, book_id, prompt_version, endpoint)
               → Index/Summary derived from translated pages
@@ -66,63 +77,94 @@ prompts/
 
 **Inline prompts** for index/summary generation are versioned via the `INDEX_PROMPT_VERSION` constant in `src/app/api/books/[id]/index/route.ts` (and the tenant variant) and the corresponding constant in `scripts/workers/enrich-worker.mjs`. Bump these when the prompt strings in those files change. The version is logged to `gemini_usage.prompt_version` and stored on the resulting `book.summary.prompt_version`.
 
-### How pages reference prompts
+### What a page carries — the `engine` block (#4613)
 
-Every page record stores all four fields, written together at the time of every overwrite:
-
-```javascript
-page.ocr.prompt_version    // "v10"                     ALWAYS present
-page.ocr.source            // see the full enum below    ALWAYS present
-page.ocr.model             //                            ALWAYS present
-page.ocr.prompt_id         // *** RARE — 0/300 recent; a few historical rows exist ***
-page.ocr.prompt_hash       // *** RARE — 0/300 recent; a few historical rows exist ***
-page.ocr.prompt_name       // *** RARE — 0/300 recent; a few historical rows exist ***
-
-page.translation.prompt_version
-page.translation.source
-page.translation.model
-page.translation.prompt_id     // source=ai: 100%   source=batch_api: 19%
-page.translation.prompt_hash   // source=ai: 100%   source=batch_api: 19%
-page.translation.prompt_name   // source=ai: 100%   source=batch_api: 19%
-```
-
-> **Corrected 2026-09-03 (#4613).** This block previously listed `prompt_id`, `prompt_hash` and
-> `prompt_name` as present on **both** `ocr` and `translation`, describing the hash as a
-> "cryptographic verifier". Measured against production: **no current OCR writer emits any of the
-> three** — 0/300 most-recently-OCR'd pages, and 0/800 sampled across May 2026. They are not
-> entirely absent from history: at least one `source=pipeline_preview` page from 2026-05-29 carries
-> a `prompt_hash`. **The exact historical coverage is UNMEASURED** — `ocr.source` has no index, so a
-> per-source count is a full scan of ~20M documents and was not worth the production load. Treat
-> presence as rare and unreliable, never as a guarantee. On `translation` the same three fields are
-> written by the realtime path (`source=ai`, 100%) and inconsistently by batch
-> (`source=batch_api`, 19% of 600 sampled).
->
-> So an OCR page can be tied to a prompt *version string* but **not** cryptographically verified
-> against the prompt text that produced it — which is what the hash was for. Anyone writing a
-> provenance check against `ocr.prompt_hash` will read `undefined` and, if they treat absence as
-> pass, will verify nothing. Closing this is part of #4613.
-
-Books store the same shape on AI-generated fields:
+The legacy label fields are still written, because readers and filters use them:
 
 ```javascript
-book.summary = { data, model, prompt_version, source, generated_at, ... }
-book.reading_summary = { overview, detailed, themes, quotes, model, prompt_version, source, generated_at }
-book.index = { ...generatedAt, pagesCovered, totalPages, vocabulary, keywords, people, places, concepts, sectionSummaries, bookSummary }
-book.chapters = [...]   // chapters_extracted_at marks the run
+page.ocr.source            // who produced the words — see the enum in §2. 'ai' names NO call path.
+page.ocr.model             // the model id requested
+page.ocr.prompt_version    // a LABEL. realtime-ocr.mjs stamps the constant 'v5.2026-02' while sending
+                           // whatever the DB default prompt is (v16 at the time of writing); the batch
+                           // collectors stamp the DB version. Do not compare across writers.
+page.ocr.prompt_id / prompt_hash / prompt_name   // batch writers only; RARE on realtime rows
 ```
 
-### How the four fields get there
+The **record** is beside them, built only by `geminiEngine()` in `scripts/lib/write-provenance.mjs`
+(twin: `src/lib/write-provenance.ts`) — never assembled by hand, so a writer cannot store a partial
+one. The shape is the Yigdzin block (the Tibetan lane, `ocr.source: 'bdrc'`) generalised to Gemini:
 
-The route or worker that calls Gemini fetches a `PromptLookupResult` from `getOcrPrompt() / getTranslationPrompt() / getSummaryPrompt() / getImageExtractionPrompt()`. That result is:
-
-```ts
-{
-  text: string;
-  reference: { id, name, version, content_hash };
+```javascript
+page.ocr.content_hash        // sha256(data), 16 hex — the same function as translation.content_hash
+page.ocr.engine = {
+  schema: 'gemini-engine/1',
+  name: 'gemini',
+  model: 'gemini-3.1-flash-lite',
+  model_version: '3.1-flash-lite-05-2026',     // from the response when returned, else the models
+  model_version_source: 'response' | 'GET /v1beta/models/<id> <date>' | 'not_recorded',
+  api: 'batch' | 'realtime',
+  call_site: 'scripts/batch/realtime-ocr.mjs', // the writer, repo-relative
+  prompt: {
+    id, name, version,                          // the stored prompt (prompts collection)
+    hash: '0203c264…',                          // prompts.content_hash of the TEMPLATE (md5, 32 hex)
+    sent_hash: '9f1c…',                         // sha256-16 of the EXACT text sent, after substitution
+    sent_chars: 4123,                           //   and any prefix (spread instructions, document context)
+  },
+  generation: {
+    temperature: 0.1, top_p: 0.95, top_k: 64, max_output_tokens: 16384,
+    thinking_budget: 0,                          // or thinking_level, or thinking: 'model_default_dynamic'
+    media_resolution: 'model_default',
+    sent: { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } },  // verbatim
+    defaulted: ['top_p', 'top_k', 'media_resolution'],      // effective values that came from the model's
+    defaults_source: 'GET /v1beta/models/gemini-3.1-flash-lite 2026-09-28',  //   defaults, not the request
+  },
+  run: { job_id | batch_job_id, code_version: 'd45e716', host: 'hetzner-1', at: Date,
+         submitted_at?, collected_by?, collected_at? },      // the batch halves, when it was a batch
+  input: { image_url, image_mime?, image_bytes?, resized_to_px? }          // OCR: the image the model saw
+       | { source_field: 'ocr', source_text_hash, source_text_chars,      // translation: WHICH text
+           source_updated_at?, context: { previous_translation, prev_ocr, next_ocr, page_break, block, seam } },
+  recorded_by: 'scripts/lib/write-provenance.mjs',
 }
+page.translation.content_hash / page.translation.engine   // same shape; input is the source-text form
 ```
 
-For batch jobs the four fields are stamped on the `batch_jobs` row at submission, and the result-collector copies them onto each page. For realtime calls they're written directly. For the inline index/summary prompts there is no DB row, so `prompt_id = 'hardcoded'` and `prompt_version = INDEX_PROMPT_VERSION`.
+Three rules the builder enforces (read the header of `write-provenance.mjs` for the incidents):
+
+1. **It records what was SENT, not what was meant.** `generation` is built from the
+   `generationConfig` object the call sent. A setting the request did not carry resolves to the
+   model's published default and is **named** in `defaulted` — `translate-worker.mjs` sets no
+   temperature, and its pages say `temperature: 1, defaulted: ['temperature']`. An unknown model
+   gets `null` and a `not_recorded` source, never a guess.
+2. **The prompt is identified by the text sent.** `prompt.sent_hash` ≠ `prompt.hash` by design; a
+   cross-book batch job sends a per-book document-context suffix, so the sent hash is per page.
+3. **Absence is never a value.** What a writer cannot know is the explicit marker
+   `{ status: 'not_recorded', reason }` (or the string `'not_recorded'` in a scalar slot): a batch job
+   submitted before its submitter recorded settings, a restore of text whose origin is not on
+   record. A checker can then tell "predates the writer" from "the writer forgot". The builder
+   **throws** on a missing required input rather than emit a partial block.
+
+Specialist lanes keep their own `engine` shape (`name: 'kraken' | 'Yigdzin' | …`, weights, revision,
+licence, run) plus `content_hash` and, for Kraken, `engine.input.image_url`; the Internet Archive
+lane records the Archive's engine in `ocr.ia` plus `ocr.content_hash` and `ocr.ia.ingest_run` (which
+run of ours copied it). `src/lib/types/page.ts` has the types (`GeminiEngine`, `SpecialistEngine`).
+
+### How the record gets there
+
+**Realtime writers** build the block at the write from the values they just sent
+(`geminiEngine(...)`) and spread `ocrProvenance(text, engine)` / `translationProvenance(text,
+engine)` into the subdocument. **The translation doors** (`writePageTranslation` in
+`scripts/lib/translate-core.mjs` and `src/lib/translate-write.ts`) refuse a model-output write that
+carries neither a `call` record nor an `engine`.
+
+**Batch writers** split the record: the submitter stores `batchJobProvenance(...)` on the
+`batch_jobs` row as `provenance` (prompt by content, settings, run) and each page's
+`page_sources[]` entry carries `source_url` + `prompt_sent_hash` (OCR) or `source_text_hash` +
+`prompt_sent_hash` (translation); the collector completes it per page with
+`engineFromBatchJob(job, { input, batch_job_id, collected_by })`. A job with no `provenance` (submitted
+before #4613) collects into explicit markers.
+
+For the inline index/summary prompts there is no DB row, so `prompt_id = 'hardcoded'` and
+`prompt_version = INDEX_PROMPT_VERSION`; those book-level fields do not yet carry an `engine` block.
 
 ### How to create a new prompt version
 
@@ -186,7 +228,12 @@ That last one is not in `prompts` at all — it is a constant in the route/worke
   prompt_version: "v10",
   job_id: "job_abc123",
   original_date: Date,  // when this content was originally WRITTEN  (a reading clock)
-  created_at: Date      // when it was SUPERSEDED (a snapshot clock — see below)
+  created_at: Date,     // when it was SUPERSEDED (a snapshot clock — see below)
+  content_hash: "…",    // #4613: the superseded text's own hash, when the writer stamped one
+  engine: { … },        // #4613: the superseded text's engine block, when it had one — a snapshot
+                        //   without these cannot be cited; named columns, kept on every revision
+  meta: { … }           // every OTHER key of the field, when the writer opted in (keepMeta) because
+                        //   it replaces the whole provenance block (#4722)
 }
 ```
 
@@ -390,6 +437,12 @@ await restoreBookRevision(revisionId, 'admin@sourcelibrary.org');
 
 This is non-negotiable. It applies to placeholder writes (blank-page markers, safety/recitation block markers) too — what looks like a no-op overwrite can clobber a real prior value on retry.
 
+> Any code path that writes model output to `ocr.data` or `translation.data` MUST stamp `content_hash`
+> and an `engine` block **through `scripts/lib/write-provenance.mjs` / `src/lib/write-provenance.ts`**
+> (#4613). Never hand-assemble the block. `tests/unit/text-writers-use-provenance-builder.test.ts`
+> fails a writer file that imports neither twin; `scripts/audit/provenance-coverage.mjs` fails a
+> page in production that lacks a required field.
+
 ### Book-level (summary, reading_summary, index, chapters)
 
 > Any code path that overwrites `book.summary`, `book.reading_summary`, `book.index`, or `book.chapters` MUST call `createBookRevision(bookId, field)` first.
@@ -409,21 +462,27 @@ To reconstruct the full history of page `XYZ`:
 ```javascript
 const db = await getDb();
 
-// Current content + which prompt produced it
+// Current content + what produced it (#4613). A page written before the writers went live has
+// no `engine`; say so rather than reading the label fields as if they were the record.
 const page = await db.collection('pages').findOne({ id: 'XYZ' });
-console.log('OCR prompt:', page.ocr.prompt_version, page.ocr.prompt_id, page.ocr.prompt_hash);
-console.log('Translation prompt:', page.translation.prompt_version, page.translation.prompt_id);
-console.log('OCR model:', page.ocr.model, 'source:', page.ocr.source);
-console.log('Translation model:', page.translation.model, 'source:', page.translation.source);
+const e = page.ocr.engine;
+if (!e) console.log('OCR: pre-#4613 row — source', page.ocr.source, 'model', page.ocr.model, 'label', page.ocr.prompt_version);
+else console.log('OCR:', e.call_site, e.model, e.model_version, e.api, 'prompt', e.prompt.version, e.prompt.sent_hash,
+                 'generation', e.generation, 'run', e.run, 'input', e.input);
+const t = page.translation?.engine;
+if (t) console.log('Translation from OCR text', t.input.source_text_hash,
+                   t.input.source_text_hash === page.ocr.content_hash ? '(the current OCR)' : '(NOT the current OCR — orphaned by a re-OCR)');
 
 // All previous versions
 const ocrHistory = await db.collection('page_revisions')
   .find({ page_id: 'XYZ', field: 'ocr' })
   .sort({ created_at: -1 }).toArray();
 
-// Find the exact prompt content by hash
+// The stored template by its hash; the text actually sent differs by substitution/prefix and is
+// pinned by engine.prompt.sent_hash (re-derive it from the template + the writer's substitutions
+// to verify — the sent text itself is not stored).
 const prompt = await db.collection('prompts')
-  .findOne({ content_hash: page.ocr.prompt_hash });
+  .findOne({ content_hash: page.ocr.engine?.prompt.hash ?? page.ocr.prompt_hash });
 
 // Gemini API calls for this page (Supabase)
 const { data: apiCalls } = await supabaseAdmin
@@ -452,36 +511,49 @@ const { data: bookCalls } = await supabaseAdmin
   .order('timestamp', { ascending: false });
 ```
 
-## 8. Known Gaps (as of audit)
+## 8. Known Gaps (as of 2026-09-28)
 
-None for the AI text content trail. Remaining items are either out of scope or already covered by other systems:
-
-- **Archive workers** (`scripts/workers/archive-*.mjs`) don't log to `gemini_usage` — correct, they don't run AI. They write `archive_metadata` per page (source_url, original_url, archived_at, bytes), which is the right provenance for image archival.
-- **Manual UI edits** are not currently audit-logged with the editing user's identity in `audit_log` (only `edited_by` on the page). Out of scope of this audit; would require auth context propagation to PATCH routes.
-- **30-day windows** in `/api/usage` and `/admin/processing-overview` cap at 50,000 rows from Supabase. At current volume (~hundreds of rows/hour) that's comfortable headroom; at 10× volume those would need pagination.
+- **Historical rows.** Everything written before the #4613 writers went live has no `engine`
+  block and is not backfilled (rule 3: unknown settings are not guessed). Two content-hash
+  formats also exist on old rows: the Vercel routes wrote a 64-hex SHA-256 until #5227/#5229;
+  the convention is 16 hex (`contentHash` in write-provenance).
+- **Dormant Vercel/Lambda paths** behind `src/lib/ai.ts` (`src/workers/*`, `/api/process`,
+  `/api/batch-save`, `/api/books/[id]/stitch-translations`): 0 usage rows in the 30 days before
+  2026-09-28; listed as PENDING in the writer-guard test until `ai.ts` returns the call record.
+  The Lambda bundle (`scripts/aws-lambda/*`) also has no CI deploy — "merged" is not "in effect".
+- **MinerU lane** (`scripts/workers/mineru-ocr-worker.mjs`, `source: 'mineru'`) writes no engine
+  block; a specialist lane outside #4613's Gemini scope, wants the Kraken/Yigdzin shape.
+- **`ocr.prompt_version` is a label, not a version** on realtime-OCR rows (`'v5.2026-02'`); the
+  DB version is in `engine.prompt.version`. 24 files read the label, so it stays.
+- **Book-level fields** (`summary`, `reading_summary`, `index`, `chapters`) carry model +
+  prompt_version + source only — no settings, no run.
+- **`/api/books/[id]/batch-ocr-async` collect stamps `ocr.updated_at` as an ISO string** (#5228);
+  a string compares against a Date by BSON type, which misleads the staleness clock and any
+  `$gte` window on that field.
+- **Archive workers** (`scripts/workers/archive-*.mjs`) don't log to `gemini_usage` — correct,
+  they don't run AI. They write `archive_metadata` per page, which is the right provenance for
+  image archival.
+- **Manual UI edits** are not audit-logged with the editing user's identity in `audit_log` (only
+  `edited_by` on the page).
 
 ## 9. Audit Verification
 
-To verify the discipline is being held end-to-end on a recent batch job:
+The standing check is `scripts/audit/provenance-coverage.mjs`: it samples the pages written in a
+window **per writer** (`engine.call_site`, else `source`), runs `missingProvenance()` from
+write-provenance on each, and exits 1 on any missing field, 2 when it could not measure. Markers
+(`not_recorded`) are reported separately and fail only with `--strict`; a marker stream that does
+not dry up within a week of a writer going live is a writer that is still not recording.
 
-```javascript
-// Pick a page that was processed in the last hour
-const page = await db.collection('pages').findOne({ 'ocr.updated_at': { $gte: new Date(Date.now() - 3600_000) } });
-
-// 1. All four prompt fields populated?
-console.assert(page.ocr.prompt_id, 'missing prompt_id');
-console.assert(page.ocr.prompt_hash, 'missing prompt_hash');
-console.assert(page.ocr.prompt_name, 'missing prompt_name');
-console.assert(page.ocr.prompt_version, 'missing prompt_version');
-
-// 2. A revision was saved (only fails on first-write pages, which is fine)
-const revs = await db.collection('page_revisions').find({ page_id: page.id, field: 'ocr' }).toArray();
-
-// 3. A gemini_usage row in Supabase
-const { data: rows } = await supabaseAdmin.from('gemini_usage')
-  .select('*').contains('page_ids', [page.id]).limit(5);
-console.assert(rows && rows.length > 0, 'no gemini_usage row');
-console.assert(rows[0].triggered_by, 'no triggered_by');
-console.assert(rows[0].book_id, 'no book_id');
-console.assert(rows[0].prompt_version, 'no prompt_version');
+```bash
+node --env-file=.env.production.local scripts/audit/provenance-coverage.mjs --days=2          # the table
+node --env-file=.env.production.local scripts/audit/provenance-coverage.mjs --since=2026-10-01 --strict --json
 ```
+
+The same checker runs in CI on synthetic pages — each required field removed from a complete block
+must read as MISSING (`tests/unit/write-provenance.test.ts`, "proven red") — and
+`tests/unit/text-writers-use-provenance-builder.test.ts` fails a writer file that bypasses the
+builder. Run on Hetzner from the crontab once the writers are live (the live crontab is the source of
+truth; add the line there, then `crontab -l > scripts/workers/crontab.production` and PR it).
+
+To trace one recent page by hand, use §6; the assertions that used to live here (`prompt_id` /
+`prompt_hash` present) are subsumed by `missingProvenance()`.
