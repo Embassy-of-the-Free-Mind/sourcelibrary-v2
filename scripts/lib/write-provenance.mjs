@@ -238,7 +238,8 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
     api,
     call_site,
     prompt: promptBlock(prompt),
-    generation: normalizeGeneration(model, generationConfig),
+    // A writer completing a job submitted before the settings were kept passes the marker.
+    generation: isNotRecorded(generationConfig) ? generationConfig : normalizeGeneration(model, generationConfig),
     run: runBlock(run),
     input,
     recorded_by: RECORDED_BY,
@@ -353,6 +354,8 @@ export function missingProvenance(field, sub) {
   const e = sub.engine;
   if (GEMINI_SOURCES.has(src)) {
     if (!e || typeof e !== 'object') { missing.push(`${field}.engine`); return { missing, markers }; }
+    // A restore of pre-#4613 text says so explicitly: a marker, not a gap.
+    if (isNotRecorded(e)) { markers.push(`${field}.engine`); return { missing, markers }; }
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
     if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);

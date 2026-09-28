@@ -161,6 +161,12 @@ describe('the checker (missingProvenance) — proven red', () => {
     expect(r.markers).toContain('ocr.engine.generation.temperature');
   });
 
+  it('a restore of pre-#4613 text carries an explicit engine marker — a marker, not a gap', () => {
+    const p = { data: 't', source: 'ai', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: mjs.notRecorded('restored from a page_revisions row written before #4613') };
+    expect(mjs.missingProvenance('translation', p)).toEqual({ missing: [], markers: ['translation.engine'] });
+    expect(ts.missingProvenance('translation', p)).toEqual({ missing: [], markers: ['translation.engine'] });
+  });
+
   it('a translation must carry the OCR text hash it was made from', () => {
     const e = mjs.geminiEngine({ ...ocrArgs(), call_site: 'scripts/workers/translate-worker.mjs', input: mjs.translationInput({ ocrText: 'lorem' }) });
     const ok = { data: 'english', source: 'ai', updated_at: new Date(), content_hash: mjs.contentHash('english'), engine: e };

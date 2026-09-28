@@ -86,6 +86,7 @@ let keyIdx = 0;
 const aiClient = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.length]);
 
 import { sanitizeTranslationTags, isDegenerateSource } from '../lib/translate-core.mjs';
+import { codeVersion, host } from '../lib/write-provenance.mjs';
 
 // ── collapse/runaway detection now lives in translate-core (#3756) ──
 // The local copies this file carried were extracted into
@@ -111,10 +112,22 @@ async function translateOnce(page, book, prevTranslation) {
     ocrText: page.ocr.data,
     previousTranslation: prevTranslation,
   });
-  const model = aiClient().getGenerativeModel({ model: getModelForBook(book), safetySettings: SAFETY_SETTINGS });
+  const modelId = getModelForBook(book);
+  const model = aiClient().getGenerativeModel({ model: modelId, safetySettings: SAFETY_SETTINGS });
   const result = await model.generateContent(prompt);
-  return { text: sanitizeTranslationTags(result.response.text()), promptRef };
+  // What produced this text (#4613). This script sends NO generationConfig, so the record
+  // will say temperature/thinking came from the model's defaults — that is the point.
+  const call = {
+    call_site: 'scripts/maintenance/retranslate-pages.mjs', api: 'realtime', model: modelId, promptText: prompt,
+    generationConfig: {}, response: { modelVersion: result.response?.modelVersion },
+    run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
+    context: { previous_translation: !!prevTranslation },
+  };
+  return { text: sanitizeTranslationTags(result.response.text()), promptRef, call };
 }
+const RUN_ID = `retranslate-pages/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
+const CODE_VERSION = await codeVersion();
+const HOST = host();
 
 await withMongo(async (db) => {
   // No process-kill timer — a multi-thousand-page flash run runs well past 300s.
@@ -192,7 +205,7 @@ await withMongo(async (db) => {
     // with the semantic health gate armed (#3756).
     const w = await writePageTranslation(db, {
       page, book, text: best.text, promptRef: best.promptRef, model, note: 'anomaly-fix',
-      refuseUnhealthy: true,
+      refuseUnhealthy: true, call: best.call,
     });
     if (w.unhealthy) { stillBad++; return; }
     if (w.protected) {

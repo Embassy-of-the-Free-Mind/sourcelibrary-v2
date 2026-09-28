@@ -54,6 +54,7 @@ import {
   contentHash,
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
+import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
@@ -462,10 +463,15 @@ export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow 
   if (!(await deps.budgetAllows(db, `translate-batch-seam ${bookId}`))) return { ok: false, reason: 'spend-dial-closed', book, estimate };
 
   let promptRef = null;
+  // Per block: the exact prompt text sent (hashed) and the output cap sent — the two things
+  // that differ between blocks and that every page of the block must be able to cite (#4613).
+  const blockSent = [];
   const requests = blocks.map((pages, k) => {
     const built = blockPrompt({ prompts, book, pages });
     promptRef = built.promptRef;
-    return batchRequest({ key: `b${k}`, prompt: built.prompt, maxOutputTokens: maxOutputTokensFor(pages) });
+    const maxOutputTokens = maxOutputTokensFor(pages);
+    blockSent.push({ prompt_sent_hash: contentHash(built.prompt), prompt_sent_chars: built.prompt.length, max_output_tokens: maxOutputTokens });
+    return batchRequest({ key: `b${k}`, prompt: built.prompt, maxOutputTokens });
   });
   const runId = newRunId();
   const job = await deps.gemini.submit({ model, requests, displayName: `tbs-translate-${bookId}-${runId}` });
@@ -479,8 +485,12 @@ export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow 
     prompt_ref: promptRef,
     blocks: blocks.map((pages, k) => ({
       key: `b${k}`,
+      ...blockSent[k],
       pages: pages.map(p => ({ id: p.id, page_number: p.page_number, ocr_hash: contentHash(p.ocr.data) })),
     })),
+    // Submit-time half of every page's provenance (#4613); writeRun completes it per page.
+    code_version: await codeVersion(),
+    host: host(),
     page_count: plan.pages.length,
     excluded: plan.excluded,
     estimate,
@@ -670,6 +680,16 @@ export async function writeRun(db, run, deps) {
       const res = await writePage(db, {
         page, book, text, promptRef, model: run.model,
         jobId: run.id, note: REVISION_NOTE, refuseUnhealthy: true,
+        // What produced this text (#4613): the block's prompt (by hash) and cap as sent, the
+        // Batch job, and whether the seam repair's text won over the draft.
+        // A run submitted before these were kept says so (markers), rather than guessing.
+        call: {
+          call_site: 'scripts/lib/translate-batch-seam.mjs', api: 'batch', model: run.model,
+          prompt_sent_hash: b.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: b.prompt_sent_chars,
+          generationConfig: b.max_output_tokens ? { maxOutputTokens: b.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } } : notRecorded(`run ${run.id} was submitted before #4613 recorded generation settings`),
+          run: { batch_job_id: run.translate_job?.name, job_id: run.id, code_version: run.code_version || NOT_RECORDED, host: run.host || NOT_RECORDED },
+          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true },
+        },
       });
       if (res.written) {
         counts.written++;

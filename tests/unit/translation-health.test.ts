@@ -131,6 +131,8 @@ const baseArgs = {
   page: { id: 'p1', book_id: 'b1', ocr: { data: latinOcr } },
   book: { language: 'latin' },
   promptRef: { id: 'x', name: 'Standard Translation', version: 12 },
+  // what produced the text (#4613) — the door refuses a write without it
+  call: { call_site: 'tests/unit/translation-health.test.ts', promptText: 'PROMPT', generationConfig: {}, run: { code_version: 'test', host: 'test' } },
 };
 
 describe('writePageTranslation refuseUnhealthy', () => {

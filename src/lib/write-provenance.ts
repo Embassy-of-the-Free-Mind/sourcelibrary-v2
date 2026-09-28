@@ -157,7 +157,7 @@ function runBlock(run: Partial<RunBlock> | undefined): RunBlock {
 
 export interface GeminiEngineArgs {
   call_site: string; api: 'realtime' | 'batch'; model: string; prompt: PromptArg;
-  generationConfig: Record<string, unknown>; run: Partial<RunBlock>;
+  generationConfig: Record<string, unknown> | NotRecorded; run: Partial<RunBlock>;
   input: ImageInput | TranslationInput | NotRecorded; response?: { modelVersion?: string; raw?: { modelVersion?: string } };
 }
 export function geminiEngine({ call_site, api, model, prompt, generationConfig, run, input, response }: GeminiEngineArgs): GeminiEngine {
@@ -173,7 +173,8 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
     api,
     call_site,
     prompt: promptBlock(prompt),
-    generation: normalizeGeneration(model, generationConfig),
+    // A writer completing a job submitted before the settings were kept passes the marker.
+    generation: isNotRecorded(generationConfig) ? (generationConfig as NotRecorded) : normalizeGeneration(model, generationConfig as Record<string, unknown>),
     run: runBlock(run),
     input,
     recorded_by: RECORDED_BY,
@@ -272,6 +273,8 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
   const e = obj(s.engine);
   if (src && GEMINI_SOURCES.has(src)) {
     if (!e) { missing.push(`${field}.engine`); return { missing, markers }; }
+    // A restore of pre-#4613 text says so explicitly: a marker, not a gap.
+    if (isNotRecorded(e)) { markers.push(`${field}.engine`); return { missing, markers }; }
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
     if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);
