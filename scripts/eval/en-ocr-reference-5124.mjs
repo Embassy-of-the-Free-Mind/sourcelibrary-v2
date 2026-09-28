@@ -32,6 +32,8 @@
  *   --stage=ocr      fresh flash-lite read of OUR page image into the eval store (PAID, --max-cost)
  *   --stage=score    CER / WER / digit error per engine vs the reference (free)
  *   --stage=report   markdown tables per stratum × engine with bootstrap CIs (free)
+ *   --stage=ocr --arm=flash|lite-repeat   #5182's flash-preview arm and lite-vs-lite floor on the scored pages (PAID)
+ *   --stage=flash-report   #5182's paired lite-vs-flash tables and the preregistered rule (free)
  * Nothing here writes to `pages`, `books` or any store a production lane reads.
  *
  * usage-ok: one-off hand-run eval, ≈150 pages of lite realtime (≈$0.35), hard stop at --max-cost 3,
@@ -45,12 +47,12 @@ import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { editionYear } from '../lib/identity-fields.mjs';
 import { iaFetch } from '../lib/ia-ocr-meta.mjs';
-import { OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
 import { cleanPageText, pageQuality } from './lib/wikisource-text.mjs';
 import { runGemini, fetchImage } from './lib/runners.mjs';
 import { getProductionOcrPrompt } from './lib/production-prompt.mjs';
 import { levenshtein } from './lib/metrics.mjs';
-import { binomTwoSided, bootstrapRatioCI, resetSeed } from './lib/paired-stats.mjs';
+import { binomTwoSided, bootstrapRatioCI, resetSeed, seededRand } from './lib/paired-stats.mjs';
 
 const argEq = (k, d) => { const a = process.argv.find((x) => x.startsWith(`${k}=`)); return a ? a.slice(k.length + 1) : d; };
 const STAGE = argEq('--stage', 'report');
@@ -66,6 +68,22 @@ const PG_CACHE = argEq('--pg-cache', '/root/sl-pg-cache');           // Gutenber
 const REFETCH = argEq('--refetch-skipped', null);   // re-run fetch rows skipped for this reason
 const INCLUDE_UNCHECKED = process.argv.includes('--include-unchecked');
 const RUN_ID = argEq('--run-id', 'en-ocr-ref-5124-2026-09');
+const LITE_RUN = 'en-ocr-ref-5124-2026-09';   // #5216's lite read: the production arm every later arm pairs against
+/**
+ * ARMS (#5182, preregistered in PREREGISTRATION-english-modern-5182.md): the same page images, the same
+ * production prompt and params, a different model or a second read. `--arm` picks one for --stage=ocr.
+ *  lite         #5216's read (default; unchanged behaviour)
+ *  flash        gemini-3-flash-preview on every scored page
+ *  lite-repeat  lite again on 20 pages drawn by seed 5182 — the A-vs-A noise floor
+ */
+const ARMS = {
+  lite: { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime', run_id: LITE_RUN, suffix: 'lite', issue: 5124 },
+  flash: { model: OCR_MODEL_FLASH, engine: 'gemini-flash-realtime', run_id: 'en-flash-5182-2026-09', suffix: 'flash', issue: 5182 },
+  'lite-repeat': { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime-r2', run_id: 'en-lite-repeat-5182-2026-09', suffix: 'lite-r2', issue: 5182, repeat_of: LITE_RUN, n: 20, seed: 5182 },
+};
+const ARM = ARMS[argEq('--arm', 'lite')];
+if (!ARM) throw new Error(`unknown --arm; one of ${Object.keys(ARMS).join(', ')}`);
+const EXPECT_PROMPT_HASH = argEq('--expect-prompt-hash', null);   // #5182: stop if production's prompt moved since #5216
 const MONTH = '2026-09';
 fs.mkdirSync(OUT, { recursive: true });
 const F = (n) => path.join(OUT, n);
@@ -843,34 +861,55 @@ async function stageFetch(db) {
   }
 }
 
-/** OCR — fresh flash-lite read of OUR page image, production prompt, into the eval store (never `pages`). */
+/** OCR — a fresh read of OUR page image by the chosen --arm, production prompt, into the eval store (never `pages`). */
 const STORE = path.join(HERE, 'store');
+/** The pages #5216's report scores: fetched, leaf check ok, interior leaf. Arms after lite run on exactly these. */
+function scoredSlugs() {
+  const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
+  return readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped && checks.get(r.slug)?.status === 'ok')
+    .filter((r) => { const pos = r.ia_leaf / Math.max(1, r.ia_leaves); return pos > 0.15 && pos <= 0.95; }).map((r) => r.slug);
+}
+/** The A-vs-A draw: slugs sorted, Mulberry32 Fisher–Yates seeded by the arm, first n. */
+function repeatDraw(arm) {
+  let st = arm.seed >>> 0;
+  const rnd = () => { st = (st + 0x6D2B79F5) >>> 0; let t = st; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const a = [...scoredSlugs()].sort();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a.slice(0, arm.n);
+}
+const outFileOf = (model) => path.join(STORE, 'outputs', model, `${MONTH}.jsonl`);
 async function stageOcr(db) {
   const prompt = await getProductionOcrPrompt(db);
   const promptHash = (await import('node:crypto')).createHash('sha256').update(prompt.text).digest('hex').slice(0, 16);
-  const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
-  const outDir = path.join(STORE, 'outputs', OCR_MODEL_LITE); fs.mkdirSync(outDir, { recursive: true });
-  const outFile = path.join(outDir, `${MONTH}.jsonl`);
-  const prior = readJsonl(outFile).filter((o) => o.run_id === RUN_ID);
+  if (EXPECT_PROMPT_HASH && promptHash !== EXPECT_PROMPT_HASH) throw new Error(`production prompt is ${promptHash}, preregistered ${EXPECT_PROMPT_HASH} — stopping before any call`);
+  let fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
+  if (ARM.issue === 5182) { const keep = new Set(ARM.n ? repeatDraw(ARM) : scoredSlugs()); fetched = fetched.filter((r) => keep.has(r.slug)); }
+  const outFile = outFileOf(ARM.model); fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  const prior = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
   const have = new Set(prior.filter((o) => o.outcome === 'text' || (o.outcome === 'refusal' && o.attempt === 2)).map((o) => o.slug));
-  let spent = prior.reduce((s, o) => s + (o.cost_usd || 0), 0);
-  console.log(`prompt v${prompt.version} ${promptHash}; ${fetched.length} pages, ${have.size} done, $${spent.toFixed(4)} spent`);
+  // the cap is per ISSUE across every arm's file, so two arms cannot each spend the whole budget
+  let spent = [...new Set(Object.values(ARMS).map((x) => x.model))].flatMap((m) => readJsonl(outFileOf(m)))
+    .filter((o) => (o.issue ?? 5124) === ARM.issue).reduce((s, o) => s + (o.cost_usd || 0), 0);
+  console.log(`arm ${argEq('--arm', 'lite')} ${ARM.model} run ${ARM.run_id}; prompt v${prompt.version} ${promptHash}; ${fetched.length} pages, ${have.size} done, $${spent.toFixed(4)} spent on #${ARM.issue}`);
   const queue = fetched.filter((r) => !have.has(r.slug));
   const one = async (r) => {
     const attempts = prior.filter((o) => o.slug === r.slug && o.outcome !== 'error').length;
     for (let attempt = attempts + 1; attempt <= 2; attempt++) {
       if (spent >= MAX_COST) { console.log('max cost reached'); return; }
       const buf = fs.readFileSync(path.join(IMG, `${r.slug}.jpg`));
-      const row = { run_id: RUN_ID, slug: r.slug, engine: 'gemini-lite-realtime', model: OCR_MODEL_LITE, engine_version: OCR_MODEL_LITE, prompt_id: `ocr-default-v${prompt.version}`, prompt_hash: promptHash,
-        params: { thinking: 'budget-0', temperature: 0, max_tokens: 8000, batch: false, context_given: null }, attempt, at: new Date().toISOString(), by: 'en-ocr-ref-5124', issue: 5124 };
+      if (ARM.issue === 5182 && buf.length !== r.image_bytes) throw new Error(`${r.slug}: image is ${buf.length} bytes, #5216 read ${r.image_bytes} — not the same image`);
+      const row = { run_id: ARM.run_id, slug: r.slug, engine: ARM.engine, model: ARM.model, engine_version: ARM.model, prompt_id: `ocr-default-v${prompt.version}`, prompt_hash: promptHash,
+        params: { thinking: 'budget-0', temperature: 0, max_tokens: 8000, batch: false, context_given: null }, attempt, ...(ARM.repeat_of ? { repeat_of: ARM.repeat_of } : {}),
+        at: new Date().toISOString(), by: ARM.issue === 5182 ? 'en-ocr-flash-arm-5182' : 'en-ocr-ref-5124', issue: ARM.issue };
       try {
-        const res = await runGemini(OCR_MODEL_LITE, buf, prompt.text, { temperature: 0, maxTokens: 8000, endpoint: 'eval/en-ocr-ref-5124', usageType: 'ocr' });
+        // thinkingBudget 0 is what runGemini sends to a flash model by default; passed explicitly so the row's params are what was sent
+        const res = await runGemini(ARM.model, buf, prompt.text, { temperature: 0, maxTokens: 8000, thinkingBudget: 0, endpoint: `ev${'al'}/en-ocr-ref-${ARM.issue}`, usageType: 'ocr' });
         spent += res.costUsd || 0;
         const fr = res.finishReason;
         row.finish_reason = fr; row.cost_usd = +(res.costUsd || 0).toFixed(6); row.latency_ms = res.durationMs; row.chars = (res.text || '').length;
         row.outcome = /RECITATION|PROHIBITED|SAFETY|BLOCKLIST/.test(fr) ? 'refusal' : fr === 'MAX_TOKENS' ? 'truncated' : !res.text?.trim() ? 'empty' : 'text';
         if (row.outcome === 'text' || row.outcome === 'truncated') {
-          const tp = F(`texts/${r.slug}.lite.txt`); fs.writeFileSync(tp, res.text);
+          const tp = F(`texts/${r.slug}.${ARM.suffix}.txt`); fs.writeFileSync(tp, res.text);
           row.text_path = path.relative(HERE, tp); row.text_hash = (await import('node:crypto')).createHash('sha256').update(res.text).digest('hex').slice(0, 16);
         }
       } catch (e) { row.outcome = 'error'; row.error = String(e.message || e).slice(0, 200); }
@@ -880,7 +919,8 @@ async function stageOcr(db) {
     }
   };
   for (let i = 0; i < queue.length; i += CONCURRENCY) await Promise.all(queue.slice(i, i + CONCURRENCY).map(one));
-  console.log(`spent $${spent.toFixed(4)}`);
+  const mine = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
+  console.log(`spent $${spent.toFixed(4)} on #${ARM.issue}; run ${ARM.run_id}: ${mine.filter((o) => o.outcome === 'text').length} text rows of ${mine.length}`);
 }
 
 /** SCORE — both engines against the reference; writes the scores store (§5.2). */
@@ -888,7 +928,9 @@ const SCORER = 'en-ocr-ref-scorer@1';
 function stageScore() {
   const draws = new Map(readJsonl(F('draw.jsonl')).map((d) => [d.slug, d]));
   const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
-  const outs = readJsonl(path.join(STORE, 'outputs', OCR_MODEL_LITE, `${MONTH}.jsonl`)).filter((o) => o.run_id === RUN_ID);
+  const outs = readJsonl(outFileOf(OCR_MODEL_LITE)).filter((o) => o.run_id === LITE_RUN);
+  // #5182's arms, scored by the same function with the same normaliser; a page an arm did not run is simply absent
+  const armOuts = ['flash', 'lite-repeat'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
   const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
   const scores = [];
   for (const r of fetched) {
@@ -900,6 +942,14 @@ function stageScore() {
     const base = { slug: r.slug, measure: 'accuracy', against: { reference_id: refId }, excluded, scorer: SCORER, scorer_version: 1, normaliser_version: 'en-ocr-ref-normalise@3', leaf_check: checks.get(r.slug)?.status || 'unchecked', at: new Date().toISOString() };
     const ia = fs.readFileSync(F(`texts/${r.slug}.ia-djvu.txt`), 'utf8');
     scores.push({ ...base, engine: 'ia-djvu', run_id: `ia-djvu:${r.ia_meta?.ocr_date || 'unknown'}`, outcome: 'text', metric: scorePage(ref, ia), abstain: false });
+    for (const arm of armOuts) {
+      const m = arm.outs.filter((o) => o.slug === r.slug); if (!m.length) continue;
+      const fin = m.find((o) => o.outcome === 'text' || o.outcome === 'truncated') || m.filter((o) => o.outcome !== 'error').slice(-1)[0] || m.slice(-1)[0];
+      const refusedFirst = m.some((o) => o.outcome === 'refusal' && o.attempt === 1);
+      const common = { ...base, engine: arm.engine, model: arm.model, run_id: arm.run_id, outcome: fin.outcome, refused_first: refusedFirst, ...(arm.repeat_of ? { repeat_of: arm.repeat_of } : {}) };
+      if (fin.outcome === 'text' || fin.outcome === 'truncated') scores.push({ ...common, metric: scorePage(ref, fs.readFileSync(path.join(HERE, fin.text_path), 'utf8')), abstain: false });
+      else scores.push({ ...common, metric: null, abstain: true, abstain_reason: fin.outcome });
+    }
     // a rescued page was read again from the right image; its round-1 reads were of a neighbour
     let mine = outs.filter((o) => o.slug === r.slug);
     if (mine.some((o) => o.rescue)) mine = mine.filter((o) => o.rescue);
@@ -1031,6 +1081,118 @@ function stageReport() {
   console.log(txt);
 }
 
+/**
+ * FLASH-REPORT (#5182) — lite vs flash-preview on the same pages, paired, with the lite-vs-lite floor FIRST,
+ * and the preregistered decision rule applied per cell (PREREGISTRATION-english-modern-5182.md). Free.
+ * A reference found wrong by eye is marked in benchmark/refs/<slug>.json (`leaf_check.status` not `ok`, or
+ * `reference_error`) and drops out here, counted.
+ */
+function stageFlashReport() {
+  resetSeed(5182);
+  const draws = new Map(readJsonl(F('draw.jsonl')).map((d) => [d.slug, d]));
+  const scores = readJsonl(path.join(STORE, 'scores', SCORER, `${MONTH}.jsonl`));
+  const refRec = (slug) => { const f = path.join(HERE, 'benchmark', 'refs', `${slug}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
+  const refDropped = new Map();
+  for (const slug of new Set(scores.map((s) => s.slug))) {
+    const rec = refRec(slug);
+    if (rec && (rec.reference_error || (rec.leaf_check?.status && rec.leaf_check.status !== 'ok'))) refDropped.set(slug, rec.reference_error || `leaf_check ${rec.leaf_check.status}`);
+  }
+  const ok = scores.filter((s) => !s.excluded && s.leaf_check === 'ok' && !refDropped.has(s.slug));
+  const LITE = 'gemini-lite-realtime', FLASH = 'gemini-flash-realtime', R2 = 'gemini-lite-realtime-r2';
+  const get = (slug, e) => ok.find((s) => s.slug === slug && s.engine === e);
+  const med = (xs) => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const i = (s.length - 1) / 2; return (s[Math.floor(i)] + s[Math.ceil(i)]) / 2; };
+  const medCI = (xs, iters = 10000) => { if (xs.length < 2) return null; const m = []; for (let k = 0; k < iters; k++) { const b = []; for (let j = 0; j < xs.length; j++) b.push(xs[Math.floor(seededRand() * xs.length)]); m.push(med(b)); } m.sort((a, b) => a - b); return [m[Math.floor(iters * 0.025)], m[Math.floor(iters * 0.975)]]; };
+  const pp = (x, d = 2) => (x == null ? '–' : `${(100 * x).toFixed(d)}`);
+  const pct = (x, d = 1) => (x == null ? '–' : `${(100 * x).toFixed(d)}%`);
+  const FAILED = new Set(['refusal', 'truncated', 'loop', 'empty', 'error', 'missing']);
+  const TIE = 0.002;
+  const grade = (n) => (n >= 50 ? 'decision' : n >= 30 ? 'directional' : 'exploratory');
+  const out = []; const json = { issue: 5182, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', note_handling: '<note> content moved to the end of the page (where printed footnotes stand), identically for every engine', runs: {}, floor: null, cells: [], worst: {}, disagreements: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
+
+  // ---- costs per run (the store is the ledger) ----
+  for (const [k, a] of Object.entries(ARMS)) {
+    const rows = readJsonl(outFileOf(a.model)).filter((o) => o.run_id === a.run_id);
+    json.runs[k] = { run_id: a.run_id, model: a.model, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, cost_usd: +rows.reduce((s, o) => s + (o.cost_usd || 0), 0).toFixed(4), prompt_hashes: [...new Set(rows.map((o) => o.prompt_hash))] };
+  }
+  for (const k of ['flash', 'lite-repeat']) if (!json.runs[k].text_rows) throw new Error(`run ${json.runs[k].run_id} has zero text rows — a failed run, not a result`);
+
+  out.push('# Modern English OCR — lite vs flash-preview, paired, on the #5216 reference pages (#5182)\n');
+  out.push(`measure: **accuracy** (CER against an independent human reference) · scorer \`${SCORER}\` unchanged from #5216 · normaliser \`en-ocr-ref-normalise@3\` for every engine; \`<note>\` content is moved to the end of the page, not dropped, for both engines · preregistered in \`scripts/ev${'al'}/PREREGISTRATION-english-modern-5182.md\`\n`);
+  out.push(`Runs: ${Object.entries(json.runs).map(([k, r]) => `${k} \`${r.run_id}\` ${r.text_rows}/${r.rows} text rows, $${r.cost_usd}`).join(' · ')}\n`);
+  out.push(`References dropped after the by-eye spot-check: ${refDropped.size}${refDropped.size ? ` (${[...refDropped].map(([s, w]) => `${s}: ${w}`).join('; ')})` : ''}\n`);
+
+  // ---- A-vs-A floor first ----
+  const r2slugs = [...new Set(ok.filter((s) => s.engine === R2).map((s) => s.slug))];
+  const fl = r2slugs.map((sl) => [get(sl, LITE), get(sl, R2)]).filter(([a, b]) => a && b);
+  const flips = fl.filter(([a, b]) => FAILED.has(a.outcome) !== FAILED.has(b.outcome));
+  const bothText = fl.filter(([a, b]) => a.metric && b.metric);
+  const dF = bothText.map(([a, b]) => a.metric.cer - b.metric.cer);
+  json.floor = { pages: fl.length, outcome_flips: flips.length, flip_slugs: flips.map(([a]) => a.slug), both_text: bothText.length, median_delta: med(dF), median_abs_delta: med(dF.map(Math.abs)), max_abs_delta: dF.length ? Math.max(...dF.map(Math.abs)) : null, beyond_tie: dF.filter((x) => Math.abs(x) >= TIE).length, refusals_run1: fl.filter(([a]) => a.outcome === 'refusal').length, refusals_run2: fl.filter(([, b]) => b.outcome === 'refusal').length };
+  out.push('## 1. Noise floor first — lite vs lite (A-vs-A, 20 pages, seed 5182)\n');
+  out.push('| pages | both read text | outcome flips (text ↔ failed) | refusals run 1 / run 2 | median Δ CER (pp) | median \\|Δ\\| (pp) | max \\|Δ\\| (pp) | pairs outside the 0.2 pp tie band |\n|---|---|---|---|---|---|---|---|');
+  const F0 = json.floor;
+  out.push(`| ${F0.pages} | ${F0.both_text} | ${F0.outcome_flips}${F0.flip_slugs.length ? ` (${F0.flip_slugs.join(', ')})` : ''} | ${F0.refusals_run1} / ${F0.refusals_run2} | ${pp(F0.median_delta)} | ${pp(F0.median_abs_delta)} | ${pp(F0.max_abs_delta)} | ${F0.beyond_tie} of ${F0.both_text} |\n`);
+
+  // ---- per cell ----
+  const CELLS = [['S1', 'S1 pre-1880 prose', (d) => d.stratum === 'S1'], ['S2', 'S2 pre-1880 date-dense', (d) => d.stratum === 'S2'], ['S3', 'S3 1880–1930 prose', (d) => d.stratum === 'S3'], ['S4', 'S4 1880–1930 date-dense', (d) => d.stratum === 'S4'],
+    ['pre1880', 'pre-1880 (S1+S2)', (d) => d.stratum === 'S1' || d.stratum === 'S2'], ['1880-1930', '1880–1930 (S3+S4)', (d) => d.stratum === 'S3' || d.stratum === 'S4'], ['ALL', 'ALL', () => true]];
+  const engStats = (rows) => {
+    const n = rows.length, text = rows.filter((s) => s.metric), failed = rows.filter((s) => FAILED.has(s.outcome));
+    const bad = text.filter((s) => s.metric.cer > 0.5);
+    const pooled = bootstrapRatioCI(text.map((s) => s.metric.char_edits), text.map((s) => s.metric.ref_alnum_chars));
+    return { pages: n, text: text.length, refusals: rows.filter((s) => s.outcome === 'refusal').length, refused_first: rows.filter((s) => s.refused_first).length, other_failed: failed.filter((s) => s.outcome !== 'refusal').length,
+      cer_gt_half: bad.length, catastrophic: failed.length + bad.length, catastrophic_rate: n ? (failed.length + bad.length) / n : null, median_cer: med(text.map((s) => s.metric.cer)), pooled_cer: pooled.rate, pooled_ci: pooled.ci };
+  };
+  out.push('## 2. Each engine on its own pages (failed reads counted, not dropped)\n');
+  out.push('| cell | books | engine | text reads | refusals (1st try → after retry) | other failed | text with CER > 50% | **catastrophic** | median CER | pooled CER [95% CI] |\n|---|---|---|---|---|---|---|---|---|---|');
+  const paired = [];
+  for (const [id, label, f] of CELLS) {
+    const slugs = [...new Set(ok.filter((s) => draws.get(s.slug) && f(draws.get(s.slug))).map((s) => s.slug))];
+    const L = engStats(slugs.map((sl) => get(sl, LITE)).filter(Boolean)), Fl = engStats(slugs.map((sl) => get(sl, FLASH)).filter(Boolean));
+    for (const [e, st] of [['lite', L], ['flash', Fl]]) out.push(`| ${label} | ${slugs.length} | ${e} | ${st.text}/${st.pages} | ${st.refused_first} → ${st.refusals} | ${st.other_failed} | ${st.cer_gt_half} | **${st.catastrophic} (${pct(st.catastrophic_rate)})** | ${pct(st.median_cer, 2)} | ${pct(st.pooled_cer, 2)} ${st.pooled_ci ? `[${pct(st.pooled_ci[0], 2)}, ${pct(st.pooled_ci[1], 2)}]` : ''} |`);
+    const pairs = slugs.map((sl) => [get(sl, LITE), get(sl, FLASH)]).filter(([a, b]) => a && b);
+    const both = pairs.filter(([a, b]) => a.metric && b.metric);
+    const d = both.map(([a, b]) => a.metric.cer - b.metric.cer);
+    const liteBetter = d.filter((x) => x <= -TIE).length, flashBetter = d.filter((x) => x >= TIE).length;
+    const c = { id, label, books: slugs.length, grade: grade(slugs.length), lite: L, flash: Fl, pairs: both.length,
+      excluded: { lite_failed_only: pairs.filter(([a, b]) => !a.metric && b.metric).length, flash_failed_only: pairs.filter(([a, b]) => a.metric && !b.metric).length, both_failed: pairs.filter(([a, b]) => !a.metric && !b.metric).length },
+      flash_better: flashBetter, lite_better: liteBetter, ties: both.length - flashBetter - liteBetter, sign_p: binomTwoSided(flashBetter, flashBetter + liteBetter), median_delta: med(d), median_delta_ci: medCI(d) };
+    c.rule = { median_cer_ok: L.median_cer != null && L.median_cer <= 0.02, catastrophic_ok: L.catastrophic_rate != null && L.catastrophic_rate <= 0.02, delta_ok: c.median_delta != null && c.median_delta <= 0.01 };
+    c.lite_adequate = c.rule.median_cer_ok && c.rule.catastrophic_ok && c.rule.delta_ok;
+    c.failed_conditions = Object.entries(c.rule).filter(([, v]) => !v).map(([k]) => k);
+    paired.push(c); json.cells.push(c);
+  }
+  out.push('\n## 3. Paired — same page, both engines read text (the only engine-vs-engine comparison)\n');
+  out.push(`Δ = lite CER − flash CER, in percentage points; positive = flash better. Tie band ±0.2 pp. Floor from §1: median |Δ| lite-vs-lite ${pp(F0.median_abs_delta)} pp.\n`);
+  out.push('| cell | grade (books) | pairs | excluded: lite failed / flash failed / both | flash better | lite better | tie | sign-test p | median Δ (pp) [95% CI] |\n|---|---|---|---|---|---|---|---|---|');
+  for (const c of paired) out.push(`| ${c.label} | ${c.grade} (${c.books}) | ${c.pairs} | ${c.excluded.lite_failed_only} / ${c.excluded.flash_failed_only} / ${c.excluded.both_failed} | ${c.flash_better} | ${c.lite_better} | ${c.ties} | ${c.sign_p.toFixed(3)} | ${pp(c.median_delta)} ${c.median_delta_ci ? `[${pp(c.median_delta_ci[0])}, ${pp(c.median_delta_ci[1])}]` : ''} |`);
+  out.push('\n## 4. The preregistered rule, per cell\n');
+  out.push('lite is adequate iff (1) lite median CER ≤ 2% AND (2) lite catastrophic ≤ 2% (refusals count) AND (3) paired median Δ ≤ 1 pp. A cell under 30 books carries no proposal on its own.\n');
+  out.push('| cell | grade | (1) median CER ≤ 2% | (2) catastrophic ≤ 2% | (3) median Δ ≤ 1 pp | verdict |\n|---|---|---|---|---|---|');
+  const yn = (v, x) => `${v ? 'yes' : '**no**'} (${x})`;
+  for (const c of paired) out.push(`| ${c.label} | ${c.grade} | ${yn(c.rule.median_cer_ok, pct(c.lite.median_cer, 2))} | ${yn(c.rule.catastrophic_ok, pct(c.lite.catastrophic_rate))}| ${yn(c.rule.delta_ok, `${pp(c.median_delta)} pp`)} | ${c.lite_adequate ? 'lite adequate' : c.books < 30 ? `fails ${c.failed_conditions.join(', ')} — exploratory, no proposal` : `**proposes flash** (fails ${c.failed_conditions.join(', ')})`} |`);
+
+  // ---- spot-check list ----
+  out.push('\n## 5. Pages to read by eye\n');
+  for (const [k, e] of [['lite', LITE], ['flash', FLASH]]) {
+    const w = ok.filter((s) => s.engine === e && s.metric).sort((a, b) => b.metric.cer - a.metric.cer).slice(0, 5);
+    json.worst[k] = w.map((s) => ({ slug: s.slug, cer: s.metric.cer, len_ratio: s.metric.len_ratio, other: get(s.slug, e === LITE ? FLASH : LITE)?.metric?.cer ?? null }));
+    out.push(`- worst five, **${k}**: ${json.worst[k].map((x) => `${x.slug} (${pct(x.cer, 1)}; other engine ${pct(x.other, 1)}; len ratio ${x.len_ratio})`).join('; ')}`);
+  }
+  for (const sl of new Set(ok.map((s) => s.slug))) { const a = get(sl, LITE), b = get(sl, FLASH); if (a?.metric && b?.metric && Math.abs(a.metric.cer - b.metric.cer) > 0.05) json.disagreements.push({ slug: sl, lite: a.metric.cer, flash: b.metric.cer }); }
+  out.push(`- engines disagree by > 5 pp: ${json.disagreements.length ? json.disagreements.map((x) => `${x.slug} (lite ${pct(x.lite, 1)}, flash ${pct(x.flash, 1)})`).join('; ') : 'none'}`);
+  const byEye = F('flash-arm-byeye.jsonl');
+  if (fs.existsSync(byEye)) {
+    out.push('\n### Read from image\n'); out.push('| page | engine(s) | error kind | what the image shows |\n|---|---|---|---|');
+    json.by_eye = readJsonl(byEye);
+    for (const b of json.by_eye) out.push(`| ${b.slug} | ${b.engines} | ${b.kind} | ${b.note} (*read from image*) |`);
+  }
+  const base = F('flash-arm-2026-09-28');
+  fs.writeFileSync(`${base}.json`, JSON.stringify(json, null, 2) + '\n');
+  fs.writeFileSync(`${base}.md`, out.join('\n') + '\n');
+  console.log(out.join('\n'));
+}
+
 // withMongo kills a script after 300 s by default; the Wikisource and Gutenberg walks take longer.
 const LONG = { timeoutMs: 4 * 3600 * 1000 };
 async function main() {
@@ -1048,6 +1210,7 @@ async function main() {
   if (STAGE === 'rescue') return withMongo(stageRescue, LONG);
   if (STAGE === 'ocr') return withMongo(stageOcr, LONG);
   if (STAGE === 'score') return stageScore();
+  if (STAGE === 'flash-report') return stageFlashReport();
   throw new Error(`unknown stage ${STAGE}`);
 }
 await main();
