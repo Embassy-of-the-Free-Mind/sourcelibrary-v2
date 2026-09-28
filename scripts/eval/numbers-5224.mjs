@@ -527,8 +527,11 @@ async function stageCrops() {
       if (!target) { crops.push({ ...e, crop: null, crop_error: 'no-word' }); continue; }
       const marks = type === 'box' ? [target] : anchors;
       const h = Math.max(20, target.bot - target.top);
-      const left = Math.max(0, Math.min(...marks.map((m) => m.l)) - 450), right = Math.min(leaf.width || md.width / sx, Math.max(...marks.map((m) => m.r)) + 450);
-      const top = Math.max(0, Math.min(...marks.map((m) => m.top)) - 0.7 * h), bot = Math.min(leaf.height || md.height / sy, Math.max(...marks.map((m) => m.bot)) + 0.7 * h);
+      // a 'between' window is wider and taller: a lite-only number is often the page number or a
+      // running head the Archive dropped, printed on the line ABOVE the first anchor
+      const padX = type === 'box' ? 450 : 650, padY = type === 'box' ? 0.7 : 1.8;
+      const left = Math.max(0, Math.min(...marks.map((m) => m.l)) - padX), right = Math.min(leaf.width || md.width / sx, Math.max(...marks.map((m) => m.r)) + padX);
+      const top = Math.max(0, Math.min(...marks.map((m) => m.top)) - padY * h), bot = Math.min(leaf.height || md.height / sy, Math.max(...marks.map((m) => m.bot)) + padY * h);
       const ex = { left: Math.round(left * sx), top: Math.round(top * sy), width: Math.max(8, Math.round((right - left) * sx)), height: Math.max(8, Math.round((bot - top) * sy)) };
       if (ex.left + ex.width > md.width) ex.width = md.width - ex.left; if (ex.top + ex.height > md.height) ex.height = md.height - ex.top;
       const rects = marks.map((m) => `<rect x="${(m.l - left) * sx - 4}" y="${(m.top - top) * sy - 4}" width="${(m.r - m.l) * sx + 8}" height="${(m.bot - m.top) * sy + 8}" fill="none" stroke="#e00" stroke-width="5"/>`).join('');
@@ -557,7 +560,7 @@ async function stageCrops() {
       const c = group[j]; const buf = await sharp(F(c.crop)).toBuffer(); const m = await sharp(buf).metadata();
       const label = Buffer.from(`<svg width="90" height="${m.height}" xmlns="http://www.w3.org/2000/svg"><rect width="90" height="${m.height}" fill="#ffe"/><text x="45" y="${Math.min(m.height - 10, 48)}" font-size="40" font-weight="bold" font-family="DejaVu Sans, sans-serif" text-anchor="middle" fill="#000">${j + 1}</text></svg>`);
       parts.push({ input: label, top: y, left: 0 }, { input: buf, top: y, left: 90 });
-      c.sheet = sheetId; c.pos = j + 1; c.question = c.type === 'box' ? 'digits in the red box' : 'any number between the two red boxes';
+      c.sheet = sheetId; c.pos = j + 1; c.question = c.type === 'box' ? 'digits in the red box' : 'a number printed between the two red boxes, or next to a lone box';
       y += m.height + 14;
     }
     const canvas = sharp({ create: { width: W, height: Math.max(1, y - 14), channels: 3, background: '#222' } });
