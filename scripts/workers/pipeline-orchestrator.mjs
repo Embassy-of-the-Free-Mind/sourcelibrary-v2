@@ -223,6 +223,25 @@ let TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 let MAX_ACTIVE_IMAGE_JOBS = 50;
 const PREVIEW_PAGE_COUNT = 25;
+
+// Newest first within a band (#5082). Every candidate sort below ends with this
+// key: a fresh import with no explicit priority otherwise queues behind the whole
+// backlog, because Mongo breaks sort ties in insertion order (= oldest first).
+// Explicit `processing_priority` and the `_priority` bands still lead — this only
+// decides the order INSIDE a band. Spread it as the LAST key of each sort, and keep
+// `created_at` alive through any `$project` that runs before the `$sort` (#3756: a
+// projected-away field sorts as null). The Phase 0 convergence tail is deliberately
+// oldest-first and does not use it.
+const NEWEST_FIRST = { created_at: -1 };
+// Dry-run only: print the head of a candidate list so a run proves its queue order.
+function logQueueHead(books, n = 10) {
+  if (!DRY_RUN || books.length === 0) return;
+  console.log('  Queue head (id | created_at | processing_priority | title):');
+  for (const b of books.slice(0, n)) {
+    const created = b.created_at instanceof Date ? b.created_at.toISOString().slice(0, 10) : String(b.created_at ?? '-');
+    console.log(`    ${b.id} | ${created} | ${b.processing_priority ?? '-'} | ${(b.title || '').substring(0, 50)}`);
+  }
+}
 // How many times finalize will return a fully-OCR'd, untranslated book to the
 // translate lane before parking it as complete WITH a recorded skip reason.
 // Bounded so a language translation genuinely cannot handle cannot ping-pong.
@@ -2866,7 +2885,7 @@ async function run() {
               },
             },
           }},
-          { $sort: { _priority: 1, hidden: 1 } },
+          { $sort: { _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           { $project: { id: 1 } },
           { $limit: ARCHIVE_LIMIT },
         ])
@@ -2899,7 +2918,7 @@ async function run() {
               },
             },
           }},
-          { $sort: { _priority: 1, hidden: 1 } },
+          { $sort: { _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           { $project: { id: 1, pages_count: 1 } },
           { $limit: ARCHIVE_LIMIT },
         ])
@@ -3948,7 +3967,7 @@ Rules:
               },
             },
           }},
-          { $sort: { _priority: 1 } },
+          { $sort: { _priority: 1, ...NEWEST_FIRST } },
           { $project: { id: 1, title: 1, pages_count: 1 } },
           { $limit: PROMOTE_LIMIT },
         ])
@@ -4210,11 +4229,13 @@ Rules:
             }},
             // processing_priority (#3756): explicit queue weight, higher first
             // (absent sorts last under -1). Existing ordering kept as tiebreak.
-            { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
+            { $sort: { processing_priority: -1, _priority: 1, hidden: 1, ...NEWEST_FIRST } },
             // language + image_source.provider must survive the projection:
             // getOcrModelForBook reads both, and a missing language reads as
             // "unknown script" and routes EVERY book to flash-preview (~2.75x).
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            // created_at + processing_priority are carried only for the dry-run
+            // queue-order printout below (#5082).
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -4224,6 +4245,7 @@ Rules:
 
         if (dedupedPreview.length > 0) {
           console.log(`  Preview pass: ${dedupedPreview.length} books (first ${PREVIEW_PAGES} pages each)`);
+          logQueueHead(dedupedPreview);
         }
 
         // Split into small books (cross-book pool) vs large/spread books (per-book)
@@ -4319,9 +4341,10 @@ Rules:
             },
           }},
           // processing_priority (#3756): explicit queue weight, higher first.
-          { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
+          { $sort: { processing_priority: -1, _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           // language + image_source.provider must survive the projection (see Pass 1).
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          // created_at + processing_priority are for the dry-run queue-order printout (#5082).
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
@@ -4331,6 +4354,7 @@ Rules:
 
       if (dedupedFull.length > 0) {
         console.log(`  Full pass: ${dedupedFull.length} books (all remaining pages)`);
+        logQueueHead(dedupedFull);
       }
 
       for (const book of dedupedFull) {
@@ -4911,7 +4935,7 @@ Rules:
           // first (reader requests board at 100). Then BPH until backlog cleared,
           // then first translations, then speed tier. Descending sort puts books
           // without the field last.
-          { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+          { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1, ...NEWEST_FIRST } },
           // pages_ocr must survive the projection: the "OCR incomplete" guard
           // reads it, and a projected-away field read as 0 — bouncing every
           // fully-translated >30-page book back to archive_complete forever.
@@ -4966,12 +4990,12 @@ Rules:
             }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
-            // processing_priority + pages_translated must survive the projection
-            // for the sort below to see them (#3756).
-            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            // processing_priority + pages_translated + created_at must survive the
+            // projection for the sort below to see them (#3756, #5082).
+            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
-            { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },
+            { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1, ...NEWEST_FIRST } },
             { $limit: effectiveLimit },
           ]).toArray();
           if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, language: 1, image_source: 1, pipeline_auto: 1 });
@@ -5307,7 +5331,7 @@ Rules:
 
           let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
-            .sort({ processing_priority: -1, hidden: 1 })
+            .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
             .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
@@ -5449,7 +5473,7 @@ Rules:
 
           let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
-            .sort({ processing_priority: -1, hidden: 1 })
+            .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
             .project({ id: 1, title: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
