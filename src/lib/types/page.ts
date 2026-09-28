@@ -240,48 +240,16 @@ export interface OcrData extends ProcessingMetadata {
    *   is the table): the weights are cited by `model_url` at the pinned `revision`.
    * Either way the reading is reproducible and the provenance panel can cite it.
    */
-  engine?: {
-    name: string;                 // 'kraken' | 'Yigdzin'
-    version: string;              // '7.1' | 'v1'
-    model: string;                // 'sophro-mhiro' | 'BDRC/tibetan-ocr' | …
-    model_label: string;
-    model_doi?: string;           // '10.5281/zenodo.17406773' (Kraken)
-    model_url?: string;           // weights at the exact revision run (Hugging Face tree URL)
-    revision?: string;            // model repository commit that was run
-    revision_source?: string;     // how `revision` is known: 'logged' | 'inferred: …' (never store an inference as observed)
-    licence: string;
-    route?: 'manuscript' | 'print';
-    segmenter?: string;
-    direction?: string;
-    base_dir?: string;
-    read_mode?: 'page' | 'leaf';  // whole capture, or each leaf of a two-leaf capture separately
-    decode?: Record<string, unknown>; // preprocessing + decoding settings of the run
-    run: string;                  // lane id + date
-    issue: number;
-    secs?: number | null;         // CPU seconds this page took
-  };
+  engine?: SpecialistEngine | GeminiEngine;
   /**
    * Why an adjudicated re-OCR page is served or marked unreadable (#4523): the evidence
    * the adjudicator weighed, copied onto the page so it does not live only in a report
    * file on a worker box. `judged_engine` names the read that was judged — on a MARK page
    * that read is NOT what `data` holds (`data` keeps the earlier text for provenance).
    */
-  verdict?: {
-    verdict: 'SERVE' | 'MARK_UNRELIABLE';
-    rule: string;                 // 'agree_wood' | 'agree_uchan' | 'derge' | 'lex' | 'solo' | 'loop' | 'none'
-    agree_wood: number | null;    // served text's syllables corroborated by the Woodblock read, in order
-    agree_uchan: number | null;
-    align: number | null;         // Derge e-text identity, window 2
-    align_src: string | null;     // 'stored' | 'w2' | 'noparallel'
-    dharani: number | null;       // share of transliterated-Sanskrit syllables
-    valid: number | null;         // share of well-formed / Derge-attested syllables
-    judged_engine: string;        // ocr.model of the judged read, e.g. 'bdrc-yigdzin-v1'
-    run: string;                  // adjudication run id
-    issue: number;
-    at: Date;
-  };
+  verdict?: OcrVerdict;
   source_url?: string;
-  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/translate-core.mjs
+  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/write-provenance.mjs
   image_urls?: string[];
   updated_at?: Date;
   prompt_name?: string;
@@ -302,11 +270,88 @@ export interface OcrData extends ProcessingMetadata {
   unreadable_reason?: string; // e.g. 'reocr_low_agreement', 'reocr_4523'
 }
 
+/**
+ * A specialist open model that read the page because the general model cannot read its
+ * script (Kraken for Syriac, #4883; BDRC's Tibetan models, #4523/#4722). The table for each
+ * is the lane that writes it; the reading is reproducible and the provenance panel can
+ * cite the weights.
+ */
+export interface SpecialistEngine {
+    name: string;                 // 'kraken' | 'Yigdzin'
+    version: string;              // '7.1' | 'v1'
+    model: string;                // 'sophro-mhiro' | 'BDRC/tibetan-ocr' | …
+    model_label: string;
+    model_doi?: string;           // '10.5281/zenodo.17406773' (Kraken)
+    model_url?: string;           // weights at the exact revision run (Hugging Face tree URL)
+    revision?: string;            // model repository commit that was run
+    revision_source?: string;     // how `revision` is known: 'logged' | 'inferred: …' (never store an inference as observed)
+    licence: string;
+    route?: 'manuscript' | 'print';
+    segmenter?: string;
+    direction?: string;
+    base_dir?: string;
+    read_mode?: 'page' | 'leaf';  // whole capture, or each leaf of a two-leaf capture separately
+    decode?: Record<string, unknown>; // preprocessing + decoding settings of the run
+    run: string;                  // lane id + date
+    issue: number;
+    secs?: number | null;         // CPU seconds this page took
+}
+
+/**
+ * What a GEMINI call sent and got back, on every page it wrote (#4613). Built only by
+ * `geminiEngine()` in src/lib/write-provenance.ts / scripts/lib/write-provenance.mjs — never
+ * assembled by hand — so that a writer cannot store a partial record. `call_site` names the
+ * writer (`source: 'ai'` names nothing). `prompt.sent_hash` is the hash of the exact text
+ * sent; `prompt.hash` is the stored template's. `generation` is what the request carried,
+ * with model defaults filled in and NAMED in `defaulted`. `input` is the image (OCR) or the
+ * `source_text_hash` of the OCR text translated (translation). A value the writer could not
+ * know is the explicit `not_recorded` marker, never absent.
+ */
+export interface GeminiEngine {
+  schema: 'gemini-engine/1';
+  name: 'gemini';
+  model: string;
+  model_version: string | null;
+  model_version_source: string;
+  api: 'realtime' | 'batch';
+  call_site: string;
+  prompt: { id: string | null; name: string | null; version: string; hash: string | null; sent_hash: string; sent_chars: number | null };
+  generation: {
+    temperature: number | null; top_p: number | null; top_k: number | null; max_output_tokens: number | null;
+    thinking_budget: number | null; thinking_level?: string; thinking?: string | null; media_resolution: string;
+    sent: Record<string, unknown>; defaulted: string[]; defaults_source: string;
+  } | { status: 'not_recorded'; reason: string };
+  run: { code_version: string; host: string; at: Date; job_id?: string; batch_job_id?: string; submitted_at?: Date | null; collected_by?: string; collected_at?: Date; [k: string]: unknown };
+  input:
+    | { image_url: string; image_mime?: string; image_bytes?: number; resized_to_px?: number }
+    | { source_field: string; source_text_hash: string; source_text_chars: number; source_updated_at?: Date; context?: Record<string, unknown> }
+    | { status: 'not_recorded'; reason: string };
+  recorded_by: string;
+}
+
+/** The evidence an adjudicated re-OCR page was served or marked on (#4523). */
+export interface OcrVerdict {
+    verdict: 'SERVE' | 'MARK_UNRELIABLE';
+    rule: string;                 // 'agree_wood' | 'agree_uchan' | 'derge' | 'lex' | 'solo' | 'loop' | 'none'
+    agree_wood: number | null;    // served text's syllables corroborated by the Woodblock read, in order
+    agree_uchan: number | null;
+    align: number | null;         // Derge e-text identity, window 2
+    align_src: string | null;     // 'stored' | 'w2' | 'noparallel'
+    dharani: number | null;       // share of transliterated-Sanskrit syllables
+    valid: number | null;         // share of well-formed / Derge-attested syllables
+    judged_engine: string;        // ocr.model of the judged read, e.g. 'bdrc-yigdzin-v1'
+    run: string;                  // adjudication run id
+    issue: number;
+    at: Date;
+}
+
 export interface TranslationData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
-  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/translate-core.mjs
+  content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/write-provenance.mjs
+  /** What produced this translation, and from which OCR text (`input.source_text_hash`) — #4613. */
+  engine?: GeminiEngine;
   updated_at?: Date;
   prompt_name?: string;
   prompt_version?: string;

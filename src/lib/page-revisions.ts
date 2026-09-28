@@ -25,6 +25,10 @@ export interface PageRevision {
   job_id?: string;
   created_at: Date; // when this revision was saved (i.e. when the content was superseded)
   original_date?: Date; // when this content was originally written
+  /** `contentHash` of `data` as the writer stamped it (#4613) — proves which text this was. */
+  content_hash?: string;
+  /** The engine block the writer stamped (#4613) — what produced this text. */
+  engine?: Record<string, unknown>;
   /** Every other key of the superseded field (prompt ids/hashes, token counts, flags, engine…),
    *  kept when the writer opted in (`keepMeta`, scripts/lib/page-revisions.mjs) because it
    *  replaced the whole provenance block. */
@@ -74,6 +78,9 @@ export async function createRevision(
       job_id: fieldData.batch_job_id || jobId,
       original_date: fieldData.updated_at || fieldData.edited_at,
       created_at: new Date(),
+      // Provenance of the superseded text travels with it (#4613) — twin of the .mjs helper.
+      ...(fieldData.content_hash ? { content_hash: fieldData.content_hash } : {}),
+      ...(fieldData.engine ? { engine: fieldData.engine } : {}),
     };
 
     await db.collection('page_revisions').insertOne(revision as unknown as Record<string, unknown>);
