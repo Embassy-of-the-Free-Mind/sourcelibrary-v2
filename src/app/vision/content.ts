@@ -60,11 +60,11 @@ export const visionContent: VisionContent = {
   },
   dateline: 'Amsterdam, September 2026',
   salutation: 'Dear friend,',
-  lead: 'The last time the world translated its ancient wisdom, it set off the Renaissance. I think we can do it again — and this time most of the books are already on the shelf.',
+  lead: 'The last time the world translated its ancient wisdom, it set off the Renaissance. I think we can do it again, and this time most of the books are already on the shelf.',
   bodyBeforeQuote: [
-    'The Renaissance began with translation. When a small circle in fifteenth-century Florence brought Plato and the Hermetic writings out of Greek into Latin, the ideas they set loose reshaped a civilization.',
-    'Most of what that civilization then wrote is still locked up. As the UCLA scholar Debora Shuger has observed, **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). Beyond Latin lie thousands of texts in Chinese, Sanskrit, Arabic, Hebrew and more, unread by anyone who does not have the language — and absent from the data that trains today’s AI.',
-    'Pico della Mirandola described the method well, in a book you can open in our library:',
+    'The Renaissance began with translation. When Marsilio Ficino translated Plato and the Hermetic writings from Greek into Latin in Florence in the 1460s, Europe got back a body of thought it had been missing for a thousand years, and spent the next two centuries working out what to do with it.',
+    'Most of what those two centuries wrote has still not been read. Debora Shuger, a Renaissance scholar at UCLA, estimates that **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). Then there are the thousands of texts in Chinese, Sanskrit, Arabic, Hebrew and other languages, which nobody reads unless they have the language, and which are missing from the data that today’s AI systems learn from.',
+    'Pico della Mirandola put the method in a sentence. You can open the book in our library:',
   ],
   quote: {
     en: 'Magic does not so much work wonders as serve nature while she works them.',
@@ -74,8 +74,8 @@ export const visionContent: VisionContent = {
     linkLabel: 'read it at the source',
   },
   bodyBeforeImage1: [
-    'That is what Source Library does: it goes back to the source and lets anyone — a reader, a scholar, an AI — do the same. Today it holds more than **40,000 books** in over fifty languages. More than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. Counting originals and translations, the library already holds more words than English Wikipedia.',
-    'Every translation sits beside the scanned original, so any line can be checked, quoted and cited. It is free, Creative Commons share-alike, and open by API and MCP, so the AI you use can reach for the actual page.',
+    'Source Library goes back to the source. Today it holds more than **40,000 books** in over fifty languages, and more than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. If you count originals and translations together, the library already holds more words than English Wikipedia.',
+    'Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike licence, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
   ],
   image1: {
     src: 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg',
@@ -88,8 +88,8 @@ export const visionContent: VisionContent = {
   ],
   buildHeading: 'What we need to finish',
   bodyBuild: [
-    'Here is the situation. We hold **72,000 more books — sixteen million pages — that no one can read yet.** They are scanned and catalogued and waiting for the pipeline. Translating a page costs about two cents; translating all of them costs about $360,000. That is the single largest thing your money can do here, and it is entirely mechanical: fund it, and the books get read. Finished, the library will hold about four times the words of English Wikipedia. Wikipedia is what we know; this is the shelf it was written from.',
-    'Around that core sit the things a library needs in order to be trusted and to last: scholars checking the translations against the originals, a scanner at the Embassy for the books that exist nowhere else, the hosting that keeps every page online, and a small team to run it. Everything so far has been done by a handful of people, mostly unpaid. The budget below is what it takes to do the next five years properly. It comes to **$2.4 million**: $2 million of work, and $400,000 to run the organization that does it. The first year needs **$672,000**; each year after that, about $430,000.',
+    'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. What they are waiting for is the translation run, which costs about two cents a page, or about $360,000 for all of them. There is nothing left to invent in this part of the work. The pipeline runs, and the only thing missing is the money to keep it running. When it is finished the library will hold roughly four times the words of English Wikipedia, and a good deal of it will be the material Wikipedia’s own articles were written from.',
+    'The rest of the budget is what a library needs if people are going to trust it and it is going to last. Scholars have to check the translations against the originals, language by language. The Embassy holds about two thousand books that exist in no other collection, and they have to be scanned before they can be translated at all. Every page has to stay online, and someone has to be paid to keep the whole thing running. So far a handful of people have done all of this, mostly unpaid. Over five years it comes to **$2.4 million**: $2 million for the work itself and $400,000 to run the organization that does it. The first year needs **$672,000**, and each year after that about $430,000.',
   ],
   montage: {
     images: [
@@ -101,7 +101,7 @@ export const visionContent: VisionContent = {
     caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica.',
   },
   bodyConvener: [
-    'If you can help fund this, I would be grateful. If you know the people who can, I would be grateful for an introduction. Either way, the best way to understand the work is to see it, and I would be glad to show you.',
+    'If you are able to help fund this, or you know someone who might, I would like to hear from you. The work is easier to understand in person than on paper, and I am happy to show it to anyone who is curious.',
   ],
   signoff: 'With gratitude,',
   signature: {
@@ -112,7 +112,7 @@ export const visionContent: VisionContent = {
   },
   plan: {
     heading: 'The five-year budget: $2.4 million',
-    intro: 'Every line is built from a unit cost we have measured. The first year needs **$672,000**; each year after that, about **$432,000**.',
+    intro: 'Each line below comes from a unit cost we have measured in practice. The first year needs **$672,000**, and each year after that about **$432,000**.',
     items: [
       { work: 'Translate the 72,000 books (16 million pages) we already hold — about 2 cents a page', resource: '$360K' },
       { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
@@ -127,7 +127,7 @@ export const visionContent: VisionContent = {
   },
   ways: {
     heading: 'Ways to take part',
-    intro: 'A book costs about $5 to translate. Every gift below is named for you in the register, in perpetuity.',
+    intro: 'A book costs about $5 to translate. Every gift below is recorded in the register under your name, permanently.',
     tiers: [
       { gift: '$100', label: 'Translates 20 books' },
       { gift: '$275', label: 'Adopt a rare manuscript — one unscanned volume at the Embassy, scanned and translated, named for you' },
@@ -140,11 +140,11 @@ export const visionContent: VisionContent = {
   },
   cta: {
     heading: 'Let’s talk',
-    body: 'I’d be glad to show you the library — in person at the Embassy in Amsterdam, or on a call — and to walk through the budget with you.',
+    body: 'I would be glad to show you the library, in person at the Embassy in Amsterdam or on a call, and to go through the budget with you.',
     primaryLabel: 'Let’s talk',
     primaryHref: 'mailto:team@sourcelibrary.org?subject=Source%20Library%20%E2%80%94%20let%E2%80%99s%20talk',
     secondaryLabel: 'Make a gift',
     secondaryHref: '/support',
-    footer: 'I read every message myself.',
+    footer: 'This address comes straight to me.',
   },
 };
