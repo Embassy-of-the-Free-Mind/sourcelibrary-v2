@@ -894,6 +894,26 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex,
   console.log(`    Synced ${promises.length} entities`);
 }
 
+// ── Phase 6 read projections (#5184, #4603 pattern: one named constant per read) ──
+// Every field the Phase 6 call tree reads from a page doc. Enumerated by grepping
+// the consumers, not guessed: processBatch/createBatches/createBatchesFromChapters
+// (page_number, translation.data), buildConceptIndexFromBatches + buildPageTexts
+// (page_number, ocr.data, translation.data), buildPageIndex in quote-grounding
+// (id, page_number, page_type, translation.data). Unprojected, this read shipped
+// the whole ~12.6 KB page doc (transliteration, image fields, OCR/translation
+// provenance) for every page of up to 30 books per 5-minute tick. If you add a
+// consumer that reads another page field, add it HERE — a missing field does not
+// throw, it silently degrades the index (#4603).
+const PHASE_6_PAGE_PROJECTION = {
+  _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1,
+};
+// chapter_texts docs average ~170 KB (text + ocr_text). Phase 6 only uses them
+// for chapter-aligned batching, which reads the page RANGE — never the text.
+// (chapter_index/part are the sort keys, kept so the order is inspectable.)
+const PHASE_6_CHAPTER_TEXT_PROJECTION = {
+  _id: 0, chapter_index: 1, part: 1, pageStart: 1, pageEnd: 1,
+};
+
 // ── Main Phase 6 function ──
 async function enrichBook(db, book) {
   const bookTitle = book.display_title || book.title;
@@ -904,7 +924,7 @@ async function enrichBook(db, book) {
 
   // Get all pages
   const pages = await db.collection('pages')
-    .find({ book_id: bookId })
+    .find({ book_id: bookId }, { projection: PHASE_6_PAGE_PROJECTION })
     .sort({ page_number: 1 })
     .toArray();
 
@@ -920,7 +940,7 @@ async function enrichBook(db, book) {
 
   // Fetch chapter texts for chapter-aligned batching
   const chapterTexts = await db.collection('chapter_texts')
-    .find({ book_id: bookId })
+    .find({ book_id: bookId }, { projection: PHASE_6_CHAPTER_TEXT_PROJECTION })
     .sort({ chapter_index: 1, part: 1 })
     .toArray();
   const useChapters = chapterTexts.length > 1;
@@ -1240,8 +1260,19 @@ Empty array [] if no discernible structure.`;
   return prompt;
 }
 
+// ── Phase 7 read projections (#5184, #4603 pattern) ──
+// Everything extractChaptersForBook reads from the book doc: the prompt header
+// (display_title/title, author, language/original_language) and the inline
+// `index.sectionSummaries` fallback used when no book_indexes doc exists.
+const PHASE_7_BOOK_PROJECTION = {
+  _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1,
+  'index.sectionSummaries': 1,
+};
+// Of the whole book_indexes doc only sectionSummaries feeds the section hints.
+const PHASE_7_BOOK_INDEX_PROJECTION = { _id: 0, sectionSummaries: 1 };
+
 async function extractChaptersForBook(db, bookId) {
-  const book = await db.collection('books').findOne({ id: bookId });
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: PHASE_7_BOOK_PROJECTION });
   if (!book) throw new Error('Book not found');
 
   const pages = await db.collection('pages')
@@ -1276,7 +1307,9 @@ async function extractChaptersForBook(db, bookId) {
   }
 
   // Section hints from book index (check dedicated collection first, then inline fallback)
-  const bookIndexDoc = await db.collection('book_indexes').findOne({ book_id: bookId }).catch(() => null);
+  const bookIndexDoc = await db.collection('book_indexes')
+    .findOne({ book_id: bookId }, { projection: PHASE_7_BOOK_INDEX_PROJECTION })
+    .catch(() => null);
   const indexData = bookIndexDoc || book.index || {};
   const sectionHints = [];
   if (indexData.sectionSummaries) {
