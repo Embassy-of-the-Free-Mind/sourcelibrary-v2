@@ -352,6 +352,15 @@ export async function GET(request: NextRequest) {
         .toArray();
     }
 
+    // Decide "is there another page?" from the RAW row count, before any
+    // post-query filtering. Deduplication below can drop the sentinel (limit+1)
+    // row, and when hasMore was measured after it, one repeated woodcut on a
+    // page ended pagination: ?library=bph stopped at 48 of 1,453 images.
+    // The client pages by a fixed `limit` in raw-row space, so trimming here
+    // keeps page boundaries aligned with `offset`.
+    const rawHasMore = textItems.length > limit;
+    if (rawHasMore) textItems = textItems.slice(0, limit);
+
     const clipScores = await clipPromise;
     let items = textItems;
 
@@ -441,8 +450,9 @@ export async function GET(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items = deduplicateByDHash(items as any) as any;
 
-    const hasMore = items.length > limit;
-    if (hasMore) items.splice(limit); // trim to limit
+    // Search fallbacks (semantic book context, CLIP) can append past `limit`.
+    const hasMore = rawHasMore || items.length > limit;
+    if (items.length > limit) items.splice(limit); // trim to limit
 
     // Derive total — avoid countDocuments for unfiltered browsing, but use it for
     // searches. `bookId` was missing from the filtered branch, so a book-scoped
