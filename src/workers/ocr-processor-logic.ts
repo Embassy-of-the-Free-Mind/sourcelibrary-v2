@@ -253,6 +253,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         ...(detectedImages.length > 0 && { detectedImages }),
         sourceUrl: imageUrl,        // provenance: the exact image OCR'd (#2297)
         codeVersion: CODE_VERSION,
+        call: ocrResult.call,       // what was sent (#4613): the write processor builds the engine block
       },
       geminiUsage: buildUsagePayload({
         model: modelId, bookId, pageId, jobId, durationMs,

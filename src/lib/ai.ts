@@ -101,10 +101,29 @@ export interface TokenUsage {
   costUsd: number;
 }
 
+/**
+ * What the call SENT, so the writer can record it on the page (#4613): the model id, the
+ * exact prompt text, the generationConfig object as sent, and the served model version when
+ * the API returned one. Built into an engine block by `geminiEngine()` in
+ * src/lib/write-provenance.ts at the write — never stored as-is.
+ */
+export interface AICallRecord {
+  model: string;
+  promptText: string;
+  generationConfig: Record<string, unknown>;
+  modelVersion: string | null;
+}
+
 export interface AIResult {
   text: string;
   usage: TokenUsage;
+  call?: AICallRecord;
 }
+
+const modelVersionOf = (response: unknown): string | null => {
+  const v = (response as { modelVersion?: unknown } | undefined)?.modelVersion;
+  return typeof v === 'string' && v ? v : null;
+};
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -166,6 +185,9 @@ export async function performOCRWithBuffer(
         totalTokens: inputTokens + outputTokens,
         costUsd: calculateCost(inputTokens, outputTokens, modelId),
       },
+      // What was sent (#4613): THINKING_OFF_CONFIG is the whole generationConfig — no temperature,
+      // so the page will say the model default applied.
+      call: { model: modelId, promptText: prompt, generationConfig: THINKING_OFF_CONFIG as unknown as Record<string, unknown>, modelVersion: modelVersionOf(result.response) },
     };
   } catch (geminiError) {
     console.error('Gemini API error:', geminiError);
@@ -237,6 +259,9 @@ export async function performOCR(
         totalTokens: inputTokens + outputTokens,
         costUsd: calculateCost(inputTokens, outputTokens, modelId),
       },
+      // What was sent (#4613): THINKING_OFF_CONFIG is the whole generationConfig — no temperature,
+      // so the page will say the model default applied.
+      call: { model: modelId, promptText: prompt, generationConfig: THINKING_OFF_CONFIG as unknown as Record<string, unknown>, modelVersion: modelVersionOf(result.response) },
     };
   } catch (geminiError) {
     console.error('Gemini API error:', geminiError);
@@ -322,6 +347,7 @@ export async function performTranslation(
       totalTokens: inputTokens + outputTokens,
       costUsd: calculateCost(inputTokens, outputTokens, modelId),
     },
+    call: { model: modelId, promptText: prompt, generationConfig: THINKING_OFF_CONFIG as unknown as Record<string, unknown>, modelVersion: modelVersionOf(result.response) },
   };
 }
 

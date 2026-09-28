@@ -10,7 +10,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation } from '@/lib/translate-write';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
-import { contentHash } from '@/lib/steganographia';
+import { geminiEngine, translationInput, translationProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
@@ -258,10 +258,18 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
     const translationMeta = extractTranslationMetadata(finalTranslation);
+    // What produced this text, and from which OCR text (#4613) — the builder refuses a partial record.
+    const engine = geminiEngine({
+      call_site: 'src/workers/translation-processor-logic.ts', api: 'realtime', model: modelId,
+      prompt: { id: promptRef.id, name: promptRef.name, version: promptRef.version, hash: promptRef.content_hash, text: translationResult.call?.promptText, sent_hash: translationResult.call ? undefined : NOT_RECORDED },
+      generationConfig: translationResult.call?.generationConfig ?? notRecorded('performTranslation returned no call record'),
+      run: { job_id: jobId, code_version: CODE_VERSION || codeVersion(), host: host() },
+      input: translationInput({ ocrText: page.ocr.data, ocrUpdatedAt: page.ocr.updated_at, context: { previous_translation: !!context } }),
+      response: { modelVersion: translationResult.call?.modelVersion ?? undefined },
+    });
     const translationSetPayload = {
       translation: {
         data: finalTranslation,
-        content_hash: contentHash(finalTranslation),
         language: 'English',
         model: modelId,
         updated_at: new Date(),
@@ -271,6 +279,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         prompt_id: promptRef.id,
         prompt_name: promptRef.name,
         code_version: CODE_VERSION,     // provenance (#2297)
+        ...translationProvenance(finalTranslation, engine),
       },
       ...translationMeta,
       updated_at: new Date()

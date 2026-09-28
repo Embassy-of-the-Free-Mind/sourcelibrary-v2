@@ -3,6 +3,7 @@ import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR } from '@/lib/ai';
+import { geminiEngine, imageInput, ocrProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
 import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
@@ -89,6 +90,15 @@ async function processChunk(
             $set: {
               ocr: {
                 data: ocrResult.text,
+                // What produced this text (#4613)
+                ...ocrProvenance(ocrResult.text, geminiEngine({
+                  call_site: 'src/app/api/process/batch/route.ts', api: 'realtime', model,
+                  prompt: { id: promptResult.reference.id, name: promptResult.reference.name, version: promptResult.reference.version, hash: promptResult.reference.content_hash, text: ocrResult.call?.promptText, sent_hash: ocrResult.call ? undefined : NOT_RECORDED },
+                  generationConfig: ocrResult.call?.generationConfig ?? notRecorded('performOCR returned no call record'),
+                  run: { code_version: codeVersion(), host: host() },
+                  input: imageInput({ url: finalImageUrl }),
+                  response: { modelVersion: ocrResult.call?.modelVersion ?? undefined },
+                })),
                 language: page.language || 'Latin',
                 model,
                 updated_at: new Date(),
