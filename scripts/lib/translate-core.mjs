@@ -429,8 +429,10 @@ export function sanitizeTranslationTags(text) {
       (_, tag) => `</${tag}>`);
 }
 
-export const contentHash = (t) =>
-  createHash('sha256').update(t || '').digest('hex').slice(0, 16);
+// The content hash now lives with the rest of the provenance vocabulary (#4613);
+// re-exported so the many importers of translate-core keep working.
+import { contentHash } from './write-provenance.mjs';
+export { contentHash };
 
 // ────────────────────────────────────────────────────────────────────────────
 // Semantic health (issue #3756): collapse / runaway detection at the door.

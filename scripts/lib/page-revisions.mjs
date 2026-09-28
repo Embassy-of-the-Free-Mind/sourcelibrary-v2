@@ -57,6 +57,11 @@ export async function saveRevisionsBeforeOverwrite(db, pageIds, field, opts = {}
         ...(reason ? { reason } : {}),
         original_date: fieldData.updated_at || fieldData.edited_at,
         created_at: now,
+        // Provenance of the superseded text travels with it (#4613): the hash proves WHICH
+        // text this was, the engine block says what produced it. Named columns, not keepMeta,
+        // because every revision needs them — a snapshot that drops them cannot be cited.
+        ...(fieldData.content_hash ? { content_hash: fieldData.content_hash } : {}),
+        ...(fieldData.engine ? { engine: fieldData.engine } : {}),
         ...(keepMeta ? { meta: Object.fromEntries(Object.entries(fieldData).filter(([k]) => k !== 'data')) } : {}),
       });
     }
