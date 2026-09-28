@@ -40,6 +40,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { normalizeBbox as productionNormalizeBbox } from '../lib/bbox.mjs';
 import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
+import { costOf, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WORKER_PATH = path.join(__dirname, '../workers/image-extract-worker.mjs');
@@ -73,17 +74,20 @@ const ENGINES = {
   qwen235: { vendor: 'openrouter', model: 'qwen/qwen3-vl-235b-a22b-instruct', format: 'bbox2d' },
 };
 const MODELS = Object.fromEntries(Object.entries(ENGINES).map(([k, v]) => [k, v.model]));
-// $/M tokens, realtime. Batch = half. Gemini rows match scripts/lib/model-pricing.mjs; the
-// Qwen row is OpenRouter's list price read from /api/v1/models on 2026-09-28.
-const PRICE = {
-  'gemini-3-flash-preview': { input: 0.5, output: 3.0 },
-  'gemini-3.1-flash-lite': { input: 0.25, output: 1.5 },
-  'gemini-3.5-flash-lite': { input: 0.3, output: 2.5 },
+// Gemini prices come from the single source (scripts/lib/model-pricing.mjs). Non-Gemini arms:
+// Qwen = OpenRouter's list price read from /api/v1/models on 2026-09-28 ($/M tokens; the run
+// records OpenRouter's billed `usage.cost` per call, which wins when present); the layout
+// detector is free (local CPU).
+const NON_GEMINI_PRICE = {
   'qwen/qwen3-vl-235b-a22b-instruct': { input: 0.21, output: 1.9 },
   'doclayout-yolo-docstructbench': { input: 0, output: 0 },
 };
 const USAGE_ENDPOINT = 'scripts/eval/image-extraction-lite-eval.mjs';
-const usd = (model, inTok, outTok, batch = false) => ((batch ? 0.5 : 1) * (inTok * (PRICE[model]?.input ?? 0) + outTok * (PRICE[model]?.output ?? 0))) / 1e6;
+const usd = (model, inTok, outTok, batch = false) => {
+  const p = NON_GEMINI_PRICE[model];
+  const cost = p ? (inTok * p.input + outTok * p.output) / 1e6 : costOf(model, inTok, outTok);
+  return batch ? cost * BATCH_MULTIPLIER : cost;
+};
 
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(IMG_CACHE, { recursive: true });
