@@ -15,6 +15,19 @@
  * worker's source text) so the experiment runs the production request, not a copy that
  * can drift.
  *
+ * WIDENED 2026-09-28 (brief: ops handoffs/2026-09-28-image-extraction-bbox-eval-brief.md).
+ * The question became "which cheap model draws ACCURATE boxes?", so agreement with stored
+ * flash output is now the secondary number. The primary one is a by-eye grade of every box
+ * against the page image (`grade-sheets` → hand-filled grades.json → `grade-score`).
+ * Arms (--engine): flash, lite, lite35, lite-box2d (3.1-lite asked for Gemini's native
+ * box_2d [ymin,xmin,ymax,xmax] 0–1000 instead of {x,y,width,height} fractions), qwen235
+ * (Qwen3-VL via OpenRouter, native bbox_2d [x1,y1,x2,y2] 0–1000 — Qwen3-VL changed from
+ * Qwen2.5's absolute pixels to relative 0–1000, per its 2d_grounding cookbook), and a free
+ * layout detector (image-extraction-doclayout.py writes raw-doclayout-local.jsonl).
+ * `--tag r2` names a re-run (flash test-retest). Every paid call writes a gemini_usage row
+ * (type `eval`, endpoint this file). Boxes go through the PRODUCTION normaliser
+ * (scripts/lib/bbox.mjs) — the 09-11 inline copy had the mixed-unit speck bug.
+ *
  * Sub-commands (state lives under --out, default scripts/eval/results/image-extraction-lite-<date>/):
  *   sample                 draw 200 positive + 200 negative pages, one per book → sample.json
  *   run --engine flash|lite   realtime generateContent on every sampled page → raw-<engine>-realtime.jsonl
@@ -22,6 +35,8 @@
  *   batch-collect --engine lite  poll + download results → raw-<engine>-batch.jsonl
  *   score                  metrics for every raw-*.jsonl vs the stored flash reference → results.json
  *   sheets                 contact sheets (reference / flash / lite boxes) for the hand-read → sheets/
+ *   grade-sheets           blinded per-page composites (one panel per arm, order shuffled) → grading/
+ *   grade-score            box-accuracy table from grading/grades.json (the by-eye grades)
  *
  * Positives = pages extracted by the production flash worker in the last 90 d with ≥ 1
  * stored bbox (`detected_images[].model = gemini-3-flash-preview`). Negatives = pages the
@@ -38,6 +53,8 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
+import { normalizeBbox as productionNormalizeBbox } from '../lib/bbox.mjs';
+import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WORKER_PATH = path.join(__dirname, '../workers/image-extract-worker.mjs');
@@ -59,15 +76,28 @@ const N_POS = parseInt(opt('n-pos', '200'), 10);
 const N_NEG = parseInt(opt('n-neg', '200'), 10);
 const GROUNDING_RADIUS = 3;
 
-const MODELS = {
-  flash: 'gemini-3-flash-preview',
-  lite: 'gemini-3.1-flash-lite',
+const TAG = opt('tag', '');
+// format = how the arm is asked for boxes. xywh: production {x,y,width,height} fractions;
+// box2d: Gemini native [ymin,xmin,ymax,xmax] 0–1000; bbox2d: Qwen3-VL [x1,y1,x2,y2] 0–1000.
+const ENGINES = {
+  flash: { vendor: 'gemini', model: 'gemini-3-flash-preview', format: 'xywh' },
+  lite: { vendor: 'gemini', model: 'gemini-3.1-flash-lite', format: 'xywh' },
+  lite35: { vendor: 'gemini', model: 'gemini-3.5-flash-lite', format: 'xywh' },
+  'lite-box2d': { vendor: 'gemini', model: 'gemini-3.1-flash-lite', format: 'box2d' },
+  qwen235: { vendor: 'openrouter', model: 'qwen/qwen3-vl-235b-a22b-instruct', format: 'bbox2d' },
 };
-// $/M tokens, realtime. Batch = half. Matches scripts/workers/lib/supabase-usage-logger.mjs.
+const MODELS = Object.fromEntries(Object.entries(ENGINES).map(([k, v]) => [k, v.model]));
+// $/M tokens, realtime. Batch = half. Gemini rows match scripts/lib/model-pricing.mjs; the
+// Qwen row is OpenRouter's list price read from /api/v1/models on 2026-09-28.
 const PRICE = {
   'gemini-3-flash-preview': { input: 0.5, output: 3.0 },
   'gemini-3.1-flash-lite': { input: 0.25, output: 1.5 },
+  'gemini-3.5-flash-lite': { input: 0.3, output: 2.5 },
+  'qwen/qwen3-vl-235b-a22b-instruct': { input: 0.21, output: 1.9 },
+  'doclayout-yolo-docstructbench': { input: 0, output: 0 },
 };
+const USAGE_ENDPOINT = 'scripts/eval/image-extraction-lite-eval.mjs';
+const usd = (model, inTok, outTok, batch = false) => ((batch ? 0.5 : 1) * (inTok * (PRICE[model]?.input ?? 0) + outTok * (PRICE[model]?.output ?? 0))) / 1e6;
 
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(IMG_CACHE, { recursive: true });
@@ -85,6 +115,36 @@ function loadWorkerArtifacts() {
   const schemaJs = s[1].replace(/SchemaType\.([A-Z]+)/g, (_, t) => JSON.stringify(t.toLowerCase()));
   const schema = new Function(`return (${schemaJs});`)();
   return { prompt, schema, promptSha: sha(prompt) };
+}
+
+/** The production request, re-expressed for an arm that is asked for a different box format. */
+function artifactsFor(format) {
+  const base = loadWorkerArtifacts();
+  if (format === 'xywh') return base;
+  const coordBlock = /BOUNDING BOX \(0\.0-1\.0 normalized coordinates\):\n- x: [^\n]*\n- width, height: [^\n]*\n/;
+  const example = /"bbox": \{ "x": 0\.15, "y": 0\.25, "width": 0\.70, "height": 0\.45 \}/;
+  if (!coordBlock.test(base.prompt) || !example.test(base.prompt)) throw new Error('worker prompt bbox block changed — update artifactsFor()');
+  if (format === 'box2d') {
+    const prompt = base.prompt
+      .replace(coordBlock, 'BOUNDING BOX: box_2d = [ymin, xmin, ymax, xmax] normalized to 0-1000 (0,0 = top-left of the page image).\n')
+      .replace(example, '"box_2d": [250, 150, 700, 850]')
+      .replace(/\bbbox\b/g, 'box_2d');
+    const schema = structuredClone(base.schema);
+    const item = schema.properties.extracted_images.items;
+    delete item.properties.bbox;
+    item.properties.box_2d = { type: 'array', items: { type: 'integer' } };
+    item.required = item.required.map((r) => (r === 'bbox' ? 'box_2d' : r));
+    return { prompt, schema, promptSha: sha(prompt) };
+  }
+  if (format === 'bbox2d') {
+    const prompt = base.prompt
+      .replace(coordBlock, 'BOUNDING BOX: bbox_2d = [x1, y1, x2, y2] in relative coordinates 0-1000 (top-left and bottom-right corners of the illustration).\n')
+      .replace(example, '"bbox_2d": [150, 250, 850, 700]')
+      .replace(/\bbbox\b/g, 'bbox_2d')
+      + '\n\nReturn ONLY a JSON object with keys "scan_quality" and "extracted_images" (no markdown fences).';
+    return { prompt, schema: null, promptSha: sha(prompt) };
+  }
+  throw new Error(`unknown format ${format}`);
 }
 function sha(s) {
   return (globalThis.crypto?.subtle ? null : null), require_sha(s);
@@ -129,7 +189,7 @@ function buildRequestText(item, prompt) {
 const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT', 'HARM_CATEGORY_DANGEROUS_CONTENT', 'HARM_CATEGORY_CIVIC_INTEGRITY']
   .map((category) => ({ category, threshold: 'BLOCK_NONE' }));
 
-function generationConfig(schema) {
+function generationConfigFor(schema) {
   return {
     temperature: 0.1,
     maxOutputTokens: 4096,
@@ -306,18 +366,86 @@ function loadSample() {
 // ═══════════════════════════════════════════════════════════════════════════
 // run (realtime)
 // ═══════════════════════════════════════════════════════════════════════════
+async function callArm(eng, item, img, art) {
+  const text = buildRequestText(item, art.prompt);
+  if (eng.vendor === 'gemini') {
+    const generationConfig = art.schema ? generationConfigFor(art.schema) : { temperature: 0.1, maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } };
+    const body = {
+      contents: [{ parts: [{ text }, { inlineData: { mimeType: img.mimeType, data: img.buffer.toString('base64') } }] }],
+      safetySettings: SAFETY,
+      generationConfig,
+    };
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${eng.model}:generateContent?key=${nextKey()}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(120000),
+    });
+    if (!res.ok) return { status: res.status, error: (await res.text()).slice(0, 300) };
+    const data = await res.json();
+    const usage = data.usageMetadata || {};
+    return {
+      input_tokens: usage.promptTokenCount || 0,
+      output_tokens: (usage.candidatesTokenCount || 0) + (usage.thoughtsTokenCount || 0),
+      thoughts_tokens: usage.thoughtsTokenCount || 0,
+      finish_reason: data.candidates?.[0]?.finishReason,
+      text: (data.candidates?.[0]?.content?.parts || []).filter((p) => p.text && !p.thought).map((p) => p.text).join(''),
+    };
+  }
+  if (eng.vendor === 'openrouter') {
+    const key = process.env.OPENROUTER_API_KEY;
+    if (!key) throw new Error('OPENROUTER_API_KEY not set');
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model: eng.model,
+        temperature: 0.1,
+        max_tokens: 4096,
+        response_format: { type: 'json_object' },
+        usage: { include: true },
+        messages: [{ role: 'user', content: [
+          { type: 'image_url', image_url: { url: `data:${img.mimeType};base64,${img.buffer.toString('base64')}` } },
+          { type: 'text', text },
+        ] }],
+      }),
+      signal: AbortSignal.timeout(180000),
+    });
+    if (!res.ok) return { status: res.status, error: (await res.text()).slice(0, 300) };
+    const data = await res.json();
+    if (data.error) return { status: 500, error: JSON.stringify(data.error).slice(0, 300) };
+    return {
+      input_tokens: data.usage?.prompt_tokens || 0,
+      output_tokens: data.usage?.completion_tokens || 0,
+      thoughts_tokens: 0,
+      vendor_cost_usd: typeof data.usage?.cost === 'number' ? data.usage.cost : undefined,
+      provider: data.provider,
+      finish_reason: data.choices?.[0]?.finish_reason,
+      text: data.choices?.[0]?.message?.content || '',
+    };
+  }
+  throw new Error(`unknown vendor ${eng.vendor}`);
+}
+
+let _ki = 0;
+function nextKey() { const k = apiKeys(); return k[(_ki++) % k.length]; }
+
+function rawName(engine, mode) { return `${engine}${TAG ? `-${TAG}` : ''}-${mode}`; }
+
 async function cmdRun() {
-  const model = MODELS[ENGINE];
-  if (!model) throw new Error(`--engine must be flash|lite`);
-  const { prompt, schema, promptSha } = loadWorkerArtifacts();
+  const eng = ENGINES[ENGINE];
+  if (!eng) throw new Error(`--engine must be one of ${Object.keys(ENGINES).join('|')}`);
+  const model = eng.model;
+  const art = artifactsFor(eng.format);
   const sample = loadSample();
-  const outFile = path.join(OUT, `raw-${ENGINE}-realtime.jsonl`);
-  const done = new Set(readJsonl(outFile).map((r) => r.page_id));
-  const todo = sample.items.filter((i) => i.image_url && !done.has(i.page.id));
-  console.log(`[run ${ENGINE}] model=${model} prompt_sha=${promptSha} todo=${todo.length} (done ${done.size}) → ${outFile}`);
-  const keys = apiKeys();
-  let ki = 0;
-  let spentIn = 0, spentOut = 0, errors = 0, n = 0;
+  const name = rawName(ENGINE, 'realtime');
+  const outFile = path.join(OUT, `raw-${name}.jsonl`);
+  const done = new Set(readJsonl(outFile).filter((r) => !r.error).map((r) => r.page_id));
+  let todo = sample.items.filter((i) => i.image_url && !done.has(i.page.id));
+  const only = opt('only-pages');
+  if (only) { const s = new Set(fs.readFileSync(only, 'utf8').split('\n').filter(Boolean)); todo = todo.filter((i) => s.has(i.page.id)); }
+  const limit = parseInt(opt('limit', '0'), 10);
+  if (limit) todo = todo.slice(0, limit);
+  const total = todo.length;
+  console.log(`[run ${name}] model=${model} format=${eng.format} prompt_sha=${art.promptSha} todo=${total} (done ${done.size}) → ${outFile}`);
+  let spent = 0, errors = 0, n = 0, inSum = 0, outSum = 0;
   const cap = parseFloat(opt('spend-cap', '3'));
 
   const worker = async () => {
@@ -325,56 +453,38 @@ async function cmdRun() {
       const item = todo.shift();
       const img = await getImage(item);
       if (!img) { appendJsonl(outFile, { page_id: item.page.id, cls: item.cls, error: 'no-image' }); continue; }
-      const text = buildRequestText(item, prompt);
-      const body = {
-        contents: [{ parts: [{ text }, { inlineData: { mimeType: img.mimeType, data: img.buffer.toString('base64') } }] }],
-        safetySettings: SAFETY,
-        generationConfig: generationConfig(schema),
-      };
-      let rec = { page_id: item.page.id, cls: item.cls, model, mode: 'realtime', prompt_sha: promptSha };
+      let rec = { page_id: item.page.id, cls: item.cls, model, mode: 'realtime', format: eng.format, prompt_sha: art.promptSha, tag: TAG || undefined };
       for (let attempt = 0; attempt < 4; attempt++) {
-        const key = keys[(ki++) % keys.length];
         const t0 = Date.now();
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(120000),
-          });
-          if (res.status === 429 || res.status >= 500) {
-            const t = await res.text();
-            if (attempt === 3) { rec.error = `${res.status} ${t.slice(0, 200)}`; break; }
-            await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
-            continue;
-          }
-          if (!res.ok) { rec.error = `${res.status} ${(await res.text()).slice(0, 300)}`; break; }
-          const data = await res.json();
-          const usage = data.usageMetadata || {};
-          rec = {
-            ...rec,
-            ms: Date.now() - t0,
-            input_tokens: usage.promptTokenCount || 0,
-            output_tokens: (usage.candidatesTokenCount || 0) + (usage.thoughtsTokenCount || 0),
-            thoughts_tokens: usage.thoughtsTokenCount || 0,
-            finish_reason: data.candidates?.[0]?.finishReason,
-            text: data.candidates?.[0]?.content?.parts?.[0]?.text || '',
-          };
-          spentIn += rec.input_tokens; spentOut += rec.output_tokens;
+          const r = await callArm(eng, item, img, art);
+          if (r.error && (r.status === 429 || r.status >= 500) && attempt < 3) { await new Promise((ok) => setTimeout(ok, 3000 * (attempt + 1))); continue; }
+          if (r.error) { rec.error = `${r.status} ${r.error}`; break; }
+          rec = { ...rec, ...r, ms: Date.now() - t0 };
           break;
         } catch (e) {
           if (attempt === 3) rec.error = String(e).slice(0, 200);
-          else await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+          else await new Promise((ok) => setTimeout(ok, 3000 * (attempt + 1)));
         }
       }
       if (rec.error) errors++;
+      const cost = rec.error ? 0 : (rec.vendor_cost_usd ?? usd(model, rec.input_tokens, rec.output_tokens));
+      rec.cost_usd = cost;
+      spent += cost; inSum += rec.input_tokens || 0; outSum += rec.output_tokens || 0;
       appendJsonl(outFile, rec);
+      logUsage({
+        type: 'eval', mode: 'realtime', model, page_count: 1, page_ids: [item.page.id], book_id: item.book.id,
+        input_tokens: rec.input_tokens || 0, output_tokens: rec.output_tokens || 0, cost_usd: cost,
+        status: rec.error ? 'failed' : 'success', error_message: rec.error, duration_ms: rec.ms,
+        endpoint: USAGE_ENDPOINT, triggered_by: 'manual', prompt_version: `eval-4747-${name}`,
+      }).catch(() => {});
       n++;
-      const usd = (spentIn * PRICE[model].input + spentOut * PRICE[model].output) / 1e6;
-      if (n % 25 === 0) console.log(`[run ${ENGINE}] ${n}/${n + todo.length} done, errors ${errors}, $${usd.toFixed(3)}`);
-      if (usd > cap) { console.error(`[run ${ENGINE}] spend cap $${cap} hit — stopping`); todo.length = 0; }
+      if (n % 25 === 0) console.log(`[run ${name}] ${n}/${total} done, errors ${errors}, $${spent.toFixed(3)}`);
+      if (spent > cap) { console.error(`[run ${name}] spend cap $${cap} hit — stopping`); todo.length = 0; }
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-  const usd = (spentIn * PRICE[model].input + spentOut * PRICE[model].output) / 1e6;
-  console.log(`[run ${ENGINE}] finished: ${n} calls, ${errors} errors, in ${spentIn} / out ${spentOut} tokens, $${usd.toFixed(3)}`);
+  console.log(`[run ${name}] finished: ${n} calls, ${errors} errors, in ${inSum} / out ${outSum} tokens, $${spent.toFixed(4)} ($${n ? (spent / n).toFixed(5) : '—'}/page)`);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -395,7 +505,7 @@ async function cmdBatchSubmit() {
       request: {
         contents: [{ parts: [{ text: buildRequestText(item, prompt) }, { inlineData: { mimeType: img.mimeType, data: img.buffer.toString('base64') } }] }],
         safetySettings: SAFETY,
-        generationConfig: generationConfig(schema),
+        generationConfig: generationConfigFor(schema),
       },
     }));
   }
@@ -462,13 +572,13 @@ async function cmdBatchCollect() {
       const sample = loadSample();
       const clsById = new Map(sample.items.map((i) => [i.page.id, i.cls]));
       fs.writeFileSync(outFile, '');
-      let n = 0, errors = 0;
+      let n = 0, errors = 0, batchIn = 0, batchOut = 0;
       for (const line of text.split('\n').filter(Boolean)) {
         const r = JSON.parse(line);
         const pageId = r.key || r.metadata?.key;
         const resp = r.response;
         const usage = resp?.usageMetadata || {};
-        const out = { page_id: pageId, cls: clsById.get(pageId), model, mode: 'batch', prompt_sha: rec.prompt_sha };
+        const out = { page_id: pageId, cls: clsById.get(pageId), model, mode: 'batch', format: 'xywh', prompt_sha: rec.prompt_sha };
         if (r.error || !resp) { out.error = JSON.stringify(r.error || 'no-response').slice(0, 300); errors++; }
         else {
           out.input_tokens = usage.promptTokenCount || 0;
@@ -476,12 +586,19 @@ async function cmdBatchCollect() {
           out.thoughts_tokens = usage.thoughtsTokenCount || 0;
           out.finish_reason = resp.candidates?.[0]?.finishReason;
           out.text = resp.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          out.cost_usd = usd(model, out.input_tokens, out.output_tokens, true);
+          batchIn += out.input_tokens; batchOut += out.output_tokens;
         }
         appendJsonl(outFile, out);
         n++;
       }
       rec.collected_at = new Date().toISOString(); rec.state = state; rec.responses = n; rec.errors = errors;
       fs.writeFileSync(f, JSON.stringify(rec, null, 2));
+      await logUsage({
+        type: 'eval', mode: 'batch', model, page_count: n - errors, input_tokens: batchIn, output_tokens: batchOut,
+        batch_job_id: rec.job_name, endpoint: USAGE_ENDPOINT, triggered_by: 'manual', prompt_version: `eval-4747-${ENGINE}-batch`,
+      }).catch((e) => console.warn('[batch] logUsage failed:', e.message));
+      console.log(`[batch ${ENGINE}] $${usd(model, batchIn, batchOut, true).toFixed(4)} for ${n - errors} pages`);
       console.log(`[batch ${ENGINE}] collected ${n} responses (${errors} errors) → ${outFile}`);
       return;
     }
@@ -496,13 +613,35 @@ async function cmdBatchCollect() {
 // ═══════════════════════════════════════════════════════════════════════════
 // score
 // ═══════════════════════════════════════════════════════════════════════════
+/** Production normaliser for {x,y,width,height}; stored reference boxes pass through it too. */
 function normalizeBbox(raw) {
-  const x = parseFloat(raw.x) || 0, y = parseFloat(raw.y) || 0, width = parseFloat(raw.width) || 0, height = parseFloat(raw.height) || 0;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return { x: Math.min(x / scale, 0.95), y: Math.min(y / scale, 0.95), width: Math.min(width / scale, 1), height: Math.min(height / scale, 1) };
+  return productionNormalizeBbox(raw);
+}
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+function cornersToBox(x1, y1, x2, y2) {
+  const [a, b] = [clamp01(Math.min(x1, x2)), clamp01(Math.max(x1, x2))];
+  const [c, d] = [clamp01(Math.min(y1, y2)), clamp01(Math.max(y1, y2))];
+  if (b - a < 0.005 || d - c < 0.005) return null;
+  return { x: a, y: c, width: b - a, height: d - c };
+}
+/** One detection → {x,y,width,height} fractions, by the format the arm was asked for. */
+function boxOf(d, format) {
+  const arr = (v) => Array.isArray(v) && v.length === 4 && v.every((n) => Number.isFinite(Number(n))) ? v.map(Number) : null;
+  if (format === 'box2d') {
+    const v = arr(d.box_2d) || arr(d.bbox);
+    return v ? cornersToBox(v[1] / 1000, v[0] / 1000, v[3] / 1000, v[2] / 1000) : null;
   }
-  return { x, y, width, height };
+  if (format === 'bbox2d') {
+    const v = arr(d.bbox_2d) || arr(d.bbox);
+    if (v) return cornersToBox(v[0] / 1000, v[1] / 1000, v[2] / 1000, v[3] / 1000);
+    return d.bbox && typeof d.bbox === 'object' ? normalizeBbox(d.bbox) : null;
+  }
+  return d.bbox && typeof d.bbox === 'object' && !Array.isArray(d.bbox) ? normalizeBbox(d.bbox) : null;
+}
+/** A raw-*.jsonl record → detections. Local detectors store `images` already normalised. */
+function parseRecord(r) {
+  if (Array.isArray(r.images)) return { images: r.images.filter((d) => d.bbox) };
+  return parseDetections(r.text, r.format || 'xywh');
 }
 function iou(a, b) {
   const x1 = Math.max(a.x, b.x), y1 = Math.max(a.y, b.y);
@@ -511,14 +650,18 @@ function iou(a, b) {
   const union = a.width * a.height + b.width * b.height - inter;
   return union > 0 ? inter / union : 0;
 }
-function parseDetections(text) {
+function parseDetections(text, format = 'xywh') {
   if (!text) return { images: [], parse_error: 'empty' };
   try {
-    const j = JSON.parse(text);
-    const images = (j.extracted_images || []).filter((d) => d && d.bbox).map((d) => ({
-      bbox: normalizeBbox(d.bbox), type: d.type, gallery_quality: typeof d.gallery_quality === 'number' ? d.gallery_quality : undefined, description: d.description,
-    }));
-    return { images, scan_quality: j.scan_quality };
+    // Qwen sometimes fences the JSON or answers with a bare array; accept both (see the
+    // contact-sheet-screen lesson: a discarded valid answer reads as a confident negative).
+    const cleaned = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '');
+    const j = JSON.parse(cleaned);
+    const list = Array.isArray(j) ? j : (j.extracted_images || []);
+    const images = list.filter((d) => d && typeof d === 'object')
+      .map((d) => ({ bbox: boxOf(d, format), type: d.type, gallery_quality: typeof d.gallery_quality === 'number' ? d.gallery_quality : undefined, description: d.description }))
+      .filter((d) => d.bbox);
+    return { images, scan_quality: Array.isArray(j) ? undefined : j.scan_quality };
   } catch (e) {
     return { images: [], parse_error: String(e).slice(0, 80) };
   }
@@ -552,7 +695,7 @@ function scoreRun(records, sampleById, refSource) {
     if (r.error) { errors++; continue; }
     callable++;
     inTok += r.input_tokens || 0; outTok += r.output_tokens || 0; thoughts += r.thoughts_tokens || 0; if (r.ms) ms.push(r.ms);
-    const parsed = parseDetections(r.text);
+    const parsed = parseRecord(r);
     if (parsed.parse_error) parseErrors++;
     const out = parsed.images;
     const ref = refSource.get(r.page_id);
@@ -614,7 +757,7 @@ function scoreRun(records, sampleById, refSource) {
 function cmdScore() {
   const sample = loadSample();
   const sampleById = new Map(sample.items.map((i) => [i.page.id, i]));
-  const storedRef = new Map(sample.items.map((i) => [i.page.id, { images: i.reference.map((d) => ({ ...d, bbox: normalizeBbox(d.bbox) })) }]));
+  const storedRef = new Map(sample.items.map((i) => [i.page.id, { images: i.reference.map((d) => ({ ...d, bbox: normalizeBbox(d.bbox) })).filter((d) => d.bbox) }]));
   const runs = fs.readdirSync(OUT).filter((f) => /^raw-.*\.jsonl$/.test(f));
   const results = { issue: 4747, scored_at: new Date().toISOString(), sample: { counts: sample.counts, method: sample.method, since: sample.since }, runs: {} };
   const runRecords = {};
@@ -626,9 +769,12 @@ function cmdScore() {
   for (const [name, records] of Object.entries(runRecords)) {
     const model = records.find((r) => r.model)?.model;
     const s = scoreRun(records, sampleById, storedRef);
-    const price = PRICE[model] || PRICE[MODELS.flash];
-    const mult = name.endsWith('batch') ? 0.5 : 1;
-    s.cost_usd = mult * (s.tokens.input * price.input + s.tokens.output * price.output) / 1e6;
+    // Per-record cost when the run recorded one (OpenRouter returns the billed amount);
+    // otherwise list price from tokens. Batch = half.
+    const recorded = records.filter((r) => typeof r.cost_usd === 'number');
+    s.cost_usd = recorded.length === records.length
+      ? recorded.reduce((a, r) => a + r.cost_usd, 0)
+      : usd(model, s.tokens.input, s.tokens.output, name.endsWith('batch'));
     s.cost_per_1k_pages = s.callable ? (s.cost_usd / s.callable) * 1000 : null;
     s.model = model;
     results.runs[name] = { vs: 'stored-flash-reference', ...s };
@@ -637,7 +783,7 @@ function cmdScore() {
   const flashRerun = runRecords['flash-realtime'];
   if (flashRerun) {
     const rerunRef = new Map();
-    for (const r of flashRerun) if (!r.error) rerunRef.set(r.page_id, parseDetections(r.text));
+    for (const r of flashRerun) if (!r.error) rerunRef.set(r.page_id, parseRecord(r));
     for (const [name, records] of Object.entries(runRecords)) {
       if (name === 'flash-realtime') continue;
       const s = scoreRun(records, sampleById, rerunRef);
@@ -645,7 +791,8 @@ function cmdScore() {
       results.runs[`${name}__vs_flash_rerun`] = { vs: 'flash-realtime-rerun', ...s };
     }
   }
-  // decision rule (handoff): lite adopted iff recall ≥ flash − 3pp, FP ≤ flash + 2pp, median IoU ≥ 0.85 — all vs the stored reference,
+  // SECONDARY since 2026-09-28: agreement with flash, not accuracy — the verdict comes from
+  // grade-score. Original 09-11 decision rule (handoff): lite adopted iff recall ≥ flash − 3pp, FP ≤ flash + 2pp, median IoU ≥ 0.85 — all vs the stored reference,
   // "flash" = flash re-run (test-retest), which is the fair yardstick.
   const F = results.runs['flash-realtime'], L = results.runs['lite-realtime'], LB = results.runs['lite-batch'];
   const decide = (l, label) => {
@@ -702,8 +849,8 @@ async function cmdSheets() {
     const meta = await sharp(img.buffer).metadata();
     const W = 900, scale = W / meta.width, H = Math.round(meta.height * scale);
     const boxes = [];
-    const layers = { reference: item.reference.map((d) => ({ ...d, bbox: normalizeBbox(d.bbox) })) };
-    for (const [name, m] of Object.entries(runs)) { const r = m.get(item.page.id); if (r && !r.error) layers[name] = parseDetections(r.text).images; }
+    const layers = { reference: item.reference.map((d) => ({ ...d, bbox: normalizeBbox(d.bbox) })).filter((d) => d.bbox) };
+    for (const [name, m] of Object.entries(runs)) { const r = m.get(item.page.id); if (r && !r.error) layers[name] = parseRecord(r).images; }
     let k = 0;
     const svgParts = [];
     for (const [name, imgs] of Object.entries(layers)) {
@@ -726,10 +873,183 @@ async function cmdSheets() {
   console.log(`[sheets] wrote ${manifest.length} sheets → ${dir}`);
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// grade-sheets — BLINDED composites for grading each box against the page image.
+// One panel per arm, arm→panel order shuffled per page (key in grading/key.json), every
+// box drawn in the same colour and numbered. The grader fills grading/grades.json:
+//   { "<page_id>": { "pictures": <true illustrations on the page, by eye>,
+//                    "panels": { "P1": { "grades": "TL", "missed": 0 }, ... } } }
+// grades: one letter per numbered box, in order — T tight, L loose (takes in text/margin),
+// C cropped (cuts the figure), W wrong object (text, ornament, blank), D duplicate (second
+// box on an already-boxed figure). missed = true illustrations with no box in that panel.
+// ═══════════════════════════════════════════════════════════════════════════
+function hashSeed(s) { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
+function loadRuns() {
+  const runs = {};
+  for (const f of fs.readdirSync(OUT).filter((x) => /^raw-.*\.jsonl$/.test(x))) {
+    const name = f.replace(/^raw-|\.jsonl$/g, '');
+    const m = new Map();
+    for (const r of readJsonl(path.join(OUT, f))) if (!r.error || !m.has(r.page_id)) m.set(r.page_id, r); // successful retry wins
+    runs[name] = m;
+  }
+  return runs;
+}
+
+async function cmdGradeSheets() {
+  const sample = loadSample();
+  const runs = loadRuns();
+  const arms = Object.keys(runs).sort();
+  const nGrade = parseInt(opt('n-grade', '60'), 10);
+  const perSheet = parseInt(opt('per-sheet', '4'), 10);
+  const PANEL_W = parseInt(opt('panel-w', '700'), 10);
+  const dir = path.join(OUT, 'grading');
+  fs.mkdirSync(path.join(dir, 'sheets'), { recursive: true });
+  const complete = (i) => arms.every((a) => { const r = runs[a].get(i.page.id); return r && !r.error; });
+  const pos = sample.items.filter((i) => i.cls === 'pos' && i.image_url);
+  const posOk = pos.filter(complete);
+  // Stratify positives by stored-reference box count (1 / 2–3 / 4+), proportional, seeded.
+  const rnd = mulberry32(47470928);
+  const strata = { one: [], few: [], many: [] };
+  for (const i of posOk) strata[i.reference.length <= 1 ? 'one' : i.reference.length <= 3 ? 'few' : 'many'].push(i);
+  const picked = [];
+  for (const [k, list] of Object.entries(strata)) {
+    const take = Math.round((list.length / posOk.length) * nGrade);
+    picked.push(...shuffle([...list], rnd).slice(0, take).map((i) => ({ ...i, stratum: k })));
+  }
+  // Negatives: every flash-negative page where ANY arm drew a box (each fire must be judged by eye —
+  // a "false positive" there may be a picture production flash missed).
+  const negFired = sample.items.filter((i) => i.cls === 'neg' && complete(i) && arms.some((a) => parseRecord(runs[a].get(i.page.id)).images.length));
+  const chosen = [...picked, ...negFired.map((i) => ({ ...i, stratum: 'neg-fired' }))];
+  console.log(`[grade-sheets] arms: ${arms.join(', ')}`);
+  console.log(`[grade-sheets] positives complete in every arm ${posOk.length}/${pos.length}; strata one/few/many = ${strata.one.length}/${strata.few.length}/${strata.many.length}; picked ${picked.length}; negatives with a fire ${negFired.length}`);
+
+  const key = {}, template = {}, manifest = [];
+  let idx = 0;
+  for (const item of chosen) {
+    const img = await getImage(item);
+    if (!img) continue;
+    idx++;
+    const meta = await sharp(img.buffer).metadata();
+    const W = PANEL_W, H = Math.round(meta.height * (W / meta.width));
+    const base = await sharp(img.buffer).resize(W, H).jpeg({ quality: 85 }).toBuffer();
+    const order = shuffle([...arms], mulberry32(hashSeed(item.page.id)));
+    key[item.page.id] = {};
+    template[item.page.id] = { cls: item.cls, stratum: item.stratum, pictures: null, panels: {} };
+    const panels = [];
+    for (let p = 0; p < order.length; p++) {
+      const label = `P${p + 1}`;
+      const arm = order[p];
+      key[item.page.id][label] = arm;
+      const boxes = parseRecord(runs[arm].get(item.page.id)).images;
+      template[item.page.id].panels[label] = { n_boxes: boxes.length, grades: '', missed: null };
+      const parts = boxes.map((d, bi) => {
+        const b = d.bbox; const x = b.x * W, y = b.y * H;
+        return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(b.width * W).toFixed(1)}" height="${(b.height * H).toFixed(1)}" fill="none" stroke="#ff00d4" stroke-width="3"/>`
+          + `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="26" height="24" fill="#ff00d4"/><text x="${(x + 6).toFixed(1)}" y="${(y + 18).toFixed(1)}" font-size="18" font-weight="bold" fill="#fff" font-family="sans-serif">${bi + 1}</text>`;
+      });
+      const head = `<rect x="0" y="0" width="${W}" height="30" fill="rgba(0,0,0,0.75)"/><text x="8" y="22" font-size="20" font-weight="bold" fill="#fff" font-family="sans-serif">${label} · ${boxes.length} box${boxes.length === 1 ? '' : 'es'}</text>`;
+      const svg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${parts.join('')}${head}</svg>`);
+      panels.push(await sharp(base).composite([{ input: svg, top: 0, left: 0 }]).jpeg({ quality: 85 }).toBuffer());
+    }
+    // Sheets of `perSheet` panels in a 2-column grid, 8px gutters.
+    for (let s = 0; s * perSheet < panels.length; s++) {
+      const chunk = panels.slice(s * perSheet, (s + 1) * perSheet);
+      const cols = Math.min(2, chunk.length), rows = Math.ceil(chunk.length / cols), G = 8;
+      const sheetW = cols * W + (cols - 1) * G, sheetH = rows * H + (rows - 1) * G;
+      const file = `${String(idx).padStart(3, '0')}-${item.cls}-${item.page.id}-${'abcd'[s]}.jpg`;
+      await sharp({ create: { width: sheetW, height: sheetH, channels: 3, background: '#808080' } })
+        .composite(chunk.map((buf, k) => ({ input: buf, left: (k % cols) * (W + G), top: Math.floor(k / cols) * (H + G) })))
+        .jpeg({ quality: 82 }).toFile(path.join(dir, 'sheets', file));
+      manifest.push({ file, page_id: item.page.id, cls: item.cls, stratum: item.stratum, url: `https://sourcelibrary.org/book/${item.book.id}?page=${item.page.page_number}`, title: item.book.title });
+    }
+  }
+  fs.writeFileSync(path.join(dir, 'key.json'), JSON.stringify(key, null, 2));
+  fs.writeFileSync(path.join(dir, 'grades.template.json'), JSON.stringify(template, null, 2));
+  fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  console.log(`[grade-sheets] ${idx} pages, ${manifest.length} sheets → ${dir}/sheets (key.json is the unblinding key — grade before opening it)`);
+}
+
+function cmdGradeScore() {
+  const dir = path.join(OUT, 'grading');
+  const key = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
+  const grades = JSON.parse(fs.readFileSync(path.join(dir, 'grades.json'), 'utf8'));
+  const runs = loadRuns();
+  const arms = Object.keys(runs).sort();
+  const blank = () => ({ pages: 0, pictures: 0, missed: 0, T: 0, L: 0, C: 0, W: 0, D: 0, neg_pages: 0, neg_pages_fp: 0, neg_W: 0, neg_real: 0, perPage: [] });
+  const A = Object.fromEntries(arms.map((a) => [a, blank()]));
+  const problems = [];
+  for (const [pid, g] of Object.entries(grades)) {
+    if (!key[pid]) { problems.push(`${pid}: not in key`); continue; }
+    for (const [label, pg] of Object.entries(g.panels)) {
+      const arm = key[pid][label];
+      const n = parseRecord(runs[arm].get(pid)).images.length;
+      const letters = (pg.grades || '').replace(/\s/g, '').toUpperCase();
+      if (letters.length !== n || /[^TLCWD]/.test(letters)) { problems.push(`${pid} ${label} (${arm}): ${n} boxes, grades "${letters}"`); continue; }
+      const s = A[arm];
+      const cnt = (ch) => [...letters].filter((x) => x === ch).length;
+      if (g.cls === 'pos') {
+        s.pages++; s.pictures += g.pictures; s.missed += pg.missed || 0;
+        for (const ch of 'TLCWD') s[ch] += cnt(ch);
+        s.perPage.push({ pid, pictures: g.pictures, tight: Math.min(cnt('T'), g.pictures), found: g.pictures - (pg.missed || 0) });
+      }
+      if (g.cls === 'neg') {
+        s.neg_pages++; s.neg_W += cnt('W'); if (cnt('W')) s.neg_pages_fp++;
+        s.neg_real += cnt('T') + cnt('L') + cnt('C');
+      }
+    }
+  }
+  if (problems.length) { console.error(`[grade-score] ${problems.length} grading problems:\n  ${problems.join('\n  ')}`); }
+  // Page-bootstrap CI (pages are the unit; boxes on one page are not independent).
+  const boot = (pp) => {
+    const rnd = mulberry32(4747); const xs = [];
+    for (let b = 0; b < 2000; b++) {
+      let t = 0, p = 0;
+      for (let i = 0; i < pp.length; i++) { const q = pp[Math.floor(rnd() * pp.length)]; t += q.tight; p += q.pictures; }
+      xs.push(p ? t / p : 0);
+    }
+    xs.sort((a, b) => a - b); return [xs[49], xs[1949]];
+  };
+  const costPerPage = {};
+  for (const a of arms) {
+    const recs = [...runs[a].values()].filter((r) => !r.error);
+    const model = recs[0]?.model;
+    const c = recs.reduce((s, r) => s + (typeof r.cost_usd === 'number' ? r.cost_usd : usd(model, r.input_tokens || 0, r.output_tokens || 0, r.mode === 'batch')), 0);
+    costPerPage[a] = recs.length ? c / recs.length : null;
+  }
+  // Paired vs production flash (first flash run): per page, tight pictures won/lost/tied.
+  const baseArm = arms.find((a) => a === 'flash-realtime');
+  const byPid = (a) => new Map(A[a].perPage.map((p) => [p.pid, p]));
+  const out = { graded_at: new Date().toISOString(), arms: {} };
+  console.log('\n| arm | pages | pictures | box accuracy (tight/pictures) [95% CI] | usable (T+L)/pictures | picture recall | boxes T/L/C/W/D | neg FP boxes (pages) | neg real finds | vs flash W–L–T | $/page | $/1K pages |');
+  console.log('|---|---|---|---|---|---|---|---|---|---|---|---|');
+  for (const a of arms) {
+    const s = A[a];
+    const acc = s.pictures ? s.T / s.pictures : null;
+    const ci = s.perPage.length ? boot(s.perPage) : [null, null];
+    let wlt = '—';
+    if (baseArm && a !== baseArm) {
+      const bp = byPid(baseArm); let w = 0, l = 0, t = 0;
+      for (const p of s.perPage) { const q = bp.get(p.pid); if (!q) continue; if (p.tight > q.tight) w++; else if (p.tight < q.tight) l++; else t++; }
+      wlt = `${w}–${l}–${t}`;
+    }
+    const row = {
+      pages: s.pages, pictures: s.pictures, box_accuracy: acc, box_accuracy_ci95: ci,
+      usable: s.pictures ? (s.T + s.L) / s.pictures : null, picture_recall: s.pictures ? (s.pictures - s.missed) / s.pictures : null,
+      boxes: { T: s.T, L: s.L, C: s.C, W: s.W, D: s.D }, neg: { pages: s.neg_pages, fp_boxes: s.neg_W, fp_pages: s.neg_pages_fp, real_finds: s.neg_real },
+      vs_flash_wlt: wlt, cost_per_page: costPerPage[a],
+    };
+    out.arms[a] = row;
+    const p = (v) => (v == null ? '—' : (v * 100).toFixed(1) + '%');
+    console.log(`| ${a} | ${s.pages} | ${s.pictures} | ${p(acc)} [${p(ci[0])}, ${p(ci[1])}] | ${p(row.usable)} | ${p(row.picture_recall)} | ${s.T}/${s.L}/${s.C}/${s.W}/${s.D} | ${s.neg_W} (${s.neg_pages_fp}/${s.neg_pages}) | ${s.neg_real} | ${wlt} | $${costPerPage[a]?.toFixed(5) ?? '—'} | $${costPerPage[a] != null ? (costPerPage[a] * 1000).toFixed(2) : '—'} |`);
+  }
+  fs.writeFileSync(path.join(dir, 'grade-results.json'), JSON.stringify(out, null, 2));
+  console.log(`→ ${path.join(dir, 'grade-results.json')}`);
+}
+
 // ── main ──
-const cmds = { sample: cmdSample, run: cmdRun, 'batch-submit': cmdBatchSubmit, 'batch-collect': cmdBatchCollect, score: cmdScore, sheets: cmdSheets };
+const cmds = { sample: cmdSample, run: cmdRun, 'batch-submit': cmdBatchSubmit, 'batch-collect': cmdBatchCollect, score: cmdScore, sheets: cmdSheets, 'grade-sheets': cmdGradeSheets, 'grade-score': cmdGradeScore };
 if (!cmds[cmd]) {
-  console.error(`usage: node scripts/eval/image-extraction-lite-eval.mjs <${Object.keys(cmds).join('|')}> [--engine flash|lite] [--out dir] [--date YYYY-MM-DD]`);
+  console.error(`usage: node scripts/eval/image-extraction-lite-eval.mjs <${Object.keys(cmds).join('|')}> [--engine ${Object.keys(ENGINES).join('|')}] [--tag r2] [--limit N] [--out dir] [--date YYYY-MM-DD]`);
   process.exit(1);
 }
 await cmds[cmd]();
