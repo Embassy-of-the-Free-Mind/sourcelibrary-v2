@@ -926,10 +926,12 @@ async function cmdGradeSheets() {
   }
   // Negatives: every flash-negative page where ANY arm drew a box (each fire must be judged by eye —
   // a "false positive" there may be a picture production flash missed).
-  const negFired = sample.items.filter((i) => i.cls === 'neg' && complete(i) && arms.some((a) => parseRecord(runs[a].get(i.page.id)).images.length));
+  const negFiredAll = sample.items.filter((i) => i.cls === 'neg' && complete(i) && arms.some((a) => parseRecord(runs[a].get(i.page.id)).images.length));
+  const nNegGrade = parseInt(opt('n-neg-grade', '0'), 10);
+  const negFired = nNegGrade ? shuffle([...negFiredAll], rnd).slice(0, nNegGrade) : negFiredAll;
   const chosen = [...picked, ...negFired.map((i) => ({ ...i, stratum: 'neg-fired' }))];
   console.log(`[grade-sheets] arms: ${arms.join(', ')}`);
-  console.log(`[grade-sheets] positives complete in every arm ${posOk.length}/${pos.length}; strata one/few/many = ${strata.one.length}/${strata.few.length}/${strata.many.length}; picked ${picked.length}; negatives with a fire ${negFired.length}`);
+  console.log(`[grade-sheets] positives complete in every arm ${posOk.length}/${pos.length}; strata one/few/many = ${strata.one.length}/${strata.few.length}/${strata.many.length}; picked ${picked.length}; negatives with a fire ${negFiredAll.length}, graded ${negFired.length}`);
 
   const key = {}, template = {}, manifest = [];
   let idx = 0;
