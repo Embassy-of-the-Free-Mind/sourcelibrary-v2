@@ -256,3 +256,72 @@ describe('the .mjs and .ts twins agree', () => {
     expect(ts.MODEL_DEFAULTS).toEqual(mjs.MODEL_DEFAULTS);
   });
 });
+
+describe('inferHistoricalGeneration — what pre-#4613 rows can be said to have run under', () => {
+  const row = (source: string, when: string, extra: Record<string, unknown> = {}) => ({ data: 't', source, updated_at: new Date(when), ...extra });
+
+  it('a row with an observed block is observed, not inferred', () => {
+    expect(mjs.inferHistoricalGeneration('ocr', { ...row('ai', '2026-09-28T17:00:00Z'), engine: mjs.geminiEngine(ocrArgs()) })).toEqual({ status: 'observed' });
+  });
+
+  it('batch OCR since 2026-02-19: 0.1 / 16384 / thinking off, labelled inferred with its git basis', () => {
+    const r = mjs.inferHistoricalGeneration('ocr', row('batch_api', '2026-08-15'));
+    expect(r.status).toBe('inferred');
+    expect(r.rule).toBe('batch-ocr');
+    expect(r.generation).toEqual({ temperature: 0.1, max_output_tokens: 16384, thinking_budget: 0 });
+    expect(r.basis[0]).toMatch(/^5e1f1d3d6 2026-02-21/);
+    expect(mjs.inferHistoricalGeneration('ocr', row('pipeline_preview', '2026-09-10')).rule).toBe('batch-ocr');
+  });
+
+  it('an `ai` OCR row is Lambda (temperature 1, thinking on) when code_version was stamped, realtime (0.1, off) when not — only after 2026-06-01', () => {
+    const lambda = mjs.inferHistoricalGeneration('ocr', row('ai', '2026-08-15', { code_version: 'abc1234' }));
+    expect(lambda.rule).toBe('lambda-ocr-thinking-on');
+    expect(lambda.generation.temperature).toBe(1);
+    expect(lambda.generation.thinking).toBe('model_default_dynamic');
+    const lambdaOff = mjs.inferHistoricalGeneration('ocr', row('ai', '2026-09-10', { code_version: 'abc1234' }));
+    expect(lambdaOff.rule).toBe('lambda-ocr-thinking-off');
+    expect(lambdaOff.generation.thinking_budget).toBe(0);
+    const script = mjs.inferHistoricalGeneration('ocr', row('ai', '2026-08-15'));
+    expect(script.rule).toBe('realtime-ocr-script');
+    expect(script.generation).toEqual({ temperature: 0.1, max_output_tokens: 16384, thinking_budget: 0 });
+    // the cap became a flag on 2026-09-15: temperature and thinking still inferred, the cap is not
+    const flagged = mjs.inferHistoricalGeneration('ocr', row('ai', '2026-09-20'));
+    expect(flagged.rule).toBe('realtime-ocr-script-flagged-cap');
+    expect(flagged.generation.max_output_tokens).toBeNull();
+    // before code_version existed the two writers are indistinguishable: not_recorded, never a guess
+    const early = mjs.inferHistoricalGeneration('ocr', row('ai', '2026-05-01'));
+    expect(early.status).toBe('not_recorded');
+    expect(early.reason).toMatch(/ambiguous/);
+  });
+
+  it('translation `ai` rows: thinking on until 2026-09-04 then off; temperature never inferred (worker 1 vs script 0.2)', () => {
+    const early = mjs.inferHistoricalGeneration('translation', row('ai', '2026-06-01'));
+    expect(early.rule).toBe('translation-ai-before-cap');
+    expect(early.generation.temperature).toBeNull();
+    expect(early.generation.thinking).toBe('model_default_dynamic');
+    const mid = mjs.inferHistoricalGeneration('translation', row('ai', '2026-08-20'));
+    expect(mid.rule).toBe('translation-ai-cap-thinking-on');
+    const late = mjs.inferHistoricalGeneration('translation', row('ai', '2026-09-20'));
+    expect(late.rule).toBe('translation-ai-thinking-off');
+    expect(late.generation.thinking_budget).toBe(0);
+    expect(late.generation.temperature).toBeNull();
+    expect(mjs.inferHistoricalGeneration('translation', row('batch_api', '2026-07-01')).generation).toEqual({ temperature: 0.1, max_output_tokens: 16384, thinking_budget: 0 });
+  });
+
+  it('boundaries are half-open [from, to): the day thinking turned off belongs to the new rule', () => {
+    expect(mjs.inferHistoricalGeneration('ocr', row('ai', '2026-09-03T00:00:00Z', { code_version: 'x' })).rule).toBe('lambda-ocr-thinking-off');
+    expect(mjs.inferHistoricalGeneration('ocr', row('ai', '2026-09-02T23:59:59Z', { code_version: 'x' })).rule).toBe('lambda-ocr-thinking-on');
+    // after the floor, a row with no block is a writer that forgot, not history
+    const after = mjs.inferHistoricalGeneration('ocr', row('batch_api', '2026-09-28T16:21:00Z'));
+    expect(after.status).toBe('not_recorded');
+  });
+
+  it('every rule in the table has a dated git basis and a writer, and generation is null only when the writer is ambiguous', () => {
+    for (const r of mjs.provenanceHistory().rules) {
+      expect(r.basis.length, r.id).toBeGreaterThan(0);
+      expect(r.basis.join(' '), r.id).toMatch(/\b[0-9a-f]{9}\b 2026-\d\d-\d\d/);
+      expect(r.writer, r.id).toBeTruthy();
+      if (r.generation === null) expect(r.writer, r.id).toMatch(/ambiguous/);
+    }
+  });
+});
