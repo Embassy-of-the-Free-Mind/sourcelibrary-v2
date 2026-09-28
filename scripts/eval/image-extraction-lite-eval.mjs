@@ -982,7 +982,30 @@ async function cmdGradeSheets() {
 function cmdGradeScore() {
   const dir = path.join(OUT, 'grading');
   const key = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
-  const grades = JSON.parse(fs.readFileSync(path.join(dir, 'grades.json'), 'utf8'));
+  const template = JSON.parse(fs.readFileSync(path.join(dir, 'grades.template.json'), 'utf8'));
+  // --grades a.json,b.json,… merges several graders' files; the first file wins on pages graded
+  // twice, and those overlap pages report inter-grader agreement (box letters + pictures).
+  const files = (opt('grades') || path.join(dir, 'grades.json')).split(',');
+  const graders = files.map((f) => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(dir, f), 'utf8')));
+  const grades = {};
+  for (const g of [...graders].reverse()) Object.assign(grades, g);
+  if (graders.length > 1) {
+    let boxes = 0, same = 0, pages = 0, picSame = 0, tightSame = 0;
+    for (let i = 0; i < graders.length; i++) for (let j = i + 1; j < graders.length; j++) {
+      for (const [pid, a] of Object.entries(graders[i])) {
+        const b = graders[j][pid]; if (!b) continue;
+        pages++; if (a.pictures === b.pictures) picSame++;
+        for (const [label, pa] of Object.entries(a.panels)) {
+          const la = (pa.grades || '').toUpperCase(), lb = (b.panels[label]?.grades || '').toUpperCase();
+          for (let k = 0; k < Math.max(la.length, lb.length); k++) {
+            boxes++; if (la[k] === lb[k]) same++;
+            if ((la[k] === 'T') === (lb[k] === 'T')) tightSame++;
+          }
+        }
+      }
+    }
+    console.log(`[grade-score] inter-grader overlap: ${pages} page-pairs; pictures agree ${picSame}/${pages}; box letter agree ${same}/${boxes} (${boxes ? ((same / boxes) * 100).toFixed(1) : '—'}%); tight-vs-not agree ${tightSame}/${boxes} (${boxes ? ((tightSame / boxes) * 100).toFixed(1) : '—'}%)`);
+  }
   const runs = loadRuns();
   const arms = Object.keys(runs).sort();
   const blank = () => ({ pages: 0, pictures: 0, missed: 0, T: 0, L: 0, C: 0, W: 0, D: 0, neg_pages: 0, neg_pages_fp: 0, neg_W: 0, neg_real: 0, perPage: [] });
@@ -990,6 +1013,7 @@ function cmdGradeScore() {
   const problems = [];
   for (const [pid, g] of Object.entries(grades)) {
     if (!key[pid]) { problems.push(`${pid}: not in key`); continue; }
+    const cls = g.cls || template[pid]?.cls;
     for (const [label, pg] of Object.entries(g.panels)) {
       const arm = key[pid][label];
       const n = parseRecord(runs[arm].get(pid)).images.length;
@@ -997,12 +1021,12 @@ function cmdGradeScore() {
       if (letters.length !== n || /[^TLCWD]/.test(letters)) { problems.push(`${pid} ${label} (${arm}): ${n} boxes, grades "${letters}"`); continue; }
       const s = A[arm];
       const cnt = (ch) => [...letters].filter((x) => x === ch).length;
-      if (g.cls === 'pos') {
+      if (cls === 'pos') {
         s.pages++; s.pictures += g.pictures; s.missed += pg.missed || 0;
         for (const ch of 'TLCWD') s[ch] += cnt(ch);
         s.perPage.push({ pid, pictures: g.pictures, tight: Math.min(cnt('T'), g.pictures), found: g.pictures - (pg.missed || 0) });
       }
-      if (g.cls === 'neg') {
+      if (cls === 'neg') {
         s.neg_pages++; s.neg_W += cnt('W'); if (cnt('W')) s.neg_pages_fp++;
         s.neg_real += cnt('T') + cnt('L') + cnt('C');
       }
