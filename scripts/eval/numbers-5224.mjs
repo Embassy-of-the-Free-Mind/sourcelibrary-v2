@@ -537,7 +537,10 @@ async function stageCrops() {
         // the overlay must match the EXTRACTED size exactly (167 crops failed on a 1-px mismatch)
         const base = await sharp(path.join(IMG, `${slug}.jpg`)).extract(ex).toBuffer(); const bm = await sharp(base).metadata();
         const svg = Buffer.from(`<svg width="${bm.width}" height="${bm.height}" xmlns="http://www.w3.org/2000/svg">${rects}</svg>`);
-        await sharp(base).composite([{ input: svg, top: 0, left: 0 }]).resize({ width: 1200 }).jpeg({ quality: 82 }).toFile(F(file));
+        // two passes: sharp applies resize BEFORE composite whatever the call order, so a crop wider than
+        // 1200 px was shrunk under a full-size overlay and rejected (159 crops, all wide 'between' windows)
+        const marked = await sharp(base).composite([{ input: svg, top: 0, left: 0 }]).toBuffer();
+        await sharp(marked).resize({ width: 1200 }).jpeg({ quality: 82 }).toFile(F(file));
         crops.push({ ...e, type, crop: file, box: type === 'box' ? { l: target.l, top: target.top, r: target.r, bot: target.bot } : null, anchors_box: type === 'between' ? anchors.map((m) => ({ l: m.l, top: m.top, r: m.r, bot: m.bot })) : undefined, leaf_wh: [leaf.width, leaf.height], img_wh: [md.width, md.height], line_h: Math.round(h) });
       } catch (err) { crops.push({ ...e, crop: null, crop_error: String(err.message || err).slice(0, 100) }); }
     }
