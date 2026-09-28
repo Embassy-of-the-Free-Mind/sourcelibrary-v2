@@ -123,9 +123,18 @@ function parseArtworkBbox(raw: unknown): { ymin: number; xmin: number; ymax: num
 }
 
 export async function POST(request: NextRequest) {
-  const rl = checkRateLimit({ name: 'identify', limit: 10, windowSeconds: 3600 }, getClientIp(request));
+  // 60/hour per IP (was 10). A museum's guest wifi NATs every visitor to one
+  // address, and 10 tripped during a single 12-photo test (#3193 Phase 3).
+  // Worst case per address per instance-hour: ~60 × ($0.005–0.01) — the
+  // identification, the 20-image comparison and, when nothing is confirmed,
+  // the grounded web check. Per-device tokens are the real fix for exhibits.
+  const rl = checkRateLimit({ name: 'identify', limit: 60, windowSeconds: 3600 }, getClientIp(request));
   if (!rl.allowed) {
-    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+    const minutes = Math.max(1, Math.ceil(rl.retryAfter / 60));
+    return NextResponse.json(
+      { error: `Too many identifications from this network in the last hour — try again in about ${minutes} min` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+    );
   }
 
   let base64: string;
