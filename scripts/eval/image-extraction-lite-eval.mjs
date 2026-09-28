@@ -518,7 +518,9 @@ async function cmdBatchSubmit() {
   const jsonl = lines.join('\n') + '\n';
   const bytes = Buffer.byteLength(jsonl);
   console.log(`[batch ${ENGINE}] ${lines.length} requests, ${skipped} skipped, ${(bytes / 1e6).toFixed(1)} MB JSONL, prompt_sha=${promptSha}`);
-  const key = apiKeys()[0];
+  // Same key preference as the production batch lane (src/lib/gemini-batch.ts): TIER3 first.
+  const batchKeyEnv = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
+  const key = process.env[batchKeyEnv];
   // resumable upload (text/plain: application/jsonl returns 200 with no `file` key — see src/lib/gemini-batch.ts)
   const start = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${key}`, {
     method: 'POST',
@@ -549,7 +551,7 @@ async function cmdBatchSubmit() {
   });
   if (!create.ok) throw new Error(`batch create failed: ${create.status} ${(await create.text()).slice(0, 500)}`);
   const job = await create.json();
-  const rec = { model, job_name: job.name, state: job.metadata?.state || job.state, file_name: fileName, requests: lines.length, submitted_at: new Date().toISOString(), prompt_sha: promptSha, key_index: 0 };
+  const rec = { model, job_name: job.name, state: job.metadata?.state || job.state, file_name: fileName, requests: lines.length, submitted_at: new Date().toISOString(), prompt_sha: promptSha, key_env: batchKeyEnv };
   fs.writeFileSync(path.join(OUT, `batch-${ENGINE}.json`), JSON.stringify(rec, null, 2));
   console.log(`[batch ${ENGINE}] created ${job.name} state=${rec.state}`);
 }
@@ -558,7 +560,7 @@ async function cmdBatchCollect() {
   const model = MODELS[ENGINE];
   const f = path.join(OUT, `batch-${ENGINE}.json`);
   const rec = JSON.parse(fs.readFileSync(f, 'utf8'));
-  const key = apiKeys()[rec.key_index || 0];
+  const key = process.env[rec.key_env || 'GEMINI_API_KEY'];
   const outFile = path.join(OUT, `raw-${ENGINE}-batch.jsonl`);
   const waitMax = parseInt(opt('wait-min', '0'), 10) * 60e3;
   const t0 = Date.now();
