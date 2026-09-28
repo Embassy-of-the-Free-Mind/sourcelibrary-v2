@@ -1168,9 +1168,10 @@ function stageFlashReport() {
   for (const c of paired) out.push(`| ${c.label} | ${c.grade} (${c.books}) | ${c.pairs} | ${c.excluded.lite_failed_only} / ${c.excluded.flash_failed_only} / ${c.excluded.both_failed} | ${c.flash_better} | ${c.lite_better} | ${c.ties} | ${c.sign_p.toFixed(3)} | ${pp(c.median_delta)} ${c.median_delta_ci ? `[${pp(c.median_delta_ci[0])}, ${pp(c.median_delta_ci[1])}]` : ''} |`);
   out.push('\n## 4. The preregistered rule, per cell\n');
   out.push('lite is adequate iff (1) lite median CER ≤ 2% AND (2) lite catastrophic ≤ 2% (refusals count) AND (3) paired median Δ ≤ 1 pp. A cell under 30 books carries no proposal on its own.\n');
-  out.push('| cell | grade | (1) median CER ≤ 2% | (2) catastrophic ≤ 2% | (3) median Δ ≤ 1 pp | verdict |\n|---|---|---|---|---|---|');
+  // Not part of the rule, shown beside it: whether flash itself would pass the condition lite failed.
+  out.push('| cell | grade | (1) median CER ≤ 2% | (2) catastrophic ≤ 2% | (3) median Δ ≤ 1 pp | verdict | flash\'s own catastrophic (not in the rule) |\n|---|---|---|---|---|---|---|');
   const yn = (v, x) => `${v ? 'yes' : '**no**'} (${x})`;
-  for (const c of paired) out.push(`| ${c.label} | ${c.grade} | ${yn(c.rule.median_cer_ok, pct(c.lite.median_cer, 2))} | ${yn(c.rule.catastrophic_ok, pct(c.lite.catastrophic_rate))}| ${yn(c.rule.delta_ok, `${pp(c.median_delta)} pp`)} | ${c.lite_adequate ? 'lite adequate' : c.books < 30 ? `fails ${c.failed_conditions.join(', ')} — exploratory, no proposal` : `**proposes flash** (fails ${c.failed_conditions.join(', ')})`} |`);
+  for (const c of paired) out.push(`| ${c.label} | ${c.grade} | ${yn(c.rule.median_cer_ok, pct(c.lite.median_cer, 2))} | ${yn(c.rule.catastrophic_ok, pct(c.lite.catastrophic_rate))}| ${yn(c.rule.delta_ok, `${pp(c.median_delta)} pp`)} | ${c.lite_adequate ? 'lite adequate' : c.books < 30 ? `fails ${c.failed_conditions.join(', ')} — exploratory, no proposal` : `**proposes flash** (fails ${c.failed_conditions.join(', ')})`} | ${pct(c.flash.catastrophic_rate)} (${c.flash.refusals} refusals of ${c.flash.pages}) |`);
 
   // ---- spot-check list ----
   out.push('\n## 5. Pages to read by eye\n');

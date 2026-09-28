@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>69</page-num>
+
+Indians are free, and not one of them is a slave. The Lakedæmonians and the Indians are here so far in agreement. The Lakedæmonians, however, hold the Helots as slaves, and these Helots do servile labour; but the Indians do not even use aliens as slaves, and much less a countryman of their own.
+
+### FRAGM. XXVII.
+
+->Strab. XV. i. 53-56,—pp. 709-10.<-
+->*Of the Manners of the Indians.*<-
+
+The Indians all live frugally, especially when in camp. They dislike a great undisciplined multitude, and consequently they observe good order. Theft is of very rare occurrence. Megasthenês says that those who were in the camp of Sandrakottos, wherein lay 400,000 men, found that the thefts reported on any one day did not exceed the value of two hundred drachmæ, and this among a people who have no written laws, but are ignorant of writing, and must therefore in all the business of life trust to memory. They live, nevertheless, happily enough, being simple in their manners and frugal. They never drink wine except at sacrifices.¶ Their beverage is a liquor composed from rice instead of barley, and their food is principally a rice-pottage.* The simplicity of their laws and their contracts is
+
+---
+¶ This wine was probably Soma juice.
+\* Curry and rice, no doubt.
+
+<vocab>Indians, Lakedæmonians, Helots, Strabo, Megasthenês, Sandrakottos, drachmæ, Soma juice, rice-pottage</vocab>

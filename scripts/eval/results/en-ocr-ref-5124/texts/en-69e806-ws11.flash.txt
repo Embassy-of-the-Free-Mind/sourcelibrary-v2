@@ -1,0 +1,35 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>9</page-num>
+
+The work abounds in prescriptions, of which the following are samples:
+"Beginning of the Book of Medicines. To remove illness from the stomach.
+"Rub up the seed of the Thehui plant with vinegar, and give the patient to drink.
+"The same for sick bowels.
+
+| | |
+|---|---|
+| Caraway seed | 1-64 dram. |
+| Goose fat | 1/8 dram. |
+| Milk | 1 tenat. |
+
+Boil, stir and eat.
+
+"The same:
+| | |
+|---|---|
+| Pomegranate seed | 1/8 dram. |
+| Sycamore fruit (?) | 1/8 dram. |
+| Beer | 1 tenat. |
+
+Treat as above."
+
+In the original the arrangement of the substances and quantities in two columns is the same as here given.
+The weights are written in red ink.
+Other prescriptions contained reference to pills made by mixing certain substances with honey, and rolling them into little balls.
+
+The weights and measures in this unique work deserve more lengthy notice than space will permit. A series of special signs indicate measure of volume, and figures with dots above them represent weights. The unit of weight employed is believed by Ebers to bear a close relation to the later Arabic Dirhem or Drachm, which is equivalent to about 48 English grains. But, owing to the smallness of the quantities given in the recipes, the unit is probably double the dram in value. This unit and its divisions are represented in hieroglyphics thus:
+
+<vocab>Book of Medicines, Thehui plant, Caraway seed, Goose fat, Milk, Pomegranate seed, Sycamore fruit, Beer, Ebers, Arabic Dirhem, Drachm, hieroglyphics</vocab>

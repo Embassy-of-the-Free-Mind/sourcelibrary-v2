@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>44</page-num>
+
+<margin>
+勞
+勞
+亭
+</margin>
+
+### 16. LAO-LAO TING, A TAVERN
+
+> Here friends come, sorrowing, to say farewell,
+> O Lao-lao Ting, tavern where every heart must ache.
+> Here even the wind of spring knows the pain of parting,
+> And will not let the willow branches grow green.
+
+---
+
+> *The tavern was situated on a hill-top just outside the city of Nanking; and people seeing their friends off came as far as this place to exchange parting cups.*
+> *The last line alludes to the Chinese custom of breaking off a willow branch and presenting it to a departing friend.*
+
+<vocab>Lao-lao Ting, Nanking, willow branch, parting cups, tavern</vocab>
