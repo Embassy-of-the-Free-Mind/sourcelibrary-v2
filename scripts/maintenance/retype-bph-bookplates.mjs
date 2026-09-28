@@ -174,25 +174,32 @@ async function main() {
   const touchedBooks = new Set();
   for (const r of todo) {
     const newQuality = Math.min(typeof r.gallery_quality === 'number' ? r.gallery_quality : MAX_QUALITY, MAX_QUALITY);
-    const res = await gallery.updateOne({ _id: r._id }, { $set: { type: 'exlibris', gallery_quality: newQuality, updated_at: now } });
-    galleryModified += res.modifiedCount;
 
     // The twin must be the SAME detection: same description at that index, or we do not
     // touch the page (a re-run of extraction can reorder detected_images).
     const page = await pages.findOne({ id: r.page_id }, { projection: { detected_images: 1 } });
     const det = page?.detected_images?.[r.detection_index];
-    if (det && (det.description || '') === (r.description || '')) {
+    const twinOk = !!det && (det.description || '') === (r.description || '');
+
+    // Log BEFORE writing. A log row without a write is harmless and re-run-safe; a write
+    // without a log loses the previous values — which is what a DNS blip did on the
+    // first run (80 rows written, 79 logged).
+    const logRow = await recordSweepAction(db, {
+      sweep: SWEEP, book_id: r.book_id, action: 'retyped-exlibris',
+      detail: { gallery_id: r.id, page_id: r.page_id, detection_index: r.detection_index, rule: r.rule, plate: r.plate, prev_type: r.type ?? null, prev_quality: r.gallery_quality ?? null, new_quality: newQuality, twin: det ? (twinOk ? 'pending' : 'description-mismatch') : 'missing' },
+    });
+    logged++;
+
+    const res = await gallery.updateOne({ _id: r._id }, { $set: { type: 'exlibris', gallery_quality: newQuality, updated_at: now } });
+    galleryModified += res.modifiedCount;
+
+    if (twinOk) {
       const tr = await pages.updateOne({ id: r.page_id }, { $set: { [`detected_images.${r.detection_index}.type`]: 'exlibris', [`detected_images.${r.detection_index}.gallery_quality`]: Math.min(typeof det.gallery_quality === 'number' ? det.gallery_quality : MAX_QUALITY, MAX_QUALITY) } });
       twinModified += tr.modifiedCount;
+      await db.collection('sweep_log').updateOne({ _id: logRow._id }, { $set: { 'detail.twin': 'updated' } });
     } else {
       twinMismatch++;
     }
-
-    await recordSweepAction(db, {
-      sweep: SWEEP, book_id: r.book_id, action: 'retyped-exlibris',
-      detail: { gallery_id: r.id, page_id: r.page_id, detection_index: r.detection_index, rule: r.rule, plate: r.plate, prev_type: r.type ?? null, prev_quality: r.gallery_quality ?? null, new_quality: newQuality, twin: det ? ((det.description || '') === (r.description || '') ? 'updated' : 'description-mismatch') : 'missing' },
-    });
-    logged++;
     touchedBooks.add(r.book_id);
     if (logged % 100 === 0) console.log(`  ${logged}/${todo.length} rows; gallery modified ${galleryModified}, twins ${twinModified}`);
   }
