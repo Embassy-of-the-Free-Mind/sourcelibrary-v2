@@ -11,6 +11,11 @@
 // derived in the private ops repo, docs/program-budget-5yr-2026-09.md. Corpus
 // figures measured 2026-09-07 (visible books at the site's readable bar; the
 // untranslated pool = books with pages_count > 0 under 90% translated).
+// Unit-cost provenance: the machine cost of a single pass is MEASURED on
+// /admin/spend (September 2026 bill: translation ≈ $0.003/page, OCR ≈ $0.0006/page,
+// whole backlog ≈ $48–63K at list price). The 2.3¢/page budget rate is a PROGRAMME
+// rate (repeat passes, hard scripts, image extraction, failed runs); the copy below
+// must say so and never present it as the bare cost of one pass.
 
 export interface PlanItem {
   work: string;
@@ -88,7 +93,7 @@ export const visionContent: VisionContent = {
   ],
   buildHeading: 'What we need to finish',
   bodyBuild: [
-    'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. What they are waiting for is the translation run, which costs about two cents a page, or about $360,000 for all of them. There is nothing left to invent in this part of the work. The pipeline runs, and the only thing missing is the money to keep it running. When it is finished the library will hold roughly four times the words of English Wikipedia, and a good deal of it will be the material Wikipedia’s own articles were written from.',
+    'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. The machine cost of reading and translating them has fallen a long way this year. At the rates on our September bill, a first pass over all sixteen million pages comes to about $60,000. The translation line in the budget is $360,000, because a first pass is not a finished library. It pays for re-reading the books as better engines arrive, for the scripts that need special handling, such as Tibetan and Syriac, for pulling out the illustrations, and for the retries and failed runs that every job of this size carries. There is nothing left to invent in this part of the work. When it is finished the library will hold roughly four times the words of English Wikipedia, and a good deal of it will be the material Wikipedia’s own articles were written from.',
     'The rest of the budget is what a library needs if people are going to trust it and it is going to last. Scholars have to check the translations against the originals, language by language. The Embassy holds about two thousand books that exist in no other collection, and they have to be scanned before they can be translated at all. Every page has to stay online, and someone has to be paid to keep the whole thing running. So far a handful of people have done all of this, mostly unpaid. Over five years it comes to **$2.4 million**: $2 million for the work itself and $400,000 to run the organization that does it. The first year needs **$672,000**, and each year after that about $430,000.',
   ],
   montage: {
@@ -114,7 +119,7 @@ export const visionContent: VisionContent = {
     heading: 'The five-year budget: $2.4 million',
     intro: 'Each line below comes from a unit cost we have measured in practice. The first year needs **$672,000**, and each year after that about **$432,000**.',
     items: [
-      { work: 'Translate the 72,000 books (16 million pages) we already hold — about 2 cents a page', resource: '$360K' },
+      { work: 'Translate the 72,000 books (16 million pages) we already hold, then re-read them as the engines improve', resource: '$360K' },
       { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
       { work: 'Scanning about 2,000 rare books at the Embassy that exist in no other collection', resource: '$130K' },
       { work: 'A director, a part-time engineer to run the pipeline, and a community manager, for five years', resource: '$800K' },
@@ -123,11 +128,11 @@ export const visionContent: VisionContent = {
       { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
       { work: 'Running the organization: fundraising help, tools, insurance, payment processing, and a three-month reserve', resource: '$400K' },
     ],
-    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
+    footnote: 'Translation is budgeted at 2.3 cents a page. Our measured cost in September 2026 was about a third of a cent a page for a single pass on the cheapest engine; the budget rate covers repeat passes with better models, the harder scripts, illustration extraction and failed runs. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
   },
   ways: {
     heading: 'Ways to take part',
-    intro: 'A book costs about $5 to translate. Every gift below is recorded in the register under your name, permanently.',
+    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. Every gift is recorded in the register under your name, permanently.',
     tiers: [
       { gift: '$100', label: 'Translates 20 books' },
       { gift: '$275', label: 'Adopt a rare manuscript — one unscanned volume at the Embassy, scanned and translated, named for you' },
