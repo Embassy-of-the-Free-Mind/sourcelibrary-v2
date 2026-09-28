@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>5</page-num>
+<header>( 5 )</header>
+
+# SECTION II.
+## Eight Operations of Arithmetic.
+
+12. Rule of addition and subtraction:² half a stanza.
+The sum of the figures according to their places is to be taken in the direct or inverse order:³ or [in the case of subtraction] their difference.
+
+13. Example. Dear intelligent LÍLÁVATÍ,⁴ if thou be skilled in addition and subtraction, tell me the sum of two, five, thirty-two, a hundred and ninety-three, eighteen, ten, and a hundred, added together; and the remainder, when their sum is subtracted from ten thousand.
+
+Statement, 2, 5, 32, 193, 18, 10, 100.
+[Answer.] Result of the addition, 360.
+Statement for subtraction, 10000, 360.
+[Answer.] Result of the subtraction, 9640.⁵
+
+14—15. Rule of multiplication:⁶ two and a half stanzas.
+Multiply the last⁷ figure of the multiplicand by the multiplicator, and
+
+<note>¹ Paricarmásh'aca, eight operations, or modes of process: logistics or algorism.</note>
+<note>² Sancalana, sancalita, miśrana, yuti, yóga, &c. summation, addition. Vyavacalana, vyavacalita, sód'hana, patana, &c. subtraction. Antara, difference, remainder.</note>
+<note>³ From the first on the right, towards the left; or from the last on the left, towards the right. GANG.</note>
+<note>⁴ Seemingly the name of a female to whom instruction is addressed. But the term is interpreted in some of the commentaries, consistently with its etymology, "Charming."—See § 1. and 277.</note>
+<note>⁵ Mode of working addition as shown in the Manóranjana:
+| | | |
+|---|---|---|
+| Sum of the units, | 2, 5, 2, 3, 8, 0, 0, | 20 |
+| Sum of the tens, | 3, 9, 1, 1, 0, | 14 |
+| Sum of the hundreds, | 1, 0, 0, 1, | 2 |
+| Sum of the sums | | 360 |</note>
+<note>⁶ Guńana, abhyása; also hanana and any term implying a tendency to destroy. It is denominated pratyutpanna by BRAHMEGUPTA, § 3; and by ŚRÍD'HARA, § 15—17.
+Gunya multiplicand. Guńaca multiplicator. Gháta product.</note>
+<note>⁷ The digit standing last towards the left. The work may begin either from the first or the last digit, according to ŚRÍD'HARA. Gańita-sára, § 15.</note>
+
+<vocab>Arithmetic, Lílávatí, addition, subtraction, multiplication, multiplicand, multiplicator, product, logistics, algorism, summation, Manóranjana, Brahmegupta, Śríd'hara, Gańita-sára</vocab>

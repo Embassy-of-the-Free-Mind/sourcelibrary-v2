@@ -1,0 +1,6 @@
+<scan-quality>poor</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>blank</page-type>
+<warning>The provided image is a blank page with no visible text or markings to transcribe.</warning>
+<vocab>blank page</vocab>

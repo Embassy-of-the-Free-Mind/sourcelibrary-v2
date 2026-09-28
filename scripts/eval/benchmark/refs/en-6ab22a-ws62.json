@@ -1,0 +1,32 @@
+{
+  "slug": "en-6ab22a-ws62",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AAlchemy%20the%20turba%20philosophorum%3B%20or%2C%20Assembly%20of%20the%20sages%2C%20called%20also%20the%20book%20of%20truth%20in%20the%20art%20and%20the%20third%20Pythagorical%20synod%3B%20(IA%20alchemyturbaphil00waitrich).pdf%2F62&oldid=15239234",
+  "source_revision": "oldid 15239234 (2025-08-01T23:24:08Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 976
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "matches start and end exactly, footnotes included"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

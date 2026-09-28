@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>32</page-num>
+<header>The second Book of</header>
+
+78. Depart from that dark light, be partakers of immortality, and leave to forsake corruption.
+
+79. And some of them that heard me, mocking and scorning, went away, and delivered themselves up to the way of death.
+
+80. But others casting themselves down before my feet, besought me, that they might be taught; but I causing them to rise up, became a guide of mankind, teaching them the reasons how, and by what means they may be saved. And I sowed in them the words of Wisdom, and nourished them with Ambrosian water of immortality.
+
+81. And when it was Evening, and the Brightness of the same began wholly to go down, I commanded them to go down, I commanded them to give thanks to God; and when they had finished their thanksgiving, every one returned to his own lodging.
+
+82. But
+
+<vocab>immortality, corruption, wisdom, Ambrosian water, thanksgiving, God</vocab>

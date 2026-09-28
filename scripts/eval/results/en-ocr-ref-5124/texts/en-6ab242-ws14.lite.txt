@@ -1,0 +1,23 @@
+ABBREVIATIONS.
+
+---
+
+Chavannes = Mémoire composé à l’époque de la grande dynastie T‘ang sur les religieux éminents qui allèrent chercher la loi dans les pays d’occident, par I-tsing. Traduit en Français par Édouard Chavannes. Paris, 1894.
+Childers = A Dictionary of the Pâli Language, by R. C. Childers. London, 1875.
+Dharmasaṅgraha = An Ancient Collection of Buddhist Technical Terms, prepared for publication by Kenjiu Kasawara. Edited by F. Max Müller and H. Wenzel. Oxford, 1885.
+J. = The New Japanese Edition of the Chinese Buddhist Books in the Bodleian Library, Jap. 65.
+Julien = Méthode pour déchiffrer et transcrire les Noms Sanscrits qui se rencontrent dans les Livres Chinois. Par Stanislas Julien. Paris, 1861.
+Kâsyapa = A Commentary in MS. on I-tsing’s Record, written in 1758. By Ji-un Kâsyapa (On-kō),—the Nan-kai-kai-ran-shō.
+Nanjio = A Catalogue of the Chinese Translation of the Buddhist Tripiṭaka, the Sacred Canon of the Buddhists in China and Japan. Compiled by Order of the Secretary of State for India, by Bunyiu Nanjio. Oxford, 1883.
+S. B. E. = The Sacred Books of the East, translated by various Oriental Scholars, and edited by F. Max Müller. Clarendon Press, Oxford.
+Yule = Travels of Marco Polo. By Colonel Yule. 2nd edition. London, 1875.
+
+---
+
+N.B.—When a word or passage is marked with an asterisk *, it has an additional note at the end.
+
+<scan-quality>good</scan-quality>
+<language>English, French</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<vocab>Abbreviations, Chavannes, Childers, Dharmasaṅgraha, I-tsing, Bodleian Library, Julien, Kâsyapa, Nanjio, Tripiṭaka, S. B. E., F. Max Müller, Yule, Marco Polo</vocab>

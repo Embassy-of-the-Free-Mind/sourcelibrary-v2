@@ -1,0 +1,66 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>4</page-num>
+<header>MESSRS. METHUEN'S CATALOGUE</header>
+
+**Beckford (Peter).** THOUGHTS ON HUNTING. Edited by J. OTHO PAGET, and Illustrated by G. H. JALLAND. *Second Edition.* Demy 8vo. 6s.
+**Beckford (William).** See Little Library.
+**Beeching (H. C.),** M.A., Canon of Westminster. See Library of Devotion.
+**Begbie (Harold).** MASTER WORKERS. Illustrated. Demy 8vo. 7s. 6d. net.
+**Behmen (Jacob).** DIALOGUES ON THE SUPERSENSUAL LIFE. Edited by BERNARD HOLLAND. Fcap. 8vo. 3s. 6d.
+**Belloc (Hilaire),** M.P. PARIS. *Second Edition.* With Maps and Illustrations. Cr. 8vo. 6s.
+HILLS AND THE SEA. *Second Edition.* Crown 8vo. 6s.
+**Bellot (H. H. L.),** M.A. THE INNER AND MIDDLE TEMPLE. With numerous Illustrations. Crown 8vo. 6s. net.
+**Bennett (W. H.),** M.A. A PRIMER OF THE BIBLE. *Third Edition.* Cr. 8vo. 2s. 6d.
+**Bennett (W. H.) and Adeney (W. F.).** A BIBLICAL INTRODUCTION. *Fourth Edition.* Cr. 8vo. 7s. 6d.
+**Benson (Archbishop)** GOD'S BOARD: Communion Addresses. Fcap. 8vo. 3s. 6d. net.
+**Benson (A. C.),** M.A. See Oxford Biographies.
+**Benson (R. M.).** THE WAY OF HOLINESS: a Devotional Commentary on the 119th Psalm. Cr. 8vo. 5s.
+**Bernard (E. R.),** M.A., Canon of Salisbury. THE ENGLISH SUNDAY. Fcap. 8vo. 1s. 6d.
+**Bertouch (Baroness de).** THE LIFE OF FATHER IGNATIUS. Illustrated. Demy 8vo. 10s. 6d. net.
+**Beruete (A. de).** See Classics of Art.
+**Betham-Edwards (M.).** HOME LIFE IN FRANCE. Illustrated. *Fourth and Cheaper Edition.* Crown 8vo. 6s.
+A Colonial Edition is also published.
+**Bethune-Baker (J. F.),** M.A. See Handbooks of Theology.
+**Bidez (M.).** See Byzantine Texts.
+**Biggs (C. R. D.),** D.D. See Churchman's Bible.
+**Bindley (T. Herbert),** B.D. THE OECUMENICAL DOCUMENTS OF THE FAITH. With Introductions and Notes. *Second Edition.* Cr. 8vo. 6s. net.
+**Binns (H. B.).** THE LIFE OF WALT WHITMAN. Illustrated. Demy 8vo. 10s. 6d. net.
+A Colonial Edition is also published.
+**Binyon (Lawrence).** THE DEATH OF ADAM, AND OTHER POEMS. Cr. 8vo. 3s. 6d. net.
+See also W. Blake.
+**Birnstingl (Ethel).** See Little Books on Art.
+**Blackmantle (Bernard).** See I.P.L.
+**Blair (Robert).** See I.P.L.
+**Blake (William).** THE LETTERS OF WILLIAM BLAKE, TOGETHER WITH A LIFE BY FREDERICK TATHAM. Edited from the Original Manuscripts, with an Introduction and Notes, by ARCHIBALD G. B. RUSSELL. With 12 Illustrations. Demy 8vo. 7s. 6d. net.
+ILLUSTRATIONS OF THE BOOK OF JOB. With a General Introduction by LAWRENCE BINYON. Quarto. 21s. net.
+See also I.P.L. and Little Library.
+**Blaxland (B.),** M.A. See Library of Devotion.
+**Bloom (J. Harvey),** M.A. SHAKESPEARE'S GARDEN. Illustrated. Fcap. 8vo. 3s. 6d.; leather, 4s. 6d. net.
+See also Antiquary's Books
+**Blouet (Henri).** See Beginner's Books.
+**Boardman (T. H.),** M.A. See Textbooks of Science.
+**Bodley (J. E. C.),** Author of 'France.' THE CORONATION OF EDWARD VII. Demy 8vo. 21s. net. By Command of the King.
+**Body (George),** D.D. THE SOUL'S PILGRIMAGE: Devotional Readings from his writings. Selected by J. H. BURN, B.D., F.R.S.E. Pott 8vo. 2s. 6d.
+**Bona (Cardinal).** See Library of Devotion.
+**Boon (F. C.).** See Commercial Series.
+**Borrow (George).** See Little Library.
+**Bos (J. Ritzema).** AGRICULTURAL ZOOLOGY. Translated by J. R. AINSWORTH DAVIS, M.A. With 155 Illustrations. Cr. 8vo. *Third Edition.* 3s. 6d.
+**Botting (C. G.),** B.A. EASY GREEK EXERCISES. Cr. 8vo. 2s. See also Junior Examination Series.
+**Boulting (W.).** TASSO AND HIS TIMES. With 24 Illustrations. Demy 8vo. 10s. 6d. net.
+**Boulton (E. S.),** M.A. GEOMETRY ON MODERN LINES. Cr. 8vo. 2s.
+**Boulton (William B.).** THOMAS GAINSBOROUGH With 40 Illustrations. *Second Ed.* Demy 8vo. 7s. 6d. net.
+SIR JOSHUA REYNOLDS, P.R.A. With 49 Illustrations. Demy 8vo. 7s. 6d. net.
+**Bowden (E. M.).** THE IMITATION OF BUDDHA: Being Quotations from Buddhist Literature for each Day in the Year. *Fifth Edition.* Cr. 16mo. 2s. 6d.
+**Boyd-Carpenter (Margaret).** THE CHILD IN ART. Illustrated. *Second Edition.* Large Crown 8vo. 6s.
+**Boyle (W.).** CHRISTMAS AT THE ZOO. With Verses by W. BOYLE and 24 Coloured Pictures by H. B. NEILSON. *Super Royal 16mo.* 2s.
+**Brabant (F. G.),** M.A. See Little Guides.
+**Bradley (A. G.)** ROUND ABOUT WILTSHIRE. With 30 Illustrations of which 14 are in colour by T. C. GOTCH. Cr. 8vo. 6s.
+**Bradley (J. W.).** See Little Books on Art.
+**Braid (James) and Others.** GREAT GOLFERS IN THE MAKING. By Thirty-Four Champions. Edited, with an Introduction, by HENRY LEACH. With 34 Portraits. Demy 8vo. 7s. 6d. net.
+A Colonial Edition is also published.
+
+<vocab>Catalogue, Methuen, Bibliography, Index, Literature, Theology, Biography, Art, History, Science</vocab>

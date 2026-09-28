@@ -1,0 +1,32 @@
+{
+  "slug": "en-6ab6da-ws107",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3AThe%20religious%20problem%20in%20India%20-%20four%20lectures%20delivered%20during%20the%20twenty-sixth%20annual%20convention%20of%20the%20Theosophical%20Society%20at%20Adyar%2C%20Madras%2C%201901%20(IA%20religiousproblem00besa).pdf%2F107&oldid=16210833",
+  "source_revision": "oldid 16210833 (2026-08-09T17:43:03Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 1306
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-28",
+    "note": null
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>155</page-num>
+<header>Book IV. of Leaves. 155</header>
+<sig>Cc 2</sig>
+
+<margin>Tab. 49.</margin> 14. §. In Borage, and Moth-Mullen, they stand also in Five Parcels. In the former, the largest maketh still a more bulky Arch, than that of Clary; being thicker, as broad, and of a lesser Circle or more bowed. But in Mullein, it maketh almost an entire Oval.
+
+15. §. By means of this Figuration, a sufficient number of Vessels for such large Leaves, are not only more conveniently Distributed into them; but also stand more safely in the stalk. For were the Arch contracted into a solid Cylinder, it could not so presently be resolved into small Fibers. And were it laid into a flat Plate, or straight out, either the Figure of the stalk, and so of the Leaf, must be altered; or else, the two ends of the Plate, would come too near the Circumference of the stalk, and so be more liable to the Impressions of the Weather: as may be observed in cutting the Stalk transversly, and by the Figures.
+
+<margin>Tab. 50.</margin> 16. §. IN the Body of the Leaf, besides the Positions of the Fibrous strings or Threds; above exprest, there is one Thred, bigger or less, which in all Plants, runs round the Edge of the Leaf, and hems in all the rest; but can hardly be well observed in any, without stripping off the skin of the Leaf. When the Fibres of the Leaf, are bigger, or less tender, as in Holly, the skin and the Pulp are sometimes found either rotted off, or eaten away with Insects; whereby, both the said surrounding Fiber, and the rest, are all very fairly visible.
+
+<margin>Tab. 50.</margin> 17. §. THE Vessels seem to be continu'd, in the Leaf, by being Ramified out of Greater into Less, as Veins or Arteries are in Animals. But if the Skin and Pulp of the Leaf, as suppose a Borage-Leaf be taken off, and the Vessels laid bare; by the help of a good Glass, it will appear; That they are all of the same Size, every where in the Leaf; and also continued throughout the fame, all several and distinct Pipes one from another, as the Threds in a Skein of Silk. And that therefore the Distribution of the Threds which the Vessels compose, is not the Ramifying of Greater Pipes into Less; but the dividing a greater Cluster of Pipes, into several lesser Clusters, till at last they come to be single; as in the Distribution of the Nerves.
+
+<margin>Tab. 50.</margin> 18. §. The Vessels seem also to be Inosculated, not only side to fide, but the ends of some into the Sides of others. But neither is this ever really done: the lesser Threds, being only so far diducted, as sometimes to stand at Right-Angles with the greater. So that they are Inosculated only End to End or Mouth to Mouth, after they are come at last to their final distribution.
+
+<margin>Tab. 51, & 52.</margin> 19. §. The Aer-Vessels, are not only, as is said, Existent in the Leaves of all Plants; but are herein also discoverable without the help of Glasses: For upon breaking the stalk or chief Fibers of a Leaf; the likeness of a fine Woolly Substance, or rather of curious small Cobwebs, may be seen to hang at both the broken Ends. This is taken notice of, only in some few Plants, as in Scabious, where it is more visible. But may also be seen more or less, in most other Plants, if the Leaves be very tenderly broken: as I have noted near twenty years since; and thence conjectur'd them a Sort of Vessel common to Plants. Now this fine Wool, is really a Skein of Aer-Vessels, or rather of the Fibers of the Aer-Vessels, unroaved from their Spiral Position, and so drawn out in Length. As they appear thus unroaved and drawn out at Length, both to the bare Eye, and through a good Microscope, I have represented in two Exemples, the one a Scabious Leaf, the other that of a Vine.
+
+20. §.
+
+<vocab>Borage, Moth-Mullen, Clary, Mullein, Fibrous strings, Threds, Holly, Insects, Vessels, Veins, Arteries, Inosculated, Aer-Vessels, Scabious, Microscope, Scabious Leaf, Vine</vocab>

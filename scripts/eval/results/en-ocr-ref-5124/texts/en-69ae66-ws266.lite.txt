@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>266</page-num>
+<header>PHYSICA</header>
+
+I shall always be getting a lesser fraction of the time originally given. Therefore the force must be infinite, 15 since it exceeds any finite force. Moreover the time occupied by the action of any finite force must also be finite: for if a given force moves something in a certain time, a greater force will do so in a lesser time, but still a definite time, in inverse proportion.¹ But a force must always be infinite—just as a number or a magnitude is—if 20 it exceeds all definite limits. This point may also be proved in another way—by taking a finite magnitude in which there resides a force the same in kind as that which resides in the infinite magnitude, so that this force will be a measure of the finite force residing in the infinite magnitude.²
+
+25 It is plain, then, from the foregoing arguments that it is impossible for an infinite force to reside in a finite magnitude or for a finite force to reside in an infinite magnitude. But before proceeding to our conclusion it will be well to discuss a difficulty that arises in connexion with locomotion. If everything that is in motion with the exception of things that move themselves is moved by something else, how is it that some things, e. g. things thrown, continue to be in 30 motion when their movent is no longer in contact with them? If we say that the movent in such cases moves something else at the same time, that the thrower e. g. also moves the air, and that this in being moved is also a movent, then it would be no more possible for this second thing than for the original thing to be in motion when the original movent is not in contact with it or moving it: all the things moved would have to be in motion simultaneously and also to have ceased simultaneously to be in motion 267ᵃ when the original movent ceases to move them, even if,
+
+¹ i. e. greater force : lesser force = time occupied by lesser force : time occupied by greater force.
+² The argument is left incomplete: the point is that then either the finite magnitude is the measure of the infinite magnitude (which is impossible) or it is a measure of so much of the infinite magnitude as can be said to possess the force, the rest not possessing any force, in which case it is not justifiable to say that it is the infinite magnitude that possesses the finite force.
+
+<vocab>Physica, infinite force, finite magnitude, locomotion, movent, motion</vocab>

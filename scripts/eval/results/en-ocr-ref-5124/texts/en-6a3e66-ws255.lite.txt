@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>242</page-num>
+<header>CONNEXION OF THE</header>
+
+sive force of the particles of different substances is very variable, different degrees of heat are requisite to produce their combustion. The tendency of heat to a state of equal diffusion or equilibrium, either by radiation or contact, makes it necessary that the chemical combination which occasions combustion should take place instantaneously; for if the heat were developed progressively, it would be dissipated by degrees, and would never accumulate sufficiently to produce a temperature high enough for the evolution of flame.
+
+Though it is a general law that all bodies expand by heat and contract by cold, yet the absolute change depends upon the nature of the substance. Gases expand more than liquids, and liquids more than solids. The expansion of air is more than eight times that of water, and the increase in the bulk of water is at least forty-five times greater than that of iron. The expansion of solids and liquids increases uniformly with the temperature, between certain limits, this change of bulk, corresponding to the variation of heat, is one of the most important of its effects, since it furnishes the means of measuring relative temperature by the thermometer and pyrometer. The expansive force of caloric has a constant tendency to overcome the attraction of cohesion, and to separate the constituent par-
+
+<vocab>combustion, heat, equilibrium, radiation, expansion, gases, liquids, solids, thermometer, pyrometer, caloric, cohesion</vocab>

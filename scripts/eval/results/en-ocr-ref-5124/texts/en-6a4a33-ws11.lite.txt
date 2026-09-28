@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<page-num>vi</page-num>
+<header>INTRODUCTION.</header>
+
+From an examination of over forty files of newspapers and many thousand separate issues, scattered in various public and private libraries, from Boston to Charleston, the editor has selected a series of these essays, and reprinted them in this volume. From various sources he has obtained the name of the writer of each. All here reprinted are the work of well-known men. Five of the writers were Signers of the Declaration of Independence; seven were members of the Federal Convention; many were members of the State Conventions, and there discussed the Constitution. All had had a wide experience in law and government. Their arguments are valuable, not merely for their reasoning, but from their statement of facts. New light is thrown upon the proceedings in the Federal Convention, so large a part of which is yet veiled in mystery; and personal motives, and state interests, are mercilessly laid bare, furnishing clues of both the support of and opposition to the Constitution. Subsequently most of the writers were prominent in administering this Constitution or opposing its development, and were largely responsible for the resulting tendencies of our government.
+
+PAUL LEICESTER FORD.
+
+*Brooklyn, N. Y., April, 1892.*
+
+<vocab>newspapers, libraries, Declaration of Independence, Federal Convention, State Conventions, Constitution, law, government, Paul Leicester Ford, Brooklyn</vocab>

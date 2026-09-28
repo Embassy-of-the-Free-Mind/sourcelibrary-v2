@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>372</page-num>
+<header>Concerning Natural Grammar. Part III.</header>
+
+compresion of the breath in framing of them. Though not only the European Nations do at this present express them by this mixture of (H,) but it was likewise the opinion of the Antients, as may appear; because before those Letters θ, φ, χ, were invented by Palamedes, the Grecians were wont to express the power of them, by adding the aspiration H, to τ, π, κ. Yet 'tis very plain, that each of these Consonants esteemed to be aspirated, are *simple Letters*; because in the prolation of them, the fame doth still continue, and therefore they ought not to be reckoned amongst the mixed Letters.
+
+<margin>Vossius de Gram. cap. 16.</margin> 2. Double Consonants are such as are compounded of some of the other Letters, and for the Compendium of writing, are in several Languages expressed by *single Characters*, and reckoned in the Alphabet as if they were distinct species of *simple Letters*. Such are in the Latin Alphabet Q, X, and the double Letter Z, whose power is the same as DS. or TS. To which *Claudius Caesar* would have added an Antisigma in this form (Ↄ) which should have had the power of the Greek φ, or PS.
+
+<margin>Scaliger de de Causis L. L. cap. 21.</margin> <margin>Vossius Gram. cap. 27.</margin> As for the Letter Q, 'Tis commonly granted to be a Compound of C and U; for which reason, in many ancient Books, the Letter V was not written after Q, as being involved in it; so qis, qe, qid. But what kind of V this should be, is much debated. Some would have it to be the Consonant, against which *Joseph Scaliger* argues, that then it would not be pronounceable, being of near affinity to F, qfis, for quis. But upon consideration, it will be found to be the Letter u coalescing into a Dipthong with the subsequent Vowel, quam, being the same with quam,
+
+<margin>Diatribe de varia literarum pronunciatione.</margin> What the true Original is of (J) Consonant, and that power which we give to (Ch) in the words Charity, Cheese, Chosen, Chink, &c. is a question men have much differed about. 'Tis evident that neither of them are single Letters, because in the prolation of them, we do not end with the same sound with which we begin. As for that Conjecture, that I Consonant may be expressed by dzy, dzyindzyer, Ginger, dzyudzy, Judge; or else that this sound is compounded of the Consonants dy, as dyoy for joy; dyentle, gentle, lodying for lodging. And so for the power that we ascribe to Ch, that it may be sufficiently expressed by Ty, as ortyard, for Orchard, rityes, for riches: These I think need not any particular refutation. It seems to be plain, that J Consonant is a Compound of D, and Zh, and Ch of T, and Sh.
+
+<margin>Alex. Gyll, Gram. cap. 1.</margin> <margin>Dr Wallis Gram.</margin> As for the other three Consonants, that are reckoned in the common Alphabet, K, W, Y, enough hath been said to prove them unnecessary. If C be used alwaies in its proper power (as every Letter ought) then K must needs be superfluous; and therefore the Welsh who use C only for one kind of sound, have no K. And as for the Letters W, Y, their power is the same with that of the Vowels u, and i, as will evidently appear when they are rapidly pronounced before any other Vowel by way of Dipthong, so as to make but one Syllable; wee warr warr, swim swim, yes yes, yoke yoke, youth youth. The words young and younker being originally of the Dutch, are by them written junk junker.
+
+And as for the Aspirations, wheele, where, when, &c. our Forefathers the Saxons, did antiently prefix the Aspirations before the vowels;
+
+<vocab>Natural Grammar, Consonants, Alphabet, Palamedes, Claudius Caesar, Antisigma, Joseph Scaliger, J Consonant, Welsh, Saxons, Aspirations</vocab>

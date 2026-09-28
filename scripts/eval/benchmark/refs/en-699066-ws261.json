@@ -1,0 +1,32 @@
+{
+  "slug": "en-699066-ws261",
+  "source": "wikisource-en",
+  "source_url": "https://en.wikisource.org/w/index.php?title=Page%3ALeviathan%2C%20or%2C%20The%20matter%2C%20forme%2C%20%26%20power%20of%20a%20common-wealth%20ecclesiasticall%20and%20civill.%20(IA%20leviathanormatte00hobb%203).pdf%2F261&oldid=15074944",
+  "source_revision": "oldid 15074944 (2025-05-14T12:04:22Z)",
+  "licence": "CC-BY-SA-4.0",
+  "proofread_level": 3,
+  "unit": {
+    "kind": "page",
+    "chars": 3259
+  },
+  "alignment": {
+    "method": "wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)",
+    "guard": "leaf check by eye"
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-09-27",
+    "note": "two-column margin notes, page 243"
+  },
+  "canonical": false,
+  "memorization_risk": "high",
+  "made_by": {
+    "engine": "human",
+    "model": null,
+    "prompt_hash": null,
+    "finish_reason": null
+  },
+  "reference_error_rate": null,
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+}

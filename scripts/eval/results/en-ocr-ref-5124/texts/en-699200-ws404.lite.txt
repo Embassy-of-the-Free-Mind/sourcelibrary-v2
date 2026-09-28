@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>394</page-num>
+<header>JOHN GUTENBERG AT STRASBURG.</header>
+
+The evidence of the witnesses on the trial agrees with the testimony afforded by the chronicles: it is plain that Gutenberg had not perfected his invention in 1439. From his lonely room in the ruined monastery of Saint Arbogastus, to which he retreated for the sake of secrecy, Gutenberg gave work to Dünne, the goldsmith, to Saspach, the joiner, and to Dritzehen, his old workman. It would seem that they were not producing work for sale, but were making tools which required a great deal of labor. Dritzehen worked night and day, Madame Schultheiss helping him. At the death of Dritzehen, the work expended on the art had cost a great deal of money, but it was still incomplete. The testimony shows that it had been intended that the salable work to be produced by the partnership should be exposed for sale at the great fair of Aix-la-Chapelle in the summer of 1439. The postponement of this fair¹ to the year 1440 was a grave disappointment. If the object of the partnership was the making of popular books of devotion, we can understand the reasonableness of the hopes of great profit when the books should be laid before the pious pilgrims. The sudden death of Andrew Dritzehen was the occasion of more delay. Gutenberg, fearing that the public, or George Dritzehen, would get possession of the secret, melted the forms and suspended the work. Then followed a litigation which lasted nearly one year, during which period it seems no work was done.
+
+There are many conflicting opinions about the character of the printing so obscurely mentioned in the testimony of the witnesses. Schoepflin says it was block-printing. In the four pieces lying in the press, he sees four pages of engraved
+
+<note>¹ The pilgrimage to ancient Aix-la-Chapelle took place every seventh year, and, commencing on the 10th of July, lasted fourteen days, during which time the ordinary service in the church did not take place, but a free market was held. The concourse of people was uncommonly great on that occasion, so that, for instance in the year 1496, 142,000 pilgrims were counted in the town, and 80,000 guilders in the offering boxes on one day. Aix-la-Chapelle possessed relics of the first rank, as the swaddling-clothes of Christ, his body-cloth at the Crucifixion, the dress worn by Mary at his birth, and the cloth on which St. John the Baptist was beheaded. Van der Linde, Haarlem Legend, p. 18.</note>
+
+<vocab>John Gutenberg, Strasburg, Saint Arbogastus, Dünne, Saspach, Dritzehen, Madame Schultheiss, Aix-la-Chapelle, Schoepflin, block-printing, litigation, invention, printing history</vocab>

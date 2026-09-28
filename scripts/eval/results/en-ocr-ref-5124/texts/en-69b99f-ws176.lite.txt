@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>150</page-num>
+<header>THE ELDER EDDA OF SAEMUND</header>
+
+26. On the earth lie the greater number of thy kinsmen, to corpses turned. Thou hast not fought the battle, yet 'twas decreed, that thou, potent maiden! shouldst cause the strife.
+
+Sigrun then wept. Helgi said:
+
+27. Sigrun! console thyself; a Hild thou hast been to us. Kings cannot conquer fate: gladly would I have them living who are departed, if I might clasp thee to my breast.
+
+Helgi obtained Sigrun, and they had sons. Helgi lived not to be old. Dag, the son of Hogni, sacrificed to Odin, for vengeance for his father. Odin lent Dag his spear. Dag met with his relation Helgi in a place called Fioturlund, and pierced him through with his spear. Helgi fell there, but Dag rode to the mountains and told Sigrun what had taken place.
+
+28. Loath am I, sister! sad news to tell thee; for unwillingly I have my sister caused to weep. This morning fell, in Fioturlund, the prince who was on earth the best, and on the necks of warriors stood.
+
+->Sigrun.<-
+
+29. Thee shall the oaths all gnaw, which to Helgi thou didst swear, at the limpid Leiptr's water, and at the cold dank wave-washed rock.
+
+30. May the ship not move forward, which under thee should move, although the wished-for wind behind thee blow. May the horse not run, which under thee should run, although from enemies thou hast to flee!
+
+31. May the sword not bite which thou drawest, unless it sing round thy own head. Then would Helgi's
+
+<vocab>Elder Edda, Saemund, Sigrun, Helgi, Dag, Hogni, Odin, Fioturlund, Leiptr, Hild, Norse mythology, fate, vengeance</vocab>

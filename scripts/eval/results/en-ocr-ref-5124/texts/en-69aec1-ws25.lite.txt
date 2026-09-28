@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>errata</page-type>
+
+<image-desc size="small" type="decorative" significance="low">Decorative printer's ornament at the top of the page.</image-desc>
+
+# E R R A T A.
+
+Page 6. Line 17. Read *Inftituted by Art.* p. 15. l. 9. r. 3. By *afsigning*, &c. p. 16. l. 11. (Y) p. 27. l. 39. dele *relief*. p. 32. l. 43. dele *poor*. p. 40. l. 28. r. *defer*. p. 41. l. 21, 22. add *adminiſter, diſperſe, diſtribute Token, Fairing, to the preceding line*. p. 70. l. 38. r. *dryer*. p. 73. l. 3. r. *Lacinia*. p. 91. l. 7, 8. r. *of this Tribe*. p. 94. l. 19. r. *expand*. p. 97. l. 21, 31. r. *Chichling*. p. 133. l. 31. r. *Oxyrhyuchos*. p. 134. l. 48. r. *lozo*. p. 139. l. 18. *Channa*. p. 147. l. 20. r. *Cariocataftes*. p. 150. l. 20, 21. r. *Coccothrauftes*. p. 153. Of *Birds*. p. 156. l. 13. *Avofetta*. p. 157. l. 48. *Strepficeros*. p. 159. l. 5. r. *Shrewmouſe*. p. 177. l. 10, &c. r. *More properly Organical; whether ſuch parts as are*
+{ External; uſed for Taſting, Speaking, or Eating.
+{ Internal; uſed for Taſting, Speaking, or Eating.
+p. 181. l. 40. after *ſuperficies* add *implying a reſpect to the fides or limits of it*. p. 291. l. 49. dele *the*, l. 50. r. *the word Change*. p. 292. l. 22. r. *Arts*. p. 299. l. 35. r. *Lux*. p. 301. l. 14. r. *Quantity*. p. 309. l. 19. r. *this*. p. 324. l. 38. r. *jabber*. p. 346. l. 29. r. *Flat*. p. 368. l. 12. r. *Thin*. p. 390. l. 8, 9. r. *upward, downward, above, below*.
+
+Pag. 391. lin. 13. p. 395. number, 71. n. 74. p. 399. n. 33. p. 400. n. 37, 45. p. 404. l. 3. n. 23. n. 27. n. 37. n. 109. p. 413. l. 20. p. 422. l. 3. *di*. p. 427. n. 37. *cabys*. p. 428. l. 1, 2. dele 86. l. 6. *ſalti*. p. 429 l. 19. for 8. r. *ſ*.
+
+# In the M A R G I N.
+
+Page 70. Read *Muſtus*. p. 72. *Oryza*. p. 76. *Petaſites*. p. 86. *Conyza*. p. 89. *Perfoliata*. *Eryngium*. *Sphondylium*. p. 90. *Charephyllon*. p. 91. *Thyſſelinum*. *Chamadrys*. p. 92. *Chamepitis*. p. 93. *Stachis*. *Bugula*. p. 95. *Caryophyllata*. p. 99. *Scorpioides*. *Bupleurifolium*. p. 102. *Caryophyllus*. *Aſcyrum*. p. 103. *Chamadrys*. p. 104. *Hyofcyamus*. p. 106. *Ebalus*. p. 107. *Groſſularia*. p. 108. *Mahaleb*. p. 109. *Philyrea*. *Pyracantha*. *Thymelaa*. p. 115. *Laurocerasus*. p. 116. *Piſtacia*. *Corylus*. p. 123. *Proſcarabaus*. p. 142. *Lenciſcus*. p. 148. *Ruſſa*. *Corylorum*. p. 150. *Alauda*. *Cinchramus*. p. 152. *Troglodytes*. p. 158. *Gazellae*.
+
+<vocab>Errata, corrigenda, botanical nomenclature, Latin, English, typography</vocab>

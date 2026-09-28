@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>344</page-num>
+
+(344)
+
+*Annotation 11.*
+
+Not only the Calces, but the Glasses of Metals, Vitrify'd *per se*, may be of Colours differing from the Natural or Obvious Colour of the Metal; as I have observ'd in the Glass of Lead, made by long exposing Crude Lead to a violent fire, and what I have observ'd about the Glass or Slagg of Copper, (of which I can show you some of an odd kind of Texture,) may be elsewhere conveniently related. I have likewise seen a piece of very Dark Glass, which an Ingenious Artificer that show'd it me profess'd himself to have made of Silver alone by an extreme Violence (which seems to be no more than is needful) of the fire.
+
+*Annotation III.*
+
+Minerals also by the Action of the Fire may be brought to afford Colours very differing from their own, as I not long since noted to you about the variously Colour'd Flowers of Antimony, to which we may add the Whitish Grey-Colour of its *Calx*, and the Yellow or Reddish Colour of the Glass, whereinto that *Calx* may be flux'd.
+
+And I remember, that I elsewhere told you,
+
+<vocab>Calces, Glass of Lead, Glass of Copper, Antimony, Flowers of Antimony, Calx, Vitrify'd, Silver, Fire, Colours, Minerals</vocab>

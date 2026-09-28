@@ -1,0 +1,33 @@
+<warning>The text is extremely faint and difficult to read due to low contrast and scanning quality.</warning>
+
+<scan-quality>poor</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>dedication</page-type>
+
+->DEDICATION<-
+
+unparalleled excellence of Plato's writings, and me to my
+translation of them, I may be allowed to hope, that while
+he blew from the page of history the names of great personages,
+who were distinguished for nothing with spirit but the
+magnificence of their lives, with this privilege, I shall be your
+Grace's home in the archives of immortality.
+
+Permit me, therefore, to add, that I have been, and still
+did however design the ear of the Marchioness family might
+have silence on the labours of others, I consider that of this
+most noble family of the Howards to have beened with a
+more splendid and auspicious light on this of mine.
+
+->I HAVE THE HONOUR TO BE,<-
+
+->MY LORD DUKE,<-
+
+->YOUR GRACE'S MOST OBEDIENT,<-
+
+->AND DEVOTED SERVANT,<-
+
+->THOMAS TAYLOR.<-
+
+<vocab>DEDICATION, Plato, Marchioness, Howards, Thomas Taylor</vocab>

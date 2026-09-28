@@ -1,0 +1,39 @@
+<scan-quality>fair</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<header>The epistle Dedicatory</header>
+<sig>A</sig>
+
+Ignorance, or attribute right to merit. Sir, you have bin
+pleased to grace some of mine owne workes with your
+curteous patronage; I hope this will not be the worse
+accepted, because commended by mee; ouer whom,
+none can clayme more power or priuilege than your
+selfe. I had no better a New-yeares gift to present you
+with; receiue it therefore as a continuance of that in-
+uiolable obliegement, by which, he rests stil ingaged;
+who as he euer hath, shall alwayes remaine,
+
+->THO. HEYWOOD.<-
+
+<image-desc size="medium" type="decorative" significance="low">Large ornamental initial letter T</image-desc>
+His play composed by
+Mr. Author, as worthy
+Mr. and the part of the
+few presented by to limn-
+ing. Mr. as for Ans older
+being in this person
+commended to the Stage: As
+vnder the Countrey and
+presented into the Cock-pit
+with Prologues and
+herein being now newly brought
+I was loath it should be published without
+the memory of an epistle; making choice of you
+to dedicate it unto, then whom (of all
+kinde-men and acquaintance within the compasse of
+my long knowledge) there is none more able to
+<unclear>ignore</unclear>
+
+<vocab>Dedication, New-yeares gift, Thomas Heywood, Cock-pit, Prologues</vocab>

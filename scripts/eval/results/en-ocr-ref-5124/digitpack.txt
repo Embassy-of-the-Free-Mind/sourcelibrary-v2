@@ -1,0 +1,229 @@
+### en-69ae66-ws159|70|1
+image: img/en-69ae66-ws159.jpg
+context (reference words around it): things are always returning to it 70 flux this necessarily brings with it
+A = 70   B = 1
+
+### en-69ae90-ws101|56|5g
+image: img/en-69ae90-ws101.jpg
+context (reference words around it): 102 106 thucydides v 18 47 56 aristophanes acharnians 727 lysistrata 513 this
+A = 56   B = 5g
+
+### en-695434-ws122|11|ii
+image: img/en-695434-ws122.jpg
+context (reference words around it): mind that is to say corol 11 pt 2 the human mind does
+A = 11   B = ii
+
+### en-695434-ws122|16|6
+image: img/en-695434-ws122.jpg
+context (reference words around it): perceives these affections and consequently prop 16 pt 2 the human body itself
+A = 16   B = 6
+
+### en-695434-ws122|11|1
+image: img/en-695434-ws122.jpg
+context (reference words around it): all his affections and consequently prop 11 pt 2 an idea of the
+A = 11   B = 1
+
+### en-6991eb-ws75|105|io
+image: img/en-6991eb-ws75.jpg
+context (reference words around it): things at the price of labour 105 and many make a trade deceiving
+A = 105   B = io
+
+### en-6aa1d5-ws52|438|488
+image: img/en-6aa1d5-ws52.jpg
+context (reference words around it): mech künste in berlin hub p 438 salomon was a teacher at the
+A = 438   B = 488
+
+### en-69b9a2-ws132|31|i
+image: img/en-69b9a2-ws132.jpg
+context (reference words around it): traders from phagri chumbi on july 31 1879 the thirteenth incarnation of the
+A = 31   B = i
+
+### en-69b9a2-ws132|1879|1s79
+image: img/en-69b9a2-ws132.jpg
+context (reference words around it): from phagri chumbi on july 31 1879 the thirteenth incarnation of the dalai
+A = 1879   B = 1s79
+
+### en-6ab233-ws84|18|8
+image: img/en-6ab233-ws84.jpg
+context (reference words around it): according to the scriptures in matthew 18 15 17 have been strictly obeyed
+A = 18   B = 8
+
+### en-699069-pg31511p363|11|ii
+image: img/en-699069-pg31511p363.jpg
+context (reference words around it): a true and exact relation 10 11 13 15 27 when the author
+A = 11   B = ii
+
+### en-699069-pg31511p363|13|i3
+image: img/en-699069-pg31511p363.jpg
+context (reference words around it): true and exact relation 10 11 13 15 27 when the author of
+A = 13   B = i3
+
+### en-699069-pg31511p363|15|is
+image: img/en-699069-pg31511p363.jpg
+context (reference words around it): and exact relation 10 11 13 15 27 when the author of the
+A = 15   B = is
+
+### en-6a0b25-pg77434p155|50|0
+image: img/en-6a0b25-pg77434p155.jpg
+context (reference words around it): every where in the leaf tab 50 and also continued throughout the same
+A = 50   B = 0
+
+### en-6ab245-pg35895p272|219|119
+image: img/en-6ab245-pg35895p272.jpg
+context (reference words around it): the throne of magadha 110 112 219 alā ra p ārā da skt
+A = 219   B = 119
+
+### en-6ab245-pg35895p272|227|127
+image: img/en-6ab245-pg35895p272.jpg
+context (reference words around it): and repute worldly but not disrespectable 227 228 231 232 amitā bha p
+A = 227   B = 127
+
+### en-699079-pg74335p860|36|30
+image: img/en-699079-pg74335p860.jpg
+context (reference words around it): on to pine ridge g d 36 war 8 thus died tata nka
+A = 36   B = 30
+
+### en-6a09ff-pg43519p227|538|268
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): is common to both numbers 1 538 342 iv ik 1 535 004
+A = 538   B = 268
+
+### en-6a09ff-pg43519p227|342|540
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): common to both numbers 1 538 342 iv ik 1 535 004 vii
+A = 342   B = 540
+
+### en-6a09ff-pg43519p227|535|234
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): 1 538 342 iv ik 1 535 004 vii kan difference 34 320
+A = 535   B = 234
+
+### en-6a09ff-pg43519p227|004|220
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): 538 342 iv ik 1 535 004 vii kan difference 34 320 132
+A = 004   B = 220
+
+### en-6a09ff-pg43519p227|538|272
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): account of the same day 1 538 342 iv ik 1 535 004
+A = 538   B = 272
+
+### en-6a09ff-pg43519p227|342|544
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): of the same day 1 538 342 iv ik 1 535 004 vii
+A = 342   B = 544
+
+### en-6a09ff-pg43519p227|535|272
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): 1 538 342 iv ik 1 535 004 vii kan difference 117 iv
+A = 535   B = 272
+
+### en-6a09ff-pg43519p227|004|921
+image: img/en-6a09ff-pg43519p227.jpg
+context (reference words around it): 538 342 iv ik 1 535 004 vii kan difference 117 iv kan
+A = 004   B = 921
+
+### en-699249-ws289|119|18
+image: img/en-699249-ws289.jpg
+context (reference words around it): thor arid járnsaxa 83 107 108 119 magnús 222 man the isle of
+A = 119   B = 18
+
+### en-699249-ws289|1100|100
+image: img/en-699249-ws289.jpg
+context (reference words around it): 174 markús an icelandic skald c 1100 135 192 195 222 226 229
+A = 1100   B = 100
+
+### en-699249-ws289|21|2
+image: img/en-699249-ws289.jpg
+context (reference words around it): by the gods for human habitation 21 24 53 54 68 80 107
+A = 21   B = 2
+
+### en-699249-ws289|80|81
+image: img/en-699249-ws289.jpg
+context (reference words around it): habitation 21 24 53 54 68 80 107 midgard serpent 42 67 70
+A = 80   B = 81
+
+### en-699249-ws289|101|loi
+image: img/en-699249-ws289.jpg
+context (reference words around it): well of wisdom 27 79 80 101 mimir s well the source of
+A = 101   B = loi
+
+### en-699249-ws289|119|118
+image: img/en-699249-ws289.jpg
+context (reference words around it): thor arid járnsaxa 83 107 108 119 magnús 222 man the isle of
+A = 119   B = 118
+
+### en-699249-ws289|49|48
+image: img/en-699249-ws289.jpg
+context (reference words around it): wisdom 27 79 mist a valkyr 49 mistletoe 71 72 114 mist world
+A = 49   B = 48
+
+### en-6aa1d2-ws352|2000|000
+image: img/en-6aa1d2-ws352.jpg
+context (reference words around it): years ago probably within the first 2000 years after the death of the
+A = 2000   B = 000
+
+### en-699063-ws324|5180|6180
+image: img/en-699063-ws324.jpg
+context (reference words around it): alexander as 5069 years others as 5180 years the majority uses the latter
+A = 5180   B = 6180
+
+### en-69e63b-ws487|243|245
+image: img/en-69e63b-ws487.jpg
+context (reference words around it): its heroes and see above pp 243 247
+A = 243   B = 245
+
+### en-695926-pg60766p151|12|5
+image: img/en-695926-pg60766p151.jpg
+context (reference words around it): was esais isai 6 ezech 12 jerem 13 vision in the 6
+A = 12   B = 5
+
+### en-699079-pg41110p268|161|118
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): 266 báriḥ inauguration 87 barḳooḳ plum 161 n barmekees barmecides 115 basil sweet
+A = 161   B = 118
+
+### en-699079-pg41110p268|115|186
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): barḳooḳ plum 161 n barmekees barmecides 115 basil sweet 24 167 basket making
+A = 115   B = 186
+
+### en-699079-pg41110p268|158|45
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): 183 spirits 37 38 báṭiyeh jar 158 baṭṭah leather bottle 158 baṭṭeekh water
+A = 158   B = 45
+
+### en-699079-pg41110p268|142|139
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): 230 231 betrother professional 225 beverages 142 beyt owwal antechamber 180 biers 258
+A = 142   B = 139
+
+### en-699079-pg41110p268|258|50
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): 142 beyt owwal antechamber 180 biers 258 n birds language of 133 birth
+A = 258   B = 50
+
+### en-699079-pg41110p268|160|19
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): bisected jinn 45 biṭṭeekh water melon 160 blacks country of the 102 blood
+A = 160   B = 19
+
+### en-699079-pg41110p268|102|266
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): melon 160 blacks country of the 102 blood 15 blood revenge 19 blood
+A = 102   B = 266
+
+### en-699079-pg41110p268|19|35
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): the 102 blood 15 blood revenge 19 blood wit 18 35 books destruction
+A = 19   B = 35
+
+### en-699079-pg41110p268|35|87
+image: img/en-699079-pg41110p268.jpg
+context (reference words around it): blood revenge 19 blood wit 18 35 books destruction of 54 boots 169
+A = 35   B = 87
+
+### en-69920a-pg70338p112|91|9
+image: img/en-69920a-pg70338p112.jpg
+context (reference words around it): 800 000 was 46 867 19s 91 4d the duty at that time
+A = 91   B = 9

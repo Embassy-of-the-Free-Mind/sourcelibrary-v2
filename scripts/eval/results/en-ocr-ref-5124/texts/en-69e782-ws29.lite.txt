@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<page-num>xii</page-num>
+<sig>as</sig>
+
+->[ xii ]<-
+
+f humilimo vestro subdito, vestræque majestati fidelissimo
+‘ E. Stafford,
+‘ Hæres domus subversæ Buckinghamiens.’ f
+
+The general observations I have to make upon it are these: many articles, it seems, were in vogue in the fourteenth century, which are now in a manner obsolete, as cranes, curlews, herons, seals g, porpoises, &c. and, on the contrary, we feed on sundry fowls which are not named either in the Roll, or the Editor’s MS. h as quails, rails, teal, woodcocks, snipes, &c. which can scarcely be numbered among the *small birds* mentioned 19. 62. 154. i. So as to fish, many species appear at our tables which are not found in the Roll, trouts, flounders, herrings, &c. k. It were easy and obvious to dilate here on the variations of taste at different periods of time, and the reader would probably not dislike it; but so many other particulars demand our attention, that I shall content myself with observing in general, that where-
+
+f This lord was grandson of Edward duke of Bucks, beheaded A. 1521, whose son Henry was restored in blood; and this Edward, the grandson, born about 1571, might be 14 or 15 years old when he presented the Roll to the Queen.
+g Mr. Topham’s MS. has *focas* among the fish; and see archbishop Nevil’s Feast, 6 E. IV. to be mentioned below.
+h Of which see an account below.
+i See Northumb. Book, p. 107, and Notes.
+k As to carps, they were unknown in England t. R. II. Fuller, Worth. in Sussex, p. 98. 113. Stow, Hist. 1038.
+
+<vocab>Edward Stafford, Buckingham, fourteenth century, culinary history, Northumb. Book, Topham's MS., archbishop Nevil's Feast, Fuller's Worthies, Stow's History</vocab>

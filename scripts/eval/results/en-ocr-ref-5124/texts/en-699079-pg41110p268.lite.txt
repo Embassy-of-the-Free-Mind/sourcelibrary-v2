@@ -1,0 +1,62 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>268</page-num>
+<header>INDEX.</header>
+
+| | |
+|---|---|
+| 'Arafát, Mount, 14, 21, 39 | Barkook (plum), 161, n. |
+| Arba'een, El- (fortieth day after funeral), 263 | Barmekees (Barmecides), |
+| Archangels, 26 | Basil, sweet, 24, 167 |
+| Arms, 183 | Basket-making saint, 52 |
+| 'Arsh Er-Raḥmán (Throne of the Compassionate), 99 | Başrah, owl of El-, 114 |
+| 'Arsh Iblees, 102 | Bath, 179-183 |
+| Ás (myrtle), 165 | — spirits, 37, 38 |
+| Asaf (Wezeer of Solomon), 40, 81 | Bátiyeh (jar), 158 |
+| Ascension of Moḥammad into Heaven, 164 | Baṭṭah (leather bottle), 158 |
+| Asceticism, 53, 55-59 | Baṭṭeekh (water-melon), 160 |
+| Aṣḥáb ed-Darak (overseers), 48 | Battues, 184 |
+| 'Aṣḳalán, 141 | Bat-winged Jinn, 46 |
+| Asma'ee, El- (poet), 114, 124-126 | Beanflower, 167 |
+| 'Aṣr (afternoon prayer), 11 | Beasts, language of, 133 |
+| Ass of Umm 'Amr, 213 | Beauty, Arab ideal of, 213-216 |
+| — , wild, hunting the, 185 | Bedawee, El-, 50, n. |
+| Astrology, 84, n., 86, 237 | — , poetic, 116 |
+| Atlantic Ocean, 102 | — , love of the, 211-213 |
+| Auguration, 86, 87 | Beer, 149 |
+| Author made a darweesh, 62 | Behaviour, 198, 199 |
+| 'Azázeel (the youthful Satan), 30, 31 | Behemoth, 107 |
+| Azhar (the university mosque in Cairo), 50 | Bekree, El- (saint), 65-69 |
+| Azraeel (Angel of Death), 26, 33, 90 | Belaḥ (date), 159 |
+| | Benefsej (violet), 165 |
+| Bábil (Babel), 82 | Beshneen (lotus), 167, n. |
+| Baghdád, literary period at, 112, 114 | Betrothal, 230, 231 |
+| Bahamoot (the fish that bears the earth), 107 | Betrother, professional, 225 |
+| Bahár (buphthalmum,) 167, n. | Beverages, 142 |
+| Baḥr el-Moḥeeṭ, El- (Circumambient Ocean), 100, 102 | Beyt-owwal (antechamber), 180 |
+| Baḥr el-Muzlim, El- (Atlantic Ocean), 102 | Biers, 258, n. |
+| Baḥr ez-Ẓulumát, or ez-Ẓulmeh (Sea of Darkness, i.e. Atlantic Ocean), 102 | Birds, language of, 133 |
+| Bakhteree, El- (poet), 118 | Birth, ceremonies attending, 186-192 |
+| Bákillà (beanflower), 167, n. | Bisected Jinn, 45 |
+| Bán (willow), 167, n. | Biṭṭeekh (water-melon), 160 |
+| Banana, 161 | Blacks, country of the, 102 |
+| Banquets, public, 139-141 | Blood, 15 |
+| Baráhimeh darweeshes, 50, n. | Blood-revenge, 19 |
+| Barahoot, well of, 264, 266 | Blood-wit, 18, 35 |
+| Báriḥ (in auguration), 87 | Books, destruction of, 54 |
+| | Boots, 169, n. |
+| | Boozeh (beer), 149 |
+| | Bottles, leather and glass, 158 |
+| | Bout of wine, 159 |
+| | Bow, 183 |
+| | Brandy, 154, 157 |
+| | Bread and salt, 144 |
+| | Breeding, good, 198, 199 |
+| | Bridal ceremonies, 232-238 |
+| | Bridegroom's ceremonies, 236, 237 |
+| | Buffalo sacrificed at funerals, 261 |
+
+<vocab>Index, Arabic culture, Islamic terminology, folklore, geography, social customs</vocab>

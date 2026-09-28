@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>98</page-num>
+<header>PHILO JUDEUS.</header>
+
+impending over him, for he feared lest, as was very likely, he, because he had been the cause of another person having been visited by a lighter punishment, might himself have a more severe one inflicted upon him.
+
+Therefore, as no one any longer ventured to say a word by way of deprecating the anger of the emperor, he gave loose to his fury, which was now implacable and unrestrained, and which, though it ought to have been mitigated by time, was rather increased by it, just as recurring diseases are in the body when a relapse takes place, for all such relapses are more grievous than the original attacks.
+
+They say that on one occasion Caius, being awake at night, began to turn his mind to the magistrates and officers who were in banishment, and who in name indeed were looked upon as unfortunate, but who in reality had now thus acquired a life free from trouble, and truly tranquil and free. And he gave a new name to this banishment, calling it an emigration, "For," said he, "it is only a kind of emigration the banishment of these men, inasmuch as they have all the necessaries of life in abundance, and are able to live in tranquillity, and stability, and peace. But it is an absurdity for them to be living in luxury, enjoying peace, and indulging in all the pleasures of a philosophical life."
+
+Then he commanded the most eminent of these men, and those who were of the highest rank and reputation, to be put to death, giving a regular list of their names, at the head of which list was Flaccus. And when the men arrived at Andros, who had been commanded to put him to death, Flaccus happened, just at that moment, to be coming from his farm into the city, and they, on their way up from the port, met him, and while yet at a distance they perceived and recognised one another; at which he, perceiving in a moment the object for which they were come (for every man's soul is very prophetic, especially of such as are in misfortune), turning out of the road, fled and ran away over the rough ground, forgetting, perhaps, that Andros was an island and not the continent. And what is the use of speed in an island which the sea washes all round? for one of two things must of necessity happen, either that if the fugitive advances further he must be carried into the sea, or else arrested when he has reached the farthest boundary. Therefore, in a comparison of evils, destruc-
+
+<vocab>Philo Judaeus, Caius, Flaccus, Andros, banishment, emigration, philosophy</vocab>

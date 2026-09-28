@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+<page-num>ix</page-num>
+<header>PREFACE</header>
+
+make such illustrative extracts as I needed from those volumes of the Sacred Books of the East Series which contain the translations of the Zandavasta and Pahlaví Texts by the late Professor Darmesteter and the late Dr. E. W. West respectively. These translations, with their introductions and notes, are most valuable to the student of the Sháhnáma. I have also to thank my sister, Caroline Warner, and my nephew, George Redston Warner, for occasional help.
+
+I hope to publish our translation a volume at a time, as circumstances permit.
+
+->EDMOND WARNER.<-
+
+ELTHAM, February 1905.
+
+<vocab>Sacred Books of the East, Zandavasta, Pahlaví, Darmesteter, E. W. West, Sháhnáma, Edmond Warner, Caroline Warner, George Redston Warner, Eltham</vocab>
