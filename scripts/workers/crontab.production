@@ -144,39 +144,20 @@
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
-# Syriac Kraken lane (#4883): re-transcribe every Syriac page with the open Kraken models on
-# this box's CPU (no Gemini, no cost), looped pages first; apply + release run under the same
-# tick. Runs from /root/sourcelibrary since 2026-09-25 (PR #4928 merged; the branch worktree is retired).
-# variable so it runs from /root/sourcelibrary. Touch /root/syriac-kraken/PAUSE to pause.
-*/30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
+*/30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)
+*/30 * * * * bash /root/tibetan-eval/relaunch_reacquire.sh # reacquire-bl-4646 (remove when reacquire-done.txt complete)
 # Withhold stale translations (#4523). Every apply pass of the re-OCR lane puts
 # more pages into the state where the English on the page was made from a
 # transcription we have since replaced — so the takedown has to be a STANDING
 # sweep over a re-derived predicate, not a one-off over a frozen id list. Runs
-# 20 minutes after the half-hourly re-OCR relaunch above, so an apply pass and
-# its cleanup do not race; the sweep is idempotent and resumable, so a missed
-# run costs nothing but latency. The `[ -f ]` guard lets these lines be
-# installed on the box BEFORE the PR merges: they no-op until the auto-pull
-# brings the scripts, then start working on their own.
+# 20 minutes after the half-hourly re-OCR relaunch, so an apply pass and its
+# cleanup do not race; the sweep is idempotent and resumable, so a missed run
+# costs nothing but latency. The `[ -f ]` guard makes it a no-op until the
+# auto-pull brings the scripts.
 20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
-# Stale-translation marker (#4927). This daily sweep re-derives the verdict
-# (ocr.updated_at newer than translation.updated_at beyond the margin) for every
-# page whose OCR changed in the last 26h and for every page already carrying the
-# marker, so a re-OCR'd page is flagged within a day and a retranslated page is
-# cleared. Flagging only — it never withholds; the hourly withhold sweep above
-# is scoped to WITHHOLD_LANES. Runs before the 08:00 health snapshot.
-# ACTUATION: the marker is read by translate-worker's page selection and by
-# realtime-translate.mjs --stale — both paid lanes behind the daily spend dial.
-30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
-
-# Pipeline HOLD reconciliation (#4790, scripts/lib/pipeline-hold.mjs): a held book is a status no
-# lane selects plus a marker the status writers refuse. This finds the writer nobody guarded —
-# CLOBBERED (marker, wrong status) / ORPHANED / LEAKED (translated after the hold) — and lists
-# RELEASABLE books whose release condition has been met. Exit 1 = drift, 2 = UNKNOWN (not PASS).
-55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
 # Daily meter-gap detector (#4599, PR #4821): billed realtime output tokens vs our
 # usage rows over the trailing 7 days; exit 3 + one email/day above 10%. Gated on the
 # read-only service-account key so the line is inert wherever the key is absent.
@@ -188,3 +169,10 @@
 */10 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
 # Monday 08:10 — volumes that bill while their instance is stopped/archived, with approximate cost
 10 8 * * 1 cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply --weekly" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
+*/30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
+30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
+# provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash
+40 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-provenance.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-coverage.mjs --days=2" >> /var/log/sourcelibrary/provenance-coverage.log 2>&1
+# pipeline-hold drift audit (committed in crontab.production since #4919 but never installed; installed 2026-09-28)
+55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
+# NOT INSTALLED: mark-stale-translations.mjs --apply (#4927) sat in scripts/workers/crontab.production from 2026-09-19 but was never in the live crontab (no log file ever written). Its marker is read by the paid translate lanes, so installing it is a spend decision — awaits Derek (ops DECISIONS-PENDING, 2026-09-28).
