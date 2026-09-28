@@ -27,7 +27,7 @@
 import type { Db } from 'mongodb';
 import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
-import { contentHash } from './steganographia';
+import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -181,6 +181,12 @@ export interface WritePageTranslationArgs {
   extraSet?: Record<string, unknown>;
   /** Bypass the human-edit guard. Only for callers acting on explicit human intent. */
   overwriteHuman?: boolean;
+  /**
+   * What produced this text (#4613): a block from geminiEngine()/engineFromBatchJob(), or
+   * notRecorded(reason) for a restore. REQUIRED for model output (`source` 'ai' /
+   * 'batch_api'); a person's edit (`source: 'manual'`) carries none.
+   */
+  engine?: GeminiEngine | NotRecorded;
 }
 
 export interface WritePageTranslationResult {
@@ -203,8 +209,17 @@ export async function writePageTranslation(
 ): Promise<WritePageTranslationResult> {
   const {
     pageId, text, model, source = 'ai', language = 'English',
-    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false,
+    promptRef, jobId, extraTranslationFields, extraSet, overwriteHuman = false, engine,
   } = args;
+
+  // Model output must say what produced it (#4613) — refuse rather than stamp a partial record.
+  if (GEMINI_SOURCES.has(source) && !engine) {
+    throw new Error(`writePageTranslation: source '${source}' requires \`engine\` (geminiEngine()/engineFromBatchJob(), or notRecorded(reason) for a restore) — #4613`);
+  }
+  if (engine && !isNotRecorded(engine)) {
+    const m = missingProvenance('translation', { data: text, source, updated_at: new Date(), content_hash: contentHash(text), engine });
+    if (m.missing.length) throw new Error(`writePageTranslation: engine block incomplete — ${m.missing.join(', ')}`);
+  }
 
   const db = await getDb();
 
@@ -241,6 +256,7 @@ export async function writePageTranslation(
             ...(promptRef.content_hash && { prompt_hash: promptRef.content_hash }),
             ...(promptRef.name && { prompt_name: promptRef.name }),
           }),
+          ...(engine && { engine }),
           ...(extraTranslationFields || {}),
         },
         ...(extraSet || {}),

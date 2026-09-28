@@ -431,7 +431,7 @@ export function sanitizeTranslationTags(text) {
 
 // The content hash now lives with the rest of the provenance vocabulary (#4613);
 // re-exported so the many importers of translate-core keep working.
-import { contentHash } from './write-provenance.mjs';
+import { contentHash, geminiEngine, translationInput, translationProvenance, isNotRecorded, codeVersion, host } from './write-provenance.mjs';
 export { contentHash };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -826,7 +826,30 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
  */
-export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false }) {
+export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false, call, engine }) {
+  // What produced this text (#4613) — required, one of:
+  //   call:   { call_site, api?, model?, promptText, generationConfig, run?, context?, response?,
+  //             prompt_sent_hash?, prompt_sent_chars? } — the door builds the engine block here,
+  //             with input = the OCR text on `page` (its content hash is what a later re-OCR
+  //             is compared against).
+  //   engine: a block already built by geminiEngine()/engineFromBatchJob(), or
+  //           notRecorded(reason) for a RESTORE of text whose origin is not on record.
+  // Neither → refuse. A door that sometimes stamps provenance is worse than one that never
+  // does, because the stamped rows are believed.
+  if (!call && !engine) {
+    throw new Error('writePageTranslation: pass `call` (what produced this text) or `engine` — every translation writer records its provenance (#4613)');
+  }
+  const resolvedModel = model || getTranslateModelForBook(book);
+  const engineBlock = engine || geminiEngine({
+    call_site: call.call_site,
+    api: call.api || 'realtime',
+    model: call.model || resolvedModel,
+    prompt: { id: promptRef?.id, name: promptRef?.name, version: promptRef?.version, hash: promptRef?.content_hash, text: call.promptText, sent_hash: call.prompt_sent_hash, sent_chars: call.prompt_sent_chars },
+    generationConfig: call.generationConfig,
+    run: { code_version: await codeVersion(), host: host(), ...(jobId ? { job_id: jobId } : {}), ...(call.run || {}) },
+    input: translationInput({ ocrText: page?.ocr?.data ?? '', ocrUpdatedAt: page?.ocr?.updated_at, context: call.context }),
+    response: call.response,
+  });
   const clean = sanitizeTranslationTags(text);
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
@@ -865,15 +888,16 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $set: {
         translation: {
           data: clean,
-          content_hash: contentHash(clean),
           language: 'English',
-          model: model || getTranslateModelForBook(book),
+          model: resolvedModel,
           updated_at: new Date(),
           source: 'ai',
           prompt_version: String(promptRef?.version ?? ''),
           prompt_id: promptRef?.id,
           prompt_hash: promptRef?.content_hash,
           prompt_name: promptRef?.name,
+          // content_hash + engine (#4613); the marker form only on a restore.
+          ...(isNotRecorded(engineBlock) ? { content_hash: contentHash(clean), engine: engineBlock } : translationProvenance(clean, engineBlock)),
         },
         ...(extraSet || {}),
         updated_at: new Date(),

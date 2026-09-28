@@ -35,6 +35,7 @@
 import { MongoClient } from 'mongodb';
 import { assessTranslationHealth, writePageTranslation, syncBookTranslationCounters } from '../lib/translate-core.mjs';
 import { isHeld } from '../lib/pipeline-hold.mjs';
+import { notRecorded } from '../lib/write-provenance.mjs';
 import { syncPageUpdate } from '../workers/lib/supabase-page-writer.mjs';
 
 const APPLY = process.argv.includes('--apply');
@@ -79,7 +80,10 @@ for (const page of pages) {
   const label = `${page.book_id} p${page.page_number} (${(book.title || '').slice(0, 40)})`;
   if (!APPLY) { console.log(`would restore ${label}: ${JSON.stringify(r.data.slice(0, 60))}`); continue; }
 
-  const res = await writePageTranslation(db, { page, book, text: r.data, model: r.model, jobId: r.job_id, note: NOTE, refuseUnhealthy: true });
+  // A restore carries the revision's own engine block when it has one; otherwise it says so
+  // (#4613) — never a guessed record for text whose settings were not kept.
+  const engine = r.engine || notRecorded(`restored from page_revisions ${r.id}, written before #4613 recorded provenance`);
+  const res = await writePageTranslation(db, { page, book, text: r.data, model: r.model, jobId: r.job_id, note: NOTE, refuseUnhealthy: true, engine });
   if (res.protected) { tally.protected++; continue; }
   if (!res.written) { console.log(`refused on write ${label}: ${res.reason}`); continue; }
   await db.collection('pages').updateOne({ id: page.id }, { $set: { 'translation.restored_from_revision': r.id, 'translation.restored_by': NOTE } });

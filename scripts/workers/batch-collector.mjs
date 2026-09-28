@@ -27,7 +27,7 @@ import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
-import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../lib/write-provenance.mjs';
+import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
@@ -761,6 +761,19 @@ async function processOneJob(db, job) {
                 'translation.batch_job_id': jobIdStr,
                 'translation.input_tokens': inputTokens,
                 'translation.output_tokens': outputTokens,
+                // What produced this text, and FROM WHICH OCR text (#4613): the submitter
+                // records each page's source_text_hash + sent-prompt hash on page_sources.
+                ...(() => {
+                  const pageSrc = pageSourceByPage.get(pageId);
+                  const prov = translationProvenance(text, engineFromBatchJob(job, {
+                    batch_job_id: jobIdStr, collected_by: COLLECTOR_CALL_SITE, now,
+                    input: pageSrc?.source_text_hash
+                      ? { source_field: 'ocr', source_text_hash: pageSrc.source_text_hash, source_text_chars: pageSrc.source_text_chars ?? null, source_updated_at: pageSrc.source_updated_at ?? null }
+                      : notRecorded('batch job carried no page_sources with a source_text_hash'),
+                    prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+                  }));
+                  return { 'translation.content_hash': prov.content_hash, 'translation.engine': prov.engine };
+                })(),
                 updated_at: now,
               },
               $unset: CLEAR_STALE_UNSET,

@@ -47,6 +47,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
@@ -69,6 +70,10 @@ const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce bat
 // to the lite model that garbles them. Parity with src/lib/types/ai-models.ts
 // is pinned by tests/unit/translate-core-parity.test.ts.
 const PROMPT_VERSION = 'v10';
+// Provenance identity of this writer (#4613).
+const CALL_SITE = 'scripts/workers/translate-worker.mjs';
+const CODE_VERSION = await codeVersion();
+const HOST = host();
 
 // ── Gemini API keys ──
 // Exclude GEMINI_API_KEY_4 (free tier, 15 RPM) — too slow for sustained translation throughput.
@@ -278,10 +283,14 @@ async function translatePage(db, page, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
+  // One object, sent AND recorded (#4613). No temperature is set here, so the page's record
+  // will say it came from the model default (1.0) — the fact, not a tidier fiction.
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor([page]), thinkingConfig: { thinkingBudget: 0 } };
+  // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor([page]), thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig,
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -296,6 +305,10 @@ async function translatePage(db, page, book, prevTranslation) {
     outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
+    call: {
+      model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null },
+    },
   };
 }
 
@@ -346,10 +359,12 @@ async function translateBatch(db, pages, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } };
+  // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig,
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -382,6 +397,10 @@ async function translateBatch(db, pages, book, prevTranslation) {
     outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
+    call: {
+      model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null, block: { pages: pages.length, first_page: pages[0].page_number } },
+    },
   };
 }
 
@@ -411,11 +430,24 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
   return saveRevisionShared(db, pageId, field, { jobId });
 }
 
+// What produced this page's text (#4613): the call record from translatePage/translateBatch,
+// plus THIS page's OCR text hash — a later re-OCR must be visible as orphaning the English.
+function engineFor(page, book, promptRef, call) {
+  return geminiEngine({
+    call_site: CALL_SITE, api: 'realtime', model: call?.model || getModelForBook(book),
+    prompt: { id: promptRef?.id, name: promptRef?.name, version: promptRef?.version ?? PROMPT_VERSION, hash: promptRef?.content_hash, text: call?.promptText },
+    generationConfig: call?.generationConfig,
+    run: { job_id: book?.job?.job_id || null, code_version: CODE_VERSION, host: HOST },
+    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: call?.context }),
+    response: { modelVersion: call?.modelVersion },
+  });
+}
+
 // ── Write a single page translation to DB ──
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
-async function writePageTranslation(db, page, text, book, promptRef) {
+async function writePageTranslation(db, page, text, book, promptRef, call) {
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -432,11 +464,11 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused, evidence kept`);
     return { written: false, reason: health.reason };
   }
+  const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
     translation: {
       data: text,
-      content_hash: contentHash(text),
       language: 'English',
       model: getModelForBook(book),
       updated_at: new Date(),
@@ -445,6 +477,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
       prompt_id: promptRef?.id,
       prompt_hash: promptRef?.content_hash,
       prompt_name: promptRef?.name,
+      ...translationProvenance(text, engine),
     },
     updated_at: new Date(),
   };
@@ -455,7 +488,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
 
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
-async function bulkWritePageTranslations(db, entries, book, promptRef) {
+async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -475,8 +508,11 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
   }
   if (entries.length === 0) return;
   if (entries.length === 1) {
-    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
+    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
   }
+  // Build every page's record BEFORE any write: a missing call record fails the whole block here
+  // rather than after some pages are stored.
+  const engines = new Map(entries.map(({ page }) => [page.id, engineFor(page, book, promptRef, call)]));
   // Save revisions before overwriting (parallel, non-blocking)
   await Promise.all(entries.map(({ page }) =>
     saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id)
@@ -490,7 +526,6 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
         $set: {
           translation: {
             data: text,
-            content_hash: contentHash(text),
             language: 'English',
             model,
             updated_at: now,
@@ -499,6 +534,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
             prompt_id: promptRef?.id,
             prompt_hash: promptRef?.content_hash,
             prompt_name: promptRef?.name,
+            ...translationProvenance(text, engines.get(page.id)),
           },
           updated_at: now,
         },
@@ -699,7 +735,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       try {
         const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
-        await writePageTranslation(db, page, result.text, book, result.promptRef);
+        await writePageTranslation(db, page, result.text, book, result.promptRef, result.call);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await logUsage({
@@ -807,7 +843,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
               batchTranslated++;
               translated++;
               globalCounter.count++;
@@ -847,7 +883,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Bulk-write all successfully parsed translations in one round trip
         if (bulkEntries.length > 0) {
-          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef);
+          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef, result.call);
         }
 
         // Log batch usage
@@ -883,7 +919,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
               translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;

@@ -6,7 +6,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
-import { contentHash } from '@/lib/steganographia';
+import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo convention (#4613)
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';

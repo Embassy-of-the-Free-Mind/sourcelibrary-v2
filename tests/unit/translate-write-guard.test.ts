@@ -57,6 +57,7 @@ import {
   isHumanEditedField,
   findHumanEditedPageIds,
 } from '@/lib/translate-write';
+import { geminiEngine, translationInput } from '@/lib/write-provenance';
 import {
   writePageTranslation as writePageTranslationMjs,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -77,11 +78,20 @@ beforeEach(() => {
   state.findResults = [];
 });
 
+// Every model-output write carries what produced it (#4613); the door refuses one that does not.
+const testEngine = () => geminiEngine({
+  call_site: 'tests/unit/translate-write-guard.test.ts', api: 'realtime', model: 'gemini-3.1-flash-lite',
+  prompt: { id: 'x', name: 'Standard Translation', version: 12, hash: 'abc123', text: 'PROMPT' },
+  generationConfig: { temperature: 0.1 },
+  run: { code_version: 'test', host: 'test' },
+  input: translationInput({ ocrText: 'SOURCE OCR' }),
+});
 const writeArgs = {
   pageId: 'p1',
   text: 'New AI translation.',
   model: 'gemini-3.1-flash-lite',
   promptRef: { id: 'x', name: 'Standard Translation', version: 12, content_hash: 'abc123' },
+  engine: testEngine(),
 };
 
 describe('writePageTranslation (TS door) human-edit guard', () => {
@@ -124,6 +134,10 @@ describe('writePageTranslation (TS door) human-edit guard', () => {
     const t = set.translation as Record<string, unknown>;
     expect(t.data).toBe('New AI translation.');
     expect(t.source).toBe('ai');
+    // #4613: the engine block and the hash of the OCR text this English was made from
+    expect((t.engine as { schema: string }).schema).toBe('gemini-engine/1');
+    expect(((t.engine as { input: { source_text_hash: string } }).input).source_text_hash).toMatch(/^[0-9a-f]{16}$/);
+    expect(t.content_hash).toMatch(/^[0-9a-f]{16}$/);
     expect(t.model).toBe('gemini-3.1-flash-lite');
     // Provenance (#3749 promise 3)
     expect(t.prompt_version).toBe('12');
@@ -190,13 +204,39 @@ describe('findHumanEditedPageIds (bulk guard for collectors)', () => {
   });
 });
 
+// ── #4613: neither door writes model output without its provenance ──
+describe('both doors refuse a write that does not say what produced the text (#4613)', () => {
+  it('TS door: source ai without engine throws before any db access', async () => {
+    setPage(null);
+    const { engine: _e, ...noEngine } = writeArgs;
+    void _e;
+    await expect(writePageTranslation(noEngine)).rejects.toThrow(/#4613/);
+    expect(state.updates.length).toBe(0);
+  });
+  it('TS door: a manual edit needs no engine', async () => {
+    setPage(null);
+    const { engine: _e, ...noEngine } = writeArgs;
+    void _e;
+    const r = await writePageTranslation({ ...noEngine, source: 'manual' });
+    expect(r.written).toBe(true);
+  });
+  it('.mjs door: neither call nor engine throws before any db access', async () => {
+    const db = makeDb();
+    await expect(writePageTranslationMjs(db, {
+      page: { id: 'p1', book_id: 'b1', ocr: { data: 'SOURCE' } }, book: { language: 'latin' }, text: 'x', promptRef: { id: 'x', version: 12 },
+    })).rejects.toThrow(/#4613/);
+    expect(state.updates.length).toBe(0);
+  });
+});
+
 // ── Parity: the TS door and the .mjs door make the same refusal decision ──
 describe('TS/.mjs door parity', () => {
   const mjsArgs = {
-    page: { id: 'p1', book_id: 'b1' },
+    page: { id: 'p1', book_id: 'b1', ocr: { data: 'SOURCE OCR' } },
     book: { language: 'latin' },
     text: 'New AI translation.',
     promptRef: { id: 'x', name: 'Standard Translation', version: 12 },
+    call: { call_site: 'tests/unit/translate-write-guard.test.ts', promptText: 'PROMPT', generationConfig: { temperature: 0.1 }, run: { code_version: 'test', host: 'test' } },
   };
 
   it('both doors refuse the same manual fixture', async () => {

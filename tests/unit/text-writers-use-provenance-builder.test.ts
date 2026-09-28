@@ -66,22 +66,15 @@ const ALLOWED: Record<string, string> = {
  * only SHRINK. When it is empty, delete it and this comment.
  */
 const PENDING: Record<string, string> = {
-  // OCR writers wired in PR 2 (#4613); the dormant TS paths remain:
-  'src/workers/write-processor-logic.ts': 'PR 3 — Lambda OCR path, dormant (0 usage rows in 30 days), no CI deploy',
-  'src/app/api/process/route.ts': 'PR 3 — Vercel realtime process route, dormant (0 usage rows in 30 days)',
-  'src/app/api/process/batch/route.ts': 'PR 3 — dormant',
-  'src/app/api/batch-save/route.ts': 'PR 3 — dormant',
-  // Translation writers — PR "translation writers record full provenance + source_text_hash (#4613)"
-  'scripts/lib/translate-core.mjs': 'PR 3 (translation writers) — the one door',
-  'scripts/workers/translate-worker.mjs': 'PR 3 (translation writers)',
-  'scripts/lib/translate-batch-seam.mjs': 'PR 3 (translation writers) — through the door; Supabase mirror payload',
-  'src/lib/translate-write.ts': 'PR 3 (translation writers) — the src door',
-  'src/workers/translation-processor-logic.ts': 'PR 3 — Lambda path, dormant',
-  'src/app/api/books/[id]/batch-translate-async/route.ts': 'PR 3 (translation writers) — Vercel batch submit + collect',
-  'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts': 'PR 3 — tenant twin',
-  'src/app/api/books/[id]/index/route.ts': 'PR 3 — index route writes page translations',
-  'src/app/api/[tenant]/books/[id]/index/route.ts': 'PR 3 — tenant twin',
-  'src/app/api/books/[id]/stitch-translations/route.ts': 'PR 3 — Gemini stitching of translations, dormant (0 usage rows in 30 days)',
+  // OCR writers wired in PR 2, translation writers in PR 3 (#4613). What remains are the
+  // Vercel/Lambda paths with 0 usage rows in 30 days, which call src/lib/ai.ts and need its
+  // results to carry the call record first — PR 4 (dormant TS paths):
+  'src/workers/write-processor-logic.ts': 'PR 4 — Lambda OCR write path, dormant, no CI deploy',
+  'src/workers/translation-processor-logic.ts': 'PR 4 — Lambda translation path, dormant',
+  'src/app/api/process/route.ts': 'PR 4 — Vercel realtime process route, dormant',
+  'src/app/api/process/batch/route.ts': 'PR 4 — dormant',
+  'src/app/api/batch-save/route.ts': 'PR 4 — dormant',
+  'src/app/api/books/[id]/stitch-translations/route.ts': 'PR 4 — Gemini stitching of translations, dormant',
 };
 
 function candidateFiles(): string[] {

@@ -10,6 +10,10 @@ import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
+import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
+
+/** Provenance identity of this route (#4613): it both submits and collects. */
+const ROUTE_CALL_SITE = 'src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts';
 import { VISIBLE_PAGE_MATCH } from '@/lib/page-counts';
 import { resolveTenantId } from '@/lib/tenant-context';
 
@@ -168,6 +172,10 @@ export const POST = withAuth(async (request, session, context) => {
       prompt_hash: promptRef.content_hash,
     };
 
+    // ONE generation config, sent in every request and recorded on the job (#4613).
+    const translateGenerationConfig = { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } };
+    // Per page: WHICH OCR text was translated and the exact prompt sent (the OCR is embedded in it).
+    const pageSources: Array<{ page_id: string; source_text_hash: string; source_text_chars: number; source_updated_at: Date | null; prompt_sent_hash: string; prompt_sent_chars: number }> = [];
     for (const page of pagesToProcess) {
       const ocrText = page.ocr?.data;
       if (!ocrText) {
@@ -187,6 +195,7 @@ export const POST = withAuth(async (request, session, context) => {
         ? `\n\n**Text to modernize:**\n${ocrText}`
         : `\n\n**Text to translate:**\n${ocrText}`);
 
+      pageSources.push({ page_id: page.id, source_text_hash: contentHash(ocrText), source_text_chars: ocrText.length, source_updated_at: (page.ocr as { updated_at?: Date } | undefined)?.updated_at ?? null, prompt_sent_hash: contentHash(prompt), prompt_sent_chars: prompt.length });
       batchRequests.push({
         key: page.id,
         request: {
@@ -194,11 +203,7 @@ export const POST = withAuth(async (request, session, context) => {
             parts: [{ text: prompt }],
             role: 'user'
           }],
-          config: {
-            temperature: 0.1,
-            maxOutputTokens: 16384,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
+          config: translateGenerationConfig,
         }
       });
     }
@@ -253,6 +258,16 @@ export const POST = withAuth(async (request, session, context) => {
       force,
       stale_only: staleOnly,
       ...promptProvenance,
+      // What every page of this job will say produced it (#4613); the collect branch below
+      // completes it per page with the source text hash and the job name.
+      provenance: batchJobProvenance({
+        call_site: ROUTE_CALL_SITE, model,
+        prompt: { id: promptRef.id, name: promptRef.name, version: promptRef.version, hash: promptRef.content_hash, text: basePrompt },
+        generationConfig: translateGenerationConfig,
+        run: { code_version: codeVersion(), host: host() },
+      }),
+      submitted_by: ROUTE_CALL_SITE,
+      page_sources: pageSources,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
       status: batchJob.state,
@@ -412,6 +427,16 @@ export const GET = withAuth(async (request, session, context) => {
                 $set: {
                   translation: {
                     data: text,
+                    ...(() => {
+                      const pageSrc = (jobDoc.page_sources as Array<{ page_id: string; source_text_hash?: string; source_text_chars?: number; source_updated_at?: Date | null; prompt_sent_hash?: string; prompt_sent_chars?: number }> | undefined)?.find((ps) => ps.page_id === pageId);
+                      return translationProvenance(text, engineFromBatchJob(jobDoc, {
+                        batch_job_id: jobName, collected_by: ROUTE_CALL_SITE, now: new Date(),
+                        input: pageSrc?.source_text_hash
+                          ? { source_field: 'ocr', source_text_hash: pageSrc.source_text_hash, source_text_chars: pageSrc.source_text_chars ?? 0, ...(pageSrc.source_updated_at ? { source_updated_at: pageSrc.source_updated_at } : {}) }
+                          : notRecorded('batch job carried no page_sources with a source_text_hash'),
+                        prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+                      }));
+                    })(),
                     updated_at: now,
                     model: jobDoc.model,
                     source_language: jobDoc.source_language,
