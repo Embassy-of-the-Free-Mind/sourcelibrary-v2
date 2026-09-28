@@ -180,29 +180,38 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
   };
 }
 
-export function batchJobProvenance({ call_site, model, prompt, generationConfig, run }: Omit<GeminiEngineArgs, 'api' | 'input'>): Omit<GeminiEngine, 'input'> {
+export type BatchJobProvenance = Omit<GeminiEngine, 'input'> & { image_resized_to_px?: number };
+export function batchJobProvenance({ call_site, model, prompt, generationConfig, run, image_resized_to_px }: Omit<GeminiEngineArgs, 'api' | 'input'> & { image_resized_to_px?: number }): BatchJobProvenance {
   const e = geminiEngine({ call_site, api: 'batch', model, prompt, generationConfig, run, input: notRecorded('completed by the collector per page') });
   const { input: _input, ...rest } = e;
   void _input;
   rest.run.submitted_at = rest.run.at;
-  return rest;
+  const out: BatchJobProvenance = rest;
+  if (num(image_resized_to_px) !== undefined) out.image_resized_to_px = image_resized_to_px; // the collector copies it into each page's input
+  return out;
 }
 
 export interface BatchJobLike {
   id?: string; _id?: unknown; model?: string; prompt_id?: string | null; prompt_name?: string | null;
   prompt_version?: string | number | null; prompt_hash?: string | null; code_version?: string;
-  created_at?: Date; submitted_by?: string; provenance?: Omit<GeminiEngine, 'input'>;
+  created_at?: Date; submitted_by?: string; provenance?: BatchJobProvenance;
 }
-export function engineFromBatchJob(job: BatchJobLike, { batch_job_id, input, collected_by, response, now = new Date() }: { batch_job_id?: string; input: ImageInput | TranslationInput | NotRecorded; collected_by?: string; response?: { modelVersion?: string }; now?: Date }): GeminiEngine {
+export function engineFromBatchJob(job: BatchJobLike, { batch_job_id, input, collected_by, response, prompt_sent_hash, prompt_sent_chars, now = new Date() }: { batch_job_id?: string; input: ImageInput | TranslationInput | NotRecorded; collected_by?: string; response?: { modelVersion?: string }; prompt_sent_hash?: string; prompt_sent_chars?: number; now?: Date }): GeminiEngine {
   if (!input || typeof input !== 'object') throw new Error('write-provenance: engineFromBatchJob needs the page input');
   const id = batch_job_id || job?.id || (job?._id != null ? String(job._id) : undefined) || NOT_RECORDED;
   if (job?.provenance?.schema === ENGINE_SCHEMA) {
-    const p = job.provenance;
+    const { image_resized_to_px, ...p } = job.provenance;
+    const img = input as ImageInput;
+    const pageInput = (num(image_resized_to_px) !== undefined && img.image_url && !('resized_to_px' in img)) ? { ...img, resized_to_px: image_resized_to_px as number } : input;
+    // A cross-book job sends a per-book prompt (document context appended): the page's own
+    // sent hash, recorded on the job's page_sources at submit, wins over the job-level one.
+    const prompt = HEX16.test(prompt_sent_hash || '') ? { ...p.prompt, sent_hash: prompt_sent_hash as string, sent_chars: num(prompt_sent_chars) ?? null } : p.prompt;
     return {
       ...p,
+      prompt,
       ...(response?.modelVersion ? { model_version: response.modelVersion, model_version_source: 'response' } : {}),
       run: { ...p.run, batch_job_id: id, collected_by: collected_by || NOT_RECORDED, collected_at: now },
-      input,
+      input: pageInput,
     };
   }
   const model = job?.model || NOT_RECORDED;

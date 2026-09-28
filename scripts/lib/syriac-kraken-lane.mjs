@@ -52,6 +52,8 @@
  */
 
 /** `ocr.pipeline` value and `sweep_log.sweep` name — one id for the whole lane. */
+import { contentHash } from './write-provenance.mjs';
+
 export const LANE = 'syriac-kraken-2026-09';
 export const LANE_ISSUE = 4883;
 /** `page_revisions.reason` for the reading this lane supersedes. */
@@ -293,11 +295,14 @@ export const STALE_OCR_FIELDS = [
  * The `$set` half of a page write. `text` is the ENVELOPED reading. `run` labels the
  * pass (a date + host) so two runs of the lane are distinguishable on the page.
  */
-export function ocrSetFields(text, engineKey, route, { run, now = new Date(), secs = null } = {}) {
+export function ocrSetFields(text, engineKey, route, { run, now = new Date(), secs = null, imageUrl = null } = {}) {
   const e = ENGINES[engineKey];
   if (!e) throw new Error(`unknown engine ${engineKey}`);
   return {
     'ocr.data': text,
+    // The hash of the text written and the image it was read from (#4613) — the two
+    // fields the 2026-09-25 standard requires that this lane did not record.
+    'ocr.content_hash': contentHash(text),
     'ocr.language': 'Syriac',
     'ocr.model': `kraken/${e.key}`,
     'ocr.source': 'kraken',
@@ -308,6 +313,7 @@ export function ocrSetFields(text, engineKey, route, { run, now = new Date(), se
       model_doi: e.model_doi, licence: e.licence, route,
       segmenter: KRAKEN.segmenter, direction: KRAKEN.direction, base_dir: KRAKEN.base_dir,
       run: run || LANE, issue: LANE_ISSUE, secs,
+      input: imageUrl ? { image_url: imageUrl } : { status: 'not_recorded', reason: 'caller passed no image url' },
     },
     updated_at: now,
   };
