@@ -235,6 +235,20 @@ findings were retracted in one session, all the same shape as the analytics
 failures above: **the instrument failed silently, in the direction that
 flattered the conclusion.**
 
+- **A judge that sees only the junction rewards omission — and assert which ARM it
+  read, do not label it.** In the #4681 seam draws the judges compared a two-page
+  excerpt around each page break for fluency; the "lane" text on j009 opened at
+  paragraph 164, silently dropping page 65's first sentence, and the judge scored
+  the smoother, shorter side as the win. Only a read against the source OCR can
+  see an omission, so pair any junction or fluency judge with a completeness check
+  (reader-text length vs the source, per side) and hand-read what it flags. And
+  the "repaired lane" the judges read was the plain draft for two rounds
+  (#5020, #5053): the harness matched `source === 'repaired'`, the worker writes
+  `'repair'`, and the key labelled every seam page repaired from
+  `run.repairs.length > 0`. A reader must import the writer's literal and throw when
+  it substitutes nothing (PR #5077); a label derived from a different field than the
+  text is not evidence of what the judge saw.
+
 - **A cheap judge that cannot do the task answers "clean", not "I can't."**
   `gemini-3.1-flash-lite` scored κ=0.107 against cross-family gold labels,
   calling 47/49 entries faithful where 21 had catalogued errors — zero false
