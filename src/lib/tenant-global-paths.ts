@@ -71,6 +71,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // Private spend & unit-cost report (#5225): Source Library's own vendor
+  // bills, backlog projections and people. Nothing about it belongs on a
+  // partner's domain, and the admin layout's role gate is not the right tool
+  // for "this host must not even answer" — refuse in the proxy like the rest.
+  '/admin/spend',
   // Inner-circle curation surfaces (#3846): identity adjudication over the
   // whole corpus (work merges, edition keeper choices). Corpus-wide by
   // construction and actuating, so a partner host must refuse it outright —

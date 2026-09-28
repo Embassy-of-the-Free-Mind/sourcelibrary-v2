@@ -211,6 +211,17 @@ const nextConfig: NextConfig = {
         has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
+      // The private spend report (#5225) is behind a named allow-list, but a
+      // sign-in redirect is still a URL a crawler can record. Belt and braces
+      // with the page's `metadata.robots`; robots.txt already disallows /admin/.
+      {
+        source: '/admin/spend/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/spend',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.

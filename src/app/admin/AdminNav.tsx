@@ -43,8 +43,13 @@ const adminLinks: NavItem[] = [
   { href: '/admin/system-map', label: 'System Map' },
 ];
 
-export function AdminNav() {
+/**
+ * `extraLinks`: links the server layout decided this viewer may see (the
+ * allow-listed spend report, #5225). Appended after the static list.
+ */
+export function AdminNav({ extraLinks = [] }: { extraLinks?: { href: string; label: string }[] }) {
   const pathname = usePathname();
+  const links: NavItem[] = extraLinks.length ? [...adminLinks, ...extraLinks] : adminLinks;
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -82,7 +87,7 @@ export function AdminNav() {
       background: '#161b22', borderBottom: '1px solid #30363d',
       overflowX: 'auto', fontSize: 13,
     }}>
-      {adminLinks.map((link) => {
+      {links.map((link) => {
         if (link.children) {
           const active = isActive(link.href, link.children);
           const isOpen = openDropdown === link.label;
