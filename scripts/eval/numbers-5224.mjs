@@ -39,6 +39,7 @@
  *   --stage=align      numeric-token alignment Archive ↔ lite on every page → numbers.jsonl (free)
  *   --stage=select     adjudication plan: 25 pages/book (a) + all (b) + 30-page full subset
  *   --stage=crops      blind crops + 8-up sheets from djvu WORD boxes (free)
+ *   --stage=margins    re-crop lite margin numbers (page numbers the Archive dropped) as bands → new sheets
  *   --stage=merge      collect adjudications/*.jsonl → adjudicated.jsonl, human queue
  *   --stage=score      verdicts, per-engine rates with book-cluster CIs, confusion table → store scores
  *   --stage=fixture    pinned fixture set benchmark/numbers-en-5224.json + crops
@@ -572,6 +573,69 @@ async function stageCrops() {
   console.log(`crops`, JSON.stringify(k), `sheets ${sheets.length}`);
 }
 
+/** tokens lite filed in <page-num>/<header>/<footer> — moved to the front by normalise(), so they are the first N lite tokens */
+const frontTokens = (lite) => words(normalise([...String(lite).matchAll(/<(page-num|header|footer)\b[^<>]*>([\s\S]*?)<\/\1>/gi)].map((m) => m[2]).join(' ')));
+
+/**
+ * MARGINS — a lite-only number that comes from lite's <page-num>/<header>/<footer> is a margin
+ * number the Archive dropped (the smoke run counted 60+ of them as lite "spurious" because a
+ * 'between' crop at the first body word never shows the margin). Re-crop as a BAND: the LINE of
+ * the first matched Archive token when it is the leaf's first or last line, else the top 6% of
+ * the page; cut into left/right halves stacked so the digits stay legible. New sheets are
+ * appended (4 per sheet); the event's earlier crop is superseded — its old sheet/pos line is
+ * simply never joined. Runs after the first adjudication round; does not touch existing sheets.
+ */
+async function stageMargins() {
+  const sharp = (await import('sharp')).default;
+  const crops = readJsonl(F('crops.jsonl')); const sheets = readJsonl(F('sheets.jsonl'));
+  const rows = new Map(allPages().map((r) => [r.slug, r]));
+  const frontN = new Map();
+  const todo = crops.filter((c) => c.kind === 'lite_only' && c.crop && c.type === 'between');
+  for (const c of todo) { if (!frontN.has(c.slug)) frontN.set(c.slug, frontTokens(liteTextOf(rows.get(c.slug))).length); }
+  const targets = todo.filter((c) => c.hi < frontN.get(c.slug));
+  console.log(`margin candidates: ${targets.length} on ${new Set(targets.map((c) => c.slug)).size} pages`);
+  let made = 0;
+  for (const c of targets) {
+    const r = rows.get(c.slug); const X = await leavesOf(r.ia, r.ia_meta?.xml_name); const leaf = X?.leaves[r.leaf]; if (!leaf) continue;
+    const A = archiveTokens(leaf); const md = await sharp(path.join(IMG, `${c.slug}.jpg`)).metadata();
+    const sx = md.width / (leaf.width || md.width), sy = md.height / (leaf.height || md.height);
+    const ai = c.anchors?.after ?? c.anchors?.before; const t = ai != null ? A[ai] : null;
+    let band;
+    if (t && (t.li === 0 || t.li === leaf.lines.length - 1)) { const ws = leaf.lines[t.li]; const top = Math.min(...ws.map((w) => w.top)), bot = Math.max(...ws.map((w) => w.bot)); const h = Math.max(20, bot - top); band = { top: Math.max(0, top - 1.2 * h), bot: Math.min(leaf.height || md.height / sy, bot + 1.2 * h), how: `line ${t.li}` }; }
+    else band = { top: 0, bot: (leaf.height || md.height / sy) * 0.06, how: 'top-6pct' };
+    const ex = { left: 0, top: Math.round(band.top * sy), width: md.width, height: Math.max(8, Math.round((band.bot - band.top) * sy)) };
+    if (ex.top + ex.height > md.height) ex.height = md.height - ex.top;
+    const half = Math.floor(md.width / 2);
+    try {
+      const L = await sharp(path.join(IMG, `${c.slug}.jpg`)).extract({ ...ex, width: half }).resize({ width: 1200 }).toBuffer();
+      const R = await sharp(path.join(IMG, `${c.slug}.jpg`)).extract({ ...ex, left: half, width: md.width - half }).resize({ width: 1200 }).toBuffer();
+      const lm = await sharp(L).metadata(), rm = await sharp(R).metadata();
+      const file = `crops/${c.id.replace('#', '_')}_margin.jpg`;
+      await sharp({ create: { width: 1200, height: lm.height + rm.height + 10, channels: 3, background: '#c00' } }).composite([{ input: L, top: 0, left: 0 }, { input: R, top: lm.height + 10, left: 0 }]).jpeg({ quality: 82 }).toFile(F(file));
+      c.superseded = { sheet: c.sheet, pos: c.pos, crop: c.crop, type: c.type };
+      c.type = 'margin'; c.crop = file; c.band = band; c.question = 'the page number printed in the margin of this band (left half above, right half below)';
+      made++;
+    } catch (e) { c.margin_error = String(e.message || e).slice(0, 100); }
+    if (r.set === 'b') XMLS.clear();
+  }
+  // sheets of 4, appended after the existing ones
+  const fresh = targets.filter((c) => c.type === 'margin'); let n = sheets.length;
+  for (let i = 0; i < fresh.length; i += 4) {
+    const group = fresh.slice(i, i + 4); const sheetId = `sheet-${String(++n).padStart(3, '0')}`;
+    const parts = []; let y = 0;
+    for (let j = 0; j < group.length; j++) {
+      const c = group[j]; const buf = await sharp(F(c.crop)).toBuffer(); const m = await sharp(buf).metadata();
+      const label = Buffer.from(`<svg width="90" height="${m.height}" xmlns="http://www.w3.org/2000/svg"><rect width="90" height="${m.height}" fill="#ffe"/><text x="45" y="${Math.min(m.height - 10, 48)}" font-size="40" font-weight="bold" font-family="DejaVu Sans, sans-serif" text-anchor="middle" fill="#000">${j + 1}</text></svg>`);
+      parts.push({ input: label, top: y, left: 0 }, { input: buf, top: y, left: 90 });
+      c.sheet = sheetId; c.pos = j + 1; y += m.height + 14;
+    }
+    await sharp({ create: { width: 1290, height: Math.max(1, y - 14), channels: 3, background: '#222' } }).composite(parts).jpeg({ quality: 82 }).toFile(F(`sheets/${sheetId}.jpg`));
+    sheets.push({ sheet: sheetId, items: group.map((c) => ({ pos: c.pos, id: c.id, type: 'margin' })) });
+  }
+  writeJsonl(F('crops.jsonl'), crops); writeJsonl(F('sheets.jsonl'), sheets);
+  console.log(`margin crops ${made}, new sheets ${sheets.length - (n - Math.ceil(fresh.length / 4))}, total sheets ${sheets.length}`);
+}
+
 /** MERGE — adjudications/*.jsonl ({sheet, pos, printed, figures, confidence, note}) → adjudicated.jsonl + human queue */
 function stageMerge() {
   const crops = readJsonl(F('crops.jsonl'));   // capped and failed rows travel through with printed: null
@@ -604,14 +668,21 @@ const sideTok = (c, side) => (side === 'archive' ? c.a : c.l);
  *   t === d → right; t != null && d === 'none' → spurious; t == null && d has digits → wrong (dropped);
  *   t != null && d digits && t !== d → wrong (misread); unreadable → unjudged
  */
-function verdict(c, side) {
+function verdict(c, side, pool = null) {
   const d = c.printed, t = sideTok(c, side);
   if (d == null || d === 'unreadable') return 'unjudged';
   const tn = t != null && isNum(t) ? t : null;
   const letterDigits = t != null && tn == null && /^[\dilIoOsSzZgGbB]+$/.test(t);   // 'loi' for 101, 'i3' for 13, 'ssi' for 551
   if (d === 'none') return tn == null ? 'right-none' : 'spurious';
+  // The other side of a one-sided event: the Archive split "1910" into "19 10" (two archive_only
+  // events) while lite has "1910" as a lite_only event on the same page. Judge that side against
+  // its own unmatched numbers on the page before calling it a drop.
+  if (tn == null && pool && pool[side] && pool[side].has(d)) return 'right';
   if (tn == null) return letterDigits ? 'wrong-misread' : 'wrong-dropped';
-  // an Archive WORD such as "144—12," yields two tokens in ONE box; the blind reader reports "14412"
+  // the box is the whole Archive WORD: "144—12," or "1705-6," or "3,000" — the blind reader reports
+  // every digit in it ("14412", "17056", "3000"); a token is right when the WORD's digits are what was read
+  const wd = c.word_text ? c.word_text.normalize('NFKC').replace(/\D/g, '') : null;
+  if (wd && wd !== tn && d === wd && wd.includes(tn)) return 'right';
   if (c.word_ntok > 1 && d.includes(tn)) return 'right';
   return tn === d ? 'right' : 'wrong-misread';
 }
@@ -633,6 +704,9 @@ function stageScore() {
   const rows = new Map(allPages().map((r) => [r.slug, r]));
   const events = readJsonl(F('numbers.jsonl')).filter((e) => plan.has(e.slug));
   const adjById = new Map(adj.map((c) => [c.id, c]));
+  // per page: unmatched numbers each side holds (for the other-side rescue in verdict)
+  const pools = new Map();
+  for (const e of events) { if (!pools.has(e.slug)) pools.set(e.slug, { archive: new Set(), lite: new Set() }); if (e.kind === 'archive_only') pools.get(e.slug).archive.add(e.a); if (e.kind === 'lite_only') pools.get(e.slug).lite.add(e.l); }
   // per page × engine tallies over the adjudicated pages
   const perPage = new Map();
   const tally = (slug, side, key, n = 1) => { if (!n) return; if (!perPage.has(slug)) perPage.set(slug, { archive: {}, lite: {} }); const t = perPage.get(slug)[side]; t[key] = (t[key] || 0) + n; };
@@ -647,15 +721,16 @@ function stageScore() {
         if (c.printed === 'unreadable') { blind.agreed_unreadable++; tally(e.slug, 'archive', 'unjudged'); tally(e.slug, 'lite', 'unjudged'); continue; }
         blind.agreed_judged++;
         if (c.printed === 'none') { blind.agreed_none++; tally(e.slug, 'archive', 'spurious'); tally(e.slug, 'lite', 'spurious'); continue; }
-        if (c.printed === e.a || (c.word_ntok > 1 && c.printed.includes(e.a))) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
+        const wd = c.word_text ? c.word_text.normalize('NFKC').replace(/\D/g, '') : null;
+        if (c.printed === e.a || (c.word_ntok > 1 && c.printed.includes(e.a)) || (wd && c.printed === wd && wd.includes(e.a))) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
         else { blind.both_wrong_same++; tally(e.slug, 'archive', 'wrong-misread'); tally(e.slug, 'lite', 'wrong-misread'); for (const s of ['archive', 'lite']) { const k = confusionClass(e.a, c.printed); conf[s][k] = (conf[s][k] || 0) + 1; examples[s].push({ id: e.id, engine: e.a, printed: c.printed, kind: 'agree', ctx: e.ctx }); } }
       } else { tally(e.slug, 'archive', 'agreed'); tally(e.slug, 'lite', 'agreed'); }   // counted correct (blind spot measured above)
       continue;
     }
     if (!c || c.printed == null) { tally(e.slug, 'archive', 'unjudged', w); tally(e.slug, 'lite', 'unjudged', w); continue; }
     for (const side of ['archive', 'lite']) {
-      const v = verdict(c, side); tally(e.slug, side, v, w);
-      if (v.startsWith('wrong') || v === 'spurious') { const k = confusionClass(sideTok(c, side), c.printed); conf[side][k] = +((conf[side][k] || 0) + w).toFixed(2); const cf = c.confidence || 'unstated'; errConf[side][cf] = +((errConf[side][cf] || 0) + w).toFixed(2); if (examples[side].length < 400) examples[side].push({ id: e.id, engine: sideTok(c, side), printed: c.printed, kind: e.kind, ctx: e.ctx, crop: c.crop }); }
+      const v = verdict(c, side, pools.get(e.slug)); tally(e.slug, side, v, w);
+      if (v.startsWith('wrong') || v === 'spurious') { const k = c.type === 'margin' && v === 'wrong-dropped' ? 'dropped (page number in the margin)' : confusionClass(sideTok(c, side), c.printed); conf[side][k] = +((conf[side][k] || 0) + w).toFixed(2); const cf = c.confidence || 'unstated'; errConf[side][cf] = +((errConf[side][cf] || 0) + w).toFixed(2); if (examples[side].length < 400) examples[side].push({ id: e.id, engine: sideTok(c, side), printed: c.printed, kind: e.kind, ctx: e.ctx, crop: c.crop }); }
     }
   }
   // per page rows → store scores; per book sums → cluster CIs
@@ -789,6 +864,7 @@ async function main() {
   if (STAGE === 'align') return stageAlign();
   if (STAGE === 'select') return stageSelect();
   if (STAGE === 'crops') return stageCrops();
+  if (STAGE === 'margins') return stageMargins();
   if (STAGE === 'merge') return stageMerge();
   if (STAGE === 'score') return stageScore();
   if (STAGE === 'fixture') return stageFixture();
