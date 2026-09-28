@@ -622,7 +622,7 @@ function stageScore() {
   for (const [slug, t] of perPage) {
     const r = rows.get(slug); const p = plan.get(slug);
     for (const side of ['archive', 'lite']) {
-      const x = t[side]; const right = (x.right || 0) + (x.agreed || 0) + (x['right-none'] || 0) - (x['right-none'] || 0);
+      const x = t[side]; const right = (x.right || 0) + (x.agreed || 0);   // 'right-none' (no number printed, engine printed none) is not a printed number
       const wrong = (x['wrong-misread'] || 0) + (x['wrong-dropped'] || 0), spurious = x.spurious || 0, unjudged = x.unjudged || 0;
       const printed = right + wrong;   // printed numbers with a verdict (agreed ones counted as printed+right)
       const metric = { numbers_printed: printed, wrong, misread: x['wrong-misread'] || 0, dropped: x['wrong-dropped'] || 0, spurious, unjudged, agreed_counted_correct: x.agreed || 0, digit_err: printed ? r4(wrong / printed) : null };
