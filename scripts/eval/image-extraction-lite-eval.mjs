@@ -220,8 +220,12 @@ async function getImage(item) {
   }
   const url = getPageSource(item.page);
   if (!url || !/^https?:\/\//.test(url)) return null;
-  const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
-  if (!res.ok) return null;
+  // A slow or dead image host is a recorded `no-image` for that page, never a crashed run.
+  let res = null;
+  for (const ms of [30000, 90000]) {
+    try { res = await fetch(url, { signal: AbortSignal.timeout(ms) }); if (res.ok) break; } catch { res = null; }
+  }
+  if (!res?.ok) return null;
   const buffer = Buffer.from(await res.arrayBuffer());
   const mimeType = (res.headers.get('content-type') || 'image/jpeg').split(';')[0].trim();
   fs.writeFileSync(f, buffer);
