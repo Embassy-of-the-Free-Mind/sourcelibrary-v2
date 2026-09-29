@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
@@ -13,9 +14,10 @@ const DIRECTORY_URL = 'https://claude.ai/directory/connectors/source-library';
 const SITE = 'https://sourcelibrary.org';
 
 // Screen recording of the directory flow in Claude, then an image search.
-// Silent, 2 min 14 s, 1280px wide (the master's first 36 s were an idle chat
-// window and are cut). Re-encode from the master with:
-//   ffmpeg -ss 36 -i in.mov -vf scale=1280:-2 -c:v libx264 -crf 26 -pix_fmt yuv420p -movflags +faststart -an out.mp4
+// Silent, 2 min 14 s, 1280x1516. The master's first 36 s (idle chat window) are cut,
+// and the Claude sidebar + browser toolbar are cropped out (private). Re-encode from the master with:
+//   ffmpeg -ss 36 -i in.mov -vf "crop=1438:1704:628:82,scale=1280:-2" -c:v libx264 -crf 26 \
+//     -pix_fmt yuv420p -movflags +faststart -an out.mp4
 const VIDEO = {
   src: '/connect/connect-claude-2026-09.mp4',
   poster: '/connect/connect-claude-poster.jpg',
@@ -161,7 +163,7 @@ function UrlBox({ label }: { label?: string }) {
   );
 }
 
-function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
+function Step({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-2">
@@ -194,7 +196,7 @@ export default function ConnectPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()).replace(/</g, '\\u003c') }}
       />
 
       {/* ── The answer, above the fold ── */}
@@ -251,8 +253,9 @@ export default function ConnectPage() {
         </video>
         <ol className="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-secondary list-none">
           <li className="bg-white rounded-xl border border-border-light p-4">
-            <span className="font-semibold text-primary">0:04 &mdash; Find it.</span> Customize &rarr; Connectors,
-            type &ldquo;source&rdquo; in the directory search.
+            <span className="font-semibold text-primary">0:04 &mdash; Find it.</span> Customize page &rarr;{' '}
+            <strong>Connectors</strong> tab &rarr; magnifier &rarr; type &ldquo;source&rdquo;. (The sidebar is cropped out
+            of the recording; the stills below show it.)
           </li>
           <li className="bg-white rounded-xl border border-border-light p-4">
             <span className="font-semibold text-primary">0:20 &mdash; Connect.</span> One click on the listing; the
@@ -273,58 +276,114 @@ export default function ConnectPage() {
       {/* ── Claude ── */}
       <section className="mb-16">
         <ClientHeading id="claude" title="Claude" tag="claude.ai, Claude Desktop and the mobile apps · every plan" />
+        <p className="text-secondary mb-8 max-w-2xl">
+          Source Library is listed in Claude&apos;s connector directory, so there is nothing to type except the word
+          &ldquo;source&rdquo;. Two of the five clicks are easy to miss, so they are circled.
+        </p>
 
-        <div className="bg-warm rounded-2xl p-6 md:p-8 mb-8">
-          <h3 className="text-lg font-semibold text-primary mb-2">Fastest: one click from the directory</h3>
-          <p className="text-secondary mb-4">
-            Source Library is listed in Claude&apos;s connector directory. Open the listing, click{' '}
-            <strong>Connect</strong>, and it is on. This is what the video shows.
-          </p>
-          <a
-            href={DIRECTORY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-accent-rust text-white rounded-full font-medium hover:opacity-90 transition-opacity"
-          >
-            Open Source Library in the Claude directory &rarr;
-          </a>
-          <p className="text-muted text-sm mt-3">
-            Or inside Claude: <strong>Customize &rarr; Connectors</strong>, search for &ldquo;Source
-            Library&rdquo;, click Connect.
-          </p>
-        </div>
-
-        <h3 className="text-lg font-semibold text-primary mb-4">Or add it by URL (custom connector)</h3>
-        <div className="space-y-8">
-          <Step n={1} title="Open Connectors">
-            <p>
-              In Claude, click your <strong>profile icon</strong> (bottom-left), then <strong>Customize</strong>,
-              then <strong>Connectors</strong>.
-            </p>
-          </Step>
-
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex-1">
-              <Step n={2} title="Add custom connector">
-                <p>
-                  Click the <strong>+</strong> button, then <strong>Add custom connector</strong>.
-                </p>
-              </Step>
-            </div>
-            <div className="md:w-80 flex-shrink-0">
-              <Image
-                src="/connect/step-add-dialog.png"
-                alt="The Add custom connector dialog in Claude, showing empty Name and URL fields"
-                width={560}
-                height={500}
-                className="rounded-xl border border-border-light shadow-sm"
-              />
-            </div>
+        <div className="space-y-10">
+          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+            <Step n={1} title="Click Customize in the left sidebar">
+              <p>
+                It sits below <strong>Scheduled</strong>, above <strong>More</strong>. Do this once on the web; the
+                connector follows your account into the desktop and mobile apps.
+              </p>
+            </Step>
+            <Image
+              src="/connect/step-1-customize.jpg"
+              alt="The Claude sidebar with the Customize item circled"
+              width={1200}
+              height={626}
+              className="rounded-xl border border-border-light shadow-sm"
+            />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex-1">
-              <Step n={3} title="Enter the name and URL">
+          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+            <Step n={2} title="Click the Connectors tab">
+              <p>
+                The Customize page opens on <strong>Skills</strong>. Connectors is the second tab, in grey, next to it.
+              </p>
+            </Step>
+            <Image
+              src="/connect/step-2-connectors-tab.jpg"
+              alt="The Customize page with the Connectors tab circled"
+              width={1200}
+              height={584}
+              className="rounded-xl border border-border-light shadow-sm"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+            <Step n={3} title="Click the magnifying glass and type “source”">
+              <p>
+                The search box is hidden behind the small <strong>magnifier icon</strong> on the right, next to the
+                black <strong>Add</strong> button. Type <strong>source</strong> and <strong>Source Library</strong>{' '}
+                (marked Community) appears in the list. Click its row.
+              </p>
+            </Step>
+            <Image
+              src="/connect/step-3-search.jpg"
+              alt="The Connectors search box with 'source' typed and the Source Library row circled"
+              width={1200}
+              height={766}
+              className="rounded-xl border border-border-light shadow-sm"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+            <Step n={4} title="Click Connect to Claude">
+              <p>
+                The black button at the top right of the listing. A moment later the tool list appears below it
+                (search, read, quote, images) and a toast says <em>Connected to Source Library</em>. No sign-in.
+              </p>
+              <p className="text-sm text-muted">
+                Shortcut for steps 1&ndash;4:{' '}
+                <a href={DIRECTORY_URL} className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
+                  open the listing directly
+                </a>{' '}
+                and click Connect.
+              </p>
+            </Step>
+            <Image
+              src="/connect/step-4-connect.jpg"
+              alt="The Source Library listing in the Claude directory with the Connect to Claude button circled"
+              width={1200}
+              height={584}
+              className="rounded-xl border border-border-light shadow-sm"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+            <Step n={5} title="Ask">
+              <p>
+                Start a new conversation and ask about any historical text or image. Claude searches, reads and cites
+                the library on its own; image results come back as a grid, each linked to its page in the original
+                book. If Claude doesn&apos;t use it, open the tools menu beside the message box and switch Source
+                Library on.
+              </p>
+            </Step>
+            <Image
+              src="/connect/step-5-result.jpg"
+              alt="Claude showing a grid of alchemical engravings returned by the Source Library connector"
+              width={1200}
+              height={1100}
+              className="rounded-xl border border-border-light shadow-sm"
+            />
+          </div>
+        </div>
+
+        <details className="group bg-white rounded-xl border border-border-light overflow-hidden mt-10">
+          <summary className="px-5 py-3 cursor-pointer hover:bg-stone-50 transition-colors text-sm">
+            <strong>Can&apos;t find it in the directory?</strong>{' '}
+            <span className="text-muted">&mdash; add it by URL as a custom connector</span>
+          </summary>
+          <div className="px-5 pb-5 pt-2 space-y-6">
+            <p className="text-sm text-secondary">
+              Same result, and it works on workspaces where the directory is switched off. On the Connectors tab
+              click the black <strong>+ Add</strong> button, then <strong>Add custom connector</strong>.
+            </p>
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex-1 text-sm text-secondary space-y-3">
                 <p>
                   Name: <strong>Source Library</strong> (keep this exact name &mdash; shared pages that call the
                   library look it up by name). URL:
@@ -333,27 +392,19 @@ export default function ConnectPage() {
                 <p>
                   Leave <strong>Advanced settings</strong> closed. Click <strong>Add</strong>.
                 </p>
-              </Step>
-            </div>
-            <div className="md:w-80 flex-shrink-0">
-              <Image
-                src="/connect/step-add-filled.png"
-                alt="The Add custom connector dialog filled in with Source Library and the MCP URL"
-                width={560}
-                height={500}
-                className="rounded-xl border border-border-light shadow-sm"
-              />
+              </div>
+              <div className="md:w-72 flex-shrink-0">
+                <Image
+                  src="/connect/step-add-filled.png"
+                  alt="The Add custom connector dialog filled in with Source Library and the MCP URL"
+                  width={560}
+                  height={500}
+                  className="rounded-xl border border-border-light shadow-sm"
+                />
+              </div>
             </div>
           </div>
-
-          <Step n={4} title="Ask">
-            <p>
-              Start a new conversation and ask about any historical text or image. Claude searches, reads and cites
-              the library on its own. If it doesn&apos;t, open the tools menu beside the message box and switch
-              Source Library on.
-            </p>
-          </Step>
-        </div>
+        </details>
       </section>
 
       {/* ── ChatGPT ── */}
