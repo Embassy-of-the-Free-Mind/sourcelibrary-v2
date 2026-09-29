@@ -91,10 +91,13 @@ const SIBLING_CAP = 60;
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
 function cos(a, b) { let s = 0, na = 0, nb = 0; for (let i = 0; i < a.length; i++) { s += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i]; } return s / (Math.sqrt(na) * Math.sqrt(nb)); }
 
-async function fetchJson(url, opts = {}, retries = 3) {
+// Every request carries a timeout: a dropped connection otherwise hangs the run
+// forever with the socket still ESTABLISHED (2026-09-28, a 1,200-image pool
+// stalled 30+ min in one CLIP batch). A timeout is retried like any failure.
+async function fetchJson(url, opts = {}, retries = 3, timeoutMs = 300000) {
   for (let i = 0; ; i++) {
     try {
-      const r = await fetch(url, opts);
+      const r = await fetch(url, { ...opts, signal: AbortSignal.timeout(timeoutMs) });
       if (!r.ok) throw new Error(`${r.status} ${await r.text().then(t => t.slice(0, 150))}`);
       return await r.json();
     } catch (e) { if (i >= retries) throw e; await new Promise(r => setTimeout(r, 2500 * (i + 1))); }
@@ -183,7 +186,7 @@ for (let i = 0; i < targets.length; i++) {
   const deg = 3 + (i % 4);
   const cachedId = fs.existsSync(meta) ? JSON.parse(fs.readFileSync(meta, 'utf8')).id : null;
   if (!fs.existsSync(wall) || cachedId !== String(t.id)) {
-    fs.writeFileSync(clean, Buffer.from(await (await fetch(t.extracted_url)).arrayBuffer()));
+    fs.writeFileSync(clean, Buffer.from(await (await fetch(t.extracted_url, { signal: AbortSignal.timeout(60000) })).arrayBuffer()));
     if (t.recipe === 'shear') {
       await sharp(clean).resize(900).affine([[1, 0.12], [0.05, 0.94]], { background: DARK }).rotate(-2, { background: DARK })
         .extend({ top: 100, bottom: 100, left: 80, right: 80, background: DARK }).blur(0.7).modulate({ brightness: 0.88 }).jpeg({ quality: 58 }).toFile(wall);
@@ -405,7 +408,7 @@ const thumbCache = new Map();
 async function thumbB64(p) {
   if (thumbCache.has(p.id)) return thumbCache.get(p.id);
   try {
-    const buf = Buffer.from(await (await fetch(p.thumbnail_url)).arrayBuffer());
+    const buf = Buffer.from(await (await fetch(p.thumbnail_url, { signal: AbortSignal.timeout(60000) })).arrayBuffer());
     const v = buf.toString('base64');
     thumbCache.set(p.id, v);
     return v;
