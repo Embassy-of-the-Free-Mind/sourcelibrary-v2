@@ -13,9 +13,14 @@
  * test here is red when the marker stops carrying weight.
  */
 import { describe, it, expect } from 'vitest';
+import fs from 'fs';
+import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { LEAF_BREAK, countLeafBreaks, splitLeafUnits, leafSeamsPreserved, leafUnitsHealth, dropLeafSeamBreaches, leafBreakNote, insertLeafBreaks, foreignTags } from '../../scripts/lib/leaf-break.mjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — plain-JS module, no declarations
+import { duplicatedAcrossBoundary, sourceRepeatsAcrossBoundary, sourceTokens, SOURCE_REPEAT_MIN_TOKENS } from '../../scripts/lib/block-drift.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { buildTranslationPrompt, buildBlockTranslationPrompt, resolvePageBreakForPage, assessTranslationHealth, PAGE_BREAK_SCOPED, LEAF_BREAK_ONLY, PAGE_BREAK_RULE, LEAF_BREAK_RULE } from '../../scripts/lib/translate-core.mjs';
@@ -229,12 +234,86 @@ describe('the #5176 guards run per leaf', () => {
     expect(leafUnitsHealth(`${LAT1}\n${LAT2}`, `${EN1}\n${EN2}`, { lang: 'Latin' })).toEqual({ healthy: true, reason: null, unit: null });
   });
 
+  it('leaf-drift: leaf 2\'s opening rendered at the end of leaf 1 AND at its own head is a duplication when the source does not repeat', () => {
+    const EN2 = 'These things pleased the assembly, but not Noailles, who, when he could obtain nothing, made a secession with nine other bishops, kept away from the meetings, and wrote letters to the king in which he defended his opinion at length.';
+    const tr = `${EN1} ${EN2}\n${LEAF_BREAK}\n${EN2}`;
+    expect(sourceRepeatsAcrossBoundary(LAT1, LAT2)).toBeNull();
+    expect(leafUnitsHealth(OCR_LAT, tr, { lang: 'Latin' })).toMatchObject({ healthy: false, reason: 'leaf-drift', unit: 0, drift: { kind: 'duplicated' } });
+    expect(assessTranslationHealth(OCR_LAT, tr, { lang: 'Latin' })).toEqual({ healthy: false, reason: 'leaf-drift' });
+    // Negative control: the same translation without the marker on either side is one page to
+    // the whole-page tier, which has no boundary to judge.
+    expect(assessTranslationHealth(`${LAT1}\n${LAT2}`, `${EN1} ${EN2}\n${EN2}`, { lang: 'Latin' })).toEqual({ healthy: true, reason: null });
+  });
+
   it('dropLeafSeamBreaches removes only the pages whose seams did not come back', () => {
     const pages = [{ page_number: 1, ocr: { data: MARKED } }, { page_number: 2, ocr: { data: PLAIN } }, { page_number: 3, ocr: { data: MARKED } }];
     const map = new Map([[1, TR_BRIDGED], [2, TR_BRIDGED], [3, TR_KEPT]]);
     const { breached } = dropLeafSeamBreaches(pages, map);
     expect(breached).toEqual([{ page: 1, ok: false, ocr: 1, tr: 0 }]);
     expect([...map.keys()]).toEqual([2, 3]);
+  });
+});
+
+describe('the refrain exemption (#5275): a run both leaves share is a duplication only when the source does not share it', () => {
+  // The 57 seam pages of the canonical pilot book the guard refused in the 2026-09-29 re-pilot,
+  // with the translations it refused. The sūtra's refrain ("…are non-dual; they cannot be
+  // divided, are not separate, and are not distinct. Through the purity of…") recurs on both
+  // leaves of each page — in the source as much as in the translation.
+  type RefrainFixture = { provenance: string; control_leaf: { book: string; page: number; text: string }; pages: { book: string; page: number; leaf_lines: number[]; source: string; refused: string }[] };
+  const FX: RefrainFixture = JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/leaf-break/refrain-seams-5275.json'), 'utf8'));
+  const leavesOf = (t: string) => splitLeafUnits(t);
+
+  it('the fixture is the re-pilot\'s refused set: 57 two-leaf pages, every one a duplicate by the translation alone', () => {
+    expect(FX.pages.length).toBe(57);
+    for (const p of FX.pages) {
+      const tr = leavesOf(p.refused);
+      expect(leavesOf(p.source).length).toBe(2);
+      expect(tr.length).toBe(2);
+      expect(duplicatedAcrossBoundary(tr[0], tr[1])).not.toBeNull();
+    }
+  });
+
+  it('the source repeats across every one of the 57 seams (shortest run 7 syllables), and the guard now passes them all', () => {
+    let refused = 0, shortest = Infinity;
+    for (const p of FX.pages) {
+      const src = leavesOf(p.source);
+      const rep = sourceRepeatsAcrossBoundary(src[0], src[1]);
+      expect(rep).not.toBeNull();
+      shortest = Math.min(shortest, rep!.len);
+      if (!leafUnitsHealth(p.source, p.refused, { lang: 'Tibetan' }).healthy) refused++;
+      expect(assessTranslationHealth(p.source, p.refused, { lang: 'Tibetan' })).toEqual({ healthy: true, reason: null });
+    }
+    expect(refused).toBe(0);
+    expect(shortest).toBeGreaterThanOrEqual(SOURCE_REPEAT_MIN_TOKENS + 1);
+  });
+
+  it('negative control: the same 57 translations against a source whose second leaf does NOT repeat the first are all refused', () => {
+    // Leaf 2 of a seam page of the narrative rnam thar stands in for the Kanjur's second leaf:
+    // the translation still repeats itself, the source no longer does, so the verdict is decided
+    // by the source and not by the shape of the English.
+    let refused = 0;
+    for (const p of FX.pages) {
+      const src = leavesOf(p.source);
+      const swapped = `${src[0]}\n${LEAF_BREAK}\n${FX.control_leaf.text}`;
+      expect(sourceRepeatsAcrossBoundary(src[0], FX.control_leaf.text)).toBeNull();
+      const h = leafUnitsHealth(swapped, p.refused, { lang: 'Tibetan' });
+      if (!h.healthy) refused++;
+      expect(h).toMatchObject({ healthy: false, reason: 'leaf-drift', drift: { kind: 'duplicated' } });
+    }
+    expect(refused).toBe(57);
+  });
+
+  it('negative control: a bridged seam on a refrain page is still refused — the exemption never reaches the seam count', () => {
+    const p = FX.pages[0];
+    const bridged = leavesOf(p.refused).join(' ');
+    expect(assessTranslationHealth(p.source, bridged, { lang: 'Tibetan' })).toEqual({ healthy: false, reason: 'leaf-seam' });
+    // …and the pilot's p.283 bridge from the top of this file.
+    expect(assessTranslationHealth(MARKED, TR_BRIDGED, { lang: 'Tibetan' })).toEqual({ healthy: false, reason: 'leaf-seam' });
+  });
+
+  it('a Tibetan token is a syllable: vowel signs and subjoined letters stay inside it, the tsheg and shad split', () => {
+    expect(sourceTokens('བྱང་ཆུབ་སེམས་དཔའ། སེམས་དཔའ་ཆེན་པོ།')).toEqual(['བྱང', 'ཆུབ', 'སེམས', 'དཔའ', 'སེམས', 'དཔའ', 'ཆེན', 'པོ']);
+    expect(sourceTokens('| | subject | ज्योतिषम् |')).toEqual(['subject', 'ज्योतिषम्']);
   });
 });
 
