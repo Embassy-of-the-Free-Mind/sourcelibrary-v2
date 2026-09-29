@@ -7,7 +7,12 @@
 #   tibetan-gpu.sh run     on the box: idle-poweroff.sh run -- (worker; mark exit; sleep 25 min for the pull)
 #   tibetan-gpu.sh pull    box outputs -> tibetan/out
 #   tibetan-gpu.sh stop    API poweroff, confirm stopped
+#   tibetan-gpu.sh tend    (round 2) wait for the box job, pull, stop — run detached on Hetzner
+# ROUND=2 (#5250 round 2): push/run/pull use /root/pp5250/r2 on Hetzner and /root/pp5250r2 on the box, and `run`
+# launches box-r2.sh (Yigdzin arms, then Kraken on the freed GPU). After `start`, the box has lost Hetzner's ssh key
+# (cloud-init resets authorized_keys on every poweron): re-add it from the laptop before `push`.
 set -eu
+ROUND=${ROUND:-1}
 SID=b40e6c57-8d1c-4f31-953a-1c898fe5aaf6; ZONE=fr-par-2
 API=https://api.scaleway.com/instance/v1/zones/$ZONE/servers/$SID
 set -a; . /root/.scaleway.env; set +a
@@ -25,6 +30,15 @@ start)
   echo SSH-FAIL; exit 1 ;;
 push)
   B=root@$(ip)
+  if [ "$ROUND" = 2 ]; then
+    $SSH $B 'mkdir -p /root/pp5250r2/tibetan /root/pp5250r2/syriac /root/pp5250r2/code'
+    rsync -a -e "$SSH" /root/pp5250/r2/tibetan/img /root/pp5250/r2/tibetan/manifest.jsonl $B:/root/pp5250r2/tibetan/
+    rsync -a -e "$SSH" /root/pp5250/r2/syriac/img $B:/root/pp5250r2/syriac/
+    rsync -a -e "$SSH" /root/pp5250/code/pp_worker.py /root/pp5250/code/syriac-run.sh /root/pp5250/code/box-r2.sh \
+      /root/sourcelibrary/scripts/gpu/idle-poweroff.sh $B:/root/pp5250r2/code/
+    $SSH $B 'wc -l < /root/pp5250r2/tibetan/manifest.jsonl; ls /root/pp5250r2/syriac/img; ls -la /etc/gpu-idle.env /root/pp5250/models/sophro-mhiro.mlmodel /root/kvenv/bin/kraken; nvidia-smi --query-gpu=name,memory.used --format=csv,noheader'
+    exit 0
+  fi
   $SSH $B 'mkdir -p /root/pp5250/tibetan /root/pp5250/code'
   rsync -a -e "$SSH" /root/pp5250/tibetan/img /root/pp5250/tibetan/manifest.jsonl $B:/root/pp5250/tibetan/
   rsync -a -e "$SSH" /root/pp5250/code/pp_worker.py $B:/root/pp5250/code/
@@ -32,6 +46,10 @@ push)
   $SSH $B 'ls /root/pp5250/tibetan/img | tr "\n" " "; wc -l < /root/pp5250/tibetan/manifest.jsonl; ls -la /etc/gpu-idle.env; nvidia-smi --query-gpu=name,memory.used --format=csv,noheader' ;;
 run)
   B=root@$(ip)
+  if [ "$ROUND" = 2 ]; then
+    $SSH $B 'nohup bash /root/pp5250r2/code/idle-poweroff.sh run -- bash /root/pp5250r2/code/box-r2.sh > /root/pp5250r2/idle.log 2>&1 < /dev/null & echo launched'
+    exit 0
+  fi
   $SSH $B 'cat > /root/pp5250/job.sh <<EOF
 cd /root/pp5250
 export VLLM_USE_FLASHINFER_SAMPLER=0 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential
@@ -42,13 +60,31 @@ EOF
 nohup bash /root/pp5250/code/idle-poweroff.sh run -- bash /root/pp5250/job.sh > /root/pp5250/idle.log 2>&1 < /dev/null & echo launched' ;;
 pull)
   B=root@$(ip)
+  if [ "$ROUND" = 2 ]; then
+    mkdir -p /root/pp5250/r2/tibetan/out /root/pp5250/r2/syriac/out
+    rsync -a -e "$SSH" $B:/root/pp5250r2/out/ /root/pp5250/r2/tibetan/out/
+    rsync -a -e "$SSH" $B:/root/pp5250r2/syriac/out/ /root/pp5250/r2/syriac/out/
+    rsync -a -e "$SSH" $B:/root/pp5250r2/worker.log $B:/root/pp5250r2/idle.log $B:/root/pp5250r2/syriac/timings.jsonl $B:/root/pp5250r2/syriac/run.out /root/pp5250/r2/ 2>/dev/null || true
+    $SSH $B 'cat /root/pp5250r2/tib.exit /root/pp5250r2/syr.exit 2>/dev/null; tail -1 /root/pp5250r2/worker.log'
+    exit 0
+  fi
   mkdir -p /root/pp5250/tibetan/out
   rsync -a -e "$SSH" $B:/root/pp5250/out/ /root/pp5250/tibetan/out/
   rsync -a -e "$SSH" $B:/root/pp5250/worker.log $B:/root/pp5250/idle.log /root/pp5250/tibetan/ 2>/dev/null || true
   $SSH $B 'cat /root/pp5250/job.exit 2>/dev/null; tail -1 /root/pp5250/worker.log' ;;
+tend)
+  # Round 2: run DETACHED on Hetzner right after `run` (never a laptop loop). Waits for the box's syr.exit (or the
+  # box leaving `running`), pulls, then API-poweroff + confirm. Deadline 200 min, inside the 4 h lease.
+  for i in $(seq 1 100); do
+    s=$(state); [ "${s%% *}" = running ] || { echo "$(date -u +%T) box $s before syr.exit"; break; }
+    $SSH root@$(ip) 'test -f /root/pp5250r2/syr.exit' 2>/dev/null && { echo "$(date -u +%T) syr.exit seen"; break; }
+    sleep 120
+  done
+  s=$(state); [ "${s%% *}" = running ] && ROUND=2 bash "$0" pull
+  bash "$0" stop; echo "tend-done $(date -u +%FT%TZ)" ;;
 stop)
   action poweroff
   for i in $(seq 1 30); do s=$(state); echo "$(date -u +%T) $s"; [ "${s%% *}" = stopped ] && { echo STOPPED; exit 0; }; sleep 15; done
   echo NOT-CONFIRMED; exit 1 ;;
-*) echo "usage: $0 start|push|run|pull|stop"; exit 2 ;;
+*) echo "usage: $0 start|push|run|pull|tend|stop"; exit 2 ;;
 esac

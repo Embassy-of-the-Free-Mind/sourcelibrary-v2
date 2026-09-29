@@ -5,7 +5,8 @@
 # and ONLY THE IMAGE varies between arms (#5250).
 """Yigdzin-v1 reads of the #5250 preprocessing arms. Job rows (manifest.jsonl): {stem, arm, files[]}; each file is
 one request (a leaf, or the whole capture); texts are joined top to bottom as in production.
-Writes <out>/txt/<arm>/<stem>.txt and <out>/pages.jsonl (one row per job). Resumable.
+Writes <out>/txt/<arm>/<stem>.txt (+ <stem>.parts.json, one text per file, for the round-2 band merge) and
+<out>/pages.jsonl (one row per job). Resumable. A job with no files (a round-2 band-geometry failure) writes empty text.
 """
 import argparse, json, os, queue, sys, threading, time, io
 from collections import Counter
@@ -244,6 +245,8 @@ def main():
             parts = [texts[(bi, li)].strip("\n") for li in range(len(leaves))]
             full = "\n".join(p for p in parts if p.strip())
             (txtdir / f"{stem}.txt").write_text(full, encoding="utf-8")
+            # round 2 (#5250): per-request texts, in file order, so band arms can be merged at score time
+            (txtdir / f"{stem}.parts.json").write_text(json.dumps(parts, ensure_ascii=False), encoding="utf-8")
             row = {"id": stem, **geo, "lines": nlines(full), "syl": len(syllables(full)),
                    "leaf": [{"lines": nlines(parts[li]), "syl": len(syllables(parts[li])), **meta[(bi, li)]}
                             for li in range(len(leaves))]}
