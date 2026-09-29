@@ -19,7 +19,9 @@ ns = {}
 exec(src[:src.index("def engines_of")], ns)
 n1, n2, line_cer, dice, loop_score = ns["n1"], ns["n2"], ns["line_cer"], ns["dice"], ns["loop_score"]
 
-ARMS = ["none", "none-repeat", "otsu", "sauvola", "clahe", "deskew", "upscale2x", "gutter", "pagecrop"]
+ARMS = os.environ.get("ARMS", "none none-repeat otsu sauvola clahe deskew upscale2x gutter pagecrop").split()
+# Round 2 (#5250): the two manuscripts are PRE-REGISTERED strata (jerusalem36 = dark spreads, onb-syr1 = clean
+# leaves); every arm is also tabled per set, with the floor computed per set.
 
 
 def read(p):
@@ -52,26 +54,40 @@ def main():
             rows.append({"slug": slug, "set": m["set"], "arm": arm, "chars": len(h),
                          "line_cer_n2": line_cer(h, ref, n2), "line_cer_n1": line_cer(h, ref, n1),
                          "dice_n2": round(dice(n2(h), n2(ref)), 4), "loop": round(loop_score(n2(h)), 4)})
-    by = {}
-    for r in rows:
-        by.setdefault(r["arm"], {})[r["slug"]] = r["line_cer_n2"]
-    floor = P.noise_floor(by.get("none", {}), by.get("none-repeat", {}))
-    table = {}
-    for arm in ARMS:
-        if arm in ("none", "none-repeat") or arm not in by:
-            continue
-        c = P.paired(by["none"], by[arm], higher_is_better=False)
-        c["counts"] = P.counts(c, floor)
-        c["arm_median"] = round(sorted(by[arm].values())[len(by[arm]) // 2], 4)
-        table[arm] = c
+    def tables(rs):
+        by = {}
+        for r in rs:
+            by.setdefault(r["arm"], {})[r["slug"]] = r["line_cer_n2"]
+        floor = P.noise_floor(by.get("none", {}), by.get("none-repeat", {}))
+        table = {}
+        for arm in ARMS:
+            if arm in ("none", "none-repeat") or arm not in by:
+                continue
+            c = P.paired(by["none"], by[arm], higher_is_better=False)
+            c["counts"] = P.counts(c, floor)
+            c["arm_median"] = round(sorted(by[arm].values())[len(by[arm]) // 2], 4)
+            table[arm] = c
+        return by, floor, table
+
+    by, floor, table = tables(rows)
+    by_set = {}
+    for st in sorted({r["set"] for r in rows}):
+        b, f, t = tables([r for r in rows if r["set"] == st])
+        by_set[st] = {"baseline_median": round(sorted(b["none"].values())[len(b["none"]) // 2], 4) if b.get("none") else None,
+                      "noise_floor": f, "paired": t}
     out = {"stratum": "syriac-estrangela", "measure": "accuracy", "metric": "line_cer_n2 (order-free, lower is better)",
            "baseline": "none", "baseline_median": round(sorted(by["none"].values())[len(by["none"]) // 2], 4) if by.get("none") else None,
-           "noise_floor": floor, "paired": table, "rows": rows}
+           "noise_floor": floor, "paired": table, "by_set": by_set, "rows": rows}
     json.dump(out, open(f"{S}/scores.json", "w"), ensure_ascii=False, indent=1)
     print(json.dumps({k: out[k] for k in ("baseline_median", "noise_floor")}))
     for arm, c in table.items():
         print(f"{arm:10s} n={c['n']:3d} W-L-T {c['wins']}-{c['losses']}-{c['ties']}  medΔ(gain)={c['median_delta']}  "
               f"CI={c['ci95']}  p={c['sign_p']}  arm_med={c['arm_median']}  counts={c['counts']}")
+    for st, v in by_set.items():
+        print(f"-- {st}  baseline_median={v['baseline_median']}  floor={v['noise_floor']}")
+        for arm, c in v["paired"].items():
+            print(f"   {arm:10s} n={c['n']:3d} W-L-T {c['wins']}-{c['losses']}-{c['ties']}  medΔ(gain)={c['median_delta']}  "
+                  f"CI={c['ci95']}  p={c['sign_p']}  arm_med={c['arm_median']}  counts={c['counts']}")
 
 
 if __name__ == "__main__":

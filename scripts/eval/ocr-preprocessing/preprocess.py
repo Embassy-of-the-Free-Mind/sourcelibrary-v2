@@ -14,6 +14,9 @@ Arms: none, otsu, sauvola (window 25, k 0.2), clahe (clip 2.0, tile 8), deskew (
 Syriac gutter). `apply(arm, img)` returns (image, meta) where meta records what the arm did
 (e.g. the deskew angle), so a no-op is visible in the results rather than inferred.
 
+Round 2 adds photometric arms (ARMS_R2): unsharp (sigma 2, amount 1.0), gamma08 / gamma12 (out = 255*(in/255)**g),
+flatten (divide by a 51-px Gaussian background, min-max renormalise), gray (luma), denoise (fastNlMeansDenoising h=10).
+
 CLI:  preprocess.py <arm> <in.jpg> <out.jpg>   (writes JPEG q95, prints meta as JSON)
 """
 import json
@@ -98,7 +101,45 @@ def upscale2x(img):
     return cv2.resize(img, (w * 2, h * 2), interpolation=cv2.INTER_LANCZOS4), {"scale": 2}
 
 
-FUNCS = {"otsu": otsu, "sauvola": sauvola, "clahe": clahe, "deskew": deskew, "upscale2x": upscale2x}
+# ── Round 2 (#5250, pre-registered 2026-09-29): photometric arms nobody tested in round 1 ──────────────────────
+ARMS_R2 = ["unsharp", "gamma08", "gamma12", "flatten", "gray", "denoise"]
+
+
+def unsharp(img, radius=2.0, amount=1.0):
+    """out = img + amount * (img - GaussianBlur(img, sigma=radius))."""
+    blur = cv2.GaussianBlur(img, (0, 0), radius)
+    return cv2.addWeighted(img, 1.0 + amount, blur, -amount, 0), {"radius": radius, "amount": amount}
+
+
+def gamma(img, g):
+    """out = 255 * (in/255) ** g.  g < 1 lightens mid-tones, g > 1 darkens them (ink gets heavier)."""
+    lut = np.clip(255.0 * (np.arange(256) / 255.0) ** g + 0.5, 0, 255).astype(np.uint8)
+    return cv2.LUT(img, lut), {"gamma": g}
+
+
+def flatten(img, ksize=51):
+    """Illumination flattening: divide each channel by its 51-px Gaussian background, then min-max renormalise."""
+    f = img.astype(np.float32) + 1.0
+    bg = cv2.GaussianBlur(f, (ksize, ksize), 0)
+    r = f / bg
+    lo, hi = np.percentile(r, 0.5), np.percentile(r, 99.5)
+    out = np.clip((r - lo) / max(hi - lo, 1e-6) * 255.0, 0, 255).astype(np.uint8)
+    return out, {"ksize": ksize, "lo": round(float(lo), 4), "hi": round(float(hi), 4)}
+
+
+def gray(img):
+    """Luma only (BT.601, OpenCV), returned as 3 identical channels so every engine gets the same format."""
+    return _bgr(_gray(img)), {}
+
+
+def denoise(img, h=10):
+    """cv2.fastNlMeansDenoising (the grayscale function named in the pre-registration) on the luma, h=10."""
+    return _bgr(cv2.fastNlMeansDenoising(_gray(img), None, h=h, templateWindowSize=7, searchWindowSize=21)), {"h": h}
+
+
+FUNCS = {"otsu": otsu, "sauvola": sauvola, "clahe": clahe, "deskew": deskew, "upscale2x": upscale2x,
+         "unsharp": unsharp, "gamma08": lambda i: gamma(i, 0.8), "gamma12": lambda i: gamma(i, 1.2),
+         "flatten": flatten, "gray": gray, "denoise": denoise}
 
 
 def apply(arm, img, already_base=False):
