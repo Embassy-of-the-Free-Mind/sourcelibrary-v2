@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 export const revalidate = 86400;
 
@@ -196,7 +197,7 @@ export default function ConnectPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()).replace(/</g, '\\u003c') }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd()) }}
       />
 
       {/* ── The answer, above the fold ── */}
