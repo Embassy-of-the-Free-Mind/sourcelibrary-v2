@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Check, Copy, Loader2, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -22,9 +22,15 @@ const SITE = 'https://sourcelibrary.org';
 
 export default function ManageRoomPage() {
   const params = useParams<{ slug: string }>();
-  const search = useSearchParams();
   const router = useRouter();
-  const justCreated = search.get('new') === '1';
+  // Read from the URL after mount rather than via useSearchParams, which
+  // would demand a Suspense boundary around this whole client page.
+  const [justCreated, setJustCreated] = useState(false);
+  useEffect(() => {
+    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('new') === '1') {
+      setJustCreated(true);
+    }
+  }, []);
 
   const [room, setRoom] = useState<RoomSummary | null>(null);
   const [missing, setMissing] = useState(false);
