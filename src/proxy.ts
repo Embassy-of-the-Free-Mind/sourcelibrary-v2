@@ -2,6 +2,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
+import { getRoomSlugFromPathname } from '@/lib/reading-rooms-paths';
+import { getRoomEmbedOrigins } from '@/lib/reading-rooms';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { PREFIXED_LOCALES } from '@/lib/locale-path';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
@@ -1264,10 +1266,15 @@ export async function proxy(request: NextRequest) {
   // --- X-Frame-Options ---
   // Allow framing only for explicit embed namespace and tenant-scoped paths.
   // Everything else gets DENY to prevent clickjacking.
+  // Self-serve reading rooms (#5266): framable from the hostnames the room's
+  // owner declared, looked up per room below. Management pages under /rooms
+  // are not rooms (getRoomSlugFromPathname returns null for them) → DENY.
+  const roomSlug = getRoomSlugFromPathname(pathname);
   const isEmbeddablePath =
     pathname === '/embed' ||
     pathname.startsWith('/embed/') ||
     pathname.startsWith('/libraries/') ||
+    roomSlug !== null ||
     // Tenant-scoped paths: allow all paths under a resolved tenant
     (tenantSlug && (
       pathname === `/${tenantSlug}` ||
@@ -1284,10 +1291,21 @@ export async function proxy(request: NextRequest) {
     
     // Allow if: origin is in allowlist, OR it's same-origin from iframe perspective,
     // OR headers are missing (same-origin internal navigation)
-    const isAllowed =
+    let isAllowed =
       (frameHost && getAllowedEmbedOrigins().has(frameHost)) ||
       frameHost === requestHost ||
       (!frameOrigin && requestHost); // same-origin nav without headers
+
+    // A room admits only its own declared hosts. An unknown or deleted room
+    // returns no origins, which is DENY — never "anyone".
+    if (!isAllowed && roomSlug && frameHost) {
+      try {
+        const origins = await getRoomEmbedOrigins(await getDb(), roomSlug);
+        isAllowed = origins.includes(frameHost);
+      } catch {
+        isAllowed = false;
+      }
+    }
 
     if (!isAllowed) {
       response.headers.set('X-Frame-Options', 'DENY');

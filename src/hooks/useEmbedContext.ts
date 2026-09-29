@@ -9,6 +9,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { getRoomPrefixFromPathname } from '@/lib/reading-rooms-paths';
 
 /**
  * Matches tenant subdomain hosts like `bph.sourcelibrary.org`. Excludes
@@ -23,7 +24,10 @@ export function isTenantSubdomain(host: string): boolean {
 
 export function useEmbedContext() {
   const pathname = usePathname();
-  const onEmbedRoute = pathname?.startsWith('/embed/') ?? false;
+  // /embed/<tenant>/… (partner rooms) and /rooms/<slug>/… (self-serve
+  // reading rooms, #5266) are both embedded surfaces; the management pages
+  // under /rooms are not (reading-rooms-paths.ts decides).
+  const onEmbedRoute = (pathname?.startsWith('/embed/') ?? false) || getRoomPrefixFromPathname(pathname) !== null;
 
   // Browser-only signals. SSR and the first client render both compute
   // these as false (deterministic match → no hydration warning); a
