@@ -44,24 +44,36 @@ const DATA = {
   sampleBimodalLow: '36%',
   sampleBimodalHigh: '43%',
   // Pending: filled by the quality pass
-  finalServe: pending,
-  finalMark: pending,
-  finalTextless: pending,
-  finalBooks: pending,
+  // Read from Mongo 2026-09-29 after wave 2 of the apply (#4523): 1,439 volumes, 276,455 pages.
+  finalBooks: '1,439',
+  finalPages: '276,455',
+  finalServe: '188,569',
+  finalMark: '71,956',
+  finalTextless: '4,252',
+  finalUnresolved: '11,678',
   // 2026-09-11: the scorer's one-page Derge window capped two-leaf folios at ~0.5
   // (#4722). The 09-10 figures (old 0.18 / new 0.66 / 488 / 1,880 / 5,086) are
   // UNDERESTIMATES and must be re-scored with the ±2-page window before publishing.
-  oldIdentityMedian: pending,
-  newIdentityMedian: pending,
-  oldAbove07: pending,
-  newAbove07: pending,
-  alignedPages: pending,
+  // Re-scored 2026-09-12 with the ±2-page window (#4523 comment 5648643568): 5,051 concordance pages.
+  oldIdentityMedian: '0.35',
+  newIdentityMedian: '0.88',
+  oldAbove07: '205',
+  newAbove07: '4,018',
+  alignedPages: '5,051',
   distinctToh: '290',
   pagesWith84000: '2,679',
   controlNoise05: '0.97',
-  computeEur: pending,
-  computeCoreHours: pending,
-  retransCostUsd: pending,
+  computeEur: '€35',
+  computeCoreHours: '6,500',
+  // Yigdzin (#4722): 93 GPU-hours on one L4 for the 276K-page read; the per-leaf re-read 63 more (2026-09-25 → 29).
+  yigdzinEur: '€74',
+  leafEur: '€56',
+  leafPagesReread: '176,513',
+  leafPagesAccepted: '150,453',
+  dropShareBefore: '22.7%',
+  dropShareAfter: '1.8%',
+  fillerPages: '8,641',
+  retransCostUsd: '$230',   // 188,541 served pages without a translation × $0.0012 (flash, batch API); realtime is twice that
   judgeFidelityOld: pending,
   judgeFidelityNew: pending,
   judgeFabricationOld: pending,
@@ -224,7 +236,7 @@ export default function TibetanReocrPage() {
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">What changed on the site</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Across the {DATA.cohortBooks} volumes with full-resolution masters, {DATA.cohortPages} pages: <Pending v={DATA.finalServe} /> pages now carry a transcription that two independent models agree on or the canon confirms; <Pending v={DATA.finalMark} /> pages are marked unreadable and show only the scan; <Pending v={DATA.finalTextless} /> are blank leaves. The old transcription and translation of every page is retained as a revision, so nothing is destroyed, but nothing we could not verify is served.
+          Across all {DATA.finalBooks} volumes, the {DATA.cohortBooks} with full-resolution masters and the {DATA.lowresBooks} low-resolution ones, {DATA.finalPages} pages: {DATA.finalServe} now carry a transcription by a specialist reader that a second model, the canon, or a well-formed read at the book&rsquo;s full line count confirms; {DATA.finalMark} are marked unreadable and show only the scan; {DATA.finalTextless} are blank leaves or covers. {DATA.finalUnresolved} pages, four percent, still show the old transcription: their re-read did not pass, and they wait for a decision rather than a guess. The old transcription and translation of every page is retained as a revision, so nothing is destroyed, but nothing we could not verify is served.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -239,7 +251,11 @@ export default function TibetanReocrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We rented one GPU for about a hundred euros and ran it over the whole cohort. On the pilot book, with the corrected scorer, its median identity to the canon is {DATA.gate0Yigdzin} against {DATA.gate0Wood} for the line models. On the {DATA.pilotMark} pages of that book we had marked unreadable, it scores {DATA.markYigdzin}, with {DATA.markYigdzinAll} above the confirmation line. The pages we withheld were the right call under the model we had, and they were readable all along. The new model also ignores resolution beyond about a megapixel, so the low-resolution cohort is no worse off than the masters. The next adjudication pass uses it as the primary reader, with the two line models as the independent witnesses that decide agreement.
+          We rented one GPU for {DATA.yigdzinEur} and ran it over the whole cohort, both resolutions, in four days. On the pilot book, with the corrected scorer, its median identity to the canon is {DATA.gate0Yigdzin} against {DATA.gate0Wood} for the line models. On the {DATA.pilotMark} pages of that book we had marked unreadable, it scores {DATA.markYigdzin}, with {DATA.markYigdzinAll} above the confirmation line. The pages we withheld were the right call under the model we had, and they were readable all along. The new model also ignores resolution beyond about a megapixel, so the low-resolution cohort is no worse off than the masters. The adjudication that produced the totals above used it as the primary reader, with the two line models and the canon as the independent witnesses that decide whether a page is served.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          It was not finished. Reading ten pages by eye against the scan, one per book, we found the first line of the lower leaf missing from the transcription on four of eight two-leaf pages. A Bhutanese folio is photographed two leaves to a frame, and at the model&rsquo;s one-megapixel budget each line of a two-leaf frame is about eighteen pixels tall. Counted against each book&rsquo;s usual line count, {DATA.dropShareBefore} of the pages in fourteen-line books were one line short. No alignment score can see this: identity is order-free, and a page missing one line of fourteen still aligns beautifully. The fix was to crop each leaf and read it on its own, at twice the height. We re-read {DATA.leafPagesReread} pages that way over three more days on the same GPU, for {DATA.leafEur}, and accepted {DATA.leafPagesAccepted} of the new reads, only where the new read carried at least as many syllables as the old and no duplicated or looping line. The one-line-short share fell to {DATA.dropShareAfter}. The re-read had its own failure to catch: on a nearly blank half-frame the model fills the space with English filler (&ldquo;empty page, paget paget&rdquo;), and on {DATA.fillerPages} pages that filler had ridden in behind a good read or beaten the old read on a syllable count. Those lines were stripped before anything was served, and every accepted page records the rule that accepted it.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -250,7 +266,7 @@ export default function TibetanReocrPage() {
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">Translating the real text</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Every served page is being retranslated from the new transcription, at a cost of about <Pending v={DATA.retransCostUsd} /> for the cohort. To measure whether the new translations are better, and not just different, we took one page per book from the set with an 84000 reference and had a blind judge score the old and new translations for fidelity against the human one, without knowing which was which. On a five-point fidelity scale the old translations score <Pending v={DATA.judgeFidelityOld} /> and the new ones <Pending v={DATA.judgeFidelityNew} />. The judge flagged invented content, passages with no counterpart in the reference, on <Pending v={DATA.judgeFabricationOld} /> of old pages and <Pending v={DATA.judgeFabricationNew} /> of new ones.
+          The translations made from the invented transcription are withheld. Retranslating every served page from the new transcription will cost about <Pending v={DATA.retransCostUsd} /> on the batch API; it has not started, because a translation of an incomplete line is a translation with a silent gap, and we wanted the re-read finished first. To measure whether the new translations are better, and not just different, we took one page per book from the set with an 84000 reference and had a blind judge score the old and new translations for fidelity against the human one, without knowing which was which. On a five-point fidelity scale the old translations score <Pending v={DATA.judgeFidelityOld} /> and the new ones <Pending v={DATA.judgeFidelityNew} />. The judge flagged invented content, passages with no counterpart in the reference, on <Pending v={DATA.judgeFabricationOld} /> of old pages and <Pending v={DATA.judgeFabricationNew} /> of new ones.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
