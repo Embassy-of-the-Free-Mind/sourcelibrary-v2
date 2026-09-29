@@ -16,7 +16,7 @@ The cost is not tidiness. On 2026-07-28 the tail included **#2946**, a security 
 
 ## How to read the output
 
-- **MERGE_READY** — mergeable, gating checks green, nobody has blocked it. This is a *review queue*, not a merge list. Main has moved hundreds of commits under a 30-day-old PR; green checks say nothing about whether the code is still correct.
+- **MERGE_READY** — mergeable, gating checks green, nobody has blocked it. Each row also shows its tier: `tier:auto` rows will be merged by `auto-merge.yml` on its next run (so a MERGE_READY tier:auto row that is *old* means the interlock or the settle gate keeps skipping it — read the workflow's log). `tier:hold` rows are the *review queue* for Derek, not a merge list: main has moved hundreds of commits under a 30-day-old PR, and green checks say nothing about whether the code is still correct. `untiered` means `pr-tier.yml` never ran (pre-dates it, or a draft) — `node scripts/maintenance/pr-tier.mjs --pr N --label`.
 - **SUPERSEDED** — every file it changes is already byte-identical on main. Usually means the work was copied into the main checkout and pushed separately. Close it, don't merge it.
 - **NEEDS_WORK** — carries a blocking review or the `blocked` label. Leave it alone until the finding is addressed.
 - **CONFLICTING** — needs a rebase. For a small docs PR it is often faster to redo the change on a fresh branch than to rebase — but **re-verify the claim first**, because a conflicting docs PR is usually conflicting *because the doc moved under it*, and its assertion may now be false.

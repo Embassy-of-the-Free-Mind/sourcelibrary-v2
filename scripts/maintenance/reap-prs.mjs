@@ -183,6 +183,7 @@ function main() {
     console.log(`\n${state}`);
     for (const r of group) {
       const flags = [
+        r.labels.includes('tier:auto') ? 'tier:auto (auto-merge.yml will merge when green)' : r.labels.includes('tier:hold') ? 'tier:hold (Derek merges)' : 'untiered',
         `${r.ageDays}d old`,
         r.idleDays !== r.ageDays ? `${r.idleDays}d idle` : null,
         r.failing.length ? `failing: ${r.failing.join(',')}` : null,
