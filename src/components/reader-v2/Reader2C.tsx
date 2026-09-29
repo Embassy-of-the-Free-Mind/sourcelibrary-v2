@@ -22,6 +22,7 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import type { SpecialistEngine } from '@/lib/types/page';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
@@ -1501,6 +1502,12 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
         const ocrCorpus = pageTextCorpus(page);
         const trCorpus = translationCorpus(page);
         const witnessCount = (book.cdli_witnesses || []).length;
+        // Syriac pages read by the Kraken lane (#4883) name the specialist model and its
+        // measured accuracy; the generic "by <model id>" row would read as a technical label.
+        const ocrEngine = page.ocr?.engine;
+        const krakenRoute = ocrEngine && ocrEngine.name === 'kraken'
+          ? ((ocrEngine as SpecialistEngine).route ?? 'manuscript')
+          : null;
         return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
@@ -1523,7 +1530,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                           page.ocr.ia?.ocr_date ? String(new Date(page.ocr.ia.ocr_date).getFullYear()) : null,
                           page.ocr.agreement_ref?.median ?? null,
                         )
-                      : t.transcribedBy(page.ocr.model)}
+                      : krakenRoute
+                        ? t.krakenTranscript(krakenRoute)
+                        : t.transcribedBy(page.ocr.model)}
                 </dd>
               </div>
             )}
@@ -1537,7 +1546,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : krakenRoute ? t.krakenNotice(krakenRoute) : t.machineNotice}
           </p>
         </>
         );
