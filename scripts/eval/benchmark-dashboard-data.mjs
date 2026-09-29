@@ -235,7 +235,9 @@ for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^oc
       imageArms.push({ cell_id: `image-arms/${stratum}${sub ? `/${sub}` : ''}/${metric}/${arm}`, file: f, run_id: s.run_id, stratum, sub, engine: s.engine,
         measure: s.measure, metric, arm, baseline: c.baseline || 'none', baseline_median: baseline, n: c.n, wins: c.wins, losses: c.losses, ties: c.ties,
         median_gain: c.median_delta ?? c.median_gain, ci95: c.ci95, p_sign: c.sign_p, counts: c.counts,
-        floor_p90: (typeof floor === 'function' ? floor(c) : floor)?.p90_abs ?? null, grade: s.grade });
+        floor_p90: (typeof floor === 'function' ? floor(c) : floor)?.p90_abs ?? null, grade: s.grade,
+        // confirmatory rounds (round 3+) carry the pre-registered prediction and the verdict; earlier rounds have neither
+        prediction: c.prediction ?? null, verdict: c.verdict ?? null });
     }
   };
   for (const [stratum, s] of Object.entries(r.strata)) {

@@ -23,6 +23,10 @@ T=$S/timings.jsonl
 #   S=<out dir>  ARMS="<whole-capture arms>"  CROPS=0 (no gutter/pagecrop)  DARK_ARMS="<arms run on jerusalem36 only>"
 #   KOPTS="<global kraken options, e.g. -d cuda:0>"
 ARMS=${ARMS:-none otsu sauvola clahe deskew upscale2x}; CROPS=${CROPS:-1}; DARK_ARMS=${DARK_ARMS:-}; KOPTS=${KOPTS:-}
+# Round 3 (#5250, confirmatory, 40+40 FRESH pages, Hetzner CPU, one worker): REPEAT_PER_SET=N puts the A/A `none-repeat`
+# read on the first N pages of EACH set prefix (jerusalem36-*, onb-syr1-*) instead of the first 30 overall, so both
+# strata get their own floor. Unset = the round-1/2 behaviour.
+REPEAT_PER_SET=${REPEAT_PER_SET:-}
 mkdir -p $S/img $S/out
 case ${1:-} in
 prep)
@@ -46,7 +50,12 @@ run)
   for img in $S/img/none/*.jpg; do
     slug=$(basename $img .jpg)
     for arm in $ARMS $DARK_ARMS; do [ -f $S/img/$arm/$slug.jpg ] && echo "$arm $S/img/$arm/$slug.jpg $slug" >> $jobs; done
-    [ $i -lt 30 ] && echo "none-repeat $S/img/none/$slug.jpg $slug" >> $jobs
+    if [ -n "$REPEAT_PER_SET" ]; then
+      set_=${slug%%-*}; n_=$(grep -c "^none-repeat .* $set_-" $jobs)
+      [ "$n_" -lt "$REPEAT_PER_SET" ] && echo "none-repeat $S/img/none/$slug.jpg $slug" >> $jobs
+    else
+      [ $i -lt 30 ] && echo "none-repeat $S/img/none/$slug.jpg $slug" >> $jobs
+    fi
     for half in R L; do
       [ -f $S/img/gutter/$slug.$half.jpg ] && echo "gutter.$half $S/img/gutter/$slug.$half.jpg $slug"  >> $jobs
       [ -f $S/img/pagecrop/$slug.$half.jpg ] && echo "pagecrop.$half $S/img/pagecrop/$slug.$half.jpg $slug"  >> $jobs
