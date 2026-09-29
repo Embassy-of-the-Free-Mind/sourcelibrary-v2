@@ -271,7 +271,12 @@ export function stripEditorialWrapperBlocks(text: string): string {
   return text
     .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
     // Any orphan opening/closing wrapper tag left by malformed AI output.
-    .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' ');
+    .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' ')
+    // `<leaf-break/>` (#5260) divides two leaves that share one page image and are not
+    // continuous. In plain text the seam is a paragraph break — never a literal tag in a quote,
+    // and never joined into one line, which would read two unrelated leaves as one passage.
+    // Parity with scripts/lib/strip-editorial-wrappers.mjs — change both together.
+    .replace(/<leaf-break\s*\/?>/gi, '\n\n');
 }
 
 export function stripEditorialWrappers(

@@ -242,6 +242,8 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
 
   out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
   out = out.replace(/<column-break\s*\/?>/gi, '\n\n');
+  // <leaf-break/> (#5260): two leaves on one page image, not continuous — a paragraph break.
+  out = out.replace(/<leaf-break\s*\/?>/gi, '\n\n');
 
   // Display lines: markdown headings and ->centred<- text. Level is kept so
   // a chapter title outranks a section title; none enter the PDF outline,

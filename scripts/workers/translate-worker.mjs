@@ -40,7 +40,9 @@ import {
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
+  dropLeafSeamBreaches,
 } from '../lib/translate-core.mjs';
+import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
@@ -343,6 +345,15 @@ async function translatePageGuarded(db, page, book, prevTranslation) {
       console.log(`  [collapse-guard] ${book.id} p${page.page_number}: still thin after retry (${strippedBodyLen(result.text)} body chars)`);
     }
   }
+  // Leaf seams (#5260): a page holding two leaves must come back with the marker between them. One
+  // retry; a page that still bridges the seam is refused at the write gate (reason 'leaf-seam'),
+  // which keeps the text as evidence and leaves the page untranslated rather than bridged.
+  const seams = leafSeamsPreserved(page.ocr?.data, result.text);
+  if (!seams.ok) {
+    const retry = await translatePage(db, page, book, prevTranslation);
+    if (leafSeamsPreserved(page.ocr?.data, retry.text).ok) result = retry;
+    else console.log(`  [leaf-seam] ${book.id} p${page.page_number}: ${seams.ocr} seam(s) in the source, ${seams.tr} in the translation after retry — the write gate decides`);
+  }
   return result;
 }
 
@@ -387,6 +398,12 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const { drifted } = dropDriftedPages(pages, translations);
   if (drifted.length) {
     console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: clause moved across ${drifted.map(d => `${d.prev}→${d.next}`).join(', ')} — re-translating those pages single-page`);
+  }
+  // A leaf seam the block bridged (#5260): the page drops out of the map and takes the
+  // single-page path, where translatePageGuarded retries and the write gate refuses.
+  const { breached } = dropLeafSeamBreaches(pages, translations);
+  if (breached.length) {
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: leaf seam not preserved on ${breached.map(b => `p${b.page} (${b.ocr}→${b.tr})`).join(', ')} — re-translating those pages single-page`);
   }
 
   return {

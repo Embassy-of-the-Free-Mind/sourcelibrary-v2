@@ -59,6 +59,10 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   // Strip <insert> tags (keep content) and <column-break/> markers
   html = html.replace(/<insert(?:\s[^>]*)?>([\s\S]*?)<\/insert>/gi, '$1');
   html = html.replace(/<column-break\s*\/?>/gi, '');
+  // `<leaf-break/>` (#5260): two leaves that share one page image and are not continuous. The
+  // seam stays VISIBLE in the export as a rule — dropping it would read two unrelated leaves as
+  // one passage. Placeholder now (before stripEditorialWrapperBlocks turns it into a paragraph break), element after the entity escape below.
+  html = html.replace(/<leaf-break\s*\/?>/gi, '\n\n[[LEAF_BREAK_PLACEHOLDER]]\n\n');
   // Strip ->...<- centering markers (OCR convention for centered text)
   html = html.replace(/->/g, '').replace(/<-/g, '');
   // Editorial wrappers — the AI's DESCRIPTION of the page (<meta>, <summary>,
@@ -92,6 +96,8 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="unclear">${inline(s)}?</span>`);
   html = html.replace(/\[\[IMAGE_DESC_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="image-desc">[Image description: ${inline(s)}]</span>`);
   html = html.replace(/\[\[LACUNA_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="lacuna">[Not transcribed: ${inline(s)}]</span>`);
+  // Its own block: the paragraph split below leaves a block that starts with `<h` unwrapped.
+  html = html.replace(/\[\[LEAF_BREAK_PLACEHOLDER\]\]/g, '<hr class="leaf-break" title="next folio"/>');
 
   // Convert legacy [[notes: ...]] to inline
   html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');

@@ -819,6 +819,17 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
           if (divClassName === 'text-center') {
             return <div className="text-center my-4">{children}</div>;
           }
+          // The seam between two leaves on one page (#5260): a thin rule with "next folio",
+          // in the tokens the `hr` component already uses — no new primitive.
+          if (divClassName === 'leaf-break') {
+            return (
+              <div role="separator" aria-label="next folio" className="my-6 flex items-center gap-3 text-xs uppercase tracking-wide text-stone-500">
+                <span className="flex-1 border-t border-stone-200" aria-hidden="true" />
+                <span>next folio</span>
+                <span className="flex-1 border-t border-stone-200" aria-hidden="true" />
+              </div>
+            );
+          }
           if (divClassName === 'image-description') {
             return (
               <div className="my-4 p-4 bg-accent-gold/8 border border-accent-gold/20 rounded-lg text-stone-600 italic">
@@ -969,10 +980,16 @@ export function prepareNotesMarkdown(
   const withLatex = preprocessLatexSuperscripts(withGreek);
   const withAnnotationMd = preprocessAnnotationInlineMarkdown(withLatex);
   const withCentering = preprocessCentering(withAnnotationMd);
+  // `<leaf-break/>` (#5260): two leaves photographed on one frame and read separately — the
+  // text before it ends one folio, the text after it begins another. Rendered as a thin rule
+  // labelled "next folio" (the `div` component below), on the transcription AND the translation,
+  // which carries the marker back from the translator. Blank lines around it make it its own
+  // HTML block, so the leaves stay separate paragraphs.
+  const withLeafBreaks = withCentering.replace(/<leaf-break\s*\/?>/gi, '\n\n<div class="leaf-break"></div>\n\n');
   // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
   // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.
   // CommonMark spec: HTML blocks (type 6) end only at a blank line.
-  let processedText = withCentering;
+  let processedText = withLeafBreaks;
   // After closing block-level tags: ensure blank line follows
   processedText = processedText.replace(/<\/(div|h[1-6]|margin|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
   // Before opening block-level tags: ensure blank line precedes (unless at start of text)

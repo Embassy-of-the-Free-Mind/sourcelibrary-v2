@@ -35,8 +35,15 @@ const VALID_XML_TAGS = new Set([
   'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc',
   // Metadata tags
   'lang', 'page-num', 'folio', 'sig', 'header', 'meta', 'warning',
-  'abbrev', 'vocab', 'summary', 'keywords'
+  'abbrev', 'vocab', 'summary', 'keywords',
+  // Structural markers — self-closing, no content. `column-break` is the OCR prompt's own
+  // (scripts/lib/source-column.mjs); `leaf-break` (#5260) divides two leaves that share one
+  // page image and must come back in the translation exactly as many times as the source has it.
+  'column-break', 'leaf-break',
 ]);
+
+/** Self-closing structural markers: `<column-break/>`, `<leaf-break/>`, `<leaf-break />`. */
+const SELF_CLOSING_TAG = /<([a-z][a-z0-9-]*)\s*\/>/gi;
 
 /**
  * Extract context around a position in text
@@ -251,6 +258,22 @@ export function validateTranslation(text: string): ValidationResult {
   while ((xmlMatch = xmlClosePattern.exec(text)) !== null) {
     const tag = xmlMatch[1].toLowerCase();
     closeTags.push({ tag, position: xmlMatch.index });
+  }
+
+  // Self-closing markers have no pair to balance; only their NAME is checked. Before #5260 the
+  // open-tag pattern (which requires `>` right after the name) skipped them entirely, so an
+  // unknown `<foo/>` was never reported.
+  while ((xmlMatch = SELF_CLOSING_TAG.exec(text)) !== null) {
+    const tag = xmlMatch[1].toLowerCase();
+    if (!VALID_XML_TAGS.has(tag)) {
+      issues.push({
+        type: 'unknown_xml_tag',
+        message: `Unknown XML tag: <${tag}/>`,
+        position: xmlMatch.index,
+        length: xmlMatch[0].length,
+        context: getContext(text, xmlMatch.index, xmlMatch[0].length)
+      });
+    }
   }
 
   // Check for unknown XML tags

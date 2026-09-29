@@ -42,8 +42,10 @@
  * network and no spend.
  */
 import {
-  translationPromptHeader,
   buildTranslationPrompt,
+  buildBlockTranslationPrompt,
+  LEAF_BREAK_ONLY,
+  dropLeafSeamBreaches,
   sanitizeTranslationTags,
   assessTranslationHealth,
   isTranslatablePage,
@@ -127,20 +129,20 @@ export function maxOutputTokensFor(pages) {
 /**
  * The block prompt with NO continuity seed. A block of one uses the single-page prompt
  * (buildTranslationPrompt without a previous translation), as the realtime worker does; a
- * longer block uses the worker's multi-page wording byte for byte.
+ * longer block uses translate-core's block prompt (buildBlockTranslationPrompt, which since
+ * 2026-09-25 IS the worker's multi-page wording — this file carried a byte-identical copy of it
+ * until #5260, and the copy is gone so the two cannot drift).
+ *
+ * `LEAF_BREAK_ONLY` (#5260): a page carrying `<leaf-break/>` gets the leaf note and the leaf
+ * rule; every other page — and this lane's page-break behaviour, which was never measured with
+ * the #5103 devices — is byte-identical to what was sent before.
  */
 export function blockPrompt({ prompts, book, pages }) {
   if (pages.length === 1) {
-    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data });
+    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, pageBreak: LEAF_BREAK_ONLY });
     return { prompt, promptRef, isEnglish };
   }
-  const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
-  let prompt = header;
-  const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += `\n**Pages to ${verb}:**\n`;
-  for (const p of pages) prompt += `\n--- Page ${p.page_number} ---\n${p.ocr.data}\n`;
+  const { prompt, promptRef, isEnglish } = buildBlockTranslationPrompt({ prompts, book, pages, pageBreak: LEAF_BREAK_ONLY });
   return { prompt, promptRef, isEnglish };
 }
 
@@ -179,6 +181,9 @@ export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
   // undrafted, so they are not written from this block and go back to the queue.
   const { drifted } = dropDriftedPages(pages, out);
   if (drifted.length && onDrift) onDrift(drifted);
+  // A leaf seam the block bridged (#5260): undrafted, back to the queue, same as a drift.
+  const { breached } = dropLeafSeamBreaches(pages, out);
+  if (breached.length && onDrift) onDrift(breached.map((b) => ({ prev: b.page, next: b.page, kind: 'leaf-seam', fragment: `${b.ocr} seam(s) in source, ${b.tr} in translation` })));
   return out;
 }
 

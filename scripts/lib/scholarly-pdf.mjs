@@ -23,6 +23,8 @@ function stripXmlTags(text) {
     ''
   );
   clean = clean.replace(/<column-break\s*\/?>/gi, '\n\n');
+  // <leaf-break/> (#5260): two leaves on one page image, not continuous — a paragraph break.
+  clean = clean.replace(/<leaf-break\s*\/?>/gi, '\n\n');
   // Convert <note>...</note> to [Note: ...]
   clean = clean.replace(/<note>([\s\S]*?)<\/note>/gi, '[Note: $1]');
   // Convert <term>...</term> to italics marker
