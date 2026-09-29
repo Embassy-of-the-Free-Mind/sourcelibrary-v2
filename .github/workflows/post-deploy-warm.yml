@@ -20,6 +20,15 @@ on:
       - 'vercel.json'
       - 'package.json'
       - 'package-lock.json'
+  # A merge made by auto-merge.yml uses GITHUB_TOKEN, and pushes made with that
+  # token never trigger `push` workflows (GitHub's recursion guard). So the
+  # auto-merger dispatches this workflow explicitly with the merge commit's SHA.
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Commit whose production deploy to wait for (default: the ref this ran on)'
+        required: false
+        type: string
 
 permissions:
   deployments: read
@@ -50,7 +59,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          SHA: ${{ github.sha }}
+          SHA: ${{ inputs.sha || github.sha }}
         run: |
           for i in $(seq 1 60); do
             STATE=$(gh api "repos/$REPO/deployments?sha=$SHA&per_page=100" \
