@@ -15,8 +15,8 @@
  *
  * WHAT THIS ADDS, and why it may write where those may not. It covers the case they cannot: a book
  * with NO OCR at all, where there is no tag to aggregate yet — so it commissions a spread sample
- * first (OCR is not reimplemented; the sample goes to scripts/batch/realtime-ocr.mjs
- * --page-ids-file). And it writes only where the decision is not a public one: by default it refuses
+ * first (OCR is not reimplemented; the sample goes to scripts/batch/bulk-reocr-local.mjs
+ * --page-ids-file, the Batch API default, #5244). And it writes only where the decision is not a public one: by default it refuses
  * to change `language` on a `visible` book, because that is the call those two scripts deliberately
  * leave to a human. Pass --allow-visible to override, and expect to justify it.
  *
@@ -29,8 +29,9 @@
  * TWO PHASES, so the paid step is a deliberate separate command:
  *
  *   --plan    choose books, pick a spread sample of content pages, write the page-id list and print
- *             the cost. Reads only. Then OCR that list (this is the paid step):
- *               node scripts/batch/realtime-ocr.mjs --page-ids-file=<file> --reason="language detection"
+ *             the cost. Reads only. Then OCR that list through the Batch API (this is the paid step),
+ *             and run --apply once batch-collector has written the results back:
+ *               node scripts/batch/bulk-reocr-local.mjs --page-ids-file=<file> --reason="language detection"
  *             The OCR is KEPT, so nothing is spent twice — those pages were going to be OCR'd anyway.
  *   --apply   read the OCR that now exists, detect, and write `language` + typed provenance.
  *             ONLY a 'clear' verdict writes. A 'review' verdict — stored value or not — records the
@@ -126,7 +127,7 @@ if (PLAN) {
   fs.writeFileSync(OUT, JSON.stringify(pageIds, null, 1));
   console.log(`\n${needing.length} book(s) need a sample · ${pageIds.length} pages -> ${OUT}`);
   console.log(`estimated OCR cost: $${(pageIds.length * OCR_RATE).toFixed(2)} at $${OCR_RATE}/page (measured ${RATE_ON})`);
-  console.log(`\nnext (this is the paid step):\n  node scripts/batch/realtime-ocr.mjs --page-ids-file=${OUT} --reason="language detection sample"`);
+  console.log(`\nnext (this is the paid step):\n  node scripts/batch/bulk-reocr-local.mjs --page-ids-file=${OUT} --reason="language detection sample"\n  (Batch API; run --apply after batch-collector writes the results back)`);
 }
 
 if (APPLY) {
