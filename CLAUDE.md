@@ -142,7 +142,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - An image-URL resolver, a new provider host, or "images broken but curl returns 200" → `image-host-allowlists.md`
 
 **Routing, access & the edge**
-- `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, any URL on a partner subdomain → `tenant-lockdown.md`
+- `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, `src/app/rooms/**`, any URL on a partner subdomain or inside a reading room → `tenant-lockdown.md`
 - Book/page/gallery/collection routes, provider prefixes, contributing libraries → `content-urls-and-libraries.md`
 - Crawler access, bot gating, rate/budget limits, blocked networks, a new Vercel alias → `crawler-access-gate.md`
 - `deploy-warm`, `deploy-prod.sh`, Cloudflare purges, `CDN-Cache-Control`, any `revalidatePath` → `deploy-and-caching.md`

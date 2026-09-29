@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { getRoomPrefixFromPathname } from '@/lib/reading-rooms-paths';
 
 /**
  * When embedded via embed.js (/embed route), intercept
@@ -22,8 +23,9 @@ export default function EmbedHistoryPatch() {
         if (window.self === window.top) return; // not in iframe
         if (patchedRef.current) return; // already patched
 
-        // Activate on canonical /embed routes.
-        const onEmbedRoute = window.location.pathname.startsWith('/embed/');
+        // Activate on canonical /embed routes and inside reading rooms (#5266).
+        const onEmbedRoute = window.location.pathname.startsWith('/embed/')
+            || getRoomPrefixFromPathname(window.location.pathname) !== null;
         if (!onEmbedRoute) return;
 
         patchedRef.current = true;
