@@ -68,6 +68,9 @@ interface ImageArm {
   counts: boolean;
   floor_p90: number | null;
   grade: string;
+  // Confirmatory rounds only (#5250 round 3): the pre-registered direction and whether the fresh pages confirmed it.
+  prediction?: 'helps' | 'hurts' | 'null' | null;
+  verdict?: 'confirmed' | 'denied' | 'exploratory' | null;
 }
 
 const DATA = evidence as unknown as {
@@ -284,6 +287,7 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                   <th style={C.th}>95 % interval</th>
                   <th style={{ ...C.th, ...C.num }}>p</th>
                   <th style={C.th}>Counts?</th>
+                  <th style={C.th}>Predicted → verdict</th>
                 </tr>
               </thead>
               <tbody>
@@ -300,6 +304,11 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                     <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '—'}</td>
                     <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '—' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
                     <td style={C.td}>{a.counts ? ((a.median_gain ?? 0) > 0 ? 'helps' : 'hurts') : <span style={C.dim}>no</span>}</td>
+                    <td style={C.td}>
+                      {a.verdict == null ? <span style={C.dim}>—</span> : a.verdict === 'exploratory' ? <span style={C.dim}>no prediction</span> : (
+                        <span style={{ color: a.verdict === 'confirmed' ? '#3fb950' : '#f85149' }}>{a.prediction} → {a.verdict}</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
