@@ -22,6 +22,10 @@
 //
 // Authored copy: the letter text is Derek's (last direct edit on the page
 // 2026-09-29). Fix typos; do not reword without asking.
+// Structure (2026-09-29, Derek: "make the 5 year vision and plan more clear"):
+// letter → `vision` (2031) → `phases` (year 1 / years 2–3 / years 4–5, each with a
+// promise and a cost) → montage → sign-off → `plan` (the line-item budget, now the
+// appendix) → tiers. Phase costs = the raise by year (ops doc v5 + v6, 2026-09-30).
 
 export interface PlanItem {
   work: string;
@@ -35,6 +39,15 @@ export interface EditComment {
   /** First ~80 characters of the field when the note was written, so it survives a path shift. */
   excerpt: string;
   text: string;
+}
+
+/** One phase of the five-year plan. `promise` is the line a donor can check later. */
+export interface Phase {
+  years: string;
+  title: string;
+  cost: string;
+  body: string[];
+  promise: string;
 }
 
 export interface VisionContent {
@@ -51,6 +64,10 @@ export interface VisionContent {
   bodyAfterImage1: string[];
   buildHeading: string;
   bodyBuild: string[];
+  /** What exists at the end of the five years. Short lines, each one checkable. */
+  vision: { heading: string; intro: string; items: string[] };
+  /** The plan by time and outcome; the budget table below is its appendix. */
+  phases: { heading: string; intro: string; items: Phase[]; footnote: string };
   montage: { images: { src: string; alt: string }[]; caption: string };
   bodyConvener: string[];
   signoff: string;
@@ -104,11 +121,60 @@ export const visionContent: VisionContent = {
   bodyBuild: [
     'Source Library has been a labor of love and now we want to open it up so that others can pour theirs in — through contributions of time and funding.',
     'When it comes to funding, we’ve raised $60,000 so far from two incredible donors, but yet have spent over $120,000 to make this resource free and open. It is my hope to find other donors who want to help participate in the *largest historical translation project in history.* We can, of course, offer in return our good karma, amazing parties, and specially collected rare books from our collection.',
-    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. This comes to about $3,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Yet we’ve made huge progress in cost optimization. The current costs are about $5/book in total. That means another $360,000 could help us to immediately make available **another 70,000+ books from diverse traditions around the world.** These books are already scanned and catalogued. This money would pay for the OCR, the translation, for quality control, for the scripts that need special handling, such as Tibetan and Syriac, for pulling out the illustrations, and for the retries and failed runs that every job of this size carries. When it is finished the library will hold roughly four times the words of English Wikipedia.',
-    'Then, there are books that still need to be scanned. At the Embassy of the Free Mind, there are about three thousand books printed before 1920 that have no digital copy anywhere, and some two thousand of them exist in no other collection. Scanning them at the Embassy, at its own pace and rates, is another $550,000. Then, there are books and manuscripts in libraries in India, in Indonesia and in libraries all around the world — we want to open these up and make them available for all the world, for all time.',
-    'Our vision is not merely to get everything “done” and walk away. We want to create a living archive, something that can improve and evolve over time. We want to create a stewardship community that can improve our translations and interpretations. We want to create a global community of amateur and professional scholars who care to create a sustainable and trusted resource. It is important for scholars to check the translations against the originals, language by language. Similarly, it is important to revise translations and interpretations over time as AI improves. Everything so far has been done entirely by volunteers.',
-    'Over five years it comes to **$2.8 million**: $2.4 million for the work itself and $400,000 to run the organization that does it. The first year needs **$742,000**, and each year after that about $520,000.',
+    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. This comes to about $3,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Yet we’ve made huge progress in cost optimization. The current costs are about $5/book in total. Everything so far has been done entirely by volunteers.',
   ],
+  vision: {
+    heading: 'Where we will be in 2031',
+    intro: 'Here is what exists at the end of five years, if this is funded.',
+    items: [
+      '**On the order of a million books readable in translation**: every ancient source text that anyone has scanned, from the Renaissance Latin that was never translated to the Chinese, Sanskrit, Tibetan and Arabic corpora, open to anyone and to AI.',
+      '**Every line checkable against its scan.** Translation and original side by side, on every page of every book.',
+      '**The core of the tradition in scholarly editions**, reviewed by experts language by language and citable by DOI.',
+      '**The Embassy’s three thousand undigitised books scanned and translated**, two thousand of which exist in no other collection, with collections from partner libraries in India, Indonesia and elsewhere joining on the same open terms.',
+      '**A global stewardship community** of amateur and professional scholars who decide what belongs, correct and annotate the translations, and keep the archive improving every year instead of going stale.',
+      '**A foundation that runs it**, with the staff, the reserve and the legal footing to keep every page online for the long term.',
+    ],
+  },
+  phases: {
+    heading: 'The plan, year by year',
+    intro: 'Three phases. Each one ends with a promise you can check.',
+    items: [
+      {
+        years: 'Year 1',
+        title: 'Read everything we hold',
+        cost: '$762,000',
+        body: [
+          'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac.',
+          'The rest of the first year builds the organisation that makes those translations trustworthy: the foundation and its legal footing, a director, a part-time engineer to run the pipeline, and the hosting that keeps every page online.',
+        ],
+        promise: 'By next summer, every book we hold, about 100,000, has a first translation, and there is an organisation responsible for it.',
+      },
+      {
+        years: 'Years 2–3',
+        title: 'Read the world’s scanned record, and make it trustworthy',
+        cost: 'about $540,000 a year',
+        body: [
+          'Far more has been scanned than we hold. HathiTrust, the Internet Archive, Gallica, the Munich Digitization Center and the Tibetan and Chinese digital libraries hold millions of volumes that nobody can read. We bring them in shelf by shelf, starting with Renaissance Latin, Chinese, Sanskrit and Arabic. At today’s rates each additional 100,000 books costs about $100,000 to read, and the shelf and language gifts below scale that directly.',
+          'It is important for scholars to check the translations against the originals, language by language. That starts with Renaissance Latin, and the core works become scholarly editions with DOIs, so they can be cited.',
+          'At the Embassy of the Free Mind, there are about three thousand books printed before 1920 that have no digital copy anywhere, and some two thousand of them exist in no other collection. Scanning them at the Embassy, at its own pace and rates, is another $550,000, and we translate them as they come off the scanner.',
+          'The stewardship community begins here: reviewers, annotators and translators who take responsibility for a language, a tradition or a shelf, and whose corrections flow back into the texts.',
+        ],
+        promise: 'By the end of year three, several hundred thousand books are readable, the Embassy’s unique holdings are online, and the most important texts carry an expert’s review.',
+      },
+      {
+        years: 'Years 4–5',
+        title: 'A million books, alive',
+        cost: 'about $540,000 a year',
+        body: [
+          'Our vision is not merely to get everything “done” and walk away. We want to create a living archive, something that can improve and evolve over time. Translations are re-read as AI improves, and the community’s work is what keeps them honest.',
+          'The library comes out in Spanish, Arabic and Hindi, expert-reviewed. Then, there are books and manuscripts in libraries in India, in Indonesia and in libraries all around the world — we want to open these up and make them available for all the world, for all time.',
+          'The foundation builds its reserve and an endowment path, so the archive outlives its founders.',
+        ],
+        promise: 'By the end of year five, a living archive on the order of a million books, stewarded by a global community, improving every year.',
+      },
+    ],
+    footnote: 'Over five years it comes to **$2.9 million**: $2.5 million for the work itself and $400,000 to run the organization that does it. The first year needs **$762,000**, and each year after that about $540,000. The line-by-line budget is below.',
+  },
   montage: {
     images: [
       { src: '/vision/embassy.jpg', alt: 'The Embassy of the Free Mind, Amsterdam' },
@@ -128,23 +194,23 @@ export const visionContent: VisionContent = {
     photo: '/founder-derek.jpg',
   },
   plan: {
-    heading: 'The five-year budget: $2.8 million',
-    intro: 'Each line below comes from a unit cost we have measured in practice. The first year needs **$742,000**, and each year after that about **$520,000**.',
+    heading: 'The five-year budget: $2.9 million',
+    intro: 'The plan above, line by line. Each line comes from a unit cost we have measured in practice. The first year needs **$762,000**, and each year after that about **$540,000**.',
     items: [
       { work: 'Translate the 72,000 books (16 million pages) we already hold, then re-read them as the engines improve', resource: '$360K' },
       { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
       { work: 'Scanning the Embassy’s last 3,000 books: 2,400 at about €70, and 600 fragile volumes on the KNAW slow scanner at about €400', resource: '$550K' },
       { work: 'A director, a part-time engineer to run the pipeline, and a community manager, for five years', resource: '$800K' },
-      { work: 'Keeping every page online for five years — hosting, storage, database', resource: '$170K' },
+      { work: 'Keeping every page online for five years — hosting, storage, database, growing with the shelf toward a million books', resource: '$270K' },
       { work: 'Research commissions, grant-writing, conferences and gatherings at the Embassy', resource: '$150K' },
       { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
       { work: 'Running the organization: fundraising help, tools, insurance, payment processing, and a three-month reserve', resource: '$400K' },
     ],
-    footnote: 'Translation is budgeted at 2.3 cents a page. Our measured cost in September 2026 was about a third of a cent a page for a single pass on the cheapest engine; the budget rate covers repeat passes with better models, the harder scripts, illustration extraction and failed runs. Scanning is costed at the Embassy’s own throughput (200 pages an hour on the standard scanners, 25 an hour on the KNAW scanner for fragile volumes) at working-student rates, and is funded through the Embassy. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
+    footnote: 'Translation is budgeted at 2.3 cents a page. Our measured cost in September 2026 was about a third of a cent a page for a single pass on the cheapest engine; the budget rate covers repeat passes with better models, the harder scripts, illustration extraction and failed runs. Scanning is costed at the Embassy’s own throughput (200 pages an hour on the standard scanners, 25 an hour on the KNAW scanner for fragile volumes) at working-student rates, and is funded through the Embassy. Hosting is our measured run rate plus storage growth toward a million books, about $250 a month for every 18 million pages added. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
   },
   ways: {
     heading: 'Ways to take part',
-    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. With your consent, every gift is recorded in the register under your name, permanently.',
+    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. The first levels fund year one; adopting a manuscript funds the scanning in years two and three; underwriting a language funds years four and five. With your consent, every gift is recorded in the register under your name, permanently.',
     tiers: [
       { gift: '$100', label: 'Translates 20 books' },
       { gift: '$275', label: 'Adopt a book — one unscanned volume at the Embassy, scanned and translated, named for you; a fragile volume on the slow scanner from $500' },
