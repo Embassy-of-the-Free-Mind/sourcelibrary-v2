@@ -75,12 +75,18 @@ const LITE_RUN = 'en-ocr-ref-5124-2026-09';   // #5216's lite read: the producti
  *  lite         #5216's read (default; unchanged behaviour)
  *  flash        gemini-3-flash-preview on every scored page
  *  lite-repeat  lite again on 20 pages drawn by seed 5182 — the A-vs-A noise floor
+ *  mineru         MinerU (CPU pipeline, `-m ocr`) on every scored page — no model call, $0
+ *                 (PREREGISTRATION-mineru-english-5182.md)
+ *  mineru-repeat  MinerU again on the same 20 seed-5182 pages — its floor, measured not assumed
  */
 const ARMS = {
   lite: { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime', run_id: LITE_RUN, suffix: 'lite', issue: 5124 },
   flash: { model: OCR_MODEL_FLASH, engine: 'gemini-flash-realtime', run_id: 'en-flash-5182-2026-09', suffix: 'flash', issue: 5182 },
   'lite-repeat': { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime-r2', run_id: 'en-lite-repeat-5182-2026-09', suffix: 'lite-r2', issue: 5182, repeat_of: LITE_RUN, n: 20, seed: 5182 },
+  mineru: { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu', run_id: 'en-mineru-5182-2026-09', suffix: 'mineru', issue: 5182, local: true },
+  'mineru-repeat': { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu-r2', run_id: 'en-mineru-repeat-5182-2026-09', suffix: 'mineru-r2', issue: 5182, local: true, repeat_of: 'en-mineru-5182-2026-09', n: 20, seed: 5182 },
 };
+const GEMINI_ARMS = ['lite', 'flash', 'lite-repeat'];
 const ARM = ARMS[argEq('--arm', 'lite')];
 if (!ARM) throw new Error(`unknown --arm; one of ${Object.keys(ARMS).join(', ')}`);
 const EXPECT_PROMPT_HASH = argEq('--expect-prompt-hash', null);   // #5182: stop if production's prompt moved since #5216
@@ -888,7 +894,7 @@ async function stageOcr(db) {
   const prior = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
   const have = new Set(prior.filter((o) => o.outcome === 'text' || (o.outcome === 'refusal' && o.attempt === 2)).map((o) => o.slug));
   // the cap is per ISSUE across every arm's file, so two arms cannot each spend the whole budget
-  let spent = [...new Set(Object.values(ARMS).map((x) => x.model))].flatMap((m) => readJsonl(outFileOf(m)))
+  let spent = [...new Set(GEMINI_ARMS.map((k) => ARMS[k].model))].flatMap((m) => readJsonl(outFileOf(m)))
     .filter((o) => (o.issue ?? 5124) === ARM.issue).reduce((s, o) => s + (o.cost_usd || 0), 0);
   console.log(`arm ${argEq('--arm', 'lite')} ${ARM.model} run ${ARM.run_id}; prompt v${prompt.version} ${promptHash}; ${fetched.length} pages, ${have.size} done, $${spent.toFixed(4)} spent on #${ARM.issue}`);
   const queue = fetched.filter((r) => !have.has(r.slug));
@@ -923,6 +929,84 @@ async function stageOcr(db) {
   console.log(`spent $${spent.toFixed(4)} on #${ARM.issue}; run ${ARM.run_id}: ${mine.filter((o) => o.outcome === 'text').length} text rows of ${mine.length}`);
 }
 
+/**
+ * OCR, MinerU arms (#5182 / #3389, PREREGISTRATION-mineru-english-5182.md) — the MinerU binary over the
+ * same page images, no model call, $0. Runs where MinerU is installed (Hetzner). Pages go through the
+ * binary in chunks (one model load per chunk, as the production worker loads once per book).
+ * Post-processing is the production worker's, lifted VERBATIM from scripts/workers/mineru-ocr-worker.mjs
+ * (that file runs on import, so it cannot be imported): `sanitize()`, `realLen`, `lowQuality()`, MIN_CHARS 40.
+ * A read the worker would refuse to write is a failed read: `empty` or `low-quality` (text kept on disk).
+ */
+const MINERU = argEq('--mineru-bin', '/root/mineru-eval/venv/bin/mineru');
+const MINERU_CHUNK = +argEq('--mineru-chunk', 8);
+// ---- verbatim from scripts/workers/mineru-ocr-worker.mjs (main 0d8f9025d, 2026-09-30) ----
+function sanitize(md) {
+  let t = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '');   // markdown images out entirely
+  t = t.replace(/<[^>]+>/g, ' ');                      // html tags -> keep inner cell text
+  t = t.replace(/^#{1,6}\s+/gm, '');                   // heading hashes
+  t = t.replace(/^\s*>\s?/gm, '');                     // blockquotes
+  t = t.replace(/`{1,3}/g, '');
+  t = t.replace(/[ \t]+/g, ' ').replace(/ *\n/g, '\n').replace(/\n{3,}/g, '\n\n');
+  return t.trim();
+}
+const realLen = (s) => (s.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length;
+function lowQuality(text) {
+  const real = realLen(text);
+  if (real < 80) return false; // too short to judge; MIN_CHARS gate handles it
+  const toks = text.split(/\s+/).filter(Boolean).length || 1;
+  const meanWordLen = real / toks;
+  const spaceRatio = (text.match(/ /g) || []).length / Math.max(1, text.length);
+  return meanWordLen > 8 || spaceRatio < 0.10;
+}
+const MINERU_MIN_CHARS = 40;
+// ---- end verbatim ----
+async function stageOcrMineru() {
+  const { execFileSync } = await import('node:child_process');
+  const crypto = await import('node:crypto');
+  const version = execFileSync(MINERU, ['--version']).toString().trim();
+  const keep = new Set(ARM.n ? repeatDraw(ARM) : scoredSlugs());
+  const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped && keep.has(r.slug));
+  const outFile = outFileOf(ARM.model); fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  const have = new Set(readJsonl(outFile).filter((o) => o.run_id === ARM.run_id && o.outcome !== 'error').map((o) => o.slug));
+  const queue = fetched.filter((r) => !have.has(r.slug));
+  console.log(`arm ${argEq('--arm')} ${version} run ${ARM.run_id}; ${fetched.length} pages, ${have.size} done, ${queue.length} to read`);
+  const work = path.join(OUT, `mineru-work-${ARM.suffix}`);
+  for (let i = 0; i < queue.length; i += MINERU_CHUNK) {
+    const chunk = queue.slice(i, i + MINERU_CHUNK);
+    const inDir = path.join(work, 'in'), outDir = path.join(work, 'out');
+    fs.rmSync(work, { recursive: true, force: true }); fs.mkdirSync(inDir, { recursive: true }); fs.mkdirSync(outDir, { recursive: true });
+    for (const r of chunk) {
+      const buf = fs.readFileSync(path.join(IMG, `${r.slug}.jpg`));
+      if (buf.length !== r.image_bytes) throw new Error(`${r.slug}: image is ${buf.length} bytes, #5216 read ${r.image_bytes} — not the same image`);
+      fs.writeFileSync(path.join(inDir, `${r.slug}.jpg`), buf);
+    }
+    const t0 = Date.now(); let err = null;
+    try { execFileSync('nice', ['-n', '15', MINERU, '-p', inDir, '-o', outDir, '-b', 'pipeline', '-m', 'ocr'], { stdio: ['ignore', 'ignore', 'pipe'], maxBuffer: 1 << 28 }); }
+    catch (e) { err = String(e.stderr || e.message || e).slice(-300); }
+    const perPage = Math.round((Date.now() - t0) / chunk.length);
+    for (const r of chunk) {
+      const row = { run_id: ARM.run_id, slug: r.slug, engine: ARM.engine, model: ARM.model, engine_version: version,
+        params: { backend: 'pipeline', method: 'ocr', device: 'cpu', nice: 15, chunk: chunk.length, post: 'mineru-ocr-worker sanitize() (verbatim)' }, attempt: 1,
+        ...(ARM.repeat_of ? { repeat_of: ARM.repeat_of } : {}), at: new Date().toISOString(), by: 'en-ocr-mineru-arm-5182', issue: ARM.issue, cost_usd: 0, latency_ms: perPage };
+      const md = [path.join(outDir, r.slug, 'ocr', `${r.slug}.md`), path.join(outDir, r.slug, 'auto', `${r.slug}.md`)].find((p) => fs.existsSync(p));
+      if (!md) { row.outcome = 'error'; row.error = err || 'no markdown output'; }
+      else {
+        const raw = fs.readFileSync(md, 'utf8').trim(); const text = sanitize(raw);
+        row.chars = text.length;
+        row.outcome = realLen(text) < MINERU_MIN_CHARS ? 'empty' : lowQuality(text) ? 'low-quality' : 'text';
+        const tp = F(`texts/${r.slug}.${ARM.suffix}.txt`); fs.writeFileSync(tp, text);
+        fs.writeFileSync(F(`texts/${r.slug}.${ARM.suffix}.raw.md`), raw);
+        row.text_path = path.relative(HERE, tp); row.text_hash = crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
+      }
+      fs.appendFileSync(outFile, JSON.stringify(row) + '\n');
+      console.log(`  ${r.slug} ${row.outcome} ${row.chars ?? ''} ${perPage} ms/page ${row.error || ''}`);
+    }
+  }
+  fs.rmSync(work, { recursive: true, force: true });
+  const mine = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
+  console.log(`run ${ARM.run_id}: ${mine.filter((o) => o.outcome === 'text').length} text rows of ${mine.length}`);
+}
+
 /** SCORE — both engines against the reference; writes the scores store (§5.2). */
 const SCORER = 'en-ocr-ref-scorer@1';
 function stageScore() {
@@ -930,7 +1014,7 @@ function stageScore() {
   const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
   const outs = readJsonl(outFileOf(OCR_MODEL_LITE)).filter((o) => o.run_id === LITE_RUN);
   // #5182's arms, scored by the same function with the same normaliser; a page an arm did not run is simply absent
-  const armOuts = ['flash', 'lite-repeat'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
+  const armOuts = ['flash', 'lite-repeat', 'mineru', 'mineru-repeat'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
   const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
   const scores = [];
   for (const r of fetched) {
@@ -948,7 +1032,8 @@ function stageScore() {
       const refusedFirst = m.some((o) => o.outcome === 'refusal' && o.attempt === 1);
       const common = { ...base, engine: arm.engine, model: arm.model, run_id: arm.run_id, outcome: fin.outcome, refused_first: refusedFirst, ...(arm.repeat_of ? { repeat_of: arm.repeat_of } : {}) };
       if (fin.outcome === 'text' || fin.outcome === 'truncated') scores.push({ ...common, metric: scorePage(ref, fs.readFileSync(path.join(HERE, fin.text_path), 'utf8')), abstain: false });
-      else scores.push({ ...common, metric: null, abstain: true, abstain_reason: fin.outcome });
+      // a MinerU read the worker would refuse to write (low-quality) is a failed read, but its text is kept: score it aside
+      else scores.push({ ...common, metric: null, abstain: true, abstain_reason: fin.outcome, ...(fin.text_path ? { shadow_metric: scorePage(ref, fs.readFileSync(path.join(HERE, fin.text_path), 'utf8')) } : {}) });
     }
     // a rescued page was read again from the right image; its round-1 reads were of a neighbour
     let mine = outs.filter((o) => o.slug === r.slug);
@@ -1110,8 +1195,8 @@ function stageFlashReport() {
   const out = []; const json = { issue: 5182, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', note_handling: '<note> content moved to the end of the page (where printed footnotes stand), identically for every engine', runs: {}, floor: null, cells: [], worst: {}, disagreements: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
 
   // ---- costs per run (the store is the ledger) ----
-  for (const [k, a] of Object.entries(ARMS)) {
-    const rows = readJsonl(outFileOf(a.model)).filter((o) => o.run_id === a.run_id);
+  for (const k of GEMINI_ARMS) {
+    const a = ARMS[k]; const rows = readJsonl(outFileOf(a.model)).filter((o) => o.run_id === a.run_id);
     json.runs[k] = { run_id: a.run_id, model: a.model, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, cost_usd: +rows.reduce((s, o) => s + (o.cost_usd || 0), 0).toFixed(4), prompt_hashes: [...new Set(rows.map((o) => o.prompt_hash))] };
   }
   for (const k of ['flash', 'lite-repeat']) if (!json.runs[k].text_rows) throw new Error(`run ${json.runs[k].run_id} has zero text rows — a failed run, not a result`);
@@ -1209,6 +1294,7 @@ async function main() {
   if (STAGE === 'queue') return withMongo(stageQueue, LONG);
   if (STAGE === 'digitpack') return stageDigitpack();
   if (STAGE === 'rescue') return withMongo(stageRescue, LONG);
+  if (STAGE === 'ocr' && ARM.local) return stageOcrMineru();
   if (STAGE === 'ocr') return withMongo(stageOcr, LONG);
   if (STAGE === 'score') return stageScore();
   if (STAGE === 'flash-report') return stageFlashReport();
