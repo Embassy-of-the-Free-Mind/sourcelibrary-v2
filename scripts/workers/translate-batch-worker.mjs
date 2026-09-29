@@ -20,6 +20,17 @@
  * --shadow keeps every draft and repair on the run document and writes NOTHING to pages —
  * the mode step 4's shadow run needs.
  *
+ * CHAINED lane (scripts/lib/translate-batch-chained.mjs): production's loop one block per round,
+ * seeded from Mongo, no repair pass — the design that replaces the seam repair above:
+ *
+ *   --chained --plan   --book=ID                        FREE  queue, blocks, estimate
+ *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
+ *                                                             submit its first round
+ *   --chained --tick                                    PAID  one pass: collect finished rounds,
+ *                                                             write pages, submit next rounds
+ *   --chained --loop [--interval=180] [--max-minutes=N] PAID  tick until every run is terminal
+ *   --chained --status                                  FREE  open and recent chained runs
+ *
  * Run on Hetzner (paid Gemini is geo-blocked on the laptop):
  *   set -a; source .env.production.local; set +a
  *   node scripts/workers/translate-batch-worker.mjs --plan --book=<id>
@@ -33,7 +44,12 @@ import { loadTranslationPrompts } from '../lib/translate-core.mjs';
 import {
   planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, batchRequestToJsonlLine, RUNS_COLLECTION, TERMINAL_PHASES,
 } from '../lib/translate-batch-seam.mjs';
+import {
+  enrolChainedRun, tickChained, planNextRound, estimateChainedUsd,
+  MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
+} from '../lib/translate-batch-chained.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { contentHash } from '../lib/translate-core.mjs';
 import { logUsage, completeBatchUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate } from './lib/supabase-page-writer.mjs';
 import { probeBatchJob } from './lib/batch-reconcile.mjs';
@@ -146,6 +162,8 @@ async function main() {
   try {
     const bookId = arg('book');
 
+    if (has('chained')) { await chained(db); return; }
+
     if (has('plan')) {
       if (!bookId) throw new Error('--plan needs --book=ID');
       const plan = await planRun(db, bookId, { limit: arg('limit') ? Number(arg('limit')) : undefined });
@@ -176,7 +194,7 @@ async function main() {
 
     if (has('advance')) {
       if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
-      const filter = arg('run') ? { id: arg('run') } : { phase: { $nin: TERMINAL_PHASES } };
+      const filter = arg('run') ? { id: arg('run') } : { phase: { $nin: TERMINAL_PHASES }, mode: { $ne: CHAINED_MODE } };
       const runs = await db.collection(RUNS_COLLECTION).find(filter).toArray();
       const deps = { gemini: makeGeminiAdapter(), logUsage, completeBatchUsage, syncPage: syncPageUpdate };
       for (const run of runs) {
@@ -203,6 +221,84 @@ async function main() {
   } finally {
     await client.close();
   }
+}
+
+// ── Chained lane commands ──────────────────────────────────────────────────
+async function chained(db) {
+  // One adapter for the whole command: its key rotation remembers which key last refused, so a
+  // loop does not pay a 429 on key 0 at every tick (it did, 2026-09-29 pilot log).
+  const gemini = KEYS.length ? makeGeminiAdapter() : null;
+  const deps = () => ({
+    gemini, logUsage, completeBatchUsage, syncPage: syncPageUpdate,
+    budgetAllows: async (d, label) => {
+      const bookId = label.split(' ').pop();
+      return gateAllowsBook(await budgetAllowsDispatchScoped(d, label), bookId);
+    },
+  });
+
+  if (has('plan')) {
+    const bookId = arg('book');
+    if (!bookId) throw new Error('--chained --plan needs --book=ID');
+    const plan = await planRun(db, bookId, { limit: arg('limit') ? Number(arg('limit')) : undefined });
+    if (!plan.ok) { console.log(`REFUSED: ${plan.reason}`); if (plan.excluded) console.log('excluded:', plan.excluded); return; }
+    const prompts = await loadTranslationPrompts(db);
+    const est = estimateChainedUsd({ prompts, book: plan.book, pages: plan.pages, model: plan.model });
+    const first = planNextRound({ queue: plan.pages.map(p => ({ id: p.id, page_number: p.page_number, ocr_hash: p.ocr?.data ? contentHash(p.ocr.data) : '' })), cursor: 0, pending_single: [] }, new Map(plan.pages.map(p => [p.id, p])));
+    console.log(`${plan.book.title?.slice(0, 70)} — ${plan.model}`);
+    console.log(`  ${plan.pages.length} pages in ${plan.blocks.length} blocks → ${plan.blocks.length} rounds minimum (one block per round; fallbacks add rounds)`);
+    console.log(`  block sizes: ${plan.blocks.map(b => b.length).join(' ')}`);
+    console.log(`  first round: ${first?.kind} p${first?.pages?.[0]?.page_number}${first?.pages?.length > 1 ? `–${first.pages[first.pages.length - 1].page_number}` : ''}`);
+    console.log(`  excluded: ${JSON.stringify(plan.excluded)}`);
+    console.log(`  estimate (batch price, seeds included): $${est}`);
+    return;
+  }
+
+  if (has('enrol')) {
+    if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
+    const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID');
+    const prompts = await loadTranslationPrompts(db);
+    for (const id of ids) {
+      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined });
+      if (!res.ok) { console.log(`  ${id}: REFUSED — ${res.reason}`); process.exitCode = 2; }
+      else console.log(`  ${id}: run ${res.run.id} est $${res.estimate} — ${res.submitted?.note}`);
+    }
+    return;
+  }
+
+  if (has('tick') || has('loop')) {
+    if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
+    const prompts = await loadTranslationPrompts(db);
+    const interval = Number(arg('interval') || 180) * 1000;
+    const maxMinutes = Number(arg('max-minutes') || 0);
+    const started = Date.now();
+    for (;;) {
+      const notes = await tickChained(db, deps(), { prompts, filter: arg('run') ? { id: arg('run') } : {} });
+      const stamp = new Date().toISOString().slice(11, 19);
+      for (const n of notes) console.log(`  ${stamp} ${n.book_id} ${n.run}: ${n.phase} — ${n.note}`);
+      const open = await db.collection(RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } });
+      console.log(`  ${stamp} open chained runs: ${open}`);
+      if (!has('loop') || open === 0) return;
+      if (maxMinutes && Date.now() - started > maxMinutes * 60000) { console.log('  --max-minutes reached; runs stay open for the next tick'); return; }
+      await new Promise(r => setTimeout(r, interval));
+    }
+  }
+
+  if (has('status')) {
+    const runs = await db.collection(RUNS_COLLECTION).find({ mode: CHAINED_MODE, ...(arg('book') ? { book_id: arg('book') } : {}) })
+      .project({ id: 1, book_id: 1, phase: 1, page_count: 1, cursor: 1, pending_single: 1, rounds: 1, counts: 1, estimate: 1, spent_est_usd: 1, strikes: 1, parked_reason: 1, updated_at: 1 })
+      .sort({ updated_at: -1 }).limit(50).toArray();
+    for (const r of runs) {
+      const rounds = r.rounds || [];
+      const lat = rounds.filter(x => x.submitted_at && x.collected_at).map(x => (new Date(x.collected_at) - new Date(x.submitted_at)) / 60000);
+      const med = lat.length ? lat.sort((a, b) => a - b)[Math.floor(lat.length / 2)].toFixed(1) : '?';
+      console.log(`${r.id}  ${r.book_id}  ${r.phase}${r.parked_reason ? ` (${r.parked_reason})` : ''}  ${r.cursor}/${r.page_count} queued, ${(r.pending_single || []).length} pending single, ${rounds.length} rounds (median ${med} min)  est $${r.estimate} spent-est $${r.spent_est_usd}  ${JSON.stringify(r.counts || {})}`);
+    }
+    if (!runs.length) console.log('No chained runs.');
+    return;
+  }
+
+  console.log('Usage: --chained --plan|--enrol|--tick|--loop|--status (see header)');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
