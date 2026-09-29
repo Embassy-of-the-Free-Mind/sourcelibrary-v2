@@ -3,7 +3,10 @@
 // Edit it here directly, OR use the in-browser editor at /vision?edit:
 // change the text on the page, click "Copy JSON", and paste the result back
 // over `visionContent` below (then redeploy). Collaborators can do the same
-// and send you their JSON.
+// and send you their JSON. In edit mode a reviewer can also click into a
+// paragraph and press "Add comment"; comments travel in the copied JSON as
+// `_comments` (see EditComment) and are for the person applying the edits —
+// strip them before pasting here. Workflow: `.claude/skills/edit-on-page/`.
 //
 // Light formatting inside any text field: **bold**, *italic*, [label](url).
 //
@@ -16,10 +19,22 @@
 // whole backlog ≈ $48–63K at list price). The 2.3¢/page budget rate is a PROGRAMME
 // rate (repeat passes, hard scripts, image extraction, failed runs); the copy below
 // must say so and never present it as the bare cost of one pass.
+//
+// Authored copy: the letter text is Derek's (last direct edit on the page
+// 2026-09-29). Fix typos; do not reword without asking.
 
 export interface PlanItem {
   work: string;
   resource: string;
+}
+
+/** One reviewer note left in edit mode. Exported in the JSON as `_comments`; never rendered. */
+export interface EditComment {
+  /** Dotted path of the field the note is about, e.g. `bodyBuild.2`. */
+  path: string;
+  /** First ~80 characters of the field when the note was written, so it survives a path shift. */
+  excerpt: string;
+  text: string;
 }
 
 export interface VisionContent {
@@ -28,9 +43,11 @@ export interface VisionContent {
   salutation: string;
   lead: string;
   bodyBeforeQuote: string[];
-  quote: { en: string; la: string; source: string; url: string; linkLabel: string };
+  /** Optional pull-quote. Dropped from the letter 2026-09-29 (the Pico line was unrelated); kept in the type so it can come back. */
+  quote?: { en: string; la: string; source: string; url: string; linkLabel: string };
   bodyBeforeImage1: string[];
-  image1: { src: string; alt: string; caption: string; href: string };
+  /** `href` is optional: a photograph with no source page renders without the "Read this page" link. */
+  image1: { src: string; alt: string; caption: string; href?: string };
   bodyAfterImage1: string[];
   buildHeading: string;
   bodyBuild: string[];
@@ -65,48 +82,43 @@ export const visionContent: VisionContent = {
   },
   dateline: 'Amsterdam, September 2026',
   salutation: 'Dear friend,',
-  lead: 'The last time the world translated its ancient wisdom, it set off the Renaissance. I think we can do it again, and this time most of the books are already on the shelf.',
+  lead: 'The last time the world translated its ancient wisdom, it ignited the Renaissance. I think we can do it again.',
   bodyBeforeQuote: [
-    'The Renaissance began with translation. When Marsilio Ficino translated Plato and the Hermetic writings from Greek into Latin in Florence in the 1460s, Europe got back a body of thought it had been missing for a thousand years, and spent the next two centuries working out what to do with it.',
-    'Most of what those two centuries wrote has still not been read. Debora Shuger, a Renaissance scholar at UCLA, estimates that **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). Then there are the thousands of texts in Chinese, Sanskrit, Arabic, Hebrew and other languages, which nobody reads unless they have the language, and which are missing from the data that today’s AI systems learn from.',
-    'Pico della Mirandola put the method in a sentence. You can open the book in our library:',
+    'Just after the arrival of the printing press, Cosimo de’ Medici commissioned Marsilio Ficino to translate ancient Greek and African wisdom texts into Latin. These ancient ideas lit up Europe and sparked what we know of as the Renaissance.',
+    'Source Library began when I learned that I couldn’t read Marsilio Ficino’s own philosophical works — because most of the Renaissance itself has never been translated. Debora Shuger, a Renaissance scholar at UCLA, estimates that **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). At current rates of human translation, it would take more than 10,000 years to finish it all.',
+    'And, of course, there is so much more than Latin: massive bodies of untranslated texts in Chinese, Sanskrit, Tibetan, Arabic, Hebrew and dozens of other languages.',
+    'At the onset of Superintelligence, we want to make sure that all ancient source texts are available to AI — and to people, through AI.',
+    'How can you trust it? Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike licence, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
   ],
-  quote: {
-    en: 'Magic does not so much work wonders as serve nature while she works them.',
-    la: 'Non tam facit miranda quam facienti naturæ sedula famulatur.',
-    source: 'Giovanni Pico della Mirandola, *Oration on the Dignity of Man* (1496)',
-    url: '/q/Bek54SCHDUKr4EJMnM4',
-    linkLabel: 'read it at the source',
-  },
   bodyBeforeImage1: [
-    'Source Library goes back to the source. Today it holds more than **40,000 books** in over fifty languages, and more than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. If you count originals and translations together, the library already holds more words than English Wikipedia.',
-    'Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike licence, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
+    'Today, Source Library holds more than **40,000 books** in over fifty languages, and more than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. To get a sense of the scale, the library already holds more words than English Wikipedia.',
+    'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a Guinness record for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
   ],
   image1: {
-    src: 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg',
-    alt: "An emblem from Michael Maier's Atalanta Fugiens (1618)",
-    caption: 'One of millions of pages now readable and quotable — an emblem from Maier’s *Atalanta Fugiens*, 1618.',
-    href: '/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154',
+    src: '/vision/ficino.jpg',
+    alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind',
+    caption: 'Marsilio Ficino at the Embassy of the Free Mind, Amsterdam.',
   },
-  bodyAfterImage1: [
-    'We are based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and the Gambrell Foundation, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. Gifts are tax-deductible in the US and the Netherlands ([give here](/support)).',
-  ],
+  bodyAfterImage1: [],
   buildHeading: 'What we need to finish',
   bodyBuild: [
-    'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. The machine cost of reading and translating them has fallen a long way this year. At the rates on our September bill, a first pass over all sixteen million pages comes to about $60,000. The translation line in the budget is $360,000, because a first pass is not a finished library. It pays for re-reading the books as better engines arrive, for the scripts that need special handling, such as Tibetan and Syriac, for pulling out the illustrations, and for the retries and failed runs that every job of this size carries. There is nothing left to invent in this part of the work. When it is finished the library will hold roughly four times the words of English Wikipedia, and a good deal of it will be the material Wikipedia’s own articles were written from.',
-    'The rest of the budget is what a library needs if people are going to trust it and it is going to last. Scholars have to check the translations against the originals, language by language. The Embassy holds about two thousand books that exist in no other collection, and they have to be scanned before they can be translated at all. Every page has to stay online, and someone has to be paid to keep the whole thing running. So far a handful of people have done all of this, mostly unpaid. Over five years it comes to **$2.4 million**: $2 million for the work itself and $400,000 to run the organization that does it. The first year needs **$672,000**, and each year after that about $430,000.',
+    'Source Library has been a labor of love and now we want to open it up so that others can pour theirs in — through contributions of time and funding.',
+    'When it comes to funding, we’ve raised $60,000 so far from two incredible donors, but yet have spent over $120,000 to make this resource free and open. It is my hope to find other donors who want to help participate in the *largest historical translation project in history.* We can, of course, offer in return our good karma, amazing parties, and specially collected rare books from our collection.',
+    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. This comes to about $3,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Yet we’ve made huge progress in cost optimization. The current costs are about $5/book in total. That means another $360,000 could help us to immediately make available **another 70,000+ books from diverse traditions around the world.** These books are already scanned and catalogued. This money would pay for the OCR, the translation, for quality control, for the scripts that need special handling, such as Tibetan and Syriac, for pulling out the illustrations, and for the retries and failed runs that every job of this size carries. When it is finished the library will hold roughly four times the words of English Wikipedia.',
+    'Then, there are books that still need to be scanned. At the Embassy of the Free Mind, there are at least two thousand books and manuscripts that exist in no other collection and they are unscanned. This is another $130,000. Then, there are books and manuscripts in libraries in India, in Indonesia and in libraries all around the world — we want to open these up and make them available for all the world, for all time.',
+    'Our vision is not merely to get everything “done” and walk away. We want to create a living archive, something that can improve and evolve over time. We want to create a stewardship community that can improve our translations and interpretations. We want to create a global community of amateur and professional scholars who care to create a sustainable and trusted resource. It is important for scholars to check the translations against the originals, language by language. Similarly, it is important to revise translations and interpretations over time as AI improves. Everything so far has been done entirely by volunteers.',
+    'Over five years it comes to **$2.4 million**: $2 million for the work itself and $400,000 to run the organization that does it. The first year needs **$672,000**, and each year after that about $430,000.',
   ],
   montage: {
     images: [
       { src: '/vision/embassy.jpg', alt: 'The Embassy of the Free Mind, Amsterdam' },
       { src: '/vision/bibliotheca.jpg', alt: 'Guests in the Bibliotheca Philosophica Hermetica' },
-      { src: '/vision/ficino.jpg', alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind' },
       { src: '/vision/embassy-crowd.jpg', alt: 'A gathering outside the Embassy of the Free Mind, Amsterdam' },
     ],
     caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica.',
   },
   bodyConvener: [
-    'If you are able to help fund this, or you know someone who might, I would like to hear from you. The work is easier to understand in person than on paper, and I am happy to show it to anyone who is curious.',
+    'If you want to participate in this historical project, please reach out. I would be happy to arrange a time online or on location at the Embassy of the Free Mind.',
   ],
   signoff: 'With gratitude,',
   signature: {
