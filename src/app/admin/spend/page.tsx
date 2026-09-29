@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
   getSpendReport, redactForViewer, requireSpendViewer,
-  type SpendData, type SpendNarrative, type Grade,
+  type SpendData, type SpendNarrative, type Grade, type LanguageRow,
 } from '@/lib/spend-report';
 import { DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
 import { daysBefore, gcpWindow, type GcpWindow } from '@/lib/spend-windows';
@@ -102,7 +102,7 @@ function KpiGroup({ title, tiles }: { title: string; tiles: { v: string; l: stri
 }
 
 const NAV = [
-  ['charts', 'Charts'], ['output', 'Output'], ['vendors', 'By vendor'], ['sku', 'By SKU'],
+  ['charts', 'Charts'], ['output', 'Output'], ['languages', 'By language'], ['vendors', 'By vendor'], ['sku', 'By SKU'],
   ['unit-costs', 'Unit costs'], ['roadmap', 'Roadmap'], ['notes', 'Notes'],
 ] as const;
 
@@ -255,6 +255,8 @@ export default async function SpendPage() {
       )}
 
       </div>
+
+      {D.languages?.length ? <LanguageSection rows={D.languages} intro={T.languages_intro} /> : null}
 
       <Section id="vendors" title="Monthly, by vendor">
         <Table head={['Vendor', ...months.map(m => monthName(m.month)), 'Total']}>
@@ -454,6 +456,56 @@ export default async function SpendPage() {
 
       </div>
     </main>
+  );
+}
+
+const LANG_TOP = 15;
+const langNum = ['books', 'live_books', 'books_done', 'ocr_pages_needed', 'translation_pages_needed',
+  'low_usd', 'high_usd', 'live_low_usd', 'live_high_usd'] as const;
+type LangSum = { language: string } & Record<(typeof langNum)[number], number>;
+
+function sumLanguages(language: string, rows: LanguageRow[]): LangSum {
+  const out = { language } as LangSum;
+  for (const k of langNum) out[k] = rows.reduce((a, r) => a + (r[k] ?? 0), 0);
+  return out;
+}
+
+/** Books readable in English, and what finishing the rest costs, by edition language. */
+function LanguageSection({ rows, intro }: { rows: LanguageRow[]; intro?: string }) {
+  const sorted = [...rows].sort((a, b) => b.books - a.books);
+  const rest = sorted.slice(LANG_TOP);
+  const shown: LangSum[] = [
+    ...sorted.slice(0, LANG_TOP).map(r => sumLanguages(r.language, [r])),
+    ...(rest.length ? [sumLanguages(`${rest.length} other languages`, rest)] : []),
+  ];
+  const total = sumLanguages('Total', sorted);
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const row = (r: LangSum, bold = false) => (
+    <tr key={r.language} className={bold ? 'font-semibold' : undefined}>
+      <td className={TD}>{cap(r.language)}</td>
+      <td className={`${TD} text-right`}>{int(r.books)}</td>
+      <td className={`${TD} text-right`}>{int(r.live_books)}</td>
+      <td className={`${TD} text-right`}>{int(r.books_done)}</td>
+      <td className={`${TD} text-right`}>{r.books ? Math.round(r.books_done / r.books * 100) + '%' : '·'}</td>
+      <td className={`${TD} text-right`}>{int(r.ocr_pages_needed)}</td>
+      <td className={`${TD} text-right`}>{int(r.translation_pages_needed)}</td>
+      <td className={`${TD} text-right`}>{rng0(r.low_usd, r.high_usd)}</td>
+      <td className={`${TD} text-right`}>{rng0(r.live_low_usd, r.live_high_usd)}</td>
+    </tr>
+  );
+  return (
+    <Section id="languages" title="By language: what is done, what remains"
+      intro={intro ?? 'Done = readable in English: at least 90% of pages translated (English books: transcribed). Cost to finish uses the same per-page rates as the roadmap; "live" is books readers can already open.'}>
+      <Tiles tiles={[
+        { v: `${int(total.books_done)} of ${int(total.books)}`, l: 'Books readable in English', n: `${Math.round(total.books_done / (total.books || 1) * 100)}% of books with pages` },
+        { v: rng0(total.low_usd, total.high_usd), l: 'AI cost to finish everything', n: `${int(total.ocr_pages_needed)} pages to transcribe, ${int(total.translation_pages_needed)} to translate` },
+        { v: rng0(total.live_low_usd, total.live_high_usd), l: 'AI cost to finish live books only', n: `${int(total.live_books)} books readers can open today` },
+      ]} />
+      <Table head={['Language', 'Books', 'Live', 'Done', '% done', 'Pages to transcribe', 'Pages to translate', 'Cost to finish, all', 'Live books only']}>
+        {shown.map(r => row(r))}
+        {row(total, true)}
+      </Table>
+    </Section>
   );
 }
 

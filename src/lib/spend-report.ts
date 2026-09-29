@@ -43,6 +43,13 @@ export interface ExampleRow {
   title: string; url: string; lang: string; source: string; note?: string; pages: number;
   ocr: number; translation: number; images: number; other: number; total: number;
 }
+/** One edition language (books.language, first listed), from the ops lang-projection.py. */
+export interface LanguageRow {
+  language: string; books: number; live_books?: number; hidden_books?: number; pages: number;
+  pages_ocr: number; pages_translated: number; books_done: number; books_started: number;
+  ocr_pages_needed: number; translation_pages_needed: number;
+  low_usd: number; high_usd: number; live_low_usd?: number; live_high_usd?: number;
+}
 export interface OutputMonth { month: string; ocr_pages: number; translated_pages: number }
 export interface HoursMonth { hours: number; active_days: number; prompts: number }
 export interface Person { name: string; role: string; monthly_usd: number | null; note?: string }
@@ -53,6 +60,7 @@ export interface Person { name: string; role: string; monthly_usd: number | null
  * except `findings` / `checks_findings`, whose items may carry `<b>` and `<a>`.
  */
 export interface SpendNarrative {
+  languages_intro?: string;
   findings_as_of?: string;
   findings?: string[];
   still_unknown?: string;
@@ -100,6 +108,8 @@ export interface SpendData {
     pages_ocr_total: number;
     measured?: string;
   } | null;
+  /** Progress and remaining cost by language; absent in documents pushed before 2026-09-29. */
+  languages?: LanguageRow[] | null;
   text?: SpendNarrative;
 }
 
