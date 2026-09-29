@@ -1,0 +1,24 @@
+{
+ "seed": "5250r3",
+ "edge_skipped": 3,
+ "round1_used": 40,
+ "sets": {
+  "jerusalem36": {
+   "stratum": "dark-spreads",
+   "xml_total": 133,
+   "interior": 127,
+   "fresh": 108,
+   "drawn": 40,
+   "skipped": []
+  },
+  "onb-syr1": {
+   "stratum": "clean-leaves",
+   "xml_total": 140,
+   "interior": 134,
+   "fresh": 114,
+   "drawn": 40,
+   "skipped": []
+  }
+ },
+ "overlap_with_round1": []
+}
