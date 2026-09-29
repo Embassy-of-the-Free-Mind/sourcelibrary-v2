@@ -92,7 +92,7 @@ export const visionContent: VisionContent = {
   ],
   bodyBeforeImage1: [
     'Today, Source Library holds more than **40,000 books** in over fifty languages, and more than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. To get a sense of the scale, the library already holds more words than English Wikipedia.',
-    'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a Guinness record for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
+    'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
   ],
   image1: {
     src: '/vision/ficino.jpg',
