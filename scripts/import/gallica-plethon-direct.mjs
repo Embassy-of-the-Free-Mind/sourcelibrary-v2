@@ -30,7 +30,7 @@ import { holdBook } from '../lib/pipeline-hold.mjs';
 
 // Held at insert: the orchestrator auto-enrols any new book within ~10 minutes and would
 // then buy a preview/full OCR of the WHOLE codex. Only the Plethon folios are wanted, and
-// they are processed by hand (realtime-ocr --page-ids-file), which does not read the hold.
+// they are processed by hand (bulk-reocr-local --page-ids-file), which does not read the hold.
 const HOLD = {
   reason: 'plethon-folios-only',
   release: 'a human decides whether the rest of the codex (non-Plethon texts) should be processed; until then only the Plethon canvases named in books.notes are OCR\'d, by hand',

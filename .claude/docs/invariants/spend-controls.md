@@ -53,6 +53,9 @@ priced. Scales with in-flight batch size.
 
 ## Judgment, which no check asserts
 
+- **Batch API unless the caller says realtime (#5244).** A hand-run OCR job goes through
+  `scripts/batch/bulk-reocr-local.mjs`, which prices each job at submit on Supabase
+  `gemini_usage` so the dial sees it; `realtime-ocr.mjs` (~2×) needs `--realtime`.
 - **Presence of a guard is not coverage by it.** The first version of
   `spend-perimeter.mjs` passed `translate-worker` because the *file* mentioned
   `budgetAllowsDispatch` — in a helper off the spending path. Hours later that

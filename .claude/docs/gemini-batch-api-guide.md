@@ -282,6 +282,13 @@ The MEMORY.md index references these files as if they exist, but most were never
 | Content may trigger RECITATION | Batch + fallback to Lambda | Lambda directly |
 | Atlas is degraded | Batch (async, no pressure) | Careful with throttling |
 
+**Default: batch unless the caller says realtime (#5244).** Hand-run OCR outside the pipeline
+is `scripts/batch/bulk-reocr-local.mjs` (`--page-ids-file`, `--ids`, `--book-id`; `--dry-run`
+prices it); `realtime-ocr.mjs` refuses without `--realtime`. **Submit from Hetzner** — 75 MB
+File-API PUTs failed twice from a residential Mac (`fetch failed`, 2026-08-13, #3974); the
+script now caps JSONL at 40 MB per job and records any chunk it could not submit as a
+`batch_jobs` row with status `submit_failed`.
+
 ---
 
 ## Incident Timeline

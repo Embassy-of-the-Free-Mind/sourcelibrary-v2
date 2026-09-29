@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 /**
  * Realtime OCR — direct Gemini API calls with concurrency control.
- * Generalized version that can target any books in the library.
- * Designed for Tier 3 API keys with high rate limits.
+ *
+ * NOT THE DEFAULT. Paid model work goes through the Batch API unless the caller says
+ * otherwise (#5244): realtime costs ~2× per page. For the same targeting — a page list
+ * (`--page-ids-file`), a book list, a single book, held books included — use
+ *   node scripts/batch/bulk-reocr-local.mjs --page-ids-file=<file> --reason="..." --dry-run
+ * This script refuses to run unless `--realtime` is passed (or SL_ALLOW_REALTIME=1 is set
+ * for a long-standing caller), so choosing realtime is a decision someone made, not a
+ * default nobody did. Reasons to choose it: a result needed within the hour, a handful of
+ * pages, or a workflow that reads this script's records (reocr-ia-frontmatter.mjs --record).
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/batch/realtime-ocr.mjs [options]
+ *   set -a; source .env.production.local; set +a; node scripts/batch/realtime-ocr.mjs --realtime [options]
  *
  * Targeting options (combine as needed):
  *   --no-ocr           Pages with NO OCR at all (default)
@@ -41,8 +48,8 @@
  *                      value (4) is the right guard for a one-off run outside the dial.
  */
 
-import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
+import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
@@ -80,6 +87,17 @@ const getArg = (name) => {
   return a ? a.split('=')[1] : null;
 };
 const hasFlag = (name) => args.includes(`--${name}`);
+
+// Batch unless the caller says realtime (#5244). A dry run spends nothing, so it is allowed.
+if (!hasFlag('realtime') && process.env.SL_ALLOW_REALTIME !== '1' && !hasFlag('dry-run')) {
+  console.error(
+    'realtime-ocr.mjs refuses to run without --realtime: paid OCR goes through the Batch API by default (#5244).\n' +
+    '  Batch (≈half the price, same targeting, held books OK):\n' +
+    '    node scripts/batch/bulk-reocr-local.mjs --page-ids-file=<file> --reason="..." --dry-run\n' +
+    '  If realtime is a deliberate choice, pass --realtime (or set SL_ALLOW_REALTIME=1).'
+  );
+  process.exit(2);
+}
 
 const MODEL_CHOICE = getArg('model') || 'flash';
 if (!['flash', 'lite'].includes(MODEL_CHOICE)) {
@@ -675,9 +693,7 @@ async function main() {
     // decided which pages need work. The image requirement below still applies.
     let explicitIds = null;
     if (PAGE_IDS_FILE) {
-      const raw = JSON.parse(fs.readFileSync(PAGE_IDS_FILE, 'utf8'));
-      const collect = (v) => (Array.isArray(v) ? v.map((x) => (typeof x === 'string' ? x : x?.page_id)).filter(Boolean) : []);
-      explicitIds = [...new Set([...collect(raw), ...collect(raw.confirmed), ...collect(raw.suspected), ...collect(raw.pages)])];
+      explicitIds = readPageIdsFile(PAGE_IDS_FILE);
       pageFilter.id = { $in: explicitIds };
       delete pageFilter.book_id;
       console.log(`Explicit page list: ${explicitIds.length} ids from ${PAGE_IDS_FILE}`);
