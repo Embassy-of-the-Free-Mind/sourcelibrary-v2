@@ -67,7 +67,6 @@ The replication column exists because of 2026-09-02, below.
 - **Artifact.** `results/en-ocr-ref-5124/flash-arm-2026-09-28.{md,json}`, `flash-arm-byeye.jsonl`,
   `store/outputs/gemini-3-flash-preview/2026-09.jsonl`, `store/scores/en-ocr-ref-scorer@1/2026-09.jsonl`;
   `en-ocr-reference-5124.mjs --stage=ocr --arm=flash|lite-repeat`, `--stage=flash-report`.
-||||||| parent of e9ba25ed0 (eval(image-extraction): #4747 results — flash keeps boxes; lite finds but crops; flash batch = same boxes at half price)
 ## 2026-09-28 — Which cheap model draws ACCURATE picture boxes? Seven arms, boxes graded by eye against the page (#4747, widened)
 
 - **Question.** Image extraction runs on full `gemini-3-flash-preview` realtime because a 5-page test
