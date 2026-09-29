@@ -38,6 +38,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/import/fetch-wikisource-javanese.mjs': 'Wikisource text, not a model read',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
+  'scripts/maintenance/backfill-leaf-break-markers.mjs': 'inserts the <leaf-break/> marker between the stored leaf reads (#5260); the text stays the BDRC read apply-reocr-verdicts.mjs stamped, and the seam is recorded inside that engine block (leaf_seams)',
   'scripts/maintenance/repair-ia-ocr-leaf-offset.mjs': 'moves stored text between pages; introduces no new text',
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
   'scripts/maintenance/restore-refused-translations-5105.mjs': 'restores text from page_revisions; the original writer stamped it',
