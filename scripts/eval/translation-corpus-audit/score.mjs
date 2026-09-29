@@ -149,6 +149,32 @@ if (V2) {
 
 fs.writeFileSync(path.join(DIR, 'report.json'), JSON.stringify(report, null, 2));
 
+// ── Store rows (eval-design.md §5.2). One row per (item, judge). `measure: judged` — a single-candidate,
+// source-grounded judge rating; NOT `accuracy` (no independent reference) and NOT `preference` (not pairwise).
+// The §2 enum has no value for this yet; the PR that lands this run proposes `judged` as the fifth value.
+if (args.store) {
+  const runId = `translation-corpus-audit-${DIR.split('/').pop().replace(/^translation-corpus-audit-/, '')}`;
+  const month = (drawLog.at || '').slice(0, 7) || '2026-09';
+  const rows = [];
+  for (const [judge, VV] of [[PRIMARY, V], [SECOND, V2]]) {
+    if (!judge || !VV) continue;
+    const scorer = `translation-corpus-audit-judge@1`;
+    for (const m of manifest) {
+      const v = VV[m.id]; if (!v) continue;
+      rows.push({ slug: `tca-${m.language.toLowerCase()}-${m.book_id.slice(-6)}-p${m.page_number}`, item_id: m.id, kind: m.kind, book_id: m.book_id, page_number: m.page_number,
+        language: m.language, period: m.period, engine: m.model, arm: m.arm, prompt_version: m.prompt_version, prompt_hash: m.prompt_hash,
+        measure: 'judged', against: { judge: `claude-${judge}`, judge_packet_id: `${runId}/${judge}`, source_hash: m.ocr_hash, translation_hash: m.translation_hash },
+        metric: { fidelity: v.fidelity, ...v.flags, n_defects_major: v.defects.filter((d) => d.severity === 'major').length, n_defects_minor: v.defects.filter((d) => d.severity === 'minor').length },
+        control_expected: m.expected || null, repeat_of: m.repeat_of || null,
+        scorer, scorer_version: 1, rubric: 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: 5274 });
+    }
+  }
+  const sdir = path.join('scripts/eval/store/scores', 'translation-corpus-audit-judge@1');
+  fs.mkdirSync(sdir, { recursive: true });
+  fs.writeFileSync(path.join(sdir, `${month}.jsonl`), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  console.error(`store: ${rows.length} score rows → ${sdir}/${month}.jsonl`);
+}
+
 // ── Markdown ─────────────────────────────────────────────────────────────────
 const row = (name, c) => `| ${name} | ${c.n} | ${c.fidelity_mean ?? '—'} | ${c.fidelity_median ?? '—'} | ${c.dist.join(' / ')} | ${c.pct_5 ?? '—'} | ${c.pct_ge4 ?? '—'} | ${c.pct_le2 ?? '—'} | ${c.flags.omission ?? '—'} | ${c.flags.invention ?? '—'} | ${c.flags.untranslated ?? '—'} | ${c.any_major ?? '—'} |`;
 const hdr = '| cell | n books | mean | median | 1/2/3/4/5 | %5 | %≥4 | %≤2 | %omission | %invention | %untransl. | %any major |\n|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|';
