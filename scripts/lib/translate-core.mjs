@@ -26,6 +26,7 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { unwrapHiddenTranslation } from './page-integrity.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 
@@ -738,7 +739,7 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   previous-page continuity); when written, it is the sanitized new text.
  */
 export async function writePageTranslation(db, { page, book, text, promptRef, model, jobId, note, extraSet, overwriteHuman = false, refuseUnhealthy = false }) {
-  const clean = sanitizeTranslationTags(text);
+  const clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: sanitizeTranslationTags(text), type: page?.page_type }).text;
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
   // or runaway translation to pages. The refused text IS kept as evidence in

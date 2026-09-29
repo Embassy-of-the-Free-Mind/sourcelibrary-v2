@@ -39,6 +39,7 @@ import {
   continuityContext,
   buildBlockTranslationPrompt,
 } from '../lib/translate-core.mjs';
+import { unwrapHiddenTranslation } from '../lib/page-integrity.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
@@ -443,6 +444,13 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef) {
+  // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page
+  // and reads to the health gate below as collapsed. Open the wrapper BEFORE judging or storing.
+  const unwrapped = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: text, type: page.page_type });
+  if (unwrapped.unwrapped) {
+    console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${unwrapped.wrapper}> (${unwrapped.wrapperLen} chars, body ${unwrapped.body}) — unwrapped`);
+    text = unwrapped.text;
+  }
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
