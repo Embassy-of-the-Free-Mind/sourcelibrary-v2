@@ -1,0 +1,1934 @@
+{
+ "issue": 4747,
+ "drawn_at": "2026-09-28T13:26:04.664Z",
+ "since": "2026-06-30T13:24:27.513Z",
+ "method": "one page per book; positives = every stored detection from gemini-3-flash-preview with a bbox in the last 90 d; negatives = flash-extracted candidate pages with no detection; classes never share a book; first 30000 index-order rows per class, book chosen by seeded RNG (4747)",
+ "counts": {
+  "pos": 120,
+  "neg": 120,
+  "pos_eligible": 19829,
+  "neg_eligible": 30000
+ },
+ "items": [
+  {
+   "cls": "pos",
+   "page_id": "6a42eb1a06e6ead3ac541d37",
+   "book_id": "6a42eb1a06e6ead3ac541d35",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4bbec76a8b1dab563dc901",
+   "book_id": "6a4bbec76a8b1dab563dc8ff",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a37637517ab961c0334aa",
+   "book_id": "6a4a37637517ab961c03347e",
+   "page_number": 12,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a267ce06c1f37c9c4f37799",
+   "book_id": "6a267ce06c1f37c9c4f37796",
+   "page_number": 3,
+   "page_type": null,
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b47e29f73a2728aaba0ea",
+   "book_id": "6a4b47e29f73a2728aaba0df",
+   "page_number": 11,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a492103cc006f976d7f5069",
+   "book_id": "6a492103cc006f976d7f5007",
+   "page_number": 25,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cb9dd3dce6cfad74977fc",
+   "book_id": "6a3cb9dd3dce6cfad74976ff",
+   "page_number": 18,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a5a054107674feb04cf22",
+   "book_id": "6a4a5a054107674feb04cf1c",
+   "page_number": 6,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42e2627ec1a96fc1a05de2",
+   "book_id": "6a42e2627ec1a96fc1a05dc9",
+   "page_number": 25,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a492368a45b99e46af93b35",
+   "book_id": "6a492368a45b99e46af93b32",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b925cd6e7fecd9ccc41d9",
+   "book_id": "6a4b925cd6e7fecd9ccc41d2",
+   "page_number": 7,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c789501fe4f593c209558",
+   "book_id": "6a3c789501fe4f593c209557",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4278ba28e9db2e39c20c2b",
+   "book_id": "6a4278ba28e9db2e39c20c26",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a51ec052d94f05f3e40a0b4",
+   "book_id": "6a51ec052d94f05f3e40a0b0",
+   "page_number": 4,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42a8a3831988adcb777021",
+   "book_id": "6a42a8a3831988adcb77701b",
+   "page_number": 6,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c722201fe4f593c1dc72e",
+   "book_id": "6a3c722201fe4f593c1dc72d",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69f70591603090fde461e167",
+   "book_id": "69c849576c6f3cc53c851e42",
+   "page_number": 6,
+   "page_type": null,
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a425530dfbbb4d07aa4f650",
+   "book_id": "6a425530dfbbb4d07aa4f644",
+   "page_number": 12,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a429f9b831988adcb769f19",
+   "book_id": "6a429f9b831988adcb769f13",
+   "page_number": 6,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c5faa879008ba7e156c44",
+   "book_id": "6a3c5faa879008ba7e156c3c",
+   "page_number": 8,
+   "page_type": "text",
+   "reference_boxes": 2
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42705a62d175ca9e4e1021",
+   "book_id": "6a42705a62d175ca9e4e1019",
+   "page_number": 8,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f0057b18250223e2f35e3",
+   "book_id": "6a4f0057b18250223e2f35d8",
+   "page_number": 10,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42766528e9db2e39c1c8d0",
+   "book_id": "6a42766528e9db2e39c1c8c2",
+   "page_number": 14,
+   "page_type": "dedication",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b8b0aba2f81d617f5dd0a",
+   "book_id": "6a4b8b0aba2f81d617f5dd04",
+   "page_number": 4,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cbf9cf9474f825c16990f",
+   "book_id": "6a3cbf9cf9474f825c1698fd",
+   "page_number": 18,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c66d0af3c49b59c5cdaf1",
+   "book_id": "6a3c66d0af3c49b59c5cdadc",
+   "page_number": 20,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4bbedc6a8b1dab563dcd89",
+   "book_id": "6a4bbedc6a8b1dab563dcd54",
+   "page_number": 1,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a431cca79855e32e46427f8",
+   "book_id": "6a431cca79855e32e46427f4",
+   "page_number": 4,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4256f92c7e112824a652dd",
+   "book_id": "6a4256f92c7e112824a652d8",
+   "page_number": 5,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c67c839b4508b04e39168",
+   "book_id": "6a3c67c839b4508b04e39166",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a45254f3f399e60338182eb",
+   "book_id": "6a45254f3f399e60338182e6",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4387e557a09c2c0fcc3145",
+   "book_id": "6a4387e557a09c2c0fcc3144",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a426b5e28e9db2e39c00e05",
+   "book_id": "6a426b5e28e9db2e39c00dfe",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a69757b720133514b0bf3",
+   "book_id": "6a4a69757b720133514b0bf2",
+   "page_number": 1,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c709c39b4508b04e4ff78",
+   "book_id": "6a3c709c39b4508b04e4ff76",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c73fc01fe4f593c1ed27a",
+   "book_id": "6a3c73fc01fe4f593c1ed277",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a243ddf0f0e4f405e632407",
+   "book_id": "6a243ddf0f0e4f405e6323e1",
+   "page_number": 38,
+   "page_type": null,
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a76d5c5f28570a9bf4e9430",
+   "book_id": "6a76d5c5f28570a9bf4e942e",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69b4cc8bd5b6c3815e1a1242",
+   "book_id": "69b4cc8bd5b6c3815e1a1194",
+   "page_number": 174,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c5f95879008ba7e15621b",
+   "book_id": "6a3c5f95879008ba7e156214",
+   "page_number": 7,
+   "page_type": "map",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c779a01fe4f593c203646",
+   "book_id": "6a3c779a01fe4f593c203637",
+   "page_number": 14,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f7450bed82fff535d30b3",
+   "book_id": "6a4f7450bed82fff535d30a2",
+   "page_number": 15,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cec298642f0445b15a1ac",
+   "book_id": "6a3cec298642f0445b15a15b",
+   "page_number": 80,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cb71357c1f37219c4ecf2",
+   "book_id": "6a3cb71357c1f37219c4ecdd",
+   "page_number": 21,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a20326018654bf8e1902bbc",
+   "book_id": "6a20326018654bf8e1902bab",
+   "page_number": 17,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a446e52d4792484c6c16b39",
+   "book_id": "6a446e52d4792484c6c16b2e",
+   "page_number": 11,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42ef3906e6ead3ac549d11",
+   "book_id": "6a42ef3906e6ead3ac549d10",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4c6fc9901c11881cb7682e",
+   "book_id": "6a4c6fc9901c11881cb7681d",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42761428e9db2e39c1af13",
+   "book_id": "6a42761428e9db2e39c1aefa",
+   "page_number": 25,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a44eccf5b5e91925b2ac7da",
+   "book_id": "6a44eccf5b5e91925b2ac7cf",
+   "page_number": 11,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a51bba5a346796675968b",
+   "book_id": "6a4a51bba5a3467966759689",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42a71a831988adcb772cae",
+   "book_id": "6a42a71a831988adcb772c9c",
+   "page_number": 18,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cbae83dce6cfad749ffb0",
+   "book_id": "6a3cbae83dce6cfad749ffaf",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f7563eeef22aafac61657",
+   "book_id": "6a4f7563eeef22aafac6164b",
+   "page_number": 12,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a51c36dfc0764e8080665a6",
+   "book_id": "6a51c36dfc0764e808066598",
+   "page_number": 14,
+   "page_type": "diagram",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f88a114134c1ad056da82",
+   "book_id": "6a4f88a114134c1ad056da6e",
+   "page_number": 20,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a445fa1335f9b32ac4953db",
+   "book_id": "6a445fa1335f9b32ac4953d7",
+   "page_number": 4,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b07cd0d1fa55f9988cc80",
+   "book_id": "6a4b07cd0d1fa55f9988cc78",
+   "page_number": 8,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cc146ec254ff6cae0ad6b",
+   "book_id": "6a3cc146ec254ff6cae0ad65",
+   "page_number": 6,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f353496ab344c790a2792",
+   "book_id": "6a4f353496ab344c790a2768",
+   "page_number": 14,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a500138bdcf926c5d24eb34",
+   "book_id": "6a500138bdcf926c5d24eb2e",
+   "page_number": 6,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c621040c88a541d8f2573",
+   "book_id": "6a3c621040c88a541d8f2565",
+   "page_number": 14,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cb8533dce6cfad748d490",
+   "book_id": "6a3cb8533dce6cfad748d48e",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4d5f96e91798b676b42ca5",
+   "book_id": "6a4d5f96e91798b676b42c4b",
+   "page_number": 5,
+   "page_type": "toc",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cbf42f9474f825c166cc6",
+   "book_id": "6a3cbf42f9474f825c166cbc",
+   "page_number": 10,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a2032f418654bf8e1903e90",
+   "book_id": "6a2032f418654bf8e1903e54",
+   "page_number": 60,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a438c0957a09c2c0fcc8fb0",
+   "book_id": "6a438c0957a09c2c0fcc8fab",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cc139ec254ff6cae0a795",
+   "book_id": "6a3cc139ec254ff6cae0a792",
+   "page_number": 3,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69b643521c1c21a373896499",
+   "book_id": "69b643521c1c21a373896433",
+   "page_number": 102,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a51d66d3616846663596560",
+   "book_id": "6a51d66d361684666359655d",
+   "page_number": 3,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b63b43029d1cf3f8e8ea3",
+   "book_id": "6a4b63b43029d1cf3f8e8e79",
+   "page_number": 24,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cb8943dce6cfad748eadf",
+   "book_id": "6a3cb8943dce6cfad748ead8",
+   "page_number": 7,
+   "page_type": "diagram",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c6ebc01fe4f593c1c5854",
+   "book_id": "6a3c6ebc01fe4f593c1c5852",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a43b3dc3c91e2a63d4dc06d",
+   "book_id": "6a43b3dc3c91e2a63d4dc06a",
+   "page_number": 3,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a49159da9e39181572e23c7",
+   "book_id": "6a49159da9e39181572e231a",
+   "page_number": 8,
+   "page_type": "dedication",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "697befe7e5b497ff8065c875",
+   "book_id": "697b079611cc8928b55ea394",
+   "page_number": 778,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c6d6601fe4f593c1bab13",
+   "book_id": "6a3c6d6601fe4f593c1baafb",
+   "page_number": 24,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69e78326d93c1f600750619c",
+   "book_id": "69e78326d93c1f6007506161",
+   "page_number": 59,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f015bb18250223e2f3b62",
+   "book_id": "6a4f015bb18250223e2f3b60",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4e44117d2e40767268dc6c",
+   "book_id": "6a4e44117d2e40767268dc69",
+   "page_number": 3,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f428cc3a6efa5a4998644",
+   "book_id": "6a4f428cc3a6efa5a4998642",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4f3d3739ecc8e27dc655a4",
+   "book_id": "6a4f3d3739ecc8e27dc6559b",
+   "page_number": 8,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a504d16d37616d3d1c0e123",
+   "book_id": "6a504d16d37616d3d1c0e11c",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cbf80f9474f825c168c3f",
+   "book_id": "6a3cbf80f9474f825c168b6e",
+   "page_number": 11,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a492347a45b99e46af935ba",
+   "book_id": "6a492347a45b99e46af9353c",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42c316e76baa13aa8418bd",
+   "book_id": "6a42c316e76baa13aa8418b7",
+   "page_number": 6,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a491a02ae20621d947e806a",
+   "book_id": "6a491a02ae20621d947e8056",
+   "page_number": 19,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69f65d95753ef1ae77ca4856",
+   "book_id": "69c855a66c6f3cc53c853b48",
+   "page_number": 2,
+   "page_type": null,
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a430d8c22c0c8edb0f91d97",
+   "book_id": "6a430d8c22c0c8edb0f91d94",
+   "page_number": 3,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42725028e9db2e39c13452",
+   "book_id": "6a42725028e9db2e39c1344b",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69d13d09578b80f3e6257e12",
+   "book_id": "6909c96acf28baa1b4cafbf3",
+   "page_number": 46,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6ab5a6bd6122fe9080c043cb",
+   "book_id": "6ab5a6bd6122fe9080c04380",
+   "page_number": 75,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4ca10492ae0395b8cd98f0",
+   "book_id": "6a4ca10492ae0395b8cd98db",
+   "page_number": 6,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4ef9e8b19783974a52abff",
+   "book_id": "6a4ef9e7b19783974a52abd8",
+   "page_number": 18,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4765d0e602c9fc4bb2bc77",
+   "book_id": "6a4765d0e602c9fc4bb2bc63",
+   "page_number": 20,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3cbb3e3dce6cfad74a1e78",
+   "book_id": "6a3cbb3e3dce6cfad74a1e72",
+   "page_number": 6,
+   "page_type": "text",
+   "reference_boxes": 2
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a7e5d20c510eceebc56ab",
+   "book_id": "6a4a7e5d20c510eceebc5612",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4ab5b2193f71077b468936",
+   "book_id": "6a4ab5b2193f71077b468931",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42714362d175ca9e4e262a",
+   "book_id": "6a42714362d175ca9e4e261c",
+   "page_number": 14,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a5a4c0673e7922c99553d",
+   "book_id": "6a4a5a4c0673e7922c99553b",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c67c739b4508b04e390ab",
+   "book_id": "6a3c67c739b4508b04e390a9",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42f8408863616ec0a4df86",
+   "book_id": "6a42f8408863616ec0a4df84",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c711239b4508b04e51705",
+   "book_id": "6a3c711239b4508b04e51704",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a5e9a4107674feb04d716",
+   "book_id": "6a4a5e9a4107674feb04d70a",
+   "page_number": 12,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "697b07e9cf7a2b35c0c7024a",
+   "book_id": "697b079611cc8928b55ea388",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4259a8dfbbb4d07aa5adcf",
+   "book_id": "6a4259a7dfbbb4d07aa5adc7",
+   "page_number": 8,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4a3416368bc418aacc31e5",
+   "book_id": "6a4a3416368bc418aacc31da",
+   "page_number": 11,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "699047e012d83c216b7e8bb4",
+   "book_id": "699047df12d83c216b7e8a49",
+   "page_number": 363,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a4b5e0d162167e7c1e5cb42",
+   "book_id": "6a4b5e0d162167e7c1e5cab3",
+   "page_number": 7,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3c70c401fe4f593c1d49f1",
+   "book_id": "6a3c70c401fe4f593c1d49ef",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a3ce74c0a0011cb4bc09157",
+   "book_id": "6a3ce74c0a0011cb4bc09155",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a42e98906e6ead3ac53e448",
+   "book_id": "6a42e98906e6ead3ac53e443",
+   "page_number": 5,
+   "page_type": "dedication",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6ab77b5e6b38d27997d19b71",
+   "book_id": "6ab77b5e6b38d27997d19b25",
+   "page_number": 76,
+   "page_type": "map",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a51c1aea29eb3ee9d4dd106",
+   "book_id": "6a51c1aea29eb3ee9d4dd104",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a44288ca43aa84d7491513c",
+   "book_id": "6a44288ca43aa84d74915139",
+   "page_number": 3,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a76d5e7f28570a9bf4e9a66",
+   "book_id": "6a76d5e7f28570a9bf4e9a5f",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a76d4be6ba8d6d1d3f8e529",
+   "book_id": "6a76d4be6ba8d6d1d3f8e511",
+   "page_number": 24,
+   "page_type": "illustration",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a50da973c25d10492e214b0",
+   "book_id": "6a50da973c25d10492e21487",
+   "page_number": 9,
+   "page_type": "title-page",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "69f338d7876dd827cbc54353",
+   "book_id": "69f338d7876dd827cbc54351",
+   "page_number": 2,
+   "page_type": "frontispiece",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "pos",
+   "page_id": "6a44c2940529d09bdf5ac674",
+   "book_id": "6a44c2940529d09bdf5ac673",
+   "page_number": 1,
+   "page_type": "text",
+   "reference_boxes": 1
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbccbec254ff6cadf3349",
+   "book_id": "6a3cbccbec254ff6cadf3348",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c7a1e01fe4f593c214a60",
+   "book_id": "6a3c7a1e01fe4f593c214a5e",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c66e5af3c49b59c5ce65d",
+   "book_id": "6a3c66e5af3c49b59c5ce65c",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4bf170ef49f280c10d9de6",
+   "book_id": "6a4bf170ef49f280c10d9de1",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4fbac36c11f99c0e4276b9",
+   "book_id": "6a4fbac36c11f99c0e4276b3",
+   "page_number": 6,
+   "page_type": "frontispiece",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4f388372a0f5a8d3809ed8",
+   "book_id": "6a4f388372a0f5a8d3809ed7",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a426e4628e9db2e39c06f98",
+   "book_id": "6a426e4628e9db2e39c06f95",
+   "page_number": 3,
+   "page_type": "preface",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4ef9e8b19783974a52abec",
+   "book_id": "6a4ef9e7b19783974a52abd7",
+   "page_number": 20,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbdbdec254ff6cadf9dfa",
+   "book_id": "6a3cbdbdec254ff6cadf9df9",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6ede01fe4f593c1c6d18",
+   "book_id": "6a3c6ede01fe4f593c1c6d17",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a426027dfbbb4d07aa65890",
+   "book_id": "6a426027dfbbb4d07aa6588a",
+   "page_number": 6,
+   "page_type": "dedication",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cb60b57c1f37219c48755",
+   "book_id": "6a3cb60b57c1f37219c48753",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c60b340c88a541d8e9cbf",
+   "book_id": "6a3c60b340c88a541d8e9cbd",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c665139b4508b04e33d7b",
+   "book_id": "6a3c665139b4508b04e33d09",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a427b8fda827ceee625dae9",
+   "book_id": "6a427b8fda827ceee625dadd",
+   "page_number": 12,
+   "page_type": "preface",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c639a93327f06e83519e5",
+   "book_id": "6a3c639993327f06e83519e4",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3d2a16af872ba37a51b6e7",
+   "book_id": "6a3d2a16af872ba37a51b6e0",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c642f39b4508b04e24ed2",
+   "book_id": "6a3c642f39b4508b04e24ed1",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c688caf3c49b59c5da1f7",
+   "book_id": "6a3c688caf3c49b59c5da1f5",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a44d133e46c70aa65d3d429",
+   "book_id": "6a44d133e46c70aa65d3d428",
+   "page_number": 1,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a425309343d756d34e3493f",
+   "book_id": "6a425309343d756d34e34933",
+   "page_number": 12,
+   "page_type": "index",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4a78a1d1c07a59a7513c89",
+   "book_id": "6a4a78a1d1c07a59a7513bbe",
+   "page_number": 8,
+   "page_type": "preface",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42edae06e6ead3ac547179",
+   "book_id": "6a42edae06e6ead3ac547164",
+   "page_number": 21,
+   "page_type": "index",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4300d04e06bc233ecf6de8",
+   "book_id": "6a4300d04e06bc233ecf6dd4",
+   "page_number": 20,
+   "page_type": "illustration",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6f0f01fe4f593c1c8a99",
+   "book_id": "6a3c6f0f01fe4f593c1c8a93",
+   "page_number": 6,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42d0fee76baa13aa855c8e",
+   "book_id": "6a42d0fee76baa13aa855c85",
+   "page_number": 9,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbac13dce6cfad749e849",
+   "book_id": "6a3cbac13dce6cfad749e771",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c765301fe4f593c1fa66f",
+   "book_id": "6a3c765301fe4f593c1fa66e",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a5177587b27c8e8d57f1e53",
+   "book_id": "6a5177587b27c8e8d57f1e4e",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c625f40c88a541d8f3e73",
+   "book_id": "6a3c625f40c88a541d8f3e72",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6b77af3c49b59c5ec6f4",
+   "book_id": "6a3c6b77af3c49b59c5ec6e3",
+   "page_number": 17,
+   "page_type": "index",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4f893d14134c1ad056e30d",
+   "book_id": "6a4f893d14134c1ad056e2fd",
+   "page_number": 16,
+   "page_type": "preface",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4c32862f4816c335be042a",
+   "book_id": "6a4c32862f4816c335be03a1",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cb7bc3dce6cfad74881cd",
+   "book_id": "6a3cb7bc3dce6cfad74881cc",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c758639b4508b04e5c408",
+   "book_id": "6a3c758639b4508b04e5c3f0",
+   "page_number": 24,
+   "page_type": "blank",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c644c39b4508b04e25e5c",
+   "book_id": "6a3c644c39b4508b04e25e5a",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4b48e79f73a2728aaba933",
+   "book_id": "6a4b48e79f73a2728aaba930",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4d53644e92e8691bc19794",
+   "book_id": "6a4d53644e92e8691bc19791",
+   "page_number": 3,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a44d120e46c70aa65d3d27b",
+   "book_id": "6a44d120e46c70aa65d3d000",
+   "page_number": 5,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4929331bbf4176e1e89260",
+   "book_id": "6a4929331bbf4176e1e8923b",
+   "page_number": 5,
+   "page_type": "dedication",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4c03f94f392afd49e43db6",
+   "book_id": "6a4c03f94f392afd49e43d95",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c76eb01fe4f593c1fe746",
+   "book_id": "6a3c76eb01fe4f593c1fe745",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c69cbaf3c49b59c5e2c0d",
+   "book_id": "6a3c69cbaf3c49b59c5e2c0c",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c671faf3c49b59c5d078c",
+   "book_id": "6a3c671faf3c49b59c5d070e",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4a59173a479d44b0033ef6",
+   "book_id": "6a4a59173a479d44b0033ef5",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a425406343d756d34e38193",
+   "book_id": "6a425406343d756d34e38191",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6f4501fe4f593c1caacc",
+   "book_id": "6a3c6f4501fe4f593c1caaca",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a426b2b28e9db2e39c00085",
+   "book_id": "6a426b2b28e9db2e39c00074",
+   "page_number": 17,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a438b4357a09c2c0fcc80f9",
+   "book_id": "6a438b4357a09c2c0fcc80f4",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4ae5769a3f4fa983d9b697",
+   "book_id": "6a4ae5769a3f4fa983d9b696",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cb60f3dce6cfad7484f88",
+   "book_id": "6a3cb60f3dce6cfad7484f86",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbd93f9474f825c1629e9",
+   "book_id": "6a3cbd93f9474f825c1629d4",
+   "page_number": 19,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a50020bbdcf926c5d24efe4",
+   "book_id": "6a50020bbdcf926c5d24eba0",
+   "page_number": 4,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a429ddb831988adcb764c59",
+   "book_id": "6a429ddb831988adcb764c58",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c9f927e1405deae1e88ba",
+   "book_id": "6a3c9f927e1405deae1e88b9",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbcdaec254ff6cadf3d15",
+   "book_id": "6a3cbcdaec254ff6cadf3d14",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a51e8f02d94f05f3e409104",
+   "book_id": "6a51e8f02d94f05f3e4090fb",
+   "page_number": 9,
+   "page_type": "dedication",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6eaa01fe4f593c1c4dfb",
+   "book_id": "6a3c6eaa01fe4f593c1c4dfa",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cb7b83dce6cfad7487f46",
+   "book_id": "6a3cb7b73dce6cfad7487f44",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4843070278a71dd7757f0c",
+   "book_id": "6a4843070278a71dd7757f03",
+   "page_number": 9,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4aab5a14a573f467717548",
+   "book_id": "6a4aab5a14a573f467717546",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42f48e2a88606fd148cecd",
+   "book_id": "6a42f48e2a88606fd148cec4",
+   "page_number": 9,
+   "page_type": "blank",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4258c3dfbbb4d07aa57499",
+   "book_id": "6a4258c3dfbbb4d07aa5737b",
+   "page_number": 18,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c606140c88a541d8e8941",
+   "book_id": "6a3c606140c88a541d8e8940",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42b11e466deeb51e5616e8",
+   "book_id": "6a42b11e466deeb51e5616e4",
+   "page_number": 4,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a43797b9a1e0c918b689148",
+   "book_id": "6a43797a9a1e0c918b68913e",
+   "page_number": 10,
+   "page_type": "index",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a425afd744db9e3105a1904",
+   "book_id": "6a425afd744db9e3105a18ff",
+   "page_number": 5,
+   "page_type": "blank",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6276879008ba7e162c2d",
+   "book_id": "6a3c6276879008ba7e162c29",
+   "page_number": 4,
+   "page_type": "toc",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6cfe01fe4f593c1b6ea3",
+   "book_id": "6a3c6cfe01fe4f593c1b6df8",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6767af3c49b59c5d301a",
+   "book_id": "6a3c6767af3c49b59c5d3019",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a424ef9c1f44d759e6d1753",
+   "book_id": "6a424ef9c1f44d759e6d174a",
+   "page_number": 9,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42f52a741ce3884f04b325",
+   "book_id": "6a42f52a741ce3884f04b311",
+   "page_number": 20,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4ef8831a64e53b6a0a3276",
+   "book_id": "6a4ef8831a64e53b6a0a3265",
+   "page_number": 17,
+   "page_type": "blank",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4f4180c3a6efa5a499829b",
+   "book_id": "6a4f4180c3a6efa5a499829a",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c78ef01fe4f593c20c239",
+   "book_id": "6a3c78ef01fe4f593c20c238",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4ae443f16f8258b8ade103",
+   "book_id": "6a4ae443f16f8258b8ade101",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c70da01fe4f593c1d5888",
+   "book_id": "6a3c70da01fe4f593c1d5886",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4b07cde3f5ea0395c71405",
+   "book_id": "6a4b07cde3f5ea0395c71400",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c774001fe4f593c200adf",
+   "book_id": "6a3c774001fe4f593c200ade",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4843450278a71dd7758936",
+   "book_id": "6a4843450278a71dd7758934",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6cde01fe4f593c1b5abb",
+   "book_id": "6a3c6cde01fe4f593c1b5ab9",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a43af853c91e2a63d4da88a",
+   "book_id": "6a43af853c91e2a63d4da885",
+   "page_number": 5,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c732701fe4f593c1e5fbc",
+   "book_id": "6a3c732701fe4f593c1e5fba",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42d33be76baa13aa85abcc",
+   "book_id": "6a42d33be76baa13aa85abc3",
+   "page_number": 9,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c63710339d4df9abcbc49",
+   "book_id": "6a3c63710339d4df9abcbc48",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a431c5379855e32e46417ac",
+   "book_id": "6a431c5379855e32e46417aa",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4afd0519bd0084b1bf19b1",
+   "book_id": "6a4afd0519bd0084b1bf19af",
+   "page_number": 2,
+   "page_type": "illustration",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4b09ed0d1fa55f9988e2ac",
+   "book_id": "6a4b09ed0d1fa55f9988e2aa",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c640939b4508b04e23abe",
+   "book_id": "6a3c640939b4508b04e23abd",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42ad675207af7c42f4f5dd",
+   "book_id": "6a42ad675207af7c42f4f5ce",
+   "page_number": 15,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4f25c9fafa84405cd5006f",
+   "book_id": "6a4f25c9fafa84405cd5006e",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a40efb07f8d954eada8b790",
+   "book_id": "6a40efb07f8d954eada8b78f",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a98d33013613b314fd636cf",
+   "book_id": "6a98d33013613b314fd636cc",
+   "page_number": 3,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c73b401fe4f593c1eaad2",
+   "book_id": "6a3c73b301fe4f593c1eaabc",
+   "page_number": 22,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42566a2c7e112824a63520",
+   "book_id": "6a42566a2c7e112824a6351c",
+   "page_number": 4,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cb8833dce6cfad748e0d6",
+   "book_id": "6a3cb8833dce6cfad748e0d5",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42b5bc5207af7c42f5f5da",
+   "book_id": "6a42b5bc5207af7c42f5f5d4",
+   "page_number": 6,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4a629b3a479d44b0037c22",
+   "book_id": "6a4a629b3a479d44b0037bfc",
+   "page_number": 22,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4eae978112cac04007bd5c",
+   "book_id": "6a4eae978112cac04007bd4f",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cee664701a906f10e8f32",
+   "book_id": "6a3cee664701a906f10e8f31",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a40efac7f8d954eada8b72e",
+   "book_id": "6a40efac7f8d954eada8b72d",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c677caf3c49b59c5d3d8a",
+   "book_id": "6a3c677caf3c49b59c5d3d89",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c69feaf3c49b59c5e3ea8",
+   "book_id": "6a3c69feaf3c49b59c5e3ea6",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3cbf0bf9474f825c165067",
+   "book_id": "6a3cbf0bf9474f825c16505d",
+   "page_number": 10,
+   "page_type": "preface",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6b3539b4508b04e41cd9",
+   "book_id": "6a3c6b3539b4508b04e41c44",
+   "page_number": 2,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a426eb928e9db2e39c08bb2",
+   "book_id": "6a426eb928e9db2e39c08bb1",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3ce861552d34d98411b23f",
+   "book_id": "6a3ce861552d34d98411b23d",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c652a39b4508b04e2c986",
+   "book_id": "6a3c652a39b4508b04e2c984",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a430a2c22c0c8edb0f8c904",
+   "book_id": "6a430a2c22c0c8edb0f8c903",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42bb105207af7c42f6d164",
+   "book_id": "6a42bb105207af7c42f6d163",
+   "page_number": 1,
+   "page_type": "blank",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a51e7d9d5a6399e0c574f6b",
+   "book_id": "6a51e7d9d5a6399e0c574f6a",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a5174812a0a8519f96254d4",
+   "book_id": "6a5174812a0a8519f96254d3",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a3c6033879008ba7e15b4e5",
+   "book_id": "6a3c6033879008ba7e15b4e3",
+   "page_number": 2,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a478fcb039733b62bf25445",
+   "book_id": "6a478fcb039733b62bf25438",
+   "page_number": 13,
+   "page_type": "text",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42d1e4e76baa13aa8580f6",
+   "book_id": "6a42d1e4e76baa13aa8580df",
+   "page_number": 23,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4ef2a21a64e53b6a0a1b45",
+   "book_id": "6a4ef2a21a64e53b6a0a1b44",
+   "page_number": 1,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a43a8d53c91e2a63d4d80a5",
+   "book_id": "6a43a8d53c91e2a63d4d809e",
+   "page_number": 7,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a4267acaedf4c943f91d6db",
+   "book_id": "6a4267acaedf4c943f91d6d7",
+   "page_number": 4,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a42b6395207af7c42f600c7",
+   "book_id": "6a42b6395207af7c42f600be",
+   "page_number": 9,
+   "page_type": "dedication",
+   "reference_boxes": 0
+  },
+  {
+   "cls": "neg",
+   "page_id": "6a425401343d756d34e37da7",
+   "book_id": "6a425401343d756d34e37d9c",
+   "page_number": 11,
+   "page_type": "title-page",
+   "reference_boxes": 0
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+flash-r2-realtime      vs flash-realtime: 240 pages; same box count 220; every box matched at IoU>=0.9 216 (90.0%)
+flash-batch            vs flash-realtime: 235 pages; same box count 217; every box matched at IoU>=0.9 209 (88.9%)
+lite-realtime          vs flash-realtime: 240 pages; same box count 211; every box matched at IoU>=0.9 122 (50.8%)
+lite-batch             vs flash-realtime: 240 pages; same box count 211; every box matched at IoU>=0.9 120 (50.0%)
+flash-r2-realtime      n=109 median edge shift vs flash (+=right/down): L 0.000 T 0.000 R 0.000 B 0.000 | w-ratio 1.00 h-ratio 1.00 | MAD L 0.000 T 0.000 R 0.000 B 0.000
+lite-realtime          n=116 median edge shift vs flash (+=right/down): L 0.007 T 0.010 R 0.000 B 0.026 | w-ratio 0.99 h-ratio 1.03 | MAD L 0.015 T 0.013 R 0.030 B 0.034
+lite-batch             n=116 median edge shift vs flash (+=right/down): L 0.005 T 0.010 R 0.000 B 0.030 | w-ratio 1.00 h-ratio 1.04 | MAD L 0.015 T 0.012 R 0.035 B 0.030
+lite-box2d-realtime    n=113 median edge shift vs flash (+=right/down): L 0.007 T 0.007 R -0.015 B 0.001 | w-ratio 0.97 h-ratio 0.99 | MAD L 0.017 T 0.013 R 0.028 B 0.019
+lite35-realtime        n=66 median edge shift vs flash (+=right/down): L -0.001 T 0.000 R 0.007 B 0.020 | w-ratio 1.04 h-ratio 1.04 | MAD L 0.020 T 0.012 R 0.027 B 0.020
+qwen235-realtime       n=95 median edge shift vs flash (+=right/down): L 0.000 T 0.000 R 0.001 B -0.001 | w-ratio 1.00 h-ratio 0.99 | MAD L 0.004 T 0.005 R 0.006 B 0.006

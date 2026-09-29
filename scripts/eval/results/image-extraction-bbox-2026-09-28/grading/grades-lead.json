@@ -1,0 +1,17 @@
+{
+  "6a4f015bb18250223e2f3b62": {
+    "cls": "pos",
+    "pictures": 1,
+    "note": "coat-of-arms plate with side border columns of shields, caption scroll inside frame; text above and below (graded by the lead session)",
+    "panels": {
+      "P1": { "grades": "C", "missed": 0 },
+      "P2": { "grades": "C", "missed": 0 },
+      "P3": { "grades": "L", "missed": 0 },
+      "P4": { "grades": "T", "missed": 0 },
+      "P5": { "grades": "C", "missed": 0 },
+      "P6": { "grades": "C", "missed": 0 },
+      "P7": { "grades": "C", "missed": 0 },
+      "P8": { "grades": "C", "missed": 0 }
+    }
+  }
+}
