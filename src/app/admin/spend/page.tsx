@@ -260,7 +260,7 @@ export default async function SpendPage() {
 
       {D.completion ? (
         <Section id="completion" title="How far along each book is"
-          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages; the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
+          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
           <div className="rounded border border-stone-200 bg-white p-3">
             <CompletionHistogram ocr={D.completion.ocr} translation={D.completion.translation}
               booksWithOcr={D.completion.books_with_ocr} nonEnglishWithOcr={D.completion.non_english_with_ocr} />
@@ -505,7 +505,7 @@ function LanguageSection({ rows, intro }: { rows: LanguageRow[]; intro?: string 
   );
   return (
     <Section id="languages" title="By language: what is done, what remains"
-      intro={intro ?? 'Done = readable in English: at least 90% of pages translated (English books: transcribed). Cost to finish uses the same per-page rates as the roadmap; "live" is books readers can already open.'}>
+      intro={intro ?? 'Done = readable in English: at least 90% of translatable pages translated (blanks, bookplates and text-free plates excluded; English books: transcribed). Cost to finish uses the same per-page rates as the roadmap; "live" is books readers can already open.'}>
       <Tiles tiles={[
         { v: `${int(total.books_done)} of ${int(total.books)}`, l: 'Books readable in English', n: `${Math.round(total.books_done / (total.books || 1) * 100)}% of books with pages` },
         { v: rng0(total.low_usd, total.high_usd), l: 'AI cost to finish everything', n: `${int(total.ocr_pages_needed)} pages to transcribe, ${int(total.translation_pages_needed)} to translate` },

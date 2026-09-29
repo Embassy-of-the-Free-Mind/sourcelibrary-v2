@@ -304,7 +304,7 @@ export function CompletionHistogram({ ocr, translation, booksWithOcr, nonEnglish
   return (
     <div className="grid gap-4">
       <CompletionPanel bins={ocr} color={SERIES[0]} title="Share of pages transcribed (OCR)" noun="transcribed" total={booksWithOcr} />
-      <CompletionPanel bins={translation} color={SERIES[2]} title="Share of pages translated (non-English books)" noun="translated" total={nonEnglishWithOcr} />
+      <CompletionPanel bins={translation} color={SERIES[2]} title="Share of translatable pages translated (non-English books)" noun="translated" total={nonEnglishWithOcr} />
     </div>
   );
 }
