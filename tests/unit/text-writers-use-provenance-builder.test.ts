@@ -49,7 +49,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",
   'scripts/maintenance/fix-unclosed-note-tags.mjs': 'repairs tags in stored translation text; introduces no new text',
   'scripts/maintenance/withdraw-fabricated-translation-4584.mjs': 'replaces invented spans with <lacuna>; introduces no new text',
-  'scripts/workers/mineru-ocr-worker.mjs': "MinerU (specialist, not Gemini) — stamps source: 'mineru'; out of #4613's Gemini scope, wants its own engine block (follow-up)",
+  'scripts/workers/mineru-ocr-worker.mjs': "MinerU (specialist, not Gemini) — its own engine block (specialist-engine/1: version, licence, backend, run, input), checked by missingProvenance under source 'mineru'",
   'src/app/api/books/[id]/import-batch/route.ts': 'text supplied by the importer with the request, not a model read here',
   'src/app/api/iiif/[id]/search/route.ts': 'reads; the probe matches its regex filters',
   'src/app/api/books/[id]/chat/route.ts': 'reads; the probe matches its regex filters',
