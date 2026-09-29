@@ -1,0 +1,20 @@
+{
+  "_doc": "PRIOR ART: scripts/maintenance/reap-prs.mjs — classifies mergeability, not risk. This file holds the risk tiers for PRs. HOLD = a human merges (Derek). AUTO = auto-merge.yml merges when green. Edit the globs here, not the script. Globs are minimatch-style against the repo-relative path; diffPatterns are regexes tested against ADDED lines only.",
+  "autoMergeAuthors": ["JDerekLomas", "app/dependabot", "dependabot[bot]"],
+  "hold": [
+    { "reason": "auth / security / sessions",
+      "globs": ["src/lib/auth.ts", "src/lib/auth*", "src/proxy.ts", "src/middleware*", "src/app/api/auth/**", "src/lib/session*", "src/lib/withAuth*"] },
+    { "reason": "money: payments, spend controls, crons",
+      "globs": ["src/lib/stripe.ts", "src/app/api/stripe/**", "src/app/api/donate/**", "src/app/support/**", "src/lib/membership-email.ts", "vercel.json", "scripts/workers/crontab.production", "infrastructure/hetzner-crontab", "scripts/lib/spend-guard*", "scripts/lib/gemini-script-client.mjs", "src/lib/gemini-client.ts", "scripts/lib/set-dial*"] },
+    { "reason": "public copy Derek has not seen",
+      "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
+    { "reason": "tenant lockdown surface",
+      "globs": ["src/app/embed/**", "src/app/[tenant]/**"] },
+    { "reason": "doctrine or enforcement (CLAUDE.md, hooks, workflows, commands)",
+      "globs": ["CLAUDE.md", ".claude/settings.json", ".claude/hooks/**", ".github/workflows/**", ".claude/commands/**", "scripts/maintenance/pr-tier-rules.json"] },
+    { "reason": "data deletion or migration in the diff",
+      "globs": ["scripts/migrations/**"],
+      "diffPatterns": ["\\.deleteMany\\(", "\\.deleteOne\\(", "dropCollection\\(", "\\.drop\\(\\)", "DROP TABLE", "TRUNCATE ", "deleteBookArchived\\(", "\\$unset", "\\.rename\\("] }
+  ],
+  "dependabotMajorHolds": true
+}
