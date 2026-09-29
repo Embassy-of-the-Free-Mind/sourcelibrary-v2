@@ -4988,13 +4988,34 @@ Rules:
         // reader, refusing to spend where there is nothing to modernize. A date cannot
         // do that: presses dropped long ſ unevenly between roughly 1790 and 1810, and
         // our own OCR preserves the glyph on some pages of a book and not others.
+        //
+        // An English book still has to LEAVE `ocr_complete` (#5271). Dropping it from the
+        // list here left it with no phase that selects it: Phase 3.5 only gates, 3.7 is
+        // non-Latin, and the "no pages need translation → translate_complete" advance below
+        // sits inside the loop over the filtered list. Every English book that reached
+        // ocr_complete after #4958 (2026-09-21) would sit there forever — no summary, no
+        // cover, never `complete` — and the held English shelves (#4966, Keely/Tesla) were
+        // about to be released into exactly that. So the English books get the same
+        // advance the loop gives a book with nothing left to translate, with the same
+        // OCR-incomplete guard: nothing to translate BY POLICY is still nothing to translate.
         {
-          const before = freshBooks.length;
-          freshBooks = freshBooks.filter(
-            (b) => !ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())
-          );
-          const skipped = before - freshBooks.length;
-          if (skipped > 0) console.log(`  Skipped ${skipped} English book(s) — modernization is reader-triggered, not dispatched`);
+          const isEnglish = (b) => ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase());
+          const englishBooks = freshBooks.filter(isEnglish);
+          freshBooks = freshBooks.filter((b) => !isEnglish(b));
+          if (englishBooks.length > 0) console.log(`  Skipped ${englishBooks.length} English book(s) — modernization is reader-triggered, not dispatched`);
+          for (const book of englishBooks) {
+            const totalOcr = book.pages_ocr || 0;
+            const totalPages = book.pages_count || 0;
+            if (totalOcr < totalPages * 0.8 && totalPages > 30) {
+              // Same bar as the loop below: a preview-only book goes back for full OCR.
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'archive_complete');
+              console.log(`  OCR incomplete (${totalOcr}/${totalPages}), recycling for full OCR: ${book.title}`);
+              continue;
+            }
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
+            log.translate_advanced++;
+            console.log(`  English, nothing to translate by policy (#4958) → translate_complete: ${book.title}`);
+          }
         }
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
