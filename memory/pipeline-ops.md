@@ -64,7 +64,8 @@ BPH / non-Latin script / unknown language → `gemini-3-flash-preview`. There is
 | `/api/jobs/queue-books`, `/api/scan/start-ocr`, `/api/jobs/[id]/retry` | SQS → **Lambda realtime** | book's (`job.config.model` overrides) | lite realtime ≈ $1.70; **flash realtime $3.42** (3,194 in + 609 out tokens/page) |
 | `scripts/batch/bulk-ocr-lambda.mjs`, `queue-ocr-direct.mjs` | SQS → Lambda realtime | book's, stamped on the job | as above |
 | `scripts/batch/queue-efm-priority.mjs` | SQS → Lambda realtime | flash (EFM/BPH by policy) | $3.42 |
-| `scripts/batch/realtime-ocr.mjs` (hand-run re-OCR) | direct Gemini realtime | flash (its selection depends on it) | ≈ $3.4, unmetered (cost 0 on rows) |
+| `scripts/batch/bulk-reocr-local.mjs` (hand-run OCR — **the default**, #5244) | Gemini **Batch** → batch-collector | router's (lite), `--model` overrides | measured batch rate, priced at submit |
+| `scripts/batch/realtime-ocr.mjs` (hand-run re-OCR; needs `--realtime` since #5244) | direct Gemini realtime | flash (its selection depends on it) | ≈ $3.4, unmetered (cost 0 on rows) |
 
 Realtime is for latency (a user waiting, a retry of a handful of pages); everything
 bulk goes through the orchestrator's batch pool, which is dial-gated. The incident that
