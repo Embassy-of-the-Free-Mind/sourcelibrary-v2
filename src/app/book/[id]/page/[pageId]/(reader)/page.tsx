@@ -88,7 +88,14 @@ const BOOK_NAV_PROJECTION = {
   pages_count: 1,
 };
 
-export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
+/**
+ * `hrefPrefix`: the namespace an embedded reader lives under (`/embed/<tenant>`
+ * or `/rooms/<slug>`). The client reader routes its own links through
+ * useEmbedHref, but the server-rendered screen-reader nav below cannot, and
+ * bare `/book/…` links there walked assistive-tech users out of the room
+ * (found by the #5266 leak check). Empty on the global route.
+ */
+export default async function PageEditorPage({ params, allowHidden = false, lang = 'en', hrefPrefix = '' }: PageProps & { allowHidden?: boolean; lang?: Locale; hrefPrefix?: string }) {
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
@@ -244,10 +251,11 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         // readers have the pager, the filmstrip and Contents for the same job.
         return (
           <nav aria-label={rs.pageNavigation} className="sr-only">
-            {prev && <a href={localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
-            <a href={localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
-            <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>
-            {next && <a href={localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
+            {prev && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            <a href={hrefPrefix + localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
+            {/* No /overview twin exists under an embed or room prefix (embedPolicy.showBookOverviewLink). */}
+            {!hrefPrefix && <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>}
+            {next && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
         );
       })()}

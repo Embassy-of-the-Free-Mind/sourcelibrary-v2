@@ -47,6 +47,12 @@ export interface EmbedUiPolicy {
   // active tenant. Disabling cross-tenant images keeps embed gallery views
   // strictly within the tenant's holdings.
   showGalleryCrossTenantImages: boolean;
+  // Entity links inside the summary prose point at the GLOBAL /encyclopedia
+  // (a corpus-wide surface the proxy refuses on tenant hosts, tenant-global-
+  // paths.ts). Inside an iframe or a reading room they navigate the frame off
+  // to sourcelibrary.org, which answers X-Frame-Options: DENY — a blank
+  // frame. Found by the #5266 leak check; render the names as plain text.
+  showEncyclopediaLinks: boolean;
 }
 
 export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
@@ -67,6 +73,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
       showAuthorCrossReference: true,
       showIndexCatalogStatus: true,
       showGalleryCrossTenantImages: true,
+      showEncyclopediaLinks: true,
     };
   }
 
@@ -84,6 +91,7 @@ export function getEmbedUiPolicy(ctx: TenantContext | null): EmbedUiPolicy {
     showAuthorCrossReference: false,
     showIndexCatalogStatus: false,
     showGalleryCrossTenantImages: false,
+    showEncyclopediaLinks: false,
   };
 }
 

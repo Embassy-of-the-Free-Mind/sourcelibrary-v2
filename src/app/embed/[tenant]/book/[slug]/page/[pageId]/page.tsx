@@ -17,6 +17,6 @@ export default async function EmbedReaderPage({
 }: {
     params: Promise<{ tenant: string; slug: string; pageId: string }>;
 }) {
-    const { slug, pageId } = await params;
-    return <PageEditorPage params={Promise.resolve({ id: slug, pageId })} />;
+    const { tenant, slug, pageId } = await params;
+    return <PageEditorPage params={Promise.resolve({ id: slug, pageId })} hrefPrefix={`/embed/${tenant}`} />;
 }

@@ -35,5 +35,5 @@ export default async function RoomReaderPage({ params }: Props) {
   const admitted = await findBookInRoom(db, room, book, { id: 1, slug: 1 });
   if (!admitted) redirect(`${ROOMS_ROOT}/${room.slug}`);
 
-  return <PageEditorPage params={Promise.resolve({ id: book, pageId })} />;
+  return <PageEditorPage params={Promise.resolve({ id: book, pageId })} hrefPrefix={`${ROOMS_ROOT}/${room.slug}`} />;
 }
