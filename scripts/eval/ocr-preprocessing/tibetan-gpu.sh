@@ -24,8 +24,21 @@ case ${1:-} in
 start)
   (cd /root/sourcelibrary && node scripts/maintenance/gpu-lease-watchdog.mjs --lease $SID --zone $ZONE --hours 4 --owner 5250)
   s=$(state); echo "state: $s"
-  [ "${s%% *}" = stopped ] && action poweron
+  # 2026-09-29 (round 2): poweron can answer {"type":"out_of_stock"} for L4-1-24G and the box stays stopped
+  # (unbilled). Retry every 5 min up to TRIES (default 1 = no retry); when it does come up, re-issue the 4 h lease
+  # from that moment so the lease covers the run, not the wait.
+  # Out of stock shows up EITHER in the poweron response OR as starting -> stopped a few seconds later.
+  for t in $(seq 1 ${TRIES:-1}); do
+    [ "${s%% *}" = running ] && break
+    if [ "${s%% *}" = stopped ]; then r=$(action poweron); echo "$(date -u +%T) try $t poweron: ${r:0:90}"; fi
+    for i in $(seq 1 12); do sleep 15; s=$(state); [ "${s%% *}" = running ] && break; [ "${s%% *}" = stopped ] && break; done
+    echo "$(date -u +%T) try $t -> $s"
+    [ "${s%% *}" = running ] && break
+    [ $t -lt ${TRIES:-1} ] && sleep 285
+  done
   for i in $(seq 1 40); do s=$(state); echo "$(date -u +%T) $s"; [ "${s%% *}" = running ] && break; sleep 15; done
+  [ "${s%% *}" = running ] || { echo NOT-RUNNING; exit 1; }
+  (cd /root/sourcelibrary && node scripts/maintenance/gpu-lease-watchdog.mjs --lease $SID --zone $ZONE --hours 4 --owner 5250)
   for i in $(seq 1 40); do $SSH root@$(ip) true 2>/dev/null && { echo SSH-OK; exit 0; }; sleep 15; done
   echo SSH-FAIL; exit 1 ;;
 push)

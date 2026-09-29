@@ -46,6 +46,7 @@ T.W = W  # save() writes under W/img/<arm>
 N_REPEAT = 30
 PHOTO = {f"leaf+{a}": a for a in pp.ARMS_R2}
 LINES = "--lines" in sys.argv
+BANDS_ONLY = "--bands-only" in sys.argv  # re-cut only the band arms; keep every other manifest row and image
 
 
 def row_profile(gray):
@@ -59,14 +60,29 @@ def row_profile(gray):
 
 def pitch(prof):
     """Line pitch in px: the first autocorrelation peak between 3% and 45% of the leaf height."""
-    x = prof - prof.mean()
+    # detrend first: a broad illumination/text-block hump otherwise swamps the line period (measured on 16/118
+    # pages before any read, 2026-09-29). High-pass = profile minus its moving average over a quarter of the span.
+    k = max(5, len(prof) // 4)
+    x = prof - np.convolve(prof, np.ones(k) / k, mode="same")
+    x = x - x.mean()
     ac = np.correlate(x, x, mode="full")[len(x) - 1:]
     lo, hi = max(3, int(0.03 * len(x))), int(0.45 * len(x))
     if hi <= lo + 2:
         return None
     seg = ac[lo:hi]
     peaks = [i for i in range(1, len(seg) - 1) if seg[i] >= seg[i - 1] and seg[i] >= seg[i + 1] and seg[i] > 0]
-    return lo + peaks[0] if peaks else None
+    if not peaks:
+        return None
+    p = lo + peaks[0]
+    # octave check (by eye, 2 of 4 pages cut with a TWO-line overlap): if ~p/2 is itself a clear autocorrelation
+    # peak, the first peak found was the second harmonic of the line period.
+    h = p // 2
+    if h >= 3:
+        win = ac[max(1, h - 3):h + 4]
+        j = int(np.argmax(win)) + max(1, h - 3)
+        if 0 < j < len(ac) - 1 and ac[j] >= ac[j - 1] and ac[j] >= ac[j + 1] and ac[j] > 0.5 * ac[p]:
+            return j
+    return p
 
 
 def valley(prof, a, b):
@@ -74,14 +90,35 @@ def valley(prof, a, b):
     return a + int(np.argmin(prof[a:b])) if b > a else None
 
 
-def band_cuts(gray, n, text=None):
+def leaf_pitch(gray, text=None):
+    t0, t1 = text if text else (0, gray.shape[0])
+    return pitch(row_profile(gray)[t0:t1]) if t1 - t0 > 20 else None
+
+
+def harmonise(ps):
+    """Leaves of one capture share the script's line pitch. A leaf whose pitch is ~2x (1.7-2.3) or ~3x another
+    leaf's is an octave error (seen by eye: 132 px vs 66 px on one page); take the smaller. None -> the page's."""
+    known = [p for p in ps if p]
+    if not known:
+        return ps
+    lo = min(known)
+    out = []
+    for p in ps:
+        if not p:
+            out.append(lo); continue
+        r = p / lo
+        out.append(lo if (1.7 <= r <= 2.3 or 2.6 <= r <= 3.4) else p)
+    return out
+
+
+def band_cuts(gray, n, text=None, p=None):
     """[(y0, y1)] for n bands with one line of overlap at each cut; None if the geometry cannot be found.
     `text` = (t0, t1), the leaf's text extent in leaf px (leafsplit's detected band); nominal cuts divide THAT, so
     margins and colour charts inside the leaf crop do not unbalance the bands. The outer bands keep the leaf edges."""
     H = gray.shape[0]
     t0, t1 = text if text else (0, H)
     prof = row_profile(gray)
-    p = pitch(prof[t0:t1]) if t1 - t0 > 20 else None
+    p = p or leaf_pitch(gray, text)
     if not p:
         return None, None
     spans, start = [], 0
@@ -116,7 +153,12 @@ def main():
     lineseg = {}
     if LINES:
         lineseg = {j["stem"]: j for j in map(json.loads, open(f"{R1}/lineseg.jsonl"))}
-    man = open(f"{W}/manifest.jsonl", "w"); meta_f = open(f"{W}/prep-meta.jsonl", "w")
+    kept = []
+    if BANDS_ONLY:
+        kept = [l for l in open(f"{W}/manifest.jsonl") if json.loads(l)["arm"] not in ("leaf-2band", "leaf-3band")]
+        os.system(f"rm -rf {W}/img/leaf-2band {W}/img/leaf-3band")
+    man = open(f"{W}/manifest.jsonl", "w"); meta_f = open(f"{W}/prep-meta{'-bands' if BANDS_ONLY else ''}.jsonl", "w")
+    man.writelines(kept)
     for r in rows:
         stem = f"{r['book']}_{r['page']:05d}"
         nat = f"{R1}/native/{stem}.jpg"
@@ -140,19 +182,24 @@ def main():
             man.write(json.dumps({**common, "arm": arm, "files": fs, "groups": groups}) + "\n")
 
         # control + A/A
-        fs = [T.save("none", stem, leaf, idx=i, arm_dir="leafcrop")[0] for i, leaf in enumerate(leaves)]
+        fs = [] if BANDS_ONLY else [T.save("none", stem, leaf, idx=i, arm_dir="leafcrop")[0] for i, leaf in enumerate(leaves)]
         g1 = [[i] for i in range(len(fs))]
-        emit("leafcrop", fs, g1)
-        if r["repeat"]:
-            emit("leafcrop-repeat", fs, g1)
+        if not BANDS_ONLY:
+            emit("leafcrop", fs, g1)
+            if r["repeat"]:
+                emit("leafcrop-repeat", fs, g1)
         # band arms
         for arm, n in (("leaf-2band", 2), ("leaf-3band", 3)):
             fs, groups, cuts_all, ok = [], [], [], True
-            for i, nl in enumerate(native_leaves):
+            grays = [np.asarray(nl.convert("L")) for nl in native_leaves]
+            exts = []
+            for i in range(len(native_leaves)):
                 y0l, y1l = spans[i]
                 tb = texts[i]
-                ext = (max(0, tb[0] - y0l), min(y1l, tb[1]) - y0l) if tb else None
-                cuts, p = band_cuts(np.asarray(nl.convert("L")), n, ext)
+                exts.append((max(0, tb[0] - y0l), min(y1l, tb[1]) - y0l) if tb else None)
+            pitches = harmonise([leaf_pitch(g, e) for g, e in zip(grays, exts)])
+            for i, nl in enumerate(native_leaves):
+                cuts, p = band_cuts(grays[i], n, exts[i], pitches[i])
                 cuts_all.append({"pitch": p, "cuts": cuts})
                 if not cuts:
                     ok = False; break
@@ -180,7 +227,7 @@ def main():
                 groups.append(grp)
             emit("leaf-lines", fs, groups)
         # photometric arms on the leaf
-        for arm, t in PHOTO.items():
+        for arm, t in ({} if BANDS_ONLY else PHOTO).items():
             fs, ms = [], []
             for i, leaf in enumerate(leaves):
                 f, m = T.save(t, stem, leaf, idx=i, arm_dir=arm)

@@ -228,7 +228,7 @@ if (mismatches.length) { console.error('SELF-CHECK FAILED:\n  ' + mismatches.joi
 // Read from results/ocr-preprocessing-<date>.json (ocr-preprocessing/build-results.py). Every delta here is a GAIN
 // (positive = the arm is better than its baseline), already paired by the stratum's scorer; nothing is recomputed.
 const imageArms = [];
-for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^ocr-preprocessing-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort()) {
+for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^ocr-preprocessing-\d{4}-\d{2}-\d{2}(-r\d+)?\.json$/.test(f)).sort()) {
   const r = JSON.parse(fs.readFileSync(path.join(__dirname, 'results', f), 'utf8'));
   const push = (stratum, s, metric, table, baseline, floor, sub = null) => {
     for (const [arm, c] of Object.entries(table)) {
