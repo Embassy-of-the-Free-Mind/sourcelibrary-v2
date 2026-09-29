@@ -46,7 +46,12 @@
  * rerank-only pass or a re-measure compares like with like.
  *
  * Baseline 2026-07-18 (n=24, pool=400): B 17/24 top-1, C2 20/24,
- * Rtext 24/24, Runion 23/24. Full history in issue #3193 and EXPERIMENTS.md.
+ * Rtext 24/24, Runion 23/24; re-run 2026-09-28: B 15/24, Bcrop 23/24, Runion
+ * 23/24. Matchers 2026-09-28/29 (63 targets, crop query, top-1): random pool
+ * CLIP 49, DINOv2-small 56, SigLIP2 59; hard-negative pool CLIP 34, DINOv2 52,
+ * SigLIP2 47 (top-20: 47 / 58 / 63). Full history in issue #3193 and
+ * EXPERIMENTS.md. A pool of ~1K cannot show what scale costs — pair a run with
+ * scripts/eval/clip-index-recall.mjs, which ranks against the live index.
  *
  * Usage (macOS only — image distortion shells out to `sips`):
  *   node --env-file=.env.production.local scripts/eval/identify-bench.mjs \
