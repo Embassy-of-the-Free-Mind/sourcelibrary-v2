@@ -29,6 +29,8 @@ import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
+import { countLeafBreaks, leafBreakNote, leafUnitsHealth, dropLeafSeamBreaches } from './leaf-break.mjs';
+export { dropLeafSeamBreaches };
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -287,9 +289,18 @@ export function translationPromptHeader({ prompts, book }) {
  * Pass `pageBreak: PAGE_BREAK_FIX` with `prevOcrText` / `nextOcrText` to enable. With `pageBreak`
  * absent the prompt is byte-identical to what it was before this option existed.
  */
-export const PAGE_BREAK_FIX = Object.freeze({ splitWords: true, catchwords: true, lookahead: true, rule: true });
+export const PAGE_BREAK_FIX = Object.freeze({ splitWords: true, catchwords: true, lookahead: true, rule: true, leafBreaks: true });
 
-export const PAGE_BREAK_RULE = '**Page breaks:** a catchword (the next page\'s first word printed again at the foot of this page) is a printer\'s device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page\'s words are rendered here: never repeat or complete the next page\'s words.';
+/**
+ * Leaf seams (#5260): a page whose OCR carries `<leaf-break/>` (two leaves photographed on one
+ * frame, read per leaf — the Tibetan EAP captures) is a FIFTH piece of the same option, handled
+ * where the page-break devices are and switchable like them (`leafBreaks`). It fires only on a
+ * page that carries the marker; every other page is byte-identical with or without it. The note
+ * and the rule line live in scripts/lib/leaf-break.mjs with the marker's other consumers.
+ */
+export const LEAF_BREAK_RULE = '**Leaf breaks:** the marker <leaf-break/> divides leaves that share one page image and are not continuous. Each leaf is translated on its own; the marker is written back on its own line between the translated leaves, and no sentence is carried, completed or moved across it.';
+
+export const PAGE_BREAK_RULE ='**Page breaks:** a catchword (the next page\'s first word printed again at the foot of this page) is a printer\'s device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page\'s words are rendered here: never repeat or complete the next page\'s words.';
 
 /**
  * The SCOPED form (#5103, the flip candidate): edits + rule line, no lookahead, and applied only to a
@@ -298,7 +309,15 @@ export const PAGE_BREAK_RULE = '**Page breaks:** a catchword (the next page\'s f
  * 2026-09-25: the lookahead is where the duplications came from (flash-lite renders "context only"
  * text), and the edits alone halved the share of device breaks carrying a defect.
  */
-export const PAGE_BREAK_SCOPED = Object.freeze({ splitWords: true, catchwords: true, lookahead: false, rule: true, scoped: true });
+export const PAGE_BREAK_SCOPED = Object.freeze({ splitWords: true, catchwords: true, lookahead: false, rule: true, scoped: true, leafBreaks: true });
+
+/**
+ * Leaf seams ONLY (#5260): for a lane that has not adopted the page-break devices (the Batch API
+ * lane, translate-batch-seam.mjs, whose block prompt was measured without them). No edit, no
+ * catchword, no rule line — a page with a `<leaf-break/>` gets the leaf note and the leaf rule,
+ * and nothing else changes on any page.
+ */
+export const LEAF_BREAK_ONLY = Object.freeze({ splitWords: false, catchwords: false, lookahead: false, rule: false, scoped: true, leafBreaks: true });
 
 /**
  * Resolve the devices around ONE page: the break before it (a word the previous page began, a
@@ -345,8 +364,19 @@ export function resolvePageBreakForPage({ ocrText, prevOcrText, nextOcrText, pag
       meta.lookahead = !!lookahead;
     }
   }
-  const fired = !!(meta.headJoined || meta.headRemoved || meta.kind || meta.catchword);
-  return { text, notes, lookahead, fired, meta };
+  // The seam INSIDE the page (#5260): leaves read separately and served together. The note goes
+  // last — it is about the whole page, the device notes are about its edges.
+  meta.leafSeams = 0;
+  if (pageBreak.leafBreaks) {
+    meta.leafSeams = countLeafBreaks(text);
+    if (meta.leafSeams) notes.push(leafBreakNote(meta.leafSeams));
+  }
+  // `deviceFired`: a device at an EDGE (the rule line is about those); `fired`: anything at all,
+  // which is what the scoped option keys on. A page with only a leaf seam gets the leaf rule, not
+  // the catchword rule.
+  const deviceFired = !!(meta.headJoined || meta.headRemoved || meta.kind || meta.catchword);
+  const fired = deviceFired || !!meta.leafSeams;
+  return { text, notes, lookahead, fired, deviceFired, meta };
 }
 
 export function buildTranslationPrompt({ prompts, book, ocrText, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
@@ -357,7 +387,8 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
   // Scoped: a page with no device at either break gets production's prompt, byte for byte.
   const applied = !!r && (!pageBreak.scoped || r.fired);
   const text = applied ? r.text : ocrText;
-  if (applied && pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
+  if (applied && pageBreak.rule && (!pageBreak.scoped || r.deviceFired)) prompt += `\n\n${PAGE_BREAK_RULE}`;
+  if (applied && r.meta.leafSeams) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
   prompt += english
     ? `\n\n**Text to modernize:**\n${text}`
@@ -405,7 +436,8 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
 
   let prompt = header;
   prompt += continuityContext(previousTranslation, { english: isEnglish });
-  if (applied && pageBreak.rule) prompt += `\n\n${PAGE_BREAK_RULE}`;
+  if (applied && pageBreak.rule && (!pageBreak.scoped || per.some((r) => r.deviceFired))) prompt += `\n\n${PAGE_BREAK_RULE}`;
+  if (applied && per.some((r) => r.meta.leafSeams)) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
   const verb = isEnglish ? 'modernize' : 'translate';
   prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
@@ -588,7 +620,13 @@ export const isExcess = (ocr, tr) => {
  * without it the echo tier is skipped, never guessed (page-integrity `echoedSource`, wholePage:
  * the shared run is at least half the translation's prose).
  *
- * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|'echo'|null}}
+ * A fourth and fifth refusal apply only to a source carrying `<leaf-break/>` (#5260): `leaf-seam`
+ * — the translation does not carry the same number of markers (a bridged seam comes back as one
+ * block; a dropped leaf as fewer) — and, on a page whose seams did come back, the echo and drift
+ * guards run PER LEAF (`leaf-drift` = the translation of one leaf absorbed the next leaf's
+ * opening). A page without the marker takes exactly the path it took before.
+ *
+ * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|'echo'|'leaf-seam'|'leaf-drift'|null}}
  */
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
@@ -596,6 +634,10 @@ export function assessTranslationHealth(ocrText, translationText, { lang } = {})
   if (lang && !echoExempt(ocrText, lang)) {
     const e = echoedSource({ ocr: ocrText, tr: translationText, lang });
     if (e.judged && e.wholePage) return { healthy: false, reason: 'echo' };
+  }
+  if (countLeafBreaks(ocrText)) {
+    const leaves = leafUnitsHealth(ocrText, translationText, { lang: lang && !echoExempt(ocrText, lang) ? lang : undefined });
+    if (!leaves.healthy) return { healthy: false, reason: leaves.reason };
   }
   return { healthy: true, reason: null };
 }
