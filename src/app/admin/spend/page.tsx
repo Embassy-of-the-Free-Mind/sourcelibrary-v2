@@ -4,7 +4,7 @@ import {
   getSpendReport, redactForViewer, requireSpendViewer,
   type SpendData, type SpendNarrative, type Grade, type LanguageRow,
 } from '@/lib/spend-report';
-import { DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
+import { CompletionHistogram, DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
 import { daysBefore, gcpWindow, type GcpWindow } from '@/lib/spend-windows';
 
 /**
@@ -257,6 +257,16 @@ export default async function SpendPage() {
       </div>
 
       {D.languages?.length ? <LanguageSection rows={D.languages} intro={T.languages_intro} /> : null}
+
+      {D.completion ? (
+        <Section id="completion" title="How far along each book is"
+          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages; the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
+          <div className="rounded border border-stone-200 bg-white p-3">
+            <CompletionHistogram ocr={D.completion.ocr} translation={D.completion.translation}
+              booksWithOcr={D.completion.books_with_ocr} nonEnglishWithOcr={D.completion.non_english_with_ocr} />
+          </div>
+        </Section>
+      ) : null}
 
       <Section id="vendors" title="Monthly, by vendor">
         <Table head={['Vendor', ...months.map(m => monthName(m.month)), 'Total']}>

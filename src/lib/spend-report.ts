@@ -110,6 +110,8 @@ export interface SpendData {
   } | null;
   /** Progress and remaining cost by language; absent in documents pushed before 2026-09-29. */
   languages?: LanguageRow[] | null;
+  /** Per-book completion histograms, 1% bins (index 100 = complete), over books with any OCR. */
+  completion?: { ocr: number[]; translation: number[]; books_with_ocr: number; non_english_with_ocr: number } | null;
   text?: SpendNarrative;
 }
 
