@@ -4999,9 +4999,12 @@ Rules:
         // advance the loop gives a book with nothing left to translate, with the same
         // OCR-incomplete guard: nothing to translate BY POLICY is still nothing to translate.
         {
-          const isEnglish = (b) => ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase());
-          const englishBooks = freshBooks.filter(isEnglish);
-          freshBooks = freshBooks.filter((b) => !isEnglish(b));
+          // The filter line keeps its literal shape: tests/unit/english-modernization-is-reader-triggered.test.ts
+          // pins it by regex, so the guard fails loudly if the filter is ever loosened.
+          const englishBooks = freshBooks.filter((b) => ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase()));
+          freshBooks = freshBooks.filter(
+            (b) => !ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())
+          );
           if (englishBooks.length > 0) console.log(`  Skipped ${englishBooks.length} English book(s) — modernization is reader-triggered, not dispatched`);
           for (const book of englishBooks) {
             const totalOcr = book.pages_ocr || 0;
