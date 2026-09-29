@@ -225,8 +225,11 @@ async function main() {
 
 // ── Chained lane commands ──────────────────────────────────────────────────
 async function chained(db) {
+  // One adapter for the whole command: its key rotation remembers which key last refused, so a
+  // loop does not pay a 429 on key 0 at every tick (it did, 2026-09-29 pilot log).
+  const gemini = KEYS.length ? makeGeminiAdapter() : null;
   const deps = () => ({
-    gemini: makeGeminiAdapter(), logUsage, completeBatchUsage, syncPage: syncPageUpdate,
+    gemini, logUsage, completeBatchUsage, syncPage: syncPageUpdate,
     budgetAllows: async (d, label) => {
       const bookId = label.split(' ').pop();
       return gateAllowsBook(await budgetAllowsDispatchScoped(d, label), bookId);

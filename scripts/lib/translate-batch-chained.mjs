@@ -428,7 +428,8 @@ export async function collectRound(db, run, deps) {
       cursor: (run.cursor || 0) + round.pages.length, pending_single: [...(run.pending_single || []), ...pending],
       counts: run.counts, dropped: run.dropped,
     }, deps);
-    log(`[translate-batch-chained] ${run.book_id}: round ${round.n} block p${pages[0]?.page_number}–${pages[pages.length - 1]?.page_number}: wrote ${summary.written}/${pages.length}${pending.length ? `, ${pending.length} → single-page` : ''}${parsed.discarded ? ` (${parsed.discarded})` : ''}${drifted.length ? ` (drift ${summary.drifted.join(',')})` : ''}`);
+    const refused = pages.length - summary.written - pending.length;
+    log(`[translate-batch-chained] ${run.book_id}: round ${round.n} block p${pages[0]?.page_number}–${pages[pages.length - 1]?.page_number}: wrote ${summary.written}/${pages.length}${pending.length ? `, ${pending.length} → single-page` : ''}${refused > 0 ? `, ${refused} refused at the write (health gate or guard)` : ''}${parsed.discarded ? ` (${parsed.discarded})` : ''}${drifted.length ? ` (drift ${summary.drifted.join(',')})` : ''}`);
     return { advanced: true, note: `block wrote ${summary.written}/${pages.length}` };
   }
 
