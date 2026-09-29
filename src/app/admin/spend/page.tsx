@@ -5,6 +5,7 @@ import {
   type SpendData, type SpendNarrative, type Grade,
 } from '@/lib/spend-report';
 import { DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
+import { daysBefore, gcpWindow, type GcpWindow } from '@/lib/spend-windows';
 
 /**
  * /admin/spend — what Source Library costs, what it produced, what the backlog
@@ -128,6 +129,12 @@ export default async function SpendPage() {
   const gcpAll = months.reduce((a, m) => a + mval(m, 'Google Cloud'), 0);
   const curGcp = D.daily.filter(d => d.day >= cur.month + '-01').reduce((a, d) => a + d.byDriver.reduce((x, y) => x + y, 0), 0);
   const dayOfMonth = Math.max(1, Number(D.gcpTo.slice(8)));
+  const gcp90 = gcpWindow(months, D.daily, D.gcpFrom, D.gcpTo, daysBefore(D.gcpTo, 89));
+  const gcpYtd = gcpWindow(months, D.daily, D.gcpFrom, D.gcpTo, D.gcpTo.slice(0, 4) + '-01-01');
+  const windowNote = (w: GcpWindow) =>
+    [w.ledger > 0.5 ? `${fmt0.format(w.daily)} daily export + ${fmt0.format(w.ledger)} from monthly invoices` : 'All from the daily export',
+     w.estimatedMonths.length ? `includes estimates for ${w.estimatedMonths.map(monthName).join(', ')}` : '']
+      .filter(Boolean).join(' · ');
   const generated = typeof doc.generated_at === 'string' ? doc.generated_at : doc.generated_at?.toISOString?.() ?? D.generated;
 
   const P = D.projection;
@@ -158,6 +165,9 @@ export default async function SpendPage() {
           n: `Google ${fmt0.format(mval(lastSettled, 'Google Cloud'))} · Vercel ${fmt0.format(mval(lastSettled, 'Vercel'))}` },
         { v: fmt0.format(curGcp), l: `Google Cloud ${monthName(cur.month)} to ${dayName(D.gcpTo)}`,
           n: `Run rate ${fmt0.format(curGcp / dayOfMonth)}/day → ~${fmt0.format(curGcp / dayOfMonth * 30)} for the month` },
+        { v: fmt0.format(gcp90.total), l: `Google Cloud, last 90 days (${dayName(gcp90.from)} – ${dayName(gcp90.to)})`,
+          n: `${fmt0.format(gcp90.total / 90)}/day · ${windowNote(gcp90)}` },
+        { v: fmt0.format(gcpYtd.total), l: `Google Cloud, ${D.gcpTo.slice(0, 4)} to date`, n: windowNote(gcpYtd) },
       ]} />
 
       {(T.findings?.length || T.still_unknown) && (
