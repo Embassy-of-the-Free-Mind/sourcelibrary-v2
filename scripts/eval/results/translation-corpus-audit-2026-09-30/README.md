@@ -10,19 +10,21 @@ Nobody had measured this. Earlier work measured slices: the notes only (#3308), 
 
 ## The answer
 
-**Nine pages in ten read faithfully.** Post-stratified over the 4.3 million live translated pages in the 15 sampled languages:
+**About seven pages in eight read faithfully; one in seven carries a major defect.** Post-stratified over the 4.3 million live translated pages in the 15 sampled languages. The first column corrects for the draw's model-arm quota (see "Is this a proper random sample?"); the second is the plain language-weighted figure the tables below use, with its bootstrap interval.
 
-| Statistic | Estimate | 95% CI |
-|---|---:|---|
-| Fidelity 5 (a reader of the source would find the same meaning throughout) | 41.4% | 35.1–47.6 |
-| Fidelity ≥ 4 (at most minor slips) | 89.1% | 85.3–92.5 |
-| Fidelity ≤ 2 (substantial parts wrong or missing) | 3.4% | 1.5–5.7 |
-| At least one major defect | 11.4% | 7.7–15.5 |
-| Omission (a sentence, clause, name or number dropped) | 14.8% | 10.1–19.5 |
-| Invention (content with no counterpart in the source) | 11.2% | 7.5–15.3 |
-| Garbled source rendered as confident prose | 6.6% | 3.9–9.5 |
-| Sense inverted | 3.9% | 1.4–6.9 |
-| Untranslated / wrong language / truncated / repetition loop | 0% | — |
+| Statistic | Arm-corrected | Language-weighted (95% CI) |
+|---|---:|---:|
+| Fidelity 5 (a reader of the source would find the same meaning throughout) | 40.8% | 41.4% (35.1–47.6) |
+| Fidelity ≥ 4 (at most minor slips) | 87.2% | 89.1% (85.3–92.5) |
+| Fidelity ≤ 2 (substantial parts wrong or missing) | 3.8% | 3.4% (1.5–5.7) |
+| At least one major defect | 14.4% | 11.4% (7.7–15.5) |
+| Omission (a sentence, clause, name or number dropped) | 19.3% | 14.8% (10.1–19.5) |
+| Invention (content with no counterpart in the source) | 9.2% | 11.2% (7.5–15.3) |
+| Garbled source rendered as confident prose | 6.8% | 6.6% (3.9–9.5) |
+| Sense inverted | — | 3.9% (1.4–6.9) |
+| Untranslated / wrong language / truncated / repetition loop | 0% | 0% |
+
+The arm correction moves omission and major defects up because lite, which omits more, is the majority arm in most languages, and the draw had sampled the arms 50/50. Weighting by pages instead of books (a random page rather than a random book) changes almost nothing: 89.3% at ≥ 4, 35.3% at 5.
 
 The last row needs a footnote: the draw samples interior pages, and the 66,525 truncated translations found by the page-integrity scan (#5055) sit at page ends. That count stands; this audit did not sample the defect it measures.
 
@@ -90,6 +92,17 @@ Twenty pages across all 15 languages were then read by a person against the page
 Two of those 20 pages, both Internet Archive scans (Oxyrhynchus Papyri V and the 1605 Don Quixote), serve a display image one leaf away from the page that was transcribed and translated. The translation is faithful to its source on both. The reader still sees the wrong page beside it. This is the known wrong-leaf class of #4790, it is invisible to any text-only judge, and it means every fidelity number above is conditional on the served image being the transcribed leaf. Two of 20 is exploratory, not a rate; a leaf check over the 311 audited pages would give a first one.
 
 Two more of the 20 pages had a catalogue language that was not the page's language (an "Arabic" book whose page is German; a "Korean" book whose page is Classical Chinese). The language table above is by catalogue language.
+
+## Is this a proper random sample?
+
+Mostly. What is random: every live book in each language was put in a seeded shuffle and visited in that order, so each book had an equal chance; within a book one interior text page was drawn uniformly; nothing used Mongo's unseeded sampler; the controls were blinded into the same packets.
+
+What is not, and what was done about it:
+
+- **The model arm was quota-sampled.** Within each language, books were accepted until each arm (lite, flash) held half the quota, so a language that is 73% flash in reality is 50/50 in the sample. Uncorrected, that over-weights each language's minority arm. The arm-corrected column above re-weights each language's cells to the arm's true share of live translated pages (`arm-shares.json`, from a 140,000-page sample of the `pages` collection joined to `books`). The per-language table is uncorrected; arm-corrected per-language rates are in `report.json` under `sensitivity` (Latin 88.6% at ≥ 4, Dutch 91.1%, Korean 42.4%; the rest within two points of the table).
+- **One page per book is book-weighted.** A reader opening a random page lands in long books more often. Weighting each sampled book by its translated page count gives the page-weighted column: 89.3% at ≥ 4, 11.9% major. The unit stays the book because two pages of one book are one observation for any rate.
+- **Scope, stated:** text pages only (non-text page types excluded), with at least 200 characters of OCR and 100 of translation, machine-translated, not human-edited, interior (first 15% and last 5% of each book skipped). Short and edge pages are where truncations live, which is why that rate reads zero here. Fifteen languages cover about 86% of live translated pages; the rest are unrepresented. Language and period are the catalogue's, not the page's; two of the 20 hand-read pages were in a different language than catalogued. Books flagged hidden were excluded even where visible was unset.
+- **Tibetan filled 11 of 12** (the visit cap was reached); every other language filled its quota.
 
 ## What was done, exactly
 

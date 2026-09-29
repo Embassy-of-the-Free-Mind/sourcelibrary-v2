@@ -2450,15 +2450,15 @@
     "pct_fidelity_ge4": {
       "est": 89.1,
       "ci": [
-        85.7,
+        85.4,
         92.4
       ]
     },
     "pct_fidelity_5": {
       "est": 41.4,
       "ci": [
-        34.9,
-        47.7
+        35.3,
+        47.9
       ]
     },
     "pct_fidelity_le2": {
@@ -2472,22 +2472,22 @@
       "omission": {
         "est": 14.8,
         "ci": [
-          10.2,
-          19.5
+          10.1,
+          19.6
         ]
       },
       "invention": {
         "est": 11.2,
         "ci": [
-          7.4,
-          15.5
+          7.6,
+          15.1
         ]
       },
       "inversion": {
         "est": 3.9,
         "ci": [
           1.4,
-          6.8
+          6.9
         ]
       },
       "untranslated": {
@@ -2515,7 +2515,7 @@
         "est": 6.6,
         "ci": [
           3.9,
-          9.9
+          9.7
         ]
       },
       "truncated": {
@@ -2537,8 +2537,123 @@
       "est": 11.4,
       "ci": [
         7.6,
-        15.3
+        15.6
       ]
+    }
+  },
+  "sensitivity": {
+    "note": "corrected estimates; see comment in score.mjs. \"language\" = the headline weighting; \"language_x_arm\" re-weights the quota-sampled arm to its true share; \"page_weighted\" weights each book by its translated pages (random page rather than random book)",
+    "pct_fidelity_ge4": {
+      "language": 89.1,
+      "language_x_arm": 87.2,
+      "page_weighted": 89.3
+    },
+    "pct_fidelity_5": {
+      "language": 41.4,
+      "language_x_arm": 40.8,
+      "page_weighted": 35.3
+    },
+    "pct_fidelity_le2": {
+      "language": 3.4,
+      "language_x_arm": 3.8,
+      "page_weighted": 2.8
+    },
+    "any_major_defect": {
+      "language": 11.4,
+      "language_x_arm": 14.4,
+      "page_weighted": 11.9
+    },
+    "omission": {
+      "language": 14.8,
+      "language_x_arm": 19.3,
+      "page_weighted": 16.8
+    },
+    "invention": {
+      "language": 11.2,
+      "language_x_arm": 9.2,
+      "page_weighted": 10.5
+    },
+    "garble_passthrough": {
+      "language": 6.6,
+      "language_x_arm": 6.8,
+      "page_weighted": 5.4
+    },
+    "by_language_arm_weighted": {
+      "Latin": {
+        "pct_ge4": 88.6,
+        "pct_le2": 2.9,
+        "any_major": 17.1
+      },
+      "English": {
+        "pct_ge4": 90.3,
+        "pct_le2": 5.6,
+        "any_major": 9.7
+      },
+      "German": {
+        "pct_ge4": 98,
+        "pct_le2": 0,
+        "any_major": 4
+      },
+      "Greek": {
+        "pct_ge4": 74.3,
+        "pct_le2": 11.1,
+        "any_major": 23.7
+      },
+      "French": {
+        "pct_ge4": 96.2,
+        "pct_le2": 0,
+        "any_major": 3.8
+      },
+      "Italian": {
+        "pct_ge4": 88.9,
+        "pct_le2": 0,
+        "any_major": 11.1
+      },
+      "Dutch": {
+        "pct_ge4": 91.1,
+        "pct_le2": 0,
+        "any_major": 8.9
+      },
+      "Chinese": {
+        "pct_ge4": 77.8,
+        "pct_le2": 11.1,
+        "any_major": 16.5
+      },
+      "Sanskrit": {
+        "pct_ge4": 50,
+        "pct_le2": 6.7,
+        "any_major": 43.3
+      },
+      "Hebrew": {
+        "pct_ge4": 83.3,
+        "pct_le2": 16.7,
+        "any_major": 16.7
+      },
+      "Arabic": {
+        "pct_ge4": 76.6,
+        "pct_le2": 0,
+        "any_major": 0
+      },
+      "Tibetan": {
+        "pct_ge4": 65.7,
+        "pct_le2": 0,
+        "any_major": 31.4
+      },
+      "Korean": {
+        "pct_ge4": 42.4,
+        "pct_le2": 0,
+        "any_major": 38.4
+      },
+      "Spanish": {
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "any_major": 0
+      },
+      "Japanese": {
+        "pct_ge4": 66.7,
+        "pct_le2": 3.7,
+        "any_major": 33.3
+      }
     }
   },
   "defect_types": {

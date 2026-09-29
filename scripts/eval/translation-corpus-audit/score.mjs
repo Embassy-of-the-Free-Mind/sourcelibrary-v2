@@ -128,6 +128,43 @@ report.corpus_estimate = {
   any_major_defect: { est: weighted((v) => v.defects.some((d) => d.severity === 'major')), ci: weightedCI((v) => v.defects.some((d) => d.severity === 'major')) },
 };
 
+// ── Sensitivity: the draw quota-sampled the model ARM within each language (≈50/50), so the plain
+// language-weighted estimate over-represents each language's minority arm; and one page per BOOK is
+// book-weighted, not page-weighted. Two corrected estimates, when the weight files exist:
+//   arm-shares.json   → post-stratify by language × arm (true arm share of live translated pages)
+//   book-weights.json → weight each sampled book by its pages_translated within its language (random PAGE)
+const armShares = fs.existsSync(path.join(DIR, 'arm-shares.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'arm-shares.json'), 'utf8')) : null;
+const bookW = fs.existsSync(path.join(DIR, 'book-weights.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'book-weights.json'), 'utf8')) : null;
+function weightedBy(pred, mode) {
+  let est = 0;
+  for (const [lang, items] of Object.entries(byLang)) {
+    const share = W[lang].translated_pages / totalPages;
+    if (mode === 'arm' && armShares && armShares[lang]) {
+      let langRate = 0, covered = 0;
+      for (const arm of ['lite', 'flash']) {
+        const cell = items.filter((m) => m.arm === arm);
+        if (!cell.length) continue;
+        langRate += armShares[lang][arm] * cell.filter((m) => pred(V[m.id])).length / cell.length; covered += armShares[lang][arm];
+      }
+      est += share * (covered ? langRate / covered : items.filter((m) => pred(V[m.id])).length / items.length);
+    } else if (mode === 'page' && bookW) {
+      const ws = items.map((m) => Math.max(1, bookW[m.book_id]?.pages_translated || 1));
+      const tot = ws.reduce((s, x) => s + x, 0);
+      est += share * items.reduce((s, m, i) => s + (pred(V[m.id]) ? ws[i] : 0), 0) / tot;
+    } else est += share * items.filter((m) => pred(V[m.id])).length / items.length;
+  }
+  return +(100 * est).toFixed(1);
+}
+report.sensitivity = {
+  note: 'corrected estimates; see comment in score.mjs. "language" = the headline weighting; "language_x_arm" re-weights the quota-sampled arm to its true share; "page_weighted" weights each book by its translated pages (random page rather than random book)',
+  ...Object.fromEntries([['pct_fidelity_ge4', (v) => v.fidelity >= 4], ['pct_fidelity_5', (v) => v.fidelity === 5], ['pct_fidelity_le2', (v) => v.fidelity <= 2], ['any_major_defect', (v) => v.defects.some((d) => d.severity === 'major')], ['omission', (v) => v.flags.omission], ['invention', (v) => v.flags.invention], ['garble_passthrough', (v) => v.flags.garble_passthrough]]
+    .map(([k, p]) => [k, { language: weightedBy(p, 'language'), language_x_arm: armShares ? weightedBy(p, 'arm') : null, page_weighted: bookW ? weightedBy(p, 'page') : null }])),
+  by_language_arm_weighted: armShares ? Object.fromEntries(Object.entries(byLang).map(([lang, items]) => {
+    const f = (pred) => { let r = 0, c = 0; for (const arm of ['lite', 'flash']) { const cell = items.filter((m) => m.arm === arm); if (!cell.length || !armShares[lang]) continue; r += armShares[lang][arm] * cell.filter((m) => pred(V[m.id])).length / cell.length; c += armShares[lang][arm]; } return c ? +(100 * r / c).toFixed(1) : null; };
+    return [lang, { pct_ge4: f((v) => v.fidelity >= 4), pct_le2: f((v) => v.fidelity <= 2), any_major: f((v) => v.defects.some((d) => d.severity === 'major')) }];
+  })) : null,
+};
+
 // ── Defect types ─────────────────────────────────────────────────────────────
 const defects = judged.flatMap((m) => V[m.id].defects.map((d) => ({ ...d, id: m.id, language: m.language, arm: m.arm })));
 report.defect_types = Object.fromEntries(Object.entries(groupBy(defects, (d) => `${d.type}/${d.severity}`)).map(([k, v]) => [k, v.length]).sort((a, b) => b[1] - a[1]));

@@ -21,8 +21,11 @@ The replication column exists because of 2026-09-02, below.
 
 ## 2026-09-30 — Translation corpus audit: how faithful is a random SERVED translation, by language, model and period? (#5274)
 
-**Headline: 89% of served pages read at fidelity ≥ 4 of 5 (95% CI 85–93); 3.4% (1.5–5.7) are ≤ 2; 11.4% (7.7–15.5)
-carry at least one major defect.** Post-stratified by language over live translated pages. Latin-script languages
+**Headline: 87–89% of served pages read at fidelity ≥ 4 of 5; 3.4–3.8% are ≤ 2; 11–14% carry at least one major
+defect.** The lower fidelity / higher defect figure re-weights the quota-sampled model arm to its true share per
+language (`arm-shares.json`; lite omits more and is the majority arm); the upper is the plain language-weighted
+estimate (≥ 4: 89.1%, CI 85.3–92.5; major 11.4%, CI 7.7–15.5). Page-weighting (random page, not random book) changes
+nothing (89.3%). Post-stratified by language over live translated pages; sampling limits stated in the README. Latin-script languages
 (198 books) are at 92.9% ≥ 4 / 8.6% major; non-Latin-script (113 books) at 70.8% ≥ 4 / 22.1% major. Per language,
 German, French, Italian, Dutch, Latin, English and Spanish are all ≥ 89% at ≥ 4 (directional to decision-grade n);
 Greek 75% / 22% major (36 books); Sanskrit 50% ≥ 4 with omission on 58% of pages (the English philological apparatus
