@@ -50,6 +50,16 @@ def main():
         "skipped_arms": {"leaf-lines": "line-segmenter gate failed (BDRC PhotiLines matched the book's line mode on "
                                        "2/17 pages before the check was stopped; >= 95/100 unreachable)"},
         "rows": rows}
+    if os.path.exists(f"{land}/tibetan-scores-always.json"):  # POST HOC, labelled as such; never a pre-registered cell
+        pa = json.load(open(f"{land}/tibetan-scores-always.json"))
+        res["strata"]["tibetan-dbu-can"]["post_hoc_merge_always"] = {
+            "note": "NOT pre-registered. Drops band n+1's first line unconditionally (the geometry puts one shared line "
+                    "there). The lower band's copy of the overlap line is read with its above-line vowel signs clipped "
+                    "at the cut (identity 0.55-0.74 vs the upper copy), so the pre-registered 0.8 rule keeps it as a "
+                    "duplicate. With it removed, both band arms are null on identity and matched syllables.",
+            "tables": {m: {k: {kk: c[kk] for kk in ("n", "wins", "losses", "ties", "median_delta", "ci95", "sign_p", "counts")}
+                           for k, c in t["paired"].items() if "band" in k} for m, t in pa["tables"].items()},
+            "merge": {k: v for k, v in pa["merge"].items() if "band" in k}}
     for r in rows:
         t = texts.get((r["arm"], r["stem"]))
         slug = f"tib-{r['stem']}"

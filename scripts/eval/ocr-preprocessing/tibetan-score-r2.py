@@ -32,6 +32,12 @@ W = "/root/pp5250/r2/tibetan"
 ARMS = ["leafcrop", "leafcrop-repeat", "leaf-2band", "leaf-3band", "leaf-lines",
         "leaf+unsharp", "leaf+gamma08", "leaf+gamma12", "leaf+flatten", "leaf+gray", "leaf+denoise"]
 MERGE_ID = 0.8
+# POST HOC (not pre-registered; added after the round-2 reads were scored): MERGE=always drops band n+1's first line
+# unconditionally (the band geometry puts exactly one shared line there). Diagnoses whether the band arms' matched-
+# syllable gain survives once the overlap duplicate is gone: the lower band's copy of that line is read with its
+# above-line vowel signs clipped at the cut, so it scores 0.55-0.74 against the upper copy and the 0.8 rule keeps it.
+MERGE_MODE = os.environ.get("MERGE", "rule")
+OUT_SUFFIX = "" if MERGE_MODE == "rule" else f"-{MERGE_MODE}"
 
 
 def merge(parts, groups):
@@ -44,7 +50,7 @@ def merge(parts, groups):
         for k, i in enumerate(g):
             bl = [l for l in parts[i].split("\n") if l.strip()]
             if k > 0 and lines and bl:
-                if SequenceMatcher(None, S1.syls(lines[-1]), S1.syls(bl[0]), autojunk=False).ratio() >= MERGE_ID:
+                if MERGE_MODE == "always" or SequenceMatcher(None, S1.syls(lines[-1]), S1.syls(bl[0]), autojunk=False).ratio() >= MERGE_ID:
                     bl = bl[1:]; dropped += 1
             lines += bl
         leaves.append("\n".join(lines))
@@ -84,7 +90,7 @@ def main():
                     ident = ka.nw_identity(s, wsyl) if s else 0.0
                     row.update(identity=round(ident, 4), matched=round(ident * len(s)))
                 rows.append(row)
-    json.dump({"rows": rows}, open(f"{W}/scores-rows.json", "w"))
+    json.dump({"rows": rows}, open(f"{W}/scores-rows{OUT_SUFFIX}.json", "w"))
     summarise(rows)
 
 
@@ -92,7 +98,7 @@ def summarise(rows):
     def col(sub, arm, key):
         return {r["stem"]: float(r[key]) for r in rows if r["substratum"] == sub and r["arm"] == arm and r.get(key) is not None}
 
-    out = {"stratum": "tibetan-dbu-can", "round": 2, "engine": "BDRC/tibetan-ocr (Yigdzin-v1) @ 50506eb6",
+    out = {"stratum": "tibetan-dbu-can", "round": 2, "merge_mode": MERGE_MODE, "engine": "BDRC/tibetan-ocr (Yigdzin-v1) @ 50506eb6",
            "baseline": "leafcrop", "tables": {}}
     for metric in ("identity", "matched", "lines"):
         floor = P.noise_floor(col("referenced", "leafcrop", metric), col("referenced", "leafcrop-repeat", metric))
@@ -124,7 +130,7 @@ def summarise(rows):
     r2 = col("referenced", "leafcrop", "identity")
     out["reproduces_round1"] = {"pages": n, "byte_identical": same,
                                 "paired_identity_vs_r1": P.paired({k: v["identity"] for k, v in r1.items()}, r2)}
-    json.dump(out, open(f"{W}/scores.json", "w"), indent=1)
+    json.dump(out, open(f"{W}/scores{OUT_SUFFIX}.json", "w"), indent=1)
     for metric, t in out["tables"].items():
         print(f"== {metric}  floor={t['noise_floor']}")
         for arm, c in t["paired"].items():
