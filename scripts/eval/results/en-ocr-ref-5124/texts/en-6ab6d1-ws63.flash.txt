@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>45</page-num>
+
+inductively upon the moderately rarefied and highly conducting gas inclosed in the neck. From there the current passes through the tube *b* into the small sphere *s*, to act by induction upon the gas contained in the globe *L*.
+
+It is of advantage to make the tube *t* very thick, the hole through it very small, and to blow the sphere *s* very thin. It is of the greatest importance that the sphere *s* be placed in the centre of the globe *L*.
+
+<image-desc size="medium" type="diagram" significance="high">A scientific diagram of a vacuum bulb or globe (labeled L in text) containing a central tube (t) and a small sphere (s) at the top of the tube. A luminous discharge, described as a "rotating brush," is depicted emanating from the central terminal toward the side of the globe.</image-desc>
+
+->Fig. 14.—Forms and Phases of the Rotating Brush.<-
+
+Figs. 14, 15 and 16 indicate different forms, or stages, of the brush. Fig. 14 shows the brush as it first appears in a bulb provided with a conducting terminal; but, as in such a bulb it very soon disappears—often after a few minutes—I will confine myself to the description of the phenomenon as seen in a bulb without conducting electrode. It is observed under the following conditions:
+
+When the globe *L* (Figs. 12 and 13) is exhausted to a
+
+<vocab>inductively, rarefied gas, induction, rotating brush, conducting terminal, electrode, vacuum bulb</vocab>

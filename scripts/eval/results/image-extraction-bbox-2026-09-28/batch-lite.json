@@ -1,0 +1,13 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "job_name": "batches/mc61ws4clbblq71e5gryklqtpe64o3nh19tk",
+  "state": "BATCH_STATE_SUCCEEDED",
+  "file_name": "files/y9fwznue7c10",
+  "requests": 240,
+  "submitted_at": "2026-09-28T13:31:48.071Z",
+  "prompt_sha": "567443052c9f",
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "collected_at": "2026-09-28T13:42:04.209Z",
+  "responses": 240,
+  "errors": 0
+}

@@ -210,6 +210,7 @@ A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 2. `scripts/eval/EXPERIMENTS.md` has an entry in its existing format (date · question · design · result · replicated? · artifact), plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
+5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
@@ -223,7 +224,7 @@ Checks (follow-up issues; design here):
 1. A cell reaches the grade its decision needs (§3.3) with a paired result (§7) and its five worst pages read by eye (#4735 rule 5).
 2. The session opens an issue **proposing** the change (routing constant, specialist lane, withholding rule), quoting the cell id, the paired table, the noise floor and the cost delta per year. It does **not** change `LATIN_SCRIPT_LANGUAGES` (`scripts/lib/translate-core.mjs`, imported by `scripts/lib/ocr-routing.mjs`, parity pinned by `tests/unit/translate-core-parity.test.ts`), an allowlist, or a lane.
 3. **Derek signs off** on any spend-affecting or reader-facing change (a comment on that issue). Settled decisions (Syriac → Kraken lane, #4883; translation non-Latin → lite, #4762) are not reopened by a new cell unless the cell is decision-grade and the issue says what changed.
-4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too.
+4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. The ledger row in `scripts/eval/DECISIONS.md` moves from PENDING to DECIDED with the date and the PR.
 5. After the change, the stability loop watches the affected stratum for 30 days (a free signal; not a quality claim).
 6. The store is never read by a production lane; a job that wants to act on eval evidence goes through steps 2–4. Writing to a store a job reads is actuation (`ingest_is_actuation`).
 

@@ -1,0 +1,213 @@
+{
+  "graded_at": "2026-09-28T16:09:46.997Z",
+  "arms": {
+    "doclayout-local": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.23684210526315788,
+      "box_accuracy_ci95": [
+        0.1111111111111111,
+        0.38235294117647056
+      ],
+      "usable": 0.6842105263157895,
+      "picture_recall": 0.8947368421052632,
+      "boxes": {
+        "T": 9,
+        "L": 17,
+        "C": 8,
+        "W": 9,
+        "D": 7
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 19,
+        "fp_pages": 13,
+        "real_finds": 1
+      },
+      "vs_flash_wlt": "1–23–24",
+      "cost_per_page": 0
+    },
+    "flash-r2-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.7894736842105263,
+      "box_accuracy_ci95": [
+        0.6571428571428571,
+        0.9142857142857143
+      ],
+      "usable": 0.8157894736842105,
+      "picture_recall": 0.9210526315789473,
+      "boxes": {
+        "T": 30,
+        "L": 1,
+        "C": 4,
+        "W": 9,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 5,
+        "fp_pages": 5,
+        "real_finds": 1
+      },
+      "vs_flash_wlt": "0–1–47",
+      "cost_per_page": 0.003961933333333332
+    },
+    "flash-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.8157894736842105,
+      "box_accuracy_ci95": [
+        0.6842105263157895,
+        0.9230769230769231
+      ],
+      "usable": 0.8421052631578947,
+      "picture_recall": 0.9473684210526315,
+      "boxes": {
+        "T": 31,
+        "L": 1,
+        "C": 4,
+        "W": 8,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 5,
+        "fp_pages": 5,
+        "real_finds": 1
+      },
+      "vs_flash_wlt": "—",
+      "cost_per_page": 0.0036995083333333334
+    },
+    "lite-batch": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.10526315789473684,
+      "box_accuracy_ci95": [
+        0.023809523809523808,
+        0.21428571428571427
+      ],
+      "usable": 0.34210526315789475,
+      "picture_recall": 1,
+      "boxes": {
+        "T": 4,
+        "L": 9,
+        "C": 25,
+        "W": 9,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 8,
+        "fp_pages": 8,
+        "real_finds": 0
+      },
+      "vs_flash_wlt": "2–29–17",
+      "cost_per_page": 0.0007079114583333332
+    },
+    "lite-box2d-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.21052631578947367,
+      "box_accuracy_ci95": [
+        0.08333333333333333,
+        0.34375
+      ],
+      "usable": 0.3157894736842105,
+      "picture_recall": 0.9736842105263158,
+      "boxes": {
+        "T": 8,
+        "L": 4,
+        "C": 25,
+        "W": 9,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 8,
+        "fp_pages": 7,
+        "real_finds": 0
+      },
+      "vs_flash_wlt": "2–25–21",
+      "cost_per_page": 0.001414472916666667
+    },
+    "lite-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.07894736842105263,
+      "box_accuracy_ci95": [
+        0,
+        0.17647058823529413
+      ],
+      "usable": 0.2894736842105263,
+      "picture_recall": 1,
+      "boxes": {
+        "T": 3,
+        "L": 8,
+        "C": 27,
+        "W": 10,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 8,
+        "fp_pages": 8,
+        "real_finds": 0
+      },
+      "vs_flash_wlt": "1–29–18",
+      "cost_per_page": 0.001418966666666667
+    },
+    "lite35-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.13157894736842105,
+      "box_accuracy_ci95": [
+        0.02857142857142857,
+        0.25
+      ],
+      "usable": 0.4473684210526316,
+      "picture_recall": 0.631578947368421,
+      "boxes": {
+        "T": 5,
+        "L": 12,
+        "C": 7,
+        "W": 4,
+        "D": 1
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 5,
+        "fp_pages": 5,
+        "real_finds": 0
+      },
+      "vs_flash_wlt": "2–28–18",
+      "cost_per_page": 0.003820189166666667
+    },
+    "qwen235-realtime": {
+      "pages": 48,
+      "pictures": 38,
+      "box_accuracy": 0.631578947368421,
+      "box_accuracy_ci95": [
+        0.47058823529411764,
+        0.7878787878787878
+      ],
+      "usable": 0.6578947368421053,
+      "picture_recall": 0.868421052631579,
+      "boxes": {
+        "T": 24,
+        "L": 1,
+        "C": 8,
+        "W": 4,
+        "D": 0
+      },
+      "neg": {
+        "pages": 24,
+        "fp_boxes": 1,
+        "fp_pages": 1,
+        "real_finds": 1
+      },
+      "vs_flash_wlt": "4–11–33",
+      "cost_per_page": 0.0016723643333333336
+    }
+  }
+}
