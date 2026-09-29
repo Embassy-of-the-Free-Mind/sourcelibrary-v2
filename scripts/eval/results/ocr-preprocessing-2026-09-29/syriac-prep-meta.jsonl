@@ -1,0 +1,320 @@
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0003_SMMJ_00036__008","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"threshold": 109.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"angle": 1.0, "profile_gain": 1.0003, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0005_SMMJ_00036__010","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"angle": 1.5, "profile_gain": 1.0123, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0008_SMMJ_00036__013","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"angle": 1.0, "profile_gain": 1.0206, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0009_SMMJ_00036__014","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"threshold": 109.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0029_SMMJ_00036__034","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"threshold": 110.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0030_SMMJ_00036__035","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"threshold": 109.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0031_SMMJ_00036__036","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"threshold": 107.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0054_SMMJ_00036__059","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"threshold": 109.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"angle": -0.5, "profile_gain": 1.0003, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0086_SMMJ_00036__091","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"threshold": 110.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0088_SMMJ_00036__093","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0091_SMMJ_00036__096","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0094_SMMJ_00036__099","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"threshold": 110.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0102_SMMJ_00036__107","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"threshold": 109.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0105_SMMJ_00036__110","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"threshold": 108.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0129_SMMJ_00036__134","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"threshold": 110.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0139_SMMJ_00036__144","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"threshold": 110.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0206_SMMJ_00036__211","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"threshold": 111.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0211_SMMJ_00036__216","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"threshold": 111.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0227_SMMJ_00036__232","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"arm": "none", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"threshold": 105.0, "arm": "otsu", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"angle": -1.0, "profile_gain": 1.0189, "arm": "deskew", "in_px": [2400, 1600], "out_px": [2400, 1600]}}
+{"slug":"jerusalem36-0264_SMMJ_00036__269","meta":{"scale": 2, "arm": "upscale2x", "in_px": [2400, 1600], "out_px": [4800, 3200]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"arm": "none", "in_px": [1969, 2365], "out_px": [1969, 2365]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"threshold": 138.0, "arm": "otsu", "in_px": [1969, 2365], "out_px": [1969, 2365]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1969, 2365], "out_px": [1969, 2365]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1969, 2365], "out_px": [1969, 2365]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"angle": 0.75, "profile_gain": 1.001, "arm": "deskew", "in_px": [1969, 2365], "out_px": [1969, 2365]}}
+{"slug":"onb-syr1-0009_00000024","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1969, 2365], "out_px": [3938, 4730]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"arm": "none", "in_px": [1953, 2356], "out_px": [1953, 2356]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"threshold": 131.0, "arm": "otsu", "in_px": [1953, 2356], "out_px": [1953, 2356]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1953, 2356], "out_px": [1953, 2356]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1953, 2356], "out_px": [1953, 2356]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"angle": -0.5, "profile_gain": 1.0003, "arm": "deskew", "in_px": [1953, 2356], "out_px": [1953, 2356]}}
+{"slug":"onb-syr1-0026_00000041","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1953, 2356], "out_px": [3906, 4712]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"arm": "none", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"threshold": 139.0, "arm": "otsu", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"angle": 1.25, "profile_gain": 1.0237, "arm": "deskew", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0029_00000044","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1970, 2352], "out_px": [3940, 4704]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"arm": "none", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"threshold": 138.0, "arm": "otsu", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"angle": 2.25, "profile_gain": 1.0477, "arm": "deskew", "in_px": [1970, 2352], "out_px": [1970, 2352]}}
+{"slug":"onb-syr1-0033_00000048","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1970, 2352], "out_px": [3940, 4704]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"arm": "none", "in_px": [1953, 2339], "out_px": [1953, 2339]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"threshold": 131.0, "arm": "otsu", "in_px": [1953, 2339], "out_px": [1953, 2339]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1953, 2339], "out_px": [1953, 2339]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1953, 2339], "out_px": [1953, 2339]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"angle": 1.0, "profile_gain": 1.025, "arm": "deskew", "in_px": [1953, 2339], "out_px": [1953, 2339]}}
+{"slug":"onb-syr1-0046_00000061","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1953, 2339], "out_px": [3906, 4678]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"arm": "none", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"threshold": 144.0, "arm": "otsu", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0082_00000097","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1994, 2373], "out_px": [3988, 4746]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"arm": "none", "in_px": [1930, 2368], "out_px": [1930, 2368]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"threshold": 141.0, "arm": "otsu", "in_px": [1930, 2368], "out_px": [1930, 2368]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1930, 2368], "out_px": [1930, 2368]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1930, 2368], "out_px": [1930, 2368]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"angle": 2.0, "profile_gain": 1.0645, "arm": "deskew", "in_px": [1930, 2368], "out_px": [1930, 2368]}}
+{"slug":"onb-syr1-0085_00000100","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1930, 2368], "out_px": [3860, 4736]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"arm": "none", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"threshold": 146.0, "arm": "otsu", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"angle": 1.5, "profile_gain": 1.0501, "arm": "deskew", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0086_00000101","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1994, 2373], "out_px": [3988, 4746]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"arm": "none", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"threshold": 142.0, "arm": "otsu", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [1994, 2373], "out_px": [1994, 2373]}}
+{"slug":"onb-syr1-0088_00000103","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1994, 2373], "out_px": [3988, 4746]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"arm": "none", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"threshold": 139.0, "arm": "otsu", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"angle": -1.5, "profile_gain": 1.0604, "arm": "deskew", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0107_00000122","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2343], "out_px": [3928, 4686]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"arm": "none", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"threshold": 140.0, "arm": "otsu", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"angle": -1.0, "profile_gain": 1.0147, "arm": "deskew", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0127_00000142","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2343], "out_px": [3928, 4686]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"arm": "none", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"threshold": 138.0, "arm": "otsu", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"angle": -0.75, "profile_gain": 1.0124, "arm": "deskew", "in_px": [1964, 2343], "out_px": [1964, 2343]}}
+{"slug":"onb-syr1-0131_00000146","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2343], "out_px": [3928, 4686]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"arm": "none", "in_px": [1964, 2342], "out_px": [1964, 2342]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"threshold": 143.0, "arm": "otsu", "in_px": [1964, 2342], "out_px": [1964, 2342]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2342], "out_px": [1964, 2342]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2342], "out_px": [1964, 2342]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"angle": 0.5, "profile_gain": 1.002, "arm": "deskew", "in_px": [1964, 2342], "out_px": [1964, 2342]}}
+{"slug":"onb-syr1-0133_00000148","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2342], "out_px": [3928, 4684]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"arm": "none", "in_px": [1964, 2371], "out_px": [1964, 2371]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"threshold": 143.0, "arm": "otsu", "in_px": [1964, 2371], "out_px": [1964, 2371]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2371], "out_px": [1964, 2371]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2371], "out_px": [1964, 2371]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"angle": -0.75, "profile_gain": 1.014, "arm": "deskew", "in_px": [1964, 2371], "out_px": [1964, 2371]}}
+{"slug":"onb-syr1-0157_00000172","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2371], "out_px": [3928, 4742]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"arm": "none", "in_px": [1964, 2370], "out_px": [1964, 2370]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"threshold": 139.0, "arm": "otsu", "in_px": [1964, 2370], "out_px": [1964, 2370]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1964, 2370], "out_px": [1964, 2370]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1964, 2370], "out_px": [1964, 2370]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"angle": -1.0, "profile_gain": 1.0239, "arm": "deskew", "in_px": [1964, 2370], "out_px": [1964, 2370]}}
+{"slug":"onb-syr1-0161_00000176","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1964, 2370], "out_px": [3928, 4740]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"arm": "none", "in_px": [1965, 2371], "out_px": [1965, 2371]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"threshold": 147.0, "arm": "otsu", "in_px": [1965, 2371], "out_px": [1965, 2371]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1965, 2371], "out_px": [1965, 2371]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1965, 2371], "out_px": [1965, 2371]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"angle": 1.75, "profile_gain": 1.0889, "arm": "deskew", "in_px": [1965, 2371], "out_px": [1965, 2371]}}
+{"slug":"onb-syr1-0179_00000194","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1965, 2371], "out_px": [3930, 4742]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"arm": "none", "in_px": [1948, 2345], "out_px": [1948, 2345]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"threshold": 136.0, "arm": "otsu", "in_px": [1948, 2345], "out_px": [1948, 2345]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1948, 2345], "out_px": [1948, 2345]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1948, 2345], "out_px": [1948, 2345]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"angle": 0.0, "profile_gain": 1.0, "arm": "deskew", "in_px": [1948, 2345], "out_px": [1948, 2345]}}
+{"slug":"onb-syr1-0235_00000250","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1948, 2345], "out_px": [3896, 4690]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"arm": "none", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"threshold": 139.0, "arm": "otsu", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"angle": -1.0, "profile_gain": 1.0604, "arm": "deskew", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0258_00000273","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1946, 2343], "out_px": [3892, 4686]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"arm": "none", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"threshold": 144.0, "arm": "otsu", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"angle": -0.5, "profile_gain": 1.0092, "arm": "deskew", "in_px": [1946, 2343], "out_px": [1946, 2343]}}
+{"slug":"onb-syr1-0260_00000275","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1946, 2343], "out_px": [3892, 4686]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"arm": "none", "in_px": [1949, 2345], "out_px": [1949, 2345]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"threshold": 138.0, "arm": "otsu", "in_px": [1949, 2345], "out_px": [1949, 2345]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"window": 25, "k": 0.2, "arm": "sauvola", "in_px": [1949, 2345], "out_px": [1949, 2345]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"clip": 2.0, "tile": 8, "arm": "clahe", "in_px": [1949, 2345], "out_px": [1949, 2345]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"angle": -0.25, "profile_gain": 1.0016, "arm": "deskew", "in_px": [1949, 2345], "out_px": [1949, 2345]}}
+{"slug":"onb-syr1-0261_00000276","meta":{"scale": 2, "arm": "upscale2x", "in_px": [1949, 2345], "out_px": [3898, 4690]}}
+{"slug": "jerusalem36-0003_SMMJ_00036__008", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0005_SMMJ_00036__010", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0008_SMMJ_00036__013", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0009_SMMJ_00036__014", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0029_SMMJ_00036__034", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0030_SMMJ_00036__035", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0031_SMMJ_00036__036", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0054_SMMJ_00036__059", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0086_SMMJ_00036__091", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0088_SMMJ_00036__093", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0091_SMMJ_00036__096", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0094_SMMJ_00036__099", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0102_SMMJ_00036__107", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0105_SMMJ_00036__110", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0129_SMMJ_00036__134", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0139_SMMJ_00036__144", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0206_SMMJ_00036__211", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0211_SMMJ_00036__216", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0227_SMMJ_00036__232", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0264_SMMJ_00036__269", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0009_00000024", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0026_00000041", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0029_00000044", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0033_00000048", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0046_00000061", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0082_00000097", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0085_00000100", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0086_00000101", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0088_00000103", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0107_00000122", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0127_00000142", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0131_00000146", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0133_00000148", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0157_00000172", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0161_00000176", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0179_00000194", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0235_00000250", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0258_00000273", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0260_00000275", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "onb-syr1-0261_00000276", "meta": {"arm": "gutter", "gutter": null}}
+{"slug": "jerusalem36-0003_SMMJ_00036__008", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [440, 243, 4540, 3173], "spread": true, "cut_frac": 0.5273, "out_px": [[2146, 3173], [2394, 3173]]}}
+{"slug": "jerusalem36-0005_SMMJ_00036__010", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [440, 243, 4540, 3182], "spread": true, "cut_frac": 0.5225, "out_px": [[2168, 3182], [2372, 3182]]}}
+{"slug": "jerusalem36-0008_SMMJ_00036__013", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [459, 215, 4540, 3201], "spread": true, "cut_frac": 0.5229, "out_px": [[2166, 3201], [2374, 3201]]}}
+{"slug": "jerusalem36-0009_SMMJ_00036__014", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [449, 253, 4540, 3192], "spread": true, "cut_frac": 0.522, "out_px": [[2170, 3192], [2370, 3192]]}}
+{"slug": "jerusalem36-0029_SMMJ_00036__034", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [449, 234, 4549, 3192], "spread": true, "cut_frac": 0.5619, "out_px": [[1993, 3192], [2400, 2997]]}}
+{"slug": "jerusalem36-0030_SMMJ_00036__035", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [449, 262, 4540, 3192], "spread": true, "cut_frac": 0.4443, "out_px": [[2400, 3036], [2017, 3192]]}}
+{"slug": "jerusalem36-0031_SMMJ_00036__036", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [449, 243, 4549, 3201], "spread": true, "cut_frac": 0.5498, "out_px": [[2048, 3201], [2400, 3072]]}}
+{"slug": "jerusalem36-0054_SMMJ_00036__059", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [449, 271, 4540, 3182], "spread": true, "cut_frac": 0.5454, "out_px": [[2064, 3182], [2400, 3084]]}}
+{"slug": "jerusalem36-0086_SMMJ_00036__091", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [459, 300, 4493, 3145], "spread": true, "cut_frac": 0.5462, "out_px": [[2039, 3145], [2400, 3076]]}}
+{"slug": "jerusalem36-0088_SMMJ_00036__093", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [477, 271, 4502, 3182], "spread": true, "cut_frac": 0.4198, "out_px": [[2400, 2924], [1890, 3182]]}}
+{"slug": "jerusalem36-0091_SMMJ_00036__096", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [459, 281, 4502, 3164], "spread": true, "cut_frac": 0.5255, "out_px": [[2136, 3164], [2366, 3164]]}}
+{"slug": "jerusalem36-0094_SMMJ_00036__099", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [459, 290, 4493, 3164], "spread": true, "cut_frac": 0.5322, "out_px": [[2102, 3164], [2391, 3164]]}}
+{"slug": "jerusalem36-0102_SMMJ_00036__107", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [468, 300, 4465, 3154], "spread": true, "cut_frac": 0.426, "out_px": [[2400, 2953], [1902, 3154]]}}
+{"slug": "jerusalem36-0105_SMMJ_00036__110", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [468, 300, 4465, 3154], "spread": true, "cut_frac": 0.5364, "out_px": [[2070, 3154], [2395, 3154]]}}
+{"slug": "jerusalem36-0129_SMMJ_00036__134", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [562, 309, 4380, 3164], "spread": true, "cut_frac": 0.5075, "out_px": [[2157, 3164], [2223, 3164]]}}
+{"slug": "jerusalem36-0139_SMMJ_00036__144", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [665, 290, 4296, 3154], "spread": true, "cut_frac": 0.5261, "out_px": [[2036, 3154], [2260, 3154]]}}
+{"slug": "jerusalem36-0206_SMMJ_00036__211", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [590, 346, 4399, 3079], "spread": true, "cut_frac": 0.491, "out_px": [[2239, 3079], [2160, 3079]]}}
+{"slug": "jerusalem36-0211_SMMJ_00036__216", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [580, 356, 4409, 3098], "spread": true, "cut_frac": 0.4758, "out_px": [[2311, 3098], [2098, 3098]]}}
+{"slug": "jerusalem36-0227_SMMJ_00036__232", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [552, 346, 4437, 3098], "spread": true, "cut_frac": 0.4704, "out_px": [[2350, 3098], [2087, 3098]]}}
+{"slug": "jerusalem36-0264_SMMJ_00036__269", "meta": {"arm": "pagecrop", "native_px": [5616, 3744], "bbox": [487, 337, 4502, 3126], "spread": true, "cut_frac": 0.454, "out_px": [[2400, 3052], [2044, 3126]]}}
+{"slug": "onb-syr1-0009_00000024", "meta": {"arm": "pagecrop", "native_px": [1969, 2365], "bbox": [0, 89, 1887, 2205], "spread": false, "out_px": [[1887, 2205]]}}
+{"slug": "onb-syr1-0026_00000041", "meta": {"arm": "pagecrop", "native_px": [1953, 2356], "bbox": [81, 88, 1872, 2210], "spread": false, "out_px": [[1872, 2210]]}}
+{"slug": "onb-syr1-0029_00000044", "meta": {"arm": "pagecrop", "native_px": [1970, 2352], "bbox": [0, 66, 1881, 2193], "spread": false, "out_px": [[1881, 2193]]}}
+{"slug": "onb-syr1-0033_00000048", "meta": {"arm": "pagecrop", "native_px": [1970, 2352], "bbox": [0, 39, 1881, 2213], "spread": false, "out_px": [[1881, 2213]]}}
+{"slug": "onb-syr1-0046_00000061", "meta": {"arm": "pagecrop", "native_px": [1953, 2339], "bbox": [107, 81, 1846, 2239], "spread": false, "out_px": [[1846, 2239]]}}
+{"slug": "onb-syr1-0082_00000097", "meta": {"arm": "pagecrop", "native_px": [1994, 2373], "bbox": [70, 56, 1924, 2316], "spread": false, "out_px": [[1924, 2316]]}}
+{"slug": "onb-syr1-0085_00000100", "meta": {"arm": "pagecrop", "native_px": [1930, 2368], "bbox": [0, 51, 1869, 2232], "spread": false, "out_px": [[1869, 2232]]}}
+{"slug": "onb-syr1-0086_00000101", "meta": {"arm": "pagecrop", "native_px": [1994, 2373], "bbox": [73, 60, 1921, 2313], "spread": false, "out_px": [[1921, 2313]]}}
+{"slug": "onb-syr1-0088_00000103", "meta": {"arm": "pagecrop", "native_px": [1994, 2373], "bbox": [76, 90, 1918, 2283], "spread": false, "out_px": [[1918, 2283]]}}
+{"slug": "onb-syr1-0107_00000122", "meta": {"arm": "pagecrop", "native_px": [1964, 2343], "bbox": [0, 82, 1879, 2262], "spread": false, "out_px": [[1879, 2261]]}}
+{"slug": "onb-syr1-0127_00000142", "meta": {"arm": "pagecrop", "native_px": [1964, 2343], "bbox": [0, 75, 1872, 2236], "spread": false, "out_px": [[1872, 2236]]}}
+{"slug": "onb-syr1-0131_00000146", "meta": {"arm": "pagecrop", "native_px": [1964, 2343], "bbox": [0, 75, 1863, 2213], "spread": false, "out_px": [[1863, 2213]]}}
+{"slug": "onb-syr1-0133_00000148", "meta": {"arm": "pagecrop", "native_px": [1964, 2342], "bbox": [0, 75, 1882, 2193], "spread": false, "out_px": [[1882, 2193]]}}
+{"slug": "onb-syr1-0157_00000172", "meta": {"arm": "pagecrop", "native_px": [1964, 2371], "bbox": [0, 92, 1872, 2226], "spread": false, "out_px": [[1872, 2226]]}}
+{"slug": "onb-syr1-0161_00000176", "meta": {"arm": "pagecrop", "native_px": [1964, 2370], "bbox": [0, 75, 1866, 2232], "spread": false, "out_px": [[1866, 2232]]}}
+{"slug": "onb-syr1-0179_00000194", "meta": {"arm": "pagecrop", "native_px": [1965, 2371], "bbox": [0, 56, 1873, 2247], "spread": false, "out_px": [[1873, 2247]]}}
+{"slug": "onb-syr1-0235_00000250", "meta": {"arm": "pagecrop", "native_px": [1948, 2345], "bbox": [0, 68, 1870, 2201], "spread": false, "out_px": [[1870, 2201]]}}
+{"slug": "onb-syr1-0258_00000273", "meta": {"arm": "pagecrop", "native_px": [1946, 2343], "bbox": [68, 84, 1878, 2170], "spread": false, "out_px": [[1878, 2170]]}}
+{"slug": "onb-syr1-0260_00000275", "meta": {"arm": "pagecrop", "native_px": [1946, 2343], "bbox": [71, 88, 1875, 2173], "spread": false, "out_px": [[1875, 2173]]}}
+{"slug": "onb-syr1-0261_00000276", "meta": {"arm": "pagecrop", "native_px": [1949, 2345], "bbox": [0, 84, 1832, 2206], "spread": false, "out_px": [[1832, 2206]]}}

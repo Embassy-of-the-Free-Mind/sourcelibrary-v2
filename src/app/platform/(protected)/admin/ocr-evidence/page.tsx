@@ -46,6 +46,30 @@ interface Sufficiency {
   referenced_books_needed: number;
 }
 
+// One paired comparison of an image-preprocessing arm against its baseline on the same pages, same engine (#5250).
+// median_gain is signed so that positive means the arm is BETTER, whatever the metric's direction.
+interface ImageArm {
+  cell_id: string;
+  stratum: string;
+  sub: string | null;
+  engine: string;
+  measure: string;
+  metric: string;
+  arm: string;
+  baseline: string;
+  baseline_median: number | null;
+  n: number;
+  wins: number;
+  losses: number;
+  ties: number;
+  median_gain: number | null;
+  ci95: Interval;
+  p_sign: number | null;
+  counts: boolean;
+  floor_p90: number | null;
+  grade: string;
+}
+
 const DATA = evidence as unknown as {
   generated_from: { file: string }[];
   production_engine: string;
@@ -53,7 +77,11 @@ const DATA = evidence as unknown as {
   totals: { pages: number; page_engine_rows: number };
   sufficiency: Sufficiency[];
   cells: Cell[];
+  image_arms?: ImageArm[];
 };
+
+// The Tibetan table carries three metrics; the page shows the one an omission lowers (matched syllables).
+const IMAGE_ARM_METRICS = new Set(['matched', 'line_cer_n2', 'windowed_cer']);
 
 const SLICES: [string, string][] = [
   ['script', 'Script'],
@@ -234,6 +262,51 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
           </section>
         );
       })}
+
+      {(DATA.image_arms?.length ?? 0) > 0 && (
+        <section id="image-arms" style={{ marginBottom: 28 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 600, margin: '0 0 4px' }}>Image preprocessing, paired (#5250)</h2>
+          <p style={{ ...C.dim, fontSize: 13, margin: '0 0 10px', maxWidth: 860 }}>
+            Accuracy against a reference. Each row is the same engine on the same pages, with only the image changed. Gain is positive
+            when the arm beats its baseline. An arm counts when its median gain is larger than the repeat-read noise floor and the sign
+            test gives p &lt; 0.05. The Tibetan metric is matched Derge syllables, which is what a dropped line lowers.
+          </p>
+          <div style={{ ...C.card, overflowX: 'auto' }}>
+            <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 900 }}>
+              <thead>
+                <tr>
+                  <th style={C.th}>Stratum</th>
+                  <th style={C.th}>Engine · metric</th>
+                  <th style={C.th}>Arm vs baseline</th>
+                  <th style={{ ...C.th, ...C.num }}>Pages</th>
+                  <th style={C.th}>Win / loss / tie</th>
+                  <th style={{ ...C.th, ...C.num }}>Median gain</th>
+                  <th style={C.th}>95 % interval</th>
+                  <th style={{ ...C.th, ...C.num }}>p</th>
+                  <th style={C.th}>Counts?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DATA.image_arms!.filter(a => IMAGE_ARM_METRICS.has(a.metric)).map(a => (
+                  <tr key={a.cell_id} id={a.cell_id}>
+                    <td style={C.td}>{a.stratum}{a.sub ? ` · ${a.sub}` : ''}</td>
+                    <td style={C.td}>{a.engine} <span style={C.dim}>· {a.metric}</span></td>
+                    <td style={C.td}>{a.arm} <span style={C.dim}>vs {a.baseline}</span></td>
+                    <td style={{ ...C.td, ...C.num }}>{a.n}</td>
+                    <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{a.wins} / {a.losses} / {a.ties}</td>
+                    <td style={{ ...C.td, ...C.num, color: !a.counts ? '#e6edf3' : (a.median_gain ?? 0) > 0 ? '#3fb950' : '#f85149' }}>
+                      {a.median_gain == null ? '—' : a.median_gain > 0 ? `+${a.median_gain}` : a.median_gain}
+                    </td>
+                    <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '—'}</td>
+                    <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '—' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
+                    <td style={C.td}>{a.counts ? ((a.median_gain ?? 0) > 0 ? 'helps' : 'hurts') : <span style={C.dim}>no</span>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       <p style={{ ...C.dim, fontSize: 12.5, maxWidth: 860, lineHeight: 1.55 }}>
         Error is character error rate against a reference (0.010 is one character in a hundred). The bar is the 95 % interval on the
