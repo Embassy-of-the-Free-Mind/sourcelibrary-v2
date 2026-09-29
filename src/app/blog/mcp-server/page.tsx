@@ -34,6 +34,11 @@ export default function McpServerPage() {
       }
       bg="bg-cream"
     >
+      <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900">
+        <strong>Update, September 2026:</strong> the connector is now one click from the Claude directory and works in
+        ChatGPT too. The current setup steps, with a video, are at{' '}
+        <Link href="/connect" className="underline font-medium">sourcelibrary.org/connect</Link>.
+      </div>
       <div className="mb-6">
         <Link
           href="/blog"

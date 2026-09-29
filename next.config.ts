@@ -512,6 +512,13 @@ const nextConfig: NextConfig = {
         destination: '/gallery/:path*',
         permanent: true,
       },
+      // Short, sayable aliases for the MCP setup guide ("sourcelibrary.org/mcp").
+      // The guide's canonical URL is /connect; these exist to be typed and read aloud.
+      ...['/mcp', '/claude', '/chatgpt'].map((source) => ({
+        source,
+        destination: '/connect',
+        permanent: true,
+      })),
       // Short share links for explore pages
       {
         source: '/map',

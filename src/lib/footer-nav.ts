@@ -55,6 +55,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'checkPages', href: '/review' },
       { key: 'support', href: '/support' },
       { key: 'sponsorship', href: '/sponsors' },
+      { key: 'connect', href: '/connect' },
       { key: 'developers', href: '/developers' },
     ],
   },

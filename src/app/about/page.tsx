@@ -193,7 +193,7 @@ export default async function AboutPage() {
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1">•</span>
-            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems</span>
+            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems &mdash; or <Link href="/connect" className="text-accent-rust hover:underline">connect it to Claude or ChatGPT</Link> in a minute</span>
           </li>
         </ul>
 
