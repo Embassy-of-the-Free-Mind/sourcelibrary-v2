@@ -9,6 +9,14 @@ the axis between them that nothing else documents.
 Measured 2026-08-21 against production `bookstore`, live = `visible: true &&
 pages_count > 0` = 22,068.
 
+**Target design: `../language-fields-design.md`** (#5304) — ISO 639-3 codes in
+`languages[]` / `source_languages[]`, one closed vocabulary in the pinned
+normaliser, one writer (`languageFieldsPatch`), `language` derived, named views
+for routing, stats, facets and locales. Until its steps land, the rules below are
+what binds. Re-measured 2026-09-30 (live = 42,009): `languages[]` is missing on
+23,865 live books and holds names, never codes; figures below are the 2026-08-21
+vintage.
+
 ---
 
 ## The three questions, and the one field each
@@ -289,6 +297,8 @@ answer is a sweep-log row or an existing flag — not `language_<yourthing>`.
 4. `languages[0]` must equal `language`. Order the rest by measured page share.
 5. OCR/translation routing reads the **per-page** tag, never `languages[0]` —
    a bilingual page set must not inherit one model choice from a book-level field.
+   *This is the target, not the code:* both routers read `books.language` as a
+   whole string today (verified 2026-09-30). See the design doc's `routing_lane`.
 6. New language field ⇒ demote something or use a row. Check the 18 above first.
 7. Parse the catalogue value as a **list** and compare by **family** before
    claiming any book disagrees with its own record.

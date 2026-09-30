@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import RoomHomeLink from '@/components/rooms/RoomHomeLink';
 import type { ReadingRoom } from '@/lib/reading-rooms';
 import { ROOMS_ROOT } from '@/lib/reading-rooms-paths';
 
@@ -41,16 +41,7 @@ export function RoomHeader({ room, showTagline = false }: { room: ReadingRoom; s
             {room.name}
           </span>
         </Link>
-        {home ? (
-          <a
-            href={home}
-            className="inline-flex items-center gap-1.5 text-sm shrink-0 no-underline hover:underline"
-            style={{ color: 'var(--accent-rust)' }}
-          >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-            {homeLabel}
-          </a>
-        ) : null}
+        {home ? <RoomHomeLink href={home} label={homeLabel} /> : null}
       </div>
       {showTagline && room.tagline ? (
         <div className={`${HEADER_INNER} pb-4 -mt-1`}>
