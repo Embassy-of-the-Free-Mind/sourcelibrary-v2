@@ -58,7 +58,7 @@ this reference. The same reads separate wrong-leaf pages cleanly: 7 of 7.**
     the other 10; 3 of 9 judge-clean pages unreliable, 4 of 9 judge-garbled only minor. On hard pages flash is unreliable on
     6/17, lite on 15/18. The 5 mild outlier pages are convention differences, not defects.
   - Wrong-leaf signature (served < 0.3, fresh reads ≥ 0.9): the 6 known pages plus one new page, read by eye with display
-    and source leaf opened (`eye/arbitration.md`); 0 of 292 by-eye matches carry it.
+    and source leaf opened (`eye/arbitration.md`); 0 of the 258 by-eye matches with three usable reads carry it (34 more unjudged).
   - Cost to cover (measured Batch rate per request: lite $0.0011 Latin-script / $0.0020 non-Latin; flash $0.0020 / $0.0024):
     one lite read of the 817,558 non-Latin translated pages ≈ $1,641; lite + flash ≈ $3,624; every live translated page
     $6,618–$16,609; wrong-leaf check of 3 pages in each of 23,662 Archive books ≈ $75. None run.

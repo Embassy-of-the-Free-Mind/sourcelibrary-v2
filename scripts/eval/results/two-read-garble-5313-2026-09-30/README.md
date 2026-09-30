@@ -9,7 +9,7 @@ PRIOR ART: `scripts/eval/results/garble-detector-5313-2026-09-30/` (PR #5369) sc
 1. **Existing double reads do not cover the corpus and cannot be scored.** Only 14 of the 327 reference pages have an earlier model read in `page_revisions`, and none of the 32 garbled ones. The Internet Archive's own OCR covers more pages but disagrees with ours on clean pages too. Neither is a usable second read.
 2. **A fresh second read carries a real signal, but not a precise one.** It ranks garbled pages well (AUC 0.80–0.86; 0.87–0.91 on major garble) and reaches most of them (recall 0.6–0.9, against 0.09 for the text signals). Precision against the judge stays at 0.3–0.45 at every threshold. The 0.8 gate in #5313 is **not met**, so no field is written and the reader is unchanged.
 3. **The 0.8 gate cannot be met on this reference by any detector.** A second judgment of the same OCR text reproduces the audit's garble flag at precision 0.51–0.58 and recall 0.62–0.66. By eye, the flagged "hard pages" have an unreliable served text on 8 of 18 (44%), and at least minor errors on all 18.
-4. **The same two reads separate wrong-leaf pages cleanly.** All six pages #5311 found by eye, plus a seventh in a book that study never sampled, have the signature "two fresh reads agree with each other, and neither agrees with the served text". No page read by eye as a match carries it.
+4. **The same two reads separate wrong-leaf pages cleanly.** All six pages #5311 found by eye, plus a seventh in a book that study never sampled, have the signature "two fresh reads agree with each other, and neither agrees with the served text". None of the 258 pages read by eye as a match, and with three usable reads, carries it.
 
 Nothing here writes to `pages`, a queue, or any store a job reads. Cost: $1.64 on the Batch API.
 
@@ -85,7 +85,7 @@ The signature is *served text against the better fresh read below 0.3, and the t
 - the six pages #5311 found by eye (served 0.14–0.21, fresh reads 0.97–1.00);
 - [Calderón, *La vida es sueño*, page 36](https://sourcelibrary.org/book/69e41216937ee36cf27c7554?page=36), from the monthly sample, which #5311 did not cover. *Read from image, display and source leaf both opened*: both show the page beginning "que es esta que ciño"; the served text is the page before. Text lane, offset one leaf, `pipeline_preview` OCR from April 2026 (`eye/arbitration.md`).
 
-None of the 292 pages #5311 read as a match carries the signature. A single lite read also scores all six known pages below 0.21, so one read finds candidates and a second is needed only to confirm. This is a verification instrument for #5309, which works from the text and on any provider.
+#5311 read 292 of these pages as a match; 258 of them have three usable reads, and none of those carries the signature. The other 34 are unjudged. A single lite read also scores all six known pages below 0.21, so one read finds candidates and a second is needed only to confirm. This is a verification instrument for #5309, which works from the text and on any provider.
 
 ## Coverage, and what covering the corpus would cost
 
