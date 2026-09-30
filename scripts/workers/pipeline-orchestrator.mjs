@@ -45,6 +45,7 @@ import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
+import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
 
@@ -3012,11 +3013,14 @@ async function run() {
               { projection: { id: 1, title: 1 } }
             );
             if (bookDoc) {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
-              );
-              console.log(`    ✓ Auto-unhidden: ${bookDoc.title?.slice(0, 60)}`);
+              // Through the publication writer (#5340). The 46 books carrying this
+              // reason on 2026-09-30 are all `visible`-absent (state unpublished), so
+              // both states are allowed; a takedown is never published by this path.
+              const r = await setPublication(db, book.id, {
+                state: 'public', by: 'script:pipeline-orchestrator:auto-unhide-unarchived',
+                from: ['hidden', 'unpublished'],
+              });
+              if (r.status === 'written') console.log(`    ✓ Auto-unhidden: ${bookDoc.title?.slice(0, 60)}`);
             }
           }
           archiveCompleted++;

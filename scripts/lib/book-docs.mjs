@@ -86,6 +86,9 @@ export const BOOK_FIELDS = Object.freeze([
   'provenance_reference', 'acquisition_campaign',
   // pipeline / status
   'status', 'hidden', 'visible', 'pipeline_auto', 'pipeline_status',
+  // publication state (#5340): spread initialPublication() from scripts/lib/publication.mjs
+  // into a new book; never hand-write it, nor visible/hidden/hidden_reason (.claude/docs/publication-state.md)
+  'publication', 'hidden_at',
   'processing_priority', 'processing_priority_breakdown',
   'needs_splitting', 'needs_splitting_reason',
   'archive_status', 'archive_completed_at', 'archive_metadata',

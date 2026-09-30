@@ -400,6 +400,7 @@
     "provenance_location",
     "provenance_reference",
     "provider",
+    "publication",
     "publication_place",
     "published",
     "published_at",

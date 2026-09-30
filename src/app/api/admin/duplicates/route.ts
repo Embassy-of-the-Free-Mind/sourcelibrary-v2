@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { isTrustedEditionKey } from '@/lib/edition-key';
+import { setPublicationMany } from '@/lib/publication';
 
 export const maxDuration = 30;
 
@@ -256,7 +257,7 @@ export const GET = withAdminAuth(async (request) => {
  * Hide specified books as duplicates.
  * Body: { bookIds: string[], keeperId?: string }
  */
-export const POST = withAdminAuth(async (request) => {
+export const POST = withAdminAuth(async (request, session) => {
   const body = await request.json();
   const { bookIds, keeperId } = body;
 
@@ -269,21 +270,20 @@ export const POST = withAdminAuth(async (request) => {
   }
 
   const db = await getDb();
-  const now = new Date();
 
-  const result = await db.collection('books').updateMany(
-    { id: { $in: bookIds }, visible: true },
-    { $set: {
-      hidden: true, visible: false,
-      hidden_reason: 'duplicate',
-      hidden_at: now,
-      updated_at: now, // books_catalog sync keys on this — without it the flip never reaches Supabase
-      ...(keeperId ? { duplicate_of: keeperId } : {}),
-    }}
-  );
+  // Only books public right now are hidden (the old `visible: true` filter); the
+  // writer derives visible/hidden/hidden_reason and bumps updated_at, which the
+  // books_catalog sync keys on.
+  const result = await setPublicationMany(db, bookIds.map(String), {
+    state: 'hidden',
+    reason: 'duplicate',
+    duplicateOf: keeperId || undefined,
+    by: `route:/api/admin/duplicates${session?.user?.email ? ` (${session.user.email})` : ''}`,
+    from: ['public'],
+  });
 
   return NextResponse.json({
-    hidden: result.modifiedCount,
+    hidden: result.written.length,
     requested: bookIds.length,
   });
 });
