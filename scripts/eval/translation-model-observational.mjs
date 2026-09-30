@@ -301,6 +301,9 @@ function phaseJudgePacket() {
   for (let round = 0; picked.length < PAIRS && round < 500; round++) {
     for (const list of byLang.values()) if (list[round] && picked.length < PAIRS) picked.push(list[round]);
   }
+  // The flips come from the seeded stream, and the generator changed on 2026-09-30 (#5373): a rebuild no longer
+  // reproduces a packet built before that date, so it must not overwrite a key a judge has already read against.
+  if (fs.existsSync(KEY_FILE)) throw new Error(`${KEY_FILE} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
   resetSeed();
   const packet = [], key = [];
   for (const p of picked) {
