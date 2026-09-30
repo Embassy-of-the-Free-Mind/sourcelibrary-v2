@@ -108,7 +108,7 @@ export const visionContent: VisionContent = {
     'How can you trust it? Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike licence, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
   ],
   bodyBeforeImage1: [
-    'Today, Source Library holds more than **40,000 books** in over fifty languages, and more than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. To get a sense of the scale, the library already holds more words than English Wikipedia.',
+    'Today, Source Library holds about **88,000 books** in over fifty languages. More than **18,000** of them can already be read in translation, nearly five million pages, most of them in English for the first time. The other **72,000** are scanned and catalogued but not yet readable. To get a sense of the scale, the library already holds more words than English Wikipedia.',
     'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
   ],
   image1: {
@@ -120,8 +120,8 @@ export const visionContent: VisionContent = {
   buildHeading: 'What we need to finish',
   bodyBuild: [
     'Source Library has been a labor of love and now we want to open it up so that others can pour theirs in — through contributions of time and funding.',
-    'When it comes to funding, we’ve raised $60,000 so far from two incredible donors, but yet have spent over $120,000 to make this resource free and open. It is my hope to find other donors who want to help participate in the *largest historical translation project in history.* We can, of course, offer in return our good karma, amazing parties, and specially collected rare books from our collection.',
-    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. This comes to about $3,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Yet we’ve made huge progress in cost optimization. The current costs are about $5/book in total. Everything so far has been done entirely by volunteers.',
+    'When it comes to funding, we’ve raised $60,000 so far from two incredible donors, but have spent over $120,000 to make this resource free and open. It is my hope to find other donors who want to help participate in the *largest historical translation project in history.* We can, of course, offer in return our good karma, amazing parties, and specially collected rare books from our collection.',
+    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. Hosting alone is about $3,000 per month; at full working pace, with the AI translation running, it is about $12,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Since then the cost has fallen sharply: a single pass now costs under a dollar a book. We budget $5 a book so that every book is re-read as better models arrive, the hard scripts get special handling, and scholars can check the results. Everything so far has been done entirely by volunteers.',
   ],
   vision: {
     heading: 'Where we will be in 2031',
@@ -184,6 +184,7 @@ export const visionContent: VisionContent = {
     caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica.',
   },
   bodyConvener: [
+    'So here is the ask. The first year needs **$762,000**, and it buys something you can check: by next summer, every book we hold has a first translation, and there is an organisation responsible for it. Simply keeping the library running at its current pace, while that is raised, takes about **$150,000 to $200,000** for the coming year.',
     'If you want to participate in this historical project, please reach out. I would be happy to arrange a time online or on location at the Embassy of the Free Mind.',
   ],
   signoff: 'With gratitude,',
