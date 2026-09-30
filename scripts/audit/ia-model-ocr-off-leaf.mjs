@@ -90,14 +90,19 @@ async function auditBook(db, b) {
   const row = { book_id: bid, ia_id: iaId, title: (b.title || '').slice(0, 70), language: (normalizeLanguageToken(b.language) || '?').toLowerCase(),
     live: b.visible === true && (b.pages_count || 0) > 0, pages_count: b.pages_count || 0, pipeline_status: b.pipeline_auto?.status || null, hold: b.pipeline_auto?.hold?.reason || null };
   if (!iaId) return { row: { ...row, status: 'no_ia_id' }, pageRows: [] };
-  const pages = await db.collection('pages').aggregate([
-    { $match: { book_id: bid, page_number: { $gt: 0 }, hidden: { $ne: true }, 'ocr.data': { $type: 'string', $ne: '' }, 'ocr.source': { $ne: IA_TEXT } } },
+  const all = await db.collection('pages').aggregate([
+    { $match: { book_id: bid, page_number: { $gt: 0 }, hidden: { $ne: true }, 'ocr.data': { $type: 'string', $ne: '' } } },
     { $sort: { page_number: 1 } },
     { $project: { id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.updated_at': 1, archive_source: '$archive_metadata.source', split: { $ifNull: ['$split_from_spread', false] },
       translated: { $and: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $ne: ['$translation.data', ''] }] } } },
   ]).toArray();
-  row.model_pages = pages.length;
-  if (!pages.length) return { row: { ...row, status: 'no_model_pages' }, pageRows: [] };
+  // Two lanes, never mixed in one run: MODEL text (the #5309 question) and the Archive's own text
+  // written by the free lane (`ia_djvu`). An ia_djvu page IS some leaf's text, so its best leaf is
+  // exact; a non-zero offset there is #4790's residue (the 2026-09-12/13 offset-compensation window;
+  // 7 of 82 served pages in the #5361 cohort check).
+  const pages = all.filter((p) => p.ocr.source !== IA_TEXT), iaPages = all.filter((p) => p.ocr.source === IA_TEXT);
+  row.model_pages = pages.length; row.ia_text_pages = iaPages.length;
+  if (!all.length) return { row: { ...row, status: 'no_model_pages' }, pageRows: [] };
   const meta = await iaOcrMeta(iaId);
   const { leaves: raw, reason, cached } = await iaLeaves(iaId, meta.djvu_xml_files || [], { cacheDir: CACHE, writeCache: false });
   if (!raw) return { row: { ...row, status: 'no_xml', reason }, pageRows: [] };
@@ -105,6 +110,15 @@ async function auditBook(db, b) {
   const leafGrams = raw.map((l) => { const t = tokens(dehyphenateLineBreaks(l)); return t.length >= OPTS.minTokens / 2 ? bigramCounts(t) : null; });
   row.leaves = raw.length; row.leaves_with_text = leafGrams.filter(Boolean).length; row.leaves_cached = !!cached;
 
+  const model = compareLane(pages, leafGrams, bid, 'model');
+  const ia = compareLane(iaPages, leafGrams, bid, IA_TEXT);
+  Object.assign(row, { status: 'ok', ...model.stats, bulk_jp2_pages: pages.filter((p) => p.archive_source === 'bulk_jp2').length });
+  row.ia_text = iaPages.length ? ia.stats : null;
+  return { row, pageRows: [...model.pageRows, ...ia.pageRows] };
+}
+
+/** One lane's pages of one book → the lane's stats and its off-leaf page rows. */
+function compareLane(pages, leafGrams, bid, lane) {
   const compared = []; const verdicts = {}; const bump = (o, k) => { o[k] = (o[k] || 0) + 1; };
   for (const p of pages) {
     const base = { page_number: p.page_number, page_id: p.id || String(p._id), ocr_run: `${p.ocr.source || 'model'}|${p.ocr.model || '?'}|${day(p.ocr.updated_at)}`, archive_source: p.archive_source || null, translated: !!p.translated };
@@ -114,12 +128,12 @@ async function auditBook(db, b) {
     else if (p.split) r = { verdict: 'split_page' };          // half a leaf: its own comparison, not this one
     else if (isPlatePage(p.ocr.data)) r = { verdict: 'plate' }; // the model DESCRIBES a picture; nothing to match
     else {
-      const t = tokensBody(p.ocr.data);
+      const t = tokensBody(lane === IA_TEXT ? dehyphenateLineBreaks(p.ocr.data) : p.ocr.data);
       r = t.length < OPTS.minTokens ? { verdict: 'short' } : pageOffset(bigramCounts(t), leafGrams, k, OPTS);
     }
     bump(verdicts, r.verdict);
     compared.push({ ...base, leaf: k, ...r });
-    if (VERBOSE) console.log(`    p.${p.page_number} n${k} ${r.verdict} ${r.offset ?? ''} best ${r.score?.toFixed(2) ?? '-'} @0 ${r.score0?.toFixed(2) ?? '-'} 2nd ${r.second?.toFixed(2) ?? '-'} ${base.ocr_run} ${base.archive_source || ''}`);
+    if (VERBOSE) console.log(`    ${lane} p.${p.page_number} n${k} ${r.verdict} ${r.offset ?? ''} best ${r.score?.toFixed(2) ?? '-'} @0 ${r.score0?.toFixed(2) ?? '-'} 2nd ${r.second?.toFixed(2) ?? '-'} ${base.ocr_run} ${base.archive_source || ''}`);
   }
   const runs = shiftRuns(compared);
   // Pages inside a run that abstained are shifted too (they sit between two pages shifted the same
@@ -129,23 +143,23 @@ async function auditBook(db, b) {
   for (const c of compared) {
     const run = inRun(c.page_number);
     if (c.verdict !== 'shifted' && c.verdict !== 'far' && !run) continue;
-    pageRows.push({ book_id: bid, page_id: c.page_id, page_number: c.page_number, leaf: c.leaf, verdict: c.verdict, decided: c.verdict === 'shifted' || c.verdict === 'far',
+    pageRows.push({ book_id: bid, lane, page_id: c.page_id, page_number: c.page_number, leaf: c.leaf, verdict: c.verdict, decided: c.verdict === 'shifted' || c.verdict === 'far',
       offset: c.offset ?? run?.offset ?? null, score: c.score != null ? +c.score.toFixed(3) : null, score0: c.score0 != null ? +c.score0.toFixed(3) : null,
       ocr_run: c.ocr_run, archive_source: c.archive_source, translated: c.translated });
   }
   const offsets = {}; const byRun = {};
   for (const c of compared) {
     if (c.offset != null && c.verdict !== 'far') bump(offsets, c.offset);
-    const [src, model] = c.ocr_run.split('|'); const key = `${src}|${model}`;
+    const [src, mdl] = c.ocr_run.split('|'); const key = `${src}|${mdl}`;
     byRun[key] = byRun[key] || { pages: 0, aligned: 0, shifted: 0 }; byRun[key].pages++;
     if (c.verdict === 'aligned') byRun[key].aligned++; if (c.verdict === 'shifted') byRun[key].shifted++;
   }
   const span = pageRows.filter((r) => r.verdict !== 'far');
-  Object.assign(row, { status: 'ok', verdicts, offsets, decided: (verdicts.aligned || 0) + (verdicts.shifted || 0), aligned: verdicts.aligned || 0, shifted: verdicts.shifted || 0, far: verdicts.far || 0,
+  const stats = { verdicts, offsets, decided: (verdicts.aligned || 0) + (verdicts.shifted || 0), aligned: verdicts.aligned || 0, shifted: verdicts.shifted || 0, far: verdicts.far || 0,
     shifted_span: span.length, shifted_span_translated: span.filter((r) => r.translated).length,
     runs, n_runs: runs.length, contiguous: runs.length === 1 && runs[0].decided === (verdicts.shifted || 0), longest_run: runs.reduce((m, x) => Math.max(m, x.decided), 0),
-    ocr_runs: byRun, bulk_jp2_pages: pages.filter((p) => p.archive_source === 'bulk_jp2').length, shifted_bulk_jp2: span.filter((r) => r.archive_source === 'bulk_jp2').length });
-  return { row, pageRows };
+    ocr_runs: byRun, shifted_bulk_jp2: span.filter((r) => r.archive_source === 'bulk_jp2').length };
+  return { stats, pageRows };
 }
 
 // ---------- stage: offsets ----------
@@ -286,6 +300,14 @@ function summarise() {
   const runs = {}; for (const r of ok) for (const [k, v] of Object.entries(r.ocr_runs)) { runs[k] = runs[k] || { pages: 0, aligned: 0, shifted: 0 }; runs[k].pages += v.pages; runs[k].aligned += v.aligned; runs[k].shifted += v.shifted; }
   console.log('\nOCR run (source|model)                        | pages | decided | shifted | share of decided');
   for (const [k, v] of Object.entries(runs).sort((a, b) => b[1].pages - a[1].pages).slice(0, 14)) console.log(`${k.padEnd(45)} | ${v.pages} | ${v.aligned + v.shifted} | ${v.shifted} | ${pct(v.aligned + v.shifted ? v.shifted / (v.aligned + v.shifted) : null, 2)}`);
+  // The Archive-text lane (ia_djvu pages written by the free lane): #4790 residue, not #5309.
+  const iaRows = ok.filter((r) => r.ia_text).map((r) => ({ ...r.ia_text, book_id: r.book_id, title: r.title, live: r.live }));
+  if (iaRows.length) {
+    const b = block('ia_djvu text (free lane)', iaRows);
+    console.log(`\nARCHIVE-TEXT LANE (ia_djvu pages, #4790 residue):\n${line(b)}`);
+    for (const r of iaRows.filter(hasRun).sort((x, y) => y.shifted_span - x.shifted_span).slice(0, 10)) console.log(`  ${r.book_id} ${r.title.slice(0, 42).padEnd(42)} | in runs ${r.shifted_span} | runs ${r.runs.slice(0, 4).map((x) => `${x.from}–${x.to}@${x.offset}`).join(' ')}`);
+    blocks.push(b);
+  }
   const contiguous = ok.filter(hasRun).filter((r) => r.contiguous).length;
   console.log(`\nbooks with a run: ${ok.filter(hasRun).length} | one contiguous run: ${contiguous} | several runs: ${ok.filter(hasRun).length - contiguous} | books whose only off-leaf pages are lone pages: ${ok.filter((r) => r.shifted > 0 && !hasRun(r)).length} (${sum(ok.filter((r) => r.shifted > 0 && !hasRun(r)), (r) => r.shifted)} pages)`);
   if (img.size) { const by = {}; for (const r of ok.filter(hasRun)) { const v = img.get(r.book_id) || 'not_imaged'; by[v] = by[v] || { books: 0, span: 0 }; by[v].books++; by[v].span += r.shifted_span; } console.log(`image side (books / pages in runs): ${JSON.stringify(by)}`); }
