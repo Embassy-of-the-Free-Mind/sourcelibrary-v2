@@ -23,6 +23,9 @@
  *   secret-lover run -- node scripts/eval/clip-index-recall.mjs \
  *     scripts/eval/results/identify-matcher-bench-2026-09-28.json [--probes=1,4,10] [--kinds=crop,wall]
  *   (needs SUPABASE_DB_URL; writes <input>-index-recall.json next to the input)
+ *   --column=embedding_v4 + CLIP_URL=<v4 server> ranks the #5099 shadow column
+ *   (writes <input>-index-recall-embedding_v4.json). Before the v4 column has
+ *   an index only `exact` is meaningful — pass --probes= to skip the ivfflat modes.
  *
  * PRIOR ART: scripts/eval/identify-bench.mjs — ranks against a sampled pool,
  * never the live index; scripts/audit/clip-index-integrity.mjs — checks row
@@ -41,9 +44,14 @@ const CLIP = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 const input = process.argv[2];
 if (!input || !process.env.SUPABASE_DB_URL) { console.error('usage: node clip-index-recall.mjs <bench results.json>  (needs SUPABASE_DB_URL)'); process.exit(1); }
 const opt = (name, dflt) => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1] || dflt;
-const PROBES = opt('probes', '1,4,10').split(',').map(Number);
+const PROBES = opt('probes', '1,4,10').split(',').filter(Boolean).map(Number);
 const KINDS = opt('kinds', 'crop,wall').split(',');
 const DEPTH = 200;
+// --column=embedding_v4 ranks the #5099 shadow column instead of the live one.
+// Point CLIP_URL at the server whose runtime wrote that column — a v4 query
+// against v2 vectors measures neither space.
+const COLUMN = opt('column', 'embedding');
+if (!['embedding', 'embedding_v4', 'embedding_v2'].includes(COLUMN)) { console.error(`--column must be embedding, embedding_v4 or embedding_v2`); process.exit(1); }
 
 const bench = JSON.parse(fs.readFileSync(input, 'utf8'));
 const db = new Client({ connectionString: process.env.SUPABASE_DB_URL, ssl: { rejectUnauthorized: false } });
@@ -54,7 +62,7 @@ async function topIds(embedding, settings) {
   try {
     await db.query(`SET LOCAL statement_timeout = '60s'`);
     for (const s of settings) await db.query(s);
-    const { rows } = await db.query(`SELECT id FROM clip_embeddings ORDER BY embedding <=> $1::vector LIMIT ${DEPTH}`, [`[${embedding.join(',')}]`]);
+    const { rows } = await db.query(`SELECT id FROM clip_embeddings ORDER BY ${COLUMN} <=> $1::vector LIMIT ${DEPTH}`, [`[${embedding.join(',')}]`]);
     return rows.map(r => r.id);
   } finally { await db.query('COMMIT'); }
 }
@@ -97,8 +105,8 @@ for (const s of ['all', ...new Set(rows.map(r => r.stratum))]) {
     summary[s][`${kind}_${name}`] = { top1: at(1), top10: at(10), top20: at(20), notInTop200: ranks.filter(x => x == null).length };
   }
 }
-const out = input.replace(/\.json$/, '-index-recall.json');
-fs.writeFileSync(out, JSON.stringify({ date: new Date().toISOString(), depth: DEPTH, probes: PROBES, summary, rows }, null, 1));
+const out = input.replace(/\.json$/, COLUMN === 'embedding' ? '-index-recall.json' : `-index-recall-${COLUMN}.json`);
+fs.writeFileSync(out, JSON.stringify({ date: new Date().toISOString(), depth: DEPTH, probes: PROBES, column: COLUMN, clip_url: CLIP, summary, rows }, null, 1));
 console.log(`\n-> ${out}`);
 for (const [s, v] of Object.entries(summary)) {
   console.log(`${s} n=${v.n}: ` + Object.entries(v).filter(([k]) => k !== 'n').map(([k, x]) => `${k} ${x.top1}/${x.top10}/${x.top20} (miss ${x.notInTop200})`).join(' | '));
