@@ -99,3 +99,27 @@ What follows from it (a proposal on the issue; no routing constant changes here,
 
 915 requests. Estimate printed by `--draw` before `--submit`; expected ≈ $1 on the Batch API (#5305 ran 288
 for $0.34). Under the $10 spend floor; ledger line in the ops repo.
+
+## Amendment, 2026-09-30, made AFTER the result was read
+
+Everything above is as written before the run. This section is not pre-registered.
+
+The statistic named above, the seeded bootstrap in `scripts/eval/lib/paired-stats.mjs`, is defective: its
+random generator is not uniform (100,000 draws into 304 bins give chi-square 3,105 against about 303
+expected). The first score, computed with it, read fidelity ≥ 4 as +3.6 pp (1.0 to 6.9) for flash − lite and
+(1.0 to 8.2) against the second lite run, and the rule printed a difference. The analytic paired interval for
+the same 304 differences is −0.2 to 7.4, and a bootstrap on a sound generator (mulberry32) gives 0.0 to 7.6
+and −0.3 to 7.6.
+
+Change: the rule is evaluated on the sound-generator bootstrap. The library interval and the analytic
+interval are both kept in `report.json` (`ci_library`, `ci_analytic`) beside each `ci`. The rule's three
+conditions, the outcomes, the sample and the judge are unchanged.
+
+Effect: fidelity ≥ 4 moves from "difference" to "no measurable difference". Omission and invention read the
+same under all three intervals. The change was made with the result in view; it removes a claim, it does not
+add one.
+
+Two departures from the design as written, neither affecting the comparison:
+- The first flash Batch job returned all 305 requests cancelled at $0; they were resubmitted once with the
+  same request bytes.
+- One judge (packet 53) wrote its verdict file twice; the second, complete write is the one scored.

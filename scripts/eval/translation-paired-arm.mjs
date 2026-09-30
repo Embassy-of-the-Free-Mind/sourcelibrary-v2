@@ -330,6 +330,32 @@ async function phasePackets() {
 }
 
 // ── score ───────────────────────────────────────────────────────────────────
+/**
+ * The bootstrap here does NOT use lib/paired-stats.mjs bootstrapCI. That module's generator is not
+ * uniform (100k draws into 304 bins: chi-square 3105 against ≈ 303 expected, bins 175–544), and its
+ * intervals came out skewed on this data: fidelity ≥ 4, F − L1, read [1.0, 6.9] pp where the analytic
+ * paired interval is [−0.2, 7.4] and a bootstrap on mulberry32 gives [0.0, 7.6]. Found AFTER the first
+ * score was read (2026-09-30); the library interval is kept in report.json as `ci_library` so the
+ * difference stays auditable, and the rule is evaluated on `ci`. The packets were shuffled with the
+ * library generator too; blinding does not need a uniform shuffle (ids are unique, arms are balanced
+ * by construction), so they stand.
+ */
+const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+function bootCI(xs, seed, iters = 10000) {
+  if (xs.length < 2) return null;
+  const rnd = mulberry32(seed), means = [];
+  for (let i = 0; i < iters; i++) { let s = 0; for (let j = 0; j < xs.length; j++) s += xs[Math.floor(rnd() * xs.length)]; means.push(s / xs.length); }
+  means.sort((a, b) => a - b);
+  return [means[Math.floor(iters * 0.025)], means[Math.floor(iters * 0.975)]];
+}
+/** The analytic paired interval (mean ± 1.96 SE), printed beside the bootstrap as a cross-check. */
+function analyticCI(xs) {
+  if (xs.length < 2) return null;
+  const n = xs.length, m = xs.reduce((a, b) => a + b, 0) / n;
+  const se = Math.sqrt(xs.reduce((a, b) => a + (b - m) ** 2, 0) / (n - 1)) / Math.sqrt(n);
+  return [m - 1.96 * se, m + 1.96 * se];
+}
+
 async function phaseScore() {
   const { resetSeed, bootstrapCI, binomTwoSided, mean } = await imp('scripts/eval/lib/paired-stats.mjs');
   const sample = new Map(readJsonl(path.join(DIR, 'sample.jsonl')).map((s) => [s.id, s]));
@@ -373,9 +399,10 @@ async function phaseScore() {
   const paired = (rows, x, y, f) => {
     const d = rows.map((r) => Number(f(r.c[y])) - Number(f(r.c[x])));
     const up = d.filter((v) => v > 0).length, down = d.filter((v) => v < 0).length;
+    const r4 = (c) => c && c.map((v) => +v.toFixed(4));
     resetSeed(SEED);
-    const ci = bootstrapCI(d);
-    return { delta: +mean(d).toFixed(4), ci: ci && ci.map((v) => +v.toFixed(4)), [`${y}_higher`]: up, [`${x}_higher`]: down, ties: d.length - up - down, sign_p: +binomTwoSided(up, up + down).toFixed(4) };
+    const ci = bootCI(d, SEED), lib = bootstrapCI(d);
+    return { delta: +mean(d).toFixed(4), ci: r4(ci), ci_analytic: r4(analyticCI(d)), ci_library: r4(lib), [`${y}_higher`]: up, [`${x}_higher`]: down, ties: d.length - up - down, sign_p: +binomTwoSided(up, up + down).toFixed(4) };
   };
   const block = (rows) => {
     const out = { n_books: rows.length, arms: {}, primary: {}, secondary: {} };
@@ -408,7 +435,7 @@ async function phaseScore() {
   const sens = [...sample.values()].filter((s) => ARMS.every((a) => !textOf.get(`${s.id}:${a}`)?.text || cell.get(s.id)?.[a]));
   const fid4All = (id, a) => (cell.get(id)?.[a] ? cell.get(id)[a].fidelity >= 4 : false);
   const sensitivity = { n_books: sens.length, fid_ge4: Object.fromEntries(ARMS.map((a) => [a, pct(sens.filter((s) => fid4All(s.id, a)).length / Math.max(1, sens.length))])) };
-  { const d = sens.map((s) => Number(fid4All(s.id, 'F')) - Number(fid4All(s.id, 'L1'))); resetSeed(SEED); const ci = bootstrapCI(d); sensitivity.F_minus_L1 = { delta: +mean(d).toFixed(4), ci: ci && ci.map((v) => +v.toFixed(4)) }; }
+  { const d = sens.map((s) => Number(fid4All(s.id, 'F')) - Number(fid4All(s.id, 'L1'))); const ci = bootCI(d, SEED); sensitivity.F_minus_L1 = { delta: +mean(d).toFixed(4), ci: ci && ci.map((v) => +v.toFixed(4)) }; }
 
   // Worst pages per arm, and the pages where the arms differ most — to be read, not just counted.
   const worst = (a) => complete.slice().sort((p, q) => p.c[a].fidelity - q.c[a].fidelity).slice(0, 5).map((r) => ({ id: r.id, language: r.s.language, url: r.s.url, fidelity: Object.fromEntries(ARMS.map((x) => [x, r.c[x].fidelity])), reason: r.c[a].reason }));
