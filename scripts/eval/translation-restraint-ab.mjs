@@ -6,6 +6,9 @@
 // the submit/collect shape of scripts/eval/image-extraction-lite-eval.mjs. The judge rubric and packet
 // format are the audit's own (scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md, build-packets.mjs),
 // so arm verdicts are on the audit's scale. The mechanical secondary is scripts/audit/translation-bridging.mjs.
+// scripts/eval/translation-page-break-fix-ab.mjs has the same three-arm shape (B, B2 noise floor, F) but its
+// unit is a two-page SEAM judged pairwise on 63 de/la seams, realtime; here the unit is one page of the audit's
+// multilingual draw, judged on its own, via Batch. Its page-break option is ON in every arm here (production).
 /**
  * translation-restraint-ab — does one restraint instruction stop the translator bridging gaps? (#5305)
  *

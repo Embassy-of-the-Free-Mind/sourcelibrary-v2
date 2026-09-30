@@ -24,8 +24,29 @@
  *             furniture) and the translation ends on a closed sentence with no marker
  *             ([continues], an ellipsis, a dash). The restraint the prompt should ask for (#5305 A).
  *
- * This is a WORK LIST and a RATE, never a verdict on a page: see the precision/recall block
- * printed by --validate before quoting a count. It files no issues (measurement-instruments.md).
+ * This is a WORK LIST and a RATE, never a verdict on a page. It files no issues
+ * (measurement-instruments.md), so it has nothing to close.
+ *
+ * MEASURED 2026-09-30 (#5305), against the #5274 audit's Opus verdicts on 311 served pages
+ * (36 with an invention flag, 14 with a major one; base rate 11.6%):
+ *
+ *   signal     flagged  precision  recall(any invention)  recall(major)
+ *   ratioHigh     10      0.40          0.11                 0.14
+ *   leak           4      0.50          0.06                 0.14
+ *   drift          7      0.43          0.08                 0.07
+ *   openEnd       48      0.23          0.31                 0.36
+ *   any           63      0.25          0.44                 0.50
+ *
+ * Read by hand (TEXT, source and translation; no page image) on 20 random openEnd flags from a
+ * corpus draw: 7 were real bridging (the translation carries content past the page's last
+ * words), 4 closed a split word or a list with no new content, and 9 were false. After the
+ * fixes below (footnote asterisk, numbered/apparatus last line), the pass at 3,000 books
+ * (one page each, seed 5305) flags 17.7% of pages on any signal, 14.5% openEnd. So roughly a
+ * third of an openEnd flag is a bridged page. The rest are the translator closing a sentence the
+ * page left open, which is the behaviour #5305 A asks the prompt to stop.
+ *
+ * What it cannot see: invention inside the page (a name or a claim added to a note: most of
+ * the audit's minor inventions), garble smoothed into prose, or a CJK page that does not punctuate.
  *
  * Usage:
  *   node scripts/audit/translation-bridging.mjs --bands                 # (re)measure length bands
@@ -101,10 +122,19 @@ export function openEnd(ocr, tr) {
 }
 
 /** The source's body prose when it ends mid-sentence (a hyphen, a letter, a comma, a digit), else null. */
+//
+// No claim (each a false-positive family from the hand read of 20 corpus flags, 2026-09-30):
+//   - a footnote mark after a full stop ("nominauerunt.*") — closed;
+//   - a last line that is a numbered verse/line ("32. ad-da …") or critical apparatus ("27 κατὰ
+//     ποσὸν] ita libri"): the unit is the line, not the sentence.
 export function sourceEndsOpen(ocr) {
   const src = dropCatchword(tailProse(sourceProse(ocr)));
-  if (contentLen(src) < 80 || SRC_CLOSED.test(src)) return null;
-  return /[-‐¬=*]\s*$/u.test(src) || /\p{L}$/u.test(src) || /[,،、，]\s*$/u.test(src) || /\p{N}$/u.test(src) ? src : null;
+  if (contentLen(src) < 80) return null;
+  const closed = src.replace(/(?<=[.!?。])\s*[*†‡]+\s*$/u, '.');
+  if (SRC_CLOSED.test(closed)) return null;
+  const last = src.split('\n').pop().trim();
+  if (/^\d{1,4}[.)]?\s/u.test(last) || /\]/u.test(last)) return null;
+  return /[-‐¬=]\s*$/u.test(src) || /\p{L}\*$/u.test(src) || /\p{L}$/u.test(src) || /[,،、，]\s*$/u.test(src) || /\p{N}$/u.test(src) ? src : null;
 }
 
 // Fallback band for a language with too few pages: by the SOURCE's script, since a character

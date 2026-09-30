@@ -89,5 +89,9 @@ Before any number is quoted, the five worst B pages by fidelity are read against
 
 ## Amendments
 
-_None yet. Any change after the paid run is logged here with its date and reason, and the rule above is not
-rewritten._
+Any change after the paid run is logged here with its date and reason, and the rule above is not rewritten.
+
+1. **2026-09-30, after submit, before any arm output was collected or read.** The detector's `sourceEndsOpen`
+   (the definition behind outcome M, not behind the drawn strata, which stay pinned) was tightened after a
+   hand read of 20 corpus flags. A footnote asterisk after a full stop now reads as closed, and a last line
+   that is a numbered verse line or critical apparatus makes no claim. M is scored with the tightened version.
