@@ -1,3 +1,8 @@
+---
+description: "Wrap up the session: commit, push, reap, hand off."
+# Wrap-up is routine; don't spend scarce Fable quota on it. Applies to this command's turn only.
+model: opus
+---
 Wrap up the session: commit, push, reap, hand off.
 
 "gnite" means **this window is closing** — not that every window is. Other Claude
