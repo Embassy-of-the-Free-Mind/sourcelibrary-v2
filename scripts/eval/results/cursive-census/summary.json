@@ -1,0 +1,6565 @@
+{
+ "generated_at": "2026-09-29T23:15:42.204Z",
+ "model": "gemini-3-flash-preview",
+ "prompt_version": "script-class-6-v4745",
+ "seed": 5100,
+ "cutoff_year": 1868,
+ "rule": "≥2 of 3 interior pages cursive → book cursive",
+ "control": {
+  "n": 10,
+  "cursive_axis_agree": 10,
+  "exact_agree": 8,
+  "rows": [
+   {
+    "slug": "japanese-4eb403-p40",
+    "eye": "woodblock-cursive",
+    "got": "woodblock-cursive",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "Utaibon 1840, printed cursive kana with kunten"
+   },
+   {
+    "slug": "japanese-fa4343-p159",
+    "eye": "woodblock-regular",
+    "got": "woodblock-regular",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "bibliographic list, block-printed gyosho"
+   },
+   {
+    "slug": "japanese-88a16c-p24",
+    "eye": "typeset",
+    "got": "typeset",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "go manual, modern typeset"
+   },
+   {
+    "slug": "japanese-59945e-p51",
+    "eye": "typeset",
+    "got": "typeset",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "Hagakure \"1716\", modern typeset reprint"
+   },
+   {
+    "slug": "japanese-c589d4-p17",
+    "eye": "manuscript-cursive",
+    "got": "woodblock-cursive",
+    "cursive_axis_ok": true,
+    "exact": false,
+    "note": "Bunsho soshi c.1600, Nara-ehon manuscript (classifier said woodblock-cursive in #4745)"
+   },
+   {
+    "slug": "japanese-264a74-p5",
+    "eye": "woodblock-cursive",
+    "got": "woodblock-cursive",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "Koshoku ichidai otoko, printed cursive + picture"
+   },
+   {
+    "slug": "japanese-ext-4feaac-p39",
+    "eye": "illustration",
+    "got": "manuscript-regular",
+    "cursive_axis_ok": true,
+    "exact": false,
+    "note": "mushroom album, painting with a few labels"
+   },
+   {
+    "slug": "japanese-ext-f9eae1-p53",
+    "eye": "manuscript-regular",
+    "got": "manuscript-regular",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "medical MS, handwritten kaisho + katakana"
+   },
+   {
+    "slug": "japanese-ext-fa2831-p56",
+    "eye": "manuscript-regular",
+    "got": "manuscript-regular",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "catalogue MS, handwritten kaisho + katakana"
+   },
+   {
+    "slug": "japanese-ext-b16f63-p14",
+    "eye": "manuscript-cursive",
+    "got": "manuscript-cursive",
+    "cursive_axis_ok": true,
+    "exact": true,
+    "note": "kana-zoshi, cursive"
+   }
+  ]
+ },
+ "cohort": {
+  "books_in_cohort": 356,
+  "books_with_pages_drawn": 356,
+  "books_no_usable_image": 0,
+  "pages_total": 32235,
+  "visible_books": 114,
+  "hidden_books": 242
+ },
+ "pages_classified": 1054,
+ "pages_unread": 0,
+ "per_page_class": {
+  "woodblock-regular": 476,
+  "typeset": 50,
+  "manuscript-regular": 94,
+  "other": 27,
+  "illustration": 70,
+  "woodblock-cursive": 254,
+  "manuscript-cursive": 83,
+  "error": 9
+ },
+ "books_by_verdict": {
+  "cursive": 116,
+  "one-cursive-page": 13,
+  "not-cursive": 216,
+  "no-text-page": 11
+ },
+ "cursive": {
+  "books": 116,
+  "books_ci95": [
+   108,
+   118
+  ],
+  "books_woodblock": 93,
+  "books_manuscript": 23,
+  "books_visible": 77,
+  "books_hidden": 39,
+  "pages_by_book_rule": 8210,
+  "pages_by_book_rule_ci95": [
+   7623,
+   8587
+  ],
+  "pages_by_page_share": 8060,
+  "pages_by_page_share_ci95": [
+   7768,
+   8351
+  ],
+  "pages_one_cursive_page_books": 1112
+ },
+ "spend": {
+  "list_price_usd": 0.8694,
+  "input_tokens": 1449647,
+  "output_tokens": 48186,
+  "calls": 1073
+ },
+ "projection": {
+  "ndl_l4_hours_at_2s": 4.6,
+  "ndl_l4_hours_at_5s": 11.4,
+  "ndl_l4_eur_at_2s": 3.6,
+  "ndl_l4_eur_at_5s": 9.01,
+  "l4_eur_per_hour": 0.79,
+  "retranslation_pages": 8210,
+  "retranslation_usd_per_page_assumed": 0.00241,
+  "rate_measured_on": "2026-09-04",
+  "retranslation_usd": 19.79
+ },
+ "books": [
+  {
+   "book_id": "69f33b16876dd827cbc586a4",
+   "title": "Heiji monogatari, 3-kan",
+   "year": 1650,
+   "visible": true,
+   "pages_count": 246,
+   "pages_in_atlas": 246,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 246,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed99009c2a0509efa3d7b",
+   "title": "Kōkeisai kyūhō, Volume 1",
+   "year": 1790,
+   "visible": false,
+   "pages_count": 208,
+   "pages_in_atlas": 208,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 208,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed99109c2a0509efa3f1c",
+   "title": "Kōkeisai kyūhō, Volume 2",
+   "year": 1790,
+   "visible": false,
+   "pages_count": 200,
+   "pages_in_atlas": 200,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 200,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ab9095c302d3fddefcf",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 112,
+   "pages_in_atlas": 167,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 167,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cd33f15c712bdb8f0bc",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 4",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 110,
+   "pages_in_atlas": 164,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 164,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ac4b3d509fcb7a48ed4",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 9",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 108,
+   "pages_in_atlas": 161,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 161,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ce43f15c712bdb8f19e",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 8",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 106,
+   "pages_in_atlas": 158,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 158,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9ab09c2a0509efa5f91",
+   "title": "Nihon saijiki, Volume 6-7",
+   "year": 1688,
+   "visible": false,
+   "pages_count": 158,
+   "pages_in_atlas": 158,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 158,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cdd3f15c712bdb8f12e",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 5a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 104,
+   "pages_in_atlas": 155,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 155,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cf6cc48e59ad74eb2eb",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 12a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 104,
+   "pages_in_atlas": 155,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 155,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d05cc48e59ad74eb3cb",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 15",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 104,
+   "pages_in_atlas": 155,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 155,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d2dcc48e59ad74eb5ff",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 20a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 104,
+   "pages_in_atlas": 155,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 155,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed95009c2a0509ef9f8f1",
+   "title": "Eiri nichiyō Onna chōhōki",
+   "year": 1847,
+   "visible": false,
+   "pages_count": 154,
+   "pages_in_atlas": 154,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 154,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e792e880b52390feb170ac",
+   "title": "伊勢物語 (Ise Monogatari), Vol. 2",
+   "year": 1608,
+   "visible": true,
+   "pages_count": 134,
+   "pages_in_atlas": 134,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 134,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed9b109c2a0509efa65bf",
+   "title": "Rōba shinsho",
+   "year": 1817,
+   "visible": false,
+   "pages_count": 126,
+   "pages_in_atlas": 126,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 126,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94f09c2a0509ef9f787",
+   "title": "Denka : ba shokbyo inari ryojikata hidensho :",
+   "year": 1575,
+   "visible": false,
+   "pages_count": 124,
+   "pages_in_atlas": 124,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 124,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a0aca8b676a42ccd9775261",
+   "title": "Karakuri Zui 機巧図彙 — Illustrated Compendium of Mechanical Dolls (1796 first edition)",
+   "year": 1796,
+   "visible": true,
+   "pages_count": 122,
+   "pages_in_atlas": 122,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 122,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e792e280b52390feb16f63",
+   "title": "伊勢物語 (Ise Monogatari), Vol. 1",
+   "year": 1608,
+   "visible": true,
+   "pages_count": 110,
+   "pages_in_atlas": 110,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 110,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69dfedec8d34461cbe7f4fc2",
+   "title": "Tsurezuregusa (徒然草, Essays in Idleness)",
+   "year": 1332,
+   "visible": true,
+   "pages_count": 99,
+   "pages_in_atlas": 99,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 99,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed9a909c2a0509efa5da2",
+   "title": "Nihon saijiki, Volume 1-2",
+   "year": 1688,
+   "visible": false,
+   "pages_count": 96,
+   "pages_in_atlas": 96,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 96,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1eda0b09c2a0509efacc47",
+   "title": "Toriagebaba kokoroegusa, ichimei, Toriagebaba hikken. Volume 1",
+   "year": 1833,
+   "visible": false,
+   "pages_count": 94,
+   "pages_in_atlas": 94,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 94,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787b34a6785cfd60cce39",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 1",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 84,
+   "pages_in_atlas": 84,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 84,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9aa09c2a0509efa5eec",
+   "title": "Nihon saijiki, Volume 5",
+   "year": 1688,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e014df27a1381d2559931f",
+   "title": "Genji Monogatari (源氏物語), Vol. 3",
+   "year": 1000,
+   "visible": true,
+   "pages_count": 81,
+   "pages_in_atlas": 81,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 81,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69f328c3aeeee0fa38c65039",
+   "title": "Ise monogatari",
+   "year": 1700,
+   "visible": true,
+   "pages_count": 79,
+   "pages_in_atlas": 79,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 79,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1eda0b09c2a0509efacd04",
+   "title": "Toriagebaba kokoroegusa, ichimei, Toriagebaba hikken. Volume 2",
+   "year": 1833,
+   "visible": false,
+   "pages_count": 77,
+   "pages_in_atlas": 77,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 77,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94709c2a0509ef9ee37",
+   "title": "Chōmei eiseiron, Volume 3",
+   "year": 1812,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94709c2a0509ef9eda2",
+   "title": "Chōmei eiseiron, Volume 2",
+   "year": 1812,
+   "visible": false,
+   "pages_count": 74,
+   "pages_in_atlas": 74,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 74,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9a509c2a0509efa58b9",
+   "title": "Miyako fūzoku keshōden, Volume 1",
+   "year": 1851,
+   "visible": false,
+   "pages_count": 74,
+   "pages_in_atlas": 74,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 74,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94609c2a0509ef9ed15",
+   "title": "Chōmei eiseiron, Volume 1",
+   "year": 1812,
+   "visible": false,
+   "pages_count": 70,
+   "pages_in_atlas": 70,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 70,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9a609c2a0509efa59d5",
+   "title": "Miyako fūzoku keshōden, Volume 3",
+   "year": 1851,
+   "visible": false,
+   "pages_count": 70,
+   "pages_in_atlas": 70,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 70,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9a509c2a0509efa594e",
+   "title": "Miyako fūzoku keshōden, Volume 2",
+   "year": 1851,
+   "visible": false,
+   "pages_count": 67,
+   "pages_in_atlas": 67,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 67,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f33beb876dd827cbc5965c",
+   "title": "Settsu no Kuni Kawabe-gun Shimizu-mura kenchichō",
+   "year": 1679,
+   "visible": true,
+   "pages_count": 66,
+   "pages_in_atlas": 66,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 66,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed94309c2a0509ef9e9f7",
+   "title": "Anma tebiki",
+   "year": 1800,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9a809c2a0509efa5d25",
+   "title": "Myoyaku shinsen kosho ko",
+   "year": 1837,
+   "visible": false,
+   "pages_count": 62,
+   "pages_in_atlas": 62,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 62,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e726a2a409200ea79efa2d",
+   "title": "御伽草子 第1冊 (文正草子 / Bunsho Sōshi)",
+   "year": 1700,
+   "visible": true,
+   "pages_count": 61,
+   "pages_in_atlas": 61,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 61,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed9f309c2a0509efab022",
+   "title": "Shōni hitsuyō sodategusa, Volume 2",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 60,
+   "pages_in_atlas": 60,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 60,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e014dc27a1381d255992e3",
+   "title": "Genji Monogatari (源氏物語), Vol. 2",
+   "year": 1000,
+   "visible": true,
+   "pages_count": 59,
+   "pages_in_atlas": 59,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 59,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69d5ae55d0bd3547a5656f95",
+   "title": "Ganzan Daishi Hyakusen Wakai",
+   "year": 1850,
+   "visible": true,
+   "pages_count": 58,
+   "pages_in_atlas": 58,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 58,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cc83f15c712bdb8f012",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 2",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 57,
+   "pages_in_atlas": 57,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 57,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d1ccc48e59ad74eb520",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 18",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 57,
+   "pages_in_atlas": 57,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 57,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d0dcc48e59ad74eb439",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 16",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d11cc48e59ad74eb474",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 16a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cec3f15c712bdb8f20c",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 55,
+   "pages_in_atlas": 55,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 55,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cfacc48e59ad74eb323",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 55,
+   "pages_in_atlas": 55,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 55,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d01cc48e59ad74eb392",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 14",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 54,
+   "pages_in_atlas": 54,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 54,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d23cc48e59ad74eb592",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 19",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 54,
+   "pages_in_atlas": 54,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 54,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94509c2a0509ef9ebb6",
+   "title": "Atami Onsen zukō",
+   "year": 1789,
+   "visible": false,
+   "pages_count": 54,
+   "pages_in_atlas": 54,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 54,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed94809c2a0509ef9eed0",
+   "title": "Chōmei eiseiron, Volume 4",
+   "year": 1812,
+   "visible": false,
+   "pages_count": 54,
+   "pages_in_atlas": 54,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 54,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9f409c2a0509efab100",
+   "title": "Shōni hitsuyō sodategusa, Volume 4",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 54,
+   "pages_in_atlas": 54,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 54,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69dfedee8d34461cbe7f5043",
+   "title": "Ise Monogatari (伊勢物語, Tales of Ise)",
+   "year": 900,
+   "visible": true,
+   "pages_count": 53,
+   "pages_in_atlas": 53,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 53,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ab4095c302d3fddef97",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 1",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 53,
+   "pages_in_atlas": 53,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 53,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69e75ccc3f15c712bdb8f04e",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 2a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 53,
+   "pages_in_atlas": 53,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 53,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ce13f15c712bdb8f166",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 7",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 53,
+   "pages_in_atlas": 53,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 53,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69de11b086e6d59321ba0fe5",
+   "title": "Empon (Shunga erotic prints)",
+   "year": 1820,
+   "visible": true,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cd93f15c712bdb8f0f7",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 4a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787b64a6785cfd60ccf39",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 2",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ccf3f15c712bdb8f086",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 51,
+   "pages_in_atlas": 51,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 51,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d0acc48e59ad74eb403",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 15a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 51,
+   "pages_in_atlas": 51,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 51,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d20cc48e59ad74eb55c",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 18a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 51,
+   "pages_in_atlas": 51,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 51,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75ce83f15c712bdb8f1d7",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 9a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cfecc48e59ad74eb35d",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787c44a6785cfd60cd596",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 6",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9f309c2a0509efab09b",
+   "title": "Shōni hitsuyō sodategusa, Volume 3",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787d04a6785cfd60cd9b8",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 9",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 49,
+   "pages_in_atlas": 49,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 49,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75abfb3d509fcb7a48ea1",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 6",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787d84a6785cfd60cdd93",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 11",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 44,
+   "pages_in_atlas": 44,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 44,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9f509c2a0509efab1c2",
+   "title": "Shōni hitsuyō sodategusa, Volume 6",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 44,
+   "pages_in_atlas": 44,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 44,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69dfede88d34461cbe7f4ecf",
+   "title": "Genji Monogatari: Miotsukushi (源氏物語 澪標)",
+   "year": 1000,
+   "visible": true,
+   "pages_count": 43,
+   "pages_in_atlas": 43,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 43,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69e014d927a1381d255992b7",
+   "title": "Genji Monogatari (源氏物語, complete woodblock), Vol. 1",
+   "year": 1000,
+   "visible": true,
+   "pages_count": 43,
+   "pages_in_atlas": 43,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 43,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e726a9a409200ea79efa80",
+   "title": "御伽草子 第9冊 (ものくさ太郎 / Monogusa Tarō)",
+   "year": 1700,
+   "visible": true,
+   "pages_count": 42,
+   "pages_in_atlas": 42,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 42,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed9f409c2a0509efab16d",
+   "title": "Shōni hitsuyō sodategusa, Volume 5",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 42,
+   "pages_in_atlas": 42,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 42,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787ba4a6785cfd60cd08d",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 3",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 41,
+   "pages_in_atlas": 41,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 41,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787c14a6785cfd60cd4a1",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 5",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 39,
+   "pages_in_atlas": 39,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 39,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787bd4a6785cfd60cd26d",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 4",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 38,
+   "pages_in_atlas": 38,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 38,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787c84a6785cfd60cd6ac",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 7",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 36,
+   "pages_in_atlas": 36,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 36,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787cc4a6785cfd60cd8be",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 8",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 35,
+   "pages_in_atlas": 35,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 35,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed98109c2a0509efa2e88",
+   "title": "In'yō shindensho",
+   "year": 1569,
+   "visible": false,
+   "pages_count": 34,
+   "pages_in_atlas": 34,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 34,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69dfeded8d34461cbe7f5026",
+   "title": "Hōjōki (方丈記, An Account of My Hut)",
+   "year": 1212,
+   "visible": true,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f33b3d876dd827cbc589d4",
+   "title": "Bunshō",
+   "year": 1600,
+   "visible": true,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed9a309c2a0509efa57e3",
+   "title": "Meishu no hō narabini tsukurikata : mankintan hō",
+   "year": 1806,
+   "visible": false,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69f327b852a77bb28fdb78c4",
+   "title": "Takaezu, 1-kan",
+   "year": 1750,
+   "visible": false,
+   "pages_count": 27,
+   "pages_in_atlas": 27,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 27,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69e4207671f02ebac6264a74",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 3",
+   "year": 1682,
+   "visible": true,
+   "pages_count": 25,
+   "pages_in_atlas": 25,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 25,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e4207771f02ebac6264a8e",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 5",
+   "year": 1682,
+   "visible": true,
+   "pages_count": 25,
+   "pages_in_atlas": 25,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 25,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e4207471f02ebac6264a46",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 1",
+   "year": 1682,
+   "visible": true,
+   "pages_count": 24,
+   "pages_in_atlas": 24,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 24,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e4207871f02ebac6264aa8",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 6",
+   "year": 1682,
+   "visible": true,
+   "pages_count": 24,
+   "pages_in_atlas": 24,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 24,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f33f20876dd827cbc61350",
+   "title": "Kanzashi no shiori",
+   "year": 1850,
+   "visible": true,
+   "pages_count": 24,
+   "pages_in_atlas": 24,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 24,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69f33c06876dd827cbc597d5",
+   "title": "Kōshoku ichidaionna",
+   "year": 1686,
+   "visible": true,
+   "pages_count": 22,
+   "pages_in_atlas": 22,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 22,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69dfede58d34461cbe7f4dde",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 3",
+   "year": 1100,
+   "visible": true,
+   "pages_count": 21,
+   "pages_in_atlas": 21,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 21,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a08a3b48fae3d3f19b7903d",
+   "title": "好色一代男 巻一 (Kōshoku Ichidai Otoko, Vol. 1, 1684 Moronobu ed.)",
+   "year": 1684,
+   "visible": true,
+   "pages_count": 20,
+   "pages_in_atlas": 20,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 20,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a08a3b78fae3d3f19b79057",
+   "title": "好色一代男 巻二 (Kōshoku Ichidai Otoko, Vol. 2, 1684 Moronobu ed.)",
+   "year": 1684,
+   "visible": true,
+   "pages_count": 20,
+   "pages_in_atlas": 20,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 20,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69dfede38d34461cbe7f4db6",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+   "year": 1100,
+   "visible": true,
+   "pages_count": 19,
+   "pages_in_atlas": 19,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 3,
+   "drawn": 3,
+   "pages": 19,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "6a1ed99209c2a0509efa40ad",
+   "title": "Kōkeisai kyūhō, Volume 3",
+   "year": 1790,
+   "visible": false,
+   "pages_count": 200,
+   "pages_in_atlas": 200,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 200,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d18cc48e59ad74eb4e5",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 17a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 110,
+   "pages_in_atlas": 164,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 164,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75cf2cc48e59ad74eb2b4",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 102,
+   "pages_in_atlas": 152,
+   "classes": [
+    "manuscript-cursive",
+    "other",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 152,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d27cc48e59ad74eb5cb",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 19a",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 96,
+   "pages_in_atlas": 143,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 143,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed97b09c2a0509efa274e",
+   "title": "Honchō idan",
+   "year": 1824,
+   "visible": false,
+   "pages_count": 113,
+   "pages_in_atlas": 113,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 113,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9cf09c2a0509efa89b2",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 1",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 97,
+   "pages_in_atlas": 97,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 97,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed98109c2a0509efa2de7",
+   "title": "Imo hyakuchin",
+   "year": 1798,
+   "visible": false,
+   "pages_count": 80,
+   "pages_in_atlas": 80,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 80,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9f209c2a0509efaaf8b",
+   "title": "Shōni hitsuyō sodategusa, Volume 1",
+   "year": 1714,
+   "visible": false,
+   "pages_count": 75,
+   "pages_in_atlas": 75,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 75,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94509c2a0509ef9ec23",
+   "title": "Atami Onsen zukō",
+   "year": 1789,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed9aa09c2a0509efa5e63",
+   "title": "Nihon saijiki, Volume 3-4",
+   "year": 1688,
+   "visible": false,
+   "pages_count": 68,
+   "pages_in_atlas": 68,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 68,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a1ed94309c2a0509ef9ea78",
+   "title": "Ansei korori ryūkōki ōmune",
+   "year": 1858,
+   "visible": false,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e75d14cc48e59ad74eb4af",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 17",
+   "year": 1840,
+   "visible": true,
+   "pages_count": 51,
+   "pages_in_atlas": 51,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 51,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a22d870031a1dedebacfbae",
+   "title": "Weighing the Goods of Love (艶色品定女, Enshoku shina sadame)",
+   "year": 1852,
+   "visible": false,
+   "pages_count": 51,
+   "pages_in_atlas": 51,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 51,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f33d5d876dd827cbc5bf12",
+   "title": "Isshi sōden gokuhi no maki",
+   "year": 1770,
+   "visible": true,
+   "pages_count": 39,
+   "pages_in_atlas": 39,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 39,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69e787d34a6785cfd60cdc15",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 10",
+   "year": 1697,
+   "visible": true,
+   "pages_count": 30,
+   "pages_in_atlas": 30,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 30,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f33eb5876dd827cbc60679",
+   "title": "Chokibune",
+   "year": 1800,
+   "visible": true,
+   "pages_count": 30,
+   "pages_in_atlas": 30,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 30,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69f3276852a77bb28fdb72f8",
+   "title": "Taka kuden, 1-kan",
+   "year": 1750,
+   "visible": true,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "woodblock-cursive",
+    "manuscript-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a08a3bb8fae3d3f19b79071",
+   "title": "好色一代男 巻三 (Kōshoku Ichidai Otoko, Vol. 3, 1684 Moronobu ed.)",
+   "year": 1684,
+   "visible": true,
+   "pages_count": 22,
+   "pages_in_atlas": 22,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 22,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a08a3bf8fae3d3f19b79089",
+   "title": "好色一代男 巻四 (Kōshoku Ichidai Otoko, Vol. 4, 1684 Moronobu ed.)",
+   "year": 1684,
+   "visible": true,
+   "pages_count": 21,
+   "pages_in_atlas": 21,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 21,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69dfede48d34461cbe7f4dca",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 2",
+   "year": 1100,
+   "visible": true,
+   "pages_count": 19,
+   "pages_in_atlas": 19,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 19,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69e726a6a409200ea79efa6c",
+   "title": "御伽草子 第19冊 (一寸法師 / Issun-bōshi)",
+   "year": 1700,
+   "visible": true,
+   "pages_count": 18,
+   "pages_in_atlas": 18,
+   "classes": [
+    "manuscript-cursive",
+    "woodblock-cursive",
+    "other"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 18,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a22d821031a1dedebacfb9b",
+   "title": "Snow on Fuji (艶本 婦慈のゆき, Fuji no yuki)",
+   "year": 1824,
+   "visible": false,
+   "pages_count": 18,
+   "pages_in_atlas": 18,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 18,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "6a22d941031a1dedebacfbe2",
+   "title": "Tōsei Komonchō (Kuniyoshi Shunga)",
+   "year": 1859,
+   "visible": false,
+   "pages_count": 15,
+   "pages_in_atlas": 15,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 15,
+   "verdict": "cursive",
+   "medium": "woodblock"
+  },
+  {
+   "book_id": "69f3276f52a77bb28fdb7316",
+   "title": "Niwa no ki",
+   "year": 1850,
+   "visible": true,
+   "pages_count": 7,
+   "pages_in_atlas": 7,
+   "classes": [
+    "manuscript-cursive",
+    "manuscript-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 2,
+   "drawn": 3,
+   "pages": 7,
+   "verdict": "cursive",
+   "medium": "manuscript"
+  },
+  {
+   "book_id": "69bf6a1bdd5a136c308e2ddf",
+   "title": "謡曲画誌 (上)",
+   "year": 1732,
+   "visible": false,
+   "pages_count": 196,
+   "pages_in_atlas": 196,
+   "classes": [
+    "woodblock-cursive",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 196,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "69bf6a32dd5a136c308e2ea4",
+   "title": "謡曲画誌 (下)",
+   "year": 1732,
+   "visible": false,
+   "pages_count": 194,
+   "pages_in_atlas": 194,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 194,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97e09c2a0509efa2aa4",
+   "title": "Honetsugi ryōji chōhōki",
+   "year": 1745,
+   "visible": false,
+   "pages_count": 134,
+   "pages_in_atlas": 134,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 134,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97909c2a0509efa24e8",
+   "title": "Hanaoka Seishu kenbunroku, Volume 3",
+   "year": 1819,
+   "visible": false,
+   "pages_count": 111,
+   "pages_in_atlas": 111,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-cursive",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 111,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a309c2a0509efa5724",
+   "title": "Kyūkyū tekihō",
+   "year": 1853,
+   "visible": false,
+   "pages_count": 95,
+   "pages_in_atlas": 95,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-cursive"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 95,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94209c2a0509ef9e95a",
+   "title": "Aiiku chadan",
+   "year": 1853,
+   "visible": false,
+   "pages_count": 78,
+   "pages_in_atlas": 78,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 78,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a409c2a0509efa581c",
+   "title": "Mesamashigusa",
+   "year": 1815,
+   "visible": false,
+   "pages_count": 78,
+   "pages_in_atlas": 78,
+   "classes": [
+    "woodblock-cursive",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 78,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2809c2a0509efaf028",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 2",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-cursive",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f609c2a0509efab2b5",
+   "title": "Taisei geka shuko : manuscript",
+   "year": 1834,
+   "visible": false,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94609c2a0509ef9ecb4",
+   "title": "Atami Onsen zukō",
+   "year": 1789,
+   "visible": false,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9af09c2a0509efa63d3",
+   "title": "Oranda yakuyu no shūge",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 43,
+   "pages_in_atlas": 43,
+   "classes": [
+    "illustration",
+    "manuscript-regular",
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 43,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "69e4207571f02ebac6264a5f",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 1 (alt ed.)",
+   "year": 1682,
+   "visible": true,
+   "pages_count": 20,
+   "pages_in_atlas": 20,
+   "classes": [
+    "illustration",
+    "woodblock-cursive",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 3,
+   "pages": 20,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "69e7495285f786e884a4e6ce",
+   "title": "万葉集 (Man'yōshū)",
+   "year": 759,
+   "visible": true,
+   "pages_count": 1,
+   "pages_in_atlas": 1,
+   "classes": [
+    "manuscript-cursive"
+   ],
+   "cursive_pages_drawn": 1,
+   "drawn": 1,
+   "pages": 1,
+   "verdict": "one-cursive-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a09fcb3edaf0f8bef57b793",
+   "title": "Gunsho Ruiju (群書類従) — Classified Collection (incl. Igoshiki 囲碁式 by Genson, 1199)",
+   "year": 1819,
+   "visible": true,
+   "pages_count": 498,
+   "pages_in_atlas": 498,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 498,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bc81a9173577a33741e8de",
+   "title": "Kōtei Kojiki-den Vol. 5 (校訂古事記伝)",
+   "year": null,
+   "visible": false,
+   "pages_count": 428,
+   "pages_in_atlas": 428,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 428,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e0151327a1381d255995b4",
+   "title": "Heihō Sonshi (兵法孫子, Sun Tzu's Art of War in Japanese)",
+   "year": 1600,
+   "visible": true,
+   "pages_count": 270,
+   "pages_in_atlas": 405,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 405,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a42a122831988adcb76c9cd",
+   "title": "Tractatus de regalibus, sive explicatio brevis et methodica C.i. Quae sint regalia, in usibus feudorum, in qua materiae singulae in suum paragraphum dispartitae, traduntur. In praesentia verò, de regalibus in genere, quid juris sit, cum venationum tantum materia, in lucem feliciter prodit",
+   "year": null,
+   "visible": false,
+   "pages_count": 400,
+   "pages_in_atlas": 400,
+   "classes": [
+    "other",
+    "other",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 400,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69bd03afe26ef4b094821b2e",
+   "title": "日本書紀 (Nihon Shoki — Chronicles of Japan)",
+   "year": null,
+   "visible": false,
+   "pages_count": 300,
+   "pages_in_atlas": 300,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 300,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97309c2a0509efa1ce9",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 5",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 268,
+   "pages_in_atlas": 268,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 268,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a42c6e897284560a2b10a15",
+   "title": "Opuscolorum cum epistolis pars prima. Divi Thomae Aquinatis Vita. De sacris Lipsianis in D. Marci templo inventis. Meditationes. De zoophagia, & anthropophagia. Elogia. De arrogantia libellus",
+   "year": null,
+   "visible": false,
+   "pages_count": 266,
+   "pages_in_atlas": 266,
+   "classes": [
+    "other",
+    "other",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 266,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99709c2a0509efa4642",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 1",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 262,
+   "pages_in_atlas": 262,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 262,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd06eae26ef4b094821e7f",
+   "title": "永平正法眼蔵私記 (Shōbōgenzō Shiki — Dōgen's Treasury of the True Dharma Eye, Private Notes)",
+   "year": null,
+   "visible": false,
+   "pages_count": 254,
+   "pages_in_atlas": 254,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 254,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9df09c2a0509efa9955",
+   "title": "Shi si jing fa hui chao, Volume 1",
+   "year": 1659,
+   "visible": false,
+   "pages_count": 248,
+   "pages_in_atlas": 248,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 248,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69dfebaf090ad7d5c33b194c",
+   "title": "Kojiki (古事記), Vols. 2-3",
+   "year": 712,
+   "visible": true,
+   "pages_count": 239,
+   "pages_in_atlas": 239,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 239,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a09fca8edaf0f8bef57b6aa",
+   "title": "Wakan Sansai Zue (和漢三才図会) — Sino-Japanese Encyclopedia of the Three Realms",
+   "year": 1712,
+   "visible": true,
+   "pages_count": 231,
+   "pages_in_atlas": 231,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 231,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69ee9183b713c277fb8210f4",
+   "title": "Tales of Times Now Past",
+   "year": 1120,
+   "visible": false,
+   "pages_count": 222,
+   "pages_in_atlas": 222,
+   "classes": [
+    "error",
+    "error",
+    "error"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 222,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69dfede68d34461cbe7f4df4",
+   "title": "Ko-i Genji Monogatari (校異源氏物語), Vol. 1",
+   "year": 1000,
+   "visible": true,
+   "pages_count": 218,
+   "pages_in_atlas": 218,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 218,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99909c2a0509efa49c0",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 11",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 212,
+   "pages_in_atlas": 212,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 212,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98e09c2a0509efa3b0c",
+   "title": "Keiketsu san'yo, Book 2",
+   "year": 1810,
+   "visible": false,
+   "pages_count": 210,
+   "pages_in_atlas": 210,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 210,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96609c2a0509efa0df3",
+   "title": "Ginkai seibi, Volume 1",
+   "year": 1668,
+   "visible": false,
+   "pages_count": 202,
+   "pages_in_atlas": 202,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 202,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97409c2a0509efa1f02",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 6",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 202,
+   "pages_in_atlas": 202,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 202,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e409c2a0509efa9f86",
+   "title": "Shin kosei jushikei hakki (3 volumes in 1)",
+   "year": 1799,
+   "visible": false,
+   "pages_count": 202,
+   "pages_in_atlas": 202,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 202,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69dfedea8d34461cbe7f4efb",
+   "title": "Heike Monogatari (平家物語), Vol. 2",
+   "year": 1371,
+   "visible": true,
+   "pages_count": 198,
+   "pages_in_atlas": 198,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 198,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e7495685f786e884a4e6d2",
+   "title": "奥の細道 (Oku no Hosomichi)",
+   "year": 1689,
+   "visible": false,
+   "pages_count": 198,
+   "pages_in_atlas": 198,
+   "classes": [
+    "error",
+    "error",
+    "error"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 198,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69f33cf7876dd827cbc5b485",
+   "title": "Zokugo yakugi",
+   "year": 1744,
+   "visible": true,
+   "pages_count": 196,
+   "pages_in_atlas": 196,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 196,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96d09c2a0509efa1683",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 15",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 186,
+   "pages_in_atlas": 186,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 186,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99809c2a0509efa484f",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 10",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 184,
+   "pages_in_atlas": 184,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 184,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96709c2a0509efa0f88",
+   "title": "Ginkai seibi, Volume 2",
+   "year": 1668,
+   "visible": false,
+   "pages_count": 182,
+   "pages_in_atlas": 182,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 182,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99f09c2a0509efa51a7",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 7",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 180,
+   "pages_in_atlas": 180,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 180,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99409c2a0509efa4343",
+   "title": "Kokon Chūka isho benran",
+   "year": 1844,
+   "visible": false,
+   "pages_count": 178,
+   "pages_in_atlas": 178,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 178,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a009c2a0509efa5310",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 8",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 178,
+   "pages_in_atlas": 178,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 178,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a709c2a0509efa5a62",
+   "title": "Mokuden ichiryū",
+   "year": 1615,
+   "visible": false,
+   "pages_count": 172,
+   "pages_in_atlas": 172,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 172,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98d09c2a0509efa39b7",
+   "title": "Keiketsu san'yo, Book 1",
+   "year": 1810,
+   "visible": false,
+   "pages_count": 170,
+   "pages_in_atlas": 170,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 170,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e209c2a0509efa9d40",
+   "title": "Shi si jing fa hui chao, Volume 4",
+   "year": 1659,
+   "visible": false,
+   "pages_count": 170,
+   "pages_in_atlas": 170,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 170,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99c09c2a0509efa4d57",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 3",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 168,
+   "pages_in_atlas": 168,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 168,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96a09c2a0509efa13c4",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 12",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 164,
+   "pages_in_atlas": 164,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 164,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69d5ad934dc55b8478de0ec2",
+   "title": "Hokekyo Yohin Kundoku",
+   "year": 1802,
+   "visible": true,
+   "pages_count": 158,
+   "pages_in_atlas": 158,
+   "classes": [
+    "woodblock-regular",
+    "typeset",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 158,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99b09c2a0509efa4c1a",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 2",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 158,
+   "pages_in_atlas": 158,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 158,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e009c2a0509efa9b46",
+   "title": "Shi si jing fa hui chao, Volume 2",
+   "year": 1659,
+   "visible": false,
+   "pages_count": 156,
+   "pages_in_atlas": 156,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 156,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97f09c2a0509efa2bb1",
+   "title": "Igaku jirin",
+   "year": 1800,
+   "visible": false,
+   "pages_count": 154,
+   "pages_in_atlas": 154,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 154,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97709c2a0509efa229d",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 9",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 150,
+   "pages_in_atlas": 150,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 150,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69c3148aa27f479ae0c07da3",
+   "title": "老子新釈",
+   "year": null,
+   "visible": false,
+   "pages_count": 149,
+   "pages_in_atlas": 149,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 149,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97109c2a0509efa1bc8",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 4",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 144,
+   "pages_in_atlas": 144,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 144,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98509c2a0509efa31c0",
+   "title": "Jūshikei hakki",
+   "year": 1709,
+   "visible": false,
+   "pages_count": 144,
+   "pages_in_atlas": 144,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 144,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98609c2a0509efa32e1",
+   "title": "Jūshikei hakki, Volume 1-3",
+   "year": 1665,
+   "visible": false,
+   "pages_count": 144,
+   "pages_in_atlas": 144,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 144,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96909c2a0509efa11ca",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 10",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 142,
+   "pages_in_atlas": 142,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 142,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e709c2a0509efaa39f",
+   "title": "Shinkan jushi keiraku hakki (3 volumes in 1)",
+   "year": 1618,
+   "visible": false,
+   "pages_count": 142,
+   "pages_in_atlas": 142,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 142,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97609c2a0509efa2184",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 8",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 140,
+   "pages_in_atlas": 140,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 140,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d809c2a0509efa9279",
+   "title": "Sanka hatsumō : igaku shikken gishū, Volume 4",
+   "year": 1799,
+   "visible": false,
+   "pages_count": 140,
+   "pages_in_atlas": 140,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 140,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99d09c2a0509efa4ea8",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 4",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 136,
+   "pages_in_atlas": 136,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 136,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99d09c2a0509efa4fb9",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 5",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 136,
+   "pages_in_atlas": 136,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 136,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014d427a1381d25599233",
+   "title": "Man'yōshū (万葉集), Vol. 3",
+   "year": 759,
+   "visible": true,
+   "pages_count": 131,
+   "pages_in_atlas": 131,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 131,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a109c2a0509efa5475",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 9",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 130,
+   "pages_in_atlas": 130,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 130,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d709c2a0509efa9174",
+   "title": "Sanka hatsumō : igaku shikken gishū, Volume 3",
+   "year": 1799,
+   "visible": false,
+   "pages_count": 130,
+   "pages_in_atlas": 130,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 130,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd0352e26ef4b094821aad",
+   "title": "古事記 中・下 (Kojiki, Vols. 2-3)",
+   "year": null,
+   "visible": false,
+   "pages_count": 128,
+   "pages_in_atlas": 128,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 128,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96f09c2a0509efa18e1",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 17",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 128,
+   "pages_in_atlas": 128,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 128,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98009c2a0509efa2ce6",
+   "title": "Igaku jirin",
+   "year": 1800,
+   "visible": false,
+   "pages_count": 128,
+   "pages_in_atlas": 128,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 128,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9db09c2a0509efa958f",
+   "title": "Seii ryakuron, Volume 1",
+   "year": 1858,
+   "visible": false,
+   "pages_count": 128,
+   "pages_in_atlas": 128,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 128,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9dc09c2a0509efa9759",
+   "title": "Seii ryakuron, Volume 3",
+   "year": 1858,
+   "visible": false,
+   "pages_count": 128,
+   "pages_in_atlas": 128,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 128,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014e727a1381d2559945e",
+   "title": "Hagakure (葉隠), Vol. 3",
+   "year": 1716,
+   "visible": true,
+   "pages_count": 126,
+   "pages_in_atlas": 126,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 126,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014e127a1381d25599371",
+   "title": "Hagakure (葉隠, Book of the Samurai), Vol. 1",
+   "year": 1716,
+   "visible": true,
+   "pages_count": 124,
+   "pages_in_atlas": 124,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 124,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96f09c2a0509efa19e2",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 2",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 122,
+   "pages_in_atlas": 122,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 122,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99509c2a0509efa44a8",
+   "title": "Kōmō yuyaku hōden",
+   "year": 1800,
+   "visible": false,
+   "pages_count": 122,
+   "pages_in_atlas": 122,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 122,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97009c2a0509efa1ad7",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 3",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 120,
+   "pages_in_atlas": 120,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 120,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97d09c2a0509efa28d2",
+   "title": "Honetsugi ryōji chōhōki",
+   "year": 1746,
+   "visible": false,
+   "pages_count": 120,
+   "pages_in_atlas": 120,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 120,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d209c2a0509efa8c8c",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 4",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 120,
+   "pages_in_atlas": 120,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 120,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e309c2a0509efa9e95",
+   "title": "Shi si jing fa hui chao, Volume 5",
+   "year": 1659,
+   "visible": false,
+   "pages_count": 120,
+   "pages_in_atlas": 120,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 120,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97509c2a0509efa2097",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 7",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 118,
+   "pages_in_atlas": 118,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 118,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96e09c2a0509efa17f8",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 16",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 116,
+   "pages_in_atlas": 116,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 116,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e809c2a0509efaa4bc",
+   "title": "Shinkan Kōtei meidō kyūkyō",
+   "year": 1600,
+   "visible": false,
+   "pages_count": 116,
+   "pages_in_atlas": 116,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 116,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98309c2a0509efa2fea",
+   "title": "Jinchū keiraku zui",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 115,
+   "pages_in_atlas": 115,
+   "classes": [
+    "illustration",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 115,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f009c2a0509efaacca",
+   "title": "Shinsō zenpen, Volume 1",
+   "year": 1651,
+   "visible": false,
+   "pages_count": 114,
+   "pages_in_atlas": 114,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 114,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97d09c2a0509efa29c3",
+   "title": "Honetsugi ryōji chōhōki",
+   "year": 1746,
+   "visible": false,
+   "pages_count": 112,
+   "pages_in_atlas": 112,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 112,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014e327a1381d255993ee",
+   "title": "Hagakure (葉隠), Vol. 2",
+   "year": 1716,
+   "visible": true,
+   "pages_count": 111,
+   "pages_in_atlas": 111,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 111,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ef09c2a0509efaabeb",
+   "title": "Shinpō higen gounshō",
+   "year": 1787,
+   "visible": false,
+   "pages_count": 111,
+   "pages_in_atlas": 111,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 111,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3809c2a0509efb0176",
+   "title": "Zentai shinron, Volume 1",
+   "year": 1857,
+   "visible": false,
+   "pages_count": 111,
+   "pages_in_atlas": 111,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 111,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96a09c2a0509efa12e7",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 11",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 110,
+   "pages_in_atlas": 110,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 110,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96c09c2a0509efa15a6",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 14",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 110,
+   "pages_in_atlas": 110,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 110,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99e09c2a0509efa50ca",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 6",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 110,
+   "pages_in_atlas": 110,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 110,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ec09c2a0509efaa8e9",
+   "title": "Shinkyū gokuhi den",
+   "year": 1780,
+   "visible": false,
+   "pages_count": 110,
+   "pages_in_atlas": 110,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 110,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd05f8e26ef4b094821d72",
+   "title": "新鐫碧巌集 上 (Hekiganroku / Blue Cliff Record, Vol. 1)",
+   "year": null,
+   "visible": false,
+   "pages_count": 108,
+   "pages_in_atlas": 108,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 108,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2809c2a0509efaef4f",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 12",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 108,
+   "pages_in_atlas": 108,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 108,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2b09c2a0509efaf2ae",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 6",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 108,
+   "pages_in_atlas": 108,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 108,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94409c2a0509ef9eae1",
+   "title": "Asai Sensei kirigami kuju",
+   "year": 1750,
+   "visible": false,
+   "pages_count": 106,
+   "pages_in_atlas": 106,
+   "classes": [
+    "woodblock-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 106,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96809c2a0509efa10f5",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 1",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 106,
+   "pages_in_atlas": 106,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 106,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014ce27a1381d255991c9",
+   "title": "Man'yōshū (万葉集), Vol. 2",
+   "year": 759,
+   "visible": true,
+   "pages_count": 105,
+   "pages_in_atlas": 105,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 105,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97a09c2a0509efa25c7",
+   "title": "Happō danō kō",
+   "year": 1818,
+   "visible": false,
+   "pages_count": 102,
+   "pages_in_atlas": 102,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 102,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94909c2a0509ef9ef3d",
+   "title": "Chou shoroku : manuscript",
+   "year": 1867,
+   "visible": false,
+   "pages_count": 100,
+   "pages_in_atlas": 100,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 100,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98c09c2a0509efa38ee",
+   "title": "Keido kuketsu",
+   "year": 1734,
+   "visible": false,
+   "pages_count": 100,
+   "pages_in_atlas": 100,
+   "classes": [
+    "woodblock-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 100,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d009c2a0509efa8afe",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 2",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 100,
+   "pages_in_atlas": 100,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 100,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9dc09c2a0509efa9690",
+   "title": "Seii ryakuron, Volume 2",
+   "year": 1858,
+   "visible": false,
+   "pages_count": 100,
+   "pages_in_atlas": 100,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 100,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d109c2a0509efa8bc7",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 3",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 98,
+   "pages_in_atlas": 98,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 98,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2a09c2a0509efaf1e9",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 5",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 98,
+   "pages_in_atlas": 98,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 98,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3909c2a0509efb02e6",
+   "title": "Zentai shinron, Volume 2",
+   "year": 1857,
+   "visible": false,
+   "pages_count": 97,
+   "pages_in_atlas": 97,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 97,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95509c2a0509ef9fea4",
+   "title": "Fuei shinsetsu, Volume 1",
+   "year": 1859,
+   "visible": false,
+   "pages_count": 96,
+   "pages_in_atlas": 96,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 96,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95809c2a0509efa0180",
+   "title": "Fukushō kiran yoku. Shohen. Volume 3",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 96,
+   "pages_in_atlas": 96,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 96,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e109c2a0509efa9c7f",
+   "title": "Shi si jing fa hui chao, Volume 3",
+   "year": 1659,
+   "visible": false,
+   "pages_count": 96,
+   "pages_in_atlas": 96,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 96,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd063ae26ef4b094821ddf",
+   "title": "新鐫碧巌集 下 (Hekiganroku / Blue Cliff Record, Vol. 2)",
+   "year": null,
+   "visible": false,
+   "pages_count": 94,
+   "pages_in_atlas": 94,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 94,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e609c2a0509efaa2e2",
+   "title": "Shinjutsu hiyō, Volume 3",
+   "year": 1865,
+   "visible": false,
+   "pages_count": 94,
+   "pages_in_atlas": 94,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 94,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f009c2a0509efaadaf",
+   "title": "Shinsō zenpen, Volume 2",
+   "year": 1651,
+   "visible": false,
+   "pages_count": 94,
+   "pages_in_atlas": 94,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 94,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97809c2a0509efa242d",
+   "title": "Hanaoka Seishu kenbunroku, Volume 2",
+   "year": 1819,
+   "visible": false,
+   "pages_count": 93,
+   "pages_in_atlas": 93,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 93,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98609c2a0509efa3402",
+   "title": "Jūshikei hayagaten",
+   "year": 1753,
+   "visible": false,
+   "pages_count": 92,
+   "pages_in_atlas": 92,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 92,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98a09c2a0509efa372b",
+   "title": "Kanshō hen, Volume 1",
+   "year": 1779,
+   "visible": false,
+   "pages_count": 92,
+   "pages_in_atlas": 92,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 92,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2909c2a0509efaf130",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 4",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 92,
+   "pages_in_atlas": 92,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 92,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3b09c2a0509efb04fc",
+   "title": "Zōshi : narabi furoku, Volume 2",
+   "year": 1759,
+   "visible": false,
+   "pages_count": 92,
+   "pages_in_atlas": 92,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 92,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd054de26ef4b094821ce4",
+   "title": "出雲國風土記 (Izumo no Kuni Fudoki, 1728 Edition)",
+   "year": null,
+   "visible": false,
+   "pages_count": 90,
+   "pages_in_atlas": 90,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 90,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98b09c2a0509efa37e4",
+   "title": "Kanshō hen, Volume 2",
+   "year": 1779,
+   "visible": false,
+   "pages_count": 90,
+   "pages_in_atlas": 90,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 90,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a709c2a0509efa5bbb",
+   "title": "Mushi Kagami",
+   "year": 1807,
+   "visible": false,
+   "pages_count": 90,
+   "pages_in_atlas": 90,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 90,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a809c2a0509efa5c70",
+   "title": "Myakushinhō : fu shishin taii zen",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 90,
+   "pages_in_atlas": 90,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 90,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99a09c2a0509efa4b69",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 12",
+   "year": 1628,
+   "visible": false,
+   "pages_count": 88,
+   "pages_in_atlas": 88,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 88,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2709c2a0509efaee9e",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 11",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 88,
+   "pages_in_atlas": 88,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 88,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95909c2a0509efa0241",
+   "title": "Fukushō kiran yoku. Shohen. Volume 4",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 86,
+   "pages_in_atlas": 86,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 86,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d909c2a0509efa941b",
+   "title": "Sanron yoku, Volume 2",
+   "year": 1775,
+   "visible": false,
+   "pages_count": 86,
+   "pages_in_atlas": 86,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 86,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95809c2a0509efa00db",
+   "title": "Fukushō kiran yoku. Shohen. Volume 2",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed99609c2a0509efa459d",
+   "title": "Kōmōryū mae yukō hō",
+   "year": 1703,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ae09c2a0509efa62bd",
+   "title": "Oranda seizai, v.2:pt.2",
+   "year": 1805,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d609c2a0509efa9036",
+   "title": "Sanka hatsumō : igaku shikken gishū, Volume 1",
+   "year": 1799,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e809c2a0509efaa5a5",
+   "title": "Shinkykū hyakumondō",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2609c2a0509efaedf9",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 10",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 82,
+   "pages_in_atlas": 82,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 82,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e787db4a6785cfd60cdeb1",
+   "title": "農書輯略 (Nōsho Shūryaku / Agricultural Anthology)",
+   "year": 1800,
+   "visible": true,
+   "pages_count": 81,
+   "pages_in_atlas": 81,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 81,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97c09c2a0509efa2831",
+   "title": "Honchō ika koseki kō : manuscript",
+   "year": 1815,
+   "visible": false,
+   "pages_count": 80,
+   "pages_in_atlas": 80,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 80,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e409c2a0509efaa11b",
+   "title": "Shin'yō kinpu: zen",
+   "year": 1799,
+   "visible": false,
+   "pages_count": 80,
+   "pages_in_atlas": 80,
+   "classes": [
+    "woodblock-regular",
+    "manuscript-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 80,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2b09c2a0509efaf387",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 7",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 80,
+   "pages_in_atlas": 80,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 80,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3709c2a0509efb00d5",
+   "title": "Zentai shinron, Volume 1",
+   "year": 1857,
+   "visible": false,
+   "pages_count": 80,
+   "pages_in_atlas": 80,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 80,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e80694fdad300064d9fbd1",
+   "title": "解体新書 (Kaitai Shinsho / New Book of Anatomy), Head Vol.",
+   "year": 1774,
+   "visible": true,
+   "pages_count": 78,
+   "pages_in_atlas": 78,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 78,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95709c2a0509efa003e",
+   "title": "Fukushō kiran yoku. Shohen. Volume 1",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 78,
+   "pages_in_atlas": 78,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 78,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95a09c2a0509efa02ee",
+   "title": "Fukushō kiran yoku. Shohen. Volume 5",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 78,
+   "pages_in_atlas": 78,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 78,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014c227a1381d2559917b",
+   "title": "Man'yōshū (万葉集), Vol. 1",
+   "year": 759,
+   "visible": true,
+   "pages_count": 77,
+   "pages_in_atlas": 77,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 77,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96109c2a0509efa0a5b",
+   "title": "Geka kinmō zui, Volume 2",
+   "year": 1767,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96b09c2a0509efa150d",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 13",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98709c2a0509efa34bb",
+   "title": "Jūyaku shinsho (2 volumes in 1)",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d309c2a0509efa8dfe",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 6",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ee09c2a0509efaab52",
+   "title": "Shinpō higen gounshō",
+   "year": 1787,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3a09c2a0509efb0463",
+   "title": "Zōshi : narabi furoku, Volume 1",
+   "year": 1759,
+   "visible": false,
+   "pages_count": 76,
+   "pages_in_atlas": 76,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 76,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96109c2a0509efa09c6",
+   "title": "Geka kinmō zui, Volume 1",
+   "year": 1767,
+   "visible": false,
+   "pages_count": 74,
+   "pages_in_atlas": 74,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 74,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d409c2a0509efa8f28",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 8",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 74,
+   "pages_in_atlas": 74,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 74,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e509c2a0509efaa1bc",
+   "title": "Shinjutsu hiyō, Volume 1",
+   "year": 1865,
+   "visible": false,
+   "pages_count": 74,
+   "pages_in_atlas": 74,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 74,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ee09c2a0509efaaabf",
+   "title": "Shinpō higen gounshō",
+   "year": 1787,
+   "visible": false,
+   "pages_count": 73,
+   "pages_in_atlas": 73,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 73,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd030de26ef4b094821a64",
+   "title": "古事記 上 (Kojiki, Vol. 1)",
+   "year": null,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69dfebad090ad7d5c33b1903",
+   "title": "Kojiki (古事記), Vol. 1",
+   "year": 712,
+   "visible": true,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9a209c2a0509efa557a",
+   "title": "Kotsudo seigo zusetsu",
+   "year": 1745,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d409c2a0509efa8e97",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 7",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e509c2a0509efaa251",
+   "title": "Shinjutsu hiyō, Volume 2",
+   "year": 1865,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3809c2a0509efb0255",
+   "title": "Zentai shinron, Volume 2",
+   "year": 1857,
+   "visible": false,
+   "pages_count": 72,
+   "pages_in_atlas": 72,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 72,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ac09c2a0509efa60d3",
+   "title": "Oranda kinso sho : manuscript",
+   "year": 1818,
+   "visible": false,
+   "pages_count": 71,
+   "pages_in_atlas": 71,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 71,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95b09c2a0509efa03f4",
+   "title": "Fukushō kiran yoku. Shohen. Volume 7",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 70,
+   "pages_in_atlas": 70,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 70,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e909c2a0509efaa64a",
+   "title": "Shinkyū bassui taisei, Volume 1",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 70,
+   "pages_in_atlas": 70,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 70,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69c31480a27f479ae0c07d8b",
+   "title": "参同契吹唱",
+   "year": null,
+   "visible": false,
+   "pages_count": 46,
+   "pages_in_atlas": 69,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 69,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d009c2a0509efa8a75",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 10",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 68,
+   "pages_in_atlas": 68,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 68,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d809c2a0509efa9392",
+   "title": "Sanron yoku, Volume 1",
+   "year": 1775,
+   "visible": false,
+   "pages_count": 68,
+   "pages_in_atlas": 68,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 68,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2909c2a0509efaf0a9",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 3",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 67,
+   "pages_in_atlas": 67,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 67,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96209c2a0509efa0af4",
+   "title": "Geka shubo kiku, Volume 1",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 66,
+   "pages_in_atlas": 66,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 66,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2609c2a0509efaed74",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 1",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 66,
+   "pages_in_atlas": 66,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 66,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2c09c2a0509efaf428",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 8",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 66,
+   "pages_in_atlas": 66,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 66,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda2c09c2a0509efaf4ad",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 9",
+   "year": 1599,
+   "visible": false,
+   "pages_count": 66,
+   "pages_in_atlas": 66,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 66,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd068be26ef4b094821e3e",
+   "title": "冠註無門関 (Mumonkan / Gateless Gate)",
+   "year": null,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "typeset",
+    "typeset",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95b09c2a0509efa0481",
+   "title": "Fukushō kiran yoku. Shohen. Volume 8",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96309c2a0509efa0bea",
+   "title": "Geka shubo kiku, Volume 3",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ad09c2a0509efa6162",
+   "title": "Oranda seizai, v.1:pt.1",
+   "year": 1805,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d209c2a0509efa8d7d",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 5",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 64,
+   "pages_in_atlas": 64,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 64,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd0407e26ef4b094821c5b",
+   "title": "延喜式 (Engishiki — Manuscript Edition)",
+   "year": null,
+   "visible": false,
+   "pages_count": 62,
+   "pages_in_atlas": 62,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 62,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98809c2a0509efa35c9",
+   "title": "Kaishi hen",
+   "year": 1772,
+   "visible": false,
+   "pages_count": 62,
+   "pages_in_atlas": 62,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 62,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ae09c2a0509efa6240",
+   "title": "Oranda seizai, v.2:pt.1",
+   "year": 1805,
+   "visible": false,
+   "pages_count": 62,
+   "pages_in_atlas": 62,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 62,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ea09c2a0509efaa781",
+   "title": "Shinkyū bassui taisei, Volume 4",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 62,
+   "pages_in_atlas": 62,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 62,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d509c2a0509efa8fbd",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 9",
+   "year": 1770,
+   "visible": false,
+   "pages_count": 60,
+   "pages_in_atlas": 60,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 60,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f109c2a0509efaae6c",
+   "title": "Shinsō zenpen, Volume 3",
+   "year": 1651,
+   "visible": false,
+   "pages_count": 60,
+   "pages_in_atlas": 60,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 60,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69b875540d6083c38e2e9d1d",
+   "title": "将棋図巧 (Shōgi Zukō)",
+   "year": 1755,
+   "visible": true,
+   "pages_count": 58,
+   "pages_in_atlas": 58,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 58,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ff65",
+   "title": "Fuei shinsetsu, Volume 2",
+   "year": 1859,
+   "visible": false,
+   "pages_count": 58,
+   "pages_in_atlas": 58,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 58,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98809c2a0509efa3554",
+   "title": "Kaden shinsho",
+   "year": 1685,
+   "visible": false,
+   "pages_count": 58,
+   "pages_in_atlas": 58,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 58,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a503ddd12003aed574feaac",
+   "title": "梅園菌譜",
+   "year": 1836,
+   "visible": false,
+   "pages_count": 57,
+   "pages_in_atlas": 57,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 57,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014fb27a1381d25599509",
+   "title": "Fūshikaden (花伝書, Kadensho — Zeami's Treatise on Noh)",
+   "year": 1418,
+   "visible": true,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94f09c2a0509ef9f880",
+   "title": "Dialogues in the Canton vernacular",
+   "year": 1850,
+   "visible": false,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96209c2a0509efa0b79",
+   "title": "Geka shubo kiku, Volume 2",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96409c2a0509efa0ccc",
+   "title": "Geka shubo kiku, Volume 5",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9af09c2a0509efa6362",
+   "title": "Oranda seizai, v.3",
+   "year": 1805,
+   "visible": false,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9eb09c2a0509efaa7fe",
+   "title": "Shinkyū bassui taisei, Volume 5",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 56,
+   "pages_in_atlas": 56,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 56,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "title": "Oku no Hosomichi (奥の細道, Narrow Road to the Deep North)",
+   "year": 1694,
+   "visible": true,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95a09c2a0509efa038b",
+   "title": "Fukushō kiran yoku. Shohen. Volume 6",
+   "year": 1809,
+   "visible": false,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98f09c2a0509efa3cb1",
+   "title": "Kinpu, Volume 1",
+   "year": 1835,
+   "visible": false,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda0c09c2a0509efacd9f",
+   "title": "Wa-Kan ninjin kō",
+   "year": 1774,
+   "visible": false,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3909c2a0509efb03a9",
+   "title": "Zentai shinron, Volume 3 / Atlas",
+   "year": 1857,
+   "visible": false,
+   "pages_count": 52,
+   "pages_in_atlas": 52,
+   "classes": [
+    "illustration",
+    "woodblock-regular",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 52,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd0596e26ef4b094821d3f",
+   "title": "先代旧事本紀 巻1 (Sendai Kuji Hongi, Vol. 1, 1644 Ed.)",
+   "year": null,
+   "visible": false,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e8069cfdad300064d9fc55",
+   "title": "解体新書 (Kaitai Shinsho), Vol. 2",
+   "year": 1774,
+   "visible": true,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96509c2a0509efa0d8e",
+   "title": "Geka shubo kiku, Volume 7",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 50,
+   "pages_in_atlas": 50,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 50,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd071fe26ef4b094821f7e",
+   "title": "宝慶記 (Hōkyōki — Dōgen's Record from China)",
+   "year": null,
+   "visible": false,
+   "pages_count": 49,
+   "pages_in_atlas": 49,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 49,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97809c2a0509efa23ca",
+   "title": "Hanaoka Seishu kenbunroku, Volume 1",
+   "year": 1819,
+   "visible": false,
+   "pages_count": 49,
+   "pages_in_atlas": 49,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 49,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd04a6e26ef4b094821c9a",
+   "title": "延喜祝詞式 (Engishiki Norito — Shinto Ritual Prayers)",
+   "year": null,
+   "visible": false,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e80698fdad300064d9fc22",
+   "title": "解体新書 (Kaitai Shinsho), Vol. 1",
+   "year": 1774,
+   "visible": true,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96309c2a0509efa0c6b",
+   "title": "Geka shubo kiku, Volume 4",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98f09c2a0509efa3d1a",
+   "title": "Kinpu, Volume 2",
+   "year": 1835,
+   "visible": false,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9dd09c2a0509efa985a",
+   "title": "Seii ryakuron, Volume 4",
+   "year": 1858,
+   "visible": false,
+   "pages_count": 48,
+   "pages_in_atlas": 48,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 48,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69b8755a0d6083c38e2e9d7f",
+   "title": "将棋絶妙 上 (Shōgi Zetsumyō, vol. 1)",
+   "year": 1797,
+   "visible": true,
+   "pages_count": 47,
+   "pages_in_atlas": 47,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 47,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ffe1",
+   "title": "Fukushin shishō zu",
+   "year": 1864,
+   "visible": false,
+   "pages_count": 46,
+   "pages_in_atlas": 46,
+   "classes": [
+    "woodblock-regular",
+    "manuscript-regular",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 46,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ad09c2a0509efa61e3",
+   "title": "Oranda seizai, v.1:pt.2",
+   "year": 1805,
+   "visible": false,
+   "pages_count": 46,
+   "pages_in_atlas": 46,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 46,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69dfedf18d34461cbe7f50ae",
+   "title": "Nihon Shoki (日本書紀, Chronicles of Japan), Vol. 1 (1599 woodblock)",
+   "year": 720,
+   "visible": true,
+   "pages_count": 45,
+   "pages_in_atlas": 45,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 45,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9dd09c2a0509efa98bb",
+   "title": "Seikotsu zue",
+   "year": 1690,
+   "visible": false,
+   "pages_count": 44,
+   "pages_in_atlas": 44,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 44,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ea09c2a0509efaa728",
+   "title": "Shinkyū bassui taisei, Volume 3",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 44,
+   "pages_in_atlas": 44,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 44,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e014ea27a1381d255994dd",
+   "title": "Go Rin no Sho (五輪書, The Book of Five Rings)",
+   "year": 1645,
+   "visible": true,
+   "pages_count": 43,
+   "pages_in_atlas": 43,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 43,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98b09c2a0509efa3899",
+   "title": "Keido kuketsu",
+   "year": 1734,
+   "visible": false,
+   "pages_count": 42,
+   "pages_in_atlas": 42,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 42,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f109c2a0509efaaee5",
+   "title": "Shintei tōshu kihō",
+   "year": 1849,
+   "visible": false,
+   "pages_count": 42,
+   "pages_in_atlas": 42,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 42,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69f33caa876dd827cbc5ab7d",
+   "title": "Chōgonka kōgi",
+   "year": 1734,
+   "visible": true,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96009c2a0509efa0975",
+   "title": "Ganmoku hihō : [Takenouchi ryōji okuhi no kan]",
+   "year": 1800,
+   "visible": false,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed96409c2a0509efa0d3d",
+   "title": "Geka shubo kiku, Volume 6",
+   "year": 1686,
+   "visible": false,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9e909c2a0509efaa6d7",
+   "title": "Shinkyū bassui taisei, Volume 2",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f209c2a0509efaaf3a",
+   "title": "Shokumotsu wage taisei nukigaki kyūhō",
+   "year": 1722,
+   "visible": false,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "manuscript-regular",
+    "illustration",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1eda3a09c2a0509efb0412",
+   "title": "Zofu zesetsu : manuscript",
+   "year": 1550,
+   "visible": false,
+   "pages_count": 40,
+   "pages_in_atlas": 40,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 40,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9da09c2a0509efa9542",
+   "title": "Sansai kikan, Volume 3",
+   "year": 1808,
+   "visible": false,
+   "pages_count": 38,
+   "pages_in_atlas": 38,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 38,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e0150927a1381d25599587",
+   "title": "Hokusai Manga (北斎漫画), Vol. 3",
+   "year": 1815,
+   "visible": true,
+   "pages_count": 37,
+   "pages_in_atlas": 37,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 37,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69b875570d6083c38e2e9d59",
+   "title": "将棋図巧詰手 (Shōgi Zukō Tsumete)",
+   "year": 1755,
+   "visible": true,
+   "pages_count": 36,
+   "pages_in_atlas": 36,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 36,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e0150127a1381d25599564",
+   "title": "Hokusai Manga (北斎漫画), Vol. 2",
+   "year": 1815,
+   "visible": true,
+   "pages_count": 34,
+   "pages_in_atlas": 34,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 34,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69e014fe27a1381d25599542",
+   "title": "Hokusai Manga (北斎漫画), Vol. 1",
+   "year": 1814,
+   "visible": true,
+   "pages_count": 33,
+   "pages_in_atlas": 33,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 33,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9da09c2a0509efa9501",
+   "title": "Sansai kikan, Volume 2",
+   "year": 1808,
+   "visible": false,
+   "pages_count": 32,
+   "pages_in_atlas": 32,
+   "classes": [
+    "woodblock-regular",
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 32,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9eb09c2a0509efaa86f",
+   "title": "Shinkyū bassui taisei, Volume 6",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 32,
+   "pages_in_atlas": 32,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 32,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9d909c2a0509efa94c8",
+   "title": "Sansai kikan, Volume 1",
+   "year": 1808,
+   "visible": false,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "woodblock-regular",
+    "other",
+    "other"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ec09c2a0509efaa8b0",
+   "title": "Shinkyū bassui taisei, Volume 7",
+   "year": 1699,
+   "visible": false,
+   "pages_count": 28,
+   "pages_in_atlas": 28,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 28,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69f33bd6876dd827cbc5960a",
+   "title": "Seiri senjimon",
+   "year": 1669,
+   "visible": true,
+   "pages_count": 26,
+   "pages_in_atlas": 26,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 26,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed97b09c2a0509efa2719",
+   "title": "Hiruta-ryū sanka",
+   "year": 1817,
+   "visible": false,
+   "pages_count": 26,
+   "pages_in_atlas": 26,
+   "classes": [
+    "manuscript-regular",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 26,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69bd0507e26ef4b094821ccb",
+   "title": "古語拾遺 (Kogo Shūi — Gleanings from Ancient Words)",
+   "year": null,
+   "visible": false,
+   "pages_count": 24,
+   "pages_in_atlas": 24,
+   "classes": [
+    "woodblock-regular",
+    "other",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 24,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a0852a03fe25a995d5bbee4",
+   "title": "参同契吹唱",
+   "year": 1683,
+   "visible": true,
+   "pages_count": 23,
+   "pages_in_atlas": 23,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 23,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a503c562f6539fb38937848",
+   "title": "菌譜",
+   "year": 1835,
+   "visible": true,
+   "pages_count": 22,
+   "pages_in_atlas": 22,
+   "classes": [
+    "manuscript-regular",
+    "manuscript-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 22,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e413522d8eeae8614a0665",
+   "title": "Hokusai Shunga",
+   "year": 1820,
+   "visible": false,
+   "pages_count": 20,
+   "pages_in_atlas": 20,
+   "classes": [
+    "error",
+    "error",
+    "error"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 20,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69f328cbaeeee0fa38c6508a",
+   "title": "Chōsen buntsū",
+   "year": null,
+   "visible": false,
+   "pages_count": 18,
+   "pages_in_atlas": 18,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 18,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69f3277552a77bb28fdb731f",
+   "title": "[Hinagata-chō]",
+   "year": 1850,
+   "visible": true,
+   "pages_count": 14,
+   "pages_in_atlas": 14,
+   "classes": [
+    "illustration",
+    "illustration",
+    "illustration"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 14,
+   "verdict": "no-text-page",
+   "medium": null
+  },
+  {
+   "book_id": "69c31474a27f479ae0c07d7e",
+   "title": "陰符経",
+   "year": null,
+   "visible": false,
+   "pages_count": 12,
+   "pages_in_atlas": 12,
+   "classes": [
+    "typeset",
+    "typeset",
+    "typeset"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 12,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed94009c2a0509ef9e869",
+   "title": "[Saru kaibōzu]",
+   "year": 1813,
+   "visible": false,
+   "pages_count": 11,
+   "pages_in_atlas": 11,
+   "classes": [
+    "manuscript-regular",
+    "illustration",
+    "manuscript-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 11,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "69e0150f27a1381d255995ad",
+   "title": "Hannya Shingyō (般若心経, Heart Sutra)",
+   "year": 700,
+   "visible": true,
+   "pages_count": 6,
+   "pages_in_atlas": 6,
+   "classes": [
+    "woodblock-regular",
+    "woodblock-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 6,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ffda",
+   "title": "Fukujin meido no zu",
+   "year": 1661,
+   "visible": false,
+   "pages_count": 3,
+   "pages_in_atlas": 3,
+   "classes": [
+    "illustration",
+    "manuscript-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 3,
+   "pages": 3,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed98409c2a0509efa31bb",
+   "title": "Jinshin gozō no zu",
+   "year": 1661,
+   "visible": false,
+   "pages_count": 2,
+   "pages_in_atlas": 2,
+   "classes": [
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 2,
+   "pages": 2,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9ab09c2a0509efa60ce",
+   "title": "Ojin meido no zu",
+   "year": 1661,
+   "visible": false,
+   "pages_count": 2,
+   "pages_in_atlas": 2,
+   "classes": [
+    "illustration",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 2,
+   "pages": 2,
+   "verdict": "not-cursive",
+   "medium": null
+  },
+  {
+   "book_id": "6a1ed9f509c2a0509efab2b0",
+   "title": "Sokujin meidō no zu",
+   "year": 1661,
+   "visible": false,
+   "pages_count": 2,
+   "pages_in_atlas": 2,
+   "classes": [
+    "manuscript-regular",
+    "woodblock-regular"
+   ],
+   "cursive_pages_drawn": 0,
+   "drawn": 2,
+   "pages": 2,
+   "verdict": "not-cursive",
+   "medium": null
+  }
+ ]
+}

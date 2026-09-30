@@ -1,0 +1,606 @@
+{
+ "seed": 59250,
+ "drawn_at": "2026-09-29T23:16:48.193Z",
+ "rows": [
+  {
+   "id": "v01",
+   "slug": "census-facd04-p44",
+   "book_id": "6a1eda0b09c2a0509efacd04",
+   "page_number": 44,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1eda0b09c2a0509efacd04/44.jpg",
+   "title": "Toriagebaba kokoroegusa, ichimei, Toriagebaba hikken. Volume 2",
+   "year": 1833,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v02",
+   "slug": "census-faef4f-p56",
+   "book_id": "6a1eda2809c2a0509efaef4f",
+   "page_number": 56,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1eda2809c2a0509efaef4f/56.jpg",
+   "title": "Xin kan Fu ren da quan liang fang, Volume 12",
+   "year": 1599,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v03",
+   "slug": "census-fa34bb-p21",
+   "book_id": "6a1ed98709c2a0509efa34bb",
+   "page_number": 21,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed98709c2a0509efa34bb/21.jpg",
+   "title": "Jūyaku shinsho (2 volumes in 1)",
+   "year": 1690,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v04",
+   "slug": "census-f9ebb6-p14",
+   "book_id": "6a1ed94509c2a0509ef9ebb6",
+   "page_number": 14,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed94509c2a0509ef9ebb6/14.jpg",
+   "title": "Atami Onsen zukō",
+   "year": 1789,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v05",
+   "slug": "census-0cd6ac-p12",
+   "book_id": "69e787c84a6785cfd60cd6ac",
+   "page_number": 12,
+   "image_url": "https://images.sourcelibrary.org/archived/69e787c84a6785cfd60cd6ac/12.jpg",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 7",
+   "year": 1697,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v06",
+   "slug": "census-fa2ce6-p38",
+   "book_id": "6a1ed98009c2a0509efa2ce6",
+   "page_number": 38,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed98009c2a0509efa2ce6/38.jpg",
+   "title": "Igaku jirin",
+   "year": 1800,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v07",
+   "slug": "census-4eb592-p36",
+   "book_id": "69e75d23cc48e59ad74eb592",
+   "page_number": 36,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75d23cc48e59ad74eb592/36.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 19",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v08",
+   "slug": "census-fa59d5-p39",
+   "book_id": "6a1ed9a609c2a0509efa59d5",
+   "page_number": 39,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9a609c2a0509efa59d5/39.jpg",
+   "title": "Miyako fūzoku keshōden, Volume 3",
+   "year": 1851,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v09",
+   "slug": "census-fa5d25-p47",
+   "book_id": "6a1ed9a809c2a0509efa5d25",
+   "page_number": 47,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9a809c2a0509efa5d25/47.jpg",
+   "title": "Myoyaku shinsen kosho ko",
+   "year": 1837,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v10",
+   "slug": "census-7f5079-p12",
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "page_number": 12,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfedef8d34461cbe7f5079/12.jpg",
+   "title": "Oku no Hosomichi (奥の細道, Narrow Road to the Deep North)",
+   "year": 1694,
+   "classifier": "typeset"
+  },
+  {
+   "id": "v11",
+   "slug": "census-fa5310-p176",
+   "book_id": "6a1ed9a009c2a0509efa5310",
+   "page_number": 176,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9a009c2a0509efa5310/176.jpg",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 8",
+   "year": 1628,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v12",
+   "slug": "census-faa728-p10",
+   "book_id": "6a1ed9ea09c2a0509efaa728",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9ea09c2a0509efaa728/10.jpg",
+   "title": "Shinkyū bassui taisei, Volume 3",
+   "year": 1699,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v13",
+   "slug": "census-4eb520-p55",
+   "book_id": "69e75d1ccc48e59ad74eb520",
+   "page_number": 55,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75d1ccc48e59ad74eb520/55.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 18",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v14",
+   "slug": "census-fab09b-p19",
+   "book_id": "6a1ed9f309c2a0509efab09b",
+   "page_number": 19,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9f309c2a0509efab09b/19.jpg",
+   "title": "Shōni hitsuyō sodategusa, Volume 3",
+   "year": 1714,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v15",
+   "slug": "census-821e3e-p32",
+   "book_id": "69bd068be26ef4b094821e3e",
+   "page_number": 32,
+   "image_url": "https://images.sourcelibrary.org/archived/69bd068be26ef4b094821e3e/32.jpg",
+   "title": "冠註無門関 (Mumonkan / Gateless Gate)",
+   "year": null,
+   "classifier": "typeset"
+  },
+  {
+   "id": "v16",
+   "slug": "census-fb0412-p29",
+   "book_id": "6a1eda3a09c2a0509efb0412",
+   "page_number": 29,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1eda3a09c2a0509efb0412/29.jpg",
+   "title": "Zofu zesetsu : manuscript",
+   "year": 1550,
+   "classifier": "manuscript-regular"
+  },
+  {
+   "id": "v17",
+   "slug": "census-fa8f28-p18",
+   "book_id": "6a1ed9d409c2a0509efa8f28",
+   "page_number": 18,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9d409c2a0509efa8f28/18.jpg",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 8",
+   "year": 1770,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v18",
+   "slug": "census-fa12e7-p95",
+   "book_id": "6a1ed96a09c2a0509efa12e7",
+   "page_number": 95,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed96a09c2a0509efa12e7/95.jpg",
+   "title": "Gōrui Ri Ten sensei igaku nyūmon, Volume 11",
+   "year": 1722,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v19",
+   "slug": "census-4eb35d-p43",
+   "book_id": "69e75cfecc48e59ad74eb35d",
+   "page_number": 43,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75cfecc48e59ad74eb35d/43.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13a",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v20",
+   "slug": "census-fa8afe-p44",
+   "book_id": "6a1ed9d009c2a0509efa8afe",
+   "page_number": 44,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9d009c2a0509efa8afe/44.jpg",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 2",
+   "year": 1770,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v21",
+   "slug": "census-fa274e-p108",
+   "book_id": "6a1ed97b09c2a0509efa274e",
+   "page_number": 108,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed97b09c2a0509efa274e/108.jpg",
+   "title": "Honchō idan",
+   "year": 1824,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v22",
+   "slug": "census-7f4db6-p5",
+   "book_id": "69dfede38d34461cbe7f4db6",
+   "page_number": 5,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfede38d34461cbe7f4db6/5.jpg",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+   "year": 1100,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v23",
+   "slug": "census-7f4ecf-p6",
+   "book_id": "69dfede88d34461cbe7f4ecf",
+   "page_number": 6,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfede88d34461cbe7f4ecf/6.jpg",
+   "title": "Genji Monogatari: Miotsukushi (源氏物語 澪標)",
+   "year": 1000,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v24",
+   "slug": "census-fa4ea8-p86",
+   "book_id": "6a1ed99d09c2a0509efa4ea8",
+   "page_number": 86,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed99d09c2a0509efa4ea8/86.jpg",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 4",
+   "year": 1628,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v25",
+   "slug": "census-0cd26d-p24",
+   "book_id": "69e787bd4a6785cfd60cd26d",
+   "page_number": 24,
+   "image_url": "https://images.sourcelibrary.org/archived/69e787bd4a6785cfd60cd26d/24.jpg",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 4",
+   "year": 1697,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v26",
+   "slug": "census-fa32e1-p25",
+   "book_id": "6a1ed98609c2a0509efa32e1",
+   "page_number": 25,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed98609c2a0509efa32e1/25.jpg",
+   "title": "Jūshikei hakki, Volume 1-3",
+   "year": 1665,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v27",
+   "slug": "census-fa0d8e-p37",
+   "book_id": "6a1ed96509c2a0509efa0d8e",
+   "page_number": 37,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed96509c2a0509efa0d8e/37.jpg",
+   "title": "Geka shubo kiku, Volume 7",
+   "year": 1686,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v28",
+   "slug": "census-7f4dca-p11",
+   "book_id": "69dfede48d34461cbe7f4dca",
+   "page_number": 11,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfede48d34461cbe7f4dca/11.jpg",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 2",
+   "year": 1100,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v29",
+   "slug": "census-5995ad-p2",
+   "book_id": "69e0150f27a1381d255995ad",
+   "page_number": 2,
+   "image_url": "https://images.sourcelibrary.org/archived/69e0150f27a1381d255995ad/2.jpg",
+   "title": "Hannya Shingyō (般若心経, Heart Sutra)",
+   "year": 700,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v30",
+   "slug": "census-fa6162-p21",
+   "book_id": "6a1ed9ad09c2a0509efa6162",
+   "page_number": 21,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9ad09c2a0509efa6162/21.jpg",
+   "title": "Oranda seizai, v.1:pt.1",
+   "year": 1805,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v31",
+   "slug": "census-faae6c-p49",
+   "book_id": "6a1ed9f109c2a0509efaae6c",
+   "page_number": 49,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9f109c2a0509efaae6c/49.jpg",
+   "title": "Shinsō zenpen, Volume 3",
+   "year": 1651,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v32",
+   "slug": "census-7f4efb-p39",
+   "book_id": "69dfedea8d34461cbe7f4efb",
+   "page_number": 39,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfedea8d34461cbe7f4efb/39.jpg",
+   "title": "Heike Monogatari (平家物語), Vol. 2",
+   "year": 1371,
+   "classifier": "typeset"
+  },
+  {
+   "id": "v33",
+   "slug": "census-faa6d7-p10",
+   "book_id": "6a1ed9e909c2a0509efaa6d7",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9e909c2a0509efaa6d7/10.jpg",
+   "title": "Shinkyū bassui taisei, Volume 2",
+   "year": 1699,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v34",
+   "slug": "census-faa251-p18",
+   "book_id": "6a1ed9e509c2a0509efaa251",
+   "page_number": 18,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9e509c2a0509efaa251/18.jpg",
+   "title": "Shinjutsu hiyō, Volume 2",
+   "year": 1865,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v35",
+   "slug": "census-4eb4af-p15",
+   "book_id": "69e75d14cc48e59ad74eb4af",
+   "page_number": 15,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75d14cc48e59ad74eb4af/15.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 17",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v36",
+   "slug": "census-fa0af4-p32",
+   "book_id": "6a1ed96209c2a0509efa0af4",
+   "page_number": 32,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed96209c2a0509efa0af4/32.jpg",
+   "title": "Geka shubo kiku, Volume 1",
+   "year": 1686,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v37",
+   "slug": "census-0cdeb1-p76",
+   "book_id": "69e787db4a6785cfd60cdeb1",
+   "page_number": 76,
+   "image_url": "https://images.sourcelibrary.org/archived/69e787db4a6785cfd60cdeb1/76.jpg",
+   "title": "農書輯略 (Nōsho Shūryaku / Agricultural Anthology)",
+   "year": 1800,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v38",
+   "slug": "census-facc47-p41",
+   "book_id": "6a1eda0b09c2a0509efacc47",
+   "page_number": 41,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1eda0b09c2a0509efacc47/41.jpg",
+   "title": "Toriagebaba kokoroegusa, ichimei, Toriagebaba hikken. Volume 1",
+   "year": 1833,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v39",
+   "slug": "census-c597d5-p6",
+   "book_id": "69f33c06876dd827cbc597d5",
+   "page_number": 6,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33c06876dd827cbc597d5/6.jpg",
+   "title": "Kōshoku ichidaionna",
+   "year": 1686,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v40",
+   "slug": "census-821b2e-p299",
+   "book_id": "69bd03afe26ef4b094821b2e",
+   "page_number": 299,
+   "image_url": "https://images.sourcelibrary.org/archived/69bd03afe26ef4b094821b2e/299.jpg",
+   "title": "日本書紀 (Nihon Shoki — Chronicles of Japan)",
+   "year": null,
+   "classifier": "typeset"
+  },
+  {
+   "id": "v41",
+   "slug": "census-0cdd93-p13",
+   "book_id": "69e787d84a6785cfd60cdd93",
+   "page_number": 13,
+   "image_url": "https://images.sourcelibrary.org/archived/69e787d84a6785cfd60cdd93/13.jpg",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 11",
+   "year": 1697,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v42",
+   "slug": "census-a48ed4-p93",
+   "book_id": "69e75ac4b3d509fcb7a48ed4",
+   "page_number": 93,
+   "image_url": "https://images.sourcelibrary.org/pages/69e75ac4b3d509fcb7a48ed4/sp69f64bd42c75f7107e80faca.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 9",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v43",
+   "slug": "census-7f5043-p41",
+   "book_id": "69dfedee8d34461cbe7f5043",
+   "page_number": 41,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfedee8d34461cbe7f5043/41.jpg",
+   "title": "Ise Monogatari (伊勢物語, Tales of Ise)",
+   "year": 900,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v44",
+   "slug": "census-f9ea78-p8",
+   "book_id": "6a1ed94309c2a0509ef9ea78",
+   "page_number": 8,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed94309c2a0509ef9ea78/8.jpg",
+   "title": "Ansei korori ryūkōki ōmune",
+   "year": 1858,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v45",
+   "slug": "census-fab2b5-p39",
+   "book_id": "6a1ed9f609c2a0509efab2b5",
+   "page_number": 39,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9f609c2a0509efab2b5/39.jpg",
+   "title": "Taisei geka shuko : manuscript",
+   "year": 1834,
+   "classifier": "manuscript-regular"
+  },
+  {
+   "id": "v46",
+   "slug": "census-9efa2d-p25",
+   "book_id": "69e726a2a409200ea79efa2d",
+   "page_number": 25,
+   "image_url": "https://images.sourcelibrary.org/archived/69e726a2a409200ea79efa2d/25.jpg",
+   "title": "御伽草子 第1冊 (文正草子 / Bunsho Sōshi)",
+   "year": 1700,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v47",
+   "slug": "census-59931f-p27",
+   "book_id": "69e014df27a1381d2559931f",
+   "page_number": 27,
+   "image_url": "https://images.sourcelibrary.org/archived/69e014df27a1381d2559931f/27.jpg",
+   "title": "Genji Monogatari (源氏物語), Vol. 3",
+   "year": 1000,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v48",
+   "slug": "census-fa5f91-p76",
+   "book_id": "6a1ed9ab09c2a0509efa5f91",
+   "page_number": 76,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9ab09c2a0509efa5f91/76.jpg",
+   "title": "Nihon saijiki, Volume 6-7",
+   "year": 1688,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v49",
+   "slug": "census-fa8e97-p62",
+   "book_id": "6a1ed9d409c2a0509efa8e97",
+   "page_number": 62,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9d409c2a0509efa8e97/62.jpg",
+   "title": "Ryōji chadan: zenbu ju-satsu, Volume 7",
+   "year": 1770,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v50",
+   "slug": "census-faa86f-p9",
+   "book_id": "6a1ed9eb09c2a0509efaa86f",
+   "page_number": 9,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9eb09c2a0509efaa86f/9.jpg",
+   "title": "Shinkyū bassui taisei, Volume 6",
+   "year": 1699,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v51",
+   "slug": "census-b8f012-p37",
+   "book_id": "69e75cc83f15c712bdb8f012",
+   "page_number": 37,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75cc83f15c712bdb8f012/37.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 2",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v52",
+   "slug": "census-4eb55c-p17",
+   "book_id": "69e75d20cc48e59ad74eb55c",
+   "page_number": 17,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75d20cc48e59ad74eb55c/17.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 18a",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v53",
+   "slug": "census-4eb403-p13",
+   "book_id": "69e75d0acc48e59ad74eb403",
+   "page_number": 13,
+   "image_url": "https://images.sourcelibrary.org/archived/69e75d0acc48e59ad74eb403/13.jpg",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 15a",
+   "year": 1840,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v54",
+   "slug": "census-fa4b69-p56",
+   "book_id": "6a1ed99a09c2a0509efa4b69",
+   "page_number": 56,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed99a09c2a0509efa4b69/56.jpg",
+   "title": "Kōtei naikyō somon chūshō hatsubi, Volume 12",
+   "year": 1628,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v55",
+   "slug": "census-faa8e9-p104",
+   "book_id": "6a1ed9ec09c2a0509efaa8e9",
+   "page_number": 104,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9ec09c2a0509efaa8e9/104.jpg",
+   "title": "Shinkyū gokuhi den",
+   "year": 1780,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v56",
+   "slug": "census-b7903d-p10",
+   "book_id": "6a08a3b48fae3d3f19b7903d",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/6a08a3b48fae3d3f19b7903d/10.jpg",
+   "title": "好色一代男 巻一 (Kōshoku Ichidai Otoko, Vol. 1, 1684 Moronobu ed.)",
+   "year": 1684,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v57",
+   "slug": "census-fa63d3-p37",
+   "book_id": "6a1ed9af09c2a0509efa63d3",
+   "page_number": 37,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9af09c2a0509efa63d3/37.jpg",
+   "title": "Oranda yakuyu no shūge",
+   "year": 1690,
+   "classifier": "manuscript-cursive"
+  },
+  {
+   "id": "v58",
+   "slug": "census-264aa8-p7",
+   "book_id": "69e4207871f02ebac6264aa8",
+   "page_number": 7,
+   "image_url": "https://images.sourcelibrary.org/archived/69e4207871f02ebac6264aa8/7.jpg",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 6",
+   "year": 1682,
+   "classifier": "woodblock-cursive"
+  },
+  {
+   "id": "v59",
+   "slug": "census-faa781-p48",
+   "book_id": "6a1ed9ea09c2a0509efaa781",
+   "page_number": 48,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed9ea09c2a0509efaa781/48.jpg",
+   "title": "Shinkyū bassui taisei, Volume 4",
+   "year": 1699,
+   "classifier": "woodblock-regular"
+  },
+  {
+   "id": "v60",
+   "slug": "census-fa0b79-p23",
+   "book_id": "6a1ed96209c2a0509efa0b79",
+   "page_number": 23,
+   "image_url": "https://images.sourcelibrary.org/archived/6a1ed96209c2a0509efa0b79/23.jpg",
+   "title": "Geka shubo kiku, Volume 2",
+   "year": 1686,
+   "classifier": "woodblock-regular"
+  }
+ ]
+}

@@ -1,0 +1,2858 @@
+{
+ "seed": 5100,
+ "cutoff_year": 1868,
+ "per_book": 3,
+ "skip_front": 0.1,
+ "drawn_at": "2026-09-25T14:42:36.522Z",
+ "catalog": "/Users/dereklomas/sl-corpus/catalog.jsonl",
+ "books": [
+  {
+   "book_id": "69b875540d6083c38e2e9d1d",
+   "drawn": 3,
+   "pages_in_atlas": 58,
+   "pages_count": 58,
+   "visible": true,
+   "year": 1755
+  },
+  {
+   "book_id": "69b875570d6083c38e2e9d59",
+   "drawn": 3,
+   "pages_in_atlas": 36,
+   "pages_count": 36,
+   "visible": true,
+   "year": 1755
+  },
+  {
+   "book_id": "69b8755a0d6083c38e2e9d7f",
+   "drawn": 3,
+   "pages_in_atlas": 47,
+   "pages_count": 47,
+   "visible": true,
+   "year": 1797
+  },
+  {
+   "book_id": "69bc81a9173577a33741e8de",
+   "drawn": 3,
+   "pages_in_atlas": 428,
+   "pages_count": 428,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd030de26ef4b094821a64",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd0352e26ef4b094821aad",
+   "drawn": 3,
+   "pages_in_atlas": 128,
+   "pages_count": 128,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd03afe26ef4b094821b2e",
+   "drawn": 3,
+   "pages_in_atlas": 300,
+   "pages_count": 300,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd0407e26ef4b094821c5b",
+   "drawn": 3,
+   "pages_in_atlas": 62,
+   "pages_count": 62,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd04a6e26ef4b094821c9a",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd0507e26ef4b094821ccb",
+   "drawn": 3,
+   "pages_in_atlas": 24,
+   "pages_count": 24,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd054de26ef4b094821ce4",
+   "drawn": 3,
+   "pages_in_atlas": 90,
+   "pages_count": 90,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd0596e26ef4b094821d3f",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd05f8e26ef4b094821d72",
+   "drawn": 3,
+   "pages_in_atlas": 108,
+   "pages_count": 108,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd063ae26ef4b094821ddf",
+   "drawn": 3,
+   "pages_in_atlas": 94,
+   "pages_count": 94,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd068be26ef4b094821e3e",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd06eae26ef4b094821e7f",
+   "drawn": 3,
+   "pages_in_atlas": 254,
+   "pages_count": 254,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bd071fe26ef4b094821f7e",
+   "drawn": 3,
+   "pages_in_atlas": 49,
+   "pages_count": 49,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69bf6a1bdd5a136c308e2ddf",
+   "drawn": 3,
+   "pages_in_atlas": 196,
+   "pages_count": 196,
+   "visible": false,
+   "year": 1732
+  },
+  {
+   "book_id": "69bf6a32dd5a136c308e2ea4",
+   "drawn": 3,
+   "pages_in_atlas": 194,
+   "pages_count": 194,
+   "visible": false,
+   "year": 1732
+  },
+  {
+   "book_id": "69c31474a27f479ae0c07d7e",
+   "drawn": 3,
+   "pages_in_atlas": 12,
+   "pages_count": 12,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69c31480a27f479ae0c07d8b",
+   "drawn": 3,
+   "pages_in_atlas": 69,
+   "pages_count": 46,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69c3148aa27f479ae0c07da3",
+   "drawn": 3,
+   "pages_in_atlas": 149,
+   "pages_count": 149,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69d5ad934dc55b8478de0ec2",
+   "drawn": 3,
+   "pages_in_atlas": 158,
+   "pages_count": 158,
+   "visible": true,
+   "year": 1802
+  },
+  {
+   "book_id": "69d5ae55d0bd3547a5656f95",
+   "drawn": 3,
+   "pages_in_atlas": 58,
+   "pages_count": 58,
+   "visible": true,
+   "year": 1850
+  },
+  {
+   "book_id": "69de11b086e6d59321ba0fe5",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": true,
+   "year": 1820
+  },
+  {
+   "book_id": "69dfebad090ad7d5c33b1903",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": true,
+   "year": 712
+  },
+  {
+   "book_id": "69dfebaf090ad7d5c33b194c",
+   "drawn": 3,
+   "pages_in_atlas": 239,
+   "pages_count": 239,
+   "visible": true,
+   "year": 712
+  },
+  {
+   "book_id": "69dfede38d34461cbe7f4db6",
+   "drawn": 3,
+   "pages_in_atlas": 19,
+   "pages_count": 19,
+   "visible": true,
+   "year": 1100
+  },
+  {
+   "book_id": "69dfede48d34461cbe7f4dca",
+   "drawn": 3,
+   "pages_in_atlas": 19,
+   "pages_count": 19,
+   "visible": true,
+   "year": 1100
+  },
+  {
+   "book_id": "69dfede58d34461cbe7f4dde",
+   "drawn": 3,
+   "pages_in_atlas": 21,
+   "pages_count": 21,
+   "visible": true,
+   "year": 1100
+  },
+  {
+   "book_id": "69dfede68d34461cbe7f4df4",
+   "drawn": 3,
+   "pages_in_atlas": 218,
+   "pages_count": 218,
+   "visible": true,
+   "year": 1000
+  },
+  {
+   "book_id": "69dfede88d34461cbe7f4ecf",
+   "drawn": 3,
+   "pages_in_atlas": 43,
+   "pages_count": 43,
+   "visible": true,
+   "year": 1000
+  },
+  {
+   "book_id": "69dfedea8d34461cbe7f4efb",
+   "drawn": 3,
+   "pages_in_atlas": 198,
+   "pages_count": 198,
+   "visible": true,
+   "year": 1371
+  },
+  {
+   "book_id": "69dfedec8d34461cbe7f4fc2",
+   "drawn": 3,
+   "pages_in_atlas": 99,
+   "pages_count": 99,
+   "visible": true,
+   "year": 1332
+  },
+  {
+   "book_id": "69dfeded8d34461cbe7f5026",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": true,
+   "year": 1212
+  },
+  {
+   "book_id": "69dfedee8d34461cbe7f5043",
+   "drawn": 3,
+   "pages_in_atlas": 53,
+   "pages_count": 53,
+   "visible": true,
+   "year": 900
+  },
+  {
+   "book_id": "69dfedef8d34461cbe7f5079",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": true,
+   "year": 1694
+  },
+  {
+   "book_id": "69dfedf18d34461cbe7f50ae",
+   "drawn": 3,
+   "pages_in_atlas": 45,
+   "pages_count": 45,
+   "visible": true,
+   "year": 720
+  },
+  {
+   "book_id": "69e014c227a1381d2559917b",
+   "drawn": 3,
+   "pages_in_atlas": 77,
+   "pages_count": 77,
+   "visible": true,
+   "year": 759
+  },
+  {
+   "book_id": "69e014ce27a1381d255991c9",
+   "drawn": 3,
+   "pages_in_atlas": 105,
+   "pages_count": 105,
+   "visible": true,
+   "year": 759
+  },
+  {
+   "book_id": "69e014d427a1381d25599233",
+   "drawn": 3,
+   "pages_in_atlas": 131,
+   "pages_count": 131,
+   "visible": true,
+   "year": 759
+  },
+  {
+   "book_id": "69e014d927a1381d255992b7",
+   "drawn": 3,
+   "pages_in_atlas": 43,
+   "pages_count": 43,
+   "visible": true,
+   "year": 1000
+  },
+  {
+   "book_id": "69e014dc27a1381d255992e3",
+   "drawn": 3,
+   "pages_in_atlas": 59,
+   "pages_count": 59,
+   "visible": true,
+   "year": 1000
+  },
+  {
+   "book_id": "69e014df27a1381d2559931f",
+   "drawn": 3,
+   "pages_in_atlas": 81,
+   "pages_count": 81,
+   "visible": true,
+   "year": 1000
+  },
+  {
+   "book_id": "69e014e127a1381d25599371",
+   "drawn": 3,
+   "pages_in_atlas": 124,
+   "pages_count": 124,
+   "visible": true,
+   "year": 1716
+  },
+  {
+   "book_id": "69e014e327a1381d255993ee",
+   "drawn": 3,
+   "pages_in_atlas": 111,
+   "pages_count": 111,
+   "visible": true,
+   "year": 1716
+  },
+  {
+   "book_id": "69e014e727a1381d2559945e",
+   "drawn": 3,
+   "pages_in_atlas": 126,
+   "pages_count": 126,
+   "visible": true,
+   "year": 1716
+  },
+  {
+   "book_id": "69e014ea27a1381d255994dd",
+   "drawn": 3,
+   "pages_in_atlas": 43,
+   "pages_count": 43,
+   "visible": true,
+   "year": 1645
+  },
+  {
+   "book_id": "69e014fb27a1381d25599509",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": true,
+   "year": 1418
+  },
+  {
+   "book_id": "69e014fe27a1381d25599542",
+   "drawn": 3,
+   "pages_in_atlas": 33,
+   "pages_count": 33,
+   "visible": true,
+   "year": 1814
+  },
+  {
+   "book_id": "69e0150127a1381d25599564",
+   "drawn": 3,
+   "pages_in_atlas": 34,
+   "pages_count": 34,
+   "visible": true,
+   "year": 1815
+  },
+  {
+   "book_id": "69e0150927a1381d25599587",
+   "drawn": 3,
+   "pages_in_atlas": 37,
+   "pages_count": 37,
+   "visible": true,
+   "year": 1815
+  },
+  {
+   "book_id": "69e0150f27a1381d255995ad",
+   "drawn": 3,
+   "pages_in_atlas": 6,
+   "pages_count": 6,
+   "visible": true,
+   "year": 700
+  },
+  {
+   "book_id": "69e0151327a1381d255995b4",
+   "drawn": 3,
+   "pages_in_atlas": 405,
+   "pages_count": 270,
+   "visible": true,
+   "year": 1600
+  },
+  {
+   "book_id": "69e413522d8eeae8614a0665",
+   "drawn": 3,
+   "pages_in_atlas": 20,
+   "pages_count": 20,
+   "visible": false,
+   "year": 1820
+  },
+  {
+   "book_id": "69e4207471f02ebac6264a46",
+   "drawn": 3,
+   "pages_in_atlas": 24,
+   "pages_count": 24,
+   "visible": true,
+   "year": 1682
+  },
+  {
+   "book_id": "69e4207571f02ebac6264a5f",
+   "drawn": 3,
+   "pages_in_atlas": 20,
+   "pages_count": 20,
+   "visible": true,
+   "year": 1682
+  },
+  {
+   "book_id": "69e4207671f02ebac6264a74",
+   "drawn": 3,
+   "pages_in_atlas": 25,
+   "pages_count": 25,
+   "visible": true,
+   "year": 1682
+  },
+  {
+   "book_id": "69e4207771f02ebac6264a8e",
+   "drawn": 3,
+   "pages_in_atlas": 25,
+   "pages_count": 25,
+   "visible": true,
+   "year": 1682
+  },
+  {
+   "book_id": "69e4207871f02ebac6264aa8",
+   "drawn": 3,
+   "pages_in_atlas": 24,
+   "pages_count": 24,
+   "visible": true,
+   "year": 1682
+  },
+  {
+   "book_id": "69e726a2a409200ea79efa2d",
+   "drawn": 3,
+   "pages_in_atlas": 61,
+   "pages_count": 61,
+   "visible": true,
+   "year": 1700
+  },
+  {
+   "book_id": "69e726a6a409200ea79efa6c",
+   "drawn": 3,
+   "pages_in_atlas": 18,
+   "pages_count": 18,
+   "visible": true,
+   "year": 1700
+  },
+  {
+   "book_id": "69e726a9a409200ea79efa80",
+   "drawn": 3,
+   "pages_in_atlas": 42,
+   "pages_count": 42,
+   "visible": true,
+   "year": 1700
+  },
+  {
+   "book_id": "69e7495285f786e884a4e6ce",
+   "drawn": 1,
+   "pages_in_atlas": 1,
+   "pages_count": 1,
+   "visible": true,
+   "year": 759
+  },
+  {
+   "book_id": "69e7495685f786e884a4e6d2",
+   "drawn": 3,
+   "pages_in_atlas": 198,
+   "pages_count": 198,
+   "visible": false,
+   "year": 1689
+  },
+  {
+   "book_id": "69e75ab4095c302d3fddef97",
+   "drawn": 3,
+   "pages_in_atlas": 53,
+   "pages_count": 53,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ab9095c302d3fddefcf",
+   "drawn": 3,
+   "pages_in_atlas": 167,
+   "pages_count": 112,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75abfb3d509fcb7a48ea1",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ac4b3d509fcb7a48ed4",
+   "drawn": 3,
+   "pages_in_atlas": 161,
+   "pages_count": 108,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cc83f15c712bdb8f012",
+   "drawn": 3,
+   "pages_in_atlas": 57,
+   "pages_count": 57,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ccc3f15c712bdb8f04e",
+   "drawn": 3,
+   "pages_in_atlas": 53,
+   "pages_count": 53,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ccf3f15c712bdb8f086",
+   "drawn": 3,
+   "pages_in_atlas": 51,
+   "pages_count": 51,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cd33f15c712bdb8f0bc",
+   "drawn": 3,
+   "pages_in_atlas": 164,
+   "pages_count": 110,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cd93f15c712bdb8f0f7",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cdd3f15c712bdb8f12e",
+   "drawn": 3,
+   "pages_in_atlas": 155,
+   "pages_count": 104,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ce13f15c712bdb8f166",
+   "drawn": 3,
+   "pages_in_atlas": 53,
+   "pages_count": 53,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ce43f15c712bdb8f19e",
+   "drawn": 3,
+   "pages_in_atlas": 158,
+   "pages_count": 106,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75ce83f15c712bdb8f1d7",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cec3f15c712bdb8f20c",
+   "drawn": 3,
+   "pages_in_atlas": 55,
+   "pages_count": 55,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cf2cc48e59ad74eb2b4",
+   "drawn": 3,
+   "pages_in_atlas": 152,
+   "pages_count": 102,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cf6cc48e59ad74eb2eb",
+   "drawn": 3,
+   "pages_in_atlas": 155,
+   "pages_count": 104,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cfacc48e59ad74eb323",
+   "drawn": 3,
+   "pages_in_atlas": 55,
+   "pages_count": 55,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75cfecc48e59ad74eb35d",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d01cc48e59ad74eb392",
+   "drawn": 3,
+   "pages_in_atlas": 54,
+   "pages_count": 54,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d05cc48e59ad74eb3cb",
+   "drawn": 3,
+   "pages_in_atlas": 155,
+   "pages_count": 104,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d0acc48e59ad74eb403",
+   "drawn": 3,
+   "pages_in_atlas": 51,
+   "pages_count": 51,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d0dcc48e59ad74eb439",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d11cc48e59ad74eb474",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d14cc48e59ad74eb4af",
+   "drawn": 3,
+   "pages_in_atlas": 51,
+   "pages_count": 51,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d18cc48e59ad74eb4e5",
+   "drawn": 3,
+   "pages_in_atlas": 164,
+   "pages_count": 110,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d1ccc48e59ad74eb520",
+   "drawn": 3,
+   "pages_in_atlas": 57,
+   "pages_count": 57,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d20cc48e59ad74eb55c",
+   "drawn": 3,
+   "pages_in_atlas": 51,
+   "pages_count": 51,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d23cc48e59ad74eb592",
+   "drawn": 3,
+   "pages_in_atlas": 54,
+   "pages_count": 54,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d27cc48e59ad74eb5cb",
+   "drawn": 3,
+   "pages_in_atlas": 143,
+   "pages_count": 96,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e75d2dcc48e59ad74eb5ff",
+   "drawn": 3,
+   "pages_in_atlas": 155,
+   "pages_count": 104,
+   "visible": true,
+   "year": 1840
+  },
+  {
+   "book_id": "69e787b34a6785cfd60cce39",
+   "drawn": 3,
+   "pages_in_atlas": 84,
+   "pages_count": 84,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787b64a6785cfd60ccf39",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787ba4a6785cfd60cd08d",
+   "drawn": 3,
+   "pages_in_atlas": 41,
+   "pages_count": 41,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787bd4a6785cfd60cd26d",
+   "drawn": 3,
+   "pages_in_atlas": 38,
+   "pages_count": 38,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787c14a6785cfd60cd4a1",
+   "drawn": 3,
+   "pages_in_atlas": 39,
+   "pages_count": 39,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787c44a6785cfd60cd596",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787c84a6785cfd60cd6ac",
+   "drawn": 3,
+   "pages_in_atlas": 36,
+   "pages_count": 36,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787cc4a6785cfd60cd8be",
+   "drawn": 3,
+   "pages_in_atlas": 35,
+   "pages_count": 35,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787d04a6785cfd60cd9b8",
+   "drawn": 3,
+   "pages_in_atlas": 49,
+   "pages_count": 49,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787d34a6785cfd60cdc15",
+   "drawn": 3,
+   "pages_in_atlas": 30,
+   "pages_count": 30,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787d84a6785cfd60cdd93",
+   "drawn": 3,
+   "pages_in_atlas": 44,
+   "pages_count": 44,
+   "visible": true,
+   "year": 1697
+  },
+  {
+   "book_id": "69e787db4a6785cfd60cdeb1",
+   "drawn": 3,
+   "pages_in_atlas": 81,
+   "pages_count": 81,
+   "visible": true,
+   "year": 1800
+  },
+  {
+   "book_id": "69e792e280b52390feb16f63",
+   "drawn": 3,
+   "pages_in_atlas": 110,
+   "pages_count": 110,
+   "visible": true,
+   "year": 1608
+  },
+  {
+   "book_id": "69e792e880b52390feb170ac",
+   "drawn": 3,
+   "pages_in_atlas": 134,
+   "pages_count": 134,
+   "visible": true,
+   "year": 1608
+  },
+  {
+   "book_id": "69e80694fdad300064d9fbd1",
+   "drawn": 3,
+   "pages_in_atlas": 78,
+   "pages_count": 78,
+   "visible": true,
+   "year": 1774
+  },
+  {
+   "book_id": "69e80698fdad300064d9fc22",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": true,
+   "year": 1774
+  },
+  {
+   "book_id": "69e8069cfdad300064d9fc55",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": true,
+   "year": 1774
+  },
+  {
+   "book_id": "69ee9183b713c277fb8210f4",
+   "drawn": 3,
+   "pages_in_atlas": 222,
+   "pages_count": 222,
+   "visible": false,
+   "year": 1120
+  },
+  {
+   "book_id": "69f3276852a77bb28fdb72f8",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": true,
+   "year": 1750
+  },
+  {
+   "book_id": "69f3276f52a77bb28fdb7316",
+   "drawn": 3,
+   "pages_in_atlas": 7,
+   "pages_count": 7,
+   "visible": true,
+   "year": 1850
+  },
+  {
+   "book_id": "69f3277552a77bb28fdb731f",
+   "drawn": 3,
+   "pages_in_atlas": 14,
+   "pages_count": 14,
+   "visible": true,
+   "year": 1850
+  },
+  {
+   "book_id": "69f327b852a77bb28fdb78c4",
+   "drawn": 3,
+   "pages_in_atlas": 27,
+   "pages_count": 27,
+   "visible": false,
+   "year": 1750
+  },
+  {
+   "book_id": "69f328c3aeeee0fa38c65039",
+   "drawn": 3,
+   "pages_in_atlas": 79,
+   "pages_count": 79,
+   "visible": true,
+   "year": 1700
+  },
+  {
+   "book_id": "69f328cbaeeee0fa38c6508a",
+   "drawn": 3,
+   "pages_in_atlas": 18,
+   "pages_count": 18,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "69f33b16876dd827cbc586a4",
+   "drawn": 3,
+   "pages_in_atlas": 246,
+   "pages_count": 246,
+   "visible": true,
+   "year": 1650
+  },
+  {
+   "book_id": "69f33b3d876dd827cbc589d4",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": true,
+   "year": 1600
+  },
+  {
+   "book_id": "69f33bd6876dd827cbc5960a",
+   "drawn": 3,
+   "pages_in_atlas": 26,
+   "pages_count": 26,
+   "visible": true,
+   "year": 1669
+  },
+  {
+   "book_id": "69f33beb876dd827cbc5965c",
+   "drawn": 3,
+   "pages_in_atlas": 66,
+   "pages_count": 66,
+   "visible": true,
+   "year": 1679
+  },
+  {
+   "book_id": "69f33c06876dd827cbc597d5",
+   "drawn": 3,
+   "pages_in_atlas": 22,
+   "pages_count": 22,
+   "visible": true,
+   "year": 1686
+  },
+  {
+   "book_id": "69f33caa876dd827cbc5ab7d",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": true,
+   "year": 1734
+  },
+  {
+   "book_id": "69f33cf7876dd827cbc5b485",
+   "drawn": 3,
+   "pages_in_atlas": 196,
+   "pages_count": 196,
+   "visible": true,
+   "year": 1744
+  },
+  {
+   "book_id": "69f33d5d876dd827cbc5bf12",
+   "drawn": 3,
+   "pages_in_atlas": 39,
+   "pages_count": 39,
+   "visible": true,
+   "year": 1770
+  },
+  {
+   "book_id": "69f33eb5876dd827cbc60679",
+   "drawn": 3,
+   "pages_in_atlas": 30,
+   "pages_count": 30,
+   "visible": true,
+   "year": 1800
+  },
+  {
+   "book_id": "69f33f20876dd827cbc61350",
+   "drawn": 3,
+   "pages_in_atlas": 24,
+   "pages_count": 24,
+   "visible": true,
+   "year": 1850
+  },
+  {
+   "book_id": "6a0852a03fe25a995d5bbee4",
+   "drawn": 3,
+   "pages_in_atlas": 23,
+   "pages_count": 23,
+   "visible": true,
+   "year": 1683
+  },
+  {
+   "book_id": "6a08a3b48fae3d3f19b7903d",
+   "drawn": 3,
+   "pages_in_atlas": 20,
+   "pages_count": 20,
+   "visible": true,
+   "year": 1684
+  },
+  {
+   "book_id": "6a08a3b78fae3d3f19b79057",
+   "drawn": 3,
+   "pages_in_atlas": 20,
+   "pages_count": 20,
+   "visible": true,
+   "year": 1684
+  },
+  {
+   "book_id": "6a08a3bb8fae3d3f19b79071",
+   "drawn": 3,
+   "pages_in_atlas": 22,
+   "pages_count": 22,
+   "visible": true,
+   "year": 1684
+  },
+  {
+   "book_id": "6a08a3bf8fae3d3f19b79089",
+   "drawn": 3,
+   "pages_in_atlas": 21,
+   "pages_count": 21,
+   "visible": true,
+   "year": 1684
+  },
+  {
+   "book_id": "6a09fca8edaf0f8bef57b6aa",
+   "drawn": 3,
+   "pages_in_atlas": 231,
+   "pages_count": 231,
+   "visible": true,
+   "year": 1712
+  },
+  {
+   "book_id": "6a09fcb3edaf0f8bef57b793",
+   "drawn": 3,
+   "pages_in_atlas": 498,
+   "pages_count": 498,
+   "visible": true,
+   "year": 1819
+  },
+  {
+   "book_id": "6a0aca8b676a42ccd9775261",
+   "drawn": 3,
+   "pages_in_atlas": 122,
+   "pages_count": 122,
+   "visible": true,
+   "year": 1796
+  },
+  {
+   "book_id": "6a1ed94009c2a0509ef9e869",
+   "drawn": 3,
+   "pages_in_atlas": 11,
+   "pages_count": 11,
+   "visible": false,
+   "year": 1813
+  },
+  {
+   "book_id": "6a1ed94209c2a0509ef9e95a",
+   "drawn": 3,
+   "pages_in_atlas": 78,
+   "pages_count": 78,
+   "visible": false,
+   "year": 1853
+  },
+  {
+   "book_id": "6a1ed94309c2a0509ef9e9f7",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1800
+  },
+  {
+   "book_id": "6a1ed94309c2a0509ef9ea78",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": false,
+   "year": 1858
+  },
+  {
+   "book_id": "6a1ed94409c2a0509ef9eae1",
+   "drawn": 3,
+   "pages_in_atlas": 106,
+   "pages_count": 106,
+   "visible": false,
+   "year": 1750
+  },
+  {
+   "book_id": "6a1ed94509c2a0509ef9ebb6",
+   "drawn": 3,
+   "pages_in_atlas": 54,
+   "pages_count": 54,
+   "visible": false,
+   "year": 1789
+  },
+  {
+   "book_id": "6a1ed94509c2a0509ef9ec23",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": 1789
+  },
+  {
+   "book_id": "6a1ed94609c2a0509ef9ecb4",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": false,
+   "year": 1789
+  },
+  {
+   "book_id": "6a1ed94609c2a0509ef9ed15",
+   "drawn": 3,
+   "pages_in_atlas": 70,
+   "pages_count": 70,
+   "visible": false,
+   "year": 1812
+  },
+  {
+   "book_id": "6a1ed94709c2a0509ef9eda2",
+   "drawn": 3,
+   "pages_in_atlas": 74,
+   "pages_count": 74,
+   "visible": false,
+   "year": 1812
+  },
+  {
+   "book_id": "6a1ed94709c2a0509ef9ee37",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1812
+  },
+  {
+   "book_id": "6a1ed94809c2a0509ef9eed0",
+   "drawn": 3,
+   "pages_in_atlas": 54,
+   "pages_count": 54,
+   "visible": false,
+   "year": 1812
+  },
+  {
+   "book_id": "6a1ed94909c2a0509ef9ef3d",
+   "drawn": 3,
+   "pages_in_atlas": 100,
+   "pages_count": 100,
+   "visible": false,
+   "year": 1867
+  },
+  {
+   "book_id": "6a1ed94f09c2a0509ef9f787",
+   "drawn": 3,
+   "pages_in_atlas": 124,
+   "pages_count": 124,
+   "visible": false,
+   "year": 1575
+  },
+  {
+   "book_id": "6a1ed94f09c2a0509ef9f880",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": false,
+   "year": 1850
+  },
+  {
+   "book_id": "6a1ed95009c2a0509ef9f8f1",
+   "drawn": 3,
+   "pages_in_atlas": 154,
+   "pages_count": 154,
+   "visible": false,
+   "year": 1847
+  },
+  {
+   "book_id": "6a1ed95509c2a0509ef9fea4",
+   "drawn": 3,
+   "pages_in_atlas": 96,
+   "pages_count": 96,
+   "visible": false,
+   "year": 1859
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ff65",
+   "drawn": 3,
+   "pages_in_atlas": 58,
+   "pages_count": 58,
+   "visible": false,
+   "year": 1859
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ffda",
+   "drawn": 3,
+   "pages_in_atlas": 3,
+   "pages_count": 3,
+   "visible": false,
+   "year": 1661
+  },
+  {
+   "book_id": "6a1ed95609c2a0509ef9ffe1",
+   "drawn": 3,
+   "pages_in_atlas": 46,
+   "pages_count": 46,
+   "visible": false,
+   "year": 1864
+  },
+  {
+   "book_id": "6a1ed95709c2a0509efa003e",
+   "drawn": 3,
+   "pages_in_atlas": 78,
+   "pages_count": 78,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95809c2a0509efa00db",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95809c2a0509efa0180",
+   "drawn": 3,
+   "pages_in_atlas": 96,
+   "pages_count": 96,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95909c2a0509efa0241",
+   "drawn": 3,
+   "pages_in_atlas": 86,
+   "pages_count": 86,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95a09c2a0509efa02ee",
+   "drawn": 3,
+   "pages_in_atlas": 78,
+   "pages_count": 78,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95a09c2a0509efa038b",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95b09c2a0509efa03f4",
+   "drawn": 3,
+   "pages_in_atlas": 70,
+   "pages_count": 70,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed95b09c2a0509efa0481",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1809
+  },
+  {
+   "book_id": "6a1ed96009c2a0509efa0975",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": false,
+   "year": 1800
+  },
+  {
+   "book_id": "6a1ed96109c2a0509efa09c6",
+   "drawn": 3,
+   "pages_in_atlas": 74,
+   "pages_count": 74,
+   "visible": false,
+   "year": 1767
+  },
+  {
+   "book_id": "6a1ed96109c2a0509efa0a5b",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1767
+  },
+  {
+   "book_id": "6a1ed96209c2a0509efa0af4",
+   "drawn": 3,
+   "pages_in_atlas": 66,
+   "pages_count": 66,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96209c2a0509efa0b79",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96309c2a0509efa0bea",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96309c2a0509efa0c6b",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96409c2a0509efa0ccc",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96409c2a0509efa0d3d",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96509c2a0509efa0d8e",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": false,
+   "year": 1686
+  },
+  {
+   "book_id": "6a1ed96609c2a0509efa0df3",
+   "drawn": 3,
+   "pages_in_atlas": 202,
+   "pages_count": 202,
+   "visible": false,
+   "year": 1668
+  },
+  {
+   "book_id": "6a1ed96709c2a0509efa0f88",
+   "drawn": 3,
+   "pages_in_atlas": 182,
+   "pages_count": 182,
+   "visible": false,
+   "year": 1668
+  },
+  {
+   "book_id": "6a1ed96809c2a0509efa10f5",
+   "drawn": 3,
+   "pages_in_atlas": 106,
+   "pages_count": 106,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96909c2a0509efa11ca",
+   "drawn": 3,
+   "pages_in_atlas": 142,
+   "pages_count": 142,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96a09c2a0509efa12e7",
+   "drawn": 3,
+   "pages_in_atlas": 110,
+   "pages_count": 110,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96a09c2a0509efa13c4",
+   "drawn": 3,
+   "pages_in_atlas": 164,
+   "pages_count": 164,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96b09c2a0509efa150d",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96c09c2a0509efa15a6",
+   "drawn": 3,
+   "pages_in_atlas": 110,
+   "pages_count": 110,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96d09c2a0509efa1683",
+   "drawn": 3,
+   "pages_in_atlas": 186,
+   "pages_count": 186,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96e09c2a0509efa17f8",
+   "drawn": 3,
+   "pages_in_atlas": 116,
+   "pages_count": 116,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96f09c2a0509efa18e1",
+   "drawn": 3,
+   "pages_in_atlas": 128,
+   "pages_count": 128,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed96f09c2a0509efa19e2",
+   "drawn": 3,
+   "pages_in_atlas": 122,
+   "pages_count": 122,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97009c2a0509efa1ad7",
+   "drawn": 3,
+   "pages_in_atlas": 120,
+   "pages_count": 120,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97109c2a0509efa1bc8",
+   "drawn": 3,
+   "pages_in_atlas": 144,
+   "pages_count": 144,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97309c2a0509efa1ce9",
+   "drawn": 3,
+   "pages_in_atlas": 268,
+   "pages_count": 268,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97409c2a0509efa1f02",
+   "drawn": 3,
+   "pages_in_atlas": 202,
+   "pages_count": 202,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97509c2a0509efa2097",
+   "drawn": 3,
+   "pages_in_atlas": 118,
+   "pages_count": 118,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97609c2a0509efa2184",
+   "drawn": 3,
+   "pages_in_atlas": 140,
+   "pages_count": 140,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97709c2a0509efa229d",
+   "drawn": 3,
+   "pages_in_atlas": 150,
+   "pages_count": 150,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed97809c2a0509efa23ca",
+   "drawn": 3,
+   "pages_in_atlas": 49,
+   "pages_count": 49,
+   "visible": false,
+   "year": 1819
+  },
+  {
+   "book_id": "6a1ed97809c2a0509efa242d",
+   "drawn": 3,
+   "pages_in_atlas": 93,
+   "pages_count": 93,
+   "visible": false,
+   "year": 1819
+  },
+  {
+   "book_id": "6a1ed97909c2a0509efa24e8",
+   "drawn": 3,
+   "pages_in_atlas": 111,
+   "pages_count": 111,
+   "visible": false,
+   "year": 1819
+  },
+  {
+   "book_id": "6a1ed97a09c2a0509efa25c7",
+   "drawn": 3,
+   "pages_in_atlas": 102,
+   "pages_count": 102,
+   "visible": false,
+   "year": 1818
+  },
+  {
+   "book_id": "6a1ed97b09c2a0509efa2719",
+   "drawn": 3,
+   "pages_in_atlas": 26,
+   "pages_count": 26,
+   "visible": false,
+   "year": 1817
+  },
+  {
+   "book_id": "6a1ed97b09c2a0509efa274e",
+   "drawn": 3,
+   "pages_in_atlas": 113,
+   "pages_count": 113,
+   "visible": false,
+   "year": 1824
+  },
+  {
+   "book_id": "6a1ed97c09c2a0509efa2831",
+   "drawn": 3,
+   "pages_in_atlas": 80,
+   "pages_count": 80,
+   "visible": false,
+   "year": 1815
+  },
+  {
+   "book_id": "6a1ed97d09c2a0509efa28d2",
+   "drawn": 3,
+   "pages_in_atlas": 120,
+   "pages_count": 120,
+   "visible": false,
+   "year": 1746
+  },
+  {
+   "book_id": "6a1ed97d09c2a0509efa29c3",
+   "drawn": 3,
+   "pages_in_atlas": 112,
+   "pages_count": 112,
+   "visible": false,
+   "year": 1746
+  },
+  {
+   "book_id": "6a1ed97e09c2a0509efa2aa4",
+   "drawn": 3,
+   "pages_in_atlas": 134,
+   "pages_count": 134,
+   "visible": false,
+   "year": 1745
+  },
+  {
+   "book_id": "6a1ed97f09c2a0509efa2bb1",
+   "drawn": 3,
+   "pages_in_atlas": 154,
+   "pages_count": 154,
+   "visible": false,
+   "year": 1800
+  },
+  {
+   "book_id": "6a1ed98009c2a0509efa2ce6",
+   "drawn": 3,
+   "pages_in_atlas": 128,
+   "pages_count": 128,
+   "visible": false,
+   "year": 1800
+  },
+  {
+   "book_id": "6a1ed98109c2a0509efa2de7",
+   "drawn": 3,
+   "pages_in_atlas": 80,
+   "pages_count": 80,
+   "visible": false,
+   "year": 1798
+  },
+  {
+   "book_id": "6a1ed98109c2a0509efa2e88",
+   "drawn": 3,
+   "pages_in_atlas": 34,
+   "pages_count": 34,
+   "visible": false,
+   "year": 1569
+  },
+  {
+   "book_id": "6a1ed98309c2a0509efa2fea",
+   "drawn": 3,
+   "pages_in_atlas": 115,
+   "pages_count": 115,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed98409c2a0509efa31bb",
+   "drawn": 2,
+   "pages_in_atlas": 2,
+   "pages_count": 2,
+   "visible": false,
+   "year": 1661
+  },
+  {
+   "book_id": "6a1ed98509c2a0509efa31c0",
+   "drawn": 3,
+   "pages_in_atlas": 144,
+   "pages_count": 144,
+   "visible": false,
+   "year": 1709
+  },
+  {
+   "book_id": "6a1ed98609c2a0509efa32e1",
+   "drawn": 3,
+   "pages_in_atlas": 144,
+   "pages_count": 144,
+   "visible": false,
+   "year": 1665
+  },
+  {
+   "book_id": "6a1ed98609c2a0509efa3402",
+   "drawn": 3,
+   "pages_in_atlas": 92,
+   "pages_count": 92,
+   "visible": false,
+   "year": 1753
+  },
+  {
+   "book_id": "6a1ed98709c2a0509efa34bb",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed98809c2a0509efa3554",
+   "drawn": 3,
+   "pages_in_atlas": 58,
+   "pages_count": 58,
+   "visible": false,
+   "year": 1685
+  },
+  {
+   "book_id": "6a1ed98809c2a0509efa35c9",
+   "drawn": 3,
+   "pages_in_atlas": 62,
+   "pages_count": 62,
+   "visible": false,
+   "year": 1772
+  },
+  {
+   "book_id": "6a1ed98a09c2a0509efa372b",
+   "drawn": 3,
+   "pages_in_atlas": 92,
+   "pages_count": 92,
+   "visible": false,
+   "year": 1779
+  },
+  {
+   "book_id": "6a1ed98b09c2a0509efa37e4",
+   "drawn": 3,
+   "pages_in_atlas": 90,
+   "pages_count": 90,
+   "visible": false,
+   "year": 1779
+  },
+  {
+   "book_id": "6a1ed98b09c2a0509efa3899",
+   "drawn": 3,
+   "pages_in_atlas": 42,
+   "pages_count": 42,
+   "visible": false,
+   "year": 1734
+  },
+  {
+   "book_id": "6a1ed98c09c2a0509efa38ee",
+   "drawn": 3,
+   "pages_in_atlas": 100,
+   "pages_count": 100,
+   "visible": false,
+   "year": 1734
+  },
+  {
+   "book_id": "6a1ed98d09c2a0509efa39b7",
+   "drawn": 3,
+   "pages_in_atlas": 170,
+   "pages_count": 170,
+   "visible": false,
+   "year": 1810
+  },
+  {
+   "book_id": "6a1ed98e09c2a0509efa3b0c",
+   "drawn": 3,
+   "pages_in_atlas": 210,
+   "pages_count": 210,
+   "visible": false,
+   "year": 1810
+  },
+  {
+   "book_id": "6a1ed98f09c2a0509efa3cb1",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": false,
+   "year": 1835
+  },
+  {
+   "book_id": "6a1ed98f09c2a0509efa3d1a",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": false,
+   "year": 1835
+  },
+  {
+   "book_id": "6a1ed99009c2a0509efa3d7b",
+   "drawn": 3,
+   "pages_in_atlas": 208,
+   "pages_count": 208,
+   "visible": false,
+   "year": 1790
+  },
+  {
+   "book_id": "6a1ed99109c2a0509efa3f1c",
+   "drawn": 3,
+   "pages_in_atlas": 200,
+   "pages_count": 200,
+   "visible": false,
+   "year": 1790
+  },
+  {
+   "book_id": "6a1ed99209c2a0509efa40ad",
+   "drawn": 3,
+   "pages_in_atlas": 200,
+   "pages_count": 200,
+   "visible": false,
+   "year": 1790
+  },
+  {
+   "book_id": "6a1ed99409c2a0509efa4343",
+   "drawn": 3,
+   "pages_in_atlas": 178,
+   "pages_count": 178,
+   "visible": false,
+   "year": 1844
+  },
+  {
+   "book_id": "6a1ed99509c2a0509efa44a8",
+   "drawn": 3,
+   "pages_in_atlas": 122,
+   "pages_count": 122,
+   "visible": false,
+   "year": 1800
+  },
+  {
+   "book_id": "6a1ed99609c2a0509efa459d",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1703
+  },
+  {
+   "book_id": "6a1ed99709c2a0509efa4642",
+   "drawn": 3,
+   "pages_in_atlas": 262,
+   "pages_count": 262,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99809c2a0509efa484f",
+   "drawn": 3,
+   "pages_in_atlas": 184,
+   "pages_count": 184,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99909c2a0509efa49c0",
+   "drawn": 3,
+   "pages_in_atlas": 212,
+   "pages_count": 212,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99a09c2a0509efa4b69",
+   "drawn": 3,
+   "pages_in_atlas": 88,
+   "pages_count": 88,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99b09c2a0509efa4c1a",
+   "drawn": 3,
+   "pages_in_atlas": 158,
+   "pages_count": 158,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99c09c2a0509efa4d57",
+   "drawn": 3,
+   "pages_in_atlas": 168,
+   "pages_count": 168,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99d09c2a0509efa4ea8",
+   "drawn": 3,
+   "pages_in_atlas": 136,
+   "pages_count": 136,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99d09c2a0509efa4fb9",
+   "drawn": 3,
+   "pages_in_atlas": 136,
+   "pages_count": 136,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99e09c2a0509efa50ca",
+   "drawn": 3,
+   "pages_in_atlas": 110,
+   "pages_count": 110,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed99f09c2a0509efa51a7",
+   "drawn": 3,
+   "pages_in_atlas": 180,
+   "pages_count": 180,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed9a009c2a0509efa5310",
+   "drawn": 3,
+   "pages_in_atlas": 178,
+   "pages_count": 178,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed9a109c2a0509efa5475",
+   "drawn": 3,
+   "pages_in_atlas": 130,
+   "pages_count": 130,
+   "visible": false,
+   "year": 1628
+  },
+  {
+   "book_id": "6a1ed9a209c2a0509efa557a",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": 1745
+  },
+  {
+   "book_id": "6a1ed9a309c2a0509efa5724",
+   "drawn": 3,
+   "pages_in_atlas": 95,
+   "pages_count": 95,
+   "visible": false,
+   "year": 1853
+  },
+  {
+   "book_id": "6a1ed9a309c2a0509efa57e3",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": false,
+   "year": 1806
+  },
+  {
+   "book_id": "6a1ed9a409c2a0509efa581c",
+   "drawn": 3,
+   "pages_in_atlas": 78,
+   "pages_count": 78,
+   "visible": false,
+   "year": 1815
+  },
+  {
+   "book_id": "6a1ed9a509c2a0509efa58b9",
+   "drawn": 3,
+   "pages_in_atlas": 74,
+   "pages_count": 74,
+   "visible": false,
+   "year": 1851
+  },
+  {
+   "book_id": "6a1ed9a509c2a0509efa594e",
+   "drawn": 3,
+   "pages_in_atlas": 67,
+   "pages_count": 67,
+   "visible": false,
+   "year": 1851
+  },
+  {
+   "book_id": "6a1ed9a609c2a0509efa59d5",
+   "drawn": 3,
+   "pages_in_atlas": 70,
+   "pages_count": 70,
+   "visible": false,
+   "year": 1851
+  },
+  {
+   "book_id": "6a1ed9a709c2a0509efa5a62",
+   "drawn": 3,
+   "pages_in_atlas": 172,
+   "pages_count": 172,
+   "visible": false,
+   "year": 1615
+  },
+  {
+   "book_id": "6a1ed9a709c2a0509efa5bbb",
+   "drawn": 3,
+   "pages_in_atlas": 90,
+   "pages_count": 90,
+   "visible": false,
+   "year": 1807
+  },
+  {
+   "book_id": "6a1ed9a809c2a0509efa5c70",
+   "drawn": 3,
+   "pages_in_atlas": 90,
+   "pages_count": 90,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed9a809c2a0509efa5d25",
+   "drawn": 3,
+   "pages_in_atlas": 62,
+   "pages_count": 62,
+   "visible": false,
+   "year": 1837
+  },
+  {
+   "book_id": "6a1ed9a909c2a0509efa5da2",
+   "drawn": 3,
+   "pages_in_atlas": 96,
+   "pages_count": 96,
+   "visible": false,
+   "year": 1688
+  },
+  {
+   "book_id": "6a1ed9aa09c2a0509efa5e63",
+   "drawn": 3,
+   "pages_in_atlas": 68,
+   "pages_count": 68,
+   "visible": false,
+   "year": 1688
+  },
+  {
+   "book_id": "6a1ed9aa09c2a0509efa5eec",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1688
+  },
+  {
+   "book_id": "6a1ed9ab09c2a0509efa5f91",
+   "drawn": 3,
+   "pages_in_atlas": 158,
+   "pages_count": 158,
+   "visible": false,
+   "year": 1688
+  },
+  {
+   "book_id": "6a1ed9ab09c2a0509efa60ce",
+   "drawn": 2,
+   "pages_in_atlas": 2,
+   "pages_count": 2,
+   "visible": false,
+   "year": 1661
+  },
+  {
+   "book_id": "6a1ed9ac09c2a0509efa60d3",
+   "drawn": 3,
+   "pages_in_atlas": 71,
+   "pages_count": 71,
+   "visible": false,
+   "year": 1818
+  },
+  {
+   "book_id": "6a1ed9ad09c2a0509efa6162",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1805
+  },
+  {
+   "book_id": "6a1ed9ad09c2a0509efa61e3",
+   "drawn": 3,
+   "pages_in_atlas": 46,
+   "pages_count": 46,
+   "visible": false,
+   "year": 1805
+  },
+  {
+   "book_id": "6a1ed9ae09c2a0509efa6240",
+   "drawn": 3,
+   "pages_in_atlas": 62,
+   "pages_count": 62,
+   "visible": false,
+   "year": 1805
+  },
+  {
+   "book_id": "6a1ed9ae09c2a0509efa62bd",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1805
+  },
+  {
+   "book_id": "6a1ed9af09c2a0509efa6362",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": false,
+   "year": 1805
+  },
+  {
+   "book_id": "6a1ed9af09c2a0509efa63d3",
+   "drawn": 3,
+   "pages_in_atlas": 43,
+   "pages_count": 43,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed9b109c2a0509efa65bf",
+   "drawn": 3,
+   "pages_in_atlas": 126,
+   "pages_count": 126,
+   "visible": false,
+   "year": 1817
+  },
+  {
+   "book_id": "6a1ed9cf09c2a0509efa89b2",
+   "drawn": 3,
+   "pages_in_atlas": 97,
+   "pages_count": 97,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d009c2a0509efa8a75",
+   "drawn": 3,
+   "pages_in_atlas": 68,
+   "pages_count": 68,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d009c2a0509efa8afe",
+   "drawn": 3,
+   "pages_in_atlas": 100,
+   "pages_count": 100,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d109c2a0509efa8bc7",
+   "drawn": 3,
+   "pages_in_atlas": 98,
+   "pages_count": 98,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d209c2a0509efa8c8c",
+   "drawn": 3,
+   "pages_in_atlas": 120,
+   "pages_count": 120,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d209c2a0509efa8d7d",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d309c2a0509efa8dfe",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d409c2a0509efa8e97",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d409c2a0509efa8f28",
+   "drawn": 3,
+   "pages_in_atlas": 74,
+   "pages_count": 74,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d509c2a0509efa8fbd",
+   "drawn": 3,
+   "pages_in_atlas": 60,
+   "pages_count": 60,
+   "visible": false,
+   "year": 1770
+  },
+  {
+   "book_id": "6a1ed9d609c2a0509efa9036",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1799
+  },
+  {
+   "book_id": "6a1ed9d709c2a0509efa9174",
+   "drawn": 3,
+   "pages_in_atlas": 130,
+   "pages_count": 130,
+   "visible": false,
+   "year": 1799
+  },
+  {
+   "book_id": "6a1ed9d809c2a0509efa9279",
+   "drawn": 3,
+   "pages_in_atlas": 140,
+   "pages_count": 140,
+   "visible": false,
+   "year": 1799
+  },
+  {
+   "book_id": "6a1ed9d809c2a0509efa9392",
+   "drawn": 3,
+   "pages_in_atlas": 68,
+   "pages_count": 68,
+   "visible": false,
+   "year": 1775
+  },
+  {
+   "book_id": "6a1ed9d909c2a0509efa941b",
+   "drawn": 3,
+   "pages_in_atlas": 86,
+   "pages_count": 86,
+   "visible": false,
+   "year": 1775
+  },
+  {
+   "book_id": "6a1ed9d909c2a0509efa94c8",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": false,
+   "year": 1808
+  },
+  {
+   "book_id": "6a1ed9da09c2a0509efa9501",
+   "drawn": 3,
+   "pages_in_atlas": 32,
+   "pages_count": 32,
+   "visible": false,
+   "year": 1808
+  },
+  {
+   "book_id": "6a1ed9da09c2a0509efa9542",
+   "drawn": 3,
+   "pages_in_atlas": 38,
+   "pages_count": 38,
+   "visible": false,
+   "year": 1808
+  },
+  {
+   "book_id": "6a1ed9db09c2a0509efa958f",
+   "drawn": 3,
+   "pages_in_atlas": 128,
+   "pages_count": 128,
+   "visible": false,
+   "year": 1858
+  },
+  {
+   "book_id": "6a1ed9dc09c2a0509efa9690",
+   "drawn": 3,
+   "pages_in_atlas": 100,
+   "pages_count": 100,
+   "visible": false,
+   "year": 1858
+  },
+  {
+   "book_id": "6a1ed9dc09c2a0509efa9759",
+   "drawn": 3,
+   "pages_in_atlas": 128,
+   "pages_count": 128,
+   "visible": false,
+   "year": 1858
+  },
+  {
+   "book_id": "6a1ed9dd09c2a0509efa985a",
+   "drawn": 3,
+   "pages_in_atlas": 48,
+   "pages_count": 48,
+   "visible": false,
+   "year": 1858
+  },
+  {
+   "book_id": "6a1ed9dd09c2a0509efa98bb",
+   "drawn": 3,
+   "pages_in_atlas": 44,
+   "pages_count": 44,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed9df09c2a0509efa9955",
+   "drawn": 3,
+   "pages_in_atlas": 248,
+   "pages_count": 248,
+   "visible": false,
+   "year": 1659
+  },
+  {
+   "book_id": "6a1ed9e009c2a0509efa9b46",
+   "drawn": 3,
+   "pages_in_atlas": 156,
+   "pages_count": 156,
+   "visible": false,
+   "year": 1659
+  },
+  {
+   "book_id": "6a1ed9e109c2a0509efa9c7f",
+   "drawn": 3,
+   "pages_in_atlas": 96,
+   "pages_count": 96,
+   "visible": false,
+   "year": 1659
+  },
+  {
+   "book_id": "6a1ed9e209c2a0509efa9d40",
+   "drawn": 3,
+   "pages_in_atlas": 170,
+   "pages_count": 170,
+   "visible": false,
+   "year": 1659
+  },
+  {
+   "book_id": "6a1ed9e309c2a0509efa9e95",
+   "drawn": 3,
+   "pages_in_atlas": 120,
+   "pages_count": 120,
+   "visible": false,
+   "year": 1659
+  },
+  {
+   "book_id": "6a1ed9e409c2a0509efa9f86",
+   "drawn": 3,
+   "pages_in_atlas": 202,
+   "pages_count": 202,
+   "visible": false,
+   "year": 1799
+  },
+  {
+   "book_id": "6a1ed9e409c2a0509efaa11b",
+   "drawn": 3,
+   "pages_in_atlas": 80,
+   "pages_count": 80,
+   "visible": false,
+   "year": 1799
+  },
+  {
+   "book_id": "6a1ed9e509c2a0509efaa1bc",
+   "drawn": 3,
+   "pages_in_atlas": 74,
+   "pages_count": 74,
+   "visible": false,
+   "year": 1865
+  },
+  {
+   "book_id": "6a1ed9e509c2a0509efaa251",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": 1865
+  },
+  {
+   "book_id": "6a1ed9e609c2a0509efaa2e2",
+   "drawn": 3,
+   "pages_in_atlas": 94,
+   "pages_count": 94,
+   "visible": false,
+   "year": 1865
+  },
+  {
+   "book_id": "6a1ed9e709c2a0509efaa39f",
+   "drawn": 3,
+   "pages_in_atlas": 142,
+   "pages_count": 142,
+   "visible": false,
+   "year": 1618
+  },
+  {
+   "book_id": "6a1ed9e809c2a0509efaa4bc",
+   "drawn": 3,
+   "pages_in_atlas": 116,
+   "pages_count": 116,
+   "visible": false,
+   "year": 1600
+  },
+  {
+   "book_id": "6a1ed9e809c2a0509efaa5a5",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1690
+  },
+  {
+   "book_id": "6a1ed9e909c2a0509efaa64a",
+   "drawn": 3,
+   "pages_in_atlas": 70,
+   "pages_count": 70,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9e909c2a0509efaa6d7",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9ea09c2a0509efaa728",
+   "drawn": 3,
+   "pages_in_atlas": 44,
+   "pages_count": 44,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9ea09c2a0509efaa781",
+   "drawn": 3,
+   "pages_in_atlas": 62,
+   "pages_count": 62,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9eb09c2a0509efaa7fe",
+   "drawn": 3,
+   "pages_in_atlas": 56,
+   "pages_count": 56,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9eb09c2a0509efaa86f",
+   "drawn": 3,
+   "pages_in_atlas": 32,
+   "pages_count": 32,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9ec09c2a0509efaa8b0",
+   "drawn": 3,
+   "pages_in_atlas": 28,
+   "pages_count": 28,
+   "visible": false,
+   "year": 1699
+  },
+  {
+   "book_id": "6a1ed9ec09c2a0509efaa8e9",
+   "drawn": 3,
+   "pages_in_atlas": 110,
+   "pages_count": 110,
+   "visible": false,
+   "year": 1780
+  },
+  {
+   "book_id": "6a1ed9ee09c2a0509efaaabf",
+   "drawn": 3,
+   "pages_in_atlas": 73,
+   "pages_count": 73,
+   "visible": false,
+   "year": 1787
+  },
+  {
+   "book_id": "6a1ed9ee09c2a0509efaab52",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1787
+  },
+  {
+   "book_id": "6a1ed9ef09c2a0509efaabeb",
+   "drawn": 3,
+   "pages_in_atlas": 111,
+   "pages_count": 111,
+   "visible": false,
+   "year": 1787
+  },
+  {
+   "book_id": "6a1ed9f009c2a0509efaacca",
+   "drawn": 3,
+   "pages_in_atlas": 114,
+   "pages_count": 114,
+   "visible": false,
+   "year": 1651
+  },
+  {
+   "book_id": "6a1ed9f009c2a0509efaadaf",
+   "drawn": 3,
+   "pages_in_atlas": 94,
+   "pages_count": 94,
+   "visible": false,
+   "year": 1651
+  },
+  {
+   "book_id": "6a1ed9f109c2a0509efaae6c",
+   "drawn": 3,
+   "pages_in_atlas": 60,
+   "pages_count": 60,
+   "visible": false,
+   "year": 1651
+  },
+  {
+   "book_id": "6a1ed9f109c2a0509efaaee5",
+   "drawn": 3,
+   "pages_in_atlas": 42,
+   "pages_count": 42,
+   "visible": false,
+   "year": 1849
+  },
+  {
+   "book_id": "6a1ed9f209c2a0509efaaf3a",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": false,
+   "year": 1722
+  },
+  {
+   "book_id": "6a1ed9f209c2a0509efaaf8b",
+   "drawn": 3,
+   "pages_in_atlas": 75,
+   "pages_count": 75,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f309c2a0509efab022",
+   "drawn": 3,
+   "pages_in_atlas": 60,
+   "pages_count": 60,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f309c2a0509efab09b",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f409c2a0509efab100",
+   "drawn": 3,
+   "pages_in_atlas": 54,
+   "pages_count": 54,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f409c2a0509efab16d",
+   "drawn": 3,
+   "pages_in_atlas": 42,
+   "pages_count": 42,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f509c2a0509efab1c2",
+   "drawn": 3,
+   "pages_in_atlas": 44,
+   "pages_count": 44,
+   "visible": false,
+   "year": 1714
+  },
+  {
+   "book_id": "6a1ed9f509c2a0509efab2b0",
+   "drawn": 2,
+   "pages_in_atlas": 2,
+   "pages_count": 2,
+   "visible": false,
+   "year": 1661
+  },
+  {
+   "book_id": "6a1ed9f609c2a0509efab2b5",
+   "drawn": 3,
+   "pages_in_atlas": 50,
+   "pages_count": 50,
+   "visible": false,
+   "year": 1834
+  },
+  {
+   "book_id": "6a1eda0b09c2a0509efacc47",
+   "drawn": 3,
+   "pages_in_atlas": 94,
+   "pages_count": 94,
+   "visible": false,
+   "year": 1833
+  },
+  {
+   "book_id": "6a1eda0b09c2a0509efacd04",
+   "drawn": 3,
+   "pages_in_atlas": 77,
+   "pages_count": 77,
+   "visible": false,
+   "year": 1833
+  },
+  {
+   "book_id": "6a1eda0c09c2a0509efacd9f",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": false,
+   "year": 1774
+  },
+  {
+   "book_id": "6a1eda2609c2a0509efaed74",
+   "drawn": 3,
+   "pages_in_atlas": 66,
+   "pages_count": 66,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2609c2a0509efaedf9",
+   "drawn": 3,
+   "pages_in_atlas": 82,
+   "pages_count": 82,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2709c2a0509efaee9e",
+   "drawn": 3,
+   "pages_in_atlas": 88,
+   "pages_count": 88,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2809c2a0509efaef4f",
+   "drawn": 3,
+   "pages_in_atlas": 108,
+   "pages_count": 108,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2809c2a0509efaf028",
+   "drawn": 3,
+   "pages_in_atlas": 64,
+   "pages_count": 64,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2909c2a0509efaf0a9",
+   "drawn": 3,
+   "pages_in_atlas": 67,
+   "pages_count": 67,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2909c2a0509efaf130",
+   "drawn": 3,
+   "pages_in_atlas": 92,
+   "pages_count": 92,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2a09c2a0509efaf1e9",
+   "drawn": 3,
+   "pages_in_atlas": 98,
+   "pages_count": 98,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2b09c2a0509efaf2ae",
+   "drawn": 3,
+   "pages_in_atlas": 108,
+   "pages_count": 108,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2b09c2a0509efaf387",
+   "drawn": 3,
+   "pages_in_atlas": 80,
+   "pages_count": 80,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2c09c2a0509efaf428",
+   "drawn": 3,
+   "pages_in_atlas": 66,
+   "pages_count": 66,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda2c09c2a0509efaf4ad",
+   "drawn": 3,
+   "pages_in_atlas": 66,
+   "pages_count": 66,
+   "visible": false,
+   "year": 1599
+  },
+  {
+   "book_id": "6a1eda3709c2a0509efb00d5",
+   "drawn": 3,
+   "pages_in_atlas": 80,
+   "pages_count": 80,
+   "visible": false,
+   "year": 1857
+  },
+  {
+   "book_id": "6a1eda3809c2a0509efb0176",
+   "drawn": 3,
+   "pages_in_atlas": 111,
+   "pages_count": 111,
+   "visible": false,
+   "year": 1857
+  },
+  {
+   "book_id": "6a1eda3809c2a0509efb0255",
+   "drawn": 3,
+   "pages_in_atlas": 72,
+   "pages_count": 72,
+   "visible": false,
+   "year": 1857
+  },
+  {
+   "book_id": "6a1eda3909c2a0509efb02e6",
+   "drawn": 3,
+   "pages_in_atlas": 97,
+   "pages_count": 97,
+   "visible": false,
+   "year": 1857
+  },
+  {
+   "book_id": "6a1eda3909c2a0509efb03a9",
+   "drawn": 3,
+   "pages_in_atlas": 52,
+   "pages_count": 52,
+   "visible": false,
+   "year": 1857
+  },
+  {
+   "book_id": "6a1eda3a09c2a0509efb0412",
+   "drawn": 3,
+   "pages_in_atlas": 40,
+   "pages_count": 40,
+   "visible": false,
+   "year": 1550
+  },
+  {
+   "book_id": "6a1eda3a09c2a0509efb0463",
+   "drawn": 3,
+   "pages_in_atlas": 76,
+   "pages_count": 76,
+   "visible": false,
+   "year": 1759
+  },
+  {
+   "book_id": "6a1eda3b09c2a0509efb04fc",
+   "drawn": 3,
+   "pages_in_atlas": 92,
+   "pages_count": 92,
+   "visible": false,
+   "year": 1759
+  },
+  {
+   "book_id": "6a22d821031a1dedebacfb9b",
+   "drawn": 3,
+   "pages_in_atlas": 18,
+   "pages_count": 18,
+   "visible": false,
+   "year": 1824
+  },
+  {
+   "book_id": "6a22d870031a1dedebacfbae",
+   "drawn": 3,
+   "pages_in_atlas": 51,
+   "pages_count": 51,
+   "visible": false,
+   "year": 1852
+  },
+  {
+   "book_id": "6a22d941031a1dedebacfbe2",
+   "drawn": 3,
+   "pages_in_atlas": 15,
+   "pages_count": 15,
+   "visible": false,
+   "year": 1859
+  },
+  {
+   "book_id": "6a42a122831988adcb76c9cd",
+   "drawn": 3,
+   "pages_in_atlas": 400,
+   "pages_count": 400,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "6a42c6e897284560a2b10a15",
+   "drawn": 3,
+   "pages_in_atlas": 266,
+   "pages_count": 266,
+   "visible": false,
+   "year": null
+  },
+  {
+   "book_id": "6a503c562f6539fb38937848",
+   "drawn": 3,
+   "pages_in_atlas": 22,
+   "pages_count": 22,
+   "visible": true,
+   "year": 1835
+  },
+  {
+   "book_id": "6a503ddd12003aed574feaac",
+   "drawn": 3,
+   "pages_in_atlas": 57,
+   "pages_count": 57,
+   "visible": false,
+   "year": 1836
+  }
+ ]
+}
