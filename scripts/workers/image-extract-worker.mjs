@@ -286,6 +286,7 @@ async function extractImagesFromPage(page, book, groundingCtx) {
   // Run in parallel with the Gemini call to keep latency flat.
   const characteristicsPromise = computeImageCharacteristics(image.buffer);
 
+  // thinking-ok: imageExtractionGenerationConfig() sets thinkingBudget 0 (scripts/lib/image-extraction-request.mjs)
   const model = getClient().getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
