@@ -671,8 +671,13 @@ const CHINESE = /chinese|^zh(-|$)/i;
  * Skips: held books, books with any open translate_batch_runs run, English, reader requests,
  * previews whose OCR is under 90% of the book (Chinese previews are the common case), unsplit
  * spreads, and, with `visibleOnly` (default), hidden books.
+ *
+ * `statuses` narrows AUTO_STATUSES. Under a scope ENVELOPE pass the terminal ones only
+ * (`complete`, `images_complete`): an envelope is a permission on a set of BOOKS, and every worker
+ * that asks the scoped gate may spend it on them — the first chained cohort's envelope paid
+ * image extraction more than translation on its non-terminal books (2026-09-30).
  */
-export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false } = {}) {
+export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false, statuses = AUTO_STATUSES } = {}) {
   // Not picked: a book with an open run of any lane; one this lane PARKED (re-enrol by hand,
   // --chained --enrol, once the cause is known); and one whose chained run ended in the last day —
   // a run takes at most MAX_PAGES_PER_RUN pages, so a longer book comes back for its next slice,
@@ -684,7 +689,7 @@ export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, m
     { mode: MODE, updated_at: { $gte: since } },
   ] });
   const match = {
-    'pipeline_auto.status': { $in: [...AUTO_STATUSES] },
+    'pipeline_auto.status': { $in: statuses.filter((s) => AUTO_STATUSES.includes(s)) },
     ...NOT_HELD,
     id: { $nin: excludedBookIds },
     pages_ocr: { $gt: 0 },

@@ -29,6 +29,7 @@
  *   --chained --enrol-auto [--limit=40] [--max-open=60] PAID  enrol what the gap-fill would want
  *             [--zero-only] [--min-pages=N]                     (AUTO_STATUSES), each approved at
  *             [--exclude-chinese] [--include-hidden]            pages × $0.0012, then submit;
+ *             [--statuses=complete,images_complete]             (terminal only under an envelope)
  *             [--dry-run]                                       --dry-run lists candidates only
  *   --chained --tick                                    PAID  one pass: collect finished rounds,
  *                                                             write pages, submit next rounds
@@ -271,6 +272,7 @@ async function chained(db) {
     const candidates = await selectAutoCandidates(db, {
       limit: room, zeroOnly: has('zero-only'), minPages: Number(arg('min-pages') || 0),
       visibleOnly: !has('include-hidden'), excludeChinese: has('exclude-chinese'),
+      ...(arg('statuses') ? { statuses: arg('statuses').split(',').map((s) => s.trim()) } : {}),
     });
     const total = candidates.reduce((s, b) => s + b.approvedUsd, 0);
     for (const b of candidates) console.log(`  ${b.id}  ${String(b.language).slice(0, 12).padEnd(12)} ${b.pages_ocr}/${b.pages_count}pp tr ${b.pages_translated || 0}  ${b.pipeline_auto?.status}  approve $${b.approvedUsd}  ${String(b.title || '').slice(0, 60)}`);
