@@ -136,6 +136,7 @@ function makeGemini({
   state = (_round: number): string => 'JOB_STATE_SUCCEEDED',
   error = (_round: number): any => null,
   finish = (_round: number): string => 'STOP',
+  blockBody = (_nums: number[], _round: number): string | null => null,  // override a block's whole response
 } = {}) {
   const submitted: Array<{ model: string; requests: any[]; displayName: string; name: string }> = [];
   return {
@@ -162,7 +163,7 @@ function makeGemini({
         const nums = [...prompt.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
         if (nums.length) {
           const tag = prompt.includes('Folium') ? 'BK2 ' : '';
-          const body = nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n)}</translation>`).join('\n');
+          const body = blockBody(nums, round) ?? nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n)}</translation>`).join('\n');
           return batchResponse(key, body, finish(round));
         }
         // Single page: the page whose OCR opens the "text to translate" section.
@@ -269,6 +270,26 @@ describe('each round sends the prompt the realtime worker would send', () => {
     expect(run.phase).toBe(PHASE.COMPLETE);
     expect(run.rounds).toHaveLength(4);
     expect(run.counts).toMatchObject({ written: 20, single_fallbacks: 8 });
+  });
+
+  it('a block with MORE entries than pages (9 for 8, labels shifted) writes nothing by label; its pages go single-page (#5426)', async () => {
+    // Round 2 (block p9–16) answers the 69b6307b shape: an extra entry, then page N labelled with page N−1's text.
+    const gemini = makeGemini({
+      blockBody: (nums, round) => (round === 2
+        ? [`<translation page="${nums[0]}">Continued from the previous page.</translation>`, ...nums.map(n => `<translation page="${n + 1}">${textFor(n)}</translation>`)].join('\n')
+        : null),
+    });
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    await tick(db, deps); // round 1 written; block p9–16 submitted
+    await tick(db, deps); // round 2 collected: over-full → discarded, eight singles submitted
+    let run = await runOf(db);
+    expect(run.rounds[1]).toMatchObject({ kind: 'block', discarded: 'over-block', returned: 9, written: 0, fallback: 8 });
+    for (let n = 9; n <= 16; n++) expect(pageText(db, `p${n}`)).toBeUndefined();
+    expect(run.pending_single.map((p: Doc) => p.page_number)).toEqual([9, 10, 11, 12, 13, 14, 15, 16]);
+    await tick(db, deps); // the singles come back right
+    run = await runOf(db);
+    for (let n = 9; n <= 16; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
   });
 
   it('in a round of singles, a page whose request errored stays pending while the others are written', async () => {

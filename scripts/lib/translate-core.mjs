@@ -775,7 +775,13 @@ export function echoExempt(ocrText, lang) {
  * missing-from-batch path re-translates every page single-page. Production logs 2026-09-11 →
  * 09-25: ~5% of blocks came back short (473 of ~9,400, the drift drops aside).
  *
- * @returns {{ translations: Map<number,string>, returned: number, discarded: null|'short-block' }}
+ * The mirror case (#5426): a block with MORE entries than pages is discarded too. Measured on the
+ * chained lane (book 69b6307b…, block pp. 16–23): nine entries for eight pages, labels one page
+ * off, so p17–20 each got the previous page's translation and p16 none. Labels on an over-full
+ * block cannot be trusted either, and its count rules out the positional fallback. 3 of 2,593
+ * chained blocks (0.12%) came back over-full; their pages go single-page, as a short block's do.
+ *
+ * @returns {{ translations: Map<number,string>, returned: number, discarded: null|'short-block'|'over-block' }}
  */
 export function parseBlockTranslations(responseText, pages) {
   const translations = new Map();
@@ -793,6 +799,7 @@ export function parseBlockTranslations(responseText, pages) {
     translations.set(pageNum, text);
   }
   if (entries.length < pages.length) return { translations: new Map(), returned: entries.length, discarded: 'short-block' };
+  if (entries.length > pages.length) return { translations: new Map(), returned: entries.length, discarded: 'over-block' };
   // Positional fallback: the model renumbered the pages (1–8 for 491–498); the count matches, so
   // the order is trusted and each entry is checked against its own page's length.
   if (entries.length === pages.length && pages.filter((p) => translations.has(p.page_number)).length < pages.length) {
