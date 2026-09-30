@@ -22,7 +22,7 @@ DATE=${TCA_DATE:-$(date -u +%Y-%m-%d)}
 REF=${TCA_REF:-main}                     # the code the draw runs with; a branch name only for testing before merge
 MONTH=${DATE:0:7}
 SEED=${DATE//-/}
-NAME=translation-corpus-audit-$DATE
+NAME=translation-corpus-audit-monthly-$MONTH   # never the bare date: the 2026-09-30 one-off already owns that name
 BRANCH=eval/tca-$MONTH
 OUT=scripts/eval/results/$NAME
 GIT_AUTH=(-c "credential.helper=" -c "credential.helper=!gh auth git-credential")
@@ -48,6 +48,7 @@ if git "${GIT_AUTH[@]}" ls-remote --exit-code --heads origin "$BRANCH" >/dev/nul
 fi
 git checkout --quiet -B "$BRANCH" "origin/$REF"
 ln -sfn "$REPO/node_modules" node_modules
+[ ! -e "$OUT" ] || red "$OUT already exists on $REF — refusing to draw over another run"
 
 set -a; . "$REPO/.env.production.local"; set +a
 node scripts/eval/translation-corpus-audit/draw.mjs --out "$OUT" --seed "$SEED" --scale 0.32 --arm-quota off --extra-per-lang 4

@@ -45,8 +45,8 @@ You are the routine. You start with a fresh checkout of the repo and no other co
    --body "RED — no monthly draw branch eval/tca-$MONTH; stage 2 did not run (MONTHLY.md)"`. If `gh` is unavailable,
    push an empty commit (`git commit --allow-empty -s -m "RED: monthly translation audit draw missing for $MONTH"`)
    to a new branch and open a draft PR with that title. Then stop.
-2. Check out the branch. The run dir is the one `scripts/eval/results/translation-corpus-audit-$MONTH-*` directory
-   on it; call it `$DIR`. It holds `manifest.jsonl`, `items.jsonl`, `draw-log.json`, `book-weights.json`,
+2. Check out the branch. The run dir is `scripts/eval/results/translation-corpus-audit-monthly-$MONTH`; call it
+   `$DIR`. It holds `manifest.jsonl`, `items.jsonl`, `draw-log.json`, `book-weights.json`,
    `packets/packet-NN.jsonl` and `packets/index.json`.
 3. Judge every packet. For each `packets/packet-NN.jsonl`, launch one subagent with the Agent tool,
    `model: "opus"`, at most five at a time. Its prompt is the full text of
