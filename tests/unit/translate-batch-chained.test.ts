@@ -18,7 +18,7 @@
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  enrolChainedRun, tickChained, planNextRound, packJobs, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
+  enrolChainedRun, tickChained, planNextRound, packJobs, selectAutoCandidates, AUTO_STATUSES, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-chained.mjs';
@@ -518,5 +518,50 @@ describe('planNextRound', () => {
     const plan = planNextRound({ queue: refs(PAGES), cursor: 8, pending_single: [] }, docs(changed));
     expect(plan.dropped).toEqual([{ id: 'p9', reason: 'ocr_changed' }]);
     expect(plan.pages[0].page_number).toBe(10);
+  });
+});
+
+// ── Auto-enrolment selector ────────────────────────────────────────────────
+describe('selectAutoCandidates', () => {
+  // Mongo's aggregation is not modelled by the fake: stub it, and check what the selector asks
+  // for and what it does after (the pages-based zero check, the approval).
+  const stubDb = (rows: Doc[], translatedBooks: string[] = []) => {
+    const seen: Doc = {};
+    return {
+      seen,
+      collection(name: string) {
+        if (name === RUNS_COLLECTION) return { distinct: async (_f: string, q: Doc) => { seen.runsQuery = q; return ['open1']; } };
+        if (name === 'books') return { aggregate: (p: Doc[]) => { seen.pipeline = p; return { toArray: async () => rows }; } };
+        if (name === 'pages') return { countDocuments: async (q: Doc) => (translatedBooks.includes(q.book_id) ? 1 : 0) };
+        throw new Error(name);
+      },
+    };
+  };
+  const row = (id: string, pages_ocr: number) => ({ id, pages_ocr, pages_count: pages_ocr, pages_translated: 0 });
+
+  it('asks for the widened statuses, skips held/English/reader-request/open-run books, approves pages × $0.0012 capped at one run', async () => {
+    const d = stubDb([row('a', 100), row('b', 800)]);
+    const out = await selectAutoCandidates(d, { limit: 5 });
+    const match = d.seen.pipeline[0].$match;
+    expect(match['pipeline_auto.status'].$in).toEqual([...AUTO_STATUSES]);
+    expect(AUTO_STATUSES).toEqual(expect.arrayContaining(['images_complete', 'needs_attention', 'failed', 'archive_complete', 'ocr_complete']));
+    expect(AUTO_STATUSES).not.toContain('translate_submitted');
+    expect(match['pipeline_auto.hold']).toEqual({ $exists: false });
+    expect(match.id).toEqual({ $nin: ['open1'] });
+    expect(match.visible).toBe(true);
+    expect(match.language.$not.test('English')).toBe(true);
+    expect(match.language.$not.test('Latin')).toBe(false);
+    expect(match.processing_priority).toEqual({ $not: { $gte: 90 } });
+    // A parked run, and a run that ended in the last day, keep the book out.
+    expect(JSON.stringify(d.seen.runsQuery)).toContain('parked');
+    expect(out.map((b: Doc) => [b.id, b.approvedUsd])).toEqual([['a', 0.12], ['b', 0.36]]);
+  });
+
+  it('--zero-only drops a book with any translated page, counted on pages, and stops at the limit', async () => {
+    const d = stubDb([row('a', 30), row('b', 30), row('c', 30), row('d', 30)], ['b']);
+    const out = await selectAutoCandidates(d, { limit: 2, zeroOnly: true, minPages: 25, excludeChinese: true });
+    expect(out.map((b: Doc) => b.id)).toEqual(['a', 'c']);
+    expect(d.seen.pipeline[0].$match.pages_count).toEqual({ $gt: 25 });
+    expect(d.seen.pipeline[0].$match.$and[0].language.$not.test('Classical Chinese')).toBe(true);
   });
 });

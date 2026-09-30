@@ -57,7 +57,7 @@ import {
   BLOCK_TAGS,
 } from './translate-core.mjs';
 import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
-import { isHeld } from './pipeline-hold.mjs';
+import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
@@ -641,4 +641,90 @@ export async function tickChained(db, deps, { prompts, filter = {} } = {}) {
   for (const run of ready) if (submitted.has(run.id)) add(run, submitted.get(run.id).note);
 
   return runs.map((run) => ({ run: run.id, book_id: run.book_id, phase: run.phase, note: notes.get(run.id) }));
+}
+
+// ── Auto-enrolment (the scheduler's selector) ───────────────────────────────
+/**
+ * Statuses a book may sit at and still be owed translation. The orchestrator's gap-fill selects
+ * the first four only; 68 of the 105 stalled books measured on 2026-09-29 sat at the next four,
+ * which no phase ever selects for translation, and `ocr_complete` is Phase 4's own input.
+ * `translate_submitted` is absent on purpose: the realtime lane owns that book.
+ */
+export const AUTO_STATUSES = Object.freeze([
+  'translate_partial', 'translate_complete', 'chapters_complete', 'complete',
+  'images_complete', 'needs_attention', 'failed', 'archive_complete',
+  'ocr_complete',
+]);
+/** Approval per page for an auto-enrolled book: 2× the measured $0.00056/pg (#4681, 2026-09-29), rounded up. */
+export const AUTO_APPROVAL_USD_PER_PAGE = 0.0012;
+/** Reader requests (processing_priority ≥ this) stay on the realtime lane, where they finish in minutes. */
+export const REALTIME_PRIORITY_FLOOR = 90;
+const ENGLISH = /^(english|eng|en)$/i;        // orchestrator ENGLISH_VARIANTS_P4: modernisation is reader-triggered (#4958)
+const CHINESE = /chinese|^zh(-|$)/i;
+
+/**
+ * Books the chained lane should pick up next, most wanted first. Mongo does the coarse cut; the
+ * per-book checks that counters cannot answer (`zeroOnly`: no page translated, counted on PAGES)
+ * run after. Every book returned carries its approval, pages × AUTO_APPROVAL_USD_PER_PAGE — the
+ * enrol refuses a book whose own estimate is higher.
+ *
+ * Skips: held books, books with any open translate_batch_runs run, English, reader requests,
+ * previews whose OCR is under 90% of the book (Chinese previews are the common case), unsplit
+ * spreads, and, with `visibleOnly` (default), hidden books.
+ *
+ * `statuses` narrows AUTO_STATUSES. Under a scope ENVELOPE pass the terminal ones only
+ * (`complete`, `images_complete`): an envelope is a permission on a set of BOOKS, and every worker
+ * that asks the scoped gate may spend it on them — the first chained cohort's envelope paid
+ * image extraction more than translation on its non-terminal books (2026-09-30).
+ */
+export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false, statuses = AUTO_STATUSES } = {}) {
+  // Not picked: a book with an open run of any lane; one this lane PARKED (re-enrol by hand,
+  // --chained --enrol, once the cause is known); and one whose chained run ended in the last day —
+  // a run takes at most MAX_PAGES_PER_RUN pages, so a longer book comes back for its next slice,
+  // but what a run refused (unhealthy, recitation) must not take a slot every hour.
+  const since = new Date(Date.now() - 24 * 3600 * 1000);
+  const excludedBookIds = await db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
+    { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
+    { mode: MODE, phase: PHASE.PARKED },
+    { mode: MODE, updated_at: { $gte: since } },
+  ] });
+  const match = {
+    'pipeline_auto.status': { $in: statuses.filter((s) => AUTO_STATUSES.includes(s)) },
+    ...NOT_HELD,
+    id: { $nin: excludedBookIds },
+    pages_ocr: { $gt: 0 },
+    language: { $not: ENGLISH },
+    processing_priority: { $not: { $gte: REALTIME_PRIORITY_FLOOR } },
+    $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+    ...(visibleOnly ? { visible: true } : {}),
+    ...(minPages ? { pages_count: { $gt: minPages } } : {}),
+  };
+  if (excludeChinese) match.$and = [{ language: { $not: CHINESE } }];
+  const rows = await db.collection('books').aggregate([
+    { $match: match },
+    { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
+    { $match: {
+      _denominator: { $gt: 0 },
+      $expr: { $and: [
+        { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] },
+        { $gte: ['$pages_ocr', { $multiply: [0.9, { $ifNull: ['$pages_count', 0] }] }] },
+      ] },
+    } },
+    { $project: { id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, 'pipeline_auto.status': 1 } },
+    // Reader-wanted first, then books already under way (finishing one beats starting another).
+    { $sort: { processing_priority: -1, pages_translated: -1, created_at: -1 } },
+    { $limit: Math.max(limit * 4, limit + 20) },
+  ]).toArray();
+
+  const out = [];
+  for (const b of rows) {
+    if (out.length >= limit) break;
+    if (zeroOnly) {
+      const translated = await db.collection('pages').countDocuments({ book_id: b.id, 'translation.data': { $exists: true, $nin: [null, ''] } }, { limit: 1 });
+      if (translated > 0) continue;
+    }
+    const owed = Math.max(1, Math.min(MAX_PAGES_PER_RUN, b.pages_ocr || 0));
+    out.push({ ...b, approvedUsd: +(owed * AUTO_APPROVAL_USD_PER_PAGE).toFixed(4) });
+  }
+  return out;
 }
