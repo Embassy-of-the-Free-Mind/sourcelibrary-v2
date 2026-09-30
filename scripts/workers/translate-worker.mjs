@@ -45,6 +45,7 @@ import {
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -611,7 +612,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       ],
     })
     .sort({ page_number: 1 })
-    .project({ id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 })
+    .project({ id: 1, page_number: 1, 'ocr.data': 1, 'ocr.updated_at': 1, page_type: 1 })
     .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
 
@@ -651,6 +652,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Same-language pages (#5154) ──────────────────────────────────────────
+  // A page already written in English is COPIED, not sent to the model. Asked to "translate"
+  // English into English, the model abridges, modernises and drifts (the page-error taxonomy's
+  // T12: dropped footnotes, condensed commentary, "Brake Wind" → "Broke Wind"), and the reader
+  // of the translation panel never reads the author. The copy is the transcription verbatim,
+  // costs nothing, and carries its own provenance (source 'same-language').
+  const sameLanguage = pages.filter(p => englishSource(p.ocr?.data).english);
+  if (sameLanguage.length > 0) {
+    for (const p of sameLanguage) {
+      await saveRevisionBeforeOverwrite(db, p.id, 'translation', job?.id);
+      const translation = await sameLanguageTranslation(p, { jobId: job?.id });
+      const setPayload = { translation, updated_at: new Date() };
+      await db.collection('pages').updateOne({ id: p.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
+      syncPageUpdate(p.id, setPayload);
+    }
+    console.log(`  [${label}] SAME LANGUAGE: copied ${sameLanguage.length} English page(s) through — no model call (#5154)`);
+    const copied = new Set(sameLanguage.map(p => p.id));
+    pages.splice(0, pages.length, ...pages.filter(p => !copied.has(p.id)));
   }
 
   if (pages.length === 0) {
