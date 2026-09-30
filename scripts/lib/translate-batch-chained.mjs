@@ -88,6 +88,7 @@ export const baseJobName = (batchJobId) => String(batchJobId || '').split('#')[0
 /** Run phases. Terminal: complete, parked, failed. */
 export const PHASE = Object.freeze({
   READY: 'round_ready',          // nothing in flight; the next tick submits a round
+  SUBMITTING: 'round_submitting', // claimed by one ticker while it builds and submits the round
   SUBMITTED: 'round_submitted',  // a Batch job is open for this run
   COMPLETE: 'complete',
   PARKED: 'parked',
@@ -246,6 +247,19 @@ async function setRun(db, run, set, deps) {
   Object.assign(run, set, { updated_at: now });
 }
 
+/** A claim older than this was left by a ticker that died mid-submit; the run goes back to READY. */
+export const STALE_CLAIM_MS = 15 * 60 * 1000;
+
+/** READY → SUBMITTING, atomically. False when another ticker holds (or just took) the run. */
+async function claimRun(db, run, deps) {
+  if (run.phase !== PHASE.READY) return false;
+  const now = deps.now ? deps.now() : new Date();
+  const res = await db.collection(RUNS_COLLECTION).updateOne({ id: run.id, phase: PHASE.READY }, { $set: { phase: PHASE.SUBMITTING, claimed_at: now, updated_at: now } });
+  if (!res.matchedCount) return false;
+  Object.assign(run, { phase: PHASE.SUBMITTING, claimed_at: now, updated_at: now });
+  return true;
+}
+
 /**
  * Enrol one book: the pages the realtime worker would translate become the queue, and the first
  * round is submitted. Refuses (sends nothing) on a held book, a book the realtime lane owns
@@ -308,7 +322,7 @@ function collapseRetryText(run, pageId) {
  * (the run completes). Returns { prepared } or { submitted: false, note }.
  */
 async function prepareRound(db, run, deps, { prompts }) {
-  if (run.phase !== PHASE.READY) return { submitted: false, note: `phase ${run.phase}` };
+  if (run.phase !== PHASE.READY && run.phase !== PHASE.SUBMITTING) return { submitted: false, note: `phase ${run.phase}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
   const pageDocs = await loadPageDocs(db, ids);
   const plan = planNextRound(run, pageDocs);
@@ -384,11 +398,21 @@ export async function submitRounds(db, runs, deps, { prompts }) {
   const log = deps.log || console.log;
   const out = new Map();
   const prepared = [];
+  const release = async (run) => { if (run.phase === PHASE.SUBMITTING) await setRun(db, run, { phase: PHASE.READY, claimed_at: null }, deps); };
   for (const run of runs) {
+    // Claim first. Two tickers that both read a run as READY (a hand-run tick beside the loop,
+    // or a long enrol pass whose runs sat READY for minutes) must not both submit it: on
+    // 2026-09-30 a second ticker re-submitted ~150 freshly enrolled runs 34 s after the first,
+    // orphaning the first job's results — paid for, never collected.
+    if (!(await claimRun(db, run, deps))) { out.set(run.id, { submitted: false, note: 'claimed by another ticker' }); continue; }
     try {
       const r = await prepareRound(db, run, deps, { prompts });
-      if (r.prepared) prepared.push(r.prepared); else out.set(run.id, r);
-    } catch (e) { out.set(run.id, { submitted: false, note: `ERROR ${e.message?.slice(0, 160)}` }); }
+      if (r.prepared) prepared.push(r.prepared);
+      else { await release(run); out.set(run.id, r); }
+    } catch (e) {
+      await release(run).catch(() => {});
+      out.set(run.id, { submitted: false, note: `ERROR ${e.message?.slice(0, 160)}` });
+    }
   }
   for (const { model, items } of packJobs(prepared)) {
     const requests = items.flatMap((p) => p.requests);
@@ -397,7 +421,7 @@ export async function submitRounds(db, runs, deps, { prompts }) {
     try {
       job = await deps.gemini.submit({ model, requests, displayName: `tbc-${label}` });
     } catch (e) {
-      for (const p of items) out.set(p.run.id, { submitted: false, note: `submit failed: ${e.message?.slice(0, 160)}` });
+      for (const p of items) { await release(p.run); out.set(p.run.id, { submitted: false, note: `submit failed: ${e.message?.slice(0, 160)}` }); }
       continue;
     }
     const now = deps.now ? deps.now() : new Date();
@@ -636,6 +660,14 @@ export async function tickChained(db, deps, { prompts, filter = {} } = {}) {
     }
   }
 
+  // A claim nobody finished (the ticker died between claim and submit) is released for this tick.
+  const nowMs = (deps.now ? deps.now() : new Date()).getTime();
+  for (const run of runs) {
+    if (run.phase === PHASE.SUBMITTING && nowMs - new Date(run.claimed_at || 0).getTime() > STALE_CLAIM_MS) {
+      const res = await db.collection(RUNS_COLLECTION).updateOne({ id: run.id, phase: PHASE.SUBMITTING, claimed_at: run.claimed_at }, { $set: { phase: PHASE.READY, claimed_at: null } });
+      if (res.matchedCount) { run.phase = PHASE.READY; add(run, 'stale claim released'); }
+    }
+  }
   const ready = runs.filter((run) => run.phase === PHASE.READY);
   const submitted = await submitRounds(db, ready, deps, { prompts });
   for (const run of ready) if (submitted.has(run.id)) add(run, submitted.get(run.id).note);

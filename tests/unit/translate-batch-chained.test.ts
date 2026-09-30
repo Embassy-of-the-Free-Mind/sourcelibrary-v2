@@ -413,6 +413,30 @@ describe('single-page outcomes', () => {
 });
 
 // ── Shared jobs across books ───────────────────────────────────────────────
+describe('two tickers never both submit a run', () => {
+  it('a READY run is claimed atomically: of two concurrent ticks, one submits it and the other skips', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    const [a, b] = await Promise.all([tickChained(db, deps, { prompts: PROMPTS }), tickChained(db, deps, { prompts: PROMPTS })]);
+    expect(gemini.submitted).toHaveLength(1);
+    expect(deps.logUsage).toHaveBeenCalledTimes(1);
+    expect([a[0].note, b[0].note].sort()).toEqual(['claimed by another ticker', 'round 1 batches/job1'].sort());
+    expect((await runOf(db)).phase).toBe(PHASE.SUBMITTED);
+  });
+
+  it('a refused round (closed dial) releases its claim; a failed submit does too', async () => {
+    const gemini = makeGemini();
+    await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    await tick(db, makeDeps(gemini, { budgetAllows: vi.fn(async () => false) }));
+    expect((await runOf(db)).phase).toBe(PHASE.READY);
+    const failing = { ...gemini, submit: async () => { throw new Error('ALL_KEYS_REFUSED_BATCH'); } };
+    const notes = await tick(db, makeDeps(failing));
+    expect(notes[0].note).toMatch(/submit failed/);
+    expect((await runOf(db)).phase).toBe(PHASE.READY);
+  });
+});
+
 describe('ready runs of many books share one Batch job per round', () => {
   const BOOK2 = { id: 'bk2', title: 'Liber Secundus', author: 'Anon.', language: 'Latin', published: '1610' };
   const ocr2 = (n: number) => `Folium ${n}. ` + ocrFor(n + 40).replace(/^Pagina \d+\. /, '');
