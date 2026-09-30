@@ -20,6 +20,10 @@
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
  *     --tag repair-xyz --books id1,id2 --budget 5 --by "why"
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --budget 40 --by "top up"
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
+ *     --tag chained-x --books id1,id2 --budget 10 --lanes translate-batch-chained --by "why"
+ *     (--lanes: the envelope opens only for gates whose label starts with one of these —
+ *      without it every scoped worker may spend it on these books)
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --remove --by "done"
  *
  * --books and --collection ADD to the existing scope (set union) — the safe
@@ -112,11 +116,13 @@ await withMongo(async (db) => {
     updated_at: new Date(),
     updated_by: by,
   };
+  if (val('lanes')) next.lanes = val('lanes').split(',').map((s) => s.trim()).filter(Boolean);
+  else if (existing?.lanes) next.lanes = existing.lanes;
   if (budget != null) next.budget_usd = budget;
   else if (existing?.budget_usd != null) next.budget_usd = existing.budget_usd;
 
   await updateConfigVersioned(db, 'processing_control', { $set: { [`allow_scopes.${tag}`]: next } }, by);
-  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}`);
+  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}${next.lanes ? `, envelope lanes [${next.lanes.join(', ')}]` : ''}`);
   if (next.budget_usd != null) {
     console.log('Envelope spend is measured from created_at over both usage stores; monitor with scripts/audit/scope-progress.mjs --scope ' + tag);
   }
