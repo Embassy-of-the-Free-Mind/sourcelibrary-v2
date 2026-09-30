@@ -19,6 +19,13 @@
 // Controls (blinded, from a second seeded page of the sampled books): 15 swap, 15 drop, 15 repeat — the gate
 // in score.mjs needs ≥ 10 of each. Weights in draw-log.json = the lane's page count per language, so the
 // post-stratified estimate is "a page the lane wrote", not "a page in the corpus".
+//
+// Window mode (the speed-test-A quality gate, ops handoffs/2026-09-30-chained-quality-sample.md "Amended"):
+//   --since <ISO> --until <ISO>   only pages whose translation.updated_at falls in [since, until)
+//   --book-ids <file>             frame = these book ids (one per line or a JSON array) instead of every chained run
+//   --swap/--drop/--repeat <n>    control counts (default 15 each; score.mjs --gate needs >= 10 of each)
+// and draw-log.json gains `eligibility`: frame books the lane should not have written in the window
+// (held before the write, English, processing_priority >= 90) — a gate ABORT condition that needs no judge.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,7 +39,9 @@ const SEED = Number(args.seed || 20261001);
 const N_BOOKS = Number(args.books || 60);
 const N_SEAMS = Number(args.seams || 15);
 const CALL_SITE = 'scripts/lib/translate-batch-chained.mjs';
-const N_SWAP = 15, N_DROP = 15, N_REPEAT = 15;
+const N_SWAP = Number(args.swap || 15), N_DROP = Number(args.drop || 15), N_REPEAT = Number(args.repeat || 15);
+const SINCE = args.since ? new Date(args.since) : null, UNTIL = args.until ? new Date(args.until) : null;
+const WINDOW = SINCE || UNTIL ? { 'translation.updated_at': { ...(SINCE ? { $gte: SINCE } : {}), ...(UNTIL ? { $lt: UNTIL } : {}) } } : {};
 const EXCLUDED_TYPES = ['archived-spread', 'blank', 'title-page', 'toc', 'index', 'illustration', 'digitizer-insert', 'colophon', 'errata', 'cover', 'map', 'plate'];
 const MIN_OCR = 200, MIN_TR = 100;
 
@@ -54,19 +63,33 @@ await client.connect();
 const db = client.db(process.env.MONGODB_DB || 'bookstore');
 const books = db.collection('books'), pages = db.collection('pages'), runs = db.collection('translate_batch_runs');
 
-const log = { seed: SEED, at: new Date().toISOString(), frame: { call_site: CALL_SITE, runs_mode: 'chained' }, n_books: N_BOOKS, n_seams: N_SEAMS, weights: {}, visits: {}, exclusions: {}, arms: {} };
+const log = { seed: SEED, at: new Date().toISOString(), frame: { call_site: CALL_SITE, runs_mode: 'chained', since: SINCE, until: UNTIL, book_ids_file: args['book-ids'] || null }, n_books: N_BOOKS, n_seams: N_SEAMS, weights: {}, visits: {}, exclusions: {}, arms: {} };
 
 // 1. Frame: books the lane has run on, and the lane's page count per language (the weights).
-const bookIds = await runs.distinct('book_id', { mode: 'chained' });
-const bookRows = await books.find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, author: 1, published: 1, pages_count: 1, provider: 1, language: 1, visible: 1, hidden: 1 } }).toArray();
+let bookIds;
+if (args['book-ids']) {
+  const raw = fs.readFileSync(args['book-ids'], 'utf8').trim();
+  bookIds = raw.startsWith('[') ? JSON.parse(raw) : raw.split(/\s+/).filter(Boolean);
+} else bookIds = await runs.distinct('book_id', { mode: 'chained' });
+const bookRows = await books.find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, author: 1, published: 1, pages_count: 1, provider: 1, language: 1, visible: 1, hidden: 1, processing_priority: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1 } }).toArray();
+log.eligibility = [];
 const byBook = Object.fromEntries(bookRows.map((b) => [b.id, b]));
 const PROJ = { page_number: 1, page_type: 1, ol: { $strLenCP: '$ocr.data' }, tl: { $strLenCP: '$translation.data' }, tm: '$translation.model', ted: '$translation.edited_by', seeded: '$translation.engine.input.context.previous_translation', first: '$translation.engine.input.context.block.first_page' };
 const lanePages = {}; // book_id → candidate rows the lane wrote (filtered)
 for (const b of bookRows) {
   const rows = await pages.aggregate([
-    { $match: { book_id: b.id, 'translation.engine.call_site': CALL_SITE, 'translation.data': { $type: 'string' }, 'ocr.data': { $type: 'string' } } },
-    { $project: PROJ },
+    { $match: { book_id: b.id, 'translation.engine.call_site': CALL_SITE, 'translation.data': { $type: 'string' }, 'ocr.data': { $type: 'string' }, ...WINDOW } },
+    { $project: { ...PROJ, tu: '$translation.updated_at' } },
   ], { maxTimeMS: 60000 }).toArray();
+  if (rows.length) {
+    const lastWrite = rows.reduce((m, r) => (r.tu && (!m || r.tu > m) ? r.tu : m), null);
+    const hold = b.pipeline_auto?.hold;
+    const why = [];
+    if (hold?.held_at && lastWrite && new Date(hold.held_at) < new Date(lastWrite)) why.push(`held (${hold.reason}) since ${new Date(hold.held_at).toISOString()}`);
+    if (/^(english|eng|en)$/i.test(b.language || '')) why.push('English');
+    if (b.processing_priority >= 90) why.push(`processing_priority ${b.processing_priority}`);
+    if (why.length) log.eligibility.push({ book_id: b.id, title: b.title, pages: rows.length, last_write: lastWrite, why });
+  }
   const lang = b.language || 'unknown';
   log.weights[lang] ||= { books: 0, translated_pages: 0 };
   log.weights[lang].books++; log.weights[lang].translated_pages += rows.length;
@@ -80,6 +103,7 @@ for (const b of bookRows) {
   });
   if (ok.length) lanePages[b.id] = ok;
 }
+if (log.eligibility.length) console.error(`ELIGIBILITY: ${log.eligibility.length} books the lane should not have written:`, JSON.stringify(log.eligibility));
 console.error(`frame: ${bookIds.length} books with chained runs, ${Object.keys(lanePages).length} with judgeable lane pages; lane pages by language:`, Object.fromEntries(Object.entries(log.weights).map(([k, w]) => [k, w.translated_pages])));
 
 async function fullPage(bookId, n) {
