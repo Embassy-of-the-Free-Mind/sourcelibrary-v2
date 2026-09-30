@@ -268,7 +268,7 @@ function phasePackets() {
   }
   // Repeat controls: the same (page, arm) twice under different ids measures the judge's own noise.
   for (let i = items.length - 1; i > 0; i--) { const j = Math.floor(seededRand() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; }
-  const N = Number(opt('packets', 8));
+  const N = Number(opt('n-packets', 8));  // not --packets: that is the phase flag
   const packets = Array.from({ length: N }, (_, p) => items.filter((_, i) => i % N === p));
   // Repeat controls go into a packet other than their original's (the judge would see both),
   // and at a random position.
