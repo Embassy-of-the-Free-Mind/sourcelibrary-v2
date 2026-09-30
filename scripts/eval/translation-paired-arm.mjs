@@ -146,18 +146,44 @@ async function phaseDraw() {
 const API = 'https://generativelanguage.googleapis.com';
 const batchKeyEnv = () => (process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY');
 
+/**
+ * arms.jsonl is append-only: a request the Batch API cancelled and a later retry of it are both
+ * rows. Readers take the LAST row per (page, arm). A prompt blocked before generation
+ * (promptFeedback.blockReason) is a refusal, whatever an older row called it.
+ */
+function armRows() {
+  const last = new Map();
+  for (const r of readJsonl(path.join(DIR, 'arms.jsonl'))) {
+    if (r.outcome === 'empty' && r.block) r.outcome = 'refusal';
+    last.set(`${r.id}:${r.arm}`, r);
+  }
+  return last;
+}
+
+/**
+ * --submit            every request, once (refuses if batch.json exists).
+ * --submit --retry    only the requests whose last outcome is `error`. The Batch API cancels whole
+ *                     jobs at $0 ("The operation was cancelled." inside a SUCCEEDED job, ~16% of
+ *                     rounds in #4681); retry is the only mitigation. Same prompt bytes, new job.
+ */
 async function phaseSubmit() {
   const meta = JSON.parse(fs.readFileSync(path.join(DIR, 'arms.json'), 'utf8'));
   const approved = Number(opt('approved-usd', 0));
   if (!(approved >= meta.estimate.usd)) { console.error(`REFUSING TO SPEND: estimate $${meta.estimate.usd}, --approved-usd ${approved || 'absent'}`); process.exit(2); }
-  if (fs.existsSync(path.join(DIR, 'batch.json'))) { console.error('batch.json exists — this run was already submitted; --collect it'); process.exit(2); }
+  const bf = path.join(DIR, 'batch.json'), retry = has('retry');
+  if (fs.existsSync(bf) && !retry) { console.error('batch.json exists — this run was already submitted; --collect it, or --submit --retry the errored requests'); process.exit(2); }
+  const prior = retry ? JSON.parse(fs.readFileSync(bf, 'utf8')) : null;
+  if (prior?.jobs.some((j) => !j.collected_at)) { console.error('a job is still uncollected — --collect first'); process.exit(2); }
+  const failed = retry ? new Set([...armRows().values()].filter((r) => r.outcome === 'error').map((r) => `${r.id}:${r.arm}`)) : null;
   const envName = batchKeyEnv(), key = process.env[envName];
   if (!key) throw new Error(`no ${envName}`);
-  const jobs = [];
+  const jobs = prior ? prior.jobs : [];
   for (const model of [...new Set(Object.values(ARM_MODEL))]) {
     // Every request line carries generationConfig.thinkingConfig.thinkingBudget: 0 (built in --draw).
-    const jsonl = fs.readFileSync(path.join(DIR, `requests-${model}.jsonl`), 'utf8'), bytes = Buffer.byteLength(jsonl);
-    const n = jsonl.split('\n').filter(Boolean).length;
+    const lines = fs.readFileSync(path.join(DIR, `requests-${model}.jsonl`), 'utf8').split('\n').filter(Boolean)
+      .filter((l) => !failed || failed.has(JSON.parse(l).key));
+    if (!lines.length) continue;
+    const jsonl = lines.join('\n') + '\n', bytes = Buffer.byteLength(jsonl), n = lines.length;
     const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
@@ -175,7 +201,7 @@ async function phaseSubmit() {
     });
     if (!create.ok) throw new Error(`batch create ${create.status} ${(await create.text()).slice(0, 500)}`);
     const job = await create.json();
-    jobs.push({ model, job_name: job.name, file_name: fileName, requests: n, submitted_at: new Date().toISOString() });
+    jobs.push({ model, job_name: job.name, file_name: fileName, requests: n, submitted_at: new Date().toISOString(), ...(retry ? { retry: true } : {}) });
     // Written after EACH job: a crash between the two submits must not orphan a paid job.
     fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify({ key_env: envName, estimate_usd: meta.estimate.usd, jobs }, null, 2));
     console.log(`submitted ${job.name} (${model}, ${n} requests)`);
@@ -188,7 +214,8 @@ function outcomeOf(r) {
   if (r.error || !resp) return { outcome: 'error', error: JSON.stringify(r.error || 'no response').slice(0, 300) };
   const cand = resp.candidates?.[0], finish = cand?.finishReason || null;
   const raw = (cand?.content?.parts || []).map((x) => x.text || '').join('');
-  if (!raw.trim()) return { outcome: finish && finish !== 'STOP' ? 'refusal' : 'empty', finish, block: resp.promptFeedback?.blockReason || null };
+  const block = resp.promptFeedback?.blockReason || null;
+  if (!raw.trim()) return { outcome: block || (finish && finish !== 'STOP') ? 'refusal' : 'empty', finish, block };
   return { outcome: finish === 'MAX_TOKENS' ? 'truncated' : finish && finish !== 'STOP' ? 'refusal' : 'text', finish, raw };
 }
 
@@ -247,7 +274,7 @@ async function phaseCollect() {
 async function phasePackets() {
   const { resetSeed, seededRand } = await imp('scripts/eval/lib/paired-stats.mjs');
   const sample = readJsonl(path.join(DIR, 'sample.jsonl'));
-  const rows = new Map(readJsonl(path.join(DIR, 'arms.jsonl')).map((r) => [`${r.id}:${r.arm}`, r]));
+  const rows = armRows();
   const PER = Number(opt('per-packet', 15)), REPEATS = Number(opt('repeats', 30));
   resetSeed(SEED + 1);
   const rint = (n) => Math.floor(seededRand() * n);
@@ -307,7 +334,7 @@ async function phaseScore() {
   const { resetSeed, bootstrapCI, binomTwoSided, mean } = await imp('scripts/eval/lib/paired-stats.mjs');
   const sample = new Map(readJsonl(path.join(DIR, 'sample.jsonl')).map((s) => [s.id, s]));
   const key = JSON.parse(fs.readFileSync(path.join(DIR, 'packet-key.json'), 'utf8'));
-  const armRows = readJsonl(path.join(DIR, 'arms.jsonl'));
+  const textOf = armRows();
   const batch = JSON.parse(fs.readFileSync(path.join(DIR, 'batch.json'), 'utf8'));
   const verdicts = new Map(); let bad = 0;
   const vdir = path.join(DIR, 'verdicts');
@@ -376,8 +403,8 @@ async function phaseScore() {
 
   // Failed reads, and the sensitivity row: a failed read scored as fidelity < 4, over every sampled page.
   const outcomes = Object.fromEntries(ARMS.map((a) => [a, {}]));
-  for (const r of armRows) outcomes[r.arm][r.outcome] = (outcomes[r.arm][r.outcome] || 0) + 1;
-  const textOf = new Map(armRows.map((r) => [`${r.id}:${r.arm}`, r]));
+  for (const r of textOf.values()) outcomes[r.arm][r.outcome] = (outcomes[r.arm][r.outcome] || 0) + 1;
+  const cancelled = readJsonl(path.join(DIR, 'arms.jsonl')).filter((r) => r.outcome === 'error').length;
   const sens = [...sample.values()].filter((s) => ARMS.every((a) => !textOf.get(`${s.id}:${a}`)?.text || cell.get(s.id)?.[a]));
   const fid4All = (id, a) => (cell.get(id)?.[a] ? cell.get(id)[a].fidelity >= 4 : false);
   const sensitivity = { n_books: sens.length, fid_ge4: Object.fromEntries(ARMS.map((a) => [a, pct(sens.filter((s) => fid4All(s.id, a)).length / Math.max(1, sens.length))])) };
@@ -391,7 +418,7 @@ async function phaseScore() {
   const report = {
     at: new Date().toISOString(), issue: 5274, measure: 'judged', judge: 'claude-opus (subagents), translation-corpus-audit/JUDGE-PROMPT.md',
     sampled_books: sample.size, complete_books: complete.length, verdicts: { expected, read: verdicts.size, malformed: bad },
-    outcomes, cost_usd: +batch.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0).toFixed(4), judge_noise: judgeNoise,
+    outcomes, batch_requests_cancelled_and_retried: cancelled, cost_usd: +batch.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0).toFixed(4), judge_noise: judgeNoise,
     all: block(complete), by_script_class: group((r) => r.s.script_class), by_language: group((r) => r.s.language),
     by_audit_arm: group((r) => `served-by-${r.s.audit_arm}`), sensitivity_failed_read_is_below_4: sensitivity,
     worst_by_arm: Object.fromEntries(ARMS.map((a) => [a, worst(a)])), largest_gaps: gaps,
