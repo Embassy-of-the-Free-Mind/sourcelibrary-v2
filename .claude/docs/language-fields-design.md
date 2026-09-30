@@ -83,7 +83,7 @@ Extend the pinned twin (`src/lib/language-normalize.ts` ↔ `scripts/lib/languag
 | `toLanguageCodes(raw)` | `{ codes: string[], unresolved: string[] }` — ordered, de-duplicated; unrecognised fragments go to `unresolved`, never into `codes` | `parseLanguageField`'s title-case fallthrough |
 | `languageCode(token)` | one code or `null` | `normalizeLanguageToken` (kept as `languageName(languageCode(t))` for callers that want a name) |
 | `languageName(code, locale = 'en')` | display name | `displayLanguage`, `CODE_TO_NAME`, `CODE3_TO_NAME`, `LANGUAGE_NAMES_ES`, `TARGET_LANGUAGE_NAMES` |
-| `languageFamily(code)` / `sameLanguage(a, b)` | family code / boolean — normalise first, then compare families | `languageFamily`, `sameLanguageFamily`, `sameLanguage` on names |
+| `codeFamily(code)` / `sameLanguage(a, b)` | family code / boolean — normalise first, then compare families (named `codeFamily`, not `languageFamily`, so the name-API `languageFamily` keeps its output for callers that pass raw labels) | `languageFamily`, `sameLanguageFamily`, `sameLanguage` on names |
 | `toBcp47(code)` / `fromLocale(locale)` | `'la'` ↔ `'lat'` | `languageToBcp47` in `language-code.ts`, `LANG_CODES` in the IIIF/DTS routes, `scholarly-typst.mjs` `LANG_CODES` |
 | `displayLabel(codes, locale = 'en')` | `'Greek and Latin'` | hand-written compound labels |
 
