@@ -216,6 +216,18 @@ describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of o
     expect(g.allowed).toBe(false);
   });
 
+  it('a lane-restricted envelope opens only for gate labels with its prefix', async () => {
+    const control = envControl({ allow_scopes: { lane: { book_ids: ['b1', 'b2'], budget_usd: 10, lanes: ['translate-batch-chained'], created_at: new Date('2026-09-01T00:00:00Z') } } });
+    const mine = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control }), 'translate-batch-chained b1');
+    expect(mine.allowed).toBe(true);
+    expect([...mine.envelopeIds!].sort()).toEqual(['b1', 'b2']);
+    // Negative control: the same envelope, asked by another worker, stays shut.
+    const other = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control }), 'image-extract-worker');
+    expect(other.allowed).toBe(false);
+    expect(readScopeEnvelopes(control)[0].lanes).toEqual(['translate-batch-chained']);
+    expect(readScopeEnvelopes(envControl())[0].lanes).toBeNull();
+  });
+
   it('dial UNSET (default-closed) + envelope with room → scoped dispatch (an envelope is an explicit bounded grant)', async () => {
     const db = makeScopedDbStub({ scopeUsd: 3, control: envControl({ daily_budget_usd: null }) });
     const g = await budgetAllowsDispatchScoped(db, 'test');

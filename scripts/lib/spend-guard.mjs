@@ -202,6 +202,9 @@ export function readScopeEnvelopes(control) {
         book_ids: Array.isArray(s.book_ids) ? s.book_ids.filter(Boolean).map(String) : [],
         collections: Array.isArray(s.collections) ? s.collections.filter(Boolean).map(String) : [],
         created_at: s.created_at ? new Date(s.created_at) : null,
+        // Optional: gate LABEL prefixes this envelope opens for. Absent = every worker that asks
+        // the scoped gate may spend it on these books (the original contract).
+        lanes: Array.isArray(s.lanes) && s.lanes.length ? s.lanes.filter(Boolean).map(String) : null,
       });
     }
   }
@@ -333,6 +336,14 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
   const open = new Set();
   const parts = [];
   for (const env of envelopes) {
+    // A lane-restricted envelope is a permission on a set of books FOR ONE WORKER. Without it, an
+    // envelope opened for translation paid image extraction more than translation on the same
+    // books (2026-09-30: $2.80 image-extract vs $2.52 chained translation, chained-stalled-2026-09-30),
+    // because spend is attributed by book_id and every scoped worker asks this gate.
+    if (env.lanes && !env.lanes.some((lane) => String(label).startsWith(lane))) {
+      parts.push(`${env.tag}: lane-restricted to ${env.lanes.join(',')}`);
+      continue;
+    }
     const ids = await resolveEnvelopeIds(db, env);
     if (ids.size === 0) { parts.push(`${env.tag}: empty scope`); continue; }
     const s = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at });
