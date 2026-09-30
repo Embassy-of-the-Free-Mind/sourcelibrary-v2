@@ -10,22 +10,26 @@
  * the first and none of the second.
  *
  * Thresholds were fixed on the #5274 audit's judged pages; see EXPERIMENTS.md for the P/R and
- * the caveat that the reference set is also the tuning set.
+ * the caveat that the reference set is also the tuning set. RESULT (2026-09-30): no operating point
+ * reaches precision 0.8 at a useful recall, so nothing reads this verdict in production and no
+ * field is written from it (#5313). It is a screen for a human or a second-stage reader.
  */
 
-export const VERDICT_VERSION = 'garble-verdict@1';
+export const VERDICT_VERSION = 'garble-verdict@2';
 
 export const THRESHOLDS = {
   /** OOV rate must exceed this quantile of the page's language (or script) distribution … */
-  oov_quantile: 'p98',
-  /** … and exceed that language's MEDIAN by at least this much (absolute). */
-  oov_margin: 0.2,
-  /** Filler: one unit making up this share of the page at >= 10x its corpus rate. */
-  filler: 0.08,
-  /** Non-periodic repeated 5-grams covering this share of the page (taxonomy O4). */
-  repeat: 0.35,
-  /** Exact periodic loop share (ocr-loop-guard's own gate is 0.5; 0.3 is its "partial" band). */
-  loop: 0.3,
+  oov_quantile: 'p90',
+  /** … and exceed that language's MEDIAN by at least this much (absolute). @2: the best-precision
+   *  point on the audit reference (5 flagged, 3 judge-garbled + 1 letter-soup page the judge missed). */
+  oov_margin: 0.3,
+  /** Filler and non-periodic repeat are MEASURED but do not vote (null = off). @1 had them at 0.08 /
+   *  0.35: on the reference they flagged litanies, dhāraṇī refrains, tables and name lists — 16 of 19
+   *  of @1's false positives. Kept as features for a second-stage reader, not as a verdict. */
+  filler: null,
+  repeat: null,
+  /** Exact periodic loop share — ocr-loop-guard's own refusal gate. */
+  loop: 0.5,
 };
 
 /** Features whose corpus distribution is recorded per group (see ocr-garble-corpus.mjs). */
@@ -52,8 +56,8 @@ export function garbleVerdict(row, baseline, t = THRESHOLDS) {
     score = +(row.oov - q.p50).toFixed(4);
     if (row.oov > q[t.oov_quantile] && score >= t.oov_margin) reasons.push('oov');
   }
-  if ((row.filler || 0) >= t.filler) reasons.push('filler');
-  if ((row.repeat || 0) >= t.repeat) reasons.push('repeat');
+  if (t.filler != null && (row.filler || 0) >= t.filler) reasons.push('filler');
+  if (t.repeat != null && (row.repeat || 0) >= t.repeat) reasons.push('repeat');
   if ((row.loop || 0) >= t.loop) reasons.push('loop');
   return { garbled: reasons.length > 0, reasons, score };
 }
