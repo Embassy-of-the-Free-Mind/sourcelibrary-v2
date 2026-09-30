@@ -26,6 +26,10 @@
  *   --chained --plan   --book=ID                        FREE  queue, blocks, estimate
  *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
  *                                                             submit the first rounds in shared jobs
+ *   --chained --enrol-auto [--limit=40] [--max-open=60] PAID  enrol what the gap-fill would want
+ *             [--zero-only] [--min-pages=N]                     (AUTO_STATUSES), each approved at
+ *             [--exclude-chinese] [--include-hidden]            pages × $0.0012, then submit;
+ *             [--dry-run]                                       --dry-run lists candidates only
  *   --chained --tick                                    PAID  one pass: collect finished rounds,
  *                                                             write pages, submit next rounds
  *   --chained --loop [--interval=180] [--max-minutes=N] PAID  tick until every run is terminal
@@ -40,12 +44,12 @@ import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
-import { loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { loadTranslationPrompts, syncBookTranslationCounters } from '../lib/translate-core.mjs';
 import {
   planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, batchRequestToJsonlLine, RUNS_COLLECTION, TERMINAL_PHASES,
 } from '../lib/translate-batch-seam.mjs';
 import {
-  enrolChainedRun, tickChained, submitRounds, planNextRound, estimateChainedUsd,
+  enrolChainedRun, tickChained, submitRounds, selectAutoCandidates, planNextRound, estimateChainedUsd,
   MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
 } from '../lib/translate-batch-chained.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
@@ -250,6 +254,41 @@ async function chained(db) {
     console.log(`  first round: ${first?.kind} p${first?.pages?.[0]?.page_number}${first?.pages?.length > 1 ? `–${first.pages[first.pages.length - 1].page_number}` : ''}`);
     console.log(`  excluded: ${JSON.stringify(plan.excluded)}`);
     console.log(`  estimate (batch price, seeds included): $${est}`);
+    return;
+  }
+
+  if (has('enrol-auto')) {
+    // The scheduler's enrolment: up to --limit books the gap-fill would want (widened, see
+    // AUTO_STATUSES), each approved at pages × AUTO_APPROVAL_USD_PER_PAGE. Enrolment spends
+    // nothing by itself — every round is still gated by the dial or an envelope at submit — but an
+    // open run IS stored spend, so --max-open caps how many this lane holds at once.
+    const limit = Number(arg('limit') || 40);
+    const maxOpen = Number(arg('max-open') || 60);
+    const open = await db.collection(RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } });
+    const room = Math.max(0, Math.min(limit, maxOpen - open));
+    console.log(`  open chained runs: ${open} (max ${maxOpen}) → room for ${room}`);
+    if (!room) return;
+    const candidates = await selectAutoCandidates(db, {
+      limit: room, zeroOnly: has('zero-only'), minPages: Number(arg('min-pages') || 0),
+      visibleOnly: !has('include-hidden'), excludeChinese: has('exclude-chinese'),
+    });
+    const total = candidates.reduce((s, b) => s + b.approvedUsd, 0);
+    for (const b of candidates) console.log(`  ${b.id}  ${String(b.language).slice(0, 12).padEnd(12)} ${b.pages_ocr}/${b.pages_count}pp tr ${b.pages_translated || 0}  ${b.pipeline_auto?.status}  approve $${b.approvedUsd}  ${String(b.title || '').slice(0, 60)}`);
+    console.log(`  ${candidates.length} candidate(s), approvals total $${total.toFixed(2)}${has('dry-run') ? ' — DRY RUN, nothing enrolled' : ''}`);
+    if (has('dry-run') || !candidates.length) return;
+    if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
+    const prompts = await loadTranslationPrompts(db);
+    const enrolled = [];
+    for (const b of candidates) {
+      const res = await enrolChainedRun(db, b.id, deps(), { prompts, approvedUsd: b.approvedUsd, submit: false });
+      if (res.ok) { enrolled.push(res.run); continue; }
+      console.log(`  ${b.id}: REFUSED — ${res.reason}`);
+      // The selector read the counters, the enrol read the pages. When they disagree the counter
+      // is stale (#3402); re-derive it so the book stops being selected every hour.
+      if (res.reason === 'nothing-to-translate') await syncBookTranslationCounters(db, b.id);
+    }
+    const submitted = await submitRounds(db, enrolled, deps(), { prompts });
+    for (const run of enrolled) console.log(`  ${run.book_id}: run ${run.id} est $${run.estimate} — ${submitted.get(run.id)?.note}`);
     return;
   }
 
