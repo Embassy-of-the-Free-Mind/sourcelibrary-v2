@@ -1309,6 +1309,9 @@ function stageMineruReport() {
   const DIGIT = new Map([...readJsonl(F('digitcheck.jsonl')), ...readJsonl(F('mineru-digitcheck.jsonl'))].map((c) => [c.key, c]));
   const silent = (s) => (s.metric?.misread_candidates || []).filter((m) => DIGIT.get(`${s.slug}|${m.r}|${m.h}`)?.printed === 'ref' && levenshtein(m.r, m.h) <= 1 && /^\d+$/.test(m.h)).length;
   const unchecked = (s) => (s.metric?.misread_candidates || []).filter((m) => !DIGIT.has(`${s.slug}|${m.r}|${m.h}`)).map((m) => ({ key: `${s.slug}|${m.r}|${m.h}`, slug: s.slug, ref: m.r, read_as: m.h, ctx: m.ctx }));
+  // a candidate can only become a SILENT misread if the engine's token is a number one edit away; the rest are
+  // visibly garbled (2o, 7oo, i17) whatever the page prints, and need no image check to be kept out of the rate
+  const canBeSilent = (u) => /^\d+$/.test(u.read_as) && levenshtein(u.ref, u.read_as) <= 1;
   const mRows = readJsonl(outFileOf(ARMS.mineru.model));
   const run = (k) => { const rows = mRows.filter((o) => o.run_id === ARMS[k].run_id); return { run_id: ARMS[k].run_id, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, versions: [...new Set(rows.map((o) => o.engine_version))], median_ms_per_page: med(rows.map((o) => o.latency_ms)) }; };
   const json = { issue: 5182, ladder_issue: 3389, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', post: 'mineru-ocr-worker sanitize() (verbatim) then en-ocr-ref-normalise@3', runs: { mineru: run('mineru'), 'mineru-repeat': run('mineru-repeat') }, floor: null, cells: [], ladder: {}, digits: {}, long_s: {}, worst: [], best: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
@@ -1342,7 +1345,7 @@ function stageMineruReport() {
     const numRef = text.reduce((a, s) => a + s.metric.num_ref, 0), sil = text.reduce((a, s) => a + silent(s), 0);
     return { pages: n, text: text.length, refusals: rows.filter((s) => s.outcome === 'refusal').length, failed: failed.length, failed_kinds: failed.reduce((a, s) => ({ ...a, [s.outcome]: (a[s.outcome] || 0) + 1 }), {}),
       cer_gt_half: bad.length, catastrophic: failed.length + bad.length, catastrophic_rate: n ? (failed.length + bad.length) / n : null, median_cer: med(text.map((s) => s.metric.cer)), pooled_cer: pooled.rate, pooled_ci: pooled.ci,
-      numbers_printed: numRef, silent_misreads: sil, silent_rate: numRef ? sil / numRef : null, unchecked_candidates: text.flatMap(unchecked).length };
+      numbers_printed: numRef, silent_misreads: sil, silent_rate: numRef ? sil / numRef : null, unchecked_candidates: text.flatMap(unchecked).filter(canBeSilent).length };
   };
   out.push('## 2. Each engine on its own pages (failed reads counted, not dropped)\n');
   out.push('MinerU\'s failed read = what the production worker would refuse to write: empty (< 40 letters/digits after `sanitize()`), low-quality (`lowQuality()`), or error. Gemini\'s = refusal after retry, truncation, loop. The Archive\'s text (ABBYY) is shown for context.\n');
@@ -1421,9 +1424,10 @@ function stageMineruReport() {
 
   // ---- 7. digits ----
   const mText = ok.filter((s) => s.engine === MIN && s.metric);
-  json.digits = { unchecked: mText.flatMap(unchecked) };
+  const un = mText.flatMap(unchecked);
+  json.digits = { unchecked_could_be_silent: un.filter(canBeSilent), visibly_garbled_unchecked: un.filter((u) => !canBeSilent(u)).map((u) => u.key) };
   out.push('\n## 7. Number misreads (the #5186 measure)\n');
-  out.push(`Silent misreads = a printed number read as another number, verified off the image (digitcheck.jsonl; MinerU-only candidates in mineru-digitcheck.jsonl). ALL cell: MinerU ${ALL.mineru.silent_misreads} / ${ALL.mineru.numbers_printed} (${pct(ALL.mineru.silent_rate, 2)}), lite ${ALL.lite.silent_misreads} / ${ALL.lite.numbers_printed} (${pct(ALL.lite.silent_rate, 2)}), Archive ${ALL.archive.silent_misreads} / ${ALL.archive.numbers_printed} (${pct(ALL.archive.silent_rate, 2)}). Candidates still unchecked: ${json.digits.unchecked.length}${json.digits.unchecked.length ? ` — ${json.digits.unchecked.map((u) => u.key).join('; ')}` : ''}.\n`);
+  out.push(`Silent misreads = a printed number read as another number, verified off the image (digitcheck.jsonl; MinerU-only candidates in mineru-digitcheck.jsonl, where \`split\` = digits right but spaced apart by the engine). ALL cell: MinerU ${ALL.mineru.silent_misreads} / ${ALL.mineru.numbers_printed} (${pct(ALL.mineru.silent_rate, 2)}), lite ${ALL.lite.silent_misreads} / ${ALL.lite.numbers_printed} (${pct(ALL.lite.silent_rate, 2)}), Archive ${ALL.archive.silent_misreads} / ${ALL.archive.numbers_printed} (${pct(ALL.archive.silent_rate, 2)}). Candidates that could still be silent and are unchecked: ${json.digits.unchecked_could_be_silent.length}${json.digits.unchecked_could_be_silent.length ? ` — ${json.digits.unchecked_could_be_silent.map((u) => u.key).join('; ')}` : ''}. Visibly garbled numbers in MinerU's text (o for 0, i for 1 — not silent, not in the rate): ${json.digits.visibly_garbled_unchecked.length}.\n`);
 
   // ---- 8. by eye ----
   const sorted = [...mText].sort((a, b) => a.metric.cer - b.metric.cer);
