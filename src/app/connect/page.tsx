@@ -210,7 +210,8 @@ export default function ConnectPage() {
           <UrlBox label="MCP server URL" />
           <p className="text-muted text-sm mt-4">
             No API key. No sign-up. Works with Claude (all plans), ChatGPT (paid plans), Claude Code, Cursor,
-            Windsurf, VS Code and any other MCP client.
+            Windsurf, VS Code and any other MCP client. In Claude you don&apos;t even need the URL &mdash; the five
+            steps below start right under this box.
           </p>
           <nav aria-label="Jump to instructions" className="mt-5 flex flex-wrap gap-2">
             {[
@@ -218,6 +219,7 @@ export default function ConnectPage() {
               ['#chatgpt', 'ChatGPT'],
               ['#claude-code', 'Claude Code'],
               ['#other-clients', 'Cursor, VS Code & others'],
+              ['#video', 'Video'],
               ['#faq', 'FAQ'],
             ].map(([href, label]) => (
               <a
@@ -232,59 +234,18 @@ export default function ConnectPage() {
         </div>
       </section>
 
-      {/* ── Video ── */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">Watch it happen (2 min 14 s)</h2>
-        <p className="text-secondary mb-4 max-w-2xl">
-          Adding the connector from the Claude directory, then asking Claude for alchemical emblems of the
-          ouroboros. It searches the library, returns the engravings, and links every one to the page of the
-          original book. Silent screen recording.
-        </p>
-        <video
-          controls
-          playsInline
-          preload="metadata"
-          poster={VIDEO.poster}
-          className="w-full rounded-xl border border-border-light shadow-sm bg-stone-900"
-          aria-label={VIDEO.name}
-        >
-          <source src={VIDEO.src} type="video/mp4" />
-          Your browser does not support embedded video.{' '}
-          <a href={VIDEO.src}>Download the recording</a>.
-        </video>
-        <ol className="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-secondary list-none">
-          <li className="bg-white rounded-xl border border-border-light p-4">
-            <span className="font-semibold text-primary">0:04 &mdash; Find it.</span> Customize page &rarr;{' '}
-            <strong>Connectors</strong> tab &rarr; magnifier &rarr; type &ldquo;source&rdquo;. (The sidebar is cropped out
-            of the recording; the stills below show it.)
-          </li>
-          <li className="bg-white rounded-xl border border-border-light p-4">
-            <span className="font-semibold text-primary">0:20 &mdash; Connect.</span> One click on the listing; the
-            tool list appears (search, read, quote, images).
-          </li>
-          <li className="bg-white rounded-xl border border-border-light p-4">
-            <span className="font-semibold text-primary">0:28 &mdash; Ask.</span> Alchemical emblems for a tattoo:
-            Claude returns a grid of engravings, 12 of 70 hits.
-          </li>
-          <li className="bg-white rounded-xl border border-border-light p-4">
-            <span className="font-semibold text-primary">0:52 &mdash; Open the original.</span> Click through to the
-            plate on sourcelibrary.org, with its book and page. From 1:48, the same thing again from scratch, this
-            time for the ouroboros.
-          </li>
-        </ol>
-      </section>
-
       {/* ── Claude ── */}
       <section className="mb-16">
         <ClientHeading id="claude" title="Claude" tag="claude.ai, Claude Desktop and the mobile apps · every plan" />
         <p className="text-secondary mb-8 max-w-2xl">
           Source Library is listed in Claude&apos;s connector directory, so there is nothing to type except the word
-          &ldquo;source&rdquo;. Two of the five clicks are easy to miss, so they are circled.
+          &ldquo;source&rdquo;. Five clicks; the two that are easy to miss are circled in red. Every picture below is a
+          frame from the recording further down.
         </p>
 
-        <div className="space-y-10">
-          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
-            <Step n={1} title="Click Customize in the left sidebar">
+        <div className="space-y-14">
+          <div className="space-y-4">
+            <Step n={1} title="Open claude.ai and click Customize in the left sidebar">
               <p>
                 It sits below <strong>Scheduled</strong>, above <strong>More</strong>. Do this once on the web; the
                 connector follows your account into the desktop and mobile apps.
@@ -294,12 +255,13 @@ export default function ConnectPage() {
               src="/connect/step-1-customize.jpg"
               alt="The Claude sidebar with the Customize item circled"
               width={1200}
-              height={626}
-              className="rounded-xl border border-border-light shadow-sm"
+              height={584}
+              className="w-full h-auto rounded-xl border border-border-light shadow-sm"
+              sizes="(min-width: 1024px) 900px, 100vw"
             />
           </div>
 
-          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+          <div className="space-y-4">
             <Step n={2} title="Click the Connectors tab">
               <p>
                 The Customize page opens on <strong>Skills</strong>. Connectors is the second tab, in grey, next to it.
@@ -310,11 +272,12 @@ export default function ConnectPage() {
               alt="The Customize page with the Connectors tab circled"
               width={1200}
               height={584}
-              className="rounded-xl border border-border-light shadow-sm"
+              className="w-full h-auto rounded-xl border border-border-light shadow-sm"
+              sizes="(min-width: 1024px) 900px, 100vw"
             />
           </div>
 
-          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+          <div className="space-y-4">
             <Step n={3} title="Click the magnifying glass and type “source”">
               <p>
                 The search box is hidden behind the small <strong>magnifier icon</strong> on the right, next to the
@@ -327,11 +290,12 @@ export default function ConnectPage() {
               alt="The Connectors search box with 'source' typed and the Source Library row circled"
               width={1200}
               height={766}
-              className="rounded-xl border border-border-light shadow-sm"
+              className="w-full h-auto rounded-xl border border-border-light shadow-sm"
+              sizes="(min-width: 1024px) 900px, 100vw"
             />
           </div>
 
-          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+          <div className="space-y-4">
             <Step n={4} title="Click Connect to Claude">
               <p>
                 The black button at the top right of the listing. A moment later the tool list appears below it
@@ -350,11 +314,12 @@ export default function ConnectPage() {
               alt="The Source Library listing in the Claude directory with the Connect to Claude button circled"
               width={1200}
               height={584}
-              className="rounded-xl border border-border-light shadow-sm"
+              className="w-full h-auto rounded-xl border border-border-light shadow-sm"
+              sizes="(min-width: 1024px) 900px, 100vw"
             />
           </div>
 
-          <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 items-start">
+          <div className="space-y-4">
             <Step n={5} title="Ask">
               <p>
                 Start a new conversation and ask about any historical text or image. Claude searches, reads and cites
@@ -368,7 +333,8 @@ export default function ConnectPage() {
               alt="Claude showing a grid of alchemical engravings returned by the Source Library connector"
               width={1200}
               height={1100}
-              className="rounded-xl border border-border-light shadow-sm"
+              className="w-full h-auto rounded-xl border border-border-light shadow-sm"
+              sizes="(min-width: 1024px) 900px, 100vw"
             />
           </div>
         </div>
@@ -406,6 +372,49 @@ export default function ConnectPage() {
             </div>
           </div>
         </details>
+      </section>
+
+      {/* ── Video ── */}
+      <section className="mb-16">
+        <h2 id="video" className="text-2xl font-semibold text-primary mb-2 scroll-mt-24">The same five steps on video (2 min 14 s)</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          Silent screen recording: adding the connector from the directory, then asking Claude for alchemical
+          emblems and opening one on sourcelibrary.org.
+        </p>
+        <div className="grid md:grid-cols-[minmax(0,400px)_1fr] gap-8 items-start">
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster={VIDEO.poster}
+            className="w-full rounded-xl border border-border-light shadow-sm bg-stone-900"
+            aria-label={VIDEO.name}
+          >
+            <source src={VIDEO.src} type="video/mp4" />
+            Your browser does not support embedded video.{' '}
+            <a href={VIDEO.src}>Download the recording</a>.
+          </video>
+          <ol className="space-y-3 text-sm text-secondary list-none">
+            <li className="bg-white rounded-xl border border-border-light p-4">
+              <span className="font-semibold text-primary">0:04 &mdash; Find it.</span> Customize page &rarr;{' '}
+              <strong>Connectors</strong> tab &rarr; magnifier &rarr; type &ldquo;source&rdquo;. (The sidebar is cropped
+              out of the recording; step 1 above shows it.)
+            </li>
+            <li className="bg-white rounded-xl border border-border-light p-4">
+              <span className="font-semibold text-primary">0:20 &mdash; Connect.</span> One click on the listing; the
+              tool list appears (search, read, quote, images).
+            </li>
+            <li className="bg-white rounded-xl border border-border-light p-4">
+              <span className="font-semibold text-primary">0:28 &mdash; Ask.</span> Alchemical emblems for a tattoo:
+              Claude returns a grid of engravings, 12 of 70 hits.
+            </li>
+            <li className="bg-white rounded-xl border border-border-light p-4">
+              <span className="font-semibold text-primary">0:52 &mdash; Open the original.</span> Click through to the
+              plate on sourcelibrary.org, with its book and page. From 1:48, the same thing again from scratch, this
+              time for the ouroboros.
+            </li>
+          </ol>
+        </div>
       </section>
 
       {/* ── ChatGPT ── */}
