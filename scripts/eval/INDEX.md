@@ -114,6 +114,7 @@ Read these for the house conventions before designing a new study.
 | `ft-verify-demote-packet.mjs` | ft-verify-demote-packet.mjs — the sign-off packet for proposed demotes. |
 | `ft-verify-gate.mjs` | ft-verify-gate.mjs — Stage-2 verification gate for first-translation verdicts (#2564). |
 | `ft-work-registry-pilot.mjs` | ft-work-registry-pilot.mjs — the work-grain pilot (#3881 north star, phase 1 in miniature). |
+| `garble-detector-5313.mjs` | Score the cheap OCR garble detector (#5313) against the translation-corpus audit's judged pages. |
 | `gen-ft-groundtruth.mjs` | Generates the bulk Tier-2 adjudication WORKFLOW script with the 462-book worklist embedded (issue #2564). |
 | `gen-ft-recall.mjs` | Generates the bulk Tier-2 adjudication WORKFLOW script with the 462-book worklist embedded (issue #2564). |
 | `gen-ft-reliability.mjs` | Generates the bulk Tier-2 adjudication WORKFLOW script with the 462-book worklist embedded (issue #2564). |
