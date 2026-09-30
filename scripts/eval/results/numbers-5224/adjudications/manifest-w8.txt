@@ -1,0 +1,15 @@
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-148.jpg   positions: 1=BOX 2=BOX 3=BOX 4=BETWEEN 5=BOX 6=BOX 7=BETWEEN 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-149.jpg   positions: 1=BOX 2=BOX 3=BETWEEN 4=BETWEEN 5=BOX 6=BOX 7=BETWEEN 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-150.jpg   positions: 1=BOX 2=BOX 3=BOX 4=BOX 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-151.jpg   positions: 1=BOX 2=BOX 3=BETWEEN 4=BOX 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-152.jpg   positions: 1=BETWEEN 2=BOX 3=BETWEEN 4=BETWEEN 5=BOX 6=BOX 7=BOX 8=BETWEEN
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-153.jpg   positions: 1=BETWEEN 2=BOX 3=BETWEEN 4=BOX 5=BETWEEN 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-154.jpg   positions: 1=BOX 2=BOX 3=BETWEEN 4=BOX 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-155.jpg   positions: 1=BOX 2=BETWEEN 3=BOX 4=BOX 5=BOX 6=BOX 7=BOX 8=BETWEEN
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-156.jpg   positions: 1=BOX 2=BOX 3=BOX 4=BOX 5=BETWEEN 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-157.jpg   positions: 1=BOX 2=BOX 3=BOX 4=BETWEEN 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-158.jpg   positions: 1=BETWEEN 2=BOX 3=BOX 4=BOX 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-159.jpg   positions: 1=BETWEEN 2=BOX 3=BOX 4=BOX 5=BOX 6=BOX 7=BETWEEN 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-160.jpg   positions: 1=BETWEEN 2=BOX 3=BOX 4=BOX 5=BOX 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-161.jpg   positions: 1=BETWEEN 2=BOX 3=BOX 4=BOX 5=BETWEEN 6=BOX 7=BOX 8=BOX
+/Users/dereklomas/sourcelibrary/.claude/worktrees/numbers-5224/scripts/eval/results/numbers-5224/sheets/sheet-162.jpg   positions: 1=BOX 2=BOX 3=BOX 4=BOX 5=BETWEEN 6=BOX 7=BETWEEN 8=BETWEEN

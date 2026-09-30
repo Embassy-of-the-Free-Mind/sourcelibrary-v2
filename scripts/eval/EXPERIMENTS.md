@@ -18,25 +18,6 @@ person pays for it again.
 The replication column exists because of 2026-09-02, below.
 
 ---
-## 2026-09-30 · Cursive census of pre-1868 Japanese + the router checked by eye (#5100, #4925)
-
-- **Question.** How many pre-1868 Japanese books are kuzushiji (the class NDL reads and Gemini does not, #4745), and is
-  the flash-preview script classifier good enough to route a GPU lane?
-- **Design.** Every Japanese book with a catalogue year before 1868 or none (356, from the local mirror); 3 seeded interior
-  pages per book (skip the first 10 %), the #4745 six-class prompt on gemini-3-flash-preview through the metered client,
-  thinking off; a book is cursive when ≥ 2 of its 3 pages are. Then 60 FRESH census pages, one per book (seed 59250,
-  30 the classifier called cursive, 30 regular text), shuffled, renamed, and labelled by eye BEFORE the labels were joined.
-- **Result.** Control (the 10 #4745 eye-reads) 10/10 on the cursive axis. **116 of 356 books cursive (CI 108–118),
-  ≈ 8,210 pages (7,620–8,590)**: 93 woodblock, 23 manuscript; 77 visible. 13 more books have one cursive page of three.
-  Eye check: **57/60 agree on the cursive axis; 28/28 eye-cursive pages caught (recall 1.0), 2 regular pages called
-  cursive** (a large-hiragana herbal, a kaisho-katakana manuscript) — the error runs toward over-routing, which costs
-  NDL GPU seconds, not readings. 3 pages the classifier called cursive are regular kanji with running hentaigana kana;
-  scored cursive (hentaigana is kuzushiji); scored regular, agreement is 54/60. 3 no-text pages (blank, show-through, a
-  cover) were given a text class — irrelevant to routing, relevant to anyone reusing the classes. Spend $0.87.
-- **Replicated?** The control is the #4745 set; the 60-page eye check is the replication on fresh books.
-- **Artifact.** `scripts/eval/results/cursive-census/` (summary.json, pages.jsonl, eyecheck/{draw,eye,score}.json);
-  scripts `cursive-census-{draw,classify,eyecheck}.mjs`.
-
 ## Monthly translation corpus audit (#5301) — does the served defect rate move?
 
 One entry for the series, one row per month (newest first); the row is written by the stage-2 routine
@@ -47,73 +28,9 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 | month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
 |---|---:|---|---:|---|---:|---:|---:|---|---|
-| 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
+| 2026-09 | 103 | 85.6 (76.9–93) | 2.9 | 14.3 (7.1–22.5) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 |
 
 ---
-
-## 2026-09-30 — How much Gemini OCR on Internet Archive books is a neighbouring leaf's text, as readers see it? (#5309)
-
-**Headline: 3.7% of decidable IA books (29 of 775, Wilson 95% CI 2.6–5.3%) show text of a neighbouring leaf beside the
-page image, in contiguous runs. Projected ≈ 102K pages (book bootstrap 57K–159K), 97% translated; a lower bound
-(undecidable books count as clean).** Another 6.5% of books carry the same text shift but a shown image shifted the same way,
-so they read correctly on screen. That is #3368 class C and must not be re-OCR'd alone. 81 of 82 books with a run have
-`bulk_jp2` pages. The run starts after the 25 IIIF-read preview pages. Offsets −1 (64 books), −3 (13), −5, −2, −7.
-**Repair (not run): ≈ $240 ($130–370)**, being lite-batch re-OCR at $0.00148 plus lite-batch re-translation at about $0.00085 per page.
-**Also:** `ia_djvu` free-lane text shifted in 9 of 85 decidable books (#4790 residue, consistent with #5361's 7/82).
-**Design:** random-order walk (seed 5309) of 2,639 of 31,187 IA books; per page, bigram Dice vs the Archive's djvu leaves
-±8, abstaining below 0.30 or within 0.15 of the runner-up; dHash of the shown image at three pages of each run. Controls:
-7/7 known wrong-leaf pages fire (all `text_wrong_on_screen`). Of 150 by-eye-matched IA pages, 6 are flagged, and every
-imaged one is `consistent_on_screen` or ambiguous, never `text_wrong`. **Lesson: text ≠ the record's leaf is not a
-reader-visible error until the shown image is checked.** *Replicated?* No (one sample; the full walk is a documented command).
-Artifact: `scripts/eval/results/ia-model-ocr-off-leaf-2026-09-30/`, `scripts/audit/ia-model-ocr-off-leaf.mjs`.
-
----
-
-## 2026-09-30 — Chained Batch lane at scale (#4681): 154 books at once in shared jobs — $0.00061/page, ~4,700 pages/hour at full concurrency, 5.4% of rounds cancelled
-
-**Question.** Does the chained lane (2026-09-29 entry below) hold its price and guard rates when
-it runs 150+ books at once, once one Batch job carries every ready book's round (#5375),
-fallback pages go in one round (#5381), and books are enrolled by a selector (#5385)?
-
-**Design.** Load test, not a quality claim (the prompt is production's, pinned byte-for-byte by
-the unit tests; the judged quality sample is a separate brief). Cohort = `--enrol-auto --zero-only
---min-pages=25 --exclude-chinese --statuses=complete,images_complete`: visible, not held,
-non-English, non-Chinese, OCR ≥ 90% of the book, no page translated (counted on pages), terminal
-status only. Terminal only because a book-scoped envelope funds EVERY worker that asks the gate:
-on the first cohort's envelope image extraction spent $2.80 against chained translation's $2.52
-(fix: lane-restricted envelopes, #5389, hold). 160 selected, 154 enrolled (6 refused: the lane's
-estimator priced them above pages × $0.0012), 3,721 pages queued, mostly 25–60-page Latin
-pamphlets. Envelope `chained-zero-2026-10`, $6. One loop, under `flock /tmp/sl-translate-chained.lock`.
-
-**Result** (153/154 runs complete at 1.2 h; the last is a tail run):
-
-| | slice A (shared jobs, 154 books) | first cohort (a job per book, 24 runs) | pilot (5 books) |
-|---|---|---|---|
-| pages written | 3,602 of 3,721 (97%) | 3,207 | 847 |
-| cost per written page (meter) | **$0.000609** | $0.00089 | $0.00056 |
-| rounds cancelled by the API | **5.4%** (37/684) | 17.6% (184/1,043) | 16% |
-| round latency p10 / median / p90 | 2.3 / 2.9 / 5.5 min | 4.4 / 5.0 / 7.0 min | median 2.7 |
-| throughput | ~4,700 pp/h in the first 0.74 h; 2,960 pp/h over the whole 1.2 h, tail included | 217 pp/h | — |
-| unhealthy (refused at the write) | 0.39% (14) | 0.77% | 6/913 |
-| fallback pages (block discarded or short) | 7.8% of queued | 6.8% | — |
-| discarded blocks / drifted rounds | 18 / 59 | 35 / 45 | — |
-| parked runs | 0 | 0 | 0 |
-
-- **Shared jobs cancel less.** 50-request jobs lost 5.4% of rounds; one-request jobs lost 16–18%.
-  The API seems to cancel whole small jobs, not requests. Replicated? No: this is one afternoon.
-- **Throughput is set by concurrency**, not by latency: a round takes ~3 minutes whatever the job
-  carries, so pages/hour grows with the number of open books. At 150 books the first 45 minutes
-  wrote ~3,500 pages. The long tail is books finishing their fallback rounds one at a time.
-- **Two operational faults found and fixed during the run.** (1) The scoped spend gate costs about
-  3 s per call; asked once per run, a 180-run tick spent about 9 min gating (#5391: once per tick).
-  (2) A hand-run tick beside the loop re-submitted ~150 freshly enrolled runs 34 s after the first
-  submit, orphaning the first jobs (~150 requests, about $0.5 unmetered: the placeholders stay
-  `submitted`); #5392 claims a run atomically before submitting it.
-- **The lane's estimator runs about 2× high**, so a per-run approval of pages × $0.0012 stops dense
-  books early (7 runs topped up by $0.03). Calibrating it to the measured meter is a follow-up.
-
-**Artifact.** `translate_batch_runs` (mode chained, books of scope `chained-zero-2026-10`), meter rows
-`gemini_usage.endpoint = hetzner/translate-batch-chained`; #4681 comment 2026-09-30.
 
 ## 2026-09-30 (later) — POST-HOC: the same MinerU rule, re-applied with PR #5299's footnote step (#5182)
 
@@ -139,8 +56,7 @@ was not kept, and PR #5299's `readPageFootnotes()` + assembly were applied verba
 First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker's `sanitize()` verbatim) against the
 #5216 human references, on the 114 books lite and flash were scored on. $0 (no model call; lite/flash rows reused).
 - **Paired vs lite (decision, 98 pairs):** MinerU better 10 / lite better 49 / tie 39, sign p < 0.001, median Δ
-  **+0.19 pp** [0.10, 0.91]. That is inside the ±0.2 pp PEER band, but the CI is not. Median CER 0.66% vs 0.20%.
-  (CI recomputed 2026-09-30, #5373 — was [0.10, 0.86]; rule output unchanged.)
+  **+0.19 pp** [0.10, 0.86]. That is inside the ±0.2 pp PEER band, but the CI is not. Median CER 0.66% vs 0.20%.
 - **Catastrophic 2.6% (3/114), bar 2%.** MinerU never refuses (114/114 text vs lite 98, flash 94). All three > 50% pages,
   and all five worst by eye, are **footnotes dropped whole**. MinerU reads them (re-run: `middle.json` has them as
   `page_footnote` in `discarded_blocks`), but its markdown leaves them out. 10/114 pages lose ≥ 20% of the words this way.
@@ -156,42 +72,6 @@ First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker'
 - Artifact: `results/en-ocr-ref-5124/mineru-arm-2026-09-30.{md,json}`; run ids `en-mineru-5182-2026-09`,
   `en-mineru-repeat-5182-2026-09`; `PREREGISTRATION-mineru-english-5182.md`; DECISIONS.md row "MinerU as peer or tier-3".
 
-## 2026-09-30 — Were the bootstrap intervals in this file the right width? The generator cycled; 31 quoted intervals recomputed, no decision changes (#5373)
-
-**Headline: no routing or adoption decision changes. 22 of the 31 quoted intervals moved, most by a few percent of
-their width; two had been a quarter to a third too narrow (Paddle on Chinese manuscript, lite on 18th-century
-Greek). One label flips (v15's invented-tag reduction becomes decisive, by one page in 320), and the flip PR #5372
-found in its own first score is confirmed.**
-- **The fault.** `lib/paired-stats.mjs` drew from `seed = (seed * 1103515245 + 12345) & 0x7fffffff` in double
-  arithmetic. The product passes 2^53, so the low bits were rounded off before the mask kept exactly those bits:
-  13,676 distinct values in 1,000,000 draws, deciles 95,446–104,437, chi-square 106,210 over 304 bins (303 expected).
-  Three scripts carried their own copy beside the library (`stats-cross-model`, `reference-error-rate`,
-  `ocr-preprocessing/gemini-score`). All four now use mulberry32: 999,759 distinct, deciles 99,388–100,359,
-  chi-square 297.
-- **The error depended on the seed.** On paired differences shaped like #5372's (23 pages up, 11 down, 270 ties), the
-  old generator gave 0.88 of the analytic width on 38 of 40 seeds and 0.35 on two. The new one gives 0.97–1.01.
-- **Method.** Stored verdicts and scores only, $0. For each result the OLD generator had to reproduce the stored
-  interval first (`PAIRED_STATS_LEGACY_LCG=1`); only then was it recomputed. v15 needed the scorer as of d49c98985,
-  because the note verifier changed afterwards. External check: on #5372 the fixed library reproduces that PR's own
-  bootstrap exactly and sits within 0.2 pp of its analytic intervals on all nine primary cells.
-- **Largest moves** (each row below carries its own note): Paddle on Chinese manuscript Δ [−0.036, −0.014] →
-  [−0.047, −0.015]; Greek 1700–1799 lite median CER 0.077–0.122 → 0.080–0.140; Latin reference error [0.17, 2.47] →
-  [0.15, 2.78]; batch-continuity A2 [−25.5, −1.2] → [−26.5, −2.0]. Every rule that reads an interval gives the same
-  verdict: the Greek "inadequate" reads the median, the cost lane reads CI-upper ≤ +0.05, the continuity bound fails
-  for every arm before and after.
-- **Not an interval from this generator, so untouched:** leaf identity #5311 (Wilson); restraint A/B #5349 (McNemar);
-  garble #5369 and invention location #5363 (counts, precision/recall); picture boxes and the evidence dashboard
-  (their own mulberry32); every Kraken/Yigdzin arm of #5250 (Python `random`).
-- **Could not be recomputed:** the observational lite-vs-flash read (#4759). Its pairs file was never committed. Three
-  of its intervals end near zero; its report now says so.
-- **Left as they are, on purpose:** six scripts that use the same arithmetic to draw a SAMPLE or a blinded shuffle
-  (`harvest-wikisource-gt`, `contact-sheet-screen`, `neighbour-leaf-test`, `repeat-instability-draw`,
-  `suda-sol/make-pilot`, `analysis/gap-validation-gold-export`). Those draws are made and judged; changing the
-  generator would stop them reproducing. A unit test lists them and fails on a seventh.
-- *Replicated?* The generator fix is pinned by `tests/unit/paired-stats-prng.test.ts` (distinctness, uniformity,
-  interval width over twenty seeds; it fails on the old generator). *Artifact:* the corrected reports under
-  `results/`; before/after table on #5373.
-
 ## 2026-09-30 — Leaf identity: is the page image a reader sees the page that was translated? (#5274 follow-up, #4790)
 
 - **Design.** The 311 audit pages (one per book, the same draw, not redrawn). Each served `display_photo` was compared with its OCR text on page number, header and first/last lines. Eight Sonnet subagents read 291 pages ($0). The 20 eye-subset pages were reused. Every mismatch was arbitrated by opening the display image AND the source leaf `pages.photo` points at.
@@ -202,51 +82,12 @@ found in its own first score is confirmed.**
 - *Replicated?* No. Book-wide extent is unmeasured and needs a detector.
 - **Artifact.** `scripts/eval/results/leaf-identity-2026-09-30/` (README, verdicts.jsonl, summary.json, worker-instructions.md).
 
-## 2026-09-30 — Does a "stop where the page stops" instruction cut invention? Restraint A/B on the audit's own pages (#5305)
-
-**Headline: NO measurable effect on judged invention; the pre-registered rule says the block stays out of v16.**
-Risk stratum (71 books, pages whose source ends mid-sentence or that the #5274 judge flagged for invention/garble):
-invention 18.3% (v16) → 21.1% (v16 + restraint), McNemar 9 vs 7 discordant, p 0.80, against an A-vs-A noise
-floor of 2.8 pp (v16 twice: 18.3% vs 21.1%, 10 vs 8 discordant). Guards all hold: omission 15.5 → 11.3%, fidelity
-≥ 4 69.0 → 71.8%, control stratum (24) within the floor. **The instruction does change behaviour mechanically**:
-unmarked open ends (source stops mid-sentence, translation closes it silently; `translation-bridging.mjs openEnd`)
-22.5% → 8.5%, 11 vs 1 discordant, p 0.006, and `<meta>continues on next page</meta>` appears on 34% of risk pages.
-**Why it did not move invention:** in all three arms the judge found page-end completion on only 3 defects each.
-The page-break fix (#5103, `PAGE_BREAK_SCOPED`) and the hybrid continuity context, both on in every arm, already
-removed most of the bridging the audit saw in OLDER served translations. What invention remains (18–22 defects per
-arm) is mostly inside `<meta>`/`<note>`, often the opening `<meta>continues from previous page: …</meta>` that v15's
-instruction 1 asks for, which supplies words from the previous page. Plus fluent prose over garbled OCR (the five
-worst pages are the same corrupt-OCR pages, at the same score, in all three arms). Side effect: B emits
-`<unclear>` 4.8× as often (6.9 vs 1.4 per risk page) without an omission penalty from the judge.
-- **Design.** `PREREGISTRATION-translation-restraint.md` (written before the paid run; one amendment, pre-read).
-  Arms A1 = v16 (v15 + note-scope sentence, #4767), A2 = A1 again, B = A1 + restraint block; production door
-  (`buildTranslationPrompt`, previous-page continuity, adjacent OCR, `PAGE_BREAK_SCOPED`), production routing (270
-  lite, 18 flash), Batch API. Judge: Claude Opus, the audit's rubric unchanged, 8 blinded packets; 12 repeat
-  controls: 10/12 identical fidelity, 10/12 identical invention flag. English (modernisation) books out of scope.
-  One page failed to translate in each v16 arm (95 of 96 scored).
-- **measure = `judged`**, n = 95 books, exploratory grade. Five worst B pages: read from the judge's reasons, NOT by
-  eye — all five are equally bad in A1/A2 (corrupt source OCR), so none is caused by the block.
-- **Replicated?** No.
-- **Spend.** Gemini Batch $0.34 (ledger line, ops `costs/spend-ledger.md`); judge on subscription (8 Opus
-  subagents, ≈ 1.6M tokens).
-- **Artifact.** `scripts/eval/results/translation-restraint-ab-2026-09-30/` (sample, arms.json with the exact
-  prompt texts, arms.jsonl, verdicts/, packet-key.json, report.json). Harness `scripts/eval/translation-restraint-ab.mjs`.
-  Detector (PR #5318) validation beside it. Next lever, not tested here: the continuity `<meta>` itself.
-
-## 2026-09-30 — Can a $0 per-page garble score find the audit's "fluent prose over garbled OCR" pages? No: precision 0.24–0.60, recall 0.09–0.19; no field written (#5313)
-
-**Question.** The reader note (#5315) reaches only pages whose OCR admitted difficulty (1.08%); the #5274 judge found 6.6% garble passthrough. Can lexicon, token-garbage and repetition features over `ocr.data` flag those pages with precision ≥ 0.8, enough to store `ocr.read_quality`?
-**Design.** Lexicon derived from the corpus (a unit is a word if it occurs in ≥ 3 books; Tibetan syllable bigrams; CJK character bigrams), built from 60 pages per book over 41.7K live books in the local mirror. Features: OOV rate relative to the page's catalogue-language distribution, vowel-less and mixed-script tokens, fragment runs, filler token, non-periodic 5-gram repeat, and the exact loop from `ocr-loop-guard`. Reference: 327 `main` pages, one per book, from the #5274 audit and the monthly run (#5319), where positive means the Opus judge's `garble_passthrough` flag (32 positive, 15 major). `measure: judged`.
-**Result.** @1 (OOV + filler + repeat + loop): P 0.24 / R 0.19. @2 (OOV > p90 and ≥ median + 0.30, or loop ≥ 0.5): P 0.60 / R 0.09 on 5 flags. AUC 0.74 raw OOV, 0.61 relative to language median. `pageReadCaution` alone: 1 of 32. On the whole mirror, @2 flags 0.56% of translated pages (25,851 pages / 2,301 books), but a hand read of 20 (OCR text, not images) found 3 garbled, 1 ambiguous and 16 clean, so corpus precision is about 15–20%. **The gate is not met; nothing is written and the reader note is unchanged.** Causes: the judge's garble is mostly phrase-level (17/32 minor); the catalogue language is often not the page's language; lists, tables and rare languages miss any lexicon; and refrains read as filler or repeat (16 of @1's 19 false positives). The reference is also the tuning set, so @2's 0.60 is optimistic.
-**Replicated?** No; single reference set. **Artifact:** `results/garble-detector-5313-2026-09-30/` (README, P/R JSON, corpus summary, hand-read sample); code `scripts/lib/ocr-garble-{score,verdict}.mjs`, `scripts/audit/ocr-garble-{lexicon,corpus}.mjs`, `scripts/eval/garble-detector-5313.mjs`. Cost $0.
-
 ## 2026-09-30 — Translation corpus audit: how faithful is a random SERVED translation, by language, model and period? (#5274)
 
 **Headline: 87–89% of served pages read at fidelity ≥ 4 of 5; 3.4–3.8% are ≤ 2; 11–14% carry at least one major
 defect.** The lower fidelity / higher defect figure re-weights the quota-sampled model arm to its true share per
 language (`arm-shares.json`; lite omits more and is the majority arm); the upper is the plain language-weighted
-estimate (≥ 4: 89.1%, CI 85.5–92.5; major 11.4%, CI 7.6–15.6 — CI recomputed 2026-09-30, #5373, was 85.3–92.5 and
-7.7–15.5). Page-weighting (random page, not random book) changes
+estimate (≥ 4: 89.1%, CI 85.3–92.5; major 11.4%, CI 7.7–15.5). Page-weighting (random page, not random book) changes
 nothing (89.3%). Post-stratified by language over live translated pages; sampling limits stated in the README. Latin-script languages
 (198 books) are at 92.9% ≥ 4 / 8.6% major; non-Latin-script (113 books) at 70.8% ≥ 4 / 22.1% major. Per language,
 German, French, Italian, Dutch, Latin, English and Spanish are all ≥ 89% at ≥ 4 (directional to decision-grade n);
@@ -287,23 +128,6 @@ does not sample; that count stands).
   (476 rows, `run_id translation-corpus-audit-2026-09-30`). Scripts: `scripts/eval/translation-corpus-audit/`.
   Dashboard: no translation cell exists on `/platform/admin/ocr-evidence` yet — follow-up. Decision rows: DECISIONS.md
   "Translation". Report page: linked from #5274.
-
-## 2026-09-30 — Does the adopted English Archive cohort (1880–1930, number-free, ≥ 90% Latin) keep the Archive's number errors out, and how much does it admit? (#5124, #5186)
-
-**Design.** Rule implemented in `scripts/lib/ia-ocr-cohort.mjs`, applied per page in `scripts/import/ia-ocr-ingest.mjs`. Three free checks and one paid one, all read-only:
-(1) **negative control** on the four #5186 county histories (2,307 pages that now carry a lite re-read; Archive leaf re-fetched): pages where the Archive prints a number the lite read lacks, with the gate on vs `--cohort-off`;
-(2) **size**: the gate over every `ia_djvu` page of 208 seeded 1880–1930 English books;
-(3) **validation**: one admitted page per book (100 pages), fresh flash-lite realtime read (production prompt, one retry on refusal), Archive-vs-lite compared, every lite number the Archive lacks read in context;
-(4) re-gate of the validated pages after the fixes (3) forced.
-
-**Result.**
-- Negative control: 1,241 of 2,307 pages carry an Archive number the lite read lacks; the gate admits **0** of them (81 pages admitted); `--cohort-off` admits all 1,241. The control fires.
-- Size: the page gate admits **34%** of `ia_djvu` pages in 1880–1930 English books (8,169 / 24,066; 15,839 refused for numbers, 58 for script). Already-written English `ia_djvu` text (from `book_events`): ≈127K pages in 1880–1930 books, ≈69K pre-1880, ≈18K post-1930, ≈2.5K unknown year — the pages outside the cohort are the #5186 re-read backlog.
-- Validation (v1 of the gate): 86 read, 14 refused as recitation (14%, same as #5124). Lite read a number the Archive text lacked on 7 pages. By context, 2 were folios (not errors), and 5 were numbers the gate could not see: "1906" read as "IQ06", which a folio exemption on a footnote line then swallowed; "18" read as "1 8"; "200" read as "aoo"; an apparatus "10" read as Greek "τὸ"; and one diary entry dropped by the Archive outright. **Fixed in v2:** a folio must be a bare digit token opening or closing the head (≤ 10 words) or foot (≤ 3 words) line; tokens mixing a digit with I/l/O/o/Q/S/Z count as numbers, and so do split digits ("1 8"). v2 refuses the IQ06 and "1 8" pages. What remains is **2 all-letter/Greek number misreads in 82 admitted pages** — the named blind spot.
-- **Separate finding (not the cohort):** 7 of the 82 validated admitted pages carry the NEIGHBOURING leaf's Archive text (word ratio 0.14–0.31; where both print a folio, the Archive's is lite's minus one). Six of the seven books were filled 2026-09-12/13 — the offset-compensation window #4790 repaired — so they look like residue that repair missed; one is a 2026-09-26 fill on 3 reference pages. A further page (Century Magazine) is Archive garbage, not a wrong leaf. Reported on #4790 (its wrong-page rate was 5.4%).
-
-*Replicated?* No — one seeded draw. Archive-vs-lite is agreement, not accuracy; accuracy for this cohort is #5124's S3 cell (Archive 0.62% vs lite 0.34% CER). Spend ≈ $0.19 (+ a killed first run, est. < $0.20). Artifacts: session scratch only (draw/validate jsonl not committed — page ids listed on #5124).
-
 ## 2026-09-29 — Round 3 of #5250: do the round-2 Kraken photometric gains hold on FRESH Syriac pages? (#5250, follow-up #5277)
 
 **Headline: YES, every pre-registered prediction confirmed, per stratum.** Kraken Sophro Mhiro, order-free line CER N2
@@ -634,6 +458,24 @@ split is a hypothesis for a pre-registered follow-up on library pages.**
   `results/image-extraction-bbox-2026-09-28/` (raw outputs, grades, key, rubric, geometry). Sheets
   (43 MB) on Hetzner `/root/bbox-eval-4747/repo/scripts/eval/results/image-extraction-lite-2026-09-28/grading/sheets`.
 
+## 2026-09-30 — Which engine reads printed NUMBERS correctly? Engine disagreements adjudicated blind on the page image (#5224; feeds #5124, #5186)
+
+- **Question.** #5124 put the Archive's silent number misreads at ~1.5% on 10 cases and lite at 0/750. For county histories, genealogies and directories the numbers are the payload, and a silent 1836→1886 passes every word-level gate. Per engine, how often is a printed 2–4-digit number wrong, with the page image as truth?
+- **Design.** `measure: accuracy`. (a) The four #5186 county histories: Archive `_djvu.xml` text snapshotted in `page_revisions` vs lite in `pages.ocr`, 25 pages per book. (b) Breadth: one number-dense interior page per English IA book 1800–1930 (seeded, decade round-robin, 130 drawn, 78 scored), lite read into the eval store. Numeric tokens aligned between engines; agreed numbers counted correct; every disagreement cropped at the Archive WORD box (or between the two anchor words for a lite-only number, or as a margin band for a page number) and read BLIND by Sonnet vision (no engine readings on the sheet), `adjudicated_by: model-eye`. A 30-page subset had every agreed number read too (shared blind spot). Book-cluster bootstrap CIs.
+- **Result** (82 books, 178 pages, 5,212 printed numbers; directional):
+
+  | set | Archive wrong [95% CI] | lite wrong [95% CI] | silent misread Archive / lite |
+  |---|---|---|---|
+  | ALL | **5.1%** [3.8, 7.4] | **1.8%** [1.1, 3.1] | 3.6% / 1.2% |
+  | (a) 4 county histories, 100 pp | 3.5% [1.7, 5.8] | 0.8% [0.4, 1.2] | 2.0% / 0.4% |
+  | (b) 78 breadth books | 6.8% [5.0, 10.1] | 2.8% [1.6, 5.0] | 5.2% / 2.0% |
+
+  Lite fewer wrong on 39 books, the Archive on 7, 35 tied (sign test p ≈ 2×10⁻⁶). Both wrong identically on 8 of 682 agreed numbers (1.2%). The Archive's signature: 3→8 (24 vs lite 1), letters for digits (`1s96`), dropped digits, page numbers dropped from the margin. By Archive version: ia-ocr/0.0.21 5.3% vs lite 2.4%; ia-ocr/0.0.14 3.4% vs 0.9%; ABBYY 8.0 2.5% vs 0.8%.
+- **Decision proposed (Derek's call, eval-design §10).** Lite stays the text for any page with numbers (the #5124 no-numbers rule stands); adopt the #5186 digits gate (engine agreement on a number is right 98.8% of the time, so disagreement is the flag); approve the ~$70 Tingley/Point Loma lite re-read (18,513 Archive-text pages, ~58K numbers, ≈1,900 fewer wrong numbers expected, possibly half that on this cleaner shelf).
+- **Instrument findings.** (1) A crop "between two anchors" is only as good as the anchors: on two-column indexes the engines order columns differently and the window lands on a neighbouring entry; the headline keeps only tight windows (125 of 264), and the all-crops variant gives the same ratio (6.7% vs 2.9%). (2) sharp applies `resize` before `composite` whatever the call order — composite, then resize in a second pass. (3) A shell-quoted regex turned `\b` into a literal backspace and silently disabled the decimal-table filter; write regexes from a file. (4) The Archive SPLITS numbers ("19 16") inside its own word boxes; a blind reader confirms each half, so a split must be scored structurally, not by the crop.
+- **Not measured.** Human spot-check (130 items queued in `human-queue.jsonl`, unread); flash; batch lite; pre-1800; non-English.
+- *Cost:* $0.313 of $3 (161 lite realtime calls, run_id `numbers-5224-2026-09`); adjudication on the Claude subscription (9 Sonnet workers). *Replicated?* No; one reader per crop, a second model reader agreed on 30 of 31. *Artifact:* `results/numbers-5224/report.md`, fixture `benchmark/numbers-en-5224.json` (1,274 adjudicated numbers; score any engine with `--stage=regress --texts=<dir>`; on the fixture lite 16.6% vs Archive 30.6% — a disagreement-enriched set, comparative only), store `store/outputs/gemini-3.1-flash-lite/2026-09.jsonl` + `store/scores/numbers-scorer@1/2026-09.jsonl`, script `numbers-5224.mjs`.
+
 ## 2026-09-28 — For which English IA books may the Archive's own OCR replace flash-lite? First English reference pages, both engines scored against them (#5124, scoped; #5180, #5186, #5014)
 
 - **Question.** Every English OCR number so far was two engines agreeing (eval-design §11: zero English
@@ -658,9 +500,7 @@ split is a hypothesis for a pre-registered follow-up on library pages.**
   | S2 pre-1880 date-dense | 6.4% | 4.0% | 11 / 1 / 7 | 3 of 265 / 0 of 194 | 3 of 22 |
   | S3 1880–1930 prose | 0.62% | 0.34% | 16 / 1 / 19 | 0 / 0 | 5 of 41 |
   | S4 1880–1930 date-dense | 3.5% | 4.9% | 15 / 2 / 10 | 6 of 599 / 0 of 534 | 7 of 34 |
-  | ALL | 3.95% [2.3, 6.1] | 2.62% [1.2, 4.6] | **57 / 5 / 43** (sign test p < 0.001) | **1.5% of printed numbers [0.6, 2.7], 9 pages / 0 of 750** | 17 of 122 (14%, CI 9–21%) |
-
-  (ALL row: CI recomputed 2026-09-30, #5373 — was [2.2, 6.2], [1.1, 4.5] and [0.6, 2.5]. The 9–21% refusal interval is analytic and stands.)
+  | ALL | 3.95% [2.2, 6.2] | 2.62% [1.1, 4.5] | **57 / 5 / 43** (sign test p < 0.001) | **1.5% of printed numbers [0.6, 2.5], 9 pages / 0 of 750** | 17 of 122 (14%, CI 9–21%) |
 
   Lite is better on the same page in every stratum. The Archive silently misreads about 1 printed number
   in 70 (e.g. *5180 years* → *6180* twice on one Albērūnī page, read by eye); lite made none that survived
@@ -1069,7 +909,7 @@ volumes, a Helck volume filed as Sethe, an HTBM IV leaf shift) are in the README
 
 **Headline: on Siku Quanshu brush manuscript (`manuscript-regular`, 69 referenced books,
 decision-grade) PaddleOCR-VL-1.6 passes the preregistered non-inferiority rule — median
-ΔCER −0.028 (95 % CI −0.047 to −0.015; recomputed 2026-09-30, #5373, was −0.036 to −0.014), wins 57 / loses 10 / ties 2 against production
+ΔCER −0.028 (95 % CI −0.036 to −0.014), wins 57 / loses 10 / ties 2 against production
 `gemini-3.1-flash-lite`, 0 vs 14 catastrophic pages, lower invention (0.132 vs 0.201), no
 loops either side. Cost lane ADOPTED for that class. It is NOT "the better reader" by the
 stronger #4743 rule (Δ ≤ −0.05 on 38 % of pages, the rule wants 60 %). Woodblock (14
@@ -1108,12 +948,9 @@ LEFT column of a right-to-left leaf and repeats a line; Paddle reads the columns
 
   | class | ref pages | median CER Paddle / lite | median Δ [95 % CI] | W/L/T (p) | catastrophic | invention | verdict |
   |---|---|---|---|---|---|---|---|
-  | manuscript-regular | 69 (20 + 49) | 0.166 / 0.260 | −0.028 [−0.047, −0.015] | 57/10/2 (p < 0.001) | 0 vs 14 | 0.132 vs 0.201 | **cost lane ADOPTED** |
+  | manuscript-regular | 69 (20 + 49) | 0.166 / 0.260 | −0.028 [−0.036, −0.014] | 57/10/2 (p < 0.001) | 0 vs 14 | 0.132 vs 0.201 | **cost lane ADOPTED** |
   | woodblock | 14 (2 + 12) | 0.174 / 0.202 | −0.010 [−0.022, +0.002] | 9/4/1 (0.27) | 0 vs 0 | 0.128 vs 0.129 | directional (n < 50) |
   | typeset | 6 (5 + 1) | 0.313 / 0.314 | 0.000 [−0.005, +0.009] | 2/2/2 (1) | 0 vs 0 | 0.098 vs 0.110 | directional (n < 50) |
-
-  (CI recomputed 2026-09-30, #5373: manuscript-regular was [−0.036, −0.014]; the other two rows and the
-  flash-preview interval below came out the same. The rule reads CI-upper ≤ +0.05, so ADOPTED stands.)
 
   flash-preview (exploratory second reader) on manuscript-regular: median Δ −0.022
   [−0.036, −0.012], 55/4/10, 0 catastrophic — Paddle and flash-preview agree lite is the
@@ -1162,8 +999,7 @@ rejected: 103 untranslatable page in the 16-page window, 44 a block over 20,000 
 the book, 4 non-prose seam page, 1 page under 200 chars. 40 of 58 seams end mid-sentence.
 
 *Controls.* (1) **H1's probe fires:** real cross-boundary consistency is 73.8% against
-3.8% [1.4, 7.1] when the same pages are scored on another same-language book's terms
-(CI recomputed 2026-09-30, #5373 — was [1.5, 6.8]).
+3.8% [1.5, 6.8] when the same pages are scored on another same-language book's terms.
 (2) **The harness runs production's configuration:** on block-k pages already translated
 by the current prompt and model, arm A reproduces the stored text as closely as two
 harness runs reproduce each other (strict match 8 pages/1 book, 0.986 vs 0.985; looser
@@ -1186,12 +1022,10 @@ builder (`tests/unit/translation-batch-continuity-ab.test.ts`).
 
 - **H1 cannot discriminate at this n, and the rule needed it to.** Only 17 of 57
   boundaries carry a term block k−1 tagged whose source form recurs in block k (42 terms).
-  Every arm fails the −5pp paired bound (B −13.1, C −10.0, D −23.9, E −11.8 lower bounds) —
-  and so does **A2, production run a second time: −12.0pp [−26.5, −2.0], 0 better / 4
+  Every arm fails the −5pp paired bound (B −13.9, C −10.0, D −23.5, E −11.8 lower bounds) —
+  and so does **A2, production run a second time: −12.0pp [−25.5, −1.2], 0 better / 4
   worse.** A bound that production fails against itself is not a quality bar. A2 was post
   hoc and descriptive; it is the most useful number here for reading the rest.
-  (CI recomputed 2026-09-30, #5373 — was B −13.9, D −23.5 and A2 [−25.5, −1.2]; C and E unchanged; every
-  arm still fails the bound.)
 - **The seam-page column is where the signal is**, and it agrees with the judge: arms that
   see the previous page's *translation* (A, A2, E) sit at 72–80%; arms that do not (B, C,
   D) sit at 32–48%. Seeing the previous page's *source* (C, D) does not carry renderings
@@ -1646,8 +1480,7 @@ the blind judge caught it. Not flipped; v16 = v15 + one sentence.**
   `gemini-3.1-flash-lite` (flat, Derek's call — the full-flash routing rests on
   OCR evidence; #4759). Verifier = `scripts/lib/page-terms-parse.mjs`, the
   build-page-terms one. Blind 30-pair Claude judge on loss. $1.26.
-- **Result.** Criteria 1–3, 5 pass: Δ +28.9 pp (CI [+14.2, +44.5]; recomputed
-  2026-09-30, #5373, was [+14.7, +44.7]), sign test
+- **Result.** Criteria 1–3, 5 pass: Δ +28.9 pp (CI [+14.7, +44.7]), sign test
   13–0; original-notes/page 0.42 → 0.77; invented tags −95%, housekeeping
   leakage −91%, inline terms +22%. Hebrew went 8% → 93% verified, Arabic
   29% → 100%: on those scripts v13's citations were mostly fabricated.
@@ -1658,13 +1491,6 @@ the blind judge caught it. Not flipped; v16 = v15 + one sentence.**
   written. Corpus-wide interpretive notes fall 1.27 → 0.81/page, every
   stratum. The "omit the note" clause is being read beyond `original:`.
 - **Replicated?** No. k=1 per (page, arm), one run.
-- **One label changes with the recomputed intervals (#5373).** The report marked
-  the invented-tag reduction (0.25 → 0.01 per page) as NOT decisive, CI
-  [−0.525, 0]. On a sound generator it is [−0.594, −0.003]: decisive, by one
-  page in 320. It is a regression gate in the favourable direction, so no
-  criterion and no recommendation changes. The stored 2026-09-12 report keeps
-  its original intervals (the verifier has changed since; reproduce it at
-  d49c98985 with `PAIRED_STATS_LEGACY_LCG=1`).
 - **Two instrument lessons.** (a) `<[^>]+>` as a tag stripper eats prose
   between `->centred<-` markers — fixed, control added. (b) A mean body
   length cannot carry a runaway-loop failure; `prompt-ab.mjs` said so in
@@ -1806,11 +1632,9 @@ diplomatic set to ≥20 pages per segment first (that is the next experiment).
 
   | arm | Δ vs Gemini | 95% CI | cost/page | speed |
   |---|---|---|---|---|
-  | kraken-catmus-cpu | **+0.18pp** | [−0.28, +0.69] | **€0** (Hetzner CPU) | 20–50s |
-  | surya2-l4 | **−0.04pp** | [−0.62, +0.49] | €0.00094 | 4.3s (98% GPU) |
-  | churro3b-l4 | −0.69pp | [−1.61, +0.09] | €0.01435 | 65.4s |
-
-  (CI recomputed 2026-09-30, #5373 — was [−0.28, +0.68], [−0.63, +0.46], [−1.66, +0.06].)
+  | kraken-catmus-cpu | **+0.18pp** | [−0.28, +0.68] | **€0** (Hetzner CPU) | 20–50s |
+  | surya2-l4 | **−0.04pp** | [−0.63, +0.46] | €0.00094 | 4.3s (98% GPU) |
+  | churro3b-l4 | −0.69pp | [−1.66, +0.06] | €0.01435 | 65.4s |
 
   None is significantly different from Gemini. All three beat every commercial
   non-Gemini arm previously run on this set (Sonnet 5 −0.63, Mistral-OCR −0.97,
@@ -1968,9 +1792,7 @@ section exists so nobody reads the gap as "nothing was run before September".
   |---|---|---|---|
   | Greek (n=18) | **0.07%** CI [0.02, 0.13] | 0.00% (5/5 exact) | 1.5pp |
   | German (n=15) | **0.06%** CI [0.02, 0.11] | 0.01% | — |
-  | Latin (n=36) | **1.15%** CI [0.15, 2.78] | 0.48% | 1.4pp |
-
-  (CI recomputed 2026-09-30, #5373 — Latin was [0.17, 2.47]; Greek and German came out the same.)
+  | Latin (n=36) | **1.15%** CI [0.17, 2.47] | 0.48% | 1.4pp |
 
   Greek and German engine differences are 20x the reference noise and stand. **The Latin
   comparison does not** — the reference error and the reported Kraken-vs-Gemini gap are the
@@ -2157,14 +1979,12 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
 ## 2026-09-21 — Which engine should read Greek print, per period? (#4925 step 2, #4744)
 
 **Headline: for 1700–1799 (53 referenced books, decision-grade) production flash-lite is
-inadequate by the preregistered threshold (median CER 0.107, CI 0.080–0.140, threshold 0.10)
-and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.010], 46
+inadequate by the preregistered threshold (median CER 0.107, CI 0.077–0.122, threshold 0.10)
+and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.009], 46
 wins / 6 losses, 0 vs 1 catastrophic). Kraken greek-cllg reads the letters as well as preview
 (0.082) but is closed for the period: it clears Δ ≤ −0.05 on 15 % of pages, not the 60 % the
 better-reader rule needs. For 1450–1699 the cell holds 48 referenced books, two short of 50,
 so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.091 (46/1/1).**
-(CI recomputed 2026-09-30, #5373 — lite's interval was 0.077–0.122 and the preview Δ [−0.024, −0.009]. Rule (a)
-reads the median against 0.10 and rule (b) the sign of CI-upper, so every verdict stands.)
 
 - **Design.** `PREREGISTRATION-greek-ext-4925.md`. One Greek-majority interior leaf per book,
   typeset print only, by-eye `greek_share ≥ 0.5`; references from First1KGreek / Perseus /
@@ -2202,8 +2022,8 @@ reads the median against 0.10 and rule (b) the sign of CI-upper, so every verdic
   shortfall is a draw-more item. Ten more pre-1700 books were sealed as a separate file (every book
   in greek.json / greek-ext.json excluded; 66 books walked). By eye, before any engine output was
   read: 9 typeset Greek leaves, 1 codex (excluded). 8 of the 9 found a reference. **Pre-1700 is now
-  decision-grade at 56: lite 0.171 [0.158, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
-  [−0.093, −0.056] (CI recomputed 2026-09-30, #5373 — was [0.159, 0.188] and [−0.093, −0.057]), 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
+  decision-grade at 56: lite 0.171 [0.159, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
+  [−0.093, −0.057], 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
   better-reader rule at 60.7 % of pages (34 of 56) against a 60 % bar — ONE page. An independent
   recompute puts that share at 57 %. Treat Kraken ≈ preview on letters, not "Kraken wins".** Spend
   $0.11. Optional-stopping note: the supplement was drawn after seeing results, but its size was
