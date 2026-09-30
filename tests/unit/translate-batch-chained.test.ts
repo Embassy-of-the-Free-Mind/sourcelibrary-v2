@@ -19,6 +19,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   enrolChainedRun, tickChained, planNextRound, packJobs, selectAutoCandidates, AUTO_STATUSES, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
+  phase4Lane, phase4ExcludedBookIds, enrolForPhase4,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-chained.mjs';
@@ -587,5 +588,62 @@ describe('selectAutoCandidates', () => {
     expect(out.map((b: Doc) => b.id)).toEqual(['a', 'c']);
     expect(d.seen.pipeline[0].$match.pages_count).toEqual({ $gt: 25 });
     expect(d.seen.pipeline[0].$match.$and[0].language.$not.test('Classical Chinese')).toBe(true);
+  });
+});
+
+describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reader requests stay realtime', () => {
+  it('phase4Lane: reader requests realtime, everything else chained, PHASE4_TRANSLATE_LANE=realtime reverts', () => {
+    expect(phase4Lane({ processing_priority: 100 }, {})).toBe('realtime');
+    expect(phase4Lane({ processing_priority: 90 }, {})).toBe('realtime');
+    expect(phase4Lane({ processing_priority: 50 }, {})).toBe('chained');
+    expect(phase4Lane({}, {})).toBe('chained');
+    expect(phase4Lane({ processing_priority: 50 }, { PHASE4_TRANSLATE_LANE: 'realtime' })).toBe('realtime');
+  });
+
+  it('phase4ExcludedBookIds keeps out open runs and parked runs, and a run ended in the last day only if it did not write its whole queue', async () => {
+    let q: Doc = {};
+    const d = { collection: () => ({ distinct: async (_f: string, query: Doc) => { q = query; return ['x']; } }) };
+    expect(await phase4ExcludedBookIds(d, { now: new Date('2026-10-01T00:00:00Z') })).toEqual(['x']);
+    const [open, parked, recent] = q.$or;
+    expect(open.phase.$nin).toEqual(expect.arrayContaining(['complete', 'parked', 'failed']));
+    expect(parked).toEqual({ mode: 'chained', phase: 'parked' });
+    expect(recent.updated_at.$gte.toISOString()).toBe('2026-09-30T00:00:00.000Z');
+    expect(JSON.stringify(recent.$expr)).toContain('counts.written');
+  });
+
+  const estimateOf = async () => (await enrolChainedRun(makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [] }), 'bk1', {}, { prompts: PROMPTS, approvedUsd: 0, submit: false })).estimate;
+
+  it('enrols without submitting (the tick packs it into a shared job) and spends nothing', async () => {
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    expect(res.lane).toBe('chained');
+    expect(res.run.phase).toBe(PHASE.READY);
+    expect(res.run.approved_usd).toBe(0.36);
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(1);
+  });
+
+  it('approves at the lane\'s own estimate when it is above pages × $0.0012 but under the realtime price', async () => {
+    const est = await estimateOf();
+    const pageCount = Math.ceil(est / 0.0018);
+    expect(pageCount * 0.0012).toBeLessThan(est);
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount });
+    expect(res.lane).toBe('chained');
+    expect(res.run.approved_usd).toBe(est);
+  });
+
+  it('sends the book realtime when the batch estimate is above the realtime price', async () => {
+    const est = await estimateOf();
+    const pageCount = Math.max(1, Math.floor(est / 0.003));
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount });
+    expect(res.lane).toBe('realtime');
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(0);
+  });
+
+  it('dispatches neither lane for a held book or one with an open run', async () => {
+    const held = makeDb({ books: [{ ...BOOK, pipeline_auto: { status: 'held', hold: { reason: 'wrong leaf' } } }], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [] });
+    expect((await enrolForPhase4(held, BOOK, { prompts: PROMPTS, pageCount: 20 })).lane).toBe('skip');
+    await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    const again = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    expect(again).toMatchObject({ lane: 'skip' });
+    expect(again.reason).toMatch(/^open-run/);
   });
 });
