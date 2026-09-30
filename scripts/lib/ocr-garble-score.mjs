@@ -110,7 +110,7 @@ const LATIN_VOWEL_RE = /[aeiouyæœø]/;
 
 /** Text the features read: tags and housekeeping removed, line-end hyphenation rejoined. */
 export function garbleBody(ocr) {
-  return sourceProse(ocr)
+  return sourceProse(String(ocr || '').replace(/&(?:[a-zA-Z]+|#\d+|#x[0-9a-fA-F]+);/g, ' '))
     .normalize('NFC')
     .replace(/[­​-‍⁠﻿]/g, '')
     .replace(/([\p{L}\p{M}])[-‐¬⸗=]\s*\n\s*(?=[\p{Ll}\p{Lo}\p{M}])/gu, '$1');
@@ -202,7 +202,7 @@ export const MIN_UNITS = 40;
 /** A key needs this many lexicon entries before "not found" means anything. */
 export const MIN_LEXICON = 2000;
 /** Filler: a unit at least this many times over its corpus rate, and seen this often. */
-const FILLER_RATIO = 10;
+const FILLER_RATIO = 15;
 const FILLER_MIN_COUNT = 5;
 const REPEAT_N = 5;
 const FRAGMENT_RUN = 4;
@@ -259,7 +259,10 @@ export function garbleFeatures(ocr, { lexicon, language = null } = {}) {
     const share = c / uni.length;
     if (share <= filler) continue;
     const tab = id.indexOf('\t');
-    const expected = lexicon.rate(id.slice(0, tab), id.slice(tab + 1));
+    const key = id.slice(0, tab), unit = id.slice(tab + 1);
+    // A Latin-script word's rate is its rate in THIS language where we have one: pooled over
+    // every Latin-script language, German `der` looks ten times rarer than it is in German.
+    const expected = Math.max(lexicon.rate(key, unit), key === 'Latin' && langUsable ? lexicon.rate(langKey, unit) : 0);
     if (share >= FILLER_RATIO * expected) { filler = share; fillerUnit = id.slice(tab + 1); }
   }
   let repeated = 0;
