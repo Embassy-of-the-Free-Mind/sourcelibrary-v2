@@ -11,7 +11,7 @@
 #   ndl-koten-box.sh setup     clone ndlkotenocr_cli at the pinned commit, build the docker image
 #   ndl-koten-box.sh fetch     download every image in manifest.tsv (bid, pn, url) to input/img/<bid>/
 #   ndl-koten-box.sh infer     run NDL over input/ with `-s b` (one directory per book)
-#   ndl-koten-box.sh collect   out-<stamp>/**/<bid>/txt/<pn>.txt -> out/<bid>/<pn>.txt, write box.json
+#   ndl-koten-box.sh collect   out-<stamp>/**/<bid>/json/<pn>.json -> out/<bid>/<pn>.txt (ndl-koten-lines.py), box.json
 #   ndl-koten-box.sh all       the four in order, then touch DONE
 # Run it under scripts/gpu/idle-poweroff.sh so the box stops itself when the job ends:
 #   idle-poweroff.sh run -- bash -c 'ndl-koten-box.sh all; sleep 1800'   (30 min to pull the outputs)
@@ -58,22 +58,20 @@ infer() {
 
 collect() {
   STAMP=$(cat "$W/last-stamp")
-  local n=0
-  while IFS= read -r f; do
-    bid=$(basename "$(dirname "$(dirname "$f")")")
-    pn=$((10#$(basename "$f" .txt)))
-    mkdir -p "$W/out/$bid"
-    cp "$f" "$W/out/$bid/$pn.txt"
-    n=$((n + 1))
-  done < <(find "$W/out-$STAMP" -path '*/txt/*.txt')
+  # NDL writes <bid>/json/<stem>.json = [[ [x0,y0,x1,y1,"line"], ... ], ...] (groups of text lines in
+  # reading order) and a <bid>/txt/<stem>_main.txt that runs every line together. The stored reading keeps
+  # one line per NDL line and a blank line between groups, so a column break on the page is a break in
+  # the text (measured 2026-09-30).
   local secs=$(cat "$W/infer-secs" 2>/dev/null || echo 0)
-  python3 - "$W" "$n" "$secs" "$(git -C "$W/ndlkotenocr_cli" rev-parse HEAD)" "$(hostname)" "$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)" <<'EOF'
+  python3 "$(dirname "$0")/ndl-koten-lines.py" "$W/out-$STAMP" "$W/out"
+  local n=$(find "$W/out" -name '*.txt' | wc -l)
+  python3 - "$W" "$n" "$secs" "$(git -C "$W/ndlkotenocr_cli" rev-parse HEAD)" "$(hostname)" "$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)" <<'PY'
 import json, sys
 w, n, secs, commit, host, gpu = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), sys.argv[4], sys.argv[5], sys.argv[6]
 json.dump({"commit": commit, "host": host, "gpu": gpu, "pages_out": n, "infer_secs": secs,
            "secs_per_page": round(secs / n, 2) if n else None}, open(f"{w}/box.json", "w"), indent=1)
-EOF
-  log "collect: $n page texts -> out/ ; $(cat "$W/box.json" | tr -d '\n ')"
+PY
+  log "collect: $n page texts -> out/ ; $(tr -d '\n ' < "$W/box.json")"
 }
 
 case ${1:-} in
