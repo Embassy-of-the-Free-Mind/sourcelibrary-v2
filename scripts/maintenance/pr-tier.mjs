@@ -117,10 +117,18 @@ function ensureLabels() {
 }
 
 function applyLabel({ pr, result, labels }) {
+  // hold → auto is NEVER automatic. On 2026-09-30 a hand-applied tier:hold on
+  // #5294 (reader copy the path rules miss) was flipped back to auto by the
+  // `labeled` re-run, because the PR already carried a pr-tier comment from its
+  // first (AUTO) classification and so looked "script-applied". Lifting a hold
+  // is a human act: remove tier:hold by hand, then re-run `--label`.
+  if (result.tier === 'AUTO' && labels.includes('tier:hold')) {
+    console.log(`   tier:hold kept — a hold is never lifted automatically (remove the label by hand to re-tier)`);
+    return;
+  }
   const want = result.tier === 'AUTO' ? 'tier:auto' : 'tier:hold';
-  const drop = result.tier === 'AUTO' ? 'tier:hold' : 'tier:auto';
   const args = [`--add-label "${want}"`];
-  if (labels.includes(drop)) args.push(`--remove-label "${drop}"`);
+  if (result.tier === 'HOLD' && labels.includes('tier:auto')) args.push('--remove-label "tier:auto"');
   sh(`gh pr edit ${pr.number} ${args.join(' ')}`);
   const already = (pr.comments || []).some((c) => (c.body || '').includes(MARKER) && (c.body || '').includes(`pr-tier: ${result.tier}`));
   if (!already) {
