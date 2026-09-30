@@ -1,0 +1,2750 @@
+{
+  "dir": "scripts/eval/results/translation-corpus-audit-monthly-2026-09",
+  "primary_judge": "opus",
+  "second_judge": null,
+  "seed": 20260930,
+  "drawn_at": "2026-09-30T07:52:28.466Z",
+  "n_main_drawn": 103,
+  "n_main_judged": 103,
+  "n_books": 103,
+  "controls": {
+    "swap": {
+      "n": 15,
+      "caught_fidelity_le2": 15,
+      "flagged_wrong_page": 15,
+      "missed": []
+    },
+    "drop": {
+      "n": 15,
+      "flagged_omission": 15,
+      "fidelity_le3": 14,
+      "missed": [],
+      "original_fidelity": [
+        {
+          "id": "eb90f6538e",
+          "language": "Tibetan",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "3a0869b5b5",
+          "language": "Tibetan",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "55628e1b3a",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "faea82d918",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "20e180e99d",
+          "language": "Korean",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "b59d67eacf",
+          "language": "Korean",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "9b661e6e67",
+          "language": "Greek",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "b38c433548",
+          "language": "Greek",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "38951c9d19",
+          "language": "Sanskrit",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "45e6dda8dd",
+          "language": "Sanskrit",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "70621d506f",
+          "language": "Italian",
+          "drop_fidelity": 3
+        },
+        {
+          "id": "84ee10ef30",
+          "language": "German",
+          "drop_fidelity": 3
+        },
+        {
+          "id": "e26de8d9a9",
+          "language": "German",
+          "drop_fidelity": 3
+        },
+        {
+          "id": "5051158c27",
+          "language": "Japanese",
+          "drop_fidelity": 4
+        },
+        {
+          "id": "20a2ea9988",
+          "language": "Japanese",
+          "drop_fidelity": 2
+        }
+      ]
+    },
+    "repeat": {
+      "n": 15,
+      "exact": 13,
+      "within1": 15,
+      "flags_identical": 10,
+      "pairs": [
+        {
+          "id": "ae784fdc12",
+          "language": "French",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "5e0aa84d50",
+          "language": "Arabic",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "2a91ca8b51",
+          "language": "Italian",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "d2e5324f7f",
+          "language": "Korean",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "910c942997",
+          "language": "Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "1a1581d5f6",
+          "language": "French",
+          "a": 4,
+          "b": 5,
+          "flags_same": false
+        },
+        {
+          "id": "a330d3791b",
+          "language": "Dutch",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "18c01ee751",
+          "language": "Dutch",
+          "a": 4,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "d0bbb1d05e",
+          "language": "Korean",
+          "a": 4,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "3067ad116c",
+          "language": "Greek",
+          "a": 5,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "712e63ae7c",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "b94194ccd7",
+          "language": "English",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "8d92acd9e1",
+          "language": "Greek",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "3cd540a3dc",
+          "language": "German",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "75a373b782",
+          "language": "Sanskrit",
+          "a": 3,
+          "b": 3,
+          "flags_same": true
+        }
+      ]
+    }
+  },
+  "controls_gate": {
+    "pass": true,
+    "checks": {
+      "swap": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      },
+      "drop": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.8666666666666667,
+        "pass": true
+      },
+      "repeat": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      }
+    }
+  },
+  "overall_unweighted": {
+    "n": 103,
+    "n_drawn": 103,
+    "fidelity_mean": 4.19,
+    "fidelity_median": 4,
+    "dist": [
+      1,
+      3,
+      14,
+      42,
+      43
+    ],
+    "pct_ge4": 82.5,
+    "pct_le2": 3.9,
+    "pct_5": 41.7,
+    "flags": {
+      "omission": 11.7,
+      "invention": 16.5,
+      "inversion": 4.9,
+      "untranslated": 0,
+      "wrong_language": 0,
+      "wrong_page": 0,
+      "garble_passthrough": 10.7,
+      "truncated": 1,
+      "repetition": 0
+    },
+    "any_major": 15.5,
+    "confidence_mean": 0.76
+  },
+  "by_language": {
+    "Latin": {
+      "n": 19,
+      "n_drawn": 19,
+      "fidelity_mean": 4.05,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        3,
+        12,
+        4
+      ],
+      "pct_ge4": 84.2,
+      "pct_le2": 0,
+      "pct_5": 21.1,
+      "flags": {
+        "omission": 15.8,
+        "invention": 21.1,
+        "inversion": 5.3,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 10.5,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 15.8,
+      "confidence_mean": 0.77
+    },
+    "English": {
+      "n": 12,
+      "n_drawn": 12,
+      "fidelity_mean": 4.67,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        1,
+        2,
+        9
+      ],
+      "pct_ge4": 91.7,
+      "pct_le2": 0,
+      "pct_5": 75,
+      "flags": {
+        "omission": 8.3,
+        "invention": 8.3,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 8.3,
+      "confidence_mean": 0.85
+    },
+    "German": {
+      "n": 12,
+      "n_drawn": 12,
+      "fidelity_mean": 4.67,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        4,
+        8
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 66.7,
+      "flags": {
+        "omission": 0,
+        "invention": 8.3,
+        "inversion": 8.3,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 8.3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.85
+    },
+    "Greek": {
+      "n": 12,
+      "n_drawn": 12,
+      "fidelity_mean": 3.5,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        2,
+        1,
+        6,
+        2
+      ],
+      "pct_ge4": 66.7,
+      "pct_le2": 25,
+      "pct_5": 16.7,
+      "flags": {
+        "omission": 33.3,
+        "invention": 16.7,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 16.7,
+        "truncated": 8.3,
+        "repetition": 0
+      },
+      "any_major": 33.3,
+      "confidence_mean": 0.77
+    },
+    "French": {
+      "n": 8,
+      "n_drawn": 8,
+      "fidelity_mean": 4.63,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        3,
+        5
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 62.5,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 12.5,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.83
+    },
+    "Italian": {
+      "n": 6,
+      "n_drawn": 6,
+      "fidelity_mean": 4.67,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        2,
+        4
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 66.7,
+      "flags": {
+        "omission": 16.7,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 16.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.78
+    },
+    "Dutch": {
+      "n": 6,
+      "n_drawn": 6,
+      "fidelity_mean": 4.33,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        4,
+        2
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 33.3,
+      "flags": {
+        "omission": 0,
+        "invention": 16.7,
+        "inversion": 16.7,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.83
+    },
+    "Chinese": {
+      "n": 6,
+      "n_drawn": 6,
+      "fidelity_mean": 3.67,
+      "fidelity_median": 3.5,
+      "dist": [
+        0,
+        1,
+        2,
+        1,
+        2
+      ],
+      "pct_ge4": 50,
+      "pct_le2": 16.7,
+      "pct_5": 33.3,
+      "flags": {
+        "omission": 0,
+        "invention": 33.3,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 16.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 50,
+      "confidence_mean": 0.66
+    },
+    "Sanskrit": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 3.75,
+      "fidelity_median": 3.5,
+      "dist": [
+        0,
+        0,
+        2,
+        1,
+        1
+      ],
+      "pct_ge4": 50,
+      "pct_le2": 0,
+      "pct_5": 25,
+      "flags": {
+        "omission": 25,
+        "invention": 50,
+        "inversion": 50,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 75,
+      "confidence_mean": 0.73
+    },
+    "Hebrew": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        1,
+        2,
+        1
+      ],
+      "pct_ge4": 75,
+      "pct_le2": 0,
+      "pct_5": 25,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 25,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.53
+    },
+    "Arabic": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        1,
+        2,
+        1
+      ],
+      "pct_ge4": 75,
+      "pct_le2": 0,
+      "pct_5": 25,
+      "flags": {
+        "omission": 50,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 25,
+      "confidence_mean": 0.72
+    },
+    "Tibetan": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4.25,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        1,
+        1,
+        2
+      ],
+      "pct_ge4": 75,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 50,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 25,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.59
+    },
+    "Korean": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 4.5,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 50,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.63
+    },
+    "Spanish": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 4.5,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.8
+    },
+    "Japanese": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 3,
+      "fidelity_median": 3,
+      "dist": [
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "pct_ge4": 0,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 50,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 50,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 50,
+      "confidence_mean": 0.43
+    }
+  },
+  "by_arm": {
+    "lite": {
+      "n": 57,
+      "n_drawn": 57,
+      "fidelity_mean": 4.16,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        1,
+        9,
+        23,
+        23
+      ],
+      "pct_ge4": 80.7,
+      "pct_le2": 3.5,
+      "pct_5": 40.4,
+      "flags": {
+        "omission": 15.8,
+        "invention": 10.5,
+        "inversion": 3.5,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 12.3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 15.8,
+      "confidence_mean": 0.76
+    },
+    "flash": {
+      "n": 46,
+      "n_drawn": 46,
+      "fidelity_mean": 4.24,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        2,
+        5,
+        19,
+        20
+      ],
+      "pct_ge4": 84.8,
+      "pct_le2": 4.3,
+      "pct_5": 43.5,
+      "flags": {
+        "omission": 6.5,
+        "invention": 23.9,
+        "inversion": 6.5,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 8.7,
+        "truncated": 2.2,
+        "repetition": 0
+      },
+      "any_major": 15.2,
+      "confidence_mean": 0.77
+    }
+  },
+  "by_language_arm": {
+    "Latin": {
+      "lite": {
+        "n": 16,
+        "n_drawn": 16,
+        "fidelity_mean": 4.06,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          3,
+          9,
+          4
+        ],
+        "pct_ge4": 81.3,
+        "pct_le2": 0,
+        "pct_5": 25,
+        "flags": {
+          "omission": 18.8,
+          "invention": 6.3,
+          "inversion": 6.3,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 12.5,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 18.8,
+        "confidence_mean": 0.76
+      },
+      "flash": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 100,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.83
+      }
+    },
+    "English": {
+      "flash": {
+        "n": 7,
+        "n_drawn": 7,
+        "fidelity_mean": 4.71,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          2,
+          5
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 71.4,
+        "flags": {
+          "omission": 0,
+          "invention": 14.3,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.86
+      },
+      "lite": {
+        "n": 5,
+        "n_drawn": 5,
+        "fidelity_mean": 4.6,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          1,
+          0,
+          4
+        ],
+        "pct_ge4": 80,
+        "pct_le2": 0,
+        "pct_5": 80,
+        "flags": {
+          "omission": 20,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 20,
+        "confidence_mean": 0.84
+      }
+    },
+    "German": {
+      "lite": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.75,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          3
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 75,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 25,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.86
+      },
+      "flash": {
+        "n": 8,
+        "n_drawn": 8,
+        "fidelity_mean": 4.63,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          3,
+          5
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 62.5,
+        "flags": {
+          "omission": 0,
+          "invention": 12.5,
+          "inversion": 12.5,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.84
+      }
+    },
+    "Greek": {
+      "flash": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 3.75,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          1,
+          0,
+          2,
+          1
+        ],
+        "pct_ge4": 75,
+        "pct_le2": 25,
+        "pct_5": 25,
+        "flags": {
+          "omission": 25,
+          "invention": 25,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 25,
+          "truncated": 25,
+          "repetition": 0
+        },
+        "any_major": 25,
+        "confidence_mean": 0.76
+      },
+      "lite": {
+        "n": 8,
+        "n_drawn": 8,
+        "fidelity_mean": 3.38,
+        "fidelity_median": 4,
+        "dist": [
+          1,
+          1,
+          1,
+          4,
+          1
+        ],
+        "pct_ge4": 62.5,
+        "pct_le2": 25,
+        "pct_5": 12.5,
+        "flags": {
+          "omission": 37.5,
+          "invention": 12.5,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 12.5,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 37.5,
+        "confidence_mean": 0.77
+      }
+    },
+    "French": {
+      "flash": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.5,
+        "fidelity_median": 4.5,
+        "dist": [
+          0,
+          0,
+          0,
+          2,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 50,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.8
+      },
+      "lite": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.75,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          3
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 75,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 25,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.85
+      }
+    },
+    "Italian": {
+      "lite": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 4.67,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 66.7,
+        "flags": {
+          "omission": 33.3,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.83
+      },
+      "flash": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 4.67,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 66.7,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 33.3,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.73
+      }
+    },
+    "Dutch": {
+      "lite": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.5,
+        "fidelity_median": 4.5,
+        "dist": [
+          0,
+          0,
+          0,
+          2,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 50,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 25,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.82
+      },
+      "flash": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          2,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 50,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.82
+      }
+    },
+    "Chinese": {
+      "flash": {
+        "n": 5,
+        "n_drawn": 5,
+        "fidelity_mean": 3.6,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          1,
+          2,
+          0,
+          2
+        ],
+        "pct_ge4": 40,
+        "pct_le2": 20,
+        "pct_5": 40,
+        "flags": {
+          "omission": 0,
+          "invention": 40,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 20,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 60,
+        "confidence_mean": 0.67
+      },
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.6
+      }
+    },
+    "Sanskrit": {
+      "lite": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        "pct_ge4": 50,
+        "pct_le2": 0,
+        "pct_5": 50,
+        "flags": {
+          "omission": 50,
+          "invention": 50,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 50,
+        "confidence_mean": 0.77
+      },
+      "flash": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 3.5,
+        "fidelity_median": 3.5,
+        "dist": [
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        "pct_ge4": 50,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 50,
+          "inversion": 100,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 100,
+        "confidence_mean": 0.68
+      }
+    },
+    "Hebrew": {
+      "lite": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 4.33,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          2,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 33.3,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.57
+      },
+      "flash": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 3,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "pct_ge4": 0,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 100,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.4
+      }
+    },
+    "Arabic": {
+      "flash": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 3.67,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          1,
+          2,
+          0
+        ],
+        "pct_ge4": 66.7,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 66.7,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 33.3,
+        "confidence_mean": 0.67
+      },
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.9
+      }
+    },
+    "Tibetan": {
+      "flash": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.7
+      },
+      "lite": {
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "pct_ge4": 66.7,
+        "pct_le2": 0,
+        "pct_5": 33.3,
+        "flags": {
+          "omission": 0,
+          "invention": 66.7,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 33.3,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.55
+      }
+    },
+    "Korean": {
+      "flash": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 4.5,
+        "fidelity_median": 4.5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 50,
+        "flags": {
+          "omission": 0,
+          "invention": 50,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.63
+      }
+    },
+    "Spanish": {
+      "flash": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.8
+      },
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.8
+      }
+    },
+    "Japanese": {
+      "lite": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 3,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        "pct_ge4": 0,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 50,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 50,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 50,
+        "confidence_mean": 0.43
+      }
+    }
+  },
+  "by_period": {
+    "pre-1500": {
+      "n": 12,
+      "n_drawn": 12,
+      "fidelity_mean": 3.92,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        2,
+        9,
+        1
+      ],
+      "pct_ge4": 83.3,
+      "pct_le2": 0,
+      "pct_5": 8.3,
+      "flags": {
+        "omission": 25,
+        "invention": 0,
+        "inversion": 8.3,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 16.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 16.7,
+      "confidence_mean": 0.69
+    },
+    "1600s": {
+      "n": 16,
+      "n_drawn": 16,
+      "fidelity_mean": 4.44,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        2,
+        5,
+        9
+      ],
+      "pct_ge4": 87.5,
+      "pct_le2": 0,
+      "pct_5": 56.3,
+      "flags": {
+        "omission": 0,
+        "invention": 25,
+        "inversion": 6.3,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 6.3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 6.3,
+      "confidence_mean": 0.81
+    },
+    "unknown": {
+      "n": 15,
+      "n_drawn": 15,
+      "fidelity_mean": 4.2,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        1,
+        2,
+        5,
+        7
+      ],
+      "pct_ge4": 80,
+      "pct_le2": 6.7,
+      "pct_5": 46.7,
+      "flags": {
+        "omission": 13.3,
+        "invention": 20,
+        "inversion": 6.7,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 13.3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 13.3,
+      "confidence_mean": 0.67
+    },
+    "1800s": {
+      "n": 21,
+      "n_drawn": 21,
+      "fidelity_mean": 3.86,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        1,
+        4,
+        9,
+        6
+      ],
+      "pct_ge4": 71.4,
+      "pct_le2": 9.5,
+      "pct_5": 28.6,
+      "flags": {
+        "omission": 28.6,
+        "invention": 28.6,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 9.5,
+        "truncated": 4.8,
+        "repetition": 0
+      },
+      "any_major": 28.6,
+      "confidence_mean": 0.77
+    },
+    "1500s": {
+      "n": 17,
+      "n_drawn": 17,
+      "fidelity_mean": 4.41,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        1,
+        8,
+        8
+      ],
+      "pct_ge4": 94.1,
+      "pct_le2": 0,
+      "pct_5": 47.1,
+      "flags": {
+        "omission": 0,
+        "invention": 5.9,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 11.8,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 5.9,
+      "confidence_mean": 0.79
+    },
+    "1700s": {
+      "n": 14,
+      "n_drawn": 14,
+      "fidelity_mean": 4.29,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        3,
+        4,
+        7
+      ],
+      "pct_ge4": 78.6,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 14.3,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 14.3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 14.3,
+      "confidence_mean": 0.78
+    },
+    "1900+": {
+      "n": 8,
+      "n_drawn": 8,
+      "fidelity_mean": 4.38,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        1,
+        0,
+        2,
+        5
+      ],
+      "pct_ge4": 87.5,
+      "pct_le2": 12.5,
+      "pct_5": 62.5,
+      "flags": {
+        "omission": 12.5,
+        "invention": 12.5,
+        "inversion": 25,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 25,
+      "confidence_mean": 0.85
+    }
+  },
+  "by_prompt": {
+    "lite/11": {
+      "n": 22,
+      "n_drawn": 22,
+      "fidelity_mean": 4.14,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        5,
+        9,
+        8
+      ],
+      "pct_ge4": 77.3,
+      "pct_le2": 0,
+      "pct_5": 36.4,
+      "flags": {
+        "omission": 9.1,
+        "invention": 13.6,
+        "inversion": 9.1,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 13.6,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 18.2,
+      "confidence_mean": 0.74
+    },
+    "lite/v1": {
+      "n": 6,
+      "n_drawn": 6,
+      "fidelity_mean": 4.5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        1,
+        1,
+        4
+      ],
+      "pct_ge4": 83.3,
+      "pct_le2": 0,
+      "pct_5": 66.7,
+      "flags": {
+        "omission": 33.3,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 16.7,
+      "confidence_mean": 0.82
+    },
+    "lite/v10": {
+      "n": 27,
+      "n_drawn": 27,
+      "fidelity_mean": 4.19,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        1,
+        3,
+        13,
+        10
+      ],
+      "pct_ge4": 85.2,
+      "pct_le2": 3.7,
+      "pct_5": 37,
+      "flags": {
+        "omission": 18.5,
+        "invention": 7.4,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 11.1,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 11.1,
+      "confidence_mean": 0.75
+    },
+    "flash/v1": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 100,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.85
+    },
+    "flash/v10": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        4,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 50,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.81
+    },
+    "flash/v5.2026-02": {
+      "n": 5,
+      "n_drawn": 5,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 40,
+        "inversion": 20,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.83
+    },
+    "flash/v2": {
+      "n": 21,
+      "n_drawn": 21,
+      "fidelity_mean": 4.52,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        1,
+        2,
+        3,
+        15
+      ],
+      "pct_ge4": 85.7,
+      "pct_le2": 4.8,
+      "pct_5": 71.4,
+      "flags": {
+        "omission": 0,
+        "invention": 23.8,
+        "inversion": 9.5,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 9.5,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 19,
+      "confidence_mean": 0.79
+    },
+    "lite/1": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.95
+    },
+    "flash/11": {
+      "n": 11,
+      "n_drawn": 11,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        1,
+        1,
+        6,
+        3
+      ],
+      "pct_ge4": 81.8,
+      "pct_le2": 9.1,
+      "pct_5": 27.3,
+      "flags": {
+        "omission": 18.2,
+        "invention": 9.1,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 9.1,
+        "truncated": 9.1,
+        "repetition": 0
+      },
+      "any_major": 18.2,
+      "confidence_mean": 0.7
+    },
+    "lite/v11-retx": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 1,
+      "fidelity_median": 1,
+      "dist": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "pct_ge4": 0,
+      "pct_le2": 100,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 100,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 100,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 100,
+      "confidence_mean": 0.95
+    },
+    "flash/12": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.85
+    },
+    "flash/v5.1.2026-03b": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 3,
+      "fidelity_median": 3,
+      "dist": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "pct_ge4": 0,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 100,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.4
+    },
+    "flash/13": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "pct_ge4": 50,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 50,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 50,
+      "confidence_mean": 0.65
+    }
+  },
+  "by_script_class": {
+    "latin-script": {
+      "n": 65,
+      "n_drawn": 65,
+      "fidelity_mean": 4.45,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        4,
+        28,
+        33
+      ],
+      "pct_ge4": 93.8,
+      "pct_le2": 0,
+      "pct_5": 50.8,
+      "flags": {
+        "omission": 7.7,
+        "invention": 10.8,
+        "inversion": 4.6,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 7.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 6.2,
+      "confidence_mean": 0.81
+    },
+    "non-latin-script": {
+      "n": 38,
+      "n_drawn": 38,
+      "fidelity_mean": 3.76,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        3,
+        10,
+        14,
+        10
+      ],
+      "pct_ge4": 63.2,
+      "pct_le2": 10.5,
+      "pct_5": 26.3,
+      "flags": {
+        "omission": 18.4,
+        "invention": 26.3,
+        "inversion": 5.3,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 15.8,
+        "truncated": 2.6,
+        "repetition": 0
+      },
+      "any_major": 31.6,
+      "confidence_mean": 0.67
+    }
+  },
+  "modernization": {
+    "n": 4,
+    "n_drawn": 4,
+    "fidelity_mean": 4.5,
+    "fidelity_median": 5,
+    "dist": [
+      0,
+      0,
+      1,
+      0,
+      3
+    ],
+    "pct_ge4": 75,
+    "pct_le2": 0,
+    "pct_5": 75,
+    "flags": {
+      "omission": 25,
+      "invention": 0,
+      "inversion": 0,
+      "untranslated": 0,
+      "wrong_language": 0,
+      "wrong_page": 0,
+      "garble_passthrough": 0,
+      "truncated": 0,
+      "repetition": 0
+    },
+    "any_major": 25,
+    "confidence_mean": 0.82
+  },
+  "stale_translation": {
+    "n": 1,
+    "n_drawn": 1,
+    "fidelity_mean": 5,
+    "fidelity_median": 5,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "pct_ge4": 100,
+    "pct_le2": 0,
+    "pct_5": 100,
+    "flags": {
+      "omission": 0,
+      "invention": 0,
+      "inversion": 0,
+      "untranslated": 0,
+      "wrong_language": 0,
+      "wrong_page": 0,
+      "garble_passthrough": 0,
+      "truncated": 0,
+      "repetition": 0
+    },
+    "any_major": 0,
+    "confidence_mean": 0.95
+  },
+  "corpus_estimate": {
+    "note": "post-stratified by language (weights = live translated pages per language at draw time); languages outside the 15 sampled are not represented; CI = 95% bootstrap over pages-as-books within language",
+    "weights": {
+      "Latin": 40.3,
+      "English": 15.9,
+      "German": 12,
+      "Greek": 10,
+      "French": 6.2,
+      "Italian": 3.4,
+      "Dutch": 2.8,
+      "Chinese": 2.5,
+      "Sanskrit": 2.1,
+      "Hebrew": 1.3,
+      "Arabic": 1.2,
+      "Tibetan": 0.3,
+      "Korean": 1.2,
+      "Spanish": 0.5,
+      "Japanese": 0.4
+    },
+    "pct_fidelity_ge4": {
+      "est": 85.6,
+      "ci": [
+        76.9,
+        93
+      ]
+    },
+    "pct_fidelity_5": {
+      "est": 40.1,
+      "ci": [
+        31.1,
+        50.3
+      ]
+    },
+    "pct_fidelity_le2": {
+      "est": 2.9,
+      "ci": [
+        0.4,
+        5.4
+      ]
+    },
+    "flags": {
+      "omission": {
+        "est": 12.7,
+        "ci": [
+          5.5,
+          21.1
+        ]
+      },
+      "invention": {
+        "est": 15.7,
+        "ci": [
+          8,
+          24.2
+        ]
+      },
+      "inversion": {
+        "est": 4.6,
+        "ci": [
+          1,
+          9.9
+        ]
+      },
+      "untranslated": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "wrong_language": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "wrong_page": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "garble_passthrough": {
+        "est": 9.3,
+        "ci": [
+          3.2,
+          16.3
+        ]
+      },
+      "truncated": {
+        "est": 0.8,
+        "ci": [
+          0,
+          2.5
+        ]
+      },
+      "repetition": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      }
+    },
+    "any_major_defect": {
+      "est": 14.3,
+      "ci": [
+        7.1,
+        22.5
+      ]
+    }
+  },
+  "sensitivity": {
+    "note": "corrected estimates; see comment in score.mjs. \"language\" = the headline weighting; \"language_x_arm\" re-weights the quota-sampled arm to its true share; \"page_weighted\" weights each book by its translated pages (random page rather than random book)",
+    "pct_fidelity_ge4": {
+      "language": 85.6,
+      "language_x_arm": null,
+      "page_weighted": 87.9
+    },
+    "pct_fidelity_5": {
+      "language": 40.1,
+      "language_x_arm": null,
+      "page_weighted": 39.5
+    },
+    "pct_fidelity_le2": {
+      "language": 2.9,
+      "language_x_arm": null,
+      "page_weighted": 2.1
+    },
+    "any_major_defect": {
+      "language": 14.3,
+      "language_x_arm": null,
+      "page_weighted": 12
+    },
+    "omission": {
+      "language": 12.7,
+      "language_x_arm": null,
+      "page_weighted": 14.2
+    },
+    "invention": {
+      "language": 15.7,
+      "language_x_arm": null,
+      "page_weighted": 9.5
+    },
+    "garble_passthrough": {
+      "language": 9.3,
+      "language_x_arm": null,
+      "page_weighted": 5.9
+    },
+    "by_language_arm_weighted": null
+  },
+  "defect_types": {
+    "mistranslation/minor": 63,
+    "invention/minor": 15,
+    "terminology/minor": 13,
+    "omission/minor": 10,
+    "garble_passthrough/minor": 7,
+    "name/minor": 6,
+    "invention/major": 5,
+    "garble_passthrough/major": 4,
+    "omission/major": 4,
+    "number/minor": 4,
+    "mistranslation/major": 3,
+    "inversion/minor": 3,
+    "untranslated/minor": 2,
+    "inversion/major": 2,
+    "truncated/major": 1,
+    "number/major": 1
+  },
+  "worst": [
+    {
+      "id": "fef9119827",
+      "language": "Greek",
+      "arm": "lite",
+      "fidelity": 1,
+      "url": "https://sourcelibrary.org/book/6a3eb56b5598be95b4ffddeb?page=354",
+      "flags": [
+        "invention",
+        "garble_passthrough"
+      ],
+      "reason": "The source is an illegible papyrus facsimile with no transcribed text ('[...]'), yet the translation makes up two columns of Epicurean philosophical content."
+    },
+    {
+      "id": "b05d32ef14",
+      "language": "Greek",
+      "arm": "flash",
+      "fidelity": 2,
+      "url": "https://sourcelibrary.org/book/69cf7bb9878f40c5945f1eea?page=189",
+      "flags": [
+        "omission",
+        "truncated"
+      ],
+      "reason": "first ~15 lines faithful (thousand hoplites, hundred cavalry, Cadmea, Ismenias/Leontides factions) but output breaks off mid-sentence; the Ismenias-Atticizing clause and the fragmentary column are dropped"
+    },
+    {
+      "id": "9bd7e627d6",
+      "language": "Greek",
+      "arm": "lite",
+      "fidelity": 2,
+      "url": "https://sourcelibrary.org/book/699246bebc722ec0ee81286a?page=96",
+      "flags": [
+        "omission"
+      ],
+      "reason": "main text (II.4–6: grief, prayer, sleep, mountain, heavens opened, 'Levi, Levi, enter') is accurate, but the apparatus that fills most of the page, including a full prayer, is only summarised"
+    },
+    {
+      "id": "63bacc2e0e",
+      "language": "Chinese",
+      "arm": "flash",
+      "fidelity": 2,
+      "url": "https://sourcelibrary.org/book/6992cad3d4d545ae73feeb78?page=1",
+      "flags": [
+        "invention",
+        "garble_passthrough"
+      ],
+      "reason": "source is a badly corrupted Vinaya-commentary OCR; translation papers over it with fluent invented structure and names; hard to verify, weak confidence."
+    },
+    {
+      "id": "df34dac1e7",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69f32e3c876dd827cbc439d4?page=437",
+      "flags": [
+        "garble_passthrough"
+      ],
+      "reason": "Margins and the lay-patronage and visitation passages track the source, but the heavily garbled first block is smoothed into confident prose that the OCR cannot support; Latin OCR is too corrupt to judge closely."
+    },
+    {
+      "id": "d6bed0375a",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69dbc8441040d1d5e20981a4?page=49",
+      "flags": [
+        "inversion"
+      ],
+      "reason": "worm-cutting episode rendered well, but the final sentence misreads Augustine's point (he would have yielded to the materialists) and the young men's bringing the pieces becomes 'we'"
+    },
+    {
+      "id": "4a5587687b",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69b51e2cefd8df28f2db2159?page=74",
+      "flags": [
+        "invention",
+        "garble_passthrough"
+      ],
+      "reason": "Main text (magistrates, vexillifer, Conestabilis, Chapter IV on Eugubine territory) = source; the margin inscription, which the source prints for scholars to discuss, is given an invented fluent reading."
+    },
+    {
+      "id": "5743d8a92c",
+      "language": "English",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69ee475f6dd925d126f421de?page=385",
+      "flags": [
+        "omission"
+      ],
+      "reason": "The body text's opening sentence is dropped. The Naogeorgus Latin verse and its Hospinian citation are replaced by a placeholder. The Googe verse and the Whimzies passage are otherwise faithful."
+    },
+    {
+      "id": "af5e96cc3f",
+      "language": "Greek",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a08573115c643eb1af5aeae?page=297",
+      "flags": [],
+      "reason": "Tiresias prophecy (birds, staff, long life, wisdom among the dead, Pallas's nod) rendered well, but the opening Actaeon couplet and the shared-archery line are misconstrued."
+    },
+    {
+      "id": "4d610f363d",
+      "language": "Chinese",
+      "arm": "flash",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a0a4efc7cd8e1e3d0f49dfe?page=22",
+      "flags": [],
+      "reason": "Table structure is kept, but every phonological entry is glossed as its dictionary meaning, which misrepresents a sound-classification chart. I judge Chinese phonology tables with limited confidence."
+    },
+    {
+      "id": "313274f76e",
+      "language": "Chinese",
+      "arm": "flash",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6992ce273ea667fbac82854a?page=33",
+      "flags": [
+        "invention"
+      ],
+      "reason": "The two captions 戈氅 and 儀鍠氅 are rendered correctly, but the translation invents a book title, volume, section and page number, plus factual notes"
+    },
+    {
+      "id": "ebc2804641",
+      "language": "Sanskrit",
+      "arm": "flash",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69906461ef12272ffdc91870?page=304",
+      "flags": [
+        "invention",
+        "inversion"
+      ],
+      "reason": "The 63-variant count and the 7/49/56/63 derivation = source, but the radius-square number is wrong, a note invents a wrong fact, and the north/south sign rule is reversed"
+    },
+    {
+      "id": "0b6a92b247",
+      "language": "Sanskrit",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69e80662fdad300064d9ed7c?page=342",
+      "flags": [
+        "omission",
+        "invention"
+      ],
+      "reason": "reasons 3–9 for the primacy of dravya rendered correctly (merging Sanskrit and Hindi), but a 10th definition is added that the page does not carry."
+    },
+    {
+      "id": "f9fcf4bf8b",
+      "language": "Hebrew",
+      "arm": "flash",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69c1bbbb8522835be8460594?page=1",
+      "flags": [
+        "garble_passthrough"
+      ],
+      "reason": "follows the garbled Kabbalistic instructions line by line with heavy glossing; several gematria values misread and some garble smoothed into doctrine-sounding prose; Hebrew OCR here is weak and my reading is uncertain"
+    },
+    {
+      "id": "0a277f7276",
+      "language": "Arabic",
+      "arm": "flash",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a20329818654bf8e19031b7?page=64",
+      "flags": [
+        "omission"
+      ],
+      "reason": "gist of the commentary on al-Kisāʾī, hamzat al-waṣl and imperative construction is right, but many clauses are elided with ellipses; Arabic grammar read moderately."
+    },
+    {
+      "id": "7310f86844",
+      "language": "Tibetan",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69e7482f85f786e884a4bb0c?page=341",
+      "flags": [
+        "invention",
+        "garble_passthrough"
+      ],
+      "reason": "follows the litany line by line but misreads deity names in the list (Akashagarbha, Sarvanivaranaviskambhin) and papers over garbled closing lines; my Tibetan reading of this OCR is weak"
+    },
+    {
+      "id": "3c80e935d4",
+      "language": "Japanese",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69e75abfb3d509fcb7a48ea1?page=8",
+      "flags": [
+        "invention",
+        "garble_passthrough"
+      ],
+      "reason": "Recognisable anchors (nembutsu, Tomomori's son 若章 read as Tomoakira, battle of 2nd month 7th day, sotoba, 一樹の陰 一河の流れ 他生の縁) are right, but the garbled connecting text is rendered as confident prose; I read this cursive-derived OCR weakly"
+    },
+    {
+      "id": "6418fa9d4a",
+      "language": "Japanese",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/69e8069cfdad300064d9fc55?page=19",
+      "flags": [],
+      "reason": "The path of the eighth nerve (medulla, dura, cranium, heart/lungs/stomach, cervical cluster) is correct. The opening sentence is misconstrued, and the Dutch-derived transliterations are replaced by guessed English terms. My reading of the kanbun is only moderate."
+    },
+    {
+      "id": "905cf444d9",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69dbcc230f8c5edf20f463c5?page=394",
+      "flags": [],
+      "reason": "This garbled Aquinas commentary is rendered faithfully through the objections, the sacrament-versus-sacramental distinction and the three senses of 'one'. The garbled sed contra is left incoherent and 'ab hominibus' is dropped; cibus/potus becomes 'bread and wine'."
+    },
+    {
+      "id": "f55c650cb9",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69944b5e1ba8351377906ed8?page=210",
+      "flags": [],
+      "reason": "Philo's argument on Esau's blessing and the allegorical 'brothers' is rendered faithfully; there are small slips on areis arboribusque, Virtute and Quare."
+    },
+    {
+      "id": "37196c72c0",
+      "language": "Latin",
+      "arm": "flash",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6952e47c77f38f6761bc7ca8?page=104",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Chapters I-III (sampling, separating spirits in the cucurbit, evaporation and coagulation, alum from attramentum, salt from halinitrum) rendered accurately; the only defect is an invented meta line about the previous page."
+    },
+    {
+      "id": "c6b6292e61",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69dbcb491040d1d5e20b5588?page=136",
+      "flags": [],
+      "reason": "both Pliny letters (to Nepos, to Falco on Sentius Augurinus) rendered faithfully; slips on 'mihi'→'you' and the sense of 'amor eius'."
+    },
+    {
+      "id": "89aeb7a7e6",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69a5ee5abfd8cafd91e4386a?page=320",
+      "flags": [],
+      "reason": "Chapters XXIV–XXVI are rendered fully with all game names. The list of which game excels in what (utilitate armorum, salubritate pilae…) is misconstrued, and a few terms are loose."
+    },
+    {
+      "id": "6096a7c822",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69e72c3ca409200ea79f42e2?page=18",
+      "flags": [
+        "omission"
+      ],
+      "reason": "Hesiod's ages rendered closely (Cadmus, Troy, Tyndaris, iron age, filial impiety); drops 'Elysian' and misses the born-grey sense of 'natis'."
+    },
+    {
+      "id": "c34ba73d67",
+      "language": "Latin",
+      "arm": "flash",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69c851df6c6f3cc53c853242?page=26",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Barclay/Schwenckfeld/Halberstadt argument rendered faithfully; slips on 'tertia hominis parte' and 'act. V.', plus an invented meta summary of the previous page."
+    }
+  ]
+}

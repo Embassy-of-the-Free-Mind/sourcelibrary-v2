@@ -28,6 +28,7 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 | month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
 |---|---:|---|---:|---|---:|---:|---:|---|---|
+| 2026-09 | 103 | 85.6 (76.9–93) | 2.9 | 14.3 (7.1–22.5) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 |
 
 ---
 
