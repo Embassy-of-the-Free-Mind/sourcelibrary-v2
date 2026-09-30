@@ -28,6 +28,7 @@
  * Needs gh auth and MONGODB_URI (for the interlock).
  */
 import { execSync, spawnSync } from 'node:child_process';
+import { appendFileSync } from 'node:fs';
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -35,6 +36,7 @@ const val = (f, d) => { const i = argv.indexOf(f); return i >= 0 && argv[i + 1] 
 const DRY = has('--dry-run');
 const SETTLE_MIN = parseInt(val('--settle', '10'), 10);
 const BUILD_GAP_MIN = parseInt(val('--gap', '8'), 10);
+const MAX_RETRY_MIN = 10;
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 const minutesAgo = (iso) => (Date.now() - new Date(iso).getTime()) / 60000;
 
@@ -94,21 +96,40 @@ function main() {
   const rows = candidates();
   const ready = rows.filter((r) => !r.why.length);
   for (const r of rows) console.log(`#${r.pr.number} ${r.why.length ? 'skip: ' + r.why.join(', ') : 'READY'}  ${r.pr.title.slice(0, 60)}`);
-  if (!ready.length) { console.log('nothing to merge'); return; }
+  if (!ready.length) {
+    console.log('nothing to merge');
+    // A PR held back ONLY by the settle window becomes ready with no event to
+    // wake this job — come back when the youngest such PR has settled.
+    const settling = rows.filter((r) => r.why.length && r.why.every((w) => w.startsWith('updated ')));
+    if (settling.length) return SETTLE_MIN - Math.min(...settling.map((r) => minutesAgo(r.pr.updatedAt))) + 1;
+    return null;
+  }
 
   const gap = mainTipAgeMin();
-  if (gap < BUILD_GAP_MIN) { console.log(`main tip is ${gap.toFixed(0)} min old (< ${BUILD_GAP_MIN}); a build is likely in flight — try next run`); return; }
+  if (gap < BUILD_GAP_MIN) { console.log(`main tip is ${gap.toFixed(0)} min old (< ${BUILD_GAP_MIN}); a build is likely in flight — retrying once it is ${BUILD_GAP_MIN} min old`); return BUILD_GAP_MIN - gap + 1; }
   const lock = interlockClear();
   console.log(lock.note);
-  if (!lock.ok) { console.log('interlock NOT clear — no merge this run'); return; }
+  if (!lock.ok) { console.log('interlock NOT clear — no merge this run'); return MAX_RETRY_MIN; }
 
   const { pr } = ready[0];
   console.log(`${DRY ? '[dry-run] would merge' : 'merging'} #${pr.number} ${pr.title}`);
-  if (DRY) return;
+  if (DRY) return null;
   sh(`gh pr comment ${pr.number} --body "Auto-merged by auto-merge.yml: tier:auto, test+DCO green, interlock clear, main quiet ${gap.toFixed(0)} min. Rules: scripts/maintenance/pr-tier-rules.json"`);
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
   dispatchWarm(pr.number);
+  return ready.length > 1 ? BUILD_GAP_MIN + 1 : null;
+}
+
+// GitHub's `schedule` trigger is best-effort, and on 2026-09-30 it was dropped
+// almost entirely (1 of 60 runs; 22 ready PRs stalled for hours — #5276). So
+// the job books its own next run: main() returns the minutes until a merge
+// could succeed (null = nothing waiting), and auto-merge.yml sleeps that long
+// and re-dispatches itself. The schedule stays as a backstop.
+function emitRetry(minutes) {
+  const m = minutes == null || DRY ? '' : String(Math.min(MAX_RETRY_MIN, Math.max(1, Math.ceil(minutes))));
+  console.log(m ? `next run in ${m} min` : 'no follow-up run needed');
+  if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `retry_in=${m}\n`);
 }
 
 // A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
@@ -127,4 +148,4 @@ function dispatchWarm(number) {
   console.log(`dispatched post-deploy-warm.yml for ${sha}`);
 }
 
-main();
+emitRetry(main());
