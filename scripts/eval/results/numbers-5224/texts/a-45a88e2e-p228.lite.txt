@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>222</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+In Fairmont, Nebraska, in 1897, Mr. Waldron was united in marriage to Miss Florence G. Magee, a daughter of the late James Magee, and they have two daughters, Mildred E. and Helen. The parents attend the Methodist Episcopal church and Mr. Waldron gives his political support to the republican party. He holds membership with the Independent Order of Odd Fellows and also is a member of the Omaha Club and the Commercial Club, cooperating heartily with the plans and purposes of the latter organization for the upbuilding and development of the city and the extension of its trade connections.
+
+->RODNEY WALDO BLISS, M. D.<-
+
+Dr. Rodney Waldo Bliss, a prominent member of the medical profession of Omaha and assistant professor of physical diagnosis and internal medicine in the University of Nebraska, was born in York, this state in 1878. His father, David Cleveland Bliss, a native of the state of New York, was born in 1843 and on removing to the west became a resident of Wisconsin. During the last year of the Civil war he served as a member of the Thirty-seventh Wisconsin Volunteer Cavalry. In 1874 he removed to Nebraska, establishing his home at York, and he is now living at Minden, where he is engaged in the nursery business. In La Salle county, Illinois, he married Sophia Hart, who is also living.
+
+Following the removal of the family to Minden, Nebraska, Rodney W. Bliss acquired his early education in the public schools there and later entered the University of Nebraska, from which he was graduated with the class of 1901. For professional training he matriculated in Rush Medical College of Chicago and completed his course there by graduation with the class of 1904. In 1906 he removed to Omaha, where he has since devoted his attention to internal medicine, and his ability in that direction is pronounced. He belongs to the Omaha-Douglas County Medical Society, the Elkhorn Valley Medical Society, the Nebraska State Medical Society and the Missouri Valley Medical Society.
+
+On the 25th of April, 1907, in Chicago, Dr. Bliss was united in marriage to Miss Clara J. Dimmick, a daughter of the late William O. Dimmick, and they have become the parents of three children, Jane, Rodney and Esther.
+
+Dr. and Mrs. Bliss hold membership in the Presbyterian church. His political endorsement is given to the republican party and he is a Master Mason and belongs also to the University Club and to the Happy Hollow Club. Social interests, however, are ever made subservient to his professional duties, which are performed with a sense of conscientious obligation that represents the utilization of his native and acquired powers.
+
+->GEORGE ANTHES.<-
+
+George Anthes, a man of ability and high character who has filled many positions of trust connecting him in various ways with civic interests, is now serving as county auditor. He was born at Frankfort-on-the-Main, Germany, in 1856. His father, Christopher Anthes, also a native of that place, was born in 1833. He there married Margaret Dauth, who passed away in 1859, and later he married again. In 1867 they brought their family to the United States, settling first in St. Louis, where the father died in 1875. His widow still survives.
+
+George Anthes was a youth of eleven years when he accompanied his father to the new world, and in the schools of St. Louis he pursued his educa-
+
+<vocab>Waldron, Florence G. Magee, Rodney Waldo Bliss, David Cleveland Bliss, Sophia Hart, Clara J. Dimmick, William O. Dimmick, George Anthes, Christopher Anthes, Margaret Dauth, Omaha, Nebraska, medical profession, University of Nebraska, Rush Medical College, county auditor, Frankfort-on-the-Main</vocab>

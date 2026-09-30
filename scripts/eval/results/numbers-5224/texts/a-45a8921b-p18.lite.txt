@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>4</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Concord Evening Monitor, 1882–98; business manager, Republican Press Ass'n, 1892–8; business manager, Rumford Printing Co., 1898–9; public printer, 1893–7; N. H. secretary of state, March, 1899 to May, 1915; director and cashier, First National Bank, Concord; director, Peterboro & Hillsboro R. R., Concord Mutual Fire Insurance Co., United Life & Accident Insurance Co., Concord Investment Co., Concord Shoe Factory; Republican; Congregationalist; member, Wonolancet Club, Capital Grange, P. of H.; m., Dec. 6, 1882, Lebanon, N. H., Addie Maria Sargent; children, Edward N. Pearson, Jr., Robert H. Pearson (Dartmouth, 1907), d., John W. Pearson (Dartmouth, 1911), Mildred (Mrs. Howard A. Morrison. Residence, Concord, N. H.
+
+**McDuffee, Willis**
+Editor and publisher; b., Rochester, N. H., March 15, 1868; s. Franklin and Mary Frances (Hayes) McDuffee; ed. public schools and Dartmouth College,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+<column-break/>
+
+A.B. 1890; six months' tour abroad following graduation; editor of the Rochester Courier and president Courier Publishing Co. since Oct., 1891; Republican; representative in N. H. legislature, 1895–6; member, Rochester school board, three years; trustee, Rochester public library, 1899 to date; trustee, N. H. College of Agriculture and Mechanic Arts, 1914–16; director, Rochester National Bank; Congregationalist; Mason, Knight Templar; was one of the originators of the Progressive movement in New Hampshire, but refused to support Roosevelt in 1912, and presided at the meeting of "Taft Progressives" which was largely responsible for the Republican primaries going for Taft; personal campaign manager for Rolland H. Spaulding in his successful campaign for governor in 1914; m., July 22, 1897, Dora Haley; children, Franklin, b. May 2, 1898; Maude Chase, b. June 12, 1901. Residence, Rochester, N. H.
+
+**Colby, Frederick Myron**
+Author and probate attorney; b., Warner, N. H., Dec. 9, 1848; s. Levi O. and Mary (Durrell) Colby; ed. public schools and Colby Academy; commenced writing in early life, for various publications, including the Youth's Companion, St. Nicholas, and other periodicals for the young; author of an interesting series of articles on "Historic Mansions of New Hampshire"; long time contributor to the Granite Monthly, writing on topics of local, state and general interest; author of various published volumes, including "Pharaoh's Daughter," "Bonnie Lads and Bonnie Lasses," "Kings and Girl Queens," etc.; Liberal; Democrat; member, board of education, 1878–88; town treasurer, 1885–6, 1895; postmaster of Warner, 1894–9; superintendent, Simonds Free High School, 1910–15; Democratic candidate for Congress, N. H. second district, 1908; member, Manchester Press Club, Wonolancet Club, Concord; m., 1st, Dec. 25, 1882, H. Maria George of Warner,
+
+<vocab>New Hampshire, biography, politics, journalism, education, genealogy, Rochester, Concord, Warner</vocab>

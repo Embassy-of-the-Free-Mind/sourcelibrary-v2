@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>606</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+A post office was needed here, and in 1862 Levi Eldridge was appointed postmaster, placing the office at his store. He was succeeded in 1885 by Joshua Eldridge, who removed the boxes and details to his store further east. In October, 1889, Francis S. Cahoon was appointed.
+
+The only distinctive religious society of the Village is the Come-Outers, as they are vulgarly called, and this also includes members from other localities. As this is probably the only mention this sect will have, although there are a few in the south of Dennis, and, perhaps in other towns, it is just to explain that the members have come out from other religious organizations, not agreeing with them in forms of worship.
+
+Pilgrim Library was instituted here February 5, 1875, and now contains 515 volumes. It is kept at the store of Levi Eldridge, and M. E. Kelley is librarian.
+
+The agent of this station of the Chatham railroad, appointed in 1887, is Alfred A. Eldridge. The beautiful rolling fields of this part of the town, the proximity of the village to Chatham bay, and the thrift of its business men, render South Chatham important among the villages.
+
+->BIOGRAPHICAL SKETCHES.<-
+
+Thomas S. Arey, born in 1839 in Orleans, is the eldest son of Oliver and Mercy (Snow) Arey and grandson of Joseph Arey, born 1716. He followed the sea fourteen years in early life. He was for sixteen months acting ensign in the navy during the rebellion. Since 1868 he has been engaged in vessel repairs—nine years in South America and twelve years at Stage Wharf, Chatham. He is a member of Frank D. Hammond Post. He was married in 1865, to Lucinda, daughter of Amariah Mayo. They have one daughter living—Bertha M.—and have lost two children.
+
+Alvin Z. Atkins, born in 1849, is a son of Zenas, whose father, Joshua, was a son of William Atkins. His mother was Rhoda, daughter of John and Temperance (Bascom) Crowell. Mr. Atkins has been selectman since 1885. He is a member of St. Martins Lodge. In 1872 he was married to Eunice, daughter of Reuben and Sally (Harding) Hawes. They have lost four children: Nellie E., Susie C., Zenas and Sadie W.
+
+George S. Atwood, son of Solomon and Lucy (Smith) Atwood, was born in 1835, and is a carpenter by trade. He was a contractor and builder until 1879, and since that time has been engaged in oyster culture. He was married in 1860, to Mehitable S., daughter of Elisha Holbrook. They have three children: George S., jr., Nellie F. and Benjamin F.
+
+<vocab>Barnstable County, South Chatham, Levi Eldridge, Joshua Eldridge, Francis S. Cahoon, Come-Outers, Pilgrim Library, M. E. Kelley, Alfred A. Eldridge, Chatham railroad, Thomas S. Arey, Alvin Z. Atkins, George S. Atwood, biographical sketches</vocab>

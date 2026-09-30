@@ -1,0 +1,83 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>995</page-num>
+<header>INDEX 995</header>
+
+| | Page | | Page |
+|---|---|---|---|
+| Haverstick, G. E. | 690 | Kimball, T. L. | 818 |
+| Hayden, Joseph | 720 | King, W. S. | 273 |
+| Heafey, P. C. | 543 | Kinyoun, F. H. | 430 |
+| Hecox, J. F. | 814 | Kirschbraun & Sons, Inc. | 757 |
+| Hedberg, A. C. | 802 | Klingbeil, G. L. E. | 207 |
+| Henderson, S. J. | 547 | Kloke, R. F. | 318 |
+| Henry, W. O. | 931 | Koenig, W. H. | 250 |
+| Henske, J. A. | 583 | Kopietz, J. H. | 541 |
+| Himebaugh, P. C. | 824 | Koutsky, J. W. | 835 |
+| Hoagland, G. A. | 56 | Kranz, L. H. | 440 |
+| Hodder, E. C. | 732 | Kratky, Ludwig | 636 |
+| Hofeldt, P. G. | 839 | Kresl, John | 652 |
+| Hoffmann, L. A. | 473 | Kritenbrink, J. H. | 817 |
+| Holdrege, G. W. | 62 | Kruger, J. C. | 191 |
+| Holdrege, H. A. | 270 | Kuenne, G. C. | 742 |
+| Holmes, George | 518 | Kugel, A. C. | 279 |
+| Holmquist, J. W. | 777 | | |
+| Holst, John | 524 | Lafferty, W. H. | 206 |
+| Hoover, Arthur | 977 | Lake, F. W. | 239 |
+| Horbach, J. A. | 352 | Lake, G. B. | 24 |
+| Horbach, P. W. | 364 | Lambert, W. C. | 7 |
+| Horton, R. S. | 150 | Larson, Swan | 724 |
+| Hosford, W. D. | 362 | Latenser, John | 35 |
+| Hospe, Anton | 208 | Latey, W. H. | 595 |
+| Hotz, W. J. | 322 | Laverty, R. M. | 641 |
+| Houghton, A. E. | 492 | Learned, M. L. | 527 |
+| Houser, S. A. | 632 | Leifang, E. M. F. | 227 |
+| Howell, E. E. | 321 | Levey, Philip | 595 |
+| Howell, R. B. | 905 | Lincoln, W. D. | 363 |
+| Hull, C. W. | 306 | Lininger, G. W. | 79 |
+| Hummel, J. B. | 283 | Lockner, Augustus | 159 |
+| Hunter, R. C. | 687 | Loney, J. S. | 684 |
+| Hunzicker, Frederick | 662 | Loomis, G. W. | 248 |
+| Hynes, W. J. | 400 | Loomis, N. H. | 96 |
+| | | Lord, J. P. | 922 |
+| Iler, P. E. | 166 | Lovely, J. M. | 971 |
+| Impey, Charles | 432 | Lyon, C. J. | 337 |
+| Indoe, W. H. | 710 | | |
+| | | McAdam, William | 153 |
+| Jacobberger, H. A. | 787 | McArdle, E. J. | 243 |
+| Jamieson, W. N. | 487 | McAusland, Alexander | 224 |
+| Jamison, J. R. | 61 | McBride, George | 192 |
+| Jardine, W. S. | 934 | McCord, H. A. | 378 |
+| Jeffers, W. M. | 82 | McCoy, Herbert | 477 |
+| Jenkins, D. E. | 950 | McCrann, W. J. | 280 |
+| Jensen, J. P. | 196 | McDermott, B. A. | 455 |
+| Jewell, B. W. | 153 | McDonald, C. B. | 27 |
+| Johannes, C. E. | 954 | McGahey, D. M. | 120 |
+| Johnson, A. | 341 | McGilton, E. G. | 426 |
+| Johnson, A. F. | 947 | McGreer, Lee | 943 |
+| Johnson, G. C. | 254 | McKeen, W. R. | 500 |
+| Johnson, H. M. | 750 | McKenzie, G. C. | 259 |
+| Johnson, O. W. | 704 | McLaughlin, A. A. | 472 |
+| Johnston, G. W. | 169 | McMenamy, F. X. | 474 |
+| Johnston, J. E. | 827 | McNamara, M. A. | 777 |
+| Jonas, A. F. | 740 | McNish, J. C. | 196 |
+| Jones, Newell | 332 | McPherson, T. B. | 688 |
+| Joslyn, G. A. | 8 | McShane, F. J., Jr. | 23 |
+| Judson, F. W. | 756 | McShane, J. A. | 130 |
+| Judson, H. T. R. | 405 | Macfarland, J. M. | 81 |
+| | | Mach, John | 611 |
+| Katz, J. B. | 979 | Mackenzie, Alexander | 305 |
+| Keegan, F. R. | 693 | Madden, R. J. | 478 |
+| Kennedy, A. C. | 95 | Magney, G. A. | 34 |
+| Kennedy, A. C., Sr. | 238 | Mahaffey, H. E. | 259 |
+| Kennedy, C. R. | 621 | Mahoney, T. J. | 182 |
+| Kennedy, Howard | 231 | Malcolm, A. B. | 205 |
+| Kennedy, J. A. C. | 285 | Mancuso, Samuel | 980 |
+| Kennedy, T. W. | 783 | Mangold, J. C. | 823 |
+| Keyser, G. A. | 399 | Manley, F. A. | 523 |
+| Kierstead, W. I. | 869 | Mantel, Nathan | 596 |
+
+<vocab>Index, Names, Page Numbers</vocab>

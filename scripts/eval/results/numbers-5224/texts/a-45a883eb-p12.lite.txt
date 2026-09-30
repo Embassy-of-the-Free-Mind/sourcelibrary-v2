@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>8</page-num>
+<header>The Book of Clevelanders</header>
+
+ADAMS, Charles E.; manufacturer; born, Cleveland, June 8, 1859; son of Edgar and Mary Jane Adams; common school education; married Jennie M. Bowley, of Cleveland, June 11, 1884; with The Chandler & Rudd Co., Cleveland, 1884-91; pres. Cleveland Hardware Co., June, 1891; director Cleveland Trust Co., First Nat. Bank, Am. Stove Co., Cleveland Life Ins. Co.; pres. Cleveland Chamber Commerce, 1910-; Republican; Baptist. Clubs: Cleveland Engineering, Union, Mayfield.
+
+ADAMS, Edgar Elliotte; general supt. Cleveland Hardware Co.; born, Cleveland, Dec. 2, 1871; son of Edgar and Mary Jane Elliotte Adams; educated in Cleveland public schools; married, Wellsville, N. Y., Oct. 25, 1914, Elizabeth Carlton; two daughters; first employment in father's art store on Euclid avenue; time-keeper for Cleveland Hardware Co., eventually working up to position of general supt.; director and member of executive committee Cleveland Hardware Co.; member Chamber of Commerce, National Civic Federation of New York; trustee and member executive committee of Legal Aid Society; trustee and member executive committee Hiram House Social Settlement.
+
+ADAMS, Edward J.; milk dealer; born, Germany, Feb. 26, 1856; son of John Adams; educated, Germany; married, Cleveland, May 7, 1882, Fredricka Franz; issue, 8 children; Republican; treas. Milk Men's League, and Martin Luther Church; member Milk Men's Fraternal League.
+
+ADAMS, George Dana; manufacturer; born, Warren, O., Feb. 17, 1863; son of George and Elizabeth Dana Adams; public school education; married, Cleveland, March 3, 1887; Grace Field; one daughter, Margaret Adams Schmidt, born, Jan. 19, 1891; entered business in 1879 with E. I. Baldwin & Co.; 1884, with Cobb, Andrews & Co.; 1886, Adams, Jewett & Co.; 1895, Cleveland-Akron Bag Co.; pres. and treas. Cleveland-Akron Bag Co., Buffalo Bag Co., Chicago-Detroit Bag Co., Manillia Trading & Supply Co., Wagner Mfg. Co.; director Cleveland National Bank; Tryian Lodge 3° Cleveland Chapter; Cleveland Council; Holyrood Commandery, K. T.; Lake Erie Consistory, S. R.; Al Koran Temple, N. M. S.; member Union, Country, and Athletic Clubs.
+
+ADAMS, Harry A.; real estate; born, Tuscarawas Co., O., April 30, 1861; son of William and Catherine Kohr Adams; public school education; married, Akron, O., May 9, 1889, Minnie Bell Helfer; in drug business in Akron, O., for seven years; Canal Dover, O., 1890, becoming pres. and mgr. the Adams, Reed & Rattan Co.; pres. Dover Land & Improvement Co., director of State Savings bank, member of Dover Board of Mdse., director of Dover Building & Loan Co.; came to Cleveland in 1905, entering the field of real estate development; vice pres., treas. and mgr. The Adams Realty Co., owner of several allotments; member Chamber of Com-
+
+<vocab>Cleveland, biography, business, manufacturing, real estate, genealogy, clubs, organizations</vocab>

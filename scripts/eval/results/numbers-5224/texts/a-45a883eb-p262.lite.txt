@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>258</page-num>
+<header>The Book of Clevelanders</header>
+
+later with Sunshine, Kohn & Kaufman; 1899, present corporation of the Sunshine Cloak & Suit Co., organized, of which he is vice pres.; pres. the Strauss Bros. Co. and the Progress Cloak Co.; member K. of P., I. O. O. F.
+
+SVOBODA, Frank J.; publisher; born, Bohemia, May 1, 1874; son of John and Mary Vild Svoboda; educated, Parochial school, "Our Lady of Lourdes," Cleveland, O., and evening public schools; married, Cleveland, June 30, 1896, Josephine Holpuch; issue, four children; when 25 years of age, established a Bohemian Newspaper, The American, which has grown to a large publication; and is considered one of the best Bohemian newspapers in the United States; The American is the representative newspaper for the Bohemian people of Cleveland; director American Association of Foreign Newspapers of N. Y.; member First Catholic Central Union of the U. S., Gilmour Council, No. 310, K. of C., Court Columbia, No. 1285, Catholic Order of Forresters; member Ben Franklin Club.
+
+SWASEY, Ambrose; manufacturer; born, Exeter, N. H., Dec. 19, 1846; son of Nathaniel and Abigail Chesley (Peavey) Swasey; early education in schools of Exeter; degree of engineering Case School of Applied Science, 1905; Sc. D. Denison University, Granville, O., 1910; married, Hampton, N. H., Oct. 24, 1871, Lavinia D. Marston, daughter of David and Sarah Ann (Dearborn) Marston; entered into partnership with W. R. Warner (Warner & Swasey), 1880, mfrs. machine tools and astronomical instruments; the 36-inch Lick telescope, the 26-inch of Naval observatory, Washington, the 40-inch Yerkes telescope, as well as a new and exceptionally accurate dividing engine, are some of the firm's achievements; invented Swasey Range and Position Finder, adopted by the United States Government; pres. The Warner & Swasey Co., pres. the Caxton Building Co.; director the Cleveland Trust Co.; Chevalier Legion of Honor, France, 1900; trustee of Denison University, Granville, O.; vice pres. Y. M. C. A.; past pres. American Society of Mechanical Engineers, N. Y.; past pres. the Cleveland Engineering Society; past pres. Chamber of Commerce; member Institution of Mechanical Engineers of Great Britain and British Astronomical Ass'n; fellow Royal Astronomical Society; member Country Club, Cleveland; Engineers' Club, N. Y., University Club, Washington.
+
+SWEENEY, Patrick Rodger; carpenter and builder; born, Ohio, May, 1852; son of Ferdinand and Mary Adams Sweeney; educated, High School, La Grange, O.; married, Grafton, O., August, 1883 Catherine Meskal; issue, four daughters; twice elected assessor, Carlisle Township, Lorain County, O., once township trustee, Newburg, O.; as building foreman, had full charge of construction and alterations on Hotel Euclid; first and second floors, Meyer & Marks Block, Standard Foundry additions and alterations, block for Continental Jewelry Co., three stores for the P. C. O'Brien
+
+<vocab>Frank J. Svoboda, Ambrose Swasey, Patrick Rodger Sweeney, biography, Cleveland, manufacturing, publishing, construction</vocab>

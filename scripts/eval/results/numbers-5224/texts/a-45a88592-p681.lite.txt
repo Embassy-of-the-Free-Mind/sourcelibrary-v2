@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>543</page-num>
+<header>TOWN OF DENNIS. 543</header>
+
+daughter of Joseph and Paulina Eldridge, and has one daughter, Ada, living at home, born July 24, 1867. Joseph Eldridge, the son of Thomas, was born and reared in a house situated back in the field to the east of Captain Zebina Small's, on the road between Harwich Port and the Center.
+
+Since he left the sea Captain Baxter has mingled in the business, the social and the religious affairs of the town, enjoying a charter membership in Mount Horeb Lodge of Masons, and attending and supporting the services of the Methodist church of his village. In civil affairs he takes a keen interest, and in February, 1887, was elected by the republicans to the office of selectman; and in February, 1889, he was reelected to a third term. He is a director in the shoe factory in West Dennis, and is counted as being ever ready to assist in building up the interests of the community. Now in the meridian of life, after two-score years on the sea, he enjoys with his happy family, the fruits of his industry, possessing to the highest degree the confidence of his townsmen.
+
+John Baxter, son of Heman Baxter and brother of Thacher T. Baxter, was born in 1835. He went to sea eight years, and at the age of twenty-one he began to learn the jewelers' trade, and has been engaged in it since that time. Since 1879 he has kept a jewelry store at West Dennis. He is a member both of the Masonic and Odd Fellow orders. He was married in 1860, to Mary E., daughter of William Douglas, and has one son, John E.
+
+Thacher T. Baxter (Heman⁷, John⁶, Reuben⁵, Thomas⁴, Thomas³, Thomas², Thomas Baxter¹,) was born in 1840. His mother was Mary L. Baker. Mr. Baxter learned the trade of a harness maker. He kept a hotel on the European plan at Cottage City, and in 1868 he built the Baxter House there. In 1871 he returned to West Dennis, where he has since been a furniture dealer. He was married in 1863 to Mary P. Crowell. They have three children: Alpheus T., Lavina M. and Charles T. He is a member of the West Dennis Methodist Episcopal Church, has been Sunday-school superintendent about twenty years, and is President of Yarmouth Campmeeting Association.
+
+William H. Baxter, born in October, 1857, is a son of Heman and grandson of Heman Baxter. His mother was Julia A. Baker. Mr. Baxter has been telegraph operator at South Dennis since October, 1875, and since 1885 he has been both operator and station agent for the Old Colony Railroad Company. He was married in 1887, to Nellie S., daughter of Ahirah Kelley. They have two children: Louise and Thomas.
+
+Edwin Bray, born in 1845, in Yarmouth, is the youngest son of Joseph and Adaline (Ryder) Bray, grandson of Eben Bray, and great-
+
+<vocab>Dennis, Massachusetts; Joseph Eldridge; Thomas Eldridge; Captain Zebina Small; Captain Baxter; Mount Horeb Lodge of Masons; Methodist Episcopal Church; John Baxter; Heman Baxter; Thacher T. Baxter; Mary L. Baker; Baxter House; Cottage City; Mary P. Crowell; Yarmouth Campmeeting Association; William H. Baxter; Old Colony Railroad Company; Edwin Bray; Joseph Bray; Adaline (Ryder) Bray; Eben Bray</vocab>

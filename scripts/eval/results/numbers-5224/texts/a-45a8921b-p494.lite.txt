@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>480</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Lebanon, conducting a large mercantile business; five years later started in business himself, subsequently forming a partnership with Frank C. Churchill which continued till 1898, when the latter withdrew; since then Mr. Carter has been president and manager of the corporation known as the Carter & Churchill Co., engaged in the manufacture of shirts, lined coats, overalls, jumpers, etc., in addition to this business he is also interested in manufac-
+
+<image-desc size="medium" type="portrait" significance="high">A black and white oval portrait of a man with a mustache, wearing a suit and tie.</image-desc>
+
+turing in Pawtucket, R. I., and in the South; Republican; has held various town offices and served in the N. H. state senate in 1891-2; auditor state treasurer's accounts, 1891; appointed of commission to determine the position of N. H. regiments in the siege of Vicksburg, and by Governor Bachelder, in 1903, to select a monument in commemoration of their service; president Lebanon Electric Light Co. for eight years previous to 1906; director Lebanon National Bank; trustee public library; president 11th N. H. Reg't Building Ass'n; member James B. Perry Post G. A. R., and past commander N. H. Department; member A. F. & A. M., lodge, chapter, commandery and shrine; m., Aug. 20, 1868, Theodora Bugbee, Lakeport, N. H. Residence, Lebanon, N. H.
+
+<column-break/>
+
+Blaisdell, Bertram
+
+Lawyer; b., Meredith, N. H., April 13, 1869; s. Philip and Jane (Leavitt) Blaisdell; ed. public schools, Tilton Seminary, 1888; Brown Univ., A.B. 1892; teacher in Meredith, 1892-5; studied law and admitted to the N. H. bar, July, 1897; in practice at Meredith; Congregationalist; Democrat; chairman Meredith school board; special justice Laconia district court, 1913-15; member N. H. house of representatives, 1915; Phi Beta Kappa, Delta Upsilon, A. F. & A. M. to and including 32d degree; past grand patron O. E. S. of New Hampshire; trustee Meredith Village Savings Bank; president Meredith Casket Co.; member N. H. Bar Ass'n; m., April 25, 1893, Georgia Moulton; children, Beatrice, b. Dec. 14, 1898; Dorothy F., b. Jan. 19, 1901. Residence, Meredith, N. H.
+
+Hamlin, Frank Wilbert
+
+Merchant; banker; b., North Charlestown, N. H., June 14, 1863; s. George Washington and Ellen L. Hamlin; ed. public schools of Charlestown; proprietor of the Hamlin Department Store, Charlestown, N. H., since 1887; Episcopalian (treasurer and junior warden St. Luke's Church); Republican; justice municipal court; trustee town trust funds, trustee and treasurer Silsby Free Library; member N. H. house of representatives, 1903; Senate, 1909; constitutional convention, 1918; president and director Connecticut River National Bank, Charlestown; member I. O. O. F., Charlestown Lodge, No. 88; Evening Star Encampment, No. 25, Claremont; Canton Oasis, No. 18, Claremont; Rebekah Lodge, No. 77; m., Dec. 26, 1887, Ada E. Perry. Residence, Charlestown, N. H.
+
+<vocab>New Hampshire, Lebanon, Meredith, Charlestown, biography, business, law, politics, genealogy</vocab>

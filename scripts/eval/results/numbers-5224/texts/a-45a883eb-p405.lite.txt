@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<header>The Book of Clevelanders 401</header>
+<page-num>401</page-num>
+
+| | Page | | Page |
+|---|---|---|---|
+| Davis, Frank W. | 74 | Everett, Henry A. | 89 |
+| Davis, Edward Lockwood | 74 | Everett, Sylvester T. | 89 |
+| Davis, Herbert Leland | 74 | Evers, William H. | 90 |
+| Dawley, Jay P. | 74 | Ewing, Frank H. | 90 |
+| Dawson, Robert H. | 74 | Ewing, Harrison W. | 90 |
+| Day, Luther | 74 | Excell, Matthew B. | 91 |
+| Day, William Louis | 75 | | |
+| Decker, Harry | 75 | Faeh, Alexander Cyril | 91 |
+| Deering, Robert Waller | 75 | Fagan, Frank H. | 91 |
+| Deisher, Frederick Charles | 75 | Fairbank, George Lorenzo | 91 |
+| Deming, Barton R. | 75 | Fairchild, Egbert Nelson | 92 |
+| Dercum, Hermann | 76 | Fanning, Michael A. | 92 |
+| Devereux, Henry Kelsey | 76 | Farnsworth, Harry M. | 92 |
+| De Voe, Walter | 76 | Farrelly, Rt. Rev. John Patrick | |
+| Diederich, Joseph E. | 76 | D. D. | 93 |
+| Diedricks, Carl J. | 76 | Fernald, Robert Heywood | 93 |
+| Dietz, William George | 77 | Fesler, Mayo | 94 |
+| Dillon, James K. | 77 | Fessler, Carl F. | 94 |
+| Dissette, Edward W. | 77 | Fetzer, Gottlob | 94 |
+| Dluzynski, Theodore | 78 | Fiebach, Albert Henry | 94 |
+| Dodge, Samuel Douglas | 78 | Fild, Edward | 95 |
+| Doherty, Joseph G. | 78 | Finch, Edward Brush | 95 |
+| Donaldson, Albert Finney | 78 | Finlay, Lance G. | 95 |
+| Donovan, James | 79 | Finley, William F. | 95 |
+| Donovan, Michall F. | 79 | Flood, William | 95 |
+| Doud, Arthur Nathan | 79 | Foote, George Harry | 96 |
+| Dove, Herman E. | 80 | Ford, Don Berry | 96 |
+| Downie, William | 80 | Ford, Edward S. | 96 |
+| Drake, Edward A. | 80 | Ford, George Whitmarsh | 96 |
+| Draper, Charles Thomas | 80 | Ford, Horatio | 96 |
+| Drew, Frank M. | 81 | Ford, Horatio Clark | 97 |
+| Drucker, Ralph M. | 81 | Forman, Jonathan Clayton | 97 |
+| Duetemeyer, Henry August | 81 | Fister, Edwin James | 97 |
+| Duff, Harry Elmer | 81 | Fowler, Harold North | 98 |
+| Duffey, Bernard T. | 82 | Fox, Ernest C. | 98 |
+| Duncan, B. M. | 82 | Frackleton, Robert James | 98 |
+| Duncan, William McKinley | 82 | France, E. Miller | 99 |
+| Dunham, Wilbur | 82 | Frankel, Philip | 99 |
+| Durell, George B. | 82 | Fraser, Arthur D. | 99 |
+| Duty, Spencer Marcus | 83 | Frazee, Henry | 99 |
+| Dyer, J. Milton | 83 | Frazier, James Welch | 99 |
+| Dyke, Frank L. | 83 | Freeman, Ladbrook H. | 100 |
+| | | French, Elmer A. | 100 |
+| Eaton, Cyrus S. | 83 | Freshwater, Milton | 100 |
+| Ebersole, William George | 84 | Fretter, Frank B. | 100 |
+| Edmondson, George Mountain | 84 | Friedrich, Martin | 101 |
+| Edson, Willis Scott | 84 | Friend, Frank Carl | 101 |
+| Edwards, Ralph Wigmore | 85 | Fritzsche, Alfred | 101 |
+| Eells, Howard Parmelee | 85 | Fritzsche, Henry Ernest | 102 |
+| Eichelberger, George Hamilton | 85 | Fuller, Clifford W. | 102 |
+| Eichhorn, Charles Henry | 85 | Fuller, Horace Arthur | 102 |
+| Einstein, Herman | 86 | Fuller, Hubert Bruce | 102 |
+| Einstein, Jacob Leopold | 86 | Fuller, Jay D. | 103 |
+| Eirick, William F. | 86 | Fuller, Joel Haven | 103 |
+| Ellis, John Warfield | 86 | | |
+| Ellsworth, Ralph H. | 86 | Gaede, John W | 103 |
+| Emerman, Maxwell Vernon | 87 | Gammeter, Harry C. | 103 |
+| Emerson, Oliver Farrar | 87 | Gardner, Burt M. | 104 |
+| Emerson, Sam W. | 87 | Gardner, George Henry | 104 |
+| Engel, Rudolph Carl | 87 | Garfield, James Rudolph | 104 |
+| Englander, Louis | 88 | Garlock, William Henry | 105 |
+| English, Virgil P. | 88 | Garrettson, George Armstrong | 105 |
+| Ensign, Theodore | 88 | Garry, Thomas H. | 105 |
+| Enwright, Roger C. | 88 | Gaston, William | 105 |
+| Ernst, A. C. | 89 | Gatch, E. K. | 106 |
+| Eshelman, Oriel D. | 89 | Geddes, Chalmer G. | 106 |
+
+<vocab>Clevelanders, index, biography, directory</vocab>

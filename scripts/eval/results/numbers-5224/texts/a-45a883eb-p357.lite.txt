@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>353</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. L. Mach</image-desc>
+H. L. MACH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. F. McNutt</image-desc>
+H. F. MCNUTT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. W. Maedje</image-desc>
+C. W. MAEDJE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fred Maly</image-desc>
+FRED MALY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. L. Magel</image-desc>
+C. L. MAGEL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. A. Manchester</image-desc>
+F. A. MANCHESTER
+
+<vocab>H. L. Mach, H. F. McNutt, C. W. Maedje, Fred Maly, C. L. Magel, F. A. Manchester, The Book of Clevelanders, biography, portraits</vocab>

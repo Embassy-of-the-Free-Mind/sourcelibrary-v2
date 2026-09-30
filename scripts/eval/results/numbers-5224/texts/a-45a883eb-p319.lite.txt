@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>315</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. G. Conant</image-desc>
+J. G. CONANT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. S. Conelly</image-desc>
+L. S. CONELLY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. B. Cook</image-desc>
+C. B. COOK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of B. F. Corday</image-desc>
+B. F. CORDAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. D. Cox, Jr.</image-desc>
+J. D. COX, JR.
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. S. Crampton</image-desc>
+P. S. CRAMPTON
+
+<vocab>J. G. Conant, L. S. Conelly, C. B. Cook, B. F. Corday, J. D. Cox Jr., P. S. Crampton, The Book of Clevelanders</vocab>

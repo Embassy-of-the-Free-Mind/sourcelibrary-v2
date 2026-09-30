@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>536</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+and Merry Meeting Grange, P. of H.; m., March 3, 1909, Stella Francis. Residence, Alton, N. H.
+
+**Jones, Andros B.**
+Shoe manufacturer; b., Pownal, Me., Aug. 5, 1846; s. Sewall L. and Mary A. (Libby) Jones; ed. public schools; engaged in shoe manufacturing in Massachusetts for some years after having served three enlistments in the Union Army, during the Civil War, in
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and glasses, wearing a suit and tie.</image-desc>
+
+the Fifth and Sixty-Second Mass. Vols. and Battery I., 5th U. S. Artillery; removed to Nashua, N. H., thirty years ago, and has there continued, serving first as superintendent of the Brackett shoe factory and later, as foreman for Estabrook & Anderson; Congregationalist; Republican; member Nashua city council, 1891; alderman, 1892; member N. H. house of representatives, 1893-4; N. H. senate, 1901-2; police commissioner, 1903-5; mayor of Nashua, 1905-6; police commissioner, 1916-18; member N. H. house of representatives, 1919-20; mem-
+
+<column-break/>
+
+ber A. F. & A. M., K. of P., G. A. R.; m., Nov. 2, 1871, Lizzie J. Young; one son, Fred A. (see sketch p. 150). Residence, Nashua, N. H.
+
+**Atwood, Charles Edward**
+Journalist; b., Waltham, Mass., Jan. 11, 1858; s. Luther and Katherine L. (Marsh) Atwood; ed. Exeter public schools, Phillips Exeter Academy, 1877; Harvard Univ., 1880; engaged now, and for many years past, with John Templeton on the Exeter News Letter, long known as one of the best managed and finely printed weekly newspapers in New England; Congregationalist; Republican; trustee Exeter Public Library; member Swamscott Club. Residence, Exeter, N. H.
+
+**Smith, Archibald Lavender**
+Real estate business and service in France; b., Hillsborough, N. H., Feb. 1, 1889; s. John Butler (governor of New Hampshire, 1893-5) and Emma E. (Lavender) Smith; ed. Hillsborough grammar school, Noble and Greenough's preparatory school, Boston; Harvard Univ., A.B. 1911; Republican; Congregationalist, uniting with the Hillsborough Church, Sept. 10, 1905; member Pi Eta Soc., Harvard College, and the Harvard Club; enlisted in the Quartermaster's Department, U. S. A., Aug. 7, 1917, and attached to the 301st Co., Motor Supply Train 401; m., Madeleine Fellows of Manchester, N. H., Nov. 1, 1916; child, John Butler, b. Aug. 2, 1918; Lieut. Archibald L. Smith died at Tours, France, while serving in the U.S. Army, Aug. 21, 1918. A lieutenant's commission was announced almost simultaneously with his death. At the memorial service at the Smith Memorial Church in Hillsborough, named in honor of Gov. John B. Smith, Rev. E. D. Towle said: "In Archibald Smith flowered the finest traits of New England culture. . . . Modest, reverent, teachable, respecting the rights of others, but never self-assertive, he grew in wisdom and power until the end. . . . A beautiful courtesy lent distinction to his bearing. . . .
+
+<vocab>Andros B. Jones, Charles Edward Atwood, Archibald Lavender Smith, New Hampshire, biography, Civil War, World War I, politics, journalism, shoe manufacturing</vocab>

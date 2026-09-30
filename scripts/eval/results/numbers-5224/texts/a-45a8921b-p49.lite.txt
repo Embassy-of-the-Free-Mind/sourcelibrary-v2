@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>35</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+L., b. Oct. 3, 1882; Howard H., b. June 15, 1884; William P. (died in infancy). Residence, Penacook, N. H.
+
+**Fellows, William Bainbridge**
+Lawyer; b., Sandwich, N. H., July 5, 1858; s. Col. Enoch Q. and Mary E. (Quimby) Fellows; ed. Tilton Seminary, 1876, Dartmouth College, 1880; studied law with Hon. E. A. Hibbard of Laconia; admitted to the bar, Sept., 1883, in practice at Tilton since 1885; Republican; sergeant-at-arms, N. H. senate, 1881; clerk, U. S. senate committee on claims, 1885–7; solicitor, Belknap county, 1889–91, 1893–7; judge of probate, Belknap county, 1895–1909; N. H. state auditor, 1909–11; secretary, state board of equalization, 1901–8; member, N. H. special tax commission, 1908; member and secretary, N. H. tax commission, since 1911; member, N. H. constitutional conventions, 1902, 1912; treasurer, town of Tilton, 1902, 1906; trustee, Tilton Seminary, 1896–; trustee, Tilton & Northfield Library Ass'n, 1887–; trustee, Hall Memorial Library building, 1901–; m., 1st, Nov. 1, 1881, Ida G. Scribner, who d. Jan. 14, 1908; 2d, Aug. 24, 1909, Clara D. Merriman; children, by first wife, John H., Paul R. Residence, Tilton, N. H.
+
+**Burroughs, Sherman Everett**
+Lawyer; b., Dunbarton, N. H., Feb. 6, 1870; s. John H. and Helen M. (Baker) Burroughs; descendant, on paternal side, of George Burroughs who served under General Heath at the siege of Boston, and on the maternal side, of Captains Joseph Baker and John Lovewell of Indian and Colonial War fame; ed. public schools of Dunbarton and Bow, Concord high school, class of 1890, Dartmouth College, A.B., class of 1894, Columbian University Law School, LL.B., 1896, LL.M. 1897; admitted to the District of Columbia bar, 1896, New Hampshire bar, 1897; commenced practice in Manchester in 1897; continued alone two years, then becoming a member of
+
+<column-break/>
+
+the firm of Taggart, Tuttle, Burroughs & Wyman, where he has continued, the firm now being Taggart, Burroughs, Wyman & McLane; Republican; private secretary to Congressman Henry M. Baker, 1894–7; member, N. H. house of representatives, 1901–3; elected to the U. S. house of representatives, to fill the vacancy occasioned by the death of Cyrus A. Sulloway, May 29, 1917; member, state board of equalization, 1909–10;
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Sherman Everett Burroughs</image-desc>
+
+member, state board of charities and corrections, 1901–1917; chairman from 1911; president, N. H. Children's Aid and Protective Soc.; Episcopalian; treasurer, Grace Episcopal church, and trustee, Orphans' Home, Concord, N. H.; member, Washington Lodge, A. F. & A. M., Manchester; Scottish Rite Mason; member, Derryfield and Country clubs; m., April 21, 1898, Helen S. Phillips; four sons, Robert Phillips, John Hamilton, Sherman Everett, Jr., and Henry Baker. Residence, Manchester, N. H.
+
+<vocab>William Bainbridge Fellows, Sherman Everett Burroughs, New Hampshire, biography, law, politics, genealogy, public service</vocab>

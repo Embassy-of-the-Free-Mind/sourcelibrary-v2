@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>89</page-num>
+<header>MILITARY HISTORY.</header>
+
+field. This town, like others, had sacrifices that called for the continued aid and sympathy of its citizens; one case was where three sons of a very poor citizen enlisted, and all were killed; one left a wife and five small children, and upon the other two the aged parents of the three valiant sons depended for support.
+
+No corporate action of the town of Truro was taken during the year 1861, but all quotas were filled by the officers and citizens until July 25, 1862, when at a special town meeting their action was ratified and expenditures refunded by the vote of the town. A bounty of two hundred dollars was offered for nine-months' men, and the most liberal provisions were made at each future meeting for the volunteers and their families. At a meeting, February 4, 1863, the town voted to bring home the remains of Edward Winslow, the first of its soldiers who had fallen; and that the widow and orphan children of the deceased receive a gratuity of one hundred dollars. Through the selectmen, assisted by proper committees, Truro furnished 144 men for the war--an excess of fourteen over all demands. The fund expended was $4,786.10, and the amount sent to the state aid was $2,328.21, which was refunded.
+
+The preceding summary of the action of the several towns of Barnstable county is brief but reliable, and gives facts of which its citizens may well be proud. The several selectmen of the towns in 1866 reported 2,305 men as having been sent into the service; but the number must have been greater, as the percentage of men furnished throughout the commonwealth was 9 1/2 to every one hundred inhabitants, and this county not only filled every quota but furnished an excess of 309 men. The total expenses of the towns aggregate the enormous sum of $399,919.92, of which $90,934.84 was paid as state aid, and mostly refunded.
+
+The general court in 1863 made provision for reimbursing the towns the bounties they had paid to volunteers enlisting under the calls of the president of July and August, 1862, not exceeding one hundred dollars for each volunteer. The assessors' report from Barnstable county show that bounties were paid to 532 men, a total of $84,395.35 under those calls.
+
+The legislature of 1864 passed an act, approved May 14th, which provided for the enrollment of all able bodied male citizens of the Commonwealth between the ages of eighteen and forty-five years. The lists were made by the assessors and filed with town clerks July 1, 1864. Copies of these lists returned to the adjutant general show 133,767 effective men, in the state, liable to military duty. The state was then divided into 249 districts, and the militia residents of each district were organized as a company, and in December were ordered to elect their captain. Sandwich was made District 45; Barnstable
+
+<vocab>Military History, Truro, Barnstable County, Civil War, Bounties, Edward Winslow, Volunteers, State Aid, General Court, Enrollment Act, Adjutant General, Militia</vocab>

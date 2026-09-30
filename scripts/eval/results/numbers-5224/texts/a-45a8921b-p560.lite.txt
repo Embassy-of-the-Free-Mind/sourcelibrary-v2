@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>546</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Thierry, he was wounded in the left wrist by a machine gun bullet and for his conduct in refusing to be evacuated and continuing in action and rescuing the wounded under heavy fire till overcome by loss of blood, was cited for bravery, recommended for the Distinguished Service Cross and promoted to Sergeant-Major. His regiment on this occasion lost 770 of 890 men engaged, and of 234 men in his company but ten remained unscathed after the attack; following the cessation of hostilities he was designated by the government for a course of instruction at the University of Can.
+
+**Pearson, Edward Nathan, Jr.**
+Investment banker; b., Concord, N. H., March 4, 1884; s. Edward N. and Addie M. (Sargent) Pearson; ed. Con-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Edward Nathan Pearson, Jr.</image-desc>
+
+cord high school and Dartmouth College (class of 1906, non-graduate); member of the firm of Schwabacher & Company, investment bankers, San Francisco, Cal.; m., July 6, 1910, E. Jean Povor; dau., Jane, b. May 31, 1914. Residence, Oakland, Cal.
+
+<column-break/>
+
+**Pearson, Robert Houghton**
+Engineer; b., Concord, May 30, 1885; s. Edward N. and Addie M. Pearson; ed. Concord high school, Dartmouth College (class of 1907) and Thayer School of Civil Engineering;
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Robert Houghton Pearson</image-desc>
+
+engineer on Panama Canal, June, 1907-10; assistant foreman of construction on the Gatun Locks, laid the first concrete in that structure; d., Medford, Mass., Jan. 5, 1911.
+
+**Stone, Harlan Fiske**
+Lawyer; educator; b., Chesterfield, N. H., Oct. 11, 1872; s. Frederick Lawson and Ann Sophia (Butler) Stone; ed. Amherst College, B.S. 1894; A.M. 1897; Columbia Univ. Law School, LL.B. 1898; lecturer on law, Columbia Univ. Law School, 1899-1902; professor of law, 1902-5; dean since 1910; member firm of Satterlee, Canfield & Stone, New York City; director Atlantic & Charlotte Air Line Ry., Woman's Hotel Co.; president Ass'n American Law Schools; member American Bar Ass'n (com. on legal
+
+<vocab>New Hampshire, Biography, Concord, Dartmouth College, Panama Canal, Harlan Fiske Stone, Edward Nathan Pearson, Robert Houghton Pearson, Law, Engineering</vocab>

@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>737</page-num>
+<header>TOWN OF EASTHAM. 737</header>
+<sig>47</sig>
+
+abolishment of the division; and the same person, with Obediah Doane, Abijah Mayo, and others, served as commissioner of wrecks for a term of years.
+
+Here is the Eastham Library of several hundred volumes, an institution established by individual munificence and now supported by the town, the citizens voting a sum yearly. Myrick Clark was its first president, continuing until his death in December last. Reuben Nickerson, Mrs. Isaiah H. Horton and Mrs. Julia Knowles have been the trustees since its organization. The town clerk, by virtue of his office, is treasurer, at present George H. Clark; and the librarian, Mrs. Herbert C. Clark. Every Saturday the library—in the hall over the store of G. H. Clark—is open to the public. One of the principal donors in the permanent establishment of the library was Augustus E. Denton, who gave one hundred dollars. Sixty dollars was voted by the town last year for new volumes and other expenditures.
+
+North Eastham is the name given to the territory of the north part of the town, which embraces the community that centers at the stores and depot under the title above given. It is more level—has more the appearance of a plain—than the south part of the town. Its general productiveness has created broad farms, upon which the citizens more closely follow agricultural than horticultural pursuits. Cook's brook, named from Josiah Cook, one of the pioneers of 1644, empties into the bay to the westward, formerly forming a sufficient harbor for the fishing vessels of the town, and in the decline of the business, comparing the vessels of that day with the boats of the present, the harbor is still sufficient, notwithstanding the filling with sand. At the mouth of this creek the schooner *Belvidere*, of 101 tons, was built in 1812 for Elkanah Cobb, Michael Collins and the Doanes, by a master builder of Plymouth, assisted by Andrew Lincoln and others. The greater part of the timbers were cut upon surrounding territory, which, coupled with the fact that at present many sturdy oaks are seen in this part of the town, indicates to the reader the character of a portion of the soil. The salt-makers along the west shore of this territory have been given.
+
+Stores were opened here early, but subsequently to those in the south part. The earliest we find to have been established prior to 1800 were those of Michael Collins and Elkanah Cobb, and later that of David Brown. Abraham Horton had a store about 1830, which he continued many years, in what is now known as the Nauset House. In 1881 Arthur H. Cobb erected a building and opened a store adjoining Millenial Grove. George P. and Samuel F. Brackett purchased the business in 1886, and are yet there engaged in a general mercantile business. In 1886 Robert R. Horton engaged in the grocery business in a new building near the depot, and after one year sold the
+
+<vocab>Eastham, Massachusetts, Eastham Library, North Eastham, Myrick Clark, Reuben Nickerson, George H. Clark, Augustus E. Denton, Cook's Brook, Josiah Cook, Belvidere (schooner), Elkanah Cobb, Michael Collins, David Brown, Abraham Horton, Nauset House, Arthur H. Cobb, Millenial Grove, George P. Brackett, Samuel F. Brackett, Robert R. Horton</vocab>

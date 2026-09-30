@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>940</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+ings resulted in the incorporation of the Eastham Camp Meeting Association, and still later of the present Yarmouth association.
+
+Burying Grounds.—The oldest burial place of the town is that south of North Truro, where the first Congregational meeting house was erected. This religious society later opened one at Truro, and more recently have opened still another there. The Methodists have one at Truro, and the South Truro society have another at South Truro. The Catholics instituted a burial place at Truro a few years ago, being the sixth in the town.
+
+Schools.—The first mention of any provision for the support of schools in Truro was in the town meeting of 1715, when it was voted "that Rev. Mr. Avery and the selectmen be a committee to procure a suitable person to keep a town school." This order was not successful in its result, for the very next year the town was presented for its delinquency in not providing a teacher, and Jonathan Paine was appointed to appear at the court of general sessions in the town's behalf. In 1716 the town school began, the sum appropriated being twenty pounds for a half year. The teacher, Samuel Spear, was hired for the year 1717, having given satisfaction the first six months. His salary was forty pounds and "board himself."
+
+To the credit of the town, let it be recorded that the citizens preferred a school for the young, to sending a representative to general court, and as the expense of both was thought to be onerous the school went on and the representative remained at home. In 1719 Samuel Winter was hired for twelve months for forty pounds, and the school was to be moved around. The first three months it was taught in the house of William Dyer, jr.; the next six months at Captain Constant Freeman's or in his neighborhood, and the last three months of the year at a suitable place near East harbor. No school houses were yet erected, and for many years the schools were kept in private houses.
+
+In 1821 Mr. Winter was engaged for one year and three months, the term to commence after his engagement for 1720. The prosperity of the schools and the increase in pupils led to the purchase, in 1724, of two school house sites, one near the residence of Richard Stevens, and the other at the northerly side of Longnook. School houses were built on these lots, and the last named site at Longnook was used for school houses until 1855.
+
+From the 26th of June, 1728, Solomon Lombard was the teacher for a year, and after a term of years Mr. Gibson was hired, as we find a complimentary vote in 1737 in the town records which explains itself: "Voted to give Mr. Gibson the rate of £55 a year in consideration of his support of the ancient people with whom he lived the winter past." In 1747 sixty pounds was voted for the schools.
+
+<vocab>Eastham Camp Meeting Association, Yarmouth association, Burying Grounds, Congregational meeting house, Truro, South Truro, Methodists, Catholics, Schools, Rev. Mr. Avery, Jonathan Paine, court of general sessions, Samuel Spear, Samuel Winter, William Dyer jr., Captain Constant Freeman, East harbor, Richard Stevens, Longnook, Solomon Lombard, Mr. Gibson</vocab>

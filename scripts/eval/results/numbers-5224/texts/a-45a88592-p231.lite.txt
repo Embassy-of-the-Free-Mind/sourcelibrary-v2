@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>197</page-num>
+<header>BENCH AND BAR. 197</header>
+
+In 1685, it became a law in this colony to establish in the three counties of Bristol, Plymouth, and Barnstable, two courts in each county, which should be presided over by three magistrates, residing in their several counties, a majority of whom constituted the requisite number to make a legal decision. Such county courts had the power vested in them to hear, try and determine according to law, all matters, actions, cases and complaints, both civil and criminal, not extending to life, limb or banishment, or matters of divorce.
+
+The same year (1685) the general court passed a law, that Barnstable, Sandwich, Yarmouth and Eastham, the villages of Sippican, Succonesset and Monomoy, should be a county, Barnstable the county town, and said county be called the county of Barnstable, in which should be held two county courts annually at the county town, giving them power to settle and dispose, according to law, the estate of any person dying intestate within the county, to grant letters of administration, and take probate of wills; to make orders about county prisons, highways and bridges, and as occasion should demand, order rates to be made in the several towns to defray county charges.
+
+The general court adopted the common law of England, that a magistrate or any court should have power to determine all such matters of equity in cases or actions that had been under their cognizance as could not be reached by the common law; such as the forfeiture of an obligation, breach of covenants without great damage, or the like matters of apparent equity. But all judgments acknowledged before any two magistrates and the clerk of the court should be good and sufficient in law.
+
+It became a law in 1662, that every town in this colony should choose three or five discreet men annually, who should in June be presented to the general court at Plymouth for appearance, who, after being duly sworn before a magistrate, should have power to hear, try and determine all actions of debt, trespass or damage, and other causes, not exceeding forty shillings in its jurisdiction. This was the court of selectmen, which had four annual sessions. The record dimly shadows the fact that as early as 1640-2 there was established a "Select Court," whose limit of jurisdiction was twenty shillings.
+
+By virtue of the charter of William and Mary, granted in 1691-2, among other rights were, that Massachusetts bay, the colony of New Plymouth, the province of Maine and Nova Scotia were united and made one province, called the province of the Massachusetts bay, which union marked a new order of things in these provinces. This period inaugurated, among other things, a revision of the judiciary, making, changing and revising much of it.
+
+The first session of the general court, under the new charter, met at Boston on June 8, 1692, and continued nineteen days, until June 27,
+
+<vocab>Bristol, Plymouth, Barnstable, Sandwich, Yarmouth, Eastham, Sippican, Succonesset, Monomoy, county courts, magistrates, intestate, probate of wills, common law, equity, selectmen, Select Court, charter of William and Mary, Massachusetts bay, Maine, Nova Scotia, judiciary</vocab>

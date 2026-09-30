@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>58</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+1902; member, N. H. house of representatives, from Ward 4, Keene, 1907; city solicitor of Keene, 1909; mayor, 1910; member, N. H. public service commission, 1911-15; Mason; member, Lodge of the Temple, Cheshire Royal Arch Chapter, Hugh de Payens Commandery, B. P. O. E., P. of H., University Club, Washington, D. C.; m., Sept. 4, 1909, Kate Lanmou Nims. Residence, Keene, N. H.
+
+**Morris, James Henry**
+Lawyer; b., Aug. 15, 1862; s. Thomas and Ann (Connelly) Morris; ed. Concord public schools; studied law with Albin & Martin; admitted to the N. H. bar, July 20, 1888; Catholic; Democrat; city auditor of Concord,
+
+<image-desc size="large" type="portrait" significance="high">Black and white portrait photograph of a middle-aged man with a mustache, wearing a suit and tie.</image-desc>
+
+1899, 1900; secretary, Democratic city committee, 1907-11; member and clerk of Concord board of assessors since the new charter went into effect, in 1911; member, Concord Lodge, No. 1210, B. P. O. E., Wonolancet Club, Concord Gun Club; unmarried. Residence, Concord, N. H.
+
+<column-break/>
+
+**Fowler, George Winthrop**
+Editor, farmer, banker; b., Pembroke, N. H., Nov. 1, 1864; s. Winthrop and Anne Lydia (Locke) Fowler; ed. Pembroke Academy, 1882, Dartmouth College, 1886; Congregationalist; Democrat; member, Pembroke school board, nine terms; member, N. H. constitutional convention, 1912; member and clerk, N. H. board of control, 1913-15; state purchasing agent, 1913-15; director, Suncook Valley R. R.; director, N. H. Fire Insurance Co.; trustee, Pembroke Academy and president of the board; treasurer, Suncook Bank, since organization, Oct., 1916; member, Pembroke Grange, P. of H.; reared to farm life and always interested in agriculture, in which he is incidentally engaged to a considerable extent, but devoted himself for some time to the Newspaper business, as editor of the *Nashua Gazette*, 1890 to 1895; editor, *Manchester Union*, 1895-1905, editor and business manager, 1905-13; m., 1st, in 1888, Etta Bartlett, who d., 1905; 2d, Grace M. Smith; children, George Sherburne, b. 1890; Harold Bartlett, b. 1898; Winthrop John, b. 1904; Mary Anne, b. 1910; Charles Smith, b.1914. Residence, Pembroke, N. H.
+
+**Jackson, Robert**
+Lawyer; b., Dover, N. H., May 21, 1880, but reared in Littleton, his parents' permanent home; s. James R. and Lydia A. (Drew) Jackson; ed. Littleton high school, Dartmouth College, 1900, Harvard Law School; pursued legal study in the office of U. S. Judge Edgar Aldrich, and of Remick & Niles, Concord; Admitted to the bar in 1907, and practiced for a time with Remick & Niles, and later with Judge James W. Remick; member of firm of Remick & Hollis, 1910 to 1912, Remick & Jackson, 1912 to 1916 and since in practice above; Episcopalian; Independent Democrat; chairman, Democratic city committee, Concord, 1914-18; member, N. H. excise commission, 1915- ; secretary, N. H. committee of public safety, 1917-; m.,
+
+<vocab>New Hampshire, biography, lawyers, editors, politicians, Concord, Pembroke, Keene, Dartmouth College, genealogy</vocab>

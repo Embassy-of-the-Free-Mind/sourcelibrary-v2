@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>326</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Foster</image-desc>
+E. J. FOSTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Edward S. Ford</image-desc>
+EDWARD S. FORD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. M. France</image-desc>
+E. M. FRANCE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Frazier</image-desc>
+J. W. FRAZIER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. D. Fraser</image-desc>
+A. D. FRASER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. H. Freeman</image-desc>
+L. H. FREEMAN
+
+<vocab>E. J. Foster, Edward S. Ford, E. M. France, J. W. Frazier, A. D. Fraser, L. H. Freeman, The Book of Clevelanders</vocab>

@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>138</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Chandler; descendant in the tenth generation from William Chandler, the immigrant ancestor, who settled in Roxbury, Mass., 1637, and in the fifth generation from Rev. Timothy Walker, first minister of Concord (1730-82); ed. Penacook schools, Elmwood Academy, Boscawen; teacher of schools in Boscawen and Webster, and principal of Penacook grammar school several years, since when he has followed agriculture on the ancestral homestead,
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and beard, wearing a suit and bowtie.</image-desc>
+
+specializing in dairy farming; member, Congregational Church since early youth; Republican, suffragist, prohibitionist; member, board of selectmen, several years; member, Concord common council, 1876-8; m., June 21, 1877, Mary S. Abbott; one dau., Annie Mary, b. July 12, 1880, studied piano with Milo Benedict, organ with John Herman Loud, Boston, musical theory with Claude P. Landi (now of Rome, Italy), school methods with Charles S. Conant; teacher of the piano, and organist, Baptist church, Penacook, since 1903; for several years supervisor of music in the Penacook schools. Residence, Penacook, N. H.
+
+<column-break/>
+
+**Colby, James Fairbanks**
+
+Lawyer, educator; b., St. Johnsbury Vt., Nov. 18, 1850; s. James K. and Sarah A. (Pierce) Colby; ed. St. Johnsbury Academy, 1868; Dartmouth College, 1872, Columbian (now George Washington) University, LL.B., 1875; practiced law in New Haven, Conn., 1878-85; instructor in economics and history, Sheffield School, Yale University, 1879-81; lecturer on international law, Yale Law School, 1883-5; Parker professor of law and political science, Dartmouth College, since 1885; honorary A.M., Yale, 1877; LL.D., Dartmouth, 1901; Congregationalist; Republican; member, N. H. forestry commission, 1893-8; N. H. constitutional convention, 1902; member, N. H. Bar Ass'n, American Bar Ass'n, American Political Science Ass'n, American Soc. International Law; editor, Manual of N. H. Constitution, 1st ed., 1902, 2d ed., 1912; Maitland and Montagu's Sketch of English Legal History, and legal and political essays; unmarried. Residence, Hanover, N. H.
+
+**Day, Harry Brooks**
+
+Organist, musician and composer; b., Newmarket, N. H., Sept. 5, 1858; s. Warren K. and Martha (Brooks) Day; moved in childhood to Concord, N. H.; ed. Concord high school, 1878, studied music in United States, England and Munich, grad. Akademie der Tonkunst München, 1899; ten years, organist and choirmaster, St. Ann's church, Lowell, Mass.; then at Newton, Mass.; musical director and organist at the Cambridge Theological School; visiting choirmaster of St. Mary's, Newton, Church of the Messiah, Auburndale, St. Paul's, Brookline and St. John's, Cambridge, also director of the Neighborhood Choristers, 150 voices; director of music in the Newton Club and organist for the festival services of the Mass. Choir Guild; at Munich, 1897-9, special pupil of Joseph Rheinburger, chosen from sixty appli-
+
+<vocab>Chandler, William; Walker, Timothy; Colby, James Fairbanks; Day, Harry Brooks; Penacook; Concord; Dartmouth College; Yale University; organists; musicians; lawyers; educators; New Hampshire</vocab>

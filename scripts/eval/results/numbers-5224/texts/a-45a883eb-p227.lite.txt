@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>223</page-num>
+<header>The Book of Clevelanders</header>
+
+pal hospital, Philadelphia, 1884-1886; asst. surgeon, Kensington Hospital for Women, 1888-1889; associate in gynecology, Johns Hopkins University and Hospital, 1889-1894; in practice at Cleveland since 1894; prof. gynecology, Western Reserve University; visiting gynecologist, Lakeside Hospital, Cleveland; member American Gynecological Society, Obstetric and Gynecological Society of Paris; Episcopalian; Republican. Clubs: Union, University. Author: Aseptic Surgical Technique, 1894; Contributor to Hare's System of Therapeutics, 1891; Keating & Coe's Gynecology, 1894; Jewett's System of Obstetrics, 1900; Reed's Gynecology, 1901. Has written numerous papers on surgical technique and diseases of women.
+
+ROBERTS, Clarence J.; district mgr. Toledo Scale Co.; born, Monroe, Mich., April 25, 1863; high school education; married, Cleveland, Sept. 13, 1887, Nativa Brillon; nine children; district mgr. Toledo Scale Co., nine years; member Knight of Columbus, Chamber of Commerce, Chamber of Industry, Rotarian Club, B. P. O. E., and C. M. B. A.
+
+ROBERTSON, Gunder; cement contractor; born, Denmark, March 7, —; son of Robert Gunderson and Marie Laursun Robertson; educated, Denmark; married, Painesville, O., June 1, 1890, Annie M. Robertson; issue, eight children.
+
+ROBY, James Justus; coal operator, born, Sherodsville, O., May 16, 1865; son of David and Sarah Justus Roby; common school education in Carroll County, Ohio, schools, and International Correspondence Schools, of Scranton, Pa.; married, Sherodsville, May 30, 1887, Della M. Henderson; two children, deceased; 1884 to 1900, asst. Wheeling & Lake Erie R. R.; 1895 to 1900, supt. Wheeling, Lake Erie & Pittsburgh Coal Co.; 1900-1911, vice pres. Roby Coal Co.; from 1912, efficiency engineer (coal mining operations); 1913, pres. and director The Short Creek Coal Co.; member Ohio Mining Commission under Gov. Harris; member The Cleveland Engineering Society; member Forest City Lodge, No. 368, F. A. M., Cleveland Chapter, No. 148, R. A. M., Holyrood Commandery, No. 32, K. T., Lake Erie Consistory, S. P. R. S., 32nd degree, Al Koran Temple, A. O. N. M. S., Al Sirat Grotto, No. 17, M. O. V. P. F. R., Cleveland Council, No. 36, R. & S. M., B. P. O. E., No. 18, Cleveland; member Union, and Athletic Clubs and Chamber of Commerce.
+
+ROCKEFELLER, Frank; capitalist; born at Richford, Tioga County, N. Y., in 1845, where he lived for several years, until his father and brothers moved to Cleveland; for several years, he followed various occupations, until he became interested with his brother, John D. Rockefeller, in the oil business, becoming one of the principal promoters of the Standard Oil Co.; retired from active business interests in 1895; he has a summer home at Wycliffe, O., and a big ranch in Kansas; member Union, Columbia and Roadside Clubs, Cleveland, and the Ohio Society, N. Y.; Republican.
+
+<vocab>Clarence J. Roberts, Gunder Robertson, James Justus Roby, Frank Rockefeller, John D. Rockefeller, Cleveland, biography, coal industry, oil industry, genealogy</vocab>

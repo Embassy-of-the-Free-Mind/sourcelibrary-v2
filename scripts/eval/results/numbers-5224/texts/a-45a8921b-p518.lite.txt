@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>504</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+N. J., since 1896; Presbyterian; member Women's University Club, New York; Fortnightly Club, Summit, N. J.; m., June 23, 1887, Edward A. Paul, Washington, D. C.; d., 1888. Residence, Kent Place, Summit, N. J.
+
+**Harris, Sarah Neal**
+(Mrs. Augustus G. Harris); teacher of literature and elocution; b., Portsmouth, N. H., May 4, 1841; dau. George W. and Minerva (Neal) Jeffts;
+
+<image-desc size="medium" type="portrait" significance="high">A black and white photographic portrait of Sarah Neal Harris, shown in profile facing left.</image-desc>
+
+grand dau. Capt. Joseph and Polly (Dearborn) Neal; ninth in descent from Godfrey Dearborn of Exeter, N. H., 1639, later of Hampton; ed. in private schools, Hampton and Portsmouth, Hampton Academy, N. E. Conservatory, Boston; m., Dec. 14, 1864, Augustus Gray Harris of Concord (d., Dec. 20, 1906); children, (1) Edward Neal, b. Sept. 10, 1865, d. Sept. 10, 1867; (2) Arthur Henry, b. Dec. 5, 1866, d. June 24, 1903; (3) Julia Atherton, b. April 29, 1874, m. June 23, 1910, Robert Whiting Har-
+
+<column-break/>
+
+rington of Newton, Mass., artist-designer, graduate of Eric Pape Art School, Boston, 1904; their children, Robert Whiting, Jr., b. Concord, N. H., April 14, 1911; Richard Bartlett, b. Concord, N. H., Nov. 1, 1912; Edward Neal, b. Medford, Mass., May 4, 1914. Upon her marriage Mrs. Harris moved from Hampton to Concord, which became her home till 1913, when she moved to Massachusetts with her daughter; in 1876 began her teaching career which continued for twenty years; classes at Gray's English and Classical School, Concord; Pembroke Academy; Hampton Academy; Miss Morgan's School, Portsmouth; Sauveur Summer School of Languages, Exeter; special classes at Dartmouth College. Hundreds of private pupils in Concord, Manchester and other New Hampshire cities and in Newburyport, Mass., have profited by the inspiration of her teaching; communicant of St. Paul's P. E. Church, Concord, charter member of the Shakespeare Club, founded in 1877, the oldest literary society in continuous existence in Concord; publication, "Voice, Gesture, Expression," 188 pp. Concord, N. H., 1891. Residence, 73 Perkins St., West Newton, Mass.
+
+**Osgood, Etta Haley**
+(Mrs. Edward S. Osgood); journalist and club woman; b., Chatham, N. H., Jan. 21, 1853; dau. Thomas Jewett and Lucretia Eaton (Colby) Haley; ed. Mt. Holyoke Seminary (now college), special course in German later, and graduate work, Univ. of Washington, Seattle; some time correspondent at Bar Harbor, Me., for *Boston Globe*, *New York Herald* and other papers; special writer for *Portland Argus*, *Express* and *Telegram*; correspondent Philadelphia *Public Ledger*; founder and first president Civic Club, Portland, Me.; life member Portland, Maine State, and National Woman Suffrage Ass'ns; first president Maine Federation of Women's Clubs (now honorary pr esident); officer and parliamentarian, General Federation of
+
+<vocab>Sarah Neal Harris, Etta Haley Osgood, New Hampshire, biography, genealogy, teaching, journalism, women's clubs, Concord, Portland</vocab>

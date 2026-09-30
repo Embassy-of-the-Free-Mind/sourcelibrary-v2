@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>204</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+kins, Provincetown, 1886 to 1888; Charles F. Chamberlayne, Bourne, 1884 to 1889 and continues; George Godfrey, Chatham, 1886 to 1889 and continues; Jonathan Kelley, 2d, Dennis, 1886 to his death in 1889; William D. Foster, Provincetown, 1884 to 1885; Tully Crosby, jr., Brewster, appointed in 1890 and continues; Watson F. Baker, Dennis, 1889, and continues.
+
+THE BAR OF THE COUNTY OF BARNSTABLE.—The bar can justly claim some of the highest mental lights of the world, and yet what is known of its members, is in a great degree, traditionary. Very few of the transcendent efforts in the forum are reported;—their fame and merit are passing and transitory; and are forgotten by the multitude who heard them. Our great American orator, statesman, and patriot, James Otis, who was born at West Barnstable, February 5, 1725, exhibited the character of one of the purest patriots and eloquent defenders of human rights, that the American continent has produced;—when in the midst (1761) of his duties as advocate general, in defending the writs of assistance, but deeming them illegal and unjust, he immediately resigned.—His argument in this case produced a profound impression. Such was his unselfish love of country, that he has left his impress as an ornament on the column of time.
+
+The finished forensic efforts of Rufus Choate and other eminent American advocates, would adorn the pages of Cicero, and yet much of it has passed into forgetfulness. A few Nestors of the Suffolk bar, occasionally speak of the scintillations of his magnetic mind, and the charm of his speech, yet they add in despair;—"we cannot repeat the effect upon the breathless multitude who heard him, with the indescribable power of a magician." No one is able to rehearse these masterly utterances, or realize the effect upon the enchanted multitude. I well remember how deeply moved was the throng in the courtroom, when he closed his argument for the defense in a capital case, where the life or death of the defendant was depending upon the verdict of that jury; the audience refused to leave the room, before the verdict came in, so deeply were they in sympathy with Mr. Choate's client.
+
+It will be impossible to say much concerning the early members of the bar of the county of Barnstable, since we have very little material relating to them to make up anything approaching the dignity of biography. At this early period of the Pilgrims and some years subsequently, the profession of the law hardly had a name in the Old Colony; very few made the study and practice of the law an exclusive profession; and those who were members of the bar, it is difficult to determine, with any degree of accuracy, until we pass to a later time.
+
+As early as 1676, Richard Bourne of Sandwich, Shearjashub Bourne
+
+<vocab>Barnstable County, Bar, James Otis, writs of assistance, Rufus Choate, Cicero, Suffolk bar, Old Colony, Richard Bourne, Shearjashub Bourne</vocab>

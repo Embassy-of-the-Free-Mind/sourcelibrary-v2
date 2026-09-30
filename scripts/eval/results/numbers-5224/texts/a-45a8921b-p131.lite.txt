@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>117</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 117</header>
+
+treasurer's office, having charge of two or more important departments; Florence Gertrude, b. Feb. 24, 1866, m. Edward P. Comins and d. June 8, 1905—their dau., Sara Comins, b. Sept. 7, 1892, grad. Smith College, 1915. Residence, Concord, N. H.
+
+**Runnells, John Sumner**
+
+Lawyer; president of The Pullman Co.; b., Effingham, N. H., July 30, 1844; s. John and Huldah (Staples) Runnells; great-grandson of Ralph Farnham, last survivor of the battle of Bunker Hill, who died in 1860, aged 105 years; ed. New Hampton Institution, Amherst College, 1865; commenced the study of law with Wheeler & Hall of Dover, N. H., but removed to Des Moines, Ia., where he completed his studies and was admitted to the bar in 1873, having meanwhile served as U. S. Consul at Tunstall, England, in 1869 and 1870; Episcopalian; Republican; reporter, supreme court of Iowa, 1875–81; U. S. district attorney for Iowa, 1881–5; chairman, Republican state central committee, 1879, 1880; member, Republican national committee, 1880–4; delegate in Republican national convention of 1880, voting for James G. Blaine until the last ballot, when he voted for General Garfield; continued legal practice in Des Moines, largely along corporation lines, till 1888, when he removed to Chicago, where he soon became general counsel of The Pullman Co., holding this position until 1895, when he was made vice-president and in 1911 became president, since continuing. He takes a pardonable pride in the reform in methods and practices effected by the management of this great company, employing from 20,000 to 30,000 men, increasing efficiency and production, and reducing expenses and waste, while insuring a more liberal reward for labor. Connected with many corporations, being a director of The Pullman Co., the National Biscuit Co., the Guaranty Trust Co. of New York, the Merchants' Loan and Trust
+
+<column-break/>
+
+Co., Chicago, the Pullman Trust and Savings Bank, Chicago, and the Roseland State Savings Bank, Chicago; member of the Society of Colonial Wars; active in club life in Chicago, having been president of the Chicago Club ten years, and president at various times of the Union Club, the Saddle and Cycle Club and others; m., March 31, 1869, Helen Rutherford, dau. of Hon. Nathaniel B. Baker, Governor of New Hampshire, 1854; children, Mabel (Mrs. Robert I. Jenks, New York), Lucy (Mrs. Albert A. Jackson, Philadelphia), Clive (vice-president of the Pullman Co., Chicago; educated at Pomfret and Harvard) and Alice (Mrs. William James, Cambridge, Mass.) Residence, 1525 No. State Parkway, Chicago, Ill.
+
+**Scales, Burton True**
+
+Musician and educator; b., Dover, N. H., Aug. 10, 1873; s. John and Ellen (Tasker) Scales; ed. Dover high school and Dartmouth College, A.B., 1895; made special study of music in Boston and New York; graduate of New School Methods in Public School Music; managing editor of *The Dartmouth*, in college; member of the editorial staff of the *Dover Daily Republican*, 1895–7; supervisor of music in Dover and Newmarket public schools, 1897–9; secretary of N. H. Music Teachers' Ass'n, 1896–9; instructor in music at the Plymouth, N. H., Normal School's summer session, 1898–1908; director of music and aid to the Headmaster of the William Penn Charter School for Boys, Philadelphia, Pa., 1899–1914; director of music, Girard College, Philadelphia, 1914–; director of the University of Pennsylvania Glee Club, and Mask and Wig Glee Chorus, 1910–; lecturer at the Institute of Musical Art, New York City; instructor in the Music Department of the New York University Summer School, 1908–13; instructor in music at Cornell University Summer School, 1914–. In college he was member of the Delta Kappa Epsilon Fraternity; Casque and Gauntlet Soc.; Republican; Presbyterian;
+
+<vocab>John Sumner Runnells, Burton True Scales, The Pullman Company, New Hampshire, biography, genealogy, education, law, music, politics</vocab>

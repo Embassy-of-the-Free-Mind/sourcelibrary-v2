@@ -1,0 +1,11 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A black and white engraving of a Victorian-style house with a tower, a wrap-around porch, and a gazebo in the yard, set within an arched frame.</image-desc>
+
+->RESIDENCE OF GEORGE P. DREW,<-
+->*Sandwich, Mass*<-
+
+<vocab>Residence, George P. Drew, Sandwich, Massachusetts, Victorian architecture, gazebo</vocab>

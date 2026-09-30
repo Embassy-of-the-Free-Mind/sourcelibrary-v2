@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>286</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Josh. Blackwell, Mich. Blackwell, Elisha Bourne, Nathan Bourne, Shearj. Bourne, Timo. Bourne, Jacob Burge, John Perry, Dan. Butler, John Chipman, Roland Cotton, Edw. Dillingham, Hy. Dillingham, John Dillingham, Matthias Ellis, Mord. Ellis, John Fish, Edm. Freeman, sr., Edm. Freeman, jr., Benj. Gibbs, John Gibbs, Saml. Gibbs, Thos. Gibbs, John Gifford, Eph. Swift, Saml. Gifford, Rd. Handy, Joseph Holway, Gid. Hoxie, Lud. Hoxie, John Jennings, Saml. Knott, Saml. Lawrence, Oliver Norris, Benj. Nye, Caleb Nye, Jona. Nye, John Nye, Nathan Nye, Edw. Perry, Ezra Perry, sr., Israel Tupper, Saml. Perry, Saml. Prince, Sam. Sanderson, Steph. Skiff, Benj. Smith, John Smith, sr., John Smith, jr., Shubael Smith, Jireh Swift, Wm. Swift, Gershom Tobey, Jona. Tobey, John Tobey, Nathan Tobey, Saml. Tobey, Thos. Tobey, Thos. Tupper, sr., Danl. Wing, Ebenr. Wing, John Wing, Nathl. Wing, Shearj. Wing, Steph. Wing.
+
+In 1687 John Allen, sr., was chosen "Sealer of weights, measures, and yards" and Edward Perry "Commissioner." These elections of town officers had now become fully developed by the division of the colony into counties in 1685, and the civil rights not only of Sandwich, but other fully incorporated towns, were greatly enlarged. The towns were required to send jurors, which Sandwich did for the first time, in 1686. These additional rights, perhaps, increased the taxes temporarily, but a home government had been instituted, and each town had been endowed with more local powers. The general court also provided "that the former titles of lands be confirmed," which made permanent the titles to the lands of the older and later purchasers under the seal of the colony.
+
+One of the best evidences of the rapid growth of the town in civil affairs, is the fact that in 1742, a jury box being provided according to law, Sandwich placed therein the names of eighty-two competent men. This number, if the selection was made in accordance with the present custom, would indicate not only a well settled town, but that a large proportion of its citizens were able men. The people of this town were among the first, in 1753, to send petitions to reduce the sessions of the inferior courts from four to two each year, which was effected in 1759, after other petitions. Among other laws enacted by the town was an important one in 1759, "to prevent damage to sheep, by dogs." For keeping a blood hound, or a dog in part of that breed, a fine of 18s. was imposed for every week such dog was kept, and every hotel keeper or citizen, who entertained persons who came from other towns to hunt, was fined. In 1760 the town regulated hunting within its confines.
+
+In the excitement consequent upon the enforcement and repeal of the stamp act in 1766 by England, the people of Sandwich were first to oppose this abridgment of their civil rights. An entry December
+
+<vocab>Sandwich, Massachusetts, Barnstable County, town officers, civil rights, jury box, Stamp Act, local government, land titles</vocab>

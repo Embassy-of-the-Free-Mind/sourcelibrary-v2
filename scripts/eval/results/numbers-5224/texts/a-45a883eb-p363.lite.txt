@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>359</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Rev. G. F. Murphy</image-desc>
+REV. G. F. MURPHY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. B. Murray</image-desc>
+C. B. MURRAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. P. Murray</image-desc>
+W. P. MURRAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. A. Nally</image-desc>
+J. A. NALLY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Myers</image-desc>
+W. E. MYERS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. H. Neale</image-desc>
+H. H. NEALE
+
+<vocab>Clevelanders, Rev. G. F. Murphy, C. B. Murray, W. P. Murray, J. A. Nally, W. E. Myers, H. H. Neale</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>386</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. G. Stroud</image-desc>
+E. G. STROUD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Strong</image-desc>
+E. J. STRONG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. J. Sullivan</image-desc>
+JNO. J. SULLIVAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. L. Szepessy</image-desc>
+JOS. L. SZEPESSY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Sykora</image-desc>
+J. W. SYKORA
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. Tanney</image-desc>
+L. TANNEY
+
+<vocab>Clevelanders, E. G. Stroud, E. J. Strong, Jno. J. Sullivan, Jos. L. Szepessy, J. W. Sykora, L. Tanney</vocab>

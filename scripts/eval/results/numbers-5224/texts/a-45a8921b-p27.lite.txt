@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>13</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+being Stevens, Couch and Stevens; Episcopalian; Republican; city solicitor, 1885-6; alderman, 1894; member, house of representatives, 1887; state senator, 1901-2; trustee, city library; president, Margaret Pillsbury General Hospital; trustee, N. H. Historical Soc.; vice-president, Mechanics National Bank; president, Merrimack County Savings Bank; clerk, Northern R. R.; director, Board of Trade Building Co.; member, N. H. Bar Ass'n, American Bar Ass'n, Alpha Delta Phi Soc., Wonolancet Club, Concord, N. H., University clubs, Boston and New York; recreation, reading and gardening; m., Exeter, N. H., Oct. 27, 1880, Ellen Tuck Nelson, second dau. of William R. Nelson, b. Peekskill, N. Y. Residence, 73 Warren St., Concord, N. H.
+
+**Cook, Charles Fred**
+Educator; b., Sennett, N. Y., Jan. 24, 1866; s. Charles E. and Cyntha A. (Bowen) Cook; ed., Munro Collegiate Institute, 1886, St. Lawrence University, Canton, N. Y., 1891; principal, high school, Old Town, Me., 1891-3; sub-principal and principal, Coney high school, Augusta, Me., 1893-6; headmaster, Concord, N. H., high school since 1906; while in Maine served as president of Maine Teachers Ass'n, Maine Schoolmasters' Club, Maine Ass'n of Colleges and Secondary Schools; in New Hampshire, president, N. H. Teachers' Ass'n, N. H. Schoolmasters' Club; N. H. Classical Ass'n; Mason, lodge, chapter, council, commandery, Scottish Rite, 32d degree; member, Wonolancet Club; Unitarian; Republican; m., July 12, 1905, Charlotte Partridge. Residence, Concord, N. H.
+
+**Spaulding, William Waldemar**
+Teacher, manufacturer, banker; b., Lempster, N. H., March 10, 1846; s. William and Emma Eliza (Miner) Spaulding; ed. Green Mountain Liberal Institute, South Woodstock, Vt., 1861-2; A.B. Tufts College, 1867, A.M. 1907; for fourteen years a
+
+<column-break/>
+
+teacher, in Adams, Boston and Haverhill, Mass., in which latter city he has continued to reside; for a number of years a member of the school board and served as its chairman; he is a member of the Whittier Club, the local historical society, and for more than forty years has been a member of the Monday Evening Club, a literary association founded in 1860; is one of the senior trustees of Tufts College, serving on the finance committee;
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of an older man with a full white beard and glasses, wearing a suit and tie.</image-desc>
+
+from 1881 to 1910 he was engaged in manufacturing shoes, senior member of W. W. Spaulding & Co., Haverhill, Mass.; for several years director in the Hampton Co., a mercerizing and finishing plant located in Easthampton, Mass.; also interested in cotton manufacturing from 1892 to 1916, being a director, and for several years vice-president of the West Boylston Mfg. Co., located in the same town; he was, for many years, trustee of the Hale Hospital, of Haverhill, and for several years its treasurer; he is a director of the Citizen's Co-operative
+
+<vocab>Biography, New Hampshire, Education, Manufacturing, Banking, Concord, Haverhill, Tufts College, Wonolancet Club</vocab>

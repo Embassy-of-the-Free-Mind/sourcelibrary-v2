@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>318</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. G. Dean</image-desc>
+H. G. DEAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. H. Dawson</image-desc>
+R. H. DAWSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fred. C. Deisher</image-desc>
+FRED. C. DEISHER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. H. Deter</image-desc>
+H. H. DETER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Hermann Dercum</image-desc>
+HERMANN DERCUM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. E. Diederich</image-desc>
+J. E. DIEDERICH
+
+<vocab>H. G. Dean, R. H. Dawson, Fred. C. Deisher, H. H. Deter, Hermann Dercum, J. E. Diederich, The Book of Clevelanders, biography, portraits</vocab>

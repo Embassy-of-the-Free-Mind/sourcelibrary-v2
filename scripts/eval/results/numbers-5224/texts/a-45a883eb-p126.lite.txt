@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>122</page-num>
+<header>The Book of Clevelanders</header>
+
+HANSEN, George C.; attorney-at-law; born, Schlesni, Germany, May 30, 1868; son of Henry William and Hannah Peterson Hansen; educated, Ohio Northern University, B. A., 1895, University of Michigan, LL. B., 1898; married, Cleveland, June 29, 1904, Orra Phillips; issue, three children; asst. county prosecutor of Cuyahoga county, from 1908 to 1910; pres. Lakewood Chamber of Commerce, 1912-1913; pres. Cuyahoga County Sunday School Ass'n, 1908-1910; taught country school in Wood county in 1889-1891; supt. of Hoytville, O., schools, 1892-1894; supt. Perrysburg, Ohio, schools, 1896-1897; began practicing law in Cleveland, September, 1898; director Lakewood Bank, Crucible Steel Castings Co., and W. E. Minor Co.; Mason, Independent Order of Odd Fellows; member Lakewood Tennis Club. Recreations: Raising Fruits and Flowers.
+
+HANSEN, Rasmus; building contractor; born, Denmark, Jan. 6, 1870; educated, Technical School in Denmark; married, Cleveland, Nov. 4, 1904, Bertha A. Simmon; three children; director and vice pres. American Construction Co.
+
+HARD, Dudley Jackson; secretary; born, Wooster, O., April 4, 1872; son of Curtis V. and Adeline Jackson Hard; educated, University of Wooster, A. B., 1893; married, St. Louis, Mo., Nov. 18, 1903, Mildred J. Hopkins; two children; First Lieut. Troop A, 1906-1910; Adjutant First Squadron Ohio Cavalry 1910, First Lieut. Co. J, 8th O. V. I., War with Spain, Spanish-American War in campaign against Santiago; sec'y and treas. The Cleveland Light & Power Co.; vice pres. The Wooster Electric Co.; director Ohio Chemical Mfg. Co.; member Military Order of Foreign Wars, Society of the Army of Santiago, Chamber of Commerce, Beta Theta Pi Fraternity, Rotary, University, Union, Hermit, and Chagrin Valley Hunt Clubs. Recreations: Tennis and Golf.
+
+HARRIS, Charles; university prof.; born Albion, Ill., Nov. 19, 1859; son of George and Catherine Smith Harris; A. B., Indiana University, 1879; Ph. D., University of Leipzig, 1883; married, Mary McCalla, of Bloomington, Ind., Dec. 24, 1884; teacher in academy, Vincennes, Ind., 1883-1886; prof. French and German, Southern Illinois State Normal School, 1886-1888; prof. Oberlin College, 1888-1893, Western Reserve University, since 1893; member Modern Language Ass'n, America, Phi Beta Kappa, Phi Kappa Psi; Episcopalian. Author: German Composition, 1890; German Lessons, 1892; German Reader, 1895. Editor: Wichert's An der Majorsecke, 1895; Goethe's Poems, 1899; Lessing's Hamburgische Dramaturgie (abridged edit.), 1901. Contributor to periodicals.
+
+HARRIS, Edward L.; asst. supt. of schools, Cleveland; born, Delavin, Wis., December, 1852; son of David Franklin and Lucretia E. Rowley Harris; educated at Wayland Academy, Beaver Dam, Wis. and Syracuse University (A. B., Ph. B.); married,
+
+<vocab>George C. Hansen, Rasmus Hansen, Dudley Jackson Hard, Charles Harris, Edward L. Harris, biography, Cleveland, Ohio, 19th century, 20th century, professional directory</vocab>

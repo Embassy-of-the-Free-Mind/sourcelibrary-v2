@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>147</page-num>
+<header>INDUSTRIAL RESOURCES. 147</header>
+
+fairs, and the important society for the advancement of agriculture in its various branches, of which particulars may be found in Chapter V.
+
+The branch of this industry now receiving the most attention and from which the largest revenue is derived, is cranberry culture. To the product of this berry a vast number of bogs and lowlands have been transformed from a condition of seeming worthlessness to the most valuable land of the county. These bogs for generations have quietly rested on every farm of the Cape, there receiving the richness of the surrounding higher lands, while in themselves they were accumulations of the most fertile vegetable mould--but useless to the owner. The cranberry grew in these in a wild state, and until half a century ago the fruit was carelessly passed as of no utility. Its present appreciation by the civilized nations of both hemispheres is another attesting circumstance of the change in tastes and customs which so revolutionizes the industries of a people.
+
+Much speculation and many conflicting statements are at hand regarding the time, place, and circumstance in which this great industry had its beginning on the Cape. At North Dennis, about 1816, one Henry Hall owned a piece of low land on which wild cranberries grew. Adjoining this were beach knolls, from which, after the cutting of some small timber, the sand was blown upon the vines. This, instead of injuring the berries of which he had made some use, was found to greatly improve them as they sprang up through the lighter parts of the sand covering; and thus is believed to have originated the idea so fundamental in their successful cultivation. So little was this fruit prized, even at its best, that it was many years before any considerable use was made of this accidental discovery. In the meantime William Sears, now living, and his father Elkanah, set, at East Dennis, some vines for their own use, and others in those vicinities soon after followed the example; but no one thought of making any commercial use of the berry. Benjamin F. Bee, of Harwich, says that Isaiah Baker set a few square rods to cranberries, at West Harwich, before 1840; but this experiment, whatever its date, shared the fate of all that were made prior to 1847. In 1844 and 1845 Alvan Cahoon, then sailing a vessel from North Dennis, saw the Henry Hall vines and how they were improved by the sand covering, and in 1846 he set eight rods to berries at Pleasant lake, in Harwich; and in 1847, the now venerable Cyrus Cahoon prepared and set, at Pleasant lake, one-fourth of an acre. These dates are fully authenticated, and mark the period from which may be dated cranberry culture in Barnstable county.
+
+Several years elapsed before the business yielded anything like profit to anyone. About the time the experiments were being made at Pleasant lake, Zebina H. Small set a little plot at Grassy pond,
+
+<vocab>cranberry culture, agriculture, Barnstable county, Henry Hall, North Dennis, William Sears, Elkanah Sears, East Dennis, Benjamin F. Bee, Harwich, Isaiah Baker, West Harwich, Alvan Cahoon, Cyrus Cahoon, Pleasant lake, Zebina H. Small, Grassy pond</vocab>

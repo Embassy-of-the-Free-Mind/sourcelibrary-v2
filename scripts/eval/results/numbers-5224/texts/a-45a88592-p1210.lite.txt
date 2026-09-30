@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>944</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+moved the building to where Daniel W. Oliver lives, where he continued until 1864. John Smith in 1837 started a store near the present depot, and on the north bank near the embankment Snow & Paine started another. These were fitting-out stores in connection with the fisheries. Lewis Lombard and Solomon Paine, jr., continued these stores until the decline of the fishing business. John M. Gill had a tin and hardware store near Union wharf in 1840, and Nathan K. Whorf also kept a variety store there. Near this wharf two sail lofts and one rigger shop were run successfully for years, for it was here that vessels were built, and here were wharves for vessel and boat building other than has been mentioned in the town history of Truro. The harbor was excellent between the years 1830 and 1845, but in 1860 the sand had so choked it that the industries clustered there were discontinued. Then the business naturally moved a mile up the river, where it is continued, but not so extensively as formerly.
+
+Samuel C. Paine started a store at Longnook in 1855, and in December, 1860, moved the building and goods to his present place at the north end of the dyke, where in March, 1861, he opened his present business in drugs and medicines.
+
+About 1855 Benjamin Dyer opened a grocery store near the present post office, in which he was succeeded by Amasa Paine and Nathaniel Dyer as the firm of A. Paine & Co. In 1879 William I. Paine, son of Amasa, took the business, which he continued until 1886, when he was succeeded by J. L. Dyer, who continues business.
+
+In 1888 Daniel W. Oliver moved the school house from the place called Castle to his present place of business—the south end of the dyke. The store had been a skating rink when that craze spread over the Cape, and it made an excellent grocery and dry-good store in which he continues business.
+
+The last stores at the wharves, where the railroad embankment is, were company stores, the very latest being run by Elkanah Paine under the name of E. Paine & Co. He was succeeded in 1856 by a company composed of Nathaniel Dyer, Amasa Paine and Sears Rich, as N. Dyer & Co., which dissolved after a short time. These gentlemen, as did the company composed of Josiah Wilder and Joseph Whorf, moved up the river, and in some individual cases opened other places of business at the present center. The high embankment now overlooks the sites of these busy wharves and stores of fifty years ago, and hardly a vestige of the former industries remain. The railroad passed through in 1873, when George S. Hamilton was appointed the depot agent, which position he filled until 1885, when Isaac C. Freeman was appointed.
+
+The first postmaster of Truro was Ephraim Harding, appointed April 1, 1798. July 1, 1803, he was succeeded by Benjamin Harding,
+
+<vocab>Barnstable County, Truro, history, commerce, fisheries, postmaster, railroad, Daniel W. Oliver, John Smith, Snow & Paine, Lewis Lombard, Solomon Paine, John M. Gill, Nathan K. Whorf, Samuel C. Paine, Benjamin Dyer, Amasa Paine, Nathaniel Dyer, William I. Paine, J. L. Dyer, Elkanah Paine, Sears Rich, Josiah Wilder, Joseph Whorf, George S. Hamilton, Isaac C. Freeman, Ephraim Harding, Benjamin Harding</vocab>

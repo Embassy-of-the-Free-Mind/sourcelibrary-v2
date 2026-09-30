@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>105</page-num>
+<header>MILITARY HISTORY. 105</header>
+
+uel Sampson, Charles E. Swift, Clark Swift, Dean W. Swift, died of wounds; Francis H. Swift, William H. Swift, Willard Weeks, died at Fortress Monroe, Jan., '64; Samuel J. Wood, died at Petersburg, Aug., '64.
+
+Fifty-fourth Regiment, 1863, 1864.—*Falmouth.*—Co. B, Robert H. Hurdle, died at Morris Island, May, '64; Co. H, Alfred F. Scott, died at Beaufort, Feb., '64; Co. G, Peter Smith, trans. to Fifty-fifth. *Barnstable:* Co. D, Charles L. Ellis. *Harwich:* Co. E, William Broadwater. *Sandwich:* Co. H, George H. Clark. *Provincetown:* Joseph Crooks, trans. to Fifty-fifth. *Eastham:* Co. I, John A. Green, trans. to Fifty-fifth.
+
+Fifty-sixth Regiment, 1864.—*Yarmouth:* Co. A, Albert Moran, died of wounds received May, '64. *Provincetown:* Co. A, James G. Stone. Co. E, James Drury, died at Millen, Ga. Co. F. John Hughes, corp. Co. G, Charles Williams; Co. H, Jesse Freeman, jr., serg.; Thomas V. Mullen, corp.; Samuel G. Smith, corp.; Freeman A. Smith, mus.; Michael Bennett, Charles W. Burkett, William H. Hammond, Solomon R. Higgins, died at home, March, '64; John W. Hoben, killed Weldon R. R., Sept., '64; Robert T. Hooten, Nathan S. Hudson, Joseph King, died at Salisbury, Nov., '64; John C. Lunton, killed at Petersburg, July, '64; William McIntosh, Michael A. Parker, Samuel Pettis, Reuben W. Rich, Taylor Small, jr., died at Danville, Va., Feb., '65; John R. Smith, John E. Smith, died at Philadelphia, June, '64; William Soule, Eliphalet H. Weldon. *Eastham:* Co. C, George Broche; Co. D, Stephen T. Foster, Henry H. West. *Barnstable:* Co. D, George W. Childs, died of wounds, June, '64; William A. McLeod, John A. Nicholson, died of wounds, May, '64; Co. H, John S. Lunt; Co. I, Charles E. Miller, Emil Tellburn, killed at Petersburg, July, '64. *Wellfleet:* Co. F, Charles Schmidt. *Truro:* Co. G, John Carroll, serg.; Jacob Rock. *Dennis:* Co. G, Ansel Edmondson, corp.; William Gay, Charles Girard, John J. Mahoney, Addington Miall, Co. H, Hugh Riley; Co. I, John Artemas. *Brewster:* Co. G, John Broady. *Sandwich:* Co. K, John Murphy, died at home, March, '64. *Falmouth:* Co. H., John Davis, corp.; William Bates, to V. R. C.; Edward Harris, James Hilton.
+
+Fifty-eighth Regiment, 1864.—*Chatham:* Charles M. Upham, 2d lieut., pro. capt., killed Cold Harbor, June, '64; William H. Harley, 2d lieut., pro. capt., killed Spottsylvania, May, '64; Co. H, Horatio F. Lewis, 2d lieut.; Franklin D. Hammond, 2d lieut., killed at Petersburg, June, '64; Co. A, Nathaniel B. Smith, serg., killed at Cold Harbor, June, '64; Francis Armstrong, serg., died of wounds June, '64; Pliny F. Freeman, serg.; George W. Hamilton, serg.; Samuel Hawes, jr., serg.; Aaron W. Snow, serg.; Charles B. Bearse, John Bolton, killed at Cold Harbor, June, '64; Joshua H. Chase, Zabina Dill, died at Anderson-
+
+<vocab>American Civil War, Military History, Regimental records, Massachusetts regiments, Casualty lists</vocab>

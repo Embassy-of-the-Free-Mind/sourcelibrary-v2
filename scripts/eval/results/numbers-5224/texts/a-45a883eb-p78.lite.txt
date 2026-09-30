@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>74</page-num>
+<header>The Book of Clevelanders</header>
+
+DAVIS, Frank W.; railroad business; born, Cleveland, Jan. 1, 1857; son of H. S. Davis, mother's name, Lyman; educated Cleveland public schools; married, Cleveland, April, 1883, Katherine Wenderink; started when 15 years old working for Bingham & Williamson, hardware dealers; railroad sales mgr. for Lake Erie Iron Co., Cleveland; member Athletic Club; too busy for any recreations; outside of business spends time at home with his music.
+
+DAVIS, Edward Lockwood; hardware; born, Cleveland, Feb. 18, 1874; son John J. and Frances M. Hunt Davis; B. A. degree, Yale University; married, Bay City, Mich., Oct. 18, 1899, Flora E. Eddy; sec'y and director Davis, Hunt, Collister Co., hardware, entering company 1896, and elected sec'y on its incorporation in 1899; member Zeta Psi, Euclid and Hermit Clubs.
+
+DAVIS, Herbert Leland; physician and surgeon; born, Cleveland, Oct. 31, 1871; son of J. F. and Annie Benbow Davis; educated public and high schools and Cleveland Medical College; married, Cleveland, Dec. 10, 1901, Mammie E. Randall; one son, Randall Leland Davis, born May 29, 1903; surgeon Medical Corps, N. G.; served as capt. from February, 1902, to March, 1912; served in Spanish-American War, and Cuba; medical inspector public schools; one of the founders; entered the medical profession, April 6, 1898; member Academy of Medicine, Ohio State Medical Society, American Medical Ass'n, Cleveland Medical Library; director Central Friendly Inn, Neighborhood Settlement House, and Associate Charities; member City Club and Chamber of Commerce; member Housing Committee of Chamber.
+
+DAWLEY, Jay P.; lawyer; born, Ravenna, O., March 7, 1847; son of Perry P. and Rebecca Clemens Dawley; educated, Ravenna High School, and Western Reserve College; married, Corry, Pa., Sept. 12, 1873, Iva G. Canfield; issue, Frances C., William J., Arthur A. and Ruby S.; member of Company C, 16th Ohio Battalion Infantry; member Cleveland Board of Education and Cleveland Library Board; practiced at Cleveland Bar for forty years; director Webb C. Ball & Co., and Baldwin Hotel Co.; member Delta Upsilon Fraternity.
+
+DAWSON, Robert H.; lawyer; born, Pontiac, Mich., March 28, 1882; son of John W. and Jean Hamilton Dawson; educated, University of Michigan, A. B., 1903, and Western Reserve University, 1909, LL. B.; married, Pueblo, Colo., Sept. 14, 1910, Miss Luna Cooper; member Phi Delta Phi Fraternity. Recreations: Baseball and Foot-ball.
+
+DAY, Luther; lawyer; born, Canton, O., May 9, 1879; son of William R. and Mary E. Lebaufu Day; married, Canton, O., June 24, 1903, Ida McKinley Barber; two daughters, Katherine and Ida;
+
+<vocab>biography, Cleveland, business, law, medicine, genealogy, fraternities, clubs</vocab>

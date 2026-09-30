@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>23</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+cina de Mexico; member, Société Française d’ Hygiène de Paris; president, N. H. Medical Soc., 1903; National Ass’n for the Study and Prevention of Tuberculosis; compiled and edited: Physicians and Surgeons of America; N. H. registration reports since 1881; reports American Public Health Ass’n, 1883–97; Reports N. H. commissioners of lunacy; author of many papers on medical and sanitary subjects; m., 1872, Lena A. Farr of Littleton, N. H., who d. Jan. 30, 1901; one dau., Bertha M. Residence, Concord, N. H.
+
+**Gay, George Washington**
+Physician and surgeon; b., Swanzey, N. H., Jan. 14, 1842; s. Willard and Fanny (Wright) Gay; ed. common schools, Mt. Caesar Seminary, Swanzey, Powers Institute, Bernardstown, Mass., Harvard Medical School, M.D., 1868, A.M. Dartmouth, 1895; has practiced continuously in Boston since graduation, specializing in surgery; surgeon, Boston City Hospital, since 1872; instructor in clinical surgery, 1888–1900, Harvard Medical School, and lecturer, 1900–07; member, Mass. Medical Soc. (president, 1906–8), American Medical Soc., American Surgical Ass’n, British Medical Ass’n, St. Botolph Club, N. H. Historical Soc.; president, Suffolk Storage Warehouse Co.; trustee, Wrentham School for Feebleminded; Unitarian; m., 1st, Nov., 1868, Mary E. Hutchinson, who d. Feb., 1873; 2d, Nov., 1875, Grace Greenleaf Hawthorne. Office, 665 Boylston St., Boston, Mass.; residence, Chestnut Hill, Mass.
+
+**Allen, Carl Addison**
+Physician; b., Lempster, N. H., Oct. 27, 1847; s. Stephen and Phoebe (Lewis) Allen; ed. common schools, private academies, Kimball Union Academy, Meriden, 1871; Long Island College Hospital, M.D., 1874; commenced medical practice at Acworth, N. H., Dec., 1874, continuing till 1890 when he removed to Holyoke, Mass., where he continues; Congregationalist;
+
+<column-break/>
+
+Independent; superintendent of schools, Lempster, 1872, Acworth, 1876–86; president, Connecticut River Medical Soc., president, Hampden County Medical Soc.; president, Holyoke Medical Soc.; president, Holyoke Anti-Tuberculosis Soc.; Secretary, Holyoke chapter, American Red Cross; member, I. O. O. F.; m., 1st, Sophie E. Stearns, May 19, 1875, who d. Dec. 19, 1888; 2d, March 25, 1891, Hattie M. Murdough; children, Walter S. (Amherst, 1900),
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of George Washington Gay, showing him from the chest up, wearing a suit, vest, and tie.</image-desc>
+
+superintendent of the laboratory of the General Chemical Co., New York; Fred H. (Amherst, 1902, Harvard Medical School, 1907), in practice in Holyoke, specializing in diseases of children; Sophie E. (Mt. Holyoke, 1909), secretary to the dean of Columbia College, New York; Carl W. (Massachusetts Agricultural College, 1914), chemist in employ of the General Chemical Co., New York; Raymond P., paymaster, Farr Alpaca Co., Holyoke; Leland C. at home. Residence, Holyoke, Mass.
+
+<vocab>George Washington Gay, Carl Addison Allen, physicians, New Hampshire, biography, genealogy, medical societies, Holyoke, Massachusetts</vocab>

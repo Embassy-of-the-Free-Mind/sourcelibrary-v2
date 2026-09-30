@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>79</page-num>
+<header>MILITARY HISTORY.</header>
+
+to secure exemption from an attack, and to prevent the destruction of property. The town of Brewster, being so harassed and threatened by the enemy, paid four thousand dollars, the sum demanded. Eastham paid one thousand dollars, but the other towns positively refused to make any contributions. The people were determined to defend the towns to the last extremity. Military companies were formed in all parts of the county, and were in readiness at all times to march to any point where the enemy might attempt to land. Committees of safety were appointed in the most exposed towns, the duties of which were to watch the movements of the British cruisers in the bay and report at headquarters whenever any hostile demonstrations were made. Alarm posts were established in all the towns, and a code of signals fixed upon to give warning to the militia and "yeomanry of the land" whenever the enemy appeared in view. Sentinels were detached from the several companies to guard the shores.
+
+In view of the exposed situation of the Cape to the depredations of the enemy, frequent appeals were made to the state government for a supply of artillery and other munitions of war. Collector Green of the port of Barnstable, asked for a detachment of flying artillery and a supply of military stores, and Simeon Kingman, Esq., of Orleans, acting as an agent of the town, went to Boston bearing a proposition, the substance of which was that an artillery company would be formed if the government would furnish the necessary equipments. Both gentlemen were unsuccessful in their efforts to obtain assistance from the state, and it became very apparent that the Cape must furnish its own protection, although Governor Strong, in his speech before the state senate and house of representatives, October 14, 1812, says: "We have in this state several hundred miles of sea-coasts and more than one hundred of the towns may be approached by the enemy's ships. * * * It will be necessary that the whole militia should be armed and equipped in the best possible manner and ready to march at the shortest possible notice, and in case of invasion, that arms should be in readiness for every man who is able to bear them."
+
+Not a large number enlisted to join the army on the northern frontier from the Cape. Their services were required in protecting their own homes. During the continuance of the war the citizens of Barnstable county able to bear arms were constantly on the look-out, ready to spring to their guns whenever the alarm was given of a threatened invasion, and they might with propriety be called "minute men," so ready and determined were they to beat back the invading foe.
+
+In the spring of 1813, Lieutenant Proctor opened a recruiting office in Harwich, and a number enlisted from that and adjoining towns to join the army in the vicinity of the Lakes. On the fifth
+
+<vocab>Brewster, Eastham, military companies, committees of safety, British cruisers, alarm posts, militia, yeomanry, Cape Cod, artillery, Collector Green, Barnstable, Simeon Kingman, Orleans, Governor Strong, War of 1812, minute men, Lieutenant Proctor, Harwich</vocab>

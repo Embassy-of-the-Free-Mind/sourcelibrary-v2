@@ -1,0 +1,67 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>552</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Edgerly, John Albert | 270 | Floyd, Charles Miller | 529 |
+| Edgerly, Joseph Gardner | 265 | Folsom, Channing | 217 |
+| Edgerly, Winfield Scott | 302 | Folsom, William Odlin | 236 |
+| Elliot, John Wheelock | 440 | Foote, Arthur Lowell | 419 |
+| Ellis, Carleton | 440 | Foss, George Ernest | 270 |
+| Elwell, Rufus Newell | 7 | Foster, George J | 150 |
+| Emerson, Abraham Fitts | 431 | Foster, Herbert Darling | 430 |
+| Emerson, Benjamin Kendall | 423 | Foster, Joseph | 429 |
+| Emerson, Charles Franklin | 107 | Foster, William Albert | 282 |
+| Emerson, Charles Sumner | 15 | Foster, William Hamilton | 540 |
+| Emerson, Francis Patten | 202 | Fowler, George Winthrop | 58 |
+| Emerson, Henry A | 297 | Fowler, William Plumer | 147 |
+| Emery, Fred Parker | 143 | Freeman, Zoheth Sparrow | 414 |
+| Emery, Natt Morrill | 431 | French, Daniel Chester | 512 |
+| Emery, (William) Stanley | 257 | French, Emma Blood | 137 |
+| English, Fred Hubbard | 395 | French, Frank | 537 |
+| Ernst, Clayton Holt | 427 | French, George Barstow | 470 |
+| Erskine, James Buddington | 223 | French, Horace | 243 |
+| Estabrook, Fred Watson | 524 | French, James Edward | 181 |
+| Evans, Alfred Randall | 207 | French, Leigh Hill | 431 |
+| Evans, Ira Hobart | 442 | Frisselle, Frank Monroe | 191 |
+| Everett, Frederic Elwin | 31 | Frost, Robert | 303 |
+| | | Frost, Stephen A | 509 |
+| Fahey, John H | 61 | | |
+| Fairbanks, Arthur | 425 | Gage, Walter Boutwell | 429 |
+| Fairbanks, Charles Albert | 531 | Gale, Stephen Henry | 456 |
+| Fairbanks, George Arlington | 65 | Gallagher, Edward John | 247 |
+| Farley, Frank Edgar | 427 | Gallagher, Thomas | 429 |
+| Farmer, James Clifton | 302 | Gallinger, Jacob Harold | 15 |
+| Farmer, William Parker | 159 | Gardner, Rufus Parker | 385 |
+| Farnsworth, Kate Maria Sheldon | 186 | Gay, George Washington | 23 |
+| Farnum, Charles Henry | 212 | Gerould, Gordon Hall | 434 |
+| Farnum, Lewis Calvin | 212 | Gerould, James Thayer | 434 |
+| Farrand, George Edward | 38 | Gerould, John Hiram | 433 |
+| Fassett, James Hiram | 509 | Gerrish, Frank Lawrence | 143 |
+| Faulkner, Philip Handerson | 391 | Gibson, Harvey Dow | 348 |
+| Felch, Albert Dustin | 73 | Gile, John Martin | 66 |
+| Felker, Andrew Llewellyn | 21 | Glessner, John George Macbeth | 499 |
+| Felker, Samuel Demerritt | 157 | Goddard, Christopher Marsh | 429 |
+| Fellows, Nellie E. Newton | 290 | Goldthwaite, James Walter | 458 |
+| Fellows, William Bainbridge | 35 | Goodall, Louis Bertrand | 447 |
+| Ferguson, Frank William | 427 | Goodell, Richard Carter | 286 |
+| Fernald, Josiah Eastman | 57 | Goodrich, Nathaniel Lewis | 447 |
+| Ferry, Edwin Sidney | 423 | Gordon, George Henry | 205 |
+| Fischer, Herbert Brainerd | 375 | Goss, Winifred Lane | 226 |
+| Fisk, Daniel Moses | 426 | Gould, Alfred Josiah | 102 |
+| Fiske, Abby Gilman | 457 | Gould, Robert Truman | 471 |
+| Fiske, Amos Kidder | 426 | Gove, Aaron | 476 |
+| Flanders, James Greeley | 430 | Gove, Charles Augustus | 474 |
+| Fletcher, Lucy Nettie | 398 | Grattan, Lawrence | 325 |
+| Fletcher, Robert | 131 | Graves, Eli Edwin | 356 |
+| Flint, William Willard | 240 | Graves, Robert John | 89 |
+| Flint, William Willard, Jr | 240 | Greeley, Harry Parker | 456 |
+
+<column-break/>
+
+<vocab>New Hampshire, biography, index, notables</vocab>

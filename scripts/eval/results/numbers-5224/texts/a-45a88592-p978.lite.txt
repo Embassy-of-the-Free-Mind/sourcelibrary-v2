@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>760</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+the county road for the sparsely settled community soon formed the nuclues of the present principal village.
+
+The manufacture of salt was commenced about 1800, and was carried on many years by several enterprising citizens. At the head of the Town cove Seth Smith had works, which were subsequently sold to Gideon S. Snow. On the northerly side between them and the Eastham line, were the works of Nathaniel Nickerson and of Jonathan Young, grandfather of D. L. Young. On the southerly side, in 1808, were in full blast the plants of Asa, Elisha and Josiah Hopkins, John Doane, Joseph and Isaac Seabury, and Daniel Higgins. Along the bay between Namskaket and Rock harbor were the works of Edward Jarvis, Blossom Rogers, Joseph Hurd, James Engles, Major Henry Knowles, Joseph G. Sloane, Captain Nathaniel Knowles, Jesse Snow, Captain William Smith, Sparrow Horton, Isaac Knowles, Sears Rogers, Josiah Freeman, Isaac Hopkins, Joseph Atwood, Seth Knowles, Edward, Edmund and Abiel Crosby, and William Myrick. In 1837, fifty plants made 21,780 bushels of salt. These, after furnishing employment for a large number of men, gradually declined and but little salt was made after the middle of the century. Every inducement was given for the encouragement of the enterprise, and we find by the records that not until 1823 was a committee appointed to confer with the owners of these plants in relation to taxing them.
+
+The older taverns of the village usually had a small store connected with them. In 1800 and many years after Major Henry Knowles kept an inn near the present hotels on the county road; and near him in 1829 was the inn, store and stage office kept by Simeon Higgins, who brought the mail by stage from Yarmouth. Near these is the present hotel of W. N. Steele, established in 1882. Abel Shattuck bought of Simeon Higgins about 1852 and opened a tavern, in the house now owned by James Boland. He remained there until the erection of the Shattuck House in 1874, to which he removed. That house was kept by him until his death in 1886, and his wife and son, C. H. Shattuck, ran it until she died in 1887, when it was leased, June 23d of that year, to the present proprietor, George S. Nickerson. The livery business in connection with the house, and adjoining, was commenced by C. H. Shattuck in 1871, near his residence, where he was burned out in 1873. He then purchased a building, moved it to the present site, and refitted it for his extensive business. Another old tavern, mentioned in the town records, was that of Kezia Harding, where the officers went in 1802 to swear in and finish the town meeting.
+
+As early as 1808 Gideon S. Snow had a store on the county road nearly opposite the inn of Major Knowles, and later Barnabas Knowles had another near by. About 1828 Richard Sparrow opened a store in
+
+<vocab>Barnstable County, salt manufacture, Town Cove, Namskaket, Rock Harbor, taverns, inns, Shattuck House, stage office, local history</vocab>

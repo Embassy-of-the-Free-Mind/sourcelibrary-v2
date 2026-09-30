@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>372</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. Melvin Roberts</image-desc>
+H. MELVIN ROBERTS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. D. Rider</image-desc>
+E. D. RIDER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. J. Roby</image-desc>
+J. J. ROBY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. N. Rodway</image-desc>
+A. N. RODWAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Sam'l Rockwell</image-desc>
+SAM'L ROCKWELL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of John Roehl</image-desc>
+JOHN ROEHL
+
+<vocab>H. Melvin Roberts, E. D. Rider, J. J. Roby, A. N. Rodway, Sam'l Rockwell, John Roehl, The Book of Clevelanders, biography, portraits</vocab>

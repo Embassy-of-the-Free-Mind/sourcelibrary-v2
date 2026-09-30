@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>307</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. A. Bliss</image-desc>
+H. A. BLISS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. Blechschmid</image-desc>
+JNO. BLECHSCHMID
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Joseph Bomgardner</image-desc>
+JOSEPH BOMGARDNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. N. Bowler</image-desc>
+W. N. BOWLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. A. Bommhardt</image-desc>
+JNO. A. BOMMHARDT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. H. Boyd</image-desc>
+W. H. BOYD
+
+<vocab>H. A. Bliss, Jno. Blechschmid, Joseph Bomgardner, W. N. Bowler, Jno. A. Bommhardt, W. H. Boyd, Clevelanders, biography</vocab>

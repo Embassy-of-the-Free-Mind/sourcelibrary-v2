@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>369</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 369</header>
+
+farm; devoted much time between 1897 and 1912 to the preparation for the press of the "History of Cornish," published in the latter year, and which may be regarded as the crowning work of his life, it having commanded great commendation as one of the best town histories yet published; m., Jan. 1, 1857, Ellen F. Leighton; five children born to them, one dying in infancy and three sons and one daughter surviving. (See sketch of Edwin L. Child elsewhere in the volume.) Residence, Cornish, N. H.
+
+**Town, Francis Laban**
+Colonel, U. S. Army, retired; b., Jefferson, N. H., Jan. 11, 1836; s. Barton G. and Harriet Frances (Tifft) Towne; ed. in the schools of Lancaster, at Dartmouth College, B.S., Class of 1856, and M.D., class of 1860; in 1859 appointed school commissioner for Coös county and member of the state board of education; entered the Medical Corps, U.S. Army, May 28, 1861, as assistant surgeon, with the rank of first lieutenant; served in the Army of the Cumberland; in 1863 established the Harvey General Hospital at Madison, Wis., for the disabled soldiers of that state, and subsequently was assigned to other important duties; received the brevets of major and lieutenant colonel, March 12, 1865, for "faithful and meritorious services during the war"; after the Civil War served on the Indian frontier and with troops at various army posts; promoted captain and assistant surgeon, May 28, 1866, major and surgeon, Oct. 20, 1866; lieutenant colonel and deputy surgeon general, July 10, 1889; colonel and assistant surgeon general, June 28, 1894; retired as colonel, U. S. Army, Oct. 10, 1896, then serving as chief surgeon of the Military Department of Texas; Episcopalian; unmarried; member of the Army and Navy Clubs of Washington and New York, of the Military Order of the Loyal Legion, Order of the Indian Wars, etc. Residence, Lancaster, N. H., summers; San Antonio, Texas, winters.
+
+<column-break/>
+
+**Vaughan, Charles Woodward**
+Journalist; b., Laconia, N. H., June 30, 1862; s. Orsino A. J. and Mary Elizabeth (Parker) Vaughan; ed. public schools; Congregationalist; Democrat; member first city council of Laconia, police commissioner of Laconia two terms; trustee N. H. State Normal School; director Laconia National Bank; trustee City Savings Bank of Laconia; vice-president and director
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Charles Woodward Vaughan, shown from the chest up, wearing a suit, vest, and tie.</image-desc>
+
+Laconia Building and Loan Ass'n, director Winnepesaukee Telephone Co.; president and general manager Laconia Press Ass'n, publishing the *Laconia Democrat*, of which he is the editor; member A. F. & A. M., Knight Templar and 32d degree; Patron of Husbandry; m., Oct. 16, 1882, Florence Elliott. Residence, Laconia, N. H.
+
+**Shute, Henry Augustus**
+Lawyer; writer; b., Exeter, N. H., Nov. 17, 1856; s. George S. and Joanna (Simpkins) Shute; ed. Harvard College, A.B., 1879; studied law and admitted to the bar, 1882; Republican
+
+<vocab>Charles Woodward Vaughan, Francis Laban Town, Henry Augustus Shute, New Hampshire, biography, military, journalism, law</vocab>

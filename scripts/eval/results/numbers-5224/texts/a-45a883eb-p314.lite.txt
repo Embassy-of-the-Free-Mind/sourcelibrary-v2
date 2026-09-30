@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>310</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Thos. W. Burnham</image-desc>
+THOS. W. BURNHAM
+
+<image-desc size="small" type="portrait" significance="high">R. E. Burdick</image-desc>
+R. E. BURDICK
+
+<image-desc size="small" type="portrait" significance="high">Dr. Chas. E. Burt</image-desc>
+DR. CHAS. E. BURT
+
+<image-desc size="small" type="portrait" significance="high">F. C. Caine</image-desc>
+F. C. CAINE
+
+<image-desc size="small" type="portrait" significance="high">Starr Cadwallader</image-desc>
+STARR CADWALLADER
+
+<image-desc size="small" type="portrait" significance="high">Fred. H. Caley</image-desc>
+FRED. H. CALEY
+
+<vocab>Thos. W. Burnham, R. E. Burdick, Dr. Chas. E. Burt, F. C. Caine, Starr Cadwallader, Fred. H. Caley, Clevelanders, biography, portraits</vocab>

@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>213</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+R. I., since November, 1905; member, A. F. & A. M., Chaplain, St. Paul's Lodge, No. 14, Newport; Board of Reference, Charity Organization Soc., Newport; trustee, Natural History Soc.; visiting committee, Woman's College, Brown University; historian, R. I. Soc. Sons of the Revolution; life member, American Unitarian Ass'n and Boston Young Men's Christian Union; American Soc. for Psychical Research; Meadville Alumni Ass'n; Harvard Divinity Alumni Ass'n; Harvard Club of R. I.; author of many printed sermons and articles; collaborator, "Getting Together: Essays by Friends in Council, on the Regulative Ideas of Religious Thought"; speaker for the U. S. government under the authority of the Committee on Public Information as a "Four Minute Man"; m., June 30, 1902, Edith Adams Nichols; one son, Edward Nichols Jones, b. July 16, 1904. Residence, "The Parsonage," 29 Kay St., Newport, R. I.
+
+**Shepard, Annie Bartlett**
+(Mrs. Frederick Johnson Shepard); home-maker and club-woman; b., Nottingham, N. H., Feb. 18, 1861; dau. Thomas Bradbury and Victoria (Cilley) Bartlett, granddaughter Judge Bradbury Bartlett and Col. Joseph Cilley of Nottingham, both serving in the War of 1812 and the latter wounded at Lundy's Lane, also great-granddaughter Gen. Thomas Bartlett and Gen. Joseph Cilley, officers in the American Revolution; ed. public schools, Haverhill, Mass., and Lasell Seminary, Auburndale, Mass.; state regent, N. H. Federation of Woman's Clubs, 1915–17; director in General Federation of Woman's Clubs, 1916–18; member, Derry Woman's Club, Molly Reid Chapter, D. A. R., N. H. Soc. Colonial Dames, N. H. Historical Soc., N. E. Historic Genealogical Soc., N. H. Woman's Dept. Nat. Civic Fed., State Advisory Com. on Food Conservation (Chairman Derry District), Derry Parent-Teacher Ass'n, Derry Red
+
+<column-break/>
+
+Cross (Chairman East Derry Auxiliary) Congregationalist, anti-suffragist; m., Sept. 27, 1887, Frederick Johnson Shepard, banker, Derry, N. H.; children, (1) Frederick Johnson, Jr., b. Dec. 10, 1889, Mass. Inst. Tech., 1912; m. Jan. 27, 1915, Caroline Rothwell Clark of Boston; one child, Helen Rothwell; commissioned First Lieutenant Ordnance Dept., U. S. A., Oct., 1917; (2) Alan Bartlett, b. Sept. 5, 1891, Dartmouth College, 1913, Tuck
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Annie Bartlett Shepard</image-desc>
+
+School, 1914; commissioned First Lieutenant, Infantry Reserve at Plattsburg, Nov., 1917; (3) Henry Bradbury, b. Nov. 23, 1893, Phillips Andover, 1912, Mass. Inst. Tech., 1916; commissioned, Ensign, Naval Reserve Ordnance Dept., Oct., 1917. Residence, East Derry, N. H.
+
+**Brown, Frank Parker**
+Merchant and lumberman; b., Bow, N. H., March 24, 1847; s. Parker and Clara A. (Gault) Brown; ed. public schools, Colby Academy, New London, N. H., Concord Business College;
+
+<vocab>Annie Bartlett Shepard, Frederick Johnson Shepard, Frank Parker Brown, New Hampshire, biography, genealogy, military service, World War I</vocab>

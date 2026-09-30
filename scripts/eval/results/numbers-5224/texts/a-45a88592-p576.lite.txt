@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>468</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+In 1814, Great Britain, being freed from her continental embarrassments, sent a large fleet to the New England coast, which kept our coasting and fishing vessels within their harbors, and nearly destroyed the remaining industries of the town.
+
+Alarms were frequent, and the militia were constantly liable to be called out. On one occasion the Yarmouth company was a day and night in Barnstable, which was supposed to be threatened with an attack, and bivouacked in the court house. It was once or twice, under the same circumstances, marched to the south side, which was threatened by a visit from the invaders. Party spirit ran high, and the people of the town refused to take any other part in the hostilities than to repel invasion. Many of those who had fought and suffered in the revolutionary war, utterly refused to engage in the struggle then going on. The opposition to the war was at no time abated in this town, and the treaty of peace was a welcome relief to the people.
+
+The year 1817 witnessed a great temperance reform in the town. The evils of the intemperate and excessive use of spirituous liquors had become very great, and the drinking habits of the people were entailing much misery upon the community. Seventeen retailers were required to supply the demand on the north side of the town, to say nothing of the other portions. The formation of the Boston Society for the Prevention of Intemperance, was followed by the organization of a similar one here—said to be the second of the kind established in this country. Several persons who had been dealers in spirituous liquors joined the organization. The conditions of membership would not be considered very exacting in these days: "No member of the society, except in case of sickness, shall drink any distilled spirit or wine, in any house in town, except his own, or the one in which he resides." "No member shall offer or furnish, except in case of sickness, to any inhabitant of the town, any distilled spirit or wine, whether they be visitors or laborers, but shall use his influence to discourage the ruinous practice." The first officers of the society were: President, Elisha Doane; first vice-president, Seth Kelley; second vice-president, Joseph Hawes; secretary, Calvin Tilden; treasurer, Prince Matthews; committee, Freeman Baker, Howes Taylor, Anthony Chase, Henry Thacher, Edmund Eldridge, Ebenezer Matthews, jr., John Eldridge. This society existed many years, and was instrumental, in a very marked degree, in checking the evil aimed at. In 1826 the town voted to petition the legislature that salt works, which had heretofore been exempt, should no longer be free from taxation.
+
+The town, in 1829, raised a committee to inquire into the subject of an alms house. Another committee was appointed in 1830, and in March, 1831, it was voted to build, and the following building com-
+
+<vocab>Barnstable County, War of 1812, temperance reform, Boston Society for the Prevention of Intemperance, Elisha Doane, salt works, alms house</vocab>

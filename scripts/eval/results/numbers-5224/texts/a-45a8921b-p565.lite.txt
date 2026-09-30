@@ -1,0 +1,65 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>551</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 551</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Clark, George Langdon | 518 | Curtis, Wardon Allan | 417 |
+| Clarke, Olive Rand | 226 | Cutter, Guy Henry | 29 |
+| Clay, Charles Leonidas | 157 | | |
+| Clifford, Thomas Fellows | 367 | Daley, Daniel James | 455 |
+| Clough, Clarence Edward | 203 | Danforth, Mary Shepherd | 94 |
+| Clough, Joseph Messer | 282 | Davis, Charles Thornton | 418 |
+| Clough, William Rockwell | 317 | Davis, Nathaniel French | 418 |
+| Clow, Fred Ellsworth | 438 | Day, Arthur Kehew | 111 |
+| Cobleigh, Marshall Day | 277 | Day, Harry Brooks | 138 |
+| Coburn, Jesse Milton | 295 | Dearborn, Burt Stephen | 511 |
+| Cochran, John Milton | 306 | Dearborn, George Vann Ness | 306 |
+| Cogswell, John Ross | 542 | Dearborn, Josiah Greene | 74 |
+| Colby, Frederick Myron | 4 | Dearborn, Sam Starrett | 527 |
+| Colby, Ira Gordon | 153 | Dearborn, Sarah Frances Stevens | 101 |
+| Colby, James Fairbanks | 138 | DeMeritt, Jennie Mabelle | 87 |
+| Cole, Anna B. Taylor | 515 | DeMeritt, John | 165 |
+| Cole, John Adams | 375 | Demers, George Arthur | 310 |
+| Cole, Samuel Winkley | 371 | Demond, Fred Clarence | 271 |
+| Collins, Clarence Morton | 519 | Dewey, Henry Sweetser | 331 |
+| Colony Horatio | 467 | Dickinson, Leonard Perley | 419 |
+| Colony, John Joslin | 135 | Dillingham, Thomas Manley | 318 |
+| Conant, Charles Sumner | 543 | Dixon, Frank Haigh | 421 |
+| Conant, Ernest Bancroft | 371 | Doe, Haven | 126 |
+| Conant, John Willis | 371 | Dolloff, Amy Josephine Babb | 544 |
+| Conn, Charles Fuller | 195 | Dolloff, Charles Hall | 90 |
+| Cook, Charles Fred | 13 | Donahue, Jessie Edith Rice | 530 |
+| Cook, George | 5 | Donahue, John Joseph | 530 |
+| Copeland, Elmer Humphrey | 523 | Donovan, John Joseph | 438 |
+| Copp, Owen | 414 | Donovan, Michael Henry | 54 |
+| Corey, Francis A. | 303 | Douglas, Orlando Benajah | 85 |
+| Corning, Charles Robert | 7 | Dow, George Francis | 434 |
+| Cottle, Marion Weston | 344 | Doyen, Charles Augustus | 285 |
+| Couch, Benjamin Warren | 6 | Doyle, Jeremiah Joseph | 523 |
+| Cox, Channing Harris | 521 | Drake, George Robert | 326 |
+| Cox, Guy Wilbur | 445 | Drake, James Frank | 94 |
+| Cox, Louis Sherburne | 522 | Drake, Nathaniel Seavey | 279 |
+| Crafts, Albert Barnard | 426 | Drew, Irving Webster | 149 |
+| Cram, Ralph Adams | 411 | Drury, Samuel Smith | 240 |
+| Cram, William Everett | 419 | Dudley, Albertus True | 439 |
+| Cressy, Frank | 78 | Dudley, Harry Hubbard | 305 |
+| Cressy, Will Martin | 297 | Duffy, George Ernest | 329 |
+| Crocker, Herbert Samuel | 415 | Duncan, Charles | 98 |
+| Crosby, Eva May (Emery) | 299 | Duncan, George Henry | 435 |
+| Cross, Allen Eastman | 373 | Dunlap, Roger Allen | 258 |
+| Cross, Alvin Benton | 373 | Durrell, Jesse Murton | 433 |
+| Crossfield, Frederic S. | 527 | Dutton, Samuel Train | 107 |
+| Crowley, James Benedict | 498 | | |
+| Cummings, Allen Curtis | 186 | Eames, George Herbert, Jr. | 381 |
+| Cummings, Edward | 417 | Eastman, Clarence Willis | 158 |
+| Cummings, Milon David | 409 | Eastman, Samuel Coffin | 37 |
+| Currier, Charles Francis Adams | 419 | Edes, Samuel Harcourt | 30 |
+| Currier, Clinton Harvey | 531 | Edgerly, James Bartlett | 287 |
+| Currier, Frank Dunklee | 154 | | |
+
+<vocab>New Hampshire, biography, index, notables</vocab>

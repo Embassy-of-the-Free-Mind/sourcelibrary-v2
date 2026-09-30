@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>135</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+establishment of the office, in 1917; for several years curator of the Holderness School, of which his father has long been rector; also for some time
+
+<image-desc size="large" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+a director of Camp Wachusett, a summer camp for boys at Squam Lake; member, Derryfield Club, Manchester, Wonolancet, Concord. Residence, Holderness, N. H., Plymouth, P. O.
+
+**Bartlett, Edwin Julius**
+Educator; b., Hudson, O., Feb. 16, 1851; s. Samuel Colcord and Mary Bacon (Learned) Bartlett; ed. Chicago public schools, Lake Forest Academy, 1868, Dartmouth College, 1872, Rush Medical College, 1879; associate professor of Chemistry, Dartmouth College, 1879-83, professor since 1883; Congregationalist; Republican; moderator, town of Hanover, 1906-12; member, N. H. house of representatives, 1913; president trustees, Mary Hitchcock Memorial Hospital, Hanover; Fellow, American Ass'n for Advancement of Science; honorary member, N. H. Medical Soc.; member,
+
+<column-break/>
+
+American Chemical Soc., N. H. Historical Soc., Psi Upsilon, Alpha Kappa Kappa, Delta Omicron Gamma College organizations, Graduate Club, Hanover, Ouroboros Club; m., July 9, 1879, Caroline Elizabeth Rice, Milwaukee, Wis. Residence, Hanover, N. H.
+
+**Colony, John Joslin**
+Woolen manufacturer; b., Keene, N. H., Nov. 14, 1864; s. Horatio and Emeline E. (Joslin) Colony; ed. Keene schools and Harvard University, A.B., 1885; Unitarian; Democrat; member, Keene city council, school committee, N. H. house of representatives from Ward 5, Keene, 1893; delegate from N. H., Democratic national convention, 1908; treasurer, Cheshire Mills, Harrisville, N. H.; director, Ashuelot Nationa Bank, Keene, Winchester Nationa Bank, Winchester, N. H; Mason Knight Templar, Patron of Husbandry;
+
+<image-desc size="large" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+m., Oct. 16, 1907, Charlotte Whitcomb children, Emeline J., b. Nov. 25, 1908 John J., Jr., June 11, 1915. Residence Keene, N. H.
+
+<vocab>Edwin Julius Bartlett, John Joslin Colony, New Hampshire, biography, genealogy, Dartmouth College, Keene, Hanover, Holderness School</vocab>

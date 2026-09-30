@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>106</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Hatch, Albert Ruyter**
+Lawyer; b., Portsmouth, N. H., Aug. 10, 1882; s. John and Alice Spencer (Benton) Hatch; ed. Portsmouth High School, 1900, Dartmouth College, A.B., 1904; Harvard Law
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Albert Ruyter Hatch</image-desc>
+
+School, LL.B., 1907; admitted to the bar June 27, 1907; commenced practice with John W. Kelley, and remained with him, under firm names of Kelley, Harding & Hatch and Kelley & Hatch until his death in 1912, since when he has practiced himself under the firm name of Kelley & Hatch; Episcopalian, member and vestryman, St. John's Episcopal church, Portsmouth; Republican; solicitor for Rockingham County, 1915–17; chairman, Greenland Republican town committee, 1912–; member, St. John's Lodge, A. F. & A. M., B. P. O. E., K. of P., Warwick Club, Portsmouth Athletic Club, Portsmouth Country Club, treasurer and director, Emery Rubber Heel Co.; director, Southern N. H. Agricultural Ass'n; m. Rosalie F. Littlefield, Jan. 10, 1905; children, Harris and Francis March Hatch, 2d. Office, 45 Pleasant St., Portsmouth; home, Greenland, N. H.
+
+<column-break/>
+
+**Willis, Eben Marston**
+Manufacturer; b., Claremont, N. H., May 11, 1871; s. Algernon and Susan L. (Marston) Willis; ed. Concord public schools, high school class of 1889; entered employ of Page Belting Co., of Concord immediately after graduation and has been connected therewith ever since in one capacity or another, having been treasurer and general manager since 1914; Universalist (grandson of Rev. Lemuel Willis, a prominent Universalist clergyman seventy-five years ago); Republican; member, Concord common council, 1897–8, board of aldermen, 1899–1900, 1901–2; member, N. H. house of rep-
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Eben Marston Willis</image-desc>
+
+resentatives, 1903–4, 1905–6; director, Page Belting Co., Mechanicks National Bank, Capital Fire Insurance Co.; trustee, Merrimack Co. Savings Bank; vice-president and director, Northern Securities Co.; Mason, 32d
+
+<vocab>Albert Ruyter Hatch, Eben Marston Willis, New Hampshire, biography, Portsmouth, Concord, Greenland, Claremont, Page Belting Co., Republican, Universalist, Episcopalian, Freemasonry</vocab>

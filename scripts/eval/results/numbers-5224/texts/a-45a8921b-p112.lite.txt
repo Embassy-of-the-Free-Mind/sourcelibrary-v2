@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>98</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+of New Hampshire; director, N. H. Children’s Aid and Protective Soc.; member, N. H. Daughters of Boston; Congregationalist. Residence, Nashua, N. H.
+
+**Robie, Edward**
+Clergyman; b. Gorham, Me., April 5, 1821; s. Dea. Thomas S. and Clarissa (Adams) Robie; ed. Gorham Academy, 1836, Bowdoin College, 1840, Andover Theological Seminary, 1843, Univer-
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of an elderly man with a long white beard, wearing a dark coat and a white shirt with a bowtie.</image-desc>
+
+sity of Halle, Germany (two years); teacher of languages, Gorham Academy, 1846–8; assistant professor of Hebrew, Andover Theological Seminary, 1848–51; pastor, Congregational church, Greenland, N. H., 1851–1917. He was ordained and installed, Feb. 25, 1852, but had supplied the pulpit from September previous. His pastorate surpasses in length that of any other pastor of his time, and is exceeded by only two in the history of the State—those of Rev. Laban Ainsworth of Jaffrey which continued seventy-five years and five months,
+
+<column-break/>
+
+and Rev. Joseph Adams of Newington, sixty-seven years and seven months. He received the degree of D.D. from Dartmouth College in 1876, and from Bowdoin in 1893. In 1893, when over seventy years of age, he took a special course at Harvard in order to master certain subjects with which he proposed to deal in his sermons. During his remarkable pastorate in this little country town he has officiated at about two hundred marriages and six hundred funerals; m., Dec. 28, 1852, Susan P., dau. of Thomas and Elizabeth (Lord) Jameson, of Effingham, N. H., d. June 12, 1878. Residence, Greenland, N. H.
+
+**Duncan, Charles**
+Physician, bacteriologist; b., Chelsea, Mass., March 18, 1872; s. James and Margaret (Patterson) Duncan; ed. Chelsea high school, Dartmouth College, 1898, Harvard Medical School, 1903; appointed bacteriologist, N. H. State Board of Health in 1903 and has since continued; bacteriologist and pathologist, N. H. State Hospital, Margaret Pillsbury General Hospital and N. H. Memorial Hospital for Women and Children; Congregationalist; Republican; member, Concord board of education, 1915–; ward supervisor, 1917–; member, Center District and Merrimack County Medical Soc. (secretary, 1913–); N. H. Medical Soc., American Medical Ass’n; Theta Delta Chi and Casque and Gauntlet college societies; Wonolancet Club; m., June 28, 1905, Charlotte Ilsley, Chelsea (A.B. Radcliffe, 1900); children, Lawrence Ilsley, b. Oct. 5, 1906; Eleanor, b. Nov. 8, 1908; Margaret, b. Feb. 27, 1913. Residence, Concord, N. H.
+
+**Baker, Dana Wingate**
+Insurance and real estate; b., Portsmouth, N. H., Aug. 1, 1861; s. Samuel and Caroline (Wingate) Baker, great-grandson of Paine Wingate, of the Continental Congress and colleague of John Langdon in the first U. S. Senate; ed. Exeter public schools and Phillips Exe-
+
+<vocab>biography, New Hampshire, clergy, medicine, genealogy, education, public service</vocab>

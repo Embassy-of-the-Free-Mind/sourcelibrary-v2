@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+ling house with a chamber floored with boards, with a chimney and an oven therein.”
+
+A deed or receipt, probably written by Anthony Thacher, for lands in Yarmouth, will acquaint the reader with the form used when other claimants might appear: “Witnesseth these presents, that I, Masshantampaigne, Sagamore, doth acknowledge that I have received and had of Anthony Thacher, John Crow, and Thomas Howes, all and every particular thing and things that I was to have for all and every part and parcel of lands: * * * which said lands I sold to Mr. William Bradford. I say I acknowledge myself fully satisfied and paid * * and I do forever acquit the said Thatcher, Crow, and Howes. In witness whereof, etc., May 8, 1657.” To this the sachem named made his mark in presence of witnesses, who also signed the deed as such; and one or more of these witnesses certified in 1674, before an officer, that the sachem “set his hand to it” and “he heard him own it.” In similar form and import were deeds or receipts given by Iyanough and sachems of the South sea Indians. In 1640 a grant for the settlement of Nauset, and subsequently one for Monomoyick, were obtained from the Plymouth court. Deeds were obtained from the sachems Quason, Mattaquason and George, and the towns of Eastham, Orleans, Wellfleet and Chatham were subsequently organized. Falmouth and Harwich still later were purchased in the same manner. In 1660 a tract of 10,500 acres was granted for the exclusive use of the Massipees, and the following year a large tract was granted to Richard Bourne at the west of the Massipee lands. The court gave grants for many smaller portions of land during the growth of the towns on the Cape, and in 1655, by order of the court, every town was required to purchase a book in which all titles of land should be recorded. These were called “proprietors’ records,” and were were very essential prior to the formation of the county and establishment of an office for the registry of deeds.
+
+The usurpations of power by Andros in 1686, his declaration that “Indian deeds were no better than the scratch of a bear’s paw,” and his summons for the surrender of charters, occasioned alarm to the colonists of the Cape, as well as the main land. In 1690 the Rev. Ichabod Wiswall and others from this colony went to England to obtain a restoration of the old or solicit a new charter. The restoration of the old was refused and a new one promised. The towns of Barnstable county paid their proportion of the expenses to obtain a new charter.
+
+The charter of October 7, 1691, granted by William and Mary, united the colonies of the Massachusetts Bay, the province of Maine, Acadia, and New Plymouth, including the Cape, into one province, called the Province of the Massachusetts Bay in New England. Four
+
+<vocab>Barnstable County, Anthony Thacher, Masshantampaigne, Sagamore, William Bradford, Iyanough, Nauset, Monomoyick, Plymouth Court, Quason, Mattaquason, Eastham, Orleans, Wellfleet, Chatham, Falmouth, Harwich, Massipees, Richard Bourne, proprietors' records, Andros, Ichabod Wiswall, William and Mary, Massachusetts Bay, Maine, Acadia, New Plymouth</vocab>

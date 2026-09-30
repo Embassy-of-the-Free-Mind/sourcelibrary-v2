@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>387</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Alex S. Taylor</image-desc>
+ALEX S. TAYLOR
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jas. J. Tanyan</image-desc>
+JAS. J. TANYAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank F. Taylor</image-desc>
+FRANK F. TAYLOR
+
+<image-desc size="small" type="portrait" significance="high">Portrait of William W. Taylor</image-desc>
+WILLIAM W. TAYLOR
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank S. Taylor</image-desc>
+FRANK S. TAYLOR
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. R. Teachout</image-desc>
+A. R. TEACHOUT
+
+<vocab>Alex S. Taylor, Jas. J. Tanyan, Frank F. Taylor, William W. Taylor, Frank S. Taylor, A. R. Teachout, The Book of Clevelanders</vocab>

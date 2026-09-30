@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>31</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 31</header>
+
+**Everett, Frederic Elwin**
+Civil engineer: b., New London, N. H., April 16, 1876; s. Benjamin G. and Sarah E. (Johnson) Everett; ed. 
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Frederic Elwin Everett</image-desc>
+
+Colby Academy, New London, class of 1896; three years in Massachusetts Institute of Technology; engineer, park department, Cambridge, Mass., 1900–6; division engineer, N. H. highway department, 1906–14; N. H. Commissioner of Highways since 1915; Episcopalian; Republican; Mason, Knight Templar, member, Wonolancet Club, Patron of Husbandry; m., Sept. 12, 1900, Gertrude E. Lamson; children, Douglas Newton, Barbara, Miriam. Residence, Concord, N. H.
+
+**Halloran, James Ambrose**
+Lawyer; b., Concord, N. H., Oct. 11, 1870; s. Dennis and Mary (O'Brien) Halloran; ed. Concord public schools and by private tutors; studied law in the office of the late Judge John M. Mitchell of Concord; graduated, LL.B., 
+
+<column-break/>
+
+from the Harvard Law School in 1897 and admitted to the Massachusetts bar; associated in practice with Hon. Geo. Fred Williams, ex-minister to Greece, whose partner he was for many years, prior to 1910 under firm name of Williams & Halloran; member, bar of U. S. Supreme court; counsel for Town of Norwood, Mass., since 1907, and incumbent of various other town offices; experienced in corporation matters; associate justice, Northern Norfolk District court; director, Norwood National Bank, Norwood, and Prudential Trust Co., Boston, Mass.; (trustee, Norwood Civic Ass'n; member, Norfolk County Bar Ass'n, Massachusetts Bar Ass'n, American Bar Ass'n, Massachusetts State Board of Trade (vice-president eleven years), Norwood board of trade (president, 1903–5), Boston Athletic Ass'n, Har-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of James Ambrose Halloran</image-desc>
+
+vard and Economic clubs; Catholic; Independent Democrat; unmarried. Residence, Norwood, Mass.; office, 15 State St., Boston.
+
+<vocab>Frederic Elwin Everett, James Ambrose Halloran, New Hampshire, biography, law, civil engineering, Norwood Massachusetts, Concord New Hampshire</vocab>

@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>481</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 481</header>
+
+**Prescott, Charles Henry**
+Editor; banker; b., Barnstead, N. H., Aug. 3, 1857; s. James Lewis and Harriet Morrill (Tripp) Prescott; ed. Berwick (Me.) Academy; Boston Univ.; studied law and admitted to the Maine bar, 1880; founder and sole proprietor Biddeford (Me.) Daily Journal, 1884–; republican; member house of representatives, 1883–4; senate, 1895–6; member governor's staff, 1893–7; executive council, 1901–6; treasurer York County, Me., 1887–90; delegate at large Republican National Convention, 1888; president York County Savings Bank, First National Bank, Biddeford; director North Berwick Mfg. Co., Union Mutual Life Ins. Co., Portland; m., Jan. 17, 1882, Ellen S. Hobbs, No. Berwick, Me. Residence, Saco, Me.
+
+**Porter, John Lincoln**
+Surgeon; b., Alstead, N. H., June 2, 1864; s. Samuel H. and Harriet (Emerson) Porter; ed. public schools; Northwestern Univ., M.D. 1894; interne, St. Luke's Hospital, Chicago, 1894–5; professor orthopedic surgery, Univ. of Illinois Med. School, 1900–17; same in Northwestern Univ. Med. School, since 1917; attending orthopedic surgeon, St. Luke's Hospital; appointed member advisory board on orthopedics, U. S. A., Aug., 1917; member American Med. Ass'n, American Orthopedic Ass'n (president, 1918–19, Illinois State Med. Soc.); Republican; member University, Quadrangle and Flossmoor Country clubs; m., Feb. 9, 1899, Ethel Quigg. Residence, 5116 Kenwood Ave., Chicago.
+
+**Lord, Harry True**
+Lawyer; b., Manchester, N. H., May 7, 1863; s. Harrison Dearborn and Juliette (True) Lord; ed. Manchester public schools (high school 1882); Dartmouth College, A.B. 1887; studied law with Hon. David A. Taggart and admitted to the N. H. bar in 1894, since when he has been in practice in Manchester; Episcopalian; Republican; president Manchester Com-
+
+<column-break/>
+
+mon Council, 1899–1902; member N. H. constitutional convention, 1902; N. H. house of representatives, 1905–6, 1907–8; N. H. Senate (president), 1909–1910; executive council, 1911–12; member local Draft Board, Div. No. 1, city of Manchester, 1917–19; member A. F. & A. M., Knight Templar and Shriner; I. O. R. M.; N. H. Soc., Sons of the American Revolution (vice-president); Manchester Historical Soc. (treasurer); Calumet Club, Manchester (secretary, 1893–1914); m., 1st, Sept. 29, 1897, Flora I. Cooper, Manchester, d.; m., 2d, Oct. 16, 1912, Florence M. Stanley; one daughter, Elizabeth, b. July 13, 1899, now in school of Museum of Fine Arts, Boston. Residence, Manchester, N. H.
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and bowtie.</image-desc>
+
+**Lund, Fred Bates**
+Surgeon; b., Concord, N. H., Jan. 4, 1865; s. Charles C. and Lydia (French) Lund; ed. public schools, Phillips Andover Academy; Harvard College, A.B. 1888 (summa cum laude, Phi Beta Kappa); A.M. 1892; M.D., Harvard
+
+<vocab>Charles Henry Prescott, John Lincoln Porter, Harry True Lord, Fred Bates Lund, New Hampshire, biography, medicine, law, politics, genealogy</vocab>

@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+# CHAPTER VII.
+
+### MILITARY HISTORY (Concluded).
+
+The Civil War.—The Election of Lincoln and the Fall of Sumter.—The first Call for Three-Months' Men.—Response from the Cape Towns.—War Meetings.—Subsequent Calls.—Bounties.—Enlistments.—Return of the Volunteers.—G. A. R. Posts.—Monuments.
+
+---
+
+THE news of the bombardment of Fort Sumter, in April, 1861, greatly affected and changed the feelings of the political parties of the Cape; and when the surrender of the fort by Major Anderson, on the 13th, was announced, the feeling was almost unanimous in favor of crushing the rebellion, the method remaining the only party question. Of the citizens of the Cape large numbers were engaged in various pursuits on the sea; but those at home recognized the issue as inevitable and were at once determined in their action.
+
+On the morning of Monday, April 15th, appeared the proclamation of Abraham Lincoln, calling for seventy-five thousand men for three months, to suppress the rebellion. Its effect was like an electric spark in quickening the resolution and action of the men of this county. The president's estimate was short of the necessities of the movement, as the history of the war abundantly proved; but to his calm and judicious patriotism a grateful nation has erected enduring monuments of granite, and engraved his deeds upon lasting pages of history.
+
+The first official act of this Commonwealth relating to the war was the recommendation by Governor Andrew, in January, 1861, that the adjutant general ascertain with accuracy the number of officers and men of the volunteer militia of the state who would instantly respond to any call of the president of the United States for troops. January 23, 1861, the legislature passed a resolution tendering to the president the aid of the Commonwealth in enforcing the laws; and February 15th an act was approved providing for the retention in service of all militia organizations then existing, and for the formation, "as the public exigency may require," of other companies by the municipal officers of cities and the selectmen of towns. On April 3, 1861, the first appropriation made by the legislature for war purposes was a sum of twenty-five thousand dollars to equip two thousand soldiers for active service. In May of that year the legislature, before its adjournment,
+
+<vocab>Civil War, Fort Sumter, Major Anderson, Abraham Lincoln, Governor Andrew, Commonwealth, militia, legislature, war appropriation</vocab>

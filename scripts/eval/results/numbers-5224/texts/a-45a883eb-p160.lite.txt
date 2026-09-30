@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>156</page-num>
+<header>The Book of Clevelanders</header>
+
+"History of The Cleveland Police Department," "The Kentucky Horse," etc.; was editor of The Ohio Architect and Builder, and for several years has devoted all his time and attention to the "Factory" end of real estate; proprietor "The Factory Man"; member Business Men's Club.
+
+KNOX, William; architect; born, Glasgow, Scotland, Jan. 20, 1858; son of Thomas and Margaret Neilson Knox; studied in the Free Church Seminary, in Glasgow, special course in architecture in Glasgow and Edinburgh; married, Painesville, O., June 21, 1891, Miss Agnes Julia Child; issue, three children, Carlos C., Beulah G., and M. Neilson; business career, successor to Mr. Aitken, in the firm of Moffett & Aitken, in Edinburgh; in 1886, left Scotland to travel; applied for and secured position with Burnham & Root, architects, of Chicago, Ill.; later office mgr. for Henry Ives Cobb, eminent architect; came to Cleveland in 1893; after a few months, formed partnership with J. H. Elliott, under firm name of Knox & Elliott; have been the architects for many fine buildings throughout the country and in the city, the Rockefeller Bldg., Trinity Congregational Church, building for the Brotherhood of Locomotive Engineers, Elks' Bldg., as well as numerous factories and beautiful residences; member American Ass'n for the Advancement of Science, Chamber of Commerce, Euclid, and Rowfant Clubs; interested in scientific research; has the finest collection of seaweeds in the country; authority on the subject of mushrooms.
+
+KOBLITZ, Rudolph C.; merchant; born, Austria, May 15, 1863; son of Moses and Julis Miller Koblitz; educated in Tabor, Austria, and Cleveland public schools; married, Cleveland, Jan. 16, 1888, Tillie B. Smitz; one son, born Oct. 21, 1888, after attending school for three months, the English language was so hard to master in proportion to his advancement, that he became discouraged, and left school to learn cigarmaking, when 14 years old, he started in business for himself, and later broadened out into other lines; vice pres. The Koblitz-Kohn Co., real estate holdings; treas. The Euclid-Prospect Investment Co.; receiver The Sanitary Co.; director Jewish Infants' Home. Fond of Motoring.
+
+KOCH, George D.; furniture business; born, Wurtenberg, Germany, Dec. 23, 1850; brought to the United States at the age of three and one-half years; studied in Cleveland public schools until 13 years of age; married, Cleveland, Dec. 1, 1875, Bertha Berno; issue, George B., Charles C., Math and Estelle; learned finishing and polishing in the furniture store of J. Vincent; in 1872, when 21 years old, formed partnership with Mr. M. Fleming, under the name of Fleming & Koch, cor. Penn. and Lorain Aves.; in 1873, opened branch store on Detroit St., under the management of Wm. Toni, who entered as partner; firm name changed to Fleming, Koch & Co.; in 1875, firm was dissolved, and he bought the interest of Mr. Puls, with Mr. Franz Henke, and the
+
+<vocab>William Knox, Rudolph C. Koblitz, George D. Koch, Cleveland, biography, architecture, merchant, furniture business, business history</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>364</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Parrish</image-desc>
+E. J. PARRISH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. C. Parrett</image-desc>
+P. C. PARRETT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. A. Parsons</image-desc>
+C. A. PARSONS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. L. Patchin</image-desc>
+E. L. PATCHIN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harry A. Parsons</image-desc>
+HARRY A. PARSONS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Patterson</image-desc>
+W. E. PATTERSON
+
+<vocab>E. J. Parrish, P. C. Parrett, C. A. Parsons, E. L. Patchin, Harry A. Parsons, W. E. Patterson, The Book of Clevelanders</vocab>

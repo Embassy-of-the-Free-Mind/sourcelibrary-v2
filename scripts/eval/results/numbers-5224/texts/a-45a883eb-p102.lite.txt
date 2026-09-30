@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>98</page-num>
+<header>The Book of Clevelanders</header>
+
+and a life position at better than $100 per month; Mr. Folsom has never fixed any fee or written me as much as a line of thanks; I have been a student all my life; have contributed articles to the press and have several volumes of writings, nearly ready for the publisher; was an early member and officer of the Y. M. C. A.; started the mission from which developed the Park St. Congregational Church.
+
+**FOWLER, Harold North**; university prof.; born, Westfield, Mass., Feb. 25, 1859; son of Samuel and Maria Jones Fowler; A. B., Harvard, 1880; studied American School Classical Studies, Athens, 1882-1883, Universities Bonn and Berlin, 1883-1885; Ph. D., Bonn, 1885; married, Helen, daughter of ex-Gov. Charles H. Bell, of Exeter, N. H., Dec. 23, 1890; instr. Harvard, 1885-1888; prof. Phillips Exeter Academy, 1888-1892; prof. Greek, University of Texas, 1892-1893; College for Women, Western Reserve University, since 1893; prof. Greek language and literature, American School Classical Studies, Athens, 1903-1904; editor-in-chief American Journal of Archaeology since 1906; corr. mem. Kaiserlich Duetsches Archaol. Institut. Editor: Thucydides, Book V., 1888; Plautus, Menaechmi, 1889; Quintus Curtius, Books III and IV, 1890; Allen and Greenough's Ovid, 1891. Joint Author: Tuell and Fowler's First Book in Latin, 1893; Tuell and Fowler's Beginner's Book in Latin, 1900; Fowler and Wheeler's Handbook of Greek Archaeology, 1909. Author: History of Ancient Greek Literature, 1902; History of Roman Literature, 1903. Contbr. classical subjects to revs. and mags.
+
+**FOX, Ernest C.**; manufacturer; born, Cleveland, April 4, 1870; son of Frank B. and Julia Brown Fox; educated, Cleveland parochial schools; married, Cleveland, Feb. 11, 1897, Ella Mabley; two daughters, Margaret 15, and Katherine, 14; business career, mailing clerk, Fuller & Warren Co.; asst. mngr. The Richmond Stove Co., sec'y and treas. F. B. Fox, Register Mnfg. Co.; organized and was sec'y and treas. The Fox Furnace Co.; organized and was sec'y and treas. The Union Selling Co.; owner The Independent Register & Mnfg. Co.; sec'y The Scheible Monceief Heater Co.; member Congregational Church, Athletic and Rotary Clubs. Recreations: Baseball and Motoring.
+
+**FRACKLETON, Robert James**; manufacturer; born, Chandlerville, Ill., 1868; educated, Illinois College, Jacksonville, B. S.; married, New York City, 1907, Constance Louise Chandler; engaged in banking for six years and manufacturing for eighteen years; pres. The Chandler & Price C.; director Frackleton State Bank; director The Reliance Gauge Column Co.; director The Cleveland Folding Machine Co.; member the Union, University, and East End Tennis Clubs.
+
+<vocab>Harold North Fowler, Ernest C. Fox, Robert James Frackleton, biography, Cleveland, manufacturing, education, bibliography</vocab>

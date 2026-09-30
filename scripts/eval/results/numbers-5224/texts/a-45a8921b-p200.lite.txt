@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>186</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Cummings, Allen Curtis.**
+Educator; b., Nov. 30, 1868, North Thetford, Vt.; s. Harlan P. and Alpa M. (Baxter) Cummings; ed. Thetford, Vt., Academy and Dartmouth College, A. B., 1892 (commencement oration and honorable mention in political science); A.M., Dartmouth, 1895; has attended several sessions Harvard Summer school. Principal high school, Littleton, Mass., 1892–5; Ayer, Mass., 1895–8; instructor, St. Johnsbury, Vt., Academy, 1898–
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with glasses, wearing a suit and tie.</image-desc>
+
+1901; principal, Orange, Mass., high school, 1904–12; head-master, Stevens High School, Claremont, N. H., since 1912; Conrgegationalist; Republican; secretary-treasurer, N. H. School-masters Club; member, New England History Teachers Ass'n; Phi Beta Kappa and K. K. K. societies, Dartmouth; A. F. & A. M., and Eastern Star; unmarried. Residence, Claremont, N. H.
+
+**Hill, Howard Fremont**
+Journalist; clergyman; b., Concord, N. H., July 21, 1846; s. John M. and Elisabeth Lord (Chase) Hill; grandson
+
+<column-break/>
+
+of Gov. Isaac Hill; descendant of Hannah Eames, killed by the Indians in the Framingham, Mass., Massacre, 1676; ed. Concord High School, 1863, Norwich (Vt.) Univ., 1863–5; Dartmouth College, A.B., 1867, A.M., 1870; Episcopal Theological Seminary, Cambridge, Mass., B.D., 1879; A.M., Trinity, 1885, Bishops' College, 1888, University of Vermont, 1911; Ph.D., Dartmouth, 1887 (on examination for work); D.D., Norwich University, 1891; Episcopalian; Democrat; member, Concord common council, 1907–8; board of aldermen, 1909–10; member, N. H. house of representatives, 1895–7; N. H. constitutional convention, 1912; chaplain, Vermont legislature, 1882; chaplain, Vermont National Guard, thirteen years; trustee, University of Vermont, 1886–9; trustee, Norwich University, 1895–1915; member, editorial board, Concord History Committee; editor, *N. H. Patriot*, 1868–73; ordained deacon, P. E. church, 1875, priest, 1877; rector, P. E. church, Ashland and Holderness, 1875–9; Montpelier, Vt., 1879–89; Amesbury, Mass., 1889–91; Pittsfield, N. H., 1895–1905; chief examining chaplain, P. E. Diocese of New Hampshire; held same office in Vermont; editor, *Church Fly-Leaf* since 1897; member, A. F. & A. M., 33d degree, Grand Cross of Constantine, Royal Order of Scotland; ex-president and present secretary-treasurer, N. H. Soc. S. A. R.; member, Soc. Colonial Wars; m., Oct. 17, 1870, Laura L. Tibbetts, Concord; children, John M., b. Oct. 30, 1871, d. Dec. 4, 1872; Maria D. (Mrs. Archibald Campbell), b. Dec. 11, 1873, d. June 2, 1908; Grace W. (Mrs. Zoheth S. Freeman, New York), b. June 21, 1876. Residence, Concord, N. H.
+
+**Farnsworth, Kate Maria Sheldon**
+(Mrs. James Farnsworth); club woman; b., Ashley, Mass., June 4, 1861; dau. Joel and Abby S. (Underwood) Sheldon; ed. private teacher; for twenty years, 1896–1912, cashier and bookkeeper for the Holbrook-Marshall Co., Nashua, N. H.; 1896–
+
+<vocab>Allen Curtis Cummings, Howard Fremont Hill, Kate Maria Sheldon Farnsworth, Biography, New Hampshire, Genealogy, Education, Clergy, Journalism</vocab>

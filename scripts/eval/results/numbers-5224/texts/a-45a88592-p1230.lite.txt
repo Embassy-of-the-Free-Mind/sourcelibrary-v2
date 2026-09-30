@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>962</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+shows that Ezekiel Cushing, son of Rev. Jeremiah and Hannah Cushing, was born here April 28, 1698. Rev. Mr. Cushing was a graduate of Harvard College in the class of 1676, and was the first resident preacher at Cape Cod.
+
+The first public act with reference to the establishing of a municipal government at Cape Cod was passed in 1714. Previous to that year the "Province Lands" seem to have been regarded as a part of Truro for municipal purposes. The population of Cape Cod at that date cannot now be ascertained. A very interesting letter published in Freeman's *Cape Cod* affords, however, the data for a belief that in 1705 one hundred and thirty men were at Cape Cod, though very likely many of them were temporary residents, pursuing the fisheries during the summer season. This letter, a quaint and unique document addressed to the Hon. Paul Dudley of Boston, is not only valuable historically, but is also extremely ludicrous in itself:
+
+->“Cap Cod, July 13th, 1705.<-
+
+“Squier Dudly.
+Sir:—after all due sarvis and Respecks to your Honnor wishing you all hapynes boath hear and hearafter I mack bould to inform your honnor that i have liveed hear at the Cap this 4 year and I have very often every year sien that her maiesty has been very much wronged of har dues by these contry peple and other whall men as coms hear a whalen every year which taks up drift whals which was never killed by any man which fish i understand belongest to har magiesty and had i power i could have seased severl every year and lickwies very often hear is opportuyty to seas vesels and goods which are upon a smoglen acompt. i believe had i had a comishon so to do i could have seased a catch this last weak which had most of thar men out landish men i judge porteges. she lay hear a week and a sloop i beleve did thar bisnes for them: sir I shall be very Redy to sarves har magisty in either of this or any thing els thet i may be counted worthy if your honor see case to precure a commishon of his Excelency for me with instrocktions I shall by the help of God be very faithful in my ofes—one thing more I mak bould to inform your honnor that hear are a gret meny men which goues fishing at this harbor and som times the french coms hear and then every one vons his way becas they have no one to hud them. i myself have been a souferor since i lived hear, being cared away by a small sloop and hear was 130 men and several brave sloops and no hand, a capt. about 12 miles distance, but we may be all tacken at the Cap and be no nothing of it. i levef it to your honnors consideration and mack bold to subskribe my selef your hombld and unworthy sarvnt
+WM. CLAP.
+
+<vocab>Ezekiel Cushing, Jeremiah Cushing, Hannah Cushing, Harvard College, Cape Cod, Province Lands, Truro, Paul Dudley, Freeman's Cape Cod, whaling, smuggling, Wm. Clap</vocab>

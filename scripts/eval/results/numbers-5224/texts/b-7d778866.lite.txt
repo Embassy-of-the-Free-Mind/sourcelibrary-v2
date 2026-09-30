@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>215</page-num>
+<header>SECT. 8.] BOOK OF SENTENCES. A.D. 1307—1323. 215</header>
+
+sermon; and, from that circumstance, the whole proceeding (or as we have learned from the Portuguese to call it, Auto-da-fé) came to be called a SERMO. The book in question is a record of what took place on fifteen such occasions, between the years 1307 and 1323. Some of these Sermons were for a special purpose (*sermo particularis*) and others rather in the nature of a general goal-delivery, at which persons who had been imprisoned were discharged, and others imprisoned, sentences of penance were passed or remitted, relapsed heretics were delivered to the secular arm, &c. These fifteen sermons were held at the following times and places:
+
+1. A. D. 1307, March 3, at Thoulouse.
+2. — 1309, May 25, ——————
+3. — 1310, April 5, ——————
+4. — 1312, April 23, ——————
+5. — ——— 30, ——————
+6. — 1313, Sept. 20, ——————
+7. — 1315, Mar. 7, ——————
+8. — 1319, Sept. 30, ——————
+9. — ——— Dec. 8, at Carcassone.
+10. — 1321, June 29, at Cordua.
+11. — ——— July 14, at Carcassone.
+12. — ——— Aug. 2, at Pamiers.
+13. — 1322, July 4, 5, ——————
+14. — ——— Sept. 12, at Thoulouse.
+15. — 1323, June 19, at Pamiers.
+
+<vocab>sermon, Auto-da-fé, sermo, sermo particularis, goal-delivery, penance, heretics, secular arm, Thoulouse, Carcassone, Cordua, Pamiers</vocab>

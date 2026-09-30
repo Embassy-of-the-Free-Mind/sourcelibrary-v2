@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>275</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 275</header>
+
+Langdell Lumber Co., with a capital of $250,000, which is doing a business not surpassed in extent in Southern New Hampshire, the offices occupying the entire front of the 8th floor of the Amoskeag Bank building. In New Boston served as selectman, and as superintendent of the Baptist Sunday school; has also served as superintendent of the First Baptist S. S. in Manchester; member and past master of Joe English Grange, New Boston; president and treasurer of Langdell Lumber Co.; m., June 6, 1900, Annie L. Anderson; children, Merritt R., b. Aug. 24, 1904; Ralph E., b. June 17, 1907. Residence, Manchester, N. H.
+
+**Averill, Elisabeth**
+Educator, b., Boston, Mass., March 31, 1861; dau. John Prescott and Abby (Foss) Averill. (Mr. J. P. Averill graduated from Dartmouth in 1842 and for many years was a teacher in Boston.) Miss Averill graduated from the Melrose (Mass.) high school, 1880, and studied four years in France and Germany till Dec., 1885; taught in private schools, Atlanta, Ga., and Nashville, Tenn., 1885–91; head of department of modern languages, Concord (N. H.) high school, 1891–; member South Congregational church, State Educational Council for many years, N. E. Modern Language Ass'n (Boston group), N. H. State Teachers's Ass'n, Merrimack Valley Teachers' Ass'n, Concord Teachers' Ass'n, Concord Woman's Club (serving on various committees), N. H. Female Cent Union, Concord Female Charitable Soc. (founded 1812), Red Cross; has often spoken before clubs in the South and in New Hampshire and Massachusetts. Residence, Concord, N. H.
+
+**Hardy, Willis Chenery**
+Commercial traveler and farmer; b., West Cambridge (now Arlington), Mass., Nov. 11, 1851; s. Solon and Martha (Chenery) Hardy; removed to Hollis, N. H., in 1867; educated in public and high schools, West Cam-
+
+<column-break/>
+
+bridge and Hollis; Congregationalist; Republican; trustee town funds; member N. H. house of representatives, 1909–10, serving on committee on Agriculture; N. H. senate, 1917–18, serving on committees on Judiciary, Agriculture, Elections, and as chairman of Committee on Education; member of the Grange, Sons of the American Revolution, Ancient Order of United Workmen, and the White Mountain, Cape Cod, National and United Com-
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+mercial Travelers Associations; m., Nov. 2, 1898, Lymena Thompson, Boston, Mass.; one son, Donald T., now in school. Residence, Hollis, N. H., Nashua, R. F. D.
+
+**Stevens, Roland Eugene**
+Lawyer; b., Peterborough, N. H., Nov. 24, 1868; s. Frederick L. and Mary E. (Kimball) Stevens; ed. St. Johnsbury Vt., Academy, Dartmouth College, AB., 1895; assistant instructor in psychology, Dartmouth, 1895–6; principal Hanover (N. H.) high school,
+
+<vocab>Langdell Lumber Co., Amoskeag Bank, New Boston, Manchester, Elisabeth Averill, John Prescott Averill, Abby Foss Averill, Dartmouth College, Willis Chenery Hardy, Hollis, N. H. house of representatives, N. H. senate, Roland Eugene Stevens, Frederick L. Stevens, Mary E. Kimball Stevens</vocab>

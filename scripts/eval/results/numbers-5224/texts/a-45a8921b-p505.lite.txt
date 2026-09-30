@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>491</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 491</header>
+
+Federation; member State Emergency Food Production Committee, 1918; president West Hopkinton Telephone Co.; member Patrons of Husbandry (past master); m., Jan. 19, 1899, Flora E. Clough, Hopkinton. Residence, Hopkinton, N. H. (Contoocook, P. O.).
+
+**Norris, True Livingston**
+Lawyer; editor and publisher; b., Manchester, N. H., May 4, 1848; s. Arthur F. L. and Olive (Wallace) Norris; ed. public schools; served as a private in the 5th Mass. Vols. in the Civil War, 1864–5; studied law and admitted to the bar in 1868; practiced in Boston, 1868–72; Washington, D. C., 1872–6; Concord, N. H., 1876–80; on staff of New York Herald, 1883–5, Boston Globe, 1885–8; editor Portsmouth Times daily, and States and Union, weekly, from 1888, and editor and proprietor from 1893 to 1918; Democrat; member N. H. executive council 1893; resigned to accept appointment as Collector of Customs for the District of New Hampshire, which he held till 1898; New Hampshire member Democratic national committee 1896–1908; delegate at large from New Hampshire to the Democratic national convention at Kansas City in 1900, and St. Louis, 1904; member N. H. constitutional convention 1902; trustee N. H. state normal schools, by appointment of Gov. Samuel D. Felker, 1913–18; member St. John's Lodge, A. F., & A. M., Portsmouth, Portsmouth Lodge, No. 9, B. P. O. E., and Storer Post, G. A. R., Portsmouth; m., May 20, 1890, Lillian G. Hurst, Eliot, Me. Residence, Portsmouth, N. H.
+
+**Pillsbury, Arthur Judson**
+Editor; b., Londonderry, N. H., Jan. 31, 1856; s. Josiah Hobart and Frances Alnora (Pervier) Pillsbury; ed. public schools; Kansas Agricultural College; studied law and admitted to Kansas bar, but went into journalism and published the Tulare Register, 1883–1903; editorial writer Oakland Herald (Cal.), 1903–4; secretary California State Board of Examiners, 1904
+
+<column-break/>
+
+–7; editor Sacramento Union, 1907–8; founder California Weekly, organ of Progressive Republicans, and editor same till its merger in the California Outlook, 1911; chairman Industrial Accident Board of California 1911– ; Unitarian; m., Sept. 15, 1881, DeEtta Warren, Lawrence, Kan. Residence, 224 Pala Ave., Piedmont Station, Oakland, Cal.
+
+**Hoyt, Deristhe Lavinta**
+Teacher; lecturer; b., Wentworth, N. H.; dau. Dr. Peter Livingston and Elizabeth (Aspinwall) Hoyt; ed. Kimball Union Academy, Meriden, 1864; teacher Appleton Academy, New Ipswich, N. H., 1865–7; Reading, Mass., high school, 1869–70; studied in South Kensington, Art School, London, Eng., 1872–3; teacher Mass. Normal Art School, 1874–91; lecturer in same on history of painting, 1891–1913; author "Historic Schools of Painting," "The World's Painters and Their Pictures," "Barbara's Heritage." Residence, Malden, Mass.
+
+**Pollard, John William Hobbs**
+Physician; educator; b., Brentwood, N. H., Feb. 22, 1872; s. Francis Dow and Mary Jane (Gray) Pollard; ed. Dartmouth, B.L. 1895; M.D., Univ. of Vermont, 1901; student in physical culture, Harvard summer school, 1896, 1902; post-graduate work in medicine, Harvard, 1905–6; physical director and instructor, Union College, Schenectady, N. Y., 1897–1900; physical director, Lehigh Univ., 1901–2; Univ. of Rochester, 1902–5; professor of physical education and lecturer on hygiene, Univ. of Alabama, 1906–10; professor of physical education and associate professor of biology, Washington and Lee Univ., 1910–15; professor of hygiene and physical education, 1915–; president South Atlantic Intercollegiate Athletic Ass'n, Virginia State Public Health Ass'n; member American Ass'n for Advancement of Physical Education, etc., A. F. & A. M., K. T. and 32d degree, N. H. Historical Soc.; commander First Reg. Med. Res.
+
+<vocab>True Livingston Norris, Arthur Judson Pillsbury, Deristhe Lavinta Hoyt, John William Hobbs Pollard, New Hampshire, biography, journalism, education, medicine, politics</vocab>

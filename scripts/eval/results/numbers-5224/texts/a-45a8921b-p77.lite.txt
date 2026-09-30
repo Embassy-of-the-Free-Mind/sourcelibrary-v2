@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>63</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 63</header>
+
+Commandery and Bektash Temple; m., Oct. 6, 1888, Lillian M. Curtis; one daughter, Edith Mabelle. Residence, Littleton, N. H.
+
+**Plummer, William Alberto**
+Jurist; b., Gilmanton, N. H., Dec. 2, 1865; s. Charles E. and Mary H. (Moody) Plummer; ed. Gilmanton Academy, Dartmouth College, Boston University School of Law, 1889; located in practice in Laconia; Congregationalist; Democrat; member, Laconia school board, nineteen years (president sixteen years); member, N. H. house of representatives, 1893, 1907; justice, N. H. superior court, Dec., 1907 to Dec., 1913, since then justice, supreme court; member, Knights of Pythias, Elks, Masons, 33d degree (Grand Master, Grand Lodge of N. H., 1806-8); member, N. H. Bar Ass'n., American Bar Ass'n., N. H. Historical Soc.; director, Laconia Nat'l Bank; trustee and vice-president, City Savings Bank of Laconia; director, Laconia Building & Loan Ass'n.; m., Jan. 1, 1890; one son, Wayne M., b. March 21, 1891, Boston University School of Law, 1917, admitted to N. H. bar, June 30, 1917. Residence, Laconia, N. H.
+
+**Mitchell, Abram Whittemore**
+Physician and surgeon; b., Lempster, N. H., Feb. 8, 1862; s. Andrew J. and Mary (Whittemore) Mitchell; ed. common and high schools, Kimball Union Academy, 1883, New York University Medical School, 1887; located in practice at Epping, N. H.; Methodist; Independent; member, school board and board of health, Epping; physician to Rockingham County Institute for thirty years; member and past president of Rockingham County Medical Soc. and N. H. Medical Soc.; president, Epping Water Co.; Odd Fellow and Mason to and including 32d degree, Knight Templar and Shriner; m., Oct. 17, 1888, Hattie F. Perkins; children, Avis W. (Mrs. C. Cann), Karl P., Richard A., Philip W. Residence, Epping, N. H.
+
+<column-break/>
+
+**Smith, Ezra M.**
+Lawyer; b., Langdon, N. H., Jan. 25, 1838; s. Orrin and Marinda (Partridge) Smith; ed. Cold River Academy, Tubbs Academy. Law Department, University of Albany, LL.B. 1861; admitted to N. H. bar, May, 1864; commenced practice in Peterborough, N. H., June 1, 1865, and has since continued; Congregationalist; Republican; ten years a member of the school board; selectman, twenty-
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Ezra M. Smith, showing him from the chest up, wearing a suit, vest, and tie, with a full white beard.</image-desc>
+
+five years (many years chairman of the board); member, N. H. house of representatives, six terms, taking active part in committee work and debate; state senator, 1915-16; member, constitutional conventions, 1876, 1912; member, Peterborough Grange, P. of H., Peterborough Lodge, No. 15, I. O. O. F., Union Encampment, No. 6; m., Oct. 4, 1886, Mary S. Fairbanks; children, Etta M. (Harlan B. deceased), Orrin F. Residence, Peterborough, N. H.
+
+<vocab>Ezra M. Smith, William Alberto Plummer, Abram Whittemore Mitchell, New Hampshire, biography, law, medicine, politics, fraternal organizations</vocab>

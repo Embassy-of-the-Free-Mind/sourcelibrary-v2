@@ -1,0 +1,40 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>163</page-num>
+<header>INDEX</header>
+
+| | PAGE | | PAGE |
+| :--- | :--- | :--- | :--- |
+| Magician, The White | 93, 94 96, 97 | Mūdha, | 39 |
+| Mahādeva, | 72 | NATURE, Mind in | 58 |
+| Manas, | 71, 82, 83 | Nirguṇa, Brahma | 126 |
+| Manomayakosha, | 15 | Niruddha, | 41 |
+| Mantras, | 127, 128 | Nirvāṇa, | 78, 97 |
+| Manvantara, | 125 | Nivṛtti Mārga, | 142 |
+| Mārga, Bhakti, | 81 | Niyama, Yama and | 92 |
+| ,, Jñāna, | 81 | Not Self, The | 81, 82, 84, 85, 89-91, 103 |
+| ,, Karma, | 81 | Not Self, The Self and the | 15 |
+| ,, Nivṛtti, | 142 | | |
+| ,, Pravṛtti, | 139 | OBSTACLES to Yoga, | 131, 132 |
+| Masters, | 120 | Ordeals of the Astral Plane, | 154, 155 |
+| Matter, | 61, 66, 67 | | |
+| Matter and Spirit, | 35 | PAIN, Functions of | 108-111 |
+| Māyā, | 63, 126 | Paṭañjali, | 39, 70, 77, 92, 98, 104 |
+| Meditation, | 120-127 | ,, The Sūtras of | 29, 31, 52, 91, 98 |
+| ‘Meditation with Seed,’ | 123 | Paṭañjali, The Teaching of | 31, 131 |
+| ‘Meditation without Seed,’ | 123 | Path, Light on the | 125 |
+| Mental Body of a Master, | 74 | Pentads, | 98, 99, 103 |
+| Mind, Dangers of Emptiness of | 124 | Philosophy, Hindū | 50, 51 |
+| Mind in Nature, | 58 | Schools of | 50, 51 |
+| Mind, States of | 97, 103 | Pituitary Body, | 28 |
+| Mobility, Inertia, Rhythm | 55, 57, 58 | Pleasure and Pain, | 103-113 |
+| Mobility, Stability, Rhythm | 35 | Pleasure, Function of | 111-113 |
+| Monad, The | 17, 66, 68, 77, 80, 98 | Plexus, Solar | 28 |
+| Morality and Yoga, | 95 | | |
+| Mystic, The | 31, 32 | | |
+| Mysticism, | 30, 31 | | |
+
+<vocab>Magician, Mahādeva, Manas, Manomayakosha, Mantras, Manvantara, Mārga, Bhakti, Jñāna, Karma, Nivṛtti, Pravṛtti, Masters, Matter, Māyā, Meditation, Mental Body, Mind, Mobility, Inertia, Rhythm, Stability, Monad, Morality, Yoga, Mystic, Mysticism, Mūdha, Nature, Nirguṇa, Brahma, Niruddha, Nirvāṇa, Niyama, Yama, Not Self, Obstacles, Ordeals, Astral Plane, Pain, Paṭañjali, Sūtras, Path, Pentads, Philosophy, Hindū, Pituitary Body, Pleasure, Solar Plexus</vocab>

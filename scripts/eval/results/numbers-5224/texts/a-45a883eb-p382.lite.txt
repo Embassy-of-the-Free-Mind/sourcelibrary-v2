@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>378</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of George W. Shaw</image-desc>
+GEORGE W. SHAW
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. B. Senter</image-desc>
+F. B. SENTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. S. Sheets</image-desc>
+F. S. SHEETS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. B. Shepard</image-desc>
+A. B. SHEPARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Herbert Sheldon</image-desc>
+HERBERT SHELDON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Sherman</image-desc>
+WM. SHERMAN
+
+<vocab>George W. Shaw, F. B. Senter, F. S. Sheets, A. B. Shepard, Herbert Sheldon, Wm. Sherman, Clevelanders, biography, portraits</vocab>

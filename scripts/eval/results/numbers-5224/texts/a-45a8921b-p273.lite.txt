@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>259</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 259</header>
+
+Simmons College, 1914, Social Service crouse, Boston Univ., 1914; taught in the Misses Patten's School, Middletown, Conn., 1889, 1891-2; Affordby School, Baltimore, Md., 1890-1; active in social service, Middletown, Conn., Girls Club, 1915; District Worker for South End Settlement House, 1916-7; author "The Year's Festivals" (Dana Estes Co.), 1903; compiler "The Music Lover's Treasury," 1905; compiler "Intimations of Immortality" (Small & Maynard), 1907; contributor of many articles and poems to various newspapers and magazines; m., Sept. 1, 1892, D. Warren Patten, Tilton, N. H. Residence, Tilton, N. H.
+
+**Husband, Richard Wellington**
+Professor classical languages, Dartmouth College; b., Nov. 27, 1869, Milton, Ontario, Canada; s. Richard and Eleanor (Teeple) Husband; ed. Leland Stanford Univ., A.B., 1895, A.M., 1896; Univ. of Toronto, A.B., 1896; Dartmouth College, A.M., 1915; instructor, Mills College, 1898-9, Stanford Univ., 1899-1900; instructor and professor, Dartmouth College, 1900-; Episcopalian; Republican; office manager N. H. District Board 1917-; secretary N. H. Committee on Public Safety, 1917; N. H. War Historian, 1917-; member Sigma Phi Epsilon, Phi Beta Kappa, American Philological Ass'n (executive committee), Simplified Spelling Board (executive committee), American Ass'n of University Professors; contributor of many articles on linguistic subjects, Roman history, and Roman criminal law in Transactions of the American Philological Ass'n, and in various classical periodicals; author, "The Prosecution of Jesus" (Princeton Univ. Press), 1916; m., June 20, 1901, Helene Borgman; one son, Richard B., b. Aug. 8, 1904. Residence, Hanover, N. H.
+
+**Lauder, George Burns**
+Electrical Engineer; b., Concord, N. H., Jan. 28, 1866; s. James Nelson and Eliza Martha (Clark) Lauder; ed. Concord schools, private instruction,
+
+<column-break/>
+
+Mass. Inst. of Tech., 1889; with the Westinghouse Electric Co., Pittsburg, Pa., 1890; Electric Lighting Co., Denver, Col., 1891-3; first electrical inspector, N. H. Board of Underwriters, 1893-8; manager, Concord Electric Co., 1898-1909; consulting engineer, 1909-. Republican; Episcopalian; life member, Humanitarian Soc., London, Eng.; member Vivisection Investigation League, New York City; Concord S. P. C. A. (president, 1913-7); Am.
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Richard Wellington Husband</image-desc>
+
+Soc. of Mechan. Engineers, N. H. Soc. Protection of Forests, Am. Soc. for Protection of Forests, Mass. Inst. Tech. Club, N. H. Historical Soc., Concord Charity Organ. Soc., Y. M. C. A., Wonolancet, Beaver Meadow Golf and Snowshoe Clubs; actively connected with Red Cross work, city and state; office manager, N. H. War Savings Com.; with his family has adopted French Orphan, No. 900, in Life's French Orphan Fund; m. Eva Belle Sanborn of Concord, June 17, 1896; children, Mildred, b. April 4,
+
+<vocab>Richard Wellington Husband, George Burns Lauder, biography, New Hampshire, Dartmouth College, electrical engineering, classical languages</vocab>

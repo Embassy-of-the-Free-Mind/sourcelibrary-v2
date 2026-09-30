@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>669</page-num>
+<header>TOWN OF FALMOUTH. 669</header>
+
+The schooner *Harriet* sailed, under Captain Gifford, May 10, 1844, for the Atlantic, and returned one year later with 50 barrels sperm.
+
+Captain Silas Jones sailed the ship *Commodore Morris*, July 9, 1845, for the Pacific ocean, sent home 90 barrels sperm oil in 1845, and returned in 1849, April 1st, with 2,450 barrels sperm and 100 barrels whale oil. The third mate, E. Chadwick, and his boat's crew were capsized and lost on the coast of Chili, in 1846.
+
+July 19, 1845, Captain Wimpenny sailed the ship *William Penn* for the Indian ocean and Northwest coast. She sent home 9,798 pounds bone, and was totally lost on the island of Whytootacke, November 26, 1847. She had on board 100 barrels sperm and 1,700 barrels whale; 1,200 barrels were saved and sold for fifty cents a barrel.
+
+The ship *Hobomok* sailed for Indian and Pacific oceans August 12, 1848, under Captain Rowland R. Jones, and arrived home five years later with 669 barrels sperm, 604 barrels whale oil and 7,400 pounds bone. Captain Jones died in 1850.
+
+Captain Smith sailed in the ship *Awashonks* October 25, 1848, for the Pacific, and returned April 5, 1851, with 2,600 barrels whale oil. He sent home 14,300 pounds bone. The second mate, Mr. Slater, was lost overboard in August, 1849.
+
+Captain Lewis H. Lawrence sailed August 13th for the Pacific, in the ship *Commodore Morris*, and returned after four years with 1,860 barrels sperm oil.
+
+In 1851, August 12th, Captain Lawrence sailed in the ship *Awashonks*, for the North Pacific ocean, and arrived home July 25, 1854, with 513 barrels sperm and 1,828 barrels whale oil. He sent home 243 barrels whale oil on the voyage. Mr. Jones, the first mate, was killed by a whale in 1843.
+
+Captain Childs sailed in the ship *Hobomok* September 30, 1853, for the North Pacific ocean, and returned three years later with 307 barrels sperm, 2,477 barrels whale oil and 18,400 pounds bone. He sent home 4,700 pounds bone.
+
+The ship *Commodore Morris* sailed December 7, 1853, under Lewis H. Lawrence, for the Pacific, and arrived home October 17, 1856, with 1,008 barrels sperm oil.
+
+In November, 1854, the bark *Awashonks* sailed under Captain Tobey for the North Pacific ocean, and returned after four years with 1,227 barrels sperm oil. She was sold to New Bedford in 1860.
+
+Captain Marchant sailed in the ship *Hobomok* for the Pacific, in November, 1856. She returned in March, 1860, with 30 barrels sperm, 1,572 barrels whale and 10,500 pounds bone. She sent home on the voyage 74 barrels sperm, 491 barrels whale and 17,859 pounds bone. She was sold in 1860 to New Bedford, and from thence to New York in 1863, where her name was changed to *Live Oak*. She afterward sailed under the British flag and was finally lost.
+
+<vocab>Falmouth, whaling, maritime history, ship logs, sperm oil, whale oil, whalebone, captains, shipwrecks</vocab>

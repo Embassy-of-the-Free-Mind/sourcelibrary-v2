@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>92</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Robbins, Ensign Rogers, re-enlisted Second H. A.; Edwin Tripp, Francis M. Tripp, W. H. Young. *Brewster*: Co. E, Laurence Doyle. *Barnstable*: George Eldridge, Owen Keeler. Co. K, Warren Cammett, John N. Collier, corp.
+
+Forty-fourth Regiment, 1862.—*Truro*: Co. A, James H. Killian, corp. *Wellfleet*: Co. A, James M. Atwood, Daniel D. Smith, Daniel W. Wiley; Co. G, Charles H. Holbrook. *Brewster*: Co. I, Benjamin F. Bates, James R. Henry. *Provincetown*: Co. T, John L. Eldredge.
+
+Forty-fifth Regiment, enlisted 1862.—*Barnstable*: Co. D, Francis Jenkins, serg.; Freeman H. Lothrop, corp.; Osmond Amos, Charles E. Bearse, Clarence W. Bassett, killed Dec., '62; George H. Bearse, died at Newbern Jan., '63; Joseph P. Bearse, Nathan H. Bearse, Henry C. Blossom, E. W. Childs, Frederick W. Childs, Simeon C. Childs, Nelson S. Crocker, Eliphalet Doane, David Fuller, James B. Hamblin, George D. Hart, John B. Hinckley, Charles E. Holmes, Asa Jenkins, Alexander B. Jones, Hercules Jones, Hiram Nye, Harrison G. Phinney, Joseph Whytal, Thomas Williams, re-enlisted Second H. A.; Aaron A. Young, died Jan., '63, of wounds, at Newbern; Co. I, Oliver G. Appley, Levi A. Baker, Isaiah B. Linnell. *Sandwich*: Co. D, George L. Haines, corp.; H. Chipman, corp.; Henry F. Benson, died of wounds, Dec., '62, at Newbern; George H. Burgess, Joseph P. Chipman, Samuel Chipman, Watson H. Fifield, John D. Foster, Henry C. Greene, Thomas Hackett, Ezra Hamblin, Augustus Holway, Thomas E. Holway, Nathaniel C. Hoxie, James T. Jones, Henry H. Knippe, Frederick U. Lovell, Samuel H. Lovell, William C. Riorden, Charles H. Stimpson, Thomas O. Stimpson, Albert Wheeler, Stillman Wright. Co. K, Thomas F. Holmes. *Provincetown*: Co. E, Joshua Ryder. *Falmouth*: Co. H, Gilbert A. Bearse, Ansel E. Fuller.
+
+Forty-seventh Regiment.—*Sandwich*: Co. F, Nathan B. Fisher. *Brewster*: Gardner E. Wetherbee, died at New Orleans Feb., '63. *Orleans*: Co. F, Azariah S. Walker. *Yarmouth*: Co. G, Joseph Bassett, Benjamin Lovell, John E. Ryder. *Provincetown*: Co. I, William W. Smith, corp.; Caleb D. Smith, mus.; George S. Cook, Alexander Gayland, Joseph P. Holland, George W. King.
+
+->ONE YEAR MEN.<-
+
+Sixtieth Regiment, unattached one year men, mustered 1864.—*Yarmouth*: Co. E, Charles H. Gorham, William Lewis. *Falmouth*: Roland Fish. *Barnstable*: James G. Warren, 2d lieut.; Phineas K. Clark, serg.; William T. Baker, serg.; Leven S. Morse, serg.; John N. Mitchell, corp.; John E. Murphy, corp.; John Flood, Noah J. Lake, Daniel D. Mitchell, William H. Munroe, Samuel P. Raymond, George W. Richardson, John P. Sears, Abraham L. Teachman, Charles H. Tripp, Stephen V. Weaver, Reuben Weeks.
+
+<vocab>Civil War, military regiments, Barnstable County, Massachusetts, enlistment, casualties</vocab>

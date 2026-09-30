@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>433</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 433</header>
+
+the first to recognize the importance of conservation and reforestation; set out, under the direction of State Forester Hirst, a large number of white pines on the family estate at Candia, N. H.; Congregationalist; Republican; member A. F. & A. M.; m., May 29, 1895, Emma Etta Smith; children, Howard Patten, b. Dec. 21, 1901; Walter Robie, Sept. 10, 1903; Marion, May 27, 1908; Richard Lane, March 12, 1912. Residence, Manchester, N. H.
+
+**Durrell, Jesse Murton**
+Clergyman; b., Boston, Mass., June 26, 1843; s. William Henry and Sarah (Averill) Durrell; descendant of Philip Durrell, who emigrated from the Isle of Guernsey and settled in the Piscataqua region previous to 1679, and of his son, Maj. Benjamin Durrell, of Revolutionary fame; ed. Eliot School and Boston Latin School, Boston, Mass., Tilton Seminary, 1869; Boston Univ. School of Theology, 1873. Previous to his course at Tilton and the Divinity school, studied dentistry and practiced for four years, then, feeling a call to the ministry, prepared as before noted; while studying at Tilton preached as supply for the Methodist churches in Tilton and Rumney, and for the Allen St. Church in New Bedford, Mass., while a student in Boston; joined the N. H. Conference in 1869; ordained deacon in 1871 and elder in 1873, spending a year following in European travel and study; pastor, Bristol, N. H., 1874-6, Wesley Church, Haverhill, Mass., 1877-8, Rochester, N. H., 1879-81; travelled in the East, 1882; pastor St. John's Church, Dover, Mass., 1886-8; St. Paul's, Manchester, N. H., 1889-90; President N. H. Conference Seminary and Female College (Tilton Seminary), 1891-5; pastor Main St. Church, Nashua, 1896-1900; Grace Church, Keene, 1901-2; superintendent Dover District; N. H. M. E. Conference, 1903-4; field agent, Tilton Seminary, since 1905, having completed the task of raising a fund of
+
+<column-break/>
+
+$150,000 for the seminary, with an excess of $30,000 in the spring of 1918; Methodist; Republican; member Nashua school board, 1899-1900; president trustees of Tilton Seminary; member Olive Branch Lodge, A. F. & A. M., Plymouth, N. H.; Temple R. A. Chapter, Rochester; St. Paul Commandery, K. T., Dover; Israel Hunt Royal and Select Masters, Aaron Hughes Lodge of Perfection 14th degree A. A. S. R.; Oriental Council of Jerusalem 16th degree; St. George Chapter Rose Croix, 18th degree; N. H. Consistory 32nd degree, Nashua; Peabody Chapter, O. E. S., Tilton; Veteran Ass'n, A.F.& A.M., Concord; Chaplain Grand Chapter R. A. M., Grand Council R. & S. M., St. George Chapter Rose Croix, and Veteran Masons Ass'n m., July 23, 1878, Irene Sarah Clark, Plymouth, N. H.; d. Nov. 9, 1914. Residence, Tilton, N. H.
+
+**Gerould, John Hiram**
+Educator; b., Stoddard, N. H., Oct. 2, 1868; s. Rev. Samuel L. and Laura Etta (Thayer) Gerould; ed. Dartmouth College, Litt.B. 1890; Harvard, A.B. 1892 A.M. 1893, Ph.D. 1895; traveled and studied in Europe, 1898-9; teacher natural sciences, Burr and Burton Seminary, Manchester, Vt., 1890-1; associate professor zoölogy, Dartmouth 19-; Congregationalist; member American Genetic Ass'n, American Soc. Zoölogists, American Soc. Naturalists, American Ass'n for Advancement of Science, Kappa Kappa Kappa; m., July 2, 1902, Adah May Hasbrook, Minneapolis, Minn.; children, May Foster, b. Aug. 13, 1903; Elizabeth, Sept. 20, 1904; Virginia, Dec. 10, 1908. Residence, Hanover, N. H.
+
+**Rotch, William Boylston**
+Journalism and Insurance; b., Amherst, N. H., June 6, 1859; s. Albert A. and Helen (Boylston) Rotch; descendant of the Boylston family who were among the early settlers of Boston, Mass.; ed. public schools of Amherst; learned the newspaper business in youth in the office of the Farmers'
+
+<vocab>Jesse Murton Durrell, John Hiram Gerould, William Boylston Rotch, New Hampshire, biography, genealogy, clergy, educators, journalism</vocab>

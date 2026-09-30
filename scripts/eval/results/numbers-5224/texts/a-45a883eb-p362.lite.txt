@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>358</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">F. H. Moritz</image-desc>
+F. H. MORITZ
+
+<image-desc size="small" type="portrait" significance="high">Chas. A. Morris</image-desc>
+CHAS. A. MORRIS
+
+<image-desc size="small" type="portrait" significance="high">Gus C. Moss</image-desc>
+GUS C. MOSS
+
+<image-desc size="small" type="portrait" significance="high">C. L. Murfey</image-desc>
+C. L. MURFEY
+
+<image-desc size="small" type="portrait" significance="high">Frank Mulhauser</image-desc>
+FRANK MULHAUSER
+
+<image-desc size="small" type="portrait" significance="high">L. A. Murfey</image-desc>
+L. A. MURFEY
+
+<vocab>F. H. Moritz, Chas. A. Morris, Gus C. Moss, C. L. Murfey, Frank Mulhauser, L. A. Murfey, Clevelanders, Biography</vocab>

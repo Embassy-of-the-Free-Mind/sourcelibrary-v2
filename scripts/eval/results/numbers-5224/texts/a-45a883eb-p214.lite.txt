@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>210</page-num>
+<header>The Book of Clevelanders</header>
+
+returned to Cleveland; eighteen years ago, started his own business; has been very successful and credit it to perseverance, honesty and good workmanship; member the Knights of Columbus; member Master Plumber's Club. Recreations: All Out-door Sports, and Reading along Historical Lines.
+
+PIERCE, Clifford E.; treas. The Betz-Pierce Co.; born, Greenfield, O., July 15, 1880; Cleveland public schools; married, Cleveland, Sept. 2, 1903, Jessie V. Palmer; with The Bassett-Presley Co. for fifteen years; sales manager; when they were merged into the Steel Corporation, A. B. Betz and himself formed Betz-Pierce Co., incorporated, July 3, 1911; jobbers high-grade steel; now treas. and director; his grandfather, Franklin Pierce, came to Cleveland, then Ohio City, about 1830; member Cleveland Athletic Club, Halcyon Lodge, F. & A. M., McKinley Chapter, R. A. M.
+
+PIERCE, Stephen Lawrence; manufacturer shoes; born, Birmingham, O., Nov. 4, 1855; son of Bennett and Clarry Pierce; educated, Oberlin College; married, Cleveland, May 10, 1882, Kittie J. Hawkint, many years with the old firm of Childs, Groff & Co., shoe jobbers; in 1884, started to manufacture shoes and has continued in same line until the present time; has a large trade in most of the states of the Union; head of S. L. Pierce & Co.; director First National Bank, Guardian Savings & Trust Co., Clifton Land & Improvement Co.; member Chamber of Commerce; served one year as treas. of the Chamber; member Union, Clifton, and Athletic Clubs; member Gatling Gun Battery.
+
+PINKETT, George M.; mgr. Cleveland Branch, Armour & Co.; born, Elyria, O., Sept. 6, 1857; son of Samuel and Maria Pinkett; left school at the age of 14, and went to work; married, Cleveland, Jan. 1, 1883, Miss M. Caloo; issue, two sons, George and Joseph; with Jas. Gibbon & Co., meat and provision dealers, from 1874 until 1891, sec'y and mgr. of the Company; in 1903, Mr. Armour bought their wholesale dept.; became mgr. of Cleveland Branch; also opened branch houses in Akron, Canton, Youngstown, Sandusky, Findlay, and Lorain, O.; director the Gibbon & Pinkett Co.; member Elks, and Eagles; Republican.
+
+PINYOUN, Frederick Charles; builder and contractor; born, November 5, 1856; son of Thomas Pinyoun; mother's maiden name Pinyoun; educated, Lower Sussex, England; married, England, Aug. 19, 1876, Mary Beck; issue, four sons, six daughters; served one year with the 1st Sussex Volunteer Artillery; manager Pinyoun & Son.
+
+PLACAK, Joseph Charles; physician; born, Cleveland, Feb. 22, 1882; son of Anthony and Jennie Goldstein Placak; educated, public schools, Cleveland, M. D., Medical Department, Ohio Wesleyan University; post-graduate, University of Prague, Austria; married, Cleveland, March 20, 1907, Eunice S. Emde; two children;
+
+<vocab>Clifford E. Pierce, Stephen Lawrence Pierce, George M. Pinkett, Frederick Charles Pinyoun, Joseph Charles Placak, biography, Cleveland, business, manufacturing, medicine</vocab>

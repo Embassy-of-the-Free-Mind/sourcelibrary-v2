@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+# CHAPTER XVIII.
+
+## TOWN OF DENNIS.
+
+Natural Features.—First Settlers of Nobscusset.—Incorporation.—Development.—Industries.—Churches.—Cemeteries.—Schools.—Civil History.—The Villages, their Industries and Institutions.—Biographical Sketches.
+
+THE town received its name in memory of Rev. Josiah Dennis who previously had been the faithful pastor of its principal church for thirty-seven consecutive years. The town extends across the Cape, having Cape Cod bay for its northern boundary and the Vineyard sound for its southern. Harwich and Brewster constitute its eastern boundary, and Yarmouth its western. Like the towns on the Cape west, it would seem to have two parts—north and south—separated by a large tract of oak and pine woods, through which the old road runs near the head of Follen's pond. At the north is the range of hills that extends through Yarmouth, Barnstable and Sandwich. In Dennis the hills are only about a mile from the bay and their summits command fine views of it. The surface of the town north of the hills is very uneven, and at the south is a vast undulating plain sloping toward the sound. The town has five divisions or communities, the most of which are considerable villages of the New England type, and are noticed under their respective names. The first settlement of the town was in the northern part, but the southern now exceeds in population. Bass river is a considerable stream, extending along the boundary between Dennis and Yarmouth—the line being the center—flowing from Follen's pond southerly into the sound, affording harbor for small craft. It is the largest stretch of inland water in the county. Chase Garden river forms part of the western boundary, emptying into the bay at the north, where many fishing schooners formerly found safe refuge for the winter months. The largest marsh of the town is at the mouth of this river. This marsh is really a continuation of the great marshes around Barnstable bay.
+
+The most valuable lands are on the north side, especially about Sesuet and Quivet. The soil is light and sandy on the undulations, but fertile in the valleys and around the ponds. It is estimated that
+
+<vocab>Dennis, Massachusetts, Cape Cod, Nobscusset, Josiah Dennis, Bass River, Follen's Pond, Chase Garden River, Sesuet, Quivet</vocab>

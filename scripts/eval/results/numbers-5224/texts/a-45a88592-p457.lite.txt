@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>373</page-num>
+<header>TOWN OF BARNSTABLE. 373</header>
+
+north side of sd way bounded by a stake in his field on ye south side and by Joseph Benjamin's fence by a stone set in his field and by three stones laid together and by a little stone drove into ye ground with little stones laid about it on south side of sd way, runing along thro ye lands of James Gorham leaving ye house of Josiah Hallett and James Gorham on north side of sd way bounded into the field of sd Gorham on south side of sd way by three stones & stones laid together at ye west corner of his fence of sd field & so thro ye lands of John Gorham leaving his house and barn on ye north side of sd road bounded by a stake set within his hay yard fence between his house and barn & so running to ye bounds of Yarmouth neer where are three great stones laid together being laid all along forty foot.
+
+"The names of ye Jury: CAPT. LOTHROP,
+LIEUT. HOWLAND,
+ENSIGN DIMOCK,
+JAMES GORHAM,
+JABEZ LUMBART,
+JAMES COB, SAML COB,
+NATHL. BACON, ENSIGN LUMBART, LIEUT.
+JAMES LEWIS, JOHN PHINNEY, JOB CROCKER, SAMUEL
+HINCKLEY SR., JOSEPH BLISH, JOSIAH CROCKER,
+JAMES HAMBLIN JR."
+
+The town, tiring of long trips to Plymouth for grinding, in 1687 ordered that a wind mill be built, either on Cobb's hill or the old Meeting House hill, and appropriated money and land to pay for it. Thomas Paine of Eastham constructed one on Meeting House hill, much to the satisfaction of Barnabas Lothrop and Samuel Allen, who were the committee to oversee the work. The same year John Andrews and others were granted a tract of eight or ten acres at the river by John Goodspeed's, and the benefit of the stream, "to build and keep a fulling mill," but there is no record of its being built. Roads were rapidly laid out, branching from the county road. In 1689 the same jury, whose names have been given, opened a highway into the woods opposite the Dimock house, another into the common field, and by the opening of this communication permission was given for another fulling mill, which was erected on the river where the Goodspeeds resided—now Marston's Mills—and Thomas Macy, or Massey, was made keeper of it. The contract with the town was that it should be kept running twenty years, and it was, much longer. The reader of the present day can hardly realize that the wool and flax at that time, and a hundred years later, were spun and woven into cloth for domestic use, and the fulling mill was as necessary as the grist mill. In 1696 other roads were laid out, and Mr. Otis had permission to build a warehouse on Rendezvous creek. He was given forty feet
+
+<vocab>Barnstable, Plymouth, wind mill, Meeting House hill, Thomas Paine, Barnabas Lothrop, Samuel Allen, John Andrews, fulling mill, Marston's Mills, Thomas Macy, grist mill, Rendezvous creek</vocab>

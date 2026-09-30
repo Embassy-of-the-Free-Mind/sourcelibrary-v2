@@ -1,0 +1,40 @@
+The following table shows the analysis of milk.
+
+| Cow's-milk, as analysed by Liebig. | 100 grains. | 1000 grains. | 14400 grains, or 1 seer. | 28800 grains, or 2 seers. |
+| :--- | :--- | :--- | :--- | :--- |
+| Water | 87·080 | 870·80 | 12539·520 | 25070·940 |
+| Carbon | 6·982 | 69·82 | 1005·408 | 2010·816 |
+| Hydrogen | 1·144 | 11·44 | 164·736 | 329·472 |
+| Nitrogen | ·520 | 5·20 | 74·880 | 149·760 |
+| Oxygen | 3·649 | 36·49 | 525·456 | 1050·912 |
+| Salts and earth | ·625 | 6·25 | 50·000 | 180·000 |
+
+Rice is another article of diet used by the Yogís of India. Its composition is shown in the table following.
+
+| Rice. | 100 grains. | 1000 grains. | 14400 grains, or 1 seer. |
+| :--- | :--- | :--- | :--- |
+| Water | 7·6 | 76· | 1094·4 |
+| Carbon | 42·1036 | 421·036 | 6062·9184 |
+| Hydrogen | 5·754 | 57·54 | 828·576 |
+| Nitrogen | 1·268 | 12·68 | 182·592 |
+| Oxygen | 42·8745 | 428·744 | 9173·576 |
+| Salts and earths | ·4 | 4· | 57·6 |
+
+Wheat is another staple article of diet of Yogís. Its composition is as follows.
+
+| Wheat. | 100 grains. | 1000 grs. | 14400 grs. or 1 seer. |
+| :--- | :--- | :--- | :--- |
+| Water | 10· | 100· | 1440· |
+| Carbon | 40·557 | 405·57 | 5840·108 |
+| Hydrogen | 5·53 | 55·3 | 796·32 |
+| Nitrogen | 2·149 | 21·49 | 308·556 |
+| Oxygen | 39·759 | 397·59 | 5724·366 |
+| Salts and earths | 2· | 20· | 288· |
+
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<header>A TREATISE ON THE YOGA PHILOSOPHY.</header>
+<vocab>Yogis, Liebig, milk, rice, wheat, analysis, diet, composition</vocab>

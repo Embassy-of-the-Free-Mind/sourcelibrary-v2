@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>156</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+fish in great variety, fresh from the sea, and all the vegetables of the season, with rich cream and milk furnished daily from the adjacent Tobey farm, the appetite, whetted by the sea air, is readily appeased.
+
+The house is supplied with pure water from a never-failing spring, while the drainage and sanitary arrangements are the best that modern science can suggest.
+
+In 1885, the late Charles Tobey of Chicago, a native of Dennis, purchased this property and greatly enlarged and beautified its appearance by adding to the hotel a front of four and a half stories, building two cottages with twelve rooms each, a billiard room and bowling alley with hall above, a pavilion, ice house and stable. The grounds were improved by walks, driveways and flower beds. Recently the present owner, Frank B. Tobey, of Chicago, also a native of Dennis, has made extensive additions to the hotel, so that it now furnishes accommodation for two hundred guests. Luther Hall, of Dennis, has charge of this property, assisted in the management of the hotel by F. H. Pratt.
+
+Generally, the several hotels mentioned in the histories of the villages through the county make special preparations to entertain the summer people.
+
+Not the least of the attractions of the Cape are the excellent facilities for yachting. The retired shipmasters, as well as the pleasure-seekers, own handsome yachts and engage in the sport. Regattas are sailed each season at various points around the shore, under the auspices of the Cape Cod Yacht Club, in which nearly every town is represented. The past summer has been marked by the several yacht races at Buzzards Bay, Nobscussett, and along the sound, many of the visitors having large and beautiful yachts for their private use.
+
+<vocab>Barnstable County, Tobey farm, Charles Tobey, Dennis, Frank B. Tobey, Luther Hall, F. H. Pratt, yachting, Cape Cod Yacht Club, Buzzards Bay, Nobscussett</vocab>

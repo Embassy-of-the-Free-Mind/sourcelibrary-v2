@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>390</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. M. Uhlrich</image-desc>
+E. M. UHLRICH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. W. Tyler</image-desc>
+JNO. W. TYLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. A. Ullmann</image-desc>
+M. A. ULLMANN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. F. Valentine</image-desc>
+R. F. VALENTINE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. C. Ulmer</image-desc>
+J. C. ULMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. S. Van Epps</image-desc>
+J. S VAN EPPS
+
+<vocab>Clevelanders, E. M. Uhlrich, Jno. W. Tyler, M. A. Ullmann, R. F. Valentine, J. C. Ulmer, J. S. Van Epps</vocab>

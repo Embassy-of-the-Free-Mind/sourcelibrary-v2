@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>935</page-num>
+<header>TOWN OF TRURO. 935</header>
+
+The seamen of Truro filled an important part in the capture of British privateers during the revolutionary war, and many Truro men were captured and imprisoned by the enemy. The fleet of the enemy constantly menaced the town, which must be protected by its own citizens. One incident worthy of record occurred near Pond landing. One day the enemy were about to land a body of men to plunder the town, when the exempts and town militia resorted to stratagem to ward off a blow which could not otherwise be averted. A small body of these citizens marched to the shore, keeping behind an elevation of land until prepared to carry out the ruse, which was to continuously march around the knoll, giving the impression to the marauding party that a large force of soldiers were congregating to oppose them. The apparent assembling of company after company had the desired effect upon the British commander, who judged it prudent not to land. The town was among the most loyal to instruct its representative "to fall in with the Continental Congress."
+
+The records of the town are filled with the resolves and proceedings of the town meetings during the war of 1812, and the war of the rebellion; and the standing of the town in the scale of duty during these struggles is one of which the present generation may justly be proud.
+
+The town was not represented in general court until five years after its incorporation, and during the period it was entitled to a representative it did not always send one. The following list gives the names of the representatives the first year of election, and the number of years each served if more than one: 1714, Thomas Paine, 5 years; 1715, Constant Freeman; 1717, Thomas Mulford, 2; 1721, John Snow, 3; 1723, Jonathan Paine, 3; 1757, Barnabas Paine; 1761, Isaiah Atkins; 1774; Benjamin Atkins; 1775, Samuel Harding; 1776, Reuben Higgins, 2; 1779, Sylvanus Snow, 2; William Thayer, 2; 1785, Ephraim Harding, 3; 1791, Anthony Snow, jr., 6; 1800, Levi Stevens; 1810, Israel Lombard, jr.; 1824, James Small, 8; 1831, John Kenney, 2; 1833, Shubael Snow, 4; 1834, Eben L. Davis, 2; 1835, Joshua Small 2; 1836, Henry Stevens, 2; and Solomon Davis 2; 1837, Jonas Stevens, 2; 1838, Freeman Atkins, 2; 1839, Jedediah Shedd, 3; 1840, Michael Snow; 1842, John Kenney, jr.; 1843, Hugh Hopkins; 1844, Richard Stevens; 1845, Ebenezer Davis, 3; 1848, Levi Stevens; 1849, Daniel Paine, 2; 1852, James Small; 1853, John Smith; 1855, Samuel H. Smith, jr.; and in 1856, Adin H. Newton.
+
+In August, 1709, selectmen for the remainder of the year were first elected by the town, and the following list contains the names of those who have since served in that capacity, giving the year of the first election of each and the time of service when over one year: In 1709, John Snow for 12 years, Thomas Mulford for 9, and Jedediah
+
+<vocab>Truro, Massachusetts, Revolutionary War, Continental Congress, War of 1812, Civil War, town meetings, representatives, selectmen</vocab>

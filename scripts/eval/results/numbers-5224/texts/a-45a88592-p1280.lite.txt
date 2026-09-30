@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>1010</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+grandson of Eleazer Young, was born in 1823. He followed the sea from 1833 until 1863, as master after 1849. Since 1864 he has been a member of the Central Wharf Company. He married Abbie, daughter of John Freeman. Their only daughter is Millie W.
+
+Paron C. Young, born in 1838, is a son of Elisha and Betsey (Sparks) Young, and grandson of Elisha Young. He entered the war in January, 1864, in Third Massachusetts Cavalry, Company I. He received a wound at Cedar creek in October, 1864, which closed his active service. He married Susan E., daughter of Joseph P. Johnson. They have two children: William H. and Nettie M.
+
+<image-desc size="small" type="decorative" significance="low">A decorative printer's ornament featuring a central female figure flanked by scrolling foliage.</image-desc>
+
+<vocab>Eleazer Young, Central Wharf Company, Abbie Freeman, John Freeman, Millie W. Young, Paron C. Young, Elisha Young, Betsey Sparks, Third Massachusetts Cavalry, Cedar Creek, Susan E. Johnson, Joseph P. Johnson, William H. Young, Nettie M. Young</vocab>

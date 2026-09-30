@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>209</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 209</header>
+<sig>14</sig>
+
+School, Randolph, Vt., 1885; taught for some years in the schools of Vershire, Newbury and Concord, Vt., and in the high schools of Wells River, Vt., and Woodsville, N. H., for two seasons in a summer school for instruction of teachers, at Wells River, and was for four years examiner of teachers for Orange County, Vt.; read law during vacations with Smith & Sloane, at Wells River, was admitted to the Vermont bar at Montpelier, Oct., 1891, subsequently to the New Hampshire bar, and at once commenced the practice of law at Lisbon, N. H., where he remained till March 19, 1906 when he became a member of the firm of Drew, Jordan, Shurtleff & Morris at Lancaster (now Drew, Shurtleff, Morris & Oakes) where he has since resided. As a member of the leading law firm in northern New Hampshire, for the last dozen years he has had a wide professional experience. Since 1914 he has been a member of the board of State bar examiners, succeeding Judge William M. Chase. In 1917 he was chosen president of the N. H. Bar Ass'n. Republican; delegate from Lisbon in the N. H. constitutional convention of 1902, and member of the N. H. house of representatives from that town in 1905; solicitor for Grafton County, 1899-1903; several years member of Lisbon board of education and has served the last ten years in Lancaster in the same capacity. Mr. Morris is much interested in botany, and has a large collection of the flora of northern New Hampshire; also extensively engaged in agriculture, being the owner of one of the finest farms in Coös County, and is president of the Coös County Farm Bureau; m., May 16, 1894, Lula J. Aldrich of Lisbon (see sketch of Mrs. Morris); one son, Robert Hall, b. Aug. 21, 1907. Residence, Lancaster, N. H.
+
+**Morris, Lula J. Aldrich**
+(Mrs. George F. Morris); clubwoman; b., Libson, N. H., Aug. 4, 1872; dau. Charles and Persis (Hall) Aldrich; ed. public schools, Lisbon
+
+<column-break/>
+
+high school, 1891; resided in Lisbon, except for a year's absence, in Creston, Ia., until removal with her husband to Lancaster in 1906; assistant post-mistress in Lisbon for six years after graduation from high school. Mrs. Morris has always been interested in the social life and events of the towns where she has resided, and is widely known among the club-women of the state; served as president of Friends in Council in Lisbon, 1905-6, and of Unity
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a woman wearing a hat and a high-collared dress.</image-desc>
+
+Club, Lancaster, 1911-12; treasurer, N. H. State Federation of Women's Clubs, 1913-14; auditor of the same, 1915-16; prominent in the Order of the Eastern Star, serving as Worthy Matron, Lafayette Chapter, Lisbon, in 1901, and as Grand Matron of the order in New Hampshire in 1909; at present, a director of N. H. Division, Women's Committee, Council of National Defense, and chairman, Lancaster Branch of the Red Cross, and active in both positions. From 1899 to 1906 Mrs. Morris worked in her husband's office, making a study of law in
+
+<vocab>George F. Morris, Lula J. Aldrich, New Hampshire, Lisbon, Lancaster, law, club-women, Order of the Eastern Star, Red Cross, Council of National Defense</vocab>

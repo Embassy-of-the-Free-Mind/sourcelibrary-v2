@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>381</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of John W. Smith</image-desc>
+JOHN W. SMITH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of John A. Smith</image-desc>
+JOHN A. SMITH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. A. C. Smith</image-desc>
+W. A. C. SMITH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. R. Snyder</image-desc>
+J. R. SNYDER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. H. Smith</image-desc>
+W. H. SMITH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. R. Snyder</image-desc>
+H. R. SNYDER
+
+<vocab>Clevelanders, John W. Smith, John A. Smith, W. A. C. Smith, J. R. Snyder, W. H. Smith, H. R. Snyder</vocab>

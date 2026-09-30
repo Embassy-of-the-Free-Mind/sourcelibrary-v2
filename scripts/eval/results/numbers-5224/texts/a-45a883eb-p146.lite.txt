@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>142</page-num>
+<header>The Book of Clevelanders</header>
+
+tecture, Chamber of Commerce; member Wholesale Merchants' and Manufacturers Board; for a number of years vice pres. of the Hydraulic Press Brick Co.; member of the executive committee of the National Brick Manufacturers Ass'n and became pres. in 1901-1902; pres. the Ohio Face Brick Ass'n, 1907-1908; four years pres. of the Builders' Exchange, now an honorary member; two years director Cleveland Chamber of Commerce; since 1909 have been pres. of the Cleveland Life Insurance Co.; trustee and treas. St. Lukes' Hospital Ass'n; trustee Hiram House; director Workingmen's Collateral Loan Ass'n; life member Associated Charities and a member of the finance committee; in 1910 pres. the Cuyahoga County Centennial Commission; vice pres. the Civil Federation of Cleveland; vice pres. for the Society for Promoting the Interests of the Blind; member City Planning Commission of Cleveland and Aquarium Commission; member Union, Euclid, Mayfield, Rowfant and Athletic Clubs. Recreations: Travel and "The Hemlocks"; his summer home at Independence, O.
+
+HUNTER, Alexander A.; sec'y and treas. The Western Reserve Woolen Co.; born, Lakewood, O., May 1, 1873; son of William and Sarah R. Hunter; educated, Collinwood public school and Spencerian Business College; married, Nottingham, O., 1898, Annah G. Weber; issue, two children, Malcolm J., aged 9, and Victor A., age 4; upon leaving school secured position as clerk in the office of the Murphy Varnish Co.; was promoted from time to time and served the above company as bookkeeper for several years; in December, 1904, accepted a position with the Western Reserve Woolen Co.; in January, 1907, was elected sec'y and treas., which position he now holds; member East Congregational Church, Cleveland Commercial Travelers' Ass'n, and Cleveland Chamber of Commerce. Recreations: Home and Gardening.
+
+HUNTER, William Ross; contractor; born, Gillardsport, Pa., Oct. 24, 1869; son of Joseph and Lucinda Dukate Hunter; common school education at Masontown, Pa.; married, Masontown, Pa., Jan. 1, 1902, Haddie May Willard; three children; plastering contractor; has worked at the business for 25 years, served apprenticeship under his father; aim has always been to please customers; member Odd Fellows.
+
+HUSBAND, Arthur J.; dentist; born, Toronto, Can., June, 1864; son of George H. and Helen McBride Husband; educated, Richmond Hill High School, and Royal College of Dental Surgeons of Ontario, Can.; married, in Illinois, July 15, 1888, Elizabeth Agnes Henry; issue, Eva, born Jan. 3, 1890, Ruby, born Jan. 1, 1894, Harold, born June 3, 1895; began practice in Toronto in 1885; practiced there for sixteen years; located in Cleveland in 1905; member of Ohio State Dental Society and Cleveland Dental Society.
+
+<vocab>Cleveland, biography, business, dentistry, construction, organizations, genealogy</vocab>

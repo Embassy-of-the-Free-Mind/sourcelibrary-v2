@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>403</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+ural History, 1901-; connected with department of Mammals, Harvard Museum of Comparative Zoölogy, since 1907; member expedition to Bahama Islands, 1904, British East Africa, 1909, Grenada, British West Indies, 1910, Sudan, 1912; Republican; Episcopalian; member Boston Soc. Natural History, American Ornithological Union, Biological Soc., Washington, D. C., Phi Beta Kappa, Travelers’, Naturalists’ and Harvard Clubs; m., June 26, 1911, Sarah Moody Cushing, Salem, Mass.; one daughter. Residence, 126 Pleasant St., Arlington, Mass.
+
+**Jackman, Samuel Hason**
+
+Teacher; farmer; b., Enfield, N. H., July 20, 1831, s. William and Lucy (Eaton) Jackman; ed. public schools, Andover (now Proctor) Academy, Kimball Union Academy, Dartmouth College, A.B. 1860; taught school and engaged in farm labor in early life; went to Bureau Co., Illinois, in 1861 and taught there till 1863, when he joined an emigrant train for California where he has since resided, teaching in public schools for twenty years, except for three years—1872-3-4—when he was superintendent of schools for the city of Sacramento; in 1884 abandoned teaching and purchased and operated a ranch till 1909, when he retired; politically a Democrat, then Republican, next a Progressive, now a Prohibitionist; member A. F. & A. M., joining in 1860, Social Lodge, No. 50 of Enfield, and demitted to Tehoma Lodge of Sacramento in 1865; Patron of Husbandry, since 1883, holding the principal offices in subordinate and Pomona Granges; m., Aug. 13, 1870 Ann McDaniel. Residence, 2819 E St., Sacramento, Cal.
+
+**Parker, Charles Sullivan**
+
+N. H. Manager Aetna Life Ins. Co., b., North Andover, Mass., Oct. 21, 1845; s. Deacon Stephen Hall and Anne Matilda (Abbot) Parker; eighth in descent from Dea. Thomas Parker, Reading, Mass., 1635; great great
+
+<column-break/>
+
+grandson of John Parker and great grandson of Lieut. John Parker, Jr., both of whom were in the battle of Lexington (the latter served throughout the Revolution); grandson of Rev. Joshua Abbot of Concord, N. H., and great grandson of Capt. Joshua Abbot who commanded a New Hampshire company at Bunker Hill; ed. Punchard Free School, Andover and Phillips Andover Academy; in early years in mercantile life, Boston, Lowell
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and glasses, wearing a suit and tie.</image-desc>
+
+and Lawrence, Mass.; with Page Belting Co., Concord, N. H., 1876-86; insurance business, Concord, 1886-; member First Congregationalist church (deacon since 1908); Republican; member Common Council; director Page Belting Co.; on Cemetery Commission several years; member Wonolancet Club (charter, 1891), N. H. Historical Soc., S. A. R., Parker Genealogical Soc., I. O. O. F. (joining in 1867), Blazing Star Lodge, Trinity Chapter, Horace Chase Council, Mount Horeb Commandery, A. F. &
+
+<vocab>Samuel Hason Jackman, Charles Sullivan Parker, biography, New Hampshire, genealogy, Aetna Life Insurance, Concord, Sacramento, education, fraternal organizations</vocab>

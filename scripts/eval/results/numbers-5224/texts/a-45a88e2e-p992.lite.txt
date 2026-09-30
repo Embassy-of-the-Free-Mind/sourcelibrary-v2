@@ -1,0 +1,86 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>994</page-num>
+<header>INDEX</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Conklin, Elijah | 65 | Falconer, A. D. | 86 |
+| Connell, W. J. | 788 | Fanning, C. E. | 146 |
+| Cook, J. M. | 664 | Farrell, Daniel | 309 |
+| Cooper, G. W. | 442 | Farrell, D. H. | 310 |
+| Corey, C. E. | 481 | Farrington, F. J. | 395 |
+| Corliss, F. W. | 452 | Ferguson, A. N. | 202 |
+| Cormack, Mary M. H. | 348 | Fields, L. S. | 515 |
+| Cornish, Alfred | 891 | Fish, H. H. | 290 |
+| Cornish, J. N. | 232 | Fisher, C. G. | 622 |
+| Coulter, F. E. | 819 | Fitch, F. W. | 599 |
+| Counsman, H. G. | 54 | Fitzgerald, J. J. | 758 |
+| Covell, G. W. | 671 | Fitzgerald, J. M. | 668 |
+| Cox, G. H. | 377 | Fitzgibbon, H. M. | 86 |
+| Coy, C. H. | 902 | Flack, J. F. | 312 |
+| Craddock, J. H. | 254 | Fleharty, H. B. | 264 |
+| Crane, T. D. | 165 | Flynn, T. J. | 100 |
+| Crary, B. D. | 53 | Foltz, C. B. | 260 |
+| Cress, F. E. | 901 | Foote, D. A. | 944 |
+| Cressey, F. A. | 657 | Foote, W. K. | 185 |
+| Crofoot, L. F. | 602 | Forgan, George | 59 |
+| Crosby, W. C. | 172 | Forrest, J. H. | 654 |
+| Crow, Joseph | 558 | Forsyth, James | 49 |
+| Crowell, C. C., Jr. | 380 | Foster, J. D. | 570 |
+| Crummer, LeRoy | 284 | Foye, W. J. | 689 |
+| Cummins, C. D. | 761 | Franta, Emil | 621 |
+| Curran, M. J. | 28 | Frazier, William | 735 |
+| Cuscaden, Gertrude | 461 | Frenzer, J. N. | 214 |
+| | | Frenzer, Peter | 237 |
+| Dahlman, J. C. | 612 | Fritscher, C. L. | 154 |
+| Dailey, T. E. | 752 | Fry, T. A. | 549 |
+| Daugherty, J. M. | 244 | Furness, G. H. | 882 |
+| Davey, J. J. | 906 | | |
+| Davis, B. B. | 50 | Gaines, F. H. | 85 |
+| Davis, W. W. | 876 | Gallagher, Benjamin | 76 |
+| Denny, W. F. | 972 | Gangestad, E. G. | 461 |
+| Deuel, H. P. | 43 | Gentleman, J. A. | 554 |
+| Deverell, W. P. | 590 | George, C. C. | 310 |
+| Dewey, Frank | 29 | George, W. A. | 583 |
+| Dietz, Rudolph | 765 | Getten, E. W. | 394 |
+| Dishong, G. W. | 949 | Gibbs, W. S. | 792 |
+| Doane, G. W. | 176 | Gilchrist, J. M. | 223 |
+| Dobbs, W. J. | 499 | Gilmore, Robert | 494 |
+| Dodds, A. E. | 808 | Glover, C. D. | 291 |
+| Dodds, D. C. | 628 | Goddard, R. C. | 794 |
+| Dodds, E. S. | 580 | Goodrich, J. E. | 888 |
+| Dodds, J. E. | 808 | Gould, C. Z. | 820 |
+| Dodds, J. J. | 808 | Graff, E. U. | 263 |
+| Dodds, M. N. | 808 | Graham, F. M. | 697 |
+| Dodge, N. P. | 859 | Gratton, C. H. | 573 |
+| Dodge, R. A. | 91 | Gray, J. P. | 374 |
+| Doe, J. A. | 55 | Green, J. H. | 301 |
+| Dougherty, C. H. | 532 | Griest, M. W. | 984 |
+| Dougherty, J. F. | 533 | Grubbs, N. L. | 713 |
+| Douglas, John | 845 | Guckert, N. L. | 932 |
+| Dow, J. M. | 436 | Guth, J. P. | 642 |
+| Dowd, J. L. | 156 | | |
+| Drexel, J. C. | 69 | Haight, P. B. | 674 |
+| Dunham, B. H. | 171 | Hall, B. W. | 678 |
+| Dunham, Martin | 239 | Hall, L. T. | 646 |
+| Dunn, A. D. | 824 | Hamann, H. F. | 709 |
+| Dunn, H. W. | 7 | Hamilton, A. B. | 964 |
+| Dwyer, T. J. | 736 | Hamilton, F. T. | 70 |
+| | | Hanighen, J. J. | 506 |
+| Eckles, G. A. | 257 | Hansen, Charles | 516 |
+| Eddy, W. A. | 606 | Harper, H. H. | 957 |
+| Edwards, H. O. | 976 | Harries, G. H. | 875 |
+| Eggerss, A. J. | 596 | Harris, T. T. | 924 |
+| Elvad, Peter | 292 | Harte, J. H. | 866 |
+| Endres, M. L. | 524 | Harty, J. J. | 468 |
+| English, J. P. | 99 | Haubens, Henry | 127 |
+| Erway, E. A. | 927 | Haver, F. C. | 462 |
+| Etter, F. F. | 897 | | |
+
+<column-break/>
+
+<vocab>Index, Names, Page numbers</vocab>

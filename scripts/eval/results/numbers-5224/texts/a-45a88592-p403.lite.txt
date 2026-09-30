@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>337</page-num>
+<header>TOWN OF BOURNE. 337</header>
+<sig>22</sig>
+
+the present lots were laid out. This gentleman had a store at his residence in 1807. It now contains over thirty residences, and the town meetings for elections and public business are held here. The first store here was opened in 1873, by Isaac Small, jr., which he occupied until it was burned, January 25, 1889. For four years previous to its burning, a store had been kept by David H. Baker. In March, 1889, Baker sold to Mr. Small, who is now the only merchant here. About 1875 he was appointed postmaster, which position he has since held, the office in its location following the changes of his store, and in its name that of the station in 1880.
+
+Prior to the completion of the Woods Holl branch, Cohasset Narrows was a flag station, but in 1872 it became one of the most important on the Cape. The present depot was built the same year, and C. S. Bassett was appointed agent.
+
+There were no hotels here until 1872, when Erastus O. Parker built the Parker House, just north of the depot, and has since been its host. The same year Dr. John Garfield erected a hotel, the Monamet House, of which he was host two years, and was succeeded by L. H. Baker, R. P. Collins, and Mrs. Grey; and by Wesley B. Pierce for the last five years prior to 1889.
+
+The Buzzards Bay citizens resolved to have a hall for their own and public use, and a stock company of one hundred shares at ten dollars each was decided upon. The stock was taken and on the 15th of April, 1879, the organization was perfected. The building, called Franklin Hall, is a wooden structure situated near the station.
+
+Pocasset village is 3½ miles south of the village of Buzzards Bay, and in the history of the town the locality is of much importance from its early settlement and prominence in the affairs of the old town of Sandwich. The name is a corruption of the Indian name Poughkeeste, and later Pokesit. Barlow's river runs southwesterly through this beautiful section into the bay, where a fine harbor is formed by Wenaumet neck on the north and Scragg's on the south. Red brook connects Handy's pond with the same harbor. Scragg's neck was formerly the property of the first parish of Sandwich, over which there was a controversy when Pocasset was instituted as a second parish. The name of the post office is Pocasset, although the name of the station was changed April 1, 1888, to Wenaumet—a name which, in time, the village of Pocasset will naturally assume.
+
+The oldest industry here is the furnace and works on Barlow's river, which were built as a blast furnace in 1822 by Hercules Weston. It was sold in 1832 to Rufus Kendrick and John A. McGraw of Boston, and Branch Harlow of Middleboro, who continued the business as the Pocasset Iron Company. Its furnaces were altered and stoves, kettles and hollow ware of various kinds were manufactured. Howard Perry
+
+<vocab>Bourne, Isaac Small, David H. Baker, Woods Holl, Cohasset Narrows, C. S. Bassett, Erastus O. Parker, Parker House, Dr. John Garfield, Monamet House, Franklin Hall, Buzzards Bay, Pocasset, Poughkeeste, Pokesit, Barlow's river, Wenaumet neck, Scragg's neck, Red brook, Handy's pond, Hercules Weston, Rufus Kendrick, John A. McGraw, Branch Harlow, Pocasset Iron Company, Howard Perry</vocab>

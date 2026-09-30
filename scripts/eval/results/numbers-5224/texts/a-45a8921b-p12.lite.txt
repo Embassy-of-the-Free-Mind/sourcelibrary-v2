@@ -1,0 +1,53 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>vi</page-num>
+<header>vi ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Edes, Samuel Harcourt, p. 30; Captain Co. G, 103d Infantry, 26th Division; sailed for France Sept., 1917; transferred, 1918, to Headquarters 6th Army Corps; still on duty in France; m. Aug. 30, 1917, Nellie E. Presby, dau. of Hon. Winthrop B. Presby, a lawyer of Portland, Ore., and native of Bradford, N. H.
+Elwell, Rufus Newell, p. 7; appointed N. H. Insurance Commissioner, Nov. 16, 1917; d. Feb. 9, 1919.
+Emerson, Charles Sumner, p. 15; chairman Hillsborough County, Dist. No. 2, Selective Service board; s. Dean A. (Dartmouth '14, Thayer School '18), lieutenant in Aviation branch, A. E. F.; Sumner B. (Dartmouth '17), lieutenant balloon section, Aviation branch.
+Emerson, Francis P., p. 202; Maj. Med. Res. Corps, 1918.
+Evans, Alfred, p. 207; member N. H. constitutional convention 1918; retired as judge of Probate, from age limitation, March 31, 1919.
+Fairbanks, George Arlington, p. 65; retired; s. Harold G., enlisted May 5, 1917; served in Portsmouth C. A. C. at Fort Constitution, on guard duty at Fort Devens and Springfield, Mass.; transferred, with rank of sergeant, April 22, 1918, to Intelligence Dept., War College, Washington; commissioned 2d lieutenant, Q. M. C., July 25, 1918, and went overseas Aug. 7; connected with Chief Purchasing Office, and located in Spain.
+Farmer, William Parker, p. 159; president Manchester Historical Ass'n.
+Farrand, George Edward, p. 38; appointed postmaster of Concord, Sept. 19, 1918.
+Faulkner, Philip Handerson, p. 391; trustee N. H. State Sanatorium.
+Felch, Albert Dustin, p. 73; delivered historical address at 150th anniversary of town of Sunapee, Sept. 2, 1918.
+Fowler, George Winthrop, p. 58; member N. H. house of representatives, 1919-20.
+Fowler, William Plumer, p. 147; Acting Corporation Counsel, City of Boston, 1917-18; d. July 3, 1918.
+French, James Edward, p. 181; member N. H. constitutional convention, 1918; house of representatives, 1919-20.
+Frisselle, Frank Monroe, p. 191; returned to the Manchester Union, 1919.
+Gallinger, Jacob Harold, p. 15; d. at Franklin, N. H., Aug. 17, 1918.
+Goss, Winifred Lane, p. 226; mother's name should be printed Lorena instead of Lovena.
+Gould, Alfred Josiah, p. 102; member Sullivan County Pomona Grange, instead of Merrimack County as printed; d. Dec. 14, 1918.
+Graves, Robert John, p. 89; Major U. S. Medical Reserve Corps, U. S. General Hospital No. 2, Ft. McHenry, Baltimore, Md.
+Green, Henry Francis, p. 5; d. May 9, 1917.
+Gunnison, William Towne, p. 47; m. Grace Horney, not Homey; sons, Arvin, Dartmouth 22, Golf Champion of N. H.; John Vinal, Student at Phillips Exeter Academy.
+Hall, Daniel, p. 101; wife d. Dec. 1, 1918.
+
+<column-break/>
+
+Hamlin, Frank Wilbert, p. 480; trustee N. H. State Industrial School.
+Hammond, Otis G., p. 51; wife d. Feb. 10, 1918.
+Harriman, Walter C., p. 193; d. June 29, 1918.
+Harris, Sarah Neal, p. 504; d. March 5, 1917.
+Hatch, Albert Ruyter, p. 106; member legal advisory board, Rockingham County, N. H. Selective Service.
+Hening, Crawford Dawes, p. 77; wife died June 5, 1918.
+Hirst, Edgar Clarkson, p. 30; general manager N. E. Sawmill Units, Bonar Bridge, Scotland, June, 1917 to Sept., 1918; Industrial Examiner, U. S. Forest Service, and Assistant to State Fuel Administrator, Hovey E. Slayton, fall of 1918; sons, Heston, b. Nov. 8, 1915, John Minot, March 5, 1918.
+Hodgman, Burns Plummer, p. 43; director First National Bank, Concord; treasurer and director Eagle and Phenix Hotel Co.; treasurer and director Hill Associates; director Concord Mutual Fire Ins. Co.; clerk Concord Water Board; chairman Concord Public Safety Committee; and Chairman Fuel Committee for Concord during the war.
+Hollis, Allen, p. 49; N. H. director W. S. S.
+Hollis, Henry French, p. 81; member U. S. Liquidation Commission, adjusting claims growing out of the war in Europe. Appointed Feb., 1919.
+Hook, Andrew Jackson, p. 33; member N. H. Senate, 1919-20; vice-president N. H. Old Home Week Ass'n.
+Hopkins, Ernest Martin, p. 243; chief of Industrial Relations Branch of the Quartermaster's Corps, Feb. 20, 1918 to Dec. 15, 1918—Assistant to the Secretary of War.
+Howard, Charles Danforth, p. 127; residence, 100 School St., Concord, N. H.
+Howard, Charles Woodbury, p. 59; disbursing officer and agent United States and State of New Hampshire, Selective Service board, district of New Hampshire.
+Hoyt, Horace F., p. 163; member N. H. constitutional convention 1918; doorkeeper N. H. house of representatives, 1919-20.
+Hutchins, Harry Burns, p. 236; resigned as president of Univ. of Mich., March, 1919, to take effect with close of college year; will engage in literary work.
+Hutchins, John Corbin, p. 74; trustee N. H. College, 1918; mem. State Bd. of Education, 1919.
+Ives, Henry Goodson, p. 59; enlisted, Aug. 21, 1917, at Montreal, in 5th Royal Highlanders, re-enforcing the "Black Watch," or 1st Quebec Reg.; served in the orderly room till March, 1918, when detailed for service with the British Chemical Co., at Trenton, Ont., under control of the Imperial Munitions board; discharged Feb. 2, 1919. Resigned as pastor at Andover, N. H., and accepted a call to Unity Church, Amherst, Mass., m. Jan. 19, 1918, Grace E. Mackintosh, Sharon, Mass.
+Jackson, James Robert, p. 71; secretary N. H. constitutional convention, 1889; d. Nov. 22, 1917.
+
+<vocab>New Hampshire, biography, World War I, military service, genealogy, public office</vocab>

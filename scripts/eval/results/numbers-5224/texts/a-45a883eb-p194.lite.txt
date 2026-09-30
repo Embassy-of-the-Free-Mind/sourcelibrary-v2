@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>190</page-num>
+<header>The Book of Clevelanders</header>
+
+vice pres. and sec’y The Gates Legal Publishing Co.; member Delta Tau Delta Fraternity, and Phi Delta Phi Legal Fraternity; member City Club.
+
+MORRIS, Isaac; manager; born, Cradley, Eng., Aug. 4, 1853; son of John Morris; educated, English common schools; married, Pittsburgh, Pa., Mary Allen Southall; issue, two sons and two daughters; citizen-Republican; one of the common people; business career, messenger, 1863; telegraph operator, 1870; steelworker, 1872 to 1878; Western Union Telegraph Co., as operator, chief operator and mgr., 1878 to 1903; mgr. American District Night Watch and Fire Alarm System, 1903 to date; F. & A. M., past presiding officer of all bodies; Oriental Commandery, K. T., past commander and present prelate; A. A. S. R., past master Rose Croix Chapter. Recreation: Books.
+
+MUCKLEY, Henry C.; asst. supt. of instruction, Cleveland Public Schools; born, Tuscarawas County, Ohio, Sept. 28, 1850; educated, public schools and Oberlin College, degree of A. M., from Hiram College, 1896; taught school in Tuscarawas and Stark Counties, until 1872; then in the village schools of Mt. Union for one year; moved to Youngstown, and was principal of the grammar schools until 1884; then in Rayen High School one year; came to Cleveland in 1885 and taught physics in Central High School eight years; in 1893, appointed supervisor of the Cleveland Schools; appointed second asst. supt. of schools in 1901; and first asst. in 1902; member State and National Educational Associations; Republican; member Disciple Denomination.
+
+MUHLHAUSER, Frank; attorney-at-law; born, Cleveland, Nov. 16, 1887; son of Frederick and Antoinette Muhlhauser; educated, Lincoln High School, Bachelor of Laws, Baldwin-Wallace University; married, Cleveland, April 5, 1911, Elsa B. Levi; one son, John Frederick Muhlhauser; active in law practice since 1910, devoting considerable time to real estate law and the drawing of long-time leases; pres. The Muhlhauser Co. of New York; partner Hedley & Muhlhauser, of Cleveland; member State Bar Ass’n; trustee the following: The Cleveland Music School Settlement, Co-Operative Employment Bureau, and The Euclid Ave. Temple; member Excelsior, Oakwood, and Automobile Clubs. Recreation: Golf.
+
+MULHERN, George C.; ex-sheriff of Cuyahoga county; born, Canada, Feb. 9, 1843; educated, public schools, Canada; came to Cleveland in 1861; clerked in grocery store until 1863; then entered the street railway business; has occupied every position from laborer to supt.; supt. Rocky River Steam R. R., 1870-1878; supt. the West Side lines for a number of years, and until his election to sheriff, in 1904, was actively engaged in the street railway business; member Clifton and Gentleman’s Driving Clubs; Republican.
+
+<vocab>Biography, Cleveland, Business, Education, Law, Politics, Organizations</vocab>

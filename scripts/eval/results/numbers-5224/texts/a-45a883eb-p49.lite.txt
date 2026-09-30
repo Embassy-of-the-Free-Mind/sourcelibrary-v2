@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>45</page-num>
+<header>The Book of Clevelanders</header>
+
+land and vicinity (pres. 1913-1914); won oratorical honors of college and state of Minnesota; interested in social and civic application of religion, helped organize Minneapolis Congregational Union, Council of Churches, Columbus, and Federated Churches, Cleveland.
+
+**BURTON, Theodore Elijah**; U. S. senator to March 3, 1915; born, Jefferson, O., Dec. 20, 1851; son of Rev. William and Elizabeth (Grant) Burton; A. B., Oberlin College, 1872, A. M. 1875; (LL. D., Oberlin, 1900, Dartmouth, 1907, Ohio University, 1907); unmarried; admitted to bar, 1875, and since in practice at Cleveland; member 51st (1889-1891), and 54th to 61st (1895-1911) congresses; 21st Ohio Dist.; resigned from 61st Congress, March 4, 1909; U. S. senator, 1909-1915; chairman Inland Waterways Commission, 1906-1908; chairman National Waterways Commission; member National Monetary Commission; Republican nominee for mayor, Cleveland, 1907; delegate Republican National convention, 1904, 1908 (placed William Howard Taft in nomination for the Presidency, Chicago, 1908); pres. Grant Family Ass'n of the U. S. Clubs: Union, Rowfant (Cleveland), Metropolitan (Washington). Author: Financial Crisis and Periods of Industrial and Commercial Depression, 1902; Life of John Sherman, 1906; Corporations and The State, 1911; pres. American Peace Society, 1911.
+
+**BUSE, William**; prop. Hofbrau-Haus; born, Sept. 1, 1865; Heppens, Oldenburg, Germany; in Cleveland since 1867; education, common and high schools; practical restauranteur; married Aug. 27, 1889, Mary Fry; issue, one daughter, Margaret, Dec. 4, 1904; member Concordia Lodge, F. & A. M.; Hillman Chapter, Holyrood Commandery, Lake Erie Consistory; Cleveland Lodge, B. P. O. E.; Westwood Golf Club, Cleveland Athletic Club, Cleveland Automobile Club.
+
+**BUSHNELL, Thomas Hubbard**; lawyer; born, Burton, O., Aug. 17, 1856; son of Ebenezer and Julia Baldwin Bushnell; public school and university education, B. A. 1882, M. A., 1885, Western Reserve College (now Western Reserve University, Adelbert college); married, Columbus, O., Oct. 23, 1889, Sophia Ballard; issue, five children; with Union Rolling Mill Company, this city, 1882-1885; admitted to bar, 1885; practiced law in Cleveland one year, in Hurley, Wis., 1886-1896; and in Cleveland since, except while judge of the Cuyahoga County Insolvency and Juvenile Court, during parts of 1904 and 1905; member Cleveland, Ohio, and American Bar Associations; Delta Kappa Epsilon; Cleveland Chamber of Commerce; Union, University and Country Clubs; trustee Cleveland Humane Society.
+
+**CADWALLADER, Starr**; settlement worker; born, Howard, N. Y., June 11, 1869; son of Joseph Shepard and Anne E. (Starr) Cadwallader; A. B., Hamilton College, 1893, A. M., 1896; graduate Union Theological Seminary, 1896; married Harriet E. Gomph, of
+
+<vocab>Theodore Elijah Burton, William Buse, Thomas Hubbard Bushnell, Starr Cadwallader, Cleveland, biography, legal profession, politics, business</vocab>

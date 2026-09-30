@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>301</page-num>
+<header>TOWN OF SANDWICH. 301</header>
+
+1879, and their tenth anniversary was celebrated on that date of the past year. The charter members were thirteen in number, and the Lodge now embraces a large number of the best citizens of the town. Its dictators have been: A. F. Sherman, 1879; F. S. Pope, 1880; S. R. Bourne, 1881; S. W. Hunt, 1882; P. T. Brown, 1883; F. W. Holway, 1884; E. G. Hamlen, 1885; J. H. Stevens, 1886; F. W. Holway, 1887; and B. F. Chamberlain, 1888–89.
+
+A flourishing G. A. R. Post, Charles Chipman No. 132, is also found here, organized February 24, 1882, and meeting in Hunt’s Hall. It has seventy members. S. W. Hunt has filled the post of commander during the years 1882–83–85 and 86; John F. Cunningham for 1884; and William C. Gifford for 1887–88–89.
+
+The Women’s Relief Corps is an organization to assist the G. A. R., and meets the second and fourth Saturdays of each month. The organization was effected June 23, 1887.
+
+The ladies have also the usual W. C. T. U., organized March 18, 1887, of which Mrs. Mercy Littlefield was two years president. The officers elected for 1889 were: Miss Lydia Jenkins, pres.; Mrs. Fletcher Clark, vice-pres.; Della R. Baker, sec.; and Mrs. Vina Blackwell, treas.
+
+The village has three halls for public use, the principal one being the Casino on School street, built in 1884 by ten men. It is a very large and pleasant hall, accommodating an audience of eight hundred. The front offices are occupied by the engineer and treasurer of the Cape Cod Canal Company. The others are Carlton Hall on Jarvis street, and Hunt’s over Benjamin G. Bartley’s store.
+
+The only library of the village is the Circulating Library of Frederick S. Pope, in the same building with the post office.
+
+The first station agent of the Old Colony railroad was Captain George Atkins, who in 1859 at his death was succeeded by his son, Thomas Atkins; Alvin P. Wing succeeded him a short term, and March 13, 1876, James D. Lloyd, the present agent, was appointed.
+
+CEMETERIES.—The records of the proprietors designated these places of the dead as burial places. The first mentioned by the records is July 6, 1663, when it was ordered “that the little neck of land that lies by Wm. Newland’s house shall be appropriated as a burial place for the town.” This is known as the old burying ground, partially surrounded by the ponds in Sandwich village. In 1695 “The town did give to those of their neighbors, called Quakers, half an acre of ground for a burial place, on the hill above the Canoe Swamp between the ways.” This is now the Friends’ burying ground and near it the present one is located. All grounds are now kept in better order and with more reverence than by the proprietors themselves, for in 1715 by a vote, Mr. Cotton, the minister, had the privilege of pasturing his horse in the burying place by the pond, if he would
+
+<vocab>Sandwich, G. A. R., Charles Chipman Post, Women's Relief Corps, W. C. T. U., Casino, Cape Cod Canal Company, Old Colony railroad, cemeteries, Quakers, Friends' burying ground</vocab>

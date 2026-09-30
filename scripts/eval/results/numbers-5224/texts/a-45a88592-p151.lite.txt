@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>129</page-num>
+<header>TRAVEL AND TRANSPORTATION. 129</header>
+
+two telegraph lines were in a year or two consolidated, and this company was afterward absorbed by the all-devouring Western Union Telegraph Company.
+
+A telegraphic cable was early in 1856 extended from Nobsque point, in Falmouth, to Gay Head, a distance of 3½ miles. August 18, 1856, a cable fourteen miles long was laid from Monomoy to Great point, on Nantucket. Communication was transmitted to and from Nantucket for a day or two, but the cable was either cut or broken by the force of the channel, and after a short time abandoned. In 1858, Samuel C. Bishop, a gutta percha goods manufacturer, who made the last named cable, laid another across Muskeget channel, and established telegraphic communications between Edgartown and Nantucket. There were frequent obstructions, caused sometimes by imperfect insulation, but oftener by vessels' anchors fouling with the cables, and the attempts of Mr. Bishop were abandoned in 1861. Since that time several abortive attempts to maintain cable communications with the islands have been made by the existing telegraph companies, but, from the causes heretofore mentioned, have been unsuccessful. Since 1887, congress having in that year made an appropriation to maintain a cable from Woods Holl to Nantucket via the Vineyard, as an auxiliary of the life-saving service, and also permitting the receipt and transmission of commercial messages, communication has, with occasional interruptions, been maintained to the present time.
+
+Telephone service to the Cape was established in 1882, when a line was constructed and offices opened in West Barnstable, Osterville, Hyannis, Cotuit, and Marston's Mills. The New Bedford system, as it is called, was connected with the Cape the following year (1883), covering the territory above described, and also connecting with Sandwich, Yarmouth, Dennis, Harwich, Harwich Port, South Chatham, Chatham, Brewster, Orleans, Eastham, North Eastham, Wellfleet, Truro, South and North Truro, Beach Point and Provincetown. M. E. Hatch of New Bedford is the general manager.
+
+<vocab>telegraph, cable, Western Union Telegraph Company, Samuel C. Bishop, gutta percha, Nantucket, Edgartown, Woods Holl, telephone, New Bedford system, M. E. Hatch</vocab>

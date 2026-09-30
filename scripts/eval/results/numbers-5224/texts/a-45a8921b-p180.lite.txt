@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>166</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Gen. Elwell S. Otis; on account of prolonged illness from fever, he was obliged to return to the States in May, 1899, since when he has made his home on the ancestral estate in Madbury. Maj. DeMerritt has a large and interesting collection of fire arms, and other military weapons, which he has gathered as souvenirs. Residence, Madbury, N. H., (Dover P. O.).
+
+**Black, Archibald**
+Minister; b., Rothesay, Bute, Scotland, May 24, 1877, s. Hugh and Isabella (McDougall) Black; ed. Rothesay Academy, 1892, Glasgow University, B.A., 1906, United Free Church Hall, Glasgow, and Union Theological Seminary, New York, B.D., 1909; while in Glasgow University, editor of *The Lord Rector*, sub. editor *Glasgow University Magazine*; prize man in English literature and vice-president of Liberal Club; ordained by New York Presbytery, 1909; minister, Bedford Park Presbyterian church, New York City, 1909-14, South Congregational
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man in a clerical collar.</image-desc>
+
+<column-break/>
+
+church, Concord, N. H., 1914-; trustee, N. H. Home Missionary Soc., secretary (unpaid), Congregational American Missionary Ass'n; member, Central Congregational Club of N. H., Merrimack Ass'n Congregational Churches, Concord Ministers' Conference, Anti-Saloon League (Mem. Headquarters Com.), Nat. Security League, N. H. Children's Aid and Protective Soc., N. H. Historical Soc., Wonolancet and Beaver Meadow Golf clubs; m., May 6, 1913, Ruth Hunter, New Rochelle, N. Y.; one son, Robert Hunter, b. April 8, 1915. Residence, Concord, N. H.
+
+**Herbert, John**
+Lawyer; b., Wentworth, N. H., Nov. 2, 1849; s. Samuel and Lydia Maria (Darling) Herbert; ed. public schools, Rumney, N. H., and Boston, Mass.; Dartmouth College (1871); principal of New Ipswich Appleton Academy for three years; studied law with his father; was admitted to the bar in 1875; began practice in Boston in 1880, with ex-Senator Bambridge Wadleigh and Frederick P. Fish, and has since practiced there; member of the Boston Bar Ass'n, Massachusetts Bar Ass'n and American Bar Ass'n; is or has been president of the Appalachian Mountain Club, Congregational Club of Boston and vicinity, Municipal League of Somerville, Independent Club of Somerville, Appleton Academy Ass'n, Scientific Temperance Ass'n, Progressive League of Somerville, Mystic Valley Club, Somerville Citizen Co., Federation of Churches of Somerville, E. T. Cowdrey Co., Bear Creek Oil Co., and Eastern Forge Co. of Massachusetts; director of the Somerville Journal Co., Merchants Co-operative Bank of Boston, The Congregational Sunday-School and Publishing Soc., Somerville Board of Trade, and Somerville Young Men's Christian Ass'n; a visitor of Tufts College; member of the Twentieth Century Club, executive committee of the Republican Club of Massachusetts, Economic Club, Massachusetts Press Ass'n, and New
+
+<vocab>Archibald Black, John Herbert, Elwell S. Otis, biography, New Hampshire, clergy, law, genealogy</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>344</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. H. Kibbee</image-desc>
+CHAS. H. KIBBEE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. D. Kilmer</image-desc>
+M. D. KILMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. P. King</image-desc>
+W. P. KING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. M. Kirk</image-desc>
+F. M. KIRK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. W. Kingsbury</image-desc>
+E. W. KINGSBURY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. H. Kittredge</image-desc>
+L. H. KITTREDGE
+
+<vocab>Chas. H. Kibbee, M. D. Kilmer, W. P. King, F. M. Kirk, E. W. Kingsbury, L. H. Kittredge, The Book of Clevelanders</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>299</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Adams</image-desc>
+E. J. ADAMS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Gardner Abbott</image-desc>
+GARDNER ABBOTT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. D. Adams</image-desc>
+GEO. D. ADAMS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. M. Albrecht</image-desc>
+A. M. ALBRECHT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Agnew</image-desc>
+WM. AGNEW
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Cary R. Alburn</image-desc>
+CARY R. ALBURN
+
+<vocab>Clevelanders, E. J. Adams, Gardner Abbott, Geo. D. Adams, A. M. Albrecht, Wm. Agnew, Cary R. Alburn</vocab>

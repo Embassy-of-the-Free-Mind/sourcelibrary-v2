@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>323</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. C. Ernst</image-desc>
+A. C. ERNST
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Theo. Ensign</image-desc>
+THEO. ENSIGN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. B. W. Ernst</image-desc>
+MR. B. W. ERNST
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. O. D. Eshelman</image-desc>
+MR. O. D. ESHELMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. Ernst</image-desc>
+C. ERNST
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. A. Everett</image-desc>
+H. A. EVERETT
+
+<vocab>A. C. Ernst, Theo. Ensign, B. W. Ernst, O. D. Eshelman, C. Ernst, H. A. Everett, Clevelanders, biography</vocab>

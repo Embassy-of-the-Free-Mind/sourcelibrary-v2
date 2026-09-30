@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>72</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+of men from the Cape was more severely felt than any former ones of the war, for many were engaged on the sea and were enumerated among those liable to do military duty.
+
+The year 1777 opened with many privations to the people of the county. The most of the fishing vessels were rotting at the wharves; the traffic was gone. The farmer might plant, but perhaps the next draft would not leave him to harvest. But they hopefully looked to the desired result. Those at home, not only on the Cape but throughout the colonies, realized that those in the field and at Valley Forge were also enduring hardships; and the vote of the town meeting was "that the town will provide for the families of the absent." The prison-ship inhumanity of the enemy was more severe upon the residents of the Cape than upon any other county, for a larger proportion were in the naval service; but to the credit of these men history does not reveal the name of one who preferred British gold or promotion to the loathsome hold. The American privateers were continually harassing the enemy by their success, having captured prior to 1777 nearly five hundred British vessels, for which the people of the Cape were entitled to great credit.
+
+The notes of war were heard along the Atlantic coast, and early in 1777 the general court resolved to draft every seventh man in the colony to complete the required quota. This was a serious blow to this Cape, for it was ordered to make the draft from all over sixteen years of age, at home and abroad. In June of the same year eighty-eight more men were drafted from the county to proceed to Rhode Island, and August 17th still more were ordered, with field pieces, to protect Truro from the invasions threatened from British men-of-war.
+
+The surrender of Burgoyne, October 22, 1777, caused rejoicings throughout the land, and the court set apart a day for a general thanksgiving. But the end was not yet. In April, 1778, the county of Barnstable was required to furnish seventy-two more men; Yarmouth, fourteen; Barnstable, fifteen; Eastham and Harwich, twelve each; Sandwich, eight; Falmouth, six; Chatham, Wellfleet and Truro, five each, including officers. This had hardly passed when on June 12th this county was desired to send seventy-eight more men, also 505 each of shirts and pairs of shoes and stockings. Of these articles Barnstable furnished eighty-two of each; Yarmouth, seventy-three; Eastham, sixty-five; Harwich, sixty-four; Sandwich, fifty-five; Wellfleet, forty-five; Falmouth, forty-three; Truro, forty-two; Chatham, thirty; and Provincetown, six. The penalty for any delinquency was thirty pounds.
+
+The drafts came so frequently that upon receipt of a letter from General Otis as to the danger of the Cape from British hordes, in which he said, "it is like dragging men from home when their houses
+
+<vocab>Barnstable County, American Revolution, 1777, 1778, military draft, General Otis, Burgoyne, Valley Forge, privateers, British men-of-war</vocab>

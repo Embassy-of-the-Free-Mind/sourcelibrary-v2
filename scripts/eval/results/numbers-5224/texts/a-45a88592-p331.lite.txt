@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>273</page-num>
+<header>TOWN OF SANDWICH. 273</header>
+<sig>18</sig>
+
+Ephriam Swift and Sarah his wife, Moses Swift, Jabez and Abigail his wife, Samuel Sanders, Captain Stephen Swift, Gamaliel Stewart, Samuel Swift, jr., Josiah Swift, Jireh Swift, Joseph Swift, Jonathan Tobey, Nathan and Cornelius Tobey, Gers. om Tobey, Medad Tupper, Eliakim and Eldad Tobey, Dea. Israel Tupper and wife Eliza, John Tobey sr. and jr., Eleazer and William Tobey, Samuel and Seth Tobey, John Vilking, Nathaniel Wing, Widow Wing; Ebenezer Wing.
+
+Returning to the details of the advancement of the town it is found by the records that the inhabitants had not been idle. Leave had been given "to certain persons to box and milk two thousand pine trees, for two years, £2 to be paid to the town for the use." This was in 1707; and in 1717 leave was given "to sundry persons to set up a saw-mill upon the brook at Spring Hill;" also to others the privilege to build a dam across the cove between town neck and the beach to prevent the overflow of the meadows. The remains of this dam are yet visible—a suggestion of future cranberry bogs. Again in 1742 Samuel Wing was voted "the liberty to erect a grist mill on Spring-hill river;" and another law enacted by the town the same year "ordered that a passage be made into the pond in the centre of the town, for herrings."
+
+Another custom of the proprietors, would, if followed, be a cause of alarm at the present day; it was that of firing the woods. At the town meeting held March 21, 1754, forty-two men were appointed "to fire the woods before Apr. 16." To the reader it may appear strange that the custom of firing the woods prevailed here as late as 150 years ago. When this territory was settled the forest was composed of larger trees, consequently but little underbrush, and the trees were not injured by the fire which was to facilitate the growth of herbage of various kinds for sheep and cattle. It also destroyed the noxious shrubs and decaying fallen branches which impeded the travel of man and beast. Doctor Hildreth, in his description of the custom, says: "While the red man possessed the country and annually set fire to the fallen leaves, the forests presented a noble and enchanting appearance. The eye roved with delight. Like the divisions of an immense temple the forests were crowded with innumerable pillars, the branches of whose shafts interlocking, formed the archwork of support to that leafy roof which covered and crowned the whole. But since the white man took possession, the annual fires have been checked, and the woodlands are now filled with shrubs and brush that obstruct the vision on every side, and convert these once beautiful forests into a rude and tasteless wilderness."
+
+Referring again to the town records, the fact is evident that prior to 1726 the town had had no poor people, or the community had for-
+
+<vocab>Sandwich, Massachusetts, town records, saw-mill, grist mill, Spring Hill, cranberry bogs, firing the woods, Doctor Hildreth, forest management, colonial history</vocab>

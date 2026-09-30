@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>203</page-num>
+<header>BENCH AND BAR. 203</header>
+
+the charter of 1691, referring to the probate of wills, vesting that power in the governor and council; and finding courts established in the several counties for that purpose, ordered that these courts be continued. The incumbents have been: first, in 1693, Barnabas Lothrop; June 15, 1714, John Otis; December 26, 1727, Melatiah Bourne; January 6, 1740-1, Sylvanus Bourne; February 1, 1764, James Otis; March 27, 1781, Daniel Davis; May 27, 1799, Ebenezer Bacon; January 30, 1800, John Davis; June 8, 1825, Job E. Davis; January 11, 1828, Nymphas Marston; December 18, 1854, George Marston; May 13, 1858, Joseph M. Day; June 14, 1882, Hiram P. Harriman.
+
+The registers of probate have been: in 1693, Joseph Lothrop; August 13, 1702, William Bassett; June 14, 1721, Nathaniel Otis; August 23, 1729, Sylvanus Bourne; January 6, 1740-1, David Gorham; August 28, 1775, Nath. Freeman; January 22, 1823, Abner Davis; March 28, 1836, Timothy Reed; June 29, 1852, Nath'l Hinckley; March 2, 1853, George Marston; December 28, 1854, Joseph M. Day; Rufus S. Pope; June 29, 1858, Charles F. Swift; 1858, Jonathan Higgins; 1874, Charles Thacher, 2d; 1884, Freeman H. Lothrop.
+
+The statute of 1858, Chapter 138, authorized the governor to designate, not exceeding *nine* justices of the peace, in the county of Barnstable, as trial justices, to try criminal offenders, whose jurisdiction extended to any town in the county. Subsequently their jurisdiction was enlarged by statute of 1877, Chapter 211, which authorized them to have original and concurrent jurisdiction with the superior court of civil actions of contract, tort, or replevin, where the debt or damages demanded or value of property alleged to be detained is more than one hundred and does not exceed three hundred dollars. In other matters, their jurisdiction was coextensive with ordinary municipal and district courts.
+
+Those who have held the office of trial justice, since 1858, in the county, are: Ebenezer Bacon, Barnstable, from 1860 to 1869; Edward W. Ewer, Sandwich, 1858 to 1860; James B. Crocker, Yarmouth, 1858 to 1884; George W. Donaldson, Falmouth, 1858 to 1865; Joseph K. Baker, jr., Dennis, 1859 to 1861; John W. Davis, Wellfleet, 1858 to 1865; Albion S. Dudley, Provincetown, 1858 to 1863; Cyrus Weeks, Harwich, 1858 to 1866; Ebenezer S. Whittemore, Sandwich, 1860 to 1889, and continues; Marshall S. Underwood, Dennis, 1861 to 1882; Isaac Bea, Chatham, 1862 to 1872; Benjamin F. Hutchinson, Provincetown, 1868 to 1870; Theodore F. Bassett, Hyannis, 1868 to 1889 and continues; Smith K. Hopkins, Truro and Barnstable, 1867 to 1889 and continues; Frederick Hebard, Dennis, 1868 to 1869; Richard S. Wood, Falmouth, 1865 to 1875; George T. Wyer, Wellfleet, 1872 to 1889 and continues; Shubael B. Kelley, Harwich Port, 1873 to 1889 and continues; Raymond Ellington, Provincetown, 1875 to 1878; James H. Hop-
+
+<vocab>probate, Barnstable County, trial justices, registers of probate, Massachusetts statutes, civil jurisdiction</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>331</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Albert Grossman</image-desc>
+ALBERT GROSSMAN
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Judge Geo. A. Groot</image-desc>
+JUDGE GEO. A. GROOT
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Geo. F. Gund</image-desc>
+GEO. F. GUND
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of H. E. Hackenberg</image-desc>
+H. E. HACKENBERG
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Jno. M. Gundry</image-desc>
+JNO. M. GUNDRY
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of W. O. Haldy</image-desc>
+W. O. HALDY
+
+<vocab>Albert Grossman, Judge Geo. A. Groot, Geo. F. Gund, H. E. Hackenberg, Jno. M. Gundry, W. O. Haldy, The Book of Clevelanders, Cleveland biography</vocab>

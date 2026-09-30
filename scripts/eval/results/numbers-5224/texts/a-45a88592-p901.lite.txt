@@ -1,0 +1,7 @@
+<scan-quality>good</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>blank</page-type>
+<warning>The page is blank, though a very faint, nearly invisible impression of a portrait is discernible in the center.</warning>
+<image-desc size="medium" type="portrait" significance="high">A very faint, barely visible impression of a portrait, likely a blind embossing or a ghost image from an adjacent page.</image-desc>
+<vocab>blank page, ghost image</vocab>

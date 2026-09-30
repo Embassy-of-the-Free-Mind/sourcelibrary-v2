@@ -1,0 +1,43 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>109</page-num>
+<header>MILITARY HISTORY. 109</header>
+
+surmounts the column, and on the east side are the names of Captain Charles M. Upham, Lieutenant Franklin D. Hammond, David G. Young, Benjamin F. Bassett, Zebina H. Dill, and Edwin S. Nickerson. The west face bears the names of Captain William H. Harley, Sergeant Nathaniel B. Smith, Sergeant Francis M. Armstrong, Seth T. Howes, Nathan Eldridge, John Bolton, and James Blauvelt.
+
+Orleans, a few years after the war, erected on the square opposite the town house a fine shaft surmounted by the life-size figure of a soldier at parade rest. On the north face of the monument are the names of James E. Studley, John M. Cowan, Joseph Moody, and Lewis Eldridge; and on the south, Isaac Y. Smith, Joshua Gould, Freeman A. Sherman and John W. Walker.
+
+In 1866 the Ladies’ Soldiers’ Aid Society, assisted by the subscribers to the war fund, erected a monument at Wellfleet in the burial ground at the head of Duck creek. Upon the south square of the main shaft are the names of William A. Holbrook, Daniel M. Hall, and Charles R. Morrill; and on the north the names of those who died in the naval service—Levi Y. Wiley, John Y. Cole, John D. Langley, and John N. Langley. The monument, surrounded by an iron fence, stands adjacent to the highway.
+
+Provincetown, at a cost of about $2,800, erected a fine monument to the memory of her soldiers. The face bears this inscription:
+
+> ERECTED BY THE TOWN OF PROVINCETOWN IN 1867 IN GRATITUDE TO THE MEMORY OF THE FALLEN WHO SACRIFICED THEIR LIVES TO SAVE THEIR COUNTRY DURING THE GREAT REBELLION OF 1861–1865.
+
+The right face has this inscription:
+
+->ARMY.<-
+->THOMAS J. GIBBONS.<-
+->GEORGE LOCKWOOD.<-
+->HENRY A. SMITH.<-
+->GEORGE E. CROCKER.<-
+->JEREMIAH BENNETT.<-
+->ELKANAH SMITH.<-
+->TAYLOR SMALL, JR.<-
+->JOHN G. LURTEN.<-
+->JOHN W. HOBBINS.<-
+->JOHN R. SMITH.<-
+->SOLOMON R. HIGGINS.<-
+->JOSEPH KING.<-
+
+The inscription on the left face is:
+
+->NAVY.<-
+->JOSIAH C. FREEMAN.<-
+->SAMUEL T. PAINE.<-
+->WILLIAM E. TUPPER.<-
+->WILLIAM H. CHIPMAN.<-
+->ASA A. FRANKEN.<-
+
+<vocab>Military history, Civil War monuments, Provincetown, Wellfleet, Orleans, Soldiers' Aid Society, war memorials</vocab>

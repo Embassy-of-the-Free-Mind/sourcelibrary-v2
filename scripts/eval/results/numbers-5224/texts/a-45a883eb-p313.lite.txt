@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>309</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Stephen E. Brooks</image-desc>
+STEPHEN E. BROOKS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. T. Brooks</image-desc>
+CHAS. T. BROOKS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. T. Brown</image-desc>
+O. T. BROWN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of T. Dave Brown</image-desc>
+T. DAVE BROWN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. J. Brown</image-desc>
+P. J. BROWN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. J. Buerman</image-desc>
+G. J. BUERMAN
+
+<vocab>Stephen E. Brooks, Chas. T. Brooks, O. T. Brown, T. Dave Brown, P. J. Brown, G. J. Buerman, Clevelanders, biography</vocab>

@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>219</page-num>
+<header>The Book of Clevelanders</header>
+
+tember 1899, to September, 1911; elected three times; served twice under appointment of Gov. Bushnell; from law school went West to Fredonia, Kas., practiced law there until 1897; moved to Sandusky, O., April, 1897; practiced law until September, 1899, when appointed Common Pleas Judge by Gov. Bushnell, elected three times, term would have expired Feb. 9, 1913; resigned, came to Cleveland, formed partnership with J. G. Russel and G. H. Eichelberger, under firm name of Reed, Russell & Eichelberger; Mr. Russell retired a year ago; the firm is now Reed & Eichelberger; member Colonial, and Athletic Clubs.
+
+**REHOR**, Anton Karl; cement contractor; born, Bohemia, Dec. 7, 1871; son of Joseph and Frances Klika Rehor; public school education; married, May 3, 1904, Anna Goll; issue, Anton K. Jr., Anna, and Alfred; came to Cleveland in 1899; started as cement worker, and in 1902, went into business for himself; in 1907, laid for City of Cleveland, 105,000 square feet of cement work; does most of brewery contracting, floors and walks; member Sokol (Turners), Eagles; member Marblehead Hunting and Fishing Club. Recreation: Hunting.
+
+**REICHERT**, J. P.; pres. and gen. mgr.; born, Cleveland, Sept. 14, 1877; son of J. P. and Lena Eichorn Reichert; educated, Cleveland public and high schools; married, Cleveland, Oct. 14, 1903, Martha Augusta Withycombe; issue, two sons, engineers Ohio National Guards; for ten years, bookkeeper Wholesale Dept., William Taylor Sons & Co.; two years sec'y and treas. The Ohio Lead Smelting Co.; entered the employ of J. M. & L. A. Osborn Co., March 4, 1903; made sec'y and treas. Jan. 1, 1904, and pres. and gen. mgr., at Mr. Osborn's death, July 6, 1912; member St. Paul's Episcopal Church, East Cleveland; pres. Harmony Club. Recreations: Motoring, Tennis and Y. M. C. A. Enthusiasm.
+
+**REID**, Albert T.; coal dealer; born, Cleveland, April 27, 1875; son of Joseph J. and Rebecca Reid; educated, Cleveland grammar schools; married, Cleveland, Jan. 4, 1899; Nellie S. Rane; three children; pres. and treas. The Fronek-Reid Coal Co.
+
+**REIMAN**, Joseph; roofer; born, Germany, Oct. 22, 1867; educated in the public schools of Germany; married, Germany, 1886, Anna Kuehl; six children; lumber business four years; with Elaborated Roofing Co.
+
+**REITZ**, Mathew; tailor; born, Hungary, Feb. 23, 1878; married, Cleveland, Oct. 9, 1907, Mamie Keal, one child; started in business eleven years ago with practically no capital; business grew, and in two years became associated with Phil. Langguth, as firm of Reitz & Langguth; firm was dissolved last July; since then he has incorporated the Reitz Tailoring Co.; pres. of the firm, and W. S. Raeder, sec'y and treas.; in new location, 2995 W. 25th St., but a short time, but the business is prospering.
+
+<vocab>Anton Karl Rehor, J. P. Reichert, Albert T. Reid, Joseph Reiman, Mathew Reitz, Cleveland, biography, business, industry</vocab>

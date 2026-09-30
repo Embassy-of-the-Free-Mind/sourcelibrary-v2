@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>273</page-num>
+<header>The Book of Clevelanders 273</header>
+<sig>18</sig>
+
+**VAN EPPS, Leslie**; wholesale coal dealer; born, Cleveland, May 9, 1883; son of John L. and Fannie Noakes Van Epps; educated, Central High School and Case School of Applied Science; married, New York City, Sept. 29, 1908, Mabel E. Anderson; two children; supt. "Catherine Colliery," of the Trevorton Co., of Trevorton, Pa.; sec'y and treas. The Van Epps Coal Co.; member Phi Kappa Psi Fraternity.
+
+**VAN TRESS, Herman B.**; dentist; born, Ohio, Oct. 8, 1865; son of Cyrus H. and Jane Donaldson Van Tress; educated, public schools, Wilmington, O.; married, Sandusky, O., Sept. 6, 1894, Eva D. Gordon; issue, two daughters, Bessie and Gladys; received professional training at The Ohio College of Dental Surgery, Department of Dentistry, University of Cincinnati; graduating with degree of D. D. S., March 11, 1891; member Ohio Dental Society, Northern Ohio Dental Society, and Cleveland Dental Society; came to Cleveland in the spring of 1897; went to Los Angeles, Cal., immediately after his marriage, and remained there about two years and a half; member Cleveland Camera Club. Recreations: Amateur Photography, Billiards and Books.
+
+**VAN VALKENBERG, Dr. Horace**; dentist; born, Russell, O., Jan. 29, 1884; son of A. E. and Mary Kilby Van Valkenburg; educated, Chagrin Falls High School; graduate, D. D. S., Western Reserve University; married, Cleveland, Aug. 12, 1908, Lucy M. Hudson.
+
+**VARGA, Hugo Eugene**; lawyer; born, Kassa, Hungary, June 16, 1885; son of Joseph and Sophie Varga; educated, Gymnasium in Kassa, Hungary; graduated, in 1903, with highest honors, Five Semester, in the Royal Hungarian University, of Budapest; second highest honors, University of Illinois, 1907; Northwestern University Law School, Chicago, 1908-1909, LL. B., 1909; participated in National Progressive Party Campaign in 1912, speaking in Northern Ohio; admitted to Illinois bar in 1910, and Ohio bar, 1911; attorney for Austro-Hungarian Consulate, 1910-1913; in active practice in Cleveland since December, 1911; 1908-1909 chief clerk of Rubens, Fisher, Mosser & Rigby, counselors, Chicago; abroad, asst. sec'y Law Club, Law College, Hungary; member board of directors, Royal University Society, Budapest; 1904-1905, member Protective League, Chicago, and Civic League, Cleveland; American Society for International Law; American Institute of Criminal Law and Criminology; American Sociological Society, American Association for Labor Legislation, National Child Labor Committee, National Conference of Charities and Corrections; pres. Alumni Associations of Northern Ohio University; member Goethe-Schiller Verein, Woodmen of the World, Hungarian American Federation, Corda Frabes, Association of Cosmopolitan Clubs, University of Illinois Alumni Ass'n, Northwestern University Alumni Association, Cleveland; member City Club, Chamber of Commerce and Progressive Club; in 1907, editor Chicago Hungarian Weekly News; has written as regular contributor to various local and university papers abroad; speaks several languages.
+
+<vocab>biography, Cleveland, lawyers, dentists, coal dealers, Hungarian-Americans, professional associations, alumni associations</vocab>

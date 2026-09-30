@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>354</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. J. Mandelbaum</image-desc>
+M. J. MANDELBAUM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. C. Mapes</image-desc>
+G. C. MAPES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of S. W. Mather</image-desc>
+S. W. MATHER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. E. Maxfield</image-desc>
+C. E. MAXFIELD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fred Mattmueller</image-desc>
+FRED MATTMUELLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. B. Meade</image-desc>
+F. B. MEADE
+
+<vocab>M. J. Mandelbaum, G. C. Mapes, S. W. Mather, C. E. Maxfield, Fred Mattmueller, F. B. Meade, Clevelanders, biography</vocab>

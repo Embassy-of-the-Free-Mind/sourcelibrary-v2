@@ -1,0 +1,11 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A landscape engraving depicting the residence of Daniel P. Bursley in West Barnstable, Massachusetts. The scene shows a large house with a porch, outbuildings, a windmill, and a fenced yard, viewed from a slightly elevated perspective.</image-desc>
+
+->RESIDENCE OF DANIEL P. BURSLEY,<-
+->*West Barnstable, Mass*<-
+
+<vocab>Daniel P. Bursley, West Barnstable, Massachusetts, residence, architecture, windmill</vocab>

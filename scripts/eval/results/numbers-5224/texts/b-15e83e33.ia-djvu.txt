@@ -1,0 +1,36 @@
+METHOD OF INDETERMINATE MULTIPLIERS. 9
+and we are to shew, that in solving this equation with reference
+to any variable z by the general theorem (75), we shall obtain
+not only the general value of z independent of /% and 4, but
+also any subsidiary relations which may exist between z and y
+independently of z.
+If we represent the general equation (2) under the form
+F (zyz) = 0, its solution may by (75) be written in the form
+ry (iy) y(i-2)_ (1-2) (-y),
+Oe ACLS ,_ £00) 7, F(Olt) | _ £(001) °
+F(110) F(100) F010) F000)
+and we have seen, that any one of these four terms is to be
+equated to 0, whose modulus, which we may represent by J,
+does not satisfy the condition "= M, or, which is here the
+same thing, whose modulus has any other value than 0 or 1.
+Consider the modulus (suppose J/,) of the first term, viz.
+a and giving to the symbol F its full meaning,
+~ F(110)
+we |have Ue 1
+1 (ill) + AWG) + AX CU) ©
+(110) + Ap (110) + Ax (110)
+It is evident that the condition MZ," = M, cannot be satisfied
+unless the right-hand member be independent of A and 4; and
+in order that this may be the case, we must have the function
+111) + Ay (411) + Ay (111) . ;
+tire A LIDS rs at independent of A and &.
+Assume then
+g(111) + Api) + Ax G1) ;
+p (110) + AW(110) + Ay (110)
+e being independent of A and &; we have, on clearing of frac-
+tions and equating coefficients,
+g(111)=e(110), P(111)=eP(110), x (111) = cx (110);
+whence, eliminating c,
+g(Qtl)_ Yl) xQ1))
+(110) Y(110) y(110)’
+b

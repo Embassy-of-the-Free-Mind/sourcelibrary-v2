@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>40</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+incorporated as towns; Falmouth, Harwich, Truro and Monomoy, soon after made towns, were plantations assuming rights of self government; and since the formation of the county, Mashpee has been incorporated, Wellfleet and Orleans set off from Eastham, Brewster from Harwich, Dennis from Yarmouth, and Bourne from Sandwich. Sippecan, or Rochester, was temporarily annexed to this county, but was transferred to Plymouth county.
+
+Barnstable was designated as the shire town, where a court house was at once erected adjoining the old training ground on the south side of the county road, and nearly opposite the site of the present Baptist church in Barnstable village. The second court house was erected in 1774, and after the completion of the present court house it was purchased by the Baptist society, turned to face westward, and remodeled to its present form, and since has been the Baptist church of the village. The officers for the new county were appointed at its incorporation, and the body corporate assumed its distinctive civil jurisdiction over the same territory now comprising its more numerous towns.
+
+In 1691 the rights of general suffrage and more liberal local legislation in the towns were guaranteed by the accession to the English throne of William and Mary, who united the colonies and formed the province of Massachusetts Bay. The powers of the towns were increased, and the New England town system became a model for municipal imitation, inaugurating a method of control over local affairs that should regulate, like the governor of the engine, the entire machinery of the government. The county, as a confederation of towns with sovereign powers, is a concentration of these corporate bodies, combining increased strength that shall comparatively more advance the social and civil affairs of the body politic.
+
+An attempt was made in 1734, by petitions in behalf of the lower towns, to have the county divided and those towns set off as a distinct county; but failing in this, the towns petitioned for the abolishment of some of the courts annually held at the court house. In the civil history of the county no bitter party strife has interrupted the harmonious execution of its duly constituted powers, and especially may this assertion be applied to its history since 1774. At that date the term whig was given to those who were in favor of resisting the taxations and aggressions of Great Britain; and to those who were willing to acquiesce in the demands the name tory was applied. Among other exactions Great Britain assumed the right to appoint the council, and also gave the sheriff the right to appoint the jurors—rights belonging to and that had long been enjoyed by the body politic. This aroused the indignation of many of the whigs of the upper part of the county, who determined to prevent the September sitting of the
+
+<vocab>Barnstable County, Massachusetts, shire town, court house, Baptist society, William and Mary, Massachusetts Bay, town system, whig, tory, Great Britain, taxation, jurors</vocab>

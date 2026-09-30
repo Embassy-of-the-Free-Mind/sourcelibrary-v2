@@ -1,0 +1,80 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>400</page-num>
+<header>The Book of Clevelanders</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Brooks, Stephen E. | 39 | Clarke, Jay N. | 56 |
+| Brown, Ernest B. | 39 | Cleveland, William H. | 56 |
+| Brown, Orlof T. | 40 | Clough, George Franklin | 56 |
+| Brown, Paul J. | 40 | Clum, Alfred | 56 |
+| Brown, T. Dave | 40 | Coach, Richard J. | 57 |
+| Bruce, Frank F. | 40 | Cody, Henry Bissell | 57 |
+| Bruch, Frederick W. | 40 | Cogan, James Edward | 57 |
+| Brudno, Ezra Selig | 41 | Cohn, Albert A. | 57 |
+| Bruno, Ernst W. | 41 | Coleman, Frederick Albert | 57 |
+| Brush, Charles Francis | 41 | Collacott, Charles M. | 58 |
+| Buerman, George J. | 42 | Collie, Willard A. | 58 |
+| Bulkley, Robert Johns | 42 | Collier, Arthur W. | 58 |
+| Bunts, Frank Emory | 42 | Collver, D. Jay | 58 |
+| Burdick, Russell Emmett | 42 | Comerford, John Joseph | 58 |
+| Burger, Fred | 43 | Comey, George P. | 59 |
+| Burke, Thomas A. | 43 | Comstock, Frank Mason | 59 |
+| Burke, Vernon H. | 43 | Conant, Jessie Grant | 59 |
+| Burkhart, Harry | 43 | Conelly, Ludwig S. | 59 |
+| Burnham, Thomas Winston | 43 | Congalton, W. P. | 60 |
+| Burrows, Charles William | 44 | Conger, James W. | 60 |
+| Burrows, George Humphrey | 44 | Connelly, William Clement | 60 |
+| Burton, Charles Emerson | 44 | Cook, Albert Judson | 60 |
+| Burton, Theodore Elijah | 45 | Cook, C. Brenton | 61 |
+| Buse, William | 45 | Cook, Harley Stephen | 61 |
+| Bushnell, Thomas Hubbard | 45 | Cook, Otis Richmond | 61 |
+| | | Cool, Henry R. | 61 |
+| Cadwallader, Starr | 45 | Corday, B. F. | 62 |
+| Caine, Frank C. | 46 | Corlett, William Thomas | 62 |
+| Caley, Frederick Henry | 46 | Corning, Henry Wick | 62 |
+| Calhoun, Newton S. | 46 | Cotabish, Nelson C. | 63 |
+| Callow, William George | 47 | Cottingham, Walter Horace | 63 |
+| Campbell, John C. | 47 | Courtney, Clarence W. | 63 |
+| Canfield, George R. | 47 | Cowdery, Warren Hervey | 63 |
+| Canniff, W. H. | 47 | Cowles, John G. W. | 64 |
+| Carleton, Charles Henry | 48 | Cox, Jacob Dolson | 64 |
+| Carpenter, Frank B. | 48 | Cox, Jacob Dolson, Jr. | 64 |
+| Carrel, Moses Gray | 48 | Cox, John H. | 65 |
+| Carroll, Frank P. | 49 | Crampton, Paul Scott | 65 |
+| Case, Eckstein | 49 | Crane, Fred Sanford | 65 |
+| Cashman, William J. | 49 | Crane, Percie D. | 65 |
+| Cassidy, James H. | 49 | Creech, Harris | 65 |
+| Caughlin, Thomas | 49 | Creer, William R. | 65 |
+| Caulkins, David Lee | 50 | Crew, William Binford | 66 |
+| Chamberlain, William W. | 50 | Crile, George W. | 66 |
+| Chamberlain, Charles D. | 50 | Crofut, William Elmer | 66 |
+| Chamberlain, Oliver N. | 50 | Crowell, Benedict | 66 |
+| Champ, Joseph H. | 51 | Crum, X. X. | 67 |
+| Champney, William P. | 51 | Cudell, Frank Edward | 67 |
+| Chandler, Francis M. | 51 | Cullitan, Frank T. | 67 |
+| Chapin, Fred Howard | 51 | Cunningham, Edward Walter | 68 |
+| Chard, William P. | 52 | Currier, John J. | 68 |
+| Charlesworth, David | 52 | Curtis, Mattoon Monroe | 68 |
+| Chase, Charles W. | 52 | Curtiss, J. Milton | 69 |
+| Chase, William Wayne | 52 | Cushing, William Erastus | 69 |
+| Chesbro, Ellis Jones | 53 | Cutler, James Elbert | 69 |
+| Chestnutt, Charles Waddell | 53 | | |
+| Childs, Lyman W. | 53 | Dall, Andrew | 69 |
+| Chisholm, C. Kenneth | 53 | Dall, William | 70 |
+| Chisholm, Stewart Henry | 53 | Daly, Martin B. | 70 |
+| Chrisford, James W. | 54 | Dangler, D. Edward | 71 |
+| Christian, George Bridson | 54 | Daniels, Irving L. | 72 |
+| Clark, Frank H. | 54 | Daoust, Edward Chellis | 72 |
+| Clark, Neil T. | 55 | Darby, John Eaton | 73 |
+| Clark, Robert Henry | 55 | Davidson, Wilbur Leroy | 73 |
+| Clarke, Norris J. | 55 | Daviess, W. W. | 73 |
+| Clarke, John Hessin | 55 | Davis, Albert Richard | 73 |
+
+<column-break/>
+
+<vocab>Index, Cleveland, Biography, Directory</vocab>

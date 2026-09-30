@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>410</page-num>
+<header>The Book of Clevelanders</header>
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Hunt, W. D. | 339 | Luekens, Paul G. | 350 |
+| Hunter, A. A. | 339 | Lyon, W. F. | 350 |
+| Huston, F. W. | 340 | | |
+| Hutchins, Hon. Jno. C. | 340 | MacAdams, A. J. | 350 |
+| Hyde, W. F. | 340 | MacDiarmid, R. W. | 350 |
+| Hyre, A. E. | 340 | McBride, M. | 350 |
+| | | McCallie, A. P. | 351 |
+| Jackson, C. E. | 340 | McDonald, C. A. | 351 |
+| Jeavons, A. N. | 340 | McIntosh, S. P. | 351 |
+| Jensen, P. | 341 | McIntyre, D. C. | 351 |
+| Jewett, C. A. | 341 | McKay, E. C. | 351 |
+| Johnson, Geo. B. | 341 | McKay, Robt. H. | 351 |
+| Johnson, L. A. | 341 | McKee, A. G. | 352 |
+| Johnston, Albert W. | 341 | McKeehan, H. H. | 352 |
+| Jones, Frank Z. | 342 | McKinstry, Chas. T. | 352 |
+| Joyce, A. D. | 342 | McMahon, Rev. Wm. | 352 |
+| Juengling, J. W. | 342 | McMasters, R. E. | 352 |
+| | | McMillin, H. E., Jr. | 352 |
+| Kanner, G. | 342 | McNutt, H. F. | 353 |
+| Karr, John U. | 342 | Mach, H. L. | 353 |
+| Kasper, W. C. | 342 | Maedje, C. W. | 353 |
+| Kassulker, Paul G. | 343 | Magel, C. L. | 353 |
+| Kaufman, H. L. | 343 | Maly, Fred | 353 |
+| Keeler, Judge H. R. | 343 | Manchester, F. A. | 353 |
+| Kellogg, F. D. | 343 | Mandelbaum, M. J. | 354 |
+| Kelly, W. E. | 343 | Mapes, G. C. | 354 |
+| Kelly, Wm. E. | 343 | Mather, S. W. | 354 |
+| Kennedy, L. B. | 343 | Mattmueller, Fred | 354 |
+| Kibbee, Chas. H. | 344 | Maxfield, C. E. | 354 |
+| Kilmer, M. D. | 344 | Meade, F. B. | 355 |
+| King, W. P. | 344 | Menjou, Adolph | 355 |
+| Kingsbury, E. W. | 344 | Merriam, J. W. | 355 |
+| Kirk, F. M. | 344 | Merville, E. E. | 355 |
+| Kittredge, L. H. | 345 | Metzenbaum, Dr. Myron | 355 |
+| Klee, John | 345 | Meyer, Fred | 355 |
+| Kling, John A. | 345 | Miller, Casper J. | 355 |
+| Knapp, H. H. | 345 | Miller, Dan T. | 356 |
+| Knight, Thomas A. | 345 | Miller, Samuel | 356 |
+| Knight, A. C. | 345 | Mills, G. M. | 356 |
+| Koch, R. A. | 345 | Minnick, C. F. | 356 |
+| Kornman, Wm. | 346 | Minshall, W. E. | 356 |
+| Kraus, E. F. | 346 | Mitchell, Ralph D. | 356 |
+| Krause, Frank S. | 346 | Moatz, Herb. C. | 357 |
+| Kuehnle, C. F. | 346 | Mooney, E. J. | 357 |
+| Kuenhold, Otto J. | 346 | Mooney, M. P. | 357 |
+| Kunze, Paul | 346 | Morgan, C. F. | 357 |
+| | | Morgan, Robt. D. | 357 |
+| Lang, Chas. E. J. | 347 | Morris, Isaac | 357 |
+| Lang, Elmer J. | 347 | Morris, Chas. A. | 358 |
+| Lang, Geo. C. | 347 | Moritz, F. H. | 358 |
+| Latimer, W. T. | 347 | Moss, Gus C. | 358 |
+| Laub, Jacob | 347 | Mulhauser, Frank | 358 |
+| Laughlin, C. F. | 347 | Murfey, C. L. | 358 |
+| Leavenworth, E. J. | 348 | Murfey, L. A. | 359 |
+| Lenihan, E. P. | 348 | Murphy, Rev. G. F. | 359 |
+| Lewin, Jno. F. | 348 | Murray, C. B. | 359 |
+| Lewis, W. I. | 348 | Murray, W. P. | 359 |
+| Liebenthal, S. | 348 | Myers, W. E. | 359 |
+| Liechti, Jno. P. | 348 | | |
+| Litzler, L. I. | 349 | Nally, J. A. | 359 |
+| Livingston, D. S. | 349 | Neale, H. H. | 359 |
+| Loeffelbein, G. A. | 349 | Nelson, Capt. N. B. | 360 |
+| Lorentz, Geo. A. | 349 | Neuberger, Dr. Jno. | 360 |
+| Lowell, E. D. | 349 | Nicholson, Ezra | 360 |
+| Lowry, H. F. | 349 | Nicola, B. D. | 360 |
+| Ludwig, Ernest | 350 | Nierman, R. G. | 360 |
+
+<vocab>Cleveland, biography, directory, index</vocab>

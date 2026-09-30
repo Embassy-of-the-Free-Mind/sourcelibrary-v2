@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>477</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+LL.D., Univ. of Colorado, 1888; served in Union Army Sept., 1861 to Aug., 1864, when honorably discharged as brevet major; superintendent of schools, Normal, Ill, 1864–74; superintendent of schools, Denver, Colo., 1874–1904; representative of the beet sugar industry in the arid states 1905– ; commander Loyal Legion, Colorado Commandery, two years; A. F. & A. M., 33d degree; Grand Commander K. T. of Colorado, three years; president National Educational Ass'n, three years; Congregationalist; Republican; m., Feb. 13, 1865, Caroline Spofford, North Andover, Mass. Residence, Denver, Colo.
+
+**McLaughlin, George Asbury**
+
+Clergyman; b., Nashua, N. H., Oct. 13, 1851; s. John and Mary A. (Towle) McLaughlin; ed. public schools, Wesleyan University (Conn.), A.B. 1873; A.M. 1875; D.D. Taylor Univ., 1903; ordained M. E. ministry, 1875; pastor, Franklin Falls, N. H., 1875–7; Whitefield, 1877–9; Littleton 1879–82; First Church, Haverhill, Mass., 1882–5; Laconia, N. H., 1885–8; Exeter, 1888–92; in evangelistic work, Chicago, 1892–1912; editor *Christian Witness*, Chicago, 1901–17; author of several commentaries and pamphlets; Prohibitionist; m., 1st, Oct. 27, 1875, Mary Ella Henshaw, Middletown, Conn.; d., Jan. 21, 1910; 2d, Oct. 20, 1914, Mrs. Jennie Reeves Walker. Residence, Los Angeles, Cal.
+
+**Marden, Orison Swett**
+
+Author and editor; b., Thornton, N. H., s. Louis and Martha (Cilley) Marden; ed. public schools, Boston Univ., B.S. 1877; A.M. and Bachelor of Oratory, 1879; LL.B. 1882; M.D., Harvard, 1881; author "Rushing to the Front," 1894, and about fifty other books; founder of the Success Magazine in 1897, and editor of the same to 1912; editor Consolidated Encyclopedic Library (10 vols.), 1901; editor New Success Magazine; president Aldine Club; president League for the Larger Life; m., May, 1905, Clara L. Evans, Louisville, Ky. Residence, Sea Cliff, L. I.
+
+<column-break/>
+
+**Rogers, William Nathaniel**
+
+Lawyer; b., Wakefield, N. H., Jan. 10, 1892; s. Herbert E. and Lilian A. (Sanborn) Rogers; ed. public schools, Wakefield, Brewster Free Academy, Wolfeboro; Dartmouth College; University of Maine School of Law, 1916; admitted to the N. H. bar in 1916 and practiced that year at Sanbornville and Wolfeboro; since July, 1917, in Concord; member firm of Streeter, Demond, Woodworth & Sulloway; Episcopalian;
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of William Nathaniel Rogers</image-desc>
+
+Democrat; member N. H. house of representatives, 1917–18, 1919–20; member judiciary committee both sessions; Democratic candidate for Congress, 1st N. H. District, 1918; for speaker of the house in the legislature of 1919; member Phi Kappa Psi, Dartmouth; Phi Alpha Delta, Univ. of Maine, Knights of Pythias, A. F. & A. M., K. T., N. H. Bar Ass'n; m., Aug. 31, 1912, Winnie E. Stevens, Farmington, N. H.; children, Pauline E., b. April 29, 1913; Una C., b. July 3, 1915. Residence, Sanbornville, N. H.; business address, Concord, N. H.
+
+<vocab>Biographies, New Hampshire, Lawyers, Clergymen, Authors, Politicians, 20th Century</vocab>

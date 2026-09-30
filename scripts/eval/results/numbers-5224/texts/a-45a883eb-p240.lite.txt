@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>236</page-num>
+<header>The Book of Clevelanders</header>
+
+good judge of coal; member Chamber of Industry. Recreation: Gardening and Shooting.
+
+**SCOTT, Nathan Stone**; surgeon; M. D., Oberlin College, 1885-1887; Western Reserve University, 1889; (hon. A. M. Oberlin, 1895); Prof. principles of surgery, and dean, Cleveland College Physicians and Surgeons; consulting surgeon, Cleveland General and St. John's Hospitals; member A. M. A., Ohio State Medical Society, Cleveland Medical Society, American Association Gynecologists and Obstetricians.
+
+**SCULLEN, Rev. William A.**; Ph. D., S. T. D., J. C. D.; sec'y Diocese of Cleveland; born, Oct. 2, 1879, East Liverpool, O.; son of Patrick and Joanna Scullen; Parochial and public high schools, East Liverpool; St. Charles College, Ellicott City Md., 1898-1902; St. Mary's Seminary, Cleveland, 1902-1903; American College, Rome, 1903-1909; Ph. D., from the Propaganda University, Rome, 1904; S. T. D., same university 1908; J. C. D., Apollonaris University, Rome, 1909; ordained priest by Cardinal Respighi, Sept. 21, 1907, in the Lateran Basilica, Rome; appointed sec'y of Cleveland diocese, June 14, 1909; member Alumni American College, Rome, (historian, 1912); Alumni St. Charles College, Alumni, East Liverpool High School.
+
+**SENTER, Frederick Baldwin**; mnfr. of lubricating oils; born, Bedford, O., April 6, 1864; son of John and Jane Boyle Senter; educated, common and high school and Spencerian Business College; married, Middlefield, O., Dec. 25, 1889, Kate Donaldson, one daughter, Margaret, and one son, Talmadge; took active part in Bedford civic improvements; promoted establishment of public water works, and sewerage system after graduation started in oil business and continued in same until he established the Franklin Oil & Gas Co., of Bedford and Cleveland; capitalized at $200,000; most modern plant for producing high-grade cylinder oil, engine oil and boiler compounds; organized The Bedford Supply Co., general merchandise; Bedford Board of Trade, raising membership from 6 to 125; pres. and gen. mgr. The Franklin Oil & Gas Co.; his father came to Northfield township, in Summit county, from Londonderry, Ireland, in 1840, and took up a section of land still owned by the family; trustee Bedford Baptist Church; member Bedford Board of Trade, Cleveland Chamber of Commerce, Automobile Club, Golden Rod Lodge, Knights of Pythias, Bedford. Recreations: Hunting and Fishing.
+
+**SEVERANCE, Sclon L.**; banker; born, Cleveland, Sept. 8, 1834; son of Solomon Lewis and Mary H. Long Severance; educated in district and private schools; married, Kinsman, O. Oct. 10, 1860, Emily C. Allen; issue, three children; Julia, now Mrs. B. L. Millikin; Prof. Allen D. Severance, and Miss Mary Severance; one of the organizers of the Euclid Ave. National Bank; its first cashier and last pres.; later it became the Euclid Park, and later the First
+
+<vocab>Nathan Stone Scott, William A. Scullen, Frederick Baldwin Senter, Sclon L. Severance, Cleveland, biography, business, medicine, clergy, banking</vocab>

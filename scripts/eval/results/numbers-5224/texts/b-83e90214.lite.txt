@@ -1,0 +1,72 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>appendix</page-type>
+<page-num>83</page-num>
+<header>APPENDIX.</header>
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Jupiter</image-desc>
+Laetitia.
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Laetitia</image-desc>
+
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Amissio</image-desc>
+Amissio.
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Mercury</image-desc>
+Albus.
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Albus</image-desc>
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Venus</image-desc>
+
+1. Long, joyful life.
+2. The older he becomes the richer he will be.
+3. Very good prospect.
+4. The end will show your ability.
+5. Girl.
+6. Honest and useful.
+7. Dies.
+8. Will get her through writing.
+
+9. Another one will get the best part.
+10. Amicable settlement.
+11. Your pen will be your recommendation.
+12. Natural death.
+13. They have already arrived.
+14. Fortunate.
+15. Good.
+16. You should try to obtain a settlement.
+
+---
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Mercury</image-desc>
+Albus.
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Albus</image-desc>
+
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Amissio</image-desc>
+Amissio.
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Mercury</image-desc>
+Laetitia.
+<image-desc size="small" type="diagram" significance="high">Geomantic figure of Laetitia</image-desc>
+
+<image-desc size="small" type="symbol" significance="high">Astrological symbol for Venus</image-desc>
+
+1. Long life and health.
+2. Rich by service.
+3. The wish will be fulfilled.
+4. The beginning is better than the end.
+5. Son.
+6. Reliable and good.
+7. Health.
+8. Will get her.
+9. You will get the best part.
+
+10. Gains.
+11. Honourable positions in the church.
+12. Peaceful and easy death.
+13. Certainly.
+14. Very good.
+15. Agreeable.
+16. The enemy will do no harm.
+
+<vocab>Geomancy, Laetitia, Amissio, Albus, divination, astrology</vocab>

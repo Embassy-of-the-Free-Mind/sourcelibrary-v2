@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>345</page-num>
+<header>The Book of Clevelanders</header>
+<sig>22</sig>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of John A. Kling</image-desc>
+JOHN A. KLING
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of John Klee</image-desc>
+JOHN KLEE
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of H. H. Knapp</image-desc>
+H. H. KNAPP
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of A. C. Knight</image-desc>
+A. C. KNIGHT
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Thomas A. Knight</image-desc>
+THOMAS A. KNIGHT
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of R. A. Koch</image-desc>
+R. A. KOCH
+
+<vocab>John A. Kling, John Klee, H. H. Knapp, A. C. Knight, Thomas A. Knight, R. A. Koch, Clevelanders, biography</vocab>

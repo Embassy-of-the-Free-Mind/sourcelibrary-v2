@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>62</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Miller, Ida Farr**
+(Mrs. Edwin C.); club woman and lecturer; b., Littleton, N. H., April 26, 1863; dau. Maj. Evarts W. and Ellen F. (Burpee) Farr; ed. public schools, St. Mary's Academy, Manchester, N. H., Museum of Fine Arts School, Boston, and Wellesley College; past president, Melrose (Mass.) Woman's Club and Kosmos Club, Wakefield, Mass.; organizer and past president, New Hampshire's Daughters Society, Boston; chairman, Forestry Committee, Mass. State Federation of Women's clubs; member, Forestry Committee, N. H. State Federation of Women's clubs, 1908-11; member, Wakefield, Mass., school board since 1906; member, N. E. Historic-Genealogical Soc.; member, Society for Prevention of N. E. Antiquities; past matron, O. E. S.; organizer and first regent, Faneuil Hall Chapter, D. A. R., etc.; lecturer on forestry and historical subjects; m., Jan. 30, 1884, Edwin Child Miller; children, Barbara (Miller) Wicker, Henry Franklin, Edith Louise. Residence, Wakefield, Mass.
+
+**Ray, Robert Allen**
+Lawyer, judge of probate; b., Palmer, Mass., April 7, 1851; s. Alexander Hamilton and Sarah Jane (Maynard) Ray; ed. Burr & Burton Seminary, Manchester, Vt., Kimball Union Academy and Dartmouth College, A.B. 1877, A.M. 1885; studied law; admitted to bar, 1879, and practiced from 1879 to 1889, in Concord, N. H., in partnership with Reuben E. Walker, now associate justice N. H. supreme court, and with him edited and published "Ray & Walker's N. H. Citations"; later for some years principal of Hinsdale, N. H., high school, removing thence to Keene, in 1893, to resume practice; Baptist; Republican; member from Ward 6, Concord, in N. H. house of representatives, 1885; judge of probate for Cheshire County since 1906; also acted as judge in Sullivan County probate court several months, during a vacancy, in 1917; member, Sons of Veterans; m., 1st, March 18, 1881, Harriet Annett Ballou, who d. 1900; 2d, May, 1907, Clara Adell Case; one dau., Agnes Helen (Mrs. Fred H. Robbins, Philadelphia, Pa.). Residence, Keene, N. H.
+
+<column-break/>
+
+**Richardson, Albert James**
+Farmer, postmaster; b., Lyndon, Vt., Oct. 29, 1866; s. Henry and Mary J. (Clark) Richardson; removed to Littleton, N. H., in infancy, and educated in Littleton public schools;
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Albert James Richardson, shown from the chest up, wearing a suit, white shirt, and tie.</image-desc>
+
+gaged extensively in agriculture and dairying for a series of years; Democrat; member of school board; selectman, 1907-8; inspector for N. H. license commission, several years previous to Jan., 1914, when appointed postmaster of Littleton; Patron of Husbandry and long active in the order, serving as master of White Mountain Grange two years, Northern N. H. Pomona Grange four years, and executive committee, N. H. State Grange, six years; member, Burns Lodge, A. F. & A. M., Franklin Chapter, St. Gerard
+
+<vocab>Ida Farr Miller, Robert Allen Ray, Albert James Richardson, New Hampshire, biography, genealogy, public service, law, agriculture</vocab>

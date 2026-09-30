@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>564</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+Chicago. In 1880 they settled on a farm in Saunders county, Nebraska, where they remained until 1892 when the father passed away at the age of fifty-five years. The mother, who was born in March, 1842, is still living with her son in Omaha. They were the parents of eight children of whom four survive: John A.; Alfred P., living in Kalispell, Montana; Mrs. Alma Lindburg, of Seattle; and Herman S., of Los Angeles, California.
+
+John A. Bruce, who was the seventh of the family, attended country schools of Saunders county up to the age of nineteen years, when he entered Luther Academy at Wahoo, Nebraska, pursuing a preparatory course during three winter seasons. He afterward taught school for three years and then entered upon a general scientific course in the University of Nebraska, from which he was graduated in 1903. He afterward became connected with the Illinois Central Railroad as track apprentice at a salary of one dollar and twenty-five cents per day. He remained there only two months and then became assistant in the engineering department of the Mobile, Jackson & Kansas City Railroad at an advance in wages. He was thus engaged in railroad location for three months and after leaving the location department he became instrument man on construction work, spending five months in that way. Later he was made resident engineer and in that position his salary was doubled. He finished forty miles of construction work, and on Christmas day of 1904 he came to Omaha where he entered the service of the Union Pacific as assistant engineer in charge of construction in Kansas. On December 25, 1905, he was transferred to Cheyenne, Wyoming, where he remained until February, 1906. He then went to work for the Denver Northwestern & Pacific Railway (the Moffatt Line) and was thus engaged until 1907, when he again came to Omaha and entered the city engineer's office as assistant engineer on paving and sewer work. His duties of that character claimed his attention and energies until April, 1911, when he entered upon the private practice of his profession in which he still continues. On the 1st of August, 1915, he was appointed city engineer and is now discharging the duties of that position in a most capable and efficient manner. His practical experience has been broad, covering almost every phase of railroad building and engineering work, and he is thus well qualified for the onerous duties which devolve upon him.
+
+On the 27th of December, 1905, in Omaha, Mr. Bruce was married to Miss Nellie Neilsen, a daughter of Mr. and Mrs. Andrew Neilsen, pioneer residents of Omaha of 1866. Mr. and Mrs. Bruce have two sons: Philip R., born in January, 1907; and John F., born in August, 1908. Mr. Bruce is well known as a Scottish Rite Mason and a member of the Mystic Shrine. He also belongs to the Commercial Club and his standing in professional circles is indicated by his membership in the American Society of Civil Engineers.
+
+---
+
+RUDOLPH RIX, M. D.
+
+Dr. Rudolph Rix, physician and surgeon of Omaha, was born in Washington county, Nebraska, December 28, 1870, a son of Nicholas and Maria (Hagadorn) Rix, both of whom were natives of Germany. Coming to America in 1852, they settled in Clinton, Iowa, traveling by ox team to Washington county in 1857. There the father engaged in farming but at the present time is living retired at Fort Calhoun, Nebraska, at the age of eighty-six years. His wife died in 1907, at the age of seventy-seven years. In their family were eight children: Henry; Emil; Emma; Minnie, living at Fort Calhoun; Rudolph; and three who have passed away.
+
+Of this family Dr. Rudolph Rix was the seventh in order of birth. In early life he attended the country schools and devoted four years to college work in Shenandoah, Iowa, and Lincoln, Nebraska, after which he began preparation for the practice of medicine as a student in the Creighton Medical College of Omaha,
+
+<vocab>John A. Bruce, Rudolph Rix, Omaha, Douglas County, Nebraska, engineering, medicine, biography, genealogy</vocab>

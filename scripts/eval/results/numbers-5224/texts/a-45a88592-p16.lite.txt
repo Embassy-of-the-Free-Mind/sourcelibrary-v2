@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>xii</page-num>
+<header>xii CONTENTS.</header>
+
+| | | PAGE |
+| :--- | :--- | :--- |
+| Small, Zebina H. | Portrait of, facing | 886 |
+| Smith, Rufus. | “ “ | 627 |
+| Snow, Calvin. | “ “ | 782 |
+| Soule, Thomas H., jr. | Hotel Hyannis | 411 |
+| Sparrow, Benjamin C., Supt. | Portrait of, facing | 59 |
+| Swett, James. | Portrait of, facing | 823 |
+| “Tawasentha” | Brewster, facing | 915 |
+| Taylor, Elisha. | Portrait of, facing | 506 |
+| Taylor, Joseph. | “ “ | 785 |
+| Tobey, F. B. | Hotel, facing | 155 |
+| Tobey Homestead. | Dennis, facing | 511 |
+| Young, Jonathan. | Portrait of, facing | 786 |
+
+<vocab>Zebina H. Small, Rufus Smith, Calvin Snow, Thomas H. Soule Jr., Benjamin C. Sparrow, James Swett, Tawasentha, Elisha Taylor, Joseph Taylor, F. B. Tobey, Tobey Homestead, Jonathan Young, Hyannis, Brewster, Dennis</vocab>

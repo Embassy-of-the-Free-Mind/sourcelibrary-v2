@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>362</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. S. Odbert</image-desc>
+H. S. ODBERT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. H. Olds</image-desc>
+C. H. OLDS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. H. Oliver</image-desc>
+J. H. OLIVER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. A. OrLanghery</image-desc>
+J. A. ORLANGHERY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. H. Olmsted</image-desc>
+GEO. H. OLMSTED
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. H. Otis</image-desc>
+A. H. OTIS
+
+<vocab>Clevelanders, H. S. Odbert, C. H. Olds, J. H. Oliver, J. A. OrLanghery, Geo. H. Olmsted, A. H. Otis</vocab>

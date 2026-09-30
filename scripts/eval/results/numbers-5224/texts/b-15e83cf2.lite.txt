@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>appendix</page-type>
+<page-num>222</page-num>
+<header>APPENDIX.</header>
+
+# TABLE
+*Showing the Expansion of Beds of Granite variously heated, from Two Hundred Degrees to Three Thousand Degrees Fahrenheit, and from One to Five Hundred Miles thick.*
+
+| Miles. | Two Hundred Degrees. | Five Hundred Degrees. | One Thousand Degrees. | Three Thousand Degrees. |
+| :--- | :--- | :--- | :--- | :--- |
+| | *Feet.* | *Feet.* | *Feet.* | *Feet.* |
+| 1 | 5·095 | 12·738 | 25·476 | 76·428 |
+| 5 | 25·5 | 63·7 | 127·4 | 382·1 |
+| 10 | 51·0 | 127·4 | 254·8 | 764·3 |
+| 15 | 76·4 | 191·1 | 382·1 | 1147·4 |
+| 20 | 101·9 | 254·8 | 509·5 | 1528·6 |
+| 25 | 127·4 | 318·5 | 636·9 | 1910·7 |
+| 30 | 152·9 | 382·1 | 764·3 | 2292·8 |
+| 35 | 178·3 | 445·8 | 891·7 | 2675·0 |
+| 40 | 203·8 | 509·5 | 1019·0 | 3057·1 |
+| 45 | 229·3 | 573·2 | 1146·4 | 3439·3 |
+| 50 | 254·8 | 636·9 | 1273·8 | 3821·4 |
+| 55 | 280·2 | 700·6 | 1401·2 | 4203·5 |
+| 60 | 305·7 | 764·3 | 1528·6 | 4585·7 |
+| 65 | 331·2 | 828·0 | 1655·9 | 4967·8 |
+| 70 | 356·7 | 891·7 | 1783·3 | 5350·0 |
+| 75 | 382·1 | 955·4 | 1910·7 | 5732·1 |
+| 80 | 407·6 | 1019·0 | 2038·1 | 6114·2 |
+| 85 | 433·1 | 1082·7 | 2165·5 | 6496·4 |
+| 90 | 458·6 | 1146·4 | 2292·8 | 6878·5 |
+| 95 | 484·0 | 1210·1 | 2420·2 | 7260·7 |
+| 100 | 509·5 | 1278·8 | 2547·6 | 7642·8 |
+| 150 | 764·3 | 1910·7 | 3821·4 | 11464·2 |
+| 200 | 1019·0 | 2547·6 | 5095·2 | 15285·6 |
+| 500 | 2547·5 | 6369·0 | 12738·0 | 38214·0 |
+
+<vocab>Granite, Expansion, Fahrenheit, Degrees, Miles, Feet, Table</vocab>

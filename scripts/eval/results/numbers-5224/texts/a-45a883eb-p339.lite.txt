@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>335</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. N. Heiser</image-desc>
+E. N. HEISER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. J. Heffner</image-desc>
+GEO. J. HEFFNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. J. P. Henahan</image-desc>
+DR. J. P. HENAHAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Myron T. Herrick</image-desc>
+MYRON T. HERRICK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Hencke</image-desc>
+J. W. HENCKE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. F. C. Herrick</image-desc>
+DR. F. C. HERRICK
+
+<vocab>E. N. Heiser, Geo. J. Heffner, Dr. J. P. Henahan, Myron T. Herrick, J. W. Hencke, Dr. F. C. Herrick, Clevelanders</vocab>

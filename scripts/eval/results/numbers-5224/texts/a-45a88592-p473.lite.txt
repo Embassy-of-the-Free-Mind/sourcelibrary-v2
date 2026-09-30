@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>389</page-num>
+<header>TOWN OF BARNSTABLE. 389</header>
+
+cember, 1877; William S. Walker, June, 1878; Mr. Scott, July, 1884; Mr. Hurst for a short time; G. W. Burnham, October, 1887; and L. F. Shepardson for 1889. Dea. Samuel Chipman was deacon from its organization until his death in 1876. Daniel Davis is now the acting deacon, and Miss A. N. Hinckley is clerk.
+
+The Methodists of Hyannis, prior to 1850, raised a fund to build a church for their worship, but were so divided in belief that the project was abandoned, and the two factions each erected one. The Protestant Methodists soon ceased public service, and the edifice became a hall--now the dwelling of Nathaniel Sears, the conductor. The Episcopal Methodists also soon discontinued their society, and the church building was sold to the Congregational society, September 16, 1854. This society was organized January 3, 1854, comprising many former Methodists. After the purchase, the edifice was repaired and enlarged for this new society, which is prosperous. In 1865 a front was added, containing a steeple, in which was placed a bell, and in 1878 the chapel by the side of the church building was erected. The pastors have been: J. U. Parsons, the first, three years, succeeded by Charles Morgridge, in 1858; H. A. Lounsbury, in 1865; J. W. Strong, 1870; J. W. Turner, 1873; V. J Hartshorne, 1875; Stephen Smith, 1879; Rev. Mr. Angier, 1881; Charles E. Harwood, to December, 1882; R. J. Mooney, to 1884; J. K. Aldrich, January 1, 1885; Mr. Kavanaugh, 1887; and George W. Osgood, November 6, 1887.
+
+The Catholic society of Hyannis was organized in 1850, and the most active in its organization and support was William Ormsby. In 1874 a church edifice was erected. Rev. Father William Moran, of Sandwich, was the first pastor, who was succeeded by other pastors from that church—Reverends Bertoldi, Kinnerny, McCabe, Brady and Clinton—once in each month. Father O'Connor, from Harwich, officiated in 1869, and Rev. C. McSweeney, of Woods Holl, is the present pastor.
+
+The Methodist Episcopal society, Barnstable village, had a church edifice early in this century, which was moved to its present site less than sixty years ago. This building occupied a site to the west and south, and was repaired when removed. Its ministers have been: Benjamin Hazleton, in 1818; Isaac Jennison, in 1820; E. Taylor and Thomas Smith, in 1821; Lewis Bates, 1823; Bates and J. N. Maffett, 1824; Hezekiah Thacher, 1825; Thacher and C. G. Chase, 1826; Enoch Bradley, 1827; Warren Wilbur, 1828; H. Bronson and S. Heath, 1829; Bronson and C. Noble, 1830; F. Upham and J. B. Brown, 1831; A. Holway, 1833; W. Ramsdell and B. M. Walker, 1834; J. Steel and L. R. Bannister, 1835; Steel and H. H. Smith, 1836; E. Otis, 1837; Josiah Litch, 1838; Henry H. Smith, 1839; E. Jackson, 1840; G. W. Stearns, 1842; Stearns and G. W. Winchester, 1843; D. Stebbins, 1844; Edward A. Lyons.
+
+<vocab>Barnstable, Hyannis, Methodists, Congregational society, Catholic society, church history, pastors, ministers, religious organizations</vocab>

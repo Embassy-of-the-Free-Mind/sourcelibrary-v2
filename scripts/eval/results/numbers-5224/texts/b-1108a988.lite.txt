@@ -1,0 +1,50 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>122</page-num>
+<header>PART I. THE ORIENTAL WORLD.</header>
+
+not as the moral disposition of the Subject, but as the
+despotism of the Sovereign.
+No People has a so strict y continuous series of Writers
+of History as the Chinese. Other Asiatic peoples also have
+ancient traditions, but no History. The Vedas of the
+Indians are not such. The traditions of the Arabs are very
+old, but are not attached to a political constitution and its
+development. But such a onstitution exists in China, and
+that in a distinct and prominent form. The Chinese tradi-
+tions ascend to 3000 years before Christ; and the Shu-King,
+their canonical document, beginning with the government
+of Yao, places this 2357 years before Christ. It may here
+be incidentally remarked, that the other Asiatic kingdoms
+also reach a high antiquity. According to the calculation
+of an English writer, the Egyptian history (e.g.) reaches to
+2207 years before Christ, the Assyrian to 2221, the Indian
+to 2204. Thus the traditions respecting the principal king-
+doms of the East reach to about 2300 years before the birth
+of Christ. Comparing this with the history of the Old
+Testament, a space of 2400 years, according to the common
+acceptation, intervened between the Noachian Deluge and
+the Christian era. But Johannes von Müller has adduced
+weighty objections to this number. He places the
+Deluge in the year 3473 before Christ,—thus about 1000
+years earlier,—supporting his view by the Septuagint. I
+remark this only with the view of obviating a difficulty that
+may appear to arise when we meet with dates of a higher
+age than 2400 years before Christ, and yet find nothing about
+the Flood.—The Chinese have certain ancient canonical
+documents, from which their history, constitution, and reli-
+gion can be gathered. The Vedas and the Mosaic records
+are similar books; as also the Homeric poems. Among the
+Chinese these books are called Kings, and constitute the
+foundation of all their studies. The Shu-King contains their
+history, treats of the government of the ancient kings, and
+gives the statutes enacted by this or that monarch. The
+Y-King consists of figures, which have been regarded as the
+bases of the Chinese written character, and this book is also
+considered the groundwork of the Chinese meditation. For
+it begins with the abstractions of Unity and Duality, and
+then treats of the concrete existences pertaining to these
+
+<vocab>Chinese history, Shu-King, Y-King, Vedas, Noachian Deluge, Johannes von Müller, Septuagint, antiquity, Oriental World</vocab>

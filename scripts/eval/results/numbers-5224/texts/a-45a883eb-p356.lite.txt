@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>352</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. H. McKeehan</image-desc>
+H. H. MCKEEHAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. G. McKee</image-desc>
+A. G. MCKEE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. T. McKinstry</image-desc>
+CHAS. T. MCKINSTRY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. E. McMasters</image-desc>
+R. E. MCMASTERS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Rev. Wm. McMahon</image-desc>
+REV. WM. MCMAHON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. E. McMillin, Jr.</image-desc>
+H. E. MCMILLIN, JR.
+
+<vocab>H. H. McKeehan, A. G. McKee, Chas. T. McKinstry, R. E. McMasters, Rev. Wm. McMahon, H. E. McMillin Jr., Clevelanders, Biography</vocab>

@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>17</page-num>
+<header>The Book of Clevelanders</header>
+<sig>2</sig>
+
+famous organization noted for their productions of large forms, such as Rubenstein's ''Tower of Babel,'' Berlioz' ''Damnation of Faust,'' St. Saens' ''Sampson and Delilah,'' etc.; visited Europe and studied methods of musical instruction; in 1885 founded The Cleveland School of Music; in 1887 went abroad again to study teaching methods under the best instructors, and selected studies and library for his school; in 1878 founded and directed the Bach Choir, and in 1892 the Sacred Music Society, both famous choirs, noted for their excellent work; director of Oratorio Society and conductor of five May Festivals; composer of a number of studies, and progressive studies for medium voice, 79 studies for low voice, and 70 studies for mezzo soprano, text book on Elementary Theory, also numerous songs and compositions for violin and piano; pres. and director The Cleveland School of Music.
+
+**ASADORIAN**, Dickran; oriental merchant; born, in Armedan, Armenia, Sept. 6, 1879; son of Bagdasar Asadorian; educated in public schools in native country; married, Feb. 5, 1907, Miss Brownie Vliet of Canton, O.; one daughter, Adeline Belle; in business with my father for some years; came to the U. S. in 1896; in business in Detroit, Mich., a few months, then came to Cleveland; established myself in the oriental rug and carpet business; was the pioneer merchant in the business in Cleveland; summer home at Meyers Lake, near Canton, O.; member Episcopalian denomination. Recreation: Boating and fishing.
+
+**ATWATER**, Albert Alling; civil engineer and real estate; born, Cleveland, May 27, 1868; son of Jared J. and Harriet Root Atwater; educated, Cleveland public schools, Western Reserve Academy, Case School of Applied Science; married, Crete, Neb., Nov., 1901, Emily Daniels; finished special course at Case School in June, 1891; followed sanitary construction at Conneaut and Dayton, O., for two years; in charge of mining operations in Michigan, Canada and Missouri for eight years; city engineer of Webb City, Mo., two years; real estate business in Cleveland since 1903; director sec'y and 2nd vice pres. The Adams Realty Co.; director The Cleveland Automobile Club; member Cache Commandery No. 27, Conneaut O., Lake Erie Consistory, Cleveland, Ahmed Temple of Mystic Shrine, Marquette, Mich.
+
+**AVERY**, Elroy McKendree; author; born, at Erie, Monroe Co., Mich., July 14, 1844; son of Casper Hugh and Dorothy (Putnam) Avery; Ph. B., U. of Mich., 1871, Ph. M., 1874; Ph. D., Hillsdale Coll., 1881 (1894; D. C. L., 1911); served in Civil War; mustered out as sergt.-maj., 11th Mich. Cav.; married, Catherine Hitchcock Tilden (q. v.), July 2, 1870; Prin. High School, Battle Creek, Mich., 1869; high and normal schools, Cleveland, O., 1871-9; member Cleveland City Council, 1871-2; Ohio Senate, 1893-7; Fellow A. A.
+
+<vocab>Dickran Asadorian, Albert Alling Atwater, Elroy McKendree Avery, Cleveland, biography, business, education, civil engineering, military service</vocab>

@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>516</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Club, Professional Woman's Club, N. H. Club of Somerville; m., March 31, 1894, Herbert A. Cole. Residence, Somerville, Mass.
+
+**Lewis, Homer Pierce**
+Educator; b., West Claremont, N. H., July 28, 1849; s. George Gilbert and Adeline (Labaree) Lewis; ed. public schools, Kimball Union Academy, Meriden, N. H., Dartmouth College, A. B., 1874; principal Pinkerton Academy,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and bowtie.</image-desc>
+
+Derry, 1874-5; grammar school, Davenport, Ia., 1876-80; high school, 1880-83; Omaha, Neb., high school, 1883-96; Worcester, Mass., English high school, 1896-1901, South high school, 1901-3; superintendent schools, Worcester, Mass., 1903-1918; member Phi Beta Kappa, Psi Upsilon, National Educational Ass'n; American Institute of Instruction, etc.; founder Worcester Economic Club; m., 1st, 1878, Kate Roberts (Vassar, 1875); 2d, 1891, Elisabeth Goodson (Univ. of Mich.), 1878). Residence, 82 Elm St., Worcester, Mass.
+
+<column-break/>
+
+**Rice, George Samuel**
+Mining engineer; b., Claremont, N. H., Sept. 8, 1866; s. George Samuel and Abby (Parker) Rice; ed. public schools, College of the City of New York, two years; Columbia University School of Mines, 1887; assistant engineer, Colorado & Utah R. R., 1887; mining engineer with Colorado Fuel Co., 1888-90; mining engineer, Whitebreast Fuel Co., Ottumwa, Ia., 1890; chief mining engineer same and allied companies, Chicago, 1897; consulting mining engineer, Atchison Topeka & Santa Fé, and Chicago, Milwaukee & St. Paul Rys., 1900-08; chief mining engineer, U. S. Bureau of Mines since formation in 1910; Episcopalian; member American Institute Mining Engineers, American Academy Arts and Sciences, etc.; m., Dec. 23, 1891, Julia Sessions, Kalamazoo, Mich. Residence, Woodley Road and 35th St., Cleveland Park, Washington, D. C.
+
+**Bradley, Mark Spaulding**
+Physician; b., East Jaffrey, N. H., Jan. 16, 1868; s. Dr. Oscar H. and Julia A. (Spaulding) Bradley; ed. public schools; Columbia College Physicians and Surgeons, N. Y., M.D., 1892; interne, N. Y. City Hospital, 1892-4; in practice in Hartford, Conn., since 1894; aurist, American School for the Deaf since 1908; visiting physician, Hartford Hospital; assistant medical director, Conn. Mutual Life Ins. Co.; director Glazier Woolen Mfg. Co., Williams Bros. Mfg. Co., Glastonbury, Conn.; Baptist; Republican; member Hartford Med. Soc., Conn. State Med. Soc., American Med. Ass'n; m., July 5, 1904, Jessie E. Goodnow, East Jaffrey, N. H. Residence, 956 Asylum Ave., Hartford, Conn.
+
+**Prescott, Samuel Cate**
+Bacteriologist; b., South Hampton, N. H., April 5, 1872; s. Samuel M. and Mary E. (Cate) Prescott; ed. Mass. Inst. Tech., B.S. 1894; post-graduate study in Europe; assistant in biology, Mass. Inst. Tech., 1895-6; instructor, 1896-1903; assistant professor indus-
+
+<vocab>Homer Pierce Lewis, George Samuel Rice, Mark Spaulding Bradley, Samuel Cate Prescott, New Hampshire, biography, mining engineering, medicine, education, bacteriology</vocab>

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>479</page-num>
+<header>TOWN OF YARMOUTH. 479</header>
+
+of Mrs. Dr. Azariah Eldridge, are conspicuous among several others, hardly less attractive and elegant.
+
+“Sandy Side,” the subject of the accompanying illustration, was built by Mrs. Simpkins upon the death of her husband, John Simpkins (a son of the late Nathaniel Stone Simpkins), and was her residence until her heath, and is now the summer home of her family.
+
+There has always been a taste for forestry and arboriculture among the people. There is evidence of the existence of a tree planting society here more than seventy-five years ago, by which the streets were skirted with rows of stately looking poplars. In 1843 the town granted leave to Amos Otis, Edward Thacher and Oliver Hallet to plant trees on each side of the street at Yarmouth Port; and to them, as the committee of nearly all the citizens, we are indebted for the rows of beautiful elms which are the pride and glory of our streets. Later still, a village improvement society undertook to trim, train and supply deficiencies in the trees upon our highways, with satisfactory results, thus far.
+
+In 1845, by actual count, there were thirty-five masters of ships or other square-rigged vessels resident between Barnstable line and White’s brook. Now they may be counted on the fingers of one hand. There are some good farming lands here, the cranberry culture is successful, and summer residents, more and more, seek each year our orderly and romantic woods and groves, the shady and enticing streets, and the pleasant eminences, commanding views of the seacoast from old Plymouth to the “city in the sand,”—a region of nearly a hundred miles in extent, but so situated on a crescent that nearly all parts of the coast are in view from this central point of observation.
+
+There are several of the ancient structures still here. The house occupied by Benjamin Lovell is about two hundred years old. It was built by Timothy, grandson of Andrew Hallet, jr., the prominent citizen two hundred years ago. The house at the corner of Hallet and Wharf streets is some 180 years old. It was built by Thomas Hallet. The house occupied by Eben A. Hallet is about the same age. The house of George T. Thacher was built by his illustrious ancestor, Anthony, for his equally distinguished son, John. The eastern wing of the house now in possession of Hannah Crowell contains the timbers of the first church in Yarmouth. When the parish built a new church they gave to the widow Sturgis the frame of the old church, which may now be seen in the building before mentioned. The frames of all these buildings are in a good state of preservation, and Mr. G. T. Thacher, in a most commendable spirit, keeps the parlor of his house in precisely the form in which it was built by his ancestor, and has been preserved by seven generations of the family.
+
+<vocab>Yarmouth, Sandy Side, arboriculture, tree planting, Amos Otis, Edward Thacher, Oliver Hallet, cranberry culture, Benjamin Lovell, Andrew Hallet, Thomas Hallet, Eben A. Hallet, George T. Thacher, Anthony Thacher, John Thacher, Hannah Crowell, widow Sturgis, G. T. Thacher</vocab>

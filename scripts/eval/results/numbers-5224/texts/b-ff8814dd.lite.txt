@@ -1,0 +1,44 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>393</page-num>
+<header>STATISTICAL FACTS. 393</header>
+
+accumulations of the centuries since the "Mayflower's" arrival. To this may now be added, an increase in the value of human service representing a capital nearly equal to that exhibited in the growth of material capital in the same decade.
+
+->**FOREIGN COMMERCE.**<-
+
+| Domestic exports, gold included. | Imports retained for consumption. |
+| :--- | :--- |
+| 1850, $137,000,000 | $163,000,000 |
+| 1860, 373,000,000 | 335,000,000 |
+| 1870, 513,000,000 | 513,000,000 |
+
+*Customs, Revenue.*—1850, $40,000,000; 1860, $53,000,000; 1870, $206,000,000.
+
+Public Debt, created in the last three years of the non-resistant period, $70,000,000; extinguished in the last three of the resistant one, $300,000,000.
+
+Railroads, miles of, in 1850, 7000; in 1860, 31,000; in 1871, 62,000.
+
+In 1860 the money value of railroad property averaged less than half its cost. Now, it is probably considerably more than cost; and yet, the amount that has been applied within the last decade toward increasing the efficiency of the various works is perhaps as great as their original cost had been.
+
+Iron Production, 1847-8,* 800,000 tons; 1858-60, average, 820,000; 1870, 1,900,000.
+
+Iron Consumption, of foreign and domestic products, 1847-8, 900,000 tons; 1858-60, 1,200,000; 1870, 2,500,000.
+
+Wool Production, 1850, 52,000,000 pounds; 1860, 60,000,-000; 1871, 171,000,000.
+
+Wool Consumption, foreign and domestic manufacture, 1850, 87,000,000 pounds; 1860, 125,000,000; 1870-71, 266,000,000.
+
+Cotton Consumption, 1847-48, 540,000 bales; 1858-60, 666,000; 1871, 1,154,000.
+
+Manufactures, 1850, $1,019,000,000;† 1860, $1,885,000,-000; 1870, $4,306,000,000.
+
+elements previously left unnoticed. A careful review made at the request of the Secretary, by the Commissioner, * * resulted in the conclusion that the then rate of increase was about 65 per cent.; * * or certainly not in excess of 80 per cent."—*Report of Commissioner Wells*, 1869, p. 11.
+
+* This was the closing year of the resistant policy, the tariff of 1846 having gone into effect at the opening of 1847.
+
+† For the reasons above given in reference to the wealth of the country, this is probably considerably below the truth. It was a first attempt at obtaining such information and much was overlooked. The figures might, perhaps, be more correct if made to read $1,200,000,000.
+
+<vocab>Foreign commerce, domestic exports, imports, customs revenue, public debt, railroads, iron production, iron consumption, wool production, wool consumption, cotton consumption, manufactures, Commissioner Wells, tariff of 1846</vocab>

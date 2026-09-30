@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>434</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Cabinet at Amherst, since removed to Milford, of which he has been editor and publisher since 1891; also engaged in insurance business; Congregationalist; Republican; member N. H. house of representatives from Amherst, 1895, also town clerk and collector, and first president Amherst Improvement Soc. which he organized; since removal to Milford president Milford improvement Soc., secretary and president Milford Republican Club; member N. H. constitutional convention, 1902; director City Guaranty Savings Bank, Nashua; three years secretary to Congressman Currier at Washington; member Republican State Committee since 1912, and member executive committee; I. O. O. F.; m., Oct. 10, 1884, Grace Marston Burrell, Weymouth, Mass.; one son, Arthur Boylston, b. March 24, 1887, (Dartmouth, 1908) now in the publishing business with his father, m. April 9, 1910, Serena H. Elliman, New York; one son, William Boylston, 2d. Residence, Milford, N. H.
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with glasses, a mustache, and a suit and tie.</image-desc>
+
+<column-break/>
+
+Gerould, James Thayer
+Librarian; b., Goffstown, N. H., Oct. 3, 1872; s. Rev. Samuel L. and Laura Etta (Thayer) Gerould; ed. Dartmouth College, A.B. 1895; assistant librarian General Theological Seminary, New York, 1896-7; department chief, Columbia Univ. Library, 1897-1900; librarian Univ. of Mo., 1900-6; Univ. of Minn., 1906-; Fellow American Library Institute; member Bibliographical Soc. of America, American Library Ass'n, Delta Kappa Epsilon; director of Chapters, northern division, American Red Cross; director Minneapolis Associated Charities; Episcopalian; Democrat; m., Sept. 18, 1900, Mary A. Chamberlain, Chester, N. Y. Residence, 2022 Second Ave., S., Minneapolis, Minn.
+
+Gerould, Gordon Hall
+Educator; b., Goffstown, N. H., Oct. 4, 1877; s. Samuel L. and Laura Etta (Thayer) Gerould; ed. Dartmouth College, A.B. 1899; Litt. B., Oxford Univ., England, 1901; instructor in English, Bryn Mawr College, 1901-2; associate professor English philosophy, 1902-5; assistant professor English, Princeton Univ., 1905-16; professor English since 1916; author, "The North English Homily Collection," 1902; "Sir Guy of Warwick," 1905; "The Grateful Dead—the History of a Folk Story," 1908; "Saints' Legends," 1916; "Peter Sanders, Retired" (novel), 1917; m., June 9, 1910, Katharine Fullerton, Brockton, Mass. Residence, 341 Nassau street, Princeton, N. J.
+
+Dow, George Francis
+Secretary Essex Institute; b., Wakefield, N. H., Jan. 7, 1868; s. George Prince and Ada Bingham (Tappan) Dow; ed. public schools and private tutors; in trade in Boston from 1886 to 1897; secretary of Essex Institute,
+
+<vocab>New Hampshire, Biography, Genealogy, Librarians, Educators, Authors, Amherst, Milford, Goffstown, Dartmouth College, Essex Institute</vocab>

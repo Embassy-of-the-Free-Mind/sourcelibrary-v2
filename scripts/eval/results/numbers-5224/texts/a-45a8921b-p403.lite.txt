@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>389</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+publican state committee, 1894–8; colonel on staff of Governor Fuller, 1892–4; member Vt. house of representatives, 1916; president Capital City Press, Montpelier, Vt.; treasurer and manager Opinion Press, Bradford, Vt.; vice-president Woodstock (N. H.) Lumber Co.; director The Parker-Young Co., Lisbon, N. H.; member A. F. & A. M.—Lodge, Chapter, Council, Commandery, Shrine, and 32nd degree,—I. O. O. F., all branches, 20 years secretary Grand Lodge of Vermont; B. P. O. E.; P. of H.; A. O. A. M.; m., Sept. 24, 1873, Anne M. Weston, Nashua, N. H.; children; Leslie Weston, b. Apr. 26, 1877, d. Feb. 28, 1878; Katherine Louise (Mrs. W. S. Huntington), b. July 9, 1879; Sara Knowles, b. Dec. 3, 1881; Charles, b. July 1, 1884; Levi Houghton, b. Jan. 5, 1891, d. Oct. 7, 1918 in service. Residence, Bradford, Vt.
+
+**Taggart, David Arthur**
+Lawyer; b., Goffstown, N. H., Jan. 30, 1858; s. David M. and Esther (Wilson) Taggart; ed. Manchester high school, 1874, Harvard University, A.B. 1878; studied law with the late Hon. David Cross of Manchester; admitted to the N. H. Bar, Sept. 1, 1881, and has since been engaged in practice in that city; at first for several years in partnership with Judge Cross, many years past head of the firm of Taggart, Tuttle, Burroughs & Wyman (now Taggart, Tuttle, Wyman & Starr); Congregationalist; Republican; member N. H. house of representatives from Goffstown, 1883; N. H. senate (president), 1889; Republican candidate for Congress, first N. H. District, 1890; member A. F. & A. M., 32d degree and Knight Templar, N. H. Bar Ass'n and American Bar Ass'n; m., Nov. 11, 1884, Mary Elbra, dau. Dr. A. B. Story, Manchester; children, Esther M., (Mrs. Ernest R. Cooper), b. March 31, 1886; Ruth Story, (Mrs. Stanley C. Whipple), b. July 23, 1891. Residence, Manchester, N. H.
+
+<column-break/>
+
+**Norwood, Charles Miles**
+Box manufacturer; b., West Brookfield, Mass., Oct. 23, 1844; s. George and Eliza (Baker) Norwood; ed. public and private schools in Massachusetts and Winchester, N. H.; Unitarian; Republican; engaged in manufacture of boxes in Keene for twenty-five years; six years superintendent of Beaver Mills, also doing business in
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Charles Miles Norwood</image-desc>
+
+his own name, and later as C. M. Norwood & Son; sold out in June, 1918 to New England Box Co.; member Keene city government as councilman and alderman fifteen years; member N. H. house of representatives, 1893–4, 1907–8, 1911–12; N. H. constitutional convention, 1912; member board of commissioners for Cheshire County since 1914; member A. F. & A. M., lodge, chapter, council, 32 degree, commandery and shrine; Unitarian Club, S. of V.; m., Sept. 12, 1866, Louisa M. Taft, Swanzey, N. H.; one son, Leon C., b. March 16, 1871, partner with his father in business. Residence, Keene, N. H.
+
+<vocab>Charles Miles Norwood, David Arthur Taggart, New Hampshire, Biography, Genealogy, 19th Century, 20th Century, Freemasonry, Politics, Business</vocab>

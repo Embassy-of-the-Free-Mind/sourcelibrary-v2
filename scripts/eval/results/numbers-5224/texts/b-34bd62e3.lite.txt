@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>39</page-num>
+
+In the Introduction to my Translation of the Timæus of Plato, I have added the following numbers, for the purpose of representing this beautiful distribution of the elements, by Proclus, arithmetically.
+
+Let the number 60 represent fire, and 480 earth; and the media between these, viz. 120 and 240, will correspond to air and water. For, as 60 : 120 :: 240 : 480. But 60 = 3 × 5 × 4, 120 = 3 × 10 × 4, 240 = 6 × 10 × 4, and 480 = 6 × 10 × 8. So that these numbers will correspond to the properties of the elements as follows:
+
+| Fire. | Air. |
+| :--- | :--- |
+| 3 × 5 × 4 | 3 × 10 × 4 :: |
+| Subtle, acute, moveable. | Subtle, blunt, moveable. |
+
+| Water. | Earth. |
+| :--- | :--- |
+| 6 × 10 × 4 : | 6 × 10 × 8. |
+| Dense, blunt, moveable. | Dense, blunt, immoveable. |
+
+“Hence,” Proclus adds, “these things being thus determined, let us physically adapt them to the words of Plato. We call a [physical] plane or superficies, therefore, that which has two powers only, but a [physical] solid that which has three powers. And we say, that if we fashion bodies from two powers, one medium would conjoin the elements to each other. But since, as we assert, bodies possess triple powers, they are bound together by two media. For there are two common powers of the adjacent media, and one power which is different. And the extremes themselves, if they consisted of two powers, would be conjoined through one medium. For let fire, if you will, be alone attenuated and easily moved; but earth, on the contrary, have alone grossness of parts and immobility. One medium, therefore, will be sufficient for these. For grossness of parts and facility of motion, and
+
+<vocab>Plato, Timæus, Proclus, elements, arithmetic, fire, air, water, earth, powers, media</vocab>

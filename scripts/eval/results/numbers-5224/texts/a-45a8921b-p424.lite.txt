@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>410</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+mings, Topsfield, Mass.; ed. town schools and Tilton Sem.; engaged in monumental business since 1863, oldest man in business on Main street, Concord; Republican; member of Legislature, 1911; member First Bap-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of an elderly man with a mustache, wearing a suit and tie.</image-desc>
+
+tist church, Rumford Lodge, I. O. O. F.; m., Nov. 19, 1868, Concord, N. H., Sarah Ann Sawyer; children, (1) Ralph Cochran, d. March 15, 1879; (2) Alvah Cochran, high school, 1892, B.S., Dartmouth College, 1896, Harvard Med. School, 1901, physician, Newton, Mass., m. Jeannette Harris, one child, Ann; (3) Maude; (4) Edward Sawyer, high school, Philadelphia Dental College, 1900, in practice, Concord, N. H., m. Fannie Stimson, one child, Edward Sawyer, Jr.; (5) Samuel Quincy, high school, Boston Univ. Law School one year, associated with his father in business, m. Mary Agnes Donovan; (6) Ralza Milon, high school, 1905, A.B., Dartmouth College, 1909, in charge of infant shoe department, Filene's, Boston, m. Genevieve Warner, one child, Jean. Residence, 1 Fiske St., Concord, N. H.
+
+<column-break/>
+
+**Holden, Arthur James**
+
+Lawyer; postmaster of Keene; b., Townshend, Vt., Nov. 22, 1863; s. Hollis J. and Ardilla (Puffer) Holden; ed. public schools, Leland and Gray Sem., Townshend, and Glenwood Classical Sem., West Brattleboro, Vt. (1887), meanwhile teaching school in South Windham, Brattleboro and Grafton; commenced study of law in the spring of 1888, with Carpenter & Towle, Boston, Mass.; employed as clerk for the assessors of Malden, Mass., three seasons, also as a teacher in the evening schools of that city; attended Albany Law School, fall term of 1889, and Harvard Law School as special student, fall and winter, 1890-1; engaged in general insurance with Edward L. Walker at Bellows
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man with a mustache, wearing a suit and tie.</image-desc>
+
+Falls, Vt., spring of 1891, countinuing till summer of 1894, when he entered the law school of the Univ. of West Virginia, at Morgantown, graduating LL.B. in 1895, and admtted to the W. Va. bar in June of that year; ad-
+
+<vocab>Arthur James Holden, biography, New Hampshire, Concord, Keene, genealogy, legal profession, education, Dartmouth College, Harvard Law School</vocab>

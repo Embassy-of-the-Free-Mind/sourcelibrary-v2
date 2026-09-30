@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>179</page-num>
+<header>THE SOCIETY OF FRIENDS. 179</header>
+
+So free from molestation were the first Friends' families in this neighborhood, that no ripple in the current of history appears to have been produced by their presence here, sufficient to leave a trace of the time of their first settlement. John Wing, from Sandwich, in 1659, was building a house in the Yarmouth jurisdiction; a John Dillingham, from Sandwich, early became a landholder in Dennis and Brewster, residing near Bound Brook. It was in his house and Henry Jones' that the first Friends' meetings of which we have record were held, as appears by the following minute,—which seems to relate to bi-monthly meetings for discipline or society business, rather than their probably much more frequent meetings for divine worship. If their Sandwich neighbors early began holding at least three meetings a week,—two on week-days besides First-day,—the kind of convincement which produced Friends in that day must in Yarmouth also have brought them together for worship as often as once a week:—
+
+"At our Mens Meeting at William Allens first day of the 2 mo. 1681. —At this meeting it was ordered concerning the setting of the meetings at Yarmouth. Whereas it was ordered to be kept upon the first day of the week in every other mo. It is now ordered at the 6th day of the week in every other month and the meeting to be kept at Henry Jones his house. The next to be kept at John Dillingham's and so continue to be kept at those two houses, and the first meeting to be at John Dillingham's which will be the 2d Sixth-day of the week in the next 3d month."
+
+In 1683 a "monthly meeting" at Yarmouth is spoken of in the Sandwich minutes. This may have been one of the occasional sittings of Sandwich monthly meeting there, such as were sometimes held also at Falmouth, before the present division of sessions between the three towns became settled.
+
+In 1697 the town ordered "that the Quakers be rated for the support of the ministry, but that the tax be made so much larger that Mr. Cotton may have his full salary,"—probably without drawing on the Friends for their rate. And in 1717 an appropriation was made to build a meeting house for the town,—"the Quakers to be exempted from the charge." Also it was "voted that such of our inhabitants as are professed Quakers be freed from paying the minister's rate."
+
+In 1703 a committee is sent to urge Yarmouth and Falmouth Friends to attend the monthly meetings more faithfully.
+
+In 1709, 1st mo., Yarmouth Friends requested liberty of Sandwich monthly meeting to hold a preparative meeting. In 11th mo. a "Man's meeting" at John Wing's is mentioned; and 1st mo., 1710, one at John Dillingham's. As the same request to hold a preparative meeting was made one hundred years later, it would seem that the first was unsuccessful. It is the opinion of an aged Friend, judging
+
+<vocab>Society of Friends, Quakers, Yarmouth, Sandwich, John Wing, John Dillingham, Henry Jones, Bound Brook, monthly meeting, preparative meeting, minister's rate</vocab>

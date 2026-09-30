@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>16</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+ident, Milford Hospital Ass'n; Congregationalist; ex-superintendent, Sunday school; moderator, N. H. Conference Congregational churches, 1915-16; member, I. O. O. F., lodge, encamp-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+ment and Rebekah lodge; past grand master, New Hampshire; grand representative to S. G. L. for ten years; member, Milford board of trade (president, 1901, secretary, 1908-11); member, standing committee, N. H. board of trade on Pilgrim Tercentenary; chairman, N. H. committee, Pilgrim Tercentenary; m., June 13, 1889, Estelle F. Abbott; children, Dean A., Sumner B., Ruth, Mark F. Residence, Milford, N. H.
+
+**Johnson, Perley Albert**
+Banker, manufacturer; b., Unity, N. H., Oct. 24, 1860; s. William B., and Flora (Severns) Johnson; ed. public schools and St. Johnsbury, Vt., Academy, 1878; was a teacher and bookkeeper for a time; served three years as a clerk in the Barton, Vt.,
+
+<column-break/>
+
+National Bank, removed to Newport, N. H., in 1885 to accept the position of cashier of the newly organized Citizens National Bank; Methodist; Republican; member, Newport school board, seven years; town treasurer and treasurer town school district many years; member, N. H. house of representatives, and chairman committee on banks, 1911; cashier, Citizens National Bank of Newport, since organization in 1885; treasurer, Sugar River Savings Bank, since organization in 1895; director, Citizens National Bank, Newport, and People's National Bank of Claremont; one of the original incorporators of the Peerless Mf'g Co., with factories at Newport, N. H., and Barton, Vt., a director from the start, treasurer for many years, now president; member, Knights of
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+Pythias, Newport Board of Trade, president 1909-10; m., Jan. 19, 1886, Katie G. Coe; children, Carroll D., Margaret L. Residence, Newport, N. H.
+
+<vocab>Perley Albert Johnson, New Hampshire, biography, banking, Newport, Milford, genealogy, public service</vocab>

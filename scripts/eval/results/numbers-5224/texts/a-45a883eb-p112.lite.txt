@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>108</page-num>
+<header>The Book of Clevelanders</header>
+
+Oriental Commandery, K. P., Lake Erie Consistory S. P. R. S., Al Koran Temple A. A. O. N. M. S.; member Union, Roadside, and Euclid Clubs, The New England Society of Cleveland, Union League Club of Chicago, and the Ohio Society of New York.
+
+GILBREATH, Bruce Raymer; dentist; born, Cleveland, Sept. 19, 1883; son of Charles L. and Clara B. Raymer Gilbreath; University School, 1904, Western Reserve Dental College, 1901; member Gamma Delta Psi and Psi Omega Fraternities and F. & A. M.
+
+GIRL, Christian; manufacturer; born, Elkhart, Ind., Dec. 31, 1874; son of Joseph and Catherine Linderman Girl; high school education, Elkhart, Ind.; married, Cleveland, September, 1909, Mehitable A. Schottler; organized The Perfection Spring Co. in 1906; organized The Gofy Engine Co. in 1909; and The Marianville Base & Filter Co. in 1912; has been pres. and mngr. of the above companies since; member Cleveland Engineering Society, Society of Auto. Engineers, and on Finance and Endowment and two other committees of same society; member Athletic, Advertising, and Automobile Clubs.
+
+GLEKLER, Michael M.; manufacturer; born, Wuertenburg, Germany, March 9, 1854, son of John and Anna Glekler; educated Mt. Union College and Spencerian Business College; married, Cleveland, Ulrika Raddatz; two daughters; second marriage, Bertha Peppel; one son; cigar mnfgr., for 40 years at 1295 West 11th St., City; making the popular brands of La Palmas, Mark Inains, and Happy Homes; member Biglow Lodge, No. 243, F. & A. M., Thatcher Chapter, No. 101, Holyrood Commandery of Knights Templar; also Shriner and Grotto; Elks Lodge No. 18, Eagles and Moose.
+
+GLIDDEN, Francis Harrington; manufacturer; born, New Castle, Me., May 24, 1832; son of Joseph and Emily Harrington Glidden; educated Lincoln Academy, New Castle, Me.; married, New Castle, Me., Nov. 15, 1854, Winifred Kavanaugh Waters; issue, Francis K., Winifred, Emily, Frederick A., William T., Gertrude, Joseph F., and Mary Beatrice; early life, seaman, later drygoods merchant; in 1866; entered the varnish business as salesman for William Tilden & Nephena, New York City; remained with them until 1875; came to Cleveland in 1868; in April, 1875, entered the varnish mnfg. business under the firm name of Glidden-Brackett Co.; later changed to Glidden & Joy; in 1890, incorporated under the laws of Ohio, as The Glidden Varnish Co., as it is at present, pres. F. H. Glidden; vice pres. F. A. Glidden; sec'y, F. K. Glidden; treas. Wm. T. Glidden; advance finishing dept., T. F. Glidden; pres. and director The Glidden Varnish Co., and director The Central National Bank; on his first visit to Cleveland, he was greatly impressed with educational advantages and business enterprises the city possessed, and with his children's welfare in view, determined to move from Miami to
+
+<vocab>Bruce Raymer Gilbreath, Christian Girl, Michael M. Glekler, Francis Harrington Glidden, Cleveland, biography, manufacturing, business, fraternal organizations</vocab>

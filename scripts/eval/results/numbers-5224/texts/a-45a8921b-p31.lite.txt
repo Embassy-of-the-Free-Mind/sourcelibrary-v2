@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>17</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 17</header>
+
+**Huntress, Harriet Lane**
+Deputy Superintendent Public Instruction; b., Meredith (now Center Harbor), N. H.; daughter of James Lewis and Harriet Perkins (Page) Huntress; ed. in private schools in Massachusetts, graduating from Prospect Hill School, Greenfield, in 1879; chief clerk, N. H. Department of Public Instruction, from April, 1889, serving under Superintendents Patterson, Gowing, Folsom and Morrison, till Sept., 1913, when appointed deputy superintendent, which position she now holds, being the first woman in New England appointed to such position; member of the Concord Woman's Club, Country Club, Friendly Club, Woman's City Club of Boston, N. H. Historical Society, Capital Grange, P. of H., Rumford Chapter, D. A. R., Mt. Vernon Ladies' Ass'n (vice-regent for New Hampshire), N. H. Equal Suffrage Ass'n (member, advisory board); Unitarian. Address, Concord, N. H.
+
+<image-desc size="large" type="portrait" significance="high">A black and white photographic portrait of Harriet Lane Huntress in profile, facing right.</image-desc>
+
+<column-break/>
+
+**Sibley, Mary Matilda Putnam**
+(Mrs. Frank A.); manufacturer, club woman; b., Croydon, N. H., March 27, 1860; dau. Marshall and Matilda (Carroll) Putnam; ed. public schools and Kimball Union Academy, Meriden, 1883; m. Frank A. Sibley of Newport, June 19, 1884. Upon Mr. Sibley's death, Oct. 26, 1909, took charge of the business of the Sibley Scythe Co., at North Newport, which had been in the family for more than seventy years,
+
+<image-desc size="large" type="portrait" significance="high">A black and white photographic portrait of Mary Matilda Putnam Sibley, facing left.</image-desc>
+
+and has successfully conducted the same; long interested in club, philanthropic, benevolent and patriotic work; member, Newport Woman's Club (president, 1908-9); chairman, conservation committee, State Federation, 1912-13; regent, Reprisal Chapter, D. A. R., 1911-13; conservation chairman, N. H. D. A. R., 1916-17; member, National Conservation board, D. A. R., 1916-17; deeply interested in conservation of New Hampshire birds and forests; president, Newport Equal Suffrage League; member, board
+
+<vocab>Harriet Lane Huntress, Mary Matilda Putnam Sibley, New Hampshire, biography, women's history, education, public service, D.A.R., suffrage, conservation</vocab>

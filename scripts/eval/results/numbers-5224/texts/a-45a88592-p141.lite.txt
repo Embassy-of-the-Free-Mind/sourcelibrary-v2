@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>119</page-num>
+<header>TRAVEL AND TRANSPORTATION. 119</header>
+
+able. About 1820, the sloop *De Wolfe*, commanded by Captain Simeon Higgins, who afterward became so famous as a hotel keeper and stage coach contractor, ran on this line for a number of years.
+
+Not far from 1825, the need of better facilities for transporting their salt to Boston induced the manufacturers to encourage the construction of two schooners, and the *President Washington*, Captain Warren A. Kenrick, and *Lafayette*, Captain Jesse Snow, were built to accommodate the salt makers as well as the general travelling public. After a few years in command Captain Kenrick died and was succeeded by Captain Lot Higgins, and he, after a while by Captain Joseph Gould and others. The decline of the salt business led to the disposal of the two vessels and the substitution of smaller craft. The sloop *Elizabeth*, Captain Absalom Linnell, ran on this line several years. Her successors were the sloop *Taglioni*, Captain Benjamin Gould, and the *Harriet Maria*, Captain Samuel N. Smith. The *Harriet Maria* met with a serious accident on one of her trips in 1857. October 8th, in Boston harbor she was run down and sunk by the British steamer *Niagara*. One of the crew, being entangled in the rigging, was carried down and drowned before rescue was possible. The vessel was afterward raised and repaired. She was the last of the Boston packets, and continued on the route about two years after the cars ran to the town.
+
+EASTHAM.--Captain David C. Atwood may be regarded as the pioneer of the packeting business between Eastham and Boston. In 1821 he procured a sloop of forty tons burthen called the *Clipper*, and commenced the business. Before this time passengers were brought by lumber vessels, which stopped at Boston both going and coming from the eastward; also by fishing vessels, which usually made a trip to Boston before and after the season's trip to their fishing grounds. Captain Atwood was on this route several years. After him came the *New York*, Captain Samuel Snow, which ran from Nauset harbor in the summer, and Bay side in the spring and fall. At this time Eastham manufactured about 30,000 bushels of salt. This rendered packet vessels in good demand. A few years later the schooner *Young Tell* was placed on the route by Captain Scotter Cobb, who was in the business for many years. This was the first two-masted packet Eastham had. Afterward Captain Cobb bought the Brewster packet, *Patriot*. He was succeeded by his son, H. K. Cobb, who ran the *A. C. Totten* for several years, and then built the *Bay Queen*, the largest and best of all the Eastham packets, and also the last of them.
+
+After the *Young Tell* was given up Eastham parties bought the Yarmouth sloop *Flight*, the fastest sailer in the Bay. Not unfrequently these packets took from thirty to fifty passengers. No life was lost nor any serious accident occurred in all this time, which is ample tes-
+
+<vocab>transportation, salt industry, Eastham, Boston, packet ships, maritime history, schooners, sloops</vocab>

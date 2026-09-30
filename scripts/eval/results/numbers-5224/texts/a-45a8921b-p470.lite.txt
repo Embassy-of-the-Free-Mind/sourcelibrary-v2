@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>456</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Greeley, Harry Parker**
+Lawyer; b., Nashua, N. H., March 21, 1874; s. Onslow S. and Gertrude E. (Parker) Greeley; ed. Nashua high school; Amherst college, 1898; Boston Univ. Law school, LL.B. 1900; admitted to the bar in 1900 and in practice in Nashua since; Congregationalist; Republican; city solicitor Nashua, 1900, 1901, 1915–19; member N. H. house of representatives, 1907, serving on Committee on Revision of
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Harry Parker Greeley</image-desc>
+
+Statutes, N. H. constitutional convention, 1912; counsel for Nashua Building and Loan Ass'n; member Rising Sun Lodge, A. F. & A. M. Residence, 24 Manchester St., Nashua, N. H.
+
+**Hartwell, Edward Mussey**
+Statistician; b., Exeter, N. H., 1850; s. Shattuck and Catherine Stowe (Mussey) Hartwell; ed. Amherst College, A.B. 1873, A.M. 1876; Ph.D., Johns Hopkins, 1881; M.D., Miami Med. College, Cincinnati, 1882; LL.D., Amherst, 1898; vice-principal Orange, N. J., high school, 1874; teacher
+
+<column-break/>
+
+Boston Latin School, 1874–7; associate in physical training and director gymnasium, Johns Hopkins Univ., 1883–91; director physical training, Boston, Mass., public schools, 1891–7; secretary statistical department, city of Boston since establishment in 1897; chairman Mass. State commission for the blind, 1906–8; special expert agent U. S. Department of Labor in Europe, 1888–9; author of many pamphlets and articles upon physical training, school hygiene, the condition of the blind, etc.; member numerous associations and clubs; m., July 25, 1889, Mary L. Brown, Baltimore, Md. Residence, 24 Burroughs St., Jamaica Plain, Mass.
+
+**Britton, Arthur Harvey**
+Hardware merchant; b., Surry, N. H., Sept. 28, 1865; s. George W. and Sarah (Harvey) Britton; ed. public schools, Newport, and Eastman's National Business College, Poughkeepsie, N. Y., 1883; removed to Concord with his father and engaged in the hardware trade in the establishment of Scribner & Britton, his father being the junior member of the firm, and succeeding to the business on the death of Mr. Scribner; upon the death of his father the business passed into his hands and he has conducted the same for the last twenty years; Universalist (member prudential committee First Universalist Soc. of Concord); Republican; member N. H. house of representatives, 1901–2; commissioner for Merrimack County since 1905 (eight times elected; chairman of the board); director Mechanicks National Bank; member A. F. & A. M.; I. O. O. F. (colonel First Reg't, N. H. Patriarchs Militant); P. of H.; B. P. O. E.; Wonolancet Club; m., Feb. 14, 1895, Myrta M. Chase, Newport, N. H. Residence, Concord, N. H.
+
+**Gale, Stephen Henry**
+Shoe manufacturer; b., East Kingston, N. H., March 23, 1846; s. Elbridge Gerry and Ann Maria (Barnes) Gale; ed. public schools, Kingston Academy, Boston Commerical College; at the age
+
+<vocab>Harry Parker Greeley, Edward Mussey Hartwell, Arthur Harvey Britton, Stephen Henry Gale, New Hampshire, biography, genealogy, public service</vocab>

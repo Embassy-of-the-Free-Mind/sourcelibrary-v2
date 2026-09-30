@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>455</page-num>
+<header>TOWN OF YARMOUTH. 455</header>
+
+A depression on the side of the hill clearly indicates the locality of the site.
+
+The permanent and authorized settlement of the town commenced early in 1639. The grantees of the court were, Anthony Thacher, John Crow and Thomas Howes, who had surveyed the lands, preparatory to occupation. They, with John Coite, "to be inquired of," Madrick Matthews, Philip Tabor, William Palmer, Samuel Rider, William Lumpkin and Thomas Hatch were proposed January 7, 1639, "to take up their freedom at Yarmouth." The same page records the following "persons there excepted against: Old Worden (dead), Burnell, Wright, Wat Deville." In March following, Nicholas Simpkins, Hugh Tilley, Giles Hopkins and Joshua Barnes are mentioned in the court records as of Yarmouth. Andrew Hallet was here in March, and there was some complaint that he had "assumed to himself" too large a proportion of the best lands, but his claim was subsequently confirmed by the court. Between the time of the first settlement and the close of the following year the pioneers were joined by Thomas Starr, Robert Dennis, Edward Sturgis, James Matthews, William Nickerson, Samuel Ryder, Yelverton Crow, Philip Tabor, William Palmer, and Thomas Payne. William Chase was chosen constable, and Thomas Payne and Philip Tabor deputies to the court, the first representative assembly in the colony, which met June 4, 1639. William Clark took the oath of allegiance and fidelity in September, and was constable for the town.
+
+The legislation by the colony court relative to the town, the first year of its existence, forbade any one here purchasing two house lots or more and laying them together and maintaining but one house upon them. This was intended to make the settlements compact, as a matter of safety and precaution. Yarmouth men were granted liberty to "keep their swine unwringed," "they keeping them with a herdsman until complaint be made of some hurt they have done." It was ordered that "a pair of stocks and a pound be erected, and that a constable see it done, and have a warrant to distrain such as shall refuse to pay what shall be assessed to the charge thereof." William Palmer was authorized to exercise the inhabitants in the use of arms.
+
+The first mention of Yarmouth as the name of the town is found in the grant by the colony court to Messrs. Thacher, Crow and Howes. Of the first settlers some were Eastern county men, some were from the midland counties, some from Wales, and others from the south of England. Yarmouth, the principal seaport on the eastern coast of England, was the place of embarkation and debarkation between that country and Holland, and was naturally associated in their minds with experiences in the mother country; hence, perhaps, the name of this town.
+
+<vocab>Yarmouth, Massachusetts, colonial history, Anthony Thacher, John Crow, Thomas Howes, 1639, Plymouth Colony, early settlers, town governance</vocab>

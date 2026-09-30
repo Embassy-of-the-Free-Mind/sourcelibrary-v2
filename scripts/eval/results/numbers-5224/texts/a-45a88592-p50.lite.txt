@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>34</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+The pilgrims of 1620 received no patent for their lands until 1629–30. The accrued indebtedness to the Merchant Adventurers at the expiration of the seven years was £1,800, which was assumed in 1627, and bonds for payment given extending over a period of nine years. The eight of the colonists who assumed the indebtedness were Governor Bradford, Edward Winslow, Thomas Prince, Miles Standish, William Brewster, John Alden, John Howland and Isaac Allerton, and to these persons a patent was issued by the Council of Plymouth January 13, 1629–30, after three voyages by Mr. Allerton to England for its procurement.
+
+“The Council of New England, in consideration that Wm. Bradford and his associates have for these nine years lived in New England, and there have planted a town called New Plymouth, at their own charges,—and now seeing that, by the special providence of God and their extraordinary care and industry, they have increased their plantation to near three hundred people * * * , do therefore seal a patent to the said Wm. Bradford, his heirs, associates, and assigns of all that part of New England on the east side of a line drawn northerly from the mouth of the Narraganset river and southerly of a line drawn westerly from the Cohasset rivulet to meet the other line at the uttermost limits of country called Pocanoket.” A tract on the Kennebec was also included. This grant comprised the entire Cape with all prerogatives, rights, royalties, jurisdictions and immunities; also marine franchises that the council had, or ought to have, with privileges of incorporation by laws and constitutions not contrary to those of England.
+
+This, the first charter received giving the pilgrims any definite territory, was granted to Mr. Bradford and his associates who had bound themselves to pay the indebtedness of the colony. This patent was missing for many years, and is said to have been found in 1741 among Governor Bradford’s papers.
+
+In 1640 the general court desired that William Bradford should make to them a surrender of the charter, which he willingly did. In *Bradford’s History of Plymouth Plantation*, page 372, these quaint words of the instrument may be found:
+
+“Whereas William Bradford, and diverce others ye first instruments of God in the begining of this great work of plantation, togeather with such as ye all adoring hand of God in his providence soone added unto them, have been at very great charges to procure ye lands, priviledges, & freedoms from all intanglements of grants, purchases, and payments of debts, &c., by reason whereof ye title to ye day of these presents remaineth in ye said William Bradford, his heires, associats, and assignes: now, for ye better settling of ye estate of the said lands (contained in ye grant or pattente,) the said William
+
+<vocab>Pilgrims, Merchant Adventurers, Governor Bradford, Plymouth Colony, Council of Plymouth, New England, land patent, charter, Pocanoket, Kennebec, Plymouth Plantation</vocab>

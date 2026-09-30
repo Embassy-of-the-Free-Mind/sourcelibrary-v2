@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>245</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 245</header>
+
+Belle J. Kennard, d. July 31, 1890; 2d, June 20, 1900, Carrie M. Anderson; children, John Carroll, b. Aug. 7, 1886, now in his country's service in France; Louise Kennard, b. Jan. 16, 1888 (Wellesley 1909), Annie Belle, b. July 31, 1890; Marion, b. June 28, 1902. Residence, Manchester, N. H.
+
+**Chapin, Bela**
+
+Printer, farmer, poet; b., Newport, N. H., Feb. 19, 1829; s. Phineas and Lydia (Osgood) Chapin; learned printer's trade in youth, in office of *National Eagle*, Claremont, and worked for a time in different offices, then pursued a three years' course of study at Kimball Union Academy, Meriden; subsequently pursued his trade for a number of years in Concord and other places; proprietor of the Dartmouth Press at Hanover from 1866 to 1870; returned to Claremont and bought a farm at the base of Green Mountain, where he continued its cultivation, but spending much time in his library in writing and study, having a fine collection of books and many rare volumes. He has written much meritorious verse which has appeared in different publications; compiled the volume known as the "New Hampshire Poets," published in 1883, embracing selections from 300 poetical writers of which 3,000 copies were sold; m., March 3, 1858, Sarah Clark Melendy. Residence, Claremont, N. H.
+
+**Bass, Robert Perkins**
+
+Industrial counsellor; ex-Governor of New Hampshire; b., Chicago, Ill., Sept. 1, 1873; s. Perkins and Clara (Foster) Bass; ed. Boston, Mass., schools, Harvard Univ., A.B., 1896, Harvard Graduate School, Harvard Law School; in business in Chicago for some time, but has had his residence in Peterborough, N. H., its mother's old home for many years past, where he has been much interested in agriculture and forestry, as well as general public affairs; Progressive Republican; member, N. H. house of representatives,
+
+<column-break/>
+
+1905-6, 1907-8, serving as chairman of the committee on retrenchment and reform in the latter session, and conducting a thorough investigation of the various departments of the state government; senate, 1909-10; drafted and largely instrumental in the enactment of the present primary law; member, N. H. Forestry Commission, 1906-10 (chairman the last two years); director, American Forestry Ass'n (president, 1911-12); member of various
+
+<image-desc size="large" type="portrait" significance="high">Portrait of Robert Perkins Bass</image-desc>
+
+clubs; appointed in Oct., 1917, assistant and counsellor to Raymond B. Stevens, vice-chairman of the U. S. Shipping Board at Washington, in dealing with labor problems; upon the departure of Mr. Stevens for England in Jan., 1918, as American delegate to the Interallied Shipping Council, was placed in charge of labor matters involved in the operation of vessels, serving as chairman of the National Adjustment Commission. His services to the government are gratuitous, he being one of the so-called "dollar-a-year" men. m., Jan. 20, 1912, Edith Harlan
+
+<vocab>Belle J. Kennard, Bela Chapin, Robert Perkins Bass, New Hampshire, biography, politics, forestry, printing, literature</vocab>

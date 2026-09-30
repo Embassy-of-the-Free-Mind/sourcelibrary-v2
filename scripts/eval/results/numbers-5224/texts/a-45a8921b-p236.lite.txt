@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>222</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Henderson, James William**
+Printer, lawyer, real estate operator; b., Rochester, N. H., Feb. 18, 1840; s. William Millet and Maria (Diman) Henderson; ed. public schools, Rochester Academy and Franklin Academy, Dover; taught school in Rochester and Farmington in youth; learned the printer's trade in the office of the *Dover Enquirer*, and was subsequently employed in the Mass. State printing office, on the *Boston Journal* and
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of James William Henderson, a man with a mustache wearing a suit and tie.</image-desc>
+
+Dover newspapers; member, Dover board of education, 1870-5; read law in the office of George W. Stevens of Dover; went to St. Augustine, Fla., in 1877, where he continued the study of law, was admitted to the Florida bar, and subsequently to the U. S. District and Supreme Courts; appointed acting state's attorney for St. John's Co., by Judge J. M. Baker of the Fourth Judicial District; meanwhile he was also engaged in extensive real estate operations in St. Augustine, including the proprietorship of a big hotel, upon the site of which, after its destruction
+
+<column-break/>
+
+by fire, he erected a large brick block, now the home of the Masons, Odd Fellows and other fraternal orders. He also purchased at a special Master's sale, the St. Augustine & South Beach Railway & Bridge Co.'s property, consisting of half a dozen miles of railroad and a drawbridge, spanning the Malansas River, which some two years later was disposed of to a Boston syndicate. Methodist; Democrat; served several years as a member of the N. H. Democratic state committee, and was active in local and state politics; in the state convention of 1875, presented the name of Capt. Daniel Marcy of Portsmouth, for the gubernatorial nomination, in a forceful and convincing speech; m., May 18, 1878, Ellen Compton, dau. Jacob Compton of Chicago, an accomplished woman of fine artistic tastes, who d. April 26, 1909. (Just previous to marriage he had purchased in Dover, the fine old residence of the late Judge Durrell of Louisiana fame, which he occupied as a summer home.) Two sons: William H., b. New York City, May 27, 1879, d. St. Augustine, Fla., March 14, 1880; J. Compton, b. Clifton House, Niagara Falls, July 8, 1880; ed. Dover, St. Augustine and Chicago public schools, South Division high school, Chicago, Phillips Exeter Academy, and South Western Univ., Jackson, Tenn., LL.B.; admitted to the bar of Tennessee and Florida, and became a partner with his father in the firm of Henderson & Henderson, St. Augustine and Chicago. Mr. Henderson has important real estate interests in Dover, St. Augustine and Chicago, and divides his time between the three cities.
+
+**Hall, Newton Marshall**
+Clergyman; b., Manchester, N. H., Jan. 10, 1865; s. Marshall Parker and Susan Marice (James) Hall; ed. Manchester high school, Dartmouth College, A.B. 1888, A.M. 1891, D.D. 1908, Andover Theological Seminary, 1891; professor, English Language and Literature, Iowa College, 1891-3; pastor, First Presbyterian Church, Owonta, N. Y., 1894-9; pastor, North Congre-
+
+<vocab>James William Henderson, Newton Marshall Hall, New Hampshire, biography, genealogy, legal profession, real estate, St. Augustine, Florida, Dover, New Hampshire</vocab>

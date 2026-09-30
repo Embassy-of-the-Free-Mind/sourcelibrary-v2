@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>401</page-num>
+<header>ON THE CABIRI. 401</header>
+<sig>D d</sig>
+<meta>catchword: doubted</meta>
+
+perly pronounces to be the same as the Phenician Berith, or Beroè<note>y</note>. This Brighit is said to have been the daughter of Daghdae, whom Col. Vallancey declares to be no other than Dagon<note>z</note>. He tells us, that Daghdae is the Sun, and that the word itself signifies *the god of fire*<note>a</note>. It is very possible, that Daghdae may have acquired such a signification in the Irish language, in consequence of the un-
+
+tion of marriage was by the ancient Irish denominated Caca-Brideoige, or, *the cake of Brid*. (Vind. of Anc. Hist. of Ireland. Collect. de Reb. Hibern. vol. v. p. 492.) It is evident, that our modern custom of having a bride-cake, as it is termed, upon the marriage-day, originated from this idolatrous rite.
+
+<note>y</note> Collect. de Reb. Hib. vol. v. p. 491, 492.
+<note>z</note> It is worthy of observation, that the Phallus was no less the symbol of Daghdae among the old Irish, than of Bacchus among the Greeks, of Osiris among the Egyptians, and of Maha-Deva among the Hindoos. (Vallancey’s Vindication, p. 160.) Dagdae was the same also as the Dacc or Dak-Po of the Tibetians: (Ibid. p. 161.) and his symbolical confort was intitled *Trom*, which word signifies pregnant. (Ibid. p. 163.) It is almost superfluous to observe, that *Trom* is the Ark, pregnant with all the hero-gods of the Gentiles, the Magna Mater of classical antiquity. Hence all the other deities were supposed to be descended from Dagdae. (Ibid. p. 502.) The Phallic Dagdae himself was sometimes styled Dia Teibitb, or Dia Thebath, *the god of the Ark*; such at least appears to me a more natural interpretation of the word Teibitb, than that which Col. Vallancey gives. See Vind. of Anc, Hist. of Ireland, p. 161.
+<note>a</note> Vind. apud Collect. de Reb. Hib. vol. v. p. 491.
+
+VOL. II.
+
+<vocab>Cabiri, Phenician, Berith, Beroè, Brighit, Daghdae, Col. Vallancey, Dagon, Sun, god of fire, Irish language, Caca-Brideoige, bride-cake, Phallus, Bacchus, Osiris, Maha-Deva, Dacc, Dak-Po, Tibetians, Trom, Ark, Magna Mater, Dia Teibitb, Dia Thebath</vocab>

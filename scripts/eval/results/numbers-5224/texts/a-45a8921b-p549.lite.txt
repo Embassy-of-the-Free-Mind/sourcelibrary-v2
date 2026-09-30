@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>535</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+national Ass'n of Medicine, etc.; m., June 2, 1914, Katherine Ball Waring, Charleston, S. C. Residence, 2085 9th Ave., San Francisco, Cal.
+
+**Weston, Robert Spurr**
+Sanitary engineer; b., Concord, N. H., Aug. 1, 1869; s. Lon and Martha B. (Greenman) Weston; ed. Brockton, Mass., high school, 1887; Amherst College, B.S. 1891 (A.M. 1900); Mass. Inst. of Tech., 1894-5; Univ. of Berlin, 1897-8; assistant chemist Louisville Water Co., 1895-8; Superior Water, Light & Power Co., 1898-9; in private practice since; assistant professor public health engineering, Mass. Inst. Tech. since 1913; member American Soc. Civil Engineers, American Chemical Soc., American Public Health Ass'n, etc.; member Boston Chamber of Commerce, Twentieth Century, City, Engineers and Appalachian Mountain clubs; m., Dec. 21, 1909, Josephine Fitz Randolph, Plainfield, N. J. Residence, 81 Griggs Road, Brookline, Mass.
+
+**Wright, George E.**
+Lawyer; b., Brookline, N. H., Jan. 20, 1867; s. William and Eliza A. (Elliot) Wright; ed. Lawrence Academy, 1884; Phillips Exeter, 1885; Harvard, A.B. 1889; A.M. and LL.B. 1892; in practice in Seattle, Wash., since 1893; Congregationalist; Democrat; ex-president Seattle Public Library; Seattle Bar Ass'n, Municipal League of Seattle; member Phi Beta Kappa, Delta Upsilon, Phi Beta Phi, University Club; m., July 16, 1895, Mary Estelle Wyckoff, Seattle. Residence, 1227 38th Ave. N., Seattle, Wash.
+
+**Tuttle, George Thomas**
+Physician; b., Northwood, N. H., March 18, 1850; s. Thomas and Olive Furber (Garland) Tuttle; ed. Dartmouth College, A.B. 1872; M.D., Harvard, 1878; commenced practice in Boston, 1878; second assistant physician, McLean Hospital, 1879-80; first assistant, 1880-1904; medical
+
+<column-break/>
+
+superintendent since Jan. 1, 1904; Republican; member Mass. Med. Soc., American Medico-Psychological Ass'n, Boston Soc. Psychiatry and Neurology, etc. Address, McLean Hospital, Waverly, Mass.
+
+**Ayer, Frank M.**
+Merchant; b., New Durham, N. H., Aug. 25, 1873; s. Joseph F. and Harriett (Downs) Ayer; ed. public schools of New Durham and Farmington; in
+
+<image-desc size="medium" type="portrait" significance="high">Black and white portrait photograph of Frank M. Ayer, shown from the chest up, wearing a suit, white shirt, and tie.</image-desc>
+
+mercantile business at Alton (dry goods and automobiles); Liberal; Republican; selectman, 1907-8, 1910-12, 1917-18 (chairman four years); town treasurer, 1909; justice Alton municipal court since March, 1915; member Republican town committee seven years; member N. H. house of representatives, 1919-20, serving on Railroads and Education committees; member and past master Winnipesaukee Lodge, A. F. & A. M., Alton; past patron Alpha Chapter, O. E. S.; past grand patron O. E. S. of New Hampshire; member Cocheco Lodge, I. O. O. F.,
+
+<vocab>Robert Spurr Weston, George E. Wright, George Thomas Tuttle, Frank M. Ayer, New Hampshire, biography, genealogy, public service</vocab>

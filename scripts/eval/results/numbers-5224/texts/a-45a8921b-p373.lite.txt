@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>359</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Robie, Charles Warren**
+Express manager; b., New Hampton (Winona), N. H., July 28, 1866; s. William R. and Harriet M. (Chase) Robie; ed. public schools, Meredith, N. H., high school; entered the service of the American Express Co. at Plymouth, N. H., at eighteen years of age and continued with the company up to July 1, 1918, when the express companies of the country were unified in one concern, now known as the American Railway Express Co.; went from Plymouth to Lowell, Mass., as a clerk; was soon transferred to Boston, as clerk in the superintendent's office; afterward sent to Springfield, Mass., as route agent; after five years was appointed superintendent, with headquarters at Boston, holding the position ten years; in 1906 was appointed assistant general manager in charge of the New England Department, which title was afterwards changed to manager, and on July 1, 1918, was appointed general manager, New England Department, American Railway Express Co., with headquarters in Boston; Baptist; Republican; member Boston Chamber of Commerce; City, Exchange, Algonquin, Economic clubs, Boston; Traffic Club of New England (president, 1917); Wonolancet Club, Concord, N. H., and others; accompanied the Boston Chamber of Commerce party on a tour of Europe in 1911; also visited South America with a similar party in 1913; m., Sept. 4, 1890, Lizzie M. Woodward, Lowell, Mass.; one son, Harold William, b. Somerville, Mass., July 17, 1892; ed. Mitchell's Military School for Boys, Billerica, Mass., Newton Technical high school, N. H. College, and Cornell University; enlisted with 14th (Ry.) Engineers, Co. D, June 17, 1917, was with the first regiment of American soldiers to parade the streets of London under arms, went into actual service Aug. 17, was with the British a year and has since been with the American forces. Residence and summer home, Rock Ridge Farm, Winona, N. H.; Boston home, City Club; office, 43 Franklin St., Boston, Mass.
+
+<column-break/>
+
+**Claggett, Fred Porter**
+Physician; b., Newport, N. H., Jan. 18, 1869; s. Rufus P. and Frances F. (Carr) Claggett; ed. Newport high school, Kimball Union Academy, Meriden, 1890, Dartmouth College, 1897, Dartmouth Medical College, 1897; Boston City hospital, 1897; in practice
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit, vest, and tie.</image-desc>
+
+in Newport since graduation; pursued a post graduate course at Harvard in 1910; Congregationalist; Republican; member Newport school board; trustee Carrie F. Wright Hospital, member corporation Citizens National Bank; Mason, Knight Templar; member American Med. Ass'n, N. H. Med. Ass'n, N. H. Surgical Club, Sullivan Co. Med. ass'n; m., Aug. 2, 1898, Gertrude M. Tubbs, Newport; children: Rogers H., b. Aug. 15, 1899 (Worcester, Mass., Academy); Louise b. Sept. 12, 1903; Barbara, b. Jan. 27, 1912. Residence, Newport, N. H.
+
+<vocab>Charles Warren Robie, Fred Porter Claggett, American Express Company, American Railway Express Company, New Hampshire, Biography, Physicians, Express Managers</vocab>

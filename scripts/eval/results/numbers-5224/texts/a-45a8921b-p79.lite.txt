@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>65</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 65</header>
+
+**Fairbanks, George Arlington**
+Woolen manufacturer, farmer; b., Newport, N. H., March 24, 1863; s. George H. and Helen M. (Nourse) Fairbanks; ed. public schools, graduating from Newport high school, June 24, 1881, followed by one year at Tilton Seminary; a successful merchant in Newport for fourteen years; with George A. Dorr purchased Granite State Mills, April 1, 1899, and from a business practically dormant, it has today over one hundred fifty employes on its pay-roll, working in day and night shifts; director of Citizens’ National Bank for fifteen years, its president since 1913; trustee and treasurer, Carrie F. Wright Hospital, since its establishment; for many years a trustee, M. E. church, and for a long time a member and generous contributor to its welfare. Continually identified with the best interests of Sullivan County Y. M. C. A., he has been a liberal supporter in all its work; member school board for twelve years and active worker for the welfare of pupils and teachers; trustee, Tilton Seminary; Mason, member and past high priest, Chapter of Tabernacle, No. 19, R. A. M.; Shrine; Republican; candidate for presidential elector, 1916, member, house of representatives, 1917–18 and chairman railroad committee; occupies a spacious home on a knoll overlooking the town, on the spot where stood the house of his birth; m., Oct. 22, 1885, Margaret A. Gilmore of Newport; three children, Helen M., a successful kindergartner, Marian S., graduate of Boston University and vocal soloist in local churches, Harold G., graduate of Tilton Seminary and now learning the woolen business in his father’s mill. Residence, Newport, N. H.
+
+**Boutwell, Harvey Lincoln**
+Lawyer; b., Meredosia, Ill., April 5, 1860; s. Eli Allen and Harriett W. (Weeks) Boutwell; removed to Hopkinton, N. H., when two years of age and reared in that town where his great-grandfather, Maj. William Weeks, of Washington’s staff, had settled in 1792,
+
+<column-break/>
+
+on land said to have been granted him by the government and a portion of which he, himself, now owns; ed. common schools, Hopkinton and Contoocook academies, New Hampshire College, 1882, and Boston University Law School, 1886; spent some time in teaching, at Claremont, N. H., grammar school, Boston Asylum Farm School, and Eliot Evening School, Boston, meanwhile taking up the study of
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Harvey Lincoln Boutwell, showing him from the chest up, wearing a suit, tie, and spectacles, with a prominent mustache.</image-desc>
+
+law, first with the late John Y. Mugridge of Concord, N. H., and later with Wilbur H. Powers of Boston; admitted to Massachusetts bar in 1886 and commenced practice in Boston in Aug. of that year, continuing alone about twenty years, since then in partnership with William H. Hastings of Malden, under firm name of Boutwell & Hastings, offices in Rogers Bldg., Washington St.; Baptist; Republican; member, Malden, Mass., common council, 1893–4–5; house of representatives, 1895–6–7–8, taking a prominent part in legislation each year; city solicitor, Malden, since 1907; trustee, New
+
+<vocab>George Arlington Fairbanks, Harvey Lincoln Boutwell, Newport New Hampshire, Granite State Mills, Citizens' National Bank, Carrie F. Wright Hospital, Sullivan County Y. M. C. A., Tilton Seminary, Mason, R. A. M., Republican, house of representatives, Margaret A. Gilmore, Eli Allen Boutwell, Harriett W. Weeks, William Weeks, Hopkinton New Hampshire, Contoocook Academy, New Hampshire College, Boston University Law School, John Y. Mugridge, Wilbur H. Powers, William H. Hastings, Malden Massachusetts, Baptist</vocab>

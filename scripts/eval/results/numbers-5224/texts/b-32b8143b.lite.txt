@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>114</page-num>
+<header>EIGHT FORMS OF EGYPTIAN MYSTERY.</header>
+
+and among the Israelites,¹ as it was afterwards among the Greeks and Romans. There was, *third*, the “enchanter,” or serpent charmer;² this practice seeming to have been accompanied with the same mutterings and charms now employed;³ the possessors of this art in the earliest times, and among various Eastern nations, being supposed able to reveal secrets of the spiritual world.⁴ There was, *fourth*, the “witch,” or sorceress; men and women who divined by administering to themselves, or to others, exhilarating and poisonous drugs, which acted like the mephitic gas of Delphi on the Pythoness, and like the modern magician’s incense; a class most dangerous in Egypt, Assyria, Canaan, and elsewhere.⁵ There was, *fifth*, the “charmer” by the power of song; a mode of exerting a soothing or stupefying influence on the nervous system, both of beasts and men, now used in the East, mentioned by Xenophon as common in Greece,⁶ and employed successfully, both on man and beast, among the ancient Israelites.⁷ There was, *sixth*, “the consulter of familiar spirits,” the ventriloquist, or the diviner by “basins” or vases,⁸ alluded
+
+¹ Gen. 40 : 8 et seq. Dan. 2 : 4 et seq. 2 Kings 21 : 6; 2 Chron. 33 : 6; Isa. 2 : 6; Micah 5 : 12.
+² See Septuagint.
+³ Psal. 58 : 4, 5.
+⁴ Gen. 44 : 5: Lev. 19 : 26; Numb. 23 : 3, 15, 23; 24 : 1; 2 Kings 17 : 17; 21 : 6.
+⁵ Exod. 7 : 11; 22 : 17; 2 Kings 9 : 22; 2 Chron. 33 : 6; Isa. 47 : 12; Jer. 27 : 9; Mic. 5 : 12; Nah. 3 : 4.
+⁶ Xen. Mem., II., v. 10, 11.
+⁷ See Sept. on 1 Sam. 16 : 23, and Ps. 58 : 6.
+⁸ Compare the Hebrew and Greek.
+
+<vocab>Egyptian mystery, enchanter, serpent charmer, witch, sorceress, mephitic gas, Delphi, Pythoness, charmer, ventriloquist, familiar spirits, diviner</vocab>

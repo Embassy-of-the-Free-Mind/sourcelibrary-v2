@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>56</page-num>
+<header>The Book of Clevelanders</header>
+
+Union, University, and Country Clubs, Cleveland, and the University Club, New York City.
+
+CLARKE, Jay N.; sales agent; born, Sandusky, O., Aug. 19, 1855; son of William H. and Mary Newton Clarke; educated, Sandusky public schools; married, Cleveland, 1876, Pauline Doll; issue, two sons and one daughter, Mrs. H. G. Hock, Harry N. Clarke and Norris J. Clarke; is a practical mechanic, having worked many years as a machinist and toolmaker; was employed as supt. of shops for several years; then took up the sales dept., and has been a salesman for the last five years; have been sales agent in Cleveland for The Bethlehem Steel Co. of South Bethlehem, Pa.; K. of P. Lodge No. 68; Criterion, Cleveland Commercial Travelers' Ass'n.
+
+CLEVELAND, William H.; plumber; born, England, 1851; common school education; married, Cleveland, 1875, Mary Schade; two children; no public record, home man; started in business in 1897, and still continue at 7701 Cedar Ave.; has done city work for many years, has fitted many houses and business blocks in Cleveland; always uses the best materials; his motto, "What is worth doing, is worth doing well;" honorary member and director Master Plumber's Ass'n.
+
+CLOUGH, George Franklin; L. S. & M. S. R. R. Co.; born, Cleveland, March 27, 1876; son of John Johnson and Mary Rivers Lowman Clough; public school education, Cleveland; married, Cleveland, Nov. 22, 1898, Blanche Mildred Leither; two sons, Kenneth and Herbert; started with L. S. & M. S. R. R. Co. in 1894, as stenographer; was private sec'y to Freight Traffic Mgr., General Traffic Mgr., and Chief clerk to General Freight Agt., to January, 1913; commercial agent L. S. & M. S. R. R. Co.; member Presbyterian Church. Recreations: Amateur Photography, Fishing, and Motoring.
+
+CLUM, Alfred; lawyer; born, Staten Island, Sept. 26, 1863; son of William and Elizabeth A. VanDusen Clum; educated, public schools, Washington, D. C., Law School, Columbian University, of Washington, D. C., now The George Washington University, of Washington, D. C., LL. B. at graduation and LL. M. at post graduate course; married, Washington, D. C., June 2, 1886, Lizzie W. Bohrer; three children; atty. for Village of East Cleveland, from May 1, 1901, to Dec. 31, 1909; solicitor for City of East Cleveland, from Jan. 1, 1912, to Dec. 31, 1913; began Law practice in Cleveland, April, 1890, and still continues in that profession; formed the partnership of Clum & Marty, Alfred Clum and George B. Marty, located at 1430 Leader-News Bldg.; director The Cyclone Woven Wire Fence Co.; professor of equity and evidence at Cleveland Law School of Baldwin University; trustee East Cleveland Presbyterian Church; member Chamber of Commerce; Cleveland Council
+
+<vocab>Biography, Cleveland, Business, Law, Engineering, Railroads, Education, Genealogy</vocab>

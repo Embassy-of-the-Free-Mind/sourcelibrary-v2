@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>23</page-num>
+<header>The Book of Clevelanders</header>
+
+became director and district mgr. the City Ice Co., first vice pres. and director of the Company; pres. the Collinwood Ice Co.; member American Society of Refrigeration, and enthusiastic over the subject of refrigeration; chairman National Ice Carnival Exposition, held in Norfolk, Va., in 1907; three terms pres. of the Middle States Ice Producers Ass'n.
+
+**BARBER**, Arthur Wellesley; attorney-at-law; born, Berea, O., Nov. 7, 1858; son of Gershorm Morse and Huldah Lavine Seeley Barber; educated, Western Reserve University, 1883, A. B. and A. M.; 1886, Columbia Law School; married, Lakewood, Dec. 22, 1896, Harriet May Wagar; four children; admitted to the Bar in 1885; member firm of Tanney & Barber and G. M. & A. W. Barber, 1885-1902; member Alpha Delta Phi Fraternity, Hudson Chapter, and Sons of Veterans.
+
+**BARKER**, Raymond H.; printer; born, Cleveland, Nov. 4, 1874; son of Samuel and Alice J. Greene Barker; married, Cleveland, Alice May Martin; 4 children; with the S. Barker Son's & Co. since 1890; pres. and treas. since the firm was incorporated in 1910; director the Floating Bethel; member Chamber of Commerce and Cleveland Credit Men's Ass'n.
+
+**BARKWILL**, Charles G.; banker and mfg.; born, Cleveland, Aug. 6, 1847; son of Charles and Elizabeth Ball Barkwill; educated, public Schools, Cleveland, and Humistons Institute; married, Cleveland, June 15, 1870, Maria O. Steetor; issue, five children; has been principally engaged in the manufacture of building brick; pres. The Columbia Savings & Loan Co.; The Barkwill Brick Co., The Empire Rolling Mills Co.; co-partnership in Barkwill & Bradley, Barkwill & Hodous; treas. The Canfield Oil Co. Recreations: Farming on farm at Dover.
+
+**BARNARD**, Ernest Sargent; vice pres. Cleveland Ball Club; born, Columbia, W. Va., July 17, 1874; son of Elias and Mary D. Barnard; educated, Otterbein University, 1895, Ph. B.; sec'y Builders & Traders Exchange, Columbus, O., 1896-7; sporting editor Columbus, O., Dispatch, 1898-1902; sec'y Cleveland Ball Club, 1903-1910; vice pres. Cleveland Ball Club, 1911-1913, vice pres. The Acetylene Stove Mfg. Co.; member Belden Lodge, No. 339, F. & A. M., Westerville, O.; Cleveland Lodge, No. 18, B. P. O. E.; Athletic and Rotary Clubs.
+
+**BARNES**, Herbert V.; manager; born, Huntsburg, O., Sept. 18, 1869; son of Virgil T. and Ella Cummings Barnes; educated, district schools, Huntsburg, and New Lyme Institute, New Lyme, O.; married, Huntsburg, Sept. 20, 1892, Anna L. Barnes; one son, Earl H. Barnes; worked on his father's farm until he was married; then engaged in farming for himself for 5 yrs.; came to Cleveland in March, 1898; was employed by the Brumelage Co., wholesale butter, eggs and cheese dealers; has had charge of sales
+
+<vocab>Cleveland, biography, business, industry, agriculture, law, printing, manufacturing, banking, sports</vocab>

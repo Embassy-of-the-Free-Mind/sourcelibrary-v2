@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>971</page-num>
+<header>TOWN OF PROVINCETOWN.</header>
+
+of which the county contributed two thousand, was constructed. The bridge, however, was destroyed by ice in 1856 and was rebuilt in 1857. Twenty years afterward the bridge was discontinued and a solid road-bed was constructed across the channel.
+
+In the meantime the railroad displaced the stage, for in 1873 the extension of the Cape Cod railroad from Wellfleet afforded Provincetown the long coveted rapid transit by land. The town contributed largely to the attainment of the railway by subscribing $98,300 toward the stock issued for the extension, and received in return 727 shares of the capital stock of the Old Colony Railroad Company, which were sold from time to time for $72,696.25. The railroad was opened for traffic July 22, 1873, and has proved, as had been anticipated, an important factor in contributing to the prosperity of the town. Very soon after the opening of the railroad President Grant, August 28, 1874, visited Provincetown, receiving an enthusiastic welcome from the people. With the exception of a brief visit from ex-President Cleveland in 1889, Provincetown has not been honored by the presence within her borders of other presidents of the United States.
+
+In 1873 Bradford street was completed and opened to public travel, a great public improvement, rendered necessary by the continued growth of the town, its execution hastened by the opening of the railroad. The town had taken steps toward the survey early in 1869, and expended, before 1873, for land damages and for the construction of the road bed nearly twenty-nine thousand dollars.
+
+TOWN OFFICERS.—The representatives from Provincetown prior to 1857, with date of first election and number of years' service (when more than one), were: 1810, Joseph Atkins, 2 years; 1811, Samuel Cook; 1812, Simeon Conant; 1813, Daniel Pease, 2; 1826, Thomas Ryder; 1827, David Ryder; 1828, Isaac Small, 6; 1833, Elisha Young; 1834, John Atkins, 7, and Enos Nickerson, 3; 1835, William Gallica; 1836, Godfrey Ryder and Joshua Cook; 1837, David Ryder, jr., 2; 1839, David Cook, 2d; 1841, Stephen A. Paine, 2; 1843, Thomas Lothrop; 1844, John Dunlap; 1845, James Gifford, 2; 1846, Stephen Hilliard, 2; 1850, Joseph P. Johnson, 5; 1852, Henry Paine; 1853, Elisha Tilson; 1856, Nathaniel E. Atwood.
+
+The selectmen have been: 1747, John Conant, 6 years, and Thomas Newcomb; 1748, Elisha Mayo, 2, and Caleb Conant, 6; 1749, Jonathan Nickerson, 2; 1751, Solomon Cook, 2; 1753, Thomas Kilburn, 12; 1756, Ebenezer Nickerson, 3; 1757, Samuel Smith, 7; 1758, Joshua Atwood, 2; 1760, Gershom Ryder; 1762, Benjamin Ellis; 1763, Seth Nickerson, 3, and Samuel Cook, 11; 1767, Solomon Cook, 15; 1768, Thomas Ryder, 4, and Samuel Atwood, 5; 1769, Phineas Nickerson, 2; 1770, Nehemiah Nickerson, 7; 1772, Stephen Atwood, 8; 1775, Seth Nickerson, jr., 7; 1782, Stephen Nickerson, 3, and Edward Cook, 2; 1784, Reuben Orcutt,
+
+<vocab>Provincetown, Cape Cod Railroad, Old Colony Railroad Company, President Grant, President Cleveland, Bradford street, Town Officers, Selectmen</vocab>

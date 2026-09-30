@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>266</page-num>
+<header>The Book of Clevelanders</header>
+
+Cleveland public schools; married, Cleveland, May 1, 1895, Grace Felton Tillotson, who died Oct. 14, 1911; issue, one child; pres. The Tillotson & Wolcott Co., investment bankers; The Guarantee Title & Trust Co.; director The Electric Properties Co., New York City; member Union, Country, Mayfield, and Athletic Clubs, Cleveland, and City Mid-day, of New York.
+
+TIMENDORFER, Julius; real estate and insurance; born, Rosdin, Silesia, Germany, Sept. 7, 1856; son of M. and Henrietta Fischer Timendorfer; educated in the public and manual training schools of native city, and Berlin; married, Oct. 4, 1886, Anna Rosenthal, of Stuttgart, Wurtemberg, Germany; issue, two daughters, Florence & Irma; when 15, entered a department store, as apprentice; worked three years without pay to learn the business; then worked as clerk; employed in a silk house in Koenigsburg, for 1 year; went into coal and lumber business with his father in Berlin; city salesman; landed in New York in 1877; worked in a coal yard, after ten days started for Cleveland; arrived with ten cents in his pocket; worked three months for Lloyd Fisher, a farmer; four months in the Cleveland Rolling Mill; porter for Strauss, Miller & Orth; promoted, after ten days to salesman; in 1887, went to Onaga, Kas., because of ill-health; remained one and one-half years; returned to Cleveland, and opened a grocery store; soon sold out, and went into the real estate business; does a large brokerage business; first broker on Erie St. and has made 50 per cent. of the sales on that St.; sec'y and mgr. Euclid Bldg Co.; mgr. Boardman Realty Co.; sec'y and mgr. Wilson Improvement Co.; pres., treas. and mgr. of the Trio Improvement Co.; director Acme Improvement Co.; former pres. the Cleveland Real Estate Board; member Chamber of Commerce, Credit Men's Ass'n, Cleveland Gesangverein, Masons, Knights of Pythias, and Royal Arcanum; member Euclid Ave. Temple, and one of the building committee.
+
+TINNERMAN, George A.; banker; born, Hessen, Germany, April 10, 1845; emigrated with his parents to this country, in 1847, locating in Brooklyn, O., later in Lindale; three years later, removed to Cleveland, where he has resided ever since; educated, common schools, learned the tinner's trade, and engaged in the hardware and stove business on Lorain St.; pres. The Lorain St. Savings Bank; owner The Tinnerman Range Work; manufacturing Ohio ranges.
+
+TIPPY, Worth M.; clergyman; born, Larwill, Ind.; Nov. 8, 1867; son of Oren and Mary Elizabeth Carder Tippy; educated, DePauw University, Ph. B., DePauw University, Hon. D. D., Baldwin University, Hon. D. D., Cornell University, two years graduate work as Sage scholar, 1901-1903; married, Vevay, Ind., May 16, 1895, Zella Birda Ward; issue, Marian Ward, born Nov. 18, 1896; Helen Ward, born Dec. 12, 1898; member of Mayor's Committee on nomination for Charter Commission, 1913; pastorates, Dryden,
+
+<vocab>Julius Timendorfer, George A. Tinnerman, Worth M. Tippy, Cleveland, biography, business, real estate, banking, clergy</vocab>

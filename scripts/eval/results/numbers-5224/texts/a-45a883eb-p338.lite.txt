@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>334</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. C. Hascall</image-desc>
+GEO. C. HASCALL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of George P. Hart</image-desc>
+GEORGE P. HART
+
+<image-desc size="small" type="portrait" significance="high">Portrait of B. S. Haskins</image-desc>
+B. S. HASKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. F. Hayes</image-desc>
+P. F. HAYES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. F. Hauserman</image-desc>
+E. F. HAUSERMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. C. Heald</image-desc>
+JNO. C. HEALD
+
+<vocab>George P. Hart, Geo. C. Hascall, B. S. Haskins, P. F. Hayes, E. F. Hauserman, Jno. C. Heald, The Book of Clevelanders</vocab>

@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>491</page-num>
+<header>TOWN OF YARMOUTH. 491</header>
+
+Alexander B. Chase was born in 1848. He is a son of Rev. Enoch E. Chase, who was ordained as a Baptist preacher in 1832, and died in 1886, aged eighty-two years. He left two children: Rebecca B. and Alexander B., who occupies the homestead where Enoch E.'s father, Anthony Chase, lived. Mr. Chase is a contractor and builder. In early life he followed the sea. Ho was married in 1873 to Lucy H., daughter of David Bearse. They have two children: George H. and Nellie S. Mr. Chase is a member of the First Baptist church of Hyannis.
+
+Theophilus Chase, born in 1831, is a son of Sylvester and Sarah (Kelley) Chase, grandson of James and Mercy Chase, and great-grandson of Job Chase. Mr. Chase followed the sea from 1840 to 1887, and was master thirty years. He was married in 1856 to Sarah K., daughter of Freeman Crowell. They have three children: Lafayette K., Hattie C., and Herbert C. Mr. Chase is a member of Howard Lodge.
+
+John T. Cobb was born in 1858, in the state of Vermont. He came to the town of Yarmouth in 1883, where he has had charge of his brother-in-law's farm since that time.
+
+Daniel Cole, son of Daniel and Mercy (Higgins) Cole, and grandson of Elisha Cole, was born in 1835. He is a carpenter and builder, having followed that business for thirty-five years. He married Eunice M., daughter of Isaac Smalley. They have two children, both of whom are deceased.
+
+Charles B. Cory bought in 1882 of S. R. Payson, Great island, comprising about six hundred acres, at the extreme southwest corner of the town of Yarmouth, where he now has a rare game preserve. Among his birds we find the golden, silver, copper and English pheasant, and others. He has a part of the island which is thickly wooded (about 120 acres), enclosed with a suitable fence, and in 1883 he placed in this enclosure about forty deer, which have increased until he has one of the finest deer preserves in this country. The island is well supplied with fresh water lakes, which are stocked with bass, pickerel and perch.
+
+Daniel B. Crocker was born in 1844. He is the youngest son of Daniel and Lucinda D. Crocker, grandson of Joseph and great-grandson of Daniel Crocker. Mr. Crocker is a merchant at Yarmouth Port, and is largely engaged in cranberry culture. He married Mary R. Knowles, and they have two sons: Fred R. and Ralph D. Mr. Crocker has two sisters: Joanna B. (Mrs. Otis White) and Susan.
+
+Hatsel Crosby, born in 1807, is the only surviving child of Abijah and Desire Crosby, and grandson of Elisha Crosby. He was a shoemaker in Brewster for fifteen years, prior to 1848, when he came to South Yarmouth, where he was engaged in salt making until 1883. He was married in 1836 to Jerusha S. Homer, who died in 1854, leav-
+
+<vocab>Alexander B. Chase, Enoch E. Chase, Theophilus Chase, John T. Cobb, Daniel Cole, Charles B. Cory, Great Island, game preserve, Daniel B. Crocker, cranberry culture, Hatsel Crosby, genealogy, Yarmouth, Massachusetts</vocab>

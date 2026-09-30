@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>113</page-num>
+<header>TRAVEL AND TRANSPORTATION. 113</header>
+<meta>8</meta>
+
+lar communication with Nantucket, which was then a place of great relative importance. Several vessels ran between Falmouth, East Falmouth and Nantucket, with wood for the island, and all these craft took passengers, particularly during the great local festival, "sheep-shearing," when the natives and their friends from abroad held high carnival together for a week! This intercourse continued after the glory of sheep-shearing had departed, until the opening of steamboat communication between Nantucket and the main land.
+
+The first packet, of which any knowledge exists, running between Falmouth and New Bedford, was a large sail-boat owned and run by Captain James Stewart about the year 1826. About 1827 the sloop *Henry Clay*, Captain Ezekiel E. Swift, was put upon the route between the two places, and ran for several years. Owing to increase of business about the year 1834, another sloop, called the *Swift*, was built and run by Captain Swift, formerly of the *Henry Clay*, which latter was run by Captain John Phinney, both vessels running to and fro on alternate days. In 1836 another sloop, the *Temperance*, was put on the route and the *Henry Clay* was withdrawn. A few years later Captain Swift retired, and was succeeded by Captain Oliver F. Robinson for many years thereafter. Since the Woods Holl railroad was opened, no direct line of packets has run to New Bedford from this town. But daily and more frequent steamboat communication in summer is still maintained between Woods Holl and New Bedford.
+
+Regular communication was maintained between West Falmouth and New Bedford by Captain William Baker of the packet sloop *Nile*, with which for years he made tri-weekly trips from West Falmouth. He and his craft were succeeded by Captain James D. Hoxie in the sloop *Peerless*, with which the three round trips weekly were made until the opening of the Woods Holl railroad.
+
+BARNSTABLE.—The town of Barnstable had in 1800 but a small amount of shipping, and it is not known that any regular packet line was maintained here. In 1806 the schooner *Comet*, 105 70-95 tons burthen, commanded by Captain Asa Scudder, made frequent trips between Barnstable and Boston. At the time of the declaration of war with Great Britain, in 1812, the sloop *Independence*, of about thirty tons, Captain Richard Howes, was running transiently as a Barnstable and Boston packet. Before the close of the war, in 1814, on her return passage from Boston, this vessel was fired into, boarded and burned by the crew of the British frigate *Nymph*, having been set on fire with her sails all standing. The captain and passengers were taken in a barge to the frigate. Their names were: Richard Howes, John Lothrop, David Parker, Timothy Phinney and his young son, Sylvanus B. Phinney, all of Barnstable. They were landed the day following near Boston light. The cargo, mostly groceries, belonged to
+
+<vocab>Falmouth, Nantucket, sheep-shearing, steamboat, packet, Henry Clay, Swift, Temperance, Woods Holl, New Bedford, West Falmouth, Nile, Peerless, Barnstable, Comet, Asa Scudder, Independence, Great Britain, Richard Howes, John Lothrop, David Parker, Timothy Phinney, Sylvanus B. Phinney, Nymph, British frigate</vocab>

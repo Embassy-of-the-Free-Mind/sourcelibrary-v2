@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>22</page-num>
+<header>The Book of Clevelanders</header>
+
+Society; member Executive Board Civic League of Cleveland Municipal Ass'n; director City Club; member Union, Tavern, Country, Mayfield, University and Chagrin Valley Hunt Clubs. Recreations: Horse-back Riding and Tennis.
+
+BALDWIN, Fred; born, Yorkshire, England, Feb. 11, 1882; son of Robert and Martha Baldwin; educated in England; married, Columbus, O., Aug. 1910, Margaret May Talbot; resident of Cleveland for 5 years.
+
+BALL, Webb C.; jeweler; born in Knox Co., Ohio; married in 1879 to Miss Florence I. Young of Kenton, O.; issue one son and three daughters; at an early age apprenticed to a watch maker to learn the watch making and jewelers' trade; came to Cleveland in Mch., 1879; for 5 yrs. had been business mgr. of the Dueber Watch Case Mnfg. Co., then located in Cincinnati; head of Railroad Time Inspection System as well as one of the leading merchants of Cleveland; the name Ball today stands for accuracy in construction of Railroad watches; in connection with Railroad inspection service offices are maintained in Cleveland, Chicago and San Francisco; pres. The Webb C. Ball Co., Cleveland.
+
+BALLARD, Thomas P.; real estate; born, Canton, O., Apr. 27, 1854; son of Martin and Sophia Ball Ballard; educated, A. B. Amherst College, 1876 and A. M. 1879; married, Columbus, O., Jan. 20, 1886, Isabella Clerk (deceased); one son, Clifford B. Ballard; married, Cambridge, Mass., Aug. 29, 1907, Frances Anne Keay; one son, Hyde Whitcomb Ballard; 1877-79, supt. schools Navarre, O.; 1879-80, prin. Unadilla N. Y. Academy; 1880-90, agt. for Ginn & Co. of Boston at Columbus, O.; 1890, admitted as partner of Ginn & Co., 1892-99, Chicago office of Ginn & Co.; 1899-1906, social and settlement worker, Philadelphia; 1906, real estate, Cleveland; 1894-99, trustee Chicago Commons; 1897-99, trustee Cong. City Mission Society, Chicago; 1895-8, trustee Central Cong. Church, Philadelphia; 1913, director Civic League, Cleveland; member Delta Kappa Epsilon Fraternity; 1886-91, Columbus, O., Club, Chicago; Union League, Congregational, Sunset, Evanston, Amherst, Evanston Boat Club; Cleveland City Club; Council of Sociology; member chamber of Commerce; committee on Municipal Affairs, 1912; vice pres. Cleveland Real Estate Board, 1911; chairman Board of Trustees, 1912, and pres. 1913.
+
+BALZHISER, E. C.; ice industry; born, Batavia, O., Aug. 24, 1868; son of Henry and Mary Balzhiser; common school education; married in 1892, Miss Cora May Walker of Oswego, N. Y.; issue, one daughter; settled in Cleveland in 1888, entering the employ of the Knickerbocker Ice Co., as driver; by 1893 had become supt. of the business, which in 1893, was sold to the Forest City Ice Co.; entered the employ of the Pictet Ice Co.; first plant to make manufactured ice in the city; bought interest in the Independent Ice Co.; became director, sec'y and mgr.; in 1902,
+
+<vocab>Fred Baldwin, Webb C. Ball, Thomas P. Ballard, E. C. Balzhiser, Cleveland, biography, business, industry, real estate, jewelry</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>325</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. Edward Fild</image-desc>
+MR. EDWARD FILD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Fessler</image-desc>
+C. F. FESSLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. G. Finlay</image-desc>
+L. G. FINLAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. J. A. Foerstner</image-desc>
+MR. J. A. FOERSTNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of John J. Fleharty</image-desc>
+JOHN J. FLEHARTY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. H. Foote</image-desc>
+GEO. H. FOOTE
+
+<vocab>Clevelanders, Edward Fild, C. F. Fessler, L. G. Finlay, J. A. Foerstner, John J. Fleharty, Geo. H. Foote</vocab>

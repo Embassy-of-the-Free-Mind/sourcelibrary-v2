@@ -1,0 +1,35 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>v</page-num>
+
+# CONTENTS.
+
+---
+
+### CHAPTER I.
+TOPOGRAPHY AND GEOLOGY. PAGE
+Location and Boundaries.—Geological Formation.—Contour of the Coast.—Surface and Soil.—The Flora of the Cape.—Effect of the Landscape on the Character of the Cape Men.................................................. 1
+
+### CHAPTER II.
+INDIAN HISTORY.
+Origin.—Manners.—Customs.—Religion.—Cape Indians.—Their Villages.—Their Tribes.—Map.—Kindness.—Subjugation.—Decrease.—Extinction.—Legends.... 12
+
+### CHAPTER III.
+DISCOVERY AND EXPLORATION.
+Early Discovery of the Cape.—Explorations by Gosnold and Dermer.—The Pilgrims.—The Mayflower in Cape Cod Harbor.—Explorations by the Pilgrims.—Compact Signed.—Plymouth.—The Lost Boy.—Post at Manomet.—Great Storm.—Declaration of Rights.—First Settlement of the Cape by the Whites.—Sandwich, Barnstable, Yarmouth and Nauset.—Erection of County.................................................. 20
+
+### CHAPTER IV.
+CHARTERS, GRANTS AND INDIAN DEEDS.
+Spanish Claims.—Cabot’s Discoveries.—Plymouth Company.—Council of Plymouth.—The Pilgrims.—Patent of 1629-30.—Settlement of the Cape Towns and Purchases from the Indians.—Charter of 1691.................................. 32
+
+### CHAPTER V.
+CIVIL HISTORY AND INSTITUTIONS.
+Basis of Civil Government.—Erection of the County.—Political History.—Councillors.—Senators.—Representatives.—Sheriffs.—Registers.—County Institutions.—Federal Institutions.—Custom House.—Lighthouses.—Life Saving Service... 38
+
+### CHAPTER VI.
+MILITARY HISTORY.
+New England Confederation.—First Indian Troubles.—King Philip’s War.—French and Indian Wars.—The Revolution.—Shay’s Rebellion.—War of 1812.......... 62
+
+<vocab>Topography, Geology, Indian History, Discovery, Exploration, Charters, Grants, Civil History, Military History, Cape Cod, Plymouth, New England</vocab>

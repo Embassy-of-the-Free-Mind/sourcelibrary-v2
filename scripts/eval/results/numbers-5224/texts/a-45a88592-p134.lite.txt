@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>112</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+matter of general interest to trace the development, growth and ultimate abandonment of the two channels of communication--the packet and the stage coach.
+
+SANDWICH.—The first packet between Sandwich and Boston, of which there is any data existing, was the *Charming Betty*, a sloop of forty-five tons, built in 1717 by Thomas Bourne, and purchased by Simeon Dillingham. Other packets, we know by tradition, plied between these ports, but their names have not been preserved. About 1825 the sloops *Polly*, Captain Roland Gibbs, and *Splendid*, Captain Sewall Fessenden, were on this route, and Captain Charles Nye run the *Charles*, which was built on the shore below the present town house. Deming Jarves afterwards built, just below the glass works, the sloop *Sandwich* (which was perhaps the first regular passenger packet), also commanded by Captain Charles Nye. The *Henry Clay*, built by Hinckley Brothers at West Sandwich in 1831-2, was commanded by Captain George Atkins. The sloop *Sarah*, commanded by Calvin Fish, ran from the village with wood and passengers, and between these last two there was a sharp rivalry. The village people, not satisfied with the sailing qualities of the *Sarah*, purchased the schooner *Nancy Finley*, and the competition continued. About 1840 the Boston and Sandwich Glass Company purchased the schooner *Sarah*, a fleet craft, also commanded by Captain Atkins. The village people tried again, and bought the schooner *Cabinet*; Captain Roland Gibbs commanded her, and afterward the sloop *Osceola*, a fast sailer.
+
+The packeting business was in its glory just before the advent of steam cars, in 1848. Competition was brisk and rates were cut from one dollar to twenty-five cents per trip. After the opening of the railroad the business began to decline. Captain Sears left the line and took command of a brig in the freighting business. The Glass Company also took off its packet. The *Wm. G. Eddie*, Captain Stephen Sears, ran a few months, but was not remunerative. Early in the fifties, Mr. Jarves had a disagreement with the railroad company as to the rates of freight, and in conversation with Mr. Bourne, the superintendent, threatened to put a steamer on the route between the Cape and Sandwich. Mr. Bourne, it is stated, remarked that "the acorn was not yet planted to grow the timber for such a steamer." But the steamer was built, and remembering the conversation, Mr. Jarves named her the *Acorn*. She ran a few years, and was commanded by Captain Roland Gibbs. But both steam and sailing vessels in the end succumbed to the railroad as a means of communication with the outside world.
+
+FALMOUTH.—The geographical position of this town rendered regular water communication with Boston impracticable. But in the early and middle parts of the present century there was constant and regu-
+
+<vocab>Sandwich, Boston, packets, shipping, transportation, Boston and Sandwich Glass Company, Deming Jarves, railroad, Falmouth</vocab>

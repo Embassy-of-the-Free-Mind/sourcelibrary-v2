@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>245</page-num>
+<header>LIFE IN THE ORDER. PART I</header>
+
+affected the constitution and ideals of monastic life, such as the almswomen's relations with men;¹ of their treatment of the lay-people² or of their dealings with them;³ of matters connected with ordination,⁴ and the distribution and the possession of robes.⁵ They complained of the breaking of the rules;⁶ and of any matter which might be subversive to discipline,⁷ such as the illegal restoration of almswomen after suspension, charges of pursuing desire, ill-will, ignorance, the rejection of the Buddha, the Dhamma and the Sangha, and grumbling, slackness and jealousy. They complained if the truth were concealed,⁸ or if promises were broken;⁹ and they complained if the other almswomen did anything which was bad for their health,¹⁰ for bodily welfare was thought to be an important factor in pursuing the holy life.
+
+It is always said that the almswomen complained to Gotama through the almsmen, and never directly to him. This may be an example of the way in which the texts as they have been handed down have been distorted by the attempts of the monk-editors to magnify the male, to put knowledge within his grasp and to place all authority upon his knees. But if the almsmen served as the intermediaries, Gotama himself was the sole fount of all the legislative decrees. The rules appear as the aftermath of disturbances which he sought to quell as soon as they were reported to him. Throughout he appears to have been guided by two principles: the necessity for keeping the friendship of the laity, and the belief, which is perhaps the
+
+---
+
+¹ V., iv., pp. 211 ff.; 218-222.
+² V., iv., pp. 271, 274.
+³ V., iv., pp. 293, 300, 302.
+⁴ V., iv., pp. 225, 318-325, 327-330, passim.
+⁵ V., iv., pp. 246, 279, 281, 282, 284-287.
+⁶ V., iv., pp. 264, 322-325.
+⁷ V., iv., pp. 230, 235-239, 275, 290, 292, 309, 331.
+⁸ V., iv., p. 216 ff., pp. 239-242.
+⁹ V., iv., pp. 279, 301, 332, 333.
+¹⁰ V., iv., pp. 260, 262, 277.
+
+<vocab>monastic life, almswomen, ordination, robes, discipline, Buddha, Dhamma, Sangha, Gotama, almsmen, monk-editors, legislative decrees, laity</vocab>

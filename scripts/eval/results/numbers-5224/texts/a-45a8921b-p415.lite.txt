@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>401</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+<sig>27</sig>
+
+Commerce, Boston Bar Ass'n. Business address, 30 State St., Boston, Mass. Residence, Boston and Sandwich, N. H.
+
+Abbott, Alfred Wells
+Physician; b., Concord, N. H., May 7, 1842; s. Alfred Chandler and Judith (Farnum) Abbott; ed. Boscawen Academy, 1863, Dartmouth Med. College, 1867; commenced the practice of medicine in Kansas, but returned to New Hampshire, locating in Sanbornton, whence, after ten years, he removed to Laconia and has there continued in practice; he has written many articles along medical lines, some of which have appeared in leading medical periodicals. As an expert witness he has been called to testify in court cases in all parts of the state. He is the owner of the Alfred Abbott farm in West Concord, on the shore of the Merrimack, near Sewall's Falls, which contained one of the finest timber lots in the state, and has been owned by Abbotts in direct lineal descent since the first settlement; it is now used by the family as a summer residence; Republican; president Citizens' Telephone Co.; trustee Laconia Savings Bank; m., Dec. 30, 1869, Julia A. Clay; children, Clifton S., physician; Blanche Newell, teacher of Latin, Laconia high school. Residence, Laconia, N. H.
+
+Aldrich, Walter J.
+Physician; b., Lyman, N. H., Nov. 3, 1866; s. Albert H. and Rula R. (Tucker) Aldrich; ed. public schools and St. Johnsbury (Vt.) Academy, 1888; taught in Kansas in 1889; graduated M.D., from Bellevue Hospital Med. School, New York, 1893, and immediately commenced practice in St. Johnsbury, Vt., since continuing; member Vermont house of representatives, 1912-3; Progressive party candidate for governor of Vermont, 1914; member Caledonia County and Vermont Med. Soc. and American Med. Ass'n; m., Nov. 1, 1893, Flora Folsom, St. Johnsbury; one son, James F. Residence, St. Johnsbury, Vt.
+
+<column-break/>
+
+Mason, Wallace Edward
+Educator; b., North Conway, N. H., June 24, 1861; s. John E. and Lizzie W. (Randall) Mason; ed. Fryeburg, Me., Academy, Bowdoin College, 1882; Harvard and Clark University and Hyannis Summer schools; principal Thomaston, Me., high school, 1883-8, admitted to the bar in Colorado in 1889; practiced law in Tennessee, 1889-91; principal high schools, Orange, Mass., 1892-7; Leominster, Mass.,
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Wallace Edward Mason</image-desc>
+
+1879-1902; district superintendent of schools, Leicester and Charlton, Mass., 1902-6; superintendent of schools and principal high school, North Andover, Mass., 1906-11; director Keene, N. H., Normal School since 1911; Congregationalist; Republican; member N. H. constitutional convention, 1918; A. F. & A. M.; past Patron, O. E. S., S. A. R., P. of H., Phi Beta Kappa, Alpha Delta Phi; member National Educational Ass'n, American Inst. of Instruction (president); director Keene Commercial
+
+<vocab>Alfred Wells Abbott, Walter J. Aldrich, Wallace Edward Mason, New Hampshire, biography, physicians, educators, genealogy</vocab>

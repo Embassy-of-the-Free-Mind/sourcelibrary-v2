@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>395</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Walter M. Williams</image-desc>
+Walter M. Williams
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. J. Wilmerink</image-desc>
+Wm. J. Wilmerink
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. E. Wismar</image-desc>
+F. E. Wismar
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. J. Wolf</image-desc>
+L. J. Wolf
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. J. Wodisky</image-desc>
+J. J. Wodisky
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jesse G. Wolfe</image-desc>
+Jesse G. Wolfe
+
+<vocab>Walter M. Williams, Wm. J. Wilmerink, F. E. Wismar, L. J. Wolf, J. J. Wodisky, Jesse G. Wolfe, Clevelanders, Biography</vocab>

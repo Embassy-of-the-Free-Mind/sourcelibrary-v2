@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>64</page-num>
+<header>The Book of Clevelanders</header>
+
+the Company in 1908; pres. The National Handle Co.; trustee Hiram College; Ohio Christian Missionary Society; member Willowick Country Club.
+
+COWLES, John G. W.; financier; born, Oberlin, O., March 14, 1836; son of Rev. Henry and Alice Welch Cowles; educated in public and preparatory schools of Oberlin; entered Oberlin College, graduating in 1856; studied for the ministry, earning money for education by teaching; graduated from the Oberlin Theological Seminary in 1859; married, in 1859, to Lois M. Church, of Vertmontville, Mich.; issue, two daughters, living, and two sons, deceased; second marriage, to Miss Beatrice Walker, of Brantford, Conn.; issue, one daughter, Jeanette, born in 1905; preached in the Congregational Church of Bellevue from 1859 to 1861; joined the army then; elected Chaplain of 55th O. V. I.; in the fall of 1862; resigned as Chaplain, and became the pastor of the First Congregational Church, Mansfield, in 1865; went to the church in Saginaw, Mich.; after six years, and on account of ill health, gave up the ministry and came to Cleveland, and for 3 years was editorial writer for the Leader; gradually drifted into the real estate field and had a prominent part in the large real estate deals of the city; mgr. of the real estate interests of John D. Rockefeller and Charles F. Brush, for eight years; served as pres. Cleveland Trust Co.; pres. Cleveland Chamber of Commerce (1896); pres. Park Board Commission (1900); trustee Oberlin College since 1874; LL. D., 1898; member Ohio Commandery of the Loyal Legion, Army and Navy Post, G. A. R.; Republican; member and deacon of Plymouth Congregational Church until its recent abandonment.
+
+COX, Jacob Dolson; manufacturer; born, Warren, O., May 15, 1852; son of Jacob Dolson and Helen Finney Cox; educated, public schools; married, Cleveland, 1878, Ellen Atwood Prentiss; three children; when 17 years old began work in the iron business, worked 8 years, learning roll turning, puddling, heating, rolling and practical machinist work with The Cleveland Iron Co.; in 1876, started present business manufacturing twist drills and tools; director Cleveland Trust Co.; director Cleveland & Pittsburgh R. R. Co.; trustee Case School of Applied Science; pres. The Cleveland Twist Drill Co.; member American Society Mechanical Engineers; member Loyal Legion; Society Mayflower Descendants; member Yacht, Country and Mayfield Country Clubs. Recreations: Yachting, Golf and Photography.
+
+COX, Jacob Dolson, Jr.; manfg.; born, Cleveland, Nov. 1, 1881; son of Jacob Dolson and Ellen Prentiss Cox; educated Williams College, Williamstown, Mass., class of 1903, degree A. B.; January to December 1910, McFadden Logging Co., Ltd.; Vancouver, B. C.; January, 1911, Cleveland Twist Drill Co.; October 1911, to date,
+
+<vocab>John G. W. Cowles, Jacob Dolson Cox, Jacob Dolson Cox Jr., Cleveland, biography, manufacturing, real estate, Oberlin College, Cleveland Trust Co., Cleveland Twist Drill Co.</vocab>

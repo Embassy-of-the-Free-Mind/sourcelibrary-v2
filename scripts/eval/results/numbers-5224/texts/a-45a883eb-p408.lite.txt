@@ -1,0 +1,81 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>404</page-num>
+<header>404 The Book of Clevelanders</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| McClure, Franklyn Evans | 172 | Morison, David | 189 |
+| McDaniels, Homer | 172 | Moritz, Frederick H. | 189 |
+| McDonald, Charles A. | 173 | Morreau, Albert | 189 |
+| McGee, John Bernard | 173 | Morris, Charles A. | 190 |
+| McGinness, John Randolph | 173 | Morris, Isaac | 190 |
+| McIntosh, Henry Payne | 173 | Muckley, Henry C. | 190 |
+| McIntosh, Henry Payne, Jr. | 174 | Muhlhauser, Frank | 190 |
+| McIntyre, Donald C. | 174 | Mulhern, George C. | 191 |
+| McKay, Edward C. | 174 | Munn, Ray Edward | 191 |
+| McKay, Robert Hunter | 175 | Murch, Maynard Hale | 191 |
+| McKeehan, Homer H. | 175 | Murfey, Charles L. | 191 |
+| McKinstry, Charles T. | 175 | Murfey, Lewis A. | 191 |
+| McMillin, Henry Everett, Jr. | 175 | Murphy, George F. | 191 |
+| McNairy, Amos | 175 | Murray, Charles B. | 192 |
+| McWaters, J. C. | 175 | Myers, Max | 192 |
+| McWilliams, Thomas Samuel | 176 | Myers, Walter Edward | 192 |
+| Mabery, Charles Frederick | 176 | | |
+| Mach, Henry Leonard | 176 | Nally, John Aloyius | 192 |
+| Maedje, Charles W. | 176 | Neale, A. William | 193 |
+| Malm, L. Louis | 177 | Neale, Eugene Edwin | 193 |
+| Maly, Fred | 177 | Neale, Harold H. | 193 |
+| Manak, Frank C. | 177 | Needs, Samuel Henry | 193 |
+| Manchester, Frederick A. | 177 | Nelson, Nils B. | 193 |
+| Mandelbaum, M. J. | 178 | Newberger, John | 194 |
+| Mansfield, Howard P. | 178 | Newcomb, Walter E. | 194 |
+| Mapes, George Carlton | 178 | Newcomb, Robert Burton | 194 |
+| Marks, Martin A. | 178 | Newman, Edward E. | 194 |
+| Marvin, Ulysses L. | 179 | Nicholson, Ezra | 194 |
+| Maschke, Maurice | 179 | Nicola, Benjamin D. | 195 |
+| Mather, Samuel | 179 | Noble, Lyman Adams | 195 |
+| Mather, Samuel Wayne | 180 | Noll, Edward A. | 195 |
+| Mathers, James | 181 | Nord, Herman J. | 196 |
+| Mathews, Herbert | 181 | Norris, Willis W. | 196 |
+| Matthews, John, stage name | | Noville, Frank | 196 |
+| Johnny Ray | 181 | Nutting, John Danforth | 196 |
+| Matzen, Hermann N. | 181 | | |
+| Meacham, Rowland Thomas | 182 | O'Brien, Charles C. | 197 |
+| Meade, G. Louis | 182 | O'Reilly, Right Rev. Thomas C. | 197 |
+| Meals, Walter D. | 182 | Oberdoerster, A. | 197 |
+| Meldrum, Andrew Barclay | 182 | Oberdoerster, William | 197 |
+| Mercer, George Wellington | 182 | Odbert, H. S. | 198 |
+| Merihew, Henry Merton | 183 | Oglebay, Crispin | 198 |
+| Merner, William E. | 183 | Olds, Charles H. | 198 |
+| Merritt, Edward A. | 183 | Oliver, John Hemwood | 198 |
+| Metzenbaum, Myron | 183 | Olmsted, George H. | 199 |
+| Meyer, Gerhard Fred | 184 | Ong, Judson W., Jr. | 199 |
+| Miles, Robert Parker | 184 | Ong, Walter Cain | 200 |
+| Miller, Burt A. | 184 | Orr, Charles | 200 |
+| Miller, Casper James | 184 | Osborn, Frank Chittenden | 200 |
+| Miller, Charles Russell | 184 | Otis, Arthur Houghton | 200 |
+| Miller, Dan T. | 185 | Otis, Charles A., Jr. | 201 |
+| Miller, Dayton Clarence | 185 | Otter, Albert Ernest | 201 |
+| Miller, Otto | 185 | Owen, Franklin Buchanan | 202 |
+| Miller, Samuel | 186 | Owens, John Ralph | 202 |
+| Mills, George McKim | 186 | | |
+| Minke, Herman J. | 186 | Pack, Charles Lathrop | 202 |
+| Minnick, Chauncey F. | 186 | Paine, Charles Alfred | 203 |
+| Mitchell, Ralph D. | 186 | Palmer, Herbert David | 203 |
+| Moatz, Herbert C. | 187 | Palmer, William Pendleton | 203 |
+| Moon, Dewitt Clinton | 187 | Parker, Charles Barnsdall | 204 |
+| Mooney, Edgar J. | 187 | Parmely, Benjamin | 204 |
+| Mooney, Michael P. | 187 | Parrett, Benjamin C. | 204 |
+| Moore, Edward W. | 188 | Parrish, Ellison J. | 204 |
+| Moran, Rev. Francis T. | 188 | Parsons, Charles Alfred | 205 |
+| Morgan, Charles F. | 188 | Parsons, Harry Arthur | 205 |
+| Morgan, Robert David | 188 | Patchin, Erle Monroe | 205 |
+| | | Patchin, Eugene L. | 205 |
+
+<column-break/>
+
+<vocab>Cleveland, biography, index, directory</vocab>

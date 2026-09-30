@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>210</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Hon. John Doane was born in part of Orleans then embraced within the limits of Eastham, on May 28, 1791, and died March 3, 1881. He was educated at Sandwich Academy, and at Bridgewater; he studied law with John Reed, and was admitted to the bar in Barnstable about 1818, and practiced for more than half a century. He was representative to the legislature, and in 1830 was first elected state senator, in which office he served three terms with dignity and ability. He was at one time a member of the governor's council. In 1850 and again in 1853 he was elected county commissioner and was thus contemporary in that court with David K. Akin, Seth Crowell and Simeon Dillingham.
+
+He lived to a ripe old age in the enjoyment of a rare social position, respected and loved by all who knew him, his life work as an adviser, peacemaker and friend more than filling up the measure of man's allotted time. Upon the town in which he resided and upon the public whose interests he sought to serve he made a deep and lasting impression as an honest and sound counselor, who, in all his professional career advised settlements, compromises and concessions instead of litigations in the courts.*
+
+Seth F. Nye of Sandwich was born May 13, 1791, and died September 13, 1856, at the age of 65 years and four months. He was admitted to the bar of the county of Barnstable about 1816, and practiced here for forty years—the whole period of his business life. He held various offices of trust, was representative to the legislature, and a delegate in the convention of 1820, to revise the constitution of the state. He rarely appeared in court as an advocate, but prepared his cases for argument by other counsel. He was a genial person, and one of good sense,—a useful and benevolent citizen, and his death was deeply lamented by those who knew him.
+
+John Walton Davis was born at Wellfleet in 1817, and died at Provincetown in 1880. He was at Amherst College two years, and subsequently graduated from Bowdoin College, Maine. He graduated with distinction, as a fine scholar, at the head of his class. He studied law at Ellsworth, Me., and after being admitted to the bar, practiced at Topham, Me., Boston, Mass., Wellfleet and Provincetown. Mr. Davis held offices of public trust, among which were internal revenue assessor, trial justice, county commissioner, and others. He was a genial and agreeable gentleman, and one who possessed sufficient ability to have filled more important stations in life than he did.
+
+Benjamin F. Hutchinson, came to Provincetown from the county of Essex, (about 1870) and practiced law, jointly with teaching. He was very devoted to the cause of education, and was connected with
+
+* The ancestry and family of Esquire Doane are further noticed in the chapter on Orleans.—Ed.
+
+<vocab>John Doane, Barnstable County, Sandwich Academy, John Reed, David K. Akin, Seth Crowell, Simeon Dillingham, Seth F. Nye, John Walton Davis, Benjamin F. Hutchinson, legal history, Massachusetts history</vocab>

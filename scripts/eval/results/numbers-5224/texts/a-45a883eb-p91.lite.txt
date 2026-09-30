@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>87</page-num>
+<header>The Book of Clevelanders</header>
+
+**EMERMAN**, Maxwell Vernon; attorney-at-law; born, Cleveland, Nov. 17, 1867; son of Benjamin and Lena Luntz Emerman; educated, public schools, Central High School 1905, and University of Michigan, 1908, degree LL. B.; married, Baltimore Md., Nov. 3, 1912; member executive committee Progressive Republican party, Cuyahoga county, 1912; sec'y North American Export Co.; director Ohio Adjustment Co., Weger Motor Co., Akron Scrap Iron Co., Akron, O.; general counsel Erie Iron & Steel Co., Erie, Pa.; member Cleveland Shakespeare Club, and Knights of Pythias.
+
+**EMERSON**, Oliver Farrar; university professor; born, Traer, Ia., May 24, 1860; son of Oliver and Maria Farrar Emerson; A. B., Iowa College, 1882, A. M., 1885; Ph. D., Cornell University, 1891; married, Annie L. Logan, of St. Louis, Sept. 24, 1891; supt. schools, Grinnell, Ia., 1882-1884, Muscatine, Ia., 1884-1885; prin. Academy of Iowa College, 1885-1888; Goldwin Smith fellow in English, 1888-1889, instru. in English, 1889-1891; asst. prof. rhetoric and English philology, 1892-1896, Cornell University; prof. English, Western Reserve University, since 1896; member Modern Language Ass'n America, American Dialect Society (pres., 1905). Author: History of the English Language, 1894; A Brief History of the English Language, 1896; Middle English Reader, 1905; Outline History of the English Language, 1906. Editor: Johnson's Rasselas, 1905; Memoirs of the Life and Writings of Edward Gibbon, 1898; Poems of Chancer, 1911. Contributor to Modern Language Notes, Dialect Notes, Publications of Modern Language Ass'n, Modern Philology, Journal of Germanic Philology, Anglia, etc.
+
+**EMERSON**, Sam W.; contracting engineer; born, Cleveland, O.; educated, Case School of Applied Science, B. S. and C. S.; married, Cleveland, Florence J. Taylor; two children; contracting engineer engaged in reinforced concrete work; pres. and treas. Sam W. Emerson Co., Emerson Realty Co.; pres. Ohio Epsilon Co.; member Cleveland Engineering Society, Phi Kappa Psi, Tau Beta Phi Fraternities; member Cleveland Athletic Club, Chamber of Commerce and Builders' Exchange.
+
+**ENGEL**, Rudolph Carl; physician and surgeon; born, Cleveland, June 19, 1879; son of Fred C. and Mary C. Heimberger Engel; educated, Cleveland public schools, Cleveland College of Physicians and Surgeons, and Medical Dept. Ohio Wesleyan University, Doctor of Medicine, 1902; married, Cleveland, June 11, 1902, Miss Mary Sheka; two sons, Walter Alfred and Alvin Ralph Engel; surgeon to River Furnace Co. and River Steel Mill, special examiner Police and Fire Depts., January, 1912; surgeon-in-chief, Uniform Rank, Knights of Pythias of Cuyahoga County; medical examiner, Cuyahoga Lodge, K. of P.; member Cleveland Academy of Medicine and Ohio State Medical Ass'n. Recreations: Motoring and Baseball.
+
+<vocab>Maxwell Vernon Emerman, Oliver Farrar Emerson, Sam W. Emerson, Rudolph Carl Engel, biography, Cleveland, Ohio, professional directory</vocab>

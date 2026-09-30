@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>314</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. J. Coach</image-desc>
+R. J. COACH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. B. Cody</image-desc>
+H. B. CODY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. E. Cole</image-desc>
+CHAS. E. COLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. W. Collier</image-desc>
+A. W. COLLIER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. M. Collacott</image-desc>
+C. M. COLLACOTT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. J. Comerford</image-desc>
+J. J. COMERFORD
+
+<vocab>The Book of Clevelanders, R. J. Coach, H. B. Cody, Chas. E. Cole, A. W. Collier, C. M. Collacott, J. J. Comerford</vocab>

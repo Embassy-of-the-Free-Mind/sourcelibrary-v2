@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>393</page-num>
+<header>The Book of Clevelanders</header>
+<sig>25</sig>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Werner</image-desc>
+W. E. WERNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Thos. H. Wells</image-desc>
+THOS. H. WELLS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Max G. Wertheim</image-desc>
+MAX G. WERTHEIM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. L. F. Wieler</image-desc>
+CHAS. L. F. WIELER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. H. Whitelaw</image-desc>
+J. H. WHITELAW
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. B. Wight</image-desc>
+E. B. WIGHT
+
+<vocab>W. E. Werner, Thos. H. Wells, Max G. Wertheim, Chas. L. F. Wieler, J. H. Whitelaw, E. B. Wight, Clevelanders, biography</vocab>

@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>524</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+League, Concord Gun Club, Council of National Defense, Red Cross, Prohibitionist, Suffragist; m., Oct. 25, 1898, Eva May Stevens of Concord; one dau., Martha Phyllis, b. June 7, 1901, Concord High School, 1919. Residence, Pleasant St., Concord, N. H.
+
+**Spaulding, Daniel Minot**
+Teacher; farmer; b., Sullivan, N. H., Sept. 10, 1859; s. Henry O. and Sarah E. (Houghton) Spaulding; ed. public schools, Keene high school, 1878, Amherst College, A.B. 1884, Phi Beta Kappa; engaged in teaching for several years—instructor in French and Science, Arms Academy, Shelburne Falls, Mass.; principal, high school, Methuen, Mass.; farmer in Keene since 1894; Congregationalist; Republican; member Keene board of education since 1911, Keene city council, 1916; member N. H. house of representatives from Ward 5, Keene, 1917–18, 1919–20 (member committee on agricultural
+
+<column-break/>
+
+college both sessions and also on banks and state library in latter session); A. F. & A. M. (past master), P. of H., past master Cheshire Grange, Keene, and of Cheshire County Pomona Grange and past D. N. H. State Grange; secretary Cheshire County Farm Bureau; president Monadnock National Farm Loan Ass’n; m., April 14, 1891, Kate M. Barker; one son, Earl Barker, b. Feb. 16, 1892. Residence, Keene, N. H.
+
+**Estabrook, Fred Watson**
+<image-desc size="medium" type="portrait" significance="high">Portrait of Fred Watson Estabrook</image-desc>
+Manufacturer; financier; b., Grafton, Mass., Sept. 23, 1852; s. John W. and Julia (Howe) Estabrook; ed. public schools of Grafton and Marlboro, Mass.; Bryant & Stratton Business College, Boston, Mass.; commenced work as bookkeeper in a shoe factory, and at 23 years of age was made manager of the factory of Crane, Leland & Moody at Nashua, N. H.; in 1879 organized the firm of Estabrook & Anderson Bros., manufacturers of shoes, whose product gained high reputation; with greatly increasing business the concern was incorporated as the Estabrook-Anderson Shoe Co. in 1895, Mr. Estabrook continuing till 1912, when he retired to devote his attention to other interests, including extensive mining enterprises in the West; Episcopalian; Republican; member Republican national committee for New Hampshire, 1908–20; director General Development Co., Miami Copper Co., N. Y.; National Shawmut Bank, Boston; Second National Bank, Nashua; Nashua Saddlery Hardware Co.; president and director White Mountain Freezer Co., Telegraph Publishing Co., Nashua; director and vice-president Sioux City Stock Yards Co.; director and treasurer Estabrook Gold Dredging Co., Boston & Idaho Gold Dredging Co.; director Manchester Traction Light & Power Co., Wonclancet Co. Nashua; trustee Protestant Episcopal Church, St. Mary’s School, Concord, N. H.; member Nashua City Club, Vesper Country Club; Union League, New York;
+
+<vocab>Daniel Minot Spaulding, Fred Watson Estabrook, New Hampshire, biography, business, politics, genealogy</vocab>

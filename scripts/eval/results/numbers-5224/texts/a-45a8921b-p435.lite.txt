@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>421</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Relief; m., June 15, 1888, Carrie Belle Sanborn; d., June 13, 1913; one son, Lowell Sanborn, b. June 2, 1891 (Bowdoin College, 1912), manager Library Bureau, Denver, Col., m. Grace Mara Allen, dau. Lewis F. Allen, Salem, Mass., June 4, 1917, and has one daughter, Grace Shirley. Residence, Sanbornville, N. H.
+
+**Brown, Albert Oscar**
+Lawyer; banker; b., Northwood, N. H., July 15, 1853; s. Charles O. and Sarah E. (Langmaid) Brown; ed. Coes Northwood Academy, 1874; Dartmouth College, A.B. 1878, A.M. 1911; Boston University Law School, LL.B. 1884; admitted to N. H. bar in 1884, and in practice in Manchester till 1912, having been a member successively of the firms of Burnham & Brown; Burnham, Brown & Warren, and Burnham, Brown, Jones & Warren; special counsel for New Hampshire in railroad tax appeals in Supreme Court, 1910–11; Congregationalist; Republican; chairman, N. H. Tax Commission since 1911; president N. H. constitutional convention, 1918; president Amoskeag Savings Bank, 1905–12; treasurer and secretary since 1912; director Amoskeag Nat’l Bank, Manchester Traction Light & Power Co., clerk, John B. Varick Co.; member N. H. Bankers Ass’n, Nat’l Tax Ass’n, Ass’n N. E. Tax Officials, executive committee, U. S. Council of State Banking Ass’ns, N. H. Bar Ass’n, A. F. & A. M., Psi Upsilon, Derryfield Club, Manchester; trustee Dartmouth College, Coes Northwood Academy, president; m., Dec. 20, 1888, Susie J. Clark, Ayer, Mass. Residence, Manchester, N. H.
+
+**Mead, Edwin Doak**
+Author; lecturer; b. Chesterfield, N. H., Sept. 29, 1849; s. Bradley and Sarah (Stone) Mead; ed. public schools and academies; worked in youth on a farm and in a store; entered employ of Ticknor & Fields, publishers, Boston, in 1866; studied in Europe, 1875–9; since engaged in lecturing and literary work; editor New England Magazine several
+
+<column-break/>
+
+years; some time president Mass. Good Citizenship Soc., also of American Free Religious Ass’n, and Twentieth Century Club; director World Peace Foundation; delegate American Peace Soc. to Congresses of Glasgow, Rouen, Lucerne, Munich and London; chairman executive committee, 13th International Peace Congress, Boston, 1904; author, “Martin Luther—A Study of the Reformation,” “The Philosophy of Carlyle,” “The Roman Church and the Public Schools,” “Organize the World,” “The Influence of Emerson,” “The Principles of the Founders,” etc.; received honorary A.M., Dartmouth, 1913; m., Sept. 29, 1898, Lucia True Ames. Residence, 19 Euston St., Brookline, Mass.
+
+**Mead, Lucia True Ames**
+Author; lecturer; b., Boscawen, N. H., May 5, 1856; dau. Nathan P. and Elvira Ames; conducted classes in Nineteenth Century Thought in Boston, and lectured on economic and social questions and international arbitration, for many years; delegate to several peace congresses; national secretary Woman’s Peace Party; member Twentieth Century Club; author, “Great Thoughts for Little Thinkers,” “Memoirs of a Millionaire,” “To Whom Much is Given,” “Primer of the Peace Movement,” “Patriotism and the New Internationalism,” “Swords and Ploughshares,” etc.; m., Sept. 29, 1898. (See preceding sketch.)
+
+**Dixon, Frank Haigh**
+Educator; b., Winona, Minn., Oct. 8, 1869; s. Alfred C. and Caroline Dixon; ed. Univ. of Mich., Ph.B., 1892, Ph.D. 1895; instructor in history and assistant professor of economics, Univ. of Mich., 1896–8; assistant professor, Dartmouth College, 1898–1908; professor since; secretary Amos Tuck School of Administration and Finance, Dartmouth, 1900–4; expert U. S. Interstate Commerce Com., 1907–8; chief statistician Bureau Railway Economics, 1910–; member American Economic Ass’n; American
+
+<vocab>Albert Oscar Brown, Edwin Doak Mead, Lucia True Ames Mead, Frank Haigh Dixon, New Hampshire, biography, Dartmouth College, peace movement, economics</vocab>

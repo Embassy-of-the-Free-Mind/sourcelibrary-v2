@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>22</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+ing in the town of Meredith since Jan., 1897; Free Baptist; Independent Democrat; selectman, Meredith, 1898-9; member, school board, ten years; appointed commissioner of agriculture by Gov. Samuel D. Felker in 1913; twice nominated for reappointment by Gov. Rolland H. Spaulding in 1916, council refusing confirmation on partisan grounds; renominated by Gov. Henry W. Keyes in 1917, and unanimously confirmed; member, Chocorua Lodge, A. F. & A. M., Meredith, Wicwas Lake Grange, P. of H., master, 1904; district deputy; lecturer, N. H. State Grange, 1910-14, overseer since 1914; secretary, N. H. Old Home Week Ass'n since 1914; has spoken extensively on agricultural and kindred topics at farmers' institutes, Grange gatherings and various public meetings throughout the state; m., Dec. 5, 1894, Eva J. Perkins of Meredith; three sons, Louis K. and Harold P., students at New Hampshire College, and Walter A. Residence, Laconia, N. H.; address, Concord, N. H.
+
+<image-desc size="large" type="portrait" significance="high">Portrait of a man with a mustache, wearing a suit and tie.</image-desc>
+
+<column-break/>
+
+**Watson, Irving Allison**
+Physician; b., Salisbury, N. H., Sept. 6, 1849; s. Porter B. and Luvia E. (Ladd) Watson; ed. common schools, Newbury (Vt.) Seminary and Collegiate Institute; studied medicine; attended lectures, Dartmouth Medical College and University of Vermont; grad. from latter, M.D., 1871 (A.M., Dartmouth, 1885); practiced Groveton, N. H., 1871-81; since then in Concord; several years superintendent of schools at Groveton, member N. H. legislature, 1879-81; secretary N. H. state board of health since organization, Sept., 1881; secretary N. H. commissioners of lunacy; registrar vital statistics of New Hampshire; president of state board cattle commissioners from 1891 to 1913; secretary, American Public Health Ass'n, 1883-97; president, International Conference State and Provincial Boards of Health, 1903; assistant secretary-general, first Pan-American medical congress; permanent member, American Medical Ass'n; honorary member, Academia Nacional de Medi-
+
+<image-desc size="large" type="portrait" significance="high">Portrait of a man with glasses and a mustache, in profile, wearing a suit and bow tie.</image-desc>
+
+<vocab>Irving Allison Watson, New Hampshire, medicine, public health, agriculture, politics, biography</vocab>

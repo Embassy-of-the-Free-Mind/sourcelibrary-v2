@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>391</page-num>
+<header>THE REPUBLIC. 391</header>
+
+Of which when our governors being ignorant, join our couples together unseasonably, the children shall neither be of a good genius, nor fortunate.
+
+ticulars and multiple-superpartients. But augmentations surpassed are, ratios of lesser inequality, viz. when the lesser is compared with the greater quantity, as for instance, submultiples, subsuperparticulars, subsuperpartients, and those which are composed from these three. Those numbers are called by Plato *assimilating* and *dissimilating*, which are denominated by arithmeticians *similar* * and *dissimilar*: but he calls those *increasing* and *decreasing*, which they denominate *abounding* † and *diminished*, or more than *perfect* and *imperfect*. Things correspondent and effable, are boundaries which correspond in ratio with each other, and can be expressed in numbers either integral or fractional, such as these four terms or boundaries, 27, 18, 12, 8, which are in sesquialter and subsesquialter ratios; since these mutually correspond in ratio, and are effable. For effable quantities are those which can be expressed in whole numbers, or fractions; and, in like manner, ineffable quantities are such as cannot be expressed in either of these, and are called by modern mathematicians surds.
+
+In the next place, let us consider what we are to understand by the *sesquitertian progeny when conjoined with the pentad and thrice increased, affording two harmonies*. By the *sesquitertian progeny* then Plato means the number 95: for this number is composed from the addition of the squares of the numbers 4 and 3, which form the first sesquitertian ratio, (viz. 25) and the number 70, which is composed from 40 and 30, and therefore consists of two numbers in a sesquitertian ratio. Hence, as 95 is composed from 25 and 70, it may with great propriety be called a sesquitertian progeny. This number conjoined with 5 and thrice increased produces ten thousand and a million: for 100 x 100 = 10000, and 10000 x 100 = 1000000. But it must here be observed that these two numbers, as will shortly be seen, appear to be considered by Plato as analogous to two parallelopipedons, the former, viz. ten thousand, being formed from 10 x 10 x 100, and the latter from 1000 x 10 x 100. These two numbers are called by Plato two harmonies, for the following reason: Simplicius, in his Commentary on Aristotle’s books De Caelo, informs us that a cube was denominated by the Pythagoreans *harmony*, because it consists of 12 bounding lines, 8 angles, and 6 fides; and 12, 8, 6, are in harmonic proportion: for the difference between 12 and 8 is to the difference between 8 and 6, i. e. 4 is to 2 as the first term to the third, i. e. as 12 to 6, which, as is well known, is the law of harmonic proportion. As a parallelopipedon therefore has the same number of fides, angles, and bounding lines as a cube, the reason is obvious why the numbers 10000 and 1000000 are called by Plato harmonies. Hence also it is evident why he says "that the other of these harmonies, viz. a
+
+* Similar numbers are those whose fides are proportional, i. e. which have the same ratio; but dissimilar numbers those whose fides are not proportional.
+
+† As perfect numbers are those which are equal to their parts collected into one, such as 6 and 28, (for the parts of the former are 1, 2, 3, which are equal to 6, and the parts of the latter are 14, 7, 4, 2, 1, the aggregate of which is 28) so a diminished number is that which is greater than the sum of its parts, as 8, whose parts are 4, 2, 1, the aggregate of which is 7; and an abounding number is that which is exceeded by the sum of its parts, as 12, whose parts are 6, 4, 3, 2, 1, the sum of which is 16.
+
+million
+
+<vocab>Plato, Republic, sesquialter, subsesquialter, sesquitertian, parallelopipedon, Simplicius, Aristotle, De Caelo, Pythagoreans, harmony, perfect numbers, diminished numbers, abounding numbers</vocab>

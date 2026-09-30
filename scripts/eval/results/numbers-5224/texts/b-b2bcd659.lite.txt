@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>106</page-num>
+<header>Liturgical Prayer</header>
+
+Thee, the heavens and all the powers therein; the Te Deum bears some resemblance to the ordinary ending of the Preface : " through whom the Angels praise Thy Majesty, the Dominations adore, the Powers are in awe;" whilst the "Sanctus, Sanctus, Sanctus," is easily recognized as the Trisagion of the Mass.¹
+
+Although some parts of the Te Deum have been borrowed from Greek liturgies, it is certainly, as we have said, of Western origin and was composed in Latin.² In any case those critics who believe that this hymn was composed in Greek have been unable to find any Greek original.
+
+The following is the text of the Te Deum as officially received in the Church :³
+
+1. We praise thee, O God.
+2. We acknowledge thee to be the Lord.
+3. All the earth doth worship thee, the Father everlasting.
+4. To thee all angels cry aloud : the heavens and all the powers therein.
+5. To thee cherubim and seraphim continually do cry.
+6. Holy, holy, holy : Lord God of Sabaoth : heaven and earth are full of the majesty of thy glory.
+7. The glorious choir of the Apostles praise thee.
+8. The admirable company of the Prophets praise thee.
+9. The white-robed army of Martyrs praise thee.
+10. The holy Church throughout all the world doth acknowledge thee.
+11. The Father of an infinite majesty.
+12. Thy adorable, true and only Son.
+13. Also the Holy Ghost, the Comforter.
+14. Thou art the King of glory, O Christ.
+15. Thou art the everlasting Son of the Father.
+16. When thou tookest upon thee to deliver man, thou didst not abhor the Virgin's womb.⁴
+17. When thou hadst overcome the sting of death, thou didst open the kingdom of heaven to all believers.
+
+¹ Some other parts of the Te Deum are borrowed; the ten first verses are taken from the Eucharistic hymn of the Liturgy of Jerusalem; verses 11, 12, 13, 24, 25, 26 are inspired by the Gloria in excelsis; a few others are taken from the Psalms.
+² On the use of the Cursus in the Te Deum, and the conclusions to be drawn from it, cf. Revue critique, 1893, i. 192.
+³ For the text and variants cf. Warren's edition of the Bangor Antiphonary, pp. 32 and 93.
+⁴ Some MSS. have "Tu ad liberandum mundum suscepisti hominem." This phrase suscipere hominem was current in St. Augustine's time, but went out of favour at the period of the Nestorian controversies; it gave place to the phrase adsumere humanitatem. On these terms cf. Dom Morin, Revue Bénédictine, 1898, p. 39.
+
+<vocab>Te Deum, Liturgy, Sanctus, Trisagion, Church history, Bangor Antiphonary, Nestorian controversies, St. Augustine</vocab>

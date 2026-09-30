@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English, Sanskrit</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>3</page-num>
+<header>SÁNKHYA PHILOSOPHY.</header>
+
+त्रिविधं दुःखं ।२। एतद्यायातथ्यं । एतत्सम्यक् ज्ञात्वा इतकर्तव्यः स्यात् । न पुनस्त्रिविधेन दुःखेनाभिभूत इति तत्त्वसमासाख्य-सांख्यसूत्राणि ।
+
+No. 4.—"(1) The eight ‘producers’ (prakriti); (2) the sixteen ‘productions’ (vikára); (3) ‘Soul’ (purusha); (4) the ‘triad of qualities’ (traigunya); (5) ‘emanation’ or ‘development’ (sanchara); (6) ‘re-absorption’ or ‘dissolution’ (pratisanchara); (7) the ‘ministers of Soul’ (adhyátma); (8) the ‘province of an organ’ (adhibhúta); (9) the respective ‘presiding deity’ (adhidaivata); (10) the five ‘perversities of understanding’ (abhibuddhi); (11) the five ‘sources of action’ (karmmayoni); (12) the five ‘airs’ (váyu); (13) the five ‘which consist of action’ (karmmátma); (14) ‘ignorance’ (avidyá) under five divisions; (15) ‘disability’ (as’akti) of twenty-eight kinds; (16) ‘acquiescence’ or ‘indifference’ (tushti) of nine kinds; (17) ‘perfectness’ (siddhi) of eight kinds; (18) the ‘radical facts’ (mulikártha) of ten kinds; (19) ‘benevolent nature,’ (anugraha-sarga); (20) ‘created existences’ (bhúta-sarga) of ten descriptions; (21) ‘parental creation’ (dhátu-sansarga) of three descriptions; (22) three-fold ‘bondage’ (bandha); (23) three-fold ‘liberation’ (moksha); (24) three-fold ‘proof’ (pramána); (25) three-fold ‘pain’ (du’kha):—in this consists all actual truth. He who shall have thoroughly understood this, will have done all that is to be done. He will not again be obnoxious to the three sorts of pain."
+
+Such are the Aphorisms of the Sánkhya, entitled the ‘Compendium of Principles.’
+
+[The commentator then proceeds to dilate on each of the foregoing topics.]
+
+<vocab>Sánkhya, Philosophy, prakriti, vikára, purusha, traigunya, sanchara, pratisanchara, adhyátma, adhibhúta, adhidaivata, abhibuddhi, karmmayoni, váyu, karmmátma, avidyá, as’akti, tushti, siddhi, mulikártha, anugraha-sarga, bhúta-sarga, dhátu-sansarga, bandha, moksha, pramána, du’kha</vocab>

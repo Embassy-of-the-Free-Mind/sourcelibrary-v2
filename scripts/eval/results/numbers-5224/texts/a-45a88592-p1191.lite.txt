@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>925</page-num>
+<header>TOWN OF TRURO.</header>
+
+jr., John Snow and Thomas Paine were appointed to run bounds between the great lots and fix the bounds; also to record the same in the Pamet books of record. The same committee laid out the first road of the town, which appears on the records of 1703, the road running from the "head of the pond to the head of Pamet." This was called a "Drift Highway," and was laid out in July of that year. The same year a division of lands near Hog's Back was made, which reveals the fact that this knoll had been previously named and was a well-known landmark. Jedediah Lombard, sr., had his lot laid out between Thomas Mulford's two lots, one of which was near Hog's Back and the other toward the pond south of Pamet great river.
+
+The shells of the shellfish being needed for the manufacture of lime, in 1705 these proprietors enacted that after June first no shellfish should be dug by any person not a resident of Pamet. In 1711 the proprietors voted that no wood be cut within the limits of the common lands for the burning of lime, except by the rightful owners.
+
+October 29, 1705, the territory of Pamet was allowed by the general court the privilege of choosing its own officers, and was called Dangerfield—a name given by early navigators, but one which was not recognized by the residents in any of the records. On the 16th of July, 1709, Pamet, as it had been previously known, was incorporated as Truro, with full powers of a town of the county, but a stringent proviso was added—that they support and maintain suitably a "learned orthodox minister."
+
+The records of the proprietors, distinctive from the records of Eastham, commenced in 1700, and in the meetings as recorded, and in the admission of freemen from time to time we find the following named persons were residents when the town was incorporated: Jedediah Lombard, senior and junior, Thomas Lombard, Dr. William Dyer, Benjamin Smalley, Thomas Newcomb, Isaac Snow, Jonathan Collins, Nathaniel Harding, Joseph Young, David Peter, John Snow, Constant Freeman, Thomas Paine, senior and junior, Nathaniel Atkins, Francis Small, Lieutenant Jonathan Bangs, John Rogers, John Steele, Thomas Mulford, Hezekiah Doane, Samuel Treat, jr., Hezekiah Purington, Humphrey Scammon, Beriah Smith, Richard Stevens, John Myrick, Moses Paine, Jonathan Vickery, Micah Atwood, Josiah Cook, Ebenezer Hurd, Samuel Small, Samuel Young, Jonathan Paine, Edward Crowell, Ebenezer Smith, Jonathan Dyer, John Savage, Israel Cole and Thomas Smith.
+
+In 1711 we find additional settlers, as may be seen by the names of the residents who were the only cattle owners in Truro that year: Ebenezer Doane, William Dyer, sr., Jonathan Collins, Jeremy Bickford, Josias Cook, Jedediah Lumbert (perhaps Lombard), Jonathan
+
+<vocab>Truro, Pamet, Drift Highway, Hog's Back, Dangerfield, proprietors, incorporation, freemen, settlers, cattle owners</vocab>

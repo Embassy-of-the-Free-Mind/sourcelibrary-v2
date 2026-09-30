@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>467</page-num>
+<header>TOWN OF YARMOUTH.</header>
+
+Hallet, Daniel Hallet, Levi Hallet, Joseph Hallet, Josiah Miller and Moody Sears, all of Yarmouth.
+
+One of the peculiarities of the civil economy of Old Yarmouth may appropriately be noted in connection with the events preceding the division of the town. During the war it was customary to transact the public business by parishes. The people became so used to transacting public business in this way, that it was thought best to make two townships of Old Yarmouth, and by a vote of eighty-six to four, they decided to devide the town. The act of separation passed June 19, 1793, and took effect in February following.
+
+The year of the final separation, the "South Sea" or West Yarmouth parish was also set off, as will be seen by reference to the church history. Party spirit raged at the time as it had never before done. Yarmouth was an intensely Federal town, and the adherents of Mr. Jefferson were regarded as Jacobins and infidels. It was fortunate for the peace of the town that there was so few of them here. In 1797, and for several years afterward, small-pox again raged in town, and a hospital for inoculation was established at Great island, now known as Point Gammon. In 1808 permission was granted to David Kelley and others to build a draw-bridge over Bass river, between Yarmouth and Dennis.
+
+These were the most important acts and votes of purely domestic concern. The relations of the town to the attitude of the general government were of an important character. The position of the administration on the subject of our commercial policy was very obnoxious to our people, who felt that it was destroying their shipping interests and sapping the foundations of their prosperity. The embargo, the non-intercourse act, and all the measures adopted by the government, under the pretext of vindicating our rights as a commercial community, seemed to them to have an exactly opposite influence and tendency. The ships were rotting at their docks, and the men out of employment. Individuals, and the town as a corporate body, protested against the policy adopted. A town meeting, held August 29, 1808, petitioned congress to suspend the embargo; and the town repeated the action in February, 1809. July 8, 1812, twenty days after the declaration of war, the town put on record a protest against the act. The vote of the town for governor in April, 1813, was 265 for Caleb Strong, the anti-war, federal candidate, and twenty-three for Joseph B. Varnum, the war, administration candidate. Brewster, which town had been served with a demand by the British naval commander for $4,000, sent a committee to Yarmouth to solicit aid. The town was called together on Sunday, and appointed a committee to inquire into any similar errand or demand, if made upon this town, but nothing further transpired in relation thereto.
+
+<vocab>Yarmouth, Old Yarmouth, West Yarmouth, Bass River, Dennis, Point Gammon, Great Island, Federalists, Jacobins, Thomas Jefferson, small-pox, inoculation, embargo, non-intercourse act, Caleb Strong, Joseph B. Varnum, Brewster, British naval commander</vocab>

@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>255</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 255</header>
+
+m., April 20, 1904, Jessie May Cofran, Boston, Mass.; child, Adelaide Burpee, b. June 28, 1906. Residence, Wilmington, Del.
+
+**Bailey, Benjamin Franklin**
+
+Physician; president of the Dr. Benj. F. Bailey Sanitorium, Lincoln, Neb.; b., Littleton, N. H., June 22, 1860; s. William and Marriete Andress (Barnes) Bailey; ed. schools of Littleton and Claremont, N. H., Boston, Mass., and Hahnemann Medical College, Philadelphia, Pa., 1881; practiced medicine in Wareham, Mass., from March, 1881 to March, 1882, and in Manchester, N. H., from March, 1882 to June, 1886, when he went west on account of ill health; in September following he located at Lincoln, Neb., where he was in practice until he opened his sanitorium in July, 1901, which he has since conducted; Congregationalist; Republican; member, Nebraska State Board of Health, and president of the same for ten years; president, American Institute of Homeopathy; president, Missouri Valley Homeopathic Ass'n; president, Nebraska State Homeopathic Soc.; president, American Institute of Drug Proving; member, American Medical Ass'n, American Endocrinology Soc., American Ass'n for Advancement of Science, American Soc. for Prevention of Tuberculosis, and many others; member, Sons of the American Revolution, and Rotary, Commercial and Country clubs (director of former); m., Feb. 8, 1882, Minnie F. Bryant, Wareham, Mass. Residence, Green Gables, Lincoln, Neb.
+
+**Russell, Frank Webster**
+
+Soldier, merchant (retired); b., Plymouth, N. H., June 22, 1847; s. William Wallace and Clara Jane (Smith) Russell; ed. Miss Gilmore's private school, Concord, N. H., Phillips (Andover) Academy, Boston Latin School, Detroit, Mich., high school, New Haven Commercial Institute,
+
+<column-break/>
+
+New Haven, Conn., U. S. Military Academy, West Point, 1868; commissioned 2d lieutenant, 6th U. S. Cavalry, serving in the South and West till 1872, when he resigned, returned to Plymouth and engaged in general mercantile business in the firm established by his grandfather, Moor Russell, in 1798, continuing till retirement in 1911; served in the N. H. National Guard as captain and aide on staff of Brig. Gen. D. M. White, 1884; ass't, inspector general, 1885-9; captain, Co. G, 3d N. H. Infantry, May 3, 1898; mustered into U. S. service, May 11, and promoted major, 1st N. H. Infantry, July 2, 1898; mustered out, Oct. 3, 1898; continued in state service as major, 3d Infantry; on reorganization made major, 2d Infantry, March 7, 1899, continuing till expiration of commission in 1905, then declining further service; Congregationalist; Republican; member, Plymouth town history committee; N. H. constitutional convention, 1902; N. H. Soc. S. A. R., Military Order Foreign Wars, American Legion, Ass'n Graduates U. S. Mil. Acad., A. F. & A. M., 32d degree and K. T.; m., Oct. 1, 1873, Louisa Webster Hale, d. May 6, 1905; children, Clara Louise, died in infancy; William Wallace, b. May 22, 1876 (Plymouth high school, 1891, Holderness School, 1893), treasurer National Life Ins. Co., Montpelier, Vt.; George Moor, b. April 28, 1878 (U. S. Military Acad., 1901), major, field artillery, in National Army in service in France; Susan Carleton, b. Oct. 31, 1879 (N. H. Normal School, 1898, Vassar College, 1904); teacher, now living with her father; Walter Hall, b. May 21, 1882 (Dartmouth, 1904, Mich. Univ. Law School, 1906), of the Russell Lumber Co., Port Arthur, Ont.; Louis Webster, b. March 22, 1885 (Dartmouth, 1906), with Alexander Hamilton Inst., of New York, located at Akron, O.; Frank Henry, b. June 18, 1887, d. May 2, 1904; Mary Louise, died in infancy. Residence, Plymouth, N. H.
+
+<vocab>Benjamin Franklin Bailey, Frank Webster Russell, New Hampshire, biography, genealogy, military service, medical profession, mercantile business</vocab>

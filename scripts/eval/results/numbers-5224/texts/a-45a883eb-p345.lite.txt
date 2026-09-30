@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>341</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of C. A. Jewett</image-desc>
+C. A. JEWETT
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of P. Jensen</image-desc>
+P. JENSEN
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Geo. B. Johnson</image-desc>
+GEO. B. JOHNSON
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Albert W. Johnston</image-desc>
+ALBERT W. JOHNSTON
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of L. A. Johnson</image-desc>
+L. A. JOHNSON
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Frank Z. Jones</image-desc>
+FRANK Z. JONES
+
+<vocab>C. A. Jewett, P. Jensen, Geo. B. Johnson, Albert W. Johnston, L. A. Johnson, Frank Z. Jones, The Book of Clevelanders</vocab>

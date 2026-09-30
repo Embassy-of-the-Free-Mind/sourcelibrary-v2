@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>498</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+ness and he is thoroughly familiar with property values and has negotiated many important realty transfers. He is also owner of a furniture store and his business affairs are most carefully and wisely directed, the enterprise and integrity of his methods bringing to him deserved success.
+
+On the 4th of May, 1890, Mr. Bailey was united in marriage to Miss May E. Calkins, of Wisconsin, her father being W. S. Calkins, who came to Nebraska in the year 1885. They have one son, Charles W., who is now employed as engineer by the firm of Anderson & Bennett.
+
+Fraternally Mr. Bailey is connected with the Ancient Order of United Workmen and the Loyal Order of Moose. He has been prominent in the affairs of his town throughout the period of his residence here and was chairman of the first elected village board, while in 1916 he was chosen mayor of the city. He has seen to the just enforcement of the laws during his term of office and stands at all times for municipal progress and improvement and is a stanch advocate of high civic ideals. In a business way he has been successful and his efforts have contributed much to the upbuilding of the city as well as to his own prosperity. His investments have made him the owner of considerable valuable property in the town.
+
+->SAMUEL MOUNT CAMPBELL, M. D.<-
+
+Dr. Samuel Mount Campbell, physician and surgeon of Omaha, was born in Fairfield, Iowa, July 2, 1853, a son of Joel E. and Anna E. (Crawford) Campbell. The father was born in Washington, Pennsylvania, March 23, 1822, and represented an old Maryland family of Scotch lineage. The paternal grandfather was William Passmore Campbell, born October 26, 1796, in Maryland. The father devoted much of his life to merchandising in Fairfield, Iowa, where he passed away March 23, 1899, on the seventy-seventh anniversary of his birth. His wife, a native of Steubenville, Ohio, born in 1831, was of Scotch descent. She met an accidental death in Omaha in 1894, when sixty-three years of age. By her marriage she became the mother of six children, of whom two died in infancy and two later in life, while those surviving are: Samuel Mount; and Eugene, a physician of Los Angeles, California.
+
+Samuel M. Campbell was educated in the public schools of Fairfield, Iowa, and afterward took up the printer's trade, which he followed for eight years, and during part of that time published a weekly journal at Albia, Iowa, called the Industrial Era. While thus engaged he became interested in medicine and resolved to prepare for the active practice of the profession. In 1878 he entered the Hahnemann Medical College of Chicago, in which he completed his course by graduation with the class of 1881, at which time his professional degree was conferred upon him. He then went to Batavia, Iowa, where he practiced for a time, but later returned to Fairfield, where he became associated with his brother, Dr. Eugene Campbell. The partnership between them continued until 1885, when Dr. Samuel M. Campbell went to New York city and entered the Homeopathic Hospital on Ward island for post graduate work. He gained valuable experience in a year's hospital training, at the end of which time he opened an office in Omaha, where he has since been in active and continuous practice, being today one of the oldest physicians in years of continuous professional connection here. He remains in general practice and his position is an enviable one, the public recognizing his superior professional merit and worth.
+
+In Omaha, Dr. Campbell was married to Miss Theodosia Kennedy, a daughter of Mr. and Mrs. William J. Kennedy, and they have two children, Cecil Dorothy and Joel E. Dr. Campbell gives his political support to the republican party and while in Fairfield, Iowa, he was United States pension examiner and also a member of the sanity commission of the state. He has membership in the Methodist
+
+<vocab>Samuel Mount Campbell, Omaha, Douglas County, biography, medicine, Hahnemann Medical College, Industrial Era, genealogy, republican party</vocab>

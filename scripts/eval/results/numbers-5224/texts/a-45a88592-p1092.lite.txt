@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>852</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+house was erected in 1855. The master builder was James Moody. The assistant cashier is A. C. Snow, 2d.
+
+The Broadbrooks Free Library, the gift of the late Major Henry C. Brooks, of Boston, but a native of the village, containing about four thousand volumes, was formally opened January 1, 1881. It is in the west chamber of the spacious building erected by him in 1879, known now as Brooks block. It is opened every Saturday, and any person of the town, over fourteen years of age, is entitled to its privileges, if complying with the rules. Connected with the library is an art room, in which are the Rogers' group of statuary, presented to the town in 1881 by Pliny Nickerson, Esq., of Boston, also a native of the town.
+
+The largest structure in the town—the Exchange building in this village—was commenced in the summer of 1884 and completed in 1885. It stands upon the site of the Exchange building burned in 1876. The second story of the building contains the spacious and well fitted hall. It was erected for the proprietor, Chester Snow, Esq., by Richardson & Young, contractors, and cost about $43,000.
+
+The post office in this village was established in 1798. Silvanus S. Stone was appointed first postmaster April first of that year. He was succeeded May 11, 1804, by Ebenezer Brooks. At this time the office was kept in Mr. Brooks' store, upon his premises, on the north side of the road, near his house, the site of which is seen in the grove where the temperance picnics are held. The mail matter was then brought on the mail carriers' shoulders in a bag once in a fortnight, and we opine the letters and papers were few in number at that date. Later on it was brought from Boston once a week on horseback by John Thacher, of Barnstable; and still later by Freeman Winslow, of Brewster, who took the mail in saddlebags from Sandwich, the terminus of the stage route, once a week from Boston.
+
+Mr. Brooks was succeeded as postmaster by Obed Brooks, the son, December 29, 1822, who in turn was succeeded August 13, 1856, by Obed Brooks, jr. The latter resigned in 1858, when W. H. Underwood was appointed. Mr. Underwood resigned in 1873, when Charles E. Brett was appointed. Mr. Brett resigned in 1885. He was succeeded, in 1885, by John H. Drum. Samuel Moody, jr., succeeded Mr. Drum in 1889, and is the present postmaster. While the office was held by Obed Brooks, it was in the old store; and when Obed Brooks, jr., was postmaster it was held in the same building.
+
+East Harwich is the post office designation of the eastern part of the town, and covers a large territory. The principal settlement is on the road from the meeting house toward Orleans. The church here of the Methodist denomination was erected in 1811, and is the oldest in the county. There are two cemeteries here, one adjoining the church yard, and the other in a northwesterly direction on high
+
+<vocab>Barnstable County, Broadbrooks Free Library, Henry C. Brooks, Brooks block, Rogers' group, Pliny Nickerson, Exchange building, Chester Snow, Richardson & Young, Silvanus S. Stone, Ebenezer Brooks, John Thacher, Freeman Winslow, Obed Brooks, W. H. Underwood, Charles E. Brett, John H. Drum, Samuel Moody jr., East Harwich, Methodist church</vocab>

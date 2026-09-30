@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>911</page-num>
+<header>TOWN OF BREWSTER. 911</header>
+
+3; 1811, Isaac Clark, 8; and Solomon Freeman, 4; 1812, Thomas Seabury; 1813, William Crosby, 14; and David Nickerson, 3; 1816, Benjamin Berry, 15; 1819, Joseph Smith, 9; 1825, Joseph Crocker, 2; 1827, Dean Bangs, 5; 1828, Isaac Foster and Lewis Howes; 1829, Jonathan Freeman; 1831, Franklin Hopkins, 4; 1832, Kenelm Winslow, 3; 1833, Richard Harding, 5; 1834, Samuel Myrick, 8; 1835, Nathan Sears, 4; 1839, Ebenezer Higgins, 8; and Anthony Smalley, 10; 1840, Theodore Berry; 1844, Jeremiah Mayo, 11; and Joshua Clarke, 7; 1848, Dean Bangs, 2; 1849, David Mayo, 2; 1850, Nathan Winslow, 5; 1851, Solomon Freeman, 8; 1854, Jonathan Freeman, 2; 1855, Elisha Crocker, 3; 1857, Bangs Pepper; 1858, Constant Sears and Benjamin Paine; 1859, Benjamin Freeman; Tully Crosby, 3; 1860, Rudolphus McCloud, 2; 1861, Zoeth Snow, jr.; 1862, William Winslow, 2; and Charles S. Foster, 27; 1864, Bailey Foster; and Strabo Clark, 4; 1866, Samuel H. Gould; 1867, Francis Baker; 1868, Joseph Foster, 2; 1870, Eben F. Ryder, 6; and Samuel T. Howes, 5; 1875, Charles Freeman, 6; 1876, Josiah Foster, 5; 1878, Thomas D. Sears, 7; 1884, Godfrey Hopkins, 6; 1885, John H. Clark, 6; 1889, Charles E. Sears, 2; 1890, Tully Crosby, jr.
+
+The first clerk and treasurer of the town was Sylvanus Stone, elected in 1803. His successors have been elected as follows: In 1805, Joseph Smith; 1818, Benjamin Foster; 1824, Elijah Cobb; 1828, Jeremiah Mayo; 1831, Benjamin Mayo; 1832, Freeman Mayo; 1840, David Mayo; 1848, Dean Bangs; 1858, Samuel H. Gould; 1861, Charles S. Foster; 1889, Freeman M. Snow.*
+
+The following report of the meteorological condition of Brewster during the year 1889, together with a summary of its mortality and condition of health, was contributed by Dr. F. A. Rogers, from his own observation of the meteorological condition from day to day during the year 1889.
+
+The mean atmospheric pressure for the whole year was 30.01 inches, which is very little above the true mean average pressure. In July the average pressure was normal, but during the months of February, June, August, September, October, November and December the pressure was above the normal, while January, March, April and May showed considerable departure below the true mean pressure. During the month of August there was the least variation for the year, while December was noted for the greatest range. The range for the year was 1.996 inches.
+
+The precipitation for the year was an average of about four inches each month, but considerable variation existed between the different months. June was the dryest month, and August took the lead for the amount of rainfall. During the year sixteen inches of snow fell; ten inches in February and six inches in December, a little trace falling in March.
+
+* Mr. Paine's manuscript ends here.—Ed.
+
+<vocab>Brewster, Massachusetts, town officials, meteorology, atmospheric pressure, precipitation, mortality, health, Dr. F. A. Rogers</vocab>

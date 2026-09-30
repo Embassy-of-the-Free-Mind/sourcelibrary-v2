@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>367</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Clifford, Thomas Fellows**
+Lawyer; b., Wentworth, N. H., Dec. 1, 1871; s. Thomas Jefferson and Sara Jackson (Fellows) Clifford; ed. public schools, Concord, N. H., and Boston University Law School; studied in the law offices of Lyman D. Stevens and Leach & Stevens, and admitted to the
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Thomas Fellows Clifford</image-desc>
+
+N. H. Bar in March, 1898; located in practice in Franklin, September, 1899; Unitarian; Republican; assistant clerk N. H. senate, 1897, 1899; clerk N. H. senate, 1901, 1903; justice Franklin Police Court, 1900-5; city solicitor Franklin, 1907-11, 1913-19; solicitor Merrimack County, 1905-13; member N. H. house of representatives, 1913-15; N. H. constitutional convention, 1912; secretary Republican state committee, 1900-4; assistant secretary Republican national committee, 1916; member A. F. & A. M., Wonolancet Club, Concord, Derryfield Club, Manchester; Captain 1st N. H. Volunteer Inf. 1898; on staff of Gen. John N. Andrews, 3d brigade, 3d
+
+<column-break/>
+
+division, I. A. C.; m., Nov. 10, 1908, Marguerite E. Tucker, dau. Dr. and Mrs. Henry Tucker, Brattleboro, Vt.; children: Thomas Henry, b. Jan. 25, 1911, and Paul Tucker, b. May 2, 1914. Residence, Franklin, N. H.
+
+**Child, William Henry**
+Farmer; b., Cornish, N. H., Dec. 22, 1832; s. Stephen and Eliza (Atwood) Child; ed. public schools and Kimball Union Academy, Meriden, 1856; Baptist, many years deacon of the church, Sunday School superintendent twenty years; Republican; member Cornish school board, 1886-96; member A. F. & A. M., master Cheshire Lodge, 1869-70, District Deputy Grand Master
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of William Henry Child</image-desc>
+
+Grand Lodge of New Hampshire, 1871-2; member Sons of Temperance many years, Patron of Husbandry since 1873; frequent speaker at Farmers' Institutes and other meetings, on the advantages of tile draining, to which he has resorted with great success in the improvement of swamp lands on his own
+
+<vocab>Thomas Fellows Clifford, William Henry Child, New Hampshire, biography, genealogy, law, farming, politics, Freemasonry</vocab>

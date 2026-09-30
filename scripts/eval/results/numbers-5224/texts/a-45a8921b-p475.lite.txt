@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>461</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Hila Maria Guptill, Berwick, Me., d. Nov. 21, 1917, leaving children—Jonathan Smith, b. Aug. 26, 1913, and Martha Brackett, b. May 26, 1916. Mr. Ross is at present teaching in Lawrence and Methuen, Mass., doing expert work in higher accountancy and preparing literary work. Residence, Somersworth, N. H.
+
+**Spaulding, Huntley Nowell**
+Manufacturer; b., Townsend, Mass., Oct. 30, 1869; s. Jonas and Emeline (Cummings) Spaulding; ed. public schools of Townsend, Phillips (Andover) Academy, 1889; entered business after graduation in the firm established by his father and since continued as Jonas Spaulding & Sons Co. (Inc.), manufacturers of leather-board, counters, novelties, etc., at Townsend Harbor, Mass.; Rochester, North Rochester, and Milton, N. H., and Tonawanda, N. Y.; Congregationalist; Republican; Federal Food Administrator for New Hampshire, 1917–; president N. H. League of Free Nations Ass'n.; member J. Spaulding & Sons Co.; treasurer Kenebunk Mfg. Co.; president International Leather Co., president Atlas Leather Co., director Spaulding & Sons (Ltd.), London, England; member Algonquin Club, Boston, Country Club, Brookline, Mass., Country Club, Rochester, N. H., Beaver Meadow Golf Club, Concord, N. H.; Sc.D., New Hampshire College, 1918; m., Aug. 11, 1901, Harriet Mason, St. Paul, Minn. Residence, North Rochester, N. H.
+
+**King, Charles Francis**
+Geographer; b., Wilton, N. H., Jan. 30, 1843; s. Sanford and Susan (Burnham) King; ed. Dartmouth College, A.B. 1867; commenced teaching in 1867; principal Dearborn grammar school, Boston, 1887–1913; lectured for many years on methods of teaching geography before educational associations and institutes; founder and manager National School of Methods, Saratoga and Glenns Falls, N. Y.; pres. Mass. Geographical Club; mem-
+
+<column-break/>
+
+ber and secretary Committee of ten on Geography; author "Methods and Aids in Geography," 1888; "Picturesque Geographical Readers for Home and School," 1889; "This Continent of Ours," 1890; "The Land We Live In" (3 vols.), 1892; "Rocky Mountains," 1894; "Northern Europe," 1896; "Round About Rambles," 1898; "Elementary Geography," 1903; "Advanced Geography," 1906, etc.; retired, 1913; m., 1st, Aug. 1, 1867, Elizabeth Boardman, Lowell; 2d, July 6, 1897, Gratia Cobb, Philadelphia. Residence, 107 Elm Hill Ave., Boston, Mass.
+
+**Keyes, Homer Eaton**
+Educator and business director; b. Brooklyn, N. Y., Dec. 21, 1875; ed. Pratt Institute, Brooklyn; Dartmouth College B.L. 1900; traveled and studied in Europe; Princeton, A.M. 1912; instructor in English, Dartmouth, 1900–3; assistant professor Modern Art, 1906–13; business director, 1913– ; Congregationalist; member Phi Beta Kappa, Psi Upsilon, N. H. Historical Soc., Archaeological Institute of America, College Art Ass'n; editor Dana's "Two Years Before the Mast," 1908; contributor to various publications; m., April 2, 1903, Caroline Gardner Abbott, Cleveland, O. Residence, Hanover, N. H.
+
+**Kimball, Herbert Harvey**
+Meteorologist; b., Hopkinton, N. H., Feb. 13, 1862; s. Elbridge Gerry and Mary (Butler) Kimball; ed. public schools, N. H. College, Durham, B.S., 1884, M.S. George Washington Univ., 1900, Ph.D. 1910; fellow Univ. of Pittsburgh, 1912–13; Meteorologist, U. S. Meteorological Service, Washington, D. C., 1884–5; clerk at central office, 1886–1900; assistant editor Monthly Weather Review, 1901–3; librarian, 1904–8; professor of meteorology in charge of solar radiation investigations, since July, 1908; member National Geographical Soc., Philosophical Soc., Washington, Academy of Arts and Sciences, American Astronomical Soc., etc.; Baptist; Independent; author many papers on meteorological
+
+<vocab>New Hampshire, Biography, Genealogy, Education, Geography, Meteorology, Manufacturing</vocab>

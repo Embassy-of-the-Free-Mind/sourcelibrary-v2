@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>280</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+factory and leasing the other third of Mr. Howland, have operated the works until the present time. These works are valuable, being composed of a good building, 125 by 35 feet, 20-horse power engine, twenty-four tack-cutting machines and other tools and machinery.
+
+An institution for mutual saving and assistance in building, called the Sandwich Co-operative Bank, was organized August 11, 1885, and chartered October 1, same year, with an authorized capital of $1,000,-000. It began business December 15, 1885, occupying Hunt's Hall for a place of meeting. Stock was issued at the first meeting of which 88 members took 133 shares. The sixth series was issued June 18, 1889. J. E. Pratt, M.D., has filled the office of president since the organization; E. B. Howland, vice-president; and W. H. Heald, secretary and treasurer. The office of treasurer was distinct and filled by Frank H. Burgess until 1888. The Sandwich Savings Bank was an institution, in operation prior to 1874, which was closed by order of the commissioner, and paid 80 cents on the dollar to its stockholders.
+
+The Cape Cod Glass Company mentioned, was the outgrowth of a business started in 1859 by Deming Jarvis after his severance from the Boston and Sandwich Company. He then erected the building now occupied by Charles W. Spurr & Co. for the manufacture of glass by his son and son-in-law, and from this the first-named company was established; it is said to have closed its doors the day Deming Jarvis died. Another unsuccessful enterprise connected with the various glass manufactories was the building of a steamer to ply between Sandwich harbor and Boston. Mr. Jarvis, while agent of the Boston and Sandwich Glass Company, instituted this steamship line after the advent of the railroad. It was very soon discontinued.
+
+The express business has become important from the growing industries, and its present daily loads of freights manipulated by Willard E. Boyden, the agent, could not have been so readily transferred by the old-time Plymouth and Sandwich stage line of his father's, of which this business is the continuation. The father's line was superseded by the railroad and Williard E., who assisted him, has filled the position of agent since the arrival of the first train. The livery and boarding stables of Mr. Boyden are the outgrowth of the stage line.
+
+Other business places worthy of mention in 1889 were the stores of F. F. Jones, boots and shoes; J. C. Stever, jewelry; Proctor Brothers, druggists; George N. Chipman, druggist; and H. G. O. Ellis, boots and shoes.
+
+East Sandwich post-village was settled very soon after the principal village of the town, and many of the early proprietors were attracted here by its beauty and fertility to take up their abodes. Its proximity to Sandwich village has given its people very desirable religious and educational privileges, as well as business relations. It is
+
+<vocab>Sandwich Co-operative Bank, Sandwich Savings Bank, Cape Cod Glass Company, Boston and Sandwich Glass Company, Deming Jarvis, Charles W. Spurr & Co., Willard E. Boyden, East Sandwich, Barnstable County</vocab>

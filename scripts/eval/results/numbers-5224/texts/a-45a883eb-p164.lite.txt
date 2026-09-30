@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>160</page-num>
+<header>The Book of Clevelanders</header>
+
+Society of Heating Engineers; inventor of numerous improvements in gas-heating apparatus, coal and ore-handling machinery, cash register and adding machine devices. Recreations: Music, Art, Literature and Working on Inventions.
+
+KUNDTZ, Theodore; manufacturer; born, Unter-Metzenseifen, Hungary, July 1, 1852; son of Joseph and Theresia (Kesselbauer) Kundtz; public school education; married, Cleveland, 1884, Marie Ballash; five sons, four daughters; mfg. of church, school and sewing-machine furniture, automobile wheels and bodies, and furniture hardware, beginning from the log, employing about 2200 people; inventor of several processes in aid of manufacture; knighted by Emperor Francis Joseph I., with the Franz-Josef's Order, 1903; director United Savings & Trust Co., and Forest City Savings and Trust Co.; member of several benevolent and mutual societies. Favorite recreation: Automobiling.
+
+KUNZE, Paul; florist; born, Germany, March 29, 1866; son of Samuel and Czernonwski Kunze; educated, Government schools, Germany; married, Cleveland, Jan. 28, 1893, Ellen Schultz; one child; served three years in German Army; with City Water Works, Cleveland, 1889 to 1890; eighteen months with Empire Plant Co.; 1892, started the florist business; pres. and treas. of the firm; decorator and designer; member Odd Fellow, No. 295, Cleveland Fraternal Order of Eagles, No. 135, American Insurance Union, No. 50, Cleveland W. O. W., American Camp; member Florist Clubs. Recreation: Hunting.
+
+LANG, Charles E. J.; manufacturer; born, Cleveland, July 14, 1858; son of Joseph and Caroline Greimer Lang; educated, public schools, Cleveland; married, Cleveland, 1883, Katherine E. Schwinzer; one son, Elmer J. Lang, born April 28, 1884; started with Charles Rauch, Jan. 8, 1878, in the carriage and wagon business, taking full charge of the office work and later full supervision of the building of high-grade carriages; in 1885, purchased one-quarter interest in the firm, Rauch & Lang, until 1888, then organized as stock company, capital, $100,000, in 1906, began the building of electric carriages, discontinuing the building of horse-drawn vehicles, and devoting all the time to building electric vehicles; vice pres. and treas. The Rauch & Lang Carriage Co.; pres. The Lakewood Realty Co.; director The Universal Life Insurance Co.; member Knight Templar, Masonic Order, Shriner, Blue Lodge, Halcyon, Thatcher Chapter; member Clifton, and Athletic Clubs; was sec'y and treas. of The Rauch & Lang Co. for twenty-five years.
+
+LANG, Elmer Joseph; automobiles; born, Cleveland, April 28, 1884; son of Chas. E. J. and Katherine Schwetzer Lang; educated, public, University and West High schools; married, Parma, O., Sept. 5, 1906, May R. Dixon; issue, Karl, born Aug. 3, 1907, Martha May, born July 15, 1910; started, in 1902, with Rauch &
+
+<vocab>Theodore Kundtz, Paul Kunze, Charles E. J. Lang, Elmer Joseph Lang, Rauch & Lang Carriage Co., Cleveland, biography, manufacturing, florists, automobiles</vocab>

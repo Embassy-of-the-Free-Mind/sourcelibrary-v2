@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>379</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of J. B. Shields</image-desc>
+J. B. SHIELDS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of H. J. Sherwood</image-desc>
+H. J. SHERWOOD
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of F. P. Shumaker</image-desc>
+F. P. SHUMAKER
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Rev. Jno. A. Sidley</image-desc>
+REV. JNO. A. SIDLEY
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of G. B. Siddall</image-desc>
+G. B. SIDDALL
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of G. L. Sigler</image-desc>
+G. L. SIGLER
+
+<vocab>J. B. Shields, H. J. Sherwood, F. P. Shumaker, Rev. Jno. A. Sidley, G. B. Siddall, G. L. Sigler, Clevelanders, Biography</vocab>

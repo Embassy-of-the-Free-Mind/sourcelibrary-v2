@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>85</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Organization Soc. (member tuberculosis committee), N. H. Charities and Corrections, N. H. Children's Aid and Protective Ass'n; president, Associates N. H. Memorial Hospital; member, National Security League, Council of National Defense, Concord Equal Suffrage League. Residence, Concord, N. H.
+
+**Douglas, Orlando Benajah**
+Physician and surgeon; b., Cornwall, Vt., Sept. 12, 1836; s. Amos and Almira (Balcom) Douglas; academic education, Brandon, Vt.; M.D., University Medical College, New York University, 1877; private, lieutenant and adjutant, 18th Mo. Vols. and acting assistant adjutant-general in Civil War; twice wounded; assistant surgeon, 1877–83, surgeon and director, 1883–1902, consulting surgeon, 1902–, Manhattan Eye, Ear and Throat Hospital; professor, diseases of nose and throat, New York Post-Graduate Medical School and Hospital, 1889–1901; president, 1891, and treasurer, 1879–87, Med. Soc. of County of New York; treasurer, N. Y. Acad. Medicine 1888–98; member, N. Y. State Med. Soc., N. H. Med. Soc., N. H. Surg. Soc., N. H. Ass'n Military Surgeons; honorary member, Vt. Med. Soc.; commander, Dept. of N. H., G. A. R., 1914–15; companion, first class, Loyal Legion, U. S. A.; medical director of Survivors of Battle of Shiloh; Mason (32d degree, Shriner); medical director, Dept. N. H., G. A. R.; president, N. H. Orphans' Home 1904– ; vice-president, Soc. for Protection N. H. Forests; member, State Ex. Com., Y. M. C. A. of N. H., 1902– ; past treasurer, N. H. Woman Suffrage Ass'n; lifelong advocate of prohibition; member, Baptist church, 1855– ; Sunday-School teacher, 1857– ; Republican; m. 1st, Mary A. Rust of Orwell, Vt., Dec. 27, 1864 (d. Aug. 31, 1873); 2d, May L., dau. Rev. A. C. Manson, Sept. 16, 1875 (d. Jan. 18, 1913). Son, Edwin Rust Douglas, mechanical engineer, M.E., Stevens Institute, Hoboken; Sc.M., Harvard University; b., 1872;
+
+<column-break/>
+
+m. Caroline Sleeper; res. Philadelphia. Grandchildren: Dorothy, Henry and Mary. Doctor Douglas is the author of "Is the Cure of Chronic Nasal Catarrah as Difficult as Has Been Supposed?" "The Upper Air-Passages and Their Diseases"; "Modern Methods of Treating Diseases of the Nose and Throat." Residence, Auburn St., Concord, N. H.
+
+**Kellom, Franklin Pierce**
+Journalism, banking; b., Concord, N. H., Aug. 16, 1852; s. Stephen W.
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Franklin Pierce Kellom, showing his head and shoulders, wearing a suit, vest, and tie.</image-desc>
+
+and Sarah E. (Ferrin) Kellom; ed. Concord public schools; employed four years in youth as mercantile clerk; connected with the *New Hampshire Patriot* and *People and Patriot*, Concord, as bookkeeper, cashier and business manager from 1873 to 1892; Democrat; member, N. H. house of representatives from Ward 3, Concord, 1881; treasurer, Merrimack County, 1893–4; U. S. national bank examiner, 1893–7; removed to Winchester, N. H., and became cashier of the Win-
+
+<vocab>Orlando Benajah Douglas, Franklin Pierce Kellom, New Hampshire, biography, physicians, journalists, bankers, Civil War veterans, New Hampshire politics</vocab>

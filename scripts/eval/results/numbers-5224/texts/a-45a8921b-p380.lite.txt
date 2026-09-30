@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>366</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Organization Soc., Woman's Auxiliary of Y. M. C. A., Hathaway Outing Club, Red Cross, South Congregational Church, Woman's Ass'n, South Church, N. H. Female Cent Institution (president of South Church Auxiliary two years). Residence, Concord, N. H.
+
+**Miller, Edward Sherman**
+Dentist; b., Ryegate, Vt., Feb. 13, 1866; s. Edward and Eliza (Gates) Miller; ed. Peacham, Vt., Academy, St. Johnsbury, Vt., Academy, class of
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+1889, Monmouth College, Harvard University, Dartmouth College, A.M. 1893, University of Maryland, D.D.S. 1900; member of the United Presbyterian church; Progressive Republican in politics, but not held closely by party ties; member of the N. H. Dental Soc., Sons of the American Revolution, National Geographic Soc., first president Blue Mountain Outing Club; always much interested in out-door life, in mountain climbing, and in travel, spending several years in the West, and in 1916, with his family, taking a 10,000 mile
+
+<column-break/>
+
+tour through Canada to the Pacific Coast and into Mexico; the study of the past history of the earth and the life upon it his favorite study; m., June 29, 1901, Edith B. Gibson; children: Annie B. and Carmen E., died in infancy; Edward G., b. Oct. 10, 1904, and Elmon S. G., b. Nov. 13, 1911. Residence, Woodsville, N. H.
+
+**Blaisdell, Albert Franklin**
+Physician; author; b., South Hampton, N. H., Aug. 31, 1847; s. John Harper and Lydia (Tuxbury) Blaisdell; ed. Dartmouth College, A.B. 1869, A.M. 1872, M.D. Harvard, 1879; practiced medicine and surgery, Providence, R. I., 1879 to 1893, when he retired; author, "First Steps with American and British Authors," 1879; "Our Bodies and How We Live," 1884; "How to Keep Well," 1885; "Child's Book of Health," 1886; "Stories of the Civil War," 1890; "Stories from English History," 1897; "Practical Physiology," 1897; "The Story of American History," 1900; "Life and Health," 1902; "English History Story Book," 1910; "Child's Book of American History," 1913; "Heroic Deeds of American Sailors," 1915; "American History for Little Folks," 1917; m., Mary Atwood Emery, Chatham, Mass., Dec. 17, 1879. Residence, Manchester, Mass.
+
+**Carr, Henry James**
+Librarian; b., Pembroke, N. H., Aug. 16, 1849; s. James W. and Jane D. (Goodhue) Carr; ed. public schools, Manchester, N. H., and Grand Rapids, Mich.; served as clerk and cashier in business and railroad offices, 1867 to 1886; studied law and was admitted to the Michigan bar in 1870, but did not practice; librarian Grand Rapids public library, 1886-90; organized Free Public library, St. Joseph, Mo., 1890-1; Librarian public library, Scranton, Pa., since 1891; member American Librarian Ass'n, (treasurer, 1886-93, recorder, 1894-5, vice-president, 1896, secretary, 1898-1900, president, 1900-1); m., May 13, 1886, D. Edith Walbridge, Springfield, Ill. Residence, Scranton, Pa.
+
+<vocab>Edward Sherman Miller, Albert Franklin Blaisdell, Henry James James, biography, New Hampshire, dentistry, medicine, librarianship, bibliography</vocab>

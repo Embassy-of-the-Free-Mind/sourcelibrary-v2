@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>389</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of T. H. Towell</image-desc>
+T. H. TOWELL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. C. Todd</image-desc>
+G. C. TODD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. E. Tower</image-desc>
+GEO. E. TOWER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. J. Trunecek</image-desc>
+F. J. TRUNECEK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. H. Treadway</image-desc>
+L. H. TREADWAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. K. Turner</image-desc>
+J. K. TURNER
+
+<vocab>T. H. Towell, G. C. Todd, Geo. E. Tower, F. J. Trunecek, L. H. Treadway, J. K. Turner, Clevelanders, biography</vocab>

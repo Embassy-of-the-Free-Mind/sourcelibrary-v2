@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>433</page-num>
+<header>TOWN OF BARNSTABLE. 433</header>
+<sig>28</sig>
+
+by President Grant, and continued in this position till removed by President Cleveland, August 8, 1887. His administration of the affairs of the custom house was marked by conspicuous ability as an executive officer. He won as friends many who at first doubted his fitness, and among these he subsequently found his most staunch supporters. His official career was so honorable and efficient that President Harrison reappointed him July 20, 1889.
+
+Mr. Goss is a tireless worker. In addition to his official duties and his work upon the *Patriot*, he finds time to superintend the publication of the *Chatham Monitor*, the *Cape Cod Bee* and the *Sandwich Observer*, which, together with the *Provincetown Advocate* and the *Harwich Independent*, are flourishing local papers owing their existence and permanency to him. Always prominent as an advocate of the cause of temperance, he is a prohibitionist, but has ever looked to the republican party as the proper organization through which to further temperance legislation. He was a member of Hyannis Lodge, Sons of Temperance, and Dawn of Truth Lodge of Good Templars during their existence. He was Chief Templar and District Deputy of the latter lodge for several years. In 1854 he was admitted a member of Cape Cod Lodge of Odd Fellows and filled the N. G. chair for several terms. He was also initiated as a Mason in James Otis Lodge soon after it was instituted in 1866.
+
+He was married in Barnstable, January 20, 1852, to Mary Gorham, daughter of Captain Joseph and Lucy (Childs) Parker of Barnstable. Of this union there were five children: F. Percy, Alton Parker, William F. M., Lillie Stanley and George Richards Goss—the latter deceased. His son, F. Percy Goss, is associated with him in the printing business; Alton Parker Goss is editor and proprietor of the *Harwich Independent*; William F. M. Goss is Professor of Experimental Engineering in Purdue University at Lafayette, Indiana; his daughter, Lillie Stanley Goss, has pursued an extended course in music and ranks among the best of local pianists and teachers.
+
+Mr. Goss, always active in promoting the interests of his town, has been elected on her board of school committee, where he has rendered valuable service. He has also been, for many years, an officer of the County Agricultural Society. He is a ready and pungent writer, and in all his newspaper work, particularly in that kind of controversial style which often becomes necessary in the defense of his principles or his friends, he is always at home, and clothes his thoughts in plain and vigorous Saxon, which reaches direct the heart and understanding. Born as he he was to the lot of the humble and the poor, he was early taught some great principles which rich men's sons ought to understand, but which the very fact of their wealth prevents them from realizing. The limitations which he early and keenly felt be-
+
+<vocab>Barnstable, President Grant, President Cleveland, custom house, Patriot, Chatham Monitor, Cape Cod Bee, Sandwich Observer, Provincetown Advocate, Harwich Independent, temperance, Hyannis Lodge, Sons of Temperance, Dawn of Truth Lodge, Good Templars, Cape Cod Lodge of Odd Fellows, James Otis Lodge, Mary Gorham, F. Percy Goss, Alton Parker Goss, William F. M. Goss, Purdue University, Lillie Stanley Goss, County Agricultural Society</vocab>

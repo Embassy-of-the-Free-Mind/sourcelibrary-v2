@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>347</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Elmer J. Lang</image-desc>
+ELMER J. LANG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. E. J. Lang</image-desc>
+CHAS. E. J. LANG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. C. Lang</image-desc>
+GEO. C. LANG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jacob Laub</image-desc>
+JACOB LAUB
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. T. Latimer</image-desc>
+W. T. LATIMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Laughlin</image-desc>
+C. F. LAUGHLIN
+
+<vocab>Elmer J. Lang, Chas. E. J. Lang, Geo. C. Lang, Jacob Laub, W. T. Latimer, C. F. Laughlin, The Book of Clevelanders</vocab>

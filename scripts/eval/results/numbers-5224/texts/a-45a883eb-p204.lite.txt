@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>200</page-num>
+<header>The Book of Clevelanders</header>
+
+ONG, Walter Cain; lawyer; born, Jefferson County, Ohio, Nov. 24, 1848; son of Moses Harlan and Mary Cain Ong; educated in the district schools; High School at Mt. Pleasant, O., Richmond College; graduated in 1870, B. A. degree; law course, University of Michigan, LL. B., 1873; admitted to the bar, 1875; married Jefferson County, Ohio, April 8, 1875, Anna M. Mansfield; issue, four children, two living and two deceased; elected prosecuting attorney of Jefferson County, in 1875; served four years; practiced law at Steubenville, O., until June, 1882; came to Cleveland, and practiced until 1886; in 1893, elected to the Common Pleas Bench of Cuyahoga County; served until February, 1899; since engaged in law practice; served two years on the City Council; member Knights of Pythias, the Knights of Honor, Cuyahoga County Bar Ass'n, Halcyon, Woodland Golf, and Cleveland Gun Clubs.
+
+ORR, Charles; investments; born, Xenia, O., 1862; son of John and Henriette Kiloh Orr; married, Xenia, O., Emily L. Currie; book business, Xenia, 1880-1886; same New York, 1886-1889; librarian, Case Library, Cleveland, 1889-1905; director of schools, Cleveland, 1905-1912 (member Board of Education, 1902-1905); investment, 1912 to date; pres. Ohio Library Ass'n, 1897-1899; member State Library Commission, 1898-1911; member American Library Ass'n, American Historical Ass'n, Rowfant Club; pres. Glen Valley Club.
+
+OSBORN, Frank Chittenden; civil engr.; born, Greenland, Ontonagon County, Mich., Dec. 18, 1857; son of Reuben Howard and Livonia (Chittenden) Osborn; C. E., Rensselaer Polytechnic Institute, 1880; married Annie Paull of Calumet, Mich., Oct. 27, 1880; asst. engr. Louisville Bridge & Iron Co., 1880-1885; prin. asst. engr. Keystone Bridge Co., 1885-1887; member firm G. W. G. Ferris & Co., Pittsburgh; inspector and designers of structural steel works, 1887-1889; asst. to M. J. Becker, chief engr. Ohio Connecting Ry., about four months in 1889; chief engr. King Bridge Co., Cleveland, 1889-1892; since then in private practice as consulting and designing engr. for structural steel work; pres. Osborn Engineering Co., 1900-1910; director Lake Shore Banking & Savings Co.; vice pres. American Art Stone Co.; member Cuyahoga County Bldg. Commission since 1908; member American Society C. E., Institution Civil Engineers of Great Britain, American Society Testing Materials, Cleveland Engineering Society, Cleveland Chamber of Commerce, American Railway Bridge and Building Ass'n. Mason (32nd degree). Clubs: Masonic, University, Cleveland Athletic, Chippewa. Author: Tables of Moments of Inertia and Squares of Radii of Gyration, 1894.
+
+OTIS, Arthur Houghton; Northern Ohio mgr. Otis Elevators Co.; born, Yonkers, N. Y., Aug. 21, 1881; son of Norton Prentiss and Elizabeth Fahs Otis; educated, Yonkers public and High School, and Princeton University, B. S., 1906; married, Cleveland, June 21,
+
+<vocab>Walter Cain Ong, Charles Orr, Frank Chittenden Osborn, Arthur Houghton Otis, biography, Cleveland, Ohio, lawyers, engineers, business, clubs</vocab>

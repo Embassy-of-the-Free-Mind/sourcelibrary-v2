@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>954</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+the fifty years preceding 1620, but contains an allusion to every expedition which tradition or the early records prove to have visited the shores of the Cape in the neighborhood of Provincetown. Note-worthy as were these early explorations, they have received less attention from the local historian because of the far more famous and epoch making adventure to Plymouth in 1620, the details of which must ever recall to the sons of Provincetown the historic associations that are inseparably connected with the place of their birth.*
+
+September 16, 1620 [N. S.], the *Mayflower* set sail from Plymouth and crossed the Atlantic “shrewdly shaken” by many storms, yet fortunately preserved from serious disasters. Upon the voyage an English sailor and the passenger, William Button, died, and a child, Oceanus, was born to Stephen and Elizabeth Hopkins.
+
+The experiences of the voyagers who were to plant at Plymouth, in New England, the colony the eventful history of which has so often been written, are related with a quaintness and frankness of speech that is delightful in *Mourt’s Relation*, a journal or relation of the proceedings of the plantation settled at Plymouth in New England, which was first printed at London in 1622, the authors of which are believed to have been Robert Cushman, George Morton, John Robinson, William Bradford and Edward Winslow, although the following quotation the one at foot of page 22 are usually ascribed to the accomplished pen of William Bradford:
+
+“Wednesday the 6th of Sept. [16th N. S.] the wind coming east northeast a fine small gale we loosed from Plymouth having been kindly entertained by divers friends there dwelling and after many difficulties in boistrous storms at length by Gods Providence upon the ninth of November [19th N. S.] following, by break of the day we espied land which we deemed to be Cape Cod and so afterward it proved. And the appearance of it much comforted us, especially, seeing so goodly a land, and wooded to the brink of the sea, it caused us to rejoice together, and praise God that had given us once again to see land. And thus we made our course South South West, purposing to go to a river ten leagues to the South of the Cape, but at night the wind being contrary we put round again for the Bay of Cape Cod and on the 11 of November [21st N. S.] we came to anchor in the Bay, which is a good harbor and pleasant bay, circled around, except in the entrance, which is four miles over from land to land, compassed about to the very sea with oaks, pines, juniper, sassafras, and other sweet wood. It is a harbor wherein one thousand sail of ships may safely ride. There we relieved ourselves with wood and water, and refreshed our people, while our shallop was fitted to coast the bay to search for an habitation. There was the greatest store of
+
+*See Chapter III. for sketch of the Pilgrims’ European adventure.
+
+<vocab>Barnstable County, Provincetown, Mayflower, Plymouth, William Button, Oceanus Hopkins, Stephen Hopkins, Elizabeth Hopkins, Mourt's Relation, Robert Cushman, George Morton, John Robinson, William Bradford, Edward Winslow, Cape Cod</vocab>

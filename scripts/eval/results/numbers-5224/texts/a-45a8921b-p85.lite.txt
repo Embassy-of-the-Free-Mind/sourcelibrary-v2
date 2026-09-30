@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>71</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 71</header>
+
+**Jackson, James Robert**
+Lawyer, writer; b., Barnet, Vt., Oct. 5, 1838; s. William and Prucia (Morrill) Jackson; removed with his parents to Littleton, N. H., in childhood; ed. Littleton public schools and in the law office of Hon. Harry Bingham; Episcopalian; Democrat; clerk, N. H. house of representatives, 1871; U. S. Consul to Sherbrooke, 1893–7; author, History of Littleton; m. July 16, 1879, Lydia Drew, Dover, N. H.; children, Robert (Dartmouth, 1900), Andrew (Dartmouth, 1903), Harry B., William M., Elizabeth, Katharine (d.), Rachel. Residence, Littleton, N. H.
+
+**Brackett, John Q. A.**
+Lawyer; b., Bradford, N. H., June 8, 1842; s. Ambrose S. and Nancy (Brown) Brackett; ed. public schools, Colby Academy, New London, 1861, Harvard College, 1865 (class orator), Harvard Law School, 1868; located in practice in Boston and there continued; Unitarian; Republican; member, Boston common council, 1873–6 inclusive (president, 1886); member, Mass. house of representatives, 1877–81 and 1884–6 inclusive, chairman judiciary committee, 1884, speaker, 1885, 1886; lieutenant governor, 1887–9 inclusive; governor of Massachusetts, 1890; delegate-at-large, Republican national convention, 1892 (member committee on resolutions); presidential elector-at-large, 1896, and chairman, Massachusetts electors; again, in 1900, elector-at-large; president, Middlesex (Republican) Club, 1893–1901; declined a public dinner tendered by Governor Walsh and the living ex-governors of the state on the occasion of his seventy-second birthday anniversary in June, 1914, but was made a special guest of the Middlesex Club at its annual meeting, June 6, in honor of his birthday and the twenty-first anniversary of his election as president of the club, as well as the twenty-fifth anniversary of the movement resulting in his nomination for governor. In May, 1917, elected delegate from the Eighth Congressional district to the Massachusetts constitutional conven-
+
+<column-break/>
+
+tion, and on the evening of June 5, the night before the meeting of the convention, in recognition of his seventy-fifth birthday, his election as a delegate, and as the senior living ex-governor of the state, he was given a public dinner at Hotel Somerset in Boston, by the Boston Club, largely attended by prominent men of both parties throughout the state; long prominent as a public speaker, delivering many notable addresses on important occasions,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of John Q. A. Brackett, showing him from the chest up, wearing a suit, vest, and bowtie.</image-desc>
+
+aside from political speeches in many campaigns, among them being those at the Bradford centennial in 1887, the dedication of the Pilgrims monument at Plymouth, Mass., and the centennial anniversary of the birth of Gen. Nathaniel P. Banks in Waltham, Mass., Jan. 30, 1916; member, Joseph Warren Lodge, A. F. & A. M., Middlesex Club, Boston Club, Arlington Boat Club; director, Exchange Trust Co., Boston; vice-president, Mass. Real Estate Exchange; m., June 20, 1878, Angeline M. Peck; children, John Gaylord (Harvard, 1901, Law School, 1904) and Beatrice. Residence, Arlington, Mass.
+
+<vocab>James Robert Jackson, John Q. A. Brackett, New Hampshire, Massachusetts, biography, politics, law, history</vocab>

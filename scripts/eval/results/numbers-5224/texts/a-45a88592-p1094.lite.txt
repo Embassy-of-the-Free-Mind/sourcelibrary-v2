@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>854</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Weekes & Co., and Levi Eldridge. The only firm engaged now in the fishing is Kendrick & Bearse, who have only two vessels engaged. This firm has two stores, one at the wharf and the other at South Harwich station. The wharf here has suffered destruction by the ice several times, and has as many times been rebuilt in consequence. Most of the above named had fitting out stores. At the west of the Deep Hole, salt making was engaged in early. There are many now living who remember the salt works that stood near George W. Nickerson's house, owned by the late Nathan Nickerson. The principal stores on Main street forty years ago were Joseph P. Nickerson & Co. and Abner Nickerson. Boat building was carried on here many years ago by Zebina H. Godfrey.
+
+The post office was established here in 1831, with Joseph P. Nickerson, postmaster. He continued in the office till his death in 1859, when his daughter, Loretta Nickerson, succeeded him. She was followed by William M. Eldridge in 1864, and the office removed to its present location.
+
+The Methodist Episcopal church is situated here. The only cemetery in this section is near by. Cyrus Eldridge, the portrait painter, one-half a century ago, was a native of this village. The traders of to-day are Sears Brothers, H. L. Crowell, W. M. Eldridge, Kendrick & Bearse, David Ellis and L. Clarke.
+
+The oldest house in town, so far as is known, is yet standing in the village, and now owned by N. T. Gorham. The first occupant was John Long, and the second his youngest son, James Long, who was a leading man in town fifty years ago. The earliest residents were Jonathan Smalley, Joseph Severance, Joseph Ellis, Ammiel Weekes, Acus Tripp, John Long and John Paine. Will Tobey, the slave of Mr. Zachariah Smalley, also lived in this section near or on the spot where Mr. E. P. Nickerson's house stands. For the faithful service he rendered his master, the heirs of Mr. Smalley in 1779 provided for his support during his natural life. An oak tree now standing on the farm of James S. Paine yet bears the mark of his axe made more than 140 years ago, when the tree was young and standing by the road, while he was assisting the owner, Ebenezer Paine, in making fence.
+
+The overall business was started here by Mrs. Hannah C. Stokes in 1865. In 1872 E. L. Stokes & Co. started the same business and soon commenced the manufacture of shirts. They run thirty machines by steam, and keep fifty hands at work at the shop, besides employing 250 persons outside, in this and adjoining towns.
+
+The watch business was started in this place by Warren Freeman in 1835. He continues repairing and dealing in watches, clocks, jewelry, etc.
+
+<vocab>Barnstable County, fishing, salt works, post office, Methodist Episcopal church, portrait painter, overall business, shirt manufacture, watch business, slavery</vocab>

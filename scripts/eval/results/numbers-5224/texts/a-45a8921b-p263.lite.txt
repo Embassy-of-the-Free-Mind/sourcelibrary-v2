@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>249</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 249</header>
+
+Universalist church; votes the Republican ticket; member of the Psi Upsilon fraternity. Residence, 37 South Spring St., Concord, N. H.
+
+**Allen, Edwin Morris**
+Pharmacist; b., East Middlebury, Vt., April 2, 1866; s. Lieut. T. Wilfred
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Edwin Morris Allen</image-desc>
+
+and Emma A. (Farr) Allen; ed. public schools of Keene, N. H., East Middlebury and Vergennes, Vt., and Columbus, O., high school; learned the drug business with John B. Coburn of Canaan and became a registered pharmacist in 1886, while in employ of Dr. George E. Leet who succeeded Mr. Coburn at Canaan; purchased the business of Doctor Leet in 1888, and has continued the same, enlarging and improving it till he now has one of the largest and best equipped establishments in this line in the state; Democrat; active in party affairs until his appointment as postmaster of Canaan, March 1, 1916, in which office he continues; member, N. H. Pharmaceutical Ass'n (president, 1908-9);
+
+<column-break/>
+
+director, People's Trust Co., Lebanon; president, Canaan-Enfield Electric Co.; charter member, Mt. Cardigan Lodge, No. 31, K. of P.; member, Indian River Grange, P. of H., Canaan Social Club; m. Roxie L. Davis, Nov. 29, 1888; one daughter, Lena, b. Aug. 9, 1890, wife of Benjamin F. Harrigan of the Portsmouth Navy Yard. Residence, Canaan, N. H.
+
+**Metcalf, Frank Arthur**
+Publisher, educator; b., Acworth, N. H., Dec. 14, 1873; s. Frank M. and Jennie E. (Mitchell) Metcalf; ed. Kimball Union Academy, 1896, Dartmouth College, A.B., 1900; member, Phi Beta Kappa and Delta Sigma Rho; m., Aug. 7, 1901, Jennie Louise Bryant,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Frank Arthur Metcalf</image-desc>
+
+of Enfield, N. H.; Democrat; registrar, THE HOME CORRESPONDENCE SCHOOL, Springfield, Mass., 1900-1904; president and managing director, THE HOME CORRESPONDENCE SCHOOL, since 1904; has organized many courses of study and planned and projected many successful publications, including THE WRIT-
+
+<vocab>Edwin Morris Allen, Frank Arthur Metcalf, New Hampshire, biography, pharmacy, publishing, education, Canaan, Concord, Acworth</vocab>

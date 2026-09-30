@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>763</page-num>
+<header>TOWN OF ORLEANS. 763</header>
+
+The only wharf along Town cove is one erected in 1879 by Aaron Snow, in the rear of his residence. About forty years ago he started in the fishing business—one of the first to build or purchase a five-ton, schooner-rigged vessel—and within a few years a fleet of twenty-two similar vessels went from the cove. The decrease of the profits of the business led to its discontinuance.
+
+The old academy had a hall that accommodated the town until the erection of the town house. The present house has a large and pleasant hall on the second floor. In 1882 Aaron Snow erected the block near the depot, in which is a large hall. Higgins' Hall is in the block opposite the depot, and Mechanics' Hall is next west of the Shattuck House. These furnish suitable meeting places for the societies, and the town hall for all public, religious and social occasions.
+
+A post office was established here soon after the town was incorporated. The first postmaster, Simeon Kingman, was appointed July 1, 1800. He was followed by Jonathan Bascom, July 1, 1807. The next incumbent, appointed October 18, 1819, was Daniel Johnson, with David Taylor as assistant, who kept the office at his dwelling. Taylor was appointed postmaster October 14, 1828, and was succeeded May 8, 1834, by Elijah Knowles, who was followed by Rufus L. Thatcher April 22, 1837. Simeon Higgins was appointed September 1, 1837, and held the position until June 11, 1841, when Sparrow Horton was appointed. May 4, 1847, Matthew Kingman was appointed, and was followed by Betsey D. Knowles November 10, 1848. Leander Crosby, appointed January 7, 1851, was the next postmaster, and he was followed by Edward Barber in 1858. Azariah Snow was appointed postmaster in 1861, and kept the office near the Library building. At his death his daughter, Eliza A. W. Snow, received a commission, serving until 1866, when her sister, Amelia Snow, was appointed. She held the office until January, 1885, when Amos O. Hurd was appointed. It is now kept by Heman F. Atwood in a building on the east side of the street, near the railroad station. From this office a daily mail is conveyed to the offices at East and South Orleans.
+
+In this village is one of the best libraries of the county, established in 1877, through the munificence of David Snow, of Boston, a native of this town. The deceased gave five thousand dollars to the town to establish a library if a suitable building should be secured for its use. The present fine edifice was erected in 1877, and across its front may be seen in modest characters—The Snow Library Building. The school committee formerly were the trustees of the fund, of which four thousand dollars remains; but by a law of 1888 trustees are now elected. From the interest of this fund an average of one hundred volumes are annually added to the shelves. The number of volumes in 1890 was 2,110, from which the reading public aggregate four
+
+<vocab>Orleans, Massachusetts, Aaron Snow, Town Cove, fishing industry, post office, postmasters, Snow Library, David Snow, library trustees</vocab>

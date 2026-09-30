@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>367</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. J. C. Placak</image-desc>
+DR. J. C. PLACAK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. C. Pinyoun</image-desc>
+F. C. PINYOUN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. C. Plummer</image-desc>
+A. C. PLUMMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. M. Post</image-desc>
+E. M. POST
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. R. Poe</image-desc>
+JOS. R. POE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. P. Potter</image-desc>
+F. P. POTTER
+
+<vocab>Dr. J. C. Placak, F. C. Pinyoun, A. C. Plummer, E. M. Post, Jos. R. Poe, F. P. Potter, Clevelanders, biography</vocab>

@@ -1,0 +1,43 @@
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>PHILODEMI LIBER IV</header>
+
+horum numero erant Platonici, ex eo quod Platonis aucto-
+ritate abutebantur, ut e sequentibus Philodemi verbis
+conligitur. Col. XXXVI v. 19 usque ad 23 rursus uncis
+inclusos redundantes quatuor στίχους per errorem bis exa-
+ratos, quos minime dictatos, sed ex αὐτογράφῳ exscriptos
+adparet. Fraudi enim exscribenti fuit particula δια, quae
+bis in hisce sex versibus recurrit. Cum enim ligneus ille,
+sententiaeque minime addictus descripsisset παραδεχομενοι
+ταυτα δια (rationes hasce delectationis gratia receperunt),
+mox retortis ad αὐτογραφον oculis, ut, quid post illud δια
+insequeretur, cerneret, in aliud superius positum δια in-
+cidit versu 14, quodque sibi adhaerens habet πονησαντες
+(qui hujusmodi exercerent), atque iterum ea verba secu-
+tus adpinxit. Observat etiam cl. Rosinius, pag. 96, impe-
+ritum librarium haec ex ore dictantis scribentem pro τοι
+posuisse τι (col. XXVIII, v. 9), pro ει posuisse ι (col.
+XXII, v. 9 et 31), atque hinc patet diphthongorum ει et
+οι pronunciationem satis adfinem fuisse τῳ ι.
+
+Columna Vta voluminis quarti Philodemiani est optime
+conservata, ¹ quam cum IVta heic exhibet tabula aenea I
+exactissime.
+
+Pulcherrimae praeterea lineae sunt in columna VI, lin.
+1 - 11; col. VII, lin. 5 - 19; col. IX, lin. 30-34; col.
+XIV, lin. I-7; col. XVII, lin. 6 - 20; col. XX, lin. 2 -
+7; col. XXIX, lin. 5-8, lin. 10-15.
+
+Pulchrae sunt et integrae : in col. I, lineae 7 - 11; col.
+II, lin. 5-11; col. III, lin. 3-9; col. XXII, lin. 1 - 22;
+col. XXIII, lin. 13 - 20; col. XXIV, lin. 1 - 22; col.
+XXXV, lin. 12 - 22.
+
+<note>¹ Omnium pessime columna XXXI.</note>
+
+<vocab>Philodemus, Platonici, Rosinius, codices, palaeographia, diphthongi, στίχους, αὐτογράφῳ, παραδεχομενοι ταυτα δια, πονησαντες</vocab>

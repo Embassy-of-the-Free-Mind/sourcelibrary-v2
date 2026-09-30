@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>199</page-num>
+<header>BENCH AND BAR. 199</header>
+
+associate justices, three of whom constituted a quorum, having general jurisdiction of causes both civil and criminal. The terms of court were held for the counties of Barnstable, Plymouth and Bristol, at Plymouth on the last Tuesday of February. Wherever this court was held, the justices held a court of assize and general goal delivery. A high court of chancery was held, to hear and determine all matters in equity, which could not be reached by the courts of law. This court was held by the governor, or such other as he might appoint as chancellor, assisted by eight or more of the council. Any party in this court could appeal, wherein the matter in controversy exceeded three hundred pounds sterling.
+
+By the authority of the province charter of William and Mary of 1691-2, power was given to the governor and council to grant the probate of wills, and appoint executors and administrators on estates of deceased persons of this province.
+
+The judiciary system, from the time of the union of the colonies, to the revolutionary period, was substantially the same in spirit, form and general jurisdiction, that existed previous to this time, yet many minor changes it was necessary to make. (See Province Laws Chap. 23, 1699. Chap. 18, 1700. Chap. 5, 1699). At the beginning of the revolutionary period, 1775-6, a court of admiralty was established, to be held at Plymouth,—its judges to be appointed by the majority of the council,—to try the justice of the capture of any vessel brought into either Barnstable, Plymouth, Bristol, Dukes county or Nantucket. Subsequently the jurisdiction of this court was enlarged. The laws relating to the judiciary, after the beginning of the revolutionary period, were enacted to be in full force and virtue until November 1, 1785, by the session held at Boston, November 1, 1779, continuing sundry laws that then existed, and were near expiring, with all and every clause, matter or thing therein respectively.
+
+The magistrates of the earliest courts in the Old Colony, officiated as early as 1640, i.e., Edmund Freeman of Sandwich, Thomas Dimock of Barnstable; and John Crow of Yarmouth. A court was held at Yarmouth June 18, 1642, before Edward Winslow, Myles Standish and Edmund Freeman.
+
+In 1679, a *select court* was established in each town. Those commissioned to hold them were, in Sandwich, Edmund Freeman, John Blackwell and Thomas Tupper; in Yarmouth, Edmund Howes, Ensign Thacher, Edward Sturgis, John Miller, and Jeremiah Howes; in Barnstable, Joseph Lothrop, James Lewis, and Barnabas Lothrop; and in Eastham, Jonathan Sparrow, Mark Snow, and John Doane. In 1689, Jonathan Sparrow of Eastham and Stephen Skiffe of Sandwich were appointed county judges.
+
+After the union of the colonies, the following is the list of the judges of the court of common pleas of the county of Barnstable:
+
+<vocab>judiciary, court of assize, chancery, probate, admiralty, Old Colony, magistrates, select court, common pleas, Barnstable, Plymouth, Bristol, Sandwich, Yarmouth, Eastham</vocab>

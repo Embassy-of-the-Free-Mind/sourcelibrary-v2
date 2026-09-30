@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>711</page-num>
+<header>TOWN OF MASHPEE. 711</header>
+
+a description and record of the titles and bounds of lands rightfully held by individual owners under the "set-off" to the proprietors of the district in 1842. The Commonwealth had already made extensive and costly surveys of these lands, and the records provided by Judge Brigham's order are now on file in the office at Barnstable, constituting the basis of all subsequent titles to these lands.
+
+The lands of the Mashpees were in common formerly, and not until their rights to civil and religious liberty were bestowed, could much be expected. Not until 1725 were they permitted to employ persons to build houses on the reservation, and in 1767 there were twenty-one shingled houses, being about one-third of the residences. In 1800 there were eighty houses and a still larger proportion were of the better class. Wigwams had almost entirely disappeared. Thus they improved as soon as the shackles of what they considered slavery were removed.
+
+Four years after the incorporation of the town the population was 278, and in 1880 had increased to 346. The census of 1885 showed a population of 311, of whom 79 were voters.
+
+Happily for the good name of Puritan New England, and happily for the fate of the Aborigines, the most conspicuous relations between the two races grew out of and clustered around the Godly efforts of Godly men to bring the white man's religion to the Indians of the South sea, which civilizing influence was early brought. In 1661, when settlers came to Falmouth, they soon learned to bound their lands on the east by the "Christian Indians'" land. The gospel was preached first among them in 1658, by Mr. Richard Bourne of Sandwich, who earnestly turned his attention to the work of evangelizing the Mashpees, sometimes then called South Sea Indians. This term of South Sea Indians was applied formerly to those occupying the south part of the Cape; they were in different precincts and under sub-chiefs, with the principal chief living at what is now Hyannis.
+
+On the 17th of August, 1670, Mr. Bourne was ordained pastor of an Indian church gathered from his own disciples and converts. The services were performed by the famous Mr. Elliot, assisted by Rev. Mr. Cotton, who came from Plymouth, and others from neighboring churches. Forty years of pastoral duty was then performed by Simon Popmonet, an Indian. He was succeeded by Rev. Joseph Bourne, ordained November 26, 1729, who was led to resign in 1742, when Solomon Briant, an Indian, officiated as pastor for sixteen years, with much opposition to his settlement, but doing much good. Rev. Gideon Hawley succeeded Mr. Briant, April 10, 1758, as missionary and pastor. In 1792 the only Indian church in the Commonwealth was at Mashpee. In 1811 Rev. Phineas Fish of Sandwich succeeded Hawley, and was ordained September 18, 1812. William Apes, a
+
+<vocab>Mashpee, Barnstable, Judge Brigham, Puritan, Aborigines, South Sea Indians, Richard Bourne, Sandwich, Simon Popmonet, Joseph Bourne, Solomon Briant, Gideon Hawley, Phineas Fish, William Apes</vocab>

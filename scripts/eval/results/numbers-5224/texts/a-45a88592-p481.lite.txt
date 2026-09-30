@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>397</page-num>
+<header>TOWN OF BARNSTABLE. 397</header>
+
+1758 Mrs. Abigail Freeman, daughter of Thomas Davis, opened a grocery store in the house where stands the present residence of Joseph M. Day. In revolutionary days she had trouble, because she would not deliver up her stock of tea to the vigilance committee. A later store was kept on the corner of "Calf Pasture lane." Daniel Scudder then lived there, and prior to the civil war the business was carried on by Nelson and Daniel, in connection with their fishery.
+
+Another old business place is the Bacon corner. It was early occupied by Eben Bacon, merchant, succeeded by a Mr. Davis, from Falmouth, Nye & Scudder, Samuel Nye, Hallet & Bursley, and Hallet & Whelden, they being succeeded in 1873 by James Knowles & Co. In 1878, after the death of Mr. Knowles, the junior partner, E. S. Phinney, and A. F. Edson, as Phinney & Edson, took the business, carrying it on successfully for five years, when, February 1, 1883, David Davis and F. B. Easterbrook began as Davis & Easterbrook, and continued until 1889, when David Davis succeeded to the business. Phinney & Edson, in the winter of 1882-3, removed their general store to that formerly occupied by Conant & Edson, who had been in business for a few years; that firm had been succeeded by Mr. Conant, from whom the property went into the hands of the Barnstable Savings Bank. In September, 1880, E. S. Phinney and Albert F. Edson purchased the property, which they now occupy in their general business.
+
+Of the stores between Scudder's lane and the present ones, one was kept by Frederick Lewis prior to 1858, near where Gustavus A. Hinckley resides; and in 1858 R. M. Waitt opened one near the Methodist Episcopal church, which in 1861 he discontinued, and removed the building to his present residence for a carriage house.
+
+Eben Smith, sr., and E. T. Cobb had a wharf and a general trade in merchandise, near the bridge leading to the Common fields. Their business was important to the village, and prior to 1850 was one of those that so largely built up the commercial standing of Barnstable in those days. This firm in 1850 added coal to their list of merchandise, being the first dealers. After the death of Mr. Cobb, Mr. Smith carried it on until his death, leaving the business to his son, Eben, who removed the yard to the depot. M. N. Harris, for a few years a partner with Eben Smith in the coal trade, has a coal yard in the village.
+
+Another industry carried on prior to the coming of the railroad, was running packets from this place to Boston. There were three then, and a lucrative business was carried on. Goods were received here for the south side, and the village presented a much more lively appearance than at present. The wharves and store-houses of fifty years ago are marked by mounds and decayed timbers, and the one fish-house is the only sign of life where once was a busy market.
+
+<vocab>Barnstable, grocery store, Abigail Freeman, Thomas Davis, Joseph M. Day, Calf Pasture lane, Daniel Scudder, Bacon corner, Eben Bacon, Nye & Scudder, Samuel Nye, Hallet & Bursley, Hallet & Whelden, James Knowles & Co., E. S. Phinney, A. F. Edson, Phinney & Edson, David Davis, F. B. Easterbrook, Davis & Easterbrook, Conant & Edson, Barnstable Savings Bank, Albert F. Edson, Frederick Lewis, Gustavus A. Hinckley, R. M. Waitt, Methodist Episcopal church, Eben Smith, E. T. Cobb, Common fields, M. N. Harris, packets, Boston</vocab>

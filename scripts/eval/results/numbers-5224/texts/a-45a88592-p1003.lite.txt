@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>777</page-num>
+<header>TOWN OF ORLEANS. 777</header>
+
+places of trust than usually are credited to his townsmen. He married Thankful Crosby July 30, 1843, and their deceased children are Sophia, Emma, Eva and Alice T.; the surviving ones being Clara, Rebecca and John Kenrick, jr., the latter assisting his father in his business affairs.
+
+CAPTAIN SETH K. KINGMAN, whose engraved likeness is presented on the opposite page, is a retired shipmaster, and a highly respected citizen of Orleans, in which town he was born March 9, 1822. He commenced his seafaring life at the age of ten years on board of a fishing vessel, like most of the boys of that period, and for ten successive years made a trip to the Grand Bank. Disliking this branch of seafaring business, at the age of twenty years he entered the merchant service "before the mast." It was not long, however, before he became a chief officer, visiting the principal seaports of the world. In 1851, while first officer of the barque *Stamboul*, of which his brother, Simeon, was master, the first cargo of ice from Boston to Egypt was delivered at Alexandria, it having been purchased by the government. In 1856, after having made two voyages in the barque *Kate Hastings*, in the employ of H. Hastings & Co., in the India trade, as chief officer, he was given the command, and went to the west coast of South America, and upon returning to Boston the vessel was chartered by the government to carry stores to Hong Kong. From Hong Kong he took a cargo for Shanghai, and from that place, with a cargo of tea, he returned to New York in 1858.
+
+Again sailing for Shanghai, he remained on the coast of China and in the China sea, visiting all the open ports of China, Japan and the island of Formosa, until the year 1863, when, selling his vessel at Singapore, he returned to Boston, took command of the barque *Nonantum*, and with a cargo of eighteen hundred tons of coal sailed for San Francisco. The coal was sold there for sixty-five dollars per ton to the steamship line between New York and San Francisco, via Nicaragua, and was delivered at San Juan Del Sur. Sailing for Chinca islands, he took a cargo for Rotterdam. After several voyages to different seaports in Europe and Asia, he returned to New York. When the new ship *Cashmere* was ready for sea, in 1868, he took command, and again engaged in the India and China trade until 1873, when he retired from seafaring life, and returned to his native town, where he now resides, enjoying the pleasures of a quiet and pleasant home, after so many years of an active life upon the sea. Of his forty years of sea life—thirty of them in the merchant service—visiting all parts of the world, he has never been wrecked, never lost a mast, or sustained serious injury, which, indeed, is remarkable.
+
+Captain Kingman is a descendant, in the eighth generation, of Henry Kingman, who came to this country from Wales and settled in
+
+<vocab>Orleans, Massachusetts, Seth K. Kingman, seafaring, merchant service, Stamboul, Kate Hastings, Nonantum, Cashmere, Henry Kingman, genealogy</vocab>

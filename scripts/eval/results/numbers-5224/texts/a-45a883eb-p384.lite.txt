@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>380</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ben F. Silliman</image-desc>
+BEN F. SILLIMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. M. Sigler</image-desc>
+L. M. SIGLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. Prescott Simpson</image-desc>
+H. PRESCOTT SIMPSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. R. Slocum</image-desc>
+M. R. SLOCUM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. W. Sloan</image-desc>
+C. W. SLOAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harold E. Smith</image-desc>
+HAROLD E. SMITH
+
+<vocab>Ben F. Silliman, L. M. Sigler, H. Prescott Simpson, M. R. Slocum, C. W. Sloan, Harold E. Smith, The Book of Clevelanders, biography, portraits</vocab>

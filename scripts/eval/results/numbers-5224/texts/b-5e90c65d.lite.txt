@@ -1,0 +1,47 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>appendix</page-type>
+<page-num>580</page-num>
+<header>APPENDIX, B.</header>
+
+“ the people, under the character of being enemies to the
+“ commonwealth ; a brand newly found out (and of no le-
+“ gal signification) to incense the people by, and with which
+“ the simplicity of former times was not acquainted: and
+“ then his majesty hath some reason to believe they would
+“ have found themselves as much abused in the report con-
+“ cerning those lords, as he is sure they are in those which
+“ tell them of the resort of great numbers of discontented
+“ persons to him, and of the other particulars, mentioned to
+“ be in that petition : whereas they who observe what resort
+“ is here to his majesty, well know it to be of the prime
+“ gentlemen of all the counties in England; whom nothing
+“ but the love of religion, the care of the laws and liberties
+“ of the kingdom, besides their affection to his person,
+“ could engage in so great journeys, trouble, and expense :
+“ men of as precious reputation, and as exemplary lives, as
+“ this nation hath any ; whose assistance his majesty knows
+“ he must not expect, if he should have the least design
+“ against honour and justice ; and such witnesses his ma-
+“ jesty desires to have of all his actions.
+“ For the declining all other counsels, and the uniting
+“ of his confidence to his parliament, his majesty desires
+“ both his houses of parliament seriously and sadly to con-
+“ sider, that it is not the name of a great or little council
+“ that makes the results of that council just or unjust; nei-
+“ ther can the imputation upon his majesty, of not being
+“ advised by his parliament, (especially since all their ac-
+“ tions and all their orders are exposed to the public view,)
+“ long mislead his good subjects, except in truth they see
+“ some particular sound advice, necessary to the peace and
+“ happiness of the commonwealth, disesteemed by his ma-
+“ jesty ; and such an instance, he is most assured, neither
+“ can nor shall be given : and that they will think it merit
+“ in his majesty, from the commonwealth, to reject such
+“ counsel as would persuade him to make himself none of
+“ the three estates ; and by giving up his negative voice, to
+“ allow them a power superior to that which the law hath
+“ given him, whensoever it pleaseth the major part, present,
+
+<vocab>commonwealth, parliament, majesty, negative voice, three estates, petition, counsel</vocab>

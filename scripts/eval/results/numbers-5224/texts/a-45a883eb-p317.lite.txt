@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>313</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank H. Clark</image-desc>
+FRANK H. CLARK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. B. Christian</image-desc>
+G. B. CHRISTIAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Clark</image-desc>
+J. W. CLARK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. F. Clough</image-desc>
+GEO. F. CLOUGH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of N. J. Clarke</image-desc>
+N. J. CLARKE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Alfred Clum</image-desc>
+ALFRED CLUM
+
+<meta>20</meta>
+
+<vocab>Frank H. Clark, G. B. Christian, J. W. Clark, Geo. F. Clough, N. J. Clarke, Alfred Clum, The Book of Clevelanders</vocab>

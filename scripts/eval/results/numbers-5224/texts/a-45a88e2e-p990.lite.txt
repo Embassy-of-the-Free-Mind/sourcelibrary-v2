@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>992</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+Bank of Greeley, Nebraska. He is likewise the president of the Gate City Malt Company, president of the Maple Grove Live Stock Company and a director in various other corporations which benefit by his sound business judgment and enterprise. He has done much to promote the material development of the state through his important and ever-broadening business connections.
+
+On the 4th of December, 1907, Mr. Coad was married in Chicago to Miss Helen O'Neill, a native of Minnesota and a daughter of the late Henry J. and Elizabeth O'Neill, who were pioneer settlers of Minnesota. Mr. and Mrs. Coad have become parents of two children, William J. and Josephine.
+
+The religious faith of the family is that of the Roman Catholic church, and Mr. Coad is connected with the Knights of Columbus and with the Woodmen of the World. He likewise belongs to the Omaha Country, the Omaha Athletic, the Omaha, the University and the Commercial Clubs. His political allegiance is given to the democratic party and he is now president of the water board. While his private and professional interests are many, he yet finds time to devote to questions of general moment and he he lends his aid and cooperation to various well-defined plans and projects for the public good. He has social qualities which are pronounced and render him a favorite, but he is preeminently a business man, giving his time, thought and activities to his practice and to his invested interests.
+
+<vocab>Omaha, Douglas County, Nebraska, business, biography, Roman Catholic, Knights of Columbus, Woodmen of the World, Democratic party, water board</vocab>

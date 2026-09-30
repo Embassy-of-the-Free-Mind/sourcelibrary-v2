@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>521</page-num>
+<header>TOWN OF DENNIS. 521</header>
+
+divisions, the only improvement in conditions being that he was to have his horse kept, and the rooms were hired, to keep the several schools in, instead of being such as could gratuitously be obtained.
+
+In 1707 the school was kept at Nobscusset half the year. In 1711 Mr. Jaquesh was hired "to keep an English school to teach children to read, write and cypher." In 1712 the same gentleman received twenty-four pounds for a yearly salary with five shillings per week for board. The salary was twenty-six pounds in 1716, and he went about the town as before. This salary was for the entire old town. In 1730, after a period of neglect, the school affairs had become better settled, improvements were made, and two teachers were employed—still traveling from division to division. In 1770 school houses had been erected at Nobscusset and Quivet Neck, and the town of Dennis, when erected, had as many districts or divisions as the entire territory of both towns the century before. The original East Dennis school house was built in 1769 near the present site of Worden Hall. It was warmed by the old fire place, and not until its successor was erected in 1826 was that wholesome luxury exchanged for the first school house stove.
+
+November 6, 1794, Dennis appointed a committee to apportion two hundred dollars among the districts, and in 1797 the sum of $333 was apportioned. In 1810 the public schools were in a flourishing condition, and in 1829 four hundred dollars was appropriated to the several districts. These sums were but a small part of the actual school expenses—the balance coming from private tax. During these years the demand for more advanced schools induced teachers to open several select schools through the town which continued until the better grade public schools met the full demand. In 1836 the town paid $850 for schools, and good houses were erected as the first ones became unsuitable.
+
+The progress of the schools need not be given so closely in detail, during the memory of the middle-aged citizen, and the advancement of fifty years will be evident by the present status. In 1887 the town supported five grammar schools, two intermediate, and six primary. Each of the five villages had a good school building, of sufficient size to accommodate the several departments. The books and supplies were being furnished by the town, and uniformity of books and rigid classification had worked wonders. Every department had been kept in session 8½ or nine months of the year, with an average attendance of over ninety per cent. of those registered. In 1888 the number of schools was thirteen: at Dennis, one grammar and one primary; East Dennis, one grammar and one primary; South Dennis, one grammar and one primary; West Dennis, one grammar and one intermediate and one primary; Dennis Port, one grammar, one intermediate and
+
+<vocab>Town of Dennis, Nobscusset, Quivet Neck, Worden Hall, East Dennis, South Dennis, West Dennis, Dennis Port, school districts, public schools, grammar schools, intermediate schools, primary schools</vocab>

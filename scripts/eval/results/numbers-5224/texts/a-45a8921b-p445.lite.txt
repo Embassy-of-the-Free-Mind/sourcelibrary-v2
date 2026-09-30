@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>431</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+sembly, 1877; delegate Democratic National Convention, 1896; president Yale Alumni Association of Wisconsin, 1899–1904; member Milwaukee Bar Ass'n, Wisconsin Bar Ass'n (president 1909–10), American Bar Ass'n; president Milwaukee Public Library, 1911–7, University Club, 1900–2; m., June 18, 1873, Mary C. Harvey. Residence, 161 Prospect Ave., Milwaukee, Wis.
+
+**French, Leigh Hill**
+Physician; soldier; capitalist; b., Dover, N. H., Oct. 1, 1863; s. George F. and Clara Shackford (Hill) French; ed. Portland, Me., high school, Univ. of Minn., M.D. 1894; practiced medicine in Washington, 1897; captain and inspector of rifle practice, 1898; major 3d Cavalry, U. S. N. (Rough Riders), 1898; studied law and admitted to the bar 1902; engaged in development of Alaska through building of railways and hydraulic running water-ways; president New Rochelle Home for the Aged; member Loyal Legion, Arctic Brotherhood, American Institute Mining Engineers; Athletic, Larchmont and Huguenot Clubs, New York; Cosmos, Chevy Chase and Army and Navy, Washington; author, "Home Nuggets," 1902; "Seward's Land of Gold," 1905; appointed lieutenant commander U. S. N., and assigned to American embassy, Paris, France, as naval attaché, 1918; m., June 27, 1893, Blanche W. Culbertson, Louisville, Ky. Residence, 116 East 58th St., New York, N. Y.
+
+**Emery, Natt Morrill**
+Educator; b., Suncook, N. H., April 16, 1875; s. Natt B. and Abbie H. (Sargent) Emery; ed. Pembroke Academy, 1891; Dartmouth College, A.B. 1895; M.A. Lehigh Univ., 1899; Litt.D., business college, 1916; instructor, Tilton Seminary, Tilton, N. H., 1895–6; instructor in English, Lehigh Univ., Bethlehem, Pa., 1896–1902; registrar, 1899–1912; assistant to president, 1907–10; vice-president, 1910–; member Phi Beta Kappa;
+
+<column-break/>
+
+m., June 23, 1904, Bertha Elizabeth Snyder. Residence, 137 East Market St., Bethlehem, Pa.
+
+**Emerson, Abraham Fitts**
+Banker; b., Candia, N. H., June 19, 1864; s. Moses Fitts and Abbie (Patten) Emerson; ed. public schools; entered employ of First National Bank and Merrimack River Savings Bank, Manchester, October, 1884; trustee Merrimack River Savings Bank since April, 1893; secretary of the board since April, 1895; assistant treasurer Mer-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Abraham Fitts Emerson</image-desc>
+
+rimack River Savings Bank since April, 1916; acting treasurer N. H. College of Agriculture and Mechanic Arts, 1895–8; treasurer Northern Telegraph Co. of New Hampshire; director of Manchester Y. M. C. A., 1902–13; member and treasurer Manchester Food Committee, 1917–18; member Manchester Board of Commerce, Historic Ass'n, Institute of Arts and Sciences; interested in agriculture and forestry, and was among
+
+<vocab>Leigh Hill French, Natt Morrill Emery, Abraham Fitts Emerson, biography, New Hampshire, banking, education, medicine, military service</vocab>

@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>586</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+In Omaha, in 1869, Mr. Callahan was united in marriage to Miss Elizabeth O'Conner, who arrived in this city the previous year. To them were born eleven children, three of whom are yet living: Mrs. Minnie McGahan, Edward J. and Clara G. The death of Mr. Callahan occurred January 1, 1900, when he was fifty-seven years of age. He held membership in the Holy Family Catholic church. In politics he was a democrat, active in the work of the party, and frequently made campaign speeches. He was a member of the volunteer fire department in Omaha, joining in 1878 and remaining active therein for a number of years. He was genial, cordial and likable and he made friends wherever he went and among all classes of people.
+
+->WARREN Y. THOMPSON, M. D.<-
+
+Dr. Warren Y. Thompson, an Omaha physician and surgeon, was born at Westpoint, Nebraska, July 24, 1888, a son of Thomas D. Thompson, a native of Pennsylvania and a representative of one of the old families of that state of Scotch and Irish descent. The father came to Nebraska in 1878 and was one of the first physicians and surgeons of Westpoint and that section of the state. He is a graduate of the University of Pennsylvania and is still active in his profession, having devoted all of the years since his graduation to the private practice of medicine and surgery. He married Elizabeth Yoder, a native of Pennsylvania and of Swiss descent. They became the parents of nine children.
+
+Dr. Thompson, the fifth of the family, pursued his education in the schools of Westpoint until he completed the high school course and afterward entered Creighton University for the study of medicine, winning his professional degree in 1909. Later he became a student in the University of Chicago, which conferred upon him the Bachelor of Science degree in 1913. The following year he won the M. D. degree at Rush Medical College of Chicago. After completing his course at Creighton he was interne for a year in St. Joseph's Hospital in Omaha and for six months was assistant in the State Hospital at Ingleside, Nebraska. He entered upon private practice in Omaha in 1910 and he has specialized to a large extent in diagnosis and internal medicine. He comes of a family long connected with the profession. His grandfather, Levi Thompson, was a prominent physician of Pennsylvania and had four sons who were physicians. Kimball E. Thompson, an elder brother of Warren Y. Thompson, is a physician practicing at Westpoint, Nebraska, and two younger brothers are now in college and will graduate in 1917 with the M. D. degree. The family seem to have special aptitude as well as liking for the practice of medicine and wherever they have located they have won distinction and success in their chosen field.
+
+On the 24th of May, 1916, Dr. Thompson was married in Omaha to Miss Mary Kenworthy, a native of this city and a daughter of W. S. Kenworthy. Politically Dr. Thompson is a republican but he has neither time nor inclination for office. He belongs to the Omaha-Douglas County Medical Society, the Nebraska State Medical Association and the American Medical Association and he concentrates his thought, purpose and energies upon his chosen calling, in which he is making steady advancement.
+
+->FRANK S. MOREY.<-
+
+Frank S. Morey, proprietor of the Emerson Laundry of Omaha, was born in Kewanee, Illinois, February 13, 1862, a son of Stephen James and Jane (Griffith) Morey, who were natives of New York, but at an early period in the development of Illinois they became residents of that state. For a considerable
+
+<vocab>Omaha, Douglas County, biography, medicine, surgery, genealogy, Creighton University, Rush Medical College, St. Joseph's Hospital, Nebraska State Medical Association, American Medical Association, Emerson Laundry</vocab>

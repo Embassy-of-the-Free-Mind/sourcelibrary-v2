@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>806</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Next to the lighthouse are the oil works of E. P. Cook, Newel Rich, S. B. Rich and William Newcomb, which were established in 1873. The blubber of the blackfish and other species of whale was tried out by the old process the first year, and steam works were then added, by which better results were obtained. Among other important processes, they have smaller machinery for manufacturing watch oil from certain parts of blackfish, combined with parts of other fish. A small wharf is connected with the works.
+
+Another industry in connection with the wharves has been important; but like them, is having a season of depression. In 1875 Nehemiah H. Paine engaged in seine-making near Central wharf, with James A. Young as a partner during the first six years. More repairing than manufacturing has been done for the past few years.
+
+Of the stores pertaining to the territory of the present village, those of the present century are the most important. Those prior to 1800 were principally on the King's highway or in the western part of the town. As early as 1832 the late Simeon Atwood built the corner building below the bank, on Commercial street. Here, with Mr. Dyer, under the firm name of Knowles Dyer & Co., a prosperous grocery trade was carried on. In 1850 the present Simeon Atwood, his son, built the hardware store adjoining, and in 1851 the interests of these three men in both stores were united, the firm name remaining the same. These three gentlemen also carried on a branch store at what is now Commercial wharf.
+
+The present store at the Commercial wharf is carried on by the Central Trading Company, with Charles Young, agent. Samuel Higgins kept a store early in the century near the present depot, subsequently adding a lumber yard. From the depot along Commercial street we find Charles A. Gorham in a grocery trade. The building was erected in 1863 for John R. Higgins, who continued trade until 1865. In 1869 James H. Gorham, father of the present merchant, filled the store with goods, and continued in business until his death in 1888. Northerly, on the east side of the same street, F. A. Wiley, after a business of four years in Truro, established, in 1852, the present store and painting business, continued by Daniel F. Wiley, his son. In 1857 Nathaniel, a brother, became partner with F. A. Wiley, and the business was increased by the addition of other branches. This partner sold to Daniel F. Wiley in 1885, who, at the death of his father in 1888, succeeded to the entire business. On the same side of the street is the old store of Nehemiah M. Baker, a building moved from Eastham about 1865, now occupied by Oliver H. Linnell as a factory and salesroom for marble work. He started this industry in 1873, in the shop on the Joshua Atwood place, and in 1879 moved to Reuben C. Sparrow's place of business, combining undertaking
+
+<vocab>Barnstable County, oil works, blackfish, seine-making, commercial history, grocery trade, hardware store, marble work, undertaking, local business, 19th century</vocab>

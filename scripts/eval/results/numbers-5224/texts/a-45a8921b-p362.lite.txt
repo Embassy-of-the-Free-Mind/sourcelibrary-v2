@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>348</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Jewell, b. March 27, 1892; John James, June 22, 1893; Mariana, March 17, 1895 (grad. Wheelock School); Henry Glover, May 16, 1897; George Albert, Aug. 20, 1899, sons all in U. S. government service. Residence, Exeter, N. H.
+
+**Ryder, Herbert Daniel**
+Teacher, lawyer, manufacturer; b., Acworth, N. H., Nov. 12, 1850; s. Daniel A. and Elizabeth A. (Brigham)
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Herbert Daniel Ryder, an older man with a white beard and mustache, wearing a suit and tie.</image-desc>
+
+Ryder; ed. public schools, Oberlin, O., Colby Academy, New London, N. H.; Dartmouth College, A.B. 1876, A.M. 1879; principal Springfield, Vt., high school, three years; studied law with Hon. David Cross and Henry E. Burnham of Manchester, N. H., and J. W. Pierce of Springfield, Vt.; admitted to the bar in 1880 and commenced practice in Springfield, removing to Bellows Falls a year later where he became principal of the high school, continuing until 1887 when he became connected with the manufacturing firm of Derby and Ball for three
+
+<column-break/>
+
+years; resumed the practice of law in 1890 and since 1907 has been the senior member of the law firm of Ryder and Graham; in 1907 became manager of the business conducted under the name of Derby and Ball and has continued the connection ever since; Congregationalist; Republican; chairman Bellows Falls board of bailiffs, 1893-5; president of Bellows Falls Village corporation, 1918; deputy collector internal revenue, 1897-1904; state's attorney, Windham County, 1904-6; presidential elector, 1908; member Vt. house of representatives and chairman judiciary committee, 1913; superintendent of schools, Bellows Falls, 1890-7; chairman school board, town of Rockingham, 1889-1914; examiner of schools for Windham county about twenty years; member Vt. State Board of Education (secretary and treasurer), 1913-4; member A. F. & A. M. (lodge, chapter and council), I. O. O. F., P. of H., and Westminster Club; m., Nov. 30, 1881, Margaret E. Ball, Springfield, Vt.; children: Jessie E., b. Feb. 18, 1884; Margaret S., b. April 26, 1885, m. Edward H. Kenerson, 1905, d. 1909; Helen W., b. June 27, 1887, m. Ralph D. Gilbert, 1912; Charlotte D., b. Sept. 4, 1889, m. Edward H. Kenerson, 1914; Katharine F., b. July 26, 1895; Daniel F., b. Jan. 9, 1900; Mary Scott, b. June 18, 1904. Residence, Bellows Falls, Vt.
+
+**Gibson, Harvey Dow**
+Banker; b., No. Conway, N. H., March 12, 1882; s. James L. and Addie (Dow) Gibson; ed. Bowdoin College, A.B. 1902; entered employ of American Express Co., and became assistant manager of the financial department of the company in New York; vice-president Raymond & Whitcomb Co, for a time; in 1912 became assistant to the president of Liberty Nat'l Bank, New York; elected vice-president April, 1913, president since Jan. 1, 1917; director Interborough Rapid Transit Co., Pacific Fire Ins. Co., Mercantile Trust & Deposit Co., and many other corpor-
+
+<vocab>Herbert Daniel Ryder, Harvey Dow Gibson, Bellows Falls, New Hampshire, biography, law, banking, genealogy</vocab>

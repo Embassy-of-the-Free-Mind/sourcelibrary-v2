@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>227</page-num>
+<header>MEDICAL PROFESSION. 227</header>
+
+family in the small pox hospital after vaccinating them. He was much interested in the galvanic battery, then little used. He made one and experimented largely with it in his efforts to obtain knowledge of the wonderful power of electricity over disease. He died in 1814, of a malignant fever which prevailed in Falmouth at that time.
+
+Dr. John Duncan was an early physician in Harwich. He removed to Boston before 1737, and died before 1756. He married Kesiah Baker of Eastham.
+
+Erastus Emery, M.D., was born in Chatham, August 7, 1840, received his early education in the public schools of Chatham, and studied medicine with Dr. M. E. Simmons of Chatham. He graduated from Harvard Medical College in 1869, practiced medicine in Truro, Mass., for nine years, and died in Chatham, at the residence of his father John Emery, the 16th of January, 1878.
+
+Dr. R. H. Faunce, born in 1859, is a son of Joshua T. Faunce. He graduated in June, 1882, from Harvard Medical College, and was surgical house officer in the Free Hospital for Women, at Boston, for a year, when he began practice in Sandwich.
+
+Rev. Benjamin Fessenden, son of Nicholas and Mary (or Margaret) Fessenden was born January 30, 1701, graduated from Harvard College in 1718, was ordained September 12, 1722, and was the first person known in the practice of medicine in Sandwich. He died August 7, 1746.
+
+Dr. William Fessenden was born in Sandwich, September 25, 1732, and settled as physician in that part of Harwich now Brewster before 1759. He married Mehitable Freeman of Harwich, February 24, 1756, had nine children, and died November 5, 1802.
+
+Dr. William Fessenden, son of Doctor William, was born in Harwich, now Brewster, and married Pede Freeman in 1807. He had five children. He died at Brewster, June 17, 1815. She died December 9, 1812.
+
+Dr. Oliver Ford first practiced medicine at Marston's Mills, and moved to Hyannis in 1832, where he resided the remainder of his life, in active practice.
+
+Dr. Nathaniel Freeman, an eminent physician of Sandwich, was a son of Edmund Freeman who married Martha Otis, and was born in North Dennis, March 28, 1741-2, where his father was engaged in school teaching. Removing to Mansfield, Conn., with his father's family, he completed his course of medical studies with Doctor Cobb, of Thompson, and returned to his father's native town, and commenced the practice of medicine, where he attained to distinction as a physician and surgeon. Dr. Freeman was a distinguished patriot, and leader of the patriots in the county during the revolutionary period. He died at Sandwich, September 20, 1827. He was three times
+
+<vocab>physicians, medical history, Sandwich, Harwich, Chatham, Harvard Medical College, revolutionary period, genealogy</vocab>

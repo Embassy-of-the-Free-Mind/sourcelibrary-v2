@@ -1,0 +1,7 @@
+<scan-quality>good</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>blank</page-type>
+<image-desc size="large" type="decorative" significance="low">The image shows the red leather-bound cover of a book with gold-tooled borders.</image-desc>
+<warning>This page is a blank book cover and contains no text to transcribe.</warning>
+<vocab>bookbinding, leather, cover</vocab>

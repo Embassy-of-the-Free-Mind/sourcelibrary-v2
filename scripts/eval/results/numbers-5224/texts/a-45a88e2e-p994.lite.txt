@@ -1,0 +1,83 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>996</page-num>
+<header>INDEX</header>
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Marcy, R. F. | 834 | Patrick, M. T. | 328 |
+| Marley, C. H. | 538 | Patterson, D. C. | 544 |
+| Marshall, A. B. | 511 | Patzman, A. A. | 542 |
+| Martin, E. M. | 265 | Payne, G. H. | 648 |
+| Martin, P. L. | 124 | Peter, V. J. | 860 |
+| Masson, G. W. | 645 | Peters, M. C. | 971 |
+| Mattson, A. S. | 544 | Peters, R. C. | 367 |
+| Medlar, I. A. | 315 | Pflug, J. G. | 446 |
+| Meitzen, C. J. | 745 | Piatti, L. J. | 35 |
+| Melady, E. P. | 680 | Pickens, C. H. | 908 |
+| Melchiors, Peter | 715 | Pitts, F. F. | 186 |
+| Menold, O. H. | 374 | Pollard, C. W. | 788 |
+| Mercer, D. H. | 44 | Poppleton, A. J. | 5 |
+| Mercer, S. D. | 879 | Power, John | 211 |
+| Merriam, Nathan | 752 | Pratt, N. C. | 113 |
+| Merten, G. H. | 296 | Prince, N. C. | 202 |
+| Mesershmidt, George | 923 | Pruner, W. H., Jr. | 373 |
+| Metcalf, J. M. | 162 | Pulte, W. J. | 557 |
+| Meyer, G. A. | 441 | | |
+| Michaelsen, Jorgen | 679 | Quigley, D. T. | 396 |
+| Mick, W. H. | 784 | | |
+| Mickel, T. E. | 409 | Rainbolt, W. M. | 647 |
+| Millard, L. J. | 440 | Ramsey, H. B. | 295 |
+| Millener, F. H. | 989 | Ramsey, W. C. | 145 |
+| Miller, B. F. | 849 | Ranz, B. C. | 522 |
+| Miner, I. W. | 368 | Rasmussen, George | 798 |
+| Mitchell, Jake | 615 | Reagan, J. E. | 274 |
+| Monaghan, W. J. | 458 | Redick, E. S. | 302 |
+| Monsky, Henry | 451 | Redick, J. I. | 30 |
+| Montgomery, S. S. | 387 | Redick, O. C. | 654 |
+| Moore, F. G. | 357 | Redick, W. A. | 92 |
+| Moore, J. C. | 405 | Redmond, T. P. | 862 |
+| Moore, R. C. | 939 | Rich, E. P. | 791 |
+| Moorhead, H. G. | 39 | Richey, C. A. | 521 |
+| More, W. T. | 431 | Riepen, C. H. T. | 435 |
+| Morearty, E. F. | 149 | Rigge, W. F. | 830 |
+| Morey, F. S. | 586 | Rine, J. A. | 628 |
+| Morgan, C. C. | 601 | Rix, Rudolph | 564 |
+| Morgan, K. A. | 352 | Roberts, G. A. | 120 |
+| Morison, C. C. | 445 | Robertson, M. M. | 635 |
+| Morrow, H. W. | 447 | Robinson, C. N. | 699 |
+| Munger, W. H. | 181 | Robinson, J. B. | 141 |
+| Munroe, J. A. | 960 | Robinson, J. C. | 940 |
+| Murphy, Hugh | 959 | Rogers, G. S. | 452 |
+| Murphy, M. R. | 677 | Rogers, H. M. | 74 |
+| Myers, H. A. | 155 | Rogers, L. M. | 881 |
+| | | Rogers, Milton | 73 |
+| Nash, E. W. | 729 | Rogers, R. E. | 276 |
+| Nash, L. C. | 778 | Rogers, S. E. | 406 |
+| Neale, H. H. | 195 | Rohrbough, G. A. | 928 |
+| Neble, S. F. | 488 | Rolfs, H. J. | 833 |
+| Neely, H. D. | 484 | Root, J. B. | 673 |
+| Nesbit, F. L. | 550 | Root, J. L. | 187 |
+| Neville, E. J. | 316 | Rose, H. F. | 768 |
+| Newkirk, L. R. | 553 | Rosewater, Charles | 896 |
+| Niswonger, C. E. | 782 | Rosicky, J. G. | 331 |
+| Norris, W. C. | 393 | Rushton, J. H. | 403 |
+| | | Rustin, C. B. | 269 |
+| Ochiltree, J. T. | 698 | Ryan, J. B. | 249 |
+| O'Connor, T. J. | 16 | | |
+| Oline, C. O. | 594 | Sadler, S. M. | 416 |
+| Olmsted, R. H. | 918 | Saunders, C. L. | 40 |
+| Olsen, H. A. | 776 | Sawtell, W. E. | 344 |
+| Orcutt, C. D. | 342 | Schindel, R. E. | 487 |
+| Owen, F. S. | 953 | Schleier, F. J. | 311 |
+| | | Schlinger, Frank | 709 |
+| Page, W. T. | 534 | Schmidt, J. H. | 136 |
+| Parks, George | 410 | Schweitzer, S. E. | 638 |
+| Parrott, R. E. | 60 | Scott, A. C. | 201 |
+| Parsons, Antony | 828 | Scott, H. A. | 343 |
+| Parsons, Grant | 856 | Sears, C. W. | 338 |
+
+<vocab>Index of names, biographical directory, historical register</vocab>

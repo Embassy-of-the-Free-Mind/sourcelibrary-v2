@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>370</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+dian. In this purchase Miles Standish acted for the settlers, and secured the southern part of the town from the Mashpee line east to the Oyster river, and to Iyanough, or Ianno’s lands on the east, and to Nepoyetum’s lands on the north. The pay for this was two brass kettles and some fencing done. This completed the purchase of the western part of the town from bay to sound and along the northern part; and the bounds between Sandwich and Barnstable were fixed in 1652, substantially as now. The lands at Cotuit were then part of Mashpee, but have been since added to Barnstable. In 1659 the first bounds between Yarmouth and Barnstable were fixed, nearly one mile west of the present bounds.
+
+In 1664 a purchase of the lands of Iyanough was perfected, which gave to the town more substantially its present area. The deed was taken for the town by Thomas Hinckley, Nathaniel Bacon and Tristam Hull, being for land at the South sea extending easterly to Yarmouth, northerly to that bought of Nepoyetum, and westerly to that purchased of Paupmunnuck, except that given to Nicholas Davis, which soon after was purchased by the town. This deed embraced the southeastern part of the present town, except a tract owned by John Yanno, son of Ianough, in and around Centreville, which was purchased of him in 1680 by Thomas Hinckley in behalf of the town. Some subsequent minor purchases of small reservations brought the lands of the town to the ownership of the proprietors, and over this territory the settlers were fast erecting their rude cabins.
+
+Of course difficulties arose regarding bounds of lands, and in 1658 the bounds between Mashpee and Barnstable were set, leaving the lands about Satuit pond to the Mashpees; and later the west bounds of Yarmouth were defined “from the centre of Stoney Cove creek due north to the sea”—substantially the present bounds. The proprietors were yet very careful as to the character of new comers, concerning which rules were made by the general court. In 1661 William Crocker and Thomas Huckins were empowered to take notice of any who should intrude themselves without the town’s consent. The underlying reason, however, for such surveillance was that religions not orthodox should be kept away. There was room in town for more people if they were of the right faith, as the entire territory between the Long pond and Shoal pond had no settlers yet, and it was made “commons for the town’s cattle.”
+
+The main line of travel from these Cape towns in these early days was toward Plymouth, and the subject of a road—a main, well-defined, wide road—was agitated. The road for the time had been opened from Sandwich, south of Scorton hill, south of Honey bottom, so-called, and so easterly near the old church in the West parish, through the woods on the south side of the pond into the present road, to avoid
+
+<vocab>Barnstable, Mashpee, Sandwich, Yarmouth, Miles Standish, Thomas Hinckley, Nathaniel Bacon, Tristam Hull, Iyanough, Nepoyetum, Paupmunnuck, Nicholas Davis, John Yanno, land purchase, colonial history, Cape Cod</vocab>

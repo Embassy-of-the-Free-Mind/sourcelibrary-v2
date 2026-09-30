@@ -1,0 +1,10 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>890</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Prince, was a son of John Young. Mr. Young began keeping a small store at East Harwich in 1851. He has continued to increase the business until he now has a general country store, beside a large stock of furniture and house furnishing goods. He was married in 1858, to Eliza A., daughter of Samuel Holmes. She died two years later. He married again in 1865, to Mrs. Emily Baker, daughter of Henry Kelley. Their children are: Harry M., Sparrow M., Eglantine F., Mary H. and Betsey I.
+
+<vocab>Barnstable County, East Harwich, John Young, Samuel Holmes, Eliza A. Holmes, Emily Baker, Henry Kelley, Harry M. Young, Sparrow M. Young, Eglantine F. Young, Mary H. Young, Betsey I. Young</vocab>

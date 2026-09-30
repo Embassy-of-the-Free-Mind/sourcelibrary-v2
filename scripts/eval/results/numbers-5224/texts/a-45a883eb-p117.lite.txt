@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>113</page-num>
+<header>The Book of Clevelanders</header>
+<meta>8</meta>
+
+treas.; director Broadway Savings & Trust Co. and Woodland Ave. Savings & Trust Co.; member Union, Country, Rowfant, and Automobile Clubs, Cleveland Chamber of Commerce; member N. Y. Athletic and Chemists Clubs.
+
+GRASSELLI, Thomas S.; manufacturer; born, Cleveland, Nov. 14, 1875; son of C. A. and Johanna Ireland Grasselli; educated, Mt. St. Mary's College, Emmitsburg, Md.; married, Rock Island, Ill., May 29, 1899, to Emilie Schmidt; issue, three boys; entered Troop A, O. N. G., 1893; appointed capt. and quartermaster First Ohio Volunteer Cavalry, May, 1898; resigned to accept appointment as captain and quartermaster U. S. V., and resigned after conclusion of war with Spain; engaged with Grasselli Chemical Co. in 1893; now first vice pres.; director Citizens Savings & Trust Co., Bank of Commerce, National Ass'n, Woodland Ave. Savings & Trust Co., Broadway Savings & Trust Co., member Union, and Chagrin Valley Hunt Clubs, and Chamber of Commerce.
+
+GREENE, Edward Belden; banker; born, Cleveland, July 26, 1878; son of John E. and Mary E. (Seymour) Greene; educated, Yale University, B. A., 1900; married, Cleveland, Nov. 18, 1908, Helen Wade; issue, one daughter, Helen W. Greene, born Nov. 12, 1911; enlisted in Troop A, 1st Squadron, Ohio Cavalry, November, 1900, and resigned as 2nd lieut. February, 1912; began work with Cleveland Trust Co. in 1900, immediately after graduation from College, rising through the grades of messenger, clerk, teller and secretary to the vice presidency; director Wade Realty Co., vice pres. and director Ohio Chemical Mnfg. Co.; director National Discount Co.; sec'y and director City & Suburban Realty Co.; treas. and trustee Babies' Dispensary and Hospital, trustee Humane Society, and Alumni Board of Yale University; member Alpha Delta Phi, Yale (Wolf Head), Union, University, Athletic, Tavern, and Country Clubs (Cleveland); Chagrin Valley Hunt Club, Gates Mills, and Yale Club of New York.
+
+GREENLEAF, Lloyd B.; moving contractor; born, Plessis, N. Y., Oct. 26, 1853; son of Alfred F. and Eliza Vanallen Greenleaf; educated in schools of Plessis, N. Y., married, Cleveland, June 15, 1887, Anna Knadler; came to Cleveland in 1884, with nothing, but has built up a very prosperous business; member Loyal Order of Moose, Protected Home Circle. Recreation: Fishing.
+
+GREIF, William; manufacturer; born, Cleveland, Aug. 16, 1855; son of Vincent and Mary E. Mayer Greif; educated in Cleveland schools; married, Cleveland, Oct. 25, 1881, Mary Hitsch; began in the manufacture of kegs and barrels in 1876; pres. of the Greif Bros.' Cooperage Co. and the Fanner Mfg. Co.; vice pres. Euclid Arcade, Pioneer Lumber Co., and General Time Recorder Co.; treas. Columbia Mutual Lumber Co.; director in the following companies: Cleveland, Alliance & Mahoning Valley R. R., Forest City Savings & Trust Co., Ohio Savings & Loan Co., United Bank-
+
+<vocab>Thomas S. Grasselli, Edward Belden Greene, Lloyd B. Greenleaf, William Greif, Cleveland, biography, business, manufacturing, banking</vocab>

@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>375</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 375</header>
+
+**McElwain, Herbert Andrew**
+Investment banker; b., Enfield, N. H., April 24, 1877; s. James and Ella R. (Gage) McElwain; ed. public schools, Kimball Union Academy, Meriden, 1899, Dartmouth College, entering the latter with the class of 1903 and leaving at the close of the second year to engage in business; went to Springfield, Mass., in 1901, where he became manager of salesmen for the Home Correspondence School of that city. In 1907 he formed a connection with Alonzo Elliott, investment banker, of Manchester, N. H.; on the death of Mr. Elliott, in 1909, purchased the business, which was incorporated under the name of Alonzo Elliott & Co., of which corporation he is president, and has continued the same with much success, headquarters being established in Beacon Block, Nos. 308-314, Elm St., Manchester; Republican; member Derryfield, Calumet and Intervale Country clubs, Manchester City and Dartmouth clubs, Boston; Nashua Country Club, Nashua, N. H.; m., April 18, 1909, R. Dorothy Favreau. Residence, Manchester, N. H.
+
+**Cole, John Adams**
+Civil engineer; b., Westmoreland, N. H., Dec. 16, 1838; s. John and Elizabeth (Shaw) Cole; ed. Kimball Union Academy, Meriden, and special studies; in office of Thomas Doane, civil engineer, Boston, Mass., 1856-9; general field agent Christian Commission, 1862 to close of the Civil War, in charge of work in the armies of the Potomac and the James, directing expenditure of more than $3,000,000; civil engineer, Washington, D. C., 1867-9; Chicago, 1873-1904; engineer Lake View and Hyde Park, Ill., and consulting engineer for many cities; designed and constructed many water-works and sewerage systems; secreta y and treasurer, trustee Howard University, Washington, D. C., 1867-71; president Chicago Tract Soc., 1911-13; member American Soc. Civil Engineers; Presbyterian; Republican; m., Dec. 15, 1870, Julia Mead Alvord, Boston, Mass. Residence, 1346 E. 53d St., Chicago, Ill.
+
+**Fischer, Herbert Brainerd**
+Banker; b., Charlestown, Mass., July 26, 1872; s. Anson B. and Caroline Frances (Cutler) Fischer; ed. public schools, Charlestown and Marlborough Mass.; employed several years in early life in the service of the Boston & Maine R. R. at Boston; removed to
+
+<column-break/>
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Herbert Brainerd Fischer, shown from the chest up, wearing a suit, white shirt, and tie.</image-desc>
+
+Pittsfield, N. H., in 1901, where he has since been connected with the Pittsfield National Bank and the Farmers' Savings Bank of that town, of which he is cashier and treasurer, respectively; Congregationalist; Republican; member N. H. house of representatives, 1907-8 (secretary committee on Retrenchment and Reform); state senate, 1919; Pittsfield town treasurer, treasurer Pittsfield Aqueduct Co., Pittsfield Gas Co., Red Cross; chairman Pittsfield Liberty Bond Committee; and war speaker; member Corinthian Lodge A. F. & A. M., Pittsfield; president
+
+<vocab>Herbert Andrew McElwain, John Adams Cole, Herbert Brainerd Fischer, biography, New Hampshire, banking, civil engineering, genealogy, 19th century, 20th century</vocab>

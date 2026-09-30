@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>240</page-num>
+<header>The Book of Clevelanders</header>
+
+pres. and gen. mgr. The Higbee Co.; vice pres. J. N. Adam & Co; member the Union Club, Cleveland, the Ellicott Club, Buffalo, the Country Club, Buffalo.
+
+SHOLES, Justin Grant; sec'y-treas. the Ohio Chemical & Mfg. Co.; born, Cleveland, Feb. 9, 1871; son of Thomas G. and Harriet Estee Sholes; educated at Brownell St. School and Central High; married, Cleveland, Dec. 16, 1908, Alice Everrett; issue, one son, Justion Everrett Sholes, born April 29, 1910; with the Grasselli Chemical Co., 1886 to 1900; re-organized the Lennox Chemical Co., Cleveland, sec'y and treas. to 1910; organized the Ohio Chemical Co., Cleveland, 1910, and sec'y-treas. of that firm to date; vice pres. Western Terminal Co.; has served three enlistments in Troop A., O. N. G.; member Chamber of Commerce, Union, and Country Clubs; member Tyrian Lodge, F. & A. M., Cleveland Chapter.
+
+SHOOK, Floyd D.; insurance; born, Randolph O., March 5, 1867; son of David and Linda A. Stambaugh Shook; educated, Hiram College, 1882-1883; finished at Ohio Normal University, Ada, O., 1887; married, Randolph, O., Nov. 20, 1889, Josephine E. Trescott; with The Adams Ford Co.; with firm twenty years, until August, 1913, when he became associated with The Penn Mutual Life Insurance Co. of Philadelphia, as associate general agent; director The Rotary Mnfg. Co.; director The Ohio Insurance Agency Co.; director The Knollwood Cemetery Co.; trustee Cleveland Christian Orphanage and Euclid Ave. Christian Church; member Masonic Order, McKinley Chapter, Royal League, Chamber of Commerce, past pres. Cleveland Association of Credit Men; member Athletic, Colonial, Rotary, and Advertising Clubs. Recreation: Automobiling.
+
+SHULTERS, Hoyt V.; sec'y and treas. The East Ohio Gas Co.; born, Chautauqua, N. Y., Dec. 3, 1868; son of Edwin and Martha (Camp) Shulters; educated, public school and business college; married, August, 1890, Mary E. Courtright, of Painesville, O.; business career, office position with the Tiffin Natural Gas Co. for four years; went to Toledo for the Northwestern Ohio Natural Gas Co.; in 1895, became asst. sec'y and treas. until 1902; came to Cleveland, and was elected sec'y and treas. East Ohio Gas Co.; sec'y and treas. Green River Coal Co.; director Connecting Gas Co., and East Ohio Gas Co.; interested financially in other gas companies and banks; Republican; Mason; member Union Club.
+
+SHUMAKER, Frank P.; real estate and insurance; born near Galion, O., Dec. 20, 1858; son of Joseph H. and Susan Walton Shumaker; educated, district school, Mt. Union College, Alliance, O., degree M. S., 1886; married, Alliance, O., June 18, 1889, Maggie M. Atwell; issue, two girls and one son; councilman and mayor of Chagrin Falls, O.; member of the Ohio State Senate from Cuyahoga County, 1904-1905; teacher District School, Principal Mt. Union Public Schools, 1866-1867; supt. Chagrin Falls schools, 1888-1901; granted
+
+<vocab>Justin Grant Sholes, Floyd D. Shook, Hoyt V. Shulters, Frank P. Shumaker, Cleveland, Ohio, biography, business, insurance, gas industry, education, politics</vocab>

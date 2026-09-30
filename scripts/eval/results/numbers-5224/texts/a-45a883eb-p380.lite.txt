@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>376</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. Schauwecker</image-desc>
+JOS. SCHAUWECKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fred Schauffler</image-desc>
+FRED SCHAUFFLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. R. Schmidt</image-desc>
+O. R. SCHMIDT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. A. Schneider</image-desc>
+GEO. A. SCHNEIDER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Thos. P. Schmidt</image-desc>
+THOS. P. SCHMIDT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Gustave Schneider</image-desc>
+GUSTAVE SCHNEIDER
+
+<vocab>Jos. Schauwecker, Fred Schauffler, O. R. Schmidt, Geo. A. Schneider, Thos. P. Schmidt, Gustave Schneider, Clevelanders</vocab>

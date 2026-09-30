@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>preface</page-type>
+
+# Preface
+
+**F**ROM time to time ephemeral publications spring up pretending to add to biographical literature sketches of "leading" and "prominent" men—for a consideration. There is no limit to this form of exploitation on the one hand and vanity on the other. Meanwhile the main object of any such attempt, the setting forth of the facts, without comment, is lost and with it whatever value might otherwise attach to the print.
+
+This is the first book of its kind published in Cleveland for Clevelanders. That it is no larger is due to the modesty of hundreds of men who have refrained from filling up the inquiry blanks sent them lest their motive be misunderstood. To this cause must be ascribed the absence from the pictorial pages of many photographs of men whose biographical sketches are here included.
+
+The book has been confined to living subjects because it is intended to make this a current publication, dealing with current matters. Other publications are available for historical purposes. Moreover, its main purpose was to offer a list of the younger men—the men who are making the Greater Cleveland-to-come, rather than their elders. No attempt has been made to select for the purposes of this publication any class of men, beyond the thought that they should represent the city of today.
+
+No space for any purpose has been sold in this book. The remarks following each name are autobiographical. Not a word has been added and except for unimportant changes affecting the phraseology employed, every man's description is his own. Too many have modestly declined to enter as fully into their achievements as the publishers might have wished. But while the comment, here and there, may seem brief, it was deemed best to adhere to truth and facts, no matter how briefly stated, than to err on the other side.
+
+Nothing more is claimed for this volume than accuracy and dependability as to the sketches included. Another issue may induce co-operation by many others whose names are among the missing.
+
+THE EDITOR.
+
+<vocab>Preface, biography, Cleveland, Greater Cleveland, autobiographical, publication, editor</vocab>

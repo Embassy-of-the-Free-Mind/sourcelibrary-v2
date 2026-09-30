@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>289</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 289</header>
+
+emy, New Ipswich, N. H., 1868-9; tutor Latin, 1869-72, associate professor Latin and rhetoric, 1872-80, Evans professor oratory and belles lettres, 1880-2; associate professor Latin language and literature, 1882-92; Daniel Webster professor since 1892; acting president, 1892-3, acting president of the faculty, 1893-1909, Dartmouth college; m., Jan. 20, 1873, Emma Fuller Pomeroy. Residence, Hanover, N. H.
+
+**Howard, Alfred Franklin**
+
+Lawyer, secretary Granite State Fire Ins. Co.; b., Marlow, N. H., Feb. 16, 1842; s. Ervin and Philinda (Simonds) Howard; ed. Marlow Academy, N. H. Conference Seminary, Tilton, N. H.; studied law with Hon. W. H. H. Allen and Hon. Shepard L. Bowers of Newport; admitted to the bar, Sept., 1868, located in practice at Portsmouth where he has since resided; Congregationalist; Republican; city solicitor, Portsmouth, 1869-71, deputy collector U. S. Customs 1870-1; collector twelve years; police commissioner twelve years; delegate to N. H. constitutional convention, 1876, 1902, 1918; secretary and director Granite State Fire Ins. Co., since organization in 1885; director N. H. National Bank; trustee Portsmouth Trust and Guarantee Co., Piscataqua Savings Bank; director Portsmouth Fire Ass'n, Piscataqua Fire Ins. Co.; trustee N. H. Historical Soc.; Member A. F. & A. M. (St. Andrews Lodge, Washington Chaper, De Witt Clinton Commandery, Portsmouth); Warwick Club; m., 1st, Oct., 1869, Eliza Fiske, Marlow, N. H., d. Aug., 1877; 2d, April, 1880, Mabel Young Smith; one son, Arthur Fiske Howard, b. June, 1874. Residence, Portsmouth, N. H.
+
+**Stevens, Edwin Dearborn**
+
+Physician; b., Montgomery, Mass., s. Rev. N. Franklin and Mary E. (Dearborn) Stevens (lineal descendant, in 8th generation, of Sir Godfrey Dearborn who came from England in 1637, and of Revolutionary ancestry on both paternal and maternal sides); His great
+
+<column-break/>
+
+grandfather Isaac Stevens, a Revolutionary soldier, built and kept the old tavern for years in Hartland, Vt., and was also sheriff in Windsor County; ed. Powers Institute, Bernardstown, Mass., Montpelier, Vt. Seminary, Boston Univ., M.D., 1895; after hospital clinical work commenced practice of medicine in Francestown in Dec. 1895, where he has contined, with success; Republican; chairman board of health, fifteen years, member board of education six
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit, vest, and tie.</image-desc>
+
+years, justice of the peace and notary public; member N. H. house of Representatives, 1917-18 (member committee on public health); Sons of America Revolution, A. F. & A. M., Eastern Star, I. O. O. F., P. of H.; American Institute, Contoocook Valley Medical Soc., N. H. Medical Soc., Mass. Surgical and Gynecological Soc., Mass. Medical Soc.; m., Dec. 16, 1903, Anne Elizabeth Hulme, daughter of the late John T. Hulme, journalist, long prominently connected with various New Hampshire newspapers. Residence, Francestown, N. H.
+
+<vocab>Alfred Franklin Howard, Edwin Dearborn Stevens, New Hampshire, biography, genealogy, Dartmouth College, Portsmouth, Francestown, medicine, law, politics</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>35</page-num>
+<header>CHARTERS, GRANTS AND INDIAN DEEDS. 35</header>
+
+Bradford, and those first instruments termed & called in sundry orders upon public recorde, ye Purchasers, or Old comers; witnes 2, in spetiall, the one bearing date ye 3. of March, 1639, the other in Des: the 1, Ano 1640, whereunto the presents have spetiall relation and agreemente, and wherby they are distinguished from other ye freemen & inhabitants of ye said corporation. Be it knowne unto all men, therfore, by these presents, that the said William Bradford, for him selfe, his heires, together with ye said purchasers, doe only reserve unto them selves, their heires, and assignes, those 3 tractes of land mentioned in ye said resolution, order, and agreemente, bearing date ye first of Des: 1640. viz. first, from ye bounds of Yarmouth 3 miles to ye eastward of Naem-schatet, and from sea to sea, cross the neck of land."
+
+Two other tracts of land were also reserved, and the closing words of the long document are: "In witness wherof, the said William Bradford hath in publick courte surrendered the said letters patents actually into ye hands & power of ye said courte, binding him selfe, his heires, executors, administrators, and assignes to deliver up whatsoever spetalties are in his hands that doe or may concerne the same."
+
+It was conceded that the Indians had a natural right or title in the lands, which must be obtained by the settlers after the court had granted them permission to establish a plantation. A verbal grant from the Indians was at first considered sufficient, but subsequently the title from the natives was passed by instruments, which were legal in their form, whether they were understood by the natives or not. Doctor Holmes in his annals quotes the words of Governor Winslow, "that the English did not possess one foot of land in the colony but was fairly obtained by honest purchase from the Indian proprietors."
+
+The first permission to settle on the Cape was given by the Plymouth colony on the 3d of April, 1637, under which so-called grant the first settlement at Sandwich was begun, and a committee was appointed to procure of the Indians a title to the lands. Grants were given in 1639 for the settlement of Mattacheese—now Barnstable, Yarmouth and Dennis. In settling these plantations a suitable location was first purchased of the Indians; and subsequently, as occasion required, deeds of adjoining territory were obtained. Reservations were made for the Indians, provided that if they sell it be to the inhabitants of the plantation; and, although all purchases were carefully made by a committee appointed by court, misunderstandings arose between the whites and Indians. In 1641, after purchasing of Nepaiton lands in Barnstable, other agreements were made to build for him, "in addition to what said Nepaiton hath already had one dwel-
+
+<vocab>William Bradford, Plymouth Colony, Indian deeds, land grants, Sandwich, Mattacheese, Barnstable, Yarmouth, Dennis, Governor Winslow, Doctor Holmes, Nepaiton</vocab>

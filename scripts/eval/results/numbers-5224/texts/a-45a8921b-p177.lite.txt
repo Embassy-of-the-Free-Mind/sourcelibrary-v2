@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>163</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+member, Newport School Committee, 1874–81; R. I. house of representatives, 1879–82 (speaker in 1881–2); state senate, 1885–6, and again in 1889 and several successive years (president, three years); again member of the house in 1898–9, and of the senate since 1906; member, Northern Pacific Railway Commission, 1882; delegate in Republican national convention, 1880, 1884; member, R. I. commission, Columbian Exposition, Chicago, 1893; ex-com. Centennial Celebration, Perry's Lake Erie Victory, 1913; conspicuous in Masonry, past Grand High Priest, Royal Arch Masons of R. I., Past Grand Commander, Grand Commandery K. T. of Mass. and R. I.; Supreme treasurer, N. E. O. P., twenty-five years; treasurer, R. I. Soc., S. A. R.; m. April 7, 1870, Isabelle M. Higbee, Newport, N. H.; children, S. Florence (Mrs. A. S. Howard), Alvah H., John Royal. Residence, Newport, R. I.
+
+**Hoyt, Horace F.**
+Farmer and business interests; b., Enfield, N. H., Oct. 26, 1842; s. Horace F. and Caroline E. (Hardy) Hoyt; ed. public schools of Hanover, in which town he has had his home since early childhood; Baptist, Republican; cast his first vote for Abraham Lincoln for president, and has missed voting at no election since, except the primary of 1916, when he was ill in a hospital; selectman, Hanover, 1868–73; commissioner for Grafton County, 1894–1912, nominated by acclamation eight times; member, N. H. house of representatives, 1893, chairman, committee on retrenchment and reform; 1915, chairman, committee on county affairs (vice-president Farmers' Council), 1917, chairman, committee on county affairs, member, committee on equalization of taxes; superintendent, Hanover Town Farm, 1887–90; served as tax collector for Hanover twenty-eight years in succession; trustee of public funds; director and treasurer, Hanover public library; president, Etna Creamery Ass'n; director and trustee, Baptist church, Etna; director, Dartmouth
+
+<column-break/>
+
+Savings Bank; Mason for more than fifty years, member, Franklin Lodge, and St. Andrew's Chapter, R. A. M., Lebanon, and has taken the Templar degrees; Patron of Husbandry forty-two years, chaplain, Mascoma Valley Pomona Grange twenty-seven years, and N. H. State Grange eleven years, and still in office; gave much time and effort to the establishment of a public library at the village of Etna, which has now over 2,600 volumes and many
+
+<image-desc size="medium" type="portrait" significance="high">A black and white photographic portrait of an elderly man with a white beard, shown in profile facing right.</image-desc>
+
+pamphlets, and is housed in a fine brick building, with slated roof and hardwood floors; m., Nov. 5, 1868, Minnie R. Coates, d. Jan. 23, 1913; two children, Willis P., b. Nov. 7, 1869, d. Jan., 1907; Caro E. (Mrs. John D. Ayer) b. July 6, 1874, d. June 22, 1897. Residence, Hanover, N. H. (Etna P. O.).
+
+**Brackett, Charles Albert**
+Dentist; b., Lempster, N. H., Jan. 2, 1850; s. Joseph and Lydia Lucretia (Hunt) Brackett; ed. public schools and under tutelage of parents; commenced
+
+<vocab>Newport School Committee, R. I. house of representatives, Northern Pacific Railway Commission, Republican national convention, Columbian Exposition, Centennial Celebration, Masonry, Royal Arch Masons, Grand Commandery, N. E. O. P., S. A. R., Horace F. Hoyt, Enfield, N. H., Hanover, N. H., Grafton County, Farmers' Council, Etna Creamery Ass'n, Dartmouth Savings Bank, Franklin Lodge, St. Andrew's Chapter, Mascoma Valley Pomona Grange, N. H. State Grange, Charles Albert Brackett, Lempster, N. H.</vocab>

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>466</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+alarm of the country was sounded by the demonstration upon Lexington and Concord, the town's militia started out for the scene of operations, the western company under Captain Jonathan Crowell mustering sixty officers and men. They had not proceeded far before intelligence of the rout and retreat of the British troops reached them and they returned home. A "committee of safety" was appointed in 1775 and was "indefinitely continued."
+
+General Washington, having early in 1776 determined upon the expulsion of the British from Boston, wrote to the council of Massachusetts Bay, submitting to their wisdom "whether it may not be best to direct the militia of certain towns, contiguous to Dorchester and Roxbury to repair to the line at those places with arms, ammunition and accoutrements, instantly, upon a given signal," and the suggestion was favorably received. Yarmouth was one of the towns called upon. Captain Joshua Gray, who commanded the militia, at once set forth, accompanied by a drummer, to call for volunteers. Every one was ready and willing to go. The night was spent in preparation. In the chamber of the ancient house now standing at the corner of Hallet and Wharf streets, the mothers and daughters spent the night in moulding bullets and making cartridges, and at early dawn eighty-one men, under the command of Captain Gray, were on the march for Dorchester.
+
+A meeting was held June 20, 1776, in which it was unanimously "Voted, that the inhabitants of Yarmouth do declare a state of independence of the king of Great Britain, agreeably to a late resolve of the General Court, if in case the wisdom of Congress should see proper to do it." This resolve they did their part to carry out, so far as laid in their power. Their men nearly all joined the patriot army. Their commerce and fisheries were destroyed, and they suffered untold hardships and privations for seven long years.
+
+About this time that portion of South Yarmouth now most thickly settled, which had heretofore been known as "Indian Town," was placed in the market and soon developed by an enterprising and intelligent population.
+
+April 10, 1783, a new schooner, called the *Perseverance*, was launched in town, and a party of young persons went out in her on an excursion. Being without ballast, when in the channel off Beach Point, she capsized, and Miss Anna Hawes, a young lady of seventeen, sister of the late Dea. Joseph Hawes, was drowned. In 1789 occurred a disastrous shipwreck, involving the loss of the lives of seven people belonging to this town. A new fishing schooner, mostly owned by a Mr. Evans, of Providence, R. I., was lost in a gale, on Nantucket shoals, with all on board. Their names were: Howes Hallet, master, Josiah
+
+<vocab>Barnstable County, Lexington and Concord, Captain Jonathan Crowell, committee of safety, General Washington, Massachusetts Bay, Dorchester, Roxbury, Captain Joshua Gray, Yarmouth, American Revolution, Indian Town, South Yarmouth, Perseverance, Anna Hawes, Joseph Hawes, shipwreck, Nantucket shoals, Howes Hallet, Josiah</vocab>

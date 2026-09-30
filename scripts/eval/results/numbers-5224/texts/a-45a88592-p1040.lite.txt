@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>808</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+moved about from the King's highway, from dwelling to store, but has been for years kept in a central place by itself. The office was established January 1, 1798, and the first postmaster was Lewis Hamblen. Reuben Arey was appointed October 1, 1810; Josiah Whitman, December 28, 1815; Jesse Holbrook, March 22, 1839; Richard Libby, April 22, 1840; Giles Holbrook, August 2, 1841; Enoch Higgins, August 16, 1845; John W. Davis, September 4, 1850. Allen Higgins succeeded Davis and was in charge in 1854; and prior to 1860 A. B. Fish and Dr. H. J. Huff had been appointed. In 1861 George T. Wyer was appointed, who held until 1876, when George F. Manter succeeded. In 1886 James Chandler was appointed.
+
+This village has a very pretty depot, the business of which has been in charge of James A. Swett since 1872. He was preceded by Richard N. Atwood for nearly two years.
+
+The Masonic fraternity established Adams Lodge here 1796, which surrendered its charter, and after an interim of half a century was revived into the present flourishing Lodge of the same name. After the institution of the first, in 1798, the Masonic brotherhood opened a stock company of forty shares for the erection of a hall. Those who took the stock were: Thomas Holbrook, Lewis Hamblen, Solomon Harding, Lemuel Newcomb, Warren A. Kenrick, Hezekiah Doane, James Bickford, Joseph Pierce, jr., Thomas Gross, Philip Higgins, Richard Higgins, Stephen Atwood, Jeremiah Newcomb, Samuel Waterman, Matthias Ryder, jr., Thomas Higgins, 3d, Matthias Ryder, Barnabas Young, jr., Samuel Ryder, Eleazer Higgins, John Young and Beriah Higgins. The hall stood on the site of the high school building, near the present Union Hall, and was the Masonic Hall before referred to.
+
+The names of the first two masters of the old lodge are not known. The succeeding presiding officers were: Samuel Waterman, 1798; Lewis Hamblen, 1799–1800; Lemuel Newcomb, 1801–2; Joseph Pierce, 1803–4; Thomas Higgins, 1805–1807; Lemuel Newcomb, 1808, then 1811–12; Lewis Hamblen, 1809; Samuel Waterman, 1810; and in 1813 the charter was surrendered. In 1823, January 28th, nine surviving members divided the proceeds of the treasury. The hall was subsequently sold to the Universalist society and long ago razed to the ground.
+
+In January, 1866, another Lodge of the same name was instituted, which received a charter in 1867. The fraternity assembled in the school house on the corner of the Truro road, adopted their by-laws, and hired Union Hall, which they occupied until the present fine Masonic Hall was erected in 1877, except during the last year, when they occupied Bank Hall. The Masonic Hall was built by a stock company of three hundred small shares, which were taken mostly by the fra-
+
+<vocab>Barnstable County, postmaster, Adams Lodge, Masonic fraternity, Union Hall, Universalist society</vocab>

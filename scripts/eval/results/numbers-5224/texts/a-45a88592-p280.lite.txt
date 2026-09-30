@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>232</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+John Davis, Esq., by whom he had a son, Ezekiel. Doctor Hersey was a very skilful physician, and had an extensive practice in the county. He died July 22, 1741.
+
+Dr. Thomas Holker was a practitioner of note in Wellfleet early in the last century, Nothing is known of his history except that he was an Englishman of learning and ability who practiced in the town and vicinity and was much respected. He was buried in the old burying ground at the head of Duck creek prior to 1765, for tradition says that when the addition to the church was made that year, it extended over his grave.
+
+Dr. Nathaniel Hopkins, son of Prence and Patience Hopkins, was born in that part of Harwich now Brewster, January 27, 1760. He studied medicine and settled in East Brewster. He was a physician of standing and was prominent in the movement to divide the town in 1803. He was the first clerk of the Baptist church in Brewster, of which he was one of the first members. He married Ann Armstrong of Franklin, Conn., in 1799, and had ten children; eight sons and two daughters. Only two children settled in Brewster. Joseph Hopkins, the fourth son, settled in Mount Vernon, Me., where he died a few years since. Doctor Hopkins died at East Brewster, March 26, 1826.
+
+Dr. Thomas Hopkins, son of Dr. Nathaniel Hopkins, was born in Brewster, in 1819, and studied medicine at Philadelphia. He practiced his profession a short time in his native town, then removed to Scituate, Mass., where he practiced many years; but failing health compelled his return to his native town and giving up professional work. He was somewhat eccentric, but was a thoroughly good man, respected and honored. He died suddenly, November 28, 1878.
+
+Dr. Zabina Horton settled in Dennis as a physician before the present century. He died November 14, 1815.
+
+Chauncey Munsell Hulbert, M.D., is one of the oldest living practitioners of this county. He was born in East Sheldon, Franklin county, Vt., on the ninth of November, 1818, and received his education at Johnson Academy. His studies were vigorously prosecuted with Dr. Horace Eaton, governor of Vermont, and subsequently a professor in Middlebury college. He attended lectures at Pittsfield, Mass., completing the medical course at Woodstock, Vt., where he graduated in 1844. He commenced practice at Franklin, Vt., but after two years removed to East Berkshire in the same state. In 1852 he came to South Dennis, where he has since practiced his profession successfully. His ride has been extensive and his long ripe experience has made his services valuable. He is a member of the State Medical Society; has been president of the Barnstable district, and for the past fifteen years its treasurer.
+
+In 1845 he married Lovina Paul, who died in 1865. Their son,
+
+<vocab>John Davis, Ezekiel, Doctor Hersey, Thomas Holker, Wellfleet, Duck Creek, Nathaniel Hopkins, Prence Hopkins, Patience Hopkins, Harwich, Brewster, Baptist Church, Ann Armstrong, Franklin Conn, Joseph Hopkins, Mount Vernon Me, Thomas Hopkins, Philadelphia, Scituate Mass, Zabina Horton, Dennis, Chauncey Munsell Hulbert, East Sheldon Vt, Johnson Academy, Horace Eaton, Middlebury College, Pittsfield Mass, Woodstock Vt, East Berkshire, South Dennis, State Medical Society, Barnstable district, Lovina Paul</vocab>

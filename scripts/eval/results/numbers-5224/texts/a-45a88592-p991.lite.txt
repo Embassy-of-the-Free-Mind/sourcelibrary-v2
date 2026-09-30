@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A landscape engraving depicting the Doane Homestead in East Orleans, Massachusetts, featuring a farmhouse, outbuildings, a stone wall, and a wooden fence in a rural setting.</image-desc>
+
+->“THE DOANE HOMESTEAD.”<-
+->RESIDENCE OF OLIVER DOANE,<-
+->*East Orleans, Mass.*<-
+
+<vocab>Doane Homestead, Oliver Doane, East Orleans, Massachusetts, rural landscape, homestead</vocab>

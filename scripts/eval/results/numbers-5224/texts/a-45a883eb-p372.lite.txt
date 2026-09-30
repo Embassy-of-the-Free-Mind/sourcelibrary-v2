@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>368</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. H. Price</image-desc>
+JNO. H. PRICE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. E. Powell</image-desc>
+A. E. POWELL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. Prince</image-desc>
+JOS. PRINCE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. F. Prosser</image-desc>
+JOS. F. PROSSER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. J. Probeck</image-desc>
+P. J. PROBECK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. J. Pullman</image-desc>
+W. J. PULLMAN
+
+<vocab>Jno. H. Price, A. E. Powell, Jos. Prince, Jos. F. Prosser, P. J. Probeck, W. J. Pullman, Clevelanders, biography</vocab>

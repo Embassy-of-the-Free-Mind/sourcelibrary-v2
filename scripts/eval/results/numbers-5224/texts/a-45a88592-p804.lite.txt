@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>618</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Captain Joseph C. Harding is one of those fortunate masters—the result of experience and care—who has never called upon his underwriters for a dollar for accidents, although he has sailed in as many cyclones and typhoons as any master of his age, having crossed the Atlantic sixty-five times, besides sailing on every ocean of the globe. His wife has accompanied him on several long voyages to Australia, Europe and China. They are pleasantly situated in their fine home in South Chatham, where the captain spent the last season while his vessel made a trip to Rio Janeiro. He is a liberal supporter of the church and of every good work in this community, in which he expects to become a resident of more permanence when he shall have completed his life on the sea.
+
+Captain Hiram Harding.—This representative of one branch of the ancient family of Harding, is the son of Mulford and grandson of Thomas Harding, who removed from Hingham to Chatham before the revolutionary war. This Mulford Harding was born July 10, 1776, in the house near Oyster pond, now the residence of his daughter, Mrs. Naomi Linnell. He was a seafaring man in early life, and in the war of 1812 was one of the crew of the *Reindeer* that suffered in Dartmoor prison as prisoners of war. He was married May 14, 1798, to Sally, daughter of Jonathan and Ruth Young, and reared nine children, whose histories appear in the succeeding paragraphs.
+
+Lurana married Thomas Stetson, and they, with their only son, are deceased.
+
+Polly was married to Abner Sparrow and had five children: Joseph, Samuel S., Abner H., Hiram H. and Mary. Of this family, the parents and children are all dead excepting Abner A. Hiram H. was lost on a voyage from New York to the Mediterranean.
+
+Mulford Harding (deceased) married Emily Rogers and had one son, George N., who is now an architect at Hyde Park.
+
+Sally was married to Enos Snow and reared five children, of whom only the youngest survives. The children were: Enos, Sarah, Emeline, Mary E. and Sarah.
+
+Howes married Catherine Hodgden and had one son, Darius H., who passed through the civil war, was paid off and had started for home, when he was stricken with fever at New Orleans, where he died.
+
+David married Elizabeth C. Holway and their children were: David, Marion, John, Andrew, Lizzie and Annette, of whom three survive.
+
+Naomi A. was married to Josiah Linnell, who died in 1887. Their only son, Josiah F. Linnell, is also dead.
+
+Betsey married Freeman Chase, who died in 1887 without issue. The widow survives.
+
+<vocab>Captain Joseph C. Harding, Captain Hiram Harding, Mulford Harding, Thomas Harding, Naomi Linnell, Reindeer, Dartmoor prison, genealogy, Chatham, South Chatham, Hingham, maritime history</vocab>

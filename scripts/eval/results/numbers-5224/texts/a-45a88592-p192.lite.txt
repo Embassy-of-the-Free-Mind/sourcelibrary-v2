@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>168</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+pher's Hollow,—a spot believed to have been so named from the preaching of Christopher Holder in at least one meeting which assembled in that woodland retreat. This hollow or glen may now be approached by the road which passes the alms-house into the woods. Not having visited the spot himself, the writer here presents the description of a visitor, as given in the *Falmouth Local*, 12th mo., 1887:
+
+"About a mile southeasterly of the village of Sandwich is a deep sequestered glen or hollow in the wood. There is no spot in the county of Barnstable more secluded or lonely. It is even now as primeval in appearance as it was on the day the Pilgrims first set foot on Plymouth rock. This quiet glen is surrounded by a ridge of hills, covered in part by trees, and it is some 125 feet deep. At the bottom are to be seen a few straggling red-cedar trees. In the spring and summer a small stream of water runs into this glen, which keeps up a perpetual murmur. For over two centuries this lonely spot has been called 'Christopher's Hollow,' in memory of Christopher Holder. . . . In 1657, immediately after the severe penal acts of the provincial legislature were passed, this small and sincere band of Christian worshipers met at William Allen's house on Spring Hill, but [afterward] adjourned to this sequestered glen to offer up in the 'darkling woods' their devout supplications to Him who is no respecter of persons. Your correspondent visited this hollow a few days ago, and noticed, particularly on its westerly side, a row of flat stones,* which are believed to be the seats on which this meagre congregation sat, and listened to the heartfelt teachings of Christopher Holder."
+
+William Allen's house, the first or one of the first meeting places of Friends, stood on the spot where Roland Fish's house now stands, the first house by the road leading southward from the present Friends' meeting house in Spring Hill. Near the southwest corner of the house is the first burying ground of the Society, now enclosed by an iron railing. On the early records we find a direction "that servants shall be buried on the side next the swamp." This is the half-acre given by the town in 1694. William Newland's house, another of the first meeting places, was opposite the old town burying ground, on the road from the village toward Stephen R. Wing's. [Of other Friends prominent in that day, William Gifford is said to have lived near the house of late years known as Russell Fish's; Edward Perry near Joseph Ewer's swamp, or opposite his house; and Edward Dillingham, (one of the original "ten men of Saugus" to whom Sandwich lands were granted), to have lived on the hillside east of the upper pond, which is southeast from Stephen R. Wing's. The cellar is
+
+<margin>* These stones are really half-buried boulders; quite a number have been carried away.</margin>
+
+<vocab>Christopher's Hollow, Christopher Holder, Sandwich, Barnstable County, Friends, Quakers, Spring Hill, William Allen, William Newland, Roland Fish, William Gifford, Edward Perry, Edward Dillingham, ten men of Saugus</vocab>

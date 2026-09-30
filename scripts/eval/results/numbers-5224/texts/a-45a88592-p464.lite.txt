@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>380</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+During these years the laws were rigidly enforced, as will appear from the entry in the record of 1677, that the aged widow, Annable, was fined one pound for selling beer without permission. The strict, law-abiding principle of the people is more marked when it is known that at this time men were permitted to sell cider and liquors by wholesale and retail.
+
+In 1693 the whole commons' meadows that had been left were divided among those who had a right. This year it was found that the town had 164 freemen and voters. In 1696 the great marshes were divided and parceled out by lot. The town was divided in 1700 into two training districts—the dividing line began "at Dea. Crocker's, and, as the way goeth, up to the head of Skonkenet river, and as the river runneth, into the South Sea." The eastern part was to be the 1st Foot, under Captain Gorham, and the western the 2d, under Captain Otis.
+
+In 1733 the line between Yarmouth and Barnstable was again adjusted, and the selectmen took measures to present the disorderly conduct of Indians, negroes and other persons at night. Wild cats molested the good people too, for the same year two pounds per head was offered as a bounty. In 1738 the town ordered Mr. Marston to open a passage through his mill dam for alewives, and in 1751 Mr. Marston was to have one-fourth part of the herrings taken at his mill brook, he to keep the passage open. The selectmen were greatly exercised in 1757 to provide for the welfare of the town during its visitation by small-pox.
+
+In 1785 an effort was made, with success, to prevent the cutting of wood on Sandy neck, thinking to protect the meadows from drifting sands. The passage of alewives to and from the ponds was the care of civil authorities in that year, and especially did they legislate to assist the poor fish around and by Macy's mill. In 1786 the town asked that the great bridge be made a county charge, but the inhabitants were very soon after warned to turn out for work on it. In 1789 the same wolf, that was worthy of mention in the Sandwich town records, was declared an outlaw, and a reward was offered for the public display of his head here in Barnstable; the selectmen would give fifty pounds if it could be shown by a Barnstable man, and twenty-five pounds if they could see the head and ears of this precious wolf in the hands of some one from any other town.
+
+The doings of the town, as recorded, related largely to the affairs of war, raising troops and money, through the excitement of the revolutionary war and that of 1812-15. The proprietors' meetings about their lands long ago had been discontinued. Their last meeting as proprietors was held March 7, 1836, when they empowered Seth Hallett to make two copies of their proceedings, which was done, and the
+
+<vocab>Barnstable, Yarmouth, alewives, small-pox, revolutionary war, proprietors, Seth Hallett, Skonkenet river</vocab>

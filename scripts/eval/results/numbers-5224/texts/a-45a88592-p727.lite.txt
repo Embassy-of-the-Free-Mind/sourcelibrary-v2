@@ -1,0 +1,11 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A landscape-oriented engraving depicting a large, multi-story house with a porch, a fence, trees, and a smaller outbuilding in the background. The image is rotated 90 degrees counter-clockwise.</image-desc>
+
+->LATE RESIDENCE OF MOSES HOWES,<-
+->*Dennis, Mass.*<-
+
+<vocab>Moses Howes, Dennis, Massachusetts, residence, architecture, 19th century</vocab>

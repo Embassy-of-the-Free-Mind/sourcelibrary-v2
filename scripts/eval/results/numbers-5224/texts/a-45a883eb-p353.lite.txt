@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>349</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. S. Livingston</image-desc>
+D. S. LIVINGSTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. I. Litzler</image-desc>
+L. I. LITZLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. A. Loeffelbein</image-desc>
+G. A. LOEFFELBEIN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. D. Lowell</image-desc>
+E. D. LOWELL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. A. Lorentz</image-desc>
+GEO. A. LORENTZ
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. F. Lowry</image-desc>
+H. F. LOWRY
+
+<vocab>Clevelanders, D. S. Livingston, L. I. Litzler, G. A. Loeffelbein, E. D. Lowell, Geo. A. Lorentz, H. F. Lowry</vocab>

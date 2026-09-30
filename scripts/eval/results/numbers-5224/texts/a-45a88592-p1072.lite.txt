@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>832</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+wich and Brewster. From time to time they disposed of their rights to friendly Indians, and such of the whites having authority from the proprietors of the reserve to purchase. The right at last to purchase of them their unreserved land in the reservation of the purchasers having passed into the lawful possession of John Cole, Joshua Hopkins, Daniel Cole, jr., Nicholas Snow and Nathaniel Doane, of Eastham, and Stephen Hopkins, Prence Snow and John King, of Harwich, on the 18th of May, 1711, purchased of John Quason, Joseph Quason, Samuel Quason, Josephus Quason, Sarah Pompmo, Bettie Nopie and Wawhanama, wife of Little James, all lawful sons and daughters (together with Jeremiah Quason, late deceased), of John Quason, deceased, "living in Eastham, Harwich, Monomoy and Yarmouth," all their unreserved land within the following described territory: "Beginning at a marked tree marked by the bank of a place called Wequassett, near Short Cove; from thence running northerly by the Sipson's range to the easterly end of Long Pond; thence running westerly by said Long Pond to the Herring Pond; and from the sd. Herring Pond southerly by the brook or river that runs out of the Herring Pond to the main sea; thence running easterly by sd. sea to Monomoy bounds near the Red River; thence northeasterly to the head of Muddy Cove, and so by the river that runs out of sd Muddy Cove, and so to the first specified bounds;" together with (their right to) the "Great Beach lying between Monomoy and the main sea, extending eastward and westward as far as our said deceased father, John Quason, his right did extend, with all meadows and sedge ground adjoining and every wise thereto belonging, from Sandy Point home to Sipson's bounds," with their Island in Pleasant Bay "called Chochpenacot Island,* lying between sd. Monomoy and the Great Beach."
+
+The reservations which they made in their deed were: a tract of twenty acres for John Quason; thirty acres for Josephus Quason; thirty acres for Samuel Quason, and twenty acres for Joseph Quason, "over and above what he holds in partnership with Little James," and "to be laid out to them between the Wading Place and Joseph Nickerson's house, to them their heirs and signs forever." Having hitherto conveyed many acres within the boundaries described in their deed, they desired that such tracts that had been "purchased according to the true meaning of the laws of the Province" should be excepted, and the grantees not to be disturbed as to their titles.
+
+The proprietors, upon coming in possession of the valuable tract, for which only the sum of eight pounds was paid to extinguish the title, found, as they probably had expected, hundreds of acres within the limits of the boundaries above given, in possession of purchasers.
+
+<margin>* This island is now known as Strong island, and is within the limits of Chatham.</margin>
+
+<vocab>Barnstable County, John Quason, land deeds, reservation, Monomoy, Eastham, Harwich, Yarmouth, Wequassett, Chochpenacot Island, Strong Island, Chatham</vocab>

@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>457</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+of sixteen went to Haverhill, Mass., to learn the shoe manufacturing business, engaging first in the factory of William M. Chase and later with his brother, John E. Gale; soon started out on a small scale for himself; was then, for a time, a partner with Samuel L. Blaisdell, but in 1869 joined his brother in business under the firm name of Gale Bros., with factory in Haverhill, also building, and subsequently greatly enlarging one in Exeter, N. H., where he removed, later, serving as president and treasurer of the company, whose business—the manufacture of women's shoes—became one of the most extensive in New England, another factory also being established at Portsmouth; Congregationalist; Republican; member city council and Republican city committee while residing in Haverhill; commissary general on staff of Gov. John B. Smith of New Hampshire, 1893-5; member N. H. Senate, 1895-7; alternate delegate Republican National Convention, 1896; member N. H. executive council, 1899-1900; N. H. house of representatives, 1905-6, 1907-8; Republican Club, Exeter; Derryfield, Manchester; A. F. & A. M. to and including 32d degree; m., Nov. 22, 1866, Anna M. Brown, Haverhill, Mass. Residence Exeter, N. H.
+
+**Fiske, Abby Gilman**
+
+Philanthropy and club work; b., Concord, N. H., dau. Francis Allen and Abby Gilman (Perry) Fiske, great-great-granddaughter, Rev. Timothy Walker, first minister of Concord (1730-82); grand-daughter of the elder Dr. William Perry of Exeter; tenth in descent from Edward Gilman, Hingham, Mass., 1638, who later settled in Exeter, N. H. Miss Fiske's line includes her great-grandfather, Col. Nathaniel Gilman, state treasurer, 1805-14; his father, Nicholas Gilman, state treasurer, 1775-82; and the latter's grandfather, Judge Nicholas Gilman, b. 1672; ed. schools of Concord, Bradford (Mass.) Academy, 1880-2; member board of lady managers of Rolfe and Rumford Home, Concord, founded by her grandmother's cousin, the Countess of Rumford; president, Concord Female Charitable Soc., 1916-19; president, N. H. Branch of International Order King's Daughters, 1910-14 and member of Central Council; charter member of N. H. Branch, King's Daughters, 1886; president, Concord Diet Kitchen since organization, 1900; member First Congregational church and for thirty-
+
+<column-break/>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Abby Gilman Fiske</image-desc>
+
+five years teacher in the Sunday School; Concord Woman's Club (secretary 1901-5); Concord District Nursing Ass'n; Concord Friendly Club (vice-president upon organization); Country Club (charter, 1897); Warwick (Shakespeare) Club (1890-1900); Charity Organization Soc., N. H. Home Mission Soc. and Cent Institution, Woman's Board of Missions; active Red Cross worker in surgical dressings department. Residence in home built by her grandfather, Francis N. Fiske, Concord, N. H.
+
+<vocab>New Hampshire, Haverhill, Exeter, shoe manufacturing, Gale Bros., William M. Chase, Samuel L. Blaisdell, John B. Smith, Abby Gilman Fiske, Francis Allen Fiske, Timothy Walker, William Perry, Edward Gilman, Nathaniel Gilman, Nicholas Gilman, Rolfe and Rumford Home, Concord Female Charitable Society, King's Daughters, Concord Diet Kitchen, First Congregational Church, Concord Woman's Club, Concord District Nursing Association, Concord Friendly Club, Warwick Club, Charity Organization Society, Red Cross</vocab>

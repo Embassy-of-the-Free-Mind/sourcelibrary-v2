@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>143</page-num>
+<header>INDUSTRIAL RESOURCES. 143</header>
+
+one bushel of salt. It was during the revolution that the first practical use was made of this fact. A bushel of salt in 1783 was worth eight dollars, and its extraction by boiling was the child of their necessity. The general court, six years before, saw fit to encourage its manufacture by a bounty of three shillings per bushel. As the diplomatic relations which led to the war of 1812 were unsettling values, and salt was rising rapidly in price, works were erected in various parts of the Cape, where salt was obtained by solar evaporation. One company was incorporated in 1809, and in 1821 a Wellfleet company was incorporated, with a capital of fifty thousand dollars. Before the gradual decline of the business began, two million dollars were at one time invested in salt works.
+
+<image-desc size="large" type="engraving" significance="high">A landscape illustration showing a Cape Cod salt works facility, featuring rows of shallow wooden vats with covers, a windmill, and a harbor with sailboats in the background.</image-desc>
+
+Many crude methods were employed, but at last a regular Cape Cod salt works consisted of one or more wind mills for pumping the water, and a series of pine-plank vats to receive it. These vats, usually nine inches deep and from twelve to twenty feet square, were furnished with movable covers that their contents might be exposed to the sun or shielded from the rain. Several plans of vats and covers were in use, each serving this general purpose. First, the covers were made to slide to and fro on suitable ways; next, they were so made as to be swung to and from their places; and finally this idea was elaborated and the double revolving covers came into use. In 1803, John Sears, of East Dennis, proposed an improvement in vats
+
+<vocab>salt works, Cape Cod, solar evaporation, John Sears, East Dennis, Wellfleet, industrial history</vocab>

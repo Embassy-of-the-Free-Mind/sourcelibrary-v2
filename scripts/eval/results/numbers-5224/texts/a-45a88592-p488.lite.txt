@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>404</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+office was changed to Cotuit Port, and for a time the government maintained no office at Old Cotuit, but Zenas Crocker, sr., received and distributed mail for the locality. In January, 1850, an office was established here as Cotuit, with Phineas Fish, postmaster. It was discontinued May 29, 1854.
+
+To have a tavern upon so important a stage line would not seem strange, and it is said that Ezra Crocker opened one in the present residence of Mrs. Elizabeth Crocker, which he ran many years, until his death in 1842. This, which was a favorite resort of Daniel Webster during his fishing tours in the vicinity, was the only tavern ever in this community.
+
+R. Thacher Crocker had a store, which at his death he was conducting in the Joseph Folger house, with the post office. This accommodated the inhabitants of Mashpee and Cotuit for many years. On the inside of the board shutter to the store window, readable from without when it was open, were these cabalistic letters, still legible through many coats of paint:
+
+->W I = N E<-
+->R U M ,<-
+->B R A N D Y ,<-
+->G I N ,<-
+->&c.<-
+
+This sign seemed to promise wine to the passer-by, but on closer inspection it assured him of a good supply of West India and New England rum.
+
+Charles F. Crocker had a store on the corner opposite Mrs. Elizabeth Crocker's, which he discontinued in 1861. Zenas Crocker also had a store where Elmer Lapham lives.
+
+COTUIT PORT.—The inhabitants here were compelled to go to the office a mile above—at Cotuit—while the stage and mail lines emanated from Sandwich as the terminus of the Plymouth line. After the railroad was built many changes in the mail routes were made. The first postmaster here was Alexander Scudder, commissioned June 5, 1848. He was succeeded by Randall Kelley, September 23, 1850, and he by Charles C. Bearse in 1870 for twelve years, after which Andrew Lovell filled the position until 1885, when Adaline F. Bearse was appointed. She was succeeded by Mr. Lovell's reappointment in 1889. Very early the shipping and fishing business was the occupation here, which led to stores of various kinds.
+
+Braddock Crocker built in 1794 the wharf, the remnants of which are still known as the old Crocker wharf, and had a store prior to 1820
+
+<vocab>Cotuit, Cotuit Port, Zenas Crocker, Phineas Fish, Ezra Crocker, Daniel Webster, R. Thacher Crocker, Joseph Folger, Mashpee, Alexander Scudder, Randall Kelley, Charles C. Bearse, Andrew Lovell, Adaline F. Bearse, Braddock Crocker, post office, stage line, tavern, wharf</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>187</page-num>
+<header>The Book of Clevelanders</header>
+
+**MOATZ, Herbert C.**; manufacturer; born, Jersey City, N. J., Jan. 18, 1880; son of Lewis and Lorinda Kent Moatz; educated, Adelbert College, Western Reserve University, B. A.; married, Cleveland, Sept. 2, 1908, Elizabeth R. Ford; one son, Herbert C. Jr.; mgr. of the Wade Park office of the Cleveland Trust Co.; 1904-1908; treas. of the Deckman-Duty Brick Co. since 1908; member Alumnus of Delta Upsilon Fraternity; member Athletic, East End Tennis, the Plymouth Fishing, and the Delta Upsilon Alumni Clubs. Recreations: Tennis and Bass Fishing.
+
+**MOON, Dewitt Clinton**; gen. mgr. L. S. & M. S. R. R.; born, New York State, July 24, 1856; son of Eben and Rhobe (Tower) Moon; common school education; married, Dunkirk, N. Y., Oct. 5, 1881, Helen E. Brownell; issue, two sons, Eben D. and Cary B.; began railroad work as a telegraph operator, and advanced to train dispatcher, train master, division supt., asst. gen. supt., gen. supt., asst. gen. mgr. and gen. mgr., always with the New York Central lines; director T. & O. C., Toledo Terminal, Cleveland Short Line, Lake Erie & Pittsburgh, Lake Erie & Eastern, Zanesville & Western Rys.; member Chamber of Commerce; member Dunkirk, N. Y., Lodge, F. & A. M., Watertown, N. Y., Commandery, K. T.; member Union, Country, and New York Railway Clubs.
+
+**MOONEY, Edgar J.**; tailor; born, 1885; head of firm of Mooney Bros., tailors; firm has been established sixty years; from grandfather to son, to son; member Athletic Club, Knights of Columbus, Cleveland Grays, Shaker Lakes Canoe Club. Recreations: Canoeing, Golf, and all Out-door Sports.
+
+**MOONEY, Michael P.**; attorney-at-law; born, Ireland, Oct. 22, 1866; son of Thomas and Anne McHugh Mooney; educated, Irish National and Intermediate Schools; married, Cleveland, Sept. 29, 1891, Mary Slowey; issue, Frank G., Robert E., Mary C., Agnes M., Charles A., and Eleanor E.; admitted to the bar in 1891, and engaged in continuous and general practice of law since that time, excepting two years of service in the law department of the city; asst. corporation counsel of City of Cleveland, 1891-1893, member pres. of Civil Service Commission of Cleveland, 1910-1911, and member Charter Commission of Cleveland, 1913; member State Board of Charters, 1913; director and gen. counsel, The Cleveland Life Insurance Co.; also Mutual Bldg. & Investment Co.; director and pres. The Realty & Rental Co.; director The Gund Brewing Co., and The D. C. Griese & Walker Co.; member local and State Bar Ass'n, Cleveland Chamber of Commerce, member Elks, Gilmour Council, Knights of Columbus, Catholic Mutual Benefit Ass'n, Branch No. 6, Master 4th degree, Knights of Columbus, for 4th Ohio District; member Athletic, and City Clubs. Recreations: Books, reading and collecting, Astronomy.
+
+<vocab>Herbert C. Moatz, Dewitt Clinton Moon, Edgar J. Mooney, Michael P. Mooney, biography, Cleveland, business, law, railroads, manufacturing</vocab>

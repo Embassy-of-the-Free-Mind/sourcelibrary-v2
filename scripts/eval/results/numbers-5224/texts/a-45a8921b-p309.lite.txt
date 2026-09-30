@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>295</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Hall, Augusta, Me., 1898–9; teacher of art, St. Mary's School, Concord, 1900–; Episcopalian; warden, St. Anna Guild, St. Paul's parish, 1915–16; teacher, St. Paul's Sunday school; member, St. Mary's Alum. Ass'n (president, 1907–9), Friendly Club (director, 1914–16, 2d vice-president, 1916–18), Hathaway Outing Club (president two years), Hathaway Shakespeare Club, Concord Oratorio Soc. (on executive committee), Wild Flower Club, Equal Suffrage League, S. P. C. A., Concord Fem. Char. Soc., Red Cross; contributor to the press; has published drawings and verse for Camp Wyonegonic, Denmark, Me.; designer of St. Mary's School seal. Residence, Concord, N. H.
+
+Leach, Edward Giles
+Lawyer, b., Meredith, N. H., Jan. 28, 1849; s. Levi and Susan C. (Sanborn) Leach; ed. Dartmouth College, A.B., 1871; studied law and admitted to the bar in 1874; in practice in Franklin and Concord; member firm of Leach & Stevens, later Leach, Stevens & Couch; Unitarian; Republican; member N. H. house of representatives, 1893–4; senate, 1901–2; executive council, 1905–6; city solicitor, Franklin, 1894–1906; solicitor Merrimack county many years; president Manufacturers and Merchants Ins. Co., since organization in 1884; member N. H. Bar Ass'n; m., Dec. 24, 1874, Agnes A. Robinson; two sons. Residence, Franklin, N. H.
+
+Coburn, Jesse Milton
+Physician; b., Pittsfield, N. H., March 27, 1853; s. Rev. Jesse Milton and Almira (Morse) Coburn; ed. public schools, Hahnemann Medical College, Philadelphia, Pa.; M.D., Boston Univ. School of Medicine, 1874. Has practiced in South Norwalk, Conn., since 1893; Congregationalist; Republican; mayor South Norwalk, 1889–1900; chairman board of education; secretary and treasurer Mayor's Ass'n of Conn.; member Conn. State Medical Ass'n, Norwalk Med. Ass'n,
+
+<column-break/>
+
+Sons of the American Revolution, Conn. Historical Soc.; m., Aug. 4, 1879, Abbie M. Cutler, Shrewsbury, Mass.; two sons, Harrie C. and Aaron C. Residence, So. Norwalk, Conn.
+
+Sawyer, Enos Kittredge
+Merchant, b., Franklin, N. H., Aug. 4, 1879; s. George W. and Louise C. (Barnes) Sawyer; ed. public schools, Phillips (Andover) Academy, 1878, Dartmouth College; engaged with his
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Enos Kittredge Sawyer</image-desc>
+
+father in the meat, grocery and provision trade in Franklin and has continued therein; Democrat; many years chairman Democratic City Committee of Franklin; elected mayor of Franklin in 1909 and unanimously re-elected the following year; member N. H. state senate from Dist. No. 6 in 1913 and president of the senate; candidate for congressional nomination in the primary in 1914 with a substantial support; appointed Federal Director
+
+<vocab>Augusta Hall, Edward Giles Leach, Jesse Milton Coburn, Enos Kittredge Sawyer, New Hampshire, biography, politics, medicine, law, business</vocab>

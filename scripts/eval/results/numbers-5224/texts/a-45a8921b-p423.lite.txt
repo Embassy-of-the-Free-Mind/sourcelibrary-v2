@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>409</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 409</header>
+
+lawyer, legal department N. Y. C. R. R., 1914-7; lieutenant in Transportation Dept., headquarters A. E. F., Brest, France; Catharine, b. Claremont, July 4, 1893 (Smith College, 1915); government service, General Hospital, No. 6, Fort McPherson, Ga., 1918-. Residence, Tufts College, Mass.
+
+**Bartlett, John Henry**
+
+Lawyer, Governor of New Hampshire; b., Sunapee, N. H., March 15, 1869; s. John Z. and Sophronia A. (Sargent) Bartlett; ed. Colby Academy, New London; Dartmouth College, A.B. 1894; taught school in Portsmouth four years after graduation, as principal of the Haven and Whipple grammar schools and the Portsmouth high school, meanwhile studying law in the offices of John W. Kelly and Hon. Calvin Page; admitted to the N. H. bar in June, 1898, and immediately engaged in practice as a partner with Judge Page under firm name of Page & Bartlett; afterwards Page, Bartlett & Mitchell; Methodist; Republican; postmaster of Portsmouth four years, by appointment of President McKinley and four years by appointment of President Roosevelt; aide-de-camp on staff of Gov. John McLane, with rank of Colonel, and active in making the local arrangements for the Russo-Japanese Peace Conference in Portsmouth in 1908; president Republican state convention, 1916; member N. H. house of representatives, 1917-18, member Judiciary Committee, and introduced the "54 hour act," "free employment agency act," act removing the criminal record of minors, a child welfare act and other reform measures. In 1912, by appointment of Governor Bass, he represented New Hampshire at the sixth annual meeting of the American Academy of Political and Social Science. He is a director of the N. H. Nat'l Bank of Portsmouth, Portsmouth Trust & Guarantee Co., Granite State Fire Ins. Co., Piscataqua Fire Ins. Co., president Allied Theatres Co.,
+
+<column-break/>
+
+Union Theatre Co.; trustee R. O. Treadwell estate; member A. F. & A. M., K. T., I. O. O. F., B. P. O. E., P. of H., K. of P., Amoskeag Veterans, N. H. Veterans Ass'n (honorary), Warwick Club, Portsmouth Athletic Club, Yacht Club, Country Club, Wonolancet Club, Concord, Derryfield, Manchester; many years prominent as a public speaker and occasional orator and in constant service during the late war in patriotic work; unanimously nominated for Governor of New Hampshire in the 1918 primary and elected in November by 6,000 majority; m., June 4, 1900, Agnes, dau. of Hon. Calvin Page; one son, Calvin Page, b. Oct. 8, 1901, now a student at Phillips (Andover) Academy. Residence, Portsmouth.
+
+**Atherton, Ella Blaylock**
+
+Physician and surgeon; b., Ulverston, Eng., Jan., 1860; dau. William and Margaret (Schollick) Blaylock; removed to America in infancy; ed. McGill Normal School, Montreal, Can., 1880; Woman's Med. School, Queen's Univ., Kingston, Can., 1887; student N. Y. Post Graduate Med. School, 1896; teacher, 1880-2; commenced practice of medicine, Newport, Vt., 1887; removed to Nashua, N. H., 1888, and has continued in practice there; member staff of Nashua Emergency and St. Joseph's hospitals, attending physician Home for Aged Women; member Nashua Med. Ass'n (president, 1908), Hillsboro Co. Med. Ass'n, N. H. Med Soc., American Med. Ass'n, N. H. Surgical Club, Orleans Co., Vt., Med. Soc., Fortnightly Club, Nashua; Episcopalian; m., Sept. 8, 1898, Capt. Henry B. Atherton, Nashua; two children. Residence, 31 Fairmount Heights, Nashua, N. H.
+
+**Cummings, Milon David**
+
+Head of Cummings Brothers monumental business; b., Acworth, N. H., March 5, 1844; s. Alvah and Polly (Grout) Cummings, grandson Col. Ebenezer Grout, also Rev. David Cummings, Baptist minister of Acworth; seventh in descent from Isaac Cum-
+
+<vocab>John Henry Bartlett, Ella Blaylock Atherton, Milon David Cummings, New Hampshire, biography, genealogy, politics, medicine, law</vocab>

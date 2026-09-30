@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>111</page-num>
+<header>The Book of Clevelanders</header>
+
+**GOSS**, Thomas Carr; insurance; born, Edinburg, O., April 22, 1862; son of Alfred R. and Martha Carr Goss; educated in Edinburg public schools, and Mt. Union College; married, Cleveland, Oct. 8, 1889, Anna M. Knowles; issue, two sons, Leonard Knowles and Alfred Edward; after leaving school, spent one year in father's country store; came to Cleveland, January, 1881, to attend business college; in May, that year, entered the service of Hull Vapor Stove Co.; August, 1881, entered insurance business with Thomas H. Geer; has remained in insurance since, except for few months; vice pres. The O. M. Stafford, Goss, Bedell Co.; trustee and treas. First Unitarian Church; member Forest City Lodge, F. & A. M., Webb Chapter R. A. M., Oriental Commandery, K. T.; member Chamber of Commerce, Mayfield Country and Union Clubs.
+
+**GOULD**, Charles Winthrop; life insurance; born, Worcester, Mass., July 7, 1866; son of Henry and Sarah W. Howland Gould; educated, Boston, and Lynn, Mass., public schools; married, Los Angeles, Cal., June 1, 1896, Cora Lee Holcomb; continuously engaged in the life insurance business since 1882; at the age of 16, entered the office of the Massachusetts Life Insurance Co. at Boston; in 1892, appointed special agent of the vice president's department of the Penn Mutual Life Insurance Co.; in 1909, formed partnership with Major Frank A. Kendall & Son, representing the Penn Mutual Life Insurance Co. in Cleveland; member Chamber of Commerce, Georgia Lodge, N. 96, F. & A. M., Atlanta, Georgia; member Cleveland Athletic Club.
+
+**GOULDER**, Harvey Danforth; admiralty lawyer; born, March 7, 1853; son of Christopher D. and Barbara Goulder; educated, public schools, graduated from Central High School in 1869; studied law in the office of Tyler & Dennison; married, Nov. 11, 1878, Mary F. Rankin (deceased 1913); spent the summer vacations working on the lakes under his father, a master of lake craft; in 1871, entered the employ of Alcott, Horton & Co., as entry clerk in the wholesale drygoods dept.; took up study of admiralty law under the late John E. Carey; in 1875, received license to practice admiralty law in the courts of the state; formed partnership with J. F. Weh, then with Alexander Hadden; in 1893, associated with S. H. Holding; now head of Goulder, Day, White, Garry & Duncan; counsel for the Vessel Owners' Ass'n, member board of Industry, and Chamber of Commerce; counsel for the Lake Carriers Ass'n; prominent in plans for the improvement and betterment of the waterways of the great lakes; intimately connected with marine matters, and extensive practice in lake and river cities from Duluth to Montreal; recognized authority on all phases of admiralty law.
+
+**GOWEN**, Albert Younglove; born, Cleveland, May 8, 1883; son of Caleb and Gertrude Younglove Gowen; educated, Harvard College, 1907; married, Cleveland, June 2, 1909, Margaret Huntington Smith; one daughter, born July 7, 1910; went to public schools,
+
+<vocab>Thomas Carr Goss, Charles Winthrop Gould, Harvey Danforth Goulder, Albert Younglove Gowen, Cleveland, biography, insurance, admiralty law, Chamber of Commerce</vocab>

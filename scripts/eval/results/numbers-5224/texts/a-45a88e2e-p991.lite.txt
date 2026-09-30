@@ -1,0 +1,70 @@
+INDEX
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Adams, L. E. | 75 | Brodegaard, Fred | 885 |
+| Adams, N. E. | 243 | Brogan, F. A. | 142 |
+| Allan, J. T. | 944 | Brome, H. C. | 290 |
+| Allen, E. H. | 133 | Brown, C. H. | 474 |
+| Alwine, G. H. | 567 | Brown, E. B. | 829 |
+| Andersen, A. H. | 620 | Brown, J. J. | 12 |
+| Anderson, A. B. | 671 | Brown, Thomas | 384 |
+| Anderson, W. N. | 766 | Brown, W. D. | 325 |
+| Anheuser, F. W. | 719 | Bruce, J. A. | 563 |
+| Anthes, George | 222 | Bucholz, W. H. | 431 |
+| Armstrong, C. D. | 161 | Buck, D. R. | 162 |
+| Aulabaugh, G. N. | 703 | Buckingham, Everett | 510 |
+| Avery, H. H. | 610 | Buffington, J. C. | 228 |
+| | | Bullard, W. C. | 970 |
+| Bailey, F. A. | 497 | Burbank, Abraham | 347 |
+| Baker, B. S. | 932 | Burbank, B. G. | 224 |
+| Baker, C. W. | 421 | Burkley, F. J. | 335 |
+| Baker, J. L. | 850 | Burnett, A. H. | 119 |
+| Balcombe, U. B. | 379 | Bushman, L. B. | 465 |
+| Baldwin, J. N. | 326 | Butler, C. E. | 114 |
+| Barkalow, B. B. | 258 | Butler, D. B. | 907 |
+| Barkalow, S. D. | 123 | Byrne, W. P. | 844 |
+| Barker, Joseph | 240 | | |
+| Barlow, M. T. | 429 | Cahow, E. W. | 836 |
+| Barnes, A. K. | 378 | Callahan, J. H. | 585 |
+| Barr, A. L. | 141 | Callahan, W. E. | 846 |
+| Battin, J. W. | 305 | Cameron, M. D. | 512 |
+| Baxter, I. F. | 316 | Campbell, J. A. | 439 |
+| Beaton, A. J. | 284 | Campbell, S. M. | 498 |
+| Beaton, C. D. | 300 | Campen, G. L. | 913 |
+| Beck, F. O. | 509 | Canan, C. J. | 253 |
+| Belden, C. C. | 705 | Carpenter, I. W. | 840 |
+| Benson, B. L. | 775 | Carpenter, J. F. | 101 |
+| Berka, Louis | 370 | Carrigan, E. B. | 115 |
+| Berry, W. H. | 809 | Carter, N. E. | 740 |
+| Bertschy, A. J. P. | 746 | Carter, R. L. | 274 |
+| Besley, R. W. | 87 | Carver, J. B. | 494 |
+| Best, F. C. | 911 | Castle, F. A. | 715 |
+| Bigelow, A. H. | 579 | Cavers, J. A. | 518 |
+| Birss, F. J. | 266 | Chaloupka, Edward | 483 |
+| Black, C. E. | 80 | Chapek, A. B. | 739 |
+| Blanchard, B. B. | 714 | Chase, Arthur | 191 |
+| Bliss, F. C. | 802 | Cheek, W. B. | 694 |
+| Bliss, R. W. | 222 | Christie, B. W. | 214 |
+| Bloom, Alfred | 917 | Clabaugh, G. W. | 74 |
+| Bloom, J. F. | 706 | Claiborne, H. H. | 198 |
+| Bondesson, John | 569 | Clark, Byron | 390 |
+| Boord, S. F. | 467 | Clark, F. E. | 616 |
+| Boyd, J. E. | 870 | Clark, M. L. | 533 |
+| Bradley, E. L. | 354 | Clark, Z. D. | 914 |
+| Brady, J. S. | 861 | Cleveland, W. G. | 217 |
+| Brailey, E. F. | 456 | Clifton, C. C. | 651 |
+| Brandt, J. G. | 641 | Coad, J. F., Jr. | 895 |
+| Breckenridge, R. W. | 17 | Coad, W. J. | 991 |
+| Brennan, W. J. | 637 | Coffey, R. T. | 794 |
+| Brewer, G. H. | 517 | Collins, G. S. | 663 |
+| Briggs, G. W. | 661 | Combs, T. L. | 369 |
+| Britt, C. W. | 892 | Conaway, E. A. | 129 |
+
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>4</columns>
+<page-num>993</page-num>
+<vocab>Index, Names, Page numbers</vocab>

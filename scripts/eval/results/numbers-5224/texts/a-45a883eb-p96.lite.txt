@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>92</page-num>
+<header>The Book of Clevelanders</header>
+
+yon & Fairbank Co.; 32nd° Mason; Elk, member Sons of the American Revolution, Cleveland Chamber of Commerce and Lakewood Chamber of Commerce; member Union, Tippecanoe, and Athletic Clubs, Cleveland, and the Duquesne Club, Pittsburgh, as a side line was engaged as dealer in local stocks and bonds prior to the establishment of the Cleveland Stock Exchange.
+
+FAIRCHILD, Egbert Nelson; flour mfgr.; born, Peekskill, N. Y., Sept. 28, 1868; son of Egbert Henry and Mary Seymour Fairchild; public school education; married, Buffalo, N. Y., Oct. 4, 1893, Gertrude A. Kenny; two daughters Catherine and Mary; in flour milling business twenty-seven years; becoming pres. of the Cleveland Milling Co. in 1910; before that mgr. Pittsburgh Flour Co., Minneapolis; member Cleveland Athletic and Euclid Golf Clubs.
+
+FANNING, Michael A.; construction work; born, Cleveland, Aug. 26, 1857; son of Michael Fanning, Sr.; common school education at St. Patrick's Parish School, but graduated from The University of the Printing Office; in 1885, married Miss Octavia Dix, of New Orleans; issue, two daughters and one son; early business life spent in newspaper work in St. Louis, Mo., Columbus, O., and political correspondent for a number of western papers; came back to Cleveland, and in 1899, made sec'y of the Municipal Ass'n; in 1900, state agt. for the Barber Asphalt Co., and later took agencies of Kentucky, Tennessee and Missouri; organizer and pres. of the Cleveland Short Line R. R. Co.; this enterprise was adopted by the New York Central R. R. Co., and has been of the greatest value to the shipping interests of the city; in 1903, organized and became pres. of the Forest City Street R. R. Co., which, through the efforts of the late Mayor Tom L. Johnson, gave 3-cent fare to the city; in the paving business for a number of years; trustee Goodrich Social Settlement House; member Benevolent Committee of the Chamber of Commerce; director the Associated Charities; organizer and first pres. Catholic Federation of Cleveland, and one of the organizers and director of The National Catholic Extension Society.
+
+FARNSWORTH, Harry M.; lawyer; born, Nashua, N. H., Sept. 4, 1861; son of Marshall H. and Mary C. Danforth Fansworth; educated in Cleveland public schools; married, Cleveland, March 25, 1886, Bettie C. Brainard; two sons, Frank M., Dec. 21, 1886, Brainard H., June 6, 1899; admitted to bar, 1882; organized Brooklyn Savings & Trust Co., 1888; actively engaged with that institution twenty-two years; in 1910, formed law firm of Farnsworth & Farnsworth; vice pres. The Brooklyn Savings & Trust Co.; pres. the Farnsworth Realty Co.; member Brooklyn Memorial M. E. Church, Chamber of Commerce, Tippecanoe Club; Mason; clerk of Brooklyn village.
+
+<vocab>Egbert Nelson Fairchild, Michael A. Fanning, Harry M. Farnsworth, Cleveland, biography, business, law, civic organizations</vocab>

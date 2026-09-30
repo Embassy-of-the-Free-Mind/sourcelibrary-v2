@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>31</page-num>
+<header>The Book of Clevelanders</header>
+
+there one year; in 1888, started in business for himself as carpenter contractor; member of C. S. P. S. Lodge, and K. of P. Lodge, No. 317. Recreations: Spend a couple of weeks every year fishing.
+
+**BLAIR, William L.**; railroad business; born, Hamilton, O., Dec. 27, 1858; son of William Henry and Angeline Linn Blair; educated, High School, Hamilton, O.; married, Hamilton, O., November, 1908, Ella Brant Elliott; member Troop A, O. N. G., 1886 to 1897; entered the employ Cincinnati, Hamilton & Dayton R. R., as telegraph operator, in December, 1872; telegraph operator, train dispatcher and clerk until September, 1880; with N. Y., C. & St. L. R. R. Co. September, 1881, to September, 1893; chief clerk and gen. mgr. September, 1893, to March, 1901; supt. Eastern Division, March, 1901, to October, 1905; supt. Telegraph, October, 1905, to October, 1906; supt. Eastern Division, October, 1906, to June, 1912; supt. transportation, June, 1912, to date; asst. to gen. mgr.; member Athletic Club.
+
+**BLAIR, Will P.**; brick business; born, Plainfield, Ind., June 28, 1849; son of Enos and Margaruitte Blair; educated, Earlham College, Richmond, Ind., married, Indianapolis, Ind., Viola V. Sanders; issue, one daughter, Marion W. Blair; pres. National Paving Brick Manufacturers' Ass'n, 1904-5; also pres. in 1910; member of American Ceramic Society; member brick committee of the American Society for Testing Materials; author of "Direction for the Construction of Brick Street Pavements"; 1894 to 1909, sec'y and mgr. of Terre Haute, Ind., Vitrified Brick Co.; sec'y and member board of directors National Paving Brick Mfr's Ass'n; member Ohio, Indiana and Illinois Engineering Societies, and American Society for Testing Materials, and American Society for Municipal Improvements; member K. of P. No. 30; Indiana Post Chancellor; contributed to engineering papers and magazines upon subjects of better construction and economy in municipal improvements; articles have been used in such magazines as Engineering News, Good Roads Magazine, New York Municipal Journal of Engineers.
+
+**BLAKE, Samuel Cooper**; attorney-at-law; born, Euclid, O., Dec. 29, 1855; son of John M. and Harriet L. Cooper Blake; educated, public schools, Shaw Academy, preparatory dept. Oberlin College, and private school, law dept. University of Michigan, LL. B.; married, Euclid, O., June, 1889, Mary A. Camp; two children, Anna H. and Allan B. Blake; clerk of Euclid School Board for two terms, and township clerk two terms; taught in the Euclid schools for two years, admitted to the Ohio Bar, at Columbus, in 1883; practised in Cleveland since admission to the Bar; director and member financial committee, The Garfield Savings & Trust Co.; member Masonic bodies, including Oriental Commandery, Knights Templars.
+
+<vocab>William L. Blair, Will P. Blair, Samuel Cooper Blake, biography, Cleveland, Ohio, railroad business, brick manufacturing, attorney, genealogy</vocab>

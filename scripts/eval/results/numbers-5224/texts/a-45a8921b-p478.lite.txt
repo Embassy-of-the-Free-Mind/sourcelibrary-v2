@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>464</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Norton; children, Henry T., b. Nov. 21, 1898; Alpa N., b. Sept. 20, 1900. Residence, Island Pond, Vt.
+
+**Hodsdon, Ervin Wilbur**
+Physician; b., Ossipee, N. H., April 8, 1863; s. Edward Payson and Emma B. (Demeritt) Hodsdon; ed. Dover high school, Phillips Exeter Academy, Washington Univ., St. Louis, Mo., M.D. 1884; interne St. Louis City hospital two years; practiced in Dover and at Center Sandwich before locating
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with glasses, a mustache, and a suit with a tie.</image-desc>
+
+in Ossipee twenty-three years ago, where he has since remained in practice; Methodist; Republican; member Ossipee board of health since residing in town, town clerk, selectman four years, member school committee twelve years, postmaster seventeen years, physician to Carroll county farm, medical referee, Carroll county, twelve years; member N. H. house of representatives, 1915-16, 1917-18, 1919-20; chairman committee on state hospital each session; member A. F. & A. M. (past
+
+<column-break/>
+
+master); I. O. R. M. (P. S. S.), A. O. U. W., P. of H., K. of P.; N. H. Historical Soc., N. H. Med. Soc., American Med. Ass'n; m., Feb. 25, 1917, Mary L. Price. Residence, Ossipee, N. H. (Mountain View, P. O.).
+
+**Hill, Joseph Adna**
+Statistician; b., Stewartstown, N. H., May 5, 1860; s. Rev. Joseph B. and Harriet (Brown) Hill; ed. Harvard, A.B. 1885; A.M. 1887; Ph.D. Halle, Germany, 1892; lecturer, Univ. of Pa., 1893; instructor, Harvard Univ., 1895; went to Europe for the Mass. Tax Commission, to investigate European systems of taxation, 1897; statistician, U. S. Census Bureau, since 1898; appointed chief statistician, 1909; member American Economic Ass'n, American Statistical Ass'n (vice-president), Cosmo Club; author "The English Income Tax," 1899; prepared many important reports for the last census; contributor to various economic journals. Residence, 8 Iowa Circle, Washington, D. C.
+
+**Chellis, Frank Otis**
+Lawyer; b., Meriden (Plainfield), N. H., Aug. 7, 1858; s. Otis H. and Betsey M. (Morrill) Chellis; ed. Newport high school, 1878; Kimball Union Academy, Meriden, 1880; Dartmouth College, A.B. 1885; studied law with Albert S. Wait of Newport three years; admitted to the bar 1888 and entered practice as a partner with Mr. Wait; taught district schools in Croydon and Enfield before entering college, and was principal of the Newport high school for nine years after admission to the bar; interested in athletic sports while in college, and played two years on the Varsity baseball, and two years on the football team; Unitarian; Democrat; has served as town moderator, and two terms as solicitor for Sullivan County (1907-8 and 1913-4), the only Democrat elected to the office in fifty years; several years a member of the Newport school board and superintendent of schools; member Newport fire department over twenty years and six
+
+<vocab>Ervin Wilbur Hodsdon, Joseph Adna Hill, Frank Otis Chellis, New Hampshire, biography, genealogy, politics, medicine, law, statistics</vocab>

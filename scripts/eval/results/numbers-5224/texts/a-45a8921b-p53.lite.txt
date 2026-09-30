@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>39</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Chase, Levin Joynes**
+Manager, Concord Electric Co.; b., Philadelphia, Pa., Feb. 6, 1862; s. Reginald Heber and Susan (Stanwood) Chase; ed. Philadelphia private schools; engaged for many years in employ of Wells-Fargo Express Co., at San Francisco, Cal.; became manager of the Concord Electric Co., Jan. 1, 1909; Episcopalian; Republican; represented Ward 3, Concord, in N. H. house of representatives in
+
+<image-desc size="large" type="portrait" significance="high">A black and white profile portrait of Levin Joynes Chase, facing left.</image-desc>
+
+1913 and 1915; member, Sons of the American Revolution, Elks, Wonolancet Club, Beaver Meadow Golf Club, Snowshoe Club, Concord Board of Trade—president since Sept., 1915; trustee, Concord public library; frequent speaker upon board of trade topics and questions of public interest, and earnest advocate of equal suffrage, to which cause he gave hearty support during his service in the legislature; m., Jan. 2, 1905, Bertha Louise Adams. Residence, Concord, N. H.
+
+<column-break/>
+
+**Rowe, Stewart Everett**
+Lawyer, poet; b., Jan. 22, 1881; s. Benjamin F. and Hattie A. (Truett) Rowe; ed. Kensington north district school, Exeter high school, 1899, Phillips Exeter Academy, 1904, Boston University Law School; studied law three years with the late Attorney-General Edwin G. Eastman; admitted to New Hampshire bar July 1, 1911, and since in practice in Exeter; Republican; moderator, clerk, auditor
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait of Stewart Everett Rowe, facing forward.</image-desc>
+
+library trustee, member school board, ballot and election inspector, tax collector and delegate to the constitutional convention of 1912, in which he took an active part, while a resident of Kensington; moderator, school meeting in Exeter, where he now resides; treasurer, Rockingham County, elected Nov., 1916; Congregationalist, clerk of Phillips church, Exeter; member, Odd Fellows, Sons of Veterans, Senior Vice Commander N. H. Division, Patron of Husbandry, Gamma Eta Gamma Legal Fraternity; Swamscott Club; cam-
+
+<vocab>Levin Joynes Chase, Stewart Everett Rowe, Concord Electric Co., New Hampshire, biography, politics, law, civic organizations</vocab>

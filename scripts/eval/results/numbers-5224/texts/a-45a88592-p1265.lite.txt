@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>995</page-num>
+<header>TOWN OF PROVINCETOWN. 995</header>
+
+mercantile affairs of the town, though the two wharves are still the headquarters for very many of the fishing vessels sailing from Provincetown.
+
+NATHANIEL E. ATWOOD.*—This highly esteemed and distinguished citizen of Provincetown was born September 13, 1807, and died at his residence, November 7, 1886. He was the son of John Atwood, a fisherman, who, like most of his contemporaries, was poor, and deprived of many of what are now esteemed the necessities, as well as of the conveniences of the household. As he could not afford a clock to tell the hour of the night when it was time to go fishing, it was his practice to repair to the shore and mark the position of the ebb or flood tide upon the beach, and thus determine the starting time. Not including provision for his schooling, the bare necessities of life were all that could be furnished the son. Few more interesting or pathetic struggles for the rudiments of knowledge have been told of New England men than those he used to relate of his own experience. In 1816, to be nearer the fishing grounds, his father and family removed to Long point, taking the son with them—the first resident fisherman. Here, at the age of nine, Nathaniel E. began his calling, the father often taking the boy from his bed, at three or four in the morning, for a place in his fishing boat for the day, returning to do other requisite work at night.
+
+Though possessing a natural bias for learning, no leisure, books or schooling could be afforded him. Occasionally, in short intervals of rest, upon returning to the shore the father, who could not read, but could cipher, drawing sums upon the smooth sand of the beach with a stick, gave the son the only lessons in arithmetic he ever received from a teacher. Despite, however, the absence of opportunity, he, by force of native ability and desire for improvement, acquired, not great scholarship, it is true, but an amount of learning and a knowledge of natural history that assured him a creditable position. As a practical ichthyologist, he not only long enjoyed a national reputation in his own country, but his name, in connection with this branch, has for many years been known by scientific men in Europe. At the age of thirteen, graduating from the fish boat, his father shipped him as cook on a fishing vessel for the coast of Labrador. Continuing those voyages, three years later he was trusted to ship himself in a vessel bound to the Grand Banks. Desirous of a change of occupation, he went several voyages as seaman, and subsequently as master in the coasting and foreign fishing trade. A superior navigator, a kind master, a careful, honest agent, he filled these positions with efficiency and secured the confidence and esteem of his men and
+
+*By James Gifford, Esq.
+
+<vocab>Nathaniel E. Atwood, Provincetown, fishing, ichthyologist, biography, New England, maritime history</vocab>

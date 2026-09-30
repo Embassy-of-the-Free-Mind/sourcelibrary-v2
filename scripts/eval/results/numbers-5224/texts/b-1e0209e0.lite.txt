@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>handwritten</script>
+<warning>Handwritten English cursive</warning>
+<page-type>text</page-type>
+
+yet it can be obtained. It is in no
+metal nor in terrestrial — not in
+silver or gold, for gold is already as
+perfect as it is to be & cannot be
+made better than it has been crea-
+ted by God.
+
+Gold cannot be prepared so as to
+transmute, because the tinging
+power must be given to it; for
+which reason our art does not be-
+gin with gold or with silver, nor
+does it proceed from them. It is a
+different thing: it is in no metal.
+If it were in metals it ought to be
+in gold or in silver. It is not in
+mercury, sulphur, herbs, salts nor
+any such things. Its equal is not
+to be found upon the earth: it is
+a stone and yet no stone, nor has it
+the nature of a stone, and yet it
+
+<vocab>alchemy, transmutation, gold, silver, mercury, sulphur, tinging power, stone</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>123</page-num>
+<header>The Book of Clevelanders</header>
+
+Beaver Dam, Wis., December, 1878, Eva E. Gould; issue, Fred Gould, Ray Gould, Eva Lucile (deceased, 1896); principal high school, Port Jervis, N. Y., 1878-1880; teacher in Cleveland High Schools, 1880-1887; principal West High School 1887-1889; principal Central High School, 1889-1912; asst. supt. of schools, September, 1912, to date; member National Education Ass'n (pres. secondary dept.); State Education Ass'n (pres. secondary dept.); North Central Ass'n (pres.); pres. of the State Entrance Medical Board; member Delta Kappa Epsilon, Phi Beta Kappa, K. of P., Loyal League, Sons of American Revolution, University, and Men's Clubs; Chamber of Commerce; wife is member of National and press committees of D. A. R.; vice pres. of D. A. R.; pres. Woman's Club of Cleveland, and member of National Patriotic Educational Committee.
+
+HARRIS, Frank R.; cigar merchant; born, Cleveland, April 14, 1860; son of Benj. F. and Ellen Hall Harris; educated in the grammar schools, and graduated from High School, in 1879; first marriage, in 1883, Miss Matie Parsons, who died in 1884; second marriage, in 1895, Miss Luella Engle; worked in the business dept. of the old Cleveland Herald; conducted cigar and tobacco business in Old Weddell House, in 1890-1892; since that date, at Hollenden Hotel, under firm name of Quinn & Harris; Democrat; has served eight years on the City Council; in the Sheriff's office, 1887-1890; chapter Mason, Tyrian Lodge, F. & A. M., and Cleveland Chapter, R. A. M.
+
+HART, Emmett Ellsworth; civil engineer; born, Little Valley, N. Y., Sept. 18, 1861; son of Austin and Dorleski Manley Hart; educated, public schools of N. Y. State, Cornell University, 1883-1887, degree C. E.; married, Little Valley, N. Y., April, 1891, Rachel Joy Sprague; issue, seven children; two years military training at Cornell University; entered the service of the C., B. & Q. R. R., June, 1887; continued with them as draftsman, asst. engineer and division engineer, until November, 1895; general engineering practice, 1895-1897; employed by the U. S. government, 1897-1899 on Deep Water Ways surveys; in July, 1899, entered the employ of the New York, Chicago & St. Louis R. R. Co., as division engineer of the Eastern Division; in November, the same year, made engineer of entire line for the same company; in 1906, made chief engineer, which position he still holds; member the Americal Railway Engineering Ass'n and Tau Beta Pi Cornell Honary Fraternity.
+
+HART, George P.; grain and coal dealer; born, Sandusky, O., May 30, 1858; son of William and Louise Hess Hart; grammar and high school education, Sandusky; married, Milan, O., Aug. 11, 1881, Debra M. Wilcox; issue, Bertha L., Ernest G., and Bella; in business since 1881; stock dealer in cattle first, then became grain and coal dealer; came to do business in Cleveland in 1901; 32nd° Mason.
+
+<vocab>Biography, Cleveland, Education, Engineering, Business, Masonry, Genealogy</vocab>

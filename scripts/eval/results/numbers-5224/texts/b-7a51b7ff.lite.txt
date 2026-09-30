@@ -1,0 +1,9 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>blank</page-type>
+<warning>The page is blank except for a piece of adhesive tape or paper strip obscuring the center.</warning>
+
+<image-desc size="medium" type="diagram" significance="low">A rectangular strip of light-colored paper or tape is affixed horizontally across the center of the page.</image-desc>
+
+<vocab>blank page, adhesive strip</vocab>

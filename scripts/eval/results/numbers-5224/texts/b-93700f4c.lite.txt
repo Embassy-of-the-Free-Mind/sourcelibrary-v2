@@ -1,0 +1,51 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>262</page-num>
+<header>WASHINGTON'S WRITINGS. [ÆT. 50.</header>
+
+tempt, in any manner, and at such a time, as your own
+judgment shall direct. I am fully persuaded, that it is
+unnecessary to caution you against offering insult or in-
+dignity to the persons of the Prince and Admiral, should
+you be so fortunate as to capture them; but it may not
+be amiss to press the propriety of a proper line of con-
+duct upon the party you command.
+
+In case of success, you will, as soon as you get them
+to a place of safety, treat them with all possible respect;
+but you are to delay no time in conveying them to
+Congress, and reporting your proceedings with a copy
+of these orders. Take care not to touch upon the
+ground, which is agreed to be neutral, namely, from
+Newark to Rahway and four miles back. Given at
+Head-Quarters, this 28th day of March, 1782.*
+
+---
+
+->TO THE GENERAL AND FIELD OFFICERS<-
+->OF THE ARMY.<-
+
+Head-Quarters, 19 April, 1782.
+
+The Commander-in-chief submits the papers accom-
+panying this, containing the case of Captain Joshua
+Huddy, lately hanged within the county of Monmouth
+in New Jersey State by a party of the enemy, to the
+consideration of the general officers of brigades and
+regiments, and thereupon requests from them, separately
+and in writing, a direct and laconic reply to the fol-
+lowing queries.
+
+1. Upon the state of facts in the above case, is re-
+taliation justifiable and expedient?
+
+2. If justifiable, ought it to take place immediately, or
+
+---
+
+* It is not known, that any attempt was made to carry the above pro-
+ject into effect.
+
+<vocab>George Washington, Joshua Huddy, Monmouth County, New Jersey, retaliation, military orders, Revolutionary War</vocab>

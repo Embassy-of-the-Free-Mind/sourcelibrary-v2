@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>340</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Hon. Jno. C. Hutchins</image-desc>
+HON. JNO. C. HUTCHINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. W. Huston</image-desc>
+F. W. HUSTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. F. Hyde</image-desc>
+W. F. HYDE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. E. Jackson</image-desc>
+C. E. JACKSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. E. Hyre</image-desc>
+A. E. HYRE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. N. Jeavons</image-desc>
+A. N. JEAVONS
+
+<vocab>Clevelanders, biography, portraits, Hon. Jno. C. Hutchins, F. W. Huston, W. F. Hyde, C. E. Jackson, A. E. Hyre, A. N. Jeavons</vocab>

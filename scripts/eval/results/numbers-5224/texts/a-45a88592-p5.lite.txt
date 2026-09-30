@@ -1,0 +1,41 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>title-page</page-type>
+
+->HISTORY<-
+->OF<-
+->BARNSTABLE COUNTY,<-
+->MASSACHUSETTS.<-
+
+->1620<-
+->---<-
+->1637 —————— 1686<-
+->---<-
+->1890<-
+
+->Edited by<-
+->SIMEON L. DEYO.<-
+
+->Special Contributors:<-
+
+| | |
+|---|---|
+| HON. CHARLES F. SWIFT, | PROF. JOHN H. DILLINGHAM, |
+| CAPT. THOMAS PRINCE HOWES, | JAMES GIFFORD, |
+| REV. N. H. CHAMBERLAIN, | GEORGE N. MUNSELL, M. D., |
+| E. S. WHITTEMORE, ESQ., | JUDGE JAMES H. HOPKINS, |
+| JOSIAH PAINE, | JOSHUA H. PAINE, |
+| PROF. S. A. HOLTON, | REV. THOMAS BELL, |
+| CHARLES DILLINGHAM, | F. A. ROGERS, M. D. |
+
+->ILLUSTRATED.<-
+
+->NEW YORK:<-
+->H. W. BLAKE & CO.,<-
+->1890.<-
+
+->Brewster Ladies Library<-
+->Brewster, Mass.<-
+
+<vocab>Barnstable County, Massachusetts, History, Simeon L. Deyo, H. W. Blake & Co., Brewster Ladies Library</vocab>

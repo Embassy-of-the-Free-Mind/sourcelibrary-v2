@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>73</page-num>
+<header>The Book of Clevelanders</header>
+
+DARBY, John Eaton; physician; born, South Williamstown, Mass., Aug. 20, 1835; son of William and Electa (Edwards) Darby; A. B., Williams College, 1858; M. D., Western Reserve Medical College, 1861; married at Cleveland, Julia Frances Wright, of Hudson, O., April 11, 1861 (died May 3, 1867); 2d, Emma Maybell Cox, of Cleveland, May 1, 1872 (died June 2, 1888); prof. Latin and Greek, Cleveland Institute, 1858-1860; demonstrator anatomy, Western Reserve Medical College, 1861-1862; surgeon in Civil War, 1862-1866; surgeon Cleveland & Pittsburg R. R., 1867-1887; member medical board, City Hospital, 1895-1908; emeritus prof. therapeutics, 1906, Western Reserve Medical College; has made special studies in natural history and is well-known as naturalist; member Cleveland Academy of Medicine, Ohio State Medical Society, A. M. A., Buffalo Society Natural Sciences, National Geographical Society.
+
+DAVIDSON, Wilbur Leroy; clergyman; born, Woodsfield, O., April 3, 1853; son of William A. and Margaret (McGregor) Davidson; A. B., Scio College, 1870; B. D., Drew Theological Seminary, 1876; (D. D., Claflin U., 1889); married, Belle Clark, of Lexington, Ky., 1890; ordained, M. E. ministry, 1876; in pastorates, 1876-1886; field agt. Sunday School Union, 1886-1889; field agt. Chautauqua Literature and Scientific Circle, 1895-1902; supt. instruction at 15 Chautauquas, 1887-1911; sec. The Am. Univ., 1899-1908; mgr. Nat. Chautauqua Bur. since July, 1908; Lyceum lecturer; del. Ecumenical Methodist Conference, London, 1901; member National Geographical Society. Clubs: University (Washington). Author: Over the Sea, and What I Saw, 1885; Frequent contributor to religious and secular press.
+
+DAVIESS, W. W.; real estate broker; born, Louisville, Ky., March 1, 1870; son of Wallace Buchanan and Kate Applegate Daviess; educated, Louisville public schools; married, Louisville, Ky., Sept. 6, 1892, Grace Darling Bruner; two daughters; promoted the town of Conway, Ark., in 1908, selling 1,372 lots in 3 days; sold over $4,000,000 worth of real estate in Cleveland and vicinity in 1912; trustee St. Luke's Hospital; member Chamber of Commerce, and Athletic Club; Joseph Hamilton Daviess statesman and a great uncle, has a county in Indiana, Illinois and Kentucky named for him; the name ceases at his death, as he is the only male survivor of an old Southern family.
+
+DAVIS, Albert Richard; automobiles; born, Delaware, O., Dec. 20, 1877; son of A. R. and Jennie Christy Davis; public and high school education; married, Cleveland, Sept. 20, 1900, Hortense Tello; two children; manager Studebaker Auto Co., until July, 1911, when he formed the A. R. Davis Motor Co., taking over Studebaker interests locally; pres. A. R. Davis Motor Co., member Chamber of Commerce, Union, Cleveland Athletic, Hermit, Rotary, Cleveland Automobile and Euclid Clubs.
+
+<vocab>biography, Cleveland, physicians, clergy, real estate, automobiles, genealogy</vocab>

@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>488</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Club Manchester; m., April 25, 1885, Lizzie Ellen, daughter of George P. and Elizabeth A. Little, Pembroke, N. H.; children, George Freeman, b. Feb. 5, 1888 (Dartmouth, 1911), Dorothy (Mrs. Frederick W. Cox), b. April 25, 1892. Residence, Nashua, N. H.
+
+**Lamb, Fred William**
+Machinist; journalist; b., Manchester, N. H., Jan. 22, 1876; s. Franklin Lee and Josephine Augusta (Savory)
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of Fred William Lamb, a man with short hair, wearing a suit, vest, and tie.</image-desc>
+
+Lamb; ed. Manchester public schools; employee of the Amoskeag Mf'g Co., and associate editor of the *Amoskeag Bulletin*; Congregationalist; Republican; member N. H. house of representatives, 1911–12 and 1913–14, serving in both terms on education and state library committees, being clerk of the former committee in the latter session; during the sessions of 1915 and 1917 served as library messenger of the house of representatives of which he was again a member for 1919–20, serving on the
+
+<column-break/>
+
+Normal School and School for Feeble-Minded committees and clerk of the former; former member and past president, N. H. Soc., S. A. R.; former member and past commander W. W. Brown camp S. of V.; member Amoskeag Textile Club, Franklin St. Congregational Church and the Manchester Historic Ass'n, of which he is curator, corresponding secretary and librarian, being deeply interested in historical pursuits; has written much upon the early history of Manchester and vicinity, and also several historical and genealogical monographs, particularly one upon the "Great Tornado in New Hampshire," in 1821; has a fine historical library specially covering the Indian, Colonial, Revolutionary and Civil War periods. Residence, Manchester, N. H.
+
+**Robinson, Maurice Henry**
+Educator; economist; b., Meredith, N. H.; s. Joseph Wadleigh and Eliza Frances (Weld) Robinson; ed. public schools, Dartmouth College, B.L. 1890; Yale, Ph.D., 1902; superintendent of schools in North Dakota and Minnesota, 1890–6; assistant in political science, Dartmouth, 1896–8; instructor in economics, Yale, 1899–1902; professor of economics, Univ. of Illinois, since Sept., 1902; special expert Census Bureau, 1903, in valuation of railways; expert on supervision of corporations, Illinois efficiency and economy commission, 1914–5; author various economic treatises, including a "History of Taxation in New Hampshire"; Episcopalian; m., Sept. 10, 1890, Elinor Corse, West Dover, Vt. Residence, Urbana, Ill.
+
+**Robie, Virginia Huntington**
+Writer; b., Salmon Falls, N. H.; dau. Rev. Thomas Sargent and Virginia Dare (Pendleton) Robie; ed. public and private schools, Boston, Mass., School of Decorative Design, Museum of Fine Arts, Boston, Art Institute of Chicago; associate editor, "The House Beautiful," 1903–13; editor, 1913–15; author, "Historic Styles in Furniture,"
+
+<vocab>Fred William Lamb, Maurice Henry Robinson, Virginia Huntington Robie, Manchester, New Hampshire, biography, genealogy, Amoskeag, Dartmouth College, economics, history</vocab>

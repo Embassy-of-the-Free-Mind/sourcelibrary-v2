@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>541</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+degree and K. T.; m., Nov. 28, 1888, Lula E. Clark, Sanford, Me.; son, Cecil M., b. Oct. 25, 1890. Residence, Portsmouth, N. H.
+
+**Smith, John Warren**
+Meteorologist; b., Grafton, N. H., Sept. 21, 1863; s. John R. and Mary E. (Wadleigh) Smith; ed. public schools, N. H. College, B.S. 1888; M.S. 1900; Lawrence Scientific School, Harvard, 1891-2; summer school, Ohio State Univ., 1902; entered service U. S. Weather Bureau, 1888; director New England section, 1890-6; Montana section, 1896-7; Ohio section, 1898-1909; district forecaster, St. Louis, 1909-10; professor meteorology and director Ohio section, 1910-15; professor meteorological science, Ohio State Univ., 1910-15; chief division of agriculture, meteorological Weather Bureau, Washington, 1916- ; president Ohio Academy Science, 1914-15. Residence, 10 E. Oxford St., Chevy Chase, Md.
+
+**Stone, Winthrop Ellsworth**
+Educator; b., Chesterfield, N. H., June 12, 1862; s. Frederick L. and Ann (Butler) Stone; ed. Mass. Agricultural College, B.S. 1882; Boston Univ., B.S. 1886; Ph.D. Göttingen, 1888; LL.D., Mich. Agricultural College, 1907; assistant chemist, Mass. Agricultural College Experiment Station, 1884-6; chemist, Tenn. Agricultural Experiment Station, 1888-9; professor chemistry, Purdue Univ., 1889-90; vice-president, 1892-1900; president since 1900; member Ind. State Board of Education, and various associations and societies. Residence, Lafayette, Ind.
+
+**Tilden, George Thomas**
+Architect; b., Concord, N. H., March 19, 1845; s. Rev. William Philips and Mary J. (Foster) Tilden; ed. Phillips Exeter Academy, Mass. Institute Tech.; in architectural offices of Ware & Van Brunt, Boston; studied in Paris under Emil Vaudremer; associated in practice with Arthur
+
+<column-break/>
+
+Rotch, as Rotch & Tilden, Boston, 1880-94; since alone; designed and erected many church, library and school buildings; fellow American Institute of Architects; member Boston Soc. Architects, etc. Residence, 55 White St., Milton, Mass.
+
+**Billings, Warren Tracy**
+Newspaper writer and advertising specialist; b., Cambridge, Mass., Jan. 11, 1868; s. Emilius G. and Lillieore
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Warren Tracy Billings</image-desc>
+
+(Tracy) Billings; lineal descendant of Lieut. Thomas Tracy, born in Tewksbury, Gloucestershire, England, in 1610, who crossed to the Massachusetts Bay Colony about 1630, was in Salem till Feb. 23, 1634, and in 1660 became one of the proprietors of Norwich, Conn., removing to that town, where he died Nov. 7, 1685; also lineal descendant of Nathaniel Billings who crossed to Boston and was in business there in 1630; ed. public schools, leaving at thirteen years of age, and at seventeen becoming entire support of a family of four, continuing several
+
+<vocab>John Warren Smith, Winthrop Ellsworth Stone, George Thomas Tilden, Warren Tracy Billings, meteorology, architecture, genealogy, New Hampshire notables</vocab>

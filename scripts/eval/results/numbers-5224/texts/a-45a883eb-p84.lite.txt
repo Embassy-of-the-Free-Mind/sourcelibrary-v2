@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>80</page-num>
+<header>The Book of Clevelanders</header>
+
+**DOVE, Herman E.**; automobile business; born, Port Huron, Mich., Dec. 14, 1875; son of James H. and Winifred Dove; educated Alpena, Mich., High School; married, Lansing, Mich., Feb. 28, 1906, Ursula E. Ackerman; corporal Company B, 33rd Mich. Volunteers; service in Cuba in 1898; five and one-half years in clothing business in Alpena, Mich.; started as errand boy and left as head salesman; was called out from there for service in the Spanish-American War; in October, 1899, left the clothing business, engaging in the manufacture of sugar with the Bay City Sugar Co.; in this business until 1908, removing from Bay City to Lansing in 1901, to take a position with the Lansing Sugar Co., later known as The Owosso Sugar Co.; as the sugar business did not offer a large field for advancement, went with the Buick Automobile Co. of Flint, Mich.; still connected with the company as mngr. Cleveland Branch; during the automobile panic of 1910, resided in Salt Lake City, taking charge of the Randall-Dodd Co.; handled their business for 15 months, putting it on a safe and sane basis, and it still exists as a prosperous distributing agency; returned to Flint, Mich., in October 1911, and from there came to Cleveland, taking the management of the Cleveland branch of the Buick Motor Car Co.; Mason, Knights of Pythias and Y. M. C. A. affiliations, member Automobile and Business Men's Club of the Y. M. C. A. Recreations: Hunting, Fishing and General Out-Door Sports.
+
+**DOWNIE, William**; master painter; born, Cleveland, 1874; son of William and Margarite McLaughlan Downie; married, Warren, O.; 1896, Cora Evarts Green; issue, two sons; pres. Wm. Downie Co. and Downie Real Estate Co.; sec'y and treas. Whittle, Downie Sign Co., vice pres. Panama-Pacific Exposition Tour Co.; member Chamber of Commerce (member municipal committee), Clan Grant, Royal Arcanum (past regent), St. Andrew's Society, Manufacturers' and Dealers' Ass'n, International Master Painters' and Decorators' Ass'n, Cleveland Athletic, Colonial, Colonial Advertising, Rotary Clubs, Automobile Owners Ass'n.
+
+**DRAKE, Edward A.**; born, Jamestown, N. Y.; Dec. 13, 1871; son of William D. and Ora Maria Wheeler Drake; B. S., Case School of Applied Science; married, Cleveland, O., Nov. 21, 1898, Georgia A. Adams; two children; 1895, started as a traveling representative for Drake & Weis Co.; now general mgr. of The Drake & Weis Co.; sec'y the W. D. Drake Co.; pres. The Colonial Investment Co.; member Phi Kappa Psi Fraternity and Presbyterian Church.
+
+**DRAPER, Charles Thomas**; mfr.; born, Cleveland, Nov. 26, 1855; son of Thomas George and Celestia Converse Draper; educated in Cleveland schools; married, Cleveland, Sept. 20, 1881; Florence H. Rossiter; three children; began manufacture of tin cans in 1875; in 1901, business merged with the American Can Co., and in 1911
+
+<vocab>Herman E. Dove, William Downie, Edward A. Drake, Charles Thomas Draper, Cleveland, biography, business, manufacturing, automobile industry</vocab>

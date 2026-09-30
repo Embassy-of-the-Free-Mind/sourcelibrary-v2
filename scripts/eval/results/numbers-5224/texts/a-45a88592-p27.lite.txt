@@ -1,0 +1,10 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>11</page-num>
+<header>GEOLOGY AND TOPOGRAPHY. 11</header>
+
+In much then that is formative in human character the Cape landscape has lent itself to make the Cape man free, self-reliant, frugal and indomitable. It has bred in him pluck and luck. The obligation he is under to his native province he is apt to fulfill by his life-long affection for the Cape. The Cape colors him all his life, the root and fiber of him. He may get beyond but he never gets over the Cape. Make him a merchant at Manilla or Calcutta, a whaler at the North Pole, a mate in Australian waters, a millionaire on Fifth avenue, a farmer in Minnesota, and the Cape sticks to him still. He will feel in odd hours to his life's end, the creek tide on which he floated ashore as a boy, the hunger of the salt marsh in haying time, the cold splash of the sea spray at the harbor's mouth, the spring of the boat over the bar where he came home from fishing with the wind rising on shore out of the grey night clouds seaward, the blast of the wet northeaster in the September morning, when under the dripping branches he picked up the windfall of golden and crimson apples, the big flaked snow of the December night when he beaued his first sweetheart home from singing school; and he will see in dreams, perhaps, the trailing arbutus among its grey mosses, on the thin edge of a spring snow bank, the bubbling spring at the hill foot near tide water, the fat crimson roses under his mother's window, with a clump of Aaron's rod or lilac for background; the yellow dawn of an October morning across his misty moors, and the fog of the chill pond among the pine trees, and above all the blue sea within its headlands, on which go the white winged ships to that great far off world which the boy has heard of and the grown man knows so well.
+
+<vocab>Cape Cod, human character, topography, geology, regional identity, nostalgia</vocab>

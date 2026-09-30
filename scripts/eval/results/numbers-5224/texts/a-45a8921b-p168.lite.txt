@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>154</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Boston University Law School, 1897; admitted to the bar in 1897, and practiced in Claremont since then; in partnership with his father until the
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+death of the latter, June 27, 1908, and afterwards alone; Methodist; Republican; supervisor of checklist since 1899; member, N. H. constitutional convention, 1902, N. H. house of representatives, 1905; trustee, Fiske Free Library, since 1905; member, Stevens high school committee, fifteen years; trustee, trust funds, town of Claremont; director, People's National Bank, Monadnock Mills; member, Alpha Delta Phi, Dartmouth, Phi Delta Phi, B. U. Law School; m., June 7, 1899, Mary Agnes Coburn; children, Harriet Louise, Caroline Leland, Ira Gordon, Jr., Margaret Coburn, Grace Mary. Residence, Claremont, N. H.
+
+**Currier, Frank Dunklee**
+Lawyer; b., Canaan, N. H., Oct. 30, 1853; s. Horace S. and Emma C. (Plastridge) Currier; ed. Kimball Union
+
+<column-break/>
+
+Academy and Dr. Hixon's School, Lowell, Mass.; studied law, admitted to the bar in 1874, and commenced practice in Canaan, 1875; Republican; member, N. H. house of representatives, 1879; 1899–1900 (speaker); clerk, N. H. senate, 1883–4; president, 1887–8; secretary, Republican state committee, 1882–90; naval officer, port of Boston, 1890–4; member, U. S. house of representatives, 1901–13; defeated for re-election by Raymond B. Stevens; since in retirement. Residence, Canaan, N. H.
+
+**Chamberlin, Alonzo Laban**
+Lawyer; b., Pomfret, Vt., Sept. 14, 1858; s. Alonzo L. and Mary S. (Carroll) Chamberlin; ed. common schools; studied law and admitted to the New Hampshire bar in Concord, July, 1895; in practice since in Lebanon; Uni-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man in a suit and tie.</image-desc>
+
+tarian; Democrat, active in party affairs and member of the Democratic state committee, eight years; appointed postmaster of Lebanon by President Wilson in 1914, and now in
+
+<vocab>New Hampshire, lawyers, politicians, biography, Claremont, Canaan, Lebanon, Republican Party, Democratic Party, U.S. House of Representatives</vocab>

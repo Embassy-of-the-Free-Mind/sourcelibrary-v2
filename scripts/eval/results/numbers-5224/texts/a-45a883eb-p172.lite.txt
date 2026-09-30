@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>168</page-num>
+<header>The Book of Clevelanders</header>
+
+LORENTZ, George A.; plumber; born, Cassel, Germany, March 15, 1877; son of William and Marget Steiner Lorentz; educated at public, high and technical schools; married, Scranton, Pa., Nov. 1, 1898, Helen Schmidt; one son, George William, age 14 years; plumbing contractor since 1905; member Cleveland Master Plumbers Ass'n; 3rd degree Mason; member Germania. Favorite recreation: Automobiling.
+
+LORENZ, Carl; journalist; born, Stuttgaart, Germany, March 31, 1858; early education in Germany; at the age of 18, went to Switzerland for further study; remained three years; graduated from the University of Geneva, in 1879; taught school in Paris for two and one-half years; taught Languages in London for two years; came to the United States in 1881; engaged in newspaper work in New York City, for two years; in 1883, located in Portsmouth, O.; resumed teaching, and was principal of a German School until 1887; came to Cleveland, and in 1880, became connected with The Waechter und Anzeiger; now its Sunday editor; 1903, sec'y of the Cleveland Library Board; author of works of fiction, poetry and dramatic writings.
+
+LOTZ, John Henry; head worker Alta Social Settlement House; born, Carrollton, O., Dec. 2, 1872; son of Daniel S. and Ella Hill Lotz; educated, Mt. Hemron Boy's School, 1894; Williams College, 1898; Union Theological Seminary, 1904; post-graduate study, Columbia University; married, Middlebury, Conn., Aug. 17, 1904; May Louise Waters; one son; taught St. Paul's School, Garden City, L. I., 1898-1901; director Bethany Memorial Boy's Club, New York City, 1901-1904; since 1904 head of Alta House Settlement; member Grargoyle, Williams College, Chamber of Commerce, and City Club, Cleveland. Recreation: Farming.
+
+LOUGEE, William S.; asst. building inspector; born, Buckfield, Me., Jan. 29, 1867; educated in Boston, Mass.; studied architecture with Tristram Griffin, Boston, Mass., eight years; in 1890, came to Cleveland; associated with John Eisenmann 1890-1900; asst. architect Board of Education until 1905; when appointed to present position.
+
+LOUGHRY, James Arthur; dentist; born, Johnstown, Pa., Nov. 30, 1881; son of Clark Hawkins and Emma Louise Cooper Loughry; educated, Elyria, O., public school, and graduate of High School, 1899; Ohio State University dental education; received degree of D. D. S., 1904; married, Marion, Ind., Dec. 25, 1906, Edith Johnson; one son, James Richard Loughry; member National Dental Ass'n, Ohio State Dental Society, Northern Ohio Dental Ass'n, and Cleveland Dental Society; member Psi Omega Dental Fraternity, and Euclid Club.
+
+<vocab>biography, Cleveland, Ohio, genealogy, professions, 20th century</vocab>

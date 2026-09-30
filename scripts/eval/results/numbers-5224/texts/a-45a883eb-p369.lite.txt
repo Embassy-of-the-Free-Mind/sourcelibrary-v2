@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>365</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harry F. Payer</image-desc>
+HARRY F. PAYER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. W. Pattison</image-desc>
+C. W. PATTISON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. A. Penton</image-desc>
+JNO. A. PENTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. B. Perkins</image-desc>
+J. B. PERKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. H. Perdue</image-desc>
+R. H. PERDUE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. C. Petra</image-desc>
+J. C. PETRA
+
+<vocab>Harry F. Payer, C. W. Pattison, Jno. A. Penton, J. B. Perkins, R. H. Perdue, J. C. Petra, Clevelanders, Biography</vocab>

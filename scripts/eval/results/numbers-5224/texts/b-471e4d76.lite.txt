@@ -1,0 +1,49 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>178</page-num>
+<header>DUALISM IN THE</header>
+
+| WARM. | COLD. |
+| :--- | :--- |
+| 48. Bismuth. | 42. Sulphuret of potassium. |
+| 52. Creosote. | 44. Arsenic. |
+| 53. Potash. | 45. Peroxide of mercury. |
+| 57. Lithium. | 49. Iodide of lead. |
+| 58. Cantharidine. | 50. Chloride of cyanogen. |
+| 61. Cetine. | 51. Bleaching powder. |
+| 64. Æsculine. | 54. Oxide of copper. |
+| 66. Baryta. | 55. Cyanide of potassium. |
+| 70. Melamine. | 56. Sulphuret of calcium. |
+| 74. Grey cast-iron. | 59. Sulphate of morphine. |
+| 75. Murexide. | 60. Bromide of potassium. |
+| 76. Protoxide of manganese. | 62. Cyanic acid. |
+| 78. Hydrated oil of turpen- | 63. Antimonic acid. |
+| tine. | 65. Sulphuret of cyanogen. |
+| 79. Cholesterine. | 66. Hydrate of baryta. |
+| 80. Asparagine. | 68. Parabanic acid. |
+| 82. Hyoscyamine. | 69. Borax. |
+| 85. Alloxantine. | 71. Acetate of morphine. |
+| 88. Caryophylline. | 72. Hydrochlorate of cit- |
+| 89. Allantoine. | ronyl. |
+| 90. Sulphuret of ammonium. | 73. Phosphuret of nitrogen. |
+| 91. Lime. | 77. Oxide of cobalt. |
+| 94. Gold. | 81. Titanic acid. |
+| 97. Zinc. | 83. Uric acid. |
+| 98. Stearine. | 84. Neutral phosphate of |
+| 99. Chromium. | lime. |
+| 101. Osmium. | 86. Chloride of carbon. |
+| 104. Palladium. | 87. Carbazotic (picric) acid. |
+| 107. Mercury. | 92. Phosphorus. |
+| 108. Delphinine. | 93. Bichromate of potash. |
+| 109. Daturine. | 95. Oxide of nickel. |
+| 110. Lead. | 96. Alcohol. |
+| 113. Oleic acid. | 100. Chloride of chromium. |
+| 116. Cadmium. | 102. Albumen. |
+| 117. Sodium. | 103. Ammonio-chloride of |
+| 118. Antimony. | Platinum. |
+| 121. Minium. | 105. Oxide of chromium. |
+
+<vocab>Chemistry, Dualism, Chemical compounds, Elements, Chemical classification</vocab>

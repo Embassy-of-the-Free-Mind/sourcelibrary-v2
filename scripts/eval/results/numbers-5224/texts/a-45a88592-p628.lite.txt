@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>504</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+as the general organization. By his union with Eliza Thacher of Yarmouth, five children were born, who arrived at mature age, viz: Charles H., Mary, John, George W., and Nathaniel Stone, jr. John and Nathaniel Stone were prominent and successful business men in New York, both being especially identified in the Calumet and Hecla Mining Copper Company. John died in 1870, and Nathaniel S., jr., in 1883. Of the surviving sons Charles H. Simpkins is engaged in business in San Francisco and was one of the original pioneers of 1849. George W. Simpkins resides in St. Louis and occupies in summer, the old homestead in Yarmouth Port, which belonged to his father.
+
+George H. Snow, was born in 1849, in Harwich; is a son of Caleb and Laurietta (Smith) Snow, and grandson of Laban Snow. He has followed the sea since 1861, and since 1877 has been master of vessels. He is a member of Newport Marine Society and a member of the Masonic order. He married Anna T., daughter of Joseph Robinson, and has one son, Herbert R.
+
+William N. Stetson, born in 1855, is a son of John Stetson, M. D., of West Harwich, and a grandson of John Stetson, of Bridgewater. His mother was Elizabeth, daughter of Barnabas and Hannah Sears, of South Yarmouth. Mr. Stetson has been traveling salesman for Israel W. Monroe & Co., since 1879. He was married in 1879 to Lucy J., daughter of D. P. W. Parker. They have four children: Elizabeth P., Angeline F., Monroe B. and William N., jr. Mr. Stetson is a member of Howard Lodge, A. F. & A. M., also of Sylvester Baxter Chapter, and is a member of the New England Commercial Travelers' Association.
+
+Hon. Charles F. Swift.—This respected citizen of Yarmouth traces his descent in the ninth generation from William Swift, of Bocking, Eng., who came over in the first expedition with Winthrop's company, was in Watertown in 1632, and in Sandwich in 1638. Charles F. Swift was born in Falmouth, June 18, 1825, and received his education in the common school and academy of his native town. At the age of fourteen he entered a printing office, still keeping up his studies, and in 1847 became associate editor of the *Yarmouth Register*, of which he has been editor since 1850. With the many cares of an editorial life, during his years of service he has written over 5,000 columns of newspaper matter, published one book, and delivered many lectures and public addresses. Nor has he been idle in affairs of the body social and politic. The first ten years of its existence he was president of the Yarmouth Library Association, has been president of the Cape Cod Historical Society since its organization; two years president of the Barnstable County Agricultural Society; was collector of customs for Barnstable district from 1861 to 1875, with only four months interruption; and in 1859 filled
+
+<vocab>Barnstable County, Yarmouth, Harwich, genealogy, biography, Charles F. Swift, Yarmouth Register, Cape Cod Historical Society, business history</vocab>

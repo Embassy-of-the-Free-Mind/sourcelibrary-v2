@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>129</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 129</header>
+
+lege, A.B., 1890, A.M., 1893; entered office of *Monitor* and *Statesman*, Concord, immediately after graduation and has continued since, serving as reporter, news editor, editorial writer and editor; president, *Monitor* and *Statesman* Co., since 1898; Congregationalist member standing committee, South Congregational Church Soc., Concord, three years; Republican; private secretary to governor of New Hampshire, 1889–91, 1905. secretary to chairman, Republican state committee, 1890; secretary, N. H. Forestry Commission, 1893–6; member, Concord board of education, 1902–3, 1906–9, 1913–16; U. S. Envoy Extraordinary and Minister Plenipotentiary to Greece and Montenegro, April, 1909 to Nov., 1912; delegate at large to Republican national convention, Chicago, 1908, 1916; president, N. H. Republican state convention, 1914; chairman advisory committee, Republican state committee, 1914, 1916; president, Greek Products Co., New York (office, 32 Nassau St.) since 1913; member staff, Republican Publicity Ass'n, (Real Estate Trust Bldg.), Washington, D. C.; member, Athenian Club, Athens, Greece; University, Army and Navy and National Press clubs, Washington, D. C., Republican club, New York, Wonolancet and Passaconoway clubs and Capital Grange, P. of H. Concord; author, "John Stark," 1890; editor, "New Hampshire Men," 1893; magazine contributor, lecturer and campaign speaker; m., Oct. 3, 1893, Florence Gordon, Franklin, N. H.; one son, Gordon, b. Oct. 5, 1900 (Phillips Exeter Academy, 1918). Home, 5 Auburn St., Concord, N. H.
+
+**Preston, Frank Buchanan**
+Insurance and real estate; b., Strafford, N. H., Feb. 11, 1856; s. Wingate T. and Mary (Jewell) Preston; ed. public schools, Franklin Academy, Dover, and New Hampton Literary Institution; Free Baptist, president, True Memorial Soc., F. B. Church, Rochester; Democrat; moderator, Rochester, 1887–8; member, N. H.
+
+<column-break/>
+
+constitutional convention, 1889, 1912; Democratic candidate for presidential elector, 1900; mayor, Rochester, 1913–14; member, Democratic state committee, six years; member, Rochester school board, six years (president, two years); trustee, Gafney Home for the Aged; president, People's Building and Loan Ass'n, since incorporation in 1909; member, I. O. O. F., Rebekah Lodge, Rochester Grange, P. of H., and Eastern N. H. Pomona Grange;
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with glasses, wearing a suit, white shirt, and dark bowtie.</image-desc>
+
+m., May 28, 1881, Fannie C. Foss, d. May 10, 1907; three children, Vinton W., b. Rochester, May, 1882 (New Hampton Inst., 1902); Mary Florence, b. June 25, 1891 (New Hampton Inst., 1909); Verne F., b. Dec. 15, 1893 (New Hampton Inst., 1915, Boston Univ., 1919). Residence, Rochester, N. H.
+
+**Welch, John Tapley**
+Journalist, public official; b., Dover, N. H., Dec. 15, 1856; s. Joseph Williams and Mary Elizabeth (Tapley) Welch; ed. public schools and Dartmouth College; Congregationalist; Re-
+
+<vocab>New Hampshire, biography, politics, journalism, Rochester, Concord, Preston, Frank Buchanan, Welch, John Tapley</vocab>

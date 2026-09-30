@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>Italian</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>56</page-num>
+
+“ PREMIUMS.
+“ Friday, May 27th, 1803.
+“ Noi sotto dichiriamo d’aver ricevuto dall’ Illmo Sigr. D. Giovanni Hayter, per lo svolgimento, assistenza, e trascrizione de’ Papiri le somme qui appresso notate, il di 27 Maggio, 1803.
+“ Io Geo. Bâtta Malesci per assistenza allo svolgimento de’ Papiri, No. 207, 218, 1385, ducati 22, grana 40.
+“ Io Gennaro Casanova per l’ assistenza allo svolgimento de’ Papiri 994, 1056, 1428, ducati 17. 30.
+“ Io Antonio Lentari ho ricevuto per lo svolgimento del Papiro 1056, ducati ondici 11. 00.
+“ Io Guiseppe Casanova per la trascrizione de’ Papiri 994, 1056, e 1428, e per cinque Alfabeti,* ducati 35. 90.
+
+---
+
+* Forty well-executed fac simile alphabets of different Greek manuscripts, and one of the fragment of a Latin poem, were finished, when
+
+<vocab>Premiums, Giovanni Hayter, Papiri, Geo. Bâtta Malesci, Gennaro Casanova, Antonio Lentari, Guiseppe Casanova, Alfabeti, Greek manuscripts, Latin poem</vocab>

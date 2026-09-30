@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>60</page-num>
+<header>PERSONS AND MANNERS OF THE NATIVES.</header>
+
+independent air, and move with a bolder carriage than the natives of Java. A considerable difference exists in person and features between the higher and lower classes; more indeed than seems attributable to difference of employment and treatment. The features and limbs of the chiefs are more delicate, and approach more nearly to those of the inhabitants of Western India, while those of the common people retain more marked traces of the stock from which the islands were originally peopled. In colour there are many different shades in different families and different districts, some being much darker than others. Among many of the chiefs a strong mixture of the Chinese is clearly discernible: the Arab features are seldom found, except among the priests, and some few families of the highest rank.
+
+The women, in general, are not so good looking as the men; and to Europeans many of them, particularly when advanced in years, appear hideously ugly. But among the lower orders, much of this deficiency of personal comeliness is doubtless to be attributed to the severe duties which they have to perform in the field, to the hardships they have to undergo in carrying oppressive burdens, and to exposure in a sultry climate. On the neighbouring island of Báli, where the condition of the women among the peasantry does not appear by any means so oppressed and degraded, they exhibit considerable personal beauty; and even on Java, the higher orders of them being kept within doors, have a very decided superiority in this respect.
+
+<margin>Manners.</margin> In manners the Javans are easy and courteous, and respectful even to timidity; they have a great sense of propriety and are never rude or abrupt. In their deportment they are pliant and graceful, the people of condition carrying with them a considerable air of fashion, and receiving the gaze of the curious without being at all disconcerted. In their delivery they are in general very circumspect and even slow, though not deficient in animation when necessary.
+
+<margin>Goitres.</margin> Here, as on Sumatra, there are certain mountainous districts, in which the people are subject to those large wens in the throat termed in Europe goitres. The cause is generally ascribed by the natives to the quality of the water; but there seems good ground for concluding, that it is rather to be traced to the atmosphere. In proof of this it may be mentioned, that there is a village near the foot of the Teng'gar mountains, in the eastern part of the island, where every family is afflicted by this malady, while in another village,
+
+<vocab>Javans, Java, Báli, Sumatra, Teng'gar mountains, goitres, personal appearance, manners, social classes</vocab>

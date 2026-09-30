@@ -1,0 +1,6 @@
+<scan-quality>good</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>blank</page-type>
+<warning>The provided image is a blank page.</warning>
+<vocab>blank page</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>602</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+started a store at his residence, and is still in trade. Isaac B. and Joseph Young built and opened a store in 1852 on the corner, and revived the fishing business; but after four years, on account of the closing of the harbor's mouth by sand, they discontinued the latter branch. The store was sold to Enos Kent, who, after a few years, removed the goods to his house. He died in 1875, and the business was closed. H. Harding, jr., opened a store in his house in 1889.
+
+The *Cape Cod*, a schooner of sixty-five tons, was built at this village by Samuel Moody, for Lumbert Nickerson, and was launched into the bay from the premises of Ensign Nickerson.
+
+For salt manufacturing, the coves and bays of Chatham Port afforded the best of facilities, which were improved soon after 1800. Reuben Ryder is said to have first erected works on the shore of Pleasant bay, and his sons, Isaiah and Christopher, continued them. The second was erected by Ensign Nickerson, sr. These were succeeded as rapidly as the works could be built by Kimble Ryder, his son, Kimble Ryder, jr., Stephen Smith and his son—all on Ryder's river. Still later Ezra Crowell built extensive works on the same river and sold to Jonah and Joseph Young, the latter being an early manufacturer elsewhere. Joshua Crowell, James Ryder and Captain Young soon established works, succeeded by Joseph, Rufus and Samuel H. Young. Edward Kent also erected works here. On Crowe's pond, in 1825, we find the works of Josiah Kendrick and Jonathan Eldridge; on Ryder's cove the works of John Taylor and Reuben Snow; and further east, in the old harbor district, Myrick Nickerson made salt. Later still Ensign Nickerson, jr., the father of Orick and Samuel M., erected works on Crowe's pond; also on the bay side, which were continued until their decay in 1877. David H. Crowell confidently asserts that in 1835 around Ryder's cove he could count within sight twenty-eight wind mills for pumping brine. The only works standing in 1889 were those of Jesse Nickerson, who once owned eighteen hundred feet, and which were more or less used until 1886.
+
+In 1828 Joseph Young established the only block factory ever on the Cape. He started a water mill in 1819, just south of the corner near David Crowell's. In this he first placed, in 1821, cards for dressing cloth. Mr. Young next started the block-making in this building, but made them mostly by hand. In 1847 Isaac B. Young, his son, formed a co-partnership with him, after having completed machinery to manufacture by water. This is claimed to have been the first manufactory of blocks by machinery in the state. Zenas L. Marston, Samuel Young and George Young were admitted to partnership and the business was successful for a period of ten years; then others had commenced the manufacture and this firm lost six thousand dollars in stock by the burning of their storehouse. The business was dis-
+
+<vocab>Barnstable County, Chatham Port, salt manufacturing, block factory, Cape Cod, Ryder's river, Crowe's pond, wind mills, brine, manufacturing</vocab>

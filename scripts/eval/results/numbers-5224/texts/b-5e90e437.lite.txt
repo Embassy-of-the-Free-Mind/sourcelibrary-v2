@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>217</page-num>
+<header>A. D. 408.] History of the Anician Family. 217</header>
+
+During the five first ages of the city, the name of the Anicians was unknown; they appear to have derived their origin from Praeneste; and the ambition of those new citizens was long satisfied with the Plebeian honorus of tribunes of the people 14). One hundred and sixty-eight years before the Christian aera, the family was ennobled by the Praetorship of Anicius, who gloriously terminated the Illyrian war by the conquest of the nation, and the captivity of their king 15). From the triumph of that general, three consulships, in distant periods, mark the succession of the Anician name 16). From the reign of Diocletian to the final extinction of the western empire, that name shone with a lustre which was not eclipsed in the public estimation, by the majesty of the Imperial purple 17). The several branches, to whom it was communicated, united, by marriage or inheritance, the wealth and titles of the Annian,
+
+has hamazed the critics; but they all agree, that whatever may be the true reading, the sense of Claudian can be applied only to the Anician family.
+
+14) The earliest date in the annals of Pighius, is that of M. Anicius Gallus. Trib. Pl. A. U. C. 506. Another Tribune, Q. Anicius, A. U. C. 508. is distinguished by the epithet of Praenestinus. Livy (xlv. 43. places the Anicii below the great families of Rome,
+
+15) Livy, xliv. 30, 31. xlv. 3. 26. 43. He fairly appreciates the merit of Anicius, and justly observes, that his fame was clouded by the superior lustre of the Macedonian, which preceded the Illyrian, triumph.
+
+16) The dates of the three consulships are, A. U. C. 593. 818. 967: the two last under the reigns of Nero and Caracalla. The second of these consuls distinguished himself only by his infamous flattery (Tacit. Annal. xv. 74.): but even the evidence of crimes, if they bear the stamp of greatness and antiquity, is admitted, without reluctance, to prove the genealogy of a noble house.
+
+17) In the sixth century, the nobility of the Anician name is mentioned (Cassiodor. Variar. l. x. Ep. 10. 12.) with singular respect by the minister of a Gothic king of Italy.
+
+<vocab>Anician family, Praeneste, Plebeian, tribunes, Anicius, Illyrian war, Diocletian, western empire, Imperial purple, Annian, Claudian, M. Anicius Gallus, Q. Anicius, Praenestinus, Livy, Pighius, Macedonian triumph, Nero, Caracalla, Tacitus, Cassiodorus, Gothic king</vocab>

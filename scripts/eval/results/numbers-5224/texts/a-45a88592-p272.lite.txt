@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>228</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+married and was the father of twenty children, one of whom was Rev. Frederick Freeman, the historian.
+
+Dr. Matthew Fuller, the first regular physician in Barnstable, came to this country about 1640. His parents came in 1620, in the Mayflower, leaving him in care of friends. He never saw them afterward as they died soon after their arrival at Plymouth. Doctor Fuller was a man of prominence in the colony. He was surgeon general of the Plymouth forces before and after Philip's war, and was captain in the war. He died at Barnstable, in 1678. He left children. His wife was named Frances and probably came with him to this country. Doctor Fuller resided at West Barnstable.
+
+Dr. John Fuller, son of Dr. Matthew, settled near his father's place at Scorton Neck. He was twice married, and he had three children, one son and two daughters. He died in 1691.
+
+Charles F. George, M.D., came to Centreville and practiced medicine from 1865 to 1872. He then removed to Goffstown, N. H., where he now resides.
+
+Dr. Benjamin D. Gifford, born November 19, 1841, at Provincetown, is a son of Simeon S. and Marinda A. (Dods) Gifford. He attended Westbrook Seminary, Maine, and Englewood school, New Jersey, graduating from the classical department of Madison University, New York, in 1864 and from Albany Medical College two years later. He practiced in Fond-du-lac, Wis., two years, in Gloucester, Mass., two years and in 1871 came to Chatham, where he has since practiced.
+
+David R. Ginn, M.D.—The first of this name who came to the continent from England was Edward K. Ghen. He settled in Maryland last century, rearing three sons, one of whom remained in Maryland, one removed to Provincetown and one to Maine, where the subject of this sketch was born May 1, 1844, at Vinalhaven. From the age of eight he was more or less on the sea until 1865. When nineteen years of age he enlisted in the Union army in the Second Maine Cavalry, Company E, and after nearly two years was transferred to the navy where he served under Farragut in the capture of the forts of Mobile bay. He was discharged in 1865, returned home, and commenced his professional studies. After a suitable education at Oak Grove Seminary he entered in 1869 at Harvard, where he graduated in medicine February 14, 1872. In November, 1873, he came from Martha's Vineyard to Dennis Port and began practice. His business success, the erection of fine blocks in Dennis Port, are fully mentioned in the history of that village. In 1884 he erected in Harwich, near Dennis Port, his fine residence which, with his block of stores, is the subject of an illustration in the proper connection. Since locating here the doctor has gained a large practice in his own and
+
+<vocab>Barnstable, Matthew Fuller, Plymouth, Philip's war, John Fuller, Charles F. George, Benjamin D. Gifford, David R. Ginn, Edward K. Ghen, Union army, Second Maine Cavalry, Farragut, Mobile bay, Harvard, Dennis Port, Harwich</vocab>

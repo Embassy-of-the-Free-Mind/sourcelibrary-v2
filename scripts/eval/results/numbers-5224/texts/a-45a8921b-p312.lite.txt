@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>298</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Thorne, John Calvin**
+Shoe merchant, local historian, b., Concord, N. H., Nov. 6, 1842, s. Calvin and Cynthia (Morgan) Thorne; ed. Concord schools, K. U. A., Meriden, N. H., 1864; entered into partnership with his father, 1864, the business being established 1835, now the oldest in Concord under one family name; upon his father's death, 1884, became sole owner; when the business was incorporated as the Thorne Shoe Store Co.,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of John Calvin Thorne, an older man with a white mustache and beard, wearing a suit and tie.</image-desc>
+
+1911, became president, retiring in 1914; Republican; president of Concord common Council, 1877-8; alderman, 1883-4; member First Congregational church, serving as deacon 1891-1913, treasurer, 1879-1913, clerk of the society at the time of the dedication of the present building, 1876; member Merrimack Valley Congregational Club (president two years), Concord Congregational Union, N. H. Congregational Ministers' and Widows' Fund (treasurer 17 years during which the fund was increased from $10,000 to $45,000), Prisoners' Aid Ass'n (treasurer 20 years), N. H. Bible Soc. (director 1881-1918, also vice-president, president 1918-), N. H. Historical Soc. (corresponding secretary 1913-, also member of standing committee), N. H. Soc. of Colonial Wars (governor 1903-6); deputy governor-general Nat. Soc. of Colonial Wars, 1912-18; trustee N. H. Savings Bank since 1880; member Concord Board of Education (1882-8), Soc. for Protection of N. H. Forests, Children's Aid and Protec. Soc., Charity Org. Soc., N. H. Audubon Soc., Red Cross, Nat. Security League, Nat. Geographic Soc. Contributor to *Granite Monthly*, also letters from Europe, Mexico, the West and South to the *N. H. Statesman* and *Concord Monitor*; occasional addresses before societies and clubs. Publications: Rev. Israel Evans (1902), Rev. Enoch Coffin (1902), History and Manual of the First Congl. Church, 1730-1907 (published and presented 600 copies), John Calvin (1909), Thorne Genealogy, 1200-1900, (1913), Chronicle of N. H. Soc. of Colonial Wars, 1894-1914, with Sketches of Deceased Members (1914); m., Mary Gordon Nichols, July 8, 1873. (See following sketch.) Residence, 216 North Main St., Concord, and Thornecroft Lodge, Pembroke, N. H.
+
+<column-break/>
+
+**Thorne, Mary Gordon (Nichols)**
+(Mrs. John C. Thorne), club-woman; b., Tremont, Ill., dau. Nathaniel Gordon and Lucia Jane (Lovejoy) Nichols; ed. Normal University, Bloomington, Ill.; has lived at Concord, N. H., since her marriage in 1873; member First Congregational church; president Woman's Board of Foreign Missions several years; organized Young People's Missionary Soc. of fifty members, 1898; president Ladies' Social Circle many years; has taught in Sunday school forty-four years and still continues with a class of 35 women; organized Y. M. C. A. Auxiliary during administration of Walter B. Abbott (1887-90), president many years, carrying through several large entertainments to raise money for a build-
+
+<vocab>John Calvin Thorne, Mary Gordon Thorne, Concord New Hampshire, genealogy, First Congregational Church, N. H. Historical Society, N. H. Savings Bank, club-woman, philanthropy</vocab>

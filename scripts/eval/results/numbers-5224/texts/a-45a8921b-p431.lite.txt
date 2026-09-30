@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>417</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 417</header>
+<sig>28</sig>
+
+**Page, Calvin**
+Lawyer; banker; b., North Hampton, N. H., Aug. 22, 1845; s. Simon D. and Judith (Rollins) Page; ed. Phillips Exeter Academy, 1863; Harvard College; studied law with the late Hon. Albert R. Hatch; admitted to the N. H. bar in 1868, and commenced practice in Portsmouth, continuing till 1910, when he retired, as head of the firm of Page, Bartlett & Mitchell, having been identified with much important litigation; Unitarian; Democrat; chairman Portsmouth high school committee 1883– ; mayor of Portsmouth, 1883–4, 1899; member of N. H. constitutional convention, 1889; member N. H. state senate, 1893–4, 1917–18; U. S. Collector of internal revenue, for Maine, New Hampshire and Vermont, eight years, under President Cleveland; president N. H. Nat’l Bank, Portsmouth Trust & Guarantee Co., Granite State Fire Ins. Co., Manchester & Lawrence R. R., Concord & Portsmouth R. R., and director Upper Coös R. R.; member Inter-State Bridge Commission of Maine and New Hampshire; president N. H. Bar Ass’n, 1905, Rockingham Co. Bar Ass’n, 1917– ; member A. F. & A. M., K. T. Eminent Commander De Witt Clinton Commandery, Portsmouth, three years; Warwick Club; m., Jan. 6, 1870, Arabella J. Moran, Portsmouth; one daughter, Agnes (Mrs. John H. Bartlett), b. Aug. 21, 1871. Residence, Portsmouth, N. H.
+
+**Knox, William Franklin**
+Journalist; b., Boston, Mass., Jan. 1, 1874; s. William E. and Sarah C. (Barnard) Knox; ed. public schools, Grand Rapids, Mich.; Alma College, Mich., A.B., 1898; employed on Grand Rapids (Mich.) Herald, 1898–1901; publisher Sault Ste. Marie (Mich.) News 1901–12; Manchester, N. H., Leader 1912–13; Manchester Union and Leader since 1913; Congregationalist; Republican; President Union-Leader Publishing Co.; member A. F. & A. M., 32d degree and Shriner, Derryfield and Intervale Country clubs, Manchester;
+
+<column-break/>
+
+private 1st U. S. Volunteers (Rough Riders) in Spanish American War; major in Mich. N. G., 1908; member board of U. S. Indian Commissioners by appointment of President Taft; Chairman Mich. Republican State Committee, 1910–2, on staff of Gov. Samuel D. Felker of New Hampshire, 1913; in service in U. S. Army in war with Germany, major horse section, battalion of 303d ammunition train, attached to 78th division; had three months of front line activity and was in St. Mihiel, Argonne Forest and Verdun battles; m., Dec. 28, 1898, Annie Reid, Alma, Mich. Residence, Manchester, N. H.
+
+**Curtis, Warden Allan**
+Journalist; author; b., in New Mexico, February, 1867; s. Capt. Charles Albert (U. S. A.) and Harriet Louise (Hughes) Curtis; ed. University of Wisconsin, A.B. 1889; engaged on various newspapers in the West and South for many years; removed to Ashland, N. H., some ten years ago, some time contributor to the Boston Transcript, and later several years special correspondent of the Boston Herald; author, “Strange Adventures of Mr. Middleton,” 1903. Residence, Ashland, N. H.
+
+**Cummings, Edward**
+Clergyman; b., Colebrook, N. H., April 20, 1861; s. Edward Norris and Lucretia Frances (Merrill) Cummings; ed. Harvard college, A.B. 1883, A.M., 1885; Harvard Divinity school, 1883–5; Graduate School (Robert Treat Paine fellow in social science), 1888–91; studied sociology in Great Britain, France, Italy and Germany; instructor in Sociology, Harvard, 1891–2, associate professor, 1893–1900; minister South Congregational Church (Unitarian), Boston, since 1900, succeeding the late Edward Everett Hale; lecturer on social science; president Mass. Civic League, Benevolent Fraternity of Unitarian Churches; director Mass. Prison Ass’n, Watch and Ward Soc., Industrial Aid Soc., etc.; general secretary World
+
+<vocab>Calvin Page, William Franklin Knox, Warden Allan Curtis, Edward Cummings, New Hampshire, biography, genealogy, politics, journalism, clergy</vocab>

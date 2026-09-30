@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>440</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Aug. 4, 1872; Elwin Lawrence, b. Feb. 22, 1876 (Williams 1900), lawyer in Concord; Wilbur Jewell, b. Jan. 4, 1883 (Williams 1906), in employ of U. S. Department of Commerce. Residence, Concord, N. H.
+
+**Tobey, Charles William**
+Banker; b., Roxbury, Mass., July 22, 1880; s. William A. and Ellen H. (Parker) Tobey; ed. Roxbury Latin
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+school; engaged in banking in Boston; established his home in Temple, N. H., in 1903, where he purchased a farm and engaged in agricultural pursuits; since 1916 has conducted business as an investment banker in Manchester, with office in Amoskeag Bank building, retaining his legal residence in Temple; Baptist; Republican; chairman selectmen and school board in Temple; member N. H. house of representatives, 1915-16, member committee on revision of the laws; 1919, speaker; delegate in N. H. constitutional convention, 1918; chairman N. H. Liberty Loan Committee, 1918-; member Miller Grange, P. of H., Temple; director Rotary Club, Manchester; m., June 4, 1902, Francelia M. Lovett, Roxbury, Mass.; children, Russell B., b. June 10, 1903; Louise Cone, b. July 6, 1907; Francelia M. Cone, b. June 22, 1908; Charles W., Jr., b. Jan. 26, 1911. Residence, Temple and Manchester, N. H.
+
+<column-break/>
+
+**Elliot, John Wheelock**
+Surgeon; b., Keene, N. H., October, 1852; s. John H. and Emily Ann (Wheelock) Elliot; ed. Harvard, A.B. 1874; M.D. 1878; Mass. General Hospital, 1878; studied in Europe, 1879-80; began practice in Boston, 1881; physician to Boston Dispensary, 1882; assistant surgeon Free Hospital for Women, 1883-7; surgeon, 1894-1907; lecturer on surgery, Harvard Med. School, 1900-5; retired from practice, 1913; Fellow American Surgical Ass'n; chairman N. E. Surgical Dressings Com., American Red Cross; director Sullivan Machinery Co.; member Tavern Club, Boston; frequent contributor to medical journals; m., May 8, 1883, Mary Lee Morse of Boston. Residence, 124 Beacon St., Boston, Mass.
+
+**Ellis, Carleton**
+Chemist; b., Keene, N. H., Sept. 20, 1876; s. Marcus and Catharine (Goodnow) Ellis; ed. public schools, Mass. Inst. Tech., B.Sc. 1900; instructor Mass. Inst. Tech., 1900-2; engaged extensively in the field of oils, fats, waxes, paints, varnishes, illuminating gas, etc., and has taken out more than 200 patents; president Ellis-Foster Co., Hydrogenated Oil Co., N. J. Testing Laboratories; vice-president Chadeloid Chemical Co.; Charter member Inventors Guild; member American Chemical Soc., American Institute Chemical Engineers, Society Chemical Industry, London, Eng., International Congress of Applied Chemistry, etc.; awarded gold medal for inventions at Jamestown exposition, 1907; author various scientific and technical works and contributor to technical journals;
+
+<vocab>Charles William Tobey, John Wheelock Elliot, Carleton Ellis, New Hampshire, biography, genealogy, medicine, chemistry, banking</vocab>

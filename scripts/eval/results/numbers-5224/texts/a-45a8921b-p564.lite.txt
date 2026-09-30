@@ -1,0 +1,65 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>3</columns>
+<page-num>550</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+| NAME | PAGE | NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Bingham, George Hutchins | 382 | Burroughs, Sherman Everett | 35 | Claggett, Fred Porter | 359 |
+| Bingham, Harry | 18 | Burton, George Dexter | 498 | Clark, Allan Chester | 331 |
+| Black, Archibald | 166 | Busiel, John Tilton | 499 | | |
+| Blackburne, Mary F. Blaisdell | 361 | Buss, George Washington | 286 | | |
+| Blaisdell, Albert Franklin | 366 | Buxton, Willis George | 105 | | |
+| Blaisdell, Bertram | 480 | | | | |
+| Blaisdell, Carlyle W. | 109 | Cain, John Leavitt | 357 | | |
+| Blake, Amos Jewett | 79 | Campbell, Alfred Hills | 498 | | |
+| Blakely, Quincy | 425 | Carlton, Charles Elijah | 155 | | |
+| Blanchard, Grace | 89 | Carpenter, Dumont Hamilton | 523 | | |
+| Blunt, Harry Harmon | 325 | Carpenter, Frank Pierce | 93 | | |
+| Boutwell, Harvey Lincoln | 65 | Carpenter, Georgia Butters Drake | 522 | | |
+| Bowker, Edgar Marshall | 547 | Carpenter, Philip | 19 | | |
+| Bowman, George Ernest | 525 | Carr, Clarence Edgar | 77 | | |
+| Boynton, Roy J. | 527 | Carr, Henry James | 366 | | |
+| Brackett, Charles Albert | 163 | Carroll, Annie Wilkins | 175 | | |
+| Brackett, John Q. A. | 71 | Carter, Solon Augustus | 115 | | |
+| Bradley, Mark Spaulding | 516 | Carter, William Scott | 479 | | |
+| Branch, Oliver Winslow | 519 | Cavanaugh, John Bernard | 230 | | |
+| Brehaut, James William | 483 | Cavis, Kate Chandler | 474 | | |
+| Brennan, James F. | 119 | Chadwick, Henry Dexter | 517 | | |
+| Brennan, Vincent John | 137 | Chamberlin, Alonzo Laban | 154 | | |
+| Bridge, John Davis | 90 | Chamberlin, Edson Joseph | 390 | | |
+| Bridgman, Don Seavey | 151 | Chamberlin, Henry Eastman | 28 | | |
+| Brinley, Godfrey Malbone | 418 | Chandler, Clark Porter | 500 | | |
+| Britton, Arthur Harvey | 456 | Chandler, Fred Gray | 137 | | |
+| Britton, William John | 95 | Chandler, Horton Lloyd | 501 | | |
+| Brooks, John Graham | 206 | Chandler, William Dwight | 500 | | |
+| Brown, Albert Oscar | 421 | Chandler, William Dwight, Jr. | 501 | | |
+| Brown, Alice | 266 | Chandler, William Eaton | 3 | | |
+| Brown, Alice Van Vechten | 270 | Chapin, Bela | 245 | | |
+| Brown, Calvin Luther | 121 | Chapman, Charles E. | 231 | | |
+| Brown, Edmund H. | 34 | Charron, Henry Emery | 190 | | |
+| Brown, Edmund Towle | 495 | Chase, Arthur Horace | 51 | | |
+| Brown, Elisha Rhodes | 273 | Chase, Charles Parker | 158 | | |
+| Brown, Emma Elizabeth | 360 | Chase, Harvey Stuart | 383 | | |
+| Brown, Frank Herbert | 151 | Chase, Ira Arthur | 95 | | |
+| Brown, Frank Parker | 213 | Chase, Levin Joynes | 39 | | |
+| Brown, Fred Herbert | 509 | Chase, Olin Hosea | 27 | | |
+| Brown, George Henry | 441 | Chase, Russell MacMurphy | 237 | | |
+| Brown, Harry James | 262 | Chase, Stuart | 353 | | |
+| Brown, Henry Currier | 37 | Chase, William Martin | 19 | | |
+| Brown, John Henry | 413 | Chellis, Frank Otis | 464 | | |
+| Bugbee, Marion Louise | 83 | Cheney, Elias Hutchins | 127 | | |
+| Bugbee, Perley Rufus | 155 | Cheney, Harry Morrison | 12 | | |
+| Bullock-Mahan, Lillian Gertrude | 503 | Child, Edwin Leighton | 353 | | |
+| Burbank, Charles E. | 495 | Child, Samuel Mitchell | 518 | | |
+| Burgum, Edwin Berry | 307 | Child, William Henry | 367 | | |
+| Burleigh, Alvin | 45 | Churchill, Mabel H. Hall | 283 | | |
+| Burley, Benjamin Thomas | 498 | Churchill, Winston | 193 | | |
+| Burlingame, Harriet Grace Boyd | 233 | Chutter, Frederick George | 482 | | |
+| Burnham, Sylvester | 361 | | | | |
+| Burnham, William Henry | 110 | | | | |
+
+<vocab>New Hampshire, biography, index, notables</vocab>

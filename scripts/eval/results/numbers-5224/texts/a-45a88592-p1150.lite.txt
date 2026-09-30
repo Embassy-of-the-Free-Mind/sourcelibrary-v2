@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>892</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Flying Place, or Little Cliff pond, is a clear pond of considerable size, lying northeasterly but a short distance. This pond was called by the Indians Quanoycomauk. Some portions of the Sipson's land adjoined it. A short distance northerly is a large bowlder marked plainly B. M., for Benjamin Macor, who lived hard by. Not far northward is the Rock pond, often mentioned in the early deeds of land.
+
+Winslow's pond, in the west part of the town, is the largest of the ponds. At the time of the settlement, and for many years after, Indians occupied land adjoining on the east. Captain Daniel, the famous Indian warrior, who did valiant service under Major Church in 1689, in Maine, resided near it, and owned a large tract adjoining it.
+
+Mill pond, the source of Sauquatuckett river, is connected with Winslow's pond by a narrow stream. Alewives spend the spawning season in it.
+
+Cobb's pond, in the north part of the town, near the shore, has an outlet into the bay. It is mentioned in the old deeds and records of land as the pond that "hath a run into the sea called Auquanest."
+
+Griffith's pond lies south of Cobb's pond, in the central part of the town. Stephen Griffith and many of his descendants lived near it, hence its name.
+
+Baker's pond is in the eastern part, and the line that divides the town from Orleans passes through it. It was called by the Indians Pomponeset. James Maker, an early settler, had a house near the pond. Afterward William Baker lived near it, since which time it has been known by its present name. Not far from it is Raph's, or Rafe's, pond.
+
+Sheep pond, a large, clear body of water, well surrounded by high land, lies not far north of Long pond. Some of the early residents of this section lived near by.
+
+The streams in the town are not large nor numerous. The most important are Quivet creek, Sauquatuckett river and Skaket or Namskaket creek.
+
+Quivet creek, or Bound brook, known to the Indians as Shuckquam, divides the town from Dennis in that section. The stream rises in Brewster, and flows northeasterly through the marsh into the bay.
+
+Sauquatuckett river rises in Mill pond, and flows northerly into the bay. This stream has been known by several names besides Sauquatuckett river. It has been called "Stoney Brook," "Satucket River," "Mill Brook" and "Winslow's Brook." Sauquatuckett is the Indian name. Upon this brook was built the first water mill in this section of the county.
+
+Namskaket creek, as far as it extends, divides this town from Orleans. On either side is a body of marsh, which affords an abun-
+
+<vocab>Barnstable County, Flying Place, Little Cliff pond, Quanoycomauk, Sipson's land, Benjamin Macor, Rock pond, Winslow's pond, Captain Daniel, Major Church, Mill pond, Sauquatuckett river, Alewives, Cobb's pond, Auquanest, Griffith's pond, Stephen Griffith, Baker's pond, Pomponeset, James Maker, William Baker, Raph's pond, Sheep pond, Long pond, Quivet creek, Skaket creek, Namskaket creek, Bound brook, Shuckquam, Stoney Brook, Satucket River, Mill Brook, Winslow's Brook</vocab>

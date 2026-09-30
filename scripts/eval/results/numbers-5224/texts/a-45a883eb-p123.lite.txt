@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>119</page-num>
+<header>The Book of Clevelanders</header>
+
+1899-1903; vice pres. The Citizens Savings & Trust Co., 1913; director The First National Bank; member the Union, Tavern, Roadside Country, and Willowick Clubs.
+
+**HALE, Willis B.**; brokerage and real estate; born, Decatur, Ill., June 17, 1847; son of E. B. and Susan C. Hoyt Hale; educated, Union College, class of 1870, valedictorian, Philomethean Society; pres. Delta Phi Fraternity; married, Cleveland, Oct. 9, 1873, Clara Worthington; issue, four children, Cora (Mrs. Jas. O. Rogers, New York); Edwin W., mining engineer, expert chemist and author, Eleanor (Mrs. E. C. Reader, Cleveland); Willis W., electrical expert and inventor, Yale graduate; organizer of Hale Electric & Engineering Co. and Hale Chemistry Co.; for twenty-three years he was cashier of E. B. Hale & Co., the oldest private banking business in the city, and which later became the Marine Bank Co.; he was vice pres. until it was liquidated in 1894; pres. Hale Electric Engineering Co.; director of various companies; member Union, Euclid, Cleveland, Yacht, Middle Bass and Little Mountain Clubs.
+
+**HALL, George Herbert**; mining engineer; born, Charleston, Mass., July 12, 1880; son of J. M. and Isabella Dunlap Hall; educated, grammar school, Charleston, Mass., High School, Chelsea, Mass., Case School Applied Science, Cleveland, degrees of B. S. and E. M., Case School; married, Cleveland, Sept. 25, 1907, Elizabeth J. Adams; two sons, Charles, born Jan. 4, 1909, William, born Nov. 14, 1911; five years engineer and salesman The Gardner Electric Drill and Machinery Co.; at present sec'y and sales manager The Cleveland Rock Drill Co.; treas. The Cleveland Pneumatic Tool Co., of Canada, Ltd.; member The Cleveland Engineering Society, Chamber of Commerce, Fraternity Sigma Xi. Recreations: Golf and Tennis.
+
+**HALL, Lewis**; life insurance; born, Ox Bow, N. Y., Nov. 19, 1857; son of Caleb G. and Catherine J. Lewis Hall; educated, Cazenovia, N. Y., Evanston, Ill.; married, Theresa, N. Y., March 31, 1896, Henrietta C. Simonds; twenty years representative The Mutual Benefit Life Insurance Co., Newark, N. J., at present with The Phoenix Mutual Life Insurance Co., Hartford Conn.; director T. H. Geer & Co.; member of Wade Park Lodge, No. 800, I. O. O. F.
+
+**HALL, Lucien B.**; wholesale druggist; born, Brenfield, O., Feb. 18, 1848; son of Porter B. and Mary Hinsdale Hall; attended Western Reserve for a time, left college to go into business; married, Cleveland, Dec. 23, 1880, Jennie E. Lyon; one daughter, Amy Hall Case (Mrs. George S.); in 1870, traveled for Benton, Myers & Canfield; 1876, entered firm of Benton, Myers & Co.; afterward Benton, Hall & Co., now Hall, Van Gorder & Co.; pres. and treas. The Hall-Van Gorder Co.; vice pres. and treas. The Cleveland Fruit Juice Co.; director, The Guardian Savings & Trust Co.; director
+
+<vocab>Willis B. Hale, George Herbert Hall, Lewis Hall, Lucien B. Hall, Cleveland, biography, business, banking, mining engineering, insurance, wholesale druggist</vocab>

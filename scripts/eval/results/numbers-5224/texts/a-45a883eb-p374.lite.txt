@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>370</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. Q. Rawson</image-desc>
+L. Q. RAWSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Johnny Ray</image-desc>
+JOHNNY RAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fdk. Reading</image-desc>
+FDK. READING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. S. Reed, Judge</image-desc>
+CHAS. S. REED, JUDGE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. A. Reamer</image-desc>
+D. A. REAMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. F. Reichert</image-desc>
+J. F. REICHERT
+
+<vocab>Clevelanders, L. Q. Rawson, Johnny Ray, Fdk. Reading, Chas. S. Reed, D. A. Reamer, J. F. Reichert</vocab>

@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>256</page-num>
+<header>HISTORY OF BARNSTABLE COUNRY.</header>
+
+In 1888, a volume entitled, *Biographical sketch of Sylvanus B. Phinney*, was issued on the 80th anniversary of his birthday. The volume contains a sketch of his life, letters from Revs. Edward E. Hale and A. Nickerson, and public addresses and papers prepared by Mr. Phinney.
+
+Joseph Story Fay, Esq., of Woods Holl, published in 1878 a little monograph entitled, *The Track of the Norsmen*, in which he very ingeniously argues that these Scandinavian navigators visited the locality since known as Wood's Hole, and that the proper name of the locality is Wood's Holl (meaning hill), which name, through his efforts, it now bears. Mr. Fay, who is an enthusiastic arborator as well as a gentleman of literary tastes and pursuits, has delivered addresses relating to his experiences in planting and rearing forest trees on his estate at Woods Holl.
+
+Rev. J. G. Gammons issued in 1888, a monograph of the Methodist Episcopal church of Bourne, which sketches the rise and growth of Methodism, and preserves many interesting reminiscences of the pioneers of this sect on Cape Cod and elsewhere, especially in the town of Bourne.
+
+A Genealogy of the Burgess family, from Thomas Burgess who settled in Sandwich in 1637, to the year 1865, was issued at that date, by E. Burgess of Dedham. It was a private edition, printed for the author, and contained 196 pages and has over 4,600 names of the family and branches, with several lithographic portraits.
+
+George Eldridge, of Chatham, in 1880 published a work of *Sailing Directions for Navigators*, followed by other editions in 1884 and 1886. In 1889 he published *Eldridge's Tide and Current Book*. These publications, together with Mr. Eldridge's charts, are the most valuable works of the class extant, and are looked upon as standard authority by navigators, and adopted by the naval authorities of the country.
+
+Mr. Gustavus A. Hinckley has reproduced for publication in the *Barnstable Patriot*, the inscriptions on the ancient grave-stones in the old Barnstable cemetery, engraving the blocks very neatly with his own hand, and compiling information to accompany the cuts. He has also compiled a manuscript *History of Barnstable in the Civil War*.
+
+In 1866, Mrs. Caroline (Thacher) Perry, of Yarmouth, collected a volume of short stories which she had contributed to the *New Church Magazine for Children*, and they were published, with illustrations, by Nichols & Noyes, of Boston, under the title, *Effie Gray and other Short Stories for Little Children*. These stories possessed the rare merit in juvenile literature of interesting the class of readers for which they were designed.
+
+Rev. Dr. William H. Ryder, a native of Provincetown, who deceased in Chicago where he settled in 1888, was a pulpit orator of
+
+<vocab>Sylvanus B. Phinney, Joseph Story Fay, Woods Holl, The Track of the Norsmen, J. G. Gammons, Methodist Episcopal Church, Bourne, Burgess family, Thomas Burgess, Sandwich, George Eldridge, Sailing Directions for Navigators, Eldridge's Tide and Current Book, Gustavus A. Hinckley, Barnstable Patriot, Caroline (Thacher) Perry, New Church Magazine for Children, Effie Gray and other Short Stories for Little Children, William H. Ryder</vocab>

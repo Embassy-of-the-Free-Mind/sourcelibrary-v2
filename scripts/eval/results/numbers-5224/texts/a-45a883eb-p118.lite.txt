@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>114</page-num>
+<header>The Book of Clevelanders</header>
+
+ing & Savings Co., California Red Wood Lumber Co., and the Stark Electric R. R. Co.; member Chamber of Commerce, Chamber of Industry, Cleveland Athletic, Clifton, and Lakewood Tennis Clubs.
+
+GREINER, Louis C.; optometrist; born, Cincinnati, Ohio; son of Charles and Augusta Fichs Greimer; educated, Cincinnati public school and Hughes High School, same city; has been in the optical business since leaving school; formerly in the employ of A. M. Jordan, one of the largest optical houses in Cincinnati; came to Cleveland, Oct. 17, 1910; has been with the Dodd-Rogers Co. since; member Walnut Hill Lodge, No. 483, F. & A. M., Kilwinning Chapter, No. 97, R. A. M. Recreations: Photography.
+
+GRESHAM, Harry Ernest; born, Sheffield, Eng., 1865; son of L. S. and Emily (Hooten) Gresham; educated in commercial and private schools, Sheffield; married; two sons and one daughter, went to work in cutlery factory at 13½ years of age; learned the practical making of pocket cutlery; at 19, was manager of W. Nealthy & Son, pocket knife dept.; came to America in 1886; three years member First York and Lancaster Light Infantry; sergeant, four years; trustee Village of Lakewood; private sec'y to J. H. Wade since 1892; British Vice Consul since 1909; Past Grand, Tyrian Lodge, I. O. O. F.; member Cleveland Yacht, Athletic and Western Reserve Cricket Clubs. Recreations: Cricket, Billiards and Gardening.
+
+GRIEBLING, Erich L.; fire insurance; born, Milwaukee, Wis., Aug. 9, 1877; son of Gustav W. and Elizabeth Damkoehler Griebling; married, Milwaukee, Wis., May 1, 1901, Lydia Dammam; two sons, Erich and Ralph, employed by Milwaukee Fire Insurance Co.; in 1898, as entry clerk; in June, 1903, appointed special agt. to travel in Wisconsin, Illinois, Ohio, Indiana, Iowa and Minnesota; in April, 1905, appointed chief clerk at home office of Milwaukee Fire Ins. Co.; in September, 1911, appointed mngr. of Cleveland Branch of Milwaukee Mechanics Insurance Co.
+
+GRIES, Moses J.; rabbi; born, Newark, N. J., Jan. 25, 1868; son of Jacob and Katie Gries; educated, Hughes High School, Cincinnati, University of Cincinnati and Hebrew Union College; married, Cleveland, June 15, 1898, Frances Hays; issue, two sons; pres. Central Conference of American Rabbis; member Board of Governors, Hebrew Union College, Board of Editors, Department of Synagogue and School Extension; member committee on Municipal Arts and Architecture of the Cleveland Chamber of Commerce (group plan); member board of trustees Cleveland Associated Charities; trustee Cleveland School of Art; Federation of Jewish Charities; director of The City Club of Cleveland; also past pres. of the following: Educational League, B'nai B'rith; Cleveland Council of Jewish Women; Alumni Ass'n of the Hebrew Union College; Jewish Religious Education Ass'n of Ohio; and the Ohio Rabbinical Ass'n and pres. of Council Educational Alliance.
+
+<vocab>Louis C. Greiner, Harry Ernest Gresham, Erich L. Griebling, Moses J. Gries, Cleveland, biography, business, insurance, optometry, rabbinate</vocab>

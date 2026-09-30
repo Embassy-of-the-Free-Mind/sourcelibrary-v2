@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>857</page-num>
+<header>TOWN OF HARWICH.</header>
+
+Emulous Small engaged in business in the store under Union Hall after the closing of the "Union store," which had been opened in 1850, and in company with his father, under the firm of E. Small & Co., remained about three years in business, when his father retired. He then carried on the business until 1876, when he sold out his store to Joseph K. Robbins. Mr. Robbins continued the business until April, 1889, when he sold out to Samuel J. Miles.
+
+Lovell S. Burgess started in the clothing business here in the village in 1864, Freeman E. Burgess being connected with the custom department. In 1877 Simeon K. Sears purchased the store, and now keeps a dry goods store. In 1879 Mr. Burgess became a partner with F. E. Burgess, who had started the clothing business, but after a year here went to Dennis Port and opened a dry goods store, leaving his partner, who continues at the old stand.
+
+Among other prominent traders of to-day here, are C. F. Nickerson, P. N. Small, George D. Smalley, W. R. Burgess and Elisha Mayo. Mr. Mayo opened his boot and shoe store in 1887.
+
+The village blacksmiths are William H. Cole and Thomas Freeman. Mr. Cole succeeded Josiah B. Hallett in 1870. In connection with his blacksmith work he carries on carriage work.
+
+Social Hall, located a little north of Main street, was erected in 1869. It is owned by a stock company, which holds 97½ shares. The meetings of the town have been held in it the past twelve years.
+
+Satucket House, built in 1886, is occupied as a reading room and library. It is managed by a board of trustees annually chosen. Watson B. Kelley is the president and S. K. Sears secretary.
+
+The Sea View Circle, composed of ladies, contributed to its erection. Their library of nearly six hundred volumes, called also Sea View Library, is in it, and is open on Saturdays. T. R. Eldridge is librarian and Miss Sabra F. Smith assistant librarian.
+
+The hotel in the eastern part of the village, known as the Sea View House, is kept by Rinaldo Eldridge. Just south of this hotel, on the west side of the road, were the salt works of Captain Theophilus Burgess, an energetic ship captain, who was lost on a voyage to Russia in 1832.
+
+Marsh Bank wharf was built in 1841. It was the first built on the shore east of the Herring river. The second was Union wharf, east of Marsh Bank wharf, built in 1849. The third was Long wharf, east of Union wharf, and West of Salt Water pond. These wharves have all been destroyed by ice. The only wharf now upon the shore is at the foot of Sea street, and is owned by Henry Kelley & Co. and T. B. Baker. This wharf has been rebuilt several times in consequence of ice. It stands upon the site of the old "Marsh Bank wharf."
+
+It was at the old Marsh Bank wharf, in 1847, that Valentine Doane
+
+<vocab>Harwich, Massachusetts, Emulous Small, Union Hall, E. Small & Co., Joseph K. Robbins, Samuel J. Miles, Lovell S. Burgess, Freeman E. Burgess, Simeon K. Sears, F. E. Burgess, Dennis Port, C. F. Nickerson, P. N. Small, George D. Smalley, W. R. Burgess, Elisha Mayo, William H. Cole, Thomas Freeman, Josiah B. Hallett, Social Hall, Satucket House, Watson B. Kelley, S. K. Sears, Sea View Circle, Sea View Library, T. R. Eldridge, Sabra F. Smith, Sea View House, Rinaldo Eldridge, Theophilus Burgess, Marsh Bank wharf, Herring river, Union wharf, Long wharf, Salt Water pond, Henry Kelley & Co., T. B. Baker, Valentine Doane</vocab>

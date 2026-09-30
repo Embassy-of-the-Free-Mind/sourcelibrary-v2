@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>131</page-num>
+<header>INDUSTRIAL RESOURCES. 131</header>
+
+There were probably then no people in the New World whose employments were more varied, or whose resources were more widely diversified than were those of the people who for the first century occupied this Cape. Their fields gave liberal reward for their toil, and on every hand were the still more productive waters of the sea. Thus all those pursuits, which may be generally classed as fishing, have been a perpetual, although a varying, fountain of wealth. The superior advantages for fishing, which Provincetown offered in 1620, were observed by the Pilgrims, and the practical whalemen among them expressed their belief that with proper facilities they, from the taking of whales alone, could have made a most profitable return for the whole voyage. As early as 1666 the Plymouth court imposed upon the Cape Cod fisheries a duty, for revenue only, with which a public school was to be established, and with the proceeds of stranded whales they oiled the machinery of church and state.
+
+The codfishing on North American coasts received the attention of Europe almost immediately after the Cabots' explorations. The abundance of this fish in the immediate vicinity of the Cape has been noticed, and is forever recorded in the name which the peninsula bears. In 1622 the Plymouth Company complained to the king, of thirty-seven English ships which had made successful fishing voyages to the New England coast, whereupon all fishing, or Indian trading, was prohibited on these shores except by license from the council of Plymouth. The right to control this industry gave to the colony, first, franchises for which they received £1,800 from the merchant adventurers, and later those royalties and revenues, the collection of which in the various towns the reader will hereafter notice.
+
+For a century and a half this branch of fishing grew in importance and the extent of waters visited by the Cape fishermen included the Bay of Fundy, the banks of Newfoundland, and the surrounding straits. An idea of the extent to which the people of this country depended upon this resource may appear from the following figures, showing the annual average of five towns for the ten years preceding the revolution. These figures are from Macgregor's tables, a standard English authority: Chatham had thirty vessels of thirty tons each engaged in the business and employed 240 men, taking 12,000 quintals. Provincetown had four vessels of forty tons each, employing thirty-two men, who took 16,000 quintals. Eighty men with ten vessels of forty tons each, sailing from Truro, took 4,000 quintals. Wellfleet had three vessels operated by twenty-one men who secured 900 quintals. Yarmouth had thirty vessels of thirty tons each, in which 180 men secured 9,000 quintals.
+
+When the colonists in 1776 appealed to the uncertain arbitrament of war, these maritime interests suffered most, but so promptly did they
+
+<vocab>Cape Cod, fisheries, Pilgrims, whalemen, Plymouth court, Plymouth Company, Cabots, Macgregor's tables, Chatham, Provincetown, Truro, Wellfleet, Yarmouth, quintals</vocab>

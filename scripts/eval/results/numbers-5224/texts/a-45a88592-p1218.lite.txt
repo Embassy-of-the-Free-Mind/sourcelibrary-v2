@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>950</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+1860. Since 1878 he has been engaged in weir fishing. He has been for several years a member of the school committee, and has taught school during the winter season for several years. He was elected in 1889 to represent his district in the legislature.
+
+I. Morton Small, born in 1846, is a son of James and Jerusha (Hughes) Small, grandson of Isaac, great-grandson of Francis, and great-great-grandson of Samuel Small. He has been marine telegraph operator at the Highland station since 1860. He has owned the Highland House since 1873, having succeeded his father, who had kept a summer boarding house for eleven years. He married Sarah E., daughter of John Small. She died leaving three children: Willard M., James S. and Lillian M.
+
+Thomas F. Small, born in 1813, was the eldest son of James and Polly (Dyer) Small, grandson of Isaac, and great-grandson of Francis, whose father was Samuel Small. Mr. Small was a farmer at Truro until his death, April 8, 1890. He married Elizabeth P., daughter of John and Hannah (Paine) Hughes, granddaughter of John and great-granddaughter of John Hughes. Their two children: Eliza F., who married John Horton, and Warren W., who married Sally A. Dyer.
+
+Isaiah Snow, born in 1842, is one of ten children of Ephraim and Jemima (Knowles) Snow, grandson of Shubael and great-grandson of Anthony Snow. He was seven years in business in Philadelphia. Since February, 1881, he has been traveling salesman for a wholesale house. He served in the civil war in Company E, Forty-third Massachusetts Volunteers. He is trustee, treasurer and recording steward of the Methodist Episcopal church, also superintendent of the Sunday school. He married Hattie R., daughter of Edward Hopkins and granddaughter of Edward Hopkins. They have lost two children: Frank I. and Dean H.
+
+John G. Thompson, born in 1837, is the only surviving child of Alexander and Bethiah (Grozier) Thompson. He followed the sea from 1855 until 1866, and has since been a merchant at North Truro. He married Sally C., daughter of James Hughes. They have two children living—Albert H. and Mary A.—and lost one—Emma H.
+
+Edwin P. Worthen, son of Jacob Worthen, was born in 1837 in Charlestown, Mass. He came to Truro at the age of seven and followed the sea from that time until 1872, seven years as master. He has been keeper of the Highland life saving station since December, 1872. He married Julia E., daughter of John Francis.
+
+<vocab>Barnstable County, genealogy, Truro, weir fishing, Highland House, Civil War, Methodist Episcopal church, Highland life saving station</vocab>

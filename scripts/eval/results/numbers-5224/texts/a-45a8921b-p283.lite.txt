@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>269</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 269</header>
+
+**Sulloway, Alvah Woodbury**
+Manufacturer; railway official; b., Somerville, Mass., Dec. 25, 1838; s. Israel W. and Adaline (Richardson) Sulloway; ed. public schools, Barre (Vt.) Academy, Green Mountain Liberal Inst., So. Woodstock, Vt., Canaan Academy; learned hosiery manufacturing business in his father's mill at Enfield, N. H., operating some of the first machines made by the late Walter Aiken; commenced business in hosiery manufacturing in Franklin with Walter Aiken in 1860, continuing four years; then in company with Frank H. Daniell till 1869, after which he operated the Sulloway Mills alone, the same being incorporated Jan., 1888, extensive additions and improvements having been made from time to time till now this is the largest woolen hosiery manufacturing plant in the country, employing 650 operatives and producing 2,000 dozen pairs per day, nearly all at the present time on war orders for the U. S. government; Unitarian; Democrat till 1896, since Independent; member N. H. house of representatives, 1871, 1872, 1874 and 1875 (chairman committee on manufactures, 1874); N. H. railroad commissioner, 1874; Democratic candidate for Congress in Second N. H. district in 1877, and twice renominated; member first city council of Franklin, continuing several years; member N. H. constitutional convention, 1889, N. H. Senate, 1891; delegate to Democratic national convention in 1876, and all subsequent conventions, to and including 1896, and New Hampshire member Democratic Nat'l Com. for same period; director Northern Railroad since 1880, and president since 1885; director B. & M. Railroad for twenty-five years previous to 1916; president Concord & Claremont and Peterboro & Hillsboro Railroads since 1889; director Lake Champlain & St. Johnsbury R. R.; several years director Me. Central R. R.; president and treasurer Sulloway Mills; president Franklin Nat'l Bank since organization in 1879; president Franklin Savings Bank, Franklin Light
+
+<column-break/>
+
+& Power Co., Acme Machine & Needle Co.; trustee Amoskeag M'f'g Co.; director Monadnock Mills, Androscoggin Pulp Co., Concord Axle Co.; trustee Franklin Hospital, N. H. Orphans Home; member A. F. &. A. M. (lodge and chapter), P. of H.; m., June 5, 1866, Susan R. Daniell; children, Alice M., b. Aug. 5, 1871 (Mrs. Fred L. Thompson, Bellows Falls, Vt.); Richard W., b. Feb., 1876; Frank J., b. Dec. 11, 1883. Residence, Franklin, N. H.
+
+**Theriault, Marcel**
+Lawyer; b., St. Jacques, N. B., Nov. 22, 1885; s. Adolph and Hermine
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Marcel Theriault</image-desc>
+
+(Plourde) Theriault; ed. Nashua, N. H., public schools, Boston Univ. Law School, 1914; Catholic; Republican; member N. H. senate, 1917-8 (chairman committee on Judiciary); State Board Trustees of State Institutions, 1917-; member Republican state committee, Secretary Hillsborough Co., Republican Club; Gamma Eta Gamma law fraternity; president Montcalm Associates; partner in Nashua Steam
+
+<vocab>Alvah Woodbury Sulloway, Marcel Theriault, biography, New Hampshire, manufacturing, law, politics, railroad, banking</vocab>

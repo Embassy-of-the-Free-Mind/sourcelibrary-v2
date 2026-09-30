@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>121</page-num>
+<header>TRAVEL AND TRANSPORTATION. 121</header>
+
+schooner *J. H. Tripp*, J. A. Rich master, brought there the same year, constitute the present packet line between Wellfleet and Boston.
+
+TRURO.—It cannot be ascertained that there was any vessel engaged in the packet business in this town prior to 1812, yet there can be no reasonable doubt that there was some periodical connection between this place and Boston many years before. The first regularly established packet of which there is authentic information was the pink, *Comet*, Captain Zoheth Rich. About 1830 the friends of Captain Rich built for him the schooner *Postboy*, “the finest specimen of naval architecture and of passenger accommodation in the bay waters.” Her cabin and furniture were finished in solid mahogany and birdseye, and silk draperies. She was the favorite of the traveling public and was thronged with passengers. Captain Richard Stevens some years later ran successively the *Young Tell*, *Mail* and the fine schooner *Modena*. With the deterioration of the town harbors, the decline of the fishing business and the general suspension of the regular industries of the town, the packeting business also fell into decay before the day of steam cars.
+
+PROVINCETOWN.—Though the leading commercial town on the Cape, Provincetown did not become prominent as a community, nor as a place of residence until some time after the war of 1812–15. During that period, as in the war of the revolution, its harbor was a rendezvous of British men-of-war, and its local shipping was, of course, annihilated. Probably about the year 1820, the sloop *Truth*—the first Provincetown packet of which any knowledge exists—commenced running between this port and Boston. She was owned by John Nickerson, who with his brother, ran her for several years. The sloops *Catherine* and *Packet* followed after the *Truth* commenced, and were for several years her contemporaries. The *Catherine* was commanded by Joseph Sawtle, and was subsequently wrecked on the “back side.” Daniel Cook and afterward Jonathan Hill were the commanders of the *Packet*. In 1827 Jonathan Cook bought, at Saybrook, Conn., the sloop *Louisa*. She was regarded as a very fine craft and continued on the route under the command of Captain Cook, and of his son, Charles A. Cook, until about the year 1847. The latter afterward procured the sloop *Osceola* and engaged with her in the business.
+
+Not far from this time the schooner yacht *Northern Light* was bought, and commanded by Captain Whitman W. Freeman, who ran her to and from Boston, from March to December, three times each week—something never before nor since accomplished by any craft. In 1848 the *Northern Light* was sold to go to California, and was wrecked and totally lost in the Straits of Magellan, on her voyage out. Another vessel was bought for Captain Freeman—the schooner yacht *Oleata*, a fast and trim craft; but she was soon sold to New Orleans
+
+<vocab>Truro, Provincetown, packet ships, maritime history, Cape Cod, schooners, sloops, transportation</vocab>

@@ -1,0 +1,81 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>409</page-num>
+<header>The Book of Clevelanders 409</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Dean, H. G. | 318 | Gentsch, Frank F. | 328 |
+| Deisher, Fred. C. | 318 | Girl, Christian | 329 |
+| Dercum, Hermann | 318 | Glekler, M. M. | 329 |
+| Deter, H. H. | 318 | Goodman, Max P. | 329 |
+| Diederich, J. E. | 318 | Gordon, Wm. | 329 |
+| Diedricks, Carl J. | 319 | Gowen, A. Y. | 329 |
+| Dietz, W. G. | 319 | Grahl, Geo. F. | 329 |
+| Dissette, Mr. E. W. | 319 | Grant, F. M. | 330 |
+| Dluzynski, Theo. | 319 | Greene, E. B. | 330 |
+| Donaldson, A. F. | 319 | Greenleaf, L. B. | 330 |
+| Donovan, M. A. | 319 | Greiner, L. C. | 330 |
+| Donovan, M. F. | 320 | Griebling, E. L. | 330 |
+| Doud, A. N. | 320 | Grogan, Jos. | 330 |
+| Dove, H. E. | 320 | Groot, Judge Geo. A. | 331 |
+| Drake, E. A. | 320 | Grossman, Albert | 331 |
+| Drucker, Ralph M. | 320 | Gund, Geo. F. | 331 |
+| Duetemeyer, H. A. | 320 | Gundry, Jno. M. | 331 |
+| Duff, Harry E. | 321 | | |
+| Duncan, A. D. | 321 | Hackenberg, H. E. | 331 |
+| Duncan, Wm M. | 321 | Haldy, W. O. | 331 |
+| Dunham, Wilbur | 321 | Hale, W. B. | 332 |
+| | | Halle, Carl | 332 |
+| Eaton, C. S. | 321 | Hall, Lewis | 332 |
+| Eberling, C. M. | 321 | Hall, F. E. | 332 |
+| Edson, W. S. | 322 | Hammer, T. S. | 332 |
+| Edwards, Ralph W. | 322 | Hanna, Gustave H. | 332 |
+| Eells, H. P. | 322 | Hanna, W. F. | 333 |
+| Eichhorn, Chas. H. | 322 | Hannen, A. K. | 333 |
+| Eilert, Henry F. | 322 | Hansen, Geo. C. | 333 |
+| Engel, Dr. R. C. | 322 | Hansen, Rasmus | 333 |
+| Ensign, Theo. | 323 | Hard, Dudley J. | 333 |
+| Ernst, A. C. | 323 | Hart, E. E. | 333 |
+| Ernst, Mr. B. W. | 323 | Hart, George P. | 334 |
+| Ernst, C. | 323 | Hascall, Geo. C. | 334 |
+| Eshelman, Mr. O. D. | 323 | Haskins, B. S. | 334 |
+| Everett, H. A. | 323 | Hauserman, E. F. | 334 |
+| Evers, Wm. H. | 324 | Hayes, P. F. | 334 |
+| Ewing, Frank H. | 324 | Heald, Jno. C. | 334 |
+| Ewing, Harrison W. | 324 | Heffner, Geo. J. | 335 |
+| | | Heiser, E. N. | 335 |
+| Faeh, A. C. | 324 | Henahan, Dr. J. P. | 335 |
+| Fairbank, Geo. L. | 324 | Hencke, J. W. | 335 |
+| Farnsworth, C. E. | 324 | Herrick, Myron T. | 335 |
+| Fessler, C. F. | 325 | Herrick, Dr. F. C. | 335 |
+| Fild, Mr. Edward | 325 | Herron, E. M. | 336 |
+| Finlay, L. G. | 325 | Hieber, Henry C. | 336 |
+| Fleharty, John J. | 325 | Higley, Frank | 336 |
+| Foerstner, Mr. J. A. | 325 | Hildebrand, Frank | 336 |
+| Foote, Geo. H. | 325 | Hill, H. H. | 336 |
+| Ford, Edward S. | 326 | Hill, Harry N. | 336 |
+| Foster, E. J. | 326 | Hiller, Frank B. | 337 |
+| France, E. M. | 326 | Hollyday, J. W. | 337 |
+| Fraser, A. D. | 326 | Holocker, Alex | 337 |
+| Frazier, J. W. | 326 | Hopkins, D. H. | 337 |
+| Freeman, L. H. | 326 | Hopple, E. J. | 337 |
+| Freshwater, Milton | 327 | Horning, W. R. | 337 |
+| Friedrich, Dr. Martin | 327 | Horton, Dr. W. P. | 338 |
+| Fritzsche, Alfred | 327 | Howard, A. E. | 338 |
+| Fuller, C. W. | 327 | Howe, A. S. | 338 |
+| Fuller, Joel H. | 327 | Howe, E. L. | 338 |
+| | | Hoynes, M. J. | 338 |
+| Gaede, J. W. | 327 | Hudlett, John | 338 |
+| Gardner, B. M. | 328 | Hughes, W. L. | 339 |
+| Garry, T. H. | 328 | Hulett, R. M. | 339 |
+| Geddes, C. G. | 328 | Humphrey, D. S. | 339 |
+| Gee, J. M. | 328 | Hunkel, M. J. | 339 |
+| Geer, Thos. H. | 328 | | |
+
+<column-break/>
+
+<vocab>Cleveland, biography, index, directory</vocab>

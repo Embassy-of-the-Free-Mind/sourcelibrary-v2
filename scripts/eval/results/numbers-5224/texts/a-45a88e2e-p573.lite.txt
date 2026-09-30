@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>567</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+<warning>Blue ink stamp partially obscures text in the middle of the page.</warning>
+
+from which he was graduated in 1899. His first practical experience came to him as interne in St. Joseph's Hospital and in 1900 he began private practice in Omaha, where he has since remained. In 1911 he went to Baltimore, Maryland, for post graduate work in the Johns Hopkins University and he has also pursued other courses elsewhere, thus keeping in close touch with the trend of modern scientific thought and investigation. He belongs to the County, State and American Medical Associations and he has the high respect and goodwill of his fellow practitioners, who recognize him as an able member of the profession and one who is most careful to conform his practice to a high standard of professional ethics. He has charge of the gynecological department of the Creighton Medical College and in his professional capacity is a representative of the St. Joseph, St. Catherine's and Douglas County Hospitals.
+
+On the 17th of September, 1903, Dr. Rix was married to Miss Louise Arnold, of Logan, Iowa, a daughter of Mr. and Mrs. J. G. McMaster, well known residents of Logan. The two children born of this marriage are Margaret and Robert, born in 1905 and 1907 respectively and now attending the Omaha schools.
+
+Dr. Rix is a firm believer in Omaha and her future destiny and does everything in his power to upbuild her interests. He is identified with a number of fraternal organizations, has membership with the Benevolent Protective Order of Elks and in Masonic circles has attained the thirty-second degree of the Scottish Rite, while with the Nobles of the Mystic Shrine he has crossed the sands of the desert. His is one of the bright minds of the medical profession in Omaha and wide reading has made him one of the best informed physicians and surgeons, while practical experience has constantly augmented his skill.
+
+---
+
+->GEORGE H. ALWINE<-
+
+George H. Alwine, a dealer in building supplies in Omaha, is one of the most public-spirited residents and enthusiastic supporters of this city, convinced of its advantages and of its further opportunities through frequent visits to all of the large cities between New York and Denver. If all of his townsmen would give to Omaha the same loyal support her possibilities would be unlimited. Mr. Alwine is a native of Pennsylvania, his birth having occurred in Greensburg, Westmoreland county, September 16, 1880. His father, Samuel Alwine, a native of Pennsylvania, represented an old pioneer family of that state, of German descent. He engaged in mechanical pursuits and is still active along that line in Greensburg. During the Civil war, while too young to become an enlisted man, he assisted in the transportation of troops then being conveyed by wagon and other means to various points of enlistment. His wife, who bore the maiden name of Jessie B. Null, was born in Pennsylvania of German and French parentage and by their marriage they became the parents of seven children, of whom George H. was the third.
+
+While spending his youthful days in his father's home George H. Alwine attended the public and high schools of Greensburg, completing his course by graduation with the class of 1899. He next entered Western University at Pittsburgh, Pennsylvania, and on attaining his majority started out in the business world, entering upon an apprenticeship in the Westinghouse shops in East Pittsburgh for the purpose of acquainting himself with the work of mechanical engineering. He served a four years' apprenticeship, after which he resigned his position there and made his way to the west, going first to a ranch at Dennison, Colorado, on which he remained for a year largely for the benefit and experience that he would derive from cowboy life. He afterward returned to Pittsburgh, where he took up civil engineering with the Jones & Laughlin Steel Company. He next came to Chicago and was employed by the Illinois Steel Company in an engineering capacity, remaining in that connection for a year. He next came to
+
+<vocab>Dr. Rix, George H. Alwine, Omaha, Douglas County, medical profession, Creighton Medical College, Masonic, Scottish Rite, Mystic Shrine, building supplies, mechanical engineering, Westinghouse, Jones & Laughlin Steel Company, Illinois Steel Company</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>580</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+John Rogers and Nathaniel Bacon the right to purchase of the Indians lands at Monomoyick and places adjacent. This invalidated Mr. Nickerson's title to the lands; but he, with his numerous sons and sons-in-law, appealed to the court for the adjustment of their rights. The court was willing to allow him one hundred acres near his house, with some other divisions in the commons, which was not satisfactory. July 3, 1672, Mr. Hinckley and his associates conveyed their rights in the territory, together with what they themselves had purchased under it, to Mr. Nickerson, which made his title indisputable, and which the general court subsequently confirmed. The settlement of Monomoyick was thus commenced by this family, to whom were subsequently added the families of Hugh Stewart, Samuel Smith, William Cahoon, William Gross, George Godfrey, Edward Small, Joseph Harding, Benjamin Phillips, William Eldred or Eldridge, Lieutenant Nicholas Eldred, Joseph Eldred or Eldridge, Moses Godfrey, Nathaniel Tomlon, William Stewart, William Covel and John Ellis. Later, after 1700, we find as residents the names of Roland Paddock, Robert Nickerson, Caleb Lombard, Richard and Daniel Sears; and still later came Thomas Atkins, William Griffith, Nathaniel Covel, Daniel Hamilton, Edmund Howes, Ebenezer Howes, John Atkins, Samuel Taylor, Thomas Howes, Paul Crowell, Thomas Doane, and many others of similar family names. The histories of the villages contain the names of subsequent settlers.
+
+In 1686 Monomoyick was ordered by the court to send grand jurors, and in 1691 to send a deputy to the general court. By this it would seem that when the county was organized this community was recognized as a town. Several pages of the first records of the town, if ever kept, are lost, for there are no records of the first deputies or grand jurors sent. May 12, 1693, in the proceedings of a regular town meeting, the records commence with that assurance and fullness that would indicate prior proceedings. The absence of proprietors' records is noticeable in this town, as the so-called proprietors early sold their franchises to William Nickerson, from whom and his heirs and assigns all deeds have been received.
+
+But little of interest is found in the town records, beyond the election of officers, for many years subsequent to 1693. June 11, 1712, Monomoy was incorporated a township by the name of Chatham. The people required frequent special town meetings to regulate their church, which, with all municipal affairs, was under the close surveillance of the Plymouth court. In 1718, for the simple omission to elect a hog constable, the town was presented, and Thomas Atkins was sent to answer for the dereliction; and about this time the first pound was erected.
+
+The town received its share of the provincial bills of the issue of
+
+<vocab>Monomoyick, Monomoy, Chatham, Barnstable County, William Nickerson, land titles, town records, Plymouth court, provincial bills</vocab>

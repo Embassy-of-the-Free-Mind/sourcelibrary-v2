@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>303</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Sidney M. Ball</image-desc>
+SIDNEY M. BALL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Webb C. Ball</image-desc>
+WEBB C. BALL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of T. P. Ballard</image-desc>
+T. P. BALLARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. W. Barber</image-desc>
+A. W. BARBER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. Barkdull</image-desc>
+J. BARKDULL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. G. Barkwill</image-desc>
+C. G. BARKWILL
+
+<vocab>Sidney M. Ball, Webb C. Ball, T. P. Ballard, A. W. Barber, J. Barkdull, C. G. Barkwill, The Book of Clevelanders, portraits, biography</vocab>

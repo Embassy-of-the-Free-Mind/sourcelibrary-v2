@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>550</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+change was made in the territory of the district, he filled this responsible position and was returned in 1889 for a fourth term. He is a director in the Yarmouth National bank, has served his town seven years as one of the school committee, and is always ready to promote the welfare of his community in social and moral advancement. In the various offices filled by him he has indicated that strong sense and practical knowledge which enables him to maintain an influential position and retain the confidence of his townsmen.
+
+<image-desc size="large" type="engraving" significance="high">Portrait of Hon. Seth Crowell</image-desc>
+
+Hon. Seth Crowell.—This was a man of more than average ability, who occupied a prominent place in the public service of Dennis and the Cape for nearly forty years. He was a brother of the late Joshua Crowell, above mentioned. Swift, in his *Old Yarmouth*, says of him: “At the age of eighteen Mr. Crowell commenced life, as many a Cape Cod boy did in those times, upon a vessel’s deck; he steadily rose, by industry, application to duty and fidelity to the interests intrusted to him, to high estimation by his fellow citizens. He was captured by the British, in the war of 1812–15, and made a prisoner at Dartmoor. In 1835, and three years thereafter, he was elected a representative from the town; in 1841–2 a senator from the Cape, and afterward, for nine years, a member of the board of county commissioners, most of the time its chairman. He was, in the meantime, a director of the Barnstable Bank, and its successor, the First National Bank of Yarmouth, for several years its president, and a director of the Barnstable County Mutual Fire Insurance Company for a long succession of years; also a member of the constitutional convention in 1853, and again a representative from Dennis in 1868. Mr. Crowell’s death occurred April 1, 1873, and during his whole life the confidence of the public was never withdrawn from him.
+
+<vocab>Seth Crowell, Joshua Crowell, Yarmouth National Bank, Barnstable County, Cape Cod, War of 1812, Dartmoor, Barnstable Bank, First National Bank of Yarmouth, Barnstable County Mutual Fire Insurance Company, constitutional convention</vocab>

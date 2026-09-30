@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>396</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. F. Worthington</image-desc>
+GEO. F. WORTHINGTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. M. Worden</image-desc>
+A. M. WORDEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. T. Wright</image-desc>
+E. T. WRIGHT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. W. York</image-desc>
+GEO. W. YORK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. I. I. Yoder</image-desc>
+DR. I. I. YODER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. H. York</image-desc>
+R. H. YORK
+
+<vocab>Geo. F. Worthington, A. M. Worden, E. T. Wright, Geo. W. York, Dr. I. I. Yoder, R. H. York, The Book of Clevelanders</vocab>

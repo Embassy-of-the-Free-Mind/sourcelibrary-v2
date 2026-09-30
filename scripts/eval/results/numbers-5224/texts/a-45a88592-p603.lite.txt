@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>489</page-num>
+<header>TOWN OF YARMOUTH. 489</header>
+
+Not until about 1827—after the stages run from Sandwich to Yarmouth—was a post office established, then Captain Elnathan Lewis kept the office in his house. Sylvanus Crowell succeeded him, with the office in his store, and he was succeeded by Freeman H. Crowell in the same place. In 1870 Captain Higgins Crowell was appointed, and in 1872 Isaiah Crowell. In 1877 Myron Peak was made postmaster and erected a small building for an office; but in 1880 Julius Crowell succeeded him and removed it to his store. In the spring of 1889 Edward F. Pierce was appointed, and keeps the office at his residence. From a weekly the first years, the office has now a daily mail from Hyannis. The street leading to Point Gammon is called South Sea avenue.
+
+The social and religious relations of this community are of the most elevating character. During the pastorate of Rev. Daniel H. Babcock, October, 1840, the Women's Benevolent Society was organized in connection with the religious society of the village, and much good has resulted. The Library Association here was formed in April, 1863, by the young people. The first books were purchased in April, 1864, and now the library numbers nearly six hundred volumes. The last officers chosen were: Abbie B. Crowell, pres.; Mrs. Isaiah Crowell, vice-pres.; Mrs. William J. Nickerson, sec.; and Mrs. Delia Baker, librarian and treasurer.
+
+The Cemetery here is distinctive from the ordinary grounds of the town, because of an organized effort to beautify and preserve this ancient burial place. After a small donation from the town toward a suitable fence, Captain Sturgis Crowell headed a subscription with one hundred dollars, and soon had the sum of seventeen hundred dollars for this and other improvements. The granite fence was finished in July, 1884. Elkanah Crowell, jr., donated the two gates, besides his subscription.
+
+Yarmouth Farms is the name given to the community at and around the depot at South Yarmouth. A post office was established there a few years ago under the name of East Yarmouth, and the railroad agents have successively been the postmasters. The name was only recently changed. The postmasters have been: N. B. Burgess, W. F. Kenney, Arthur Underwood and W. B. Snow.
+
+BIOGRAPHICAL SKETCHES.
+
+Joseph Allen, only son of Joseph and Ruth Allen, was born in 1846. He has been captain of the light ship *Pollock Rip* since 1881. He was married in 1872, to Mary H. Crowell. They have six children: M. Maude, Joseph E., Albert F., William D., Orra I., and Peyson E.
+
+<vocab>Yarmouth, post office, Women's Benevolent Society, Library Association, Cemetery, Yarmouth Farms, biographical sketches, Joseph Allen, Pollock Rip</vocab>

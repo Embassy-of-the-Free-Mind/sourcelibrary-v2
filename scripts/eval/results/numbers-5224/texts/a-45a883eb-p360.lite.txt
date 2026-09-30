@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>356</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dan T. Miller</image-desc>
+DAN T. MILLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Samuel Miller</image-desc>
+SAMUEL MILLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. M. Mills</image-desc>
+G. M. MILLS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Minshall</image-desc>
+W. E. MINSHALL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Minnick</image-desc>
+C. F. MINNICK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ralph D. Mitchell</image-desc>
+RALPH D. MITCHELL
+
+<vocab>The Book of Clevelanders, Dan T. Miller, Samuel Miller, G. M. Mills, W. E. Minshall, C. F. Minnick, Ralph D. Mitchell</vocab>

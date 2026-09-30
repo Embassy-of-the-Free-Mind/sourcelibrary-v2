@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>641</page-num>
+<header>TOWN OF FALMOUTH. 641</header>
+
+generation strove to perfect this element. In 1824 an elaborate organization, called the Sabbath School Union of Falmouth, was formed; and was actively engaged in and carrying on the good results of which will ever be felt. In 1830 a temperance committee was appointed and strong temperance resolutions were passed making the use of intoxicating drinks as a beverage a disqualification for church membership.
+
+The mills of this date are not so numerous as earlier in the century, but are of greater capacity and of modern construction. One wind mill remains, and in different parts of the town may be seen the debris of those once important industries. Two water mills supply the want.
+
+During the first half of the nineteenth century the middle-aged and younger citizens labored in the South, spending seven or eight months of the year in South Carolina, in their several avocations, and returning home for the summer months. Tradition says that prior to 1830 as many as six hundred of the enterprising residents of Falmouth made these annual visits. The industries have been greatly changed during the last half of the present century, new assuming the place of the old. Not until 1872 was a coal yard opened; then by Marcus Starbuck, a real estate broker. Two years later he sold the business to George E. Clarke, who in April 1888, sold to Rowland R. Jones & Co.
+
+The improvement of the highways, stocking the ponds with other than native fish, and the best regulations possible for the public good regarding the catch of herrings, have been carefully adjusted by the selectmen. In 1854 the law was made to exclude animals from the roads, and officers are elected annually to enforce the rule. By the vote of 1854 pickerel were placed in all suitable ponds of the town, and have thrived. In 1865, "Voted that the herring of rivers of the town be allowed to pass up and down said rivers into the ponds unmolested, from 12 o'clock, noon, Saturday, to 12 noon on Monday each week, except that the herring in Coonemossett river be allowed from 10 o'clock at night to 5 in the morning of each day in the week unmolested in addition." This gives the poor herring of the Coonemosset far more privileges than in other rivers.
+
+The selectmen keep the lines of the town and public places definitely bounded and plant granite monuments. April 11, 1871, they surveyed accurately and fixed permanently the bounds between Falmouth and Mashpee, supplementing them by those for Sandwich and Bourne. There is no doubt that if these selectmen could arrange a fixed line on the sound for the south bounds of the town they would have done so long ago!
+
+At a period prior to 1877 the enterprising young ladies of the town took the initial steps for establishing a library, which is now very creditable and important. On account of the increasing demand for
+
+<vocab>Falmouth, Sabbath School Union, temperance, mills, South Carolina, Marcus Starbuck, George E. Clarke, Rowland R. Jones & Co., selectmen, herring, Coonemossett river, Mashpee, Sandwich, Bourne, library</vocab>

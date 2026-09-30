@@ -1,0 +1,66 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>3</columns>
+<page-num>620</page-num>
+<header>INDEX OF AUTHORS</header>
+
+| | | |
+|---|---|---|
+| Evagrius, Scholasticus, 263, 316, 486. | Harmenopulus, 74. | Kober, 272. |
+| | Harnack, Adolf, 13, 14, 144, 162 n., 317, 555, 575. | Krebbs, 62. |
+| Fabricius, Johannes Albert, 43. | Hatch, Dr. Edwin, 184. | Labbe, Philippe, 3 n., 17 n., 19, 121, 163 n., 164, 512, 525, 579, 586. |
+| Ferrandus, Canonist, 127. | Hefele, Carl Joseph von, xii, 5, 8, 9, 11, 12, 16, 17, 21, 23, 28, 40, 42, 43, 44, 51, 64, 65, 68, 80, 82, 89, 93, 100, 106, 110, 114, 124, 130, 132, 141, 147, 150, 155, 159, 163, 166, 172, 177, 178, 196, 208, 211, 213, 214, 217, 219, 232, 242, 263, 266 n., 267, 269, 272, 279, 290, 293, 295, 304, 305, 316, 317, 353, 356, 373 n., 402, 405, 417, 419, 421, 434, 438, 516, 539, 557, 561, 562, 563, 578, 579, 583, 586. | Labbe & Cossart, vii, 45, 63, 107, 166, 197, 218, 220 seq., 231, 234, 235, 236, 237, 247, 251, 259, 260, 265, 266, 267, 302, 305, 321, 340, 349, 359, 441, 512, 513, 529, 583, 584, 586. |
+| Ferraris, Rev. E. S., 372. | | Lambeck, Peter, 316. |
+| Ffoulkes, Bibliotheca Prompta, 15, 40, 89, 90, 159, 218. | Herbst, 158, 160, 171, 421. | Lambert of Hersfeld, 8, 24, 28, 150. |
+| Field, Dean, 524. | Hergenröther, Cardinal, 272. | L'Ami du Clergé, 367. |
+| Fleidner, Pastor, 41 n. | Hermann Contractus, 6, 526. | Launoy, 15, 526. |
+| Fleury, Claude, 20 n., 166, 177, 268, 269, 281, 286, 288, 356, 363, 372, 379, 556, 586. | Hermenopulus, 23, 241, 242, 421. | Laurents, 96. |
+| Flodoard of Épernay, 421. | Hermes, Pastor, 92. | Lee, F. G., 285. |
+| Forbes, Bishop A. P., 4. | Hervetus, 269, 278, 417. | Legg, J. Wickham, 396. |
+| Fortunatus, Life of St. Martin, 583. | Herzog, Johann Jakob, 112. | Leo Allatius, 155, 167, 389. |
+| Foster, General Preface to the Works of Alcuin, 578. | Hilary of Poitiers, 37, 105, 175, 335, 434. | Leo the Great, 19, 22, 37, 277, 286, 288, 289, 293, 334, 335, 404, 421. |
+| Freeman, Norman Conquest, 271. | Hincmar, Archbishop of Rheims, 45, 526, 579. | Le Quien, 166, 169, 234, 278. |
+| Fuchs, Bibliotheca, 11, 17, 110, 129, 159, 171, 430, 440, 458. | Hippolytus, 6, 9, 145. | Leunclavius, xxxiii. |
+| Fulgentius Ferrandus, 69 | Hodgkin, 282, 283, 575. | Libellus Synodicus, 62. |
+| Fulton, Dr. John, 150, 365. | Holstenius, Lucas, 182. | Liber Pontificalis, 145. |
+| Funk, Franz Xavier, 37 n. | Hort, Dr. E. I. A., 162 n. | Liberatus, 208, 285, 321. |
+| | Hosius, Bishop of Cordova, 272. | Liddell & Scott, 31 n., 70, 210, 219, 386, 505. |
+| Gallandus, August, 204, 237, 264. | | Liddon, Dr. Henry Parry, 156. |
+| Garnier, Jean, 314, 316, 321 | Ibas, Edessa of, 200. | Lightfoot, Bishop of Durham, 4, 41 n., 90, 96, 144, 207 n. |
+| Gaudentius, Bishop at Sardica, 418. | Ignatius of Antioch, 4, 5, 6, 13, 39 n., 96, 208. | Lipsius, Dr., 163. |
+| Gazette Archéologique, 143. | Irenæus, Bishop of Lyons, 6, 9, 209. | Littledale, Dr. R. F., 80 n. |
+| Gelasius, Pope, 13, 40, 44, 51, 53. | Isidore Mercator, 121, 126, 127, 157, 158, 164, 171, 184, 269, 271, 278, 416, 417 | Lombard, Peter, 27. |
+| Genebrardus, 584. | Isidore of Pelusium, 286. | Loofs, 317. |
+| Gibbon, Edward, 207 n. | Isidore of Seville, 279, 286, 436. | Louis le Débonnaire, 576. |
+| Gieseler, Johann Carl Ludwig, 264. | Ivo of Chartres, 31. | Lupus, Servatus, 52, 557, 559. |
+| Giraldus Cambrensis, 284. | | Mabillon, Jean, 166. |
+| Goar, Euchologion, 268. | Jahn, Johann, 6. | Macaulay, Lord, 207 n. |
+| Godefridus Hermantius, 119, 124. | Jerome (Hieronymus), 32, 33, 37, 72, 275, 366, 367, 413. | Macrostich (Semiarian), 5. |
+| Goldast, Melchior, 578. | Joannes Damascenus, 4, 7, 209. | Mansi, 12, 37, 38, 45, 73, 105, 173, 181, 200, 263, 266, 268, 269, 270, 271, 272, 273, 274, 276, 277, 278, 281, 286, 304, 340, 413, 464, 579, 586. |
+| Gothofred, 147, 273. | John, Archbishop of Constantinople, 335. | Marca, Peter de, 18, 124, 321, 415, 417, 439, 592. |
+| Gratian, 9, 10, 11, 12, 13, 21, 24, 30, 33, 35, 36, 39, 40, 42, 63, 64, 67, 79, 80, 83, 84, 85, 86, 92, 93, 94, 97, 98, 101, 110, 111, 114, 115, 116, 117, 118, 119, 120, 121, 126, 131, 140, 144, 147, 148, 152, 157, 158, 179, 269, 270, 271, 272, 273, 274, 275, 278, 279, 280, 282, 283, 284, 286, 287, 358, 362, 364, 370, 372, 374, 378, 382, 404, 421, 422, 425, 494, 557, 558, 560, 566, 568, 569. | John of Antioch, 101, 184. | Marcian, Roman Emperor, 277. |
+| Greek Pontificals, 177. | Johnson, Rev. John, 11, 68, 136, 271, 276, 278, 403, 450, 459, 462, 463, 467, 472, 480, 481, 482, 493, 516, 600, 601, 615. | Marius Mercator, 206, 217, 229. |
+| Green, Dr. T. L., 80 n. | Josephus Egypt., 184. | Marquardt, Freher, 145. |
+| Gregory I., 38, 146, 186, 269, 276, 284, 378, 436. | Journal Asiatique, 2 n. | Marriott, W. B., 37, 141. |
+| Gregory of Nazianzum, 13, 37, 206, 334. | Journal of Hellenic Studies, 147. | Martigny, 147. |
+| Gregory of Nyssa, 37, 38, 272, 335. | Joyce, J. W., 284. | Martin Bracarensis, 110, 120, 121. |
+| Gregory, Thaum., 25, 335. | Julius of Rome, 9. | Mason, Rev A. J., 28, 216. |
+| Gregory of Tours, 38, 176. | Justellus, Christopher, 11, 16, 40, 45, 63, 79, 125, 231, 235, 269, 278, 425. | Matthew of Paris, 526. |
+| Grosart, Rev. Dr., 591 n. | Justin Martyr, 6, 8, 13, 30, 92, 136, 146, 380. | Matthieu de Larroque, 591. |
+| Guérard, M. L., 575. | Justinian I., Roman Emperor, 131, 178, 268, 274, 279, 290, 382, 387, 422, 566, 567, 569. | Maximus the Abbot, 241. |
+| Guettée, H. W., 2 n. | Keble, Rev. John, 285. | Melito, Bishop of Sardes, 208. |
+| Gury, Jean Pierre, 37. | Kellner, 114. | Mendham, 529 n., 538 n. |
+| Haddan, A. W., 21. | Kingdon, 156. | Methodius, Cyrillus, 6. |
+| Haddan & Stubbs, 38. | Kitchin, 277, 283. | Meyrick, Rev. F., 524 n. |
+| Hahn, Johann Michael, 264. | | Michael the Stammerer, 576. |
+| Halloix, 314. | | Michaud, Joseph, 578. |
+| Hammond, W. A., 10, 16, 21, 25, 65, 137, 138, 150, 271, 278, 279. | | Migne, Pat. Lat., 220, 227, 266, 340, 349, 370 n., 441, 536, 578, 582, 586. |
+| Hardouin, Jean, 38, 44, 45, 200, 219 n., 264, 304, 321. | | Migne, Pat. Græc., 38, 197, 206, 209, 251, 321. |
+| | | Milman, Dean, 180, 219. |
+| | | Minucius, Felix, 72. |
+
+<column-break/>
+
+<vocab>Index of authors, bibliography, historical figures, ecclesiastical history, canon law, patristics</vocab>

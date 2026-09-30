@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>81</page-num>
+<meta>G</meta>
+
+trumpet was evidently an indication that a barren period was about to commence.—For an account of the great year, see the note to page 478 of the treatise on Meteors.
+
+The following extracts from a work entitled "Sketches chiefly relating to the History, Religion, &c. of the Hindoos, concerning the Mundane Periods," appear to me to be highly interesting, and to form a most important addition to what has been before said about the revolutions which take place in the universe.
+
+"They reckon the duration of the world by four Yougs, corresponding in their nature with the Golden, Silver, Brazen, and Iron ages of the ancients.
+
+| | Years. |
+| :--- | :--- |
+| The first, or the Sutty Youg, is said to have lasted ........................ | 3,200,000 |
+| The Tirtah Youg, or second age ........ | 2,400,000 |
+| The Dwapaar Youg, or third age ...... | 1,600,000 |
+| And they say the Kaly Youg, or present age, will last ........................ | 400,000." |
+
+p. 222.
+
+"The beginning of the Kaly Youg, or present age, is reckoned from 2 hours, 27 minutes, and 30 seconds of the morning of the 16th of February 3102 years before the Christian æra; but the time for which their astronomical tables are constructed, is 2 days, 3 hours, 32 minutes, and 30 seconds after that on the 18th of February, about six in the morning. They say there was then a conjunction of the planets, and their tables show that conjunction. Monsieur Bailly observes*, that by calculation it appears,
+
+* Traité de l'Astronomie Indienne et Orientale, par Monsieur Bailly, published in 1787.
+
+<vocab>Yougs, Sutty Youg, Tirtah Youg, Dwapaar Youg, Kaly Youg, Hindoos, Mundane Periods, Monsieur Bailly, Traité de l'Astronomie Indienne et Orientale, astronomy, chronology</vocab>

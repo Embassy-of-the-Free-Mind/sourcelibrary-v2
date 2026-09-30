@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>269</page-num>
+<header>The Book of Clevelanders</header>
+
+**TRUNECEK, Frank J.**; sec'y and treas. The Electra Pure Water Co.; born, Bohemia, Oct. 5, 1869; son of John and Theresa Pinkas Trunecek; educated, High School in Prague; married, Cleveland, Oct. 5, 1891, Rose Cenec; issue, three children; sec'y and treas. The Electra Pure Water Co.; American representative Kratochvil and growers and importers Bohemian hops, Prague Saaz, pres. The Papa Cola Co.; member Svrrnost, No. 3, C. S. P. S., Knights Pythias, No. 317, Bohemian Turners Sokol Cech; member Cleveland Athletic, and Rotary Clubs.
+
+**TUCKERMAN, Jacob Edward**; surgeon; born, Austinburg, O., Aug. 23, 1876; son of Louis Bryant and Mary Ellen Hopkins Tuckerman; educated, South New Lyme Institute, South New Lyme, O., 1888-1890; Cleveland Central High School, 1893; Adelbert College, Western Reserve University, A. B.; Cleveland College Physicians and Surgeons, M. D.; commissioner first Charter Commission of City of Cleveland, 1913; vice pres. American Academy of Medicine, 1912-1913; sec'y and treas. Academy of Medicine, Cleveland, 1911-1912-1913; member Ohio State Medical Ass'n, and American Medical Ass'n; taught physics and chemistry, Ogden High School, Ogden, Utah, 1897-1899; instructor embryology and comparative anatomy, Cleveland College Physicians, 1899-1902; lecturer hygiene and sanitary science, 1909-1910; interne St. Alexis Hospital, 1902-1903; physician and surgeon since 1902; director Glenville Hospital; member Chamber of Commerce, and City Club. Favorite recreation: Figure Ice Skating. Medical contributions: "Flat Foot," A Mechanical Problem Solved by an Ideal Plate, Simply Constructed and Allowing Natural Motion to the Foot. "The Economic Effect of Contract Medical Practice on the Medical Profession," "Management, Maintenance and Efficiency of The School for Cripples in Cleveland," 1913, Exchange Editor of Current Medical Literature.
+
+**TURNER, J. K.**; editor; born, Chicago, 1863; son of J. K. and Ellen Brady Turner; educated, common schools, three years; married, Milwaukee, Wis., 1896, May Grace Schiffman; issue, three children; pres. The Manufacturers' Information Bureau Co.; editor The Mediator Magazine; owner The Mediator Printery; member Chamber of Commerce, Geauga County Farm Improvement Ass'n, Cleveland Humane Society; member the following: The Square Deal Club, The American Academy of Political and Social Science, The American Civic Association, American Geographical Ass'n, National Society for the Promotion of Industrial Education, National Educational Ass'n; member Colonial, Tippecanoe, and Automobile Clubs.
+
+**TYLER, John Walter**; lawyer; born, South Newburg, O., May 4, 1841; son of Cutler and Sarah Fisher Tyler; educated, common and High schools; A. B., Oberlin College, 1867, and A. M., 1870; graduated from the Union Law School, Cleveland; admitted to the bar at Wooster, O., in 1862; married, Castile, N. Y., Dec. 29,
+
+<vocab>Frank J. Trunecek, Jacob Edward Tuckerman, J. K. Turner, John Walter Tyler, biography, Cleveland, Ohio, medical profession, law, business</vocab>

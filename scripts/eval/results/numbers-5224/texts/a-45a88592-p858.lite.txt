@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>666</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+harbor, where the Episcopal church now stands, on the north end of the harbor and in the northwest angle of Main and School streets, extending as far north as the present school house. The store-house for the salt was on the site of Benjamin J. Edwards' present residence. Other evaporating vats are remembered on the west side of Little harbor and on the hill by the Dexter house. The names of Ward M. Parker, John Parker, Ephraim Eldridge and Jabez Davis are associated with this industry.
+
+Woods Holl attained to some prominence as a shipbuilding and whaling station early in the century. Elijah Swift, who had formerly built pine whalers at Wareham, began in 1828 his career at Woods Holl. Solomon Lawrence, father of Captain John R. Lawrence, was the master builder. Of all the men employed in building and equipping these vessels, only Christopher G. Bearse and Sanford Herendeen survive. The last ship built here was the *Elijah Swift*, a merchantman. Among the smaller craft, of more recent date, were two merchant schooners built for Joseph S. Fay, and the fishing vessel *Aurelia*, built by Thomas Robinson and Jabez Davis for Harwich parties.
+
+The brig *Sarah Herrick*, sailing June 17, 1820, was the first whale vessel from Falmouth. Her voyage in the Atlantic was for one year. She returned laden with three hundred barrels of sperm.
+
+In December, 1821, the ship *Pocahontas*, of 350 tons, which was built that year at Falmouth, began a voyage of thirty-three months under Captain Frederick Chase, and brought home two thousand barrels of sperm oil. The next year, 1821, the schooner *Salome* sailed, and in 1825 the *Pocahontas* sailed in May for the Pacific, and in 1827 returned with 2,100 barrels sperm. Her next voyage, until October, 1830, was under Captain Charles Swift, in the Pacific, from which she brought in 1,700 barrels sperm.
+
+The ship *Uncas*, 400 tons, was built at Woods Holl in 1828, and sailed under Captain Henry C. Bunker, November 17th, for the Pacific, returning July 15, 1831, with 3,468 barrels sperm. Her next voyage under the same captain was four years, yielding 2,900 barrels sperm.
+
+The *Awashonks* was built at Woods Holl in 1830—a ship of 355 tons—and sailed for the Pacific, November 6th, under Captain Obed Swain, arriving home three years later, with 2,000 barrels sperm.
+
+The bark *Brunette*, 200 tons, Captain Cottle, sailed in January, and in May, 1834, reached home with 800 barrels sperm.
+
+Captain Joseph Swift sailed with the *Pocahontas* to the Pacific in 1831, returning April 23, 1835, with 1,700 barrels sperm.
+
+In 1832 the *Bartholomew Gosnold*, 360 tons, was built at Woods Holl and sailed November 29th, Captain John C. Daggett, and in August, 1836, brought home 2,200 barrels sperm.
+
+<vocab>Barnstable County, Woods Holl, shipbuilding, whaling, salt industry, Elijah Swift, Pocahontas, Uncas, Awashonks, Brunette, Bartholomew Gosnold, sperm oil</vocab>

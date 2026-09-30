@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>29</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+since 1903; Republican; member, Concord board of aldermen, from Ward 1, 1893–4; member, N. H. house of representatives, 1897–8; Mason, member lodge, chapter, council and commandery, S. of V., past commander, N. H. Div.; m., Nov. 23, 1875, Mary E. Livengood; three daus., Myla, Iyla, and Ruth Elizabeth. Residence, West Concord, N. H.
+
+**Cutter, Guy Henry**
+
+Lawyer; b., Jaffrey N. H., Aug. 1, 1882; s. Lucius A. and Corrisende (Lawrence) Cutter; ed. Jaffrey and Winchendon, Mass., high schools, Clark College, 1905, Harvard Law School, 1908; admitted to the bar in Massachusetts, 1908, in New Hampshire in 1909; practiced three years, with offices in Jaffrey and Winchendon, Mass., residing in Jaffrey, where he still retains his legal residence; Congregationalist; Democrat; member, N. H. house of representatives from Jaffrey, 1909–11–13; state auditor, 1914; member, N. H. bank commission, 1915, reappointed 1917; member, I. O. O. F., Wonolancet Club, Concord; m., June 30, 1915, Marion L. Burns. Address, Concord, N. H.
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Guy Henry Cutter</image-desc>
+
+<column-break/>
+
+mission, 1915, reappointed 1917; member, I. O. O. F., Wonolancet Club, Concord; m., June 30, 1915, Marion L. Burns. Address, Concord, N. H.
+
+**McIntyre, Daniel**
+
+Clergyman; b., Jamestown, Scotland, May 23, 1866; s. Finlay and Ann (Donald) McIntyre; came to Dover, N. H., May 29, 1873; ed. public schools, Dover, graduating from high school in 1886; Bowdoin College, Brunswick, Me., 1892; Andover, Mass., Theological Seminary, 1894;
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Daniel McIntyre</image-desc>
+
+ordained and installed pastor, Congregational church, Barrington, N. H., Sept. 5, 1894, continuing till 1900, East Fairfield, Vt., 1900–03, Pawlet, Vt., 1903–6, Townshend, Vt., 1906–11, Westminster West, Vt., 1911–14, Barnstead, N. H., 1914–16; became pastor of Second Congregational church at Ossipee, and chaplain of Carroll County almshouse and jail, July 1, 1916; Republican; superintendent, of public schools, Townshend, Vt., 1907–11; Mason, Odd
+
+<vocab>Guy Henry Cutter, Daniel McIntyre, New Hampshire, biography, genealogy, clergy, lawyers, politicians, Mason, I.O.O.F.</vocab>

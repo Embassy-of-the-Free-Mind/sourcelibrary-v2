@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>548</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Mt. Caesar Seminary, Swanzey, N. H., Law Department of the Univ. of Michigan, LL.B. 1865; studied law in the office of Hon. Edmund Burke, Newport, N. H.; admitted to the Sullivan County bar, Sept., 1866; engaged in journalism as editor of the *White Mountain Republic*, Littleton, N. H., 1867–8; editor of *The People*, Concord, N. H., 1868–72; editor of the *White Mountain Republic*, 1872–4; founded *The Democratic Press*, Dover, N. H., 1874, and edited and published the
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of an older man with a white beard and mustache, wearing a suit and tie.</image-desc>
+
+same till 1879; meanwhile founded *The Granite Monthly*, which he removed to Concord in the spring of 1879; in November of that year sold the magazine to John N. McClintock and engaged in the service of Stilson Hutchins as managing editor and editorial writer for the *Manchester Daily Union*, then established as a morning paper, continuing till 1882, when he returned to Concord as editor of *The People* and *New Hampshire Patriot*, continuing ten years in that position; purchased *The*
+
+<column-break/>
+
+*Granite Monthly* in 1892 and published the same for two years, then sold it to the Republican Press Ass'n; many years N. H. correspondent of the *New York World*, *Herald* and *Times*, and of the *Boston Post*; editorial writer for the Portsmouth, N. H., *Times*, twelve years and for the *Cheshire Republican*, Keene, N. H., five years; regained control of *The Granite Monthly* again in 1906 and continued its publisher till 1919; received hon. A. M., from Dartmouth College, 1913. Member First Universalist Church, Concord, N. H., moderator parish four years, superintendent Sunday school seven years; vice-president N. H. Universalist state convention, 1906–15; member board of trustees, 1918– ; Democrat; secretary N. H. Democratic state committee, 1869–70; delegate Democratic Nat'l. Conv., 1876; president N. H. Democratic state convention, 1900; chairman Democratic city committee, Concord, several years; Democratic candidate for representative in Congress, Second N. H. District, 1910; appointed editor of State Papers (state historian) July 1913; member board of education, Littleton Union Dist. 1873–4; auditor Union School District, Concord, since March, 1906; member N. H. Constitutional Convention, 1918; Concord Board of Trade (secretary, 1893–8, 1900–13); secretary N. H. State Board of Trade, 1907–16; member N. H. Soc. S. A. R., serving as necrologist; member board of managers and vice-president at different times (president, 1918–19); member executive committee N. H. Old Home Week Ass'n, 1899–1914, president since 1914; member N. H. Historical Soc., Patrons of Husbandry, (first lecturer and past master Capital Grange; lecturer Merrimack County Pomona Grange eleven years; N. H. State Grange, 1897–1903; m., Dec. 18, 1869, Mary Jane Jackson, Littleton; children, Harry Bingham, b. Concord, N. H., Jan. 25, 1871 (Dartmouth, 1893); Edmund Burke, b. Littleton, N. H., July 7, 1872; Laura Prucia, b. Littleton, N. H., Feb. 4, 1874 (m. Harlan C. Pearson). Residence, Concord, N. H.
+
+<vocab>New Hampshire, journalism, politics, biography, genealogy, Concord, Littleton, Dartmouth College, Universalist Church, Grange, S. A. R.</vocab>

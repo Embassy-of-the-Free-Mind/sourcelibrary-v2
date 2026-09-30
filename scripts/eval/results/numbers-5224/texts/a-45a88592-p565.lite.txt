@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>457</page-num>
+<header>TOWN OF YARMOUTH. 457</header>
+
+and twelve acres of meadow, with the frame of a house to be made by William Chase, the house "to be made and set with a chimney, and to be thatched, studded and latched (daubing excepted)," which Mr. Chase had agreed to do for the sum of five pounds. This house lot was in the northwest part of Yarmouth and the northeast part of Barnstable, on the county road; the house was probably within the limits of Yarmouth. In 1643 Mr. Hallet presented to the poor of the town a cow, which was accepted by the court for the purpose indicated—a gift at that time munificent, as cattle were valued, and evidently appreciated by the recipients. Mr. Hallet is described in the records as a "gentleman," a term which then carried with it high social consideration. His children were: Andrew, Samuel, Hannah, Josias, and Joseph. He died about the year 1647.
+
+Andrew Hallet, jr., came over in 1636, nominally as a "servant" of Richard Wade—a title assumed for convenience—and was first in Lynn, and subsequently in Sandwich. He sold his house in that town in 1640 and in 1642 bought the Giles Hopkins house, the first built in town. He afterward built a house on the knoll, a few feet northerly of the present residence of Captain Charles Basset. He purchased eighteen acres to the eastward of his house lot, of Nicholas Simpkins, and the farm of Robert Dennis on the southwest. By subsequent purchases he became the proprietor of some three hundred acres of the best tillage and pasture land in town, owning from Barnstable line to nearly a quarter of a mile easterly on both sides of Hallet street, named for his family, He died in 1684, aged seventy-six, his wife Anne, daughter of Anthony Besse of Sandwich, surviving him.
+
+Edward Sturgis was a man of wealth and social prominence. He was in Charlestown in 1634, and constable in Yarmouth in 1641. He kept an ordinary and sold large quantities of liquors, which our fathers consumed. His residence was northerly of the old burying ground. He died in Sandwich in 1695. Among his descendants are the late President Quincy of Harvard College, John Quincy Adams, and other distinguished personages.
+
+Mr. Edmund Hawes came to this country in the *James* in April, 1635. He registered as a "cutler." He resided some time in Duxbury, and came to Yarmouth in 1645. His residence was on the lot in the rear of the store of J. Knowles & Co. He survived nearly all the first settlers, dying in 1693, at the age of about eighty years.
+
+William Chase was a member of the company of Rev. Mr. Bachilor, who, in 1638, made the first attempt to settle in what was afterward a part of Barnstable. He was appointed the first constable in town, but was deposed at the end of six months, not being in sympathy with the people of the town. In 1640 he was censured by the court, for his language against the minister, and ordered to depart the colony in six
+
+<vocab>Yarmouth, Barnstable, William Chase, Andrew Hallet, Richard Wade, Giles Hopkins, Nicholas Simpkins, Robert Dennis, Anthony Besse, Edward Sturgis, John Quincy Adams, Edmund Hawes, Rev. Mr. Bachilor</vocab>

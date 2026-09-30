@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>340</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+A.B. 1874; Thayer School, C.E. 1876; instructor in Thayer School and N. H. College (then a department of Dartmouth), 1876-7; professor of Mathematics, N. H. College, 1877-1917; appointed dean in 1888 and still continues; received honorary degree LL.D. from N. H. College in 1913; member American Ass'n for Advancement of Science, Soc. for Promotion of Engineering Education, Nat'l Geographic Soc., Patrons of Husbandry
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+(Master Grafton Star Grange, Hanover, N. H., six years, ex-committee N. H. State Grange, two years), Phi Beta Kappa Soc., Kappa Kappa Kappa fraternity; Congregationalist (senior deacon Durham Congregational church); Republican; town auditor in Durham several years; delegate in N. H. constitutional convention 1918. While living in Hanover Professor Pettee initiated the movement resulting in the establishment of the town water works; he was an early advocate of highway improvement, and of state aid to towns
+
+<column-break/>
+
+for such purpose; since removal to Durham, with the college in 1893, has been there interested in public as well as college affairs. He served as acting president of the college for several months each, between the administrations of Presidents Murkland and Gibbs, Gibbs and Fairchild and Fairchild and Hetzel; m., 1877, Luella Elizabeth Swett, at Hanover (a native of Canaan); children; Alvena, b. 1881, (m. 1905, Edward E. Nelson, mechanical engineer, Garfield, Utah); Horace James, b. 1883, mechanical engineer with the Decatur Bridge Co., Decatur, Ill.; Sarah Elizabeth, b. 1886, dietitian, Roosevelt Hospital War Unit, Base Hospital 15, A. E. F., France; Charles Swett, b. 1895, first lieutenant, U. S. regular army, 3d division headquarters, A. E. F., France. All his children are graduates of N. H. College. Residence, Durham, N. H.
+
+**Shontell, Frederick William**
+
+Investment banker; b., Montpelier, Vt., June 11, 1862; s. Frederick and Emilie (Amiel) Shontell; removed to Penacook, N. H., in boyhood (his father having been killed in the Civil War), and commenced work at eleven years of age in the old John Brown woolen mill; ed. public schools of Montpelier and Penacook; entered employ of Amoskeag Mf'g Co., Manchester, N. H., April 1, 1876, continuing two years; afterwards employed by Plummer & Holton, merchant tailors, Manchester; was with A. D. Smith, druggist, of Nashua, two years, returning to Manchester in 1895 in service of the Manchester Traction Light & Power Co., continuing till 1910 when he engaged in investment banking (head of the firm of Shontell & Varick); Unitarian; Independent Republican; Moderator Ward 4; member N. H. state senate, 1901, A. F. & A. M., 32d degree and Knight Templar, Derryfield and Joliet clubs, Sons of Veterans; m., Oct. 20, 1903, Edith Davis, Manchester. Residence, Manchester, N. H.
+
+<vocab>Biography, New Hampshire, Education, Engineering, Investment Banking, Civil War, Genealogy, Public Service</vocab>

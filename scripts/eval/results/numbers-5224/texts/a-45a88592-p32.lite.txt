@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+tucket, Martha's Vineyard and Elizabeth islands were separate tribes, in constant communication with the tribes on the Cape, and had their own sachems. All these tribes had their sachems or sagamores, and though owing fealty to the Wampanoags they could not be induced by King Philip to join in the wars of 1675. The tribe at Manomet, after their adhesion to the English, proved a defense and were faithful to their friendship.
+
+As an evidence of the friendship and hospitality of the Cape Indians, it is said that when the ship *Fortune* in 1621 touched at Cape Cod, the Indians carried word of her approach to the settlers at Plymouth.
+
+In 1622 the colonists were compelled to go to the Cape Indians for corn. They sailed around the Cape, along southerly, anchoring in a harbor at Chatham, and obtained eight hogsheads of corn and beans. During that and subsequent years corn was obtained of the Indians at Sagamore hill, Mattacheese, and other places on the north side.
+
+For these purchases the Indians received trinkets and clothes. Various facts are given that show a friendship beyond the hope of gain. In 1630, when an English vessel was shipwrecked on the Cape, those passengers who died from exposure were carefully buried in the frozen earth to keep the bodies from wild beasts, the sick were nursed to health and the survivors were conducted to Plymouth. The incident of the lost boy—strayed from Plymouth and found among the Nausets—when Iyanough with his warriors assisted in the search, and the Nauset sachem, Aspinet, so promptly delivered the boy to the English, is another proof of their friendliness. The various kind offices of Iyanough upon the departure of the whites—the festival, the filling of their rundlets with fresh water, and the taking the bracelet from his neck and placing it upon the leader of the party—are matters of record in the pilgrim history.
+
+Some of the natives were possessed of such an inherent love of tinsel display that the bounds of Captain Standish's strict doctrines were sometimes overstepped. In 1623, while the captain and his men were at Mattacheese purchasing corn, they were forced to lodge in the wigwams of the natives. Missing a few beads in the morning, he ranged his men around the sachem's cabin and threatened to fall upon the inmates unless the beads were returned. The offender was discovered, restitution made, and a penalty for the offense was paid with more corn.
+
+In 1637, when the whites commenced the purchase of lands from the Indians on the Cape, satisfaction was given by full returns of beads, hoes, hatchets, coats and kettles; but years later, as the number of the Indians was diminished from various causes and the increase of the whites was rapid, the natives could not see their best plantation
+
+<vocab>Wampanoags, King Philip, Manomet, Fortune, Plymouth, Chatham, Sagamore hill, Mattacheese, Nausets, Iyanough, Aspinet, Captain Standish</vocab>

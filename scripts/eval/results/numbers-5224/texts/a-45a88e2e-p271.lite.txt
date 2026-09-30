@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>265</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+a farmer by occupation, was born in Maryland in 1833 and had a twin brother, the late Rev. John Quincy Adams Fleharty, who passed away in Omaha in 1916. Henry C. Fleharty was united in marriage to Margaret Cullison, a native of Virginia, who passed away in 1909, but Mr. Fleharty continues a resident of Omaha.
+
+It was in the year 1880 that the parents removed to Ogallala, Nebraska, and there Harry B. Fleharty attended the public schools, while later he studied at Fullerton. He likewise spent two years in the Nebraska Wesleyan College at Lincoln and later entered upon the study of law, being admitted to the bar in 1893 at Stockville, Nebraska. He there began practice but after eighteen months removed to Larned, Kansas, where he continued for a year. In 1896 he was appointed private secretary by Governor John W. Leedy and occupied that position for two years. In 1899 he opened an office in South Omaha, where he continued in the private practice of law until 1906, when he was elected to the office of city attorney. Two years later he was nominated for the position of attorney general of the state on the democratic ticket, but met defeat, as did the entire ticket save the candidate for governor. In 1908 he removed to Omaha and in 1910 he was defeated by only ninety votes for the nomination for congress. In June, 1915, he was appointed city solicitor of Omaha, which position he is now acceptably and creditably filling. For a long period he has been an active leader in the democratic party and his opinions carry weight in its councils. He has ever closely studied the vital and significant problems before the country and his position is the result of a firm belief in the principles which he advocates.
+
+On the 22d of October, 1912, in Kansas City, Missouri, Mr. Fleharty was united in marriage to Miss Maud Doersam. They attend the Methodist Episcopal church and Mr. Fleharty also holds membership with the Woodmen of the World, the Eagles and the Stags. His interest in and support of measures of civic virtue and civic pride is indicated in his identification with the Commercial Club.
+
+---
+
+<-EDWARD MORRIS MARTIN.->
+
+Edward Morris Martin, vice president of the Guarantee Fund Life Association, was born in Delafield, Wisconsin, September 23, 1871. His father, the Rev. John Martin, was born in Ripley, Ohio, in 1825 and was the grandson of Alexander Martin, who enlisted from Staunton, Virginia, as a soldier in the Revolutionary war and was wounded at the battle of Brandywine. The Rev. John Martin became a Presbyterian minister and served as chaplain of an Ohio regiment in the Civil war. He was married in his native state to Miss Elizabeth King, who was born in Ohio, and in 1865 they went to Wisconsin, while in 1880 they came to Nebraska, settling in Cedar county, where the father passed away in 1891 and the mother in 1896.
+
+Edward M. Martin acquired a country school education in Cedar county and later attended Hastings College at Hastings, Nebraska, and Grinnell College at Grinnell, Iowa, being graduated from the latter with the Bachelor of Arts degree in 1893. He completed a course in the law department of the Nebraska State University in 1895 and the same year was admitted to the bar. He at once located in Omaha, where he has since practiced law, and from 1912 to the present he has devoted his attention to insurance litigation and is vice president of and counsel for the Guarantee Fund Life Association. He is likewise president of the Home Casualty Company of Omaha and for years he has been counsel for the Nebraska State Bankers Association.
+
+On the 1st of January, 1900, in Yankton, South Dakota, Mr. Martin was united in marriage to Miss Bertha Louisa Felber, her father being John J. Felber, who has passed away. Mr. and Mrs. Martin hold membership in the West-
+
+<vocab>Harry B. Fleharty, Edward Morris Martin, Omaha, Nebraska, law, politics, Guarantee Fund Life Association, biography</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>311</page-num>
+<header>The Book of Clevelanders 311</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. H. Canniff</image-desc>
+W. H. CANNIFF
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. C. Campbell</image-desc>
+J. C. CAMPBELL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. H. Carleton</image-desc>
+C. H. CARLETON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. G. Carrel</image-desc>
+M. G. CARREL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. B. Carpenter</image-desc>
+F. B. CARPENTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank P. Carroll</image-desc>
+FRANK P. CARROLL
+
+<vocab>Clevelanders, W. H. Canniff, J. C. Campbell, C. H. Carleton, M. G. Carrel, F. B. Carpenter, Frank P. Carroll</vocab>

@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>326</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Willis, John Richard**
+Postmaster of Manchester; b., Manchester, N. H., Feb. 18, 1862; s. Thomas and Bridget (O'Shaughnessy) Willis; ed., parochial schools of Manchester; Catholic; Democrat; clerk for eleven years in wholesale grocery business; employed about three years as clerk in the Commonwealth and Second National Banks, Manchester; engaged in the coal trade from 1897 to 1914; assistant postmaster of Manchester,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+under Ex-Mayor E. J. Knowlton, 1894–1897; postmaster by appointment of President Wilson, since 1914; m., Nov. 6, 1889, Lizzie M. Sullivan, Manchester; children: John S., b. Jan. 5, 1894; Russell L., b. April 18, 1895 (draftsman Atlantic Ship Corporation); Florence L., b. Aug. 16, 1897; Richard T., b. Dec. 3, 1901; Sylvester E., b. Feb. 27, 1905; Alice Elizabeth, b. Aug. 1, 1907. Residence, Manchester, N. H.
+
+<column-break/>
+
+**Drake, George Robert**
+Farmer, secretary N. H. State Grange; b., Pittsfield, N. H., May 9, 1848; s. Noah W. and Mary Elizabeth (Batchelder) Drake; descendant of Robert Drake who settled in Exeter previous to 1640 and subsequently removed to Hampton; ed. public schools and Pittsfield Academy; engaged in agriculture in Pittsfield, but taught school winters for some years in early life; removed to Manchester in 1891, where he has since resided; Baptist; Democrat; member board of education in Pittsfield; member Patrons of Husbandry and first master of Catamount Grange, Pittsfield and of Eastern N. H. Pomona Grange, deputy N. H. State Grange, treasurer Amoskeag Grange, Manchester, for some years past and secretary N. H. State Grange since 1903; member executive committee, Hillsborough County Farm Bureau, Manchester Food Committee, supervisor Manchester war gardens and manager Manchester public market; m., April 14, 1875, Jane Graham Clark, Auburn, N. H., d. Dec. 2, 1895; children, Ralph Allen, b. May 15, 1882 (now in Springfield, Mass.); Ruth Wheeler, b. July 10, 1884 (Mrs. Charles G. Goodrich, Trenton, N. J.). Residence, Manchester, N. H.
+
+**Shedd, John Graves**
+Merchant; b., Alstead, N. H., July 20, 1850; s. William and Abigail (Wallace) Shedd; ed. public schools of Alstead and Langdon; employed as clerk in stores in Alstead, N. H., and Bellows Falls and Rutland, Vt., 1867–72; entered employ of Field, Leiter & Co., Chicago, Ill., Aug. 7, 1872, since continuing with that firm and its successor, Marshall Field & Co., of which he is now president; director Merchants Loan & Trust Co., Commonwealth Edison Co., Illinois Trust & Savings Bank, Chicago; Baltimore & Ohio, Illinois Central, Chicago, Rock Island & Pacific railroads; National Bank of Commerce, New York, Baldwin Locomotive Works, Philadelphia, and vari-
+
+<vocab>John Richard Willis, George Robert Drake, John Graves Shedd, Manchester, New Hampshire, biography, business, politics, genealogy</vocab>

@@ -1,0 +1,73 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>997</page-num>
+<header>INDEX 997</header>
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Sears, W. G. | 180 | Towle, J. W. | 422 |
+| Selleck, Charles | 140 | Trapp, E. F. | 755 |
+| Shafer, M. F. | 364 | Trimble Brothers | 927 |
+| Shanahan, E. F. | 772 | Tubbs, F. L. | 336 |
+| Shane, D. L. | 234 | Tucker, F. S. | 537 |
+| Shary, J. H. | 528 | Tunison, G. M. | 317 |
+| Shearer, W. L. | 700 | Tyler, A. F. | 576 |
+| Sheehy, P. J. | 725 | | |
+| Sholes, De Ver | 247 | Uehling, F. J. | 275 |
+| Sholes, L. C. | 16 | Uncle Sam Health Food Co. | 907 |
+| Shopen, J. A. | 631 | Ure, W. G. | 415 |
+| Shull, D. W. | 233 | Uren, C. T. | 593 |
+| Simeral, E. W. | 264 | | |
+| Simeral, William | 232 | Van Camp, L. B. | 653 |
+| Simpson, F. W. | 404 | Van Keuren, J. S. | 672 |
+| Simpson, J. E. | 361 | Vincent, Cuthbert | 804 |
+| Skinner, C. M. | 898 | Vogel, I. N. | 344 |
+| Slabaugh, W. W. | 574 | von Dorn, J. E. | 286 |
+| Smith, E. P. | 448 | Votava, J. T. | 574 |
+| Smith, H. B. | 139 | | |
+| Smith, J. F. | 843 | Wakeley, A. C. | 978 |
+| Smith, O. M. | 810 | Waldron, H. B. | 221 |
+| Smith, S. W. | 872 | Walker, W. H. | 782 |
+| Smith, W. A. | 684 | Wallace, R. B. | 611 |
+| Smith, W. B. | 912 | Walrath, C. H. | 966 |
+| Smith, W. F. | 937 | Watkins, J. B. | 493 |
+| Snowden, W. P. | 964 | Wattles, G. W. | 18 |
+| Somers, A. B. | 801 | Wear, J. D. | 114 |
+| Spalding, S. K. | 110 | Weaver, J. D. | 321 |
+| Speedie, John | 767 | Webster, J. L. | 986 |
+| Steel, H. O. | 351 | Webster, J. R. | 116 |
+| Stephens, Lucien | 361 | Welch, J. W. | 937 |
+| Stephens, William, Jr. | 384 | Weller, C. F. | 388 |
+| Stillman, W. S. | 559 | Weller, R. B. | 327 |
+| Stokes, A. C. | 797 | Wellman, E. M. | 128 |
+| Storz, A. C. | 568 | Wellman, F. F. A. | 720 |
+| Stout, J. F. | 188 | Wells, A. R. | 716 |
+| Stovall, G. C. | 703 | Wells, P. A. | 172 |
+| Strehlow, R. C. | 726 | Westerfield, E. H. | 128 |
+| Stull, William | 985 | Wharton, G. C. | 977 |
+| Sturgess, T. F. | 605 | White, A. S. | 975 |
+| Summers, J. E. | 36 | Whitmore, Frank | 813 |
+| Sunderland, J. A. | 66 | Whitmore, W. G. | 803 |
+| Sutphen, C. J. | 354 | Wilcox, Frank | 135 |
+| Swanson, N. P. | 482 | Wilcox, G. A. | 609 |
+| Swindler, L. M. | 88 | Williams, A. L. | 658 |
+| | | Williams, H. W. | 781 |
+| Tagg, W. B. | 762 | Williams, J. H. L. | 419 |
+| Talbot, N. O. | 478 | Windheim, H. G. | 958 |
+| Tancock, J. A. | 959 | Winter, C. F. | 731 |
+| Tanner, J. M. | 751 | Winterson, G. C. | 589 |
+| Thomas, Amos | 358 | Withnell, C. H. | 289 |
+| Thomas, E. E. | 135 | Withnell, Frank | 979 |
+| Thompson, H. A. | 466 | Witte, Charles | 855 |
+| Thompson, W. Y. | 586 | Wolf, H. A. | 296 |
+| Thomson, A. P. | 619 | Wood, A. P. | 457 |
+| Tilden, George | 102 | Wood, B. B. | 218 |
+| Tilden, Mrs. George | 107 | Wood, W. H. | 560 |
+| Tillotson, Theodore | 667 | | |
+| Tomanek, J. L. | 741 | Yates, J. T. | 301 |
+| Towle, G. C. | 23 | Yeiser, J. O. | 965 |
+
+<vocab>Index, Names, Directory</vocab>

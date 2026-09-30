@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>579</page-num>
+<header>TOWN OF CHATHAM. 579</header>
+
+surface, and no considerable portion of the inhabitants are engaged in husbandry beyond the culture of cranberries in suitable places; and to this industry less attention is paid than in towns to the westward. It excels in harbors, furnishing within its projecting points more and safer anchorage than any other town; but in no other are the changes from wind and tide greater. (See Chapter I). The harbors are free from rocks, but the shifting sands require skill and almost a daily familiarity with them to be safely navigated. Inside the beaches and on the southern side of Strong island are salt marshes, flowed by the tides. The west side of Monomoy, which is virtually an island stretching ten miles toward Nantucket, was formerly a long salt marsh but the wind has filled it with sand.
+
+The streams are short and not available for mill purposes. Mitchell's river connects Mill pond with the Cove and Stage harbor; west of Stage harbor is Cockle Cove river, connecting Salt pond with the sound. Muddy creek, flowing northeasterly into Pleasant bay, forms in part the northwestern boundary between Chatham and Harwich, and Red river, flowing into the sound, the southwestern.
+
+Peat has been obtained for fuel from the ancient bogs in years past; but cranberry culture in these spots is now of more profit. The woodland of the town, comparatively less than in towns to the westward, is mostly along the western bounds. Hundreds of acres of pines have been planted in the central and northern parts. This planting began about fifty years ago.
+
+The original Indian name was Monomoyick and has been variously written with the same significance. In the territory embraced within the limits of the town the natives, unmolested, enjoyed their customs many years after the English had settled Old Eastham and Yarmouth. Early in the spring of 1665, William Nickerson, mentioned at page 458, settled here, having purchased of the Indians, in 1656, the first lands for settlement by the whites. The first territory purchased was of John Quason, chief of Monomoyick, and was a large tract north of the road now leading from Chatham to West Brewster, and south of and near to Potanumaquut. June 19, 1672, the same sachem, Quason, joined with Mattaquason in a deed of land, south of the first, which extended east to Oyster pond, the name Mr. Nickerson gave to that body of salt water and which it now bears. March 29, 1678, August 16, 1682, and at other times he purchased other tracts of the natives, paying valuable considerations of goods as agreed. But Mr. Nickerson had purchased these lands without permission of the court at Plymouth, and much legal strife ensued.
+
+The same year that Mr. Nickerson made his first purchase, the court at Plymouth granted to Thomas Hinckley, John Freeman, William Sargeant, Anthony Thacher, Edmund Hawes, Thomas Falland,
+
+<vocab>Chatham, Monomoy, cranberries, harbors, Mitchell's river, Stage harbor, Cockle Cove river, Salt pond, Muddy creek, Pleasant bay, Harwich, Red river, Monomoyick, William Nickerson, John Quason, Potanumaquut, Mattaquason, Oyster pond, Plymouth court, Thomas Hinckley, John Freeman, William Sargeant, Anthony Thacher, Edmund Hawes, Thomas Falland</vocab>

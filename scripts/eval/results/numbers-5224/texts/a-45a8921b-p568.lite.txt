@@ -1,0 +1,67 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>554</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Johnson, Perley Albert | 16 | Leonard, Henry Barrett | 489 |
+| Johnson, Thomas Franklin | 394 | Lewis, Homer Pierce | 516 |
+| Jones, Andros B | 536 | Lewis, Jonathan Snow | 413 |
+| Jones, Edwin Frank | 193 | Lewis, Samuel De Wolf | 343 |
+| Jones, Elgin Alonzo | 229 | Linehan, John J | 352 |
+| Jones, Fred Andros | 150 | Little, Clarence Belden | 379 |
+| Jones, Seth Warner | 303 | Little, Cyrus Harvey | 86 |
+| Jones, William Safford | 212 | Livingston, Frank Channing | 528 |
+| Jump, Herbert Atchison | 370 | Lockhart, Burton Wellesley | 385 |
+| Junkins, William Oliver | 99 | Lord, Harry True | 481 |
+| | | Lord, John King | 287 |
+| Keeler, Irad Eugene | 25 | Lougee, Arthur Jewett | 323 |
+| Keenan, George William | 285 | Loveland, Israel Albert | 415 |
+| Kellom, Franklin Pierce | 85 | Lund, Fred Bates | 481 |
+| Kempton, Elisha Moody | 38 | Lyford, James Otis | 53 |
+| Kendall, John Chester | 459 | | |
+| Keyes, Anson L | 91 | MacGreggor, Henry Frederick | 469 |
+| Keyes, Arthur Louis | 229 | MacMurphy, Mary L. S. James | 468 |
+| Keyes, Frances Parkinson W | 335 | Madden, Charles Augustus | 397 |
+| Keyes, Henry Wilder | 211 | Madden, Joseph | 406 |
+| Keyes, Homer Eaton | 461 | Madigan, Thomas Henry, Jr | 323 |
+| Keyser, Frank Nathaniel | 529 | Manahan, William Henry | 351 |
+| Kidder, Daniel | 453 | Mann, Hosea Ballou | 495 |
+| Kimball, Benjamin Ames | 229 | Mann, William Hazeltine Gage | 290 |
+| Kimball, George Morrill | 277 | Marble, Thomas Littlefield | 519 |
+| Kimball, Henry Ames | 141 | Marden, Orison Swett | 477 |
+| Kimball, Herbert Harvey | 461 | Marshall, Harold | 479 |
+| Kimball, Martha Smith | 279 | Marshall, Roujet DeLisle | 463 |
+| Kimball, William Henry | 482 | Martin, Frederick Roy | 313 |
+| King, Charles Francis | 461 | Martin, Nathaniel Everett | 89 |
+| Kingsbury, Edward Newell | 202 | Marvin, Winthrop Lippitt | 468 |
+| Kingsbury, William Josiah | 182 | Mason, Ellen McRoberts | 195 |
+| Kivel, John | 515 | Mason, Nathaniel Robert | 198 |
+| Knowlton, Edgar Jay | 109 | Mason, Wallace Edward | 401 |
+| Knox, William Franklin | 417 | Masseck, Frank Lincoln | 451 |
+| | | Matthews, Joseph Swett | 161 |
+| Ladd, Fred Newton | 377 | McAllister, George Isaac | 446 |
+| Ladd, William Palmer | 487 | McCollester, Lee Sullivan | 407 |
+| Lake, Harry Foss | 51 | McCollester, Sullivan Holman | 287 |
+| Lamb, Fred William | 488 | McCrillis, John | 24 |
+| Lamprey, Maitland Charles | 315 | McDaniel, Allen Boyer | 468 |
+| Lane, Edward Austin | 356 | McDonald, Etta Austin Blaisdell | 465 |
+| Lane, Francis Ransom | 463 | McDougall, Henry C | 422 |
+| Lang, Walter Monroe | 513 | McDuffee, Willis | 4 |
+| Langdell, Samuel Frank | 274 | McElwain, Herbert Andrew | 375 |
+| Lauder, George Burns | 259 | McFarland, Annie Avery | 402 |
+| Laycock, Craven | 145 | McGregor, George Wilbur | 42 |
+| Leach, Edward Giles | 295 | McHugh, Bartholomew Franklin | 333 |
+| Learned, Henry Barrett | 489 | McIntyre, Daniel | 29 |
+| Ledoux, Henri Toussaint | 462 | McLane, John Roy | 159 |
+| Lee, William Andrew | 426 | McLaughlin, Agnes Winifred | 435 |
+| Leighton, George Bridge | 545 | McLaughlin, George Asbury | 477 |
+| Leonard, Charles Hall | 330 | McQuaid, Elias Alfred | 383 |
+
+<column-break/>
+
+<vocab>New Hampshire, biography, index, notables</vocab>

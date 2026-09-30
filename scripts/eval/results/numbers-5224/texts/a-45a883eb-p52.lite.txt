@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>48</page-num>
+<header>The Book of Clevelanders</header>
+
+1896, to May, 1898, gen. mgr., all on the Lake Shore & Michigan Southern R. R., May, 1898, up to the present time, pres. of The New York, Chicago & St. Louis Railway Co., at Cleveland; member Chamber of Commerce, Union, Clifton, Roadside and Country Clubs, of Cleveland, and Chicago Traffic Club and Chicago Association of Commerce.
+
+CARLETON, Charles Henry; lumber dealer; born St. Clair, Mich., Sept. 18, 1859; son of George W. and Emeline P. Smith Carleton; educated, high school, St. Clair, Mich., and Business College, Valparaiso, Ind.; married, Wayne, Mich., Jan. 3, 1889, Janet L. Morrison; three children, George M., Margaret and Jean; after leaving school, entered the employ of B. W. Jenks & Co. in a lumbering operation near Grand Rapids, Mich.; came to Cleveland in May, 1885, and entered the employ of N. Mills & Co.; secured an interest in the firm the following year, and has been a member of the above firm and its successors up to date; pres. The Mills-Carleton Co.; treas. The Eddy Road Allotment Co.; vice pres. The Pearl St. Realty Co.; director Lumber Underwriters of New York; member The Euclid and Lumbermen's Clubs. Recreations: Florida Fishing.
+
+CARPENTER, Frank B.; atty. and general counsel the N. Y., C. & St. L. R. R. Co.; born, Oberlin, O., July 17, 1866; son of John D. and Charity G. Lester Carpenter; educated, Oberlin College, A. B., 1888, and Columbia Law School; married, Morrison, Ill., June 3, 1890, Edna Woods; one daughter, Florence, and two sons, John and Edward; 1901 to 1912, assistant general counsel for the N. Y., C. & St. L. Ry. Co.; in 1912, appointed general counsel for the same road; administrator and trustee of the estate of W. J. Gordon, since 1903, succeeding Hon. Samuel E. Williamson, at the time of the latter's death; general counsel N. Y. C. & St. L. R. R. Co.; pres. The W. J. Gordon Realty Co.; director The Edgewater Land Co., and The Goshen Coal Co.; member auxiliary board, The Guardian Savings and Trust Co.; member Ohio Bar Ass'n, Union and Mayfield Clubs.
+
+CARREL, Moses Gray; dist. passenger agt. B. & O. R. R.; born, Fulton county, O., June 4, 1854; son of William P. and Elizabeth Waite Carrel; educated at High School and College, Hillsdale, Mich.; married, Reading, Mich., June 8, 1875, Jennie E. Bradley; two daughters and one son; telegraph operator, freight and ticket agt. L. S. & M. S. R. R., 1870 to 1880; ticket agt. Union Depot, Cleveland, 1880 to 1891; sec'y and treas. Merchant's Bank & Storage Co., Cleveland, 1891 to 1893; mgr. and editor railroad magazine, ''The Station Agent,'' and financial editor the Cleveland Press, 1893-1894; general passenger agt. C. L. & W. R. R., 1894 to 1904; division passenger agt. B. & O. R. R., 1904 to date; director and sec'y for several years to date Masonic Temple Ass'n, Merchant's Banking & Storage Co.; sec'y and treas. W. M. Meridian Lodge, F. & A. M., 1911-1912; E. M. Commander, Holyrood Commandery, No. 32, K. T., 1991-1992; P. M., Bahurim Council, A. A.
+
+<vocab>Charles Henry Carleton, Frank B. Carpenter, Moses Gray Carrel, Cleveland, biography, railroad industry, lumber industry, legal profession</vocab>

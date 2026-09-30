@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>50</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+board of education, since 1910; member, constitutional convention, 1902; chairman, N. H. public service commission, since its establishment in 1911; first
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+vice-president, and member, valuation and legislative committees, National Association of Railway Commissioners; member, commission to revise the charter of the city of Concord; counsel on constitutional questions to the Tax Revision Commission of 1908; Episcopalian, chancellor, and member, standing committee of the diocese of New Hampshire; deputy to the general convention of the Episcopal church, 1904–16; judge of the ecclesiastical court of review, province of New England; Mason; member, Wonolancet club, Concord; m., 1st, July 12, 1893, Ethel Abbe, who d. 1910; 2d, July 31, 1916, Ellen Tower Abbe; three children by first wife, Edward Abbe (Trinity, 1916, Harvard Law School, Rhodes scholar), James Huntington, Rose Terry. Residence, Concord, N. H.
+
+<column-break/>
+
+**Smith, Edward M.**
+Lawyer and insurance agent; b., Alstead, N. H., Feb. 6, 1838, s. Alden and Lurinda (Partridge) Smith; ed. select schools, Alstead Academy, and law department of the University of Albany, graduating LL.B., March, 1861; admitted to the N. Y. bar, March 4, 1861; admitted to Cheshire County, N. H., bar, Oct., 1864, and since in practice at Alstead, where he has done an extensive office and general business, including the settlement of nearly four hundred estates; Congregationalist; Republican; tax collector, 1881, and for fourteen years; member of school board twelve years; member, N. H. house of representatives, 1889; town counsel for the last thirty years; member, National Geographic Soc., Washington, D. C.,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of an older man with a full beard, wearing a suit and tie.</image-desc>
+
+Alstead and Langdon Thief Detecting Soc.; m., Nov. 24, 1880, Fannie Washburn, who d. Dec. 5, 1913. Residence, Alstead, N. H.
+
+<vocab>Edward M. Smith, biography, New Hampshire, lawyers, insurance agents, Alstead, Concord, genealogy, public service, politics</vocab>

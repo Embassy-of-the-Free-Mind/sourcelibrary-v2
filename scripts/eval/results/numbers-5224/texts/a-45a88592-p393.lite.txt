@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>327</page-num>
+<header>TOWN OF BOURNE. 327</header>
+
+important branch. The right of the people to have each family a certain share of herrings is sustained, and the profit beyond this is sold to the highest bidder. For the year 1890 this privilege was sold for one thousand dollars, reserving two barrels for each Indian family, and a barrel for the head of every other family in Bourne or Sandwich, the latter town having a common interest with the former in the herring rights.
+
+This people early had been active in the matters of the church, which by dissensions had become reduced to a small membership, and at the close of Mr. Smith's pastorate, in 1688, James Skiff, Thomas Tupper, Thomas Tobey, Jacob Burge and William Bassett were the only active male members. In 1732 a petition was presented by certain ones "to be released from paying for the support of the minister, and to be set off as a distinct precinct." This request was refused "on the ground that the petitioners are widely scattered and in all make less than 20 families;" and it was voted by the town that "the return of the disaffected is the only way to restore our ancient glory of unity and peace."
+
+Again, in 1744, Ebenezer Wing and twenty-three others of Pocasset and Manomet petitioned to be released from paying to the support of Mr. Fessenden and town schools, which by the vote of the town was refused. The application for a precinct was renewed in 1769, and in 1772 Pocasset was incorporated as the second precinct in Sandwich. These last petitions had been carried to the general court where the prayer of the petitioners was granted. This division was only of the church, but the feeling that ultimately resulted in the division of the parent town and erection of the town of Bourne, existed from this time. In 1797 an ineffectual attempt was made to divide the town, the movers desiring to include Monument, Pocasset and other portions in the new township.
+
+This portion of the parent town had been first in many enterprises of the day not yet mentioned. It raised its portion of the schoolmaster's salary, and at Pocasset and also at Monument the school was kept a proportion of the year. Early in the present century salt was manufactured around Buzzards bay. The last of these extensive manufactories, at Back river, succumbed to the change in affairs about the middle of the century. Ship building was an industry as early as 1800, and was carried on by Captain William Handy, who retired from the seas and engaged in it successfully, establishing a shipyard near his house on Buzzards bay. He sent forth from his own yard the ship *Rebecca*, the brig *Fame*, the schooners *Resolution*, *Nancy*, *Sophronia*, *Love*, *Achsah Parker*; the sloops *Betsey*, *Nancy* and *Deborah*, and other smaller vessels designed for the Long Island Sound trade during the war of 1812. Benjamin Burgess built the brigs *Cordelia* and *Sarah*
+
+<vocab>Bourne, Sandwich, herring rights, church history, Pocasset, Manomet, Mr. Fessenden, general court, Monument, salt manufacturing, Buzzards Bay, Back River, shipbuilding, Captain William Handy, War of 1812</vocab>

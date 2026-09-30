@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>297</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+for New Hampshire and Vermont of United States Employment Service. 1918; member A. F. & A. M. (lodge, chapter and council), Elks, and Foresters; m., Feb. 28, 1911, Mabel E. White, graduate of Mass. Normal Art School, and teacher of art in Franklin high school. Residence, Franklin, N. H.
+
+**Cressy, Will Martin**
+Actor and Playwright; b., Bradford, N. H., Oct. 29, 1863; s. Frank and Annette M. (Ring) Cressy; ed. public schools, Concord, N. H., high school; commenced active life as a traveling salesman, but soon relinquished this vocation for the stage, having been known as a versatile amateur actor in youth. His first professional engagement was with Frost & Fanshawe in 1889; subsequently for six years with Denman Thompson in his “Old Homestead” company, appearing in the well-remembered part of “Cy Prime,” wherein he laid the foundation for the remarkable popularity he has since enjoyed. Not only is he a master in his line as an actor and entertainer, but he undoubtedly leads the world as an author of vaudeville sketches, or one act plays, having produced about one hundred and fifty, and is credited with having written about half of all the playlets now being presented in vaudeville. January 19, 1900, Mr. Cressy married Blanche Dayne of Troy, N. Y., who was also a member of the “Old Homestead” company, and together, under the widely familiar name of Cressy & Dayne, they have since been entertaining the amusement loving public of this and other lands, having visited England, Ireland, Scotland, Wales, Holland, Belgium, France, Japan, China, the Philippines, Hawaii, and other countries, and presented their plays in most of them. Much time has been devoted by Mr. Cressy in the last three years to giving illustrated free lectures to orphans and poor children in the theatres on Saturday mornings, free transportation being given them by the Rotary Club. Since the war
+
+<column-break/>
+
+broke out he has been deeply interested in all the “drives.” He is the author of about twenty popular war poems which have been put into book form and sold, the proceeds being sent to some war fund. He has turned over $5,000 to the Tobacco fund alone; has earned thousands for the Y. M. C. A., Red Cross, and War Savings Stamp drives, and, during the various Liberty Loan drives was instrumental in selling hundreds of thousands of dollars worth of bonds. He is one of eight “Four Minute Men” at large, appointed by the President to speak on patriotic subjects, and made twenty-nine speeches during a two weeks stay in San Francisco. With his wife he enlisted in the summer of 1918, to go to France for five months for free service in the Theatrical Over Seas League for the entertainment of the American troops. Mr. Cressy has written three books that have had wide circulation, and is a constant correspondent of various newspapers and magazines; he is a Christian Scientist, a Republican and a member of the B. P. O. E. Permanent residence, Concord, N. H.; summer home, “Cressy Point,” Sunapee Lake, Newbury, N. H.
+
+**Emerson, Henry A.**
+Paper manufacturer; b., Concord, N. H., May 1, 1837; s. Fenner H. and Clarinda Baker Emerson; ed. public schools and Franklin and Penacook Academies; entered a paper mill at Pepperell, Mass., at seventeen years of age and learned the business; became a member of the Contoocook Valley Co., at West Henniker, N. H., and was president and manager from 1880 till retirement a few years since; Congregationalist; Democrat for many years, latterly acting with the Republicans; member N. H. house of representatives as a Democrat in 1876 and 1877, and in 1905, as a Republican; member senate in 1915; member I. O. O. F., and Wonolancet Club of Concord; m., Jan. 1, 1864, Louise M. Lydston of Litchfield, d., Feb. 7, 1910. Residence, Henniker, N. H.
+
+<vocab>Will Martin Cressy, Henry A. Emerson, New Hampshire, biography, vaudeville, paper manufacturing, politics, World War I, Four Minute Men, Cressy & Dayne</vocab>

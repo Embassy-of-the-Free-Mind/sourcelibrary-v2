@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>415</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+ena (Wentworth) Copp; ed. Dartmouth College, A.B. 1881, Harvard, M.D. 1884; assistant physician Taunton (Mass.) Insane Hospital, 1885–95; superintendent Mass. Hospital for Epileptics, Monson, Mass., 1895–9; executive secretary, Mass. Board of Insanity, Boston, 1899–1911; physician-in-chief and superintendent Pa. Hospital for Insane, Philadelphia, since September, 1911; member American Medico-Psychological Ass'n, N. E. Soc. Psychiatry and Neurology, etc.; m., June 15, 1886, Hattie Grace Sargent, Methuen, Mass. Address, 44th and Market Sts., Philadelphia, Pa.
+
+**Crocker, Herbert Samuel**
+Civil engineer, b., Haverhill, N. H., June 20, 1867; s. Samuel Hooker and Abiah W. (Morse) Crocker; ed. public school and academies, Univ. of Mich. B.S. in Civil engineering, 1889; draftsman, Chicago, Milwaukee & St. Paul Ry., 1889–91; assistant engineer, Northern Pacific Ry., 1891–4; bridge engineer, Toronto, Hamilton & Buffalo Ry., 1895–6; assistant engineer; Denver, Col., Board of Public Works, 1897–1901; assistant manager, American Bridge Co., Chicago, 1901–6; bridge engineer, Denver City Tramway Co., 1906–7; in private practice since Dec., 1907; supervised construction of all important viaducts in Denver; member for Colorado board of directors for Industrial Preparedness; m., April 15, 1905, Edna Louis Mitchell. Residence, 1333 Fillmore St., Denver, Col.
+
+**Loveland, Israel Albert**
+Physician; investment banker, real estate and insurance; b., Gilsum, N. H., Nov. 3, 1850; s. Israel B. and Sarah (Thompson) Loveland; ed. Marlow Academy, Dartmouth Med. College, M.D. 1874; practiced his profession in Westmoreland and Gilsum; removed to Keene, N. H., in 1909 and gave up the practice of medicine, but retained his membership in county, state and national medical societies; in Westmoreland he was physician in the Cheshire County Almshouse, and superintendent of schools; in Gilsum he was postmaster
+
+<column-break/>
+
+and executive officer of the board of health; since coming to Keene he has devoted his attention to fire insurance under the name of Loveland & Hopkins, the real estate business, and especially the handling as owner of extensive timberlands, the selling of high grade securities and legal and corporation work; Republican; a Freemason and Granger; official member Grace M. E. church; president York Corporation Trust and Law Co.; eastern man-
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Herbert Samuel Crocker</image-desc>
+
+aging director Realty Bond Co. of Minneapolis, Minn.; senior trustee Securities Co. of Wisconsin under a trust deed securing a large bond issue, and holds other important positions of trust; m., 1st, Oct. 21, 1875, Lucy Mahala, only child of the late Gen. Daniel W. Bill, d. Nov. 17, 1910, leaving two daughters, Fannie V., who married Don W. Felch of Brattleboro, Vt., and Ada M., wife of W. Bridge Jones of Keene; 2d, Dec. 11, 1912, Miss Mary Elizabeth Gunn. Residence, Keene, N. H.
+
+<vocab>Biography, New Hampshire, Medicine, Engineering, Finance, Real Estate, Genealogy, Freemasonry, Grange</vocab>

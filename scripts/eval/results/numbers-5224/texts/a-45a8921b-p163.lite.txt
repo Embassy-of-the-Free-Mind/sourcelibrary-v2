@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>149</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+his sister, Clara M. Fowler, gave the city of Concord the Fowler Library building in 1888; m., Oct. 14, 1899, Susan Farnham Smith; children, William Plumer, Jr., b. Aug. 5, 1900, (Dartmouth, 1921); Katharine Stevens, b. June 12, 1902; Philip, b. June 6, 1906. Office, 18 Tremont St.; residence, 1 Plymouth St., Boston, Mass., and Little Boar's Head, N. H.
+
+**Drew, Irving Webster**
+Lawyer; b., Colebrook, N. H., Jan. 8, 1845; s. Amos Webster and Julia Esther (Lovering) Drew; ed. public and private schools, Colebrook academy, Kimball Union Academy, 1866, Dartmouth College, 1870; studied law in the office of Ray & Ladd at Lancaster; admitted to the bar in November, 1871, and succeeded Hon. William S. Ladd, upon his appointment as a justice of the Supreme Court, in partnership with Hon. Ossian Ray, under the firm name of Ray & Drew; subsequently the firm became successively, Ray, Drew & Heywood, Ray, Drew & Jordan, Drew & Jordan, Drew, Jordan & Buckley, Drew, Jordan, Buckley & Shurtleff, Drew, Shurtleff & Morris, and Drew, Shurtleff, Morris & Oakes, Mr. Drew's connection continuing to the present time; admitted to practice in U. S. Courts in 1877; Episcopalian; Democrat till 1896, Republican since; moderator town of Lancaster; member, N. H. state senate, 1883-4, N. H. constitutional convention, 1902, 1912; delegate in Democratic national conventions of 1880, 1892 and 1896 (withdrew); major 3d Reg. N. H. N. G., 1876-9; director, Lancaster National Bank; trustee and president, Siwooganock Guaranty Savings Bank; president, Upper Coös R. R.; trustee and president, Lancaster Library; member, N. H. Bar Ass'n. (president, 1899), N. H. Historical Soc., A. F. & A. M. (Knight Templar), I. O. O. F.; president of the day at Lancaster's one Hundred and Fiftieth Anniversary Celebration, Aug. 12, 1914; m., Nov. 4, 1869, Caroline Hatch Merrill,
+
+<column-break/>
+
+Colebrook; children, Paul b. Feb. 20, 1872 d. Oct. 1, 1872; Neil Bancroft, b. Sept. 9, 1873, d. May 7, 1905; Pitt Fessenden, b. Aug. 27, 1875, m. Mabel Swain; Sara Maynard, b. Dec. 19, 1876, m. Edward Kimball Hall. Residence, Lancaster, N. H.
+
+**Odlin, Arthur Fuller**
+Lawyer; b., Concord, N. H., April 25, 1860; s. Woodbridge and Abby Pratt (Comstock) Odlin; ed. Concord high school, 1876, Dartmouth College, Boston University Law School, 1885; Unitarian; Republican since 1896 (formerly Cleveland Democrat); attorney-general, Porto Rico, 1899-1901; judge, Court of First Instance, Philippine Islands, 1901-4; vice-president, Florida State Bar Ass'n, 1916-17; m., Oct. 5, 1886, Mary Emma Allen, Lancaster, N. H., children, Lawrence Allen, b. 1889, now assistant paymaster, U. S. Navy; Evelyn, b. 1893, m. Oct. 11, 1917, James Kennedy Atwood, Jacksonville, Fla. Judge Odlin has appeared, occasionally, on the public lecture platform, and has written occasional articles for legal magazines, generally in English, sometimes in Spanish. Residence, Arcadia, Fla.
+
+**Abbot, Charles Greeley**
+Astronomer; b., Wilton, N. H., May 31, 1872; s., Harris and Caroline Ann (Greeley) Abbot; ed. Wilton high school, 1888, Phillips Andover Academy, Massachusetts Institute of Technology, S.B., 1894, S.M., 1895; Congregationalist, Republican; director, Astrophysical Observatory, Smithsonian Institution, Washington, D. C., 1906 to the present time; member, National Academy of Sciences, Royal Astronomical Soc. of Great Britain, Soc. Astron. de France, Meteorologische Gesellschaft of Germany, Academy of Modena, Italy, etc.; discovered variability of the sun; invented numerous scientific instruments, some widely in use in the world; author of "The Sun," and numerous scientific articles; m., Oct. 13, 1897, Lillian E. Moore. Residence, Washington, D. C.
+
+<vocab>Irving Webster Drew, Arthur Fuller Odlin, Charles Greeley Abbot, New Hampshire, biography, lawyers, astronomers, genealogy</vocab>

@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English, Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<header>CELESTIAL HIERARCHY. CH. II.</header>
+<meta>catchword: 1</meta>
+<warning>Handwritten marginalia present</warning>
+
+<margin>2 Cor. iii. 18.</margin>
+<margin>2 Cor. iv. 6.</margin>
+<margin>love? kindly</margin>
+<margin>Rom. ix. 28.</margin>
+stood as a child; but when I became a man, I put away childish things.” From childishness and images and imitations Christ has drawn us; who has shone upon our darkness, and has taught us the truth, and has made us that believe on him to be men; in order that we, “with open face beholding as in a glass the glory of the Lord, may be changed into the same image from glory to glory, even as by the Spirit of the Lord:” “God, who commanded the light to shine out of darkness, hath himself shined in our hearts, to give the light of the knowledge of the glory of God in the face of Jesus Christ;” that by faith we may discern more truly the countenance of him who has revealed what Moses pourtrayed concerning Christ and the Church. He that believes in this word, believes in that “short work which the Lord has made upon the earth.”¹ For in Christ
+
+says in his Letter to Justus Jonas of Colet’s fondness for children:—“In pueris ac puellis delectabat naturæ puritas ac simplicitas; ad cujus imitationem suos vocat Christus, Angelis eos solitus comparare.” It is strange to observe in what an unquestioning spirit the anecdote of Erasmus about barbarity in schools (“Novi theologum quendam,” etc., *Op. i.* 441,) has been assumed to refer to Dean Colet above all people. Mr. Seebohm has satisfactorily refuted this application of the story (*Oxford Reformers*, p. 144), and I will not impair the freshness of his arguments by repeating them. But it may be instructive to notice how widely such base coin circulates, before it can be finally detected and destroyed. Thus, in the present case, we have Tytler, in his *Life of Henry VIII.* (p. 42), relating how “the amiable Erasmus . . . has left us a picture of the manner in which Colet used to superintend the flagellations, and the good will with which Lilly administered them, which is at once ludicrous and revolting.” And to the same effect we may read in the *Quarterly Review*, vol. xxxix. p. 104; *MacMillan’s Magazine*, No. lxxi. p. 401; *Report of the Commissioners on Colleges*, etc. vol. i. p. 194; and many other places. And all this, because Dr. Knight says that “it will be a hard task to apply [the story] to any other than to them.” Kennett, from whose collections Knight took the passage, speaks more diffidently: “I think there can be no other application of it.” And he sets down the extract from Erasmus in an evidently half-jesting mood:—“I leave it as a task to be translated by some ill-deserving Paul’s scholar.”—*Lansdowne MS.* 1030, fol. 132 *b*. Such are the scanty materials from which this tissue of error has been spun.
+
+¹ See above, p. 9. A somewhat unexpected illustration of what is there supposed to be the author’s meaning, is found in the *Bibliotheca* of Sixtus Senensis (1610, p. 178), under the heading of “A specimen of a
+
+<vocab>Celestial Hierarchy, Colet, Erasmus, Justus Jonas, Henry VIII, Lilly, Oxford Reformers, Sixtus Senensis, flagellations, education</vocab>

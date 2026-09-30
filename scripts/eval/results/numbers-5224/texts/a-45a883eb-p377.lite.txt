@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>373</page-num>
+<header>The Book of Clevelanders 373</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. O. Rote</image-desc>
+R. O. ROTE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Louis Rorheimer</image-desc>
+LOUIS RORHEIMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Aloysius L. Roth</image-desc>
+ALOYSIUS L. ROTH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. Roubicek</image-desc>
+H. ROUBICEK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Rothenberg</image-desc>
+WM. ROTHENBERG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Edd A. Ruggles</image-desc>
+EDD A. RUGGLES
+
+<vocab>R. O. Rote, Louis Rorheimer, Aloysius L. Roth, H. Roubicek, Wm. Rothenberg, Edd A. Ruggles, Clevelanders, biography</vocab>

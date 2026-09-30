@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>151</page-num>
+<header>The Book of Clevelanders</header>
+
+**KELLY**, William Eldred; manufacturer; born, Emporium, Pa., May 11, 1861; son of Andrew Emmons and Lorinda Lyman Kelly; educated, Towanda College, Towanda, Pa.; also ordinary business course; married, Cleveland, Aug. 23, 1882, Alice T. Brown; issue, Fred Eugene, Myrtle L. and Hattie L. Kelly; pres. and gen. mgr. The Kelly Reamer Co.; formerly vice pres. The Kelly Handle-Bar Co.; joint proprietor and mgr. The E. A. Hewett Co.; pres. and mgr. The W. E. Kelly Mnfg. Co.; pres. and mgr. The Safety Handle-Bar Co.; pres. and mgr. The Modern Toy & Novelty Co.; master mechanic and supt. of The Clark Cash Register Co., and many other manufacturing plants in Cleveland for the past thirty-four years; member Masonic order, Biglow Lodge, No. 243, Chamber of Industry, past treas. and senior warden of St. Mark's Episcopal Church; member Superintendent's and Foreman's Club; mechanic and patenter of many mechanical and electrical devices, Kelly Handle-Bars, etc.
+
+**KENNEDY**, Frederick Ingham; coal and vessel business; born, Erie, Pa., Nov. 10, 1866; son of Silas E. and Belle Ingham Kennedy; educated, public schools and Erie Academy; graduated, class of 1884; married, Erie, Pa., Sept. 10, 1889, Madeline Hammond; issue, one daughter, Dorothy, one son, Frederick I., Jr.; commenced work with Youghiogheny River Coal Co., Erie, Pa., controlled by the late Congressman W. L. Scott, June 2, 1884; clerk and afterwards treas. and director of the company; also treas. and director Spring Valley Coal Co., controlled by the same interests; these companies sold to Pittsburg Coal Co., when he went with them as traveling auditor and afterwards as asst. to the vice pres., leaving Pittsburg for his present position; agent The C. Reiss Coal Co., and The Milwaukee Western Fuel Co.; director The North American Steamship Co., and The Wainwright Steamship Co.; member Masonic Order, Elks, Athletic Club, and The Erie Club, and Sheboygan, Wis., Club.
+
+**KILGORE**, Robert Murray; dist. sales mgr. Jones & Laughlin Steel Co.; born, Pittsburg, June 14, 1877; son of Jesse B. and Mary Barker Kilgore; educated, public schools and Penn State College (B. A.); married, Pittsburg, 1900, Bertha Wallace; issue, two sons and three daughters, James, Jesse, Robert, Elizabeth and Ruth; with Jones & Laughlin Steel Co. since January, 1898 (no other employer); appointed mgr. of sales Cleveland district, January, 1908; member Kappa Sigma, Union, and Mayfield Clubs, Chamber of Commerce; Royal Arch Mason.
+
+**KILMER**, Melvin Daniel; manufacturer; born, New York State, July 29, 1858; son of Augustus and Vianna Barner Kilmer; educated, Eastman's Business College, Poughkeepsie, N. Y.; married, Schenectady, N. Y., Oct. 22, 1886, Mary T. Hoag; two sons, Augustus H. and Melvin D. Jr.; pres. and mgr. The Kilmer Spring Support Co.; the company also manufactures wire-forming machines and bale ties; co-partner with M. D. Kilmer & Co., and A. H.
+
+<vocab>William Eldred Kelly, Frederick Ingham Kennedy, Robert Murray Kilgore, Melvin Daniel Kilmer, Cleveland, biography, manufacturing, coal industry, steel industry</vocab>

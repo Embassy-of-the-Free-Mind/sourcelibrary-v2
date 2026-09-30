@@ -1,0 +1,81 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>237</page-num>
+<header>INDEX 237</header>
+
+Pronaos, 170.
+Ptolemies, 93.
+Ptolemy, 10.
+Purification, 181.
+Purity, 141.
+Puster-Thal, 73.
+
+Q
+Quadriga, 116, 118, 138.
+
+R
+Râ, 92.
+Radiate crown, 99.
+Rashnu, 5.
+Raven, degree of, 152 et seq.
+Ravenna, fleet at, 46.
+Redeemer, the, 193, 195.
+Redemption, 143.
+Resurrection of the flesh, 146, 171, 191, 206.
+Revelation, 191.
+Réville, Jean, 17.
+Rhætia, 73.
+Rhone, 69 et seq.
+Ritual of Mazdaism, 28.
+Rock, Mithra born from the, 130 et seq.; of generation, 194.
+Roman aristocracy, Mithra and, 81 et seq.
+Roman Emperors and theocracy, 90.
+Roman tolerance of Mithraism, 85.
+Rome, 210, 217; Mithraism at, 79 et seq.; the capital of paganism, 205.
+Runner of the Sun, degree of, 152 et seq.
+
+S
+Sabazius-Anaïtis, 17.
+Sacraments, 156, 157, 206.
+
+<column-break/>
+
+Sacred bath, 180.
+Sacrifice, the, 137, 166.
+Sæculum. (See Kronos.)
+Samson, 228.
+Sarmizegetusa, 45, 142, 216.
+Sarrebourg, 56, 204.
+Sassanian kings, 100.
+Saturn, Mithraic, 105 et seq. (See Kronos.)
+Scarbantia, 49.
+Schneider, Von, 214.
+Schwarzerden, 56.
+Scorpion, sign of the, 129.
+Scotland, 43.
+Sculpture, Mithraic, 196, 215; ancient, 226.
+Seasons, the, 115, 121, 222.
+Sebesio, Nama, Nama, 151.
+Seleucidae, the, 95.
+Semitic theories in Mithraism, 10.
+Serapis at Rome, 34.
+Services, Mithraic, 162.
+Seven spheres, the, 144.
+Seven, the number, 120 et seq., 154.
+Severus, Alexander, 18, 61, 78, 88.
+Shahrîvar, 112.
+Shamash, 10, 20, 121, 127, 128.
+Shepherds, worship of the, 132, 194.
+Sicily, Mithraism in, 68.
+Sidereal influences, 206.
+Silvanus, 66, 112, 136, 137.
+Sisters, order of, 179.
+Skeleton, Chained, 204.
+Slaves, Asiatic, disseminated Mithraism and other Oriental cults, 63 et seq., 70, 71, 78.
+Smyrna, 214.
+Societies, Mithraic, 170.
+
+<vocab>Mithraism, Roman history, ancient religion, index</vocab>

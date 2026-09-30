@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>343</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Judge H. R. Keeler</image-desc>
+JUDGE H. R. KEELER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. L. Kaufman</image-desc>
+H. L. KAUFMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. D. Kellogg</image-desc>
+F. D. KELLOGG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. E. Kelly</image-desc>
+WM. E. KELLY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Kelly</image-desc>
+W. E. KELLY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. B. Kennedy</image-desc>
+L. B. KENNEDY
+
+<vocab>Clevelanders, H. R. Keeler, H. L. Kaufman, F. D. Kellogg, Wm. E. Kelly, W. E. Kelly, L. B. Kennedy</vocab>

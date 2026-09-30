@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+well known sculptor and designed the equestrian statue of Washington in Union Square, New York. A cousin, Attillio Piatti is now vice consul at Nice.
+
+Reared in New York city, Louis J. Piatti attended its public schools and taking up the study of law, was admitted to the bar at the May term of court in 1884, when twenty-one years of age. For several years he practiced in New York and for one year in Buffalo, but, believing that the west offered a better field, came to Omaha in February, 1890, and has since become a prominent representative of the bar of this city. After a time he began to take an active interest in politics and his loyalty to the democratic party led to his selection for the position of secretary of the democratic county committee, in which capacity he served for eight years. In 1900 he was chosen a delegate to the democratic national convention, which was held in Kansas City, and his opinions have carried considerable weight in the local and state councils of his party. In 1907 he was appointed deputy county attorney by James P. English and reappointment has continued him in the office for six terms, having been in 1916 again appointed to serve for two years. He most faithfully and capably defends the legal interests of the county and his services are highly satisfactory to the general public. He is also acting at the present time as a member of the governor's staff.
+
+In September, 1905, in Omaha, Mr. Piatti was married to Minnie Humpert, a daughter of Frank Humpert, who was a private in a Pennsylvania regiment during the Civil war, and his family includes Frances R. Piatti.
+
+In his religious faith Mr. Piatti is a Catholic and he belongs to the Dahlman Democracy Club. He is a member of the state and county bar associations, was vice chairman of the democratic central committee for 1916 and chairman of that committee for 1911. He is a man of fine personal appearance and has many substantial qualities which have rendered him popular with his fellow townsmen.
+
+---
+
+->JOHN EDWARD SUMMERS, M. D.<-
+
+Dr. John Edward Summers, a distinguished surgeon of Omaha and a well-known contributor to the medical press of the country, was born in Fort Kearney, Nebraska, January 2, 1858, a son of John E. and Caroline J. (Stuart) Summers. The family has long been a prominent one in Virginia, and Summers county of West Virginia was named in its honor. Dr. John Edward Summers, Sr., was for thirty-eight years actively connected with the medical department of the United States Army. His wife was born in New York and came of Scotch ancestry.
+
+In his youthful days John E. Summers of Omaha attended public and private schools and afterward spent about three years as a cadet in the United States Military Academy at West Point. Having determined to make the practice of medicine his life work, he then entered Columbia University and was graduated from the medical department in the spring of 1881. He joined the United States Army as an assistant surgeon and for two years served in Wyoming, on the expiration of which period he resigned his position in order to further study medicine in Europe, where he remained for two years, most of the time in Vienna.
+
+In the spring of 1885 Dr. Summers opened an office in Omaha, where he has since made his home, and throughout the intervening period he has occupied a most prominent position in professional ranks. For some years he has been professor of clinical surgery in Omaha Medical College, and his high standing among professional colleagues of the United States is indicated in the fact that he has been honored with a fellowship in the American Surgical Association, of which he is now vice president; he is a membre de la Societe Internationale de Chirurgie, fellow of the American College of Surgeons and of the American Medical Association, a member and former president of the Western Surgical
+
+<vocab>Louis J. Piatti, John Edward Summers, Omaha, Douglas County, Nebraska, law, politics, democratic party, medicine, surgery, United States Army, Columbia University, Vienna, American Surgical Association, Societe Internationale de Chirurgie</vocab>

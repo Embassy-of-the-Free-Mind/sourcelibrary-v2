@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>14</page-num>
+<header>The Book of Clevelanders</header>
+
+golf; my parents were natives of Ohio; my father was raised on a farm; in 1892 he moved to Marion, Ind., and engaged in the hay and grain shipping business; my father retired from business two years ago and bought back his old homestead farm in Clinton Co.; I have a brother in Marion, Ind., who is a mechanical engineer; I own a 60-acre farm south of Columbus, about 50 miles; have given it some attention in the summer months, but think I shall sell or rent to a more practical farmer.
+
+**ANISFIELD, John**; manufacturer; born, near Vienna, Austria, March 5, 1860; son of Israel and Amelia Geldwerth Anisfield; educated in the public and technical school in Vienna, came to this country at the age of 16; married, March 26, 1886; Daniela Guttenberg, of Vienna, Austria; issue, one daughter, Edith Karolyn, a graduate of Western Reserve University and a talented musician; second marriage, Jan. 17, 1904, to Miss Alice Strauss, daughter of Adolph Strauss of New York City; for six years mngr. and traveling salesman for the D. Black Cloak Co.; in 1882 established business under the name of John Anisfield Co., mnfgrs. of cloaks and suits; in 1909 erected the Anisfield Block at the corner of East Ninth and Huron Rd.; member Chamber of Commerce, Royal Arch Mason Webb Chapter; member Oakwood Golf and Excelsior Clubs; vice pres. Jewish Infant's home; interested in civic betterment of the city; a Republican; owner of a fine library; fond of the best literature and a broad reader.
+
+**ANSPACH, Nathan H.**; chief of tariff bureau, L. S. & M. S. R. R.; born, Evansville, Ind., June 19, 1873; son of Herman and Rosa Kaden Anspach; educated Evansville schools; married, Cleveland, Oct. 25, 1898, Sadie Goldsmith; two sons, Herman F. and Robert G.; 1889-90, clerk E. & T. H. R. R.; 1890-93, F. P. agt., E. & T. H. R. R.; 1893-97, sec'y G. S. A., C. & E. J.; 1897-05, C. C. G. M., L. S. & M. S. R. R.; 1905 to date, C. T., L. S. & M. S. R. R.; member Transfer Club, Cleveland, Buffalo and Toledo; member Excelsior Club, Cleveland.
+
+**ANTHONY, Paul H.**; contractor; born, Pennsylvania, 1876; son of William M. and Sarah Chambers Anthony; educated, public and high school, supplemented by private tutors, also experimental and research work; married, Allegheny, Pa., 1901, Gertrude E. Cox; issue, three children; military service in the Philippines during the Spanish-American war and Philippine insurrection; pres. The Standard Structural Co., Cleveland, and same Co., Canada; pres. The Hindman-Henderson Co. of Penn.; manager or director in allied contracting companies covering various fields of construction; member American Society Engineering Contractors.
+
+**APTHORP, Henry**; capitalist; born, Mayfield, Cuyahoga Co., O., Feb. 9, 1841; son of William and Chloe Howard Apthorp;
+
+<vocab>John Anisfield, Nathan H. Anspach, Paul H. Anthony, Henry Apthorp, biography, Cleveland, business, manufacturing, railroads, contracting</vocab>

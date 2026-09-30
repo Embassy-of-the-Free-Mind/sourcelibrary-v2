@@ -1,0 +1,32 @@
+<scan-quality>good</scan-quality>
+<language>English, Sanskrit, Chinese</language>
+<script>printed</script>
+<page-type>index</page-type>
+<page-num>423</page-num>
+<header>GLOSSARY</header>
+
+5—5, 7—8, 7—11, 11—16, 13—13, 23—16, 39—16, 49—5, 55—1, 57—9, 59—11, 155—2, 172—12, 242—15; (with *gatigama*), 43—8, 222—3; (with *adhigama*), 58—3, 4, 12, 60—4, 61—8, 148—11; (with *abhisamayagotra*), 64—12; (with *tathāgatabhūmi*), 224—10, 214—4, 10—15.
+
+3. *Pratyātmadharma* (or *dharmatā*), 6—11, 8—1, 143—5, 144—12, 185—3, 226—18; (qualified with *vedyagati*), 3—12, 3—16, (with *nayalakṣaṇa*), 15—3; (with *tattvam*), 48—14; (with *vastu*), 95—4; (with *tathatā*), 132—3; (with *bhūtakoti*), 88—13.
+
+In the "Sagāthakam" we have the following combinations: *Pratyātma-vedyayāna*, 163, *dharmatā*, 350, *vedya*, 421, *tathatā*, 545, *gatigama*, 746, *dṛṣṭigatika*, 781, *dṛṣṭadharma*, 881.
+
+**Pratyekabuddha**, 獨覺, a solitary Buddha who has no desire to announce his truth to the world: *Pratyekabuddhayāna*, 360, 緣覺乘.
+
+**Pradhāna**, 264, 勝者; *Pradhānam īśvaraḥ kartā cittamatram vikalpyate* (79—12), 勝自在作者, 此但心分別 (T).
+
+**Praṇidhāna**, 203, 205, 209 f, 340, 355 f, 357, 願, vow, prayer, earnest wish.
+
+**Prapañca**, 137, 200, 201n, 戲論, vain talk, diffusive trivial reasoning; *darśana*, 345, 虛妄見; *dauṣṭhulya*, 190, 戲論過患; *Anādikālaprapañcadauṣṭhulyavikalpavāsanāhetukam* (43—7), 無始虛妄過患妄想習氣因 (S). "Owing to the habit-energy accumulated since beginningless time by trivial erroneous discrimination."
+
+**Prabandha**, 183, 相續, continuation.
+
+**Prabhāva**, 208, 356, 威力, 威神力, sovereign power, =*anubhāva* and *adhiṣṭhāna*.
+
+**Prabhedapracāra** (*in vyavasthānayati*, 57—12), 143, 分別觀察建立 (S), 建立差別行 (W).
+
+**Prabhedanayalakṣaṇa** (127—14), 110, (妄計自性) 差別相, the aspect of individuation arising from false imagination.
+
+**Pramāṇa**, 134, 137, 量, logical survey. *Naikatvānyatvo-*
+
+<vocab>Pratyātmadharma, Pratyekabuddha, Pradhāna, Praṇidhāna, Prapañca, Prabandha, Prabhāva, Prabhedapracāra, Prabhedanayalakṣaṇa, Pramāṇa</vocab>

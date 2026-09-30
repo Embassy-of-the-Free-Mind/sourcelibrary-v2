@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>330</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. B. Greene</image-desc>
+E. B. GREENE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. M. Grant</image-desc>
+F. M. GRANT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. B. Greenleaf</image-desc>
+L. B. GREENLEAF
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. L. Griebling</image-desc>
+E. L. GRIEBLING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. C. Greiner</image-desc>
+L. C. GREINER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jos. Grogan</image-desc>
+JOS. GROGAN
+
+<vocab>E. B. Greene, F. M. Grant, L. B. Greenleaf, E. L. Griebling, L. C. Greiner, Jos. Grogan, The Book of Clevelanders</vocab>

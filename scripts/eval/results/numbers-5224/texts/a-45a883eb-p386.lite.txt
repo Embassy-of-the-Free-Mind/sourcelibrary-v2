@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>382</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Edw. H. Sommer</image-desc>
+EDW. H. SOMMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. Somers</image-desc>
+CHAS. SOMERS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Speck</image-desc>
+E. J. SPECK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. D. M. Spicer</image-desc>
+DR. D. M. SPICER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. J. G. Spenzer</image-desc>
+DR. J. G. SPENZER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. D. Sprague</image-desc>
+E. D. SPRAGUE
+
+<vocab>Edw. H. Sommer, Chas. Somers, E. J. Speck, Dr. D. M. Spicer, Dr. J. G. Spenzer, E. D. Sprague, The Book of Clevelanders</vocab>

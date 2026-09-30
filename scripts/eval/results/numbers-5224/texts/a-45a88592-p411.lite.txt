@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>341</page-num>
+<header>TOWN OF BOURNE. 341</header>
+
+wich, is on the line of the proposed canal, and has one of the tributaries of Scusset harbor to afford power for manufacturing purposes. It contains about sixty residences and business places, and is one of the prettiest rural villages of the town. Nearly all the site on which it is built was once the farm of the pioneer Thomas Burgess, who lived just east of the village on the north side of the present county road and opposite the present residence of John P. Knowlton. A depression in the old orchard marks the spot where, in 1637, he built his residence.
+
+This point was early a favorite resort for fishermen, and in 1695 the resort called "Tom Swift's" was famous. He was allowed by the selectmen to keep an ordinary, and that implied the right to keep everything but dry goods.
+
+The most important enterprise here is the Keith manufacturing works, for the building of freight cars of the box and flat pattern. The Old Colony, the Boston & Maine, and other roads use the cars manufactured here. This business is the outgrowth of a shop for a wheelwright and blacksmithing business, erected in 1829, by Isaac Keith, father of the present owner, on the dam adjoining the building that contains the present engine and machinery. This led to a machine shop and forge in which, in 1849, a large business was done manufacturing tools for use in the California mines. Hiram T. Keith, in 1861, became a partner with the father, and in 1867 Isaac N. Keith became interested, and they purchased the business, in 1869, of the father, who died in 1870. In 1882 Isaac N. Keith became sole owner and proprietor, and in 1887 added the buildings at the north—the workshop 56 by 120 feet and the paint shop 40 by 175—all covered with a strong truss roof of the Monitor pattern. In the various buildings fifty experienced men find employment. The requisite power has increased with the works and is now supplied from an eighty horse power engine. The lathes, planers, trip-hammers and other machinery are of the latest and best manufacture, indicative of the superior work of the plant. Mr. Keith, whose time has been recently absorbed by legislative and other duties, has an efficient foreman in B. F. Bray.
+
+Stores were kept here early, and in those days store and post office were generally together. We find Benjamin Burgess engaged in a store where Hiram Crowell lives soon after the war of 1812. Here was kept the post office established January 1, 1825, and receiving mail by the Plymouth stage. Isaac Keith was made postmaster November 17, 1836, purchasing the business of Mr. Burgess, and continued the post office there. Charles H. Burgess was appointed postmaster September 26, 1840, and also took the business. He was succeeded in the store by Asa Besse, who after a few years moved
+
+<vocab>Bourne, Scusset harbor, Thomas Burgess, John P. Knowlton, Tom Swift's, Keith manufacturing works, Old Colony, Boston & Maine, Isaac Keith, Hiram T. Keith, Isaac N. Keith, B. F. Bray, Benjamin Burgess, Hiram Crowell, Charles H. Burgess, Asa Besse, post office</vocab>

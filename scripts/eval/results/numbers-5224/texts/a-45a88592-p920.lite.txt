@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>708</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+graphical importance. In Popponesset bay is an island containing forty acres of excellent land, and in Waquoit bay there are two; between these bays is Great neck, once a favorite resort of the Indians. Some extent of salt marsh is found near the bays, and the best lands are near and around the large ponds.
+
+That this territory was early sought and had long been the home of the natives has been proven in many ways. Mr. Hawley, who labored here as a missionary said: "There is no place I ever saw, so adapted to an Indian town as this." And the state commissioner in a later report said: "It is hardly possible to find a place more favorable for gaining a subsistence without labor, than the territory of Mashpee."
+
+The settlement of a boundary line between the proprietors of Barnstable and the natives was effected in 1658 by the assistance of Richard Bourne, who by his untiring efforts soon after obtained for the Mashpees a patent of these lands from the South Sea Indians, as they were styled in the deeds of that day; he considering it vain to undertake the propogation of Christianity among any people without a home when they might remain on their own soil—a view of the case which has been amply justified. No lands at this time could be sold by the natives without license from the general court, or court of assistants. This early enactment of 1685, and the natural characteristics of the territory, tended to the crystalization of the native element here, which has since been possessed and occupied by them. The same year there were 141 praying Indians.
+
+In 1693 the state appointed guardians who in turn were subject to commissioners, which manner of rule was endured until 1763, when Mashpee was constituted a plantation. In 1760 a Mashpee, Reuben Cognehew, went to England and in person presented to the King complaints against the colonial government, which resulted in the permission to elect their own officers. By an act, January 25, 1777, permission was given to sell certain lands for the poor fund of the district, and eight thousand dollars was thus realized for that purpose.
+
+The dissatisfaction of the Mashpees with the oppressive condition of affairs, assumed in 1833 a determined and formidable aspect. Petitions had been addressed to the governor and council in vain; but Ebenezer Attaquin, Daniel B. Amos, Ezra Attaquin and others resolved once more to seek redress. Accordingly May 21, 1833, a council in Mashpee framed and sent to the legislature a set of resolutions strongly asserting the right of self-government. The leaders in this move were arrested and imprisoned during the summer of 1833 for assuming to practice the rights claimed; but so energetic and persistent were the Mashpees that their memorial, signed by 282 males and females of the plantation, was favorably considered, resulting in the act of March 31, 1834, incorporating Mashpee as a district. They
+
+<vocab>Barnstable County, Popponesset Bay, Waquoit Bay, Great Neck, Indians, Mr. Hawley, Mashpee, Richard Bourne, South Sea Indians, Christianity, praying Indians, Reuben Cognehew, Ebenezer Attaquin, Daniel B. Amos, Ezra Attaquin, self-government</vocab>

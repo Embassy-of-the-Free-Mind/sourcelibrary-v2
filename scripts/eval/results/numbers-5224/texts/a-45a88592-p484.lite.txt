@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>400</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+years in a building just west of Mr. Munroe's, until the company took possession, in 1860, of its new office, the building next west of the Globe Hotel.
+
+The public buildings of the county, including the Agricultural Hall, have been mentioned in the county chapters. The harbor to this pleasant village enjoys the benefit of a light house that was erected in 1826 by the United States government. It is on the point of Sandy neck, at the entrance of the harbor. The importance of Barnstable early gave reason for a custom collector here, and for a century last past Barnstable has been the port of entry for the county. The custom house for the Barnstable district is here.
+
+<image-desc size="large" type="engraving" significance="high">A black and white photograph of the Barnstable Court House, a large building with columns, surrounded by trees and a fence.</image-desc>
+
+->COURT HOUSE, BARNSTABLE VILLAGE.<-
+
+There are no mills or other manufacturing interests in this village at present. The old Lewis mill on the creek down "Poverty lane" has been still for many years. Elijah Lewis moved the building there and set up the mill soon after 1850. The wind salt mill just beyond was once used by the Crockers to grind corn; but long ago, with the salt works, the mill fell into disuse.
+
+WEST BARNSTABLE is a business center in the west part of the town, known many years ago as Great Marshes and as West Parish. It is now a pretty and a busy village, the meeting place of the selectmen and the terminus of several mail lines connecting with villages on the south shore. The old West Parish church, a beautiful school house, and the abodes of thrifty inhabitants unite in forming a village of no mean proportions. Here, besides others, settled the ancient families of Otis, Hinckley, Annable, Crocker, Jenkins, Howland, Fuller, Parker, Bursley, Blossom and Shaw, many of whose descendants are the
+
+<vocab>Barnstable, Agricultural Hall, Sandy Neck, custom house, Lewis mill, Poverty lane, West Barnstable, Great Marshes, West Parish, Otis family, Hinckley family, Annable family, Crocker family, Jenkins family, Howland family, Fuller family, Parker family, Bursley family, Blossom family, Shaw family</vocab>

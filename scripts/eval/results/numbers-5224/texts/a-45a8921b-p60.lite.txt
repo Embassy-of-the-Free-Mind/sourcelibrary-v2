@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>46</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+College, 1910; after graduation from college taught history and English in Leicester, Mass., academy; later was head of the English department in
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a woman in profile, facing left.</image-desc>
+
+Arlington, Mass., high school, leaving to accept a similar position in New Bedford, where she met Doctor Shockley. Since her marriage, Feb. 10, 1916, she has continued her interest along educational lines, being a member of the executive committee of the large New Bedford Woman's Club, and chairman of its education committee; vice-president of the Young Women's Christian Ass'n and chairman of that education committee; a very active member of the New Bedford College Club, the Wellesley Club of Southeastern Massachusetts, the Boston Wellesley Club and the old Dartmouth Historical Soc. She has always been especially interested in music, having been president of the Glee club and the mandolin club in her high school course, president of the mandolin club of Wellesley College and a member of the college choir; she was an editor
+
+<column-break/>
+
+of the *College News*, one of the editors of the class *Alumnae Record*, and is permanent corresponding secretary of her college class. Since her extended trip through California and the Hawaiian islands, she has given illustrated lectures on her travel through the so-called "Garden of the World." Residence, 591 County St., New Bedford, Mass. Summer home, Padanaram.
+
+**Aspinwall, Ada Mae**
+Musician; b., Concord, N. H., Feb. 10, 1866, dau. Charles C. and Ednah (Eastman) Aspinwall; ed. Concord public schools, New England Conservatory of Music and by private teachers, including G. H. Howard, Milo Benedict and Arthur Foote; teacher of pianoforte in Concord since 1890, first teacher in the city to take up the work of instruction in the
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a woman in profile, facing left.</image-desc>
+
+"Progressive Series of Piano Lessons"; organist and choir director at the First Universalist church in Concord for the last twenty-five years; pianist and
+
+<vocab>Ada Mae Aspinwall, biography, New Hampshire, education, music, Concord, New Bedford, Wellesley College, piano instruction</vocab>

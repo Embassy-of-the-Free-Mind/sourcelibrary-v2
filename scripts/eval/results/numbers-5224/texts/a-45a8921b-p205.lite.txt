@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>191</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 191</header>
+
+Agriculture and Mechanic Arts, B.S., 1899; Ph.D., Hanover College, 1913; assistant chemist, N. H. Experiment Station, 1899; U. S. Smokeless powder factory, Indian Head, Md., 1900-1; trustee, N. H. College, 1903-6; chemist, N. H. State Board of Health, 1901-5; Indiana State Board of Health since 1905; state food and drug commissioner, Indiana, since 1907; state commissioner of weights and measures since 1911, food and drug inspection chemist, U. S. Dept. of Agriculture, since 1907; president, Indiana Sanitary and Water Supply Ass'n; member, American Chemists Soc. (founder and first president, Indiana Section); member, Soc. Official Agrl. Chemists, Nat'l Ass'n State Food Commissioners, Federal Food Standards Com., Indianapolis Tech. Soc., Indiana member, Lake Michigan Water Commission; honorary member, N. H. Medical Soc.; member executive committee, Nat'l Conservation Congress, 1912; Irvington Athenaeum, Indianapolis Literary Soc.; m., June 20, 1901, Marion Harvie, Providence, R. I. Residence, 5543 University Ave., Indianapolis, Ind.
+
+**Ayers, Philip Wheelock**
+Forester; b., Winterset, Ia., May 26, 1861; s. Elias J. Ayers; ed. Cornell University, Ph.B., 1884, Johns Hopkins, Ph.D., 1888; tutor and fellow, Johns Hopkins, 1886-8; general secretary, Associated Charities, Cincinnati, O., 1889-95; studied penal and charitable institutions in Europe, 1895; general secretary, Bureau of Associated Charities, Chicago, 1895-7; assistant secretary, Charity Organization Soc., New York, 1897-1900; Forester of the N. H. Soc. for the Protection of Forests since 1900; superintendent, Summer School of Philanthropic Work, New York Charity Organization, 1898-1905; m. Alice Stanley Taylor, Newton, Mass., Aug. 8, 1899. Residence, Franconia, N. H., business address, 4 Joy St., Boston, Mass.
+
+<column-break/>
+
+**Frisselle, Frank Monroe**
+Journalist; b., Boston, Mass., Dec. 22, 1862; s. Isaac Monroe and Annie (Steele) Frisselle; ed., Boston public schools, Harvard preparatory course, Boston Latin School; Episcopalian; Republican; city editor, Manchester Daily Union, 1890-2, night editor, 1905-13; city editor, Manchester *Mirror and American*, 1913-; deputy chief, Manchester fire department, 1897-1900; first secretary, N. H. State Fire-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Frank Monroe Frisselle</image-desc>
+
+men's Ass'n; president, Animal Rescue League, 1911-17; member, Lake Winnipesaukee Improvement Ass'n, Manchester Historic Ass'n, Sarsfield Boat Club, Manchester; author, "Kismet Poems," "Lady Franklin Boy Greeley Relief Expedition" (delivered in lecture form) and many fugitive poems and local historical pamphlets; originator of "Observant Citizen" column, Manchester *Union*; editor "O. C." column, Manchester *Mirror*; for ten years Associated Press correspondent
+
+<vocab>Frank Monroe Frisselle, Philip Wheelock Ayers, Biography, New Hampshire, Journalism, Forestry, Manchester, Indiana, Genealogy</vocab>

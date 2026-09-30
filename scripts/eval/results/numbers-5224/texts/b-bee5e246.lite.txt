@@ -1,0 +1,45 @@
+<scan-quality>good</scan-quality>
+<language>Old French, English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>72</page-num>
+<header>PHILIP DE THAUN. [1558.</header>
+
+U iloc en verted que ai determined.
+E sacez pur verted, si cum est espruved,
+Les reules qu'ai dunées sunt de sainz confermées,
+E qui si's guarderat, mult ben l'en avendrat,
+Jà n'en ert encuset, ne en sened blasmet.
+Et or demustrum que sait clef par raisun;
+Ke icest est maisterie ne lerai ne l' vus die,
+et hom qui dait valcir icest deit ben saveir.
+Si .xix. parnez, et à .vij. les justez,
+.xx. e .vi. i avez, çeo est la clef que tendrez
+Enz es primerains ans de ces .xix. anz,
+Dunt je là sus parlai quant des termes traitai:
+De cest numbre en vertad qui .xi. en sustrairat,
+.xv. en i remaindrat, çeo est la clef qu'il tendrat
+En le altre an en verted, si cum est espruved.
+Si à .xv. ajustez .xix., si avez
+.xxx.iiij. en cel an, çeo est la clef del terz an.
+Ensement d'an en an le fercz chascun an,
+.xi. en devez sustraire, et .xix. atraire,
+Que te iraie acuntant? se tun numbre creis tant
+Que il vengez à .xl., .xxx. ostez des .xl.,
+E çeo que i remaindrat, la clef demusterat
+De l' an que est à venir, jà n'i puras faillir.
+Or veez par raisun cum nus les aluum;
+La clef sacez itant de allera encloant,
+Es .vij. ides par veir de Jenver deit sedeir.
+E la clef de Quaresme, par veir,
+Tuz tens es .v. kalendes de Fevrer, ben l'entendes;
+La clef de Pascha rez enz el Marz içel mais,
+Es .v. ides serat tut tens, jà n'i faldrat.
+
+---
+
+never fail;—or there in truth where I have determined.—And know for truth, as is proved,—the rules that I have given are confirmed by wise men,—and he who shall keep them, he shall be the better for it,—he shall not be accused or blamed for it.
+And now we will explain what is the *clavis*;—that this is ‘maistrie,’ I will not omit to tell you,—and a man who is to have any worth ought to know it well.—If you take 19, and add them to 7,—you will have 26, that is the clavis which you will hold—in the first year of those nineteen years,—of which I spoke above when I treated of the terms:—from this number in truth he shall subtract 11,—there will remain 15, that is the clavis which he shall keep—in the second year in truth, as is proved.—If to the 15 you add 19, you will have 34 in this year, that is the clavis of the third year.—Similarly from year to year you shall do it each year,—you must subtract 11, and add 19,—why should I go on counting? if your number increase so much—that it comes to 40, take 30 from the 40, and that which will remain, will show the clavis—of the year which is to come, you can never fail in it.—Now see rightly how we place them;—know that the clavis of Septuagesima—ought in truth to fall on the 7 Ides of January.
+And the clavis of Lent, in truth,—always in the 5 kal. of February, you understand well;—you have the clavis of Easter in the month of March,—on the 5 ides it shall be always, and never fail.
+
+<vocab>Philip de Thaun, clavis, maistrie, Septuagesima, Lent, Easter, calendar, computus</vocab>

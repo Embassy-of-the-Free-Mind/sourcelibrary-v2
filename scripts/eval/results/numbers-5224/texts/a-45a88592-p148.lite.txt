@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>126</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+John F. Cornish. From Hyannis to Nantucket, from 1825 to 1830, the mails were carried in a packet by Freeman Matthews. Thereafter, for many years, until 1872, the mails and passengers were taken by sailing vessels and steamer to Nantucket, the steamers being withdrawn upon the opening of Woods Holl railroad.
+
+Those veteran whips Nickerson and Howes continued to serve the Chatham public until the opening of the railroad to that town, and for nearly a year after the road was in full operation the old contractors continued to run the mail carriage. With the retirement of “Whit” and “Sim,” by which names everybody knew these contractors, the last of the stages on Cape Cod were withdrawn, for the carriages which transport mails and passengers to and from Cotuit, Osterville and Centreville via West Barnstable, and Mashpee and vicinity via Sandwich, do not resemble the old-time stages of the fathers, such as the elders of this generation knew when they were girls and boys.
+
+The short lines between towns and from the central villages to smaller ones, have frequently been found too minute for this general chapter. These postal routes and mail lines will therefore be mentioned in the chapters devoted to the towns where the routes were established and run.
+
+Previous to the opening of the Woods Holl road, the Boston mails were carried for many years by David Dimmock, of Pocasset, and afterward by William Hewins, of Falmouth, the terminus of the line after the opening of the Cape Cod railroad being at Monument (now Bourne). A ferry was established from Falmouth to the Vineyard, running daily, wind and weather permitting, during the twenty years preceding the establishment of railroad and steamboat communications. The first grant was given a century and a half ago, to Joseph Parker and others, and it was continued by their successors until quite recent times.
+
+After the construction of the Woods Holl branch, the only remaining stages were the Chatham line, supplying that town and the intermediate villages to Harwich, with their mails and passenger transportation, and the Mashpee route, by which the villages of Mashpee, South Sandwich and Greenville are supplied.
+
+RAILROAD LINES.—Railroad communication to the Cape was opened in 1848, by the extension of the line between Boston and Middleboro, under the charter granted to the Cape Cod Branch Railroad Company, from Middleboro to Sandwich, a distance of twenty-seven miles. The first board of directors of this line was constituted as follows: Richard Borden, Joshua B. Tobey, Philander Washburn, P. G. Seabury, Nahum Stetson, Southworth Shaw, T. G. Coggshall, Howard Perry, Clark Hoxie. Richard Borden was the first president.
+
+<vocab>Barnstable County, mail routes, stagecoaches, Cape Cod, Woods Holl railroad, Cape Cod Branch Railroad Company, transportation history</vocab>

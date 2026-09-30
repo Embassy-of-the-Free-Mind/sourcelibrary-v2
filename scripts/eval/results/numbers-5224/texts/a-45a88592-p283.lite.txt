@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>233</page-num>
+<header>MEDICAL PROFESSION. 233</header>
+
+Munsell P., died September, 1851, aged two years. He was married in 1869, to Mrs. Lydia N. Chase, a widow with two daughters. The second wife died in 1885. Her only surviving daughter married Willis G. Myers, of Portsmouth, N. H., with whom and their two children the doctor continues the most affectionate relations.
+
+Of him a brother in the profession says: The doctor is a practical man and has no patience with subtle theories, but keeps steadily along the well-beaten and reliable path of his profession, using every well established practice. His penchant for the practical side of his profession is illustrated at every meeting of the district society where he has a case to relate concerning his own treatment, on which he solicits the opinion of his confreres. He has a high appreciation of humor and wit, and no one of the Barnstable society adds more piquancy and humor to the after-dinner sociability. The results of his experience are always sought by the younger members of the profession, and he most sympathetically enters into their hopes and plans. He is a typical physician, full of zeal for the success of his labors, and is actuated by the highest Christian principles.
+
+Dr. Samuel Jackson resided in Barnstable.
+
+Dr. Thomas P. Jackson practiced medicine in Harwich and afterward at Marston's Mills from 1843 to 1845. He died in Italy.
+
+Dr. F. H. Jenkins has practiced medicine for many years in West Barnstable, where he now resides.
+
+Leslie C. Jewell, M.D., was born in Wales, Me., April 20, 1852, received his academic education at Bates' College, Lewiston, Me., and graduated in medicine at Boston University in 1876. He then settled in Cape Elizabeth, Me., where he practiced till 1881, when he removed to Chatham, Mass., and remained in active practice there nearly seven years. He is practicing now at Auburn, Me.
+
+Ellis P. Jones, M.D., was born in Brewster, January 24, 1853, was educated in the University of Vermont and graduated July 15, 1889. He then located in Orleans, where he formerly resided, and commenced the practice of medicine.
+
+Luther Jones, M.D., was born in Acton, Mass., in 1817. He commenced the practice of medicine in South Yarmouth in 1846, where he was married in 1847. Later, on account of ill health, he went to California, where he died in 1862. Millard Jones, of Yarmouth, is his son.
+
+G. Wallace Kelley, M.D., was born November 7, 1856, at Newburyport, Mass. His early education was in Newburyport High School, and June 26, 1878, he was graduated from Harvard Medical School. He began practice at the New York Hospital in 1879, and located in Barnstable in November, 1883, where he now resides and enjoys a fine practice.
+
+<vocab>Medical profession, Barnstable, physicians, biography, medical education, medical practice</vocab>

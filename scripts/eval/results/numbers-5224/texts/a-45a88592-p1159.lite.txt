@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>901</page-num>
+<header>TOWN OF BREWSTER. 901</header>
+
+year. Mr. Stone had as a colleague in the ministry after 1748, Mr. Dunster. He was "a man of piety, of talents and of firmness, much revered and beloved by the people of his charge." He left a record of the church over which he was so long pastor, which is carefully preserved. He married Reliance, daughter of Governor Thomas Hinckley of Barnstable, and was the father of twelve chlidren. His eldest son, Nathan, born in Harwich, February 18, 1707-8, graduated at Harvard College in 1726, and settled in the ministry at Southboro, Mass., in 1730, where he died in 1781. His son, Nathaniel, born November 29, 1713, died in 1777, was a prominent man in this parish. Mrs. Stone, wife of the minister, died May 24, 1752, in her eighty-fourth year. Mr. Stone's house stood but a short distance northerly from the house of Captain William Freeman.
+
+Rev. Isaiah Dunster, the second pastor of the old church, was born in Cambridge, October 21, 1720. He was educated at Harvard, and graduated in 1741. He was ordained as the colleague of Mr. Stone, November 2, 1748, and was continued in the ministry here till his death, January 18, 1791. His first wife was Hannah, daughter of Rev. Josiah Dennis of Yarmouth. His second wife was Mary Smith of Pembroke. Rev. John Simpkins, jr., his successor, was born in Boston, April 18, 1768, was graduated at Harvard College in 1786, and was ordained pastor, October 19, 1791. He continued in the ministry here till 1831. His death occurred at Boston, February 28, 1843. His wife, Olive, died at the same place, April 14, 1844, in her eighty-first year. They were both interred at Mt. Auburn. He married Olive, daughter of Nathaniel Stone, Esq., and had children: Caroline, Nathaniel S., John, Samuel G. and Elizabeth. Mr. Simpkins' house was standing a few years since. The site is now marked by the house of Captain William Freeman.
+
+The successos of Mr. Simpkins was Rev. Samuel Williams, who was ordained April 25, 1832. He was born in 1803, and graduated at Harvard College in 1824. He continued in the ministry here until 1844. He married Temperance Mayo of this town. He died at St. Paul, Minn., October 21, 1884.
+
+Mr. Williams was succeeded by Rev. James L. Stone in 1845. He remained here several years. His successor was Rev. F. R. Newell, who was installed November 13, 1847. Mr. Newell was pastor to September, 1853. He married Miss Mary D. Berry of this town. He died some years ago. Among those who supplied the pulpit until Mr. Chaffe came were Revs. Bellows, Pratt, Damon, Bridge and Ponds.
+
+Rev. Nathaniel O. Chaffe supplied the pulpit from December, 1853, till 1855. Revs. Mosely and Orril followed Mr. Chaffe as supplies till the meeting house was closed for repairs. After being opened, Rev.
+
+<vocab>Brewster, Massachusetts, ministry, church history, Harvard College, genealogy, Rev. Isaiah Dunster, Rev. John Simpkins, Rev. Samuel Williams, Rev. James L. Stone, Rev. F. R. Newell, Rev. Nathaniel O. Chaffe</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>282</page-num>
+<header>The Book of Clevelanders</header>
+
+works; in 1895 was admitted to the bar; in June, 1895, opened law office in Cleveland; in October of that year formed partnership with Herman Presser under firm name of Presser & Wenneman; in 1897, admitted to practice in Federal Courts, and before Department of Interior; in 1900, dissolved partnership and practiced alone till fall of 1904, then formed partnership with C. O. McCray, under firm name of Wenneman & McCray, dissolved this relationship in 1908; in February, 1911, formed partnership with C. L. Gates and A. R. Edgerton, under firm name of Wenneman, Gates & Edgerton; has made a study of insurance and surety law; has acted as general agent for various Surety and Casualty companies; member Cleveland Law Library Ass'n, and Bar Ass'n, member St. John's Hospital Building Committee, and St. Stephen's Auditorium and School Building Committee, Catholic Mutual Benefit Ass'n, Grand Deputy of Ohio; Cleveland Chamber of Industry, Alumni Ass'n; Western Reserve University Law School president, 1912-1913.
+
+**WERTHEIM, Max**; merchant; born, Cleveland, June 24, 1866; son of Julius and Rosa Wise Wertheim; educated, Cleveland Mayflower and Central High School; married, Cleveland, Jan. 25, 1899, Rebecca Mae Sloss; issue, three children; worked for S. Halle for two years, then went into the office of Dryfoos & Klein, who were succeeded by Klein, Goodhart & Koch; became bookkeeper and went into business in 1880 with Kaufman & Sol Hexter for period of ten years; dissolution for the firm of The Max G. Wertheim Co.; pres. and treas. The Max G. Wertheim Co., importer and jobbers of tailors' trimmings for twenty-two years, and manufacturers of waists and dresses for three years; member Excelsior and Oakwood Clubs, Chamber of Commerce, Cleveland Ass'n of Credit Men, and Cleveland Garment Ass'n. Recreations: Golf and Athletics.
+
+**WETTSTEIN, Frank Eugene**; banking and real estate; born, Rochelle, Ill., June 6, 1867; son of Otto and Louise Tracy Wettstein; educated, Rochelle High School, class of 1884; married, La Porte City, Ia., Sept. 22, 1896; married Maud Wagoner; issue, two sons, William and Frank Jr.; republican; five years a member of the Illinois National Guard; in 1889, organized First National Bank, La Porte City, Ia.; in 1900, organized First National Bank, Dysort, Ia.; vice pres. and gen. mgr. Guarantee Title & Trust Co., Cleveland; 1903 to 1908, promoted Gates Mills property; built all roads at Gates Mills; pres. Pease Engineering Co., 1904 to 1908; chairman Board of Trustees, Cleveland Homeopathic Medical College, 1907-1909; chairman Finance Committee, Cleveland Associated Charities, 1906-1908; sec'y and treas. Maple Leaf Land Co., sec'y and treas. Davenport, Ia., Land & Investment Co.; trustee Cleveland Pulte Medical College; Mason; also member Union and Tippecanoe Clubs and Cleveland Chamber of Commerce.
+
+**WHITE, Rollin Henry**; automobile mnfr.; son of Thomas H. White and Almira Greenleaf White; educated, Cornell University,
+
+<vocab>Max Wertheim, Frank Eugene Wettstein, Rollin Henry White, Cleveland, biography, business, law, banking, manufacturing</vocab>

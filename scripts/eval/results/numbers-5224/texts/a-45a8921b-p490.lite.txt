@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>476</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Frances (Potter) Runnells (see preceding); ed. Concord high school; employed National State Capital Bank; Episcopalian; Republican; entered the U. S. service, July 25, 1917; sailed for France, Oct. 3, 1917; in the Medical Corps of the 26th Division, later in the 101st Ambulance Corps; cited for bravery by Major-Gen. C. R. Edwards in the second battle of the Marne, July 18-26, 1918, "for rescuing wounded comrades under heavy enemy fire"; cited by Major-Gen. C. R. Edwards
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a young man in a suit and tie.</image-desc>
+
+for "exceptionally meritorious service and gallant conduct under a terrific enemy artillery bombardment," Sept. 25 and 26, 1918; decorated with Distinguished Service Cross (American), Dec. 17, 1918 (see succeeding). Residence, 6 Lyndon St., Concord, N. H.
+
+**Runnells, Ellsworth Potter**
+
+Soldier (twin brother to preceding); b., Concord, N. H., April 7, 1894; s. Everett Hazen and Clara Frances (Potter) Runnells; ed. Concord schools;
+
+<column-break/>
+
+Episcopalian; Republican; member White Mountain Lodge, I. O. O. F.; employed in the People's Market, 1912-17; entered the U. S. service, July 25, 1917; sailed for France, Oct. 3, 1917; in the 103d Machine Gun Battalion, 26th Division, 52d Brigade, Co. B; decorated with the Croix de Guerre, Dec. 17, 1918, standing beside his twin brother who received the American Cross at the same time (this is believed to be the only instance where twin brothers were simultaneously
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a young man in a suit and tie.</image-desc>
+
+decorated with French and American crosses during the Great War); m., May 14, 1917, Amy Isabel Milton, Penacook, N. H. Residence, 6 Lyndon St., Concord, N. H.
+
+**Gove Aaron**
+
+Educator; b., Hampton Falls, N. H., Sept. 26, 1838; s. John Francis and Sarah Jane (Wadleigh) Gove; ed. public schools, Illinois Normal Univ., 1861; honorary A.M., Dartmouth, 1878;
+
+<vocab>Frances (Potter) Runnells, Ellsworth Potter Runnells, Gove Aaron, World War I, Distinguished Service Cross, Croix de Guerre, 26th Division, Concord New Hampshire, biography</vocab>

@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>377</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Ladd, Fred Newton**
+Banker, treasurer Loan and Trust Savings Bank; b., Concord, N. H., Jan. 21, 1859; s. William Dudley and Mary Ann (Emerson) Ladd; ed. Concord high school, private instruction; started in the National State Capital Bank, 1879, soon after accepting a position with the Loan and Trust, which connection has continued ever since; Congregationalist; Republican; trustee Loan and Trust Savings Bank, director Capital Fire Ins. Co., treasurer Concord Masonic Ass'n, treasurer twenty-four years Blazing Star Lodge, chairman Christian Science Church Building Fund, member executive committee Liberty Loan Com.; Concord; member Mt. Horeb Commandery, K. T., Concord, N. H., Wonolancet Club, Beaver Meadow Golf Club (secretary-treasurer), N. H. Historical Soc., Council of National Defense, Red Cross, Concord Board of Trade, Boys' City Club; m., Dec. 2, 1885, Carrie Idella Sleeper of Concord; two children: Dorris, Concord high school, Dana Hall (Wellesley), art student, Boston and New York, m. Emerson Davis of Concord (children, Barbara Annalee, Rosemary); Phyllis Baker, student St. Mary's School, Concord. Residence, 113 Center St., Concord, N. H.; Meredith Bay, N. H.
+
+<image-desc size="large" type="portrait" significance="high">Portrait of Fred Newton Ladd</image-desc>
+
+<column-break/>
+
+**Huntington, William Spooner**
+Banker, treasurer Merrimack County Savings Bank; b., Washington, D. C., Jan. 15, 1871, only son of William Spooner, cashier First National Bank (Jay Cooke & Co.), Washington, D. C., and Fanny A. (Dearborn) Huntington; seventh in descent from Christopher Huntington, the first male child b. in Norwich, Conn. (1660), who was a grandson of Simon Huntington, the Puritan immigrant; moved to Concord, N. H., 1883; ed. Concord high school, 1889; Episcopalian; Republican; treasurer N. H. Historical Soc., treasurer and trustee N. H. Orphans' Home, also Holderness School for
+
+<image-desc size="large" type="portrait" significance="high">Portrait of William Spooner Huntington</image-desc>
+
+<vocab>Fred Newton Ladd, William Spooner Huntington, Bankers, Concord New Hampshire, Biography, Genealogy, New Hampshire Historical Society</vocab>

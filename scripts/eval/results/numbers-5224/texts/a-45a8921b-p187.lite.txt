@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>173</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 173</header>
+
+Psychological Ass'n, N. E. Soc. of Psychiatry, Boston City Hospital Alumni Ass'n, having been president of the last four; director, Mechanics' National Bank; trustee and member, investment committee, N. H. Savings Bank; president N. H. State Board of Charities and Corrections; member, Concord Park Commission, Constitutional Convention (1912), N. H. Historical Soc., Wonolancet Club, N. H. Harvard Club, N. H. Soc. for Preservation of Forests, N. H. Conference of Charities and Corrections, National Conference of Charities and Corrections, N. H. S. A. R., South Congregational church (trustee), University and Harvard clubs and Appalachian Mountain Club (Boston); Republican; m., Aug. 6, 1884, Susan Cushing Wood; children, Charles Parker (dec.), Jennette, Elisabeth, Miriam. Residence, Concord, N. H., and Pasquaney Lodge, Newfound Lake, N. H.
+
+Bancroft, Susan Cushing Wood
+(Mrs. Charles P. Bancroft); club woman and social worker; b., Milford, Mass., March 15, 1861; dau. Bartholomew and Jennette (Burke) Wood; ed. schools of Newton, Mass., High school, 1878; taught in private school, Philadelphia, and public schools of Massachusetts five years; m., Newton Center, Mass., Aug. 6, 1884, Dr. Charles P. Bancroft of Concord, N. H.; member, South Congregational church, Concord Woman's Club (president, 1895-7), N. H. Federation of Woman's Clubs (serving on several standing committees, president, 1899-1901); treasurer, N. H. State Conference of Charities and Corrections, 1901-; trustee of the N. H. School for the Feeble-Minded, 1900-13; member, Concord Board of Education, 1899-1908; director, N. H. Children's Aid and Protective Soc., 1913-; trustee, N. H. Memorial Hospital for Women and Children (secretary, 1912-); member, Concord Female Charitable Soc. (president, 1899-1902), Woman's Committee, Council of National Defense, N. H. Division; member, executive
+
+<column-break/>
+
+committee, N. H. Branch National Civic Federation, Soc. for Preservation of N. H. Forests, Stratford (Shakespeare) Club (president, 1917-), Country Club, Friendly Club, District Nursing Ass'n, Charity Organization Soc., Mayflower Club and Woman's E. and I. Union (Boston); executive committee, N. H. Equal Suffrage Ass'n, Concord Equal Suffrage League (president, 1916-); has frequently spoken before clubs on charitable,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Susan Cushing Wood Bancroft, wearing glasses and a high-collared dress.</image-desc>
+
+educational and suffrage work; children, Charles Parker, b. May 28, 1886, d. Sept. 28, 1887; Jennette, b. Sept. 22, 1888, A.B., Vassar College, 1911, m. Asa Shiverick of Cleveland, Ohio, Feb. 22, 1913, children, Jane and Asa, Jr.; Elisabeth, b. May 17, 1891, A.B., Smith College, 1914, m. John R. McLane of Manchester, N. H., June 12, 1915, son, John R., Jr.; Miriam, b. April 24, 1894, Abbot Academy, Andover, Mass., 1914, nurse in training, Peter Bent Brigham Hospital, 1917-. Residence, Concord, N. H., and Pasquaney Lodge, Newfound Lake, N. H.
+
+<vocab>Susan Cushing Wood Bancroft, Charles P. Bancroft, New Hampshire, biography, genealogy, social work, women's suffrage</vocab>

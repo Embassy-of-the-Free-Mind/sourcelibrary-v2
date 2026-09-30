@@ -1,0 +1,72 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<page-num>408</page-num>
+<header>The Book of Clevelanders</header>
+
+-># PORTRAIT INDEX<-
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Abbott, Gardner | 299 | Breed, Dr. W. R. | 308 |
+| Adams, E. J. | 299 | Broadwell, O. W. | 308 |
+| Adams, Geo D. | 299 | Brooks, Stephen E. | 309 |
+| Agnew, Wm. | 299 | Brooks, Chas T. | 309 |
+| Albrecht, A. M. | 299 | Brown, O. T. | 309 |
+| Alburn, Cary R. | 299 | Brown, P. J. | 309 |
+| Alburn, Jno. A. | 300 | Brown, T. Dave | 309 |
+| Alden, C. E. | 300 | Buerman, G. J. | 309 |
+| Alexander, Mr. W. D. B. | 300 | Burdick, R. E. | 310 |
+| Allen, A. M. | 300 | Burnham, Thos. W. | 310 |
+| Altman, B. F. | 300 | Burt, Dr. Chas. E. | 310 |
+| Ambler, W. E. | 300 | | |
+| Anderson, A. J. | 301 | Cadwallader, Starr | 310 |
+| Andrews, Earl J. | 301 | Caine, F. C. | 310 |
+| Anspach, N. H. | 301 | Caley, Fred. H. | 310 |
+| Arndt, G. H. | 301 | Campbell, J. C. | 311 |
+| Arter, Chas. K. | 301 | Canniff, W. H. | 311 |
+| Arthur, Alfred | 301 | Carleton, C. H. | 311 |
+| Atwater, A. A. | 302 | Carpenter, F. B. | 311 |
+| Ayer, Fred. B. | 302 | Carrel, M. G. | 311 |
+| | | Carroll, Frank P. | 311 |
+| Backus, W. V. | 302 | Caulkins, D. L. | 312 |
+| Bader, W. J. | 302 | Chafer, Jno. E. | 312 |
+| Baldwin, A. D. | 302 | Chamberlain, O. N. | 312 |
+| Baldwin, Fred | 302 | Charlesworth, David | 312 |
+| Ball, Sidney M. | 303 | Chase, Chas. W. | 312 |
+| Ball, Webb C. | 303 | Chrisford, Jas. W. | 312 |
+| Ballard, T. P. | 303 | Christian, G. B. | 313 |
+| Barber, A. W. | 303 | Clark, Frank H. | 313 |
+| Barkdull, J. | 303 | Clark, J. W. | 313 |
+| Barkwill, C. G. | 303 | Clarke, N. J. | 313 |
+| Barnes, Dr. Henry | 304 | Clough, Geo. F. | 313 |
+| Barnes, H. V. | 304 | Clum, Alfred | 313 |
+| Barnes, Dr. V. E. | 304 | Coach, R. J. | 314 |
+| Barron, A. N. | 304 | Cody, H. B. | 314 |
+| Barry, D. J. | 304 | Cole, Chas. E. | 314 |
+| Bates, Albert H. | 304 | Collacott, C. M. | 314 |
+| Bauer, P. J. | 305 | Collier, A. W. | 314 |
+| Becker, A. L. | 305 | Comerford, J. J. | 314 |
+| Becker, Dr. W. H. | 305 | Conant, J. G. | 315 |
+| Beckwith, C. G. | 305 | Conelly, L. S. | 315 |
+| Betz, A. B. | 305 | Cook, C. B. | 315 |
+| Bevington, D. F. | 305 | Corday, B. F. | 315 |
+| Biggerstaff, C. T. | 306 | Cox, J. D., Jr. | 315 |
+| Billings, Frank | 306 | Crampton, P. S. | 315 |
+| Bingham, Geo. A. | 306 | Creech, Harris | 316 |
+| Bishop, E. A. | 306 | Creer, W. R. | 316 |
+| Blake, S. C. | 306 | Crittenden, W. E. | 316 |
+| Blatt, Mr. R. H. | 306 | Currier, J. J. | 316 |
+| Blechschmid, Jno. | 307 | | |
+| Bliss, H. A. | 307 | Daly, Martin B. | 316 |
+| Bomgardner, Joseph | 307 | Daniels, Irving L. | 316 |
+| Bommhardt, Jno. A. | 307 | Daoust, E. C. | 317 |
+| Bowler, W. N. | 307 | David, Mr. W. L. | 317 |
+| Boyd, W. H. | 307 | Daviess, W. W. | 317 |
+| Bradley, Arthur | 308 | Davis, Frank W. | 317 |
+| Brady, H. S. | 308 | Davis, Hy. D. | 317 |
+| Brainard, T. W. | 308 | Dawley, J. P. | 317 |
+| Brandt, Wm. J. | 308 | Dawson, R. H. | 318 |
+
+<vocab>Portrait Index, Clevelanders, Biography, Directory</vocab>

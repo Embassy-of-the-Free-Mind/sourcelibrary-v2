@@ -1,0 +1,62 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>407</page-num>
+<header>The Book of Clevelanders 407</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Ulmer, John Christian | 270 | Whitworth, T. Evans | 284 |
+| Utzinger, Leonard | 271 | Wick, Dudley Baldwin | 284 |
+| Vail, George Skinner | 271 | Wieler, Charles L. F. | 284 |
+| Valentine, Richard F. | 271 | Wilberding, John Bernard | 285 |
+| Van de Boe, Joseph Sherman | 272 | Wilcox, Owen N. | 285 |
+| Van Epps, John Sminck | 272 | Wildman, N. R. | 285 |
+| Van Epps, Leslie | 273 | Wilhelmy, Otto A. | 285 |
+| Van Tress, Herman B. | 273 | Wilkins, Bert LeRoy | 285 |
+| Van Valkenberg, Dr. Horace | 273 | Willard, Hudson E. | 286 |
+| Varga, Hugo Eugene | 273 | Williams, Arnold E. | 286 |
+| Vickery, Hon. Willis | 274 | Williams, Arthur Baldwin, Jr. | 286 |
+| Vorce, Myron Bond | 274 | Williams, Edward Mason | 286 |
+| | | Williams, George Henry | 286 |
+| Wade, Benjamin Franklin | 275 | Williams, Walter Miller | 287 |
+| Wade, Jeptha Homer | 275 | Williamson, James D. | 287 |
+| Wagar, Mars E. | 275 | Willis, Malcolm Chandler | 287 |
+| Wagner, Jacob | 275 | Wilmerink, William J. | 288 |
+| Wain, Lewis H. | 276 | Wilson, George Henry | 288 |
+| Waite, Frederick Clayton | 276 | Wilson, Dr. Harris R. C. | 288 |
+| Wall, William E. | 276 | Wilson, Harwood | 288 |
+| Walker, Frank Ray | 276 | Wilson, James W. | 288 |
+| Walkey, Charles B. | 277 | Wilson, Thomas H. | 288 |
+| Walkey, Harry Edgar | 277 | Wing, Francis Joseph | 288 |
+| Walter, Robert E. | 277 | Winton, Alexander | 289 |
+| Walton, John Whittlesey | 277 | Wismar, Fred E. | 289 |
+| Walworth, Frank Howard | 278 | Wodisky, Jerome Joseph | 289 |
+| Ward, Joseph A. | 278 | Wolf, L. J. | 289 |
+| Warner, Franz Childs | 278 | Wolf, Morris J. | 289 |
+| Warner, Worchester Reed | 278 | Wolfe, Jesse G. | 290 |
+| Wascko, Roman W. | 278 | Wolsey, Louis | 290 |
+| Wason, Charles William | 279 | Wood, James Craven | 290 |
+| Watson, Wilbur J. | 279 | Woodruff, Albert W. | 290 |
+| Weaver, S. Marshall | 279 | Woodwirth, Fred J. | 291 |
+| Webster, John Howard | 279 | Worden, Arthur Morley | 291 |
+| Weidenthal, Maurice | 280 | Worthington, George H. | 291 |
+| Weis, S. H. | 280 | Wright, Arthur Silas | 292 |
+| Welch, Leon Cowles | 280 | Wright, Elmer B. | 292 |
+| Wellman, Samuel Thomas | 280 | Wright, Ernest T. | 292 |
+| Wells, Thomas Henry | 281 | | |
+| Wemple, John Jay | 281 | Yoder, Ivan Isaac | 292 |
+| Wenneman, Joseph H. | 281 | York, George W. | 293 |
+| Wertheim, Max | 282 | York, Robert H. | 293 |
+| Wettstein, Frank Eugene | 282 | Young, William Daniel | 293 |
+| White, Rollin Henry | 282 | Young, William F. | 293 |
+| White, Windsor Thomas | 283 | | |
+| Whitelaw, James Herbert | 283 | Zeman, Mathew | 293 |
+| Whitman, Frank Perkins | 283 | Ziegler, Daniel H. | 294 |
+| Whitmore, Fred A. | 283 | Zimmerman, Charles X. | 294 |
+| Whitney, William Henry | 283 | Zipp, John | 294 |
+| | | Zornow, John C. | 295 |
+
+<vocab>Cleveland, biography, index, directory</vocab>

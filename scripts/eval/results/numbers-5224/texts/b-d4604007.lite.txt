@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten cursive script</warning>
+
+labour: also no one of them alone,
+nor all of them united could kill
+him, nor could any man."
+"How then can they ever possess
+the kingdom, if he cannot die nor
+be killed by any one?" He answered:
+"His six subjects proceed from the foun-
+tain, from which they derive every
+thing they possess, as well as he, where-
+fore they are chiefly drawn by the
+fountain. The king is killed by
+that very fountain as well as they
+are and is resuscitated by it: after-
+wards from the substance of his
+kingdom, which substance is di-
+vided into the minutest particles,
+each of his subjects receives his
+portion; and however minute
+the particle which any one of
+them obtains, he equals the king
+
+<vocab>labour, kingdom, subjects, fountain, resuscitated, substance, particles</vocab>

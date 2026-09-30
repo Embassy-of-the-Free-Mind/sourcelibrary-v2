@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>42</page-num>
+<header>The Book of Clevelanders</header>
+
+School of Art, Lake View Cemetery; corporator Case School Applied Science; member Sinking Fund Commission of Cleveland; Chevalier, Legion of Honor, France, 1881; Rumford medal, Am. Acad. Arts and Sciences, 1899; member Am. Philos. Soc.; fellow, A. A. A. S.; life member Brit. Ass'n, Ohio State Board Commerce, Cleveland Chamber Commerce (pres. 1909-1910); Am. Soc. Mech. Engrs.; member Am. Inst. Elec. Engrs., Archaeol. Inst. America, Am. Hist. Ass'n, Nat. Electric Light Ass'n, Franklin Inst., Phila., Am. Chem. Soc. Clubs: University (New York), Country, Euclid, University, Union (pres. 1897-1898), Mayfield (Cleveland), Winous Point Shooting (pres. since 1895).
+
+**BUERMAN**, George J.; contracting plumber; born, Cleveland, Aug. 28, 1886; son of G. H. and Anna Kuper Buerman; graduated from St. Stephen's Parochial school in 1900; attended St. Ignatius' College three years; classical course; married, Cleveland, Aug. 22, 1911, Ida P. Beeoli; started in the plumbing, sewering and gas fitting business in 1908, under the firm name of Buerman & Mayer; continued until 1911, when he bought Mr. Mayer's interest; firm now Geo. J. Buerman; member C. M. B. A. Recreations: Baseball and Bowling.
+
+**BULKLEY**, Robert Johns; congressman; born, Cleveland, Oct. 8, 1880; son of Charles Henry and Roberta (Johns) Bulkley; A. B., Harvard, 1902, A. M., 1906; law student, Harvard, and at Cleveland; married Katharine Pope, of Helena, Mont., Feb. 17, 1909; admitted to bar, 1905, and began practice at Cleveland; member law firm of Bulkley & Inglis, Sept. 1, 1909-; member 62d Congress (1911-13); 21st Ohio Dist.; Democrat; trustee University School, Cleveland. Clubs: Union, Hermit, University, Tavern and Country (Cleveland), Harvard (New York), Montana (Helena).
+
+**BUNTS**, Frank Emory; surgeon; born, Youngstown, O., June 3, 1861; son of William C. and Clara E. (Barnhisel) Bunts; graduated U. S. Naval Academy, 1881; served U. S. N., 1881-1883; M. D., Western Reserve Medical College, 1886; married, Harriet E. Taylor, of Cleveland, Oct. 29, 1888; prof. surgery Western Reserve Medical College, since 1893; fellow Am. Surg. Ass'n; member A. M. A., Societe Internat. de Chirurgie; Miss. Valley Med. Ass'n; Ohio State Med. Ass'n; Acad. Medicine, Cleveland; Nu Sigma Nu; Republican. Clubs: Union, University, Euclid (Cleveland); Army and Navy (Washington).
+
+**BURDICK**, Russell Emmett; merchant; born, Alfred, N. Y., May 28, 1848; son of Russell W. and Malvina A. (Middaugh) Burdick; educated, Alfred University; married, Ashland County, O., May 24, 1874, Mary H. McCutchen; two daughters and one son; captain commanding Troop A, O. N. G., 1895; capt. 1st Ohio Vol. Cavalry, war with Spain, 1898; aid-de-camp to Gen. Horace Porter, 1897; to Gen. G. M. Dodge, 1897; to Gen. J. F. Bell, 1909; pres. and treas. the Bowler & Burdick Co., jewelers; established, 1873.
+
+<vocab>George J. Buerman, Robert Johns Bulkley, Frank Emory Bunts, Russell Emmett Burdick, Cleveland, biography, business, medicine, law, military</vocab>

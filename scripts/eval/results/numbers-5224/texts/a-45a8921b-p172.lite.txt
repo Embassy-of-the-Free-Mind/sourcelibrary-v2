@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>158</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+1915, Dartmouth College, 1919); 3d, Oct. 3, 1916, Delia Bingham Mitchell, Littleton. Residence, Littleton, N. H.
+
+**Eastman, Clarence Willis**
+Educator; b., Concord, N. H., Jan. 3, 1873; s. Charles L. and Sarah (French) Eastman; ed. public schools of Concord, N. H., and Worcester, Mass., Worcester Polytechnic Institute, B.S., 1894; instructor of Modern Languages, W. P. I., 1894–5; graduate
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+study, University of Göttingen, 1895–6; University of Leipzig, 1896–8; Ph.D., Leipzig, 1898; instructor in German, 1898–1901, assistant professor of German, 1901–7, State University of Iowa; in charge of German work, University of Missouri Summer School, summers of 1903 and 1905; instructor, University of Chicago, summer quarter, 1902; associate professor of German language and literature, Amherst College, since 1909; traveled abroad, summers of 1909 and 1912; member of Plattsburg Training Camp, Aug., 1916; in charge of military training, Amherst College,
+
+<column-break/>
+
+spring of 1917; Episcopalian; Independent; member, Amherst Golf Club, Holyoke Canoe Club, Faculty Club (Amherst), Modern Language Ass'n of America, Modern Language Ass'n of New England, Sons of the American Revolution, Federal Training Camps Ass'n; m., Aug. 29, 1906, Ann Hull Dey; children, Anthony Dey, b. July 8, 1908, Philip Dey, b. Nov. 25, 1909; Karl Dey, b. June 17, 1912. Residence, Amherst, Mass.
+
+**Chase, Charles Parker**
+Educator, banker; b., West Newbury, Mass., May 6, 1845; s. Samuel S. and Eunice (Colby) Chase; ed. Phillips Andover Academy and Dartmouth College, A.B., 1869, A.M., 1872; tutor in Greek, Dartmouth College, 1870–2; professor of Latin, Olivet College, Mich., 1872–8; instructor in political economy, Dartmouth, 1884–92; treasurer, Dartmouth College, from 1890—now treasurer emeritus; Congregationalist; Republican; cashier, Dartmouth National Bank, 1878–92, president since; vice-president, Dartmouth Savings Bank; president, Grafton County Electric Light & Power Co.; member, University Club, Boston, and Delta Kappa Epsilon and Phi Beta Kappa College societies; m., July 7, 1874, Fanny Huntington, Hanover. Residence, Hanover, N. H.
+
+**Stone, George Weare**
+Lawyer; b., Plymouth, N. H., Nov. 11, 1857; s. Charles J. F. and Abbie Anna (Weare) Stone; ed. New London Literary and Scientific Institute (now Colby Academy), 1874, Dartmouth College, 1878, Boston University Law School, 1882; studied law with Hon. John M. Shirley at Andover; admitted to the bar in 1882; in partnership with Mr. Shirley in practice from Jan., 1883 till the death of the latter in 1887, since then alone; Unitarian; Democrat; superintendent of schools, 1879–80; member, board of education, nine years; N. H. house of representatives, 1885, 1887 (Democratic candidate for speaker, 1887); N. H. constitutional
+
+<vocab>Clarence Willis Eastman, Charles Parker Chase, George Weare Stone, Dartmouth College, biography, New Hampshire, educators, lawyers, bankers</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>322</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Ralph W. Edwards</image-desc>
+Ralph W. Edwards
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of W. S. Edson</image-desc>
+W. S. Edson
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of H. P. Eells</image-desc>
+H. P. Eells
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Henry F. Eilert</image-desc>
+Henry F. Eilert
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Chas. H. Eichhorn</image-desc>
+Chas. H. Eichhorn
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Dr. R. C. Engel</image-desc>
+Dr. R. C. Engel
+
+<vocab>Ralph W. Edwards, W. S. Edson, H. P. Eells, Henry F. Eilert, Chas. H. Eichhorn, Dr. R. C. Engel, Clevelanders, Biography</vocab>

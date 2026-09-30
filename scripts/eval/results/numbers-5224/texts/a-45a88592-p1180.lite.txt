@@ -1,0 +1,5 @@
+<scan-quality>good</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>blank</page-type>
+<vocab>none</vocab>

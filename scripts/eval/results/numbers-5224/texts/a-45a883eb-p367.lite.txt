@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>363</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. E. Otter</image-desc>
+A. E. OTTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. Otis</image-desc>
+CHAS. OTIS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. R. Owens, DD.</image-desc>
+J. R. OWENS, DD.
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. D. Palmer</image-desc>
+H. D. PALMER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. A. Paine</image-desc>
+C. A. PAINE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. B. Parker</image-desc>
+M. B. PARKER
+
+<vocab>A. E. Otter, Chas. Otis, J. R. Owens, H. D. Palmer, C. A. Paine, M. B. Parker, The Book of Clevelanders</vocab>

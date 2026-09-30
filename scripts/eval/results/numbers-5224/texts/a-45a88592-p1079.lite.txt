@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>839</page-num>
+<header>TOWN OF HARWICH. 839</header>
+
+coasting business, as well as the mackerel fishery, was engaged in, to considerable extent. The last war with England interfered much with the seafaring business of the Cape, especially of this town.
+
+In 1837, the fishing business was no way in a prosperous condition. Only twenty-two sail of vessels were engaged in the fisheries, and about two hundred persons employed. Most of these vessels were engaged in the cod fishery the first part of the season.
+
+After this time the Harwich fleet again increased, and in 1841, the year of the memorable gale, when fourteen persons belonging to this town were lost, twelve vessels sailed from "Marsh Bank" besides the fleet from Deep Hole and Herring river. In 1850 the mackerel fleet was much increased, owing to the good success attending the fishery the preceding years. In 1851 the scarcity of mackerel on this coast induced many of the fleet to visit Bay Chaleur. While there in the autumn, came on the memorable gale in which so many vessels and lives were lost, and from which all of the Harwich vessels escaped destruction, excepting the schooner *Commerce*, John Allen, master, and the schooner *Ogunquit*, commanded by Stephen D. Ellis, which were lost. The former went ashore and the crew were saved, while the latter was never heard from after the gale. Since the late war, the fleet engaged in the cod and mackerel fishery has gradually decreased, owing to small returns for great outlays. The number of vessels now engaged in the fishery is reduced to two.
+
+The manufacture of marine salt by solar heat, by improved works, commenced here about the first of the present century, and for a time was an important branch of industry. But the decline in the price of salt, and the great increase in the cost of the construction of the works, led to the abandonment of the business. It has been many years since a foot of the works has been seen standing here, or the arms of one of the pump mills seen revolving in the wind.
+
+During the revolutionary war, when salt was scarce and dear, many here produced it for home consumption by boiling sea water. The work of producing salt in this manner was laborious, and, the salt being impure, it was given up when other means of getting pure salt became general.
+
+RELIGIOUS SOCIETIES.—There has never been any lack of interest in religious matters here. No less than fifteen religious societies have been organized within the limits of the present town. Of these societies, the Separatist or New Light, Free Will Baptist, Reformed Methodist and Wesleyan Methodist have become extinct.
+
+The oldest organization is the Congregational church. It was constituted November 12, 1747. The first minister was Rev. Edward Pell, who was ordained the same day. Mr. Pell was a native of Boston, born in 1711. He was a graduate of Harvard College in 1730.
+
+<vocab>Harwich, fishing, mackerel, cod, Marsh Bank, Deep Hole, Herring river, Bay Chaleur, Commerce, Ogunquit, John Allen, Stephen D. Ellis, marine salt, revolutionary war, religious societies, Separatist, New Light, Free Will Baptist, Reformed Methodist, Wesleyan Methodist, Congregational church, Edward Pell, Harvard College</vocab>

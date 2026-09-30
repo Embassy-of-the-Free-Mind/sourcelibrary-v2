@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>174</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Beckwith, Hira Ransom**
+Architect and builder; b., Lempster, N. H., Sept. 28, 1852; s. Ransom P. and Emily L. (Parker) Beckwith; ed. public schools, Marlow Academy and
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Hira Ransom Beckwith</image-desc>
+
+Stevens High School; removed to Claremont with his mother after his father's death, when eleven years of age; learned the carpenter's trade with the late B. P. Gilman of Claremont; studied architecture in Boston, and at the age of 21 formed a partnership, with the late Levi Chase, carrying on business together as contractors and builders for a number of years, since when he has continued alone, doing an extensive business at home and abroad; many of the finest residences in Claremont have been designed and built by him, and some of the most substantial public buildings and business blocks are of his design, and their construction superintended by him, including Hotel Claremont, Union Block, and the town Hall and Opera House; the Richards Free Library and Sullivan County Court house at Newport and other
+
+<column-break/>
+
+important buildings at Windsor, White River Junction and Bellows Falls, Vt., and Massachusetts are of his design; Universalist; Democrat; assessor, 1908; Mason, member Hiram Lodge, and Sullivan Commandery of Claremont, Bektash Temple, Concord; m., 1st., 1878, Libbie A. Martin, Springfield, Vt., d. 1902; 2d, 1910, Mrs. Etta M. Wolcott Benjamin. Residence, Claremont, N. H.
+
+**Smith, Jonathan**
+Lawyer; b., Peterborough, N. H., Oct. 27, 1842; s. John and Susan (Stearns) Smith; ed. New Hampton Institution, New Hampton, N. H., 1867, Dartmouth College, 1871; studied law with Cross & Burnham, Manchester, N. H.; admitted to Hillsborough County bar in 1875; practiced in Manchester till 1878 when he removed to Clinton, Mass., where he has
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Jonathan Smith</image-desc>
+
+since resided; Unitarian; Republican; city solicitor of Manchester, 1876-8; town solicitor, Clinton, 1889, 1891; chairman Clinton board of health, 1885, 1890; member, Mass. house of
+
+<vocab>Hira Ransom Beckwith, Jonathan Smith, biography, New Hampshire, architecture, law, genealogy, public service</vocab>

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>title-page</page-type>
+
+->The<-
+->Book of Clevelanders<-
+
+->A Biographical Dictionary of Living<-
+->Men of the City of Cleveland<-
+
+<image-desc size="small" type="symbol" significance="low">A small printer's mark depicting an open book.</image-desc>
+
+->Cleveland<-
+->The Burrows Bros. Company<-
+->1914<-
+
+<vocab>Cleveland, biography, dictionary, The Burrows Bros. Company</vocab>

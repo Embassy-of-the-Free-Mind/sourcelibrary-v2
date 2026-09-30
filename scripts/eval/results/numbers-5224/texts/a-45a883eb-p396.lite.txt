@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>392</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. E. Walkey</image-desc>
+H. E. WALKEY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. R. Walker</image-desc>
+F. R. WALKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. C. Warner</image-desc>
+F. C. WARNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Maurice Weidenthal</image-desc>
+MAURICE WEIDENTHAL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. J. Watson</image-desc>
+W. J. WATSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of S. W. Weitz</image-desc>
+S. W. WEITZ
+
+<vocab>H. E. Walkey, F. R. Walker, F. C. Warner, Maurice Weidenthal, W. J. Watson, S. W. Weitz, Clevelanders, biography</vocab>

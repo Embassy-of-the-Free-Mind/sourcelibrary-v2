@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>417</page-num>
+<header>TOWN OF BARNSTABLE. 417</header>
+<sig>27</sig>
+
+In 1837 Gorham Crosby began making his house a stopping place for travelers. The old house was replaced by a new one in 1859, where Aaron Crosby, the son, continues to accommodate the public.
+
+Craigsville is a beautiful resort, just southeast of Centreville—between it and Hyannis—and is famous for its camp ground. Its visitors, attracted by its beauty and novelties, may be numbered by thousands each season. A post office is maintained here by the government during the season, a mail pouch being received from Hyannis. Miss Susie V. Aldrich was postmistress in 1889.
+
+Marston’s Mills is the Indian Mistic, and is pleasantly situated between Osterville and Cotuit. Its importance, early in the history of the town, is largely due to the excellent power for mills, which were erected very early on the stream issuing from the several ponds at the north, flowing into Cotuit harbor. A fulling mill, a cloth dressing mill, a jewelry establishment, a grist mill and blacksmithing existed here at an early date. Here, as has been mentioned, was the ancient fulling mill of Thomas Macy—in 1689—on what was called Goodspeed river, for those families were the first here. This mill was used many years as a fulling mill. Benjamin Marston, through a long course of years, ran it. He was here in 1738, from which time it took its present name. In 1829 the former business of the place had dwindled to a grist mill, and to carding, cloth dressing, fulling, etc., by Robert Francis and A. B. Marston. Francis sold out in 1829 to Nathaniel Hinckley, who enlarged the building and added one of Copeland’s first-class carders. He continued the carding and cloth dressing until 1852, when Rufus Churchill became a partner. They purchased cotton in Boston, and here made cotton batting until 1855, when the death of Mr. Churchill’s son, for whom it was purchased, caused its decline. Neither party wished to purchase the share of the other; the old mill was subsequently removed, and the remains of the dam, on the land of Lilly Backus, is the only remaining memento of this important fulling mill, except this history.
+
+At a proprietors’ meeting, February 13, 1704-5, at the request of John Stacy (or Stasye), the privilege to erect a dam on the Goodspeed river, or Cotuit, was given, if he would build a grist mill for the benefit of the inhabitants, and charge only two quarts to the bushel for toll. This dam was not to interfere or “damnifie or pen any back water to hinder the fulling mill already set up.” Chipman Hinckley and Ebenezer Scudder subsequently owned the old mill, which was purchased in 1842 by Nathaniel Hinckley, who put it in order, adding a corn and cob cracker. Mr. Hinckley now made an unsuccessful attempt to put the two dams together, for the purpose of starting a paper mill to work the beach grass of the Cape into paper. The mill, in 1889, with its dam, was still to be seen as of yore, and Mr. Hinckley-
+
+<vocab>Barnstable, Craigsville, Marston's Mills, Cotuit, Goodspeed River, Thomas Macy, Benjamin Marston, Nathaniel Hinckley, Rufus Churchill, John Stacy, Chipman Hinckley, Ebenezer Scudder, milling, fulling mill, grist mill, carding</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>70</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+municate with other counties; and the same gentlemen, with Captain Joseph Doane and Captain Jonathan Howes, were appointed as a committee to consider the public grievances and report at an adjourned meeting.
+
+But the time had arrived when the edict that "the country shall be free" must be enforced by the privations of war. The happy firesides and rural avocations must be exchanged for the stern duties of a military life. Many noble deeds were performed in the struggle that followed, which are, and ever will be, unrecorded; for no historian can give the people of the Cape their full meed of praise.
+
+In 1775 the first din of battle was heard when General Gage sent troops to Concord to destroy the stores of the provincials, and seven hundred men along the road put to flight one thousand seven hundred of his royal army. Then the couriers went out crying, "the war is begun." No one lives to remember the thrill of determination that vibrated along the Cape to its extremity when that cry leaped from town to town. The year was an active one in levying men for the defense of the coast, and Major Hawley, Mr. Sullivan, Mr. Gerry and Colonels Orne and Freeman were appointed to report proper regulations for minute men. Major Joseph Dimmick, with a sufficient force, was commissioned to repair to Nantucket and other islands and arrest those who were supplying the enemy with provisions. The defense of the coast was entrusted to four companies; of Company 1, Nathan Smith was captain; Jeremiah Mantor, first lieutenant; and Fortunatus Bassett, second lieutenant; of Company 2, Benjamin Smith, captain; Melatiah Davis, first lieutenant; and James Shaw, second lieutenant; Company 3, John Grannis, captain; James Blossom, first lieutenant; Samuel Hallett, second lieutenant; Company 4, Elisha Nye, captain; Stephen Nye, jr., first lieutenant; and John Russell, second lieutenant.
+
+In January, 1776, General Washington called for six regiments of 728 men each, to be raised in the province, of which 260 men were to be furnished by Barnstable county. The committee to direct this duty in the county were Colonels Otis and Cobb. Barnstable and Plymouth counties together raised one entire regiment, of which Colonel Carey of Bridgewater was commandant; Barachiah Bassett of Falmouth, lieutenant colonel; Thomas Hamilton of Chatham, adjutant; and Nathaniel Hall of Harwich, surgeon mate. Still later, in January, another regiment was called from the same source to go to Canada. Many of these men were Mashpees, who made valiant soldiers. On the 31st the militia of the county was divided into two regiments and the general court appointed the officers; for the first, including Barnstable, Sandwich, Yarmouth and Falmouth, Nathaniel Freeman, colonel; Joseph Dimmick, lieutenant colonel; Joshua Gray,
+
+<vocab>Barnstable County, American Revolutionary War, General Gage, minute men, militia, General Washington, Mashpees, Nathaniel Freeman, Joseph Dimmick, Joshua Gray</vocab>

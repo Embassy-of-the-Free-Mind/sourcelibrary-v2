@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>649</page-num>
+<header>TOWN OF FALMOUTH. 649</header>
+
+The Congregational church of North Falmouth was organized August 15, 1833, being composed of twenty-three members of the First and Second churches, who resided in the vicinity. The church edifice was dedicated November 1, 1833. The early members were Benjamin, Stephen, Ebenezer, John, Joshua, Shubael, and Charles J. Nye, and Rev. Paul Jewett. There were fourteen females, none now living, as members. Former deacons were Ebenezer, Joshua and Samuel Nye, the last survivor. F. G. Nye is the present clerk.
+
+Rev. Paul Jewett was installed August 21, 1833, and dismissed June 25, 1834, since when there has been no settled minister. Among the preachers supplying the pulpit have been: Daniel D. Tappan, 1834; Gideon Dana, 1836; John Pike, 1837; Charles C. Beaman, 1841; Asahel Cobb, 1844; Lorain Reed, 1848; Nathaniel Cobb, 1850; Cyrus Mann, 1852; Mr. Weston, 1857; Levi Wheaton, 1858; Mr. Paine, E. W. Allen, Mr. Kilburn, and, since April, 1888, Rev. Mr. Woodworth, of Cambridge.
+
+The Congregational church edifice at Waquoit was dedicated February 2, 1848, but the society was not organized until January 3, 1849. Its original members numbered eighteen, seventeen of whom previously belonged to the society in East Falmouth. They have never had a settled pastor. Rev. Spencer F. Beard labored as stated supply from October, 1848, to April, 1853. His pastorate resulted in the addition of thirty-two persons to the church. The successive supplies have been: Horace Pratt, from June, 1853, for two years; Rev. Anson Hubbard, from October, 1855, to May, 1856; Rev. Levi Little, for several months; Rev. Job Cushman, for a few Sabbaths; Rev. Elijah Demond, from October, 1859, to April, 1863; Rev. David Brigham, October, 1863 to 1870; Reverends James R. Cushing, Sayer, Wilbur and Burn from the Methodist Episcopal church at East Falmouth, to 1877; Rev. Samuel Fairley, from 1877, to August, 1881; Rev. Joshua S. Gay, from September, 1882, to March, 1885; Rev. Samuel Morrison, from April, 1885, to October, 1888; Rev. Thomas Bell, of Hatchville, for 1889.
+
+The early Methodists at East Falmouth worshipped in the school house. The faithful band were served with preaching by Reverends Lambert, Otis, Hardy, Keith, Merrill, Paine, Binney, Haven, Bates and others. In later years the pastor at Falmouth village preached here. In 1852-3 Rev. Mr. Adams supplied, and in 1854, Rev. J. C. Allen. In 1855 Rev. Mr. Bennett, of Sandwich, supplied. In 1856-7 Rev. J. E. Gifford was stationed at Falmouth, preaching here once in two weeks. In 1858 the same gentleman, supernumerary, by request filled the desk until April, 1859, and the class was increased from nineteen to fifty-four. In 1859 a building committee, consisting of Captain John Tobey, Elnathan Baker, Alexander Clark and Andrew Baker, was appointed. Four hundred dollars, for the year 1859-60, was
+
+<vocab>Falmouth, Congregational church, North Falmouth, Waquoit, East Falmouth, Methodist Episcopal church, church history, religious organizations, Massachusetts history</vocab>

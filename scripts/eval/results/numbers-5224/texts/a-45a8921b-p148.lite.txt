@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>134</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Mascoma Valley Pomona Grange; m., Dec. 11, 1886, Rosamond Wood; one dau., died in infancy. Residence, West Lebanon, N. H.
+
+**Warren, Joseph**
+Farmer, lumberman, brick manufacturer; b., Pembroke, N. H., July 12, 1857; s. Hugh T. and Lydia A. (Moore) Warren; ed. common schools and Pembroke Academy; engaged for several years in the manufacture of brick in
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+Pembroke, then removing to Rochester where he continued extensively in the business, making as many as 17,000,000 brick in a season; Democrat; member, Rochester board of aldermen, 1892–3–4; member, N. H. house of representatives, 1903, 1913; mayor of Rochester, 1910, 1911–, chosen for second term without opposition; inspector of state highways, 1914; appointed commissioner of insurance in Dec., 1914, by Gov. Samuel D. Felker and removed by legislative address for partisan reasons, in January, 1915; appointed postmaster of Rochester by President Wilson, Feb.
+
+<column-break/>
+
+3, 1916, since continuing; m., Aug. 4, 1878, Addie G. Elliott of Pembroke; one daughter, Sarah W. (Mrs. Albert D. Jones of Rochester). Residence, Rochester, N. H.
+
+**Barnabee, Henry Clay**
+Musical comedian; b., Portsmouth, N. H., Nov. 14, 1833; s. Willis Barnabee; ed. public schools; mercantile clerk in youth in Portsmouth and Boston; appeared in entertainments of Boston Mercantile Library Ass'n, commencing in April, 1854, and soon developed much talent as a singer and comedian; sang many years in church choirs in and around Boston, including nineteen years as a member of the quartette of the Church of the Unity; in 1865 gave up mercantile life and organized the Barnabee Operetta Co., which was succeeded in 1870 by the Barnabee Concert Co.; subsequently appearing in monologue work in lyceum courses; joined the Boston Ideal Opera Co., in 1879, appearing as Sir Joseph Porter in "Pinafore" and in other leading rôles; in 1887, with Tom Karl and others, organized The Bostonians, in which he created leading opera rôles, notably the "Sheriff of Nottingham" in Robin Hood; first appeared in vaudeville in Brooklyn, Sept. 12, 1904; member, Ancient and Honorable Artillery Co., Boston; author, "My Wanderings," 1913; m., 1859, Clara, dau. Maj. Daniel George of Warner, N. H. Residence, Jamaica Plain, Mass.
+
+**Webster, Harold Adams**
+Commissioner of weights and measures; b., Ashland, N. H., Aug. 12, 1885; s. Rev. Lorin and Jennie Josephine (Adams) Webster; ed. public schools of Ashland and Plymouth, and Holderness School for Boys, 1904; Episcopalian; Republican; member, school board and library trustee, Ashland; member, N. H. house of representatives, 1913–14, 1917–18, serving each session on appropriations committee; appointed commissioner of weights and measures, by Governor Keyes, upon the
+
+<vocab>Joseph Warren, Henry Clay Barnabee, Harold Adams Webster, New Hampshire, biography, politics, business, theater, public service</vocab>

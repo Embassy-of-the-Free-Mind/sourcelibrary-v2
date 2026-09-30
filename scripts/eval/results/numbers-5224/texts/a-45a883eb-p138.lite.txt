@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>134</page-num>
+<header>The Book of Clevelanders</header>
+
+**HOLOCKER, Alexander C.**; contractor; born, Cleveland, Aug. 26, 1880; son of Henry and Sophia Noll Holocker; public school education; married, Cleveland, Aug. 26, 1903, Effie J. Tedder; issue, three daughters, Eva, Florence and Effie; ten years with the city in engineering department; grading and contracting work for a number of years now. Recreation: Baseball.
+
+**HOPKINS, Benjamin F.**; railroad promotor and builder; born, Cleveland, 1876; educated, Cleveland public schools, Western Reserve Academy and Adelbert College, West Reserve University; one of the promoters of "The Belt Line"; connected with various other railroad and construction enterprises; sec'y and treas. Cleveland Short Line R. R. Co., and Belt & Terminal Realty Co.; member Elks, Mason, Knights Templar and Shriner.
+
+**HOPKINS, David Harris**; lawyer; born, Granger, Medina county, O., Oct. 8, 1882; son of Chauncey J. and Allie Harris Hopkins; graduated from Granger High School in 1900; following year attended Ohio Northern University, and graduated from Baldwin University, 1911, receiving LL. B. degree; married, Granger, O., Jan. 16, 1904, Vira Marie Kerstetter; opened his law office in the Engineers' Bldg. in November, 1911; interested in farming and breeder of Holstein-Friesian cattle, Poland China swine and fancy poultry; director The Cleveland Poultry Breeders' Ass'n Co.; member Masons, Odd Fellows, Maccabees, and Sigma Kappa Phi Fraternity.
+
+**HOPKINS, Evan Henry**; lawyer; born, Johnstown, Pa., Nov. 4, 1864; son of David J. and Mary Jeffreys Hopkins; A. B., Adelbert College, 1889; LL. B., Harvard, 1892; married, Frances P. M. Shain, of Cleveland, Dec. 27, 1892; admitted to bar, 1891; in practice at Cleveland since 1892; member law firm of Herrick & Hopkins; member faculty and registrar, 1892-1895, dean law dept., 1895-1910, Western Reserve University; member and sec'y Cleveland Public Library Board, 1892-1898; member Board Park Commissioners, Cleveland, 1900-1901; Presbyterian; Republican; contributor to legal publications; member University Club.
+
+**HOPKINS, William Rowland**; lawyer; born, Johnstown, Pa., July 26, 1869; son of David J. and Mary Jeffreys Hopkins; educated, Western Reserve Academy, 1892, Adelbert College, Western Reserve University, 1896, A. B.; Law School, Western Reserve University, 1897, LL. B.; married Cleveland, June 11, 1903, Ellen Louise Cozad; member City Council, 1897-1899; active in promotion and construction of the Cleveland Short Line R. R., working out a system of rapid transit for Cleveland; director The Cleveland Short Line R. R. Co.; vice pres. and treas. the Belt & Terminal Realty Co.; pres. The Cleveland Underground R. R. Co., the Subway Realty Co., the Junction Realty Co., the Regan Realty Co., The Hopkins Holding Co.; director the Deckman-Duty Brick Co.; pres. The Railway Contracting Co.; member
+
+<vocab>Alexander C. Holocker, Benjamin F. Hopkins, David Harris Hopkins, Evan Henry Hopkins, William Rowland Hopkins, Cleveland, biography, business, law, railroad, real estate</vocab>

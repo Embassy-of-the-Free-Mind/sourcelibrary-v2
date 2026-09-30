@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>966</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+tunes of all the Cape towns, Provincetown was again without a population. The history of the town during the intervening years must be gathered from the scanty records that remain, devoted largely to the recording of the births and to the registry of the ecclesiastical affairs of the township. The first record is an entry in the treasurer's book for the precinct of Cape Cod, 1724, to wit: "Precinct of Cape Cod to John Traill, Dr. April 29, 1724. To cash paid Mr. Samuel Spear for his salary——10s."
+
+The record of births, which began regularly in 1731, contains a record of the birth of Ezekiel Doane, son of Hezekiah and Hannah Doane, April 1, 1696. The entry, however, is not made in chronological order, and there is reason to believe that Hezekiah Doane removed to Provincetown from Eastham. The early entries show that among the residents in 1730 were: John Atwood, Thomas Bacon, Hezekiah Bosworth, Elisha Cobb, John Conant, Robert Davis, Thomas Delano, Elisha Doane, Hezekiah Doane, Jeremiah Hatch, Elisha Higgins, John Kinney, Benjamin Ryder, William Sargent, Christopher Strout, William Sargent, Samuel Winter, Solomon Lumbert, Isaac Bacon, Josiah Cole, John Gray, Benjamin Rotch, Isaac Smalley, George Strout, Ezekiel Cushing, Thomas Freeman, John Traill, David Freeman and John Duncan. It appears also that Mr. Samuel Winter was the first school teacher engaged in Provincetown.
+
+It is interesting to note that in 1744 the town had already begun to appreciate the danger to the harbor that must follow from the unrestricted cutting of wood and from the turning of cattle upon the beaches. The urgency of some measures for the protection of the harbor here became so great that in 1744 James Bowdoin and many other citizens of Boston presented to the general court a petition, setting forth the great importance of the harbor of Cape Cod to the navigation of the province, and praying that the general court would take necessary measures to preserve it. The petition was referred to a committee consisting of Thomas Berry, Colonel Miller and Mr. Skinner, who were directed to repair to Cape Cod before the tenth of May, 1744. The report of the committee contained a graphic description of the impending danger to the harbor at Provincetown, and resulted in the adoption of appropriate legislation regulating the turning of cattle upon the beaches at Provincetown and Truro, acts which have been renewed from time to time.
+
+The encroachments of sand upon the harbor did not cease with the acts of 1744. Again in 1854 an appeal was made to the legislature for the protection of the harbor from the constant inroads of sand which were drifting into the harbor. The state was asked to construct a dike across the mouth of Eastern Harbor channel as an additional defence in the event of the Atlantic breaking through the
+
+<vocab>Provincetown, Cape Cod, Barnstable County, Ezekiel Doane, Hezekiah Doane, James Bowdoin, Thomas Berry, Eastern Harbor, history, legislation, navigation</vocab>

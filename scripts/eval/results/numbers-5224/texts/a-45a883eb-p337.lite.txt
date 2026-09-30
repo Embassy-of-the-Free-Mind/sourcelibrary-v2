@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>333</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. K. Hannen</image-desc>
+A. K. HANNEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. F. Hanna</image-desc>
+W. F. HANNA
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. C. Hansen</image-desc>
+GEO. C. HANSEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dudley J. Hard</image-desc>
+DUDLEY J. HARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Rasmus Hansen</image-desc>
+RASMUS HANSEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. E. Hart</image-desc>
+E. E. HART
+
+<vocab>A. K. Hannen, W. F. Hanna, Geo. C. Hansen, Dudley J. Hard, Rasmus Hansen, E. E. Hart, The Book of Clevelanders</vocab>

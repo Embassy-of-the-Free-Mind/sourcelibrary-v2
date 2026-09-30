@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>919</page-num>
+<header>TOWN OF BREWSTER. 919</header>
+
+trade since 1854. He was first married to Sarah Lizzie Atkins, who died, and he married for his second wife Augusta F. Snow. They have one daughter, Edna A.
+
+Joseph Mayo, born in 1822, is a son of Elnathan and Susan (Paine) Mayo and grandson of Thomas Mayo. He went to New Hampshire in 1840, where he was a carriage maker until 1862, then entered the army in Company D, Fourteenth New Hampshire Volunteers. In November, 1864, at the Battle of Cedar Creek, he lost his right arm. He was discharged in 1865. He was warden of the New Hampshire state prison from 1865 to 1870. He returned to Brewster in 1886, where he now lives. He was married to Maria L. Huntington, who died, leaving two children: Herbert A. and Ann Maria. He was married again to Caroline, daughter of William Freeman. He and his wife became members of the Baptist church in New Hampshire in 1842, and in 1886 he and his present wife joined the Baptist church in Brewster.
+
+Captain Frederic Nickerson was born at West Brewster, December 15, 1808, and, although he died at his city residence in South Boston, January 12, 1879, he claimed his native town as his home, and there he had passed the last eighteen summers of his life. He was left an orphan in early youth, and, with his brother Thomas, had a home with an uncle at Chatham. He was young when he went to sea, and by his diligence attained to the command of a vessel before he was twenty years old. After a term of years as shipmaster he embarked in commercial lines of business in Boston with his brother David, under the firm name of David Nickerson & Co.; later, after his brother's death, it was changed to F. Nickerson & Co.
+
+His integrity and intelligent management of business interests called him to fill many offices of trust and responsibility in monied and social enterprises, and it has been said of him that wherever he touched business it was dignified and made better by his influence. He was, for seven years from its organization, president of the South Boston Savings Bank, but on account of failing health resigned the position three years before his death, although continuing in the relation of trustee. He was for forty years a director in the Mechanics Bank, which trust he held until his decease. He was officially connected with the Union Pacific Railway Company, the Boston Marine Society, the New England Insurance Company, and the Boston Board of Trade. He was a member of the Commercial Club, and had large interests in several railroad enterprises in the West. In his business relations Captain Nickerson, as a type of the substantial, genial, old merchants of Boston, won the esteem of his associates, who rewarded him with honor, while his life's work was crowned with a broad financial success.
+
+His school days were limited. In the forecastle and the ship's
+
+<vocab>Joseph Mayo, Elnathan Mayo, Susan Paine, Thomas Mayo, Sarah Lizzie Atkins, Augusta F. Snow, Edna A. Mayo, Maria L. Huntington, Herbert A. Mayo, Ann Maria Mayo, Caroline Freeman, William Freeman, Frederic Nickerson, Thomas Nickerson, David Nickerson, F. Nickerson & Co., South Boston Savings Bank, Mechanics Bank, Union Pacific Railway Company, Boston Marine Society, New England Insurance Company, Boston Board of Trade, Commercial Club, Brewster, New Hampshire, Cedar Creek, Chatham, Boston</vocab>

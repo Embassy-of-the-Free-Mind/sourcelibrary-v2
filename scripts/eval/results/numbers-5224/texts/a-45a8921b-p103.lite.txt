@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>89</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Martin, Nathaniel Everett**
+Lawyer; b., Loudon, N. H., Aug. 9, 1855; s. Theophilus B. and Sarah L. (Rowell) Martin; great-grandson of James Martin of Pembroke, a soldier of the Revolution; ed. common schools and Concord high school, class of 1876; studied law with Sargent & Chase; admitted to the bar Aug. 14, 1879; located in practice in Concord and has since continued; has had several partners; now head of the firm of Martin & Howe; Democrat; solicitor of Merrimack County, 1887-8, and first solicitor in the state to rigidly enforce the prohibitory liquor law; mayor of Concord, 1899-1900; member, constitutional convention, 1912; state senator, 1915-16, 1917-18; delegate in Democratic national convention at St. Louis, 1904; treasurer, Concord Building and Loan Ass'n, since organization Sept., 1887; member, Rumford Lodge, I. O. O. F., Canton Wildey, P. M., Concord Lodge, B. P. O. E., Wonolancet Club, Concord Gun Club (president); interested in agriculture owning the ancestral farm in Loudon; also, in lumbering and real estate; m. 1st, March 27, 1902, Jennie P. Lawrence, who d. Oct. 20, 1911; 2d, June 14, 1915, Margaret W. Clough. Residence, Concord, N. H.
+
+**Blanchard, Grace**
+Authoress, librarian; b., Dunleith, Ill.; dau. George A. and Frances (Sargent) Blanchard; removed to Concord, N. H., in early childhood; ed. Concord public schools, Smith College, Northampton, Mass., 1882; frequent contributor to magazines and newspapers for many years; author, "Phil's Happy Girlhood," 1910, "Phillida's Glad Year," 1913; librarian, Concord Public Library, since 1895; has frequently spoken before library associations on pertinent topics, and at woman's club meetings; Unitarian; member, Concord Woman's Club, Stratford (Shakespeare) Club, Concord Woman's College Club and the N. H. Smith College Club. Residence, Concord, N. H.
+
+<column-break/>
+
+**Graves, Robert John**
+Surgeon; b. June 22, 1878, Boscawen, N. H.; s. Dr. Eli Edwin and Martha A. (Williams) Graves; ed. Concord high school, 1896, Harvard University, 1900, Harvard Medical School, 1903; interne, Massachusetts General Hospital two years, Boston Lying-in Hospital, six months; studied in the hospitals of Germany, France and Switzerland, 1914; practised, Concord, N. H., 1905— ; Fellow, Ameri-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Robert John Graves</image-desc>
+
+can College of Surgeons; surgeon to Boston & Maine R. R. and Margaret Pillsbury General Hospital; Congregationalist; Republican; member, Æsculapian Club, Harvard Club, Boston, Mass. Medical Soc., N. H. Medical Soc., American Medical Ass'n, Center District Medical Soc., N. H. Historical Soc., Wonolancet, Bow Brook and Passaconaway clubs, Concord, and the Masons, Odd Fellows, Elks, and Capital Grange, P. of H.; m. Oct. 10, 1905, Helen McGregor Ayers, dau. of Augustine R. and Clara
+
+<vocab>Nathaniel Everett Martin, Grace Blanchard, Robert John Graves, New Hampshire, biography, law, medicine, literature, Concord</vocab>

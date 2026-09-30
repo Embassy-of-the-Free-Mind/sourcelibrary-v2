@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>342</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">A. D. Joyce</image-desc>
+A. D. JOYCE
+
+<image-desc size="small" type="portrait" significance="high">J. W. Juengling</image-desc>
+J. W. JUENGLING
+
+<image-desc size="small" type="portrait" significance="high">G. Kanner</image-desc>
+G. KANNER
+
+<image-desc size="small" type="portrait" significance="high">W. C. Kasper</image-desc>
+W. C. KASPER
+
+<image-desc size="small" type="portrait" significance="high">John U. Karr</image-desc>
+JOHN U. KARR
+
+<image-desc size="small" type="portrait" significance="high">Paul G. Kassulker</image-desc>
+PAUL G. KASSULKER
+
+<vocab>A. D. Joyce, J. W. Juengling, G. Kanner, W. C. Kasper, John U. Karr, Paul G. Kassulker, The Book of Clevelanders, portraits, biography</vocab>

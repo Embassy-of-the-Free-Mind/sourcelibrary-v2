@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>383</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Dr. F. J. Sprague</image-desc>
+DR. F. J. SPRAGUE
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of C. H. Spriggs</image-desc>
+C. H. SPRIGGS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of E. Loomis Spriggs</image-desc>
+E. LOOMIS SPRIGGS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of A. B. Sprosty</image-desc>
+A. B. SPROSTY
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Andrew Squire</image-desc>
+ANDREW SQUIRE
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of L. A. Sribers</image-desc>
+L. A. SRIBERS
+
+<vocab>Clevelanders, Dr. F. J. Sprague, C. H. Spriggs, E. Loomis Spriggs, A. B. Sprosty, Andrew Squire, L. A. Sribers</vocab>

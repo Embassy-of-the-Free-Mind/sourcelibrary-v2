@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>337</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 337</header>
+<sig>23</sig>
+
+**Sanborn, Mary Farley**
+
+Author; b., Manchester, N. H., May 8, 1853; dau., Alden W. and Elizabeth Hazeltine, (Abbott) Sanborn; ed. Doctor Gannett's school, Boston; afterwards studied vocal music, for the concert stage, with Madame Erminie Rudersdorff; has done much literary work in short articles, reviewing, etc.; author "Sweet and Twenty," 1890; "It Came to Pass," 1891; "Paula Ferris," 1892; "The Revelation of Herself," 1904; "Lafayette and the Congressman," 1905; "The Canvas Door," 1909; m., Oct. 18, 1876, Fred C. Sanborn, Manchester, N. H. Residence, 30 Williston Rd., Brookline, Mass.
+
+**Snow, Leslie Perkins**
+
+Lawyer; b., Eaton, N. H., Oct. 19, 1862; s. Edwin and Helen M. Perkins Snow (descendant of Nicholas Snow, who came from England to Plymouth, Mass., in 1623); his father, Edwin Snow was a prominent business man and leading Democrat of Carroll county for many years; ed. Bridgton Academy, No. Bridgton, Me., 1881; Dartmcuth College, A.B., 1886; Columbian Law School (now George Washington Univ.), LL.B. 1890; Congregationalist; Republican; served as moderator in Eaton and as a member of N. H. house of representatives from that town in 1887-88; special pension examiner for U. S. government, 1887-90, serving in Kansas, Nebraska, Colorado and Washington, D. C.; admitted to the Maryland bar in 1890, and the New Hampshire bar in 1891, since when he has been in practice in the firm of Worcester, Gafney & Snow, subsequently alone; now senior member of Snow, Snow & Cooper; member Rochester school board, 1899-1904; N. H. constitutional convention, 1918; Odd Fellow, 32d degree Mason, Knight Templar and Shriner, Theta Delta Chi College fraternity (Pres. N. E. Ass'n 1886); president Rochester Nat'l Bank since 1902; vice-presi-
+
+<column-break/>
+
+dent Rochester Trust Co.; president Gafney Home for the Aged president Rochester Public Safety Com.; Chairman Liberty Loan Com.; County chairman War Savings Com., and various State and New England committees in war activities; m., 1st, Nov. 28, 1888, Susan E. Currier, Haverhill, N. H., d. June 6, 1892; 2d, June 27, 1894, Norma C. Currier; children, Conrad Edwin, b. August 6, 1889 (A.B. Dartmouth, 1912; Magdalen College, Oxford, Eng., 1914; LL.B. Harvard Law School, 1917); Lieutenant and Aide-de-Camp to Gen. Babbitt in American Expeditionary forces in France; Leslie Whitmore, b. Dec. 9, 1890 (A.B. Dartmouth, 1912, B.S. Mass. Inst. of Tech., 1914), Captain in American Expeditionary forces in France. Residence, Rochester, N. H.
+
+**Snow, Norma Cutter Currier**
+
+(Mrs. Leslie P. Snow), b., July 3, 1863; dau. Franklin Pettingill and Missouri Eliza (Whitmore) Currier; ed., Haverhill Academy, Haverhill, N. H., and Montebello Institute, Newbury, Vt.; after leaving school served from 1883 to 1892 as cashier and bookkeeper for the wholesale and retail house of Carter & Churchill, Lebanon, N. H.; m. June 27, 1894, Leslie P. Snow, Rochester, N. H; organized and conducted a kindergarten at Rochester, from 1896 to 1900; Congregationalist and active in religious and social work; member (by several lines) Daughters of the American Revolution, regent Mary Tarr Chapter, Rochester, 1912-14, State secretary, N. H. Chapter, 1915-17; president Rochester Woman's Club, 1903-5, 1912-14, secretary N. H. Federation Women's Clubs, 1913-15, Chairman Reciprocity Committee; member Rochester School Board, 1914 to the present time; chairman board of managers, Gafney Home for the Aged, Rochester, from organization in 1904 to the present time; organizer and vice-president Rochester District Nurse Ass'n; director N. H. Ass'n for Prevention of Tuberculosis; and N. H. Parent and Teachers' Ass'n;
+
+<vocab>Mary Farley Sanborn, Leslie Perkins Snow, Norma Cutter Currier Snow, New Hampshire, biography, genealogy, Rochester, Gafney Home for the Aged, Daughters of the American Revolution</vocab>

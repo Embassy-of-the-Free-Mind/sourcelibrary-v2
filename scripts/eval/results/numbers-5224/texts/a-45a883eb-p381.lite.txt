@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>377</page-num>
+<header>The Book of Clevelanders</header>
+<sig>24</sig>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Thos. G. Schulkins</image-desc>
+THOS. G. SCHULKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. L. Schryver</image-desc>
+GEO. L. SCHRYVER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Andrew W. Scobie</image-desc>
+ANDREW W. SCOBIE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank C. Scott</image-desc>
+FRANK C. SCOTT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. T. Scofield</image-desc>
+L. T. SCOFIELD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. C. Scott</image-desc>
+W. C. SCOTT
+
+<vocab>Thos. G. Schulkins, Geo. L. Schryver, Andrew W. Scobie, Frank C. Scott, L. T. Scofield, W. C. Scott, Clevelanders, biography</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>276</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+from Sandwich in 1884, the particulars of which, with the line of separation, are fully given in the Bourne chapter.
+
+The population, territory and valuation of the original town was lessened one-half by this division; but also were the expenses. The old town had lost the seacoast of Buzzard's bay; but had retained nearly all that of Cape Cod. Sandwich still leads the other towns of the Cape in manufactories, paying yearly $6,000 for schools, $2,500 for the poor, $2,500 for roads, and other proportionate expenses, which indicates to the reader that it retains its rank among the first.
+
+VILLAGES.—The history of the village of Sandwich and that of the town are so inseparably blended during the first 150 years of their growth, that either would compose the warp or the woof of the fabric presented to the reader at the close of the 18th century. The three-score families who first settled in 1637 the plantation of Sandwich, had formed the nucleus of this principal village which so prominently marked the town in its industries and growth during the period mentioned. Early in its history the village of Sandwich was the door of the Cape and the terminus of lines of travel. This, in its turn, created taverns and other places of business, for which the village was most celebrated in the early days of the Cape. In 1659 John Ellis was licensed to keep an "ordinary" at Sandwich village, and sell "strong waters and wines, only not to let town-dwellers stay drinking unnecessarily at his house." There is no evidence that the strong waters sold by Ellis had any connection with those of the pond above. Newcomb's was a favorite resort situated by the side of the lower pond; but the records do not indicate that he sold the waters thereof. William Bassett was licensed by the court in 1659 "to draw wines," a business which he followed several years attended with its consequent troubles, as in 1666 he complained of James Skiff, jr., who was fined 10s. "for going to sd Bassett's house and taking away liquors without order." This was an industry susceptible of no improvement except in the desires and appetites of the town-dwellers; and so, after a fair trial of rum rule for 154 years, the good people on May 3, 1819, voted "that there shall be no retailer of distilled liquors licensed; and that tavern keepers are not to be approbated unless they desist from mixing and selling to town-dwellers."
+
+The early stage and mail line from Plymouth to the Cape terminated at the celebrated tavern called "Fessenden's," which was then the middle section of the present Central Hotel on Main street. This building was originally the residence of Rev. Benjamin Fessenden, and William Fessenden, his son, opened an ordinary after the decease of his father. We can date its advent in 1790 as the principal tavern of the village, from which all the stages started—to Plymouth daily and east on the Cape tri-weekly. Mr. Fessenden retired in 1830 and
+
+<vocab>Sandwich, Bourne, Buzzard's Bay, Cape Cod, John Ellis, William Bassett, James Skiff, Jr., Fessenden's Tavern, Rev. Benjamin Fessenden, William Fessenden, Central Hotel, Plymouth</vocab>

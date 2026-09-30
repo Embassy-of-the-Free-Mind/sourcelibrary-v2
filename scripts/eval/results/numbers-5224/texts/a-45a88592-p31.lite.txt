@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>map</page-type>
+<page-num>15</page-num>
+<header>INDIAN HISTORY.</header>
+
+<image-desc size="large" type="map" significance="high">A historical map of Cape Cod showing indigenous place names and locations of historical interest, with a compass rose and reference key.</image-desc>
+
+->MAP OF<-
+->CAPE COD<-
+->BEFORE 1620.<-
+
+DESIGNED AND DRAWN FOR
+THIS BOOK.
+
+REFERENCES.
+1 Burying Hill, Bournedale.
+2 Iyanough's Grave.
+3 Indian Cemetery.
+4 Indian Monument.
+5 Ancient Graves.
+
+[Map text transcribed by region:]
+
+BUZZARDS BAY
+PLYMOUTH Co.
+MANOMET
+POKESIT
+WENAUMET
+CATAUMET
+TASSACUST
+SHAUME
+SKANTON
+CUMMAQUID HARBOR
+MATTACHEESE
+HOCKANOM
+NOBSCUSSET
+SEUQUET
+SAUQUATUCKET
+NAMSKAKET
+NAUSET
+POTANUMAQUUT
+MONOMOYICK
+MATCHAPOXET
+MONOMY
+SOUND
+POPPONESSET BAY
+WESQUOBS
+MASSI PEE
+WAKOQUET
+ASHUMET
+SUCCONESSET
+QUISS ETT
+ACAPESKET
+NOBSQUE
+MENAUHANT
+TATEKET
+COATUIT
+MISTIC
+SOUTH SEA INDIANS
+WIANNO
+PAWKUT
+HAWKUTS
+TONSET
+POCKET
+WEESIT
+NAMEQUOIT
+PONONAKANET
+CHEPY ESSET
+TASHMUIT
+PAMET
+MEESHAWN
+OCEAN
+
+S.L. DEYO, 1890.
+
+<vocab>Cape Cod, Indian History, indigenous place names, map, 1620, Bournedale, Iyanough</vocab>

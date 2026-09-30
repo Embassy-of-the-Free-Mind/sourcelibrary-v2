@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>308</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. S. Brady</image-desc>
+H. S. BRADY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Arthur Bradley</image-desc>
+ARTHUR BRADLEY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of T. W. Brainard</image-desc>
+T. W. BRAINARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. W. R. Breed</image-desc>
+DR. W. R. BREED
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. J. Brandt</image-desc>
+WM. J. BRANDT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. W. Broadwell</image-desc>
+O. W. BROADWELL
+
+<vocab>H. S. Brady, Arthur Bradley, T. W. Brainard, Dr. W. R. Breed, Wm. J. Brandt, O. W. Broadwell, Clevelanders, biography</vocab>

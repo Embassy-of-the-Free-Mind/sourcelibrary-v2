@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>339</page-num>
+<header>TOWN OF BOURNE. 339</header>
+
+built anew, and in 1888 sold to the present merchant, A. P. Davis, who erected a fine new store in 1889. Another little store has been kept here for the past five years by Reuben P. Lawrence. The oyster and fishing business is here, as elsewhere along the bay, a profitable industry, engaging many persons, the most prominent of whom we mention elsewhere.
+
+Monument Beach is a summer resort between Buzzards Bay and Wenaumet station on the Woods Holl branch, and is now increasing in growth and importance more rapidly than any other village in Bourne. Its long rows of pretty residences, as seen from the bay or passing train, create within the traveler a desire to enjoy its loveliness. It has summer hotels and every convenience for recreation. It overlooks Back River harbor, with Tobey's island nestling in the bay opposite, and is one of the most picturesque spots along the bay coast of Bourne. Perez H. Phinney, who was made postmaster in 1878, keeping the office in a suitable building across the track from the depot, also fills the position of station agent. The growing importance of this romantic spot induced David H. Baker to erect a convenient building and open a store in the spring of 1889. There are many retired shipmasters here, enjoying the fruits of their perilous labors, concerning whom, as well as other prominent seafaring men, oyster men and artisans of the town, individual mention will be made in other sections of this work.
+
+Bournedale, formerly called North Sandwich, is pleasantly situated in the north part of the town, in a valley through which the ship canal is surveyed. Burying hill, now the property of Francis H. Ellis, is here—a round, high knob of land which was the burial place of the Herring Pond Indians when the whites first came, and has been since the memory of the present residents, by whom no use of the hill has been made. Upon a plateau on its southern slope is the site of the church which was removed to the south part of the town, and at the base of the hill is the never-failing "Meeting-house spring." A flagstaff and seats crown the hill, and its commanding view leads the pleasure seeker and antiquarian to the summit. The fish house of the town is located here, on Herring river, and is so constructed that the herring must pass through the narrowest possible limit for the stream, under the house, at which point large quantities are taken for food and bait. Just above, are the remains of the old grist mill of 1695, surrounded by a dam from which much important machinery has been propelled.
+
+In 1821 a trip-hammer and axe factory was erected west of the old mill, of which the flume only remains. Prior to 1830 Thomas Swift and Mr. Fox built an addition to the old grist mill, which was used for manufacturing purposes, but was taken down. About 1836 the busi-
+
+<vocab>Bourne, Monument Beach, Buzzards Bay, Wenaumet, Woods Holl, Back River, Tobey's Island, Perez H. Phinney, David H. Baker, Bournedale, North Sandwich, Herring Pond Indians, Burying Hill, Meeting-house spring, Herring river, grist mill, trip-hammer, axe factory, Thomas Swift</vocab>

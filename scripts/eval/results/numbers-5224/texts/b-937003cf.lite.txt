@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>appendix</page-type>
+<page-num>490</page-num>
+<header>WASHINGTON'S WRITINGS. [APPENDIX.</header>
+
+pardon my prolixity, I never was happy enough to be concise. I am, with the greatest respect and deference, your Excellency's most obedient humble servant.
+
+"JOSEPH HAWLEY."
+
+"TO GENERAL WASHINGTON."
+
+It was no doubt in consequence of this suggestion and advice, that the following order was issued on the 7th of July, after approving the decision of the court-martial in the case of Captain John Callender.
+
+"The General, having made all due inquiries and maturely considered this matter, is led to the above determination, not only from the particular guilt of Captain Callender, but the fatal consequences of such conduct to the army, and to the cause of America. He now, therefore, most earnestly exhorts officers of all ranks to show an example of bravery and courage to their men, assuring them, that such as do their duty in the day of battle, as brave and good officers, shall be honored with every mark of distinction and regard, and their names and merits be made known to the General Congress and all America; while, on the other hand, he positively declares, that every officer, be his rank what it may, who shall betray his country, and dishonor the army and his general, by basely keeping back and shrinking from his duty in any engagement, shall be held up as an infamous coward and punished as such, with the utmost martial severity; and no connexions, interest, or intercessions in his behalf will avail to prevent the strict execution of justice."
+
+Captain Callender was cashiered for his conduct in the battle of Bunker's Hill, the charge of cowardice having been sustained against him before a court-martial. It is proper to state, however, that whatever may have been the fact in this particular instance, Captain Callender afterwards fully vindicated himself from this imputation upon his character. "He continued with his corps as a volunteer, and desperately exposed himself in every action. At the battle of Long Island, the captain and lieutenant of the artillery company, in which he served, were shot. He assumed the command, and, refusing to retreat, fought his pieces to the last. The bayonets of the soldiers were just upon him, when a British officer, admiring his chivalrous and desperate courage, interfered and saved him." — Swett's *History of Bunker-Hill Battle*, p. 57. He continued in the service to the end of the war, and his military reputation remained unsullied.
+
+The following order was issued the day after General Washington took command of the army.
+
+"The Continental Congress having now taken all the troops of the
+
+<vocab>Joseph Hawley, George Washington, John Callender, court-martial, Bunker's Hill, Continental Congress, American Revolutionary War, military discipline</vocab>

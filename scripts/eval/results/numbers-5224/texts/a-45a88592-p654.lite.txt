@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>524</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+started grinding in 1870. After five years he took the mill down, and all that is tangible at this date are the mill stones, which are doing service at either door of Mr. Matthews' residence, near the post office. The south mill stood just west of the burying ground, and was taken down in 1874 by Rufus and Edmund Howes—the last owners. Aaron Crowell, a gentleman of four-score years, and an old resident here, remembers that in his boyhood these old mills looked as weather-beaten as when taken down.
+
+This part of the town also was engaged in ship-building. The *Sally* and *Betsey* was built at Corporation wharf, in 1811, by Aaron Crowell, sr., who also built the *Five Sisters*. The sloop *Sally* was built near Bass hole by the Brays in 1817. Jeremiah and Aaron Crowell built the *Star* in 1839, and the *Bridge*, built by the Shivericks at East Dennis, was owned and manned by the people of the north village.
+
+In the terrible gale of 1841 four Dennis vessels were lost, and of their crews, including twenty-one Dennis men, not one was saved. Of this number, eight out of a crew of nine of the schooner *Bride*, whose bodies were recovered, found Christian burial upon land, the coffins of six of them being placed side by side in the village church at one time, and the members of seven families gathered in one common service of mourning for the loss each of one from the household. The wreck of the *Bride* was brought from Provincetown back to Shiverick’s shipyard and again made ready for the sea by the same firm which built her. The *Hopewell*, a fishing vessel of thirty tons, was built about the middle of the present century, near where Rev. Dennis once lived, in the road that leads to Nobscusset harbor. It was built by Joshua Baker, and after much trouble was moved to the water.
+
+The present county road forms the principal street of this village, and along it the early ordinaries were found. Where Mrs. Moses Howes now lives was an old-fashioned two story tavern, kept by Joseph Hall before 1784. About the same time there was a tavern kept by Obed Howes, where Harvey Howes now lives. Obed Howes’ father, called “Great Sam,” had kept it prior to Obed. Henry Hall’s tavern, with its sign of a black horse, was opened just prior to 1800, and stood where Howes Chapman now lives. In 1871 James Humphrey built up the Cape Cod Bay House, which was the Minot House removed to Nobscusset. It was used as a hotel for several years in that condition; the present Nobscusset House here is noticed fully at page 155.
+
+The observatory built by subscription a few years ago on the summit of Scargo hill, is one of the places of interest. It stands where a former observatory was prostrated by a tempest.
+
+The mail for this part of Dennis was delivered from the Yarmouth
+
+<vocab>Barnstable County, Dennis, Massachusetts, ship-building, Sally, Betsey, Five Sisters, Star, Bridge, gale of 1841, Bride, Hopewell, Nobscusset, Scargo hill, taverns, Cape Cod Bay House, Nobscusset House</vocab>

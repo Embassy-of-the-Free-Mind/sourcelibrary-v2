@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>206</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+b. Dec. 31, 1889; Vaughn L., b. May 7, 1892; Mamie G., b. Oct. 7, 1893; Ethelyn A., b. July 1, 1899; Ruth C., b. Jan. 10, 1902. Residence, Canaan, N. H.
+
+**Wells, Christopher Henry**
+Lawyer, journalist, Judge of Probate; b., Somersworth, N. H., July 6, 1853; s. Nathaniel and Eliza (Thom) Wells; ed. Somersworth high school, 1871, Bowdoin College, 1875; studied law and admitted to the N. H. bar,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit, tie, and pince-nez glasses.</image-desc>
+
+Aug. 16, 1878; practiced some years in company with his father's old partner, William R. Burleigh, and in 1883, purchased the *Free Press* newspaper and printing establishment, devoting his attention largely, thereafter, to journalism; Congregationalist; Republican; member, N. H. house of representatives, 1881-3; N. H. constitutional convention, 1889; aide-de-camp, with rank of colonel, staff of Gov. Charles H. Sawyer, 1887-8; mayor of Somersworth, 1894-8; justice, Somersworth police court, Jan., 1900 to July, 1914; Judge of Probate for Strafford County
+
+<column-break/>
+
+since March 15, 1898; chairman committee appointed by Gov. Chester B. Jordon to prepare rules of procedure, and uniform blanks for use in probate courts of the state, 1901-3; president, First National Bank of Somersworth; vice-president and trustee, Somersworth Savings Bank; owner and treasurer, since 1883, Somersworth Free Press; member, Strafford County and New Hampshire Bar Ass'ns, N. H. Historical Soc., N. H. Soc. Laws of the American Revolution; N. H. Weekly Publishers Ass'n, Scottish Rite Mason (32d degree), Knight of Pythia, Patron of Husbandry, etc.; m., June 15, 1887, Oriana Hartford, Dover; no children. Residence, Somersworth, N. H.
+
+**Brooks, John Graham**
+Author, lecturer; b., Acworth, N. H., July 19, 1846; s. Chapin Kidder and Parmelia (Graham) Brooks; S.T.B. Harvard Divinity School, 1875; studied three years at the Universities of Berlin, Jena and Freidburg, and became a lecturer on economical subjects; instructor two years, in Harvard University; several years lecturer, extension dept., University of Chicago; two years expert, U. S. Dept. of Labor, at Washington, making report of 1893, upon Workingmen's Insurance in Germany; lecturer, University of California; president, National Consumers' League; author, "The Social Unrest," 1903; "As Others See Us," 1908; "An American Citizen," 1910; "American Syndicalism," 1913. Address, 8 Francis Ave., Cambridge, Mass.
+
+**Morrill, Osma Cornelia Baker**
+(Mrs. Shadrach C. Morrill); b., Concord, N. H., March 7, 1855, dau. Bishop Osman C. and Mehitable (Perley) Baker. (In 1847 Bishop Baker was a prime mover in organizing the Biblical Institute at Concord, N. H., the first Methodist Theological school in this country, which in 1868 became the nucleus of Boston University.) Ed. Concord High School, 1872 (valedictorian); member, Baker Memorial M. E. Church; first president for
+
+<vocab>Christopher Henry Wells, John Graham Brooks, Osma Cornelia Baker, New Hampshire, biography, genealogy, Somersworth, Harvard University, Methodist Theological school</vocab>

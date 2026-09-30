@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>300</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. E. Alden</image-desc>
+C. E. ALDEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. A. Alburn</image-desc>
+JNO. A. ALBURN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. W. D. B. Alexander</image-desc>
+MR. W. D. B. ALEXANDER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of B. F. Altman</image-desc>
+B. F. ALTMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. M. Allen</image-desc>
+A. M. ALLEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Ambler</image-desc>
+W. E. AMBLER
+
+<vocab>C. E. Alden, Jno. A. Alburn, W. D. B. Alexander, B. F. Altman, A. M. Allen, W. E. Ambler, Clevelanders, biography</vocab>

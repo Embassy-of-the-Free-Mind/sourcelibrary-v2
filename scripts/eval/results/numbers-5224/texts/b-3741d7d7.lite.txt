@@ -1,0 +1,47 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>452</page-num>
+<header>ASTROLOGY AND DIVINATION.</header>
+
+cycle (Rab-jun), coincide with the year 1867 A.D., as this is alleged by the learned astrologer Lāma of Darjiling to be the true epoch, and not the year 1866.
+
+| Year A.D. | Cycle No. | Cyclical Year | Year-name | Year A.D. | Cycle No. | Cyclical Year | Year-name |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1858 | XIV. | 52 | Earth-Horse | 1890 | XV. | 24 | Iron-Tiger |
+| 1859 | " | 53 | " -Sheep | 1891 | contd. | 25 | " -Hare |
+| 1860 | " | 54 | Iron-Ape | 1892 | " | 26 | Water-Dragon |
+| 1861 | " | 55 | " -Bird | 1893 | " | 27 | " -Serpent |
+| 1862 | " | 56 | Water-Dog | 1894 | " | 28 | Wood-Horse |
+| 1863 | " | 57 | " -Hog | 1895 | " | 29 | " -Sheep |
+| 1864 | " | 58 | Wood-Mouse | 1896 | " | 30 | Fire-Ape |
+| 1865 | " | 59 | " -Ox | 1897 | " | 31 | " -Bird |
+| 1866 | " | 60 | Fire-Tiger | 1898 | " | 32 | Earth-Dog |
+| 1867 | XV. | 1 | " -Hare | 1899 | " | 33 | " -Hog |
+| 1868 | " | 2 | Earth-Dragon | 1900 | " | 34 | Iron-Mouse |
+| 1869 | " | 3 | " -Serpent | 1901 | " | 35 | " -Ox |
+| 1870 | " | 4 | Iron-Horse | 1902 | " | 36 | Water-Tiger |
+| 1871 | " | 5 | " -Sheep | 1903 | " | 37 | " -Hare |
+| 1872 | " | 6 | Water-Ape | 1904 | " | 38 | Wood-Dragon |
+| 1873 | " | 7 | " -Bird | 1905 | " | 39 | " -Serpent |
+| 1874 | " | 8 | Wood-Dog | 1906 | " | 40 | Fire-Horse |
+| 1875 | " | 9 | " -Hog | 1907 | " | 41 | " -Sheep |
+| 1876 | " | 10 | Fire-Mouse | 1908 | " | 42 | Earth-Ape |
+| 1877 | " | 11 | " -Ox | 1909 | " | 43 | " -Bird |
+| 1878 | " | 12 | Earth-Tiger | 1910 | " | 44 | Iron-Dog |
+| 1879 | " | 13 | " -Hare | 1911 | " | 45 | " -Hog |
+| 1880 | " | 14 | Iron-Dragon | 1912 | " | 46 | Water-Mouse |
+| 1881 | " | 15 | " -Serpent | 1913 | " | 47 | " -Ox |
+| 1882 | " | 16 | Water-Horse | 1914 | " | 48 | Wood-Tiger |
+| 1883 | " | 17 | " -Sheep | 1915 | " | 49 | " -Hare |
+| 1884 | " | 18 | Wood-Ape | 1916 | " | 50 | Fire-Dragon |
+| 1885 | " | 19 | " -Bird | 1917 | " | 51 | " -Serpent |
+| 1886 | " | 20 | Fire-Dog | 1918 | " | 52 | Earth-Horse |
+| 1887 | " | 21 | " -Hog | 1919 | " | 53 | " -Sheep |
+| 1888 | " | 22 | Earth-Mouse | 1920 | " | 54 | Iron-Ape |
+| 1889 | " | 23 | " -Ox | 1921 | " | 55 | " -Bird |
+
+It is by giving a realistic meaning to these several animals and elements, after which the years are named, that the Lāma-astrologers arrive at their endless variety of combinations of attraction and repulsion in regard to their casting of horoscopes and their prescriptions of the requisite worship and offerings necessary to counteract the evils thus brought to light. The animals are more or less antagonistic to each other, and their most unlucky combinations are as follows:—
+
+<vocab>Astrology, Divination, Rab-jun, Lāma, Darjiling, Tibetan Era, horoscopes, cyclical years</vocab>

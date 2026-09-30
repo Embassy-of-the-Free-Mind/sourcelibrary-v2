@@ -1,0 +1,42 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>546</page-num>
+
+— 546 —
+
+Birth of my child Rihlangana. Death of Shiluvane (1874).
+Famine of Magadingele (1875).
+Death of Nkambi, son of Mhalamhala, a Khosa (1876).
+War of Makhanana of the Loyi country. Refugees come to Spelonken (1877).
+The Makandju people kill nwashitine of Rikotjo (1878).
+Birth of my child Ntitiri (1879).
+Circumcision school of Mayingwe (1880).
+Djiwawa goes to catch Sekukuni (1881).
+War between the Boers and the English (1882).
+Year of the comet (1883). Djiwawa's son, Sambana, becomes chief.
+Sambana plunders the village of a Venda called Mbekwa (1884).
+Phundjululu: the vermin destroys mealies (1885).
+Circumcision school of Ñwamutjungu, a Hlanganu who had come from Spelonken (1886).
+A Gwamba chief quarrels with Girifi. (Mr. Grieve, and old colonist of Spelonken) (1887).
+Sambana beats a policeman (1888).
+Death of Djiwawa (1889).
+Sambana calls statute labourers (1890).
+Death of Sambana (1891).
+Circumcision school at Modjadji (1892).
+My son Magondjwen starts for a journey (1893).
+He comes back home (1894).
+We are beaten by hail. Four people die (1895).
+My son-in-law goes away (1896).
+Epidemic among cattle. War of Makhube. We accompany the Boers (1897).
+Matshona: Plague among oxen (1898).
+Bahehemuki! The people of Gungunyana take refuge in Spelonken (after the war of Magigwana with the Portuguese) (1899).
+The Boers attack Phefu, the Venda chief (1900).
+The Whites fight. (Anglo-Boer war) (1901).
+The English column chases the Boers away from Pietersburg
+Ñwashimbutane! The Son-of-the-Kid! (General Beyers compared with a kid on acount of his swift movements through the country during the guerilla war, (1902).
+Mugayo! Ndlala! The mealie flour bought from the Whites on account of the famine! (1903).
+Of course many of these dates are doubtful... Many are of a very
+
+<vocab>Rihlangana, Shiluvane, Magadingele, Nkambi, Mhalamhala, Khosa, Makhanana, Loyi, Spelonken, Makandju, Rikotjo, Ntitiri, Mayingwe, Djiwawa, Sekukuni, Boers, English, Sambana, Venda, Mbekwa, Phundjululu, Ñwamutjungu, Hlanganu, Gwamba, Girifi, Grieve, Modjadji, Magondjwen, Makhube, Matshona, Bahehemuki, Gungunyana, Magigwana, Portuguese, Phefu, Anglo-Boer war, Pietersburg, Ñwashimbutane, Beyers, Mugayo, Ndlala</vocab>

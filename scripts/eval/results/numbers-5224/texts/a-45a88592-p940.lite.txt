@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>724</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+action. New records were opened, the salt manufacture was commenced, and a canal was constructed from Great Meadow river to Herring pond. The embargo of a few years later greatly affected the town, and its population was decreased, being in 1809 only 782. During the war of 1812 the people of this town found it impracticable to reach Boston by vessel to exchange for supplies, and a market was found at New York by watching the opportunity to creep along the coast to Sandwich, cart the boats and cargo across to Buzzards bay, and creep along the south shore to that market to exchange dried fish for flour and other necessaries.
+
+One of the interesting incidents of the town during the blockade was the capture of Captains Matthew H. Mayo and Winslow E. Knowles, who succeeded in reaching Boston with a whale boat loaded with rye. After an exchange for family supplies, they exchanged their boat for a more capacious craft, and in this were captured. On board the English ship they were offered a ransom, and Captain Knowles was permitted to return to Boston to obtain the money. Captain Mayo was compelled to pilot a crew of British on a cruise, and he contrived to bring the vessel to anchor at Billingsgate point. He then managed to cut and weaken the hawser, which broke, and the vessel went ashore just south of the old camp ground at North Eastham. Captain Mayo waved back Edward C. Clark and George Collins until more men could approach, and when sufficient of his neighbors had assembled, the crew was captured. The British were confined one night in George Collins' barn and allowed to depart the next day, as the town was at the mercy of the privateers; and upon the demand for satisfaction the town paid a large sum.
+
+In 1820 the population had declined to 766; but in 1830 had increased two hundred. Its share of the surplus reveue, $2,100, was partly used in constructing a bridge over Boat river, in 1837, and the remainder was the next year, with the interest, appropriated to the support of schools.
+
+For the past half century the population has steadily declined, being in 1840 only 955, and in 1875 it had decreased to 639; in 1880 the population was 692; and in 1885, the last census, it had declined to 638.
+
+An epidemic scourged the town in 1816, which decimated the population, and perhaps directly influenced the town's future prosperity. In the four months ending June first of that year seventy-two persons died. The disease had no regard for age, class or locality, and nearly every family mourned the loss of one or more members.
+
+The town having never erected a poor house, the poor were either assisted in their homes by the officers, or their keeping for the year was let to the lowest bidder; but for many years past the selectmen have arranged for their keeping with those who would keep them in
+
+<vocab>Barnstable County, salt manufacture, Great Meadow river, Herring pond, embargo, war of 1812, Sandwich, Buzzards bay, Matthew H. Mayo, Winslow E. Knowles, Billingsgate point, North Eastham, Edward C. Clark, George Collins, privateers, surplus revenue, Boat river, epidemic, poor house, selectmen</vocab>

@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>323</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+professor, 1908–12; professor and head of department of mathematics, University of New Mexico, 1912–3; professor and head of department of mathematics and physics, Lombard College, 1914–5, dean and acting president, 1915–6; instructor in mathematics, University of Minnesota, 1916– ; member American Mathematical Soc., Dartmouth Alumni Ass’n (secretary, 1908–11); Congregationalist; Republican; m., 1st, Sept. 12, 1899, Verna C. Cate, Haverhill, Mass., d. 1906; 2d, Dec. 31, 1913, Clara Belle Porter, Duluth, Minn. Residence, 1092 15th Ave., S. E., Minneapolis, Minn.
+
+**Beede, Joshua William**
+Geologist; b., Raymond, N. H., Sept. 14, 1871; s. Hiram Pratt and Lydia M. (Brown) Beede; ed. Washburn College, Kan., B.S. 1896, A.M. 1897, University of Kansas, Ph.D. 1899; teacher of science, Atchison County high school, Effingham, Kan., 1899–1901; instructor in geology, Indiana University, 1901–6, assistant professor, 1906–9, associate professor, 1909–17; geologist, department of economic geology and technology, University of Texas, 1917– ; served as a member of the geological surveys of Kansas and Oklahoma, and as an aid in the U. S. Geological Survey in 1901–2; author of various scientific treatises; member Geological Soc. of America, Paleontological Soc. of America, and various other scientific organizations; m., Dec. 25, 1899, Frances McKee, Narka, Kan. Residence, 404 W. 38th St., Austin, Tex.
+
+**Madigan, Thomas Henry, Jr.**
+Lawyer; b., Westfield, Mass., June 29, 1872; s. Thomas Henry and Johanna (Bahen) Madigan; ed. Mechanicsville (N. Y.) academy, Troy (N. Y.) Business College and by private tutors; studied law with Sargent, Hollis & Niles, Concord, and was admitted to the New Hampshire bar in 1899; practiced in Concord till 1907, when he removed to Manchester and has there continued; Catholic;
+
+<column-break/>
+
+Democrat; secretary N. H. constitutional convention, 1902; secretary Democratic state committee, 1900–4, chairman, 1904–8; judge advocate, N. H. National Guard, with rank of major, 1899–1907; chairman Democratic city committee of Manchester, 1914–17; city solicitor of Manchester, 1918– ; chairman local draft board, Division No. 2, city of Manchester,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man in a suit and glasses, facing right.</image-desc>
+
+1918; member N. H. Bar Ass’n, American Bar Ass’n, Knights of Columbus. Residence, Manchester, N. H.
+
+**Lougee, Arthur Jewett**
+Physician and oculist; b., Rochester, N. H., Nov. 1, 1870; s. Isaac W. Lougee, M.D., and Ellen (Wheeler) Lougee; ed. public schools of Rochester, Dartmouth College, A.B 1893, and at the College of Physicians and Surgeons, New York City, M.D. 1896; engaged in medical practice in New York City and state for several years and for the past fifteen years at Fryeburg, Me., with several periods of post-graduate study and hospital
+
+<vocab>biography, New Hampshire, genealogy, education, law, medicine, geology, politics, Manchester, Rochester, Dartmouth College</vocab>

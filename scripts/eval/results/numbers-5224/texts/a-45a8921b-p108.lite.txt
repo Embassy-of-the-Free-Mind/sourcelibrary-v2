@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>94</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+published; member of the N. H. Historical Soc.; N. H. Soc. of Colonial Wars; N. H. Soc., Sons of the American Revolution; Northam Colonist Historical Soc.; Piscataqua Pioneers; Masons; St. Paul Commandery, Knights Templar; First Parish Church (1633); member of school committee; trustee of Normal School at Plymouth; m., Oct. 20, 1865, Ellen A. Tasker; their son, Burton True Scales (Dartmouth, 1895, is a professor in Girard College, Philadelphia. Resident of Dover since 1869.
+
+**Danforth, Mary Shepherd**
+Physician; b., Derry, N. H., May 18, 1850; d. Charles and Rebecca F. (Batchelder) Danforth; ed. public schools, Manchester, N. H., Pinkerton
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of Mary Shepherd Danforth.</image-desc>
+
+Academy, Derry, 1869, Woman's Medical College, Philadelphia, M.D., 1875; secured her education by her own efforts, teaching in different places, being for some time principal of the grammar school at Danielson, Conn.; commenced practice in Manchester, N. H.,
+
+<column-break/>
+
+May 10, 1876, and has since continued; admitted to membership in the N. H. Medical Soc. in 1878, being the first woman accorded membership in that organization, and undoubtedly the first member of any state medical society in the country; delegate in 1882, from Center District Medical Society, to American Medical Ass'n. meeting in Washington, D. C.; Baptist; member, Woman's Advance Club, Manchester, N. H. Medical Soc., American Medical Ass'n; unmarried. Residence, Manchester, N. H.
+
+**Drake, James Frank**
+Publisher; b., Pittsfield, N. H., Sept. 1, 1881; s. Nathaniel Seavey and Mary Agnes Rogers (Green) Drake; descendant of Robert Drake, who settled in America about 1640; ed. Pittsfield, N. H., high school, Kimball Union Academy, Meriden, Dartmouth College, A.B., 1902, Master of Commercial Science, Tuck School of Administration and Finance (Dartmouth), 1903; Episcopalian; Independent; secretary, Springfield, Mass., board of trade, 1903–8; secretary, Phelps Publishing Co., 1908–Nov., 1914, and since director and treasurer; also treasurer, Patriot Publishing Co., Worthington Realty Trust, Myrick Building Trust, Home Correspondence School, all of Springfield; vice-president, Mass. state board of trade, 1903–8; director, Springfield board of trade, 1908–15, vice-president, 1914–15; trustee, Springfield city library, 1910–12; member, Springfield common council, 1908–12 (president, 1910–12), Springfield River Front Advisory Commission, 1910–12, Springfield Municipal Bldg. Commission, 1909–13, Springfield City Planning Commission since 1913; member, American Philatelic Soc., S. A. R., Chamber of Commerce of the U. S. A., Dartmouth Alumni Council, Springfield Fish and Game Ass'n, Theta Delta Chi Fraternity, Country Club of Springfield (secretary, 1906–11), University Club, Washington, D. C.; part author, "Springfield Present and Prospective," 1905; recreations, tennis, fishing, hunt-
+
+<vocab>Mary Shepherd Danforth, James Frank Drake, New Hampshire, biography, medicine, publishing, civic leadership</vocab>

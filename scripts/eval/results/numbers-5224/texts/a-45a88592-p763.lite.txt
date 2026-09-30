@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>583</page-num>
+<header>TOWN OF CHATHAM. 583</header>
+
+decline of its salt and fishing industries, the census of 1870 gave 2,411; that of 1880 gave 2,250; and the last state census in 1885 only enumerated 2,028 souls. Of this number there were 612 voters in 1857, 603 in 1875, and 601 in 1885, indicating a gradual removal of the heads of families to seek homes and employment elsewhere.
+
+Manufacturing forms no part of the occupation of the present generation. In 1800 considerable attention was paid to this, as we find at that date a tannery at Old Harbor, owned by the Crosbys, who ground bark by a wind mill; it was abandoned about 1830. A rope walk, built by Cobb Nickerson, near his homestead in the north part of the town, did good service during the first quarter of this century. The wind mills have naturally declined, and of the seven in town in 1800 only one is now in use. This is owned by Zenas Nickerson and stands on the knoll north of the marine railway. It was built in 1796, and was owned successively by Colonel Godfrey, Christopher Taylor and Oliver Eldridge. About 1883 it was purchased of Eldridge's heirs by the present owner. Of the older ones Chatham Port had one, South Chatham one, Old Harbor one, which was moved to Orleans, and the point at the Light had one. Isaac Bearse, at South Chatham now has one not in use, and another, equally worthless, adorns the knoll, north of Oyster pond.
+
+Of the many old wharves on the east and south borders of the town but little remains beyond tradition; three of recent date, two at Stage harbor and one at Harding's beach, supply the fishing of 1889 as well as several did when this business was active and lucrative.
+
+The town at large, especially along the central road where the first churches stood, had its "ordinaries." Perhaps that term should not be applied; but away back in the dim aisles of tradition, the widow Knowles kept some sort of an institution where, after election, the town officers and their friends ordinarily adjourned for the purpose of swearing in and lengthening the day into the evening. "Esquire Crowe" also had, in the same neighborhood, a store, or ordinary, that in this century has been voted entirely away. Before there was any village of Chatham, and while "Esquire Crowe" was selling to that part of the town, Richard Sears had a general store of necessaries on the spot now next to the hall of the A. L. of H. in the village. The only hotels—the more modern name—are now in the village.
+
+Within the limits of the town, besides that of the village, are two lighthouses—one on Harding's beach and the other on Monomoy point. These are strong iron towers with appropriate lights for the safe guidance of mariners over the shoals. Each has a comfortable residence for the keeper. On the beach east of Morris island is the U. S. life saving station, and near the lighthouse of Monomoy is another. These stations have one man—the captain—during the summer, and
+
+<vocab>Chatham, census, manufacturing, tannery, wind mills, Zenas Nickerson, Colonel Godfrey, Christopher Taylor, Oliver Eldridge, Isaac Bearse, wharves, Stage harbor, Harding's beach, ordinaries, widow Knowles, Esquire Crowe, Richard Sears, A. L. of H., lighthouses, Monomoy point, U. S. life saving station, Morris island</vocab>

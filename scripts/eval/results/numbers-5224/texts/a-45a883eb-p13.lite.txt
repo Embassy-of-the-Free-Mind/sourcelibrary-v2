@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>9</page-num>
+<header>The Book of Clevelanders</header>
+
+merce, Cleveland Athletic, Cleveland Automobile, Cleveland Driving and Willowick Golf Clubs.
+
+**AGNEW, William**; attorney-at-law; born, Glasgow, Scotland, May 30, 1870; son of John and Elizabeth Black Agnew; educated, Cleveland public schools and Cleveland Law School, LL. B., Baldwin University; married, Cleveland, June 20, 1899, Anna B. Coville; Chief Deputy Clerk of Courts, 1903-11; admitted to the Bar, June, 1906; member Cleveland and Ohio State Bar Ass'ns; trustee Broadway Y. M. C. A.; member Masonic (Knights Templars and Scottish Rites) and Knights of Pythias; member City and Athletic Clubs; recreations, travel, curling and bowling; (vice pres. American Bowling Congress).
+
+**AIKINS, Herbert Austin**; university prof.; born, Toronto, Ont., March 1, 1867; studied W. T. A. (M. D., LL. D.); U. of Toronto, 1887; Ph. D., Yale, 1891; Instr. U. of Southern Cal., 1888; lecturer on history of philosophy, Yale, 1890-1; prof. logic and philosophy, Trinity Coll., N. C., 1891-3; hon. fellow Clark U., 1892-3; prof. philosophy, Coll. for Women, Western Reserve U., since 1893; member Am. Psychol. Assn., Am. Philos. Soc.; fellow A. A. S. Editor; Philosophy of Hume, 1893. Author: Principles of Logic, 1903; and papers on Psychol. and Philos. subjects. Translator: Forel's Hygiene of Nerves and Mind, 1907.
+
+**AKERS, William Joseph**; business and philanthropy; born, England, Aug. 2, 1852; son of John and Catherine O'Leary Akers; educated, public schools, Cleveland; married, Cleveland, Miss Maud M. Miller of Brooklyn, N. Y.; at the age of 13 went to work in a blacksmith shop, since then interested in the hotel business; owner with S. T. Paine of the Forest City House, Cleveland; partner Sagertown Inn, Sagertown, Pa.; formerly connected with many railroad eating houses; organized the Cleveland Hotel Men's Ass'n, and was pres. for several years; one of the organizers of the State Hotel Men's Ass'n, and was its second pres.; identified with local politics for over 40 years; former member board of education, director of the Library Board and in 1900 wrote and published a valuable history of the public schools; for over 30 years director of the Associated Charities; served on relief committees in connection with some of the worst disasters the country has ever had, Chicago fire, Johnstown flood, Kentucky cyclone, etc.; financial trustee Dorcas Invalid's Home; from 1880 to 1890 pres. Cleveland General Hosp.; 33° Mason; chairman building committee, Masonic Temple; trustee Masonic Home, Springfield, O.; member the Methodist denomination; lover of out-door sports.
+
+**ALBL, Michael Albert**; physician; born, Cleveland, Oct. 8, 1869; son of Michael and Katherine Pech Albl; educated, Cleveland public and Central High School; entered the Cleveland School of Pharmacy in 1887; studied for two years, in the drug business for a year and three months, then entered the medical department of
+
+<vocab>William Agnew, Herbert Austin Aikins, William Joseph Akers, Michael Albert Albl, biography, Cleveland, business, law, medicine, education, philanthropy</vocab>

@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>131</page-num>
+<header>The Book of Clevelanders</header>
+
+ter, No. 166, R. A. M., Pearl Lodge, Knights of Pythias, Cleveland Chamber of Industry, Funeral Directors' Ass'n of Ohio; Jennings Square Business Men's Ass'n; Zion Evangelical, and Pilgrim Congregational Churches; Freiheit Unterstuezungs Verin; United German Union; Humboldt Lodge, V. D. V.; Schwaben Verein, The German Club, Heights Maennerchor, Schweizer Turn Verein, Odeon Bowling Club; family record deposited at the Royal State Library, at Stuttgart, shows patent of nobility and coat of arms of Hiebers.
+
+HIGBEE, William Tryon; vice pres. The Higbee Co.; born, Cleveland, Oct. 24, 1867; son of Edwin Converse and Mary Haines Higbee; public and private school education; married, Oct. 9, 1889, Ella M. Perdue; two sons, Edwin C. and Eugene P.; member Union, Rowfant, and Chagrin Valley Clubs.
+
+HIGLEY, Frank; lawyer; born, near St. Paul, Minn., March 16, 1861; son of Aaron and Charlotte Finney Higley; educated, Cleveland Central High School, graduated, University of Michigan Law School, 1884; married, Cleveland, 1891, Carrie M. Maltby; issue, Raymond, Albert and Charles Higley; deputy clerk of Supreme Court of Ohio; practiced law in Cleveland since 1884; director The National Safe & Lock Co.; member Chamber of Commerce and Tippecanoe Club.
+
+HILL, Hal. H.; contracting engineer; born, Detroit, Mich., Feb. 9, 1875; son of Thomas W. and Harriette C. De La Hooke Hill; educated, Cornell University, class of 1897, mechanical engineer; early education, University School, Cleveland; contracting engineer The Erie City Iron Works, Erie, Pa.; member American Society of Mechanical Engineers; Delta Kappa Epsilon Fraternity, Union, Roadside, Chagrin Valley Hunt Clubs of Cleveland, and the Erie Club, Erie, Pa.
+
+HILL, Harry N.; gen. mgr. The Cleveland Tanning Co., born, Boston, Mass., 1866; son of Hosea E. and Mary Pillsbury Hill; educated, Cleveland Kentucky Grammar school, West High School, Gambier Milner Hall Academy, Kenyon College; married, Cleveland, Sept. 25, 1888, Mary E. Mathivet; four children, three sons and one daughter; since 1899, mgr. of The Cleveland Tanning Co.; pres. The Cleveland Auto Top & Trimming Co., The Tanners Sealher Co. of Newark, N. J.; director The Royal Tourist Car Co.; chairman executive committee of the National Association of Patent and Enameled Sealher Manufacturers; member Chamber of Commerce, Beta Theta Pi Fraternity, Athletic, Automobile, Clifton and Westwood Golf Clubs, of Cleveland, and the Beta Theta Pi College Club, of New York.
+
+HILL, Thomas William; banker; born, England, May 30, 1847; son of Thomas R. and Mary Alice Hunt Hill; public school education; married, Detroit, Mich., July 15, 1870, Harriette C. De La
+
+<vocab>Cleveland, biography, business, clubs, genealogy, industry, organizations</vocab>

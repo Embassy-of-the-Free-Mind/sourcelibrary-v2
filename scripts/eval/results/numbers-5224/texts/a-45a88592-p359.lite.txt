@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>299</page-num>
+<header>TOWN OF SANDWICH.</header>
+
+1876. The first year after division from Bourne, $5,100 was appropriated, and in 1889, $5,600.
+
+Rev. Jonathan Burr, in 1803, while in charge of the church at Sandwich, urged the establishment of an academy for the purpose of promoting education and piety amoung the youth. In response to a large petition Sandwich Academy was incorporated February 21, 1804, and Rev. Mr. Burr became its principal. A board of eighteen trustees was elected, eight of whom were residents of Sandwich and ten were chosen from adjoining towns. A grant of six square miles of land in the district of Maine was made by the legislature for the use of the academy, provided that the sum of $3,000 be actually raised and secured by its friends for its endowment. It was a useful institution, rising to a high standard among similar schools in New England. Mr. Burr was succeeded by Elisha Clapp, A.M., assisted by Miss Bathsheba Whitman as preceptress. Before the close of the first decade of the academy religious dissensions caused its decline in usefulness and importance. Its incorporation and name have been perpetuated by an election of trustees annually.
+
+Many years ago the school committee of Sandwich hired the property for a high school which has continued its existence. In 1881 the academy building was sold by the trustees to Susan McFarland, and is now occupied as a boarding house. From the sale of the building here and the lands in Maine, a more suitable building was erected which is now occupied by the high school of the town. This school has attained a high standard and to its excellence the efficiency of the other schools of the town is largely due. In 1882 a class of thirty-six pupils were examined for admission to the high school, twenty-four of whom were admitted after a rigid examination; but in a similar examination a few years before only two out of eighteen could be admitted. The benefit of this high school is also clearly demonstrated in the fact that in recent years a large portion of its graduates have been engaged as teachers of the first grade. The scholars have been held to a high plane of excellence in order to be admitted, which fact has created the habits of application and a more thorough preparation in the lower departments, thus strengthening the interest in and benefits from the entire system.
+
+In 1862 the schools were placed under the town's care, called the Massachusetts system, abolishing that of districts, and from this date their progress was more rapid. The school houses were lessened in number, better teachers were employed, and the schools rapidly advanced in attendance and standing. In his report of 1874-75, Charles Dillingham suggested that the town avail itself of the law providing for the conveyance of pupils to and from public schools, which was done. In 1876 the custom of a rigid examination at the close of every
+
+<vocab>Sandwich, Massachusetts, Sandwich Academy, Jonathan Burr, Elisha Clapp, Bathsheba Whitman, education, school committee, public schools</vocab>

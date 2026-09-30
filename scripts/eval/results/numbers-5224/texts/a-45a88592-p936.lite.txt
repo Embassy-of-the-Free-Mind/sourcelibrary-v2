@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+# CHAPTER XXII.
+
+TOWN OF EASTHAM.
+
+Territory of the Nausets.—Purchase of the Lands.—Settlement and Incorporation of Nauset.—The Present Town of Eastham.—Natural Features.—Early Settlers.—Growth and Progress.—Industries.—Civil History.—Churches.—Burying Places.—Schools.—Villages.—Biographical Sketches.
+
+THE territory of the Nausets, of which the present town of Eastham forms a part, was familiar to the Pilgrims, and its lands had been favorably considered since their visit in November, 1620, when exploring the Cape. In 1622, and years subsequent, they resorted to this territory for means of subsistence, of which the natives had a surplus. In 1640, Mourt says, some of the Pilgrims became dissatisfied with the barrenness of the soil in the vicinity of Plymouth, which presented the seeming impossibility of building up an opulent capital, and they naturally turned their attention to Nauset, from whence had been furnished ample supplies. At this time the purchasers had surrendered to the court the lands embodied in the grant of 1629, as set forth in Chapter IV., and in 1643 a committee of seven, who subsequently became the first settlers, with Governor Bradford at their head, repaired to this territory with a view to determine the feasibility of removing the entire church and seat of government from Plymouth to Nauset. This committee reported, as also had one that was sent in 1640, that Nauset was not as extensive as desired, and was also too remote from the center of the colony to be a suitable location for the seat of government.
+
+The church, while relinquishing the idea of removal as a body, resolved to give those who desired liberty to remove and commence a new plantation. The grant obtained was as follows: "The Court doth grant unto the Church of New Plymouth, or those that go to dwell at Nauset, all the tract of land lying between sea and sea, from the purchasers' bounds at Namskaket to the Herring brook at Billingsgate, with said Herring brook and all the meadows on both sides the said brook with the great bass pond there, and all the meadows and islands lying within the said tract." This grant was for a tract of land about fifteen miles long, extending from Pleasant bay northerly to the south bounds of Truro, bounded east by the ocean, west by the bay and the
+
+<vocab>Eastham, Nauset, Pilgrims, Plymouth, Governor Bradford, Namskaket, Herring brook, Billingsgate, Pleasant bay, Truro</vocab>

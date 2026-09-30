@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>24</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Bean, George Fremont**
+Lawyer; b., Bradford, N. H., March 24, 1857; s. Stephen Sibley and Nancy E. (Colby) Bean; ed. Warner public schools, Simonds free high school, Warner, Colby Academy, New London, N. H., 1877, Brown University, A.B., 1881, A.M., 1884; studied law with Hon. Samuel C. Eastman of Concord, and graduated, LL.B., from Boston University Law School, 1885; admitted to the bar in Boston same
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+year and has been in general practice there since, establishing his residence in Woburn; Congregationalist; Republican; mayor of Woburn, 1901-2; member, Woburn school board from 1896 to 1908, half the time as chairman, and declining further election; member, Mass. house of representatives, 1910; trustee, Choate Memorial Hospital, Woburn; trustee, Warren Academy; chairman, trustees of the Brown Alumni Loyalty Fund; member, advisory board of the Brown Alumni; member, Towanda Club of Woburn; m., Sept. 2, 1896, E. Maria Blodgett, who d. April 16, 1917; Mrs. Bean was a sister of the late Judge John T. Blodgett of the supreme court of Rhode Island, a graduate of Wellesley, a teacher and earnest worker along educational, church and charitable lines; children, Esther (Mrs. Orel M. Bean), Wellesley, 1909; Stephen Sibley, Brown, 1914. Residence, Woburn, Mass.; office, Rice Building, Boston.
+
+<column-break/>
+
+**Perley, Sir George Halsey**
+Lumber manufacturer; high commissioner; b., Lebanon, N. H., Sept. 12, 1857; s. William G. and Mabel Ticknor (Stevens) Perley; ed. Ottawa grammar school, St. Paul's School, Concord, N. H., Harvard University, A.B., 1878; vice-president, Hull Lumber Co.; president, Argenteuil Lumber Co.; director, Bank of Ottawa; many years vice-president, Canada Atlantic Railway; elected to House of Commons for Argenteuil, 1904, 1908, 1911; on defeat of the Laurier Administration, in 1911, became a member of the Privy Council, and accepted a seat in the Borden Cabinet without portfolio; in charge of office of High Commissioner for Canada, in London, since June, 1914; m., 1st, June 4, 1884, Annie Hespeler Bowlby, who d. Aug. 10, 1910; 2d, June 11, 1913, Emily Colby White; one dau. Residence, 233 Metcalfe St.; office, Citizen's Building, Ottawa, Ontario.
+
+**McCrillis, John**
+Lawyer, insurance, banker; b., Goshen, N. H., Aug. 5, 1858; s. William H. and Abby (Huntoon) McCrillis; ed. Newport high school, Kimball Union Academy, Dartmouth College, 1883; principal, Morris, Minn., high school, 1883-4, Springfield, Vt., high school, 1884-6; read law with Albert S. Wait of Newport; admitted to the bar, 1889; clerk of Supreme or Superior Court for Sullivan County since 1886; extensively engaged in insurance; Unitarian; Democrat; many years member N. H. Democratic state committee; member, Newport board of education, 1887-90; auditor,
+
+<vocab>George Fremont Bean, Sir George Halsey Perley, John McCrillis, New Hampshire, biography, law, politics, business</vocab>

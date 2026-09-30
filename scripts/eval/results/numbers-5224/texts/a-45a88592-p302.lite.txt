@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>246</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+ninety-first year. He published several works, including his journal while in the revolutionary war.
+
+Dr. Charles N. Thayer was born at Attleboro, Mass., in 1828. His childhood was passed in Mansfield, where his early education was received. His father, Simeon Thayer, was a soldier in the war of 1812. His grandfather, Isaac Fuller, served in the revolution, and he was a non-commissioned officer in Company I, Fourth Massachusetts, during the late rebellion. On the maternal side he traces his ancestry to the Doctor Fuller whose name is enrolled on the Puritans’ monument at Plymouth, Mass. He resided for some time in Pembroke, Mass., where he was engaged in the lumber business, and represented that town in the legislature of 1855. He studied medicine with E. R. Sisson, M.D., of New Bedford, and attended lectures in Boston. In 1869 he opened an office in Falmouth, and established an extensive practice. In 1884, his health becoming impaired, part of his practice was dropped and a store was opened, with the management of which, in connection with his professional duties, he is now engaged.
+
+Dr. Townsend was a physician of Orleans at the beginning of the present century. He had two children, Hannah and Julia, baptized at Orleans by Rev. Mr. Bascom, the former in 1801, the latter in 1803.
+
+Henry Tuck, M.D., of Barnstable, was born February 16, 1808, and died June 24, 1845.
+
+Alexander T. Walker, M.D., a practitioner of the alopathic school, was born in Canada, in 1844. He received his early education in Canada, and graduated from Dartmouth College, N. H., in 1869. Before entering Dartmouth he was in New York two years—one year in the College of Physicians and Surgeons, and one year in Bellevue Hospital Medical College. Since graduating he has attended lectures six seasons—two courses in Bellevue Medical College (one under Doctor Loomis, in the hospital), one course in Vermont University in Burlington, and two courses in the medical department of the University of the City of New York. In 1870 he located in Maine, but came to Falmouth in 1883, where he has since practiced.
+
+James T. Walker, M.D., of Falmouth, born April 25, 1850, at Toronto, is the youngest of a family of six sons, three of whom are physicians and the others clergymen. He was educated in the Toronto city schools and at eighteen years of age graduated from the Provincial Normal School. Four years later he graduated from Queen’s College, Toronto, at the head of the class of ’72, and was chosen its valedictorian. In 1873 he came to Martha’s Vineyard where he taught school and studied medicine three years. In 1876-7 he attended the Detroit Medical College and was two seasons at Burlington in the University of Vermont, where he was graduated in June, 1879, and
+
+<vocab>Dr. Charles N. Thayer, Simeon Thayer, Isaac Fuller, Dr. Townsend, Henry Tuck, M.D., Alexander T. Walker, M.D., James T. Walker, M.D., Barnstable County, medicine, physicians, Dartmouth College, Bellevue Hospital Medical College, University of Vermont, Detroit Medical College</vocab>

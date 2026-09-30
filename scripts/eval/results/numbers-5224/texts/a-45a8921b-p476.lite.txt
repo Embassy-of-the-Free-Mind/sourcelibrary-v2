@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>462</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+subjects; m., Nov. 14, 1891, Margaret Gertrude Cowling, Washington. Residence, 1819 Monroe St., N. W., Washington, D. C.
+
+**Ledoux, Henri Toussaint**
+Lawyer; postmaster of Nashua; b., St. Albans, Vt., Nov. 4, 1873; s. Toussaint and Elmire (Bourgeois) Ledoux; ed. public and parochial schools, Nashua, N. H.; Theresa Classical College, Quebec, 1893; Boston Univ. Law
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and glasses, facing left.</image-desc>
+
+School, LL.B. 1896; admitted to the bar and commenced practice in Nashua in the latter year, there continuing; Catholic; Democrat; member Nashua common council, 1895, N. H. house of representatives, 1897-9; N. H. constitutional convention, 1902; member Nashua board of Public Works, 1903-6; collector of taxes, 1907-13; Democratic candidate for Congress, 2d N. H. district, 1906; delegate to Democratic national convention, Baltimore, 1912; postmaster of Nashua since April 16, 1917; National President L'Union St. Jean Baptiste D'Amerique, since 1911;
+
+<column-break/>
+
+director American Historical Soc.; vice-chairman Nashua Chapter American Red Cross; secretary-treasurer French American Chamber of Commerce for New England; director Citizens Guaranty Savings Bank, Nashua, First National Bank, Van Buren, Me.; director and treasurer Union Novelty Co., Leominster, Mass.; m., June 6, 1904, Agnes A. Manseau, Nashua. Residence, Nashua, N. H.
+
+**Thayer, Lucius Harrison**
+Clergyman; b., Westfield, Mass., Nov. 28, 1857; s. Lucius Fowler and Martha A. (Harrison) Thayer; ed. Westfield public schools; Amherst College, A.B. 1882; Yale Univ., B.D. 1888, Dwight Fellow, 1889; D.D., Dartmouth, 1909; ordained to the Congregational ministry, 1891; pastor North Church, Portsmouth, N. H., since 1890; Congregationalist; Progressive Republican; president N. H. Home Missionary Soc.; member Prudential Committee, American Board C. F. M.; member Psi Upsilon college fraternity, Winthrop Club, Boston, Mass.; m., June 29, 1892, Helen Chadwick Rand; children, Dorothy Goldthwait, b., Aug. 29, 1893 (Smith College, A.B. 1916), Lucius Ellsworth, b. June 19, 1896 (Amherst, A.B. 1918); Sherman Rand, b. Sept. 28, 1904. In youth Dr. Thayer served for two years, 1876-8 as supercargo on the ship *Lucy S. Mills*, and after leaving college was engaged for a time with the Franklin Foundry & Machine Co., Providence, R. I. Residence, Portsmouth, N. H.
+
+**Thayer, Helen Chadwick Rand**
+(Mrs. Lucius H. Thayer); philanthropist and social worker; b., Morristown, N. Y., Oct. 3, 1863; dau., Albert Tyler and Sophia Anna (Chadwick) Rand; ed. private schools, Brooklyn, N. Y.; Adelphi Academy; Burnham School, Northampton, Mass.; Smith College, A.B. 1884; student of history Newnham College, Cambridge, Eng., 1886-7; a founder, in 1889, of the College Settlement, Rivington St., New York City; president College
+
+<vocab>Henri Toussaint Ledoux, Lucius Harrison Thayer, Helen Chadwick Rand, Nashua, Portsmouth, biography, New Hampshire, genealogy</vocab>

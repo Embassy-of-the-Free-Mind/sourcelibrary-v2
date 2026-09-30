@@ -1,0 +1,56 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>viii</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Samuel Leland. Residence, Newtonville, Mass.
+Powers, Wilbur Howard, p. 33; s. Walter (Dartmouth 1906, Harvard Law School, 1909), Major in Ordnance Department, A. E. F., serving in France.
+Quimby, Frank Pierce, p. 103; member N. H. constitutional convention, 1918.
+Rainie, Herbert Williamson, p. 425; s. Donald Garland, b. March 6, 1919.
+Ranney, William Bradford, p. 313, member N. H. house of representatives, 1919-20; chairman Merrimack County delegation.
+Richardson, Albert James, p. 62; president Littleton Board of Trade.
+Richardson, Ellen Ruddick, p. 121; d. March 10, 1919.
+Robie, Edward, p. 98; d. Sept. 20, 1917.
+Rollins, Dillwyn Sidney, p. 28; trustee Kimball Union Academy, Meriden, N. H.
+Rossiter, William S., p. 118; called to Washington in July, 1918, as member of staff of Dean E. F. Gay, director of the Central Bureau of Planning and Statistics; prepared progress reports of the Navy for the President: resigned Feb., 1919; chairman joint committee of the American Statistical and American Economic Ass'ns to advise the director of the Census on the 14th Census of the United States; President of the Rumford Printing Co., since the death of William E. Chandler.
+Rowe, Stewart Everett p. 39; re-elected treasurer Rockingham, County, Nov., 1918; commander N. H. Division, S. of V., 1918. Ch. Rock. Co. United War Works Campaign.
+Sargent, Orison Clark, p. 219; d. Feb. 26, 1919.
+Sherman, Lillian Adelaide Tourtelotte, p. 146; War historian for town of Warner; press correspondent, Dept. of N. H., National W. R. C.
+Shockley, Alice Porter, p. 45; president New Bedford College Club, vice-president New Bedford Woman's Club, vice-president Y. W. C. A., supervisor New Bedford Junior Red Cross.
+Slayton, William Harvey, p.239; superintendent of schools, Portsmouth, N. H., since 1918.
+Smith, Edward M., p. 50; d. March 13, 1919.
+Spaulding, Rolland Harty, p. 21; N. H. Director U. W. W., trustee N. H. Historical Soc.; m., Dec. 18, 1918, Vera A. Going, Rochester, N. H.
+Stone, George Weare, p. 158; member N. H. constitutional convention, 1918; secretary Division 1, Merrimack County legal advisory board, N. H. Selective Service.
+Storrs, John Williams, p. 293; member N. H. Public Service Commission since Dec. 23, 1918.
+Streeter, Frank Sherwin, p. 45; President State Bd. of Education, 1919-.
+
+<column-break/>
+
+Sullivan, Dennis Edward, p. 103; Captain U. S. Medical Reserve Corps, Base Hospital, Camp Upton, Long Island, N. Y., July 5 to Dec. 14, 1918; detailed to duty, Harvard S. A. T. C., Dec. 2 to Dec. 12.
+Taylor, Levi Colby, p. 91; m., Dec. 8, 1874, instead of 1879 as printed.
+Thayer, William Wentworth, p. 61; in charge of War Trade Board, American Embassy, London, England.
+Theriault, Marcel, p. 269; general manager Abbot-Downing Co., Concord, 1919-.
+Towle, Fred Scates, p. 217; Captain Medical Reserve Corps, U. S. A.; d. Oct. 10, 1918, in a fire at U. S. Base Hospital, Colonial, N. J.
+Tufts, James Arthur, p. 69; member N. H. senate, 1919-20; chairman committee on education.
+Turner, Huffman George, p. 407; should be printed George Huffman.
+Tuttle, James Patterson, p. 97; resigned as Attorney General, April 16, 1918, to return to private practice in Manchester.
+Wallace, James Burns, p. 170; member N. H. constitutional convention, 1918.
+Walker, Charles Rumford, p. 6; member Merrimack County Selective Service Board, District No. 1; s. Charles R., Jr., first lieutenant, U. S. Coast Artillery, in service since Oct., 1917; served in England; last at Fort Eustis, Va.
+Wason, Edward Hills, p. 251; re-elected to Congress Nov., 1918; m. and has a son.
+Wason, George Butler, p. 167; re-elected to Massachusetts executive council, Nov., 1918.
+Watson, Irving Allison, p. 22; d. April 2, 1918.
+Webster, Harold Adams, p. 134; m., June 1, 1918, Charlotte White, Concord. Residence, Concord, N. H.; son, Harold Adams, Jr., b. April 18, 1919.
+Webster, Rev. Lorin, p. 363; Author "Chips from a Busy Workshop" (volume of verse), The Gorham Press, 1919.
+Wendell, Caroline R., p. 167; temporary president N. H. W. C. T. U., March, 1919-.
+Whipple, Sherman Leland, p. 131; counsel for U. S. Shipping Board, 1918-; s. Sherman Leland, Jr.; returned from service in France, entered Harvard O. T. C., and later stationed at Camp Lee, Va.; m., April 15, 1919, Margaret Cassandra Jones, St. Louis, Mo.
+Whitcher, William Frederick, p. 113; d. May 31, 1918.
+Willis, Eben Marston, p. 106; d. Jan. 1, 1919.
+Winslow, Sherburn J., p. 430; d. Feb. 19, 1919.
+Wood, Mary Inez Stevens, p. 179; New Hampshire director, W. S. S.
+Woodbury, Gordon, p. 66, in Y. M. C. A. service in France, 1918.
+Woolson, Augustus A., p. 202; d. Dec. 15, 1918
+
+<vocab>New Hampshire, biography, World War I, genealogy, public service, 1919</vocab>

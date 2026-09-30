@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>369</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. R. Putnam</image-desc>
+P. R. PUTNAM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. P. Punchard, Jr.</image-desc>
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank A. Quail</image-desc>
+CHAS. P. PUNCHARD, JR.
+FRANK A. QUAIL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ivan T. Quick</image-desc>
+IVAN T. QUICK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. L. Queisser</image-desc>
+<image-desc size="small" type="portrait" significance="high">Portrait of F. P. Rankin</image-desc>
+R. L. QUEISSER
+F. P. RANKIN
+
+<vocab>P. R. Putnam, Chas. P. Punchard Jr., Frank A. Quail, Ivan T. Quick, R. L. Queisser, F. P. Rankin, The Book of Clevelanders, biography, portraits</vocab>

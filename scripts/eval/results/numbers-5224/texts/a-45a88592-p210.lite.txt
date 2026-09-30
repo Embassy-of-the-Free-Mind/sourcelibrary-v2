@@ -1,0 +1,13 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A large engraving depicting a two-story house with a fenced yard and trees, with a smaller inset engraving in the lower left corner showing a meeting house behind a fence.</image-desc>
+
+->FRIENDS' MEETING HOUSE.<-
+
+->THE LATE RESIDENCE OF DAVID K. AKIN,<-
+->South Yarmouth, Mass.<-
+
+<vocab>Friends' Meeting House, David K. Akin, South Yarmouth, Massachusetts, architecture, Quaker history</vocab>

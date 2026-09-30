@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>700</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Herbert F. Nye, born October 4, 1848, is a son of Francis A., grandson of Francis and great-grandson of Samuel Nye. He was educated in Falmouth High School and Phillips Academy in Andover, and on leaving school he entered the employ of the Old Colony Railroad Company. Three years later, in July, 1872, he became station agent at North Falmouth, where he is still employed. His wife is Adelia F., daughter of Franklin and Pheba Nye.
+
+Hiram Nye, born in 1842, is the only son of Alden, born 1814, whose father, Alden, was a son of Elihu and grandson of Seth Nye. Hiram went to sea before he was fourteen years of age, and followed the sea, in merchant service and whaling, until 1886, the last three years as captain of the ship *Fleetwing* from New Bedford. His wife, Lucy M., is a daughter of George Bonum Nye, of Marion, Mass. They have two daughters. Major Joshua Nye of 1812 was also a son of Elihu.
+
+CAPTAIN ABISHIA PHINNEY was born May 1, 1821, in a humble cottage at Waquoit, and was the son of Asa and Annie (Bradford) Phinney. They named him in honor of his paternal grandfather, who was a son of Peter Phinney, one of the early white settlers of that portion of the county formerly included in Mashpee. Asa, whose wife was a descendant of the colony's second governor, was an active citizen in the first days of Waquoit, being its only merchant, a tavern-keeper, and its second postmaster. The family name, now scatteringly represented on the Cape, has been a part of the industrial and civil history of the county for more than two hundred years, and is best known in Falmouth to-day by the resident whose name heads this sketch. He received the education afforded by the common schools of that day, and at the age of twenty-three he went to sea. After a brief experience he became master of a vessel and he continued twenty-four years in the coasting and fishing business, coasting from Boston to Norfolk, Virginia, and cod-fishing. Salt manufacturing on the Cape opened a prosperous trade along Long Island sound and up the Connecticut river, and six years of his coasting were passed in this lucrative branch of trade. Over fifty sailing vessels from the Cape were thus engaged at that time in those waters, until steam vessels and the cars superseded the slow sailing vessels.
+
+Mr. Phinney's success on the Grand Banks was all that could be realized from the energy and industry of a seaman of his nature. He invested in shares of vessels and prosecuted the business vigorously for several years until 1868, when he retired. During twenty-four years of coasting and fishing, twenty-one of which he was master, no accident of a serious nature occurred. His small craft was run into Waquoit bay, but the major part of the vessels he was connected with made Woods Holl the home port.
+
+<vocab>Herbert F. Nye, Francis A. Nye, Samuel Nye, Hiram Nye, Alden Nye, Seth Nye, Elihu Nye, Joshua Nye, Abishia Phinney, Asa Phinney, Annie (Bradford) Phinney, Peter Phinney, Falmouth, Waquoit, Mashpee, Old Colony Railroad, Fleetwing, Grand Banks, Woods Holl, whaling, coasting, salt manufacturing</vocab>

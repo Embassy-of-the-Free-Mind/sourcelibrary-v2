@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>740</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Josiah M. Cole, son of Joshua and grandson of Timothy Cole, died in 1866, aged thirty-six years. He was a farmer. He married Mary E., daughter of Knowles and Mary (Knowles) Doane, granddaughter of Jesse, and great-granddaughter of Jesse Doane. They had three children: Wilber S., Elsie F. and Josiah A. Wilber S., was born in Eastham, January 29, 1858.
+
+Ezekiel Doane, born in 1812, is a son of Obed and Phebe (Atwood) Doane, and grandson of Sylvanus Doane. He is a farmer, having owned the Governor Prince farm since 1842, where with his two sons, Charles T. and Abealino, he now lives. He married Rachel, daughter of Dawson Lincoln. She died in 1881, leaving seven children: Obed, Josephine, Charles T., William P., Georgiana, Rachel and Abealino E.
+
+Russell Doane⁸, born in 1837, is a son of Isaiah⁷ and Temperance (Knowles) Doane (Heman⁶, Isaiah⁵, Simeon⁴, Samuel³, John², John Doane¹). Mr. Doane followed the sea from 1850 until 1877, and since that time he has been engaged on the Nauset life saving station. He married Lucinda A., daughter of Thomas Paine.
+
+Henry K. Harding, son of Prince S. and Nancy B. (Knowles) Harding, and grandson of Ephraim Harding, was born in 1829. He followed the trade of carriage making with his father until 1864. He was afterward twenty years in Tiverton, R. I., engaged in menhaden oil manufacture. He is now living, retired, at his old home in Eastham. He married Betsey F., daughter of Alvin and Eliza (Gould) Smith. They have one son—George M.—and an adopted daughter—Susie W.
+
+David Higgins, son of Joshua and Mercy (Mayo) Higgins, grandson of Elkanah, and great-grandson of Ebenezer Higgins, was born in 1804. He is a farmer. He married Sally, daughter of Walter P. Swain. They had six children, three of whom are living: Maria H. (Mrs. Roland D. Cobb), Asa and Levi W.
+
+Peter Higgins, born in 1838, is a son of John W. and grandson of Benjamin, whose father, Elkanah, was a son of Ebenezer Higgins. Richard Higgins was born in England and came to Plymouth, Mass., soon after that town was settled, as his name appears in the list of freemen of 1633. He married Mary Gates of Plymouth. He was chosen deputy in 1649, 1661 and 1667, and was selectman three years. His son Jonathan was married to Elizabeth Rogers in 1660, and had eight children. From these have descended all the families of the name in Barnstable county. Peter Higgins is a farmer and fisherman. He served in the civil war from July, 1862, to June, 1865, in Company I., Thirty-third Massachusetts Infantry, and is a member of Frank D. Hammond Post, G. A. R. He was in the lighthouse service four years and has held several minor town offices. He married for his first wife, Harriet E. Baker, who died leaving one son, Henry F. His second
+
+<vocab>Josiah M. Cole, Timothy Cole, Mary E. Doane, Knowles Doane, Jesse Doane, Wilber S. Cole, Elsie F. Cole, Josiah A. Cole, Ezekiel Doane, Obed Doane, Phebe Atwood, Sylvanus Doane, Governor Prince farm, Charles T. Doane, Abealino Doane, Rachel Lincoln, Dawson Lincoln, Russell Doane, Isaiah Doane, Temperance Knowles, Heman Doane, Simeon Doane, Samuel Doane, John Doane, Lucinda A. Paine, Thomas Paine, Henry K. Harding, Prince S. Harding, Nancy B. Knowles, Ephraim Harding, Betsey F. Smith, Alvin Smith, Eliza Gould, George M. Harding, Susie W. Harding, David Higgins, Joshua Higgins, Mercy Mayo, Elkanah Higgins, Ebenezer Higgins, Sally Swain, Walter P. Swain, Maria H. Cobb, Roland D. Cobb, Asa Higgins, Levi W. Higgins, Peter Higgins, John W. Higgins, Benjamin Higgins, Richard Higgins, Mary Gates, Jonathan Higgins, Elizabeth Rogers, Civil War, 33rd Massachusetts Infantry, Frank D. Hammond Post, G. A. R., Harriet E. Baker, Henry F. Higgins</vocab>

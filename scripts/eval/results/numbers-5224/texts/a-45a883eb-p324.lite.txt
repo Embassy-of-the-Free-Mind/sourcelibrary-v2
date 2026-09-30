@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>320</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. N. Doud</image-desc>
+A. N. DOUD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. F. Donovan</image-desc>
+M. F. DONOVAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. E. Dove</image-desc>
+H. E. DOVE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ralph M. Drucker</image-desc>
+RALPH M. DRUCKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. A. Drake</image-desc>
+E. A. DRAKE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. A. Duetemeyer</image-desc>
+H. A. DUETEMEYER
+
+<vocab>A. N. Doud, M. F. Donovan, H. E. Dove, Ralph M. Drucker, E. A. Drake, H. A. Duetemeyer, Clevelanders</vocab>

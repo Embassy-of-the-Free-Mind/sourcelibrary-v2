@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>135</page-num>
+<header>INDUSTRIAL RESOURCES. 135</header>
+
+and the decline of the industry there, may be a fair indication of when and how rapidly the attention of the Cape people was turned to other pursuits.
+
+In 1834 Falmouth had six whale ships at sea, and in 1837 had nine, the total tonnage of which was 2,823; in 1845 her vessels numbered five, with an average tonnage of 315; in 1855 three whalers were reported as securing $55,000 worth of oil. Provincetown, in 1837, had only two whale ships out; in 1841 six vessels returned, bringing 1,065 barrels of oil; in 1843 sixteen vessels from here were on whaling voyages; in 1845 twenty-six vessels, with a tonnage of 3,255, secured during the census year $102,984 worth of oil; in 1855 seventeen vessels were in the business, reporting $118,833 earnings for the year; in 1865 twenty-eight vessels reported oil worth $312,017; and in 1885 the town had only three vessels thus engaged. For the census year 1855 Orleans reported four vessels of 155 tons each, employing 125 men, and securing oil to the amount of $19,250. Thus as the vocation became less profitable, and its prosecution imposed greater hardships upon those who followed it, the Cape people gradually dropped out of it or went in those ships which later on still sailed from New Bedford.
+
+Soon after the development of the cod fisheries, the taking of mackerel became a very important and lucrative vocation, and from the first until the present moment it has, after the cod fishery, furnished regular employment and a source of revenue to more of the people than has any other branch of fishing. In the taking of these fish the most scientific methods are employed, and the habits of the fish have been most thoroughly and systematically investigated. Fishing for mackerel with hook and line was for many years a regular employment, and the aged fishermen now maintain that a workman's share was then worth more than one has averaged since the introduction of methods requiring expensive outfits, in which, of course, capital has come in for a larger relative share.
+
+The most sweeping change made in the method of capture was the introduction of the purse seine, by which whole schools of them may be surrounded off shore, in any depth of water, and speedily transferred to the boats. Before this a similar seine had been used only in shoal water, where the seine would sweep the bottom. These sweep seines were usually two hundred fathoms long and three or four deep, but since the deep-water seining has been found practicable, the seines in use have been made somewhat longer and five or six times as wide, and hundreds of barrels of mackerel are taken at a single draught. This was a new idea in 1853, at which date it is said that Isaiah Baker first practiced it successfully off the south shores west of Monomoy. This wholesale taking of mackerel, although highly profitable to those engaged in it, is now the generally assigned reason of the disastrous
+
+<vocab>whale ships, tonnage, oil, cod fisheries, mackerel, purse seine, deep-water seining, Isaiah Baker, Monomoy, Cape Cod</vocab>

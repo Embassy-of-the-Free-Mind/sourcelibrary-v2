@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>1</page-num>
+
+->HISTORY OF BARNSTABLE COUNTY.<-
+
+CHAPTER I.
+
+GEOLOGY AND TOPOGRAPHY.
+
+Location and Boundaries.—Geological Formation.—Contour of the Coast.—Surface and Soil.—The Flora of the Cape.—Effect of the Landscape on the Character of the Cape Men.
+
+THE peninsula forming the southeastern extremity of Massachusetts, and embraced within the present county of Barnstable, is better known as Cape Cod. It extends easterly into the Atlantic forty miles, thence northerly thirty-five miles to its extremity in north latitude 42°, 4'.
+
+The geographical name it bears was first applied in 1602, by Gosnold, to its most northern portion. Its position, contour and importance early earned the sobriquet of "The Right Arm of Massachusetts," which it appropriately bears, having its shoulder, elbow, wrist and hand symbolically poised over the deep, as if beckoning the dispirited pilgrims to cross over and rest safely under the palm; and pointing toward Plymouth, indicating the haven where should be planted the seeds of civil and religious liberty that should bloom to the admiration of the world. It has Plymouth county and Buzzards bay for its western boundary, Vineyard and Nantucket sounds for its southern, the ocean for the eastern, and Cape Cod bay for the northern boundary, being twenty miles in width across the shoulder, tapering to eight at the elbow, two at the wrist, and then widening to a hand.
+
+Its geological formation has been hastily considered by scientific writers, who have recorded various and varying conclusions—perhaps facts—which may be modified by more minute researches in the future light of science; but thus far the man who, after Agassiz, knows most about the subject, says that a great interrogation point might be appropriately set against the whole topic, to denote as yet an unanswered inquiry, but it is gratifying to know that a gentleman of the United States Geological Survey spent the past year on and about the Cape, from whose reports a valuable and more conclusive opinion will
+
+<vocab>Barnstable County, Cape Cod, Geology, Topography, Massachusetts, Gosnold, Plymouth, Buzzards Bay, Vineyard Sound, Nantucket Sound, Agassiz, United States Geological Survey</vocab>

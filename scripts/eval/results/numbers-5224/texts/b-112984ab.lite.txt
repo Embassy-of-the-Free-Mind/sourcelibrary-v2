@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>546</page-num>
+
+<image-desc size="large" type="photograph" significance="high">A group of men, including Narzunof, resting on a rocky, mountainous slope.</image-desc>
+
+->NARZUNOF AND HIS COMPANIONS ON THE ROUTE BETWEEN THE TSAIDAM<-
+->AND TANG-LA, THE HIGHEST RANGE OF TIBET<-
+
+interest, especially to those who, like the writer, have devoted some of the best years of their lives to studying all attainable records of this land, and have hoped and striven, but in vain, to see with their eyes the spots now first fully shown us by the Kalmuk pilgrim. We owe him a lasting debt of gratitude.
+
+# II. NEW LIGHT ON LHASA, THE FORBIDDEN CITY
+
+IT may be said, at the beginning of the twentieth century, that, except for the two poles, there is not a corner of the earth where white men have not penetrated. Yet, in truth, there exists on the Asiatic continent, hardly two hundred miles from the frontier of British India, a city, the capital of Tibet, to which the "white men" of Europe and America are absolutely forbidden access. Within a distance of one hundred and fifty to two hundred miles from this city, all the roads leading to it, at the place where they cross the frontier to the province of Wu, of which Lhasa is the chief town, are jealously guarded by pickets of Tibetan soldiers. Immediately upon perceiving a suspicious-looking caravan the sentinels notify the local authorities. The advancing traveler then sees rise up before him a whole detachment of armed men, commanded by high functionaries of the country, who, without discussing the matter, politely insist that the bold pioneer retrace his steps. They even offer him the money and food necessary for the return voyage, at the same time warning him that if he continue on his way to Lhasa he will pay for it with his life.
+
+Such a state of affairs has not always existed. During the middle ages, and until the middle of the eighteenth century, a number of Europeans, mostly Catholic monks, were able to remain for long periods in the "Holy City" of the Tibetans, who profess, as we know, the Buddhist-Lamaist religion. But since the expulsion, in 1760, of the Capuchin monks, who tried to meddle with the internal affairs of the country, all Europeans have been regarded with suspicion, and none has been allowed to penetrate into Lhasa. Nevertheless, in
+
+<vocab>Narzunof, Tsaidam, Tang-la, Tibet, Lhasa, Forbidden City, British India, Wu, Capuchin monks, Buddhist-Lamaist religion</vocab>

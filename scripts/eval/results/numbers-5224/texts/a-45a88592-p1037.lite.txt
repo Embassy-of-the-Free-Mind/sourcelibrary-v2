@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>805</page-num>
+<header>TOWN OF WELLFLEET. 805</header>
+
+Samuel Higgins near the railroad crossing of the creek, time has left no evidence. On these the business of fishing and repairing small craft was successfully carried on for years. Passing westward to the bay the busy wharf of Theodore Brown attracts attention, and here since 1864 he annually repaired over one hundred vessels; but the decline in fishing has lessened this branch, and latterly he has built large scows and small craft for weir fishing. In 1865 he built at this wharf the *Clara D. Swett*, a schooner of thirty-three tons—the largest built by him since he completed his trade with Giles Hopkins.
+
+The next west is Commercial Wharf, the oldest of the village, built in 1835 by Paine G. Atwood and Elisha G. Perry, who did business there until 1853, when the Commercial Wharf Company, composed of twenty men, purchased it. R. R. Freeman was the first president of the company, John Swett the second, and from 1880 Michael C. Burrows has presided. Noah Swett was agent under the company until 1880, when Isaiah C. Young was appointed, who was succeeded by Freeman A. Snow in 1889. The present directors are Charles A. Gorham, Parker E. Hickman and Jesse F. Snow.
+
+The Central Wharf was built and incorporated in 1863 by a stock company of sixty shares, which have changed hands, leaving only about one half of the shares in original hands. Stephen Young was the agent prior to Robert B. Jenkins, who assumed the duties of the office in 1883. The first president, Parker Wiley, was succeeded in 1868 by Warren Newcomb, who still fills the office. Three directors are elected annually, the last being Charles A. Gorham, George Baker and Samuel W. Kemp, with James Mott clerk. This wharf is three hundred feet long, is kept in good order and has been a very successful enterprise.
+
+On the opposite side of Duck creek Enterprise Wharf, the first one at Wellfleet, was erected prior to 1837, where a successful fishing trade was conducted by Benjamin Rich and Stephen Young. This wharf was abandoned about 1862.
+
+The Mercantile Wharf, erected in 1870, is the last along the north shore of the bay. Sixty shares comprised the stock for its erection. The store is controlled by the company. The first president was Richard R. Freeman, succeeded in 1886 by J. H. Freeman, who in turn was succeeded in 1887 by R. R. Freeman, jr., the present incumbent. J. H. Freeman acted as agent and clerk until 1885, when Samuel W. Kemp was appointed to succeed him. The acting president is a director, and with him R. R. Higgins, David Y. Pierce and Charles W. Swett were last elected. The mackerel trade has been very successfully and largely carried on on this wharf, which was enlarged in 1883 to accommodate its large business. The business of these wharves is greatly affected by the dullness of the trade occasioned by the decline in fishing.
+
+<vocab>Wellfleet, fishing, Commercial Wharf, Central Wharf, Enterprise Wharf, Mercantile Wharf, mackerel trade, schooner, shipping</vocab>

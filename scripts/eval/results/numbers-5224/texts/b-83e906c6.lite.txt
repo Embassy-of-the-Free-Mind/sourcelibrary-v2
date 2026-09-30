@@ -1,0 +1,52 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>362</page-num>
+<header>FRANCIS BACON</header>
+
+| DATE | TITLE | POT | GRAPES | CANDLESTICKS | EXTRAS |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1579 | North's Plutarke | Pot (on fly-leaves) | — | — | — |
+| 1590 | Book of Com. Prayer | Pots, various | — | — | — |
+| 1596 | The Faerie Queene | Pots, various, some two-handled, with letters A B, F B, B I, R, R C | — | — | — |
+| 1598 | Chapman's Works | Pots, various | — | — | — |
+| 1603 | North's Plutarke | Pots, various | — | — | — |
+| 1603 | Montaigne's Essays | Pots, various, some two-handled | — | — | — |
+| 1605 | Advt. of Learning | Pots, various | Grapes | — | Twisted horns |
+| 1609 | Book of Com. Prayer | Pots, various | Grapes | — | Crowns, shields |
+| 1609 | Observns. on Cæsar's Commentaries | — | — | Candlestick, single | (Fly-leaves gone) |
+| 1611 | Bible | Pots, various | Grapes | — | Twisted horns |
+| 1611 | Florio's Dictionary | Pots, various | Grapes | — | Bugle |
+| 1616 | Ben Jonson's Works | Pots, various | — | — | Moons |
+| 1618 | Selden's History of Tithes | Pots, various, some two-handled | — | — | Shields |
+| 1622 | Shakespeare | — | Grapes | — | Crowns |
+| 1631 | Love's Labour's Lost | Pots, various | — | — | — |
+| 1633 | "Fulke's" Bible | Pots, various | Grapes | — | Shields |
+| 1634 | Jeremy Taylor's "Holy State" | Pots, various | — | — | Shields |
+| 1638 | Bacon Opera | Pots, various | Grapes | Candlesticks | Shields, bugles |
+| 1639 | Quarles' Emblems | Pots, various | Grapes | Candlesticks | Shields, bugles |
+| 1640 | De Augmentis | Pots, various | — | Candlesticks | Shields |
+| 1640 | Ben Jonson's Works | — | Grapes | Candlesticks | Shields |
+| 1645 | Comus & other poems | Pots, various | — | Candlesticks | Fool's cap |
+| 1646 | "The Art of Making Devises," &c. | Pots, various | Grapes | Candlesticks | — |
+| 1647 | Fuller's "Holy Warre" | Pots, various | Grapes | Candlesticks | — |
+| 1648 | Hieroglyphics, Symbols, Ciphers, &c. | Pots, various | Grapes | Candlesticks | — |
+| 1648 | "Diodati" Bible | Pots (enormous) | — | — | Shields |
+| 1651 | Sylva Sylvarum | Pots, various | Grapes | Candlesticks | Shields |
+| 1651 | Comus, &c. | Pots, various | — | — | — |
+| 1652 | Comus, &c. | Pots, various | — | Candlesticks | — |
+| 1655 | Comus, &c. | Pots, various, and cut in half | — | — | Shields |
+| 1655 | Fuller's Ch. History | Pots, various | — | — | Shields & double-headed eagle |
+| 1658 | Sylva Sylvarum | Pots, various | Grapes | — | Shields, bugle |
+| 1664 | Shakespeare | Pots, various | Grapes | — | Shields, hearts, crowns, &c. |
+| 1668 | Paradise Lost | Pots, various | Grapes | — | Shield |
+| 1669 | Paradise Regained | Pots, various | Grapes | — | Shield |
+| 1669 | Sir K. Digby's Treatises | Pots, various | — | Candlesticks | Crescent & R C |
+| 1669 | Cowley's Works | Pots, various | Grapes | — | Fool's cap |
+| 1671 | Resuscitatio, 3d edn. | Pots, various, very large | — | — | — |
+| 1674 | De Augmentis | Pots, various, very large | — | — | — |
+
+7. Not only is the nature of the paper-mark thus varied in each book, but the forms of each figure are varied to a surprising extent. No two volumes, often no two parts of the same volume, treatise, poem, or play, contain marks which are identical. For instance, in *Ben Jonson*, 1616, there are at least fifteen different forms of the pot, two of which are sometimes in one
+
+<vocab>paper-mark, watermarks, bibliography, Francis Bacon, Ben Jonson, printing history</vocab>

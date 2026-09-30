@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>979</page-num>
+<header>TOWN OF PROVINCETOWN. 979</header>
+
+of lumber soon after caused a diminution in the annual product, so that in 1854 the business had ceased. Several attempts to establish manufactories have been fruitless, so that in 1890 a shirt factory, employing from one to two hundred young women, is the principal and only manufacturing industry of Provincetown not directly dependent upon the fisheries.
+
+The population of Provincetown has varied from time to time, and yet has since 1800 increased steadily, though slowly. In 1748 there were but two or three families at Provincetown; in 1755, ten or fifteen families; in 1776 there were thirty-six families. In 1755 only three houses remained; in 1775 twenty houses were standing; in 1800 the number of dwellings had reached 144. In 1798, 101 houses in Provincetown were valued at $15,375, of which several were valued over $200, among them being the houses belonging to Joseph Nickerson, Ebenezer Nickerson, Seth Nickerson, Thomas Small and Samuel Rider. In 1791 there were owned in town but two horses, two yoke of oxen, and fifty cows. In 1870 the number of dwelling houses had increased to 794. In 1890 there were 970 dwelling houses.
+
+The population of Provincetown in 1765 was 205; in 1776, 205; 1790, 454; 1800, 812; 1810, 936; 1820, 1,252; 1830, 1,710; 1840, 2,122; 1850, 3,157; 1855, 3,096; 1860, 3,206; 1865, 3,472; 1870, 3,865; 1875, 4,357; 1880, 4,346; 1885, 4,480; 1890 (estimated), 5,000.
+
+The population of Provincetown consists of three distinct classes: the descendants of the early settlers, the emigrants from the Provinces, and the Portuguese from the Western Islands. The fisheries have for many years attracted to Provincetown seamen of all nationalities, so that in 1890 the population of Provincetown resembles in the number of nationalities some foreign city, as the following table of the parent nativity will show: Of a total population of 4,480 in 1885 there were: Native born, 3,332; foreign born, 1,148; both parents native, 1,813; both parents foreign, 2,136; one parent foreign, 431. Of the population of foreign birth, 698 were of Portuguese nativity, 251 of Nova Scotia or Provincial birth, and 199 were born in other foreign countries.
+
+The first banking institution at Provincetown was a branch of the Freeman's National Bank of Boston, established in 1846 at the Union Wharf Company store, with which David Fairbanks and Richard E. Nickerson were connected. This branch bank continued to do business until the establishment of the Provincetown Bank, which used the Freeman's National Bank of Boston as its first place of deposit in Boston.
+
+James M. Holmes, Elijah Smith, Elisha Tillson and others were incorporated as the Provincetown Bank, with a capital of $100,000 March 28, 1854. The bank was opened for business in December,
+
+<vocab>Provincetown, population, fisheries, manufacturing, demographics, banking, Freeman's National Bank, Provincetown Bank</vocab>

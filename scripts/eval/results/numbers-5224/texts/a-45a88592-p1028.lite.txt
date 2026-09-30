@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>796</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+in the town meeting called to consider it. In 1795 the revised constitution was approved by a unanimous vote. For years subsequently the town was united in the administration of local affairs, the church, the fisheries and the welfare of the Indians. In 1800 the town by a majority of votes forbid the straying of sheep, but the division of feeling in this case was of a personal, not political character—the same as was shown in 1807, when the friends of Rev. Mr. Whitman wished to increase his salary and it was promptly negatived; but the town voted to give him a good suit of clothes throughout, with underclothing complete, not even forgetting the extremities to be encased in boots and hat. The action of the town in 1814 was harmonious in relation to war matters, and in 1820 Reuben Arey was sent to the convention for the revision of the state constitution, which revision, when submitted, was approved with the exception of two articles.
+
+In 1874 the selectmen, upon the petition of the people, appointed a committee of twenty-two persons to tender to General Grant a proper reception when he should arrive in the town. The president, his wife, Secretary Belknap, Postmaster General Jewell and others stopped here and were introduced by Dr. Thomas N. Stone to the citizens, who gave them a hearty reception.
+
+The principal officers of the town since its incorporation will be found in the following lists, one year being the term of service when no time is given. The deputies and representatives have been: Willard Knowles, elected 1767, serving 2 years; in 1768 Elisha Doane was elected and served 3 years; in 1769, Thomas Paine, 5; 1772, Barnabas Freeman, 10; 1774, Naaman Holbrook, 2; 1776, Elisha Cobb; 1777, John Greenough, 2; 1780, Winslow Lewis; 1785, Jeremiah Bickford, 3; 1787, Hezekiah Doane, 3; 1793, Samuel Waterman, 5; 1797, Reuben Arey, 5; 1801, Lemuel Newcomb, 3; 1803, Reuben Rich, 2; 1809, Josiah Whitman, 6; 1810, Beriah Higgins, 5; 1829, Benjamin R. Witherell, 3; 1831, Joseph Holbrook, 3d, 2; 1833, Freeman Atwood; 1834, Ebenezer Freeman, 2d, 5, and Joseph Higgins; 1835, Amaziah Atwood; 1836, Richard Libby, 2, and Jonathan Hickman; 1837, John L. Daniels; 1838, Atkins Dyer and Nathan Paine; 1839, Nathaniel B. Wiley and Solomon R. Hawes, each 2; 1841, Seth H. Baker, 2; 1843, Isaac Paine, 2; 1845, Caleb B. Lombard, 3; 1846, Robert Y. Paine, 2; 1850, Ebenezer Freeman; 1852, William Cleverly; 1853, Richard Stubbs, 2; 1854, Israel Pierce; 1855, Thomas H. Lewis; and in 1856, John Y. Jacobs. After 1857 two or more towns were joined in a district, and the representatives' names for the district appear in Chapter V.
+
+The names of the selectmen, dates of election and years of service, from first to last, are given in the following list: 1763, Elisha Doane, 8 years, Reuben Rich, 3, and Samuel Smith, 8; 1765, Zoeth Smith, 9; 1769, Naaman Holbrook, 8; 1770, Jonathan Young, 10; 1771, Eleazer
+
+<vocab>Barnstable County, town meeting, constitution, Rev. Mr. Whitman, General Grant, President, Secretary Belknap, Postmaster General Jewell, Dr. Thomas N. Stone, deputies, representatives, selectmen</vocab>

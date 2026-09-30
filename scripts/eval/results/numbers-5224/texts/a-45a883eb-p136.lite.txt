@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>132</page-num>
+<header>The Book of Clevelanders</header>
+
+Hooke; one son, Harold H.; came to America with parents in 1850; located at Flint, Mich.; enlisted, September 1863, with the Michigan Cavalry (Custer Brigade), (Sheridan's Cavalry Corps); served until the close of the war; with the W. U. Telephone Co. at Toledo until 1869; with the same company at Detroit, as bookkeeper and cashier, 1869-1885; transferred to Cleveland, as mgr. of their Cleveland office, 1885-1892; elected cashier Cleveland National Bank, October, 1892; appointed member and elected pres. New City Hall Commission in 1898; served as such until January, 1912, when commission was discontinued; pres. Merchants' Banking & Storage Co.; sec'y, treas. and director Electric R. R. Improvement Co.; same offices in Forest City Electric Co.; treas. and director A. S. Gilman Printing Co.; director and officer in several other corporations; member Y. M. C. A. Corporation; sec'y Oriental Lodge, F. & A. M., Detroit, 1875 to 1885; sec'y Tyrian Lodge, F. & A. M., Cleveland seventeen years; treas. since 1906; member Colonial, and Masonic Clubs.
+
+**HILLER, Frank B.**; mfgr.; born, Cleveland, Dec. 29, 1874; son of William F. and Christina Geiger Hiller; educated, Cleveland public schools; married, Cleveland, July 12, 1900, Emma E. Gross; three sons and one daughter; started in the sheet metal business at the age of 12, continuing about fifteen years, after which organized a partnership, bearing the same name as present concern, Cleveland Metal Roofing & Ceiling Co.; pres., gen. mgr. and treas. since the incorporation of the concern; doing a steadily growing business; member Builders' Exchange; Mason, Lakewood Lodge, Cunningham Chapter.
+
+**HILMAN, Max**; merchant; born in 1875; educated, Massachusetts Institute of Technology; married, St. Louis, Mo., 1906, Helen Schwab; two children; for twelve years, mgr. and vice pres. the Emerson Elm Mfg. Co., St. Louis, Mo.; since 1908, vice pres. and treas. The Lindner Co., Cleveland; vice pres. and treas. The Wadsworth Stone Co., Cleveland; and vice pres. The Gruby Co., Logansport, Ind.; member The Chamber of Commerce, the Advertising Club, Oakwood, and City Clubs.
+
+**HINDSON, Thomas**; master plumber; born, England, May 25, 1863; son of John and Ann Gibson Hindson; educated in the public schools of England; member Knights of Pythias Lodge.
+
+**HIRSTIUS, August J.**; ex-sheriff of Cuyahoga county; born, Cleveland, 1875; son of Jacob H. Hirstius; educated, public schools; married, 1896, Miss Anna Bente of Cleveland; issue, one son, Sherwood; cash boy for E. I. Baldwin, Hatch & Co.; with G. H. Lyttle, wall paper business; remained ten years; two years clerk for the County Board of Reviews; two terms member of City Council, from 12th Ward; active in bringing about the first referendum campaign in the State of Ohio on the street railroad
+
+<vocab>biography, Cleveland, business, commerce, civic organizations, genealogy</vocab>

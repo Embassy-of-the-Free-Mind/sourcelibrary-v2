@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>620</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Hardy. Mr. Hardy was a coal and wood merchant. He was several years selectman, and at the time of his death, in 1877, he was president of the Cape Cod Five Cents Savings Bank. He was married in 1827, to Miriam, daughter of Samuel Freeman. Seven of their nine children are living: Almira, Miriam, Rebecca, Betsey A., Harriet, Josiah and Augustus. Eliza and Samuel died. Betsey A. owns the homestead.
+
+Josiah Hardy, born in 1822, is a son of Josiah and Rebecca (Clark) Hardy, and grandson of Josiah Hardy, who came from Virginia to Chatham in 1776, and married Rebecca Hamilton, and had four children. Mr. Hardy was a master mariner until 1866, and since 1872 he has been the keeper of the Chatham lighthouse. He is a member of St. Martin's Lodge, A. F. & A. M. He was married in 1844, to Harriet K., daughter of Jonathan and Olive (Moody) Myrick. They have four children: James H., Joseph M., Ursula M. and Samuel F. They lost two: Joseph M. and Rebecca C.
+
+Ebenezer N. Hawes, born in 1849, is the youngest son of Edward and Polly (Kelley) Hawes, grandson of Samuel, and great-grandson of John Hawes. Mr. Hawes is a blacksmith at West Chatham. He was married in 1870, to Lucy I., daughter of Luther Sears. They have one daughter, Annie M.
+
+Samuel Higgins, born in 1812, in Brewster, was a son of Samuel Higgins. He was a blacksmith by trade, and kept a hardware store in Chatham several years prior to his death, which occurred in 1881. He was married in 1834, to Abby E., daughter of Samuel Hallett, of Yarmouth. They had two daughters: Abby C. (Mrs. Joseph C. Chase) and Adelaide L., who died. Mr. Higgins was several years a member of the school committee, two terms county treasurer, and two terms a member of the house of representatives.
+
+Thomas Holway, born in 1825, is the only survivor of four children of Thomas and Sabrina (Gould) Holway, and grandson of Prince Holway, of Sandwich. He has been engaged in the fishing business for several years. He was married in 1867, to Sarah E., daughter of Abel Reynolds, of Rhode Island. They have two children: Sabie S. and William T. Mr. Holway is a member of the Chatham Methodist Episcopal church and a prohibitionist.
+
+Marcus W. Howard, son of Edward and Emily (Nickerson) Howard, was born in 1846. He is a merchant tailor at Chatham, where in 1873, he succeeded his father, who had been in the business since 1839. Mr. Howard was postmaster from 1885 to 1889. He is a member of the Masonic Lodge and Chapter. He was married in 1872, to Susan E. Huckins. They have one daughter, Agnes A.
+
+Oscar E. Howard, son of Edward Howard, was born in 1853. He has been in the tailor shop with his brother, Marcus W., since 1876.
+
+<vocab>Hardy, Freeman, Myrick, Hawes, Higgins, Hallett, Holway, Howard, Nickerson, Huckins, Chatham, Brewster, Yarmouth, Sandwich, genealogy, biography, Cape Cod Five Cents Savings Bank, St. Martin's Lodge, A. F. & A. M., blacksmith, merchant tailor, postmaster</vocab>

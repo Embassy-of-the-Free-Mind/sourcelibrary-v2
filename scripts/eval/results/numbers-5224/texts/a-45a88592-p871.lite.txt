@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>677</page-num>
+<header>TOWN OF FALMOUTH. 677</header>
+
+originally bore the appellation of Quamquissett, situated one mile north of Woods Holl on Buzzards bay. In 1691 Moses Rowley took lands and settled here. He was the third deputy from Falmouth to the colonial legislature. Most of the early residents were engaged in marine pursuits, and before any vessels were built at Woods Holl shipbuilding was an important industry here. Barney Marchant was a substantial man of the period, and later. Among the vessels built here were the brigs *Victory* and *Enterprise*, the bark *Union*, and the sloop *Susannah*.
+
+Salt was made here by Barney Marchant, Francis Davis, Dea. Thomas Fish, Prince Jenkins, Braddock Gifford, Lemuel Eldred, Samuel Hammond, and others. The vessels built here were launched south of Joseph C. Fish’s, where the stone wharf is. Deacon Jenkins was a ship carpenter here. Braddock Gifford’s house, an old-fashioned farm building with shed roof nearly to the ground, stood where, in 1830, he built the present residence of Thomas Fish. Mr. Gifford was blacksmith to the shipbuilders, and when the business was removed to Woods Holl he continued it there, where he built, in 1833, the third house on Bar neck. Dea. Thomas Fish was a prominent factor in the progress of Quissett. The Quissett Harbor House, which George W. Fish has, since 1880, made a popular summer hotel, is the property of Stephen W. Carey, of New York. A part of the house is the former residence of Deacon Jenkins, and a part was the house of Isaiah Hammond. Before they were united Prince Jenkins and his wife—daughter of Dea. Thomas Fish—entertained summer guests twenty-five years ago. The house, now leased by Mr. Fish, has accommodations for seventy-five guests, The location is considered the most desirable in this vicinity.
+
+In 1879, February tenth, a post office was established here, with George W. Fish as postmaster. He was then a grocer, but in February, 1886, he was succeeded by Myron C. Johnson, who has since been his deputy,
+
+Quissett had at one time the largest school of the town, except that in Falmouth village; but its relative importance, except as a summer resort, has declined.
+
+Between Falmouth village and Waquoit, on the post road, are the two small hamlets, Teticket and East Falmouth. The latter is a post village containing a Methodist Episcopal church and one store. The first postmaster was John Robinson, who was succeeded after his death, January 3, 1855, by his son, John H. Robinson, who kept the office in his store. The next was Ephraim Crocker, who removed the office to the Union store, where it has since been kept. His successors have been Joshua W. Davis, Leander Baker and H. L. Davis.
+
+<vocab>Falmouth, Quamquissett, Woods Holl, Moses Rowley, Barney Marchant, Quissett, post office, Teticket, East Falmouth, John Robinson, John H. Robinson, Ephraim Crocker</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>654</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Hatch, Ebenezer Phinney, Nathan Ellis, Levi Landers, William Weeks, jr., and Barnabas Baker. It was voted that the agents act as school committee—the first mention found of such officials.
+
+The educational system seems now to have been established upon a firm basis and to have continued with but slight changes until the year 1866, when several of the nineteen districts were united, and in the following year the town purchased the school houses and abolished the entire district system. Several new buildings were erected and schools were located where they still remain—at Woods Holl, Quissett, Falmouth village, West Falmouth, North Falmouth, Hatchville, Waquoit, Davisville, East Falmouth and Teticket.
+
+In 1867 it became desirable to establish a high school and a committee was chosen to make arrangements with the trustees of Lawrence Academy, whereby the work is done in that institution. A new departure was taken in 1883 by a vote instructing the school committee to appoint a superintendent of schools. William E. Curtis was elected, and was soon succeeded by William E. Morang, Charles L. Hunt and William D. Parkinson, in the order named. Under the care of these gentlemen the schools have made rapid progress, the grading has been improved and a uniform course of study and system of promotions adopted. The present grading of the schools is as follows: Falmouth village, high, grammar and primary; Woods Holl, grammar, intermediate and primary; West Falmouth and Waquoit, grammar and primary each. In each of the other districts the entire work below the high school grade is done in one school. The amount of money appropriated for educational purposes in 1889 was $8,550; For common schools, $6,000; tuition of high school scholars, $850; transportation of high school scholars, $500; superintendent's salary, $1,000; superintendent's traveling expenses, $200.
+
+The following is an extract from the first records of the Lawrence Academy; “at a meeting of gentlemen friendly to the erection of a building in Falmouth, suitable for the accommodation of a high school, holden at the Middle District School House, so called in said Falmouth, September 30, 1833. Chase R. S. Wood, Esq., chairman, and Knowles Butler, Sec., voted to chose a committee of three persons to draft the plan of a house, and ascertain the probable expense of the same.” The committee consisted of John Jenkins, Harrison Goodspeed and Knowles Butler. These gentlemen attended to their duty, and their report was adopted. It was voted to fix the capital stock at $2,500, divided in one hundred shares of twenty-five dollars each, and to proceed forthwith to erect and finish a school house in accordance with the report of the committee. This building was so far completed, that a meeting of the proprietors was held therein November 15, 1834, at which it was voted to invite Rev. Josiah Bent
+
+<vocab>Barnstable County, Falmouth, Lawrence Academy, school committee, education, school districts, superintendent of schools, school funding, school architecture</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>510</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Prentiss, John W.**
+Farmer and lumberman; b., Walpole, N. H., Nov. 20, 1857; s. John W. and Emeline (Slade) Prentiss; ed. public schools, Boston, Mass., and Walpole Academy; resided in Walpole till 1910, when he removed to Alstead, purchasing a large farm near the village, where he has been extensively engaged in agriculture, which pursuit he has always followed, though teaching school to some extent in youth; interested in
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and glasses, wearing a suit and tie.</image-desc>
+
+breeding Morgan horses and Berkshire swine, but more particularly noted for his superior herd of pure-blooded Holstein-Friesian cattle; also largely interested in lumbering; Unitarian; Democrat; tax collector in Walpole three years, road agent four years, selectman ten years; member N. H. house of representatives, 1907–8, 1909–10; N. H. Senate, 1911–12, 1913–14, serving as chairman of the judiciary committee the latter term; member I. O. O. F. and P. of H.; m., Dec. 1, 1883, Katie M. Fisher, of Alstead; children, Flora May, b. March 26, 1885 (Mrs. W. R. Long, Walpole;
+
+<column-break/>
+
+three daughters); John W., Jr., b. July 17, 1889 (took two years course at State College; married Minnie Clark of Alstead, and has a son and daughter; is associated with his father in business under the name of J. W. Prentiss & Son); Ethel M., b. Sept. 26, 1890 (Mrs. R. M. Galloway of Walpole; three sons). Residence, Alstead, N. H.
+
+**Nelson, Edward William**
+Naturalist; b., Manchester, N. H., May 8, 1855; s. William and Nancy M. (Wells) Nelson; ed. public schools, Cook County, Ill., Normal School, 1875; engaged in scientific explorations in Alaska, 1877–81; naturalist of the U. S. S. Corwin, on the search for the Jeannette, 1881; with Bureau of Biological Survey, U. S. Department of Agriculture, 1890– ; member Death Valley expedition, 1890–91; several years engaged in scientific explorations in Mexico; chief field naturalist, 1916; president American Ornithologists’ Union, 1908–9, 1912–13; president Biological Soc., Washington, 1912–13; member Washington Academy of Sciences; author many scientific monographs and reports. Address, U. S. Department of Agriculture, Washington, D. C.
+
+**Morrill, Charles Henry**
+Banker; real estate operator (retired); b., Concord, N. H., July 14, 1843; s. Ephraim and Mahala Morrill; ed. public schools and Colby Academy, New London, N. H., private, 11th N. H. Vols., 1862–5; emigrated to Nebraska; private secretary to Gov. Nance, 1879–83; president Stromsberg (Neb.) Bank, 1883–90; Farmers’ and Merchants’ Bank, Stromsberg, 1890–2; president Lincoln (Neb.) Land Co., since 1895; also president Lancaster Land Co., So. Platte Land Co. and Boston Investment Co.; collector of customs, 1897–1901; regent Nebraska state university and president board of regents, 1891–1901; twice chairman Republican State Committee of Nebraska, and member Republican National Committee from Nebraska, 1904–8;
+
+<vocab>John W. Prentiss, Edward William Nelson, Charles Henry Morrill, New Hampshire, biography, genealogy, agriculture, naturalists, bankers</vocab>

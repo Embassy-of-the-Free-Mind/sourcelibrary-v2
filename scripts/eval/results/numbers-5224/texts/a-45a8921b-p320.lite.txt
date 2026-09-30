@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>306</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+peace and quorum for 60 years; m., Oct. 9, 1853, Sarah Folsom Gale, dau. of Bartholomew and Abigail (Morrison) Gale of Gilmanton; children, Abby S. (m. Rev. W. W. Brown, Evansville, Wis.); John Herbert, b. Sept. 10, 1859 (m. Elona G. Manning, Nottingham); Mertie Folsom, b. Sept. 10, 1863 (m. Herbert Waldron, Strafford), who resides with her father, being the only surviving child. Residence, Dover, N. H.
+
+**Sherry, George Henry**
+Pharmacist; postmaster of Dover; b., Dover, N. H., June 29, 1871; s. John
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit, vest, and tie.</image-desc>
+
+and Julia (Scully) Sherry; ed. Dover public schools; parochial schools of Dover, Jersey City, N. J., and New York City; became a registered pharmacist in Dover and pursued that business until 1916; Catholic; Democrat, member board of aldermen of the city of Dover, 1907, 1908, 1909; Democratic candidate for State Senator, 1908; Democratic candidate for Mayor, 1910; member N. H. house of representatives, 1911-12, taking an active part in the
+
+<column-break/>
+
+proceedings, on the Democratic side; delegate in N. H. constitutional convention, 1912; member house of representatives again in 1913, during which session, after protracted balloting, Henry F. Hollis, the Democratic nominee, was chosen United States Senator. Mr. Sherry was secretary of the Democratic legislative caucus, and manager of pairs and quorum on the Democratic side, and by his alertness and sagacity contributed largely to the election of Mr. Hollis; received a recess appointment as postmaster of Dover in 1915 and his regular commission in March, 1916; member Holy Name Soc., and the A. O. H., of Dover; m., Jennie Cecelia Early; children, Malona, Marie G., George H., Jr., and Mildred V., the latter died in 1913. Residence, Dover, N. H.
+
+**Cochran, John Milton**
+Lawyer; b., Pembroke, N. H., April 11, 1849; s. Martin H. and Miriam (Rowell) Cochran; ed. public schools and Pembroke Academy; studied law with Hon. Ira A. Eastman of Concord, N. H.; admitted to Massachusetts bar in 1871 and has practiced in Southbridge, Mass., since 1872; Congregationalist; Republican; town solicitor; special justice first District Court, Southern Worcester District since 1899; vice-president and attorney, Southbridge Savings Bank, and attorney for various other corporations; member Mass. house of representatives, 1880; Capt. Co. K, Mass. Volunteer Militia; president, Quinabaug Historical Soc.; prominent in Masonry and past master Grand Lodge of Massachusetts; member and ex-president Southbridge Club; m., May 12, 1875, Lizzie Whitehouse, Pembroke, N. H.; one son, Charles M. Residence, Southbridge, Mass.
+
+**Dearborn, George Vann Ness**
+Psychologist, educator, author; b., Nashua, N. H., Aug. 15, 1869; s. Cornelius Vann Ness and Louie Frances (Eaton) Dearborn (9th generation from Godfrey Dearborn; 8th genera-
+
+<vocab>George Henry Sherry, John Milton Cochran, George Vann Ness Dearborn, Dover, New Hampshire, Southbridge, Massachusetts, biography, genealogy, politics, law, pharmacy</vocab>

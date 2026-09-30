@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>283</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+commander of City Guards in Manchester and member of Lowell City Guards, commanded by Gen. B. F. Butter; enlisted in 1st N. H. Vols. April 26, 1861, and made first lieut., Co. H.; reinlisted in 4th N. H. regiment, Sept. 10, 1861, and appointed captain of Co. H.; wounded in mine explosion at Petersburg, July 30, 1864, and discharged Sept. 17; appointed lieutenant colonel, 18th N. H. Vols., Sept., 1864; wounded in night attack on Ft. Stedman, March 29, 1865; brevetted brigadier general, and mustered out July 29, 1865. Returned to New London, and engaged for thirteen years as route agent in U. S. railway mail service; commanded First Brigade, N. H. N. G., for seven years prior to 1884; Republican; member, N. H. house of representatives, 1866, 1897; senate, 1881-2; m., 1st, Abiah Bucklin, d. Dec. 17, 1873; 2d, 1874, Cornelia Smith (Chase). Residence, New London, N. H.
+
+**Johnson, Jesse**
+Lawyer; b., Bradford, Vt., Feb. 2, 1842; s. Elliot and Sarah (Taylor) Johnson; ed. Dartmouth College, 1863; read law and engaged in practice in Brooklyn, N. Y.; U. S. District Attorney, Eastern District of New York, 1889-93; member New York constitutional convention, 1894 (chairman committee on Cities); justice supreme court of New York, 1897-8. Author "Testimony of the Sonnets as to the Authorship of the Shakespearean Plays and Poems," 1898; "Glimpses of Europe," 1906; m., 1st, Sarah E. Russell, Brooklyn, d. 1897; 2d, 1902, Adaline Pritchard, Worcester, Mass.; retired some years since. Residence, "Brookside," Orford, N. H.
+
+**Churchill, Mabel Harlakenden Hall**
+(Mrs. Winston Churchill); b., New Haven, Conn.; dau. George B. and Lucretia (Allen) Hall; ed. Mary Institute, St. Louis, Mo.; Miss Comegys' School, Philadelphia, Pa.; Episcopalian; Woman Suffragist; member N. H. Woman Suffrage Ass'n (Vice-
+
+<column-break/>
+
+president), National Woman Suffrage Ass'n, Chilton Club, Boston, Mass.; m., Oct. 22, 1895, Winston Churchill; children, Mabel Harlakenden, John Dwight, James Creighton. Residences Cornish, N. H., Windsor, Vt., P. O.
+
+**Woodbury, Elmer Ellsworth**
+Farmer; builder; b., Woodstock, N. H., Feb. 27, 1865; s. David and Mahitable (Russell) Woodbury; ed. public schools of Woodstock and Franconia;
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of Elmer Ellsworth Woodbury, a man with a mustache wearing a suit and bowtie.</image-desc>
+
+Republican; selectman, six years, town clerk and member of school board several years; member N. H. constitutional convention, 1902 (member committee on Legislative Department); house of representatives, 1909 (chairman committee on Elections); state senate, 1915-6 (chairman Forestry Committee and member Finance committee); constitutional convention, 1918; member K. of P., P. of H., master home Grange three years; master Pomona Grange, one year; deputy State Grange three years; writer of some
+
+<vocab>New Hampshire, Biography, Civil War, Politics, Law, Agriculture, Suffrage, Genealogy</vocab>

@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>908</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+his barn and its valuable contents were consumed by incendiary fire. He died in 1746.
+
+Nathaniel Snow occupied a store near his house, which stood just north of the house of Captain William Freeman. He was a man of business in every respect. He was succeeded in business by his son, Silvanus Stone, who continued in trade after the beginning of the present century.
+
+Benjamin Bangs, a grandson of the innholder and shop keeper, Edward Bangs, commenced business on the old place during the middle of the last century. He was first engaged in sea-faring business. He was a very successful merchant. He was interested in the whale fishery, and fitted out whale vessels. He died in 1769. His son, Benjamin Bangs, carried on the store business here before and after 1800. He was also successful. He died in 1814. The old house in which these three traders lived was taken down in 1868, and the present house, occupied by the pastor of the Unitarian church, was built.
+
+John Silk, an enterprising citizen, opened a store on the north side of the road opposite E. E. Knowles' house. He was an Irishman from the county of Kilkenny. He died in 1793. His widow married Edward O'Bryan who was for some time postmaster here.
+
+<margin><image-desc size="small" type="symbol" significance="low">A handwritten 'x' mark in the margin.</image-desc></margin> Jeremiah and David Mayo had stores here a quarter of a century ago. Elisha Crocker, jr., with Mr. Kimball, opened a store a short distance east of the Unitarian church in 1852. They sold out their business in the fall of that year to W. W. Knowles, who continued the business at this place until 1866, when he purchased the Universalist church, fitted it up for a store, and removed his goods to it, and has since remained here. In 1880 he took in his son, William M., and they now carry on the business under the firm name of W. W. Knowles & Co.
+
+Warren Lincoln opened a store in his house in 1853. In 1855 he bought the building occupied by Nathan Winslow as a store in West Brewster, and removed it to the present site, and opened a store; since which time he has continued in the business.
+
+<margin><image-desc size="small" type="symbol" significance="low">A handwritten 'x' mark inside a circle in the margin.</image-desc></margin> Freeman Atwood, who opened a grocery store here in 1877, and his son, Freeman D., have a fish weir on the flats, which was first put up in 1857. Near Mr. Atwood's place is the old Atwood House, over a century old, the timber of which, it is said, was cut near by.
+
+The first postmaster at Brewster was Silvanus Stone, appointed July 1, 1804. His successors have been: William Stone, appointed October 1, 1805; Edward O'Bryan, March 8, 1810; Joseph Sampson, October 1, 1815, Jeremiah Mayo, February 11, 1833; Dean Bangs, May 8, 1849; Ebenezer H. Knowles, April 3, 1851, Joseph C. Crosby, Martha B. Huckins, W. W. Knowles, and Frank S. Allen, the present incum-
+
+<vocab>Brewster, Barnstable County, Nathaniel Snow, William Freeman, Silvanus Stone, Benjamin Bangs, Edward Bangs, John Silk, E. E. Knowles, Edward O'Bryan, Jeremiah Mayo, David Mayo, Elisha Crocker Jr., Mr. Kimball, W. W. Knowles, William M. Knowles, Warren Lincoln, Nathan Winslow, Freeman Atwood, Freeman D. Atwood, postmasters, Unitarian church, Universalist church, fish weir</vocab>

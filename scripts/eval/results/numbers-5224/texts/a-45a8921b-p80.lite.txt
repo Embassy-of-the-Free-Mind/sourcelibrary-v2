@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>66</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Hampshire College, since 1910 and president of the board since 1913; first vice-president, Second National Bank of Malden; director, F. W. Ransholb Co., Samuel E. Jordan Brush Co.; Mason, Odd Fellow; member, Boston City Club, University Club of Malden, Malden Deliberative Assembly, Middlesex Club, Mass. Republican Club; a frequent public speaker on political, patriotic and other occasions; m. Nellie C. Booth, Dec. 28, 1886; one son, Louis E., b. Feb. 15, 1892, Boston University School of Law, 1917. Residence, Malden, Mass.
+
+**Gile, John Martin**
+Surgeon; b. Pembroke, N. H., March 8, 1864; s. Brainerd and Mary A. (Kimball) Gile; ed. Pembroke Academy, Dartmouth College, 1887, Dart-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of John Martin Gile</image-desc>
+
+mouth Medical School, 1891; commenced practice at Tewksbury, Mass.; Professor of Practice of Medicine, 1896-1910; Dean and Professor of Clinical Surgery, 1910-., Dartmouth Medical School; Republican; president, N.
+
+<column-break/>
+
+H. Republican state convention, 1910; member, N. H. executive council, Fourth District, 1911-12; member, American Medical Ass'n, N. H. and Mass. Medical Socs.; trustee, Dartmouth College; trustee, Mary Hitchcock Memorial Hospital; Mason; member, Graduates Club, Kappa Kappa Kappa, Hanover Country Club; director, Lake Tarleton Club; m., June 8, 1892, Vesta Fowler; children, John F., Archie B., Madelain, Dorothy. Residence, Hanover, N. H.
+
+**Woodbury, Gordon**
+Lawyer, farmer, journalist; b., New York City, Sept. 17, 1863; s. Freeman Perkins and Harriet A. (McGaw) Woodbury, his father being a descendant of John Woodbury (Beverly, Mass., 1624) and his mother a granddaughter
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Gordon Woodbury</image-desc>
+
+of Matthew Thornton, signer of the Declaration of Independence; ed. Phillips Exeter Academy, 1882, Harvard College, 1886, Columbia University Law School, 1888; located in Bedford, N. H., in 1889, upon the old
+
+<vocab>John Martin Gile, Gordon Woodbury, New Hampshire, biography, Dartmouth College, medicine, law, genealogy, Matthew Thornton</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>256</page-num>
+<header>The Book of Clevelanders</header>
+
+STRONG, Emmet J.; hardware; born, Huntsburg, O., Jan. 31, 1862; son of Lyman and Ludia Curtis Strong; educated, public schools and Austinburg; married, June 7, 1893, Lenora Goodwin; issue, two sons, Lester, 17, and Stuart, 9; in 1893, organized The Curtiss Steel Roofing Co., located at Niles, O.; in 1900, reorganized and enlarged the business, moving to Zanesville, O., building a sheet and steel mill, operating under the name of The Muskingum Valley Steel Co.; in 1902, sold out in the above company, and came to Cleveland, purchasing an interest in the J. M. and L. A. Osborn Co.; connected with this firm as vice pres. and director; member Chamber of Commerce, Y. M. C. A., and Hough Avenue Congregational Church.
+
+STROUD, Edwin Gerrish; engineer and contractor; born, Bonfield, Ill., Jan. 31, 1878; son of Thomas and Jane Pearson Gerrish Stroud; educated, public schools, Seminary and Purdue University, B. S., in M. E., 1899; married, Cleveland, Oct. 15, 1902, Cora L. Campbell; issue, one son, Thomas Douglas Stroud (age 6); fifteen years engineering and business experience, having established and built up two complete companies; pres. The Cleveland Engineering Agency Co. (technical employment agency); pres. The E. G. Stroud Company (building contractors); member American Society of Mechanical Engineers, Ohio Society of Mechanical, Electrical and Steam Engineers; member K. of P. (Iola Lodge, No. 84, Dayton). Recreations: Automobiling and Bowling.
+
+STUTSON, Willis; sales mgr. The Oldsmobile Co.; born, Lancaster, O., Jan. 28, 1884; son of Alverd and Emma Stutson; educated, Asheville schools, Asheville, N. C.; married, Pittsburgh, Pa., April 23, 1905, Ethel Crozier; issue, one daughter, Elizabeth Stutson; 1904-1905, special agt. New York Life Insurance Co., traveling out of Dayton, O.; 1905, 1906, 1907, has his own insurance business, writing general lines in Washington Court House, O.; 1909-1910, traveling salesman, out of Cleveland, for The White Co.; 1910-1911-1912, branch mgr. of The Winton Motor Carriage Co., at Columbus, O.; at present sales mgr. for The Oldsmobile Co.; member B. P. O. E., Washington Court House, O., Lodge; member Automobile, and Advertising Clubs.
+
+SULLIVAN, Jeremiah Jay; banker; born, Fulton, Stark County, Nov. 16, 1844; educated, village schools; enlisted 3rd Ohio Battery, 1862; mustered out as sergeant, 1865; moved to Millersburg, 1866; engaged in general merchandise until 1878; elected state senator by Democratic party, 1879; served two terms; entered hardware business in Millersburg in 1883; re-elected state senator; national bank examiner 1887; came to Cleveland in 1889 and organized Central National Bank; served as treas., cashier, vice pres., pres., 1900; pres. Chamber of Commerce, 1893; member Union, Country, Roadside, Colonial, and Euclid Clubs; married, 1873, Selina J. Brown; issue, two daughters and one son.
+
+<vocab>Emmet J. Strong, Edwin Gerrish Stroud, Willis Stutson, Jeremiah Jay Sullivan, Cleveland, biography, business, industry, banking, engineering</vocab>

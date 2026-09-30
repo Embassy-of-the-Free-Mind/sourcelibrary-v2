@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>237</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 237</header>
+
+in the West in 1872; in trade at Templeton, Mass., from Nov., 1872 till fall of 1875, when he opened a general store in Henniker, continuing in business twenty years; Universalist; Democrat; selectman in Henniker, 1863; register of deeds for Merrimack County, 1867-8; postmaster of Henniker, 1893-7; member, N. H. house of representatives, 1907-8; justice of the peace for fifty years; has been engaged in fire insurance since 1876, and has also done most of the surveying and civil engineering in town in that time; prominent in Odd Fellowship, being a charter member of Crescent Lodge of Henniker, instituted in 1876 and previously initiated in Rumford Lodge of Concord; was grand master of the N. H. Grand Lodge in 1887, and grand representative to the Sovereign Grand Lodge in 1888 and 1889; member, A. F. & A. M., having passed the chairs in Aurora Lodge and Woods Chapter of Henniker; m. 1st, in 1861, Carrie F. Foster of Henniker, d. 1866; 2d, in 1869, Julia F. Whitney, also of Henniker; one daughter, Carrie E., b. Feb., 1873 (Mrs. Edward K. Cogswell). Residence, Henniker, N. H.
+
+**Abbot, Stanley Harris**
+
+Farmer, land surveyor; b., Wilton, N. H., Oct. 20, 1863; s. Harris and Caroline Ann (Greeley) Abbot; ed. public schools and Cushing Academy, Ashburnham, Mass., 1882; resides on farm where his grandfather and great uncle, a hundred years ago, originated and developed the potato starch process; specially interested in forestry and music; member or director of local church choir for more than thirty years; Congregationalist; Republican; member, school board, 1906-15; member, N. H. house of representatives, 1917-18, serving on agricultural committee; member, N. H. Vocational Education Commission, 1917-; member and director, N. E. Milk Producers Union (president, 1905-14); Patrons of Husbandry; m., Nov. 15, 1894, Mary Kimball, Lowell, Mass.; children, Leonard Harris, b. Sept. 19, 1895
+
+<column-break/>
+
+(Clark College and Worcester Polytechnic Inst., leaving in junior year to accept position in Smithsonian Institute, Washington, D. C.); Marion Kimball, b. March 5, 1898 (grad. Wilton high school, now in Keene Normal school); Howard Stanley, b. Jan. 7, 1900 (Wilton high school, now in N. H. College, Durham); Edith Hale, b. Nov. 7, 1901; Sidney Greeley,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a man with a mustache, wearing a suit and tie.</image-desc>
+
+b. Aug. 19, 1903; Charles Mack, b. March 15, 1905; Helen, b. July 10, 1906 (the last four are now students in the Wilton high school). Residence, Wilton, N. H.
+
+**Chase, Russell MacMurphy**
+
+(Mrs. Charles B. Chase); musician, b., Fond du Lac, Wis., Sept. 29, 1871; dau. Rev. Jesse Gibson and Lucy Stuart (James) MacMurphy; ed., Home School, Racine, Wis., New England Conservatory of Music (piano), 1892, Berlin, Germany, 1895-6; head of Piano Department, St. Mary's College, Dallas, Tex., 1892-5, 1896-7; West Virginia University, 1897-1903;
+
+<vocab>Henniker, Merrimack County, Odd Fellowship, Crescent Lodge, Rumford Lodge, A. F. & A. M., Aurora Lodge, Woods Chapter, Stanley Harris Abbot, Wilton, Cushing Academy, N. H. Vocational Education Commission, N. E. Milk Producers Union, Patrons of Husbandry, Russell MacMurphy Chase, New England Conservatory of Music, St. Mary's College, West Virginia University</vocab>

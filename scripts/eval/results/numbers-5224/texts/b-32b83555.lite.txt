@@ -1,0 +1,27 @@
+CHAPTER XXII. . . . . . . . . 63
+CHAPTER XXIII. . . . . . . . . 64
+CHAPTER XXIV. . . . . . . . . 66
+CHAPTER XXV. . . . . . . . . 67
+CHAPTER XXVI. . . . . . . . . 68
+CHAPTER XXVII. . . . . . . . . 70
+CHAPTER XXVIII. . . . . . . . . 71
+CHAPTER XXIX. . . . . . . . . 72
+CHAPTER XXX. . . . . . . . . 73
+CHAPTER XXXI. . . . . . . . . 74
+CHAPTER XXXII. . . . . . . . . 75
+CHAPTER XXXIII. . . . . . . . . 76
+CHAPTER XXXIV. . . . . . . . . 77
+CHAPTER XXXV. — AN APPENDIX TO THE FOREGOING WORK . 78
+CHAPTER XXXVI. . . . . . . . . 79
+CHAPTER XXXVII. . . . . . . . . 80
+CHAPTER XXXVIII. . . . . . . . . 81
+CHAPTER XXXIX. . . . . . . . . 82
+CHAPTER XL. . . . . . . . . 83
+
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>10</page-num>
+<header>CONTENTS.</header>
+<vocab>Contents, Chapters, Appendix</vocab>

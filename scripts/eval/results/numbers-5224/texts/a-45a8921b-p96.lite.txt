@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>82</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Thompson, Edwin Payson**
+Lawyer; b., Gilmanton, N. H., July 28, 1852, on farm purchased by his grandfather in 1836, which he now
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Edwin Payson Thompson</image-desc>
+
+owns; s. William B. and Luezer J. (Asher) Thompson; ed. public and private schools and Gilmanton Academy; studied law with Col. Thomas Cogswell of Gilmanton and Hon. Erastus P. Jewell of Laconia; admitted to the bar, April 1, 1876; practiced in company with Colonel Cogswell at Gilmanton one year, and alone until Oct., 1879, when he removed to Belmont and was in practice there until appointed clerk of the supreme court, for Belknap County, Jan. 1, 1885, continuing till April 1, 1901, when the court was abolished and he was appointed clerk of the superior court, since continuing; held residence in Belmont till 1900, when he removed to Laconia; Republican; town treasurer in Belmont and moderator for sixteen years; delegate in N. H. constitutional convention of 1889, and in convention of 1902 from Ward 4, Laconia, being
+
+<column-break/>
+
+one of twenty members serving in both conventions; member, Laconia city council, seven years, from March, 1905, and sometime acting mayor; trustee, City Savings Bank, Laconia, since 1907; director, Laconia Building and Loan Ass'n, since 1904; director, Laconia National Bank, since 1909; director and treasurer, Casino Building Co.; member, Belknap County Bar Ass'n, and N. H. Bar Ass'n; m., Dec. 9, 1896, Minnie E. James, dau. of Orrin F. and Bedora (Durgin) James, b. Thornton, N. H., Sept. 17, 1867; no children. Residence, Laconia, N. H.
+
+**Roberts, Ernest Porter**
+Banker; b., Brunswick, Me., Feb. 18, 1869; s. John and Lydia Sylvester (Porter) Roberts; ed. Concord public schools; employed as clerk in general freight office, Concord R. R.; money order clerk in Concord postoffice under
+
+<image-desc size="medium" type="portrait" significance="high">Photograph of Ernest Porter Roberts</image-desc>
+
+Postmaster Henry Robinson; clerk in superintendent's office, Concord Div., B. & M. R. R., under Supt. Horace E. Chamberlin; entered N. H. Savings
+
+<vocab>Edwin Payson Thompson, Ernest Porter Roberts, Laconia, Gilmanton, New Hampshire, biography, lawyers, bankers</vocab>

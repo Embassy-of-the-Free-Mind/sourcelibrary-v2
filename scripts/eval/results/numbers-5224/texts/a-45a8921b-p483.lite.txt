@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>469</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 469</header>
+
+professor civil engineering, Univ. of South Dakota, 1907–12; assistant professor civil engineering, Univ. of Illinois, 1912–16; professor civil engineering, Union College, Schenectady, N. Y., 1917– ; fellow American Acad. Arts and Sciences; member Amer. Soc. Civil Engineers, etc.; m., Oct. 21, 1903, Amanda Fowler, Boston, Mass. Residence, Schenectady, N. Y.
+
+**MacGreggor, Henry Frederick**
+
+Railroading and real estate; b., Loudonderry, N. H., April 25, 1855; s. Lewis Aiken and Augusta (Watts) Blodgett; ed. Pinkerton Academy, Derry, and Bryant & Stratton Commercial College, Manchester; removed to Texas in youth; secretary Galveston City R. R. Co., 1879–83; vice-president and general manager, Houston Railway System, 1883–1903; engaged in real estate operations since 1903; vice-president and director, State Land Oil Co.; director, South Texas National Bank, Houston Printing Co., Glen Park Co.; Presbyterian; Republican; chairman, state executive committee, 1894–6; Texas member Republican National Committee since 1912; m., Dec. 10, 1885; Elizabeth Stevens. Residence, 3530 Fannin St., Houston, Texas.
+
+**Howes, Benjamin Alfred**
+
+Engineer; b., Keene, N. H., Aug. 4, 1875; s. Benjamin Thomas and Maria Adelaide (Holt) Howes; ed. public schools, Mass. Institute Technology, B.S. 1897; with Frank Sprague, Sprague Multiple Unit System, New York, 1897–1900; with Randfontein Estates, mining equipment and construction, South Africa, and Thomas Robins, Paris and London, 1900–3; in research and construction work, 1903–5; in private practice in New York since 1905; advisory to various shipbuilding undertakings in concrete, 1918; member American Soc. Mining Engineers, American Concrete Institute, American Soc. Civil Engineers, etc.; author “Building by a Builder,” 1914, and various technical articles on concrete and building construction;
+
+<column-break/>
+
+m., Aug. 5, 1908, Ethel D. Puffer, Framingham, Mass. Residence, Scarsdale, N. Y.
+
+**Hoyt, Louis G.**
+
+Lawyer; probate judge; b., Exeter, N. H., Feb. 23, 1856; s. Gilman B. and Marianna (Jewell) Hoyt; ed. Phillips Exeter Academy, 1873; Dartmouth College, 1877; studied law and commenced practice at Kingston, N. H.,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Louis G. Hoyt</image-desc>
+
+1878; member banking firm of E. H. Rollins & Sons, Boston, 1888–1900; Universalist; Republican; superintendent of schools, Kingston, 1880 to 1886; solicitor of Rockingham County, 1892–1900; judge of probate, Rockingham County, since September, 1902; trustee Union Five Cent Savings Bank, Exeter; Sanborn Seminary, Kingston; Brown’s Academy, East Kingston; secretary, Republican state committee, 1899–1901; member Gideon Lodge, A. F. & A. M.; author “Hoyt’s Probate Practice,” “Hoyt’s Law of Administration in New Hampshire,” “Hoyt’s Homestead Right”; m., March 30, 1893, Mary S. Towle. Residence, Kingston, N. H.
+
+<vocab>New Hampshire, Biography, Engineering, Law, Railroading, Real Estate, Genealogy, Politics, Education</vocab>

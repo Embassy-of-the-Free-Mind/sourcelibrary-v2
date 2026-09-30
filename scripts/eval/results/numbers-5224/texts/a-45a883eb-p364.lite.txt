@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>360</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Capt. N. B. Nelson</image-desc>
+CAPT. N. B. NELSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Jno. Neuberger</image-desc>
+DR. JNO. NEUBERGER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ezra Nicholson</image-desc>
+EZRA NICHOLSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. G. Nierman</image-desc>
+R. G. NIERMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of B. D. Nicola</image-desc>
+B. D. NICOLA
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. L. A. Noble</image-desc>
+DR. L. A. NOBLE
+
+<vocab>Capt. N. B. Nelson, Dr. Jno. Neuberger, Ezra Nicholson, R. G. Nierman, B. D. Nicola, Dr. L. A. Noble, The Book of Clevelanders</vocab>

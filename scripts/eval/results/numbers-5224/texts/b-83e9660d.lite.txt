@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>Italian</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>XXXII</page-num>
+<header>XXXII</header>
+
+<image-desc size="large" type="diagram" significance="high">A complex grid of playing cards and text instructions for cartomancy, divided into four main sections: QVADRO DI BONTA, QVADRO DI ATROPOS, QVADRO DEL SERVIRE, and QVADRO DI COGNITIONE, with a central column labeled CROCE.</image-desc>
+
+| QVADRO DI BONTA | CROCE | QVADRO DI ATROPOS |
+| :--- | :--- | :--- |
+| Va a Carte 128. a Aristippo philo. e aggiunge AL RE La prima Figura che cauerai. | Va a Carte 126. a Aristippo philo. e aggiunge A L'OTTO La prima car. de pō to che cauerai | Va a Carte 134. a Menedemo phi. e aggiunge AL DIECE La prima carta de ponto che cauerai |
+| Va a Carte 140. a Crisippo philo. e aggiunge A L'ASSO La prima Figura che cauerai | Va a Carte 142. a Eraclito philo. e aggiunge AL NVOVE La prima carta de ponto che cauerai. | Va a Carte 142. a Crifippo philo. e aggiunge AL FANTE La prima Figura che cauerai |
+| Va a Carte 132. a Stilpon philo. e aggiunge AL DIECE La prima carta de ponto che cauerai. | Va a Carte 136. a Platone philo. e aggiunge AL RE La prima Figura che cauerai. | Va a Carte 138. a Speusippo philo. e aggiunge AL DVE La prima Figura che cauerai |
+| Va a Carte 130. a Theodoro philo. e aggiunge l'Orto La prima Figura che cauerai. | | Va a Carte 140. a Crifippo philo. e aggiunge al Cauallo La prima Figura che cauerai. |
+
+<column-break/>
+
+| QVADRO DEL SERVIRE | CROCE | QVADRO DI COGNITIONE |
+| :--- | :--- | :--- |
+| Va a Carte 130. a Theodoro phi. e aggiunge AL DVE La prima Figura che cauerai. | Va a Carte 136. a Platone philo. e aggiunge AL DVE La prima Figura che cauerai. | Va a Carte 128. a Aristippo philo. e aggiunge AL DIECE La prima Figura che cauerai. |
+| Va a Carte 138. a Speusippo phi. e aggiunge A L'OTTO La prima Figura che cauerai. | Va a Carte 134. a Menedemo philo. e aggiunge AL FANTE La prima Figura che cauerai. | Va a Carte 144. a Senocrate phil. e aggiunge AL NVOVE La prima carta de ponto che cauerai |
+| Va a Carte 140. a Crifippo philo. e aggiunge AL NVOVE La prima carta de ponto che cauerai | | Va a Carte 140. a Crifippo philo. e aggiunge A L'OTTO La prima carta de ponto che cauerai |
+
+---
+
+Fig. 283. METHOD OF ARRANGING THE CARDS FOR CARTOMANCY IN THE SIXTEENTH CENTURY
+Marcolino da Forlì, Le Sorti (Venice, 1540).
+
+<vocab>Cartomancy, Marcolino da Forlì, Le Sorti, Divination, Playing Cards, Renaissance Occultism</vocab>

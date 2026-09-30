@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>39</page-num>
+<header>CIVIL HISTORY AND INSTITUTIONS.</header>
+
+In 1643 the towns then existing on the Cape as part of the Plymouth colony were joined with others in the confederation of the United Colonies of New England, which, with some slight changes, was continued until 1685, when the charters of the several colonies of the province were, in effect, vacated by a commission of King James II. The spirit of confederation had taught the colonies to act together when common dangers had menaced, and here was the germ
+
+<image-desc size="large" type="map" significance="high">A map of Barnstable County, Massachusetts, showing town boundaries, incorporation dates, and surrounding bodies of water. The map includes a compass rose pointing North.</image-desc>
+
+->**BARNSTABLE**<-
+->**COUNTY,**<-
+->**Mass.**<-
+->INCORPORATED JUNE 2, 1685.<-
+
+> Bourne was erected from Sandwich,
+> Dennis from Yarmouth,
+> Brewster from Harwich,
+> Orleans from Eastham,
+> Wellfleet from Eastham
+
+->*Prepared expressly for this History. Pen Sketch, Deyo 1890.*<-
+
+of the present national system, reserving to the towns their own local government.
+
+In the division of Plymouth colony into three counties—Plymouth, Bristol and Barnstable—in 1685, the county of Barnstable was incorporated June second. The history of this county in its relation to the European race may be dated from its first exploration; but its civil history must be regarded as beginning with its incorporation in 1685. Sandwich, Barnstable, Yarmouth and Eastham had been previously
+
+<vocab>Barnstable County, Plymouth Colony, confederation, United Colonies of New England, King James II, local government, incorporation</vocab>

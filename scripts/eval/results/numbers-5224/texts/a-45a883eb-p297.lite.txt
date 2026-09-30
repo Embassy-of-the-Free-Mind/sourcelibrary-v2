@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>293</page-num>
+<header>The Book of Clevelanders 293</header>
+
+Academy of Medicine, American Association for Advancement of Science; Forest City Lodge, F. & A. M.; Lakewood Tennis Club; Civic League of Cleveland.
+
+YORK, George W.; investment banker; born, 1869; graduated from Hiram College in 1892; he has been associated with the bond business since 1893; has had a long experience in the purchase and sale of bonds; has traveled extensively in connection with his work; for some years he was mgr. of the Bond Dept. of the Otis Co., and in 1911 became a general partner in the firm.
+
+YORK, Robert H.; mnfr.; born, Michigan, Oct. 29, 1866; son of Barney H. and Julia Harkness York; educated, Phillips Academy, Andover, Mass.; married, Cleveland, Oct. 3, 1892; Clara Gordon; issue, three children; pres. The Berkshire Mnfg. Co.; member Union, Tavern, Euclid, Country, Mayfield, Country, and Roadside Clubs, Cleveland; Manhattan, N. Y.
+
+YOUNG, William Daniel; banker; born, Cleveland, April 19, 1863; son of John P. and Elizabeth (Borger) Young; educated, public schools; married, Aug. 19, 1885, Bertha Knecht; issue, one son, Carlton W., one daughter, Elsie B.; Republican; began life as cash boy with E. I. Baldwin & Co., until 1880, when he was first employed by the National City Bank as messenger; rose through the grades of collector, clerk, bookkeeper, teller, asst. cashier and cashier to vice pres. (1913), also vice pres. Bloomfield Development Co.; pres. American Trading Co.; director The People's Savings Bank Co.; member Iris Lodge, No. 229, F. & A. M.; Webb Chapter, R. A. M.; Cleveland Council; Oriental Commandery, K. T.; Al Koran Temple, N. M. S.; Lake Erie Consistory, Scottish Rite; Automobile, Automobile Country, and Rotary Clubs. Recreation: Motoring.
+
+YOUNG, WILLIAM F.; sales mgr.; born, Jonesboro, Ind., July 9, 1862; son of James and Lucinda Bird Young; educated, public schools of Jonesboro and Marion Normal College, married, Jonesboro, Jan. 29, 1887, Phebe C. Adams; issue, two sons; taught school five years in Jonesboro; five years principal of the Gas City, Ind., schools; fifteen years in employ of Brunswick, Balke, Callender Co., first as traveling salesman, then as branch manager; served as township trustee for five years in Mill Township, Grabt County, Ind.; member B. P. O. E., No. 39, Omaha, Neb.; K. of P., No. 7, Omaha; Ben Hur Lodge No. 15, Fort Wayne, Ind.; member Elks Club.
+
+ZEMAN, Mathew; iron business; born, Probulov, Bohemia, Feb. 15, 1860; son of John and Anna Zeman; educated, public and high schools of Pisek, Bohemia; after leaving school, married, July 20, 1889, Miss M. Svoboda; issue, three children; Miroslav, graduate of public schools and Central Institute, now a student in Technical High School, in Prague, Bohemia, Ladimir, who was the first
+
+<vocab>George W. York, Robert H. York, William Daniel Young, William F. Young, Mathew Zeman, biography, Cleveland, business, genealogy</vocab>

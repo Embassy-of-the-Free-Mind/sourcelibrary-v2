@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>303</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 303</header>
+
+Aug. 21, 1884, L. A. Wright, Troy, N. H., d. Aug. 1, 1885; 2d, May 1, 1889, Lizie S. Parker, Claremont, N. H.; one son, Parker McCollester. Residence, Tufts College, Mass.
+
+**Corey, Francis A.**
+Magazine and newspaper writer; b., Fitzwilliam, N. H., Feb. 9, 1843; s. Abram and Hannah (Perkins) Corey; went West while a lad; graduated from Adrian College, Adrian, Mich., 1867; began writing for *Ballou’s Monthly* and *True Flag* while a boy in school; taught for a short time, but soon after graduating devoted his entire time to writing for the press; wrote for most of the leading story papers in their day, generally using a pseudonym, more frequently that of “Rett Winwood”; a contributor to *Chimney Corner* and *Frank Leslie’s Illustrated Newspaper*; wrote serials for *Boston Globe*, most of which were syndicated; has written for the McClure Newspaper Syndicate; published a few books; Congregationalist; Republican; m., March 1, 1871, Rebecca Elena Douds of Canton, Ohio, who died Jan. 1873; one son, Leslie D., supply sergeant in Mississippi regiment; 2nd, Mrs. Ellen Medill Dilley of Canton, Ohio, sister of Hon. Joseph Medill of the Chicago Tribune, who d. Feb. 1881; 3rd, Mary J. Beckley of Keene, N. H., Feb. 1885. Residence, Keene, N. H.
+
+**Frost, Robert**
+Educator; author; b., San Francisco, Cal., March 26, 1875; s. William Prescott and Belle (Moody) Frost; ed. Dartmouth College, Harvard University; engaged in Agriculture at Derry, N. H., 1900–1905; teacher of English, Pinkerton Academy, Derry, 1905–11; teacher of psychology, N. H. State Normal School, Plymouth, 1911–12; studied in England, 1912–15; now professor of English, Amherst College; author, “A Boy’s Will” (poems), 1913; “North of Boston,” 1914; “Mountain Interval,” 1916; m., Dec. 28, 1895, Elinor M. White, Lawrence, Mass. Residence, Franconia, N. H.
+
+<column-break/>
+
+**Jones, Seth Warner**
+Physician and surgeon; b., Canterbury, N. H., June 23, 1864; s. Charles and Sarah (Pickard) Jones; ed. Lowell, Mass., high school, University of Maryland Med. School 1894. In practice at Franklin, N. H., many years; Unitarian; Democrat; member N. H. house of representatives, 1903, 1913 (chairman Democratic caucus latter year); N. H. constitutional convention, 1912; mayor of Franklin,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Seth Warner Jones</image-desc>
+
+1911–12; U. S. Collector Internal Revenue since Jan. 1, 1914; Mason—lodge, commandery and shrine; m., July 19, 1892, Susan Ann French, Chichester, N. H.; children, Compton Wilson, b. Sept. 23, 1895 (ed. Tilton Seminary), income tax inspector, U. S. Internal Revenue service; Warner Edrick, b. June 17, 1897 (studied at Phillips Exeter and Harvard), entered U. S. Naval Academy, Annapolis, June, 1916. Residence, Franklin, N. H. Address, Portsmouth, N. H.
+
+<vocab>Francis A. Corey, Robert Frost, Seth Warner Jones, New Hampshire, biography, genealogy, 19th century, 20th century</vocab>

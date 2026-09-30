@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>55</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 55</header>
+
+Enterprise; first associated with her father, and since his death, in February, 1914, as editor of the *Enterprise*, and proprietor of the "Musgrove Printing House," with an extensive line of job work, including considerable state printing; Methodist; recording steward, M. E. church in Bristol since 1914; member and secretary, Sawheguit Chapter, O. E. S.; member, Red Cross and Bristol Suffrage Ass'n. Residence, Bristol, N. H.
+
+**Plummer, John Wesley**
+State treasurer; b., Hebron, N. H., Sept. 1, 1871; s. Philip and Eliza J. (Ferrin) Plummer; ed. Concord public schools; employed as mercantile clerk and bookkeeper in Concord till 1901; member, Concord common council,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of John Wesley Plummer</image-desc>
+
+1899-1902, president, 1901-2; deputy state treasurer from 1901 to 1915; treasurer from 1915; Christian Scientist; Republican; Mason, Knight Templar; m., Jan. 22, 1895, Etta F. Sleeper; one dau., Laura. Residence, Concord, N. H.
+
+<column-break/>
+
+**Pillsbury, Rosecrans William**
+Lawyer, manufacturer, publisher, farmer; b., Londonderry, N. H., Sept. 18, 1863; s. William S. and Sarah A. (Crowell) Pillsbury; ed. Pinkerton and Phillips (Andover) Academies and Dartmouth College, class of 1885;
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Rosecrans William Pillsbury</image-desc>
+
+studied law with Robert J. Peaslee, and at Boston University Law School; admitted to the bar in 1890; long engaged with his father in shoe manufacturing in Derry; treasurer and manager, Union Publishing Co., publishing *Manchester Daily and Weekly Union*, 1896 to 1911; extensively engaged in agriculture in Londonderry, making a specialty of apple culture on an unusual scale; Republican; representative from Londonderry in N. H. legislature in 1897, 1905 and 1909, serving the last year as chairman of special committee on railroad rates; candidate for Republican gubernatorial nomination and strongly supported in 1906, 1914 and 1916; trustee, N. H. College of Agriculture and Mechanic Arts for sixteen years; alternate in
+
+<vocab>John Wesley Plummer, Rosecrans William Pillsbury, New Hampshire, biography, politics, business, agriculture, genealogy</vocab>

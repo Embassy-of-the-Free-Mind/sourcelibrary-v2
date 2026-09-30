@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>410</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+business from Barnstable village after a three years' trial there. He built in 1873, and removed the building in 1885 to its present site on the northwest corner of Main and Ocean streets, where clothing and furnishing goods have been added to his former business.
+
+The American Clothing House at Hyannis was opened in November, 1885, by Louis Arenovski, and is now the best equipped establishment of the kind in the county west of Harwich Port. Coming to the United States in 1881, he began his business on Cape Cod in a small way, and has been very successful.
+
+In 1866 A. G. Cash purchased the store and hardware business of N. O. Bond, who had continued it several years. In July, 1886, Myron G. Bradford became an equal partner, and the business of plumbing and roofing, with that of general hardware, is continued by Cash & Bradford.
+
+The lumber and carriage manufacturing business has become prominent very naturally. The carriage business now carried on by C. C. & B. F. Crocker was established in 1849, and since 1851 they have occupied their present site. In 1857 B. F. Crocker and his brother, Charles C., opened the lumber yard of B. F. Crocker & Co., still continuing it; also together manufacturing and painting carriages, and keeping paints and like materials for builders. Later, in 1869, two brothers, J. K. & B. Sears, bought of Samuel Snow the lumber yard at the head of Railroad wharf. In 1881 two sons of B. Sears—Isaiah C. and Henry W.—became partners, creating the present firm of J. K. & B. Sears & Co. Branches from this yard are at Woods Holl and Middleboro.
+
+Prominent among the other industries here is the grain and flour business, by the Chase Brothers, near the depot. The father, Heman B., began it in 1848, and was running a packet from Hyannis to New York at the time, loading with fish westward, and returning with goods for merchants and grain for himself. In 1856 David S. Marchant became his partner, and they built a store on Railroad wharf, where for a few years they did business and continued the packet line as Chase & Marchant. In 1868, after the decline of freighting by water, Mr. Chase and his sons, Heman B. Chase, jr., and Clarence, engaged in the grain and coal business, near the depot, admitting, in 1874, a third son, Edward L., to the firm of Heman Chase & Sons. The father died in June, 1880, and Clarence in 1884. The remaining members of the firm still continue, the only change being the addition of hay to the list of merchandise.
+
+The only commission fish business is that of Timothy Crocker & Sons, on Railroad wharf. In 1860 Mr. Crocker started as a shipper of fish, and in 1882 Gideon Hallett became a partner for a short time, adding ice, coal and wood to the business.
+
+<vocab>Barnstable County, Hyannis, Louis Arenovski, A. G. Cash, N. O. Bond, Myron G. Bradford, C. C. & B. F. Crocker, B. F. Crocker & Co., J. K. & B. Sears, Chase Brothers, Heman B. Chase, David S. Marchant, Timothy Crocker & Sons, Gideon Hallett, business history, Cape Cod</vocab>

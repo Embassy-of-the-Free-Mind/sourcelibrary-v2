@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>329</page-num>
+<header>The Book of Clevelanders</header>
+<sig>21</sig>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Christian Girl</image-desc>
+CHRISTIAN GIRL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. M. Glekler</image-desc>
+M. M. GLEKLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Max P. Goodman</image-desc>
+MAX P. GOODMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. Y. Gowen</image-desc>
+A. Y. GOWEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Gordon</image-desc>
+WM. GORDON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. F. Grahl</image-desc>
+GEO. F. GRAHL
+
+<vocab>Clevelanders, Christian Girl, M. M. Glekler, Max P. Goodman, A. Y. Gowen, Wm. Gordon, Geo. F. Grahl</vocab>

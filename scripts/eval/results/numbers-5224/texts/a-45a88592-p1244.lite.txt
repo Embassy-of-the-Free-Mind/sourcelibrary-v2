@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>976</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+most conspicuous site the town could boast. Admirably completing the central outline and background to the village, it served as an excellent beacon to storm-imperilled sailors approaching our coast from sea. But for the transaction of the town's business, except, perhaps, during the pendency of some exciting election or question, and for all social uses, it might as well have been moored upon Stellwagner's bank, in Massachusetts bay. True the high school was kept there, and its dullest pupils were made to understand that ascending the hill of science was not merely a figure of speech. If in fine weather the view from the hill was pleasing, during the terrific storms not infrequent here, the girl approaching or leaving the school who avoided the perils of the slate flying at her from the roof at the rate of seventy-five knots, or escaped impalement upon the iron pickets of the fence surrounding it, had good reason for uttering a prayer of thanksgiving.
+
+That this is not a fancy sketch may be inferred from the incident that one young lady pupil still survives, who, on leaving the house upon one occasion, was lifted from the ground by the gale, and after being helplessly hurled about the premises, was finally suspended upon this fence, with a picket through her cheek. Hence, when on the night of February 16, 1879, some accidental or providential hand applied the torch, and the town and high school house vanished in a glowing chariot of flame, with all the town as spectators, there was felt little genuine regret.
+
+The central part of this site, including most of that covered by the building, had been the homestead of a much respected and one of the oldest families in town, that of the late Godfrey Ryder, sr. It had recently become the patrimony of a distinguished member of that family, who was born upon this spot, and now the honored resident of a distant western city.* The question was anxiously debated in committee, whether or not he would be willing to part with this estate for an adequate consideration, and for the purposes indicated. Half apprehensive of a refusal, you can judge of the committee's gratification when the response to their application came, in substance, that the possessor would not only part with it for a site for a town hall, but in token of the attachment he still cherished towards the place of his birth, its conveyance would be a gift to the town. Subsequently, when the necessity for enlargement of the site became apparent, and steps were taken for the purchase of three other adjoining estates, he claimed the privilege of paying for these also. The entire site thus bestowed, and bordering upon three streets, comprises an area of twenty-two thousand five hundred feet of land, of a value of not less than four thousand dollars.
+
+* Rev. Doctor Ryder, of Chicago.
+
+<vocab>Barnstable County, Godfrey Ryder, high school, town hall, philanthropy, Massachusetts Bay, Stellwagner's bank</vocab>

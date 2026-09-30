@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>399</page-num>
+<header>TOWN OF BARNSTABLE. 399</header>
+
+$883 was given in aid of the enterprise by several gentlemen who had prior to 1863 planned a public library. Gustavus A. Hinckley prepared, January 1, 1877, the first and only catalogue of its books, then 6,161 volumes; in 1889 there were 11,083. The interest on the fund is sufficient for its current expenses, and the purchase of new books annually.
+
+In the latter part of last century a social library was kept here for a time by Dr. Richard Bourne, at his house where the post office was, and his daughter, Abigail, waited on the villagers to books.
+
+Dr. Richard Bourne, the first postmaster, was appointed March 20, 1793. The mail at first was received weekly, then semi-weekly, but its transportation was paid by private subscription, and not until it was tri weekly did the government assume to assist in supplying the Barnstable office, which was near Jail street. Dr. Bourne was succeeded in the office by Matthew Cobb, December 17, 1817. It is a matter of history that great injustice was heaped upon the worthy Doctor Bourne by the government. He was called a defaulter, and his last days were clouded by the imputation. Much distress was occasioned by the collection of the alleged debt from his estate. The error was discovered and full amends were received by his only child after his death, which occurred in 1826. Matthew Cobb had the office near where Mr. Sturgis lives, opposite Phinney & Edson's store, for several years, and was succeeded May 1, 1837, by William H. Brown, who moved it to a building on the corner just west of Alfred Crocker's. He in turn was followed in February, 1842, by Richard Ainsworth, who moved the office to a building on the vacant lot opposite Miss Hinckley's millinery store. The office at the expiration of Mr. Ainsworth's term was variously filled by David Bursley, appointed January 22, 1851, then by Calvin Stetson, Elijah Lewis, and Elisha Jenkins up to 1866. James Clagg was appointed in 1866 and served for fourteen years, being succeeded by Alfred Crocker in 1880. He was succeeded in 1885 by O. W. Hinckley.
+
+The Old Colony Railroad company has had but two agents at its station here, the present one, John A. Lewis, having grown gray in the position. After the establishment of a station in 1854, Joseph Bursley acted as agent a few years. The depot building, with its contents, was burned during a thunder storm in June, 1889, and at once rebuilt.
+
+Among the institutions well remembered was the savings bank established in 1831, of which Henry Crocker was the first president, succeeded by Eben Bacon, and he by Josiah Hinckley. John Munroe was the treasurer for forty years, investing over three million dollars in the time. Daniel Scudder was the treasurer for two years, when the affairs of the bank were closed. The business was done for many
+
+<vocab>Barnstable, public library, Gustavus A. Hinckley, Dr. Richard Bourne, postmaster, Matthew Cobb, William H. Brown, Richard Ainsworth, David Bursley, Calvin Stetson, Elijah Lewis, Elisha Jenkins, James Clagg, Alfred Crocker, O. W. Hinckley, Old Colony Railroad, John A. Lewis, Joseph Bursley, savings bank, Henry Crocker, Eben Bacon, Josiah Hinckley, John Munroe, Daniel Scudder</vocab>

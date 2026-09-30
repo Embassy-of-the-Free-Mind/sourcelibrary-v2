@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>199</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+b. May 21, 1913; and Mahlon Rasselas, b. April 6, 1915. Office and residence, 483 Beacon St., Boston; summer home, North Conway.
+
+**Silver, Ernest Leroy**
+Educator; b., Salem, N. H., Sept. 29, 1876; s. Clinton Leroy and Paulina Clymelia (Ayer) Silver; ed. Pinkerton Academy, Derry, N. H., 1894, Dartmouth College, B.Litt., 1899; superintendent of schools, Rochester, N. H., 1900-04, Portsmouth, 1905-9; principal, Pinkerton Academy, 1909-11; director, N. H. State Normal School, Plymouth, since 1911; Methodist (trustee, M. E. Church, Plymouth); Progressive Republican; served as president of Strafford and Rockingham County Teachers' Ass'n, and N. H. State Teachers' Ass'n; many years mem-
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Ernest Leroy Silver</image-desc>
+
+ber, N. H. Educational Council; president, Schoolmasters' Club; director, American Institute of Instruction; member, National Educational Ass'n and National Ass'n of Normal School Presidents; A. F. & A. M., St. Johns'
+
+<column-break/>
+
+Lodge, Portsmouth; m., 1889, Hattie May Plummer. Residence, Plymouth, N. H.
+
+**Nolin, William Peter**
+Merchant; postmaster of Claremont; b., Claremont, N. H., April 6, 1875;
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of William Peter Nolin</image-desc>
+
+s. Pierre and Mary (Gillette) Nolin; ed. public schools of Claremont; engaged in the grocery business established by his father in 1895, and since incorporated as P. Nolin & Sons, doing an extensive business; now president of the corporation, and also president of the Nolin Shoe Co.; Roman Catholic; Democrat; appointed postmaster of Claremont by President Wilson; active member of Claremont board of trade and interested in all public improvements; member, committee on public playground; director, People's National Bank; member and past vice-president, N. H. Retail Grocers Ass'n; member, Knights of Columbus, Elks, Moose, Foresters of America, L'Union Canadienne Francaise, St. Jean Baptiste Soc., Naturalization Club; m.
+
+<vocab>Ernest Leroy Silver, William Peter Nolin, New Hampshire, biography, education, merchant, postmaster, genealogy</vocab>

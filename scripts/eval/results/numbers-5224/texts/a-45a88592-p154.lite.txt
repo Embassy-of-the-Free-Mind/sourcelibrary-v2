@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>132</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+resume their peaceable pursuits after the declaration of peace that the averages of the four years, including and preceding 1790, are equal to the yearly average for the decade preceding the war. Provincetown had greatly increased her vessels and tonnage, sending out eleven, with an average of fifty tons, in which eighty-eight men secured 8,200 quintals of cod annually.
+
+The business of the cod fishermen has been a permanent and generally a profitable one, and their product has long been one of the staple food-supplies of the world. Off every shore of the Cape more or less are caught, but the greater supply is to the north and east. The records of the Bureau of Labor Statistics show that in the census year 1837 there were taken 134,658 quintals of cod by the fishermen of Barnstable county. Of these Provincetown caught 51,400 quintals; Orleans, 20,000; Truro, 16,520; Chatham, 15,500; Harwich, 10,000; Dennis, 9,141; Yarmouth, 4,300; Wellfleet, 3,100; Sandwich, 2,100; Eastham, 1,200; Brewster, 800; and Barnstable, the least, 267 quintals.
+
+In 1845 Provincetown secured 20,000 quintals; Harwich, 14,200; Dennis, 11,150; Chatham, 7,600; Truro, 6,250; Yarmouth, 6,195; Orleans, 3,500; Brewster, 2,400; Eastham and Wellfleet, each 2,000; and Falmouth, 800 quintals.
+
+The next decade showed Provincetown catching 79,000 quintals annually; with Chatham next in order, taking 15,000; Wellfleet, 8,528; Barnstable, 8,225; Harwich, 6,300; Yarmouth, 4,400; Orleans, 4,265; Dennis, 1,200; Eastham, 300; and Falmouth, 250 quintals.
+
+In the census year 1865 Provincetown reported a catch of 65,411 quintals, followed by Chatham, with 25,361; Harwich, 20,938; Dennis, 7,769; Barnstable, 1,938; Orleans, 1,350; Wellfleet, 1,200; Truro, 670; Yarmouth, 500; and Eastham, 130 quintals.
+
+In 1875 the Provincetown fleet reported for the census year 29,936 quintals; Chatham, 16,773; and Yarmouth, 62 quintals.
+
+While other branches of fishing are common to all the towns of the county, the cod fishing is more extensively carried on from Provincetown. In 1887 the Provincetown fleet took 120,000 quintals; in 1888 fifty-seven vessels, employing nine hundred men, secured 90,000 quintals; and the season of 1889 yielded but 50,000 quintals to the forty-nine vessels and the eight hundred men employed. These latter figures indicate the least prosperous season which the fleet has had in twenty years. In the early days of the business a crew consisted of six or eight men, but larger vessels were found to be better, and during the recent years schooners with twenty-five men each are more generally in use. Their season at the Grand banks is usually from April to September, and it has been expected that during this period the fleet would secure two hundred quintals of fish for each man employed.
+
+<vocab>Barnstable County, Provincetown, cod fishing, Bureau of Labor Statistics, census, quintals, Grand banks, fishing industry</vocab>

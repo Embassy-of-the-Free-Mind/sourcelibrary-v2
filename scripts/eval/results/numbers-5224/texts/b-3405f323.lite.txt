@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>195</page-num>
+<header>ON THE CAVE OF THE NYMPHS. 195</header>
+
+But Plato, in the Gorgias, by tubs intends to signify souls, some of which are malefic, but others beneficent, and some of which are rational, but others irrational^e.
+
+<note>e</note> The passage in the Gorgias of Plato, to which Porphyry here alludes, is as follows: — " Soc. But, indeed, as you also say, life is a grievous thing. For I should not wonder if Euripides spoke the truth when he says: ' Who knows whether to live is not to die, and to die is not to live?' And we, perhaps, are in reality dead. For I have heard from one of the wise, that we are now dead; and that the body is our sepulchre; but that the part of the soul in which the desires are contained, is of such a nature that it can be persuaded, and hurled upwards and downwards. Hence a certain elegant man, perhaps a Sicilian, or an Italian, denominated, mythologizing, this part of the soul a tub, by a derivation from the probable and the persuasive; and, likewise, he called those that are stupid, or deprived of intellect, uninitiated. He farther said, that the intemperate and uncovered nature of that part of the soul in which the desires are contained, was like a pierced tub, through its insatiable greediness."
+
+What is here said by Plato is beautifully unfolded by Olympiodorus, in his MS. Commentary on the Gorgias, as follows: — " Euripides (in Phryxo) says, that to live is to die, and to die to live. For the soul coming hither, as she imparts life to the body, so she partakes [through this] of a certain privation of life; but this is an evil. When separated, therefore, from the body, she lives in reality: for she dies here, through participating a privation of life, because the body becomes the source of evils. And hence it is necessary to subdue the body.
+
+" But the meaning of the Pythagoric fable, which is here introduced by Plato, is this: We are said to be dead, because, as we have before observed, we partake of a privation of life. The sepulchre which we carry about with us is, as Plato himself explains it, the body. But Hades is the unapparent, because we are situated in obscurity, the soul being in a state of servitude to the body. The tubs are the desires; whether they are so called from our hastening to fill them, as if they were tubs, or from desire persuading us that it is beautiful. The initiated, therefore, *i. e.* those that have a perfect knowledge, pour into the entire tub: for these have their tub full; or, in other words, have perfect virtue. But the uninitiated, viz. those that possess nothing perfect, have perforated tubs. For those that are in a state of servitude to desire always wish to fill it, and are more inflamed; and on this account they have perforated tubs, as being never full. But the sieve is the rational soul mingled with the irrational. For the [rational] soul is called a circle, because it seeks itself, and is itself sought; finds itself, and is itself found. But the irrational soul imitates a right line, since it does
+
+<vocab>Plato, Gorgias, Porphyry, Euripides, Olympiodorus, Pythagoric, soul, body, Hades, desires, virtue, rational, irrational</vocab>

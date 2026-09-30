@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+order of Governor Bowdoin was issued alike to the sheriffs of every other county of the state; and this, considering the exigency of the times, perhaps was the duty of the executive branch.
+
+WAR OF 1812.*—After the restoration of peace, at the conclusion of the revolutionary war, the French revolution took place and France declared war against England. This war continued from 1793 until the treaty of peace at Amiens in 1802. But this treaty was of short duration, for England became so excited by the aggressive policy of Napoleon that war was declared against France in May, 1803, and soon all the European powers were again involved in hostilities. The United States was almost the only power that preserved its neutrality. Being thus at peace with the two great nations—England and France, a flourishing commerce, unprecedented in the history of the country, grew up in America, which produced a high degree of prosperity in the commercial portions of the United States, and Barnstable county received a remarkable touch of this new impetus given to sea going business, as a large part of its citizens were engaged in maritime pursuits.
+
+But these favorable advantages were not long enjoyed by the citizens of the United States, for Napoleon, in 1806, issued the famous Berlin Decree, by which the British islands were declared to be in a state of blockade, and all commerce, intercourse and correspondence with them were prohibited. In consequence of such restrictions the commerce of the United States with England was much embarrassed, and was carried on at a risk of seizure. The British government, aggrieved by the Berlin Decree, put forth a retaliatory measure by which American commerce received another damaging blow; to the effect that all neutral vessels trading with France should be confiscated. This order was followed by another in 1807, by which all trade in French goods and the goods of other nations with which England was at war, was entirely prohibited. Then followed an order by Napoleon called the Milan Decree, by which every vessel of whatsoever nation, that had been searched by an English vessel and had consented to be sent to England, was to be considered as a lawful prize. By such acts and measures on the part of England and France, a fatal blow was aimed at American commerce, and the course pursued by the two hostile nations was disastrous to the prosperity of this country.
+
+The blockade of the European ports from Brest to the Elbe, declared by Great Britain and not maintained by an actual naval force, was by the United States government looked upon as a “paper blockade,” and therefore of no avail, and any seizure made by British vessels of American commerce was a palpable violation of the rights of a nation occupying a neutral position in time of war. Owing to the
+
+* By Joshua H. Paine, Esq., of Harwich.
+
+<vocab>War of 1812, Governor Bowdoin, French Revolution, Treaty of Amiens, Napoleon, Barnstable County, Berlin Decree, Milan Decree, paper blockade, maritime commerce, neutrality</vocab>

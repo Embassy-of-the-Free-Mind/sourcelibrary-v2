@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>361</page-num>
+<header>The Book of Clevelanders</header>
+<sig>23</sig>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. W. Norris</image-desc>
+W. W. NORRIS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Herman J. Nord</image-desc>
+HERMAN J. NORD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Frank Noville</image-desc>
+DR. FRANK NOVILLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Oberdoerster</image-desc>
+WM. OBERDOERSTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of August Oberdoerster</image-desc>
+AUGUST OBERDOERSTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. C. O'Brien</image-desc>
+C. C. O'BRIEN
+
+<vocab>Clevelanders, biography, portraits, W. W. Norris, Herman J. Nord, Frank Noville, Wm. Oberdoerster, August Oberdoerster, C. C. O'Brien</vocab>

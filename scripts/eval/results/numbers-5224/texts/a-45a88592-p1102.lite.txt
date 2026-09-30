@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>860</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+dollars. Bartlett White, of Yarmouth, was the builder. The first story contains the public hall, the second story is occupied by Mount Horeb Lodge, of Freemasons, and the Sylvester Baxter Chapter, and the third story is used for a dining room. The lodge room was furnished at an expense of about fifteen hundred dollars, and dedicated December 25, 1865. Rev. Dr. Quint, of New Bedford, delivered the dedicatory address.
+
+Mount Horeb Lodge of Freemasons was constituted, December 25, 1855. The following officers, representing the Grand Lodge, were in attendance: Sylvester Baxter, M. W. G. M.; Rufus S. Pope, D. G. M.; A. C. Nickerson, G. S. W.; H. W. Rugg, J. G. W. The marshal for the occasion was Anthony Kelley. The officers for the year ending December, 1856, installed were: Nehemiah D. Kelley, W. M.; Joseph K. Baker, S. W.; William E. Ansel, J. W.; Anthony Kelley, jr., secy.; Remark Chase, treas.; Samuel D. Chase, S. D.; Benjamin W. Eldridge, J. D.; and Anthony Kelley, marshal. The masters of the lodge have been: N. D. Kelley, Joseph K. Baker, Anthony K. Chase, Veranus Nickerson, Ozias C. Baker, Benjamin P. Sears, Abner L. Ellis, Luther Fisk, David Fisk, Erastus Chase, Sylvester Baker, Sylvester F. Baker, and Henry H. Fisk. The secretary of the lodge in 1889 was James B. Hopkins.
+
+The Sylvester Baxter Chapter meets in Mount Horeb Lodge room. The charter bears date December 7, 1870. The principal officers the first year were: N. D. Kelley, H. P.; Joseph K. Baker, K.; Watson B. Kelley, sec. The principal officers of 1889 were: John E. Hamer, H. P.; Henry H. Fisk, K.; and Erastus Chase, S. Charles H. Kelley has been secretary during eleven years of the existence of the chapter. Besides the above, who acted as H. P. since the chapter was instituted, was Abiathar Doane. The members are scattered over the adjoining towns.
+
+North Harwich is the post office designation of the village in the northwestern part of the town. This part of the town was early known, as here was built the first grist mill in the south part of the old town. It stood upon the Herring river, and was known as Hall's mill. The site is now marked by the Ryder's mill. It was owned by Samuel Hall, the first resident here, sometime before 1700. A short distance north of this mill, on the river, stood the cotton and woolen factory, removed from South Harwich in 1825, and again removed in 1851; and also the grist mill and mill for carding wool. The site of these mills is marked by Rogers' mill. Below Hall's mill, or "Middle mill," as it was sometimes called, was Kelley's mill. Near the site of this grist mill, in 1867, was erected the tap and die factory, which was burned in December, 1868. Near by was shortly after erected the building for making safety sectional boilers, under the superin-
+
+<vocab>Barnstable County, Mount Horeb Lodge, Freemasons, Sylvester Baxter Chapter, North Harwich, Herring River, grist mill, Hall's mill, Ryder's mill, Samuel Hall, cotton and woolen factory, Rogers' mill, Kelley's mill, tap and die factory, safety sectional boilers</vocab>

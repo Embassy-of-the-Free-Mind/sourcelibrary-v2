@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>mixed</script>
+<page-type>copyright-page</page-type>
+<meta>F499 C6 B7, AUG 27 1914, $12.50, Cl. A 380118, no 1</meta>
+
+->Copyright 1914 by<-
+->The Burrows Bros. Company<-
+->Cleveland<-
+
+AUG 27 1914
+
+<margin>F499 C6 B7</margin>
+
+<margin>$12.50</margin>
+© Cl. A 380118
+<margin>no 1</margin>
+
+->THE COMMERCIAL PRINTING CO.<-
+->AKRON, OHIO<-
+
+<vocab>Copyright, The Burrows Bros. Company, Cleveland, The Commercial Printing Co., Akron, Ohio</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>44</page-num>
+<header>The Book of Clevelanders</header>
+
+Schenectady, N. Y.; degree of A. B.; married, Cleveland, Oct. 6, 1869; Mary Kate Coll; two daughters, Mrs. G. W. Grandin and Mrs. J. P. Burton; pres. The Star Elevator Co. and The Kilby Mfg. Co.; director and chairman of the Board National City Bank; director The Cleveland Burial Case Co., Cleveland Union Stock Yards Co., Citizens' Savings & Trust Co. and F. H. Hill & Co., Chicago; member Union, University, Country, Roadside Clubs, Cleveland, and The University Club, New York City; pres. of the Union Club of Cleveland, 1899 and 1900. Recreations: Golf and Motoring.
+
+**BURROWS, Charles William**; born, Hollis, York County, Me., Dec. 21, 1849; son of Joseph W. and Mary Elizabeth Atkinson Burrows; graduated, U. S. Military Academy, 1870; served as 2d Lt., 34 U. S. Art, 1870-1872; married, Lottie Thomas Mott, of Norwalk, Conn., Feb. 26, 1884; started, November, 1873, firm of Burrows Bros. (now The Burrows Bros. Co.), publishers and booksellers; Republican, member Ass'n of Graduates of U. S. Military Academy; Cleveland Chamber of Commerce, Soc. Colonial Wars. Clubs: Union, Euclid, Hermit, Athletic. Identified with movement to procure one-cent letter postage.
+
+**BURROWS, George Humphrey**; lawyer; born, Wakeman, O., May 18, 1863; son of Asa W. and Nancy Ann Humphrey Burrows; educated in Cleveland public schools and Riverside Seminary, Wellsville, N. Y.; married, Cleveland, April 5, 1885, Ida Bell Folliett; issue, Ethel Ida, G. Howard; sec'y Cleveland Coal Exchange, 1885-1886; sec'y Merchant's and Manufacturer's Exchange, 1887-1897; practiced law from 1893; sec'y and gen'l mgr. Cleveland Farm Development Co.; sec'y and director Chagrin River Land & Investment Co.; pres. and director the Geo. H. Burrows Development Co.; member firm of Burrows, Kraus & McMasters.
+
+**BURTON, Charles Emerson**; clergyman; born, Iowa, March 19, 1869; son of John Henry and Jane A. Simons Burton; educated, Carleton College, A. B., 1895, M. A., 1898, Chicago Theological Seminary, B. D., 1898, Carleton College, D.D., 1911; married, Menoken, N. D., Oct. 17, 1898, Cora Viola King; issue, Dorothy Viola, Lyndon David, Malcolm King and Myron Simons; preached before and during college course in the missions and churches of the Congregational order of Minneapolis; spent summer vacations preaching in home missionary churches in Minnesota and North Dakota; pastor Puritan Church, Chicago, 1895-1898, Lyndale Church, Minneapolis, 1899-1909; associate pastor to Dr. Washington Gladden, First Congregational Church, Columbus, O., 1909 and 1910; began pastorate Euclid Avenue Church, Cleveland, March 1, 1911; trustee Congregational Home Missionary Society, New York, Congregational Union, Cleveland, National Anti-Saloon League; former trustee of Carleton College and Chicago Theological Seminary; member Delta Sigma Rho (honor) Fraternity; member Business Men's Club, Y. M. C. A., and Congregational Club, Cleve-
+
+<vocab>Biography, Cleveland, Business, Clergy, Genealogy, Education, Clubs</vocab>

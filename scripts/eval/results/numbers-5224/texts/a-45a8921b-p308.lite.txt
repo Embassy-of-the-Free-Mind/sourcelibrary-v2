@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>294</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Weeks, Greenland, N. H.; children, Virginia G., b. May 29, 1899 (Dover high school, 1918); Elizabeth M., b. Sept. 18, 1904; Frederick C., b. Aug. 22, 1905; Henry R., b. Oct. 27, 1913. Residence, Dover, N. H.
+
+**Sanders, Charles Henry**
+Merchant; b., Penacook (Ward One Concord), N. H., Sept. 12, 1851; s. Jacob P. and Sarah Ann (Dutton) Sanders; ed. public schools, Penacook
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache, wearing a suit, vest, and tie.</image-desc>
+
+Academy, N. H. College of Agriculture and Mechanic Arts, 1871, Thayer School of Engineering, one year, Mass. Inst. of Technology, one year; engaged as an architect till 1876, when entered mercantile life with his father, in Penacook, and has since continued the business, dealing in boots, shoes, and clothing; Congregationalist; Republican; superintendent Congregational Sunday School, Penacook, many years; for some time member Penacook school committee; alderman, Ward 1, 1897; trustee Concord public library
+
+<column-break/>
+
+for thirty years; trustee Loan and Trust Savings Bank and member investment committee many years; one of the organizers of the Penacook Electric Light Co., serving as director, treasurer and manager; president Woodlawn Cemetery Ass'n; trustee N. H. Orphans Home, Franklin; member N. H. Historical Soc., Appalachian Mountain Club, Boston (life member); Mason, 32d degree and Knight Templar; m., May 24, 1876, Sarah Emmeline Abbott. Residence, Penacook, N. H.
+
+**Niles, Mary**
+Registrar, b., Hartford, Conn., Sept. 12, 1867, dau. Rt. Rev. William Woodruff and Bertha (Olmsted) Niles; moved to Concord, N. H., in infancy; ed. Concord high school, 1885; studied five years at St. Mary's School, Concord, two years with S. B. Whitney, organist and composer, Boston; taught at St. Mary's School; Episcopalian; supervisor primary dept., St. Paul's Sunday school; corresponding secretary and treasurer, St. Mary's Alumnæ Ass'n, 1909- (having edited two Registers of the Alumnæ); treasurer and business manager of the Church Fly-Leaf, 1903-; registrar of the Diocese of New Hampshire, 1913-; member Concord Fem. Char. Ass'n (corresponding secretary, 1914-), N. H. Historical Soc., Stratford (Shakespeare) Club, Outing Club (Camp Weetamoo), Wild Flower Club, Olmsted Family Ass'n, District Nursing Ass'n, Friendly Club, Red Cross; contributor to the press. Residence, Concord, N. H.
+
+**Niles, Bertha**
+Teacher of art; b., Concord, N. H., Apr. 29, 1874, dau. Rt. Rev. William Woodruff and Bertha (Olmsted) Niles; ed. St. Mary's School, Concord, N. H., 1891, took post-graduate course there two years, five years at the Art Students' League, New York, supplemented by two years of study in Paris and Munich; elected member Art Students' League (equivalent to a degree), 1900; taught in St. Catherine's
+
+<vocab>Charles Henry Sanders, Mary Niles, Bertha Niles, New Hampshire, biography, genealogy, Penacook, Concord, St. Mary's School, Episcopalian, Art Students' League</vocab>

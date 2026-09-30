@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>403</page-num>
+<header>The Book of Clevelanders 403</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Humphrey, Dudley S. | 141 | Koons, Louis Albert, Jr. | 158 |
+| Hunt, William Henry | 141 | Kornman, William | 158 |
+| Hunter, Alexander A. | 142 | Kraus, Emil F. | 158 |
+| Hunter, William Ross | 142 | Krause, Frank S. | 158 |
+| Husband, Arthur J. | 142 | Kuechle, Adam William | 159 |
+| Huston, Frederick Wilhelm | 143 | Kuehn, William J. | 159 |
+| Hutchins, John Corydon | 143 | Kuehnle, Carl Fred | 159 |
+| Hyde, Edward Pechior | 143 | Kuenhold, Otto J. | 159 |
+| Hyde, Walker F. | 144 | Kundtz, Theodore | 160 |
+| Hyre, Alonzo Eugene | 144 | Kunze, Paul | 160 |
+| | | | |
+| Ireland, Robert L. | 144 | Lang, Charles E. J. | 160 |
+| | | Lang, Elmer Joseph | 160 |
+| Jackson, Charles Edmund | 145 | Lang, George C. | 161 |
+| Janes, Julius French | 145 | Langdon, Charles T. | 161 |
+| Jeavons, A. N. | 145 | Lapp, Charles W. | 161 |
+| Jennings, John Gould | 145 | Latimer, Jay E. | 161 |
+| Jensen, Peter | 145 | Latty, Samuel D. | 162 |
+| Jerome, Frank J. | 146 | Laub, Jacob | 162 |
+| Johnson, George Baird | 146 | Laughlin, Charles F. | 162 |
+| Johnson, Levi A. | 146 | Lawrence, Frank Duran | 163 |
+| Johnson, Wendell H. | 147 | Lawrence, M. Lyman | 163 |
+| Johnston, Albert William | 147 | Laws, Albert W. | 163 |
+| Jones, Frank Z. | 147 | Leavenworth, Edwin John | 163 |
+| Jones, Harry Brinton | 147 | Lee, William Granville | 163 |
+| Jones, J. H. | 147 | Lenihan, Ernest P. | 163 |
+| Jones, Paul D. | 148 | Leonard, Rt. Rev. William | |
+| Joyce, Adrian Dwight | 148 | Andrew, D. D. | 164 |
+| Juengling, James W. | 148 | Leuty, Demaline | 164 |
+| | | Lewandowski, S. | 164 |
+| Kanner, Gabriel | 149 | Lewin, John F. | 165 |
+| Kasper, William C. | 149 | Lewis, Robert Ellsworth | 165 |
+| Kaufman, Harry Livingston | 149 | Lewis, Walter Irving | 165 |
+| Kelley, Hermon A. | 149 | Liebenthal, Melville | 165 |
+| Kelley, Samuel Walter | 150 | Liebenthal, Sylvester | 165 |
+| Kelley, Michael J. | 150 | Liechti, John Paul | 166 |
+| Kellogg, Frederick D. | 150 | Lieghley, Per Lee Alvin | 166 |
+| Kelly, William Eldred | 151 | Linley, Arthur | 166 |
+| Kennedy, Frederick Ingham | 151 | Little, Bascom | 166 |
+| Kilgore, Robert Murray | 151 | Litzler, Louis I. | 167 |
+| Kilmer, Melvin Daniel | 151 | Livingston, David S. | 167 |
+| King, Herbert Doan | 152 | Locher, Cyrus | 167 |
+| King, Harry Wheelock | 152 | Loeffelbein, Gustav A. | 167 |
+| King, Warren Phelps | 152 | Lorentz, George A. | 168 |
+| Kingsbury, Edward W. | 152 | Lorenz, Carl | 168 |
+| Kirk, Frank M. | 153 | Lotz, John Henry | 168 |
+| Kiss, Ernest | 153 | Lougee, William S. | 168 |
+| Kittredge, Lewis Harris | 153 | Loughry, James Arthur | 168 |
+| Klee, John | 153 | Lowe, John C. | 169 |
+| Klein, Henry F. | 154 | Lowell, Edwin Dwight | 169 |
+| Klein, Louis | 154 | Lowith, Emanuel | 169 |
+| Kline, Homer J. | 154 | Lowry, Hugh F. | 169 |
+| Kline, John Charles | 154 | Luce, Frank Wellington, D. D. | 169 |
+| Kline, Virgil P. | 154 | Ludlow, William Wallace | 170 |
+| Klingman, Fred F. | 155 | Ludwig, Ernest | 170 |
+| Knapp, Howard H. | 155 | Luekens, Paul G. | 170 |
+| Knight, Augustus C. | 155 | Lynch, Frank E. | 170 |
+| Knight, Thomas A. | 155 | Lyon, William Francis | 170 |
+| Knox, William | 156 | | |
+| Koblitz, Rudolph C. | 156 | MacAdams, Albert Joseph | 171 |
+| Koch, George D. | 156 | MacDiarmid, Roy Wright | 171 |
+| Koch, Rudolph A. | 157 | McAllister, William Barriss | 171 |
+| Koehl, William | 157 | McBride, Malcolm | 171 |
+| Kohn, Adolph | 157 | McCallie, Audley P. | 172 |
+| Kohn, Jacob B. | 157 | McCarrens, John S. | 172 |
+| Konigslow, Otto | 157 | McCaslin, Walter L. | 172 |
+
+<vocab>Cleveland, biography, index, directory</vocab>

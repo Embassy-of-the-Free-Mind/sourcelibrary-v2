@@ -1,0 +1,57 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>x</page-num>
+<header>x CONTENTS.</header>
+
+| | | PAGE |
+| :--- | :--- | :--- |
+| Dexter House | Woods Holl, facing | 671 |
+| Dillingham, John H. | Portrait of, facing | 195 |
+| Doane, Abiathar | “ “ | 874 |
+| Doane, George W., M.D. | “ “ | 225 |
+| Doane, John | “ “ | 210 |
+| Doane, Nathaniel | “ “ | 870 |
+| Doane, Oliver | Portrait of, follows | 770 |
+| Doane, Valentine, jr. | Residence of, facing | 873 |
+| Doane Homestead | Orleans, precedes | 771 |
+| Drew, George P. | Residence of, facing | 277 |
+| Edson, Nathan | Portrait of, follows | 428 |
+| Edson, Nathan | Residence of, precedes | 429 |
+| Eldridge, Levi | Portrait of, facing | 613 |
+| Freeman, Richard R. | “ “ | 817 |
+| Friends Meeting House | Sandwich | 175 |
+| Friends Meeting House | West Falmouth | 191 |
+| Friends Meeting House | Yarmouth | 181 |
+| Fish, Joseph C. | Portrait of, facing | 687 |
+| Fisk, David | “ “ | 45 |
+| Fisk, Uriah B. | Residence of, facing | 558 |
+| Ginn, David R., M.D. | “ “ | 858 |
+| Ginn’s Bazaar | Dennis Port, facing | 858 |
+| Goss, Franklin B. | Portrait of, facing | 431 |
+| Gould, Samuel H., M.D. | “ “ | 230 |
+| Hamblin, Caleb O. | Portrait of, follows | 690 |
+| Hamblin, Caleb O. | Residence of, precedes | 691 |
+| Hamblin, John C. | Portrait of, facing | 692 |
+| Harding, Hiram | “ “ | 618 |
+| Harding, Joseph C. | “ “ | 617 |
+| Harriman, Judge Hiram P. | “ “ | 212 |
+| Headstones, Ancient | Barnstable | 393 |
+| Holway, David N. | Portrait of, facing | 311 |
+| Howard, Ezra C. | “ “ | 356 |
+| Howes, Jerusha S. | Residence of, precedes | 563 |
+| Howes, Joshua C. | Portrait of, facing | 561 |
+| Howes, Levi | “ “ | 566 |
+| Howes, Moses | Portrait of, follows | 562 |
+| Howes, Thomas Prince | Portrait of, facing | 255 |
+| Howes, William F. | “ “ | 564 |
+| Hoxie, Joseph | “ “ | 315 |
+| Hoxie, Newell | “ “ | 178 |
+| Hoxie, Susan F. | Residence of, facing | 175 |
+| Hulbert, Chauncy M., M.D. | Portrait of, facing | 232 |
+| Incorporation Map | | 39 |
+| Indian Map | | 15 |
+| Iyanough House | | 411 |
+
+<vocab>Table of Contents, Portraits, Residences, Local History, Massachusetts</vocab>

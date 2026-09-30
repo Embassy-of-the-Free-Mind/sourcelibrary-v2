@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>80</page-num>
+<header>The External History of the Church.</header>
+
+<margin>CENT. I. PART I.</margin>
+he himself had committed with a barbarous pleasure. In avenging this crime upon the innocent Christians, he ordered matters so, that the punishment should bear some resemblance to the offence. He, therefore, wrapped up some of them in combustible garments, and ordered fire to be set to them when the darkness came on, that thus, like torches, they might dispel the obscurity of the night; while others were fastened to crosses, or torn to pieces by wild beasts, or put to death in some such dreadful manner. This horrid persecution was set on foot in the month of November [u], in the 64th year of Christ, and in it, according to some ancient accounts, St. Paul and St. Peter suffered martyrdom; though this latter fact is contested by many, as being absolutely irreconcilable with chronology [w]. The death of Nero, who perished miserably in the year 68, put an end to the calamities of this first persecution, under which, during the space of four years, the Christians suffered every sort of torment and affliction, which the ingenious cruelty of their enemies could invent.
+
+<margin>The extent of this persecution.</margin>
+XIV. Learned men are not entirely agreed concerning the extent of this persecution under Nero. Some confine it to the city of Rome, while others represent it as having raged throughout the whole empire. The latter opinion, which is also the most ancient [x], is undoubtedly to be preferred; as
+
+[u] See, for a further illustration of this point of chronology, two French Dissertations of the very learned Alphonse de Vignoles, concerning the cause, and the commencement of the persecution under Nero, which are printed in Masson's *Histoire critique de la republique des lettres*, tom. viii. p. 74—117. tom. ix. p. 172—186. See also Toinard. *Ad Lactantium de mortibus persequut.* p. 398.
+
+[w] See Tillemont, *Histoire des empereurs*, tom. i. p. 564. Baratier, *De successione Romanor. Pontif.* cap. v. p. 60.
+
+[x] This opinion was first defended by Franc. Balduin, in his *Comm. ad edicta imperator, in Christianos*, p. 27, 28.
+
+<vocab>Nero, Christians, persecution, martyrdom, St. Paul, St. Peter, chronology, Roman Empire, history of the church</vocab>

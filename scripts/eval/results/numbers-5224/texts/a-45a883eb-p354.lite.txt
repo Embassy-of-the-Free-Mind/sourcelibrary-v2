@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>350</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Paul G. Luekens</image-desc>
+PAUL G. LUEKENS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Ernest Ludwig</image-desc>
+ERNEST LUDWIG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. F. Lyon</image-desc>
+W. F. LYON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. W. MacDiarmid</image-desc>
+R. W. MACDIARMID
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. J. MacAdams</image-desc>
+A. J. MACADAMS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. McBride</image-desc>
+M. MCBRIDE
+
+<vocab>Paul G. Luekens, Ernest Ludwig, W. F. Lyon, R. W. MacDiarmid, A. J. MacAdams, M. McBride, Clevelanders, biography, portraits</vocab>

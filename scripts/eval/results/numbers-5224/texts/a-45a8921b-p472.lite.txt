@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>458</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Thomas, Edwin Herbert**
+Editor and publisher; b., Lawrence, St. Lawrence County, N. Y., Nov. 19, 1857; s. Harris J. and Lucy D. (Wright) Thomas; ed. public schools, Nicholville, N. Y., and St. Albans, Vt.; learned the printer’s trade with the *St. Albans Messenger*; subsequently foreman and superintendent of a Montreal, P. Q., printing establishment; served five years, from 1887, on the reportorial staff of the Rutland, Vt.,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie.</image-desc>
+
+*Herald*; later assisted in establishing the *Rutland Daily Evening News*; in November, 1899, purchased the Farmington, N. H., *News*, removing there; in charge of that paper till 1917 when he retired; Episcopalian; Republican; member N. H. house of representatives, 1915–16, 1917–18, serving on appropriations committee each session; delegate Republican national convention, 1916; secretary and treasurer Strafford County Republican Club; president Farmington Board of Trade; trustee Farmington Savings Bank; member N. H. Pilgrim Tercentennial
+
+<column-break/>
+
+committee, 1917–, Fraternal Lodge, A. F. & A. M., Columbian Chapter, O. E. S., Harmony Lodge, K. of P.; m., February, 1880, Jennie I. Shipman, Hardwick, Vt.; two sons, Carl S., b. June 3, 1883, now proprietor *Farmington News*; Guy E., b. Feb. 8, 1889, now associated with the Du Pont Mfg. Co., Portland, Me. Residence, Farmington, N. H.
+
+**Rich, George Frank**
+Lawyer; b., Bethel, Me., Dec. 1, 1868; s. James Frank and Sarah Ellen (Bean) Rich; ed. public schools; Gould’s Academy, Bethel, Me.; Univ. of Me., 1892; Univ. of Mich., law department, LL.B. 1893; admitted to N. H. bar, 1894; member firm of Chamberlin & Rich, Berlin, 1894–1904; Rich & Marble, 1905–17; since then alone in practice; Congregationalist; Republican; judge Berlin municipal court, 1894–1913; member city council, Berlin, 1914; mayor of Berlin, 1915–19; member Republican state committee, A. F. & A. M., 32d degree and Shriner; Knights of Pythias; m., June 10, 1896, Persis M. Mason, Berlin; two children, Robert, b. March 25, 1897 (in U. S. Navy); Barbara, b. Aug. 2, 1904. Residence, 143 Prospect St., Berlin, N. H.
+
+**Goldthwaite, James Walter**
+Educator; b., Lynn, Mass., March 22, 1880; s. James W. and Olive J. (Parker) Goldthwaite; ed. Lynn, Mass., classical high school, 1898; Harvard, A.B. 1902, A.M. 1903, Ph.D. 1906; assistant professor geology, Northwestern Univ., 1904–8; assistant professor geology, Dartmouth, 1908–11, Hale professor geology since 1911; engaged in summers in field work for geological surveys of Wisconsin and Illinois, for the U. S. Geological Survey, and Canadian Geological Survey; Fellow Geological Soc. of America, American Academy of Arts and Sciences, etc.; author various geological reports and publications; Congregationalist; m., June 25, 1906, Edith Dunnels Richards, Newtonville, Mass. Residence, Hanover, N. H.
+
+<vocab>Edwin Herbert Thomas, George Frank Rich, James Walter Goldthwaite, Biography, New Hampshire, Farmington, Berlin, Hanover, Geology, Journalism, Law, Education</vocab>

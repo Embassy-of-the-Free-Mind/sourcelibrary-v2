@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>439</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 439</header>
+
+pital, Wolfeboro; lieutenant Medical Reserve Corps, U. S. Army; member A. F. & A. M. (Morning Star Lodge) Knights of Pythias, Patrons of Husbandry; m., Oct. 25, 1905, Bessie Frances Beless, Waltham, Mass.; children: Ethel Alma, b. Aug. 22, 1906; Mildred Beless, b. May 24, 1908; Stephen Ellsworth, b. June 9, 1910; John Hildreth, b. March 5, 1913. Residence, Wolfeboro, N. H.
+
+**Wheeler, Bertrand Thorp**
+Civil engineer; b., Lempster, N. H., Nov. 25, 1863; s. Daniel Bingham and Maria (Thorp) Wheeler; ed. Dartmouth College, B.S. 1884; pursued the profession of civil engineer for many years in Boston and vicinity; street commissioner of Boston under Mayors Curtis and Hart; assistant engineer of construction, N. Y., N. H. & Hartford R. R.; chief engineer Me. Central R. R. and Portland Terminal Co. since 1912; Unitarian; Republican; member American Soc. Civil Engineers; m., March 27, 1888, Mabel A. Cole, Fitchburg, Mass.; three sons and three daughters. Residence, 35 West St., Portland, Me.
+
+**Dudley, Albertus True**
+Teacher; author; b., Paris, N. Y., June 18, 1866; s. Rev. Horace Franklin and Josephine (Lamson) Dudley; ed. Harvard, A.B. 1887, and German study; teacher Phillips Exeter Academy, 1887–95, Noble & Greenough’s School, Boston, 1896–1917; Republican; antisuffragist; secretary N. H. Public Library Commission, 1917–; N. H. house of representatives, 1919–20; author, “Following the Rail,” 1903; “Making the Nine,” 1904; “In the Line,” 1905; “With Mask and Mitt,” 1906; “The Great Year,” 1907; “The Yale Cup,” 1908; “The School Four,” 1909; “At the Home Plate,” 1910; “The Pecks in Camp,” 1911; “The Half Miler,” 1913, etc.; m., July 2, 1890, Frances Perry, Exeter. Residence, Exeter, N. H.
+
+**Page, Charles Tilton**
+Manufacturer (retired); b., Woburn, Mass., Aug. 5, 1846; s. Moses Webster and Mary Ann (Ayer) Page; ed. public
+
+<column-break/>
+
+schools and Eastman’s Commercial College, Poughkeepsie, N. Y.; engaged with his brother, George P. Page, in the manufacture of leather belting at Franklin, N. H., after leaving school, under firm name of Page Bros.; business removed to Concord in 1871, when the now extensive and widely known Page Belting Co. was formed, of which he became treasurer, continuing in that position until 1913, serving also for three years, 1872–5, as Boston agent of
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of an elderly man with a white beard and mustache, wearing a suit and tie.</image-desc>
+
+the firm, during which time he resided in Medford, but since then in Concord; Congregationalist; Republican; active in Y. M. C. A. work and some time president of the Concord Ass’n; president N. H. Congregational Ministers and Widows Fund; trustee General Conference Congregational churches of New Hampshire; moderator, 1910; president Concord Board of Trade, 1910–12; m., June 2, 1870, Almira, dau. Oliver H. and Sarah F. (Bergen) Booth of Lebanon, N. H.; children, Grace Farnum, wife of Dr. H. H. Amsden, b.
+
+<vocab>Bertrand Thorp Wheeler, Albertus True Dudley, Charles Tilton Page, New Hampshire, biography, civil engineering, manufacturing, Concord, Exeter, Wolfeboro</vocab>

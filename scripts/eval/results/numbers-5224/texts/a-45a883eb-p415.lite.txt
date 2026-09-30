@@ -1,0 +1,78 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>411</page-num>
+<header>The Book of Clevelanders 411</header>
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Noble, Dr. L. A. | 360 | Reitz, Mathew | 371 |
+| Nord, Herman J. | 361 | Rhodes, R. R. | 371 |
+| Norris, W. W. | 361 | Rice, E. | 371 |
+| Noville, Dr. Frank | 361 | Richardson, E. A. | 371 |
+| | | Rider, Eugene | 372 |
+| Oberdoerster, August | 361 | Rider, E. D. | 372 |
+| Oberdoerster, Wm. | 361 | Roberts, H. Melvin | 372 |
+| O'Brien, C. C. | 361 | Roby, J. J. | 372 |
+| Odbert, H. S. | 362 | Rockwell Samuel | 372 |
+| Olds, C. H. | 362 | Rodway, A. N. | 372 |
+| Oliver, J. H. | 362 | Roehl, John | 372 |
+| Olmsted, Geo. H. | 362 | Rorheimer, Louis | 373 |
+| OrLanghery, J. A. | 362 | Rote, R. O. | 373 |
+| Otis, A. H. | 362 | Roth, Aloysius L. | 373 |
+| Otis, Chas. | 363 | Rothenberg, Wm. | 373 |
+| Otter, A. E. | 363 | Roubicek, H. | 373 |
+| Owens, J. R., D. D. | 363 | Ruggles, Edd A. | 373 |
+| | | Ruhl, Jas. B. | 374 |
+| Paine, C. A. | 363 | Ruple, F. H. | 374 |
+| Palmer, H. D. | 363 | Rupp, Edw. | 374 |
+| Parker, M. B. | 363 | Rutherford, Geo. A. | 374 |
+| Parrett, B. C. | 364 | | |
+| Parrish, E. J. | 364 | Saffold, S. S. | 374 |
+| Parsons, C. A. | 364 | Salen, Chas. P. | 374 |
+| Parsons, Harry A. | 364 | Samman, Peter | 375 |
+| Patchin, E. L. | 364 | Sanders, C. E. | 375 |
+| Patterson, W. E. | 364 | Saum, O. C. | 375 |
+| Pattison, C. W. | 365 | Saunders, C. W. | 375 |
+| Payer, Harry F. | 365 | Sawyer, Leroy P. | 375 |
+| Penton, Jno. A. | 365 | Saywell, J. K. | 375 |
+| Perdue, R. H. | 365 | Schauffler, Fred | 376 |
+| Perkins, J. B. | 365 | Schauwecker, Jos. | 376 |
+| Petra, J. C. | 365 | Schmidt, O. R. | 376 |
+| Petrie, J. R. | 366 | Schmidt, Thos. P. | 376 |
+| Phare, W. G. | 366 | Schneider, Geo. A. | 376 |
+| Pickard, Thomas B. | 366 | Schneider, Gustave | 376 |
+| Pickett, P. J. | 366 | Schryver, Geo. L. | 377 |
+| Pierce, Clifford E. | 366 | Schulkins, Thos. G. | 377 |
+| Pierce, S. L. | 366 | Scobie, Andrew W. | 377 |
+| Pinyoun, F. C. | 367 | Scofield, L. T. | 377 |
+| Placak, Dr. J. C. | 367 | Scott, Frank C. | 377 |
+| Plummer, A. C. | 367 | Scott, W. C. | 377 |
+| Poe, Jos. R. | 367 | Senter, F. B. | 378 |
+| Post, E. M. | 367 | Shaw, George W. | 378 |
+| Potter, F. P. | 367 | Sheets, F. S. | 378 |
+| Powell, A. E. | 368 | Sheldon, Herbert | 378 |
+| Price, Jno. H. | 368 | Shepard, A. B. | 378 |
+| Prince, Jos. | 368 | Sherman, Wm. | 378 |
+| Probeck, P. J. | 368 | Sherwood, H. J. | 379 |
+| Prosser, Jos. F. | 368 | Shields, J. B. | 379 |
+| Pullman, W. J. | 368 | Shumaker, F. P. | 379 |
+| Punchard, Chas. P., Jr. | 369 | Siddall, G. B. | 379 |
+| Putman, P. R. | 369 | Sidley, Rev. Jno. A. | 379 |
+| | | Sigler, G. L. | 379 |
+| Quail, Frank A. | 369 | Sigler, L. M. | 380 |
+| Queisser, R. L. | 369 | Silliman, Ben F. | 380 |
+| Quick, Ivan T. | 369 | Simpson, H. Prescott | 380 |
+| | | Sloan, C. W. | 380 |
+| Ranklin, F. P. | 369 | Slocum, M. R. | 380 |
+| Rawson, L. Q. | 370 | Smith, Harold E. | 380 |
+| Ray, Johnny | 370 | Smith, John A. | 381 |
+| Reading, Fdk. | 370 | Smith, John W. | 381 |
+| Reamer, D. A. | 370 | Smith, W. A. C. | 381 |
+| Reed, Judge Chas. S. | 370 | Smith, W. H. | 381 |
+| Reichert, J. F. | 370 | Snyder, J. R. | 381 |
+| Reid, A. F. | 371 | Snyder, H. R. | 381 |
+
+<vocab>Cleveland, biography, index, directory</vocab>

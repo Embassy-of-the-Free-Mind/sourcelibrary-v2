@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>530</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+The old wind mill, the three stores, the tavern, and the fishing vessels of the Bakers made it a lively center. The wind mill near Grand cove was the scene of many important telegraphic communications. It stood on the knoll northwest of L. M. Gage's present residence, and its upper port holes, or windows, commanded a view of the high land in the north part of the town, on which a flag was hoisted when a Boston packet was entering Nobscusset harbor. As soon as the lookout in the wind mill saw the flag, he went to a pole erected on the triangular piece of land between the highways, near Mr. Gage's, and hoisted a flag, which communicated the news to West Harwich, South Yarmouth and the remaining portion of Dennis, that the "packet was in." They told of the departure of the packet by hoisting the day before it sailed a ball or barrel. These messages, delivered many miles so rapidly and effectively, are yet remembered by the more aged, who, in those days of no railroads, went to North Dennis for their goods at the first mentioned signal, and at the second carried to the packet produce and articles of exchange for the Boston market.
+
+Peter Baker had a tavern here early in the history at the village, and Elkanah S. Baker started another in 1868 in the premises opposite L. M. Gage's. This was discontinued at his death in 1884. Mrs. L. B. Nickerson still keeps the Nickerson House—a tavern started in 1875 by her husband, who died in 1883.
+
+The later stores have been generally kept by the Bakers. In 1862 Reuben and Jethro Baker opened a store, which was sold to Watson F. Baker, in October, 1874, and it is yet a principal store of South Dennis. Marshall S. Underwood kept a store where the post office is until his death, in 1873, and Charles M., his son, continues it. Charles G. Baker has a general store by the depot.
+
+The mail was delivered to the citizens of the south part of North Dennis until January 9, 1822, when Miller Whelden was made the first postmaster at South Dennis. Eleazer Nickerson was appointed December 15, 1828, postmaster for South Dennis, and received the mail at Miller Whelden's house, where Charles Baker now resides. Whelden was his assistant in carrying the mail and waiting upon the people. Watson Baker was postmaster from January 21, 1847, and had the office a short time in the present Liberty Hall, and May 29, 1869, Marshall S. Underwood was appointed, moved it to the present site, and in 1873 was succeeded by Charles M. Underwood.
+
+Liberty Hall was once a store occupied by Baker & Downs. In 1844 it was moved to its present site by Watson Baker and Isaac Downs; then it was sold to Collins C. Baker, for Joseph C. Baker, who sold it twenty years ago to a stock company, which transformed the upper floor into a convenient hall. The Good Templars meet in the hall, and although only organized February 7, 1889, with twenty-two members, they had increased to sixty-six in the third quarter.
+
+<vocab>Barnstable County, South Dennis, North Dennis, wind mill, Nobscusset harbor, packet, tavern, postmaster, Liberty Hall, Good Templars, Baker family, Nickerson family, Underwood family</vocab>

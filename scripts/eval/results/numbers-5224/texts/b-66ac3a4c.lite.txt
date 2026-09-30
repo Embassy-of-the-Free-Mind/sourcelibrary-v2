@@ -1,0 +1,99 @@
+<scan-quality>good</scan-quality>
+<language>Latin, English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>65</page-num>
+<header>DE ORATORE I. 143—147.</header>
+
+commonendum oratorem, quo quidque referat et quo in-
+tuens ab eo, quodcumque sibi proposuerit, minus aberret.
+Verum ego hanc vim intellego esse in praeceptis omnibus, 146
+sed, quae sua sponte homines eloquentes facerent, ea
+quosdam observasse atque digessisse; sic esse non elo-
+quentiam ex artificio, sed artificium ex eloquentia natum;
+quod tamen, ut ante dixi, non eiicio; est enim, etiam si
+minus necessarium ad bene dicendum, tamen ad cognos-
+cendum non illiberale; et exercitatio quaedam suscipienda 147
+vobis est; quamquam vos quidem iam pridem estis in
+cursu; sed eis, qui ingrediuntur in stadium, quique ea,
+quae agenda sunt in foro tamquam in acie, possunt etiam
+
+<column-break/>
+
+dition that is still possible is assumed
+as occurring now or at some future
+time, while it is at the same time
+intimated that it will not actually
+occur. ‘If I were to say—I should
+speak an untruth,’ but I do not in-
+tend to. Cf. Madvig, § 347 b. Care
+should be taken not to use the Latin
+impf. conj. in translating the Eng-
+lish imperfect in such cases, but
+the pres. conj.]
+
+1 *quo quidque referat* II. 27.
+117.
+
+5 *sua sponte* without theoretical
+instruction, ‘instinctively,’ beneficio
+ingenii (Quint. v. 10. 121), cf. II.
+46. 193.
+
+6 *digessisse* So (or perhaps even
+coegisse, § 191. II. 33. 142, ad Her.
+IV. 40. 52) we must read for the
+meaningless id egisse; as Quint. v.
+10. 119 sqq, who evidently had this
+passage before his eyes and employ-
+ed it for his subject, clearly shows:
+Haec non idcirco dico, quod inutilem
+horum locorum—cognitionem puto
+—sed ne se qui cognoverint ista—
+perfectos protinus atque consumma-
+tos putent—Neque enim artibus
+editis factum est, ut argumenta in-
+veniremus, sed dicta sunt omnia,
+antequam praeciperentur, mox ea
+scriptores observata et collecta edide-
+runt; put together in a certain order
+and classification (§§ 108, 186, 190;
+II. 19. 79, ad fin.) [Kayser reads id
+egisse*, Ell. would explain it, ei rei
+operam dedisse].
+
+8 *eiicio* II. 24. 102, ‘I do not
+altogether reject.’
+
+10 *exercitatio* To learn the theory
+of rhetoric it is necessary, at least
+for those who are at the beginning
+of their career, to enter also upon a
+definite practical exercise.
+
+11 *quamquam* a rhetorical correc-
+tion or recalling of the just-employed
+vobis; sed after the parenthesis as
+in § 163.
+
+12 *ingrediuntur in stadium* a
+phrase used of those who enter upon
+a career, in order to begin their
+course from the very starting-point.
+Hence ingred. alone in the sense:
+Or. 23 75, magnum opus et arduum
+—sed ingredientibus (before one is
+yet out at sea) considerandum fuit,
+quid ageremus, nunc quidem iam
+quocumque feremur danda nimirum
+vela sunt.
+
+13 *acie* §§ 81, 157, quasi ludicra,
+II. 20. 84, i. e. quasi in ludo gladia-
+torio, the palaestra, the fighting and
+wrestling school, as Div. in Caec.
+14. 47, prolusio and ipsa pugna are
+opposed.
+
+<vocab>orator, eloquentia, artificium, exercitatio, stadium, rhetorica, argumenta</vocab>

@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>102</page-num>
+<header>OMAHA AND DOUGLAS COUNTY</header>
+
+Carpenter was but forty-six years of age when called to his final rest. It seemed that he should have been spared for many years to come, for he had not yet reached the zenith of his powers, but the summons came, and while he is still greatly missed in those circles in which he moved, among his business associates, his friends and most of all at his own fireside, his memory remains as an inspiration and a blessed benediction to all who knew him.
+
+->GEORGE TILDEN, M. D.<-
+
+Dr. George Tilden is now living retired but for forty-six years was actively identified with the practice of medicine and surgery, in which field of labor he won distinction. In 1914, however, he withdrew from active connection with the profession to enjoy a rest which he has truly earned and richly deserves. He came to Omaha in 1868 from New York, then a young man of twenty-six years, his birth having occurred in the town of Warren, Herkimer county, in 1842. He attended the public schools and an academy there and afterward became a medical student in the State University of Michigan at Ann Arbor. He continued his preparation for the profession, however, in the Albany Medical College, in which he won his degree in 1867, being valedictorian of his class. In 1868 he entered upon the active practice of his profession in Omaha and always remained alone, never forming any partnership relation. His attention was given to general practice and he was ever a deep and discriminating student, keeping in touch with the trend of modern scientific thought and investigation. Early in his practice he contributed articles to the State Medical Society and to medical journals. He was interested at all times in anything that tended to bring to man the key to the complex mystery which we call life and he held membership in the County and State Medical societies and of the former was at one time president. For forty years he filled the position of county insanity commissioner but resigned in 1914, much to the regret of the judges of the district court, and at the time they expressed themselves to that effect by a set of resolutions paying tribute to his faithful service and rare ability, as follows:
+
+> "Whereas, Upon the loss of his beloved wife, recently occurring, and after more than forty years of continuous service as a member of the board of insanity of Douglas county, being the sustained appointee of the judges of this court throughout that period, Dr. George Tilden has expressed a desire to be relieved from further service on said board, and,
+>
+> "Whereas, Upon such occasion it seemed exceedingly fitting that the judges of this court should give some expression of recognition and appreciation for so long and faithful service in this exceptionally important work as an adjunct to the business of this court, therefore, be it
+>
+> "Resolved, First, That we extend to Dr. Tilden our sincere condolence in his bereavement caused by the recent death of his faithful and distinguished wife, a most remarkable woman, whose life was devoted to the establishment and support of various charitable and beneficent institutions in this community and in the promotion of every good work having for its object the physical, mental and especially the moral betterment of mankind. A distinguished public benefactor, as she was, she was none the less in her private life a most faithful and efficient helpmeet to her husband.
+>
+> "Second, That regretting exceedingly the necessity of accepting the resignation of Dr. Tilden as a member of the board of insanity, we congratulate him upon the honor he has conferred upon himself and this community by his long and efficient term of service upon that board; upon his exceptional wisdom and sound discretion in conducting the peculiarly delicate and exacting task attendant upon the duties of the physician throughout a period of more than forty years without, it may be said, a single instance of unseemly notoriety or criti-
+
+<vocab>George Tilden, M. D., Omaha, Douglas County, medicine, surgery, Albany Medical College, State Medical Society, county insanity commissioner, biography</vocab>

@@ -1,0 +1,65 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>553</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 553</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Green, Henry Francis | 5 | Hetzel, Ralph Dorn | 539 |
+| Greenleaf, Charles Henry | 139 | Hill, Frank Pierce | 185 |
+| Greer, Benjamin Fuller | 422 | Hill, Howard Fremont | 186 |
+| Griffin, Appleton Prentiss Clark | 443 | Hill, Joseph Adna | 464 |
+| Guernsey, Alice Margaret | 445 | Hirst, Edgar Clarkson | 30 |
+| Guertin, George Albert | 393 | Hobbs, Frank Pierce | 221 |
+| Gunnison, William Towne | 47 | Hodgman, Burns Plummer | 43 |
+| | | Hodsdon, Ervin Wilbur | 464 |
+| Hackett, Frank Warren | 451 | Hoitt, Charles William | 452 |
+| Hackett, Wallace | 142 | Holden, Arthur James | 410 |
+| Hadley, Charles John | 370 | Holden, Gerry Rounds | 452 |
+| Hadley, Elbridge Drew | 507 | Hollis, Abijah | 130 |
+| Hadley, George Plummer | 386 | Hollis, Allen | 49 |
+| Hadlock, Albert Emerson | 101 | Hollis, Henry French | 81 |
+| Hale, William Gardner | 241 | Holt, Hermon | 189 |
+| Hall, Daniel | 101 | Hook, Andrew Jackson | 33 |
+| Hall, Dwight | 248 | Hopkins, Ernest Martin | 243 |
+| Hall, Harriet James | 405 | Hough, Arthur Hugh | 233 |
+| Hall, Newton Marshall | 222 | Howard, Alfred Franklin | 289 |
+| Hall, Walter Perley | 441 | Howard, Charles Danforth | 127 |
+| Halloran James Ambrose | 31 | Howard, Charles Woodbury | 59 |
+| Hamblett, Charles Judson | 531 | Howes, Benjamin Alfred | 469 |
+| Hamlin, Frank Wilbert | 480 | Howland, Fred Arthur | 492 |
+| Hammond, Otis Grant | 51 | Hoyt, Charles Burleigh | 223 |
+| Hannaford, Mary Elisabeth Neal | 217 | Hoyt, Deristhe Lavinta | 491 |
+| Hanscom, Charles Ridgley | 443 | Hoyt, Horace F | 163 |
+| Hanson, Benjamin Frank | 142 | Hoyt, Louis G | 469 |
+| Hanson, Bert | 146 | Hoyt-Stevens, Jane Elizabeth | 344 |
+| Hanson, Charles Lane | 446 | Humphrey, Alice Caroline | 267 |
+| Hardy, Willis Chenery | 275 | Hunt, Edwin Sumner | 43 |
+| Harriman, Alice Stratton | 497 | Huntington, William Spooner | 377 |
+| Harriman, Walter C | 193 | Huntress, Frank | 442 |
+| Harrington, Karl Pomeroy | 446 | Huntress, Harriet Lane | 17 |
+| Harris, Almon Greene | 314 | Hurd, Henry Norris | 512 |
+| Harris, Ira Francis | 405 | Husband, Richard Wellington | 259 |
+| Harris, Sarah Neal | 504 | Huse, Raymond Howard | 181 |
+| Harris, Thomas Jefferson | 455 | Hutchins, Harry Burns | 236 |
+| Hartford, Fernando Wood | 215 | Hutchins, John Corbin | 74 |
+| Hartshorn, William Newton | 455 | | |
+| Hartwell, Edward Mussey | 456 | Ives, Henry Goodson | 59 |
+| Hatch, Albert Ruyter | 106 | | |
+| Hayes, Charles Carroll | 244 | Jackman, Charles Lyman | 203 |
+| Hayes, Francis Little | 453 | Jackman, Samuel Hason | 403 |
+| Hayes, Frank Lincoln | 414 | Jackson, Andrew | 545 |
+| Haynes, Martin Alonzo | 67 | Jackson, James Robert | 71 |
+| Hazelton, Gerry Whiting | 83 | Jackson, Lydia Drew | 81 |
+| Hazlett, Charles Albert | 130 | Jackson, Robert | 58 |
+| Heard, Arthur Marston | 425 | Jameson, John Butler | 257 |
+| Henderson, James William | 222 | Jenks, Arthur Whipple | 459 |
+| Hendrick, Nellie Towne | 382 | Jewell, John Woodman | 305 |
+| Hening, Crawford Dawes | 77 | Jewett, Stephen Shannon | 119 |
+| Herbert, John | 166 | Johnson, Jesse | 282 |
+| Hering, Hermann Siegfried | 178 | Johnson, Martha Evelina | 281 |
+
+<vocab>New Hampshire, biography, index, notables</vocab>

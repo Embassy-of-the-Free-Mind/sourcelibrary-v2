@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>312</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jno. E. Chafer</image-desc>
+JNO. E. CHAFER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. L. Caulkins</image-desc>
+D. L. CAULKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. N. Chamberlain</image-desc>
+O. N. CHAMBERLAIN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. W. Chase</image-desc>
+CHAS. W. CHASE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of David Charlesworth</image-desc>
+DAVID CHARLESWORTH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jas. W. Chrisford</image-desc>
+JAS. W. CHRISFORD
+
+<vocab>Jno. E. Chafer, D. L. Caulkins, O. N. Chamberlain, Chas. W. Chase, David Charlesworth, Jas. W. Chrisford, The Book of Clevelanders, biography, portraits</vocab>

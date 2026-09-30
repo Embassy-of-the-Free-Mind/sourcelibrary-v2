@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>33</page-num>
+<header>The Book of Clevelanders</header>
+
+and Julian; after graduating, spent two years traveling abroad; became identified with Rhodes & Co., the predecessors of M. A. Hanna & Co.; remained with that firm 25 years; retired in 1904, devoting time to private interests; charter member of Troop A; served in every capacity from private to captain; now veteran member; life member Chamber of Commerce; director and chairman of Military Committee; Republican; member St. Paul's Episcopal Church, Union, University and Country Clubs, of Cleveland, and Duquesne Club, Pittsburgh; interested in charity and philanthropy; former pres. Associated Charities. Recreations: Hunting, Fishing, Travel and Motoring; member Winan's Point Shooting Club and Castalia Sporting Club.
+
+BOMGARDNER, Joseph; mfr.; born, Wilmot, O., 1855; son of B. F. and Harriet Putnam Bomgardner; educated, graded school, Winfield, O., Commercial School, Painesville, O., Literary Course Mount Union College, Alliance, O.; married, Winfield, O., Oct. 24, 1878, Kizzie Olis; 4 children; no military record, and takes very little interest in politics; worked on his fathers' farm until he was 21; salesman on the road for 30 years; in the meantime, invented a number of patent articles and is now engaged in the manufacture of a number of them; namely, elevators, invalid chairs, and beds, etc.; member advisory board, Colonial Savings & Loan Co.; member Chamber of Industry. Recreation: Farming.
+
+BOMMHARDT, John A.; patent and claim attorney, born, Hastings, Minn., Sept. 14, 1862; son of Jacob and Elizabeth Glock Bommhardt; educated, St. Paul's German Parish School, Mayflower School, and Business College, all of Cleveland; married, Cleveland, July 21, 1901, Catherine F. Kavanaugh; issue, two children; sec'y Cuyahoga County Republican Executive Committee, since 1909; Past State Commander Ohio Division of Sons of Veterans; sec'y of Cuyahoga County Memorial Day Committee since 1900; entered the law office of the late Milo B. Steven, in January, 1880, and was connected with the pension and patent business of this firm until 1908; being located at Cleveland, Chicago, Detroit, and for a short period at Washington, D. C.; in 1908, started in business for himself; solicitor and attorney in matters pertaining to patents and pensions and departmental practises, with offices in Cleveland and Washington; firm name John A. Bommhardt & Co.; member Woodward Lodge, No. 508, and Al Sirat Grotto, No. 17; Lookout Camp, Sons of Veterans; Cleveland Lodge, No. 18, Elks; Cleveland Lodge, No. 63, Loyal Order of Moose; member German Club.
+
+BONESTEEL, Willis E.; sec'y Worden Tool Co.; born, Northampton, O., Oct. 7, 1862; son of George H. and Loretta C. Prior Bonesteel; public school education; married, Cleveland, Oct. 4, 1886, Annabell Scott; director Land Title Abstract Co., Cleveland
+
+<vocab>Biography, Cleveland, Business, Patents, Manufacturing, Fraternal Organizations, Republican Party</vocab>

@@ -1,0 +1,80 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>405</page-num>
+<header>The Book of Clevelanders 405</header>
+
+| | | | |
+|---|---|---|---|
+| Patterson, William Edward | 206 | Rickey, Harry Norris | 221 |
+| Pattison, Charles W. | 206 | Ricks, Charles A. | 221 |
+| Payer, Harry F. | 206 | Rider, Edwin D. | 222 |
+| Pease, Fred A. | 206 | Rider, Eugene | 222 |
+| Peck, Francis J. | 207 | Rigo, Henri S. | 222 |
+| Perdue, Robert H. | 207 | Roach, P. H. | 222 |
+| Perrin, John William | 207 | Robb, Hunter | 222 |
+| Petrie, John Robertson | 208 | Roberts, Clarence J. | 223 |
+| Petro, John M. | 208 | Robertson, Gunder | 223 |
+| Pfeil, Nicholas | 208 | Roby, James Justus | 223 |
+| Phare, William G. | 208 | Rockefeller, Frank | 223 |
+| Pheneger, Charles R. | 209 | Rockefeller, John Davison | 224 |
+| Phypers, Charles J. | 209 | Rockwell, Samuel | 224 |
+| Phypers, George William | 209 | Rodway, A. N. | 224 |
+| Pickands, Henry S. | 209 | Roehl, John | 225 |
+| Pickett, Phillip James | 209 | Rogers, James Hotchkiss | 225 |
+| Pierce, Clifford E. | 210 | Rogers, George M. | 225 |
+| Pierce, Stephen Lawrence | 210 | Rogers, William Banks | 225 |
+| Pinkett, George M. | 210 | Rohbock, William L. | 225 |
+| Pinyoun, Frederick Charles | 210 | Rorheimer, Louis | 226 |
+| Placak, Joseph Charles | 210 | Rose, William Ganson | 226 |
+| Platner, Samuel Ball | 211 | Rosenberg, W. L. | 226 |
+| Plummer, Artemus Clark | 211 | Rosenvasser, Herman B. | 226 |
+| Poe, Joseph Ralph | 211 | Rote, Robert Ogden | 227 |
+| Pollock, Wilfred S. | 212 | Roth, Aloysius L. | 227 |
+| Pond, Daniel H. | 212 | Rothenberg, William | 227 |
+| Pool, Charles E. | 212 | Roubicek, Herman | 227 |
+| Post, Ernest M. | 212 | Rudd, George A. | 227 |
+| Potter, Frederick P. | 213 | Rudd, William Cullen | 227 |
+| Powell, Albert E. | 213 | Ruhl, James B. | 228 |
+| Pratt, Charles Wheeler | 213 | Ruple, Franklin H. | 228 |
+| Price, John H. | 213 | Rupp, Edward | 228 |
+| Prince, Joseph | 214 | Rutherford, George A. | 228 |
+| Printz, Alexander | 214 | | |
+| Probeck, A. O. | 214 | Saffold, Starke Selbert | 228 |
+| Probeck, Henry J. | 214 | Salen, Charles P. | 229 |
+| Probeck, P. J. | 215 | Samman, Peter | 229 |
+| Prosser, Joseph F. | 215 | Sanders, Clarence E. | 229 |
+| Pullman, William J. | 215 | Sanders, William Brownell | 229 |
+| Punchard, Charles Pierpont, Jr. | 215 | Sanford, Henry Lindsay | 230 |
+| Putnam, P. R. | 215 | Sargent, H. Q. | 230 |
+| | | Sarstedt, Frank A. | 230 |
+| Quail, Frank Adgate | 216 | Saum, O. C. | 230 |
+| Queisser, Robert L. | 216 | Saunders, Charles William | 231 |
+| Quick, Ivan T. | 216 | Savage, Minot Judson | 231 |
+| Quinn, Edward Martin | 217 | Sawyer, Leroy Pursel | 231 |
+| | | Saywell, James K. | 232 |
+| Raber, Charles W. | 217 | Schauffler, Fred | 232 |
+| Radde, Carl A. | 217 | Schlather, Leonard | 232 |
+| Rains, Fred H. | 217 | Schmidt, Oscar Richard | 232 |
+| Rankin, John | 217 | Schmidt, Thomas Philip | 232 |
+| Ratajczak, Charles | 218 | Schmitt, C. A. | 233 |
+| Rattle, James William | 218 | Schneider, Edward F. | 233 |
+| Rawson, La Quinio | 218 | Schneider, George A. | 233 |
+| Reed, Charles Shadrack | 218 | Schneider, Gustave | 233 |
+| Rehor, Anton Karl | 219 | Schulkins, Thomas G. | 234 |
+| Reichert, J. P. | 219 | Schuster, Joseph J. | 234 |
+| Reid, Albert T. | 219 | Schwan, George H. | 234 |
+| Reiman, Joseph | 219 | Scobie, Andrew W. | 234 |
+| Reitz, Mathew | 219 | Scofield, Levi Tucker | 234 |
+| Rhodes, Robert Russell | 220 | Scott, Frank A. | 235 |
+| Rice, Eranious | 220 | Scott, Frank C. | 235 |
+| Richards, Franklin B. | 220 | Scott, William C. | 235 |
+| Richards, Thos. B. | 220 | Scott, Nathan Stone | 236 |
+| Richardson, Edward A. | 220 | Scullen, Rev. William A. | 236 |
+| Richmond, Charles T. | 221 | Senter, Frederick Baldwin | 236 |
+
+<column-break/>
+
+<vocab>Cleveland, biography, index, directory</vocab>

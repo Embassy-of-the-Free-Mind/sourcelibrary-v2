@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>75</page-num>
+<header>The Book of Clevelanders</header>
+
+practiced law in Canton, O., six years; entered firm of Goulder, Day, White, Garry & Duncan, in November, 1910; member Psi Upsilon Fraternity and Athletic, Euclid, and Lakeside Country Clubs; and Chamber of Commerce.
+
+DAY, William Louis; judge, born, Canton, O., Aug. 13, 1876; son of William Rufus (q. v.) and Mary Elizabeth (Schaefer) Day; graduate Williston Seminary, Easthampton, Mass., 1896; LL. B., University of Michigan, 1900; married Elizabeth E. McKay, of Caro, Mich., Sept. 10, 1902; admitted to bar, 1900, and practiced at Canton; city solicitor, 1906-1908; U. S. atty., Northern Dist. Ohio, 1908-1911; U. S. dist. judge, May 13, 1911-; Republican, Lutheran. Clubs: Hermit, Cleveland Athletic, Nisi Prius.
+
+DECKER, Harry; merchant; born, Cleveland, Feb. 14, 1864; son of Denceman and Adriana Van Lesser Decker; educated public schools of Cleveland; married, Cleveland, May 31, 1888, Evelyn Weihl; five daughters; dry goods.
+
+DEERING, Robert Waller; university dean; born, Hogansville, Ga., June 27, 1865; son of Rev. John R. and Fannie (Covin) Deering; A. M., Vanderbilt University, 1885; A. M., Ph. D., University of Leipsiz, 1889; married Jessie Winn, of Mt. Sterling, Ky., Sept. 9, 1891; adj. prof. Germanic languages, Vanderbilt, 1890-1892; prof. Germanic languages since 1892, dean, Grad. Faculty, since 1893, Western Reserve University. Editor: The Little Gipsy (translated from Cervantes' La Jitanilla), 1891; Schiller's Wilhelm Tell, 1894; Schiller's Wilhelm Tell, spl. edit., 1900; Goethe's Egmont, 1903; also monographs and reviews on philol. subjects.
+
+DEISHER, Frederick Charles; master plumber; born, Pottsville, Pa., Jan. 31, 1873; son of Wm. E. and Jane E. Smith Deisher; educated, Cleveland schools; married, Mansfield, O., June 13, 1898, Josephine Schambs; three children; for eight years F. C. Deisher Plumbing & Heating, Incorporated, Feb. 28, 1913; pres. and mgr. The Deisher Plumbing & Heating Co.; F. & A. Masons; raised Iris Lodge, No. 229, Nov. 28, 1904; Exalted Cleveland Chapter, No. 148, Cleveland, March 9, 1906; created Knight Templar in Holyrood Commandery, No. 32, Cleveland, Dec. 20, 1906; created Grand Elect Mason, 14th degree, in Eliadah Lodge of Perfection, Feb. 28, 1908; created Prince of Jerusalem, 16th degree, Bahurim Council at Cleveland, March 11, 1908; created Knight of Rose Croix, 18th degree, in Ariel Chapter, Cleveland; created Sublime Prince of the Royal Secret, 32nd degree in Lake Erie Consistory, March 13, 1908; Al Koran Temple, Al Sirat Grotto, Cleveland Council, No. 36, Royal and Select Masters.
+
+DEMING, Barton R.; real estate and bldg.; born, Mudson, Ont., August, 1875; son of Huburt U. and Susan Wigle Deming; Ontario schools, graduated Sarnia High School; married, Chicago, Ill., July 8, 1908, Helen R. Rice; one daughter; five years with Oglebayhorton & Co., iron ore; pres., treas. and mngr. The
+
+<vocab>Biography, Cleveland, Business, Law, Education, Freemasonry, Genealogy</vocab>

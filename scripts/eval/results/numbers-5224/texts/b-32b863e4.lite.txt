@@ -1,0 +1,55 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+
+# BOOKS FOR SALE BY THE
+# STAR PUBLISHING CO.
+
+HISTORY OF THE COUNCIL OF NICE, A. D., 325, WITH A LIFE OF CONSTANTINE THE GREAT. BY DEAN DUDLEY, LAWYER AND HISTORIAN. Paper, 50 cents.
+ON MIRACLES AND MODERN SPIRITUALISM. ALFRED RUSSELL WALLACE, of England. Cloth, $1.75.
+THE MECHANISM OF THE UNIVERSE. BY AUGUSTUS FENDLER. Cloth, $1.50; postage 10 cents.
+THE SPIRIT WORLD, ITS LOCALITY AND CONDITIONS. BY JUDGE EDMONDS. Paper, 20 cents; postage, 2 cents.
+THE SPIRITUAL SPHERES. BY CORA L. V. RICHMOND. 15 cents.
+DOES MATTER DO IT ALL? A REPLY TO PROF. TYNDALL. BY EPES SARGEANT. 5 cents.
+HYGIENE OF THE BRAIN AND THE CURE OF NERVOUSNESS. M. L. HOLBROOK, M. D. $1.50.
+HEAVEN AND HELL. BY ALLEN KARDAC. $2.00; postage, 12 cents.
+ISIS UNVEILED. H. P. BLAVATSKY. 2 vols. Cloth extra, $7.50.
+THE DAY AFTER DEATH. A discourse by Spirit EPES SARGEANT. Medium, CORA L. V. RICHMOND. 5 cents.
+MENTAL DISORDERS. ANDREW JACKSON DAVIS. $1.00; postage, 10 cents.
+HEAVEN AND HELL. BY JUDGE EDMONDS. 10 cents.
+FOOTPRINTS OF A PRESBYTERIAN TO SPIRITUALISM. FRANCIS H. SMITH. 75 cents.
+
+## LECTURES BY GEORGE CHAINEY.
+
+This work contains the following lectures:
+No. 1.—Lessons from the Life and Work of Karl Heinzen.
+2.—Minot Savage's Talks about God.
+3.—Moral Objections to the God Idea.
+4.—Nature and Decline of Unitarianism.
+5.—A Study of Ingersoll.
+6.—Assassination of the Czar.
+7.—Lights and Shades of Liberalism.
+8.—The Spirit of the Press.
+9.—Relics of Barbarism.
+10.—The Sphinx.
+11.—The Choir Invisible.
+12.—Lessons for To-Day, from Walt Whitman.
+13.—True Democracy.
+14.—My Religious Experience.
+15.—The Ideal Man and Woman.
+16.—What is Morality?
+17.—What is Religion?
+18.—The Church of the Future.
+Vol. 1. Cloth. Price $1.00; postage, 10 cts; or in single lectures, 10 cts. each.
+
+MAN AND HIS RELATIONS. S. B. BRITTAN. $1.50.
+THE DIVINE LAW OF CURE. W. F. EVANS. $1.50; postage, 10 cents.
+MATERIALISM. OR A SPIRITUAL PHILOSOPHY AND NATURAL RELIGION. GILES B. STEBBINS. 50 cents.
+ON THE CONNECTION OF CHRISTIANITY WITH SOLAR WORSHIP. Translated from the French of Dupuis, by T. E. PARTRIDGE. 30 cents.
+SUBSTANTIALISM; OR PHILOSOPHY OF KNOWLEDGE. BY JEAN STORY. $1.50.
+WITCHCRAFT OF NEW ENGLAND EXPLAINED BY MODERN SPIRITUALISM. BY ALLEN PUTNAM, ESQ. $1.50; postage, 10 cents.
+"SELF-CONTRADICTIONS OF THE BIBLE." 15 cents.
+THE PSALMS OF LIFE. BY JOHN S. ADAMS. $1.00; postage, 10 cents.
+
+<vocab>Spiritualism, Theology, Philosophy, Liberalism, Bibliography, Catalog</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>79</page-num>
+<header>METHOD OF INDETERMINATE MULTIPLIERS.</header>
+
+and we are to shew, that in solving this equation with reference to any variable $z$ by the general theorem (75), we shall obtain not only the general value of $z$ independent of $h$ and $k$, but also any subsidiary relations which may exist between $x$ and $y$ independently of $z$.
+
+If we represent the general equation (2) under the form $F(xyz) = 0$, its solution may by (75) be written in the form
+$$z = \frac{xy}{1 - \frac{F(111)}{F(110)}} + \frac{x(1 - y)}{1 - \frac{F(101)}{F(100)}} + \frac{y(1 - x)}{1 - \frac{F(011)}{F(010)}} + \frac{(1 - x)(1 - y)}{1 - \frac{F(001)}{F(000)}};$$
+and we have seen, that any one of these four terms is to be equated to 0, whose modulus, which we may represent by $M$, does not satisfy the condition $M^n = M$, or, which is here the same thing, whose modulus has any other value than 0 or 1.
+
+Consider the modulus (suppose $M_1$) of the first term, viz. $\frac{1}{1 - \frac{F(111)}{F(110)}}$, and giving to the symbol $F$ its full meaning, we have
+$$M_1 = \frac{1}{1 - \frac{\phi(111) + h\psi(111) + k\chi(111)}{\phi(110) + h\psi(110) + k\chi(110)}}.$$
+
+It is evident that the condition $M_1^n = M_1$ cannot be satisfied unless the right-hand member be independent of $h$ and $k$; and in order that this may be the case, we must have the function $\frac{\phi(111) + h\psi(111) + k\chi(111)}{\phi(110) + h\psi(110) + k\chi(110)}$ independent of $h$ and $k$.
+
+Assume then
+$$\frac{\phi(111) + h\psi(111) + k\chi(111)}{\phi(110) + h\psi(110) + k\chi(110)} = c,$$
+$c$ being independent of $h$ and $k$; we have, on clearing of fractions and equating coefficients,
+$$\phi(111) = c\phi(110), \quad \psi(111) = c\psi(110), \quad \chi(111) = c\chi(110);$$
+whence, eliminating $c$,
+$$\frac{\phi(111)}{\phi(110)} = \frac{\psi(111)}{\psi(110)} = \frac{\chi(111)}{\chi(110)},$$
+
+<vocab>indeterminate multipliers, general equation, modulus, variable, function, coefficients</vocab>

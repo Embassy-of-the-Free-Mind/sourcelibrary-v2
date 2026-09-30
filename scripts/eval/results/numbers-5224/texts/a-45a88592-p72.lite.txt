@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>52</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+tion containing an account of its condition and prosperity. The body has certain powers of its own, and has for its object the promotion of piety.
+
+The Barnstable County Mutual Fire Insurance Company was chartered in March, 1833, and in August of the same year opened its principal office at Yarmouth Port. The executive officers are the president and the secretary, who is also treasurer. The presidents in succession, have been: David Crocker, Eben Bacon, Zenas D. Bassett, David K. Akin and Joseph R. Hall. The first secretary and treasurer was Amos Otis, succeeded by his son, George Otis, and he, in January, 1882, by Frank Thacher, the present incumbent. The career of this institution has been uniformly successful. Careful management has reduced the average net cost of insurance to one-third the usual rates.
+
+The Cape Cod Historical Society was organized at a meeting held at the camp meeting grove in Yarmouth, August 5, 1882. Its object, as stated in its constitution, is "the collection, preservation and dissemination of facts of local history." The fee for membership was placed at two dollars, with a liability to assessment not exceeding one dollar per year. For life members the fee is ten dollars, without any additional charges. The annual meetings of the society are held on the 22d of February, or the day of its legal observance. At these meetings original papers are read, and discussions of historical subjects are conducted. When practicable a summer meeting is held or an excursion provided to some spot of historic interest. Three such occasions have occurred during the existence of the society—one in 1883, when a clambake was served near the site of the ancient trading port of the pilgrims, at Manomet, when an address was delivered by Hon. Thomas Russell, and appropriate speeches made by other gentlemen. The following year the party visited Sandwich and inspected the site of the Cape Cod ship canal. One year some fifty members and their friends visited Plymouth and thoroughly explored its historic sites, burial grounds and record halls, and the rooms of the Pilgrim Society. Papers have been prepared and read at the annual meetings of the society which are worthy of preservation in a permanent form, and would make an interesting and instructive volume. They were written by Josiah Paine, Thomas P. Howes, E. S. Whittemore, Shebnah Rich, C. C. P. Waterman and Charles F. Swift.
+
+The officers of the society are: Charles F. Swift, president; Josiah Paine, secretary; Samuel Snow, treasurer. These persons have held their positions since the organization of the society. The following are the additional officers in 1889-90: Vice-presidents, Thomas P. Howes, Alonzo Tripp, Sylvanus B. Phinney, Ebenezer S. Whitte-
+
+<vocab>Barnstable County Mutual Fire Insurance Company, Cape Cod Historical Society, Yarmouth, insurance, local history, historical society, clambake, Manomet, Thomas Russell, Sandwich, Cape Cod ship canal, Pilgrim Society, Josiah Paine, Thomas P. Howes, E. S. Whittemore, Shebnah Rich, C. C. P. Waterman, Charles F. Swift, Samuel Snow, Alonzo Tripp, Sylvanus B. Phinney, Ebenezer S. Whittemore</vocab>

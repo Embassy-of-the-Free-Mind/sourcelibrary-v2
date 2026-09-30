@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>453</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Hopkins, 1901; special student, Berlin, 1901; house surgeon, Roosevelt Hospital, New York, 1903; resident gynecologist, Johns Hopkins Hospital, Baltimore, 1905; attending gynecologist, St. Luke's Hospital, Jacksonville, Fla., 1906-; Florida State Hospital of Insane, 1910-; Presbyterian; Fellow, American College of Surgeons; member American Med. Ass'n, Southern, Med. Ass'n, Southern Surgical Ass'n, A. F. & A. M.; m., Nov. 8, 1905, Anne Ridgeway Milliken, Summit, N. J. Residence, 205 Goodwin St., Jacksonville, Fla.
+
+**Hayes, Francis Little**
+Clergyman; b., New Hampton, N. H., Jan. 5, 1858; s. Benjamin Francis and Arcy (Cary) Hayes; ed. Nichols Latin School, Lewiston, Me.; Halle, Germany; Bates College, A.B. 1880; A.M. 1883; Cobb Divinity School, B.D. 1885; D.D., Bates, 1902; instructor in Greek, Hillsdale College, Mich., 1880; professor of Greek language and literature, 1881-3; general secretary Y. M. C. A., Lewiston, Me., 1884; ordained Free Baptist ministry, 1885; pastor First Church, Boston, 1885-90; First Church, Minneapolis, Minn., 1890-4; Congregational Church, Manitou, Colo., 1896-1902; First Congregational Church, Topeka, Kan., 1902-11; California Ave. Church, Chicago, 1911-14; Western secretary, Congregational Board, Ministerial Relief, 1914-; president Evangelical Alliance, Boston, 1889-90; Western Free Baptist Pub. Co., 1890-4; lecturer on homiletics, Biblical Department, Washburn College, 1909-10; trustee Washburn College, 1902-11; director Chicago Theological Seminary, 1905-11; life member American Bible Soc.; m., June 26, 1884, Cora Walker, Washington, D. C. Residence, 5415 University Ave., Chicago.
+
+**Kidder, Daniel**
+Mechanical engineer; b., Lowell, Mass., June 15, 1838; s. John and Betsey (Metcalf) Kidder; removed with parents to Groton, N. H., in 1844,
+
+<column-break/>
+
+where he had his home and legal residence till 1908; learned the trade of machinist in youth, and has followed the profession of mechanical engineer most of his life; master mechanic and superintendent Aiken's Knitting and Machine Shops, 1862-70; master mechanic Mt. Washington Ry., 1870-3, Brown's Lumber Co., Whitefield, and Whitefield & Jefferson R. R., 1873-88; afterward engaged in his profession in different localities until 1909, when
+
+<image-desc size="large" type="portrait" significance="high">Portrait of an elderly man with a mustache, wearing a suit and tie.</image-desc>
+
+he removed to Rumney, N. H., and is now practically retired; Universalist; Democrat; held most town offices in Groton for 36 years; member N. H. house of representatives 1891 and constitutional convention 1902, also representative from Rumney 1915, 1917, 1919; member G. A. R., having served as a private in the First N. H. Vols.; vice-president and director National Veterans Ass'n; member A. F. & A. M., Maccabees and P. of H., director Union Grange Fair, Plymouth, and associated in the manage
+
+<vocab>biography, New Hampshire, genealogy, clergy, mechanical engineering, politics, G.A.R., veterans</vocab>

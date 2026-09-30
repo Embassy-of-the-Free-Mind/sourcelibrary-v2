@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>316</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harris Creech</image-desc>
+HARRIS CREECH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. R. Creer</image-desc>
+W. R. CREER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. E. Crittenden</image-desc>
+W. E. CRITTENDEN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. J. Currier</image-desc>
+J. J. CURRIER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Martin B. Daly</image-desc>
+MARTIN B. DALY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Irving L. Daniels</image-desc>
+IRVING L. DANIELS
+
+<vocab>Harris Creech, W. R. Creer, W. E. Crittenden, J. J. Currier, Martin B. Daly, Irving L. Daniels, The Book of Clevelanders</vocab>

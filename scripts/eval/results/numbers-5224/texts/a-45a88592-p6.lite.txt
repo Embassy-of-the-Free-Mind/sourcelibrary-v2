@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>mixed</script>
+<page-type>title-page</page-type>
+<warning>Handwritten cursive note at top of page</warning>
+
+Willed to George S. Campbell
+by Mr & Mrs Freeman D. Atwood
+in the late 1930s. The Atwoods
+lived on the corner of Rt 6A and
+Pt. of Rocks Rd, Brewster.
+Donated to the Brewster Ladies
+Library on 12/91 by George S.
+Campbell
+
+->Limited Edition.<-
+-><image-desc size="small" type="decorative" significance="low">ornamental flourish</image-desc><-
+->No................................................<-
+
+ENGRAVERS { A. H. RITCHIE,
+A. C. SHIPLEY,
+HAZLETT GILMOUR.
+
+ARTIST, FRANK M. GILBERT.
+PRINTER, J. HENRY PROBST.
+
+<vocab>George S. Campbell, Freeman D. Atwood, Brewster Ladies Library, Limited Edition, A. H. Ritchie, A. C. Shipley, Hazlett Gilmour, Frank M. Gilbert, J. Henry Probst</vocab>

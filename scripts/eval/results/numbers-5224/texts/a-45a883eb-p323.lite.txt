@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>319</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. G. Dietz</image-desc>
+->W. G. DIETZ<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Carl J. Diedricks</image-desc>
+->CARL J. DIEDRICKS<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mr. E. W. Dissette</image-desc>
+->MR. E. W. DISSETTE<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. F. Donaldson</image-desc>
+->A. F. DONALDSON<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Theo. Dluzynski</image-desc>
+->THEO. DLUZYNSKI<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. A. Donovan</image-desc>
+->M. A. DONOVAN<-
+
+<vocab>W. G. Dietz, Carl J. Diedricks, E. W. Dissette, A. F. Donaldson, Theo. Dluzynski, M. A. Donovan, Clevelanders</vocab>

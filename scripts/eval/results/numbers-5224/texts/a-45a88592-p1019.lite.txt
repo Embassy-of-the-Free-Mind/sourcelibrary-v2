@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+# CHAPTER XXIV.
+
+## TOWN OF WELLFLEET.*
+
+Formation and Description.—Pioneers.—Early Town Action.—The Revolution.—War of 1812.—The Fisheries.—Population.—King's Highway.—The Eastham Line.—Town House.—Shipbuilding.—Town Records.—Life Saving Station and Lighthouse.—Early Business Interests.—Wind Mills.—Civil History.—Schools.—Churches—Cemeteries.—Wellfleet Village.—South Wellfleet.—Biographical Sketches.
+
+THE territory comprising this town was formerly included in Eastham, and until the period of its separation their political history is inseparably interwoven; but so far as possible the historical facts pertaining to the territory of the present town, from its first settlement, will find a place in this chapter. Prior to 1644 the territory of Wellfleet had been purchased of George, sachem, successor to Aspinet, and was known as Pononakanet. Here, when the purchase of lands to and including Herring brook, with its meadows, had been made, the committee of whites asked the Indians whose lands were those down the Cape, to which the answer was, "Nobody's." "Then they are ours," was the reply, and Wellfleet was the last territory paid for at this end of the county.
+
+Billingsgate was an early name given to the present territory of Wellfleet, which unexplained cognomen still clings to some of its surroundings. At Billingsgate point, where the first lighthouse was subsequently erected, Captain Standish and the men from the *Mayflower* landed on their way to the main land, and in many ways this territory has been made historic in the annals of the county.
+
+The rapid settlement of this part of the ancient town induced its inhabitants to apply to the court in 1722 to be erected into a separate church parish, which was granted the following year. The importance of this parish, and the distance from the center where the town meetings were held, induced the inhabitants of the new parish to attempt the formation of a separate town. At the first meeting held for this purpose, March 9, 1761, they appointed Captain Elisha Doane agent "to get this precinct set of as a district." He, with Daniel Cole, Richard Atwood, Joseph Atkins, James Atwood, Jonathan Hiller, Eleazer Atwood, Zoeth Smith, Jeremiah Mayo and Samuel Smith,
+
+* The manuscript to page 812 was revised by Simeon Atwood.—*Ed.*
+
+<vocab>Wellfleet, Eastham, Pononakanet, Billingsgate, George (sachem), Aspinet, Mayflower, Captain Standish, Elisha Doane, Daniel Cole, Richard Atwood, Joseph Atkins, James Atwood, Jonathan Hiller, Eleazer Atwood, Zoeth Smith, Jeremiah Mayo, Samuel Smith, Simeon Atwood</vocab>

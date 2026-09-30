@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>328</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">B. M. Gardner</image-desc>
+B. M. GARDNER
+
+<image-desc size="small" type="portrait" significance="high">T. H. Garry</image-desc>
+T. H. GARRY
+
+<image-desc size="small" type="portrait" significance="high">C. G. Geddes</image-desc>
+C. G. GEDDES
+
+<image-desc size="small" type="portrait" significance="high">Thos. H. Geer</image-desc>
+THOS. H. GEER
+
+<image-desc size="small" type="portrait" significance="high">J. M. Gee</image-desc>
+J. M. GEE
+
+<image-desc size="small" type="portrait" significance="high">Frank F. Gentsch</image-desc>
+FRANK F. GENTSCH
+
+<vocab>B. M. Gardner, T. H. Garry, C. G. Geddes, Thos. H. Geer, J. M. Gee, Frank F. Gentsch, The Book of Clevelanders, biography, portraits</vocab>

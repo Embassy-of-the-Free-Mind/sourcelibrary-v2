@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>17</page-num>
+
+of an edict by Kubla khan, the Chinese original of which was engraved below it. At some risk and trouble I procured a few impressions from this stone, and sent one of them, through Sir John Bowring, to the Royal Asiatic Society in London, where it still remains. A short article on the subject, by myself, appeared in the "Transactions of the China Branch of the Royal Asiatic Society,"¹ for 1855, giving a copy of the inscription in the Mongol and Chinese characters, and also cuts of several coins of the Yuen dynasty.² There is also a restoration of the commencement of the *Pih kea sing* noticed above.
+
+In 1860, M. Pauthier gave a French translation of the inscription which I had published in the Hongkong Transactions. This appeared in the Journal Asiatique,³ together with some interesting details on the Bâshpah alphabet.
+
+The same year a very neat fount of type for this character was cast at the Imprimerie Impériale at Paris, under the instructions of M. Pauthier.
+
+An article which I had written on the Mongolian inscription new erection. This place was afterwards used as a lodging for the British officers during the military occupation of that city; and in their little arrangements to make things comfortable, all the inscribed tablets in the walls had been covered with plaster and whitewash. The Mongolian slab I could never find again, and on a visit to the place in company with Dr. Lamprey, he told me he had seen the stone in question used as a block for chopping on.
+
+¹ Part v. pp. 65–81.
+
+² I may be allowed here to notice some confusion that has taken place in the printing of that article. The cut of the coin to note || on page 55 is erroneously placed as note * on page 58. The note marked || at the foot of page 55 should be referred to the word *Pih*, in the third line of page 56. The Mongol letter *p*, placed on its side, thus <image-desc size="small" type="symbol" significance="high">Mongol letter p on its side</image-desc>, on page 64, should be <image-desc size="small" type="symbol" significance="high">Mongol letter p upright</image-desc>. The four Mongol characters at the top of page 65 are upside down. Engravings of some of these coins may be seen in an article by C. B. Hillier, on "Chinese Coinage," in the Transactions of the China Branch of the Royal Asiatic Society, part ii., 1848–50, pp. 105–110; also in the works of De Chaudoir, Endlicher, and others, on Chinese numismatics. A special article by Pauthier, on one of these coins, appeared in the Journal Asiatique, 5me. série, tom. xv. pp. 321–337, 1860.
+
+³ Vol. xix. pp. 5–47.
+
+<vocab>Kubla khan, Sir John Bowring, Royal Asiatic Society, Transactions of the China Branch of the Royal Asiatic Society, Yuen dynasty, Pih kea sing, M. Pauthier, Journal Asiatique, Bâshpah alphabet, Imprimerie Impériale, Dr. Lamprey, C. B. Hillier, Chinese Coinage, De Chaudoir, Endlicher, numismatics</vocab>

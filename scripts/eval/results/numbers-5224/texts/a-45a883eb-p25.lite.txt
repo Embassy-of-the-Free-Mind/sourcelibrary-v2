@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>21</page-num>
+<header>The Book of Clevelanders</header>
+
+**BAKER, Elbert H.;** pres. and gen. mgr. Cleveland Plain Dealer; born, Norwalk, O., July 25, 1854; son of Henry and Clara Maria (Hall) Baker; educated, public schools; married Ida. A. Smith, of Cleveland, June 1, 1876; began newspaper work on Cleveland Herald, 1877; advertising mgr., Cleveland Leader, 1882-97; gen. mgr. Cleveland Plain Dealer, 1898; pres., 1914; pres. City Investment Co.; Commercial Bldg. Co.; pres. Euclid Ave. Congregational Church; trustee Cleveland Y. M. C. A.; member Cleveland Chamber of Commerce, and active in municipal and civic affairs. Clubs: Colonial, Athletic, Chagrin Valley Hunt.
+
+**BAKER, Frederick L.;** dist. agent Empire Line; born, Wooster, O., Aug. 5, 1876; public and high school education; married, Chicago, June 10, 1911, Irene Carr; one child; fifteen years with the Empire Line; being district agent for the past seven years; member Traffic and Country clubs; three years member of Troop A; Mason.
+
+**BAKER, Newton Diehl;** mayor; born Martinsburg, W. V., Dec. 3, 1871; son of Newton Diehl and Mary (Dukehart) Baker; B. A., Johns Hopkins, 1892; LL. B., Washington and Lee University, 1894; married Elizabeth Lepold, of Pottstown, Pa., July 5, 1902; pvt. sec. to Postmaster-General Wilson, 1896-97; began practice at Martinsburg, W. Va., 1897; city solicitor of Cleveland, O., 1902-12; mayor of Cleveland, 1912-1913; re-elected 1913; Democrat; member Phi Gamma Delta. Clubs: Union, University.
+
+**BAKER, Walter Charles;** pres. American Ball Bearing Co.; born, Hinsdale, N. H., June 27, 1868; son of G. W. and Jeannette R. Hall Baker; educated, public schools, Cleveland, and Case School of Applied Science; married, Cleveland Oct. 27, 1891, Fannie E. White; organized the American Ball Bearing Co.; in 1894 was elected pres. and Mechanical Engineer, still serving; interested in other corporations; member Union, Euclid, Clifton Park and Engineers Clubs; Republican; member Unity Church.
+
+**BALDWIN, Arthur Douglas;** lawyer; born, Hiawiian Islands, Apr. 8, 1876; son of Henry P. and Emily Alexander Baldwin; educated, Oakland, Cal., High School; Hotchkiss School, Conn.; Yale, B. A.; Harvard Law School, LL. B.; married, Cleveland, June 17, 1902, Reba Louise Williams: 5 children, Henry, Louise, Fred, Alexander and Sarah; with Judge Daniel Babat of Crestline served on commission to codify Ohio Children's Law, 1911-12; candidate on Progressive ticket for State representation in 1912 (unsuccessful); member Brathenal School Board 1910-13; member troop A, O. N. G., 1901-3; organized law firm of Crowell & Baldwin in 1908; this firm dissolved in 1911; sec'y Workingmen's Collateral Loan Co.; director American Fabric & Belting Co.; member Nisi Prius Club; trustee Cleveland Federation for Charity and Philanthropy; Babies' Dispensary and Hospital; sec'y Legal Aid
+
+<vocab>Elbert H. Baker, Frederick L. Baker, Newton Diehl Baker, Walter Charles Baker, Arthur Douglas Baldwin, Cleveland, biography, business, law, politics</vocab>

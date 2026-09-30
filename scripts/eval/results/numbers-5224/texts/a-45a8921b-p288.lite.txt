@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>274</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Griffin, d.; treasurer Ladies Aid Soc., Congregational church, Brookfield, Ill.; member and officer of Brookfield Woman's Club; chairman Library Com.; member Woman's Club. Residence, Brookfield, Ill.
+
+Niles, William Porter
+Clergyman; b., Warehouse Point, Conn., Nov. 29, 1869; s. William
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of William Porter Niles</image-desc>
+
+Woodruff and Bertha (Olmsted) Niles, his father having been for more than forty years bishop of the P. E. Diocese of N. H.; ed. Holderness school, Plymouth, N. H., St. Paul's school, Concord, Trinity College, Hartford, Conn., B.A., 1893, M.A., 1896, General Theological Seminary, New York, Oxford University, England; Episcopalian; Republican; taught at Holderness School, Plymouth, 1893-6; ordained deacon, 1899, priest, 1900; priest in charge of St. James church, Laconia, N. H., 1899-1902; rector, Church of the Good Shepherd, Nashua, since 1902; deputy to General Convention of Protestant Episcopal church, 1907, 1910, 1913 and 1916; member board of managers of Diocesan Missions; trustee St. Mary's school, Concord; secretary Convocation; Knight Templar and 32d degree Mason; member Psi Upsilon Fraternity, Nashua Country Club; m., April 30, 1903, Serena Gertrude Sanders, Laconia, N. H.; children, Serena Olmsted, b. Jan. 16, 1904; William Woodruff, b. Oct. 7, 1905; George Sanders, b. Nov. 18, 1908. Residence, Nashua, N. H.
+
+<column-break/>
+
+Langdell, Samuel Frank
+Manufacturer and dealer in lumber; b., New Boston, N. H., Jan. 8, 1876; s. George and Lydia Shaw (McNeil) Langdell; ed. public schools, New Boston, and Bryant & Stratton's Business
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Samuel Frank Langdell</image-desc>
+
+College, Manchester; Baptist; Republican; resided on the old homestead in New Boston, which he had purchased; having gone into the lumber business, and the same increasing, he left the farm and removed to Goffstown village in 1906; and in 1913 removed to Manchester, where in 1918 he organized the
+
+<vocab>William Porter Niles, Samuel Frank Langdell, New Hampshire, biography, genealogy, clergy, lumber industry</vocab>

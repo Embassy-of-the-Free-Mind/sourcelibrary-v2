@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>69</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 69</header>
+
+**Nash, John Barzillia**
+Lawyer; b., Windham, Me., May 17, 1848; s. Barzillia and Lovina (Hick) Nash; ed. common and private schools and Gorham, Me., Academy; studied law and located in practice in Conway, N. H.; admitted to the N. H. bar in 1878; Universalist; Democrat; delegate in N. H. constitutional convention, 1889; representative in N. H. house of representatives, 1891, 1893; solicitor for Carroll county, four years; Democratic nominee for Congress 1894, 1896; president, N. H. Democratic state convention, 1896; delegate in Democratic national convention at Kansas City in 1900, and elected to the Denver convention in 1908, but unable to attend; appointed U. S. naval officer of customs, port of Boston and Charlestown, by President Wilson in 1913, and still in that office; has spoken extensively on the stump for the Democratic party in many campaigns; m., Nov., 1871, Susan J. Libby; children, Nathan G., Jessie (Mrs. Clifford H. Craig). Residence, Conway, N. H., P. O. address, Intervale.
+
+**Porter, Eleanor Hodgman**
+Musician and author; b., Littleton, N. H., Dec. 19, 1868; dau. Francis F. and Llewella (Woolson) Hodgman; ed. public schools, N. E. Conservatory of Music, and by private teachers; m., May 3, 1892, John Lyman Porter of Corinth, Vt.; Congregationalist; engaged for several years as choir and concert singer, and music teacher; since 1901 devoted to authorship; has written several published volumes that have attracted wide attention, “Pollyanna” being the most notable, as well as a great number of short stories for magazines and newspapers. Residence, Cambridge, Mass.
+
+**Tufts, James Arthur**
+Educator; b., Alstead, N. H., April 26, 1855; s. Timothy and Sophia P. (Kingsbury) Tufts; ed. Phillips Exeter Academy, 1874, Harvard College, A.B., 1878, A.M. Dartmouth, 1914; Professor of English, Phillips Exeter Acad-
+
+<column-break/>
+
+emy, since 1878; Unitarian; Progressive Republican; member, N. H. house of representatives, 1905, 1907 and chairman committee on education each year; trustee, N. H. College of Agriculture and Mechanic Arts, Robinson Seminary, Exeter, Exeter Public library, Kensington Social Library; member, Modern Language Ass’n of
+
+<image-desc size="medium" type="portrait" significance="high">Black and white portrait photograph of an elderly man with a mustache, wearing a suit and tie.</image-desc>
+
+America, American Dialect Soc., American Philological Ass’n, N. E. Ass’n Colleges and Preparatory Schools; honorary member, Cliosophic Soc., Princeton Univ., associate member, N. H. Soc. Cincinnati; m., Dec. 21, 1878, Effie Locke; children, Effie Miriam (d.), Irving Elting, Theodora, Delmont Locke, James Arthur, Jr., Helen. Residence, Exeter, N. H.
+
+**Minot, Fanny Elizabeth Pickering**
+(Mrs. James); b., Barnstead, N. H.; dau. Hazen and Martha Ann (Drew) Pickering; ed. Concord high school, 1865, Wheaton Seminary, Norton, Mass., 1867 (valedictorian of each class); m., Capt. James Minot, cashier
+
+<vocab>John Barzillia Nash, Eleanor Hodgman Porter, James Arthur Tufts, Fanny Elizabeth Pickering Minot, New Hampshire, biography, genealogy, politics, education, literature</vocab>

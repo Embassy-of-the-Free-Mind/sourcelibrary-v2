@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>357</page-num>
+<header>The Book of Clevelanders 357</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Mooney</image-desc>
+E. J. MOONEY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Herb. C. Moatz</image-desc>
+HERB. C. MOATZ
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. P. Mooney</image-desc>
+M. P. MOONEY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Robt. D. Morgan</image-desc>
+ROBT. D. MORGAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Morgan</image-desc>
+C. F. MORGAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Isaac Morris</image-desc>
+ISAAC MORRIS
+
+<vocab>E. J. Mooney, Herb. C. Moatz, M. P. Mooney, Robt. D. Morgan, C. F. Morgan, Isaac Morris, The Book of Clevelanders, portraits, biography</vocab>

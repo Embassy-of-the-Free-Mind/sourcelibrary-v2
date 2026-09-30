@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>285</page-num>
+<header>The Book of Clevelanders</header>
+
+Reserve University Law School; Bachelor of Letters, Adelbert, 1902; Bachelor of Laws, Western Reserve University Law School, 1905; married, Cleveland, Oct. 24, 1905, Margaret Knowlton; issue, two sons; pres. and treas. The Gates Legal Publishing Co.; member Delta Tau Delta (College) Fraternity, and Phi Delta Phi (Law School) Fraternity.
+
+WILDMAN, N. R.; commercial paper; born, Pitchur, N. Y., Sept. 1, 1879; son of Elijah and Elsie Newton Wildman; educated, public schools, Syracuse, N. Y., Fairfield Military Academy, Onondaga Academy; married, Cristhine, O., Sept. 28, 1904, Alice M. Snyder; issue, two children; studied law at Syracuse and after a time accepted position as traveling adjustor; about three years ago became engaged in the commercial paper business, The N. R. Wildman Co., pres. and mgr.
+
+WILHELMY, Otto A.; florist; born, New York City, May 29, 1889; son of Curt A. and Marie Holoechter Wilhelmy; educated, Cleveland public schools and Prag, Germany, High School; married, Cleveland, June 29, 1911, Emily Witting; 1905-1907, at greenhouses of The Cleveland Cut Flower Co.; 1908-1909, at Long Island private place, gardening and hot house work; 1909-1911, landscape work in the south near Jacksonville and Tampa, Fla.; 1912, landscape work in Cleveland; 1912-1913, florist, decorator and designer.
+
+WILKINS, Bert LeRoy; manufacturer; born, LaGrange, O., Dec. 11, 1869; son of H. J. and Anna Rowell Wilkins; educated, LaGrange public school and Oberlin Business College; married, LaGrange, O., Nov. 27, 1889, Lucy A. Richmond; issue, one daughter, Ada Vera; organized the partnership of Wilkins & Rawson, February, 1890; Lakewood Plumbing Co., 1903; Lakewood Wash Tray Co., 1906; consolidated the above with Euclid Stove & Brick Co., June, 1912; sec'y The Euclid Stove & Brick Co.; partner The Lakewood Plumbing Co.; director Colonial Savings & Loan Co.; Lakewood Lodge, F. & A. M.; Cunningham Chapter, R. A. M.; Forest City Commandery, K. T.; Lake Erie Consistory, A. A., Scottish Rite; Al Koran Temple, A. A. O. N. M. S.; member Chamber of Industry. Recreation: Spending summers at cottage, Black Lake, Mich.
+
+WILLARD, Hudson E.; coal business; born, Cleveland, Oct. 18, 1860; son of Elliott Sherrill and Ruth Hudson Willard; educated, Cleveland schools, Brooks Military Academy, and Oberlin College; married, New Philadelphia, July 11, 1890, Edith Smith; issue, three children; business career, William Bingham & Co., wholesale hardware, six years; organized the New Philadelphia Pipe Works Co., manufactures cast iron pipe; A. C. Saunders & Co., coal and iron ore; organized with A. R. Rhodes and M. A. Bradley, The United States Coal Co., and kindred organizations and corporations; sec'y, gen. mgr. and director The United States Coal Co.; member Clifton, Tennis, and Athletic Clubs.
+
+<vocab>biography, Cleveland, business, manufacturing, coal, floriculture, fraternal organizations</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>959</page-num>
+<header>TOWN OF PROVINCETOWN. 959</header>
+
+from the waters of the bay. The moving sand hills in the rear of the settled part of the town are often driven by the winds into strange, weird forms, fantastic and unique, fit subjects for the painter, the artist, or the poet. The Desert, as Thoreau calls the region between the two lines of hills, is often visited by artists from abroad in search of the picturesque and the beautiful.
+
+The drifting of the eastern sand hills has gradually changed portions of this territory. Strout's creek, which for many years afforded several acres of salt meadow, has been obliterated for a hundred years by the inroads of the sand. The waters of the bay, too, have changed the shore lines occasionally. In 1885 House Point island, a little island in the western part of the harbor, was completely washed away. Tradition preserves the record of an island at the eastern end of the harbor, called Hog's island, which was large enough for the pasturage of sheep, of which no trace remains. The natural changes have been accompanied by others due to the hand of man alone. Sods and loam, brought from the woods at the eastern end of the town, have been used to cover the barren beach sand which constituted originally what might be called the soil; sand and gravel taken from vessels discharging superflous ballast at the wharves have also been applied to the natural soil, so that in 1890 the residences in Provincetown are surrounded by gardens artificial in origin, yet flourishing and fertile, rose gardens in a desert, blooming the more brilliantly because of the saltness of the atmosphere, which gives to flowers a brilliant coloring not elsewhere observable.
+
+Provincetown stands alone, the one town in the old colony whose early history, rich in historical incidents of another kind, embraces few allusions to the Indians, who seem to have had no established habitations or villages within her limits. The Pamets exercised dominion over all the territory to the north of Herring brook in Wellfleet, and doubtless visited Provincetown frequently in pursuit of game. It is very probable, too, that the Meeshawms, a branch of the Pamets, had an encampment or village near Strout's creek, for evidence exists to-day, in the form of shells, arrow heads and other articles, of a former Indian occupation of the locality. At the east of Negro head, too, arrow heads have been found within a few years, and a clear spring still flows from the sand hills in the vicinity of Strout's creek, additional evidence, perhaps, of a probable Indian occupation.
+
+From the date of the departure of the *Mayflower* from Provincetown, or rather from November 19, 1621, the day that the *Fortune* sailed into Provincetown, until 1700, the history of the place is derived from the records of Plymouth colony. The colonists early recognized the title of the Pamet Indians to the lands at the Cape, which were believed to be of great value, and took steps to purchase their
+
+<vocab>Provincetown, sand hills, Thoreau, Strout's creek, House Point island, Hog's island, Pamet Indians, Meeshawms, Mayflower, Fortune, Plymouth colony</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>470</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+acres, and destroying standing and cut wood, to the value of fifty thousand dollars.
+
+In 1844 John Reed, of this town, was chosen by the legislature to the office of lieutenant governor, there having been "no choice" by the people. Mr. Reed was re-elected six subsequent terms. December 20, 1852, the magnesia works of Fearing & Akin, South Yarmouth, were destroyed by fire; loss, five thousand dollars. In December, 1853, in a severe snow storm, accompanied by high wind and tide, Central wharf, in Yarmouth Port, was nearly destroyed, the store and packing shed of Hawes & Taylor, located upon it, containing a stock of goods, was washed away and broken up, and five vessels driven from their moorings, floated ashore. The bark *Ida*, and several schooners went ashore on Sandy neck. The schooner *Leo*, of Rockland, Me., came ashore on Sandy neck; her crew were doubtless all lost. In October, 1858, the schooner *Granite*, of Quincy, was wrecked on the outer bar, off Yarmouth, and her crew, five in number, were swept overboard and drowned.
+
+May 3, 1863, the store and stock of goods of James B. Crocker were destroyed by fire; loss, about five thousand dollars. August 11th, a camp-meeting, under the auspices of Methodist Episcopal societies of the Providence Conference, was initiated. The association having the matter in charge, had previously purchased a grove about one mile and a quarter from the Yarmouth railroad station, on the Hyannis road, and erected suitable buildings for the purpose. This grove, with its accommodations, has been greatly enlarged, and improved yearly since that time. The last vessel of the Yarmouth Port fishing fleet was sold this year. October 15, 1868, the ancient cemetery, having been enlarged and greatly improved, there were impressive services held to commemorate the event; the chief feature of which was an address, by Rev. Joseph Eldridge, D. D., of Norfolk, Conn. March 14, 1869, the schooner *Electric Light*, of Provincetown, from Boston for Provincetown, was driven by a severe northeasterly gale into Yarmouth harbor, striking upon the bar and capsizing. Her crew of five men, with five passengers, all lost their lives. The severity of the weather of March, 1872, was said by the oldest people to be unprecedented for that month of the year. It was reported in the newspapers of March 23d, that it had been three weeks since any communication was had with Sandy neck.
+
+June 20, 1873, a fire broke out in the woods northeasterly from the town house, burning over a region of a square mile, destroying a large quantity of cut and standing wood. The station house of the Old Colony Railroad Cempany, in Yarmouth Port, was destroyed by fire November 17, 1878, and a few months after another was erected on the spot. Village Hall, Yarmouth Port, was also destroyed by fire,
+
+<vocab>Barnstable County, John Reed, Fearing & Akin, South Yarmouth, Central wharf, Hawes & Taylor, Sandy neck, Granite, James B. Crocker, Methodist Episcopal, Providence Conference, Yarmouth Port, Joseph Eldridge, Electric Light, Old Colony Railroad Company</vocab>

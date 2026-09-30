@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>89</page-num>
+<sig>N</sig>
+
+<margin>vul-
+tu-
+oil,
+tuy,
+ast,
+be-
+ses
+be-
+The
+ered
+the
+sh-
+as
+as
+urs
+on
+any
+al-
+st
+of
+*
+the
+re
+n-
+at
+gr.</margin>
+
+keeps day and night between 36° and 40°. Far from the river we scarce find a few huras or piper trees extend their foliage over thickets destitute of verdure. This phenomenon seems owing to the dryness of the air, which attains it's maximum in the month of February; and not, as the European planters assert, "to the seasons of Spain, of which the empire extends as far as the torrid zone." It is only plants transported
+
+The 12th of Feb., at 22 in the morning, hygr. 37·8°, th. 25° : at 3, hygr. 35°, th. 26·2° : at 11, hygr. 42·6°, th. 21·2°. Hacienda de Cura (altitude 226 toises). The 14th of Feb. at 2, hygr. 35·2°, th. 27·5° : at 4, hygr. 34°, th. 28·1° : at 5ʰ 30', hygr. 34·2°, th. 26·3° : at 7, hygr. 36·7°, th. 25° : at 12, hygr. 39·5°. On the 15th of Feb. at 2ʰ 30', hygr. 34·2°, th. 25° : at 11, hygr. 37·6°, th. 23·7°. The 16th of Feb. at 18, hygr. 38·5°, th. 20° : at 21, hygr. 39·7°, th. 23·3° : at 3ʰ 30', hygr. 35·2°, th. 26·2° : at 9, hygr. 37·6°, th. 23·3° : at 11, hygr. 38·6°, th. 22·7°. The 17th of Feb. at 19, hygr. 39·6°, th. 21·2° : at 1, hygr. 35·2°, th. 26·3° : at 12, hygr. 37·4°, th. 22·6°. The 19th of Feb. at 4, hygr. 34°, th. 25·2° : at 12, hygr. 38·7°, th. 22·5°. During all these observations the sky was clear, and without clouds. The mean humidity of the month of February appeared to have been in the valleys of Aragua, 35°—36° of Deluc, or 70·8°—72° of Saussure, with a mean temperature of 24·3°. These numbers indicate a considerable dryness, if we recollect the usual state of the hygrometer between the tropics. (See chap. iii, vol. ii, p. 88—90.) At Paris, and at Geneva, the humidity of the months, the mean temperature of which reaches 18°, is above 82° of Saussure.
+
+<vocab>Huras, piper trees, Hacienda de Cura, Aragua, Deluc, Saussure, hygrometer, humidity, temperature, tropics</vocab>

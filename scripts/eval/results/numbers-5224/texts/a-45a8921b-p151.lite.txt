@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>137</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 137</header>
+
+**French, Emma Blood**
+Philanthropist; b., Manchester, N. H., Oct. 15, 1863; dau. Aretas and Lavinia (Kendall) Blood; ed. in the Manchester schools and at Dr. Gannett's boarding-school, Chester Square, Boston, Mass.; m. Dr. L. Melville French of Manchester, June 1, 1887 (d. Dec. 21,1914); daughter, Margaret Lavinia, b. April 20, 1888, m. Carl Spencer Fuller of Manchester, June 9, 1910; grandchildren, Mary Spencer, 1911, and Henry Melville, 1914. In 1916 Mrs. French erected and endowed a building for the Manchester Institute of Arts and Sciences, an institution in which she had long been interested. This building is adjacent to the Carpenter Library, erected in memory of her sister, Elenora Blood Carpenter, by the latter's husband, Frank P. Carpenter. With Mrs. Carpenter, Mrs. French gave the maternity and children's ward to the Eliot Hospital and endowed it; and in 1918 Mrs. French built and endowed the L. Melville French children's ward for the same hospital. Mrs. French started the first Shakespeare Club in Manchester, 1872; president of the Woman's Aid and Relief Home, founded by her parents, 1899-; vice-president, Pembroke Sanitarium; director, District Nursing Ass'n; member, Franklin Street Congregational church, N. H. Soc. of Colonial Dames, D. A. R., Board of Council of the Manchester Institute, Y. M. C. A., Children's Home, Red Cross, Navy League, Y. W. C. A. War Relief (patron), N. H. Memorial Hospital for Women and Children at Concord. Residence, North River Road, Manchester, and Little Boar's Head, N. H.
+
+**Brennan, Vincent John**
+Woolen manufacturer; b., Manchester, N. H., Sept. 25, 1847; s. William J. and Mary (Murphy) Brennan; ed. public schools; removed to Rockford, Conn., in childhood and reared there; entered the New England Mill in Rockford in early life continuing five years and becoming an overseer at the age of
+
+<column-break/>
+
+21; superintendent of carding in Salisbury Mills, Amesbury, Mass., six years; Asabet Mfg. Co.'s Mills, Maynard, Mass., superintendent of carding five years; superintendent, Ottequechee Woolen Co., North Hartland, Vt., six years; superintendent, A. G. Dewey & Co., Quechee, Vt., twelve years; removed to Newport, N. H., in 1906 as general agent of the Brampton Mills, since continuing; served also as general agent, Dexter Richards & Sons Mills,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and glasses, wearing a suit and tie.</image-desc>
+
+1912-16; Catholic; Democrat; member, Newport board of trade; m., 1st, April, 1871, Cora F. Keyes, Orland, Me., d. Feb., 1891; 2d, Nov., 1891, Edith L. Reed; children, Vincent John, Jr., superintendent, Brampton Mills; Ralph A. (Philadelphia Textile School); Maud E. (Wheaton College, 1914, Maryland College, 1916). Residence, Newport, N. H.
+
+**Chandler, Fred Gray**
+Teacher, farmer; b., Penacook, N. H. (Concord, Ward One), Dec. 31, 1845; s. Nathan and Louisa (Ferrin)
+
+<vocab>Emma Blood French, Vincent John Brennan, Fred Gray Chandler, Manchester, Newport, Penacook, philanthropy, textile manufacturing, biography, New Hampshire</vocab>

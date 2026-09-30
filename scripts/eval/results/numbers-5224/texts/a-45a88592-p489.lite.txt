@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>405</page-num>
+<header>TOWN OF BARNSTABLE. 405</header>
+
+on what is now the property on the bank belonging to the estate of Samuel Hooper, deceased. Hezekiah Coleman built the wharf close by, known as "Uncle 'Kiah's wharf," where he also had a store soon after Mr. Crocker's. These were prominent stores and business places for many years; Mr. Crocker's was continued till his death in 1841. The Coleman store is now a part of Sylvester R. Crocker's house. Daniel Childs, about 1840, started a store on the site of Andrew Lovell's present office, and a portion of the building he occupied then is now doing service as Esquire Lovell's laundry room.
+
+Samuel Nickerson carried on a shoe store and clothing store here fourteen years prior to his death in 1884. Leander W. Nickerson there carried on a mercantile business for several years, when in May, 1869, Asa F. Bearse opened his present store. John M. Handy was engaged in the mercantile business here from 1884 until his death in 1889. Others also in business are Julius Nickerson and Henry Hodges. On the Heights, as it is termed, although in the same village, Aaron Nickerson started a store nearly twenty years ago under the firm name of A. Nickerson & Son, the son, Alexander E., buying the business and stock in 1887. Daniel Nickerson was a merchant at this part of the village until his death a few years ago.
+
+About 1875 the late Ensign Nickerson began a grocery business at Highground, Cotuit. His son, George W., succeeded him, and in 1877 Aaron Nickerson & Son took the business, which, in January, 1889, the son, A. E. Nickerson, moved to his present store building. Ensign Nickerson had a small store here, which was burned about 1858.
+
+Since the opening of the Santuit House in June, 1860, this village has been growing in favor as a summer resort.
+
+An old landmark here is the residence of General John H. Reed. It was built in 1793 by Ebenezer Crocker, father of Braddock Crocker. Alexander Scudder, who married Braddock's daughter, next owned it and in 1849 he sold it to Hon. Samuel Hooper, whose granddaughter, Mrs. Balfour of Scotland, now owns it.
+
+Mariners Lodge, A. F. & A. M., was instituted in 1870. Preliminary meetings were held in the chambers of John M. Handy, Cotuit Port, early in the year 1870, and March 10th a dispensation was granted to George J. Miller, W. M.; John B. Baxter, S. W.; John B. Lovell, J. W.; Thomas Chatfield, T.; John M. Handy, S.; Asa F. Bearse, S. D.; Simeon L. Ames, J. D.; Alonzo L. Phinney, C.; Sylvanus Porter, M.; Bennett W. Dottridge, S. S.; Frank Cammett, J. S.; and Stephen B. Tallman, T. A charter was granted to the lodge December 13, 1871, and in August following the number of members was thirty-seven. The installation of the first officers was held in Freedom Hall, and by arrangement with the proprietors of the hall, a suitable lodge room was, in 1872, prepared over the hall, which is still in use by the order.
+
+<vocab>Barnstable, Samuel Hooper, Hezekiah Coleman, Uncle 'Kiah's wharf, Sylvester R. Crocker, Daniel Childs, Andrew Lovell, Samuel Nickerson, Leander W. Nickerson, Asa F. Bearse, John M. Handy, Julius Nickerson, Henry Hodges, Aaron Nickerson, Alexander E. Nickerson, Daniel Nickerson, Ensign Nickerson, George W. Nickerson, A. E. Nickerson, Santuit House, John H. Reed, Ebenezer Crocker, Braddock Crocker, Alexander Scudder, Mrs. Balfour, Mariners Lodge, A. F. & A. M., Cotuit, Freedom Hall</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>301</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. J. Anderson</image-desc>
+A. J. ANDERSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Earl J. Andrews</image-desc>
+EARL J. ANDREWS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of N. H. Anspach</image-desc>
+N. H. ANSPACH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. H. Arndt</image-desc>
+G. H. ARNDT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. K. Arter</image-desc>
+CHAS. K. ARTER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Alfred Arthur</image-desc>
+ALFRED ARTHUR
+
+<vocab>A. J. Anderson, Earl J. Andrews, N. H. Anspach, G. H. Arndt, Chas. K. Arter, Alfred Arthur, The Book of Clevelanders, biography, portraits</vocab>

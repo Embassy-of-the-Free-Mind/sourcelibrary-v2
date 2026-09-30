@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>360</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Barnard, Charles Daniel**
+Lawyer; b., Bedford, N. H., Feb. 15, 1873; s. Henry T. and H. Louisa (Hunter) Barnard; ed. public schools of Bedford and Merrimack, N. H., McGaw Institute, Reed's Ferry, and George Washington University, Washington, D. C.; studied law and was admitted to the bar in 1905, commencing practice as an associate of Hon. Cyrus A. Sulloway and Moodybell S. Bennett; Congregationalist; Republican;
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of a man with a mustache and glasses, wearing a suit and tie.</image-desc>
+
+member N. H. house of representatives from Ward 4, Manchester, 1909-10; secretary to Senator Henry E. Burnham, 1910-13; city solicitor of Manchester, 1913 to Jan. 1918; member A. F. & A. M., Knight Templar and Shriner, I. O. O. F., Amoskeag Veterans, Derryfield and Calumet Clubs, Manchester; nominated as Republican candidate for councilor from the 3d N. H. district in the September, 1918, primary; m., Dec 31, 1904, Mabelle W. Wright; one son, Charles Henry, b. Sept, 28, 1907 Residence, Manchester, N. H.
+
+<column-break/>
+
+**Bailey, Irving Widmer**
+Educator; b., Tilton, N. H., Aug. 15, 1884; s. Solon I. and Ruth Elaine (Poulter) Bailey; ed. Harvard University, A.B. 1907, M.F. 1909; assistant in botany, Harvard, 1909-10; instructor in forestry, 1910-12; assistant professor since 1912; secretary Bussey Institution for Research in Applied Biology; member forestry committee, National Research Council; Fellow American Academy, Arts and Sciences; member Soc. of American Foresters, Soc. Naturalists of America; Harvard Club, Boston; m., June 15, 1911, Helen Diman Harwood, Littleton, Mass. Residence, 42 Shepard St., Cambridge, Mass.
+
+**Brown, Emma Elizabeth**
+Author; illustrator; b., Concord, N. H., Oct. 18, 1847; dau. John F. and Elizabeth (Evans) Brown; ed. public schools and private instruction; author of Lives of Washington, Grant, Garfield, Oliver Wendell Holmes, James Russell Lowell and others, constituting a series of fifteen volumes; "Spare Moment Series" (6 vols.); "From Night to Light"; "The Child Toilers of the Boston Streets"; "Huldah" (verse) and many Sunday School books; frequent contributor to magazines. Residence, 1925 Massachusetts Ave., Cambridge, Mass.
+
+**Remick, Helen Lorraine Benedict**
+(Mrs. Charles G. Remick), b. Cornwall, Vt.; dau. Abel Jerome and Helen Adaline (Peck) Benedict; ed. Middlebury, Vt., high school, Petersilea academy, Boston, Mass.; president, Concord Music Club, 1902-5, 1914-; president Concord Equal Suffrage League, 1913-6 (secretary four preceding years); vice-president Concord Oratorio Soc., 1911-; on committee for biennial of National Federation of Music Clubs, held at Peterboro, N. H., 1918; trustee of Y. M. C. A. Auxiliary; for several years chairman of music committee, Concord Woman's Club; for three years on executive board of Friendly Club; member N. H. Histori-
+
+<vocab>Biography, New Hampshire, Genealogy, Law, Education, Literature, Suffrage, Clubs</vocab>

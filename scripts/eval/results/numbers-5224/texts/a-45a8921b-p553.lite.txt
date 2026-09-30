@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>539</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 539</header>
+
+Manchester. Mr. French has received the highest honors for his work at notable exhibitions; medal at Columbian Exposition, Chicago, in 1893; Pan American Exposition, Buffalo, in 1901; Paris Exposition, 1900; gold medal, St. Louis Exposition, 1904. his specialty is portraits; member of Artists Fund Soc., Kit Kat Club, Salmagundi Club of New York; author of "Home Fairies and Heart Flowers," and other works. While acting as secretary of the Soc. of American Wood Engravers he caused to be completed the "Portfolio" of fine original woodcuts by the foremost engravers and published by Harper and Brothers. Mr. French now maintains his studio in the Odd Fellows Building, Manchester, 81 Hanover St.; is president of the Studio Shop and has associated with him his daughter, Mabel Edna and son Frank A., the latter assuming the active management of the business.
+
+**Young, Oscar L.**
+
+Lawyer; attorney general; b., Ossipee, N. H., Sept. 11, 1874; s. Timothy B. and Isabel S. (Buzzell) Young; ed. Brewster Free Academy, Wolfeboro, N. H., 1895; Boston University Law School, LL.B. 1900; admitted to the N. H. bar, 1900, and commenced practice in Wolfeboro, removing to Laconia in 1901, where he has since remained in practice; now member law firm of Young & Cheney (Thomas P. Cheney), with office in Baldi Bldg., Laconia; Free Baptist; Republican; justice Laconia police court, 1903-13, Laconia municipal court, 1915, 1917; clerk Board of Railroad Commissioners, 1909-11; chairman Republican state committee, 1908-10; attorney general of New Hampshire since April 15, 1918; trustee Laconia Savings Bank, Brewster Free Academy, Wolfeboro, N. H.; president Lake City Club, Laconia; member A. F. & A. M., I. O. O. F., P. of H.; m., July 11, 1909, Anna M. Paris, Wolfeboro, N. H. Residence, 84 Whipple Ave., Laconia, N. H.
+
+<column-break/>
+
+**Hetzel, Ralph Dorn**
+
+Educator; b., Merrill, Wis., Dec. 31, 1882; s. Henry Clayton and Sadie (Dorn) Hetzel; ed. Merrill, Wis., public schools; Univ. of Wisconsin, A.B. 1906; LL.B. 1908; LL.D., Dartmouth, 1918; instructor in English, Oregon State College, 1908-9; assistant professor, 1909-11; professor English and political science, 1911-3; director of Extension Service, 1913-17; president N. H. College of Agriculture and Mechanic Arts since August, 1917; admitted to the Wisconsin bar, 1908; Oregon bar, 1910; member Delta Upsilon, Phi Delta Phi, Gamma Sigma Delta, American Ass'n Agricultural Colleges and Experiment Stations (chairman Extension Section, 1915); m., Aug. 4, 1911, Estelle Helene Heineman, Merrill, Wis.; four children. Residence, Durham, N. H.
+
+**Whoriskey, Richard**
+
+Professor of modern languages; b., Cambridge, Mass., Dec. 2, 1874; s. Richard and Anne (Carroll) Whoriskey; ed. Harvard College, 1897; Harvard Graduate School, 1897-8; professor of modern languages, N. H. College of Agriculture and Mechanics Arts, Durham, since 1899; former president modern language section, N. H. Teachers' Ass'n; former president, N. H. Schoolmasters' Club; member Modern Language Ass'n of America, Kappa Sigma; author of various monographs; chief of the division of coöperating agencies on the staff of Huntley N. Spaulding, federal food administrator for New Hampshire; speaker for the League of Nations. Residence, Durham, N. H.
+
+**Weston, George Franklin**
+
+Educator; b., Hancock, N. H., Oct. 3, 1853; s. Ephraim and Almira H. (Gates) Weston; ed. New London Literary and Scientific Inst., New London, N. H., 1874; Brown Univ., 1878, A.M. 1881; principal, Elmwood grammar school, Providence, R. I., 1878-95; principal, Technical high school, Providence, since 1895; member R. I. Institute of Instruction, R. I. Ass'n Mech. Eng'rs, R. I. Historical
+
+<vocab>biography, New Hampshire, educators, lawyers, genealogy, 20th century</vocab>

@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>355</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Merriam</image-desc>
+J. W. MERRIAM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Adolph Menjou</image-desc>
+ADOLPH MENJOU
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. E. Merville</image-desc>
+E. E. MERVILLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Fred Meyer</image-desc>
+FRED MEYER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Myron Metzenbaum</image-desc>
+DR. MYRON METZEN-
+BAUM
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Casper J. Miller</image-desc>
+CASPER J. MILLER
+
+<vocab>J. W. Merriam, Adolph Menjou, E. E. Merville, Fred Meyer, Dr. Myron Metzenbaum, Casper J. Miller, Clevelanders, biography</vocab>

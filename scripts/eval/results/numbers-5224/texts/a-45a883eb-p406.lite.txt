@@ -1,0 +1,80 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>402</page-num>
+<header>The Book of Clevelanders</header>
+
+| | Page | | Page |
+|---|---|---|---|
+| Gee, James McCreary | 106 | Hartzell, Russell S. | 124 |
+| Geer, Thomas Henry | 107 | Harvey, Allyn Fitch | 124 |
+| Gibbons, John Waldron | 107 | Harvey, M. C. | 124 |
+| Gibbs, Harley Brownell | 107 | Hascall, George C. | 125 |
+| Gilbreath, Bruce Raymer | 108 | Haserot, Francis H. | 125 |
+| Girl, Christian | 108 | Haskins, John Henry | 125 |
+| Glekler, Michael M. | 108 | Hatch, Henry Reynolds | 125 |
+| Glidden, Francis Harrington | 108 | Hauserman, Earl Frederic | 126 |
+| Goakes, Fred W. | 109 | Hawley, Davis | 126 |
+| Goddard, Dwight | 109 | Hayden, Warren Sherman | 126 |
+| Goff, Frederick Harris | 109 | Hayes, Patrick F. | 127 |
+| Goodman, Max P. | 109 | Hays, Eugene K. | 127 |
+| Gordon, William | 110 | Hays, Louis H. | 127 |
+| Gormsen, James | 110 | Heald, John C. | 128 |
+| Goss, Thomas Carr | 111 | Heffner, George John | 128 |
+| Gould, Charles Winthrop | 111 | Henahan, Joseph P. | 128 |
+| Goulder, Harvey Danforth | 111 | Henderson, John Moreland | 128 |
+| Gowen, Albert Younglove | 111 | Henry, Frederick Augustus | 129 |
+| Graham, Adam | 112 | Herrick, Frank Rufus | 129 |
+| Grahl, George F. | 112 | Herrick, Frederick C. | 129 |
+| Grant, Frank M. | 112 | Herrick, Myron T. | 129 |
+| Grasselli, E. R. | 112 | Herron, Edward Manoe | 130 |
+| Grasselli, Thomas S. | 113 | Hertner, John H. | 130 |
+| Greene, Edward Belden | 113 | Heydler, Charles | 130 |
+| Greenleaf, Lloyd B. | 113 | Hickox, Ralph W. | 130 |
+| Greif, William | 113 | Hieber, Henry C. | 130 |
+| Greiner, Louis C. | 114 | Higbee, William Tryon | 131 |
+| Gresham, Harry Ernest | 114 | Higley, Frank | 131 |
+| Griebling, Erich L. | 114 | Hill, Hal. H. | 131 |
+| Gries, Moses J. | 114 | Hill, Harry N. | 131 |
+| Groll, George C. | 115 | Hill, Thomas William | 131 |
+| Groot, George Anderson | 115 | Hiller, Frank B. | 132 |
+| Grossman, Albert | 115 | Hilman, Max | 132 |
+| Grossman, Isador | 116 | Hindson, Thomas | 132 |
+| Gundry, John Murton | 116 | Hirstius, August J. | 132 |
+| Gund, George F. | 116 | Hogsett, Thomas H. | 133 |
+| Guthrie, Tracy W. | 117 | Holden, Guerdon Stearns | 133 |
+| | | Hollyday, John Wilson | 133 |
+| Hackenberg, Harvey Edward | 117 | Holocker, Alexander C. | 134 |
+| Hadden, Alexander | 117 | Hopkins, Benjamin F. | 134 |
+| Hailmann, William Nicholas | 118 | Hopkins, David Harris | 134 |
+| Haldy, William Oscar | 118 | Hopkins, Evan Henry | 134 |
+| Hale, Edwin Victor | 118 | Hopkins, William Rowland | 134 |
+| Hale, Willis B. | 119 | Hopple, Elden J. | 135 |
+| Hall, George Herbert | 119 | Horner, James Richey | 135 |
+| Hall, Lewis | 119 | Horning, Walter R. | 135 |
+| Hall, Lucien B. | 119 | Horton, William Perry | 136 |
+| Hall, Orlando | 120 | Hough, Addison Hills | 136 |
+| Halle, C. K. | 120 | House, Augustus F. | 136 |
+| Halle, Carl | 120 | Housum, Bird W. | 137 |
+| Halle, Salmon Portland | 120 | Howard, Albert E. | 137 |
+| Handerson, Henry Ebenezer | 120 | Howard, William Travis | 137 |
+| Hanna, Gus H. | 121 | Howe, Albert Z. | 138 |
+| Hanna, William F. | 121 | Howe, Charles Sumner | 138 |
+| Hannen, Aaron Kerr | 121 | Howe, Edward Lyman | 138 |
+| Hannum, Edwin Alan | 121 | Howe, William Addison | 138 |
+| Hansen, George C. | 122 | Howland, Paul | 139 |
+| Hansen, Rasmus | 122 | Hoyt, James Humphrey | 139 |
+| Hard, Dudley Jackson | 122 | Hubbard, Sterling William | 139 |
+| Harris, Charles | 122 | Hubbell, Benjamin S. | 139 |
+| Harris, Edward L. | 122 | Hudlett, John | 140 |
+| Harris, Frank R | 123 | Hughes, Felix | 140 |
+| Hart, Emmett Ellsworth | 123 | Hulett, Ralph Martin | 140 |
+| Hart, George P. | 123 | Hull, John Bartlett | 140 |
+| Hartshorn, George E. | 124 | Humphrey, David H. | 141 |
+| Hartz, Augustus Frederic | 124 | | |
+
+<column-break/>
+
+<vocab>Index, Cleveland, Biography, Directory</vocab>

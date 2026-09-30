@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>375</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. E. Sanders</image-desc>
+->C. E. SANDERS<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Peter Samman</image-desc>
+->PETER SAMMAN<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. C. Saum</image-desc>
+->O. C. SAUM<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Leroy P. Sawyer</image-desc>
+->LEROY P. SAWYER<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. W. Saunders</image-desc>
+->C. W. SAUNDERS<-
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. K. Saywell</image-desc>
+->J. K. SAYWELL<-
+
+<vocab>C. E. Sanders, Peter Samman, O. C. Saum, Leroy P. Sawyer, C. W. Saunders, J. K. Saywell, The Book of Clevelanders</vocab>

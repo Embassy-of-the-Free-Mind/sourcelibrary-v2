@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>251</page-num>
+<header>The Book of Clevelanders</header>
+
+a prominent attorney, and was admitted to the Ohio Bar, March 11, 1897; married, Columbus, O., June 12, 1895, Bertha Bassett Browne; at the age of 14, entered the employ of the Standard Oil Co.; continued with them for about twenty years; for six years, held the position of senior accountant, for nine years, chief accountant in their office at Columbus, O.; two years, sec’y and treas. the H. H. Hessler Co.; for seven years, has been engaged in the practice of public accounting; director and sec’y The Fred A. Lee Realty Co.; member Chamber of Commerce, Cleveland Credit Mens Ass’n, Tyrian Lodge, Masonic Temple; in 1850, his grandfather, Needham Maynard Standart, became a resident of Cleveland, building the old homestead on Detroit Ave., between Waverly and Gordon Aves.; this house is still one of the city’s landmarks. Recreations: Boating and Long Distance Walking.
+
+STANLEY, Welles Kirk; lawyer; born, Portsmouth, Nov. 12, 1873; son of Rev. T. W. and Amanda Kirk Stanley; A. B., Ohio Wesleyan University, 1895; LL. B., Yale University, 1900; married, Cleveland, June 8, 1905, Grace Hiles; issue, one daughter, Ann; in the office of Attorney W. H. Boyd three years; formed partnership with P. L. A. Lieghley in October, 1911; sec’y the Lewis Jewelry Co., the A. J. Fawcett Co., the W. H. Noble Co.; member Beta Theta Pi, Book and Gavel (Yale), Cleveland Athletic Club.
+
+STEARNS, Arthur Adelbert; attorney; born, Olmsted, O., July 18, 1858; son of Edmund and Anna J. Marsh Stearns; educated, Buchtel College, A. B.-A. M., honorary degree LL. D., Harvard Law School; issue, three children; business connections, 1884-1890, Stearns & Kelley; 1902-1904, Stearns & Chamberlain; 1904-1909, Carr, Stearns, Chamberlain & Royon; 1909, Stearns, Chamberlain & Royon; sec’y Cleveland Bar Ass’n, 1890 to 1898; 1905, pres. Cleveland Bar Ass’n; trustee Buchtel College; member Chamber of Commerce and Union Club. Author of “Stearns on Suretyship” (1903), “Annotated Cases on Suretyship” (1907).
+
+STEHN, George Gustav; florist; born, Germany, Sept. 17, 1861; son of William Stehn; mother’s maiden name, Dreesfen; served one year, 1880, at De Loues Tomological Institute in Reuteingen, Germany; received first-class diploma; married, Manchester, N. H., Jan. 11, 1893, Anna Emelie Liebing; issue, three children; served four years in Ulan Regiment, King Charles, No. 19, Stuttgart, Wurtemberg, under Count Ferdinand Von Feypelia; advanced to corporal; has worked as florist in New York, Boston and Cleveland; educated as teacher of physical education in Normal School of North America, at Indianapolis, Ind., 1890; graduated with first-class diploma; taught for twenty years in different cities, a number of years in Cleveland; ten years ago went into the florist business again; teacher of physical education Star Turnverns, for fourteen years; one of the directors of Turnverns Business Ass’n for two years; director of the German Club for last three years.
+
+<vocab>Cleveland, biography, attorney, lawyer, florist, business, education, genealogy, organizations</vocab>

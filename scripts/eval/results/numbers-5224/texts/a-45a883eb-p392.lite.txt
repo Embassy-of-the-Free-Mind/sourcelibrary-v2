@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>388</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. C. K. Teter</image-desc>
+DR. C. K. TETER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. L. Terry</image-desc>
+C. L. TERRY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Wm. C. Teter</image-desc>
+DR. WM. C. TETER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Edw. L. Thurston</image-desc>
+EDW. L. THURSTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. W. Thomas</image-desc>
+A. W. THOMAS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. A. Tinnerman</image-desc>
+G. A. TINNERMAN
+
+<vocab>Dr. C. K. Teter, C. L. Terry, Dr. Wm. C. Teter, Edw. L. Thurston, A. W. Thomas, G. A. Tinnerman, The Book of Clevelanders</vocab>

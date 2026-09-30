@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>850</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+where he carried on business until 1876, when fire destroyed the store and the famous Exchange building, together with the dwelling house of Mrs. Turpie, and outbuildings connected with the store. It should have been stated that upon retiring from the dry goods business, Mr. Underwood went into the grocery business in another room of the old Exchange building, and engaged in other branches of trade, holding at the time the office of postmaster and town clerk and treasurer in his store. He was succeeded by his son, Joseph Underwood, and Henry Holmes in the grocery business in 1872. The store vacated by Mr. Brett in 1874 was soon occupied by C. F. Parker of Yarmouth in the dry goods business. He was in trade here when the store was burned. Mr. Parker for a short time opened a store in Mr. Buck's building, now occupied by Paddock Small, and removed to Osterville. Mr. Brett's present store was built in 1876. The west room is occupied by J. F. Tobey, who succeeded Mr. Brett in the grocery business.
+
+Nathan Ellis opened a store in his old house on the north road in 1855, and subsequently opened opposite his house on the east side of the road a store, which was destroyed by fire about 1880. In 1881 he opened, near the railroad station, a store, which he sold to Thomas Harriman in 1884, who carried on the grocery business until 1885, when the store was burned. In 1881 Mr. Ellis built the store now owned and occupied by his son, Samuel A. Ellis.
+
+Others who have stores here at present are: Rufus F. Crowell, Paddock Small, Samuel Moody, jr., J. G. Ryder, 2d, Sheldon K. Crowell and Patrick Kelly, jr.
+
+T. D. Eldridge and S. W. Rogers, pharmacists, have each a drug store.
+
+In 1856, the manufacture of soap was commenced in a building standing upon the site of the house of F. D. Weekes, by Solomon Thacher. The business was not successful, and Mr. Thacher sold out to T. P. Parker,—who had been in his employ—an experienced soap maker. After some years in the business, he removed from the town. The shop was made a dwelling house, and some years since was destroyed by fire.
+
+In 1865, Jonathan Buck moved into the new building which had just been completed for him, standing upon the site of the old school house, and commenced the manufacture of fishermen's boots and slippers. He continued in the business until 1868, when a company was formed, with a capital stock of ten thousand dollars, to carry on the same business, in addition to making women's shoes, and he became superintendent. In 1870, the capital was increased. In 1873 the company closed up business, and Mr. Buck resumed the old business. He retired in 1883. Paddock Small now occupies the place.
+
+The building erected for the company is now owned and occupied by Henry T. Crosby, the marble worker, who came here in 1873.
+
+<vocab>Barnstable County, history, commerce, retail, grocery, pharmacy, soap manufacture, shoe manufacture, fire, business history</vocab>

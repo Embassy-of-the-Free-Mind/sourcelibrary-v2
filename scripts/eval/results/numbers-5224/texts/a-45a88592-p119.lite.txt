@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>97</page-num>
+<header>MILITARY HISTORY.</header>
+
+Michael Cregan; Co. H, James Booth, Francis Daval, Samuel F. Mason, George Meyer; Co. L, Henry R. Cook, William Johnson; unassigned, John W. Clark. *Barnstable*: Co. F, Robert P. Stewart, serg.; Co. G, Charles Hinton, Alexander Lucia; Co. K, John Lang; unassigned, Jacob Doolittle. *Sandwich*: Co. G, Alonzo B. Poor; Co. K, William W. Phinney, serg.; Co. L, Solomon H. Jones, Ettien Morien, Zeno Whiting; unassigned, James H. Holemon. *Yarmouth*: Co. G, Abner Williams, Cyrus L. Williams; Co. H, Richard Massey, John Smith; Co. M, Charles H. Lee. *Chatham*: Co. H, John Crawford; Co. L, Cain Mahoney; Co. M, James De Wolver, corp.; Christian Boost. *Truro*: Co. G, Walter A. Cook.
+
+Fifth Regiment, 1864.—*Provincetown*: Co. A, Aaron J. Moore, serg.; died at New Orleans, Sept., '65; John Franks, corp.; William Gardner, Charles Stuart; Co. B, Frank Manuel; Co. G, Charles Heatley, died Fortress Monroe, July, '65; Co. H, Charles Williams; Co. M, Joshua Hunt. *Harwich*: Co. A, John S. Matthews; Co. L, George Lyons. *Barnstable*: Co. B, John Alden, Clark H. Northup, David R. Northup, Co. E, Pardon K. Parker, George W. Wilson; Co. K, James Harris; Co. L, William Taylor; Co. K, James Camrel, serg. *Wellfleet*: Co. L, John Connor; Co. C, John Green; Co. G, John H. Mason. *Dennis*: Co. D, John Collamore, William Jones, Zachariah Rogers. *Falmouth*: Co. E, George C. Warren, corp.; John Homager, James G. Mason. *Sandwich*: Co. F, Charles Riley; Co. G, Richard Colwell; Co. H, William Brewster, William Brooks, accidentally shot March, '65; Co. L, Turner Richardson; unassigned, Robert Lee. *Orleans*: Co. H, John Boggs, Frederick Collins, Levi Jackson, William St. John; Co. I, Nelson Merideth, Barney O'Brien, Frank Thornton, William Thomas, Henry Tillman. *Falmouth*: E. J. Woods. *Yarmouth*: Co. H, James Carter; Co. I, John Hawley, John Sweeney. *Brewster*: Co. I, James F. Oliver. *Eastham*: Co. K, Ira Smith.
+
+->INFANTRY.<-
+
+First Regiment, 1862.—*Sandwich*: Co. C, Thomas Ball, dis.; Co. H, James Gaffney, dis. *Barnstable*: Unassigned, George Adams, Charles Brown, Peter Conley, Thomas Cramer, John Dorcey, Patrick Finnan, John Lee, John Morris, trans. to Eleventh; John M. Reed, Samuel Roche, Christopher Voux, James L. Wood.
+
+Second Regiment, 1864.—*Wellfleet*: Co. A, Joseph Kratt, John Moore; Co. B, John Kaumm, Henry Miller; Co. D, Daniel Daley, transferred; Co. E, John Ford; Co. G, Edward Carrick, Charles Foley, James Herrick; Co. H, James Short; unassigned, Bernhard Bears, James R. Boyd. *Eastham*: Co. D, Charles A. Hatch. *Chatham*: Co. E, Henry Smith; Co. G, James Muir, Matthew Thompson; Co. I, Warner Smith. *Provincetown*: Co. F, Thomas Nangle; unassigned
+
+<vocab>Military History, Civil War, Infantry, Regiment, Barnstable, Sandwich, Yarmouth, Chatham, Truro, Provincetown, Harwich, Wellfleet, Dennis, Falmouth, Orleans, Brewster, Eastham</vocab>

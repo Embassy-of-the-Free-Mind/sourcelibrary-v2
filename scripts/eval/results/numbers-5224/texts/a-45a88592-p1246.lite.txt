@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>978</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+RESOURCES OF THE TOWN.—The location of the town has naturally determined the character of its business enterprises. From the beginning of the settlement the fisheries were the dependence of the people. As early as 1690 the people of the Cape had become proficient in the shore whale fisheries. In 1791 a committee was chosen to petition the general government for the removal of the duties on salt, which was largely consumed in the cod fisheries that employed from twenty to thirty vessels at that date, taking in 1790 eleven thousand quintals of cod fish on the Grand Banks. In 1803 forty-four sailing vessels belonging in Provincetown were at sea, chiefly fishing at the Straits of Belle Isle. The cargoes brought home amounted to fifty thousand quintals of fish. In 1834 besides four hundred tons of coasting vessels, six thousand tons of vessels were engaged in the cod and mackerel fishery, returning 45,000 quintals of codfish and 17,000 barrels of mackerel, and employing one thousand men. In 1837 ninety-eight vessels were engaged in the fisheries from Provincetown, employing 1,113 men, securing 51,000 quintals of codfish and 18,000 barrels of mackerel. In 1857 one hundred vessels, averaging ninety tons each, fitted out at Provincetown for the cod fishery alone, taking during the season 80,000 quintals of codfish and oil valued at $22,000, a total value, including $28,000 bounty, of $300,000.
+
+The cod fishery has been the chief fishery of the town, though at times the mackerel fishery has proved profitable. In 1860 nineteen thousand barrels of mackerel were inspected at Provincetown, though doubtless many barrels caught by Provincetown vessels in the same year were inspected at Boston. In 1862 Provincetown returned seventy-four vessels employed in the cod fishery, the catch for the year amounting to sixty-two thousand quintals of cod fish. The shore fisheries, supplemented during the ten years since 1880 by fish weirs, have always proved a source of irregular yet often bountiful income to the fishermen of Provincetown.
+
+The capital invested in the Provincetown fishing business amounted in 1885 to $964,573.*
+
+Apart from the fisheries, the making of salt for many years employed a large portion of the inhabitants of the town, many of whom were able to prosecute at the same time the shore fisheries with success. The manufacture of salt began in Provincetown in 1800 and continued for many years a profitable industry. Salt mills and salt works extended along the shore from one end of the town to another, giving to the town a picturesque appearance, which is not wholly lost in the early wood cuts of the town that are still preserved in rare copies of the gazetteers of Massachusetts. In 1835 the business was still at its height, but the reduction of the bounty and the high price
+
+*At pages 132-139 are further statistics in detail on whaling and the fisheries.—Ed.
+
+<vocab>Provincetown, Barnstable County, cod fishery, mackerel fishery, salt manufacture, fishing vessels, Grand Banks, Straits of Belle Isle, fish weirs</vocab>

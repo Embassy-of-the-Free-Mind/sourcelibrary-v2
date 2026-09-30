@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>36</page-num>
+<header>The Book of Clevelanders</header>
+
+public school in Fairview, O.; took up the study of law and was admitted to the bar in 1890; married, Sept. 7, 1892, Miss Anna Maud Judkins, of Flushing, O.; Mrs. Boyd died in September, 1908; member firm of Westenhaver, Boyd, Rudolph & Brooks; in street car war, one of the lawyers for the Municipal Traction Co.; Republican; clerk of Flushing Township, in Belmont County; corporation clerk of Flushing, 1888, 1890, 1891; police prosecutor during absence of Mr. Fielder; asst. director of law 1897-1898; desires to keep free from political entanglements and give entire time to profession.
+
+BRADLEY, Arthur; law and insurance; born, Philadelphia, Pa., Jan. 18, 1856; son of Joseph William and Clara Amelia Morse Bradley; educated, Swathmore College, Pa., class of '76, degree A. B.; studied and admitted to the practice of law in Philadelphia, Pa., 1881; Ohio U. S. Courts in 1910; married, Philadelphia, Pa., Nov. 24, 1891, Alice Deering Ilsley; one son, Arthur Ilsley Bradley, born July 25, 1899; practised law in Philadelphia until 1886; general publishing business, 1886-1888; connected with West Pub. Co. of St. Paul, Minn. (law publishers), 1888-1891; general solicitor of Warren Scharf Asphalt Paving Co., N. Y., 1881-1901; general insurance business, legal and expert work, from 1903 to date; Masonic Fraternity and Elks; Past Master Franklin Lodge, No. 134, Philadelphia, Pa., Signet Chapter, No. 25 (no office); Elks Peoria Lodge, No. 20; pres. the Builders Exchange, 1898-1899; member Chamber of Commerce, Cleveland Ass'n of Credit Men, Mens' League for Equal Suffrage; member University, Rowfant, and Automobile Clubs. Recreations: Tennis, Fishing and Farming.
+
+BRADLEY, Dan Freeman; clergyman; born, Bangkok, Siam, March 17, 1857; son of Dan Beach and Sarah (Blachly) Bradley; educated, Oberlin College, 1882, Oberlin Theological Seminary, 1885, Oberlin Honorary Degree Doctor of Divinity, 1909; same degree, Cornell College, 1904; married, Oberlin, O., July 9, 1883, Lillian Jaques; three sons, Dwight J., Robert G., and Theodore Bradley; pastor Steubenville Ohio, Congregational Church, 1885-1887; Yankton, S. D., 1887-1892; Grand Rapids, Mich., 1892-1902; pres. Iowa College, Grinnel, Ia., 1902-1905; pastor Pilgrim Church, Cleveland, 1905 to date; has gymnasium, branch of public library cooking school and mothers club; has been instrumental in the organization of the above; member Congregational National Council, Congregational Conference of Ohio, Congregational Union, Cleveland, Federated Churches, Cleveland, trustee Oberlin College, Schauffler School, Cleveland, Atlanta University, Atlanta, Ga.; member Chamber of Commerce, Congregational Club, Cleveland. Recreations: Base-ball, Rowing and Fishing.
+
+BRADLEY, Morris A.; real estate; born, Cleveland, Aug. 15, 1859; son of Alva Bradley; educated, public schools and Hiram College; married, Cleveland, May 10, 1883, Anna Leiminger; issue,
+
+<vocab>Arthur Bradley, Dan Freeman Bradley, Morris A. Bradley, biography, Cleveland, law, insurance, clergy, real estate, genealogy</vocab>

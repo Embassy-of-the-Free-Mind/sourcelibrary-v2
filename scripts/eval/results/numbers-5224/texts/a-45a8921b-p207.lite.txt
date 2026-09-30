@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>193</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 193</header>
+<sig>13</sig>
+
+for Manchester; dramatic editor, Manchester, for twenty years; m., Feb. 4, 1899, Carrie Stearns Corliss. Residence, Manchester, N. H.; summer home, Beaver Island, Lake Winnipesaukee, N. H.
+
+**Jones, Edwin Frank**
+Lawyer; b., Manchester, N. H., April 19, 1859; s. Edwin R. and Mary A. (Farnham) Jones; ed. Manchester schools, Dartmouth College, A.B., 1880; studied law with the late Judge David Cross of Manchester; admitted to the bar Aug. 23, 1883, and commenced practice as a partner of the late William J. Copeland; after Mr. Copeland's death, in 1886, continued alone for sixteen years, then becoming a member of the firm of Burnham, Brown, Jones & Warren; which, with some changes in membership, is now the firm of Jones, Warren, Wilson & Manning, with an extensive general practice, Mr. Jones devoting himself mainly, however, to the interests of various large corporations; Unitarian; Republican; assistant clerk, N. H. house of representatives, 1881, clerk, 1883, 1885; city solicitor of Manchester, twelve years, from 1887; treasurer, Hillsborough County, 1887-95; delegate in N. H. constitutional convention, 1902, and member, standing committee on future mode of amending the constitution; delegate, again, in the convention of 1912, and president of the convention; a frequent speaker on the stump in the interests of his party, and orator of the day at many civic celebrations and historical anniversaries; president of the Republican state convention in 1900; delegate-at-large from New Hampshire in the Republican national convention at Chicago, in 1908; trustee of Manchester city library since 1906; many years trustee of Pine Grove Cemetery; member, N. H. Bar Ass'n (president, 1906-8); American Bar Ass'n; Mason, member, Washington Lodge (Master in 1891), Mt. Horeb Chapter, Adoniram Council and Trinity Commandery of Manchester; N. H. Consistory (32d de-
+
+<column-break/>
+
+gree), and Shriner; district deputy grand master, Grand Lodge of N. H. in 1896, and grand master in 1910; I. O. O. F.; member, Manchester Committee of Public Safety, and chairman Speakers' Bureau, N. H. Committee of Public Safety; member, Phi Beta Kappa, Derryfield and Intervale Country clubs, Manchester Boston Art Club, Boston; m., Dec. 21, 1887, Nora F. Kennard of Manchester; one dau., Rebecca, b. July 17, 1889, d. Oct. 26, 1902. Residence, Manchester, N. H.
+
+**Churchill, Winston**
+Author; b., St. Louis, Mo., Nov. 10, 1871; s. Edward Spaulding and Emma Bell (Blaine) Churchill; ed. U. S. Naval Academy, Annapolis, 1894 (hon. A.M., 1903, Litt.D., 1914, LL.D., 1915); Episcopalian; Progressive Republican; member, N. H. house of representatives, 1903-4, 1905-6; aide on staff of Gov. Nahum J. Bachelder, 1903; Progressive candidate for governor of New Hampshire, 1912; member, Century Club, New York; Tennis and Racquet, Union and Tavern clubs, Boston; author, "The Celebrity," 1898; "Richard Carvel," 1899; "The Crisis," 1901; "The Crossing," 1904; "Coniston," 1906; "Mr. Crewe's Career," 1908; "A Modern Chronicle," 1910; "The Inside of the Cup," 1913; "A Far Country," 1915; "The Dwelling Place of Light," 1917; traveled in Europe, 1917-18, writing impressions of the war for the American press; m., Oct. 22, 1895, Mabel H. Hall. Residence, Cornish, N. H. (Windsor, Vt., P. O.).
+
+**Harriman, Walter C.**
+Lawyer; b., Warner, N. H., Sept. 8, 1849; s. Gen. Walter and Almira R. (Andrews) Harriman; ed. public schools and Colby Academy, New London, N. H.; commenced the study of law in 1873, and pursued the same in the office of Lyman D. Stevens and that of Tappan & Albin in Concord; admitted to the bar in 1876, and the following year commenced practice in Portsmouth; Universalist; born a Democrat, and raised his first flag for
+
+<vocab>Edwin Frank Jones, Winston Churchill, Walter C. Harriman, New Hampshire, biography, law, politics, literature, genealogy</vocab>

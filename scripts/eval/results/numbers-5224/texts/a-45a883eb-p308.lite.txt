@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>304</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. V. Barnes</image-desc>
+H. V. BARNES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Henry Barnes</image-desc>
+DR. HENRY BARNES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. V. E. Barnes</image-desc>
+DR. V. E. BARNES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. J. Barry</image-desc>
+D. J. BARRY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. N. Barron</image-desc>
+A. N. BARRON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Albert H. Bates</image-desc>
+ALBERT H. BATES
+
+<vocab>H. V. Barnes, Dr. Henry Barnes, Dr. V. E. Barnes, D. J. Barry, A. N. Barron, Albert H. Bates, The Book of Clevelanders, biography, portraits</vocab>

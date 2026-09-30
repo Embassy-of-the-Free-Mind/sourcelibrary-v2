@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>100</page-num>
+<header>The Book of Clevelanders</header>
+
+Co., in office of chief engineer, 1896-1899; engineer Brown Hoisting Mchy. Co., 1899-1905; member of firm Frazier & Fox, 1905-1910; pres. The J. W. Frazier Co., 1910, to date; member of board of consulting engineers in connection with construction of Detroit-Superior High Level Bridge; director The Civic League of Cleveland; past pres. The Cleveland Engineering Society; member Rensselaer Society of Civil Engineers, American Society of Civil Engineers, and Cleveland Engineering Society; member Athletic, Colonial, City, and Automobile Clubs, Chamber of Commerce.
+
+**FREEMAN, Ladbrook H.**; manufacturer; born, England, June 23, 1870; son of Walter Thomas and Esther L. Healy Freeman; public and high school education; married, Cleve'nd, May 16, 1894, Emilie Loeber; issue, Harley L. Freeman, born, Dec. 30, 1895, and Ruth E. Freeman, born Sept. 1, 1899; sec'y and treas. The Industrial Mchy Co.; pres. The Hall Mnfg. Co.; vice pres. The Guggenheim Ldy. Mchy Co.; director the Cahen Mfg. Co.; member Masonic bodies.
+
+**FRENCH, Elmer A.**; general contractor; born, Cleveland, Mar. 20, 1880; son of Albert and Harriet E. Maguire French; went through Lakewood High School, class of 1899; is a grandson of R. G. French, who settled in Lakewood (which was East Rock Port at that time), about 1830; he was a carpenter and contractor, one of the best of his time; many of the buildings that he constructed are still standing; has given up house contracting and has taken up asphalt shingle roofing as a specialty. Recreations: Sports of all kinds.
+
+**FRESHWATER, Milton**; paving contractor; born, West Virginia, Sept. 11, 1877; son of E. A. and Clarenda Campbell Freshwater; educated in commercial course at Morgantown, W. Va.; married, Johnstown, Pa., Dec. 31, 1907, Miss C. B. Williams; two children; has worked at the street-paving business since 1893; completing street paving in the following places; Johnstown and Freeport, Pa., Chester, W. Va., Alliance, Richwood, Ada and Cleveland, Ohio; since April, 1909; the paving contracts are managed by three members of the firm, while Mr. E. A. Freshwater takes no part in this branch of the business; the firm consists of E. A. Freshwater, Philip, Elmer and Milton Freshwater, sons of E. A.; the firm has offices in Morgantown, W. Va., and Cleveland.
+
+**FRETTER, Frank B.**; vice pres. and treas. National Refining Co.; born, Cleveland, Oct. 2, 1864; son of Nathan and Barbara Kirch Fretter; educated in Cleveland public schools; married, Cleveland, Margaret Huburt; one child; first employed by Marsh & Howard Chemical Co., Root & McBride Co., and L. S. & M. R. R.; entered oil business about 1885; with the National Refining Co. twenty-five years, past two years as vice pres., previously sec'y; member National Petroleum Ass'n, Union and Country Clubs; vice pres. Western Petroleum Refiners' Ass'n.
+
+<vocab>Ladbrook H. Freeman, Elmer A. French, Milton Freshwater, Frank B. Fretter, Cleveland, biography, business, industry, engineering, construction, oil industry</vocab>

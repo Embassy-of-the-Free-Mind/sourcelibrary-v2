@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>57</page-num>
+<header>CIVIL HISTORY AND INSTITUTIONS.</header>
+
+the main land at the head of the harbor. The light is a fixed red, visible nearly twelve miles.
+
+Hyannis Beacon light is a framed building, containing a red light visible nine miles. This is used in connection with surrounding lights in giving courses for safe navigation.
+
+Bass River light is just east of the mouth of the river of that name, and is situated in West Dennis. It is a fixed white light in the tower of the keeper's residence, and is visible 11½ miles.
+
+Stage Harbor light is situated on Harding's beach, at the entrance of Stage harbor, Chatham. The tower is thirty-five feet high and has a fixed white light that can be seen twelve miles at sea.
+
+Monomoy Point light, on the south end of the beach of the same name, is a fixed white light in a tower thirty feet high, and is visible twelve miles.
+
+Chatham light station is on the main land, in Chatham village. It consists of two round towers, each forty-three feet high, placed north and south, one hundred feet apart. In each is a fixed white light, visible 14½ miles.
+
+Nauset Beach light is in Eastham, on the ocean coast, and has three towers, each eighteen feet high, ranging north and south, with a distance of 150 feet between. Each tower contains a fixed white light, visible fifteen miles out on the sea. Abreast this light the tides divide and run in opposite directions.
+
+Cape Cod light station—the Highland light—is on the east shore of Truro, on a blue clay bank, 142 feet above the sea. The tower still rises fifty-three feet higher, from which a fixed white light sheds its rays twenty miles out to sea. A Daboll trumpet is used for a fog signal, which is a blast of eight seconds, with an interval of a half minute. Vessels passing this light can communicate with Boston if the International Code signals are in use on board.
+
+Race Point light, situated on the northeast point of Provincetown, has a tower thirty feet high, with a white light varied by flashes every ninety seconds, which can be seen by mariners 12½ miles at sea. It also contains a steam whistle for fog signals.
+
+Wood End light, on Wood End, near the entrance of Provincetown harbor, is a tower thirty-four feet high, using a red, flashing light in intervals of fifteen seconds. It is visible twelve miles.
+
+Long Point light is on the eastern point of the peninsula that encircles the west side of Provincetown harbor, the square tower thirty-four feet high being erected on the extreme point, southwest of the entrance to the harbor. A fixed white light is used, which is visible nearly twelve miles. A bell, run by machinery, gives the fog signal, which is two quick, successive strokes, then one after half a minute, followed by a longer interval.
+
+<vocab>Lighthouses, Cape Cod, Navigation, Fog signals, Maritime history, Massachusetts</vocab>

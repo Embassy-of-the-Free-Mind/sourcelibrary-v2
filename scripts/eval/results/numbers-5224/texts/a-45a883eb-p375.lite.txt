@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>371</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Mathew Reitz</image-desc>
+MATHEW REITZ
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. F. Reid</image-desc>
+A. F. REID
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. R. Rhodes</image-desc>
+R. R. RHODES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. A. Richardson</image-desc>
+E. A. RICHARDSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. Rice</image-desc>
+E. RICE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Eugene Rider</image-desc>
+EUGENE RIDER
+
+<vocab>Mathew Reitz, A. F. Reid, R. R. Rhodes, E. A. Richardson, E. Rice, Eugene Rider, Clevelanders, biography</vocab>

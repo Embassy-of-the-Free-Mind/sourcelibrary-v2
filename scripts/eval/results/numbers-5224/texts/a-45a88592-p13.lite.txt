@@ -1,0 +1,56 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>ix</page-num>
+<header>CONTENTS. ix</header>
+
+->ILLUSTRATIONS.<-
+
+| | | PAGE |
+| :--- | :--- | :--- |
+| Akin, David K. | Portrait of, facing | 183 |
+| Akin, David K. | Late residence of, facing | 181 |
+| Ames, Simeon L. | Portrait of, facing | 419 |
+| Ancient Grave Stones | Barnstable Cemetery | 393 |
+| Attaquin, Solomon | Portrait of, facing | 715 |
+| Atwood, Levi | “ “ | 607 |
+| Atwood, Nathaniel E. | “ “ | 995 |
+| Atwood, Simeon | “ “ | 813 |
+| Baker, Ezra H. | “ “ | 538 |
+| Baker, Howes | “ “ | 536 |
+| Baker, Joseph K. | “ “ | 540 |
+| Baker, Nehemiah P. | “ “ | 678 |
+| Bass River Lower Bridge | Precedes | 553 |
+| Baxter, Edwin | Portrait of, facing | 542 |
+| Bearse, Charles C. | “ “ | 421 |
+| Bourne, Benjamin F. | “ “ | 345 |
+| Boyden, William E. | “ “ | 303 |
+| Brooks, Obed | “ “ | 863 |
+| Burgess, Nathaniel | “ “ | 348 |
+| Burgess, Seth S. | Portrait of, follows | 350 |
+| Burgess, Seth S. | Residence of, precedes | 351 |
+| Bursley, Daniel P. | Portrait of, follows | 422 |
+| Bursley, Daniel P. | Residence of, precedes | 423 |
+| Cahoon, Barzillai C. | Residence of, facing | 681 |
+| Cahoon, Cyrus | Portrait of, facing | 866 |
+| Chapman, David S. | Portrait of, follows | 544 |
+| Chapman, Mrs. Sallie E. | Residence of, precedes | 545 |
+| Chase, Albert | Portrait of, facing | 424 |
+| Chase, Job | “ “ | 868 |
+| Court House | | 400 |
+| Crosby, Albert | Residence of, facing | 915 |
+| Crosby, Isaac | Portrait of, facing | 916 |
+| Crosby, Nathan | “ “ | 914 |
+| Crowell, Edward E. | “ “ | 546 |
+| Crowell, Eleazer K. | “ “ | 548 |
+| Crowell, Joshua | “ “ | 549 |
+| Crowell, Luther | “ “ | 551 |
+| Crowell, Peter H. | Portrait of, follows | 552 |
+| Crowell, Peter H. | Residence of, precedes | 553 |
+| Crowell, Prince S. | Portrait of, facing | 554 |
+| Crowell, Seth | Portrait of | 550 |
+| Crowell, Rev. Simeon | Portrait of, facing | 492 |
+| Crowell, William | “ “ | 556 |
+
+<vocab>Illustrations, Portraits, Residences, Barnstable Cemetery, Bass River Lower Bridge, Court House</vocab>

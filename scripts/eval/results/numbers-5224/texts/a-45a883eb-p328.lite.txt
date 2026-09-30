@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>324</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank H. Ewing</image-desc>
+FRANK H. EWING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. H. Evers</image-desc>
+WM. H. EVERS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harrison W. Ewing</image-desc>
+HARRISON W. EWING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. L. Fairbank</image-desc>
+GEO. L. FAIRBANK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. C. Faeh</image-desc>
+A. C. FAEH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. E. Farnsworth</image-desc>
+C. E. FARNSWORTH
+
+<vocab>Frank H. Ewing, Wm. H. Evers, Harrison W. Ewing, Geo. L. Fairbank, A. C. Faeh, C. E. Farnsworth, The Book of Clevelanders</vocab>

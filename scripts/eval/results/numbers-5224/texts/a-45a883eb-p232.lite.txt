@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>228</page-num>
+<header>The Book of Clevelanders</header>
+
+**RUHL, James B.**; lawyer; born near Lisbon, Ohio, on a farm; taught, prepared for college, at Lisbon High School, and taught in rural schools; graduated from Ohio Northern University, B. S., 1888, and LL. B., 1891 (in cursu); later took M. Sc. and L. L. M. (pro merito); supt. schools, McComb, O., 1888-1889; instructor at Ohio Northern University, 1889-1891; admitted to the Ohio Bar in 1889, U. S. Courts in 1894, and U. S. Supreme Court, 1901; practiced law in Cleveland since 1891; member, for five years, State board of examiners for admission to the bar; Knight Templar, 32nd degree Mason, Past Master, Cleveland City Lodge, No. 15, F. & A. M.; first master Meridian Lodge, No. 610; Past High Priest, Cleveland Chapter, No. 148, R. A. M.; Eminent Commander Holyrood Commandery, No. 32, K. T. and Sovereign Prince Bahurim Council, 16th degree, Ancient Accepted Scottish Rite, Valley of Cleveland; Republican; Chamber of Commerce.
+
+**RUPLE, Franklin H.**; merchant and teaming contractor; born, Euclid Township, Ohio, May 19, 1848; son of Cyrus and Julia Hitchcock Ruple, educated in schools of Euclid; married, Euclid, O., Feb. 12, 1871; Mary C. Seaber; issue, five children, three living; served as councilman of Village of Collinwood for six years, and marshall of the village for two years; in 1874, started in express business between Collinwood and Cleveland; continued this until February, 1883, then opened livery and boarding stable; following year, started a hotel in connection with his livery business; continued this business for over three years; then went into the coal and teaming business; has served as trustee of Collinwood Congregational Church for about eight years; charter member of Knights of Pythias, Lakeside Lodge, No. 367; member Men's Club, Collinwood Congregational Church.
+
+**RUPP, Edward**; baker; born, Germany, May 11, 1869; son of Adam and Barbara Daum Rupp; educated, public schools; married, Cleveland, April, 1898, Emma Mayer; has been in business twelve years; proprietor Lakewood Bakery. Recreation: Motoring.
+
+**RUTHERFORD, George A.**; general builder and contractor; born, Cleveland, Sept. 18, 1871; son of Mark and Isabella Cossar Rutherford; educated, Cleveland public schools; married, Cleveland, Oct. 3, 1894, Daisy Day; issue, two children; started contracting business, 1896, incorporated The Geo. A. Rutherford Co.; in 1903, pres. the company; pres. The Sand & Building Co.; pres. The Cleveland Builders Exchange; 2nd vice pres. the Cleveland Real Estate Board; member Iris Lodge, Masonic, Cleveland Chamber of Commerce; member Athletic, Automobile and Advertising Clubs.
+
+**SAFFOLD, Starke Selbert**; insurance; born, Mobile, Ala., March 15, 1852; son of Judge Milton J. and Martha Harrison Saffold; educated by private instructor, Graylock and Emerson Institutes; married, Philadelphia, Pa., Sept. 1, 1881, Harriet Webb; issue, one daughter, Mrs. Wm. C. Young, of Texas, and one son, J. Webb Saffold, Cleveland; has occupied official position in eight or ten
+
+<vocab>James B. Ruhl, Franklin H. Ruple, Edward Rupp, George A. Rutherford, Starke Selbert Saffold, Cleveland, biography, business, civic organizations</vocab>

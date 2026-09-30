@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>141</page-num>
+<header>INDUSTRIAL RESOURCES. 141</header>
+
+the state. Bourne, on its Buzzards bay front, has 168¼ acres, which is nearly all the native beds of the county, and has also 124 acres of planted beds. Barnstable has two acres of native and 249 of planted; Chatham has ten acres of planted; Dennis three of planted; Mashpee 3¼ of planted; and Harwich has three acres of native beds. These beds of native oysters are the only ones in Massachusetts, excepting 250 acres at Somerset, in Bristol county. This census report does not notice the beds on the west of Waquoit bay, planted in 1877, where F. C. Davis now has the only oyster beds in Falmouth, and has done an increasing business during the last year. In the town histories of Bourne, Barnstable, Mashpee, Chatham and Wellfleet, their cultivation by the various planters is noticed.
+
+By that inexorable law of change and succession, the oyster and the oysterman are, so far as these shores are concerned, slowly, but surely, passing away. Their doom is the shifting sand, and the business as a source of gain or general employment must be now regarded as among the things that have been. The man who followed this vocation has been made immortal in literature by Thoreau, in his inimitable description of the Wellfleet oysterman, and the oyster himself has made a pleasant and lasting impression, very near, if not quite, upon the hearts of all who knew him.
+
+The perennial clam, the abundance of which the Pilgrims made the subject of thanksgiving, still abides as a blessing to their posterity. He figures in all the affairs here except politics—at the church fair, at the picnic dinner, in the menu of every well-regulated hotel, at the rich man's feast, and at the poor man's board, he appears in various guises. He and his hard-shelled cousin, the quahaug, are indigenous to the sands of every shore. Here are 150 miles of shore line, greatly increased by indentations of coves and bays, and almost throughout this entire stretch of tide-water margins, these nutritious shell-fish are in greater or less abundance.
+
+The business of clam-digging calls for the minimum investment of capital and the maximum employment of labor, hence it has ever furnished employment and profit to many whose tastes or finances deterred them from embarking in other fishing enterprises. The old saying that there is no royal road to learning is equally true of clam digging. Any man or boy not necessarily well-dressed, and equipped with a short-handled hoe and a pair of long-handled boots, is fully prepared to make the business remunerative.
+
+The various branches of the fishing business which accustomed the boys to the sea was the great school whose graduates became the master marines. Every product of the sea and of the soil made cargo for the coasters, whose prosperity began so early in the Cape history, and continued so late. Before the modern railway, this coasting busi-
+
+<vocab>oyster, clam, quahaug, fishing, Cape Cod, Massachusetts, industry, Thoreau, coasting</vocab>

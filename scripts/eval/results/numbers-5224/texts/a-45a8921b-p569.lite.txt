@@ -1,0 +1,65 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>555</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 555</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Mead, Edwin Doak | 421 | Neal, John Herbert | 540 |
+| Mead, Lucia True Ames | 421 | Nealley, John Haven | 311 |
+| Meader, John Levi | 423 | Nelson, Edward William | 510 |
+| Melendy, Jesse George | 253 | Newton, Earl Frank | 447 |
+| Melville, Henry | 473 | Nichols, Herbert | 511 |
+| Merrill, Charles Clarkson | 467 | Nichols, William Theophilus | 422 |
+| Merrill, Robert Josiah | 54 | Niles, Bertha | 294 |
+| Merrill, William Bradford | 470 | Niles, Edward Cullen | 49 |
+| Merrow, Lyford A. | 528 | Niles, Harold Herbert | 451 |
+| Messer, Loring Wilbur | 470 | Niles, Mary | 294 |
+| Metcalf, Frank Arthur | 249 | Niles, William Porter | 274 |
+| Metcalf, Harry Bingham | 223 | Nims, Harry Dwight | 279 |
+| Metcalf, Henry Clifton | 261 | Nolin, William Peter | 199 |
+| Metcalf, Henry Harrison | 547 | Norris, Harry Waldo | 507 |
+| Miller, Charles Ransom | 473 | Norris, True Livingston | 491 |
+| Miller, Edward Sherman | 366 | Norwood, Charles Miles | 389 |
+| Miller, Ida Farr | 62 | Noyes, Charles Hermon | 455 |
+| Mills, Herbert Elmer | 511 | Nute, Eugene Pearl | 267 |
+| Minot, Fanny E. Pickering | 69 | | |
+| Minot, Lena Margaret | 533 | Oakes, Frederick Warren | 509 |
+| Mitchell, Abram Whittemore | 63 | Odell, Eva Beede | 341 |
+| Mitchell, Harry Walter | 473 | Odell, Willis Patterson | 341 |
+| Mitchell, John Lewis | 109 | Odlin, Arthur Fuller | 149 |
+| Mitchell, William Hugh | 122 | O'Kane, Walter Collins | 540 |
+| Moore, Herbert Fisher | 171 | O'Leary, Thomas Mary | 310 |
+| Morrill, Albro David | 471 | Orcutt, William Dana | 505 |
+| Morrill, Arthur Putnam | 170 | Osgood, Etta Haley | 504 |
+| Morrill, Charles Henry | 510 | Osgood, Wilfred Hudson | 499 |
+| Morrill, Ellen Rebecca (Bryant) | 537 | Otis, Edward Osgood | 258 |
+| Morrill, Grace | 365 | Owen, Ellery Scott | 146 |
+| Morrill, Harley Winslow | 331 | | |
+| Morrill, Osma Caroline Baker | 206 | Page, Calvin | 417 |
+| Morrill, Sibley Gage | 543 | Page, Charles Tilton | 439 |
+| Morris, George Franklin | 207 | Parker, Charles Sullivan | 403 |
+| Morris, James Henry | 58 | Parker, Edward Melville | 91 |
+| Morris, Lula J. Aldrich | 209 | Parker, George Amos | 345 |
+| Morrison, Henry Clinton | 77 | Parker, Harry Elwood | 387 |
+| Morrison, Howard A. | 547 | Parker, Hiram | 10 |
+| Morrison, Obe Gray | 225 | Parker, Hosea Washington | 9 |
+| Morrison, William H. | 450 | Parker, Samuel Sewall | 394 |
+| Morse, Edward Leland Clark | 511 | Parker, Walter Matthew | 543 |
+| Morse, Harris A. | 182 | Parks, Isabel Merial | 113 |
+| Moses, George Higgins | 127 | Parsons, Frank Nesmith | 329 |
+| Moulton, Warren Joseph | 330 | Patrick, Mary Mills | 507 |
+| Murchie, Alexander | 47 | Pattee, Fred Lewis | 505 |
+| Murchie, Robert Charles | 9 | Patten, Helen Philbrook | 258 |
+| Murphy, David Edward | 261 | Patterson, Joab Nelson | 497 |
+| Musgrove, Frank Abbott | 57 | Paul, Amasa Copp | 321 |
+| Musgrove, Mary Donker | 54 | Paul, George Washington | 251 |
+| Myers, Walter Crane | 194 | Paul, Sarah Woodman | 503 |
+| | | Pearson, Edward Nathan | 3 |
+| Nash, John Barzillia | 69 | Pearson, Edward Nathan, Jr. | 546 |
+| Nason, William Francis | 123 | Pearson, Harlan Colby | 248 |
+
+<vocab>New Hampshire, biography, index, notables</vocab>

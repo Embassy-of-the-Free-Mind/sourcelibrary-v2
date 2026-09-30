@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>299</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 299</header>
+
+ing; president Concord Female Charitable Soc., 1902-5; life member and trustee of N. H. Memorial Hospital for Women and Children and a liberal contributor to the furnishings and repairs; vice-president of the Hospital Associates; president of Concord Woman's Club, 1915-17, having previously been vice-president and chairman of various committees. (During Mrs. Thorne's presidency the club co-operated with the city authorities in "Clean-up-Week," helped establish the free dental clinic in the public schools and organized the Concord Red Cross, the largest chapter in the state. (Mrs. Thorne represented the club at the Thirteenth Biennial Convention of the Nat'l Federation in New York.) Member Forestry committee of N. H. Federation; member Am. Federation of Arts, N. H. Historical Soc., N. H. Soc. of Charities and Corrections, Soc. for Protection of N. H. Forests, Children's Aid and Protective Soc., Concord Equal Suffrage League, Dist. Nursing Ass'n, Charity Organization
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a woman, head and shoulders, facing slightly left.</image-desc>
+
+<column-break/>
+
+Soc., W. C. T. U., Friendly Club (one of the organizers); m., John C. Thorne (see preceding), July 8, 1873. Adopted daughter, Elsie Chandler Thorne, b. Concord, N. H.; (St. Mary's School, 1908); student at Gordon Bible College, Boston. Residence, Concord, and Pembroke, N. H.
+
+**Crosby, Eva May (Emery)**
+Hospital superintendent, b., Ossining, N. Y., Oct. 5, 1877, dau. Asa and Hattie L. (Currier) Emery; desc. from John Emery, who settled in Newburyport, Mass., in 1635; great great granddaughter Noah Emery, who fought in Revolution; Asa Emery served in both the Army and Navy during Civil War; ed. Taunton, Mass., and Concord, N.H.; Concord high school 1896; Training
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of a woman, head and shoulders, facing slightly right.</image-desc>
+
+School of N. H. Mem. Hospital for Women and Children, Oct. 23, 1900; Episcopalian; member Concord Nurses' Club (president, 1914-16), Graduate Nurses' Ass'n of N. H. (president 1915-16), Red Cross Nursing
+
+<vocab>Concord Female Charitable Society, N. H. Memorial Hospital for Women and Children, Concord Woman's Club, Concord Red Cross, American Federation of Arts, N. H. Historical Society, N. H. Society of Charities and Corrections, Society for the Protection of N. H. Forests, Children's Aid and Protective Society, Concord Equal Suffrage League, District Nursing Association, Charity Organization Society, W. C. T. U., Friendly Club, John C. Thorne, Elsie Chandler Thorne, Gordon Bible College, Eva May Crosby, Asa Emery, Hattie L. (Currier) Emery, John Emery, Noah Emery, Concord Nurses' Club, Graduate Nurses' Association of N. H., Red Cross Nursing</vocab>

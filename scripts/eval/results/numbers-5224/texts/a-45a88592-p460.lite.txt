@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>376</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+century—the present town house being the first building erected by the town for civil uses only. About 1840 the subject of a town house was agitated—some wishing to utilize what is now the Baptist church, and others wishing to have it on the south side of the town. Zenas D. Bassett and others were finally appointed a committee to locate a town house at the geographical centre of the town, which was found to be within the bounds of the Iyanough pond. It was therefore decided to locate it where it now stands, and a good building was erected soon after. It is centrally situated, has every convenience outside and in, and is a credit to the town.
+
+Notwithstanding the lapse of 250 years since the incorporation of Barnstable, which great period would seem to preclude such an idea, a singular memento of primitive times was brought to the eyes of the citizens of Barnstable village on the 18th of March, 1889, in the form of a young deer that came from the woods south of the railroad station; he ran across the track, down through the fields in front of the *Patriot* office, by the jail to the vicinity of W. D. Holme’s shop, and from thence back, across the track, to the woods again. He went over fences and walls with easy bounds, and presented a novel sight to those fortunate enough to witness it.
+
+SCHOOLS.—The proprietors’ records indicate an early and unflagging interest in the means of education. In fact none of the older towns were so prompt in appropriating annually the requisite fund for sustaining the common school. As early as 1714 the town voted an additional sum to their accustomed appropriation, that the teacher could teach six months in the south part of the town—dividing the year with the settlement in the north part. Prior to this time one school had served the purpose of the town. In 1731 a grammar school was added to the common school and £65 was voted for its support. In 1732 Mr. Bennett was employed as master and was to divide his time between the two parishes, casting lots to determine which should have the first term. Private dwellings were used for school purposes until 1735, when it was voted to have two grammar school masters—one in each parish—and that a schoolhouse be built. But the first school building, which was erected near the old burying ground, was not built until 1771.
+
+In 1789 the appropriation for schools was £150, the privations caused by the war, or internal differences not having abated the zeal of these fathers in religious and educational interests.
+
+The dawn of the present century found the schools of Barnstable in a prosperous condition. Every improvement in its system, as developed by the more liberal laws and enlightment of the commonwealth, had been eagerly seized by the people of this town. They also inaugurated, through individual support, a system of
+
+<vocab>Barnstable, Zenas D. Bassett, Iyanough pond, Patriot office, schools, education, grammar school, Mr. Bennett, appropriation</vocab>

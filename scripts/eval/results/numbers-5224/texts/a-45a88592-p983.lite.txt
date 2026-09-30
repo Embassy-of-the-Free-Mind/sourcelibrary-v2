@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>765</page-num>
+<header>TOWN OF ORLEANS. 765</header>
+
+Progressive Lyceum Association, of which Celia M. Nickerson is president and Eliza L. Rogers treasurer. The object of the association is to establish and maintain places for libraries, reading rooms and social meetings. This village, with its manufactures and other industries, is not so seriously affected by the decline of the fisheries as some others, and continues its solid prosperity.
+
+East Orleans is in the eastern part of the town, with a division line from the main village, just east of the Congregational church. It includes the several communities of Tonset, Weesit—the extreme northern part of the neck,—Pochet and Barley neck. Its territory embraces a large portion of the most fertile land of the town, sloping northerly toward Nauset harbor and southerly toward Pleasant bay. Reference to the settlers here in 1797, as described in the commencement of this chapter, will show that this territory was quite early settled.
+
+The salt manufacturers here at an early day were: Lewis Doane, Joseph Crosby, Josiah Sparrow, Zoeth Taylor, Elkanah Linnell, who were located on Nauset harbor and Barley neck; and William Myrick, who had a plant at the head of tide water near Lot Higgins’ store. The wind mill near there was originally used for grinding salt.
+
+Old stores were opened here as early as in any part of the town by Josiah Foster, Elisha Hopkins and others. Isaac Sparrow had a store before 1825, which he conducted several years. Before Sparrow discontinued William Myrick opened another east of the church, which he sold to Freeman H. Myrick, who after a score of years sold out to Lewis Doane. It was then kept on the north side of the street opposite the present post office. Leander Crosby became a partner and the business was conducted under the firm name of Doane & Crosby. A few years subsequently Doane sold to Crosby, and he in 1858 to Lot Higgins, who moved the store to its present site and there continues in trade. The store was enlarged by adding to its front before it was removed.
+
+Elisha Hopkins started a store here prior to 1855, which after a few years he sold to Samuel Hopkins. In 1854 Aaron Snow started a small store near the Hopkins store and in a few years purchased the goods and building of his neighbor, Samuel Hopkins. He consolidated the two stores and continued in the business until 1875, when he sold the goods to his brother, Elkanah L. Snow, who continued the business in the same building until 1884, when he purchased a millinery store near the head of the cove, on the Knowles place, which he moved to East Orleans. This he remodeled into his present place of business. In 1889, Lot Higgins and Elkanah L. Snow were the only tradesmen in East Orleans.
+
+The post office is kept in the store of Lot Higgins, who is postmaster. He was appointed in 1859, soon after he purchased the store.
+
+<vocab>Progressive Lyceum Association, East Orleans, Tonset, Weesit, Pochet, Barley neck, Nauset harbor, Pleasant bay, salt manufacturing, mercantile history, post office</vocab>

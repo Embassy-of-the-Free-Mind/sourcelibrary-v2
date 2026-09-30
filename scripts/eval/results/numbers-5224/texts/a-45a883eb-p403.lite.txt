@@ -1,0 +1,72 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+
+# SUBJECT INDEX
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Abbott, Gardner | 7 | Barry, David J. | 24 |
+| Abel, William Fleming | 7 | Bartol, George | 24 |
+| Aborn, Willard Grant | 7 | Bate, Herbert | 24 |
+| Adams, Charles E. | 8 | Bates, Albert Harlow | 25 |
+| Adams, Edgar Elliotte | 8 | Bauer, Philip J. | 25 |
+| Adams, Edward J. | 8 | Beck, Johann Heinrich | 25 |
+| Adams, George Dana | 8 | Becker, Albert L. | 26 |
+| Adams, Harry A. | 8 | Becker, Henry A. | 26 |
+| Agnew, William | 9 | Beckwith, C. G. | 26 |
+| Aikins, Herbert Austin | 9 | Bedell, Abner H. | 26 |
+| Akers, William Joseph | 9 | Behrens, Frederick | 26 |
+| Albl, Michael Albert | 9 | Beidler, Howard T. | 27 |
+| Albrecht, A. M. | 10 | Bellchambers, Walter A. | 27 |
+| Alburn, Cary Rudolph | 10 | Bentz, Gus A. | 27 |
+| Alburn, John Alvin | 11 | Berner, Herman D. | 27 |
+| Alden, Charles E. | 11 | Bever, John Jacob | 27 |
+| Alexander, Harold Graham | 11 | Bicknell, Warren | 27 |
+| Allen, Albert Mark | 11 | Biggar, Hamilton Fisk | 28 |
+| Allen, Dudley Peter | 12 | Biggerstaff, Charles Thomas | 28 |
+| Allyne, Edmund E. | 12 | Biggs, Charles Lewellyn | 29 |
+| Altman, Benjamin F. | 12 | Billings, Frank | 29 |
+| Ambler, Judge William E. | 13 | Bing, Louis S. | 29 |
+| Anderson, Alfred J. | 13 | Bingham, George A. | 29 |
+| Andrews, Earl J. | 13 | Bishop, Eaton Alfred | 30 |
+| Anisfield, John | 14 | Bishop, George E. | 30 |
+| Anspach, Nathan H. | 14 | Bishop, George Taylor | 30 |
+| Anthony, Paul H. | 14 | Black, Louis | 30 |
+| Apthorp, Henry | 14 | Blaha, Joseph F. | 30 |
+| Arbuthnot, Charles Criswell | 15 | Blair, William L. | 31 |
+| Arndt, Gustav Henry | 15 | Blair, William P. | 31 |
+| Arter, Frank A. | 16 | Blake, Samuel Cooper | 31 |
+| Arter, Charles Kingsley | 16 | Blau, William S. | 32 |
+| Arthur, Alfred | 16 | Blechschmid, John | 32 |
+| Asadorian, Dickran | 17 | Bliss, Harry A. | 32 |
+| Atwater, Albert Alling | 17 | Boggis, Herbert James | 32 |
+| Avery, Elroy McKendree | 17 | Bolton, Charles C. | 32 |
+| Ayer, Frederick B. | 18 | Bomgardner, Joseph | 33 |
+| | | Bomhardt, John A. | 33 |
+| Bachelder, Frank Jerome | 18 | Bonesteel, Willis E. | 33 |
+| Backus, William Vernon | 18 | Bonhard, Alfred M. | 34 |
+| Bacon, Leon Brooks | 19 | Bonta, Maurice Buford | 34 |
+| Bader, Walter J. | 20 | Borgerhoff, Joseph Leopold | 34 |
+| Badgley, Sidney Rose | 20 | Borton, Fred S. | 34 |
+| Baehr, Herman C. | 20 | Borton, Thomas Ernest | 35 |
+| Baer, Frank House | 20 | Bourne, Henry Eldridge | 35 |
+| Baker, Elbert H. | 21 | Bowler, Walter Noadiah | 35 |
+| Baker, Frederick L. | 21 | Boyd, William H. | 35 |
+| Baker, Newton Diehl | 21 | Bradley, Arthur | 36 |
+| Baker, Walter Charles | 21 | Bradley, Dan Freeman | 36 |
+| Baldwin, Arthur Douglas | 21 | Bradley, Morris A. | 36 |
+| Baldwin, Fred | 22 | Brady, James Albert | 37 |
+| Ball, Webb C. | 22 | Brainard, Tyler W. | 37 |
+| Ballard, Thomas P. | 22 | Bramley, William Alfred | 37 |
+| Balzhiser, E. C. | 22 | Brandt, William J. | 38 |
+| Barber, Arthur Wellesley | 23 | Brett, William Howard | 38 |
+| Barker, Raymond H. | 23 | Brewer, Abraham T. | 38 |
+| Barkwill, Charles G. | 23 | Broadwell, Olin Witmer | 38 |
+| Barnard, Ernest Sargent | 23 | Broggini, James | 39 |
+| Barnes, Herbert V. | 23 | Brooks, Charles S. | 39 |
+| Barron, Amos N. | 24 | Brooks, Charles Twing | 39 |
+
+<vocab>Subject Index, Names, Biographies</vocab>

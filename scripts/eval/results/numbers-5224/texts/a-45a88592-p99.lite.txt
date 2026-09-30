@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>77</page-num>
+<header>MILITARY HISTORY. 77</header>
+
+dangers threatened to commerce by the "decrees" of France and the "orders in council" of Great Britain, the United States government, under Jefferson, laid an embargo on all exports from the United States, the object of which was to retaliate on the position taken by France and England in relation to commercial intercourse with these two great powers of Europe. But the embargo became very unpopular and worked very disastrously to the shipping interest of this country, and in no other section was there greater suffering and prostration of business than in the maritime industries of Cape Cod.
+
+The embargo was repealed by congress in 1809, and was followed by an act, called the "Non-intercourse law," by which all trade and intercourse with France and England were prohibited. Neither the embargo nor the non-intercourse law had any effect in causing the British government to recede from the offensive position it had taken, or France to revoke its "decrees," so fatal to American commerce. By such obstinacy on the part of both nations, and in view of the threatened outrages to American commerce, it was a question for some time whether to declare war against France or England, but the persistency of the British in intercepting American vessels and impressing British seamen therefrom decided the question, and war was declared against England by President Madison, June 19, 1812.
+
+Hon. Isaiah L. Green, member of congress from the Barnstable district, voted for the act declaring war, and appears to have been sustained in so doing by the citizens of the district, as the following preamble goes to show: "Resolved that the Hon. Isaiah L. Green, our Congressional representative, has done nobly, and deserves well of his country, and that he enjoys the confidence of his constituents."
+
+As a large part of the business of Cape Cod was upon the ocean, no portion of the country would be subjected to greater deprivations and inconveniences than Barnstable county by the operations of war, and the people dreaded the issue; but still they considered it just, necessary and unavoidable, and acquiesced in all measures of the general government in its prosecution; being ready at all times to engage in the defense of the country, both on sea and land, in order that those rights for which the war was waged might be obtained.
+
+Soon after the news had reached England that war had been declared, British men-of-war began to hover around the New England coasts. All communication by water with Boston and other commercial ports on the New England coasts was cut off by British ships of war cruising about the bay, and when at anchor they would send out their barges to capture the small craft that might venture out in quest of fish, or those that undertook to make a passage from port to port along shore.
+
+<vocab>embargo, Non-intercourse law, France, Great Britain, United States, Jefferson, Cape Cod, Congress, Isaiah L. Green, Barnstable, war of 1812, President Madison, impressment, maritime commerce</vocab>

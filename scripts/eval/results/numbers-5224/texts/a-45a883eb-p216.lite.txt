@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>212</page-num>
+<header>The Book of Clevelanders</header>
+
+Crane, two 150-ton Floating Cranes, four beam and four Chamber Cranes for the United States Government at Panama; member American Society of Civil Engineers, Cleveland Engineering Society, Chamber of Industry, and Lakewood Tennis Club. Recreation: Racing of Homing Pigeons.
+
+**POLLOCK**, Wilfred S.; dept. mgr. Weideman Co.; born, New York City, Sept. 3, 1863; son of Joseph and Sarah Beardsley Pollock; educated in New York schools; married, New York, April 14, 1887, Harriet A. Hotchkiss; issue, one son, Preston Ganson, March 13, 1902; came to Cleveland in 1893, as dept. mgr. with Weideman Co., which position he still holds; director Weideman Co.; member U. S. Geographical Society; member Chamber of Commerce, Sons of American Revolution, Cleveland Athletic, Hermit, and Rotary Clubs. Favorite recreations are Golfing and Farming.
+
+**POND**, Daniel H.; pres. and gen. mgr. Economy Bldg. & Loan Co.; born, Petroleum Center, Pa., March 11, 1870; son of Henry Herbert and Maria M. (Gates) Pond; educated, public schools of Trumbull County, public schools Cleveland, and Allegheny College; married, May 17, 1891, Miss Ola Clark; one son, Ralph; worked one year in a factory in Painesville, O.; came to Cleveland and worked for The Cleveland Baking Co., as driver; later purchasing agt. one year; served one enlistment 7th U. S. Cavalry; messenger for the Adams Express Co.; then entered the real estate and insurance business and in 1894, became connected with The Economy Bldg. and Loan Co.; in 1907, elected vice pres.; senior member the insurance firm of Pond Bros., representing many important companies; Methodist; Republican; member Chamber of Commerce, Knights of Pythias, Military Order of Foreign War, and Military and Naval Order of the Spanish-American War; captain 5th O. V. I., during war with Spain, and later lieut. col. 5th Infantry, O. N. G., until retired.
+
+**POOL**, Charles E.; coal operator; born, Irwin, Pa., July 8, 1881; educated, public schools; married, Philadelphia, Feb. 18, 1911; business career, real estate, Allegheny City, Pa., 1890-1902, W. Y. Bygate Co.; vice pres. one year; 1903, owned and operated coal mine at Gorman, Md., on the West Va. Central; 1904, organized The Continental Fuel Co.; 1906, owned and operated Quaker Valley mine, Rogers, O.; 1908, owned and operated Shamrock mines, Moro, Pa.; sold to Pittsburg Cambria Co.; same year, took over Russell Hill at Delroy, O.; 1910, operated mine at Clements, W. Va.; 1912, organized Claybrook Coal Mining Co.; Banner Creek, W. Va.; sec'y and treas. Claybrook Coal Mining Co.; member Athletic Club; also Wisconsin Gas Ass'n.
+
+**POST**, Ernest M.; insurance; born, Avoca, Louisiana, Sept. 1, 1862; son of Ralph B. and Ellen Deming Post; educated, Norwalk, Conn., and Hanover, Va.; married, Milwaukee, Wis., March 27, 1894, Alice C. Paine; 1882 to 1892, connected with the firm of
+
+<vocab>Wilfred S. Pollock, Daniel H. Pond, Charles E. Pool, Ernest M. Post, Cleveland, biography, business, coal industry, insurance, military service</vocab>

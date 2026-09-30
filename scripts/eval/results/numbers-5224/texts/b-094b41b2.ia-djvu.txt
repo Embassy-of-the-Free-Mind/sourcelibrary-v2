@@ -1,0 +1,33 @@
+444 A DISSERTATION ON
+Here, if under the fiift i the laft — i be placed, the arrangement will be as
+alcove. Hence alfo it will clearly follow, that the nullities in unity are triple ihofe
+in 7, quadruple thofe in J-, &c. ; and this will be at once apparent by placing the
+one under the other thus :
+I — I * + I ~ I '> + I — » *3 &Cj = t
+1+ i + i + i+i + i + i+i-}-
+1+ i + i + i+i + i + i+i+n
+I — I — I — I — I — I — I — 1 — ij
+For, In the upper feries there arc three nullities, and in the lower nine ; and, in like
+manner, it will be manifeft that the nullities in unity are quadruple thofe in ^.
+8. If the nullity i — 1 be continually involved into itfelf, the following nulli-
+ties will be produced, viz. 1— a + i, i — 3 + 3 -' ^y ^ — 4 -1-6 — 4+ i,
+I— 5 + 10 — 10 + 5 — I, i~6-fi5— ao+ 15 — 6 + 1, I — y -\- 21
+•~~35 + 35~~*i + 7 — I, Sec, each of which will be found to poffefs a differ-
+ent power from the reft, and will confequcntly be a nullity of a different order.
+The firft remarkable property of thefe nullities is this, that each when it divides
+unity produces the terms of the reft in a confequent order. Thus, 1 — i when it
+divides i produces i + i +1, &c, the firft terms of the feveral feries; i — a + I
+when it divides i produces i + 2 + 3 -+- 4, &c, the fccond terms ; 1 — 3+3 — i
+produces i + 3 + 6 + 10, &c, the third terms, and fo of the reft,
+9. In the next place, it Is remarkable that when any preceding is divided by any
+immediately following nullity, the quotient is always 1 + i -f- i, &c, ad infinitum^
+I i-i I — z -H »
+= YZTi' "^^"^^ I - 2 + I = I + I + I, &c, I _ 3 + 3 « 1 = I.+ 1 + I, &ci
+and fo of the reft.
+10. In the third place it follows, fince i — 2 + i is the fquare, and r — 3 + 3 — i
+r 1 I
+the cube of i — i, that i _ a + t is the fquare, and i_3-f.3_i the cube of i _ i.
+Hence, the Caiv of the feries of numbers in a natural order, viz. i. a. 3. 4, &c, when
+Infinitely continued is equal to the fquare of the fum of the feries 1 + i + ij
+f<c, infinitely continued ; and 1+34-6 + 10, &c, ad infinitum, is the cube of the
+faid

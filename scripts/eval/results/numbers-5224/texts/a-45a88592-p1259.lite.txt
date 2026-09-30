@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>991</page-num>
+<header>TOWN OF PROVINCETOWN. 991</header>
+
+McLain, 1810; Epaphras Kibby, 1812–24; Shipley W. Wilson, 1824; Leonard Bennett, 1826; Epaphras Kibby, 1828; Ebenezer Blake, 1830; Ephraim Wiley, 1832; John E. Risley, 1834; Frederick Upham, 1835–6; Ira M. Bidwell, 1835; E. W. Stickney, 1839; Aaron D. Sargent, 1840; Samuel W. Cogswell, 1841; Paul Townsend, 1842; John Lovejoy, 1844; William T. Harlow, 1846; E. B. Bradford, 1848; Pardon T. Kenney, 1850; William Livsey, 1852; Robert McGonegal, 1854; M. P. Alderman, 1856; Asa N. Bodfish, 1858; Ed. H. Hatfield, 1860; J. T. Benton, 1862; George W. Bridge, 1863; A. P. Aiken, 1865; C. S. Mcreading, 1867; Charles Young, 1869; J. H. James, 1872; Edgar F. Clark, 1874; Angelo Canoll, 1877; H. H. Martin, 1880; A. William Seavey, 1882; W. W. Colburn, 1884; Porter M. Vinton, 1887.
+
+The First Unitarian society was organized in 1829, in “Enos Nickerson's School House.” This society, the year it was organized, changed its name to “First Christian Union Society,” which it retained upon its records until 1847, when by vote it was called, what in fact it had been since 1835, the First Universalist society. The first settled pastor, 1830, was Asahel Davis, Unitarian, who removed from Portsmouth, N. H.
+
+A church for this society was built by Joseph Fuller and Thomas Lothrop, contractors, for $3,105, land and other items increasing the cost to $4,825, and was dedicated November 3, 1830, upon the premises where the dwelling of Abner B. Rich now stands. The second Universalist church, now standing, was erected in 1847.
+
+The following is the list of settled pastors and the years of their coming: Asahel Davis, 1830; George C. Leach, 1834; Mr. Clemsby, 1834; John B. Dods, 1836; Hiram Beckwith, 1842; Mr. Stevens, 1843; Theodore R. Taylor, 1844; Emmons Partridge, 1845; Mr. Cronens, 1852; Mr. Gardner, 1853; Mr. Sanborn, 1854; Mr. Bartlett, 1855; Mr. Hooper, 1858; A. W. Bruce, 1860; B. H. Davis, 1869; Mr. Perry, 1871; S. M. Beal, 1874; D. S. Libby, 1877; George F. Babbit, 1880; Alfred J. Aubry, 1884; R. T. Sawyer, 1885; H. E. Gilcrhist, 1887.
+
+Of these clergymen several, especially John B. Dods, exhibited good preaching ability, were impressive speakers and devoted to their calling. Replying to an invitation received at the end of his first year's engagement, Rev. Dods informs the society he will remain another year for $600, the sum received for the first year's service, and then states to the parish committee: “You mention to me that ‘$800 would not separate us.’ But that is a sum I have not the conscience to ask, nor would I accept it if it were freely offered, as I have no use for so much money annually. I was fearful that even $600 was more than the society could conveniently pay, and had therefore made up my mind to leave here the end of June.” Mr. Dods' family at that time consisted of a wife and five children.
+
+<vocab>Provincetown, Unitarian, Universalist, church history, clergy, John B. Dods, Asahel Davis</vocab>

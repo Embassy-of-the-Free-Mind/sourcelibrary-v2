@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>165</page-num>
+<header>The Book of Clevelanders</header>
+
+LEWIN, John F.; mason contractor; born, Isle of Man, Sept. 5, 1875; son of John and Jane Bridson Lewin; educated, Kirk Patrick, Isle of Man; married, Kirk Braddon, March 20, 1901, Netta Quirk; issue, three children.
+
+LEWIS, Robert Ellsworth; gen. sec'y Y. M. C. A.; born, Berkshire, Vt., Sept. 28, 1869; son of C. P. V. and Ellen E. Haynes Lewis; University of Vermont, class of 1892, degrees Ph. D., M. A., L. H. D.; married, Brookline, Mass., Aug. 24, 1893, Grace Mason Brackett (Wellesley, 1890); issue, five sons, three daughters; captain and aide staff Brig. Gen. J. J. Estey, Vermont National Guard, 1892-1894; expedition relief Peking, China, 1900, attached to 14th infantry staff until after capture of Peking; began career as college Y. M. C. A. sec'y in Massachusetts and Rhode Island; national traveling sec'y S. V. M. F. M.; sec'y International Committee, Y. M. C. A., in China 1898-1907; state sec'y, Ohio, 1908; gen. sec'y, Cleveland, 1909---; built largest Y. M. C. A. in Asia; built Martyrs' Memorial Hall, in national memory of Boxer massacres from 1910-1913, Cleveland Y. M. C. A. rehoused in three new buildings at cost of $1,090,000; director Institute and Training School, Chicago; member corp. International College, Springfield, Mass.; chairman General Committee on Vocational Guidance; member Royal Asiatic Society, Am. Ass'n of China, National Geographic Society, Am. Ass'n of Labor Legislation, Chamber of Commerce, Phi Delta Theta, University, and City Clubs. Author: Educational Conquest of the Far East; Government Education in Japan, published by U. S. Government and translated and published in Chinese by Chinese government; articles in North American Review, Forum, Outlook, Independent, Harper's Weekly, Congregationalist.
+
+LEWIS, Walter Irving; business maps and real estate; born, Chicago, Oct. 23, 1878; son of Wallace F. and Ella C. Slosson Lewis; educated, public and high schools, Armour Institute of Technology, Chicago, B. S. M. E., 1901; married, Cleveland, Feb. 18, 1897, Marion D. Raymond; sales mgr. Rand Drill Co., New York, 1901-1902; sales mgr. Cleveland Chocolate & Cocoa Co., 1902-1906; advertising mgr. The Raymond Co., 1908-1910; pres. and treas. City Improvement Co.; sec'y Sincere Realty Co.; sec'y and treas. The Raymond Co.; director The Euclid Point Co.; member Cleveland Chamber of Commerce, and Real Estate Board, Athletic Club.
+
+LIEBENTHAL, Melville; merchant; born, Cleveland, O.; son of Emanuel and Cordelia (Strauss) Liebenthal; educated, Cleveland public schools; married, Cleveland, Minnette Sanger; issue, two children; member firm of Liebenthal Brothers; member Excelsior Club.
+
+LIEBENTHAL, Sylvester; wholesale liquors; born, Cleveland, Nov. 13, 1873; son of Emanuel and Cordelia (Strauss) Liebenthal; educated, Brownell School, Cleveland; married, Cleveland,
+
+<vocab>Biography, Cleveland, Business, Y.M.C.A., Merchants, Real Estate, Education</vocab>

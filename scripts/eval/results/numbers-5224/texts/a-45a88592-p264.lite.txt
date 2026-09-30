@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>222</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+George W. Kelley, Barnstable, 1884; Horatio S. Kelley, jr., Dennis Port, 1884; George N. Munsell, Harwich, 1860; Adin H. Newton, Provincetown, 1874; Franklin W. Pierce, Marston's Mills, 1880; Peter Pineo, Boston, 1850; Samuel Pitcher, Hyannis, 1881; John E. Pratt, Sandwich, 1880; Frank A. Rogers, Brewster, 1883; William N. Stone, Wellfleet, 1869.
+
+Dr. Samuel Adams was a physician of Truro before the revolutionary war. He was born in Killingly, Conn., in 1745, studied medicine under Dr. Nathaniel Freeman of Sandwich, and went to Truro, where in 1774, he was appointed one of the committee of correspondence. He was an ardent patriot, and when the conflict began he entered the service as a surgeon, serving through the war with distinction. Upon leaving service, he settled in Ipswich, where he engaged in the practice of his profession until 1798, when, marrying Abigail Dodge, he removed to Bath, Me., where he continued to practice until his death in 1819. Doctor Adams was a man of ability, and was highly respected in the communities where he successively resided. That he was twice married is certain. His first wife, Abigail, died July 8, 1774, in her 24th year, at Truro, where a stone marks her resting place, and that of her infant child, who died July 31, 1774, aged four weeks. Dr. Adams had several children. His son, Rev. Charles S. Adams, was once pastor of the Congregational church in Harwich.
+
+George Atwood practiced at Marston's Mills for two years prior to 1850, when he removed to Fair Haven.
+
+Dr. Josiah Baker was a native of Tolland, Conn., and practiced medicine in South Dennis, where he died December 7, 1810, aged 31 years.
+
+Dr. Isaac Bangs, born in that part of Harwich now Brewster, December 11, 1752, a son of Benjamin and Desire Bangs, graduated at Harvard College in 1771 and studied medicine. He entered the revolutionary army as lieutenant in Captain Benjamin Godfrey's company in 1776, and afterward was a lieutenant in Captain Jacob Allen's company in Colonel John Bailey's regiment, in service at New York. In 1779, he was doctor's mate on board the frigate Boston, Samuel Tucker, commander. He died September 12, 1780, in Virginia. He left some account of his service in the first years of the revolutionary war in manuscript.
+
+Dr. Jonathan Bangs was an early physician of Harwich, residing in that part of the town now Brewster. He was son of Captain Edward Bangs of Harwich, and was born in 1706. He was in practice in the town as early as 1731. He died December 7, 1745, after three weeks' sickness, aged 39 years. He married widow Phebe Bangs, January 4, 1732-3, and left one son, Allen.
+
+<vocab>Barnstable County, physicians, Samuel Adams, Josiah Baker, Isaac Bangs, Jonathan Bangs, Revolutionary War, Harwich, Truro, Brewster, medical history</vocab>

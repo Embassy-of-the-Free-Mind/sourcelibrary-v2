@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>244</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Questen, civil engineer, b. April 21, 1897 (Dartmouth, B.S., 1899), d. Aug. 26, 1906. Residence, West Lebanon, N. H.
+
+**Stevens, Jabez Howes**
+Farmer, traveling salesman; b., Newmarket, N. H., July 29, 1857; s. Nathaniel and Elizabeth T. (York)
+
+<image-desc size="medium" type="portrait" significance="high">Black and white portrait photograph of Jabez Howes Stevens, a man with a receding hairline and a mustache.</image-desc>
+
+Stevens; ed. Durham public schools, Franklin Academy, Dover, Bryant & Stratton Commercial College, Manchester; Congregationalist; Republican; engaged in the hay trade for some years at Durham and has been a traveling salesman for the International Harvester Co. of America for the last fifteen years or more; active in public affairs, serving as tax collector, overseer of the poor, selectman five years (twice chairman of the board), member, N. H. house of representatives in 1895; deputy sheriff for Strafford County, 1895-8, resigning to take the office of Commissioner for Strafford County, to which he had been elected, and to which he was re-elected two years later, serving as clerk of the board; member,
+
+<column-break/>
+
+A. F. & A. M., I. O. O. F., B. P. O. E., and P. of H., being a past master of Scammell Grange of Durham; m., 1st, Feb. 10, 1879, Ada J. Drew, Strafford, N. H., d. Oct. 24, 1903; 2d, Nov. 2, 1904, Marguriete M. G. Thompson, of Portland, Me.; one daughter, Florence L., b. Oct. 26, 1882, m. March 17, 1902, Walter J. Dunlap, Augusta, Me. Residence, Durham, N. H.
+
+**Hayes, Charles Carroll**
+Real estate and loans; b., New London, N. H., May 31, 1855; s. John M. and Susan E. (Carr) Hayes; ed. public schools of Manchester, N. H.; Baptist; Democrat; mayor of Manchester, 1913-14; president, Democratic state convention, 1912; trustee, Mechanics Sav-
+
+<image-desc size="medium" type="portrait" significance="high">Black and white portrait photograph of Charles Carroll Hayes, a man with a mustache wearing a suit and tie.</image-desc>
+
+ings Bank, Manchester; member, A. F. & A. M. (33d degree), Elks, Moose, Grange, Derryfield, Calumet and Country clubs, Manchester; member, Manchester chamber of commerce (ex-president and treasurer); president, Rimmon Mfg. Co.; clerk, Manchester Shoe Mfg. Co.; m., 1st, Jan. 1, 1885,
+
+<vocab>Jabez Howes Stevens, Charles Carroll Hayes, New Hampshire, biography, genealogy, public service, fraternal organizations</vocab>

@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>75</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Baldwin), Cora M., Josephine G. (Mrs. G. F. Russell). Residence, South Weare, N. H.
+
+Sanborn, Jeremiah Wilson
+Farmer, educator, publicist; b., Gilmanton, N. H., Feb. 4, 1847; s. George W. and Mary A. (Brown) Sanborn; ed., Pittsfield and Gilmanton academies and private library; Congregationalist; Republican; superintendent of schools, Gilmanton, 1868, 1869; member, N. H. board of agriculture, 1873-82; member, N. H. house of representatives, 1875 and 1876, serving as chairman of committee on Agricultural college; appointed superintendent of the State college farm at Hanover, 1876, and in that year began publication of monthly bulletins of research work which were continued during the six years of his connection there; these covered various fields, including plant and animal nutrition, and were the first regular publications of the kind in the country; in Sept., 1882, made dean of the agricultural department of the University of Missouri, and while there continued elaborate investigations of various problems, and carried on many important experiments; served as secretary of the Missouri board of agriculture, 1882-6, and gathered the material for the state’s agricultural exhibit at the World’s Fair in New Orleans; secretary of the Kansas City Fat Stock Show, and state statistician for Missouri for U. S. Department of Agriculture, 1884-7; in 1889 became president and organized the Agricultural and Mechanical College of Utah, and was director of the experiment station; during five years here organized the faculty, its courses of study, its extensive research work, and Utah’s agricultural exhibit at the Columbian Exposition at Chicago; returned to New Hampshire in 1894 to become agricultural editor of the *Mirror and Farmer*, and to resume temporarily suspended work of organizing on a large scale extensive and intensive farming on his estate in Gilmanton, where he has redeemed and added to
+
+<column-break/>
+
+the machine tillage area 170 acres, so that about 500 acres are included in one body out of the hill estate of 2,000 acres; served three years as trustee of the State College, and again in the legislature in 1909, being chairman of committee on national affairs; trustee of Gilmanton Academy; chairman, town school board; an officer of the N. E. Milk Producers’ Union, and, since 1911, member of the advisory council of the State Department of
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Jeremiah Wilson Sanborn, an older man with a full white beard, wearing a suit and bowtie.</image-desc>
+
+Agriculture; Patron of Husbandry and past master, Catamount Grange, Pittsfield; has lectured extensively before farmers’ institutes and other organizations, in New England, New York and the West, and written much for the press; author of the section on agriculture in Gateley’s great work on the World’s Progress. The New Hampshire and Utah state colleges have conferred on him the degree of B.S., M.S. and LL.D.; he is now elaborating his youth’s dream of a fine hill estate around the site first deeded to his ancestor for colonial services; m., June 4, 1872,
+
+<vocab>Jeremiah Wilson Sanborn, Gilmanton, New Hampshire, agriculture, education, University of Missouri, Agricultural and Mechanical College of Utah, Mirror and Farmer, Catamount Grange, biography</vocab>

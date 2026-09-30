@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>9</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 9</header>
+
+**Parker, Hosea Washington**
+Lawyer, statesman, publicist; b., Lempster, N. H., May 30, 1833; s. Benjamin and Olive (Nichols) Parker; ed. Tubbs Union Academy, Green Mountain Liberal Institute and Tufts College; studied law with Edmund Burke of Newport; admitted to the bar in 1859; commenced practice in Claremont in 1860 and there continued; has been counsel for the town of Claremont for nearly fifty years, and president of the Sullivan County bar since 1905; was tendered a complimentary banquet by the bar on his eightieth birthday anniversary; Democrat; served many years on town and state committees; represented Lempster in the N. H. house of representatives in 1859 and 1860, and presided at the legislative reunion in Concord in 1915; member, U. S. house of representatives, 1871 to 1875, serving on the education and patents committees and largely responsible for the refusal of patent extensions resulting in the overthrow of the sewing machine monopoly; Universalist; superintendent, Claremont Universalist Sunday school for the last fifty-seven years; twice president of the Universalist general convention, and president of the state convention for the last twelve years; Mason, Knight Templar, elected Eminent Commander Sullivan Commandery in 1869, serving twenty-one years in all; trustee of Tufts College, and for some years president of the board; received honorary degree of A.M., in 1883, and of LL.D. from Tufts in 1912; m., May 30, 1861, Caroline Lovisa Southgate, who d. Sept. 14, 1904; their dau., Lizzie S., b. June 17, 1865 (Smith College, 1888), is the wife of Rev. Lee S. McCollester, D.D., dean of the Tufts College Divinity School. Residence, Claremont, N. H.
+
+**Murchie, Robert Charles**
+Lawyer; b., Creetown, Kirkcudbrightshire, Scotland, Jan. 22, 1885; s. William and Agnes Janet (Kellie) Murchie; removed to America in early childhood; ed. Concord high
+
+<column-break/>
+
+school and University of Michigan, Law Department, graduating LL.B. in 1909; admitted to the New Hampshire bar, June 26, 1909; employed for a time in the office of Henry F. Hollis; subsequently became a member of the firm of Remick & Hollis; upon dissolution of this firm became a member of the firm of Hollis & Murchie and so continues; Democrat; elected solicitor of Merrimack County
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Robert Charles Murchie, shown from the chest up, wearing a suit, white shirt, and tie.</image-desc>
+
+in Nov., 1912; re-elected in 1914; resigned, Jan. 1, 1917, to enter upon his duties as representative from Ward 3, in the N. H. house of representatives, to which he had been elected in November previous; member of the house judiciary committee; secretary, N. H. Democratic state committee, since 1912; member, Democratic national committee for New Hampshire, since June, 1916; spoke extensively for the Democratic party on the stump in the last three campaigns; affiliated with the Elks. Residence, Concord, N. H.
+
+<vocab>Hosea Washington Parker, Robert Charles Murchie, New Hampshire, biography, law, politics, Democrat, Universalist, Tufts College, Merrimack County, Concord, Claremont</vocab>

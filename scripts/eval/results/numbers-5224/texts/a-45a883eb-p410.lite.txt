@@ -1,0 +1,79 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>406</page-num>
+<header>The Book of Clevelanders</header>
+
+| | Page | | Page |
+| :--- | :--- | :--- | :--- |
+| Severance, Solon L. | 236 | Stewart, George Neil | 253 |
+| Sheadle, Jasper Holmes | 237 | Stilber, Peter | 254 |
+| Sheets, Frank S. | 237 | Stockwell, John Nelson | 254 |
+| Sheldon, Herbert | 237 | Stoke, U. S. G. | 254 |
+| Shepard, Arthur Bishop | 238 | Stone, Warren Sanford | 254 |
+| Sherman, William | 238 | Stowe, Charles Browne | 255 |
+| Sherwin, George N. | 238 | Streitberger, Jacob | 255 |
+| Sherwin, John | 239 | Strimple, Theodore L. | 255 |
+| Shields, James B. | 239 | Strong, Edgar E. | 255 |
+| Shimmon, Claude Wilber | 239 | Strong, Emmet J. | 256 |
+| Shiverick, Asa | 239 | Stroud, Edwin Gerrish | 256 |
+| Sholes, Justin Grant | 240 | Stutson, Willis | 256 |
+| Shook, Floyd D. | 240 | Sullivan, Jeremiah Jay | 256 |
+| Shulters, Hoyt V. | 240 | Sullivan, John J. | 257 |
+| Shumaker, Frank P. | 240 | Sulzmann, John M. | 257 |
+| Siddall, George Bennett | 241 | Sunshine, David | 257 |
+| Sigler, Gilbert Lee | 241 | Svoboda, Frank J. | 258 |
+| Sigler, Lucius M. | 241 | Swasey, Ambrose | 258 |
+| Silliman, Benjamin F. | 241 | Sweeney, Patrick Rodger | 258 |
+| Simpson, George C. | 242 | Swetland, Truman Monroe | 259 |
+| Simpson, Harry Prescott | 242 | Swift, Charles J. | 259 |
+| Singer, William F. | 242 | Sykora, Joseph W. | 259 |
+| Skeel, John C. | 242 | Szepessy, Joseph L. | 259 |
+| Skeel, Roland Edward, | 242 | | |
+| Slatmeyer, Henry G. | 243 | Tabor, Franklyn Breed | 260 |
+| Sloan, Clark W. | 243 | Taft, Gilbert Leslie | 260 |
+| Slocum, Milton Russell | 243 | Tame, Alfred George | 260 |
+| Smith, Albert William | 243 | Tanney, La Zell | 260 |
+| Smith, Harold E. | 244 | Tanyan, James J. | 260 |
+| Smith, Walter Hubbell | 244 | Taylor, Alexander S. | 261 |
+| Smith, John Alvaro | 244 | Taylor, Frank F. | 261 |
+| Smith, John William | 244 | Taylor, Frank S. | 261 |
+| Smith, Matthew | 245 | Taylor, Henry | 261 |
+| Smith, William A. C. | 245 | Taylor, John Warren | 261 |
+| Smith, William Grant | 245 | Taylor, Virgil Corydon | 262 |
+| Smith, Wilson George | 245 | Taylor, William N. | 262 |
+| Smithnight, Louis | 246 | Teachout, Albert R. | 262 |
+| Smythe, Alfred Burns | 246 | Teachout, David William | 263 |
+| Snider, Martin | 246 | Teare, Elmer E. | 263 |
+| Snyder, Harvey R. | 247 | Terry, Carleton Lewis | 263 |
+| Snyder, John Royal | 247 | Teter, Charles K., D. D. S. | 263 |
+| Sollmann, Torald Herman | 247 | Teter, William Crooks | 264 |
+| Sommer, Edward H. | 247 | Textor, Oscar | 264 |
+| Speck, Early James | 247 | Thomas, Arthur Winfield | 264 |
+| Spenzer, John George | 248 | Thomas, John J. | 264 |
+| Spicer, Dembe M. | 248 | Thomson, Archibald W. | 265 |
+| Sqrague, Edwin D. | 248 | Thurston, Edwin L. | 265 |
+| Sprague, Ernest M. | 249 | Thwing, Charles Franklin | 265 |
+| Sprague, Franklin John | 249 | Tillotson, Edwin Gray | 265 |
+| Spriggs, Charles H. | 249 | Timendorfer, Julius | 266 |
+| Spriggs, E. Loomis | 249 | Tinnerman, George A. | 266 |
+| Sprosty, A. B. | 250 | Tippy, Worth M. | 266 |
+| Spurney, Albert F. | 250 | Todd, George C. | 267 |
+| Squire, Andrew | 250 | Tolle, Richard Perry | 267 |
+| Staley, Cady | 250 | Tomlinson, George F. | 267 |
+| Standart, Henry Needham | 250 | Tower, George Edward | 267 |
+| Stanley, Wells Kirk | 251 | Treadway, Francis Wilcox | 268 |
+| Stearns, Arthur Adelbert | 251 | Treadway, Lyman H. | 268 |
+| Stehn, George Gustav | 251 | Trescott, Samuel Butler | 268 |
+| Stephens, Jesse | 252 | Trunecek, Frank J. | 269 |
+| Sterling, Frederick Augustine | 252 | Tuckerman, Jacob Edward | 269 |
+| Stern, Joseph L. | 252 | Turner, J. K. | 269 |
+| Stern, Walter G. | 252 | Tyler, John Walter | 269 |
+| Stevens, Alfred J. | 253 | | |
+| Stevens, Edwin Augustus | 253 | Uhlrich, Emile Marie | 270 |
+| Stevens, J. A. | 253 | Ulchek, Frank J. | 270 |
+| | | Ullman, Monroe A. | 270 |
+
+<vocab>Cleveland, biography, index, directory</vocab>

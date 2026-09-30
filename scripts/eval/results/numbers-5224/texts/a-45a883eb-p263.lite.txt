@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>259</page-num>
+<header>The Book of Clevelanders</header>
+
+Co.; business agt. Sweeney & Schully, two terms Carpenter Brotherhood; chairman Carpenter Committee to pass on present building code; adjusting five losses for Stafford Goss Co.; two terms trustee Grafton Church; member Catholic Mutual Benevolent Ass'n; is now taking charge of building mostly for themselves and old customers in Lakewood.
+
+SWETLAND, Truman Monroe; real estate; born, Middlefield, N. Y., Feb. 20, 1848; son of Eli and Sophia McGregory Swetland; educated, public schools; married, Rochester, Nov. 30, 1871, Carrie Raymond Hamilton; issue, four sons; instrumental in organizing a company for the erection of several large office buildings in Cleveland; treas. and gen. mgr. The Park Investment Co.; gen. mgr. The City Investment Co.; 32nd degree Mason; member the Pine Ridge Country Club, Isle of Pines, West Indies; fond of farming; in 1657, the first Swetland, an Englishman, settled in Connecticut; he was master and owner of his own ship, ''The James,'' in which he made the voyage to this country.
+
+SWIFT, Charles J.; insurance; born, Corry, Pa., Dec. 16, 1866; son of Charles J. and Hanna Ophelia Hopkins Swift; educated in Corry public schools; married, Cleveland, May 16, 1907, Catherine Pennock Brooke; issue, one daughter, Alice Ophelia; organized firm of C. J. Swift & Co., in 1893; has built up one of largest individual insurance agencies in Cleveland; member Iris Lodge, F. & A. M., Webb Chapter, R. A. M., Oriental Commandery, K. T., Lake Erie Consistory and Al Koran Temple; past chancellor K. of P.
+
+SYKORA, Joseph W.; lawyer; born, Bohemia, March 21, 1840; son of Wac. and Teska Sykora; educated, Bohemia, in the City of Pisek, college and university, City of Prague; and in Cleveland at the State Law School; married, Cleveland, Aug. 1, 1866; Josephine M. First; issue, ten children; admitted to the bar, July 3, 1871; practicing attorney.
+
+SZEPESSY, Joseph L.; real estate and steamship agency; born, Kassa, Hungary; high school education; married, Pittsburgh, Pa., Jan. 16, 1889, Irene Balczer; issue, three sons, George, Theodore and Edward; staunch Republican, organizing many Republican clubs; elected decennial assessor in 19th Ward; instrumental in naturalizing thousands of his countrymen; first Hungarian real estate agt. in the city; through his efforts many of his countrymen acquired homes; organized several societies, which are still flourishing; founded the first Hungarian paper published in Cleveland, called Szabadsag (Liberty); long time director Woodland Ave. Savings & Trust Co., and instrumental in building up of branch on Buckeye Road; enthusiastic worker for the Hungarian Hospital project and moving spirit in purchase of the Gesangverein Bldg., on E. 55th St., where a magnificent hospital is to be built.
+
+<vocab>Truman Monroe Swetland, Charles J. Swift, Joseph W. Sykora, Joseph L. Szepessy, Cleveland, biography, real estate, insurance, law, Hungarian community</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>78</page-num>
+<header>The Book of Clevelanders</header>
+
+DLUZYNSKI, Theodore; publisher and editor; born, Poland, 1866; son of Simon and Dorothia Dluzynski; educated, St. Mary's College, Dayton, O.; married, Cleveland, May, 1901, Lotti Milosyenska; three children; worked one year in the post office money order department; ten years deputy County Treasurer; sec'y of the Polonia in Amuryre Corporation Polish Newspaper, organized twenty years ago; after seven years the corporation sold the paper to him; is now the sole owner and publisher; has improved the publication, increased the circulation; it is read mostly by the Polish people in the State of Ohio; has a membership of 7,000; sec'y and treas. Realty & Trust Co.; director Wanda Furniture Co. and Olsty Carriage Co.; trustee of St. Stainslaus Church; sec'y Polish Chamber of Industry; vice pres. of Polish Turnvers; member of Polish Alliance in the State of Ohio, Polish Catholic Union of Ohio, and of the United States, and Polish National Alliance of the United States; member Ben Franklin Club and Polish Singing Society.
+
+DODGE, Samuel Douglas; lawyer; born, Cleveland, Aug. 25, 1885; son of George C. and Lucy A. Burton Dodge; educated private schools of Cleveland, Graylock Institute, at South Williamstown, Mass.; graduated from Williams College with degree of B. A. in 1877; law course at Columbia University, LL. B., 1879; married, Cleveland, Oct. 25, 1882, Miss Jeanette Groff; issue, Henry Groff Dodge, born, Oct. 24, 1883, and Miss Janet Dodge; entered active law practice in the office of Virgil P. Kline, and later in the office of Judge E. J. Blandin; has devoted his time to general practice and real estate law; has dealt in real estate also; in charge of the business of The Euclid Heights Realty Co., for four years; beginning in 1886, asst. district atty. under appointment of President Cleveland; 1890 to 1895, in private practice; appointed United States District Atty. under President Cleveland's second administration; served until 1900; served two terms on the Board of Education; member Chamber of Commerce; member Ohio State Board of Pardons since 1905; in 1900, elected sec'y Cleveland Humane Society, filled that position for 7 years; member Presbyterian Church, Union, University, Country and Euclid Clubs; member Alpha Delta Phi Fraternity, Williams College.
+
+DOHERTY, Joseph G.; secretary Cleveland Milling Co.; born, Detroit, Mich.; educated Detroit public schools; married, Dec. 2, 1901; two children; secretary and general mngr. Cleveland Milling Co.; member Masonic order. Golf preferred recreation.
+
+DONALDSON, Albert Finney; real estate dealer; born, Charlestown, O., Aug. 17, 1889; son of Levi Judson and Margaret Frow Donaldson; early education in the district schools of Florida and Georgia, later attending Oberlin College at Oberlin, O., took gold medal at 1st prize for original oration in Oberlin, 1910; spent about two years traveling for Frontier Press Co. of Buffalo, N. Y., doing general agency work; went to the Northwest, and engaged
+
+<vocab>Theodore Dluzynski, Samuel Douglas Dodge, Joseph G. Doherty, Albert Finney Donaldson, Cleveland, biography, business, law, education</vocab>

@@ -1,0 +1,10 @@
+<scan-quality>good</scan-quality>
+<language>none</language>
+<script>none</script>
+<page-type>illustration</page-type>
+<page-num>60</page-num>
+<header>PLATE 60</header>
+
+<image-desc size="large" type="illustration" significance="high">A reproduction of a prehistoric rock painting depicting several bovine figures and two human figures holding shields and spears or clubs.</image-desc>
+
+<vocab>rock art, prehistoric painting, bovines, shields, spears</vocab>

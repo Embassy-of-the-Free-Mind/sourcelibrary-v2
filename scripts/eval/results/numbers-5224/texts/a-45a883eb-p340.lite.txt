@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>336</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Henry C. Hieber</image-desc>
+HENRY C. HIEBER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. M. Herron</image-desc>
+E. M. HERRON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank Higley</image-desc>
+FRANK HIGLEY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. H. Hill</image-desc>
+H. H. HILL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank Hildebrand</image-desc>
+FRANK HILDEBRAND
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Harry N. Hill</image-desc>
+HARRY N. HILL
+
+<vocab>Henry C. Hieber, E. M. Herron, Frank Higley, H. H. Hill, Frank Hildebrand, Harry N. Hill, The Book of Clevelanders</vocab>

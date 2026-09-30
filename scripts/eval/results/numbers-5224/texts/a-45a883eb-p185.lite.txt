@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>181</page-num>
+<header>The Book of Clevelanders</header>
+
+MATHERS, James; lawyer; born, Bellwood, Pa., Sept. 4, 1868; educated at Mifflintown; graduated, Princeton University, 1890, degree A. B., Cincinnati Law School, 1893, degree LL. B.; admitted to the bar, and began practice in the United States attorney's office, in Pittsburgh, Pa., 1893; come to Cleveland in 1894, as attorney for Cleveland, Akron & Columbus R. R.; formed partnership with Senator H. W. Wolcott, continuing until Wolcott was made gen. mgr. Kansas City & Leavenworth Ry.; then with Berkley Pearce, firm name Mathers & Pearce; member Century, Euclid and Hermit Clubs; politically Independent.
+
+MATHEWS, Herbert; law and real estate; born, Canada, Nov. 21, 1864; son of Aaron and Caroline (Crabtree) Mathews; educated, public schools and Western Reserve Law School, Cleveland; one of the earliest developers of Lakewood, well-known suburb; one of the original committee of the Chamber of Industry; helped to frame the law establishing a County Park Board; pres. The Cleveland Real Estate Board and Home Exposition; director-general West Side Industrial Exposition; in 1900, organized Rocky River Bank; charter member Phi Delta Phi, Legal Fraternity; member Chamber of Commerce, Chamber of Industry, Hermit, Athletic, and Keswick Golf Clubs.
+
+MATTHEWS, John, stage name JOHNNY RAY; actor; born, Tredegar, Wales, Oct. 12, 1858; son of Benjamin and Annie Matthews; educated, Cleveland public schools; married, San Francisco, Cal., April 12, 1890, Miss Carter; first stage appearance at the age of 13, at Montpelier's Variety's, in Frankfort St., in 1871; retired May 1, 1912, after forty-three years of stage life; most successful comedies were "A Hot Old Time," "Down the Pike," and "King Casey"; invested earnings in real estate; owns much valuable residence property on East 98th St., and in Superior Park, and a farm in Randall; hobby, trotting horses; member Gentleman's Driving Club; 32nd degree Mason.
+
+MATZEN, Hermann N.; sculptor; born, Denmark, 1861; son of Nicolai Edinger and Henrietta Rasch Matzen; graduate, German-American Seminary, Detroit, Royal Academy of Fine Arts, Berlin (medal of second class); married, Cleveland, 1888, Emma Hale; married, 1908, Blanche Disette; issue, Madelein Dorothy, Carl and Herman; engaged in sculpture since 1893; executed groups, "War and Peace," on Indianapolis Soldiers' and Sailors' monument; Schiller monument, Detroit; Burke mausoleum; figures, "Moses and Gregory," Cuyahoga County Court House, Cleveland; "Law and Justice," Summit County Court House, Akron; "Cain and Abel," Lake County Court House, Painesville; Wagner monument, Cleveland, and others; instructor Cleveland School of Art since 1897; member Chamber of Commerce, National Sculpture Society, American Federation of Art, Arts Club.
+
+<vocab>James Mathers, Herbert Mathews, John Matthews, Johnny Ray, Hermann N. Matzen, Cleveland, biography, lawyers, real estate, actors, sculptors, clubs, organizations</vocab>

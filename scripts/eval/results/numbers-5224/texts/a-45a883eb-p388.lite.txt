@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>384</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. A. Stearns</image-desc>
+A. A. STEARNS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. N. Standart</image-desc>
+H. N. STANDART
+
+<image-desc size="small" type="portrait" significance="high">Portrait of G. G. Stehn</image-desc>
+G. G. STEHN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. H. Stern</image-desc>
+J. H. STERN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jesse Stephens</image-desc>
+JESSE STEPHENS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. A. Stevens</image-desc>
+E. A. STEVENS
+
+<vocab>A. A. Stearns, H. N. Standart, G. G. Stehn, J. H. Stern, Jesse Stephens, E. A. Stevens, Clevelanders, biography, portraits</vocab>

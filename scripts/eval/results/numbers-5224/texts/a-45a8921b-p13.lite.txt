@@ -1,0 +1,51 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>vii</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Jackson, Lydia Drew, p. 81; teacher of French, St. Mary's School, Concord, N. H., 1918-19.
+Jackson, Robert, p. 58; vice-president L. H. Shattuck, Inc.
+Jameson, John Butler, p. 257; b. Aug. 2, 1873, great great grandson Capt. Thomas Jameson, who settled in Antrim in 1783; Democratic candidate for U. S. senator to fill the vacancy occasioned by the death of Jacob H. Gallinger, Nov., 1918, lacking less than 1,000 votes of election.
+Jewett, Stephen Shannon, p. 119; member legal advisory board for Belknap County, N. H. District, Selective Service; trustee N. H. State Prison, appointed April, 1919.
+Johnson, Jesse p. 283; d. Oct., 1918.
+Johnson, Perley Albert, p. 16; chairman New-port Chapter, American Red Cross; Federal food administrator for eastern Sullivan district; member Liberty Loan and W. S. S. Committees.
+Keeler, Irad Eugene, p. 25; re-elected Register of Probate, Nov., 1918.
+Keyes, Frances Parkinson, p. 335; author "The Old Gray Homestead," Houghton, Mifflin Co., 1919.
+Keyes, Henry Wilder p. 211; elected U. S. senator for six years, to succeed Henry F. Hollis, Nov., 1918.
+Kimball, George Morrill, p. 277; president N. H. Savings Bank, succeeding the late Samuel C. Eastman.
+Lake, Harry Foss, p. 51; Democratic candidate for Congress, 2d N. H. District, 1918; chairman N. H. War Speakers' Bureau.
+Lauder, George Burns, p. 259; daughter, Mildred, graduated from St. Mary's School, 1913.
+Leonard, Charles Hall, p. 330; d. Aug. 27, 1918.
+Lyford, James Otis, p. 53; son Richard (Harvard 1918) First Class private, Battery A., 101st Regiment, Field Artillery, 26th Division; served in France from September, 1917 to April, 1919.
+Mann, William Hazelton Gage, p. 290; instructor Dartmouth College, S. A. T. C., 1918.
+Martin, Nathaniel Everett, p. 89; Democratic candidate for Governor of New Hampshire, Nov., 1918.
+Mason, Nathaniel Robert, p. 198; chief of staff, Base Hospital 51, Toul, France, 1918; recommended for promotion to major, and commission made out when the armistice was signed.
+McAllister, George Isaac, p. 446; A. O. U. M. should be A. O. U. W.
+McCollister, Lee Sullivan, p. 407; should be printed McCollester.
+McCrillis, John, p. 24; s. John, b. Jan. 1, 1897, (Dartmouth 20); instructor in Thayer School Training Detachment, June to Dec., 1918; William Henry, b. April 24, 1898 (Worcester Academy, 20), U. S. Marine Corps, Oct., 1918 to March 12, 1919.
+
+<column-break/>
+
+McHugh, Bartholomew Franklin, p. 333; trustee N. H. State Prison.
+McLane, John Roy, p. 159; s. Charles Bancroft, b. March, 1919.
+McQuaid, Elias Alfred, p. 383; on staff of New York World, 1919-.
+Merrill, Robert Josiah, p. 54; resigned as insurance commissioner, Nov., 1917, to become secretary of the United Life & Accident Ins. Co., Concord.
+Miller, Ida Farr, p. 62; member Soc. for Preservation of N. E. Antiquities, not Prevention as printed.
+Morrill, Arthur Putnam, p. 170; member N. H. state senate, 1919-20 (president).
+Morrison, Henry Clinton, p. 77; assistant secretary Connecticut State Board of Education since 1918; removed to Middletown, Conn.
+Moses, George Higgins, p. 127; elected U. S. Senator from New Hampshire to fill unexpired term of the late Jacob H. Gallinger, Nov. 5, 1918; assigned to committees on agriculture, the library and printing; s. Gordon, now midshipman, U. S. Naval Academy, Annapolis, Md.
+Murchie, Alexander, p. 47; secretary Democratic state committee, Feb. 1, 1918, to Sept., 1918—chairman since; legal adviser for New Hampshire, to the U. S. Custodian of Alien Property; dau. Jean, b. Nov. 30, 1917. Residence, 7 Pine St., Concord, N. H.
+Murchie, Robert Charles, p. 9, major, National Army, Adjutant General's Dept.; graduate Army General Staff College, Dec. 31, 1918; honorably discharged, Feb., 1919.
+Murphy, David Edward, p. 261; President Concord Board of Trade, 1906-10.
+Niles, Edward Cullen, p. 49; resigned as Public Service Commissioner, July 27, 1918, to become assistant to the director of Public Service, U. S. Railroad Administration, Washington, D. C.
+Niles, Harold Herbert, p. 451; trustee of N. H. State Prison, 1919-.
+Parker, Edward Melville, p. 91; chaplain N. H. State Guard; s. Henry Melville, b. Jan. 9, 1919; named for his grandfather, a Massachusetts lawyer, native of Jaffrey, N. H.
+Parker, Hosea Washington, p. 9; member and temporary president N. H. constitutional convention, 1918.
+Pearson, Edward Nathan, p. 3; trustee Kimball Union Academy; vice-president Northern Bankers Ass'n, vice-president and director N. H. Bible Soc.
+Pillsbury, Rosecrans William, p. 55; proprietor Manchester Mirror, 1918-.
+Powers, Samuel Leland, p. 49; s. Leland, b. July 1, 1890; Dartmouth, A.B. 1910 (Phi Beta Kappa), A.M. 1911; Harvard, LL.B. 1914; admitted to the bar and since a member of the firm of Powers & Hall, Boston; member Mass. house of representatives 1918-19 (chairman committee on bills in the third reading; m., 1913, Barsheba T. Threwit, Denver, Colo.; two children, Polly and
+
+<vocab>New Hampshire, biography, 20th century, politics, military service, education, law</vocab>

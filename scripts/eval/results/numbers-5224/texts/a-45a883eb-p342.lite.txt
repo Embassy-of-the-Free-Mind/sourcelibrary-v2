@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>338</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. E. Howard</image-desc>
+A. E. HOWARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. W. P. Horton</image-desc>
+DR. W. P. HORTON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. S. Howe</image-desc>
+A. S. HOWE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. J. Hoynes</image-desc>
+M. J. HOYNES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. L. Howe</image-desc>
+E. L. HOWE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of John Hudlett</image-desc>
+JOHN HUDLETT
+
+<vocab>A. E. Howard, Dr. W. P. Horton, A. S. Howe, M. J. Hoynes, E. L. Howe, John Hudlett, The Book of Clevelanders</vocab>

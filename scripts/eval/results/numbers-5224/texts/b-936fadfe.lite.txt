@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>277</page-num>
+<header>DAVILA. 277</header>
+<sig>24</sig>
+
+balance of your government. In a well-balanced government, reason, conscience, truth, and virtue, must be respected by all parties, and exerted for the public good.* Advert to the principles on which you commenced that glorious self-defence, which, if you behave with steadiness and consistency, may ultimately loosen the chains of all mankind. If you will take the trouble to read over the memorable proceedings of the town of Boston, on the twenty-eighth day of October, 1772, when the Committee of Correspondence of twenty-one persons was appointed to state the rights of the colonists as men, as Christians, and as subjects, and to publish them to the world, with the infringements and violations of them,† you will find the great principles of civil and religious liberty for which you have contended so successfully, and which the world is contending for after your example. I could transcribe with pleasure the whole of this immortal pamphlet, which is a real picture of the sun of liberty rising on the human race; but shall select only a few words more directly to the present purpose.
+
+“The first fundamental, positive law of all commonwealths or states is the establishment of the legislative power.” Page 9.
+
+“It is absolutely necessary in a mixed government like that of this province, that a due proportion or balance of power should be established among the several branches of the legislative. Our ancestors received from King William and Queen Mary a charter, by which it was understood by both parties in the contract, that such a proportion or balance was fixed; and, therefore, every thing which renders any one branch of the legislative more independent of the other two than it was originally designed, is an alteration of the constitution.”
+
+Americans! in your Congress at Philadelphia, on Friday, the fourteenth day of October, 1774, you laid down the fundamental principles for which you were about to contend, and from which it is to be hoped you will never depart. For asserting and vindicating your rights and liberties, you declared, “That, by the immutable laws of nature, the principles of the English constitution and your several charters or compacts, you were
+
+* Americans paid no attention or regard to this. And a blind, mad rivalry between the north and the south is destroying all morality and sound policy. God grant that division, civil war, murders, assassination, and massacres may not soon grow out of these rivalries of states, families, and individuals.
+
+† This Boston pamphlet was drawn by the great James Otis. J. A. 1813.
+
+<meta>VOL. VI.</meta>
+<vocab>government, Boston, Committee of Correspondence, civil liberty, religious liberty, legislative power, King William, Queen Mary, Congress, Philadelphia, James Otis, constitution</vocab>

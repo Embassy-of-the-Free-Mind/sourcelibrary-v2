@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>355</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES 355</header>
+
+Hampshire in each case; m., Feb. 15, 1894, Ida L. Ford, Danbury, N. H.; children: Ford Leighton, b. Feb. 2, 1895, d. Jan. 7, 1904; Roswell Towle, b. Oct. 19, 1903 (N. H. College 1921); Edna Lizzie, b. Oct. 19, 1903 (student Pembroke Academy). Residence, Pembroke, N. H.
+
+**Tuck, Edward**
+Retired banker, philanthropist, b., Exeter, N. H., Aug. 24, 1842; s. Amos and Sarah Ann (Nudd) Tuck; ed. Phillips Exeter Academy, Dartmouth College, A.B. 1862, LL.D. 1903; U. S. vice-consul, Paris, France, 1864–6; engaged in foreign banking many years, New York and Paris. Gave the Amos Tuck Endowment Fund to Dartmouth College in memory of his father, Dartmouth, 1835, who was also a trustee, 1857–66; erected the building for the Tuck School of Administration and Finance, Dartmouth, 1899, also endowed Foundation for instruction in French Language and Literature, Dartmouth, making a total of more than a million dollars given to this institution; in 1903 founded and endowed Hôpital Stell, Reuil, near Paris, greatly enlarged since the beginning of the war; 1911, gave to the N. H. Historical Soc. the sumptuous granite building at Concord, costing nearly half a million; this will be supplemented in the near future by a magnificent museum on the same lot for the housing of the valuable Tuck collections. Has made liberal gifts to his native town, including a completely equipped cottage hospital; also to Phillips Exeter Academy. Officier Légion d'Honneur, laureate Académie Française; member advisory council American Red Cross in Europe; N. Y. clubs, Metropolitan and Union League; m., 1872, London, Eng., Julia Stell, dau. William Shorter Stell of Philadelphia. She was made Chevalier de la Légion d'Honneur, 1917, and ably co-operates in all her husband's benevolence. Since 1914 Mr. and Mrs. Tuck have devoted their entire time to war relief. "Since the days of Lafayette no American has done more to cement the bonds of friendship existing between France and the United States than has Edward Tuck." Residence, 82 Champs Elysées, Paris, Vert Mont, Reuil France.
+
+<column-break/>
+
+**Baker, Benjamin Ward**
+Physician, superintendent N. H. School for Feeble-Minded Children; b., New Boston, N. H., Aug. 6, 1874; s. Benjamin F. and Annie (Ward)
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Benjamin Ward Baker</image-desc>
+
+Baker; ed. McCollum Institute, Mont Vernon, N. H., 1895, Dartmouth Medical College, 1898, post-graduate work at Harvard Medical College, and psychiatrical studies in the hospitals of England and Scotland; assistant physician and assistant superintendent, Taunton State Hospital, Taunton, Mass., for eleven years; appointed superintendent of the N. H. School for Feeble-Minded Children, July 1, 1910; Mason; member of Belknap County Medical Soc., American
+
+<vocab>Edward Tuck, Benjamin Ward Baker, Dartmouth College, Phillips Exeter Academy, N. H. Historical Society, Hôpital Stell, Légion d'Honneur, N. H. School for Feeble-Minded Children, philanthropy, medicine</vocab>

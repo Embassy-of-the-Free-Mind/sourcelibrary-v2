@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>345</page-num>
+<header>WHAT ARE THEY DOING AT VASSAR?</header>
+
+demonstrated their need of lubrication. But when that was done, we saw Mars if not stars, and though the night was a poor one for observation, give our witness to vision which showed the excellence of the great equatorial. When first mounted, indeed, it was second only to three others in the United States, in the size of its object glass. These were at Cambridge, Mass., at Hamilton College, N. Y., and at the Dudley Observatory in Albany.* The Professor has about the Observatory three smaller telescopes of good working power. One of them has revealed to the eye of the observer the time-star $\delta$ in Ursa Minor, of the fifth magnitude, at 10 A.M. Her class during 1870-71 has numbered twenty, and four of them are proficients. One young lady, from New York, resident graduate at the College, has ordered for her own use a $400 telescope, now in process of construction. Careful study of the changes in the planet Jupiter has been the main employment at this Observatory for months past, and its results are stated in an article from the Professor in the last number of *Silliman's Journal of Science*.
+
+The buildings named, with the pump-house, covering the water wheel and steam pump, which drives water to the reservoirs above the College edifice, and the requisite farm-houses, barns, vegetable depots, ice-house, spring-house, *et al.*, complete a collection which justified the compiler of the first College Catalogue in saying that Vassar could "challenge comparison with sister institutions everywhere for the perfection of its material arrangements." They make a possession consecrated to woman's elevation of which the world may be proud, are of course exempt from taxation, and have cost, with the farm and with
+
+<column-break/>
+
+<image-desc size="large" type="engraving" significance="high">An interior view of the Vassar College Calisthenium, showing several young women in long dresses exercising with dumbbells in a large, high-ceilinged room with wooden floors and large windows.</image-desc>
+->STUDENTS' CALISTHENIUM.<-
+
+the apparatus, by the last report to the Regents of the University of the State of New York :—
+
+College Edifice, including Gas and Steam House, Water Tanks and Ice House, $341,484.93 ; Calisthenium, $46,098.70 ; Grounds and Farm House, $40,000.00 ; Observatory, $6,040.85 ; Gate Lodge, $6,684.00. Making total real estate, $440,308.48. And other College property :—Library, $8,303.44 ; Art Gallery, Library, and Materials, $26,359.09 ; Furniture, fixtures, and outfits, $64,522.79 ; Musical Instruments, $11,000.00. Apparatus :—Chemical, $756 ; Philosophical, $3,675.62 ; Anatomical, $767.35 ; Mathematical, $200.00 ; Astronomical, $8,108.44. Cabinets :—Ornithology, $5,750.00; Zoology, $1,216.41 ; Geology and Mineralogy, $8,000.00. Stocks, $1,000.00—$139,659.14. Aggregate amount of College Property, $579,967.62.
+
+We can now inquire after Vassar's education of the intellect. What we have seen of grounds and buildings is the fundamental preparation for that.
+
+The College year contains forty weeks, beginning about the middle of September and closing about the 20th of June. A short recess
+
+<note>* Diameter of the object glass 12 3/8 inches clear aperture; focal length, 16 1/2 feet; hour circle, 18 inches in diameter, reading by verniers to four seconds of time. Declination circle is 20 inches in diameter, reading by verniers to 30 seconds of arc. It has nine negative eye-pieces, of powers from 50 to 1,500, for direct observation; and a finding telescope with object-glass 3 inches in diameter; also ring micrometer, large position Filar micrometer, with eight positive eye-pieces, and a spectroscope for the examination of the various spectra from celestial objects.</note>
+
+<vocab>Vassar College, Observatory, Astronomy, Calisthenium, Education, Financial Report, Scientific Apparatus</vocab>

@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>285</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+note, under pen name of "Justus Conrad" for various periodicals; a leader in the movement for the development of the Lost River region and securing the construction of the Kinsman Notch State road; m., Sept. 4, 1885, Florence E. Chase of Concord; children, David Eugene, b. June 21, 1886; Amos Scott, Nov. 17, 1888; Florence Evelyn, July 17, 1905. Residence, Woodstock, N. H.
+
+**Keenan, George William**
+Musician, violinist and conductor; b., Penacook, N. H., July 11, 1890; only s. Peter A. and Mary (Nolan) Keenan; ed., Penacook high school, 1908. Began study of the violin at the age of twelve years, and two years later organized Keenan's Orchestra, which did much successful public work for the next six years; studied for two years 1908-10 in Boston, with Joseph Emile Daudelin of the Paris Conservatoire, at the same time acting as teacher of violin at Colby Academy, New London, N. H.; in 1910 went to Paris, France, and studied for two years under Professors Charles Huguenin and Joseph White, and with M. Bertheliet at the Conservatoire Nationale de Musique; from Paris went to Brussels, Belgium and successfully passed the entrance examinations to the Royal Conservatory, studying there for two years, 1913-4, under Cesar Thomson; returned to America at the beginning of the war, in 1914, and accepted the position of leader of the orchestra at the Odeon Theatre, Marshalltown, Iowa; since 1915 has been at the head of the Violin Department at the Kansas State Teachers' College, Emporia, Kansas, and during the time has conducted the two orchestras of the college; has received favorable press notices in Paris and Brussels papers, also in American papers and magazines, including *Musical America*, New York, and has flattering recommendations and testimonials from prominent people of Paris and Brussels, including the nobility of the latter city. Catholic. Residence, Emporia, Kan.
+
+<column-break/>
+
+**Doyen, Charles Augustus**
+Brigadier General, U. S. Marine Corps; b., Concord, N. H., Sept. 3, 1859; s. Edward Nevins and Mary Elizabeth (Tucker) Doyen; ed. Concord public schools, U. S. Naval Academy, Annapolis, Md., 1881; midshipman U. S. Marine Corps, two years; 2d lieutenant, July, 1883, serving several years in that rank and then promoted 1st lieutenant; successively promoted to captain, major, lieutenant colonel and
+
+<image-desc size="large" type="portrait" significance="high">A black and white portrait photograph of Charles Augustus Doyen in his military uniform, wearing a peaked cap.</image-desc>
+
+colonel, attaining the latter rank in 1898; has seen service in all parts of the world; stationed off Cuba and Porto Rico during the Spanish War; at the Philippine Islands 1904-6 and again in 1913-14; in command of U. S. Marine Barracks at Washington at the outbreak of war with Germany; promoted Brigadier General March 22, 1917; left Washington for France, in command of the 5th regiment, U. S. Marines, June 7, 1917, and saw active service in the front line trenches in the Verdun sector; invalided home in May, 1918, and later
+
+<vocab>Charles Augustus Doyen, George William Keenan, New Hampshire, biography, military, music, U.S. Marine Corps, violin, education</vocab>

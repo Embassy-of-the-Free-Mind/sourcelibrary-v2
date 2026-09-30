@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>183</page-num>
+<header>The Book of Clevelanders 183</header>
+
+**MERIHEW, Henry Merton**; attorney; born, Plattsburgh, N. Y., June 3, 1875; son of Henry W. and Deborah Havens Merihew; educated, Plattsburg High School 1898, Cornell University College of Law, LL. B., 1898; married, New York City, July 29, 1897, Bessie Mable Hewitt; land and tax agt. Erie R. R. Co., since 1907; practiced law at Plattsburg, N. Y., from June, 1898, to January, 1904; entered the legal department of the Erie R. R. Co.; in New York City; member Plattsburg, N. Y., Lodge, No. 828, F. & A. M.
+
+**MERNER, William E.**; wall paper business; born, Ontario, Can., April 29, 1865; son of Christian Merner, mother's maiden name Young; educated, Canadian High School, Commercial course at The Northwestern College, Naperville, Ill.; married, June 18, 1902, Effie S. Pratt; issue, two daughters; director The Western Reserve Land Co.; owner The Economy Wall Paper Co.; Mason, Ellsworth Lodge, Hillman Chapter; member Chamber of Industry.
+
+**MERRITT, Edward A.**; sec'y and treas. The Cleveland Stone Co.; born, Marquette, Mich., Feb. 12, 1862; son of Daniel H. and Harriett L. Merritt; educated, public schools and Racine College, Racine, Wis.; came to Cleveland, took course in Bryant Stratton and Smith Business College; returned to Marquette, and was in business with his father; married, Dec. 15, 1886, Matildia Huntington, of Cleveland; issue, one daughter; came back to Cleveland in 1888, as asst. treas. for the Cleveland Stone Co.; also auditor and stockholder and director, connected with the Company for over twenty-four years.
+
+**METZENBAUM, Myron**; specialist, ear, nose and throat; born, Cleveland, April 1, 1876; son of Joseph and Fanny Firth Metzenbaum; educated, Cleveland public schools and High School, Adelbert College, special student Chemical Dept., Case School of Applied Science, B. S., Ada University, Western Reserve University, Medical Dept., 1900, post-graduate work, Vienna, 1901; married, Cleveland, March 20, 1912, Elsa Puldheim; St. Alexis Hospital, interne, 1899 to 1900; resident house surgeon 1900-1901; lecturer of Anatomy, Cleveland College of Physicians and Surgeons, 1903-1905; associate laryngologist Mt. Siani Hospital; Government medal, 1904, for original research in the medical value of radium; sec'y of legislative committee, Cleveland Academy of Medicine, when it had enacted anti-Fourth of July ordinances; author of "Cleveland's Ambulance System" and council enacted the existing anti-ambulance ordinance; member the American Academy of Oto-Laryngology; member of the Clinical Congress of Surgeons of North America; American Medical Ass'n, Ohio State Medical Ass'n, Cleveland Academy of Medicine, Cleveland German Medical Society; member Masonic Order, Knights of Pythias, and Elks. Recreations: Travel and Music.
+
+<vocab>Henry Merton Merihew, William E. Merner, Edward A. Merritt, Myron Metzenbaum, Cleveland, biography, business, medicine, law</vocab>

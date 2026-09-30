@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>841</page-num>
+<header>TOWN OF HARWICH. 841</header>
+
+Adams was pastor from August, 1841, to April, 1844. Rev. Cyrus Stone was pastor from September 1, 1844, to October 1, 1848. Rev. T. P. Sawin was pastor from December, 1848, to March 11, 1851. Rev. Moses H. Wilder became pastor in October, 1851, and was dismissed March 1, 1858. Rev. Joseph R. Munsell was pastor from November 7, 1858, to May 3, 1868. Rev. William Beard came in November, 1869, and closed his labors December 25, 1870. Mr. Charles S. Whitney, a licentiate, supplied the pulpit from May 7, 1871, to October 6, 1872. While supplying the pulpit he was ordained a Congregationalist minister. Rev. Bradish C. Ward supplied the pulpit from October, 1872, to January, 1876. The pulpit was supplied in 1877 by Rev. Joseph Hammond; in 1878 by Rev. Smith Norton; 1879 by Rev. S. W. Powell. Since 1880 the pastors have been: Rev. R. S. Tobey, Rev. C. M. Westlake, and Rev. H. P. Cutting. Rev. Mr. Cutting closed his labors in 1888.
+
+The first meeting house erected by the parish or society, a rude structure, stood a little westward of the chapel. It was taken down in 1792, and another, more commodious, was erected a little to the eastward, about where the chapel stands. After standing forty years this became dilapidated and unfit for public service, and was taken down and sold. The present structure was built in 1832, and enlarged and renovated in 1854, at an expense of about six thousand dollars.
+
+The second church constituted was the Separate or New Light church. The first pastor was Rev. Joshua Nickerson. He was ordained on "a stage in open air," February 23, 1749. The officiating ministers were: Rev. Isaac Backus, of Middleboro, Rev. John Paine, of Rehobath, and Rev. Nathaniel Sheperd, of Attleboro. The ordination sermon was preached by Mr. Backus. The first deacons were William Nickerson and Richard Chase, both ordained the day after the pastor's ordination. As this was the first church of the denomination in Barnstable county it caused considerable excitement and "a deal of discourse." Mr. Dunster, the pastor of the First church, the Sunday following "preached a sermon against the Newlight's proceedings." The meeting house of this society, tradition has it, stood near the burying ground west of the house now occupied by Watson B. Baker. This burying ground is now unfenced, and all the head stones have been removed to the Island Pond cemetery. It was a small structure. Mr. Nickerson, the pastor, removed to Jamworth, N. H. But little is further known of this church.
+
+The third church organized was of the Separate or New Light denomination. The first pastor was Richard Chase. He was ordained December 11, 1751, Mr. Backus of Middleboro delivering the sermon for the occasion. Other ministers officiating were Elder Carpenter, Elder Ewer and Elder Nickerson of the first Separate church. At
+
+<vocab>Harwich, Massachusetts, church history, pastors, meeting house, Separate church, New Light, ordination, Barnstable county</vocab>

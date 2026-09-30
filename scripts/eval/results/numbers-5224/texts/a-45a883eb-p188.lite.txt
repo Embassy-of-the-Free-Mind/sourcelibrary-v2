@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>184</page-num>
+<header>The Book of Clevelanders</header>
+
+**MEYER**, Gerhard Fred; merchant; born, Hanover, Germany, Jan. 17, 1859; son of John and Mary Heitling Meyer; married, Cleveland, 1885; private in the Germany Army; owner "Fred Meyer," The Daisy Products, wholesale and retail.
+
+**MILES**, Robert Parker; lecturer; born, Burnley, Lancashire, Eng., July 11, 1866; son of Harrison and Sarah (Parker) Miles; St. Stephens College, Annadale, N. Y., 1885-1888; Union Theological Seminary, 1892; married Lena B. Coburger, of East Orange, N. J., Nov. 12, 1899; ordained Presbyterian ministry, 1892; asst. pastor Rutherford, N. J., 1892-1896; pastor Ravenswood Church, New York, 1896-1897; religious editor New York Evening Journal, 1897-1899; traveled extensively as newspaper and magazine correspondent; has lectured in U. S., Canada and English-speaking countries since 1901; prin. lectures "Tallow Dips," "Sparks and Dawn"; Progressive Republican; member International Lyceum Ass'n; Eulexion Society (St. Stephens College). Author: "Three Men and a Woman," 1901; also wrote several chapters of character sketches in "New Metropolis," 1898, and sketch of George Francis Train.
+
+**MILLER**, Burt A.; surety bonds; born, Canton, O., March 17, 1871; son of William K. and Sarah Burwell Miller; educated at Cornell university and Cincinnati Law School; married, Canton, O., Dec. 27, 1899, Jane Rabe; organized the surety business in Cuba and Porto Rico after the Spanish-American war, drawing law permitting surety companies to operate in Cuba, and fixing the deposit required and tax to be paid; resident vice pres. and mgr. for Northern Ohio of the Southwestern Surety Ins. Co.; served in the 8th inf., O. N. G. (second lieut.); vice pres. Surety Association of Cleveland; member Canton Lodge, F. & A. M., Sigma Alpha Epsilon, Cleveland Athletic, and Rotary Clubs.
+
+**MILLER**, Casper James; steamship agency; born, St. Louis, Mo., Sept. 12, 1876; son of Casper and Frances Speck Miller; education, common and high schools; married at Cleveland, June 25, 1907, May R. Hart; issue, Casper Hart Miller, Lawrence William Miller; first employed as clerk in the Collver Steamship Agency, in 1896, and rose to partnership; now in full charge of the steamship business of Collver & Miller; member Gilmour Council, Knights of Columbus. Chief recreation: Baseball.
+
+**MILLER**, Charles Russell; lawyer; born, Canton, O., Oct. 1, 1858; son of William K. and Sarah Burwell Miller; educated, Canton High School and Canton Academy; married, Cleveland, May 9, 1883, Alice Evelyn Rose; issue, Wm. R. Miller, Mrs. H. C. Hyatt, Jr.; member of law firm, Weed, Miller & Rothenberg; presidential elector, 1896; major and assistant adjutant general, U. S. V., 1898-1899; commander-in-chief U. S. War Vet., 1906-1907; pres. Cleveland Bar Ass'n, 1913; pres. Commercial Law League, 1889;
+
+<vocab>Biography, Cleveland, Merchants, Lecturers, Lawyers, Surety Bonds, Steamship Agency, Genealogy</vocab>

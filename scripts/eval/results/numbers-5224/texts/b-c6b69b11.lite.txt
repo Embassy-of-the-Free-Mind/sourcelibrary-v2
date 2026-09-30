@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>167</page-num>
+<header>BOOK V. DEFINITION VII.</header>
+
+and m introduced in the fifth definition, which are in that definition considered to be every pair of multiples that can be taken. It must also be here observed, that <image-desc size="small" type="symbol" significance="high">red heart symbol</image-desc>, <image-desc size="small" type="symbol" significance="high">black U-shaped symbol</image-desc>, <image-desc size="small" type="symbol" significance="high">blue square symbol</image-desc>, and the like symbols are to be considered merely the representatives of geometrical magnitudes.
+
+In a partial arithmetical way, this may be set forth as follows:
+
+Let us take the four numbers, 8, 7, 10, and 9.
+
+| First. | Second. | Third. | Fourth. |
+| :--- | :--- | :--- | :--- |
+| 8 | 7 | 10 | 9 |
+| 16 | 14 | 20 | 18 |
+| 24 | 21 | 30 | 27 |
+| 32 | 28 | 40 | 36 |
+| 40 | 35 | 50 | 45 |
+| 48 | 42 | 60 | 54 |
+| 56 | 49 | 70 | 63 |
+| 64 | 56 | 80 | 72 |
+| 72 | 63 | 90 | 81 |
+| 80 | 70 | 100 | 90 |
+| 88 | 77 | 110 | 99 |
+| 96 | 84 | 120 | 108 |
+| 104 | 91 | 130 | 117 |
+| 112 | 98 | 140 | 126 |
+| &c. | &c. | &c | &c. |
+
+Among the above multiples we find 16 <image-desc size="small" type="symbol" significance="high">greater than symbol</image-desc> 14 and 20 <image-desc size="small" type="symbol" significance="high">greater than symbol</image-desc> 18; that is, twice the first is greater than twice the second, and twice the third is greater than twice the fourth; and 16 <image-desc size="small" type="symbol" significance="high">less than symbol</image-desc> 21 and 20 <image-desc size="small" type="symbol" significance="high">less than symbol</image-desc> 27; that is, twice the first is less than three times the second, and twice the third is less than three times the fourth; and among the same multiples we can find 72 <image-desc size="small" type="symbol" significance="high">greater than symbol</image-desc> 56 and 90 <image-desc size="small" type="symbol" significance="high">greater than symbol</image-desc> 72: that is, 9 times the first is greater than 8 times the second, and 9 times the third is greater than 8 times the fourth. Many other equimul-
+
+<vocab>multiples, geometrical magnitudes, arithmetical, equimultiples</vocab>

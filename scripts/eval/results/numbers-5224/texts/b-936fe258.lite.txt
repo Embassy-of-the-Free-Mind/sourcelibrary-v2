@@ -1,0 +1,32 @@
+<scan-quality>good</scan-quality>
+<language>English, French</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>470</page-num>
+<header>470 The Writings of [1782</header>
+
+# QUERY VII
+
+*A notice of all what can increase the progress of Human Knowledge?*
+
+Under the latitude of this query, I will presume it not improper nor unacceptable to furnish some data for estimating the climate of Virginia. Journals of observations on the quantity of rain, and degree of heat, being lengthy, confused, and too minute to [135] produce general and distinct ideas, I have taken five years' observations, to wit, from 1772 to 1777, made in Williamsburg and its neighborhood, have reduced them to an average for every month in the year, and stated those averages in the following table, adding an Analytical view of the winds during the same period. [136]
+
+| | Fall of rain, etc., in inches. | Least and greatest daily heat, by Fahrenheit's thermometer. | N. | N.E. | E. | S.E. | S. | S.W. | W. | N.W. | Total |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Jan... | 3.192 | 38 1/2 to 44 | 73 | 47 | 32 | 10 | 11 | 78 | 40 | 46 | 337 |
+| Feb... | 2.049 | 41 .. 47 1/2 | 61 | 52 | 24 | 11 | 4 | 63 | 30 | 31 | 276 |
+| March. | 3.95 | 48 .. 54 1/2 | 49 | 44 | 38 | 28 | 14 | 83 | 29 | 33 | 318 |
+| April.. | 3.68 | 56 .. 62 1/2 | 35 | 44 | 54 | 19 | 9 | 58 | 18 | 20 | 257 |
+| May... | 2.871 | 63 .. 70 1/2 | 27 | 36 | 62 | 23 | 7 | 74 | 32 | 20 | 281 |
+| June.. | 3.751 | 71 1/2 .. 78 1/2 | 22 | 34 | 43 | 24 | 13 | 81 | 25 | 25 | 267 |
+| July... | 4.497 | 77 .. 82 1/2 | 41 | 44 | 75 | 15 | 7 | 95 | 32 | 19 | 328 |
+| August | 9.153 | 76 1/2 .. 81 | 43 | 52 | 40 | 30 | 9 | 103 | 27 | 30 | 334 |
+| Sept... | 4.761 | 69 1/2 .. 74 1/2 | 70 | 60 | 51 | 18 | 10 | 81 | 18 | 37 | 345 |
+| Oct... | 3.633 | 61 1/2 .. 66 1/2 | 52 | 77 | 64 | 15 | 6 | 56 | 23 | 34 | 327 |
+| Nov... | 2.617 | 47 1/2 .. 53 1/2 | 74 | 21 | 20 | 14 | 9 | 63 | 35 | 58 | 294 |
+| Dec... | 2.877 | 43 .. 48 1/2 | 64 | 37 | 18 | 16 | 10 | 91 | 42 | 56 | 334 |
+| **Total..** | **47.038** | **8 A.M. to 4 P.M.** | **611** | **548** | **521** | **223** | **109** | **926** | **351** | **409** | **3,698** |
+
+pa. 95, says: 'Divers Indiens ont rapporté qu'ils avoient vu sur les bords de la riviere de Coari dans la haut des terres, un pays decouvert, des mouches et quantité de betes à cornes, objects nouveaux pour eux, et qui prouvent que les sources deces rivieres arrosent des pays voisins des colonies Espagnoles de haut Perou.' '
+
+<vocab>Virginia, climate, Williamsburg, meteorology, rain, heat, winds, Fahrenheit, Coari, Peru</vocab>

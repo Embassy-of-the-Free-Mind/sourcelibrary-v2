@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>mixed</script>
+<page-type>illustration</page-type>
+
+<image-desc size="large" type="engraving" significance="high">A portrait engraving of Calvin Snow, depicted from the chest up, wearing a suit, vest, and bowtie. Below the portrait, the text "Engd by A.H. Ritchie" is printed in small script. Below that, the name "Calvin Snow" is written in a facsimile of a handwritten signature.</image-desc>
+
+->Engd by A.H. Ritchie<-
+
+->Calvin Snow<-
+
+<vocab>Calvin Snow, A.H. Ritchie, portrait, engraving</vocab>

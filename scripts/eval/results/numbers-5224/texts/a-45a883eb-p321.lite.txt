@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>317</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Mr. W. L. David</image-desc>
+MR. W. L. DAVID
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of E. C. Daoust</image-desc>
+E. C. DAOUST
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of W. W. Daviess</image-desc>
+W. W. DAVIESS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Hy. D. Davis</image-desc>
+HY. D. DAVIS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Frank W. Davis</image-desc>
+FRANK W. DAVIS
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of J. P. Dawley</image-desc>
+J. P. DAWLEY
+
+<vocab>Cleveland, biography, portraits, W. L. David, E. C. Daoust, W. W. Daviess, Hy. D. Davis, Frank W. Davis, J. P. Dawley</vocab>

@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>374</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of F. H. Ruple</image-desc>
+F. H. RUPLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jas. B. Ruhl</image-desc>
+<image-desc size="small" type="portrait" significance="high">Portrait of Edw. Rupp</image-desc>
+JAS. B. RUHL
+EDW. RUPP
+
+<image-desc size="small" type="portrait" significance="high">Portrait of S. S. Saffold</image-desc>
+S. S. SAFFOLD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. A. Rutherford</image-desc>
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. P. Salen</image-desc>
+GEO. A. RUTHERFORD
+CHAS. P. SALEN
+
+<vocab>F. H. Ruple, Jas. B. Ruhl, Edw. Rupp, S. S. Saffold, Geo. A. Rutherford, Chas. P. Salen, The Book of Clevelanders</vocab>

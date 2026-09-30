@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>200</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+December 7, 1692, John Freeman, Eastham; December 7, 1692, Bar's Lothrop, Barnstable; December 7, 1692, John Thacher, Yarmouth; December 7, 1692, Stephen Skiffe, Sandwich; March 6, 1695, Jon'n Sparrow, Eastham; July 17, 1699, John Sparrow, Eastham; June 8, 1710, Wm. Bassett, Sandwich; July 5, 1713, Daniel Parker, Barnstable; July 5, 1713, Thomas Payne, Eastham; April, 1715, John Otis, Barnstable; April, 1714, Sam. Annable, Barnstable; July 20, 1711, John Gorham, Barnstable; July 5, 1713, John Doane, Eastham; July 14, 1715, Mela'h Bourne, Sandwich; July 14, 1715, Sam. Sturgis, Barnstable; December 10, 1715, Nath. Freeman, Harwich; November 14, 1721, Jos. Lothrop, Barnstable; March 16, 1722, Jos. Doane, Eastham; December 26, 1727, Ezra Bourne, Sandwich; March 10, 1729, Peter Thacher, Yarmouth; March 10, 1729, Shub'l Baxter, Yarmouth; June 22, 1736, John Thacher, Yarmouth; June 22, 1736, John Davis, Barnstable; December 21, 1739, John Russell, Barnstable; January 27, 1742, Shub. Gorham, Barnstable; January 27, 1742, Dav. Crocker, Barnstable; August 9, 1746, John Otis, Barnstable; February 24, 1763, Roland Cotton, Sandwich; May 9, 1770, Is'c Hinckley, Barnstable; September 13, 1753, Thos. Winslow, Harwich; June 2, 1758, Sylv. Bourne, Barnstable; August 2, 1758, Thos. Smith, Sandwich; December 19, 1758, Row. Robinson, Falmouth; May 23, 1760, Ny's Marston, Barnstable; February 1, 1764, James Otis, Barnstable; February 1, 1764, Edw. Bacon, Barnstable; June 20, 1765, John Gorham, Barnstable.
+
+At the interruption of the revolutionary period the following were known to belong to the common pleas court: Melatiah Bourne, Shearjashub Bourne, David Gorham, Solomon Otis, Kenelm Winslow, David Thacher, Daniel Davis, Joseph Otis, and Richard Bourne.
+
+Immediately following 1774, the appointment of judges was conferred upon the governor alone, and the first appointments in the county were in the names of the "Governor and People of Massachusetts Bay," viz.: October 11, 1775, James Otis, Barnstable; Nath. Freeman, Sandwich; Daniel Davis, Barnstable; and Richard Baxter, Yarmouth. The following appointments were also made: October 13, 1775, Joseph Nye, jr., Sandwich; March, 27, 1781, Sol. Freeman, Harwich; March 21, 1793, John Davis, Barnstable; June 28, 1799, Ebenezer Bacon, Barnstable; February 11, 1801, David Scudder, Barnstable; February 14, 1803, Sam'l Waterman, Wellfleet; February 20, 1804, Thomas Thacher, Yarmouth; February 22, 1809, Isaiah L. Green, Barnstable; February, 1809, Timothy Phinney, Barnstable; August 22, 1809, Wendell Davis, Sandwich.
+
+As session justices for the county (immediately after the circuit court of common pleas was established) Richard Sears of Chatham was commissioned June 10, 1814, and Calvin Tilden of Yarmouth on February 15, 1815.
+
+<vocab>Barnstable County, Massachusetts, common pleas court, judges, session justices, colonial history, revolutionary period</vocab>

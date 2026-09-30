@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>133</page-num>
+<header>INDUSTRIAL RESOURCES. 133</header>
+
+According to the state census of 1885, the cod fleets from Barnstable county took 18,134,539 pounds of fish. Provincetown took 16,801,060; Chatham, 755,009; Harwich, 415,160; Truro, 112,050; Orleans, 28,560; Dennis, 20,700; and Barnstable, 2,000 pounds.
+
+The first people who pursued the whale fishery as a regular business were the Biscayans, who carried it on with success from the twelfth to the fourteenth century; although the Norwegians had taken whales cast on the Shetland and Orkney coasts at a much earlier period. The northern whale fishery was opened up by the Dutch and English after their voyages of discovery, and as early as 1680 the Dutch whale fishery reached its most prosperous state, employing then 260 ships and fourteen thousand sailors. Prior to this, houses provided with tanks and boilers for reducing the blubber and preparing the bone, were established on the northern coast of Spitzbergen.
+
+The American whale fishery was commenced at Nantucket, where in 1672, James Lopar and John Savage were given a subsidy of land and a third interest with the town in the business of securing the whales which came to their shores. The people of Cape Cod had become proficient in securing and utilizing the whale, and in 1690 Ichabod Padduck of Provincetown was considered an expert in methods of capturing the whale and extracting the oil. He went to Nantucket, where his instructive descriptions of his successful methods were dignified with the name lectures.
+
+The more enterprising white settlers, assisted by the more venturesome Indians, made trips in open boats beyond the sight of land, and when a whale was killed, with such rude weapons as his size had suggested, he was towed ashore, where the tedious process of securing the oil was carried on. The blubber was conveyed on carts to "try-houses," where in kettles the oil was extracted. Fifty years before the revolution, Boston was exporting large quantities of whale products; and the towns of the Cape, and the court of Plymouth were collecting revenues from the stranded whales found on their shores. The introduction of larger vessels, equipped with apparatus for cutting up the blubber, marked a new era in the industry, although a single whale, producing 250 barrels of oil and 3,000 pounds of bone, made a cargo for what was then called a good sized vessel, and the practice of bringing the blubber to the "try-houses" on shore still prevailed.
+
+The equipping of larger ships, with furnaces for rendering and casks for storing the oil, marked a third epoch in the history of the great whaling industry, and with facilities thus increased the fields of operation were enlarged. In July, 1730, the North American whalemen sent 9,200 tuns of oil and 154 tons of bone to England.
+
+The whaling grounds at Davis' straits were first visited by whalers in 1746; Baffin's bay in 1751; Gulf of St. Lawrence, 1761; eastern banks
+
+<vocab>cod fishery, whale fishery, Biscayans, Norwegians, Dutch, English, Spitzbergen, Nantucket, James Lopar, John Savage, Cape Cod, Ichabod Padduck, try-houses, Plymouth, Davis' straits, Baffin's bay, Gulf of St. Lawrence</vocab>

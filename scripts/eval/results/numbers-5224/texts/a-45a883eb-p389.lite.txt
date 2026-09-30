@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>385</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. A. Stevenson</image-desc>
+J. A. STEVENSON
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. J. Stevens</image-desc>
+A. J. STEVENS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Chas. B. Stowe</image-desc>
+CHAS. B. STOWE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Theo. L. Strimple</image-desc>
+THEO. L. STRIMPLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Jacob Streitberger</image-desc>
+JACOB STREITBERGER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. E. Strong</image-desc>
+E. E. STRONG
+
+<vocab>J. A. Stevenson, A. J. Stevens, Chas. B. Stowe, Theo. L. Strimple, Jacob Streitberger, E. E. Strong, The Book of Clevelanders</vocab>

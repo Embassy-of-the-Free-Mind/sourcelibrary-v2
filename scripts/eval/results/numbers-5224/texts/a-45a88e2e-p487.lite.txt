@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>481</page-num>
+<header>OMAHA AND DOUGLAS COUNTY 481</header>
+
+family were ten children, of whom four died in infancy, and of those who reached adult age four are still living.
+
+Nathan O. Talbot, the eldest, pursued his education in public schools and in Central University at Pella, Iowa. Through the period of his youth his time was divided between the work of the schoolroom and of the home farm and when eighteen years of age he started out to earn his own livelihood. He continued his studies, however, until he reached the age of twenty-two and after leaving college taught school for about two years. He later became topographical surveyor for a map publishing company of Quincy, Illinois, and through the succeeding three years traveled for that company, known as the J. P. Edwards Mapping Company. On the 1st of January, 1889, Mr. Talbot arrived in Omaha, where he entered the publishing business in connection with the Douglas County Reporter, which was the pioneer commercial paper of the city, the business having been established in 1886. At the time when Mr. Talbot became connected with the paper C. C. Campbell was conducting it. Mr. Talbot purchased a half interest in the business and after six months became sole proprietor. He has since conducted the paper alone and in 1892 he changed its name to The Daily Record. It is the only paper of the kind issued in this city and that it is regarded as of value in commercial lines is indicated by its large subscription list. Mr. Talbot is also secretary of the City Linotyping Company of Omaha and is the vice president of the Midland Title Guarantee & Abstract Company. The first money that he ever earned was one hundred dollars, for which he worked eight months, spending that time as an employe on a thousand-acre farm. Gradually from that point he has advanced until he is well known in the business circles of the city as one of the representative men.
+
+On the 1st of March, 1888, in Quincy, Illinois, Mr. Talbot was united in marriage to Miss Harriett Edwards, a native of Illinois and a daughter of the late Charles W. and Maggie (Quinton) Edwards, representing an old family of Hannibal, Missouri. Mr. and Mrs. Talbot have three children, namely: Raymond A., who is associated with his father in the publication of The Daily Record; Willard O., vice president and general manager of the Refiners Oil Company of Dayton, Ohio; and Alice Nathene.
+
+Mr. Talbot belongs to the Commercial Club, being in hearty sympathy with its purposes to extend the trade relations of Omaha and promote its business and civic progress. He belongs to the Modern Woodmen of America, gives his political allegiance to the republican party and indicates his interest in moral development through his membership in and support of the First Baptist church. He has many substantial qualities worthy of praise and commendation and he enjoys the warm friendship of the large majority of those with whom he comes in contact.
+
+->CLARENCE E. COREY.<-
+
+Clarence E. Corey, senior partner in the Corey & McKenzie Printing Company of Omaha, was born in York county, Nebraska, May 26, 1873, his parents being A. G. and Mary C. (Gilmore) Corey, in whose family were four sons and a daughter, Clarence E. being the eldest. The father was a native of Wisconsin and the mother of Pennsylvania. In 1866 he arrived in Nebraska and cast in his lot with the pioneer settlers of the state. He took up the occupation of farming and afterward entered into mercantile pursuits. He is now filling the position of postmaster at Fairfield, Nebraska, at the age of seventy-two years and his wife has reached the age of seventy.
+
+In his boyhood days Clarence E. Corey attended the schools of his home town and later continued his studies in the college at Fairfield, Nebraska. He began learning the printers' trade when fourteen years of age, securing work at McCool
+
+<vocab>Nathan O. Talbot, Douglas County Reporter, The Daily Record, City Linotyping Company, Midland Title Guarantee & Abstract Company, Harriett Edwards, Commercial Club, Modern Woodmen of America, First Baptist church, Clarence E. Corey, Corey & McKenzie Printing Company, A. G. Corey, Mary C. Corey, Fairfield Nebraska</vocab>

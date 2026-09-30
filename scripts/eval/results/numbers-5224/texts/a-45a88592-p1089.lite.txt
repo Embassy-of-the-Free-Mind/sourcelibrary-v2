@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>849</page-num>
+<header>TOWN OF HARWICH. 849</header>
+<meta>54</meta>
+
+Villages.—The villages in town and localities in which post offices have been established, are Harwich, East Harwich, South Harwich, Harwich Port, West Harwich, North Harwich and Pleasant Lake.
+
+Harwich is the central village and the oldest in the town. It is situated upon high land, many feet above the level of the sea, and above the chain of ponds that border the northerly line of the town. Where the Exchange building stands, the land is twenty-nine feet above the level of Long pond. On what is now Main street, sixty years ago, from the house of the late E. E. Hardings to the house occupied by the late Isaac Smith, there were only ten dwelling houses, and of these eight are yet standing, together with the old school house, in which many of the old residents of the village and neighborhood received the rudiments of their education.
+
+The first to open a store in this place was Ebenezer Brooks, Esq., which was before 1789. In 1802 his son, Obed Brooks, became associated with him in trade, and they erected in 1807 the store which was removed in 1880 from the old corner across the street, and is now occupied as a dwelling house. After the death of the father, Mr. Brooks continued in trade until about 1833, when he became associated with his son, Obed Brooks, jr., who had been in business in Boston under the firm of Rand & Brooks. Mr. Brooks at this date enlarged the store, and put in a good stock of goods, such as was usually kept in a country store, making it *the* store of the town. Mr. Brooks, in 1856, becoming cashier of the bank just established in the village, gave up the business, and Mr. Obed Nickerson of South Harwich, who had for some time been engaged in the store, took charge and carried on the business for several years, when in 1876 Mr. Cyrenus S. Hunt, a young man, who had received his business training under Mr. Nickerson, took charge of the old stand, and remained in business there until the erection of Brooks' block, in 1879, when he removed his stock into the room he now occupies. Mr. Hunt has, with the exception of a short period at his place of residence in trade, occupied this store.
+
+In 1854, through the efforts of Chester Snow, the Exchange building, as it was called, was erected; the lower story was fitted up for stores, and the upper story as a hall, which at the time was the most commodious in the county. William H. Underwood and Andrew Snow, under the firm of Snow & Underwood, in 1855 opened a dry goods store in the building. They both retiring from the business in a few years, a new firm, Brett, Smith & Co., commenced business in the store. This firm was succeeded in 1864 by Charles E. Brett, a native of Brockton, who had been a clerk for the firm. Mr. Brett was a dealer in dry goods and clothing. He remained in the store until 1874, when he removed into his new store built a few steps east of the Exchange building,
+
+<vocab>Harwich, Massachusetts, local history, commerce, trade, Ebenezer Brooks, Obed Brooks, Exchange building, dry goods, business history</vocab>

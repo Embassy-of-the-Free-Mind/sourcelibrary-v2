@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>394</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of O. N. Wilcox</image-desc>
+O. N. WILCOX
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. B. Wilberding</image-desc>
+J. B. WILBERDING
+
+<image-desc size="small" type="portrait" significance="high">Portrait of N. R. Wildman</image-desc>
+N. R. WILDMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of H. E. Willard</image-desc>
+H. E. WILLARD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of B. L. Wilkins</image-desc>
+B. L. WILKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Geo. H. Williams</image-desc>
+GEO. H. WILLIAMS
+
+<vocab>O. N. Wilcox, J. B. Wilberding, N. R. Wildman, H. E. Willard, B. L. Wilkins, Geo. H. Williams, The Book of Clevelanders, Cleveland, Ohio, Biography</vocab>

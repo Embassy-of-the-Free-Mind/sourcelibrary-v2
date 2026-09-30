@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>327</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. Martin Friedrich</image-desc>
+DR. MARTIN FRIEDRICH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Milton Freshwater</image-desc>
+MILTON FRESHWATER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Alfred Fritzsche</image-desc>
+ALFRED FRITZSCHE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Joel H. Fuller</image-desc>
+JOEL H. FULLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. W. Fuller</image-desc>
+C. W. FULLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Gaede</image-desc>
+J. W. GAEDE
+
+<vocab>Clevelanders, Dr. Martin Friedrich, Milton Freshwater, Alfred Fritzsche, Joel H. Fuller, C. W. Fuller, J. W. Gaede</vocab>

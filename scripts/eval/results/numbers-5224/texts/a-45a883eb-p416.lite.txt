@@ -1,0 +1,61 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>412</page-num>
+<header>The Book of Clevelanders</header>
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Somers, Chas. | 382 | Tyler, Jno. W. | 390 |
+| Sommer, Edw. H. | 382 | Uhlrich, E. M. | 390 |
+| Speck, E. J. | 382 | Ullmann, M. A. | 390 |
+| Spenzer, Dr. J. G. | 382 | Ulmer, J. C. | 390 |
+| Spicer, Dr. D. M. | 382 | | |
+| Sprague, E. D. | 382 | Valentine, R. F. | 390 |
+| Sprague, Dr. F. J. | 383 | Van Epps, J. S. | 390 |
+| Spriggs, C. H. | 383 | Van Valkenburg, Dr. H. | 391 |
+| Spriggs, E. Loomis | 383 | Varga, Hugo E. | 391 |
+| Sprosty, A. B. | 383 | Vaters, A. J. | 391 |
+| Squire, Andrew | 383 | Vlchek, Frank J. | 391 |
+| Sribers, L. A. | 384 | Wagner, C. F. | 391 |
+| Standart, H. N. | 384 | Wain, L. H. | 391 |
+| Stearns, A. A. | 384 | Walker, F. R. | 392 |
+| Stehn, G. G. | 384 | Walkey, H. E. | 392 |
+| Stephens, Jesse | 384 | Warner, F. C. | 392 |
+| Stern, J. H. | 384 | Watson, W. J. | 392 |
+| Stevens, E. A. | 384 | Weidenthal, Maurice | 392 |
+| Stevens, A. J. | 385 | Weitz, S. W. | 392 |
+| Stevenson, J. A. | 385 | Wells, Thos. H. | 393 |
+| Stowe, Chas. B. | 385 | Werner, W. E. | 393 |
+| Streitberger, Jacob | 385 | Wertheim, Max G. | 393 |
+| Strimple, Theo. L. | 385 | Whitelaw, J. H. | 393 |
+| Strong, E. E. | 385 | Wieler, Chas. L. F. | 393 |
+| Strong, E. J. | 386 | Wight, E. B. | 393 |
+| Stroud, E. G. | 386 | Wilberding, J. B. | 394 |
+| Sullivan, Jno. J. | 386 | Wilcox, O. N. | 394 |
+| Sykora, J. W. | 386 | Wildman, N. R. | 394 |
+| Szepessy, Jos. L. | 386 | Wilkins, B. L. | 394 |
+| | | Willard, H. E. | 394 |
+| Tanney, L. | 386 | Williams, Geo. H. | 394 |
+| Tanyan, Jas. J. | 387 | Williams, Walter M. | 395 |
+| Taylor, Alex S. | 387 | Wilmerink, Wm. J. | 395 |
+| Taylor, Frank F. | 387 | Wismar, F. E. | 395 |
+| Taylor, Frank S. | 387 | Wodisky, J. J. | 395 |
+| Taylor, William W. | 387 | Wolf, L. J. | 395 |
+| Teachout, A. R. | 387 | Wolfe, Jesse G. | 395 |
+| Terry, C. L. | 388 | Worden, A. M. | 396 |
+| Teter, Dr. C. K. | 388 | Worthington, Geo. F. | 396 |
+| Teter, Dr. Wm. C. | 388 | Wright, E. T. | 396 |
+| Thomas, A. W. | 388 | | |
+| Thurston, Edw. L. | 388 | Yoder, Dr. I. I. | 396 |
+| Tinnerman, G. A. | 388 | York, Geo. W. | 396 |
+| Todd, G. C. | 389 | York, R. H. | 396 |
+| Towell, T. H. | 389 | | |
+| Tower, Geo. E. | 389 | Zeman, Mathew | 397 |
+| Treadway, L. H. | 389 | Ziegler, Dr. D. H. | 397 |
+| Trunecek, F. J. | 389 | Zornow, John C. | 397 |
+| Turner, J. K. | 389 | | |
+
+<vocab>Cleveland, biography, directory, index</vocab>

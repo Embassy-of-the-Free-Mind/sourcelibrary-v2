@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>66</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Plymouth colony must bear its proportion. It was ordered that men be raised to go to New York and other places against the enemy; of these Barnstable county was to send nineteen—Barnstable five; Sandwich, Yarmouth and Eastham four each; and Monomoyick and Succonessit one each. (As the two latter towns were soon after known as Chatham and Falmouth, these names will be used.) But soon after the county was pressed to furnish forty-six more men—Barnstable twelve; Sandwich, Yarmouth and Eastham ten each; and Chatham and Falmouth each two; also, the county was compelled to furnish twenty-two Indians. The same year the county was taxed £452, 4s., 9d. for the expenses of the war, and this additional burden was distributed among the towns, Barnstable paying the largest sum and Falmouth the least. The full account of this campaign may be found in Hutchinson's History of Massachusetts Bay.
+
+The treaty of Ryswick in 1697 temporarily closed the seven years of war, and permitted the inhabitants of the Cape towns to resume for a short period their wonted avocations.
+
+In 1702, during the reign of Queen Anne, difficulties again arose between England and the French and their Indian allies. For years this war continued, with all its horrors of Indian inhumanities instigated by the French; and frequent requirements were made upon the Cape towns for men and money; until, in 1713, the peace negotiations at Utrecht again quieted the disturbing elements. It was then estimated that for some years not less than one-fifth of the inhabitants of the towns had been engaged in actual service, while those at home had been subjected to constant fears and alarms, as well as the most onerous pecuniary burdens.
+
+In 1691, for the relief of the towns from the burdens of war, and in the scarcity of currency, the court issued bills of credit and made them current for the payment of all public and private debts. In 1711, to still further relieve the people, a series of forty thousand pounds was issued. These sinews of war perhaps temporarily gave relief; but their depreciation in after years fell heavily upon the soldiers who had received them for pay. In 1721 and 1727 the general court issued more of these bills to be loaned to the towns, and which were sent to them in proportionate amounts. These bills, when first issued, had been redeemed by the general court until 1704, when their redemption was indefinitely postponed. Their value slid down the scale of depreciation according to the denomination of "old tenor," "middle tenor" and "new tenor," which terms were applicable to the age or issue of the bills. In 1749 England sent to Boston 215 chests, each containing three thousand dollars in silver, also one hundred casks of copper—seventeen cartloads of the silver and ten of the copper—to redeem these bills.
+
+<vocab>Barnstable County, Plymouth Colony, New York, Chatham, Falmouth, Hutchinson's History of Massachusetts Bay, Treaty of Ryswick, Queen Anne, Indian wars, Utrecht, bills of credit, currency, old tenor, middle tenor, new tenor, silver, copper</vocab>

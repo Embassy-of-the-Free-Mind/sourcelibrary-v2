@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>illustration</page-type>
+<page-num>391</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. H. Van Valkenburg</image-desc>
+DR. H. VAN VALK-
+ENBURG
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Hugo E. Varga</image-desc>
+HUGO E. VARGA
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. J. Vaters</image-desc>
+A. J. VATERS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank J. Vlchek</image-desc>
+FRANK J. VLCHEK
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Wagner</image-desc>
+C. F. WAGNER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of L. H. Wain</image-desc>
+L. H. WAIN
+
+<vocab>The Book of Clevelanders, Dr. H. Van Valkenburg, Hugo E. Varga, A. J. Vaters, Frank J. Vlchek, C. F. Wagner, L. H. Wain</vocab>

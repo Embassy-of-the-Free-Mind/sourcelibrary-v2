@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>151</page-num>
+<header>INDUSTRIAL RESOURCES. 151</header>
+
+town, 750; Eastham, 533; Wellfleet, 375; Chatham, 322; and Truro, 114 bushels. Since then the amount of the production has been stated in barrels. The totals for the county, as determined from the shipment records of the Old Colony Railroad Company, were 34,733 barrels for 1877, and 37,883 barrels for 1879. In 1880 they shipped 39,625 barrels, and 26,500 barrels in 1883. In 1884 the crop was 27,245 barrels. For 1885 the bureau of labor statistics furnishes the details by towns, showing that each town in the county was producing this fruit, of which Harwich, in the lead, marketed 12,180 barrels, and Wellfleet, at the foot of the list, produced 143 barrels. The other towns in order were: Barnstable, producing 8,509 barrels; Bourne, 8,094 barrels; Dennis, 6,030 barrels; Yarmouth, 5,000; Falmouth, 3,234; Brewster, 3,000; Mashpee, 2,740; Sandwich, 2,389; Provincetown, 1,472; Orleans, 1,067; Chatham, 1,000; Truro, 479; and Eastham, 471 barrels—a total for the county of 55,898 barrels. These figures are from the producers' statements, while the shipment records of the railroad company make the total for the county 991 barrels less, a difference of less than two per cent. The Old Colony figures for 1886 show the crop to have been 60,803 barrels; for 1887 to have been 63,476 barrels; for 1888 the crop was 54,316, and for 1889 the gross shipments—the largest ever made—reached 66,750 barrels.
+
+The table shows the number of barrels or their equivalents shipped in 1889 from the several stations, and gives an approximate idea of the amount produced in the several towns. The West Barnstable and Sandwich shipments include chiefly the crop of Mashpee.
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| Buzzards Bay | 201 | South Dennis | 5,993 |
+| Monument Beach | 141 | North Harwich | 3,930 |
+| Wenaumet | 95 | Harwich | 9,479 |
+| Cataumet | 558 | South Harwich | 405 |
+| North Falmouth | 735 | South Chatham | 186 |
+| West Falmouth | 52 | Chatham | 580 |
+| Falmouth | 4,420 | Pleasant Lake | 491 |
+| Woods Holl | 170 | Brewster | 5,285 |
+| Bourne | 773 | Orleans | 1,224 |
+| Bournedale | 1,681 | Eastham | 189 |
+| Sagamore | 3,371 | North Eastham | 33 |
+| Sandwich | 5,800 | South Wellfleet | 55 |
+| West Barnstable | 9,585 | Wellfleet | 132 |
+| Barnstable | 353 | South Truro | 58 |
+| Yarmouth | 4,735 | Truro | 13 |
+| Hyannis | 3,349 | North Truro | 10 |
+| South Yarmouth | 2,968 | Provincetown | 66 |
+
+The area devoted to their culture in the several towns as recorded by the local assessors for 1889, shows a total of 3,006¼ acres in the county, valued at $589,639.00 as the basis of taxation. This area is doubtless very nearly correct, but this valuation is not more than
+
+<vocab>Industrial resources, cranberry production, Old Colony Railroad Company, Barnstable County, agricultural statistics, taxation</vocab>

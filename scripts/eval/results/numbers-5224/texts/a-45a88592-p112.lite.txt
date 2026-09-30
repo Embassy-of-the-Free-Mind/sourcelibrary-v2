@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>90</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+and Falmouth, 46; Yarmouth, 47; Harwich, 48; Brewster, Dennis and Chatham, 49; Eastham and Orleans, 50; Truro and Wellfleet, 51; Provincetown, 52.
+
+A few weeks before the call of October 17, 1863, for three hundred thousand new troops, provision was made that the district provost marshal, or their agents should receive fifteen dollars for each new recruit, and twenty-five dollars for each re-enlistment; but from this rule Massachusetts was, by request of Governor Andrew, excepted, and these fees made payable to the selectmen of the several towns who secured the enlistments. The amount paid to the several towns under this arrangement was used exclusively to promote enlistments, and the local recruiting officers received only a per diem allowance while actually employed.
+
+After the original call for a draft in Massachusetts, the selectmen of the several towns filed sworn statements, showing the number of men each town had furnished to the army prior to February 1, 1863.
+
+The following list of names comprehends the men furnished by Barnstable county during the years 1861–1865, as reported by the adjutant general of the state. We have classified with care the mustering in of companies and regiments, and have especially arranged the names by towns to better enable the reader to find those of any particular locality when the number of the regiment is known. To the names of those who died in the service from disease, prison life, or were killed, the time and place are given.
+
+->THREE MONTHS' MEN.<-
+
+Third Regiment, Militia, enlisted May, 1861.—*Sandwich*: Co. K, Charles M. Packard, corp.; Howard Burgess, Sylvester O. Phinney, William W. Phinney; Co. L, George H. Freeman.
+
+Fourth Regiment, 1861.—*Falmouth*: Co. F, George W. Washburn, George S. Jones.
+
+->ONE HUNDRED DAYS' MEN.<-
+
+Fifth Regiment, July, 1861.—*Sandwich*: Co. A, Joseph W. Phinney, corp.; Sands K. Chipman, Charles S. Clark, Alvin C. Howes, Prince A. Phinney, re-enlisted in Twenty-fifth Infantry. And the following were mustered in 1862: *Yarmouth*: Co. E, Jarius Lincoln, jr., serj.; Edwin H. Lincoln, mus.; Charles P. Baker, Darius Baker, George H. Baker, W. I. Baker, Watson Baker, Edwin Chase, Frederick N. Ellis, Warren H. Ellis, Edmund H. Gray, Elam S. Marcarta, E. Dexter Paine, David Snow, Franklin Thacher. *Dennis*: Co. E, Horatio Howes, corp.; Edmund Matthews, corp.; Sylvester F. Baker, John Considine, John W. Greenleaf, Hiram H. Hall, Jeremiah G. Hall, Joseph
+
+<vocab>Barnstable County, Massachusetts, Civil War, enlistment, Governor Andrew, provost marshal, militia, regiments, muster rolls</vocab>

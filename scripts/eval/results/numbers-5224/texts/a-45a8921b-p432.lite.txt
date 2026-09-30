@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>418</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Peace Foundation; member Twentieth Century Club, Boston City Club; m., June 25, 1891, Rebecca Haswell Clarke, Roxbury, Mass. Residence, 104 Irving St., Cambridge, Mass.
+
+**Brinley, Godfrey Malbone**
+Clergyman; educator; b., Perth Amboy, N. J., Nov. 22, 1864; s. Edward and Andrewetta Sims (Rowlett) Brinley; ed. The Pingrey School, New Jersey, St. Paul's School, Con-
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in clerical attire.</image-desc>
+
+cord, N. H., Trinity College, Hartford, Conn., B.A. 1888, A.M. 1895; engaged in teaching at St. Paul's School, Concord, since 1888; Episcopalian; Democrat; ordained deacon, Protestant Episcopal church, 1893; priest, 1897; chaplain Orphans' Home, Concord, 1915-6; trustee, 1917-. In charge of the Mission of the Holy Spirit, Danbury, N. H.; founder and president of St. Paul's School Camp, Danbury; director of the Missionary Soc. of St. Paul's School; member Psi Upsilon Fraternity, University Club, N. Y.
+
+<column-break/>
+
+City, Church Club, Manchester, N. H. Morris Country Club, New Jersey; m., June 17, 1902, Elizabeth Agnes, dau. George Macculloch and Elizabeth (Hoffman) Miller, New York City; one daughter, Elizabeth Malbone. Residence, St. Paul's School, Concord, N. H.
+
+**Davis, Nathaniel French**
+Educator; b., Lake Village (now Laconia), N. H., June 11, 1847; s. John and Rhoda French (Maxfield) Davis; ed. Brown Univ., A.B. 1870, A.M. 1873; studied at Univ. of Göttingen, 1892-3; LL.D., Colby Univ., 1894; in engineering department, Providence Water-Works, 1870-1; instructor Riverview Military Academy, Poughkeepsie, N. Y., 1871-3; vice principal and professor mathematics, Keystone State Normal School, Kutztown, Pa., 1873-4; instructor in Mathematics, Brown Univ., Providence, R. I., 1874-9, assistant professor, 1879-89, associate professor, 1889-90, professor pure mathematics, 1890-1915, professor emeritus, 1915-; secretary N. E. College Entrance Board, 1902-13, president, 1913-5; member American Mathematical Soc., Mathematical Ass'n of America, N. E. Ass'n of Colleges and Secondary Schools, American Ass'n of University Professors; fellow American Academy of Arts and Sciences; Congregational Club of Rhode Island, (president 1901-2), Economic and University Clubs, Providence; m., Dec. 23, 1878, Lydia Martin Bellows. Residence, 159 Brown St., Providence, R. I.
+
+**Davis, Charles Thornton**
+Lawyer; judge; b., Concord, N. H., Jan. 12, 1863; s. Charles Augustine and Mary (Thornton) Davis; ed. Harvard, A.B. 1884; studied law at Harvard Law School and office of Bacon, Hopkins & Bacon, Worcester, Mass. Admitted to Massachusetts bar in 1887, and in general practice in Boston till 1892; in Worcester, Mass., 1893-8; chief examiner of titles, Metropolitan Water Board, 1895-8; appointed Judge of
+
+<vocab>Godfrey Malbone Brinley, Nathaniel French Davis, Charles Thornton Davis, biography, New Hampshire, educators, clergymen, lawyers, judges</vocab>

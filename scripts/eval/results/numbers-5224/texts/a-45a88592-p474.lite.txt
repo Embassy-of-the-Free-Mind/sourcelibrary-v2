@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>390</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+1845; William Richards, 1846; Henry Mayo, 1847; James M. Worcester, 1848; G. W. Stearns, 1849; Edward B. Hinckley, 1851; James B. Weeks, 1853; Joseph Marsh, 1855; Daniel Webb, 1856; Seth B. Chase, 1862; Caleb S. Sanford, 1867; S. Y. Wallace, 1868; S. W. Coggeshall and N. B. Fisk, 1869; V. W. Mattoon, 1871; Silas Sprowls, 1873; supplies, 1875 to 1879; Y. B. Gurney; 1879; C. F. Sharp, 1881; Philo Hawks, still a resident of the place, 1883; H. N. Donnell, 1886; supplies in 1887; E. F. Newell, 1888; and George Bernreuter, 1889.
+
+Rev. William Black, the honored founder of Methodism in Nova Scotia, New Brunswick and Newfoundland, preached the first Methodist sermon ever preached upon Cape Cod. He embarked for Boston from New York in a schooner, which put in at Hyannis, January 20, 1784, and being detained there, Mr. Black preached six sermons at Barnstable, where a deep religious interest was produced.
+
+The services of the Protestant Episcopal church were held during the summer of 1889 in the village of Barnstable at stated periods. The society is largely composed of the visitors for the season. Rev. N. H. Chamberlain, of Bourne, officiated the past season.
+
+The Catholic society held monthly services in Barnstable village during the summer of 1889, the few members being under the care of the Woods Holl priest.
+
+The Methodist Episcopal Society, Osterville, dates its organization November 30, 1847. For some time previous there had been meetings of the people as Methodists, at the hall, and soon after the organization of the society a church edifice was built. It was erected in 1848 and remodeled in 1861. The old members interested at the first were: Oliver Hinckley and wife, Mrs. John Cammett, Benjamin F. Crocker, John F. Blossom, Lot Phinney, Joshua Lumbert, Bartlett Holmes, Daniel Lovell and wife, Mrs. Timothy Parker, Josiah Scudder, Jacob Lovell and J. Lovell. The ministers were: A. M. Osgood and L. W. Barber in 1847; J. B. Hunt, 1848; Mr. Tainter, 1849; John Tasker, 1850; J. B. Washburn, 1851; B. K. Bosworth, 1852; J. C. Allen, 1853; J. Burleigh Hunt, 1854; J. N. Collier, 1856; J. W. Willett, 1857; E. K. Colby, 1859; H. D. Robinson, 1861; Edward Edson, 1863; E. B. Hinckley, 1865; Edward Anthony, 1866; C. N. Hinckley, 1867; Solomon P. Snow, 1870; Charles H. Ewer, 1872; Mr. Cottle, 1874; J. W. Fitch, 1875; George H. Butler, 1877; E. S. Fletcher, 1878; S. H. Day, 1879; George A. Grant, 1881; W. W. Hall, 1884; Lewis B. Codding, 1885; Mr. Dalrymple came in 1887 and Mr. Newell finished the year; and next Rev. Edward Gurney came.
+
+The Methodist Episcopal Society, Marston's Mills, was formed quite early and was supplied as one of a circuit. Its church building was first erected at Yarmouth Port early in the present century, and about 1830 was purchased and removed to Marston's Mills. It was repaired
+
+<vocab>Barnstable County, Methodism, Protestant Episcopal Church, Catholic society, Osterville, Marston's Mills, church history, Cape Cod</vocab>

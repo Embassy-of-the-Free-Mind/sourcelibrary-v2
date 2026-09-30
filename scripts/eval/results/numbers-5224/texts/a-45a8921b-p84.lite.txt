@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>70</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Mechanicks National Bank, May 13, 1874 (d. Nov. 15, 1911); member, South Congregational church; national president, Woman's Relief Corps, 1904
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait of a woman with dark hair, wearing a high-collared lace blouse.</image-desc>
+
+-5; member, Concord board of education, since 1908 (secretary); Woman's Club of Concord (president, 1904-5); president, N. H. Female Cent Inst., 1901-8; president, Concord Female Charitable Soc., 1911-15; member, educational committee, General Federation Women's Clubs, 1912-14; regent, Rumford Chapter, D. A. R., 1905-8; president, Federation of Women's Missionary Societies, Concord; member, Woman's Board of Missions (life), Avon (Shakespeare) Club, Friendly Club, Charity Organization Soc., District Nursing Ass'n, Red Cross, Nat. League for Woman's Service, Wheaton Seminary Alumnae Ass'n, N. H. Historical Soc. Residence, 23 S. State St., Concord, N. H.
+
+**Perley, George Edmund**
+Lawyer, loans, real estate; b., Lempster, N. H., Aug. 19, 1853; s. Asbury
+
+<column-break/>
+
+F. and Sarah J. (Dodge) Perley; ed. Kimball Union Academy, Meriden, 1873, Dartmouth College, 1878; teacher, 1878 to 1883—principal Charlestown, N. H., high school; studied law with Hon. Ira Colby of Claremont, N. H.; admitted to the N. H. bar in 1883, Mass. bar, 1883, Minn. bar in 1884, having removed to the latter state and located at Moorhead, Clay co., opposite Fargo, N. D., where he has continued in legal practice and also engaged extensively in the handling of loans and real estate, conducting the "George E. Perley Farm Loan and Land Agency;" Christian Scientist; Progressive Republican; alderman, city of Moorhead, four years; member, Minn. house of representatives, 1903, 1905, chairman, committee on education, the latter year; member, Moorhead board of education, fifteen years; trustee, Fargo College, Fargo,
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait of a man with a mustache, wearing a suit and tie.</image-desc>
+
+N. D., twenty-five years; Royal Arcanum; m., May 9, 1884, M. Etta Jones; one daughter, Grace Perley Hess, Minneapolis. Residence, Moorhead, Minn.
+
+<vocab>George Edmund Perley, New Hampshire, biography, legal practice, Moorhead, Minnesota, Concord, Woman's Relief Corps, Dartmouth College</vocab>

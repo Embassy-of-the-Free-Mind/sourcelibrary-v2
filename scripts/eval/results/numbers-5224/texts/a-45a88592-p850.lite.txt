@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>658</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+site for this second building was defined in 1716, as laid out in connection with the burying ground.
+
+The present green, so beautiful in its triangular bounds, was laid out October 6, 1749, and included, on the north side, the strip of land between the present green and a line that extended from the old Shiverick House, next west of the Continental shoe store kept by G. W. Jones, passing in the rear of the present Congregational church, to and in line with the street upon which Mrs. Sarah P. Lawrence dwells. The present common was taken from the north side of this meeting house lot and training ground that had been laid out in common use to all; and the past pages will show that, including the original town house for a meeting house, the present Congregational church is the fourth place of worship on those grounds. The proprietors reserved the present square as part of the old one, when, on October 6, 1749, they "agreed that there should be part of that lot of land called the meeting house lot & training field, about one acre and a half besides the road that leads to Woodshole & bounded Southerly by Samuel Shiverick, and westerly by Silas Hatch Northerly by Nath'l Nickerson & easterly by Paul Hatch & Sam'l Shiverick, to lay perpetually forever to that end, as the fence now stands, except before Paul Hatches house."
+
+As the growth of the village called for its territory, the remainder of the old square has been sold off by the proprietors until the old cemetery only remains.
+
+In the action of the town June 6, 1687, land was voted for the help and encouragement of teaching the word of God, which lands, among others, are west of Bowerman's pond, now included in the village. The importance of this village in the beginning of the present century led, in 1805, to the building at the foot of Shore street of a wharf, which was washed away by the gale of 1815. The present stone wharf was built in 1817. In those days the ferries and water ways of business were of great import; but railroad facilities have turned the tide of shipments, and the tide of the sound has demonstrated to the present generation that even granite monuments are not imperishable. It was the demand for the guns captured by Captain Jenkins at Tarpaulin cove and the refusal, in 1814, that brought the British frigate *Nimrod* near the foot of Shore street, where anchorage was made and the village bombarded by her guns. The old Congregational church, the large house on Shore street now owned by E. E. C. Swift (then occupied by Captain John Crocker, and thought to be the governor's residence), the residence now occupied by Mrs. Sarah P. Lawrence, the residence now occupied by Charles M. Dimmick, near Hotel Falmouth (then occupied by Ichabod Hatch), and the house
+
+<vocab>Barnstable County, Congregational church, Shiverick House, meeting house, training ground, Woodshole, Bowerman's pond, Shore street, wharf, gale of 1815, Tarpaulin cove, British frigate Nimrod, Captain Jenkins, Captain John Crocker, Sarah P. Lawrence, Charles M. Dimmick, Hotel Falmouth, Ichabod Hatch</vocab>

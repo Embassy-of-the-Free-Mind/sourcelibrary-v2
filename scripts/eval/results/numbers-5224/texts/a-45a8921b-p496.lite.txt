@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>482</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Med. School, 1892; interne Mass. General Hospital, 1900–3; in practice in Boston since latter date; established wide reputation for surgical skill; in U. S. Medical Service in France during war with Germany. Address, 529 Beacon St., Boston.
+
+**Kimball, William Henry**
+Farmer; lumberman; b., Columbia, N. H., Nov. 18, 1853; s. Edward Walter and M. Jannette (Lucy) Kimball; ed. public schools of Stratford, N. H.;
+
+<image-desc size="medium" type="portrait" significance="high">Black and white portrait photograph of a man with a mustache, wearing a suit and tie.</image-desc>
+
+engaged in agriculture in early life, and has since carried on extensive lumbering operations; Methodist; Democrat; member Stratford school board several years; selectman twenty-five years; member N. H. house of representatives, 1901–2, 1909–10, 1917–18; commissary-general of New Hampshire 1913–14; member Democratic state committee since 1910; member Knights of Pythias; director Coös County National Bank, Groveton; m., Dec. 31, 1885, Emma J. Bass of Stratford; children, George Marden, b. March 27, 1891 (Shaw's Business College, Portland, Me., 1908); Lina Jannette, b. Sept. 1, 1897. Residence, Stratford, N. H.
+
+<column-break/>
+
+**Peterson, Oscar William**
+Clergyman; b., Lingdal, Wardnas Parish, Ostergolland, Sweden; s. Peter Johan Johanson and Johanna (Andersdotter) Peterson; ed. public schools in Sweden, Rice Collegiate Institute, Paxton, Ill.; Bangor Theological Seminary, 1902; Bowdoin College, Brunswick, Me., 1906; Congregationalist; Republican; pastor Congregational churches, Phillips and Strong, Me., 1902–4; Cornish and East Baldwin, Me., 1904–9; principal Parsonfield (Me.) Seminary, 1909–10; pastor Congregational churches, Brownfield and Denmark, Me., 1911–13, Newcastle, Me., 1913–17, Claremont, N. H., 1917– ; member A. F. & A. M., Phi Beta Kappa; published, 1909, patriotic hymn, "God Save the President"; in 1910, "Songs and Lyrics," translated from the Swedish; in 1917, "Abigail Goodhue Bayley," a memoir; extensively engaged as a speaker for various war causes; m., 1905, Emma Augusta Stubbs, Strong, Me.; children, Alma Stubbs, Hilda Stubbs. Residence, Claremont, N. H.
+
+**Chutter, Frederick George**
+Clergyman; b., Chard, Somerset, England, Sept. 12, 1857; s. George and Hannah Chutter; ed. Phillips Andover Academy, Colburn Institute, Colby College (A.B. and A.M.), Andover Theological Seminary (B.D.), Oxford University, Edinburgh and Paris; preached in various places in Maine and New Hampshire while pursuing his studies; ordained in the Congregational ministry and installed pastor of the church at Littleton, N. H., Sept. 9, 1887; resigned on account of ill health, Sept., 1890; traveled in Europe and the East two years; later for several years in mercantile business in Littleton; resumed ministerial work as pastor of the Congregational Church at Norwich, Vt., and later at Lebanon,
+
+<vocab>William Henry Kimball, Oscar William Peterson, Frederick George Chutter, biography, New Hampshire, clergy, farmers, lumbermen, genealogy</vocab>

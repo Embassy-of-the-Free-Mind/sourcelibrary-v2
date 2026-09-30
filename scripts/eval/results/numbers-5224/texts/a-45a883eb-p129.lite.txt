@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>125</page-num>
+<header>The Book of Clevelanders</header>
+
+and for forty years has continued in same business; at Columbus, O., 1873, with United States Express Co.; agt, at Bradford, Pa., seven years for same company; agt. and gen. agt. Cleveland, since March, 1888, for Wells Fargo & Co.; pres. Genck Realty Co.; member Chamber of Commerce, Chamber of Industry, and Tippecanoe Club.
+
+HASCALL, George C.; manufacturer; born, Yipsilanti, Mich., Jan. 17, 1852; son of Philander and Mary A. Christy Hascall; common school education; married, Alden, N. Y., April 10, 1889, Hattie M. Fuller; one son, Robert G., born March 14, 1893; pres. The Tropical Oil Co., The Hascall Paint Co., The Union Products Co.; pres. The Attan Vic Paint Co., New York, and The Knickerbocker Paint Co.; director The Texas Mnfg. Co., Fort Worth Tex.; member Knights Templar, Oriental Commandery, Mystic Shrine (Al Koran), N. M. S., Lake Erie Consistory, Webb Chapter, Iris, No. 229, F. & A. M., member Chamber of Commerce, Athletic and Automobile Clubs.
+
+HASEROT, Francis H.; wholesale grocer; born, Cleveland, Dec. 19, 1860; educated in the public and German Lutheran schools of Cleveland; married, Cleveland, 1889, Miss Sarah Henrietta McKinney; issue, three sons and one daughter; business career, 1881 to 1883, merchandise broker; junior member of the firm of W. J. Hayes & Co.; 1886 to 1894, partner in the firm of S. F. & F. H. Haserot & Co.; firm reorganized, and became vice pres. of the Haserot Co.; in 1903, became pres. of the company; pres. The Merchantile Warehouse Co., Hough Ave. Bank & Trust Co., and director The First National Bank; former pres. of the City Board of Education; director of the Chamber of Commerce for two terms; two terms member of the Republican State Central Committee; chairman of the board of trustees of the Teachers' Pension Committee; member Unitarian Church, Union and Euclid Clubs.
+
+HASKINS, John Henry; roofing contractor; born, N. Wilbraham, Mass., 1843; son of Enoch C. and Mary M. Davis Haskins; educated, Chapman Academy, Ellington, Conn.; married, Springfield, Mass., 1865, Mary Carlisle; issue, eleven children; sergt. Co. A, 1st Conn. Cav., in the Civil War; in 1878, established roofing business in Cleveland, J. H. Haskins Roofing Co.; member Chamber of Industry, Association of Master Gravel and Slag Roofers of America; pres. board of trustees of Franklin Ave. M. E. Church; has been successful in his business.
+
+HATCH, Henry Reynolds; retired; born, Grand Isle, Vt., Oct. 3, 1831; son of Abijah and Abigail Lyon Hatch; early education in merchantile lines; married, October, 1857, Miss Lyda Baldwin, deceased in 1886; issue, six children, two living; second marriage, November, 1888, to Mary Cummings Brown of Newark, N. J.; issue, two children, Esther and Henry Reynolds, Jr.; early life
+
+<vocab>biography, Cleveland, business, manufacturing, wholesale, Civil War, genealogy</vocab>

@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>339</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of R. M. Hulett</image-desc>
+R. M. HULETT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. L. Hughes</image-desc>
+W. L. HUGHES
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. S. Humphrey</image-desc>
+D. S. HUMPHREY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. D. Hunt</image-desc>
+W. D. HUNT
+
+<image-desc size="small" type="portrait" significance="high">Portrait of M. J. Hunkel</image-desc>
+M. J. HUNKEL
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. A. Hunter</image-desc>
+A. A. HUNTER
+
+<vocab>R. M. Hulett, W. L. Hughes, D. S. Humphrey, W. D. Hunt, M. J. Hunkel, A. A. Hunter, Clevelanders, Biography</vocab>

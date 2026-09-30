@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>95</page-num>
+<header>The Book of Clevelanders</header>
+
+**FILD, Edward**; milk dealer; born, Cleveland, July 18, 1887; son of Herman and Catherine Schnabel Fild; graduated from Orchard School and went to West High school two years; graduated from the Grammar School in 1901; married, Cleveland, June 25, 1905, Lauretta Corcoran; two children; succeeded his father, Herman Fild, who established the business in 1888; member Milk Dealers’ Fraternal League. Recreations: Bowling and Baseball.
+
+**FINCH, Edward Brush**; dealer in motor cars; born, Holly, Mich., Oct. 17, 1873; son of Nathaniel A. and Mary Hadley Finch; educated University of Michigan; married, Detroit, Mich., January, 1900, May Pruegs; issue, Edward B., Jr., William Roberts; member Michigan Naval Reserves and Michigan State Militia; 1900-1906, sec’y and treas. Pungs-Finch Auto & Gas Engine Co.; 1906-1908, asst. to factory mngr. and head of Technical Dept., Packard Motor Car Co., Detroit, Mich.; 1908-1910, head of Inspection and Service Divisions with The Chalmers Motor Car Co., Detroit, Mich.; July, 1910, established business dealing in Chalmer Motor Cars in Cleveland; pres. American Novelty Co.; member Sigma Alpha Epsilon Fraternity; member Athletic, and Automobile Clubs, Cleveland, and Detroit Boat Club, Detroit, Mich.
+
+**FINLAY, Lance G.**; sales engineer; born at sea, Nov. 16, 1875; son of George Finlay, fleet paymaster, R. N., and Emma M. Williams Finlay; educated, public schools, School of Science, University of Glasgow; married in New York; was engaged for a number of years in the sugar industry, building several plants in Trinidad, Cuba, and other sugar-producing countries; then asst. sales mngr. for De Ha Vergne Machine Co. of New York City; also in consulting practice; came to Cleveland in 1907, and engaged in business for himself, in high-grade machinery and equipment; district mngr. The Terry Steam Turbine Co., Providence Engineering Works, Schutte & Koerting Co., Raymond Concrete Pile Co.; member Athletic Club.
+
+**FINLEY, William F.**; banker; born, Millersburg, O., Oct. 16, 1879; son of Calim and Laura Gray Finley; education, Millersburg High School and Mt. Union College; married, Fredericksburg, O., Nov. 25, 1907, Grace Morgan; two children; asst. treas. Garfield Savings Bank; member Chamber of Commerce; Woodward Lodge, F. & A. M., Alpha Tau Omega.
+
+**FLOOD, William**; painting contractor; born, Cleveland, March 27, 1854; son of James and Annie Aylard Flood; public school education; married, Cleveland, March 25, 1885, Nellie Denison; two children; employed by Aylard & Burnett, June, 1868; remained with same firm thirteen years; then purchased business; has been in the same business at the same location forty-five years; pres. and treas. the William Flood Co.; member Cleveland Builders’ Exchange, Chamber of Commerce, Automobile Club.
+
+<vocab>biography, Cleveland, business, commerce, genealogy, fraternal organizations</vocab>

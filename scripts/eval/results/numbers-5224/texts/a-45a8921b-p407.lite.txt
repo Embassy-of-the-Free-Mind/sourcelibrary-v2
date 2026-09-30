@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>393</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Co., Boston, Mass., director Conn. River R. R. Co., president trustees of Keene Public Library, director Keene Gas & Electric Co., Laconia Gas & Electric Co.; treasurer and director Greenfield, Mass. Gas Light Co.; government Appeal agent Cheshire County Draft Board; chairman Community Labor Board, Keene; president Keene Chapter, American Red Cross; m., June 22, 1916, Katherine H. Kingsbury Keene. Residence, Keene, N. H.
+
+**Guertin, George Albert**
+
+Roman Catholic Bishop of the Diocese of Manchester; b., Nashua, N. H., Feb. 27, 1869, s. George and Louise (LeFebvre) Guertin; ed. St. Aloysius' School, Nashua; St. Charles' College, Sherbrooke, Canada; St. Hyacinthe College, Canada; St. John's Boston Ecclesiastical Seminary, Brighton, Mass., 1892; ordained priest of the Roman Catholic Church by Bishop Bradley in St. Aloysius' Church, Nashua, Dec. 17, 1892; assistant priest at St. Augustine's Church, Manchester, 1893-7; assistant priest, Sacred Heart Church, Lebanon, 1897-1900; pastor St. Anthony's Church, Manchester, 1900-7; consecrated bishop of the Diocese of Manchester, in St. Joseph's Cathedral, Manchester, by His Excellency, the Most Rev. Diomede Falconio, apostolic delegate to the United States, later Cardinal Falconio, March 19, 1907; doctor of divinity, Laval University, Quebec, 1908; spokesman for Catholic schools at Semi-Centenary of Manchester, 1896; member of French Historical Soc. of the United States, 1914; etc., etc. Residence, Manchester, N. H.
+
+**Bartley, William Tenney**
+
+Clergyman; b., Concord, N. H., Nov. 7, 1868; s. Joseph D. and Mary A. (Tenney) Bartley; ed. public schools, Yale, A. B. 1891. Ph. D. 1895; Andover Theological Sem., 1897, S.T.B. 1899; ordained Congregational Ministry, 1897; pastor, Salem, N. H., 1896-1902, Bennington, 1902-7, Bethlehem, 1907
+
+<column-break/>
+
+-11, First Church, Hadley, Mass., 1911-13, Middlefield, Mass., since 1913; member North Berkshire Ass'n, Congregational Churches, North Berkshire Ministerial Union; m., Feb. 6, 1900, Carrie Belle Webster, Salem, N. H.; one son, Irving Dana. Residence, Middlefield, Mass.
+
+**Babbidge, Paul Freese**
+
+Superintendent Water, Sewer and Drain Department, Keene, N. H.; b., Milford, Me., Jan. 17, 1858; s. John and Angeline (Jellison) Babbidge; ed. public schools and Oldtown (Me.)
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Paul Freese Babbidge, showing him from the chest up, wearing a suit, white shirt, and bowtie.</image-desc>
+
+Academy, 1876; Episcopalian; Republican; engaged for some time in civil engineering in Minnesota, and subsequently for seven years with George E. Waring, the eminent sanitary engineer, Newport, R. I.; located in Keene, N. H., June 18, 1888, as superintendent of the city's water, sewer and drain department which position he has since held continuously; has always been interested in military affairs, served four years in
+
+<vocab>George Albert Guertin, William Tenney Bartley, Paul Freese Babbidge, Roman Catholic Church, Congregational Ministry, civil engineering, Keene, Manchester, New Hampshire, biography</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>992</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+The second Methodist church, known as the Wesleyan chapel, was the house originally erected by the Christian Union Society, already noticed. It was purchased in 1848, by Freeman Atkins, Samuel Soper and Rufus L. Thatcher, a committee representing Methodists living in the west part of the town, who desired a place of worship nearer their residences. The church was remodeled and refurnished soon after its purchase, when ninety-five members withdrawing from the Centre church, joined the new society and worshiped in this church. Centenary church was erected and completed in 1866, under the pastorate of Rev. George W. Bridge.
+
+The list of pastors of Centenary church, with year of their coming, is as follows: Samuel Fox, 1848; Azariah B. Wheeler, 1849; John Livesay, jr., 1851; Josiah Higgins, 1853; N. P. Philbrook, 1855; B. K. Bosworth, 1857; J. T. Wright, 1859; Mr. Cooper, 1861; J. F. Sheffield, 1863; George W. Bridge, 1865; George M. Hamlen, 1867; Shadrach Leader, 1868; Andrew J. Kenyon, 1870; John Livesay, 1872; William McK. Bray, 1872; George A. Morse, 1874; George H. Bates, 1877; George W. Hunt, 1880; John H. Allen, 1882; Warren Applebee, 1884; George C. King, 1885; Thomas J. Everett, 1887; Samuel McBurney, from April, 1889. This list embraces men of acknowledged ability and worth, and who were devoted to the care of their charge.
+
+The Catholic society was organized by Rev. Joseph M. Finotti in 1851. The first service was held in the dwelling of Thomas Welch, on Franklin street, previously known as the Freeman House. A Sunday school was early begun by Jeremiah Quean with three pupils, and now numbers over five hundred. In 1853 Mr. Finotti bought the building on Bradford street, formerly called the Wesleyan Academy, and subsequently occupied by the town high school, for a place of worship and pastoral residence. Public services were held in this building until the purchase, in 1872, of Adams Hall, by Father O'Conner, for the sum of $4,500. The society worshiped here for nearly two years when, March 4, 1875, it was destroyed by fire during a terrific northeast snow storm, in which the Italian bark *Giovanni* was stranded on the outer bar off Peaked hills, and all the crew save one perished. The present house of worship—St. Peters church—located on the north side of Prince street, was consecrated October 12, 1874. A fine parsonage was added to the church estate in 1886.
+
+This society when established was principally composed of natives of Ireland and their children. A very large majority of those now comprising its membership are of Portuguese birth and descent. There is a larger regular attendance at this church than is present at any other place of worship in town. The following priests have officiated as pastors: Father Joseph M. Finotti, 1851; Father Haly, Father Cornelius O'Conner, 1860; Father McGough, 1873; Father McGuire, 1874;
+
+<vocab>Methodist church, Wesleyan chapel, Christian Union Society, Centenary church, Catholic society, St. Peters church, Barnstable County, history, religion, immigration</vocab>

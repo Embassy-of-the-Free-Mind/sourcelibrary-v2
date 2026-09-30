@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>386</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Suffield, Conn., 1882-8; Third Congregational Church, Chicopee, Mass., 1888-93; Franklin Street Congregational Church, Manchester, 1893- ; Congregationalist; Republican; member Winthrop Club, Boston, Mass.; m., Dec. 24, 1883, Fanny Mary Upson, Westfield, Mass. Residence, Manchester, N. H.
+
+**Hadley, George Plummer**
+
+Insurance; b., Goffstown, N. H., Sept. 30, 1846; s. Peter Eastman and
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of George Plummer Hadley</image-desc>
+
+Mary (Cochran) Hadley; lineal descendant of George Hadley who emigrated to Ipswich, Mass., from England, previous to 1639, and of Roger Eastman who settled in Salisbury in 1638; ed. schools of Goffstown, Kimball Union Academy, 1869, non-graduate Dartmouth College, class of 1873; taught successfully in New Hampshire and Massachusetts, afterwards became civil engineer, which profession he practiced a number of years. In addition to his insurance business he devotes his time to probate business and the settlement of estates involving
+
+<column-break/>
+
+matters of trust and responsibility; takes a commendable interest in all progressive measures, and is a recognized authority on matters pertaining to the history of his native town, having devoted much attention for several years to the collection and arrangement of material for a town history; Congregationalist; Republican; held office of selectman, collector, member of school board, N. H. house of representatives, 1885, constitutional convention, 1912; justice of the peace and notary public; member I. O. O. F., P. of H., N. H. Historical Soc., New England Historic-Genealogical Soc.; m. June 10, 1875, Edna V. Carr of Goffstown. Residence, Goffstown, N. H.
+
+**Taylor, Amos Leavitt**
+
+Lawyer and Lecturer; b., Danbury, N. H., Feb. 22, 1877; s. Frank Leavitt and Nellie J. (Martin) Taylor (descendant of Anthony Taylor, first of the family in America, at Portsmouth, N. H., 1636, of Anthony Taylor, founder and first settler of the town of Danbury (1770), fifth generation in America, of Amos Taylor, trial justice at Danbury and many times representative in the legislature, of Moses L. Taylor, trial justice at Danbury, seventh generation, who was his grandfather); ed. public schools of Danbury and Franklin, N. H., Phillips Andover Academy, Brown University, A.B. 1901; Boston University Law School, LL.B. (cum laude and special mention for graduation thesis) 1903; Unitarian; Republican; member law firm of Adams & Blinn, Boston; lecturer Pace Institute of Accountancy, Boston; Author of "Corporation Law in Massachusetts"; member Republican town committee, Belmont, Mass., six years; town counsel for Belmont nine years; delegate, Mass. Republican state convention, 1914, 1916; clerk American Water Supply Co. of New England; member corporation and counsel, Belmont (Mass.) Savings Bank; clerk and director London Sponging Works
+
+<vocab>George Plummer Hadley, Amos Leavitt Taylor, biography, New Hampshire, genealogy, law, insurance, local history</vocab>

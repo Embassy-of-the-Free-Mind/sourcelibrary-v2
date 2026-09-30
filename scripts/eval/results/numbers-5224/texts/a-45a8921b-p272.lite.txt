@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>258</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+house of representatives from Tilton, 1907-8; member executive committee, N. H. State Conf. Charities and Corrections; standing committee, Diocese of New Hampshire, Protestant Episcopal Church; m., Jan. 18, 1887, Ethel Naunton Julian, St. Andrews, N. B.; four daughters and two sons. Residence, Concord, N. H.
+
+**Otis, Edward Osgood**
+Physician; b., Rye, N. H., Oct. 29, 1848; s. Israel Taintor and Olive
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of Edward Osgood Otis, showing him from the chest up, wearing a suit, white shirt, and dark tie.</image-desc>
+
+Morgan (Osgood) Otis; ed. Phillips Exeter Academy, Harvard College, A.B., 1871, M.D., 1877; commenced practice 1879, in Boston in 1880, specializing in pulmonary diseases, particularly tuberculosis, and writing and speaking on its prevention; sometime visting physician for Free Home for Consumptives in Boston and connected with various medical institutions; physician to tuberculosis department, Boston Dispensary; professor of Pulmonary Diseases and Climatology, Tufts College Medical School since 1901; late visiting and con-
+
+<column-break/>
+
+sulting physician, Mass. State Sanatorium; delegate, Congress of Tuberculosis, London, 1901; International Congress on Tuberculosis, Rome, 1912; member, advisory board, Dennison (settlement) House, Boston; trustee, Exeter, N. H., Cottage Hospital, Montgomery, Ala., Colored School; member, American Climatological Ass'n (president, 1898), American Public Health Ass'n, National Ass'n for Study and Prevention of Tuberculosis, American Ass'n for the Advancement of Science, and many medical societies; ex-president, Boston Ass'n Relief and Control of Tuberculosis; cor. member, International Anti-Tuberculosis Ass'n; member, S. A. R., Soc. Colonial Wars, Harvard Club of Boston; author, 1909; "Tuberculosis—Its Cause, Cure and Prevention," 1914, "Pulmonary Tuberculosis," 1917; and various contributions to medical publications; m., June 4, 1894, Marion Faxon; children, Olive, John F., Edward O., Jr., William F., Brooks. Residence, 381 Beacon St., Boston.
+
+**Dunlap, Roger Allen**
+Clergyman; b., Charlestown, N. H., June 10, 1878; s. George Harlan and Mary Catharine (Folger) Dunlap; ed. public schools, Nelson, N. H., and Rock Island and Stanstead, P. Q., Concord high school, 1896; Dartmouth College, 1900, Hartford (Conn.) Theological Seminary, 1903; Congregationalist; Republican; pastor, Paterson, N. J., 1903-9; Windsor Locks, Conn., 1909-1917; Second Parish Church, Portland, Me., 1918; Chaplain Connecticut house of representatives, 1915; member Phi Beta Kappa and Phi Kappa Psi fraternities; m., Nov. 18, 1903, Alice Gates; children, Esther, b. Sept. 11, 1906, Catharine Alice, b. May 15, 1911. Residence, Portland, Me.
+
+**Patten, Helen Philbrook**
+Author; social worker; b., New Bedford, Mass., April 21, 1865; dau. of Rev. Nathan Page and Hannah Hill (Sanborn) Philbrook; ed. Tilton Seminary, 1884, Framingham, (Mass.) Normal School, 1888, Social Service Dept.,
+
+<vocab>Edward Osgood Otis, Roger Allen Dunlap, Helen Philbrook, tuberculosis, medicine, clergy, New Hampshire, biography</vocab>

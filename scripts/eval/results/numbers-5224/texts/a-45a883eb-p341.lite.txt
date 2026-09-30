@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>337</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank B. Hiller</image-desc>
+FRANK B. HILLER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of J. W. Hollyday</image-desc>
+J. W. HOLLYDAY
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Alex Holocker</image-desc>
+ALEX HOLOCKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. J. Hopple</image-desc>
+E. J. HOPPLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. H. Hopkins</image-desc>
+D. H. HOPKINS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of W. R. Horning</image-desc>
+W. R. HORNING
+
+<vocab>Frank B. Hiller, J. W. Hollyday, Alex Holocker, E. J. Hopple, D. H. Hopkins, W. R. Horning, The Book of Clevelanders</vocab>

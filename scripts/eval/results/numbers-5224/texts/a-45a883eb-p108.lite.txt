@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>104</page-num>
+<header>The Book of Clevelanders</header>
+
+and director the Lake Erie Forging Co.; Republican; Episcopalian; member Chamber of Commerce, Business Men's Club, Y. M. C. A., Aero Club of America, and pres. The Aero Club of Cleveland; member Engineers and Manufacturers' Club. Recreations: Outdoor Sports, such as Motoring, Yachting, Fishing and Tennis.
+
+GARDNER, Burt M.; salesman; born, Cleveland, Jan. 16, 1867; son of George W. and Rosaline L. Oviatt Gardner; public school education; married, St. Paul, Minn., Sept. 12, 1895, Marian P. Hall; one son; 1892-1901, associate editor The Iron Trade Review, located at Chicago, Ill.; 1895-1898, sec'y The Western Foundry-mens' Ass'n; 1901-1906, iron and steel broker in Chicago, Ill.; 1909, sales agt. Ansonia Brass & Copper Co., New York; 1912, district sales agt. for Ohio for Worth Bros. Co., of Coatville, Pa.; and Michigan Copper & Brass Co. of Detroit, Mich.; pres. The Standard Iron & Steel Co.; treas. Ventwell Stove Front Co.; director American Portable Seating Co.; member Hermit and Athletic Clubs, Cleveland, and Fulton Club of New York.
+
+GARDNER, George Henry; president Gardner Printing Co.; born, Cleveland, June 9, 1863; son of George W. and Rosaline L. Oviatt Gardner; public schools and Case School of Applied Science (1886); married, Cleveland, Sept. 26, 1889, Alice L. Huntington; issue, one son; Kenneth H.; father, George W. Gardner, was mayor of Cleveland two terms; in 1860, he formed partnership with M. B. Clark and John D. Rockfeller, in the grain business, continuing four years, when Mr. Rockfeller went into the oil business; 1886-1888, sec'y and treas. Walker Mnfg. Co., manufacturing conveying machinery; 1889-1890, member firm Clark & Gardner, flour millers and grain dealers; 1890-1900, sec'y Cleveland Printing & Publishing Co.; 1900-1904, pres. of the Iron & Steel Press Co.; publishers The Iron Trade Review, The Foundry, and other trade papers; 1904-1913, pres. The Gardner Printing Co., owning one of the largest printing plants in Ohio; vice pres. The Robert S. Denham Co.; member Ben Franklin Club of America; trustee Association for the Blind; member Zeta Psi college Fraternity; member of Brooks Corps, the Cleveland Gatling Gun Battery, Chamber of Commerce, Union, Fellow Craft, Rowfant, Yacht, Longworth Canoe, Mayfield Country, and Cleveland Automobile Clubs. Recreations: Yachting, Canoeing and Books.
+
+GARFIELD, James Rudolph; ex-Secretary of the Interior; born, Hiram, O., Oct. 17, 1865; son of James Abram (20th President of the U. S.) and Lucretia Rudolph Garfield (q. v.); brother of Harry Augustus G. (q. v.); A. B., Williams College, 1885; studied Columbia Law School.; (LL. D., University of Pittsburg, 1909); married, Helen Newell, of Chicago, Dec. 30, 1890; admitted to bar, 1888; member Ohio Senate, 1896-1899; member U. S. Civil Service Commission, 1902-1903; commissioner of corporations, U. S. Dept.
+
+<vocab>Burt M. Gardner, George Henry Gardner, James Rudolph Garfield, Cleveland, biography, business, politics, genealogy</vocab>

@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>516</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+ance more than in agriculture, but during the past twenty years the bogs of the town have been redeemed for the cultivation of cranberries, and the town now has a high position in this branch of industry. The town still had in 1889 over sixty vessels of various tonnage, including nine three-masters, engaged in the coast and fishing trade.
+
+Wind mills were early erected. The earliest record given is that William Howes, in 1759, had been appointed as the proper miller for the grist mill in the East parish. The town house erected in 1837 stands near Follen’s pond. It would seem by the records that a house on that site was in use prior to that date, for in 1829 it was “voted that the selectmen sell the town house * * * and have same moved from the town land.” Major Obed Baxter, Abijah Howes, and Thacher Clark, January 4, 1837, were made a committee to complete a town house by September of that year, which was accomplished. No regular poor house was erected until 1837, when the present town asylum was voted at the March town meeting.
+
+The census of 1800 showed the population of the town to be 1,408, which had rapidly increased during the preceding seven years of its existence. In 1810 it contained 1,739; in 1820, 1,907; in 1830, 2,317; 1840, 2,942; 1850, 3,257; 1860, 3,662; this year was the highest within its life as a town. The fishing in its many branches not proving as lucrative as formerly, the young men sought employment elsewhere, and in 1870 the population was 3,269; in 1880, 3,288; and in 1885 it had decreased to 2,923. In the decline of population, the fact is evident that other sections, and even the busy marts of the world, have been receiving the fine sons of Dennis among their prominent business men.
+
+So rapid was the growth of the town during the first half of the present century, and so conspicuous in every industry and in wealth had the south part become, that in 1860 an attempt was made to divide the town and form a new one of the southern part. But perhaps this was only a temporary diversion of interests, as at this writing a more harmonious people do not exist on the Cape. The south side people are more generally engaged in fishery and coasting, while at the north, where the land is better, they are more devoted to agriculture.
+
+In 1888 a lock-up was erected at South Dennis for the town’s use; it was not costly and prison-like, but was adequate for the temporary confinement of mild offenders. At the town meeting of February 11, 1889, the sum of thirty-nine hundred dollars was voted for the poor; three thousand dollars for roads; fifty-four hundred dollars for schools; and five hundred dollars for public buildings. The assessed valuation of the town is now one and a half millions.
+
+CHURCHES.—In 1721 the East precinct or parish of Yarmouth was constituted. The last day of February, 1721-2, at the house of Na-
+
+<vocab>Barnstable County, cranberries, William Howes, Follen's pond, town house, Obed Baxter, Abijah Howes, Thacher Clark, census, Dennis, South Dennis, churches, Yarmouth</vocab>

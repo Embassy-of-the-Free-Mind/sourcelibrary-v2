@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>110</page-num>
+<header>110 ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+(Leonard) Blaisdell; ed. public and private schools, Concord and Laconia. He is of the third generation of one of New England's best known musical families, personally ranking among its leading violinists; leader of the famous Blaisdell Orchestra for twenty years; conductor of the New England Symphony Orchestra, and violin instructor of long experience; prominent in musical festival, concert and general orchestral work, playing and conducting in
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man in a suit and tie, shown in profile facing right.</image-desc>
+
+different parts of the country; associated in concerts with the most noted singers, and offered a position with the famous Boston Symphony Orchestra; his experience in orchestral work compares favorably with that of any man of his age; member, St. Paul's Episcopal church, Concord, B. P. O. E., Wonolancet Club, American Federation of Musicians, and Lake Winnipesaukee Club; motor boating is his diversion; won the New England championship for speed boat racing in 1916 after ten years of winning; m. Florence M. Toof, Sept. 1, 1899; one son, Paul Henry, b. May 9, 1908. Residence, Concord, N. H.; summer, Weirs, N. H.
+
+<column-break/>
+
+**Sanborn, Alden F.**
+
+Farmer and lumberman; b., Fremont, N. H., Aug. 20, 1855; s. Aloah and Nancy (Page) Sanborn; ed. public schools and New Hampton Literary Institution, 1877; Congregationalist; Republican; chairman, board of selectmen, fourteen years; member, board of education, twelve years; member, N. H. house of representatives, 1895-6; member, state board of agriculture, 1902-13; member and treasurer, Rockingham County Farmers' Ass'n since its organization; Mason; Patron of Husbandry, past master Fremont Grange; owns and occupies the old homestead which has been held in the family for over 150 years, and has also been extensively engaged in lumbering; m., Jan. 26, 1882, Luna A. Gove, of Raymond; two sons, Moses Hermon (N. H. College, 1908) and Edson Dana (N. H. College, 1910), president, N. H. C. Alumni Association, 1917. Residence, Fremont, N. H.
+
+**Burnham, William Henry**
+
+Educator; b., Dunbarton, N. H., Dec. 3, 1855; s. Samuel and Hannah (Dane) Burnham; ed. Harvard College, A.B., 1882, Ph.D., Johns Hopkins, 1888; instructor, Wittenberg College, 1882-3, State Normal School, Potsdam, N. Y., 1882-5, Johns Hopkins, 1892-1900; assistant professor pedagogy, 1900-06; pedagogy and school hygiene, Clark University, Worcester, Mass., since 1906; member, American Psychological Ass'n, Soc. College Teachers of Edn.; member, permanent com., International Congress, Schools of Hygiene; member Council, American School of Hygiene Ass'n; assistant editor, Pedagogical Seminary; author, articles on Hygiene in Universal Cyclopedia; departmental editor (Hygiene), Cyclopedia of Education. Home, Dunbarton, N. H.; address, Worcester, Mass.
+
+<vocab>Leonard Blaisdell, Alden F. Sanborn, William Henry Burnham, biography, New Hampshire, education, agriculture, music, genealogy</vocab>

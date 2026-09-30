@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>150</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+**Jones, Fred Andros**
+Lawyer; b., Stoneham, Mass., April 9, 1884; s. Andros B. and Lizzie J. (Young) Jones; ed. Nashua high school, Dartmouth College, 1906, and Harvard Law School; admitted to N. H. bar, 1909; Congregationalist; Republican; member, N. H. house of representatives from Lebanon, 1913-14; member, executive committee, Republican state committee since 1914; moderator, Lebanon, since 1914; judge,
+
+<image-desc size="medium" type="portrait" significance="high">Portrait of Fred Andros Jones</image-desc>
+
+Lebanon municipal court, since 1915; member, A. F. & A. M. (32d degree), Knight Templar and Shriner, B. P. O. E., K. of P., P. H., S. of V., Langdon Club and Sunset Club; m. Mary Elizabeth Bennett, Sept. 23, 1907; children, Eleanor, Lucille, Robert. Residence, Lebanon, N. H.
+
+**Wallace, Ellen Alfreda**
+Physician; b., Hill, N. H., April 24, 1853; dau. Edmund Rundlett and Mary Johnson (Flanders) Wallace; ed. New Hampton Literary Institution, 1873, Medical College, New York
+
+<column-break/>
+
+Infirmary, 1887; Congregationalist; member, Manchester Medical Soc., Hillsboro County Medical Soc., N. H. Medical Soc., American Medical Ass'n, W. C. T. U., Florence Nightingale Club, Manchester Federation Woman's Clubs, staff of Beacon Hill Hospital, president trustees, N. H. Memorial Hospital for Women and Children, Concord. Residence, Manchester, N. H.
+
+**Roote, Clarence Burgess**
+Educator; b., Francestown, N. H., Oct. 3, 1853; s. Martin Nelson, and Abigail Kimball (McEwen) Roote; ed. Francestown Academy, 1872, Williams College, 1876, Boston University Law School; admitted to Massachusetts bar, 1884; headmaster, Northampton, Mass., high school since 1888; member, Phi Beta Kappa and Chi Psi societies, Massachusetts High School Masters' Club, Headmasters' Club of Western Mass., Mass. State Teachers' Ass'n, Classical Ass'n, of New England, Monday Evening Club, Northampton, Lay Readers' League; Episcopalian; Democrat; senior warden and lay reader, St. John's Church, Northampton; member, Board of Religious Education, Diocese of Western Mass.; three times delegate to Provincial Synod, Province of New England; m., Oct. 3, 1882, Idelle M. Bothwell. Residence, Northampton, Mass.
+
+**Foster, George J.**
+Newspaper publisher; b., Concord, N. H., Feb. 13, 1854; s. Joshua L. and Lucretia A. (Gale) Foster; ed. public schools, Portsmouth high school, 1869; learned the newspaper business in his father's office and has been connected with *Foster's Democrat* in Dover for the last forty-five years, or more, most of the time as publisher; Methodist; Republican; member, Dover school board, twenty-nine years (chairman, 1903-8); member, N. H. house of representatives, 1893-4; mayor of Dover, 1906, 1909-10; trustee, Strafford Savings Bank, Wentworth Home for the Aged; Mason, 32d degree,
+
+<vocab>Fred Andros Jones, Ellen Alfreda Wallace, Clarence Burgess Roote, George J. Foster, New Hampshire, biography, genealogy, lawyers, physicians, educators, newspaper publishers</vocab>

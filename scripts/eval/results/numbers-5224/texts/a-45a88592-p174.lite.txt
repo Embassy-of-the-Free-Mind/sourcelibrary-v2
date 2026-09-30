@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>152</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+two-fifths of the commercial value of these lands. The detail by towns are:
+
+| | | | | |
+| :--- | :--- | :--- | :--- | :--- |
+| 198 1/10 | acres in | Bourne, | valued at | $35,684 00 |
+| 131 1/4 | “ | Falmouth, | “ | 37,097 00 |
+| 203 1/2 | “ | Mashpee, | “ | 66,160 00 |
+| 135 5/6 | “ | Sandwich, | “ | 32,400 00 |
+| 549 3/4 | “ | Barnstable, | “ | 116,550 00 |
+| 165 1/4 | “ | Yarmouth, | “ | 25,680 00 |
+| 359 1/7 | “ | Dennis, | “ | 71,870 00 |
+| 500 1/2 | “ | Harwich, | “ | 114,810 00 |
+| 93 3/8 | “ | Chatham, | “ | 12,144 00 |
+| 204 1/4 | “ | Brewster, | “ | 47,990 00 |
+| 123 1/8 | “ | Orleans, | “ | 10,008 00 |
+| 56 | “ | Eastham, | “ | 4,979 00 |
+| 135 5/6 | “ | Wellfleet, | “ | 995 00 |
+| 59 5/8 | “ | Truro, | “ | 3,754 00 |
+| and 212 1/4 | “ | Provincetown, | “ | 9,518 00 |
+
+This total for the county does not include the larger areas in course of preparation, but not yet set with vines. Several individuals and companies in the lower Cape are preparing to increase the acreage in those towns where, thus far, less of the fruit has been grown.
+
+The biographical sketches of Abel D. Makepeace, of West Barnstable, generally known as the cranberry king; of Cyrus Cahoon and Zebnia H. Small, of Harwich, and of E. K. Crowell, William Crowell and Capt. Howes Baker, of Dennis, as they appear in the subsequent chapters of this volume, and the personal mention of the other growers in the several towns, will throw more light upon their relation to the origin and progress of this great industrial resource of South Eastham, Mass.
+
+The terms in which this county is generally referred to, and the distinctive titles applied to the residents of it, have gradually given those who have not known the territory or its inhabitants, the idea that Cape Codders, the Cape and Cape Cod people were terms referring to a community different from the rest of New England, and especially distinguished from the rest of the world. This idea is not correct, even in general respects, because the residents of the county have always, by land and sea, maintained business and social relations as extensive with others as have any people. If, however, there be one trait which, more than another, distinguish these families from others of the East, it is that love of home which more or less characterizes the dwellers of all islands and insular localities. This love of their native place, and that reverence and respect for the character that has been developed in it, seems to increase the longer they remain
+
+<vocab>Barnstable County, cranberry industry, Abel D. Makepeace, Cyrus Cahoon, Zebnia H. Small, E. K. Crowell, William Crowell, Howes Baker, Cape Cod, New England, industrial history</vocab>

@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>896</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+his house. He was a large landholder, and appears to have been the wealthiest of the Sauquatuckett settlers. His tax paid to Yarmouth in 1676 amounted to £6, 17s., 9d. His first wife was Elizabeth Feake of Sandwich, to whom he was married March 24, 1650. His second wife was Elizabeth, who died aged seventy-three, December 15, 1720. He lived a quiet and peaceable life, and died aged eighty-five, May 21, 1715, and was buried in the old cemetery west of Sauquatuckett river, where a stone, with inscription, marks the spot of burial. He had several children. His only son, John, born in 1663, died September 11, 1746.
+
+Kenelm Winslow came from Marshfield, where he was born about 1637. He was a son of Kenelm Winslow, who came from Droitwich, England. He married for his first wife Mercy, daughter of Peter Warden of Yarmouth, about 1666. She died September 22, 1688, in her forty-eighth year, and was buried in the old cemetery at East Dennis, which was reserved for a burial place by her brother, Samuel Warden. Mr. Winslow married for his second wife Damaris --. He died November 11, 1715, and was buried beside his wife in the Warden burying ground, where a stone with inscription marks the place of his sepulture. He resided in West Brewster, near the house occupied by Edmund Hall. He was a wealthy man of his time. He seems to have been of a different religious training than his neighbors, John Wing and John Dillingham. He had a large family. He was a "clothier" and farmer, and owned a fulling mill on Sauquatuckett river, with some of his neighbors. His eldest son, Kenelm, born in 1667, married Bethiah Hall, January 5, 1689, and settled near him. From this Kenelm descended the present Winslows in the town.
+
+William Griffith came from Sandwich, where he is mentioned as assisting in the settlement of the estate of Edward Dillingham in 1667. He purchased of Thomas Prence one half the corn mill on the Sauquatuckett river, removed thither and occupied a place on the west side of the river, and became the miller. He sold out his place, together with his share of the mill, to Thomas Clarke, and removed to the vicinity of Monomoyick, where he was residing in 1691. Stephen Griffith, who settled in the town after 1700, was doubtless his son.
+
+Andrew Clarke was the son of Thomas Clarke of Plymouth. He removed to this town from Boston about 1678, where he had married Mehitabel Scottoway, and settled on the west side of Stoney brook upon his father's land. He died about 1706, and his wife died in 1712. He had, besides other children: Thomas, born in Boston in 1672, settled on the east side of the river; Scotto, Andrew and Nathaniel. Many descendants of Thomas Clarke are yet living in this town.
+
+<vocab>Sauquatuckett, Yarmouth, Elizabeth Feake, Kenelm Winslow, Droitwich, Mercy Warden, Peter Warden, East Dennis, Samuel Warden, Damaris, West Brewster, Edmund Hall, John Wing, John Dillingham, fulling mill, Bethiah Hall, William Griffith, Sandwich, Edward Dillingham, Thomas Prence, Monomoyick, Stephen Griffith, Andrew Clarke, Thomas Clarke, Plymouth, Boston, Mehitabel Scottoway, Stoney brook, Scotto Clarke, Nathaniel Clarke</vocab>

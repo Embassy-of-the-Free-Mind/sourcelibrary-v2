@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>258</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+“The hills were bold and fair to view,
+And covered o'er with trees,
+Said Gosnold, ‘Bring a fishing line,
+While lulls the evening breeze.
+
+“‘I'll christen that there sandy shore
+From the first fish I take—
+Tautog, or toadfish, cusk or cod,
+Horse-mackerel or hake,
+
+“‘Hard-head or haddock, sculpin, squid,
+Goose-fish, pipe-fish or cunner,—
+No matter what—shall with its name
+Yon promontory honor.’
+
+“Old Neptune heard the promise made,
+Down dove the water-god—
+He drove the meaner fish away
+And hooked the mammoth cod.
+
+“Quick Gosnold hauled. ‘Cape—Cape—Cape—Cod.’
+‘Cape Cod,’ the crew cried louder ;
+‘Here, steward! take the fish along,
+And give the boys a chowder.’”
+
+Not only has Cape Cod furnished a considerable contribution of the best literature to the world, but it has been provocative of a good deal of interesting writing from others, in respect to its characteristics, both mental and physical. It is scarcely to be wondered at, that a community so peculiarly situated as this should attract attention and excite curiosity. In 1807, an Englishman named Kendall visited these parts and published a book in which he devoted a liberal share of space to this county. Although it contained nothing very striking, it embodied some interesting and curious information respecting the Cape, at that day, when intercourse with the world was quite infrequent to the mass of the people.
+
+About 1821, Dr. Timothy Dwight, former president of Yale College, published his *Travels in New England*, in four volumes, a liberal space being devoted to Cape Cod. His book was full of information, and appreciative in that part of it devoted to the Cape. At a later period N. P. Willis wrote for a New York newspaper, and afterward embodied in a book, a series of lively, touch-and-go letters, dealing more particularly with the outward aspect of the Cape. Some of his strictures gave offense and others were more agreeable to the popular taste. Though not profound, this book was exceedingly suggestive and entertaining.
+
+Of all the numerous publications of the nature ever issued from the press, Thoreau's *Cape Cod* is by far the best, as a literary production, and for genuine appreciation of the grand physical aspects of the Cape, and of the true qualities of its people. Thoreau had a keen relish for quaint and curious phases of character as well as of land-
+
+<vocab>Cape Cod, Barnstable County, Gosnold, Neptune, Kendall, Timothy Dwight, Travels in New England, N. P. Willis, Henry David Thoreau, Cape Cod (book)</vocab>

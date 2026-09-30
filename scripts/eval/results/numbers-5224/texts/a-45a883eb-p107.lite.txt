@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>103</page-num>
+<header>The Book of Clevelanders</header>
+
+**FULLER**, Jay D.; manufacturer; born, Alden, N. Y., Jan. 22, 1872; son of Spencer J. and Mary A. Smith Fuller; educated, Alden High School; married, Cleveland, June 4, 1896, Florence Helen Quayle; one daughter, Helen; with the Haserot Canneries Co. fifteen years; established The Fuller Canneries Co. in March, 1904; pres. of the company; in November, 1912, became identified with The Weideman Co., Canned Foods and Mnfg. Dept.; Mason; member Union and Athletic Clubs.
+
+**FULLER**, Joel Haven; manufacturer; born, Cleveland, Sept. 6, 1851; son of William and Catherine M. Haven Fuller; educated, common, graded and preparatory schools, Cleveland and Oberlin, O.; married, Buffalo, N. Y., Sept. 12, 1888, Lillian Beatty Turner; issue, one daughter, living and one son, deceased; Republican in National politics, Independent in State, County and Municipal; left school at 17, to take clerkship with C., C., C. & St. L. R. R. Co.; served several years then in County Auditor's office, and later served thirteen years in office of the Standard Oil Co.; left their employment in 1890, to engage in fire brick pavement business, under name of Stowe-Fuller Co.; vice pres. of the Company; pres. Federal Refractories Co., and Terminal Land Co.; vice pres. National Fire Brick Co., Minor Fire Brick Co.; Lock Haven Fire Brick Co.; sec'y and treas. Square Realty Co.; Masonic 32nd°; member Union, Mayfield Country, Cleveland Gun, and Automobile Clubs; member Cleveland and Pittsburgh Chambers of Commerce. Recreations: Golf and Hunting.
+
+**GAEDE**, John W.; manufacturer; born, Illinois, May 16, 1873; educated, common schools, Evergreen City Business College, Bloomington, Ill.; married, Cleveland, 1896, Sophia Bohn; issue, three daughters and one son, Esther, Ottillia, Lydia and David; for the past five years has been manufacturing hardware specialties, consisting of the following, saw vices, chain drills, hollow augers, saw sets, emery wheel dressers, bench vises, plane gauges, spoke pointers and spoke shaves; has recently started to make an improved iron plane, which is entirely new and the best plane ever produced; gen. mngr. Buckeye Saw Vice Co.; member Masonic Order, Woodmen of the World, and Independent Order of Foresters.
+
+**GAMMETER**, Harry C.; inventor; born, Akron, O., Feb. 27, 1870; son of Christian and Anna Mauerhover Gammeter; public school education in Akron and Buchtel College and Case School of Applied Science; married, Oct. 25, 1905, Miss Maud F. Frye; issue, two children, Electa L. and Harry F.; traveled for seven years studying modern methods of manufacturing; worked for the United Typewriting & Supplies Co.; recognized the need of a duplicating machine for business purposes; became associated with H. C. Osborne, and the Multigraph machine was developed; in 1902, a company was formed; now has 65 offices and employs 600 men; mechanical expert American Multigraphing Co.; stockholder
+
+<vocab>Jay D. Fuller, Joel Haven Fuller, John W. Gaede, Harry C. Gammeter, manufacturing, Cleveland, biography, business, industry</vocab>

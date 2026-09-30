@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>582</page-num>
+<header>HISTORY OF BARNSTABLE COUNTY.</header>
+
+Joseph Reed, David Lewis and Myrick N. Kent were prominent fish and weir men in Chatham. The weir business there now is owned by Mr. Kent, T. V. Loveland, Joseph S. Reed, and seven others, under the firm name of Reed & Loveland. In 1837 the town had twenty-two vessels in the fisheries, yielding annually fifteen thousand quintals of cod and twelve hundred barrels of mackerel. The latter part of this century the culture of cranberries has been advanced, measurably filling the decline of the fisheries. Early in the present century the freight business by packets and vessels was of great importance. It is believed that more freighting was done from Chatham than from any other town in the county.
+
+Soon after 1800 the manufacture of salt from sea water commenced in the north part of the town, and the entire shore line from Pleasant bay around to the Harwich line at Red river was interspersed with the works. The owners' names and the location of these plants will be found in the history of the villages. The industry was at its height in 1830, and in 1837 the product from eighty establishments was twenty-seven thousand, four hundred bushels.
+
+Sheep husbandry commenced as early as 1700, and became the subject of a town vote for its regulation. March 19, 1712, the town meeting voted that no sheep should be driven for shearing before the last Monday of May, the penalty for violation of the rule to be twenty pounds. Many years subsequently various laws were passed by the town in advancing and systematizing this industry—now long extinct.
+
+Of the ills and accidents of life Chatham has had its share. The smallpox caused the death of many of its citizens in 1766, and the prevalence of this loathsome epidemic caused the removal from town of many families for the succeeding three years. Among the many losses by sea was the mysterious murder, November, 1772, of Captain Thomas Nickerson, Mr. Elisha Newcomb and William Kent, jr., on board the vessel sailed by them. The *Massachusetts Gazette* of November 23d gives a detailed account of the finding of the schooner back of the Cape by Captain Joseph Doane, who, on boarding her, found bloody decks, plundered chests and one man alive. This man was tried for the murder of the officers and crew, and was acquitted. The resolves against the embargo act, the church actions and annual elections are the only matters found in the records during the first quarter of this century.
+
+The population of the town of Chatham under the colonial census was, in 1765, 678; and in 1776, 929. Under the United States census of 1790 it had reached 1,140; in 1800, 1,351; in 1810 it was reduced by some unknown cause to 1,334; in 1820 the population was 1,630; in 1830, 2,130; in 1840, 2,334; in 1850, 2,439; and in 1860, 2,710. After the
+
+<vocab>Chatham, Barnstable County, fisheries, weir, cranberries, salt manufacture, sheep husbandry, smallpox, Massachusetts Gazette, Captain Thomas Nickerson, census, population statistics</vocab>

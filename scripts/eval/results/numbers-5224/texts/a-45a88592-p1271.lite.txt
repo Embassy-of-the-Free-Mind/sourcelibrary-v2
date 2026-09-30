@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>1001</page-num>
+<header>TOWN OF PROVINCETOWN. 1001</header>
+
+John D. Hilliard, born in 1836, is a son of Jairus and Emily (Cook) Hilliard, and grandson of Thomas Hilliard. He married Rebecca H. daughter of Jonathan Hill. She died leaving three children: Nellie B., Alice S. and John D., jr. His second marriage was with Lizzie H., daughter of Phineas Paine. They have one daughter, Helen J. John W. Hilliard succeeded in 1880 to the wholesale fish business, begun in 1836 by Stephen Hilliard, who in that year opened a store for the sale of general merchandise. In 1846 Hilliard's wharf was erected. Stephen Hilliard afterward sold to Hilliard, Johnson & Co., who were succeeded by T. & J. H. Hilliard & Co. In 1859 Thomas Hilliard retired. The firm of Freeman & Hilliard succeeded and continued until 1880, when Nathan D. Freeman retired and John D. Hilliard continued the business.
+
+Hiram C. Holmes, born in 1861, is a son of Hiram and Nancy (Avery) Holmes. Hiram Holmes came to Provincetown at the age of nineteen and followed the sea in fishing and whaling. He was twenty-five years captain of a whaleman. He kept a hardware store from 1865 until his death in 1888. Hiram C. continued the business until January, 1890, when he sold out to William C. Bangs and entered the firm of Wilcox, Crittenden & Co., manufacturers of marine and awning hardware at Middletown, Conn. Mr. Holmes is traveling for the firm. He was married January 16, 1890, to Mary E. Dyer of Provincetown. His two sisters, Susie P. and Hattie F. L., reside with their mother at Provincetown.
+
+James P. Holmes, son of James M. and Salome C. (Soper) Holmes, and grandson of Nathaniel Holmes, was born in 1852. He was for about eight years on the steamer *George Shattuck*, then four years in Boston, and since 1880 he has kept a fruit and confectionery store at Provincetown. He married Sadie C., daughter of Thomas Lewis. They have one daughter living, Flora M.—and one died in infancy.
+
+Nathaniel Hopkins, son of Isaac and Hannah (Rich) Hopkins, and grandson of Isaac Hopkins, was born in 1815. He followed the sea from 1823 until 1847, eleven years of the time as master. Since 1847 he has been a ship carpenter. He owns a controlling interest in the Union Marine Railway Company. He married Aphiah Snow, who died leaving four children, three of whom are now living: Olive J., Aphiah L. and Addie. His second marriage was with Mrs. Delia P. Paine, daughter of Benjamin Hinckley. She died and he afterward married Mrs. Margaretta E. Smith.
+
+Philip R. Howes, born in Barnstable in 1852, is a son of Philip and Temperance B. (Ames) Howes, and grandson of Richard Howes. He has lived in Provincetown since 1873. He was express messenger on the railroad until 1888, and since that time he has been express agent
+
+<vocab>John D. Hilliard, Hiram C. Holmes, James P. Holmes, Nathaniel Hopkins, Philip R. Howes, Provincetown, genealogy, biography, maritime history</vocab>

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>94</page-num>
+<header>The Book of Clevelanders</header>
+
+United States Geological Survey and Bureau of Mines, member American Society Mechanical Engineers, Society Promotion Engineering Education, American Society Testing Materials, Cleveland Engineering Society, Cleveland Chamber of Commerce; club: University; Congregationalist; Republican.
+
+FESLER, Mayo; sec'y Civic League of Cleveland; born, Indiana, 1871; son of Peter and Emma Collett Fesler; education, public and high school, Indiana; University of Chicago, Ph. B., 1896; postgrad. University of Chicago; three years fellow in History and Political Science; married, Chicago, June, 1901, Gertrude Fails; one child; sec'y Civic League of St. Louis, 1902-1910; sec'y Civic League of Cleveland since 1910; sec'y City Club of Cleveland, Ohio Municipal League and Cleveland Charter Commission; member City Club.
+
+FESSLER, Carl F.; teacher of piano; born, Karlsruhe, Germany, 1860; received his education in his native town of Karlsruhe; entered the high school there, called gymnasium, and then the music school, displaying unusual talent for music when young, his parents gave him careful training under the very best instructors; married, Cleveland, 1892, Henrietta Stoll; issue, one daughter and two sons; came to America in 1880, and with the exception of one year, has lived in Cleveland ever since; his ability as a musician and teacher was soon recognized; for twelve years he was associate director of The Wolfram School of Music; after its dissolution, he founded The Fessler School of Music, which has a teaching force of seven instructors; he has done considerable composing and one of his best is a series of piano lyrics.
+
+FETZER, Gottlob; clergyman, editor; born at Cleveland, July 30, 1861; son of Andrew and Mary A. Fetzer; educated, German-American Academy, Rochester, N. Y.; graduated Rochester Theological Seminary, 1889; married, Bertha L. Haselhuhn, of Cleveland, Nov. 28, 1889; ordained German Baptist minister, 1889; pastor Erin Avenue Church, Cleveland, 1889-1890; Berlin, Ont., 1890-1897; Second Church, New York, 1897-1901; editor of German Baptist periodicals and literature, since 1901.
+
+FIEBACH, Albert Henry; lawyer; born, Brownhelm, Lorain county, O., Aug. 28, 1876; son of Peter and Sarah Leuszler Fiebach; educated, district schools, Oberlin Academy and Oberlin College; studied two years in the University of Michigan; returned to Oberlin for senior year, graduating in 1899; received degree of A. B.; received LL. B. degree from Harvard in 1902; married, Shenandoah, Ia., Nov. 30, 1905, Miss Louise June Bogart; admitted to the bar in December of 1902; since that time engaged in general law practice in Cleveland; member Chamber of Commerce; member of the benevolence committee of the Chamber; member executive committee of Legal Aid Society, and of the legal committee of the Associated Charities.
+
+<vocab>Mayo Fesler, Carl F. Fessler, Gottlob Fetzer, Albert Henry Fiebach, Cleveland biography, genealogy, 20th century Ohio</vocab>

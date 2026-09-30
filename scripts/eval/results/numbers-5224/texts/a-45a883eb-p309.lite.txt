@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>305</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. L. Becker</image-desc>
+A. L. BECKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of P. J. Bauer</image-desc>
+P. J. BAUER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Dr. W. H. Becker</image-desc>
+DR. W. H. BECKER
+
+<image-desc size="small" type="portrait" significance="high">Portrait of A. B. Betz</image-desc>
+A. B. BETZ
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. G. Beckwith</image-desc>
+C. G. BECKWITH
+
+<image-desc size="small" type="portrait" significance="high">Portrait of D. F. Bevington</image-desc>
+D. F. BEVINGTON
+
+<vocab>A. L. Becker, P. J. Bauer, Dr. W. H. Becker, A. B. Betz, C. G. Beckwith, D. F. Bevington, The Book of Clevelanders</vocab>

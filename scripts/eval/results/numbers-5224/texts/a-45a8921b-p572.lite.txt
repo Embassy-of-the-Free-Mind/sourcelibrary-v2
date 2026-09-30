@@ -1,0 +1,62 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>558</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Towne, Hollis Frank | 381 | Wellington, Leonard | 141 |
+| Towne, Omar Alvah | 18 | Wellman, James Albert | 291 |
+| Townsend, Manley Bacon | 290 | Wellman, Justin Owen | 474 |
+| Tracy, Charles Alden | 319 | Wells, Christopher Henry | 206 |
+| Trickey, William Henry | 281 | Wendell, Caroline R | 167 |
+| Tripp, Walter Henry | 315 | Wentworth, Joseph | 399 |
+| Tripp, Warren | 343 | Weston, George Franklin | 539 |
+| True, Reuben Cutler | 190 | Weston, Robert Spurr | 535 |
+| Tuck, Edward | 355 | Wheeler, Bertrand Thorp | 439 |
+| Tuck, Edward Arthur | 406 | Whippen, Frank Warren | 161 |
+| Tucker, William Jewett | 162 | Whipple, George Hoyt | 534 |
+| Tufts, Edith Souther | 227 | Whipple, Henry Chandler | 86 |
+| Tufts, James Arthur | 69 | Whipple, Sherman Leland | 131 |
+| Turner, George Huffman | 407 | Whitcher, William Frederick | 113 |
+| Tutherly, Herbert Everett | 262 | White, Eliza Orne | 301 |
+| Tuttle, George Thomas | 535 | Whitford, George Langdon | 327 |
+| Tuttle, James Patterson | 97 | Whittemore, Arthur Gilman | 291 |
+| | | Whoriskey, Richard | 539 |
+| Upham, James Duncan | 473 | Wiggin, Joseph | 286 |
+| Upham, Warren | 123 | Wilder, Ella Caroline Abbot | 257 |
+| Upton, Robert W | 381 | Willis, Eben Marston | 106 |
+| | | Willis, John Richard | 326 |
+| Varick, Thomas Rice | 506 | Winchell, F. Mabel | 153 |
+| Varney, Charles Wesley | 339 | Winslow, Sherburn J | 430 |
+| Vaughan, Charles Woodward | 369 | Wood, George Albert | 125 |
+| Verette, Moise | 321 | Wood, Leonard | 114 |
+| | | Wood, Mary Inez Stevens | 179 |
+| Wadleigh, Fred Tilton | 177 | Woodbury, Charles Edward | 327 |
+| Wagner, George Augustus | 382 | Woodbury, Elmer Ellsworth | 283 |
+| Walker, Charles Rumford | 6 | Woodbury, Frank Ernest | 361 |
+| Walker, Reuben Eugene | 145 | Woodbury, Frank Tayler | 330 |
+| Wallace, Ellen Alfreda | 150 | Woodbury, Gordon | 66 |
+| Wallace, James Burns | 170 | Woodman, Frederic Thomas | 183 |
+| Warren, George Herbert | 447 | Woolson, Augustus A | 202 |
+| Warren, Joseph | 134 | Woodward, Nellie F. Tupper | 97 |
+| Warren, Mary Hale Palmer | 450 | Woodward, Sarah Jones | 87 |
+| Wason, Edward Hills | 251 | Woodward, Susan Jones W | 353 |
+| Wason, Eugene | 261 | Woodworth, Edward Knowlton | 235 |
+| Wason, George Butler | 167 | Woodworth, Mary Parker | 53 |
+| Waterman, Thomas Palmer | 133 | Worthen, Thomas Wilson Dorr | 41 |
+| Watson, Irving Allison | 22 | Wright, George E | 535 |
+| Weaver, George Albert | 309 | Wright, Robert Morrill | 318 |
+| Webster, Harold Adams | 134 | Wyman, Louis Eliot | 356 |
+| Webster, Jennie Josephine A | 363 | Wyman, William D | 533 |
+| Webster, Jerome Pierce | 363 | | |
+| Webster, Lorin | 363 | Yantis, Effie Earll | 519 |
+| Weed, Charles Frederick | 11 | Young, Harrie Minot | 531 |
+| Weeks, Albert J | 479 | Young, James Burlington | 427 |
+| Weeks, John W | 233 | Young, John Edwin | 395 |
+| Welch, John Tapley | 129 | Young, Oscar L | 539 |
+
+<vocab>New Hampshire, biography, index, notables</vocab>

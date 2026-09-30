@@ -1,0 +1,67 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>556</page-num>
+<header>556 ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+| NAME | PAGE | NAME | PAGE |
+| :--- | :--- | :--- | :--- |
+| Pearson, John Walter | 547 | Remick, Mary Pendleton | 201 |
+| Pearson, Robert Houghton | 546 | Rice, George Samuel | 516 |
+| Peaslee, Robert James | 325 | Rich, George Frank | 458 |
+| Peavey, George Smith | 505 | Richards, Charles Herbert | 494 |
+| Pender, John | 111 | Richards, William Frances | 493 |
+| Perin, Florence Hobart | 501 | Richardson, Albert James | 62 |
+| Perley, George Edmund | 70 | Richardson, Ellen Ruddick | 121 |
+| Perley, Mary Elizabeth | 115 | Richardson, Henry Sturtevant | 465 |
+| Perley, Sir George Halsey | 24 | Richardson, Leon Josiah | 489 |
+| Perry, Daniel Webster | 479 | Richardson, William Cummings | 486 |
+| Peterson, Oscar William | 482 | Ricker, Marilla Marks Young | 73 |
+| Pettee, Charles Holmes | 339 | Riley, Phil Madison | 483 |
+| Pike, Edwin Bertram | 175 | Robbins, Joseph Henry | 221 |
+| Pillsbury, Albert Enoch | 27 | Roberts, Ernest Porter | 82 |
+| Pillsbury, Arthur Judson | 491 | Robertson, John Evans | 376 |
+| Pillsbury, Rosecrans William | 55 | Robie, Charles Warren | 359 |
+| Pingree, Samuel Everett | 43 | Robie, Edward | 98 |
+| Plimpton, George Lincoln | 318 | Robie, Samuel Hastings | 411 |
+| Plummer, John Wesley | 55 | Robie, Virginia Huntington | 488 |
+| Plummer, William Alberto | 63 | Robinson, Maurice Henry | 488 |
+| Pollard, John William Hobbs | 491 | Rogers, Fred Ashley | 185 |
+| Poor, Ruel Whitcomb | 253 | Rogers, William Nathaniel | 477 |
+| Porter, Eleanor Hodgman | 69 | Rolfe, Jennie Clapp | 79 |
+| Porter, John Lincoln | 481 | Rollins, Dillwyn Sidney | 28 |
+| Powers, Jennie B. Carter | 494 | Rollins, Edward Warren | 521 |
+| Powers, Samuel Leland | 49 | Rolofson, Mary Currier | 145 |
+| Powers, Wilbur Howard | 33 | Roote, Charles Burgess | 150 |
+| Pratt, Louise | 515 | Ross, Winfred Smith | 459 |
+| Prentiss, John W | 510 | Rossiter, William S | 118 |
+| Prescott, Charles Henry | 481 | Rotch, William Boylston | 433 |
+| Prescott, Samuel Cate | 516 | Rowe, Stewart Everitt | 39 |
+| Preston, Frank Buchanan | 129 | Rublee, George | 495 |
+| Preston, Frank Wesley | 493 | Rundlett, Louis John | 450 |
+| Preston, George Cutler | 307 | Runnells, Ellsworth Potter | 476 |
+| Proctor, Edna Dean | 153 | Runnells, Ernest Potter | 475 |
+| Pulsifer, Harry Bridgman | 517 | Runnells, Everett Hazen | 475 |
+| Putnam, George Martin | 489 | Runnells, John Sumner | 117 |
+| Putnam, Stephen Greeley | 513 | Russell, Frank Webster | 255 |
+| | | Ryder, Herbert Daniel | 348 |
+| Quimby, Charles Elihu | 513 | | |
+| Quimby, Frank Pierce | 103 | Saltus, (Amasa) Wright | 262 |
+| Quimby, Fred Elihu | 126 | Sampson, Cassander Cary | 411 |
+| Quimby, Henry Brewer | 301 | Sanborn, Alden F | 110 |
+| Quincy, Josiah Hatch | 487 | Sanborn, Alice Evelyn | 339 |
+| | | Sanborn, Eugene Dana | 376 |
+| Rainie, Herbert Williamson | 425 | Sanborn, Frank Berry | 497 |
+| Rand, John Prentice | 114 | Sanborn, Jeremiah Wilson | 75 |
+| Randolph, William J | 517 | Sanborn, John Page | 162 |
+| Ranney, William Bradford | 313 | Sanborn, Mary Farley | 337 |
+| Ray, Robert Allen | 62 | Sanborn, Walter Henry | 345 |
+| Reed, George Harlow | 179 | Sanders, Charles Henry | 294 |
+| Remick, Helen L. Benedict | 360 | Sanders, Loren Addison | 518 |
+| Remick, James Waldron | 201 | Sanderson, Henry Stephen | 494 |
+
+<column-break/>
+
+<vocab>New Hampshire, biography, index, notables</vocab>

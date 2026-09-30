@@ -1,0 +1,84 @@
+BOOK V. DEFINITION FII.
+167
+and m introduced in the fifth definition, which are in that
+definition confidered to be every pair of multiples that can
+be taken. It muft alfo be here obferved, that ^ , D,U,
+and the like fymbols are to be confidered merely the repre-
+fentatives of geometrical magnitudes.
+In a partial arithmetical way, this may be fet forth as
+follows :
+Let us take the four numbers, 8. 7, io, and
+Firji .
+Second.
+Third.
+Fourth.
+8
+7
+10
+9
+16
+H
+20
+18
+24
+21
+3 °
+27
+32
+28
+4 °
+36
+40
+35
+5 °
+4 ?
+48
+42
+60
+54
+5 6
+49
+70
+y
+6 3
+6 4
+56
+80
+72
+*7 2
+63
+90
+01
+80
+70
+100
+90
+88
+V
+no
+99
+96
+84
+120
+108
+104
+91
+130
+117
+112
+98
+140
+126
+6cc.
+See.
+See
+&c.
+Among the above multiples we find 16 C 14 and 20
+C that is, twice the firfi is greater than twice the
+fecond, and twice the third is greater than twice the fourth;
+and 16 3] 21 and 20 ^ that is, twice the firfi: is lefs
+than three times the fecond, and twice the third is lefs than
+three times the fourth; and among the fame multiples we
+can find 71 C 56 and C that is, 9 times the firfi:
+is greater than 8 times the fecond, and 9 times the third is
+greater than 8 times the fourth. Many other equimul-

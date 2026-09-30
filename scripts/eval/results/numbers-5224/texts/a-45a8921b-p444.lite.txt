@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>430</page-num>
+<header>ONE THOUSAND NEW HAMPSHIRE NOTABLES</header>
+
+Central Committee; representative from 8th Illinois District, U. S. house of representatives, since 1909; m., Oct. 12, 1886, Margaret Barsh, Chicago. Residence, 522 South Sagamon St., Chicago.
+
+**Winslow, Sherburn J.**
+General business; b., Nottingham, N. H., March 16, 1834, but removed to Pittsfield in infancy; s. Josiah and Ruth (Tucker) Winslow; ed. public
+
+<image-desc size="medium" type="portrait" significance="high">A black and white portrait photograph of a man with a beard and glasses, wearing a suit and tie.</image-desc>
+
+schools and Pittsfield, Pembroke and New London Academies; engaged in farming and teaching until forty years of age, after which engaged extensively in lumbering and contracting; constructed the water-works for Merrimack County at Boscawen, also had charge of construction of the Pittsfield and Tilton water-works; in 1894, when the concern was in financial straits, became treasurer of the Exeter Mfg. Co., and raised the necessary funds to put it "on its feet," paying the first dividend for years in 1896; treasurer, without bond, of the Crockertown
+
+<column-break/>
+
+Lumber Co., spending $200,000 annually; Episcopalian (warden and treasurer of St. Stephens Church, Pittsfield, for years); Republican (last survivor of the organizers of the party in Pittsfield, and has voted for every Republican candidate for President); member N. H. house of representatives, 1899–1901; chairman selectmen, 1905–6, town treasurer, 1909–13; member school board many years; president Pittsfield Aqueduct Co., Pittsfield Gas Co.; director Suncook Valley and Peterboro & Hillsboro R. R.; treasurer Pittsfield Savings Bank since 1897, deposits doubling in the time; member Corinthian Lodge, A. F. & A. M., Pittsfield; Wonolancet Club, Concord; m., March 19, 1860, Margaret Dennison; two daughters, Cora and Nellie—Mrs. James L. Hook and Mrs. Frank H. Sargent, M. D.; one granddaughter, Margaret L. Hook. Residence, Pittsfield, N. H.
+
+**Foster, Herbert Darling**
+Educator; b., West Newbury, Mass., June 22, 1863; s. Davis and Harriet Louisa (Darling) Foster; ed. Dartmouth College, A.B., 1885; Harvard Graduate School, 1891–3, A.M. 1892; Univ. of Geneva, Switzerland, Litt.D. 1909; professor English and history, Worcester, Mass., Academy, 1885–91; professor of history, Dartmouth College since 1894, having spent a year previous in European study; editor "A History Syllabus for Secondary Schools," 1904; "The Records of the Town of Hanover, 1761–1818," 1905; "A Syllabus of European History" (with S. B. Fay), 1916, etc.; m., July 7, 1897, Lillian Darlington Smith, Liverpool, Eng. Residence, Hanover, N. H.
+
+**Flanders, James Greeley**
+Lawyer; b., New London, N. H., Dec. 13, 1844; s. Walter Powers and Susan Everett (Greeley) Flanders; ed. Yale, A.B. 1867; Columbia Law School, 1869; located in practice in Milwaukee, Wis.; member Milwaukee school board, 1875–7; Wisconsin As-
+
+<vocab>Sherburn J. Winslow, Herbert Darling Foster, James Greeley Flanders, New Hampshire, biography, genealogy, Dartmouth College, Pittsfield, Hanover, New London</vocab>

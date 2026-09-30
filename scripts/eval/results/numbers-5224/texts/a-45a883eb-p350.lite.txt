@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>346</page-num>
+<header>The Book of Clevelanders</header>
+
+<image-desc size="small" type="portrait" significance="high">Portrait of E. F. Kraus</image-desc>
+E. F. KRAUS
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Wm. Kornman</image-desc>
+WM. KORNMAN
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Frank S. Krause</image-desc>
+FRANK S. KRAUSE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Otto J. Kuenhold</image-desc>
+OTTO J. KUENHOLD
+
+<image-desc size="small" type="portrait" significance="high">Portrait of C. F. Kuehnle</image-desc>
+C. F. KUEHNLE
+
+<image-desc size="small" type="portrait" significance="high">Portrait of Paul Kunze</image-desc>
+PAUL KUNZE
+
+<vocab>E. F. Kraus, Wm. Kornman, Frank S. Krause, Otto J. Kuenhold, C. F. Kuehnle, Paul Kunze, The Book of Clevelanders</vocab>
