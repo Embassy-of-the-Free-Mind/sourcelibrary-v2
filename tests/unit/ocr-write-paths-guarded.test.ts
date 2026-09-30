@@ -33,6 +33,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'builds the $set for scripts/workers/syriac-kraken-lane.mjs, which runs loopVerdict on the text before calling it (#4883)',
+  'scripts/lib/ndl-koten-lane.mjs': 'builds the $set for scripts/workers/ndl-koten-lane.mjs, which runs loopVerdict on the text before calling it (#4925)',
   'scripts/import/ia-ocr-ingest.mjs': "Internet Archive's delivered OCR, not a model read — gated by scripts/lib/ia-ocr-gate.mjs (#4780)",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration; formulaic repetition is the genre (#4851)",
   'scripts/import/import-oraec.mjs': 'ORAEC corpus dump, a published edition',
