@@ -92,6 +92,8 @@ export const BOOK_FIELDS = Object.freeze([
   // page accounting
   'pages_count',
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
+  // when recountBook() (scripts/lib/page-counts.mjs) last wrote all six counters (#5325)
+  'page_counts_at',
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',

@@ -176,6 +176,8 @@ Found by scanning every tracked `.mjs/.ts/.tsx/.js/.py` file outside `tests/` an
 
 Groups: **Reconciler** 1 · **Manual recount** 1 · **Request path** 19 · **Worker / batch** 9 · **Archive counter** 10 · **One-off script** 27 · **Book creation** 77 · **Not live** 12. Live writers with a private count: 44.
 
+**Found after this table was written** (#5325, by the widened shape guard, which sees hoisted update objects): `scripts/lib/translate-core.mjs` (`syncBookTranslationCounters()`, hoisted `$set` of count/ocr/translated — a subset, canonical module; step 3) is missing from the table. `scripts/workers/batch-split-bph.mjs` (126) and `src/lib/uploads/utils.ts` (144) are listed as creation only but ALSO `$set` counters after the fact through a hoisted object — `uploads/utils.ts` with `countDocuments` over ALL pages, soft-hidden included. All three are in the guard's baseline (69 files, `tests/fixtures/page-counter-writers-baseline.json`), which is the live inventory from here on; `recount-page-stats.mjs` (2) left it in #5325.
+
 | # | file | writes | group | in #4499 baseline | today | becomes |
 |---:|---|---|---|:-:|---|---|
 | 1 | `scripts/workers/sync-worker.mjs` | $set count, ocr, translated, blank, archived | Reconciler |  | private aggregation (imports `page-counts` only for the flags) | Reconciler. Imports the shared accumulator; adds `pages_translatable`; step 2 |
