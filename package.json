@@ -5,6 +5,7 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "next dev",
+    "local": "SL_LOCAL=1 next dev --hostname 127.0.0.1 --port 3000",
     "prebuild": "node scripts/build-lamejs-bundle.js",
     "build": "next build",
     "start": "next start",

@@ -68,7 +68,7 @@ export function isLatinScriptText(text: string | null | undefined): boolean {
  * `isAldineFount(id) || <this is a Latin-script original>`, which is the widening
  * decision 1 authorises — and only here.
  */
-export function useFountOffline(bookId: string | undefined, originalText: string | null | undefined): boolean {
+export function setsInAldineOffline(bookId: string | undefined, originalText: string | null | undefined): boolean {
   return isAldineFount(bookId) || isLatinScriptText(originalText);
 }
 

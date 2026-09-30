@@ -69,6 +69,9 @@ export interface ParsedPage {
   furniture: PageFurniture;
   blocks: Block[];
   glosses: Gloss[];
+  /** `<image-desc>` — the OCR's description of a picture on the page. Not text the
+   *  printer set; shown only as a caption when nothing else describes the plate. */
+  imageDescription?: string;
   /** `<vocab>` — key terms the OCR pulled out. Apparatus, not reading text. */
   vocabulary: string[];
   /** True when there is nothing to read: every block is empty. */
@@ -115,7 +118,8 @@ const all = (src: string, tag: string): { values: string[]; rest: string } => {
  */
 function reflow(s: string): string {
   return s
-    .replace(/(\p{L})[-‐‑–]\n(\p{L})/gu, '$1$2')
+    // "continge-\nret" and the OCR's spaced variant "flucti -\nbus".
+    .replace(/(\p{L}) ?[-‐‑–][ \t]*\n[ \t]*(\p{L})/gu, '$1$2')
     .replace(/[ \t]*\n[ \t]*/g, ' ')
     .replace(/[ \t]{2,}/g, ' ')
     .trim();
@@ -255,6 +259,9 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
     .map((v) => v.trim())
     .filter(Boolean);
 
+  const desc = /<image-desc[^>]*>([\s\S]*?)<\/image-desc>/i.exec(s);
+  const imageDescription = desc ? reflow(desc[1].replace(/<\/?[a-z-]+[^>]*>/gi, '')) || undefined : undefined;
+
   // Apparatus the desk reader does not surface at all. `<summary>`/`<keywords>`
   // are indexing aids; `<meta>` is editorial; `<image-desc>` describes ornament
   // rather than transcribing it; `<insert>`/`<detected-images>`/`<columns>` are
@@ -270,6 +277,10 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
   // Legacy [[bracket:]] apparatus. Still present on older pages.
   s = s.replace(/\[\[(?:markup|language|page\s*number|page\s*type|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
+  // A note is written "Lethe <note>…</note>." — the space belongs to the note,
+  // and left behind it strands the full stop: "Lethe .". Close it up.
+  s = s.replace(/[ \t]+(<(?:note|gloss)[^>]*>)/gi, '$1');
+
   // --- blocks ---------------------------------------------------------------
   // Marginalia and centred lines are pulled out as whole blocks in document
   // order, with the surrounding prose split into paragraphs around them.
@@ -279,6 +290,14 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
   let bm: RegExpExecArray | null;
   const flushProse = (chunk: string) => {
     for (const p of paragraphs(chunk)) {
+      // A markdown heading ("### Volume I, Chapter III") is the translator marking
+      // a heading the printer centred; the desk sets it the same way as `->…<-`.
+      const heading = /^#{1,6}\s+([\s\S]+)$/.exec(p);
+      if (heading) {
+        const text = reflow(heading[1].replace(/<\/?[a-z-]+[^>]*>/gi, ''));
+        if (text) blocks.push({ kind: 'centred', text });
+        continue;
+      }
       const runs = inlineRuns(reflow(p), glosses, nextId);
       if (runs.length) blocks.push({ kind: 'para', runs });
     }
@@ -312,6 +331,7 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
     furniture,
     blocks,
     glosses,
+    imageDescription,
     vocabulary,
     isEmpty,
   };
