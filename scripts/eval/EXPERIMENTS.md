@@ -19,6 +19,22 @@ The replication column exists because of 2026-09-02, below.
 
 ---
 
+## 2026-09-30 — Does the adopted English Archive cohort (1880–1930, number-free, ≥ 90% Latin) keep the Archive's number errors out, and how much does it admit? (#5124, #5186)
+
+**Design.** Rule implemented in `scripts/lib/ia-ocr-cohort.mjs`, applied per page in `scripts/import/ia-ocr-ingest.mjs`. Three free checks and one paid one, all read-only:
+(1) **negative control** on the four #5186 county histories (2,307 pages that now carry a lite re-read; Archive leaf re-fetched): pages where the Archive prints a number the lite read lacks, with the gate on vs `--cohort-off`;
+(2) **size**: the gate over every `ia_djvu` page of 208 seeded 1880–1930 English books;
+(3) **validation**: one admitted page per book (100 pages), fresh flash-lite realtime read (production prompt, one retry on refusal), Archive-vs-lite compared, every lite number the Archive lacks read in context;
+(4) re-gate of the validated pages after the fixes (3) forced.
+
+**Result.**
+- Negative control: 1,241 of 2,307 pages carry an Archive number the lite read lacks; the gate admits **0** of them (81 pages admitted); `--cohort-off` admits all 1,241. The control fires.
+- Size: the page gate admits **34%** of `ia_djvu` pages in 1880–1930 English books (8,169 / 24,066; 15,839 refused for numbers, 58 for script). Already-written English `ia_djvu` text (from `book_events`): ≈127K pages in 1880–1930 books, ≈69K pre-1880, ≈18K post-1930, ≈2.5K unknown year — the pages outside the cohort are the #5186 re-read backlog.
+- Validation (v1 of the gate): 86 read, 14 refused as recitation (14%, same as #5124). Lite read a number the Archive text lacked on 7 pages. By context, 2 were folios (not errors), and 5 were numbers the gate could not see: "1906" read as "IQ06", which a folio exemption on a footnote line then swallowed; "18" read as "1 8"; "200" read as "aoo"; an apparatus "10" read as Greek "τὸ"; and one diary entry dropped by the Archive outright. **Fixed in v2:** a folio must be a bare digit token opening or closing the head (≤ 10 words) or foot (≤ 3 words) line; tokens mixing a digit with I/l/O/o/Q/S/Z count as numbers, and so do split digits ("1 8"). v2 refuses the IQ06 and "1 8" pages. What remains is **2 all-letter/Greek number misreads in 82 admitted pages** — the named blind spot.
+- **Separate finding (not the cohort):** 8 of the 82 validated admitted pages carry the NEIGHBOURING leaf's Archive text (the Archive's folio is off by one from lite's; word ratio 0.14–0.31) — 5 are Point Loma periodicals filled 2026-09-26 with `--min-ref-pages 1`. Reported on #4790 (its wrong-page rate was 5.4%).
+
+*Replicated?* No — one seeded draw. Archive-vs-lite is agreement, not accuracy; accuracy for this cohort is #5124's S3 cell (Archive 0.62% vs lite 0.34% CER). Spend ≈ $0.19 (+ a killed first run, est. < $0.20). Artifacts: session scratch only (draw/validate jsonl not committed — page ids listed on #5124).
+
 ## 2026-09-29 — Round 3 of #5250: do the round-2 Kraken photometric gains hold on FRESH Syriac pages? (#5250, follow-up #5277)
 
 **Headline: YES, every pre-registered prediction confirmed, per stratum.** Kraken Sophro Mhiro, order-free line CER N2

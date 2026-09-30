@@ -33,9 +33,16 @@
 // 136) does not run with its neighbours, so it stays a number and refuses the page — the exemption
 // can only ever be taken by a number the book itself corroborates.
 //
-// KNOWN BLIND SPOT. A number the Archive read as LETTERS ("551" → "SSI", #5186) has no digits left
-// to test. Nothing here catches it; the validation (#5124 thread) measured how often lite reads a
-// number on a page this gate admitted.
+// NUMBERS THE ARCHIVE HALF-READ (validation, 2026-09-30: 100 admitted pages, one per book, against
+// a fresh lite read). The first version tested only `\d{2,}` and let through "March 1906" read as
+// "IQ06" (its "06" was then swallowed by a folio exemption on a footnote line), "18 yôjanas" read as
+// "1 8", and "IO5" in a running head. So a number is also: a token that mixes a digit with the
+// letters an OCR engine confuses with digits (I l O o Q S Z |), and two single digits separated by
+// one space. And a folio must be a bare digit token at the START or END of its head/foot line.
+//
+// KNOWN BLIND SPOT. A number read ENTIRELY as letters ("551" → "SSI" in #5186, "rs. 200" → "rs.
+// aoo" in the validation) has no digit left to test, and an apparatus numeral read as Greek ("10"
+// → "τὸ") looks like a word. Nothing here catches those; the validation found 2 in 86 read pages.
 
 /** The rule, recorded on every page it admits (`ocr.agreement_ref.page_gate.rule`). */
 export const IA_ARCHIVE_COHORT = Object.freeze({
@@ -46,8 +53,10 @@ export const IA_ARCHIVE_COHORT = Object.freeze({
   minLatinShare: 0.9,
   /** Leaves either side searched for a number that runs with a candidate folio. */
   folioWindow: 3,
-  /** A running-head / folio line has at most this many words. */
+  /** A running HEAD carrying a folio has at most this many words ("12 HISTORY OF THE COUNTY."). */
   folioLineMaxWords: 10,
+  /** A FOOT line carrying a folio is nearly bare ("12", "B 12"); longer is a footnote. */
+  folioFootMaxWords: 3,
 });
 
 /**
@@ -63,14 +72,28 @@ export function publicationYear(book) {
 }
 
 const lines = (text) => String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
-const numsOf = (line) => (line.match(/\d+/g) || []).map(Number);
 
-/** Numbers on a leaf's first and last line, when that line is short enough to be a head or foot. */
+/**
+ * A folio candidate: a bare digit token (trailing punctuation allowed) that opens or closes the
+ * leaf's first or last line, when that line is short enough to be a head or foot. "12 HISTORY OF
+ * THE COUNTY." and "THE CODE OF HANDSOME LAKE 105" qualify; a footnote ending "March 1906." does not
+ * (its last token is a year inside prose, and "IQ06." is not a bare digit token anyway).
+ */
 function folioCandidates(text) {
   const ls = lines(text);
   if (!ls.length) return [];
-  const edge = ls.length === 1 ? [ls[0]] : [ls[0], ls[ls.length - 1]];
-  return edge.filter((l) => l.split(/\s+/).length <= IA_ARCHIVE_COHORT.folioLineMaxWords).flatMap(numsOf);
+  const edge = ls.length === 1 ? [[ls[0], IA_ARCHIVE_COHORT.folioLineMaxWords]]
+    : [[ls[0], IA_ARCHIVE_COHORT.folioLineMaxWords], [ls[ls.length - 1], IA_ARCHIVE_COHORT.folioFootMaxWords]];
+  const out = [];
+  for (const [l, maxWords] of edge) {
+    const words = l.split(/\s+/);
+    if (words.length > maxWords) continue;
+    for (const w of new Set([words[0], words[words.length - 1]])) {
+      const m = w.match(/^(\d{1,4})[.,:;]?$/);
+      if (m) out.push(+m[1]);
+    }
+  }
+  return out;
 }
 
 /**
@@ -92,14 +115,23 @@ export function confirmedFolios(leaves) {
   })));
 }
 
+/** A token mixing a digit with digit look-alike letters: "IQ06", "IO5", "l886", "18S6". */
+const HALF_READ = /(?<![\p{L}\d])(?=[IlOoQSZ|]*\d)(?=[\dIlOoQSZ|]*[IlOoQSZ|])[\dIlOoQSZ|]{2,}(?![\p{L}\d])/gu;
+/** Two single digits split by one space: "1 8". Not "1 Related" (a footnote marker), not "3 4ths". */
+const SPLIT_DIGITS = /(?<![\p{L}\d.,])\d \d(?![\p{L}\d])/gu;
+
 /**
- * Numbers of two or more digits on a leaf, after removing ONE occurrence of each confirmed folio.
- * Stricter than "2–4 digits" only in that a 5+-digit run also counts (it is a number to get wrong).
+ * The numbers on a leaf that an engine could get wrong, after removing ONE occurrence of each
+ * confirmed folio: digit runs of two or more (stricter than "2–4 digits" only in that a 5+-digit run
+ * also counts), plus half-read and split numbers, which are returned as strings.
  */
 export function pageNumbers(text, folios = new Set()) {
-  const nums = (String(text || '').match(/\d{2,}/g) || []).map(Number);
+  const t = String(text || '');
+  // A digit run inside a half-read token ("06" in "IQ06") is counted twice; only zero vs non-zero decides.
+  const nums = (t.match(/\d{2,}/g) || []).map(Number);
   const exempt = new Set(folios);
-  return nums.filter((n) => { if (exempt.has(n)) { exempt.delete(n); return false; } return true; });
+  const plain = nums.filter((n) => { if (exempt.has(n)) { exempt.delete(n); return false; } return true; });
+  return [...plain, ...(t.match(HALF_READ) || []), ...(t.match(SPLIT_DIGITS) || [])];
 }
 
 /** Share of a leaf's letters that are Latin script. 1 for a leaf with no letters (nothing to lose). */

@@ -52,6 +52,21 @@ describe('confirmedFolios + pageNumbers', () => {
     const f = confirmedFolios(leaves);
     expect(pageNumbers(leaves[1], f[1]).sort()).toEqual([1854, 1917]);
   });
+  it('counts numbers the Archive half-read as letters, or split (validation 2026-09-30)', () => {
+    expect(pageNumbers('Related by Edward Cornplanter, March IQ06.')).toContain('IQ06');
+    expect(pageNumbers('after going 1 8 yojanas')).toEqual(['1 8']);
+    expect(pageNumbers('THE CODE OF HANDSOME LAKE IO5')).toEqual(['IO5']);
+    expect(pageNumbers('born in l886 at Boston')).toContain('l886');
+    // …but not ordinary words, a footnote marker, or a single digit
+    expect(pageNumbers('the IO and SO words, Ohio, Illinois')).toEqual([]);
+    expect(pageNumbers('1 Related by Edward Cornplanter')).toEqual([]);
+  });
+  it('does not take a year closing a footnote on the foot line as a folio', () => {
+    const leaves = [104, 105, 106].map((n) => `THE CODE OF HANDSOME LAKE ${n}\n${prose}\n1 Related by Edward Cornplanter, March ${n + 1800}.`);
+    const f = confirmedFolios(leaves);
+    expect([...f[1]]).toEqual([105]);
+    expect(pageNumbers(leaves[1], f[1])).toEqual([1905]);
+  });
   it('counts every body number, including 5+ digit runs and pieces of "1,000"', () => {
     expect(pageNumbers('In 1836 he paid 1,000 dollars for 12345 acres.')).toEqual([1836, 0, 12345]);
     expect(pageNumbers('He had 3 sons and 4 daughters.')).toEqual([]);
