@@ -1,0 +1,20 @@
+{
+  "seeded": {
+    "n": 60,
+    "fidelity_ge4_pct": 88.3,
+    "any_major_pct": 11.7,
+    "omission_pct": 8.3,
+    "invention_pct": 13.3,
+    "k_ge4": 53,
+    "k_major": 7
+  },
+  "seam": {
+    "n": 15,
+    "fidelity_ge4_pct": 93.3,
+    "any_major_pct": 13.3,
+    "omission_pct": 0,
+    "invention_pct": 6.7,
+    "k_ge4": 14,
+    "k_major": 2
+  }
+}
