@@ -35,6 +35,14 @@
  *           complete the meter — plan the next round
  *   done    queue exhausted and nothing pending → `complete`; counters synced
  *
+ * A HOLD placed after enrol (#5424) parks the run at the next step: before a round is submitted
+ * (nothing is sent), and at collect before any page is written (the round's texts stay on the run
+ * document, `held_texts`, as a shadow run keeps its drafts; the meter is completed as usual). A
+ * hold-parked run is TERMINAL, like any park: after release the book is enrolled afresh (by hand or
+ * by the auto-selectors, which do not exclude a run parked for a hold), and the new queue skips
+ * whatever the old run already wrote. It is never resumed, because the reason for most holds is
+ * that the pages are about to change underneath it.
+ *
  * A dead or cancelled job, or a round whose every request errored, is a STRIKE: the same plan is resubmitted
  * next round; MAX_STRIKES in a row parks the run (the worker's MAX_BATCH_FAILURES). A block
  * that parsed nothing is a strike too; a block discarded short, or with a drifted boundary, is
@@ -250,6 +258,20 @@ async function setRun(db, run, set, deps) {
 /** A claim older than this was left by a ticker that died mid-submit; the run goes back to READY. */
 export const STALE_CLAIM_MS = 15 * 60 * 1000;
 
+/**
+ * Park a run because its book is held (#5424). `parked_for_hold` names the hold's reason, so the
+ * auto-selectors can tell this park (re-enrolable once the hold is released) from a strike park
+ * (re-enrol by hand once the cause is known). Returns the parked_reason.
+ */
+async function parkForHold(db, run, book, deps, extra = {}) {
+  const log = deps.log || console.log;
+  const h = book.pipeline_auto.hold;
+  const reason = `book-held (${h.reason})`;
+  await setRun(db, run, { phase: PHASE.PARKED, round: null, claimed_at: null, parked_reason: reason, parked_for_hold: h.reason, ...extra }, deps);
+  log(`[translate-batch-chained] ${run.book_id}: PARKED — ${reason}${h.issue ? ` #${h.issue}` : ''}; nothing further sent or written`);
+  return reason;
+}
+
 /** READY → SUBMITTING, atomically. False when another ticker holds (or just took) the run. */
 async function claimRun(db, run, deps) {
   if (run.phase !== PHASE.READY) return false;
@@ -316,13 +338,18 @@ function collapseRetryText(run, pageId) {
 }
 
 /**
- * Plan and build a READY run's next requests, with every refusal that sends nothing: a closed dial,
+ * Plan and build a READY run's next requests, with every refusal that sends nothing: a book held
+ * since enrol (the run parks, #5424), a closed dial,
  * or a running estimate past the approval (the run stays READY and the next tick tries again — a
  * closed dial reopens at midnight; an approval is topped up by the operator), or a finished queue
  * (the run completes). Returns { prepared } or { submitted: false, note }.
  */
 async function prepareRound(db, run, deps, { prompts }) {
   if (run.phase !== PHASE.READY && run.phase !== PHASE.SUBMITTING) return { submitted: false, note: `phase ${run.phase}` };
+  // Re-read the book every round: enrol refused a held book, but a hold placed since then must
+  // stop the run here, before anything is planned or sent.
+  const book = await db.collection('books').findOne({ id: run.book_id });
+  if (isHeld(book)) return { submitted: false, note: `parked: ${await parkForHold(db, run, book, deps)}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
   const pageDocs = await loadPageDocs(db, ids);
   const plan = planNextRound(run, pageDocs);
@@ -339,7 +366,6 @@ async function prepareRound(db, run, deps, { prompts }) {
   if (!plan || !plan.kind) return finishRun(db, run, deps);
 
   if (!(await deps.budgetAllows(db, `translate-batch-chained ${run.book_id}`))) return { submitted: false, note: 'spend-dial-closed' };
-  const book = await db.collection('books').findOne({ id: run.book_id });
   const n = (run.rounds || []).length + 1;
   const groups = plan.kind === 'block' ? [plan.pages] : plan.pages.map((p) => [p]);
   const units = [];
@@ -544,6 +570,17 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses });
 
   const book = await db.collection('books').findOne({ id: run.book_id });
+  if (isHeld(book)) {
+    // Held since the round was submitted: the round is paid for (metered above) but no page is
+    // written. Its texts stay on the run document, as a shadow run keeps its drafts (#5424).
+    const heldTexts = units.map((u, i) => {
+      const a = answerOf(i);
+      return { key: u.key, page_ids: u.pages.map((p) => p.id), text: a?.text ?? null, finish_reason: a?.finishReason ?? null, error: a?.error ?? null };
+    });
+    const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), written: 0, outcome: 'held' };
+    const reason = await parkForHold(db, run, book, deps, { rounds: [...(run.rounds || []), summary], held_texts: [...(run.held_texts || []), ...heldTexts] });
+    return { advanced: true, note: `parked: ${reason}` };
+  }
   const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id));
   const pages = round.pages.map((p) => pageDocs.get(p.id)).filter(Boolean);
   const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), written: 0, fallback: 0 };
@@ -713,7 +750,7 @@ export function phase4Lane(book, env = process.env) {
 /**
  * Books Phase 4 must not select for the chained lane this tick: an open run of any lane (the
  * pages are already on their way); a run this lane PARKED (re-enrol by hand once the cause is
- * known); and a chained run that ended in the last day WITHOUT writing its whole queue — what it
+ * known) — except one parked for a hold, whose book the hold itself keeps out until release; and a chained run that ended in the last day WITHOUT writing its whole queue — what it
  * refused (unhealthy, recitation) must not come back every tick. A run that wrote everything does
  * not exclude its book: Phase 4 then finds nothing left and advances it to translate_complete, or
  * enrols the next MAX_PAGES_PER_RUN slice of a longer book.
@@ -722,7 +759,7 @@ export async function phase4ExcludedBookIds(db, { now = new Date() } = {}) {
   const since = new Date(now.getTime() - 24 * 3600 * 1000);
   return db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
     { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
-    { mode: MODE, phase: PHASE.PARKED },
+    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false } },
     { mode: MODE, updated_at: { $gte: since }, $expr: { $lt: [{ $ifNull: ['$counts.written', 0] }, { $ifNull: ['$page_count', 0] }] } },
   ] });
 }
@@ -770,13 +807,13 @@ const CHINESE = /chinese|^zh(-|$)/i;
  */
 export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false, statuses = AUTO_STATUSES } = {}) {
   // Not picked: a book with an open run of any lane; one this lane PARKED (re-enrol by hand,
-  // --chained --enrol, once the cause is known); and one whose chained run ended in the last day —
+  // --chained --enrol, once the cause is known) other than for a hold (NOT_HELD below covers that); and one whose chained run ended in the last day —
   // a run takes at most MAX_PAGES_PER_RUN pages, so a longer book comes back for its next slice,
   // but what a run refused (unhealthy, recitation) must not take a slot every hour.
   const since = new Date(Date.now() - 24 * 3600 * 1000);
   const excludedBookIds = await db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
     { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
-    { mode: MODE, phase: PHASE.PARKED },
+    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false } },
     { mode: MODE, updated_at: { $gte: since } },
   ] });
   const match = {

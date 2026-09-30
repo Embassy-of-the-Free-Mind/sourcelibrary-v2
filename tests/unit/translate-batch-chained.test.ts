@@ -389,6 +389,61 @@ describe('guards at the write', () => {
   });
 });
 
+// ── A hold placed AFTER enrol (#5424) ──────────────────────────────────────
+describe('a hold placed after enrol stops the run at the next step', () => {
+  const HOLD = { reason: 'stranded-text-5309', issue: 5309, held_at: new Date('2026-10-01T00:00:00Z'), held_from_status: 'complete', release: 'OCR replaced' };
+  const holdBook = () => { db.data.books[0].pipeline_auto = { status: 'held', hold: HOLD }; };
+
+  it('before a round is submitted: nothing is sent, the run parks, and it is terminal (the next tick leaves it alone)', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+    holdBook();
+    const notes = await tick(db, deps);
+    expect(notes[0].note).toBe('parked: book-held (stranded-text-5309)');
+    expect(gemini.submitted).toHaveLength(0);
+    expect(deps.logUsage).not.toHaveBeenCalled();
+    const run = await runOf(db);
+    expect(run).toMatchObject({ phase: PHASE.PARKED, parked_reason: 'book-held (stranded-text-5309)', parked_for_hold: 'stranded-text-5309' });
+    await tick(db, deps, 2);
+    expect(gemini.submitted).toHaveLength(0);
+  });
+
+  it('at collect: no page is written, the round is metered, its texts stay on the run, and no next round goes out', async () => {
+    const gemini = makeGemini();
+    const writePage = vi.fn(async () => ({ written: true }));
+    const deps = makeDeps(gemini, { writePage });
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });  // round 1 submitted
+    holdBook();
+    await tick(db, deps);
+    expect(writePage).not.toHaveBeenCalled();
+    for (let n = 1; n <= 8; n++) expect(pageText(db, `p${n}`)).toBeUndefined();
+    expect(gemini.submitted).toHaveLength(1);
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1);
+    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ status: 'success', input_tokens: 2000 });
+    const run = await runOf(db);
+    expect(run).toMatchObject({ phase: PHASE.PARKED, parked_for_hold: 'stranded-text-5309', round: null });
+    expect(run.rounds.at(-1)).toMatchObject({ n: 1, outcome: 'held', written: 0 });
+    expect(run.held_texts).toHaveLength(1);
+    expect(run.held_texts[0].page_ids).toEqual(['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8']);
+    expect(run.held_texts[0].text).toContain('TRANSLATION 3');
+  });
+
+  it('after release the book enrols afresh, and the new queue skips what the old run wrote', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    await tick(db, deps);                                   // p1–8 written, round 2 submitted
+    holdBook();
+    await tick(db, deps);                                   // round 2 collected under the hold → parked
+    expect(pageText(db, 'p9')).toBeUndefined();
+    db.data.books[0].pipeline_auto = { status: 'complete' }; // released
+    const again = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(again.ok).toBe(true);
+    expect(again.run.queue.map((r: Doc) => r.page_number)).toEqual([9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+  });
+});
+
 // ── Refusals and the collapse retry ────────────────────────────────────────
 describe('single-page outcomes', () => {
   it('a RECITATION refusal on a single page is stamped as production stamps it, and the run moves on', async () => {
@@ -606,7 +661,7 @@ describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reade
     expect(await phase4ExcludedBookIds(d, { now: new Date('2026-10-01T00:00:00Z') })).toEqual(['x']);
     const [open, parked, recent] = q.$or;
     expect(open.phase.$nin).toEqual(expect.arrayContaining(['complete', 'parked', 'failed']));
-    expect(parked).toEqual({ mode: 'chained', phase: 'parked' });
+    expect(parked).toEqual({ mode: 'chained', phase: 'parked', parked_for_hold: { $exists: false } });
     expect(recent.updated_at.$gte.toISOString()).toBe('2026-09-30T00:00:00.000Z');
     expect(JSON.stringify(recent.$expr)).toContain('counts.written');
   });
