@@ -25,6 +25,12 @@
  * `--sweep-tag` records one `sweep_log` row per book attempted (pages sent, images,
  * prior status) so "attempted, found nothing" is a row, not silence.
  * Env overrides for a long operator run: IMAGE_EXTRACT_BOOKS_PER_RUN, IMAGE_EXTRACT_DEADLINE_MIN.
+ *
+ * Batch routing (#4747): when IMAGE_EXTRACTION_USE_BATCH is anything but 'false' (set in
+ * /root/sourcelibrary/.env.production.local on Hetzner), this worker stands down on the
+ * status-driven selection and the orchestrator's Phase 8 submits those books to the Gemini
+ * Batch API instead; batch-collector.mjs writes the results. Set it to 'false' to return
+ * to realtime. Explicit-list mode (--books-file) always runs realtime.
  */
 
 import { MongoClient } from 'mongodb';
@@ -50,6 +56,10 @@ const SINCE = argVal('since') ? new Date(argVal('since')) : null;
 const SWEEP_TAG = argVal('sweep-tag');
 if (SINCE && Number.isNaN(SINCE.getTime())) { console.error('--since must be an ISO date'); process.exit(2); }
 if ((SINCE || SWEEP_TAG) && !BOOKS_FILE) { console.error('--since / --sweep-tag need --books-file'); process.exit(2); }
+// Routing (#4747, decided 2026-09-30): the orchestrator's Phase 8 reads the same flag and submits
+// status-driven extraction to the Gemini Batch API (same model, half the price, boxes matched the
+// realtime noise floor in PR #5238). Same default as the orchestrator: anything but 'false' = batch.
+const BATCH_ROUTED = process.env.IMAGE_EXTRACTION_USE_BATCH !== 'false';
 // Statuses the normal selection picks; anything else keeps its status in explicit mode.
 const STATUS_ADVANCEABLE = new Set(['chapters_complete', 'complete', undefined, null]);
 
@@ -1116,6 +1126,11 @@ async function main() {
     }
     const preserved = books.filter(b => b._preserveStatus).length;
     console.log(`[IMAGE-EXTRACT] Explicit list: ${books.length} to run this invocation (${skippedDone} already run, ${runnable.length - found.length} ids not found, ${preserved} keep their status)`);
+  } else if (BATCH_ROUTED) {
+    // The orchestrator's Phase 8 owns status-driven extraction on the Batch API (#4747).
+    // Picking the same chapters_complete books here would race it and pay realtime for them.
+    console.log('[IMAGE-EXTRACT] IMAGE_EXTRACTION_USE_BATCH is on: status-driven extraction goes through the orchestrator Batch API path (Phase 8). Standing down; --books-file still runs realtime.');
+    books = [];
   } else {
   // Find books ready for image extraction
   books = await db.collection('books')
