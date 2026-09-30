@@ -61,6 +61,21 @@ describe('English modernization is reader-triggered', () => {
     ).toMatch(/freshBooks\s*=\s*freshBooks\.filter\(\s*\(?b\)?\s*=>\s*!ENGLISH_VARIANTS_P4\.includes/);
   });
 
+  it('Phase 4 gap-fill never selects English books (#4958)', () => {
+    // Gap-fill re-queues books at translate_complete / chapters_complete / complete whose
+    // translated share is under 90%. An English book has 0 translated pages by policy, so
+    // without this filter every English book at `complete` is a gap-fill candidate — and
+    // NEWEST_FIRST ranks a freshly released English shelf first (Keely/Tesla, 2026-09-30).
+    const start = orchestrator.indexOf('If no fresh books, re-queue partially-translated books');
+    const end = orchestrator.indexOf('const readyForTranslate', start);
+    expect(start, 'Phase 4 gap-fill anchor not found').toBeGreaterThan(-1);
+    expect(end, 'readyForTranslate anchor not found').toBeGreaterThan(start);
+    const gapFill = orchestrator.slice(start, end);
+    const filterAt = gapFill.search(/\$not:\s*\{\s*\$in:\s*\[\s*\{\s*\$toLower:\s*\{\s*\$ifNull:\s*\['\$language'[^\]]*\]\s*\}\s*\},\s*ENGLISH_VARIANTS_P4\s*\]/);
+    expect(filterAt, 'Phase 4 gap-fill no longer excludes ENGLISH_VARIANTS_P4 — released English books would be dispatched to paid modernization.').toBeGreaterThan(-1);
+    expect(filterAt, 'the English filter must run BEFORE $limit, or English books still take the gap-fill slots').toBeLessThan(gapFill.indexOf('$limit: effectiveLimit'));
+  });
+
   it('a filtered-out English book still leaves ocr_complete — advanced, not stranded (#5271)', () => {
     // The filter above dropped English books from the list BEFORE the loop whose
     // "no pages need translation" branch writes translate_complete, so no phase selected

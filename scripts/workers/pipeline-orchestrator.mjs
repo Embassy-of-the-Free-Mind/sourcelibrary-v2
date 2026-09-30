@@ -5033,6 +5033,11 @@ Rules:
               // Spread guard (#2449)
               $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
             }},
+            // English books are never gap-filled (#4958): an English book at `complete` has
+            // 0 translated pages BY POLICY, so it always reads as "under-translated" here, and
+            // NEWEST_FIRST puts a just-released English shelf at the head of the list. Filtering
+            // before $limit (not after) so English books cannot take the slots either.
+            { $match: { $expr: { $not: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P4] } } } },
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
             // processing_priority + pages_translated + created_at must survive the
