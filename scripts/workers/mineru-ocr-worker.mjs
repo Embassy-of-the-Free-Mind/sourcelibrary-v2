@@ -20,6 +20,9 @@
  *     snapshot is taken first (no-op on a fill, doctrine); every book gets a `sweep_log`
  *     and a `book_events` row. Until 2026-09-30 this worker stamped a bare string under
  *     `engine` — those 2,586 rows are a known gap (data-provenance.md §8), not backfilled.
+ *   - Footnotes: MinerU's markdown drops them (it files them as `page_footnote` in
+ *     `discarded_blocks`); `readPageFootnotes` appends them below the body. Measured
+ *     2026-09-30 (#5182 MinerU arm): every catastrophic page was a dropped footnote.
  *   - Empty MinerU output (<MIN_CHARS) → flag the page for a Gemini fallback,
  *     do NOT store blank text as confident OCR.
  *   - Gate the lane: language English, year 1820–1928, non-artwork, has imaged
@@ -75,7 +78,7 @@ const RUN = {
  * which image — plus `ladder`, the Gemini refusal stamps already on the page, because a
  * MinerU fill normally follows two Gemini refusals and the page should say so.
  */
-function engineBlock({ imageUrl, secs, pagesInRun, priorOcr }) {
+function engineBlock({ imageUrl, secs, pagesInRun, priorOcr, footnotes = 0 }) {
   const ladder = {};
   for (const k of ['recitation_count', 'recitation_blocked', 'fail_count', 'fail_reason', 'fail_blocked', 'fail_blocked_model']) {
     if (priorOcr && priorOcr[k] !== undefined) ladder[k] = priorOcr[k];
@@ -90,7 +93,8 @@ function engineBlock({ imageUrl, secs, pagesInRun, priorOcr }) {
     backend: 'pipeline',
     method: 'ocr',
     device: 'cpu',
-    post: 'sanitize(markdown→text); loop guard #4850; MIN_CHARS and low-quality gates',
+    post: 'sanitize(markdown→text); footnotes from middle.json discarded_blocks (page_footnote) appended below the body; loop guard #4850; MIN_CHARS and low-quality gates',
+    footnotes_appended: footnotes,
     run: { ...RUN, secs_book: Math.round(secs), pages_in_run: pagesInRun },
     issue: LANE_ISSUE,
     ladder: Object.keys(ladder).length ? ladder : null,
@@ -169,6 +173,38 @@ function readPageMd(outDir, base) {
   return hits.length ? fs.readFileSync(hits[0], 'utf8').trim() : '';
 }
 
+/**
+ * The footnotes MinerU read but left out of its markdown (#5182 MinerU arm, 2026-09-30).
+ *
+ * The pipeline backend classifies footnotes as `page_footnote` and files them in
+ * `<base>_middle.json` → `pdf_info[0].discarded_blocks`, beside the running head and the
+ * page number, so `<base>.md` has none. Measured on the 114-book English reference set:
+ * every one of MinerU's catastrophic pages (3 of 114, plus 7 more under 80% of the
+ * reference's words) was a page whose footnotes were dropped this way — the body read
+ * word for word, the notes gone. Read from image: Hyndluljoth p.225 lost three notes,
+ * over half the page's words. So the notes are appended below the body, in reading
+ * order (top to bottom by bbox), as plain text. Header and page number stay out: the
+ * reader's text is the page's words, not its furniture.
+ */
+function readPageFootnotes(outDir, base) {
+  const hits = [
+    path.join(outDir, base, 'ocr', `${base}_middle.json`),
+    path.join(outDir, base, 'auto', `${base}_middle.json`),
+  ].filter((p) => fs.existsSync(p));
+  if (!hits.length) return [];
+  try {
+    const d = JSON.parse(fs.readFileSync(hits[0], 'utf8'));
+    const blocks = (d?.pdf_info?.[0]?.discarded_blocks || []).filter((b) => b?.type === 'page_footnote');
+    blocks.sort((a, b) => (a.bbox?.[1] ?? 0) - (b.bbox?.[1] ?? 0));
+    return blocks
+      .map((b) => (b.lines || []).map((l) => (l.spans || []).map((s) => s.content || '').join(' ')).join(' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean);
+  } catch (e) {
+    console.warn(`  footnotes: could not read ${hits[0]}: ${String(e.message || e).slice(0, 80)}`);
+    return [];
+  }
+}
+
 async function processBook(db, book) {
   const id = String(book._id);
   const pagesCol = db.collection('pages');
@@ -225,10 +261,12 @@ async function processBook(db, book) {
   let written = 0, flaggedEmpty = 0, sampledCjk = 0, sampleN = 0, sampleText = '';
   const pageOps = [];
   for (const [base, p] of byBase) {
-    const text = sanitize(readPageMd(outDir, base));
+    const body = sanitize(readPageMd(outDir, base));
+    const footnotes = readPageFootnotes(outDir, base).map(sanitize).filter(Boolean);
+    const text = footnotes.length ? `${body}\n\n${footnotes.join('\n')}` : body;
     if (sampleN < 8) { sampleText += ' ' + text; sampleN++; }
     if (realLen(text) >= MIN_CHARS && !lowQuality(text)) {
-      pageOps.push({ page: p, text });
+      pageOps.push({ page: p, text, footnotes: footnotes.length });
     } else {
       const status = realLen(text) < MIN_CHARS ? 'empty' : 'low-quality';
       flaggedEmpty++;
@@ -257,11 +295,11 @@ async function processBook(db, book) {
     await saveRevisionsBeforeOverwrite(db, pageOps.map((o) => o.page.id).filter(Boolean), 'ocr', { reason: 'mineru_fill', keepMeta: true });
     // A dotted `$set` cannot create fields inside `ocr: null`; make it an object first.
     await pagesCol.updateMany({ book_id: id, ocr: null }, { $set: { ocr: {} } });
-    for (const { page, text } of pageOps) {
+    for (const { page, text, footnotes } of pageOps) {
       // Degeneration-loop guard (#4850). MinerU is not an LLM, but a stuck OCR pass
       // writes the same shape into the same field, read by the same reader.
       if (loopVerdict(text || '').refuse) { console.warn(`  LOOP GUARD: refusing page ${page._id} (#4850)`); loopRefused++; continue; }
-      const engine = engineBlock({ imageUrl: imgUrl(page), secs, pagesInRun: byBase.size, priorOcr: page.ocr });
+      const engine = engineBlock({ imageUrl: imgUrl(page), secs, pagesInRun: byBase.size, priorOcr: page.ocr, footnotes });
       const r = await pagesCol.updateOne(
         fillFilter(page._id),
         { $set: {
