@@ -46,9 +46,9 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip,
 } from './ReaderV2Bits';
-import { pageTextCorpus, translationCorpus } from '@/lib/text-provenance';
+import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
@@ -1542,15 +1542,8 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {ocrCorpus
-                    ? t.corpusTranscript(ocrCorpus.name, ocrCorpus.org)
-                    : page.ocr.source === 'ia_djvu'
-                      ? t.iaTranscript(
-                          page.ocr.ia?.engine ?? null,
-                          page.ocr.ia?.ocr_date ? String(new Date(page.ocr.ia.ocr_date).getFullYear()) : null,
-                          page.ocr.agreement_ref?.median ?? null,
-                        )
-                      : t.transcribedBy(page.ocr.model)}
+                  {/* Same helper as the pane-header chip (#5186): one source of truth. */}
+                  {(() => { const prov = transcriptProvenance(page); return prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model); })()}
                 </dd>
               </div>
             )}
@@ -3682,7 +3675,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
                   {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
                 </CapsLabel>
-                {paired && <PairedBadgeRow paired={paired} />}
+                {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -4067,7 +4060,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>
                   {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
                 </CapsLabel>
-                {paired && <PairedBadgeRow paired={paired} />}
+                {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 <div className="flex items-center gap-1">
                   {traceShown && (
                     <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
