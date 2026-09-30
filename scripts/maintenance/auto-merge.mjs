@@ -43,10 +43,26 @@ function gating(pr) {
   return { test: byName.test, DCO: byName.DCO };
 }
 
+// `gh pr list` reports mergeable=UNKNOWN for EVERY open PR right after anything
+// lands on main (GitHub invalidates them all at once and recomputes lazily, on a
+// per-PR request). Since this job runs after merges by design, reading the list
+// alone would find nothing to merge, forever. Asking for one PR forces the
+// computation — same fix as reap-prs.mjs resolveMergeable(). First run after
+// the 2026-09-30 launch: 7 of 7 candidates UNKNOWN, "nothing to merge".
+function resolveMergeable(pr, attempts = 3) {
+  for (let i = 0; i < attempts && pr.mergeable === 'UNKNOWN'; i++) {
+    if (i) execSync('sleep 2');
+    const fresh = JSON.parse(sh(`gh pr view ${pr.number} --json mergeable`));
+    if (fresh.mergeable) pr = { ...pr, mergeable: fresh.mergeable };
+  }
+  return pr;
+}
+
 function candidates() {
   const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName'));
   const out = [];
-  for (const pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
+  for (let pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
+    pr = resolveMergeable(pr);
     const labels = pr.labels.map((l) => l.name);
     const g = gating(pr);
     const why = [];
