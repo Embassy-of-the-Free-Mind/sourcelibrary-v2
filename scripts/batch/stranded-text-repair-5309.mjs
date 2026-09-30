@@ -343,7 +343,12 @@ async function enrol(db) {
   const cands = s.books.filter((b) => b.phase === 'withheld' && !b.foreign_hold && (has('english') || !b.english) && (!val('book') || b.id === val('book')));
   let open = s.books.filter((b) => b.phase === 'tr_enrolled').length;
   if (!cands.length) { log(`enrol: nothing waiting (${open} runs open)`); return; }
-  if (!loopAlive()) log('enrol: WARNING no chained --loop process on this box — runs will not tick until one starts (/root/sl-chained-restart-loop.sh)');
+  if (!loopAlive()) {
+    // The lane's loop dies at its --max-minutes; the box keeps a restart script for exactly this.
+    const restart = '/root/sl-chained-restart-loop.sh';
+    if (fs.existsSync(restart)) { spawnSync('bash', [restart], { stdio: 'inherit', timeout: 120000 }); log(`enrol: chained --loop was not running — restarted via ${restart} (alive=${loopAlive()})`); }
+    else log('enrol: WARNING no chained --loop process on this box and no restart script — runs will not tick');
+  }
   let enrolled = 0;
   for (const b of cands) {
     if (open >= maxOpen) break;
