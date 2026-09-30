@@ -128,3 +128,18 @@ told apart by meter endpoint). Logged in ops `costs/spend-ledger.md`. If the coh
 
 Re-propose the seam-repair lane; judge seams source-blind; count pages by job counters; read the
 dial from a banner.
+
+---
+
+## Amendment 1 — 2026-09-30 09:49Z, before any judging: R started during the shadow phase
+
+After 75 minutes the shadow arms were at 5–6 rounds per book with a round latency median of
+7.1–7.9 min (the pilot: 2.7) and 48 of 122 rounds cancelled by the Batch API (39%; pilot 16%),
+and the loop's own tick over 24 runs takes ~7 min. The shadow phase will take ~10 h, not ~2.
+R was therefore requeued now (`_tmp-speedtest-b-r-arm.mjs --requeue`, 09:49:39Z; guard running)
+rather than after C/C2. Why this does not touch the design: a shadow run ignores what another lane
+writes and seeds only from its own text (pinned by the unit tests), and the realtime worker
+draws on realtime request quota, not the Batch queue. What it does touch: R's wall-clock now
+shares Atlas and the worker's slots with the shadow ticks and the other envelope books — it is
+reported as measured, with the first→last page write per book beside the dispatch-to-complete
+time. No verdict had been read.
