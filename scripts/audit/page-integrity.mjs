@@ -35,6 +35,8 @@ import {
   vocabAbsent, repeatedBlocks,
 } from '../lib/page-integrity.mjs';
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
+// O11 (#5142): per page, a <page-num> off the book's own pagination line
+import { pageNumMisreads } from '../lib/page-integrity.mjs';
 
 export const TRUNC_NORM_FLAG = 0.5;
 export const REPEATED_BOOK_SHARE = 0.2;
@@ -105,6 +107,11 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
   for (const b of pn.breaks) {
     bk.pn.shapes[b.shape] = (bk.pn.shapes[b.shape] || 0) + 1;
     lines.push({ kind: 'pn', book: id, ...b });
+  }
+  // 2b. O11 (#5142): each <page-num> off its book's pagination line, with the folio expected there
+  for (const m of pageNumMisreads(rows)) {
+    bk.pn.misread = (bk.pn.misread || 0) + 1;
+    lines.push({ kind: 'pnmis', book: id, ...m, type: rows.find(r => r.p === m.p)?.type || null });
   }
   // 3–5 per page / pair
   for (let i = 0; i < rows.length; i++) {
@@ -338,6 +345,8 @@ export function report(out, reportDir, date) {
         for (let p = r.from; p < r.to; p++) if (cwBreak.has(p)) corroborated = true;
         lists['leaf-order'].push({ book, visible: v.visible, from: r.from, to: r.to, fromValue: r.fromValue, toValue: r.toValue, shape: r.shape, d: r.d, numbering: r.numbering, corroborated });
       }
+      // O11 (#5142): a wrong <page-num> — the repair is the tag (and what reads it), not the leaf order
+      for (const r of rows.filter(x => x.kind === 'pnmis')) (lists['page-num-misread'] ||= []).push({ book, visible: v.visible, page: r.p, numbering: r.numbering, tag: r.tag, expected: r.expectedPrinted, cause: r.cause, type: r.type });
       for (const r of rows.filter(x => x.kind === 'trunc')) lists.truncated.push({ book, visible: v.visible, page: r.p, lang: r.lang, ratio: r.ratio, norm: r.norm, src: r.src, tr: r.tr });
       for (const r of rows.filter(x => x.kind === 'echo')) lists.echoed.push({ book, visible: v.visible, page: r.p, lang: r.lang, len: r.len, share: r.share, wholePage: !!r.wholePage });
       for (const r of rows.filter(x => x.kind === 'ocrleak')) lists['ocr-reasoning-leak'].push({ book, visible: v.visible, page: r.p });
@@ -384,6 +393,7 @@ export function report(out, reportDir, date) {
   const lo = lists['leaf-order'];
   stats['leaf-order'].corroborated = lo.filter(r => r.corroborated).length;
   stats['leaf-order'].byShape = lo.reduce((o, r) => ((o[r.shape] = (o[r.shape] || 0) + 1), o), {});
+  if (stats['page-num-misread']) stats['page-num-misread'].byCause = lists['page-num-misread'].reduce((o, r) => ((o[r.cause] = (o[r.cause] || 0) + 1), o), {});
   stats.echoed.wholePage = lists.echoed.filter(r => r.wholePage).length;
   stats.echoed.wholePageBooks = new Set(lists.echoed.filter(r => r.wholePage).map(r => r.book)).size;
   const ds = lists['duplicate-scans'];
