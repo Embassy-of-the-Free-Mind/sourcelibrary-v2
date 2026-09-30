@@ -125,9 +125,20 @@ export function envelope(rawText, route) {
   return `<language>Japanese</language>\n<script>${script}</script>\n\n${lines.join('\n')}`;
 }
 
-/** Characters of text (letters in any script), envelope tags excluded — "did NDL read anything?" */
+/**
+ * The reading without its metadata envelope: the model readings carry `<language>Japanese</language>`,
+ * `<scan-quality>`, `<warning>`, `<vocab>` … whose CONTENT is not page text (counting "Japanese" as eight
+ * letters of reading made every page look read — caught 2026-09-30). Header/footer tags wrap real text
+ * and are kept (tags stripped, content kept).
+ */
+const META_TAGS = /<(language|script|scan-quality|warning|vocab|page-type|columns|confidence|notes?)>[\s\S]*?<\/\1>/g;
+export function bodyText(text) {
+  return String(text || '').replace(META_TAGS, '').replace(/<[^>]{1,40}>/g, '');
+}
+
+/** Characters of text (letters and digits in any script) in the body — "did the engine read anything?" */
 export function charCount(text) {
-  const body = String(text || '').replace(/<[^>]{1,40}>/g, '');
+  const body = bodyText(text);
   let n = 0;
   for (const ch of body) if (/[\p{L}\p{N}]/u.test(ch)) n++;
   return n;

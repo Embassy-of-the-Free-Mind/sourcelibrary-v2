@@ -1,0 +1,202 @@
+{
+ "69e75abfb3d509fcb7a48ea1": {
+  "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 6",
+  "visible": true,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "観世流謡本 (Kanze-ryū U",
+  "pages": 48,
+  "planned": 48,
+  "status_before": "complete"
+ },
+ "69e787d34a6785cfd60cdc15": {
+  "title": "農業全書 (Nōgyō Zensho), Vol. 10",
+  "visible": true,
+  "route": "woodblock",
+  "why": "2/3 census pages cursive",
+  "series": "農業全書 (Nōgyō Zensho",
+  "pages": 30,
+  "planned": 30,
+  "status_before": "complete"
+ },
+ "6a1ed9f409c2a0509efab16d": {
+  "title": "Shōni hitsuyō sodategusa, Volume 5",
+  "visible": false,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Shōni hitsuyō soda",
+  "pages": 42,
+  "planned": 42,
+  "status_before": "parked"
+ },
+ "6a1ed94809c2a0509ef9eed0": {
+  "title": "Chōmei eiseiron, Volume 4",
+  "visible": false,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Chōmei eiseiron, V",
+  "pages": 54,
+  "planned": 54,
+  "status_before": "parked"
+ },
+ "6a1ed9aa09c2a0509efa5e63": {
+  "title": "Nihon saijiki, Volume 3-4",
+  "visible": false,
+  "route": "woodblock",
+  "why": "2/3 census pages cursive",
+  "series": "Nihon saijiki, Vol",
+  "pages": 68,
+  "planned": 68,
+  "status_before": "parked"
+ },
+ "69e4207471f02ebac6264a46": {
+  "title": "好色一代男 (Life of an Amorous Man), Vol. 1",
+  "visible": true,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "好色一代男 (Life of an",
+  "pages": 24,
+  "planned": 24,
+  "status_before": "images_complete"
+ },
+ "69e014d927a1381d255992b7": {
+  "title": "Genji Monogatari (源氏物語, complete woodblock), Vol. 1",
+  "visible": true,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Genji Monogatari (",
+  "pages": 43,
+  "planned": 43,
+  "status_before": "images_complete"
+ },
+ "69dfede38d34461cbe7f4db6": {
+  "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+  "visible": true,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "Genji Monogatari E",
+  "pages": 19,
+  "planned": 19,
+  "status_before": "complete"
+ },
+ "6a1ed9a509c2a0509efa594e": {
+  "title": "Miyako fūzoku keshōden, Volume 2",
+  "visible": false,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Miyako fūzoku kesh",
+  "pages": 67,
+  "planned": 67,
+  "status_before": "parked"
+ },
+ "6a1ed94509c2a0509ef9ebb6": {
+  "title": "Atami Onsen zukō",
+  "visible": false,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "Atami Onsen zukō",
+  "pages": 54,
+  "planned": 54,
+  "status_before": "parked"
+ },
+ "6a1eda0b09c2a0509efacd04": {
+  "title": "Toriagebaba kokoroegusa, ichimei, Toriagebaba hikken. Volume 2",
+  "visible": false,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Toriagebaba kokoro",
+  "pages": 77,
+  "planned": 77,
+  "status_before": "parked"
+ },
+ "69e792e280b52390feb16f63": {
+  "title": "伊勢物語 (Ise Monogatari), Vol. 1",
+  "visible": true,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "伊勢物語 (Ise Monogata",
+  "pages": 110,
+  "planned": 110,
+  "status_before": "complete"
+ },
+ "6a1ed94309c2a0509ef9e9f7": {
+  "title": "Anma tebiki",
+  "visible": false,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Anma tebiki",
+  "pages": 64,
+  "planned": 64,
+  "status_before": "parked"
+ },
+ "6a1ed94309c2a0509ef9ea78": {
+  "title": "Ansei korori ryūkōki ōmune",
+  "visible": false,
+  "route": "woodblock",
+  "why": "2/3 census pages cursive",
+  "series": "Ansei korori ryūkō",
+  "pages": 52,
+  "planned": 52,
+  "status_before": "parked"
+ },
+ "69f33b3d876dd827cbc589d4": {
+  "title": "Bunshō",
+  "visible": true,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "Bunshō",
+  "pages": 28,
+  "planned": 28,
+  "status_before": "images_complete"
+ },
+ "69f33eb5876dd827cbc60679": {
+  "title": "Chokibune",
+  "visible": true,
+  "route": "manuscript",
+  "why": "2/3 census pages cursive",
+  "series": "Chokibune",
+  "pages": 30,
+  "planned": 30,
+  "status_before": "complete"
+ },
+ "6a1ed94f09c2a0509ef9f787": {
+  "title": "Denka : ba shokbyo inari ryojikata hidensho :",
+  "visible": false,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "Denka : ba shokbyo",
+  "pages": 124,
+  "planned": 124,
+  "status_before": "parked"
+ },
+ "69de11b086e6d59321ba0fe5": {
+  "title": "Empon (Shunga erotic prints)",
+  "visible": true,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Empon (Shunga erot",
+  "pages": 52,
+  "planned": 52,
+  "status_before": "complete"
+ },
+ "69d5ae55d0bd3547a5656f95": {
+  "title": "Ganzan Daishi Hyakusen Wakai",
+  "visible": true,
+  "route": "woodblock",
+  "why": "3/3 census pages cursive",
+  "series": "Ganzan Daishi Hyak",
+  "pages": 58,
+  "planned": 58,
+  "status_before": "complete"
+ },
+ "69dfede88d34461cbe7f4ecf": {
+  "title": "Genji Monogatari: Miotsukushi (源氏物語 澪標)",
+  "visible": true,
+  "route": "manuscript",
+  "why": "3/3 census pages cursive",
+  "series": "Genji Monogatari:",
+  "pages": 43,
+  "planned": 43,
+  "status_before": "complete"
+ }
+}

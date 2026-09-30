@@ -45,7 +45,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, NDL,
-  routeBook, pilotDraw, pagePolicy, envelope, charCount, ocrSetFields,
+  routeBook, pilotDraw, pagePolicy, envelope, bodyText, charCount, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/ndl-koten-lane.mjs';
 
@@ -135,7 +135,7 @@ async function plan() {
 // ── compare ────────────────────────────────────────────────────────────────────────────
 
 function bigrams(t) {
-  const s = [...String(t || '').replace(/<[^>]{1,40}>/g, '').replace(/\s+/g, '')];
+  const s = [...bodyText(t).replace(/\s+/g, '')];
   const m = new Map();
   for (let i = 0; i + 1 < s.length; i++) { const k = s[i] + s[i + 1]; m.set(k, (m.get(k) || 0) + 1); }
   return m;
@@ -212,9 +212,10 @@ async function apply() {
         const raw = fs.readFileSync(outTxt(bid, r.pn), 'utf8');
         const chars = charCount(raw);
         const oldLoop = p.ocr?.data ? loopVerdict(p.ocr.data).refuse : false;
-        if (chars < MIN_CHARS && charCount(p.ocr?.data) >= MIN_CHARS && !oldLoop) {
-          // NDL saw no text where the stored reading has some: keep it and say so (a picture page, or
-          // a reading NDL missed — either way a blank must not replace text by accident)
+        if (chars < MIN_CHARS && !oldLoop) {
+          // NDL saw no text: never store an empty reading. Where the page has a stored reading it is
+          // kept (a picture page, or text NDL missed); where it has none it stays unread. A textless
+          // read replaces only a loop, which is not a reading of anything.
           if (APPLY) append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'ndl_textless_kept', chars, old_chars: charCount(p.ocr?.data) });
           totals.textless_kept++; continue;
         }
