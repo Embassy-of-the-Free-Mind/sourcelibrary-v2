@@ -17,8 +17,9 @@
  * which knows about the others: the batch OCR submit (pages), the batch collector (writes OCR
  * hours later), the stale-translation withhold (the chained lane only selects pages WITHOUT a
  * translation, so the wrong-leaf English must be moved out first), and the chained translation
- * lane (refuses held books, so each book is released for the seconds it takes to enrol and held
- * again). This file sequences them, checkpoints every step in a state file, and keeps a running
+ * lane (refuses held books — and since #5427 parks a run whose book is held at any round — so a
+ * book is released for translation and stays at its prior status; Phase 4 excludes books with an
+ * open chained run, #5411). This file sequences them, checkpoints every step in a state file, and keeps a running
  * sum against the cap. It is idempotent per phase: rerun any command and it continues.
  *
  * Old text is retained: OCR is snapshotted to page_revisions with keepMeta (the old
@@ -38,7 +39,7 @@
  *   ... reconcile       re-derive submit state from batch_jobs after a dropped submit
  *   ... check           collect OCR job outcomes; retry unwritten pages once
  *   ... withhold        withhold stale (wrong-leaf) translations under the new OCR
- *   ... enrol [--max-open 60] [--english] [--book ID]
+ *   ... enrol [--max-open 60] [--english] [--book ID]   release → chained enrol (book stays released)
  *   ... runs            read chained run phases
  *   ... clear           clear needs_reocr on rewritten pages
  *   ... release         release every book this lane held (after the audit passes)
@@ -87,12 +88,39 @@ const STATE = val('state', path.join(ROOT, 'scripts/output/stranded-text-repair-
 const LOG_DIR = path.dirname(STATE);
 
 // ── state ──────────────────────────────────────────────────────────────────
-function loadState() { return JSON.parse(fs.readFileSync(STATE, 'utf8')); }
-function saveState(s) {
+function loadState() {
+  const s = JSON.parse(fs.readFileSync(STATE, 'utf8'));
+  Object.defineProperty(s, '__loaded', { value: new Map(s.books.map((b) => [b.id, JSON.stringify(b)])), enumerable: false });
+  return s;
+}
+function writeState(s) {
   fs.mkdirSync(LOG_DIR, { recursive: true });
   s.updated_at = new Date().toISOString();
   fs.writeFileSync(STATE + '.tmp', JSON.stringify(s, null, 1));
   fs.renameSync(STATE + '.tmp', STATE);
+}
+/**
+ * Merge-on-save: commands run concurrently (a 50-book `ocr` submit takes an hour while `check`,
+ * `withhold` and `enrol` tick), so a command never writes back the whole snapshot it loaded. It
+ * re-reads the file and replaces only the books it changed since its load (deep-compared against
+ * the copy it started from), plus `cap_hit`.
+ */
+function saveState(s) {
+  if (!fs.existsSync(STATE) || !s.__loaded) return writeState(s);
+  const fresh = loadState();
+  const byId = new Map(fresh.books.map((b, i) => [b.id, i]));
+  let changed = 0;
+  for (const b of s.books) {
+    const before = s.__loaded.get(b.id);
+    const now = JSON.stringify(b);
+    if (before === now) continue;
+    const i = byId.get(b.id);
+    if (i == null) fresh.books.push(b); else fresh.books[i] = b;
+    s.__loaded.set(b.id, now); changed++;
+  }
+  if (s.cap_hit) fresh.cap_hit = s.cap_hit;
+  writeState(fresh);
+  return changed;
 }
 const log = (m) => console.log(`${new Date().toISOString().slice(11, 19)} ${m}`);
 const ts = (d) => (d ? new Date(d) : null);
@@ -364,9 +392,11 @@ async function enrol(db) {
       out = execFileSync(process.execPath, ['scripts/workers/translate-batch-worker.mjs', '--chained', '--enrol', `--books=${b.id}`, `--approved-usd=${approved}`],
         { cwd: ROOT, env: process.env, encoding: 'utf8', timeout: 600000 });
     } catch (e) { out = `${e.stdout || ''}\n${e.stderr || ''}\nEXIT ${e.status}`; }
-    const re = await holdBook(db, b.id, HOLD);
-    if (re.outcome !== 'held') log(`  ${b.id}: RE-HOLD ${re.outcome} — check the book`);
-    const m = out.match(/run (\S+) est \$([\d.]+)/);
+    // NOT re-held: since #5424/#5427 the chained lane parks any run whose book is held, at every
+    // round. The book stays at its prior status while the run translates; Phase 4 (and gap-fill)
+    // exclude books with an open chained run (#5411), so nothing else translates them meanwhile.
+    b.held_by_us = false; b.released_for_translation_at = new Date().toISOString();
+    const m = out.match(/run (\S+) est \$([\d.]+)/) || (out.match(/open-run (\S+)/) && ['', out.match(/open-run (\S+)/)[1], String(b.n * 0.0006)]);
     if (m) {
       b.run_id = m[1]; b.tr_est = Number(m[2]); b.tr_approved = approved; b.phase = 'tr_enrolled'; b.tr_enrolled_at = new Date().toISOString();
       open++; enrolled++;
@@ -424,7 +454,7 @@ async function clear(db) {
 async function release(db) {
   const s = loadState();
   let n = 0;
-  for (const b of s.books.filter((x) => x.held_by_us && !x.released_at)) {
+  for (const b of s.books.filter((x) => x.held_by_us && !x.released_at && !x.released_for_translation_at)) {
     const book = await db.collection('books').findOne({ id: b.id }, { projection: { pipeline_auto: 1 } });
     if (!isHeld(book) || book.pipeline_auto.hold.reason !== HOLD.reason) { log(`  ${b.id}: not held as ${HOLD.reason} (${book?.pipeline_auto?.hold?.reason || book?.pipeline_auto?.status}) — skipped`); continue; }
     const r = await releaseBook(db, b.id, { note: 'stranded-text repair finished (#5309)', source: HOLD.source });
