@@ -136,32 +136,48 @@ via `highlighted_books` collection entries.
 ## Corpus size in words ("bigger than Wikipedia")
 
 **One instrument, one log.** Every "N billion words" or "× English Wikipedia"
-claim comes from `scripts/analytics/corpus-size.mjs` (a `$sample` over `pages`,
-winsorized at 3,000 words a page; median is the floor). Run it with `--log` and
-it appends a dated row to `scripts/analytics/corpus-size-log.jsonl`; quote from
-the log, and re-run before any public number older than a month:
+claim comes from `scripts/analytics/corpus-size.mjs`: per-page word statistics
+from a `$sample` over `pages` (winsorized at 3,000 words a page; median is the
+floor), multiplied by the **exact** page counts from `books.pages_ocr` /
+`pages_translated`. Run it with `--log` and it appends a dated row to
+`scripts/analytics/corpus-size-log.jsonl`; quote from the log, and re-run before
+any public number older than a month:
 
 ```
 node --env-file=.env.production.local scripts/analytics/corpus-size.mjs --sample 6000 --log
 ```
 
-| Date | Page docs | Headline words | Floor (median) | vs EN Wikipedia (5B) | Source |
-|---|---|---|---|---|---|
-| 2026-06-01 | 6.5M | 5–7B | | ≈ 1× | blog "How Big Is the Library?" |
-| 2026-10-01 | 22.6M | 15.2B (7.9B originals + 7.3B translations) | 10.7B | ≈ 2–3× | the log |
+| Date | Page docs | OCR'd / translated pages | Headline words | Floor (median) | vs EN Wikipedia (5B) | Source |
+|---|---|---|---|---|---|---|
+| 2026-06-01 | 6.5M | | 5–7B | | ≈ 1× | blog "How Big Is the Library?" |
+| 2026-10-01 | 22.6M | 6.9M / 4.87M | 6.8B (3.4B originals + 3.3B translations) | 4.8B | ≈ 1.35× | the log |
 
-Three things the number does NOT say, learned 2026-10-01 when "we had about as
-much as Wikipedia months ago — have we stopped translating?" turned out to be
-the wrong question:
+**`$sample` is biased toward text-bearing documents — never take a coverage
+fraction from it (2026-10-01).** The same run, projecting from the sample's own
+coverage (71% of docs with OCR, 48% with translation), reported **15.2B words,
+3× Wikipedia** — a tripling since June that did not happen. The exact counters
+say 30% and 22%. A WiredTiger random-cursor sample lands on large documents
+more often, and since June the collection filled with ≈ 14M empty import stubs
+(50K hidden books), so the bias went from negligible to 2×. A per-book spot
+check (25 visible books) confirmed the counters: page docs = 1.03× `pages_count`,
+docs with translation text = 1.05× `pages_translated`. The sample is fine for
+words-per-page; the denominator must be an exact count. Same family as the
+`visible: true` overcount above: the convenient number is the wrong one.
 
-- **Growth ≠ translation.** The tripling since June is mostly hidden Internet
-  Archive imports (≈ 50K hidden books) arriving with the Archive's own OCR text.
-  Translation output over July–September was 12% of April alone (`output.json`
-  on the spend page), by choice: the $5/day dial and the holds.
-- **Translation coverage can be inflated by English books whose `translation`
-  field held their own text** (English-to-English, stopped by #5384). Until the
-  exact count of pages with genuine translation text is in the log, quote the
-  floor for the translated share.
+Three things the number does NOT say, learned the same day when "we had about as
+much as Wikipedia months ago — have we stopped translating? are we losing
+books?" came in:
+
+- **Flat words ≠ stopped, and it is not loss.** Books with pages went 88,123 →
+  92,185 (7 Sep → 1 Oct), visible readable 41,848 → 42,192; 1,483 books moved to
+  the recoverable `deleted_books` in 90 days. Translation output July–September
+  was 12% of April alone (`output.json` on the spend page), by choice: the
+  $5/day dial and the holds. The page-doc count (6.5M → 22.6M) is import stubs
+  waiting for the pipeline, not text.
+- **The translated share can still be nudged by English books whose
+  `translation` field held their own text** (English-to-English, stopped by
+  #5384); the book-level counter for English books with translation is 742K
+  pages, so the effect on the total is under 10%.
 - **This is a different question from "how many books are translated".** That
   one is the ladder in `../translation-state.md` (`readable_in_english`); the
   homepage `translatedToEnglish` is the old ≥90% rule; the vision page's

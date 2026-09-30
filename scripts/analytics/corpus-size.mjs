@@ -21,9 +21,10 @@
 //       node scripts/analytics/corpus-size.mjs [--sample N] [--outliers] [--log]
 //
 // --log appends one JSON row to scripts/analytics/corpus-size-log.jsonl so runs
-// can be compared over time (June 2026 ≈ 1× English Wikipedia → Oct 2026 ≈ 3×;
-// see the log and .claude/docs/invariants/visibility-and-stats.md § Corpus size
-// in words). A run takes about two minutes.
+// can be compared over time (June 2026 and Oct 2026 both ≈ 1× English
+// Wikipedia; see the log and .claude/docs/invariants/visibility-and-stats.md
+// § Corpus size in words). A run takes about two minutes. Page COUNTS come from
+// the book counters, not the sample — see the COVERAGE comment below.
 
 import { MongoClient } from 'mongodb';
 
@@ -120,7 +121,26 @@ for (const p of samp) {
   kwWords += cleanWords(p.translation_keywords);
 }
 const ocrS = stats(ocr), trS = stats(tr);
-const ocrCov = ocr.length / samp.length, trCov = tr.length / samp.length;
+
+// COVERAGE COMES FROM THE BOOK COUNTERS, NOT FROM THE SAMPLE. Measured
+// 2026-10-01: `$sample` over 22.6M page docs returned 48% with translation
+// text, but the exact book-level counters sum to 4.87M translated pages = 22%.
+// A WiredTiger random-cursor sample is biased toward large documents, i.e. the
+// text-bearing pages, so sample coverage over-projects the corpus by ~2x once
+// the collection is mostly empty import stubs (it was ~6.5M mostly-filled docs
+// in June, so the bias was small then). Per-page word statistics from the
+// sample are fine; the PAGE COUNTS must be exact. Per-book spot check (25
+// visible books): page docs = 1.03 x pages_count, translated docs = 1.05 x
+// pages_translated, so the counters are the honest denominator.
+const [counters] = await books.aggregate([
+  { $match: { pages_count: { $gt: 0 } } },
+  { $group: { _id: null, ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, tr: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
+]).toArray();
+const ocrPagesExact = counters?.ocr ?? 0, trPagesExact = counters?.tr ?? 0;
+const ocrCov = ocrPagesExact / totalPages, trCov = trPagesExact / totalPages;
+const ocrCovSample = ocr.length / samp.length, trCovSample = tr.length / samp.length;
+console.log(`COVERAGE (exact, from books.pages_ocr / pages_translated): OCR ${(ocrCov * 100).toFixed(1)}% (${ocrPagesExact.toLocaleString()} pages) | TRANS ${(trCov * 100).toFixed(1)}% (${trPagesExact.toLocaleString()} pages)`);
+console.log(`  ($sample said OCR ${(ocrCovSample * 100).toFixed(1)}% / TRANS ${(trCovSample * 100).toFixed(1)}% — the sample is biased toward text-bearing docs; not used for totals)\n`);
 
 const project = (perPage, cov) => perPage * cov * totalPages;
 const ocrWords = project(ocrS.winsor, ocrCov);
@@ -186,7 +206,9 @@ if (LOG) {
   const floor = project(ocrS.median, ocrCov) + project(trS.median, trCov) + enrich;
   const row = {
     date: new Date().toISOString().slice(0, 10), sample: SAMPLE, winsor: WINSOR,
-    page_docs: totalPages, ocr_coverage: +ocrCov.toFixed(3), tr_coverage: +trCov.toFixed(3),
+    page_docs: totalPages, ocr_pages: ocrPagesExact, tr_pages: trPagesExact,
+    ocr_coverage: +ocrCov.toFixed(3), tr_coverage: +trCov.toFixed(3),
+    ocr_coverage_sample: +ocrCovSample.toFixed(3), tr_coverage_sample: +trCovSample.toFixed(3),
     ocr_median_words: ocrS.median, tr_median_words: trS.median,
     ocr_words: Math.round(ocrWords), tr_words: Math.round(trWords), enrich_words: Math.round(enrich),
     total_words: Math.round(grand), floor_words: Math.round(floor),
