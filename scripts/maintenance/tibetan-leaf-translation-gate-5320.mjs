@@ -25,7 +25,7 @@
  * Every write records a sweep_log row per book and the page ids go to the report (the undo list).
  *
  *   node --env-file=.env.production.local scripts/maintenance/tibetan-leaf-translation-gate-5320.mjs \
- *     --ledger=/root/tibetan-reocr/leaf-run-logs/pages.jsonl (--exclude | --unexclude | --lift) [--apply]
+ *     --ledger=/root/tibetan-reocr/leaf-run-logs/pages.jsonl (--exclude | --unexclude | --lift) [--book=<id>] [--apply]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -38,6 +38,7 @@ const has = (f) => process.argv.includes(f);
 const APPLY = has('--apply');
 const MODE = has('--exclude') ? 'exclude' : has('--unexclude') ? 'unexclude' : has('--lift') ? 'lift' : null;
 const LEDGER = ARG('--ledger', null);
+const ONLY_BOOK = ARG('--book', null);   // one book (a pilot), else the whole held cohort
 const HOLD_REASON = 'tibetan-retranslation-awaits-derek';
 const STAMP = 'leaf-unmarked';
 const LIFTABLE = ['runaway', 'collapsed', 'source_loop', 'leaf-drift'];
@@ -61,7 +62,7 @@ await mongo.connect();
 const db = mongo.db('bookstore');
 fs.mkdirSync(path.dirname(REPORT), { recursive: true });
 const report = fs.createWriteStream(REPORT, { flags: 'a' });
-const books = (await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id).sort();
+const books = (await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id).filter((id) => !ONLY_BOOK || id === ONLY_BOOK).sort();
 console.log(`${books.length} held cohort books — ${MODE}${APPLY ? ' APPLY' : ' dry run'}`);
 const t = { pages: 0, books: 0, reasons: {} };
 const now = new Date();
