@@ -1,0 +1,14 @@
+ordinarily accentuated, that is, when there is present a wholly fresh affect. But this is not the case with our patient, she is perfectly calm, she simply shows the results of the affects in the associations, the one-sided prominence of the complexes without the concomitant affective excitement. From this we receive the clinical impression of “lack of emotion." We still have the shells of the affect; the content, however, is gone. Perhaps the patient has misplaced the affect and these shells are only the wornout expressions for a repressed complex, having a more sensible and comprehensible content, but it is no longer reproducible and hence the affect, too, is buried. We wish here to call attention to these possibilities concerning which we shall speak later.
+
+12. Wood …I. Cushion …… 10.2"   
+13. Dream . Reality  3.8"   
+14. Copy-book ...I. Map ...... 144"   
+15. Paper ... Stamped paper .... 5.0"   
+Government paper.   
+16. Book . ooks 6.8"   
+17. Lead pencil.. Pens 7.6"   
+18. Sing ...I. Songstres .... 5.0"   
+19. Ring ..............I. Band, union or engagement............ 16.4"   
+20. Tooth ........ Set of teeth, teeth........ 14.8"
+
+R. 12“ wood—cushion" refers to her complaint that there are only wooden benches in the asylum; for her own use she desires padded furniture ("I establish upholstered furniture"). R. I3 dream—reality": Most of her delusions she takes from dreams, and when they are refuted she always emphasizes energetically the reality of all objects of her desire. R. 15"paper— stamped paper"is connected with her delusions that there exists a state document about her enormous activities. R. 16“book— books" refers to her stereotypy, “I saw the book awfully high above the grounds of the city hall," etc. This stereotypy likewise refers to her unusual activity, as we shall see below. The many reactions in R. 19"ring band, union or engagement" show an especially strong feeling-tone. The erotic complex is here quite plain—it plays a great part, as we shall see later. R. 20 tooth—set of teeth, teeth" also belongs to her wishes; she would like a new set of teeth.
