@@ -75,10 +75,14 @@ try {
     }
   }
 
-  // OPEN_CHAINED: a chained run still open on a held book (#5424).
-  const openChained = await db.collection(RUNS_COLLECTION)
+  // OPEN_CHAINED: a chained run still open on a held book (#5424). `marked` was read before the
+  // per-book loop above, which takes minutes; a book released meanwhile (and enrolled at once, the
+  // repair lanes' pattern) must not be reported, so the hold is re-read now for each candidate.
+  const candidates = await db.collection(RUNS_COLLECTION)
     .find({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL }, book_id: { $in: [...markedIds] } }, { projection: { id: 1, book_id: 1, phase: 1 } })
     .toArray();
+  const stillHeld = new Set(await B.distinct('id', { id: { $in: candidates.map((r) => r.book_id) }, 'pipeline_auto.hold': { $exists: true } }));
+  const openChained = candidates.filter((r) => stillHeld.has(r.book_id));
   const titleOf = new Map(marked.map((b) => [b.id, (b.title || '').slice(0, 44)]));
 
   const summary = { held: marked.length, by_reason: byReason, clobbered: clobbered.length, orphaned: orphaned.length, leaked: leaked.length, open_chained: openChained.length, releasable: releasable.length };
