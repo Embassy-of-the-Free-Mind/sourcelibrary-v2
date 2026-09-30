@@ -54,6 +54,13 @@ never hides an open loop.
   open a PR (`gh pr create --base main`).
 - **Never leave uncommitted work in a worktree** — it's invisible to every other session,
   and the reaper will keep the worktree around rather than touch it.
+- **If this branch's PR carries `needs-rebase`, rebase it before wrapping**:
+  `gh pr view --json labels -q '[.labels[].name]'`; if the label is there, `git fetch origin &&
+  git rebase origin/main`, resolve (`main` wins every line you did not set out to change, then
+  re-read the whole hunk for facts that now disagree with their neighbours), push with
+  `--force-with-lease`, and check `npx tsc --noEmit`. A PR that conflicts on the day it is opened is
+  the opener's job; left overnight it waits for a sweep, and 32 PRs since August were closed that
+  way instead of finished (#5415).
 
 ## 2. Reap dead worktrees
 
