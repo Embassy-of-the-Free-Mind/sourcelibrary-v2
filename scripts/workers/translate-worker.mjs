@@ -50,6 +50,7 @@ import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
@@ -1182,6 +1183,14 @@ async function selfDispatch(db, limit) {
     return [];
   }
 
+  // TWO LANES (#4681): orchestrator Phase 4 enrols every book below REALTIME_PRIORITY_FLOOR in
+  // the chained Batch lane. Self-dispatch takes reader requests only, or it claims the same
+  // backlog for realtime at 4× the price (2 books at 22:36Z on 2026-09-30, the night Phase 4
+  // flipped). PHASE4_TRANSLATE_LANE=realtime reverts both dispatchers together.
+  const LANE_FILTER = phase4Lane({ processing_priority: 0 }) === 'chained'
+    ? { processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }
+    : {};
+
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
@@ -1191,6 +1200,7 @@ async function selfDispatch(db, limit) {
       'pipeline_auto.status': { $in: ['ocr_complete'] },
       $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
       ...SCOPE_FILTER,
+      ...LANE_FILTER,
     } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
@@ -1220,6 +1230,7 @@ async function selfDispatch(db, limit) {
         // Spread guard (#2449)
         $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
         ...SCOPE_FILTER,
+        ...LANE_FILTER,
       } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
