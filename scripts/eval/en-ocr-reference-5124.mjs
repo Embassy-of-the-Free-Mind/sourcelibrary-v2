@@ -1432,6 +1432,11 @@ function stageMineruReport() {
   out.push('## 8. Pages to read by eye\n');
   out.push(`- best five, MinerU: ${json.best.map((x) => `${x.slug} (${pct(x.cer, 2)}; lite ${pct(x.lite, 2)})`).join('; ')}`);
   out.push(`- worst five, MinerU: ${json.worst.map((x) => `${x.slug} (${pct(x.cer, 1)}; lite ${pct(x.lite, 1)}; len ratio ${x.len_ratio})`).join('; ')}`);
+  // OMISSION: MinerU's pipeline backend files footnotes as `page_footnote` in middle.json's discarded_blocks, beside
+  // the running head, so the markdown the worker keeps has none. A page where MinerU emits < 80% of the reference's
+  // words while the Archive text (which keeps footnotes) emits ≥ 90% is counted here; the by-eye rows say which are footnotes.
+  json.omission = mText.filter((s) => s.metric.len_ratio < 0.8 && (get(s.slug, IA)?.metric?.len_ratio ?? 0) >= 0.9).map((s) => ({ slug: s.slug, cer: s.metric.cer, len_ratio: s.metric.len_ratio, archive_len_ratio: get(s.slug, IA).metric.len_ratio }));
+  out.push(`- pages where MinerU emits < 80% of the reference's words and the Archive text ≥ 90%: ${json.omission.length} of ${mText.length} — ${json.omission.map((x) => `${x.slug} (${pct(x.len_ratio, 0)} of words, CER ${pct(x.cer, 1)})`).join('; ')}`);
   const failedM = ok.filter((s) => s.engine === MIN && !s.metric);
   out.push(`- MinerU failed reads: ${failedM.length ? failedM.map((s) => `${s.slug} (${s.outcome}${s.shadow_metric ? `, CER of the kept text ${pct(s.shadow_metric.cer, 1)}` : ''})`).join('; ') : 'none'}`);
   const byEye = F('mineru-arm-byeye.jsonl');
