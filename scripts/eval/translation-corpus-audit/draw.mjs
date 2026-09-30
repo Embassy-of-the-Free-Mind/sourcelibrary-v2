@@ -8,7 +8,11 @@
 // Draw a stratified random sample of served translations for the corpus-wide fidelity audit.
 //
 //   node --env-file=.env.production.local scripts/eval/translation-corpus-audit/draw.mjs \
-//        --out scripts/eval/results/translation-corpus-audit-2026-09-30 --seed 20260930 [--scale 1]
+//        --out scripts/eval/results/translation-corpus-audit-2026-09-30 --seed 20260930 [--scale 1] [--arm-quota off] [--extra-per-lang 3]
+//
+// Monthly runs (monthly-draw.sh, #5301) use --scale 0.32 --arm-quota off --extra-per-lang 4: ~100 books, the model arm left to fall
+// where the random book draw puts it. The 09-30 run's 50/50 arm quota over-weighted each language's minority
+// arm and needed a separate arm-shares correction; without the quota the language weights are the only ones.
 //
 // Unit = one interior page of one book (15% front / 5% back skipped; ocr.data ≥ 200 chars; translation.data
 // ≥ 100 chars; translation.source ∈ {ai, batch_api}; no edited_by; page_type not in EXCLUDED_TYPES).
@@ -31,6 +35,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.start
 const OUT = args.out || 'scripts/eval/results/translation-corpus-audit-2026-09-30';
 const SEED = Number(args.seed || 20260930);
 const SCALE = Number(args.scale || 1);
+const ARM_QUOTA = args['arm-quota'] !== 'off';
 
 // Quota in BOOKS per language (one page per book). Post-stratification weights come from live translated
 // page counts measured at draw time and written to draw-log.json.
@@ -38,7 +43,7 @@ const QUOTA = {
   Latin: 60, English: 36, German: 36, Greek: 36, French: 24, Italian: 18, Dutch: 18, Chinese: 18,
   Sanskrit: 12, Hebrew: 12, Arabic: 12, Tibetan: 12, Korean: 6, Spanish: 6, Japanese: 6,
 };
-const EXTRA_PER_LANG = 3; // control pool
+const EXTRA_PER_LANG = Number(args['extra-per-lang'] || 3); // control pool (monthly: 4, so 15 drops survive the ≥4-unit rule)
 const N_SWAP = 15, N_DROP = 15, N_REPEAT = 15;
 const EXCLUDED_TYPES = ['archived-spread', 'blank', 'title-page', 'toc', 'index', 'illustration', 'digitizer-insert', 'colophon', 'errata', 'cover', 'map', 'plate'];
 const MIN_OCR = 200, MIN_TR = 100;
@@ -61,7 +66,7 @@ await client.connect();
 const db = client.db(process.env.MONGODB_DB || 'bookstore');
 const books = db.collection('books'), pages = db.collection('pages');
 
-const log = { seed: SEED, at: new Date().toISOString(), quota: QUOTA, weights: {}, visits: {}, exclusions: {}, arms: {} };
+const log = { seed: SEED, at: new Date().toISOString(), quota: QUOTA, scale: SCALE, arm_quota: ARM_QUOTA, weights: {}, visits: {}, exclusions: {}, arms: {} };
 const bump = (o, k) => { o[k] = (o[k] || 0) + 1; };
 
 // 1. Frame: live books with translations, per language, and the live translated-page weights.
@@ -129,7 +134,7 @@ for (const lang of Object.keys(QUOTA)) {
     const r = await drawPage(book).catch((e) => { bump(log.exclusions, 'error'); console.error('draw error', book.id, e.message); return null; });
     if (!r) { bump(log.exclusions, 'no_candidate_page'); continue; }
     const arm = armOf(r.page.translation.model);
-    if (taken < target && (got[arm] < armCap[arm] || (visits > target * 4))) {
+    if (taken < target && (!ARM_QUOTA || got[arm] < armCap[arm] || (visits > target * 4))) {
       // after 4× the quota in visits, relax the arm cap so a one-arm language still fills its quota
       const it = toItem('main', { ...book, language: lang }, r.page, { n_candidates: r.n_candidates });
       main.push(it); texts[it.id] = { source: r.page.ocr.data, translation: r.page.translation.data };
@@ -199,5 +204,9 @@ const manifest = [...main, ...controls];
 fs.writeFileSync(path.join(OUT, 'manifest.jsonl'), manifest.map((m) => JSON.stringify(m)).join('\n') + '\n');
 fs.writeFileSync(path.join(OUT, 'items.jsonl'), manifest.map((m) => JSON.stringify({ id: m.id, language: m.language, source: texts[m.id].source, translation: texts[m.id].translation })).join('\n') + '\n');
 fs.writeFileSync(path.join(OUT, 'draw-log.json'), JSON.stringify(log, null, 2));
+// Page weights for score.mjs's page-weighted sensitivity (a random PAGE rather than a random BOOK).
+const bookW = {};
+for (const lang of Object.keys(frame)) for (const b of frame[lang]) if (main.some((m) => m.book_id === b.id)) bookW[b.id] = { pages_translated: b.pages_translated || 0, pages_count: b.pages_count || 0 };
+fs.writeFileSync(path.join(OUT, 'book-weights.json'), JSON.stringify(bookW, null, 1));
 console.error(`wrote ${main.length} main + ${controls.length} controls → ${OUT}`);
 await client.close();

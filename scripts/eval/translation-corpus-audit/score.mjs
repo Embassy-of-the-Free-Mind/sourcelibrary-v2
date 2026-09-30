@@ -5,10 +5,12 @@
 //
 //   node scripts/eval/translation-corpus-audit/score.mjs --dir scripts/eval/results/translation-corpus-audit-2026-09-30 --primary opus [--second sonnet]
 // Reads <dir>/manifest.jsonl, <dir>/draw-log.json, <dir>/verdicts/<judge>/*.jsonl. Writes <dir>/report.json, <dir>/report.md.
+// --gate: exit 3 when the blinded controls fail (monthly.sh reports nothing but the controls then). Thresholds
+// below were set from the 2026-09-30 run (15/15, 15/15, 15/15 within one) with one miss of slack each.
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { bootstrapCI, resetSeed } from '../lib/paired-stats.mjs';
+import { bootstrapCI, resetSeed, seededRand } from '../lib/paired-stats.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true] : []).filter(Boolean));
 const DIR = args.dir, PRIMARY = args.primary || 'opus', SECOND = args.second || null;
@@ -72,6 +74,17 @@ const ctrl = {
 };
 // swap items: the *unswapped* extra is never judged; report drop controls vs their own text is not available. Fine.
 
+// A run whose controls fail is not reported (#5301). Rates, not counts, so a run with a short control set
+// is judged on what it has — and a control set under 10 of a kind fails outright: too few to certify.
+const GATE = { swap_caught: 14 / 15, drop_flagged: 13 / 15, repeat_within1: 14 / 15, min_n: 10 };
+const gateChecks = {
+  swap: { n: ctrl.swap.n, rate: ctrl.swap.n ? ctrl.swap.caught_fidelity_le2 / ctrl.swap.n : 0, need: GATE.swap_caught },
+  drop: { n: ctrl.drop.n, rate: ctrl.drop.n ? ctrl.drop.flagged_omission / ctrl.drop.n : 0, need: GATE.drop_flagged },
+  repeat: { n: ctrl.repeat.n, rate: ctrl.repeat.n ? ctrl.repeat.within1 / ctrl.repeat.n : 0, need: GATE.repeat_within1 },
+};
+for (const c of Object.values(gateChecks)) c.pass = c.n >= GATE.min_n && c.rate >= c.need - 1e-9;
+const controlsGate = { pass: Object.values(gateChecks).every((c) => c.pass), checks: gateChecks };
+
 // ── Cells ────────────────────────────────────────────────────────────────────
 const judged = main.filter((m) => V[m.id]);
 const byLang = groupBy(judged, (m) => m.language);
@@ -79,6 +92,7 @@ const report = {
   dir: DIR, primary_judge: PRIMARY, second_judge: SECOND, seed: drawLog.seed, drawn_at: drawLog.at,
   n_main_drawn: main.length, n_main_judged: judged.length, n_books: new Set(judged.map((m) => m.book_id)).size,
   controls: ctrl,
+  controls_gate: controlsGate,
   overall_unweighted: cell(judged, V),
   by_language: Object.fromEntries(Object.entries(byLang).sort((a, b) => b[1].length - a[1].length).map(([k, v]) => [k, cell(v, V)])),
   by_arm: Object.fromEntries(Object.entries(groupBy(judged, (m) => m.arm)).map(([k, v]) => [k, cell(v, V)])),
@@ -110,7 +124,7 @@ function weightedCI(pred, iters = 2000) {
     let est = 0;
     for (const [lang, items] of langs) {
       const share = W[lang].translated_pages / totalPages;
-      let k = 0; for (let j = 0; j < items.length; j++) k += pred(V[items[Math.floor(Math.random() * items.length)].id]) ? 1 : 0;
+      let k = 0; for (let j = 0; j < items.length; j++) k += pred(V[items[Math.floor(seededRand() * items.length)].id]) ? 1 : 0;
       est += share * k / items.length;
     }
     draws.push(100 * est);
@@ -203,19 +217,24 @@ if (args.store) {
         measure: 'judged', against: { judge: `claude-${judge}`, judge_packet_id: `${runId}/${judge}`, source_hash: m.ocr_hash, translation_hash: m.translation_hash },
         metric: { fidelity: v.fidelity, ...v.flags, n_defects_major: v.defects.filter((d) => d.severity === 'major').length, n_defects_minor: v.defects.filter((d) => d.severity === 'minor').length },
         control_expected: m.expected || null, repeat_of: m.repeat_of || null,
-        scorer, scorer_version: 1, rubric: 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: 5274 });
+        scorer, scorer_version: 1, rubric: 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: Number(args.issue || 5274) });
     }
   }
   const sdir = path.join('scripts/eval/store/scores', 'translation-corpus-audit-judge@1');
   fs.mkdirSync(sdir, { recursive: true });
-  fs.writeFileSync(path.join(sdir, `${month}.jsonl`), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  console.error(`store: ${rows.length} score rows → ${sdir}/${month}.jsonl`);
+  // A month file can hold more than one run (the 2026-09-30 one-off and the first monthly run share September):
+  // replace this run's rows, keep every other run's.
+  const sfile = path.join(sdir, `${month}.jsonl`);
+  const kept = readJsonl(sfile).filter((r) => !r._bad && r.run_id !== runId);
+  fs.writeFileSync(sfile, [...kept, ...rows].map((r) => JSON.stringify(r)).join('\n') + '\n');
+  console.error(`store: ${rows.length} score rows → ${sfile} (${kept.length} rows of other runs kept)`);
 }
 
 // ── Markdown ─────────────────────────────────────────────────────────────────
 const row = (name, c) => `| ${name} | ${c.n} | ${c.fidelity_mean ?? '—'} | ${c.fidelity_median ?? '—'} | ${c.dist.join(' / ')} | ${c.pct_5 ?? '—'} | ${c.pct_ge4 ?? '—'} | ${c.pct_le2 ?? '—'} | ${c.flags.omission ?? '—'} | ${c.flags.invention ?? '—'} | ${c.flags.untranslated ?? '—'} | ${c.any_major ?? '—'} |`;
 const hdr = '| cell | n books | mean | median | 1/2/3/4/5 | %5 | %≥4 | %≤2 | %omission | %invention | %untransl. | %any major |\n|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|';
 let md = `# Translation corpus audit — ${DIR.split('/').pop()}\n\nJudge: ${PRIMARY} (source-grounded, reference-free, single candidate; measure = judge rating, NOT accuracy). ${report.n_main_judged} pages from ${report.n_books} books, one interior page per book, seed ${report.seed}.\n\n`;
+md += `**Controls gate: ${controlsGate.pass ? 'PASS' : 'FAIL — this run is not reported'}** (swap ≥ ${Math.round(GATE.swap_caught * 100)}% rated ≤2, drop ≥ ${Math.round(GATE.drop_flagged * 100)}% flagged omission, repeat ≥ ${Math.round(GATE.repeat_within1 * 100)}% within one; ≥ ${GATE.min_n} of each).\n\n`;
 md += `## Controls (read first)\n- swap (translation of another page): ${ctrl.swap.caught_fidelity_le2}/${ctrl.swap.n} rated ≤2, ${ctrl.swap.flagged_wrong_page}/${ctrl.swap.n} flagged wrong_page\n- drop (middle ~35% removed): ${ctrl.drop.flagged_omission}/${ctrl.drop.n} flagged omission, ${ctrl.drop.fidelity_le3}/${ctrl.drop.n} rated ≤3\n- repeat (same item twice): ${ctrl.repeat.exact}/${ctrl.repeat.n} exact, ${ctrl.repeat.within1}/${ctrl.repeat.n} within 1, ${ctrl.repeat.flags_identical}/${ctrl.repeat.n} identical flags\n\n`;
 md += `## Corpus estimate (post-stratified by language; 95% CI)\n| statistic | est % | CI |\n|---|---:|---|\n| fidelity 5 | ${report.corpus_estimate.pct_fidelity_5.est} | ${report.corpus_estimate.pct_fidelity_5.ci.join('–')} |\n| fidelity ≥ 4 | ${report.corpus_estimate.pct_fidelity_ge4.est} | ${report.corpus_estimate.pct_fidelity_ge4.ci.join('–')} |\n| fidelity ≤ 2 | ${report.corpus_estimate.pct_fidelity_le2.est} | ${report.corpus_estimate.pct_fidelity_le2.ci.join('–')} |\n| any major defect | ${report.corpus_estimate.any_major_defect.est} | ${report.corpus_estimate.any_major_defect.ci.join('–')} |\n` + FLAGS.map((k) => `| ${k} | ${report.corpus_estimate.flags[k].est} | ${report.corpus_estimate.flags[k].ci.join('–')} |`).join('\n') + '\n\n';
 md += `## By language\n${hdr}\n` + Object.entries(report.by_language).map(([k, c]) => row(k, c)).join('\n') + '\n\n';
@@ -228,4 +247,5 @@ md += `## Defect types (primary judge, main items)\n| type/severity | n |\n|---|
 if (report.agreement) md += `## Inter-judge agreement (${PRIMARY} vs ${SECOND}, n=${report.agreement.n})\nexact ${report.agreement.exact}%, within 1: ${report.agreement.within1}%, mean(primary−second) ${report.agreement.primary_minus_second_mean}. Second judge controls: swap caught ${report.agreement.second_controls.swap_caught.filter(Boolean).length}/${report.agreement.second_controls.swap_caught.length}, drop flagged ${report.agreement.second_controls.drop_flagged.filter(Boolean).length}/${report.agreement.second_controls.drop_flagged.length}.\n\n| flag | agree % | primary + | second + |\n|---|---:|---:|---:|\n` + FLAGS.map((k) => `| ${k} | ${report.agreement.flag_agreement[k].agree_pct} | ${report.agreement.flag_agreement[k].primary_pos} | ${report.agreement.flag_agreement[k].second_pos} |`).join('\n') + '\n\n';
 md += `## Worst 25 (primary judge)\n| fidelity | language | arm | flags | url | reason |\n|---:|---|---|---|---|---|\n` + report.worst.map((w) => `| ${w.fidelity} | ${w.language} | ${w.arm} | ${w.flags.join(', ')} | ${w.url} | ${String(w.reason || '').replace(/\|/g, '/').slice(0, 200)} |`).join('\n') + '\n';
 fs.writeFileSync(path.join(DIR, 'report.md'), md);
-console.error(`report → ${DIR}/report.{json,md}`);
+console.error(`report → ${DIR}/report.{json,md}; controls gate ${controlsGate.pass ? 'PASS' : 'FAIL'}`);
+if (args.gate && !controlsGate.pass) process.exit(3);
