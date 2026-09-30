@@ -15,6 +15,7 @@ import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
+import { translationPercent } from '@/lib/translation-completeness';
 
 export interface CollectionBook {
   bookId?: string;
@@ -32,6 +33,9 @@ export interface CollectionBook {
   pages_ocr?: number;
   pages_translated?: number;
   pages_translated_es?: number;
+  /** Translation denominator inputs — see src/lib/translation-completeness.ts. */
+  pages_translatable?: number | null;
+  pages_blank?: number | null;
   /** Per-language title glosses — see src/lib/localized.ts. */
   localized?: LocalizedBookMap | null;
   thumbnail?: string;
@@ -166,7 +170,15 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
 
   const ocrPct = pctOf(book.pages_ocr, pageCount);
-  const translatedPct = pctOf(book.pages_translated, pageCount);
+  // The one translation formula (#4505): blank leaves are skipped on both sides, so a
+  // book whose every readable page is translated gets its tick. Falls back to
+  // pages_count when the surface did not project pages_translatable / pages_blank.
+  const translatedPct = translationPercent({
+    pages_count: pageCount,
+    pages_translated: book.pages_translated,
+    pages_translatable: book.pages_translatable,
+    pages_blank: book.pages_blank,
+  });
   const byline = getEffectiveByline({ ...book, author: book.author || '' });
 
   return (
