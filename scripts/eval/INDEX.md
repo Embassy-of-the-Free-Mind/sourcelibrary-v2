@@ -183,5 +183,6 @@ Read these for the house conventions before designing a new study.
 | `translation-prompt-ab.mjs` | Paired A/B of translation prompt v13 vs v15 (#3825): verified-note rate, note emission, invented/housekeeping tags, glossary blocks, with a numeric pre-registered flip rule. |
 | `true-repeat-count.mjs` | How many TRUE REPEATS does a corpus JSONL contain, and what does excluding bulk-maintenance rows do to that count? (#3473) The headline "63,572 true repeats" is not a field in the corpus summary — … |
 | `tuned-vs-base-eval.mjs` | Held-out eval: tuned sl-greek-translator-v1 vs base gemini-2.5-flash-lite on the whole-book validation split (issue #4320). |
+| `two-read-garble-5313.mjs` | Does DISAGREEMENT between two independent reads of one page image find garbled OCR? (#5313, #5376) mjs (PR #5369) — one-read text signals (OOV, filler, loops) against the same judge labels: P 0.60 … |
 | `wikisource-gt-to-groundtruth.mjs` | wikisource-gt-to-groundtruth.mjs — convert harvest-wikisource-gt.mjs output into ground-truth files the existing scorers read. |
 | `work-resolver-probe.mjs` | work-resolver-probe.mjs — measure how well the work_id resolver clusters books into works, WITHOUT a gold set. |

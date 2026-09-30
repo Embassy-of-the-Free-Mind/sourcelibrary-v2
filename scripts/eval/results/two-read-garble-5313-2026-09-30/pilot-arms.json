@@ -1,0 +1,51 @@
+{
+ "at": "2026-09-30T11:42:40.518Z",
+ "arms": {
+  "L": "gemini-3.1-flash-lite",
+  "L2": "gemini-3.1-flash-lite",
+  "F": "gemini-3-flash-preview"
+ },
+ "pages": 327,
+ "image_fetch_failed": 0,
+ "prompt": {
+  "name": "Standard OCR",
+  "version": "16",
+  "content_hash": "0203c2641e253ffbf17772ae1b30bf16",
+  "document_context": "pipeline suffix (title, author, year)"
+ },
+ "generation": {
+  "temperature": 0.1,
+  "maxOutputTokens": 16384,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "image": {
+  "field": "display_photo (manifest.image)",
+  "resized_to_px": 1500
+ },
+ "estimate": {
+  "gemini-3.1-flash-lite": {
+   "requests": 654,
+   "in": 2523222,
+   "out": 718974,
+   "price": {
+    "input": 0.25,
+    "output": 1.5
+   },
+   "usd": 0.8546
+  },
+  "gemini-3-flash-preview": {
+   "requests": 327,
+   "in": 1261611,
+   "out": 359487,
+   "price": {
+    "input": 0.5,
+    "output": 3
+   },
+   "usd": 0.8546
+  },
+  "usd": 1.7093,
+  "basis": "Batch API, 50% of list price (scripts/lib/model-pricing.mjs)"
+ }
+}
