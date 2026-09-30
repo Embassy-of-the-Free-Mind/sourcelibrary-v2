@@ -24,7 +24,8 @@ you are about to pick `--model`, an engine, or a free lane by hand.
    leaves `sweep_log` + `book_events` rows. Enforced twice: `tests/unit/text-writers-use-provenance-builder.test.ts`
    (CI, per writer file) and `scripts/audit/provenance-coverage.mjs` (daily, per page). A lane
    that is in the **writer registry below as GAP** is not run until the gap is closed, however
-   cheap the text is (the 47 Keely/Tesla residue pages stayed empty for this reason).
+   cheap the text is (the 47 Keely/Tesla residue pages stayed empty on 2026-09-30 until the
+   MinerU gap closed the same day).
 2. **Batch API by default** for any Gemini read (`bulk-reocr-local.mjs`; #5244). Realtime is
    for a reader waiting or a handful of pages, and needs `--realtime`.
 3. **No Tesseract**, as an engine or as a free reference (Derek). Never Gemini below v3.
@@ -84,7 +85,11 @@ A page (or book) needs text
 │     │    tier 1  lite again        (book flag `recitation_retry`)                      │
 │     │    tier 2  flash             (`recitation_retry_lite`; = lite under LITE_ONLY)   │
 │     │    tier 3  MinerU + grounded correction (`mineru-ocr-worker.mjs` → `ocr-correct-  │
-│     │            grounded.mjs`, #3389) — GAP: writes no engine block. Do not run.      │
+│     │            grounded.mjs`, #3389). Provenance ✓ since PR #5280 (2026-09-30).       │
+│     │            MEASURED on the 114-book English reference (PR #5298): reads every    │
+│     │            page Gemini refuses (16/16 at median CER 0.21%), median 0.66% overall │
+│     │            vs lite 0.20%; 1820+ only — before 1820 it reads ſ as f (median 4.6%).│
+│     │            Its worst pages dropped footnotes → fixed in PR #5299.                │
 │     │    tier 3' the Archive's text for THAT leaf, under an accepted by-eye verdict   ─┘
 │     │            (branch 0) — the free refusal fallback DECISIONS.md still calls open.
 │     │    tier 4  read it by eye (Claude on the subscription, never an API call), or
@@ -117,7 +122,7 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Archive free text | `scripts/import/ia-ocr-ingest.mjs` | `ia_djvu` | ✓ `ia` block + `agreement_ref` (measured or `by_eye`) + ingest run |
 | Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |
 | Tibetan Yigdzin / BDRC | `scripts/maintenance/apply-reocr-verdicts.mjs` | per verdict | ✓ `engine` + `verdict` + revisions + sweep_log + book_events |
-| MinerU (ladder tier 3) | `scripts/workers/mineru-ocr-worker.mjs` | `mineru` | **GAP** — no engine block, no revisions, no guard |
+| MinerU (ladder tier 3) | `scripts/workers/mineru-ocr-worker.mjs` | `mineru` | ✓ since PR #5280 — `specialist-engine/1` block (version, licence, run, image, `ladder` = the refusal stamps it follows), revisions, human-edit guard, sweep_log + book_events; `missingProvenance` checks it with the kraken/bdrc rule. Rows before 2026-09-30 (2,586) carry only a bare string. |
 | Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
 | Greek Kraken, Japanese NDL | eval only | — | — |
 | Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
