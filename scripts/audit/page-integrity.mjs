@@ -4,9 +4,12 @@
 // scans are in order or whether a translation is short or echoed. The detectors live in
 // scripts/lib/page-integrity.mjs (pure, tested).
 /**
- * page-integrity — five exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
+ * page-integrity — seven exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
  * catchword continuity, printed page-number sequence, duplicate consecutive scans, truncated
- * translations, echoed source. MEASUREMENT ONLY: writes files, touches no store.
+ * translations, echoed source (2026-09-24), and from the page-error taxonomy (2026-09-25):
+ * <vocab> words absent from the body (O5 #5136) and a block repeated inside one page (O4 #5135).
+ * MEASUREMENT ONLY: writes files, touches no store.
+ * The two new signals need a FRESH --out directory: a resumed shard skips books already scanned.
  *
  * Checkpointed per book: every book's lines (its flags, then one `book` row with its counts) are
  * appended in ONE write, and a restart skips every book that already has a `book` row in its
@@ -29,11 +32,14 @@ import os from 'os';
 import zlib from 'zlib';
 import {
   catchwordBoundary, pageNumberBreaks, duplicateScan, truncationRatio, echoedSource, ocrReasoningLeak,
+  vocabAbsent, repeatedBlocks,
 } from '../lib/page-integrity.mjs';
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
 
 export const TRUNC_NORM_FLAG = 0.5;
 export const REPEATED_BOOK_SHARE = 0.2;
+export const VOCAB_CORPUS_MAX = 5;  // an absent <vocab> term seen on this many pages corpus-wide is a keyword
+export const VOCAB_BOOK_MAX = 3;    // ... or on this many pages of one book
 const arg = (k, d) => process.argv.find(a => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
 const flag = (k) => process.argv.includes(`--${k}`);
 
@@ -78,6 +84,9 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
     dup: { judged: 0, dup: 0 },
     trunc: { judged: 0, flagged: 0, byLang: {} },
     echo: { judged: 0, echo: 0, listLike: 0, unjudged: {} },
+    // page-error taxonomy (2026-09-25): O5 vocab-vs-body, O4 repeated blocks
+    vocab: { judged: 0, flagged: 0, flagged2: 0, unjudged: {} },
+    repeat: { judged: 0, block: 0, loop: 0 },
   };
   // 1. catchwords
   for (let i = 0; i < rows.length; i++) {
@@ -110,6 +119,25 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
       if (d.dup) { bk.dup.dup++; bk.dup[`gap${gap}`] = (bk.dup[`gap${gap}`] || 0) + 1; lines.push({ kind: 'dup', book: id, p: A.p, next: B.p, gap, dice: d.dice }); }
     }
     if (ocrReasoningLeak(A.ocr)) { bk.ocrLeak = (bk.ocrLeak || 0) + 1; lines.push({ kind: 'ocrleak', book: id, p: A.p, head: String(A.ocr).slice(0, 120) }); }
+    // 6. O5 — the page's own <vocab> names words its body lacks (OCR only)
+    if (A.ocr) {
+      const v = vocabAbsent(A);
+      if (!v.judged) bk.vocab.unjudged[v.why] = (bk.vocab.unjudged[v.why] || 0) + 1;
+      else {
+        bk.vocab.judged++;
+        if (v.flag) {
+          bk.vocab.flagged++; if (v.absent.length >= 2) bk.vocab.flagged2++;
+          lines.push({ kind: 'vocab', book: id, p: A.p, terms: v.terms, absent: v.absent, capitalised: v.capitalised, share: v.share, type: A.type || null });
+        }
+      }
+      // 7. O4 — a block repeated inside one page (the short-period loop is counted, not flagged)
+      const rb = repeatedBlocks(A.ocr);
+      if (rb.judged) {
+        bk.repeat.judged++;
+        if (rb.kind === 'loop') bk.repeat.loop++;
+        if (rb.flag) { bk.repeat.block++; lines.push({ kind: 'repeat', book: id, p: A.p, longest: rb.longest, copies: rb.copies, share: rb.share, ttr: rb.ttr, units: rb.units, unsegmented: !!rb.unsegmented, sample: rb.sample, type: A.type || null }); }
+      }
+    }
     if (!A.tr || !A.tr.trim()) continue;
     bk.trPages++;
     const lang = pageLanguage(A, bookLang);
@@ -218,6 +246,8 @@ export function summarize(out) {
     dup: { judged: 0, dup: 0, books: 0 },
     trunc: { judged: 0, flagged: 0, books: 0 },
     echo: { judged: 0, echo: 0, listLike: 0, books: 0, unjudged: {} },
+    vocab: { judged: 0, flagged: 0, flagged2: 0, books: 0, unjudged: {} },
+    repeat: { judged: 0, block: 0, loop: 0, books: 0 },
   });
   const add = (o, k, v) => { o[k] = (o[k] || 0) + v; };
   const all = blank(), byLang = {};
@@ -249,6 +279,9 @@ export function summarize(out) {
         S.trunc.judged += b.trunc.judged; S.trunc.flagged += b.trunc.flagged; if (b.trunc.flagged) S.trunc.books++;
         S.echo.judged += b.echo.judged; S.echo.echo += b.echo.echo; S.echo.listLike += b.echo.listLike; if (b.echo.echo) S.echo.books++;
         for (const [k, v] of Object.entries(b.echo.unjudged)) add(S.echo.unjudged, k, v);
+        // taxonomy signals (absent on shard rows written before they existed)
+        if (b.vocab) { S.vocab.judged += b.vocab.judged; S.vocab.flagged += b.vocab.flagged; S.vocab.flagged2 += b.vocab.flagged2 || 0; if (b.vocab.flagged) S.vocab.books++; for (const [k, v] of Object.entries(b.vocab.unjudged || {})) add(S.vocab.unjudged, k, v); }
+        if (b.repeat) { S.repeat.judged += b.repeat.judged; S.repeat.block += b.repeat.block; S.repeat.loop += b.repeat.loop; if (b.repeat.block) S.repeat.books++; }
       }
     }
   }
@@ -278,7 +311,8 @@ export function report(out, reportDir, date) {
     if (!line) continue;
     try { const b = JSON.parse(line); vis.set(b.id, { visible: !!b.visible, title: b.display_title || b.title || '' }); } catch {}
   }
-  const lists = { 'duplicate-scans': [], 'repeated-page-books': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [] };
+  const lists = { 'duplicate-scans': [], 'repeated-page-books': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [],
+    'vocab-absent': [], 'repeated-block': [] };
   const pagesOf = new Map();
   for (const f of files) {
     const byBook = new Map();
@@ -307,6 +341,8 @@ export function report(out, reportDir, date) {
       for (const r of rows.filter(x => x.kind === 'trunc')) lists.truncated.push({ book, visible: v.visible, page: r.p, lang: r.lang, ratio: r.ratio, norm: r.norm, src: r.src, tr: r.tr });
       for (const r of rows.filter(x => x.kind === 'echo')) lists.echoed.push({ book, visible: v.visible, page: r.p, lang: r.lang, len: r.len, share: r.share, wholePage: !!r.wholePage });
       for (const r of rows.filter(x => x.kind === 'ocrleak')) lists['ocr-reasoning-leak'].push({ book, visible: v.visible, page: r.p });
+      for (const r of rows.filter(x => x.kind === 'vocab')) lists['vocab-absent'].push({ book, visible: v.visible, page: r.p, terms: r.terms, absent: r.absent, capitalised: r.capitalised, share: r.share, type: r.type });
+      for (const r of rows.filter(x => x.kind === 'repeat')) lists['repeated-block'].push({ book, visible: v.visible, page: r.p, longest: r.longest, copies: r.copies, share: r.share, ttr: r.ttr, unsegmented: r.unsegmented, sample: r.sample, type: r.type });
     }
   }
   // A book where a fifth or more of the pages repeat an earlier page is not a scan with a few
@@ -320,6 +356,22 @@ export function report(out, reportDir, date) {
     if (share >= REPEATED_BOOK_SHARE) { repeated.add(book); lists['repeated-page-books'].push({ book, visible: vis.get(book)?.visible ?? null, repeatedPages: set.size, pages, share: +share.toFixed(3), title: vis.get(book)?.title || '' }); }
   }
   lists['duplicate-scans'] = lists['duplicate-scans'].filter(r => !repeated.has(r.book));
+  // O5 post-filter: the model's <vocab> is mostly a KEYWORD list ("theology", "Paracelsus",
+  // "alchemy"), and a keyword recurs — across the corpus and across its own book — while a
+  // dropped page-form ("Bagienis") is absent exactly once. A term absent on ≥ VOCAB_CORPUS_MAX
+  // pages corpus-wide or ≥ VOCAB_BOOK_MAX pages of one book is the vocabulary, not an omission
+  // (a detector's artefact is its biggest cluster). `absentRare` is what the hand-read reads.
+  const foldT = (t) => String(t).toLowerCase().normalize('NFD').replace(/\p{M}+/gu, '');
+  const corpusN = new Map(), bookN = new Map();
+  for (const r of lists['vocab-absent']) for (const t of r.absent) {
+    const f = foldT(t); corpusN.set(f, (corpusN.get(f) || 0) + 1);
+    const bk = r.book + '\u0000' + f; bookN.set(bk, (bookN.get(bk) || 0) + 1);
+  }
+  let rawRows = lists['vocab-absent'].length;
+  for (const r of lists['vocab-absent']) {
+    r.absentRare = r.absent.filter(t => corpusN.get(foldT(t)) < VOCAB_CORPUS_MAX && bookN.get(r.book + '\u0000' + foldT(t)) < VOCAB_BOOK_MAX);
+  }
+  lists['vocab-absent'] = lists['vocab-absent'].filter(r => r.absentRare.length);
   const stats = {};
   fs.mkdirSync(reportDir, { recursive: true });
   for (const [cls, rows] of Object.entries(lists)) {
@@ -336,6 +388,10 @@ export function report(out, reportDir, date) {
   stats.echoed.wholePageBooks = new Set(lists.echoed.filter(r => r.wholePage).map(r => r.book)).size;
   const ds = lists['duplicate-scans'];
   stats['duplicate-scans'].byGap = ds.reduce((o, r) => ((o['gap' + r.gap] = (o['gap' + r.gap] || 0) + 1), o), {});
+  stats['vocab-absent'].rawRows = rawRows;
+  stats['vocab-absent'].keywordTerms = [...corpusN.entries()].filter(([, n]) => n >= VOCAB_CORPUS_MAX).length;
+  const rb = lists['repeated-block'];
+  stats['repeated-block'].byLongest = { '20-39': rb.filter(r => r.longest < 40).length, '40-99': rb.filter(r => r.longest >= 40 && r.longest < 100).length, '100+': rb.filter(r => r.longest >= 100).length };
   return stats;
 }
 

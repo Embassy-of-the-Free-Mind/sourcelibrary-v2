@@ -582,3 +582,182 @@ export function echoedSource({ ocr, tr, lang }) {
   // French) — measured at 3/20 real before this split.
   return { judged: true, len: run.len, share: +share.toFixed(3), echo, wholePage: echo && share >= ECHO_WHOLE_PAGE_SHARE, listLike, englishInSource, proseLike, text: run.text.slice(0, 200) };
 }
+
+// ══════════════════════════════════════════════════════════════════════════════════════════
+// Page-error taxonomy quick wins (2026-09-25, .claude/docs/page-error-taxonomy.md):
+//   6. vocabAbsent()        O5 · #5136 — the page's own <vocab> names words its body lacks
+//   7. repeatedBlocks()     O4 · #5135 — a block of ≥ REPEAT_MIN_TOKENS repeated inside one page
+// Same contract as 1–5: pure, no model, explicit { judged:false, why } for what cannot be read.
+// ══════════════════════════════════════════════════════════════════════════════════════════
+
+// ── 6. vocab words absent from the body (O5) ──────────────────────────────────────────────
+
+export const VOCAB_MIN_TERMS = 3;
+export const VOCAB_STEM_MIN = 5;   // letters of a term that must open some word of the body
+
+/** The `<vocab>` terms of a page in printed form (the tag's own separators: commas, semicolons,
+ *  newlines, bullets, "·"). A parenthetical gloss ("三昧 (Samadhi)") is dropped — the head is
+ *  the page's word, the gloss the model's. Empty when the page carries no <vocab>. */
+export function parseVocab(ocr) {
+  const m = String(ocr || '').match(/<vocab>([\s\S]*?)<\/vocab>/i);
+  if (!m) return [];
+  return m[1].replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ')
+    .split(/\s*(?:[,;·•\n|]|\s-\s)\s*/).map(t => t.trim().replace(/^[\s"'“”‘’*_]+|[\s"'“”‘’*_.:]+$/g, '')).filter(t => t && /\p{L}/u.test(t));
+}
+
+/** Compare-fold for vocab lookup: foldWord's letter folding per word, words joined by one space
+ *  (so a multi-word term is looked up as a phrase), digits kept. */
+const foldPhrase = (t) => String(t || '').split(/\s+/).map(w => foldWord(w) || w.replace(/[^\p{N}]/gu, '')).filter(Boolean).join(' ');
+
+/** Fold of the OCR body WITHOUT its vocab (and other wrapper) blocks, with word boundaries kept
+ *  as single spaces so a prefix test can anchor on a word start. */
+const foldedBodyOf = cached('vb', (ocr) => ' ' + foldPhrase(proseOf(ocr)) + ' ');
+
+/**
+ * Which of the page's own `<vocab>` terms do not occur in its body? The OCR prompt asks for key
+ * terms "from THAT page only", so a term the body lacks is either a line the transcription
+ * dropped (O5 — the Varro p.149 case, where the missing terms sat in 13 dropped lines) or a
+ * term the model invented. Both are defects; the hand-read tells them apart.
+ *
+ * A term is PRESENT when its fold occurs in the folded body, or — for an inflected language —
+ * when its first max(VOCAB_STEM_MIN, len−3) letters open some body word ("transmutatio" ~
+ * "transmutationis"; "Ptolomæus" ~ "Ptolomæi"). Unsegmented scripts (CJK, Tibetan) get a plain
+ * substring test, which their lack of inflection makes exact.
+ *
+ * UNJUDGEABLE: fewer than VOCAB_MIN_TERMS terms; a body under TRUNC_MIN_OCR_CHARS reading
+ * length; NON_PROSE page types (an index or table lists more than its body "says").
+ */
+export function vocabAbsent({ ocr, type }) {
+  const terms = parseVocab(ocr);
+  if (terms.length < VOCAB_MIN_TERMS) return { judged: false, why: terms.length ? 'few-terms' : 'no-vocab' };
+  if (NON_PROSE_TYPES.has(type)) return { judged: false, why: 'non-prose' };
+  if (readingLength(proseOf(ocr)) < TRUNC_MIN_OCR_CHARS) return { judged: false, why: 'short-source' };
+  const body = foldedBodyOf(ocr);
+  const bodyScript = dominantScript(body);
+  const absent = [], absentExact = [], shapes = { keyword: 0, otherScript: 0, short: 0 };
+  for (const term of terms) {
+    const f = foldPhrase(term);
+    if (!f) continue;
+    if (body.includes(f)) continue;
+    absentExact.push(term);
+    // Shapes the 300-book test walk showed to be the model's KEYWORDS, not the page's words
+    // (63% of judged pages flagged before these): a Greek letter or sigil (≤ 2 letters), a term
+    // in another script than the body (a transliteration: "Peah, Ruach" on a Hebrew page), and
+    // a multi-word label whose words are all absent ("textual criticism", "Lex Censoria").
+    if (f.replace(/[^\p{L}]/gu, '').length <= 2) { shapes.short++; continue; }
+    if (bodyScript && dominantScript(f) && dominantScript(f) !== bodyScript) { shapes.otherScript++; continue; }
+    const wordsOf = f.split(' ');
+    if (CASELESS_UNSEGMENTED.test(f)) { absent.push(term); continue; }
+    // stem test per word: an inflected language changes the last 1–3 letters ("transmutatio" ~
+    // "transmutationis", "bonum" ~ "boni"); a word is present when the body has a word opening
+    // with its stem. A phrase counts as present when ANY of its words is.
+    const present = wordsOf.some(w => {
+      if (w.length < 3) return false;
+      const stem = w.length <= 6 ? w.slice(0, Math.max(3, w.length - 2)) : w.slice(0, Math.max(VOCAB_STEM_MIN, w.length - 3));
+      return body.includes(' ' + stem);
+    });
+    if (present) continue;
+    if (wordsOf.length > 1) { shapes.keyword++; continue; }
+    absent.push(term);
+  }
+  const share = +(absent.length / terms.length).toFixed(3);
+  const capitalised = absent.filter(t => /^\p{Lu}/u.test(t)).length;
+  return { judged: true, terms: terms.length, absent, absentExact, shapes, capitalised, share, flag: absent.length > 0 };
+}
+
+/** The script most of a folded text's letters belong to, or null. */
+export function dominantScript(text) {
+  const counts = { latin: 0, greek: 0, hebrew: 0, arabic: 0, cyrillic: 0, han: 0, tibetan: 0, devanagari: 0, syriac: 0, armenian: 0 };
+  for (const ch of String(text || '').slice(0, 2000)) {
+    if (/\p{Script=Latin}/u.test(ch)) counts.latin++;
+    else if (/\p{Script=Greek}/u.test(ch)) counts.greek++;
+    else if (/\p{Script=Hebrew}/u.test(ch)) counts.hebrew++;
+    else if (/\p{Script=Arabic}/u.test(ch)) counts.arabic++;
+    else if (/\p{Script=Cyrillic}/u.test(ch)) counts.cyrillic++;
+    else if (/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(ch)) counts.han++;
+    else if (/\p{Script=Tibetan}/u.test(ch)) counts.tibetan++;
+    else if (/\p{Script=Devanagari}/u.test(ch)) counts.devanagari++;
+    else if (/\p{Script=Syriac}/u.test(ch)) counts.syriac++;
+    else if (/\p{Script=Armenian}/u.test(ch)) counts.armenian++;
+  }
+  let best = null, n = 0;
+  for (const [k, v] of Object.entries(counts)) if (v > n) { best = k; n = v; }
+  return n ? best : null;
+}
+
+// ── 7. repeated blocks inside one page (O4) ───────────────────────────────────────────────
+
+export const REPEAT_MIN_TOKENS = 20;   // shingle length, segmented scripts (words)
+export const REPEAT_MIN_CHARS = 40;    // shingle length, unsegmented scripts (characters)
+export const LOOP_MAX_PERIOD = 6;      // a repeat whose period is this short is the KNOWN token loop
+export const LOOP_MAX_TTR = 0.15;      // type/token ratio under which ocr-loop-guard already refuses the page
+export const LOOP_MIN_COPIES = 10;     // a block copied this often is degeneration, not a doubled leaf
+
+/** Repeat units of a page: folded words that carry a letter or digit (table pipes, rules and
+ *  punctuation runs are typography, not text), or single characters for an unsegmented script. */
+export function repeatUnits(prose) {
+  const p = String(prose || '');
+  const sample = p.slice(0, 600);
+  const unsegmented = CASELESS_UNSEGMENTED.test(sample) && (sample.match(/\s/g) || []).length < sample.length / 20;
+  if (unsegmented) return { units: [...p.replace(/\s+/g, '')].filter(c => /[\p{L}\p{N}]/u.test(c)), K: REPEAT_MIN_CHARS, unsegmented };
+  return { units: p.split(/\s+/).map(w => foldWord(w) || w.replace(/[^\p{N}]/gu, '')).filter(Boolean), K: REPEAT_MIN_TOKENS, unsegmented };
+}
+
+/** Smallest period p ≤ maxP such that run[k] === run[k+p] for every k, else 0. */
+function periodOf(run, maxP) {
+  for (let p = 1; p <= Math.min(maxP, run.length >> 1); p++) {
+    let ok = true;
+    for (let k = 0; k + p < run.length; k++) if (run[k] !== run[k + p]) { ok = false; break; }
+    if (ok) return p;
+  }
+  return 0;
+}
+
+/**
+ * Does one page's OCR repeat a block of itself? Shingles of K units; a shingle seen before is
+ * extended to the maximal repeated run. Reports the longest such run, how many copies of its
+ * opening shingle the page holds, and the share of units covered by ANY repeated shingle.
+ *
+ * `kind`: 'loop' when the longest run has a period ≤ LOOP_MAX_PERIOD (one phrase over and over —
+ * the KNOWN token-level degeneration, caught by ocr-loop-guard's type/token ratio); 'block'
+ * otherwise (a stanza, a paragraph, a whole leaf transcribed twice — the class #5135 names, whose
+ * type/token ratio is normal). `flag` is set for 'block' only.
+ *
+ * UNJUDGEABLE: fewer than 2K units.
+ */
+export function repeatedBlocks(ocr) {
+  const { units, K, unsegmented } = repeatUnits(proseOf(ocr));
+  if (units.length < 2 * K) return { judged: false, why: 'short' };
+  const first = new Map();
+  const covered = new Uint8Array(units.length);
+  let best = { len: 0, at: -1, prev: -1 };
+  for (let i = 0; i + K <= units.length; i++) {
+    const s = units.slice(i, i + K).join('\u0001');
+    const j = first.get(s);
+    if (j === undefined) { first.set(s, i); continue; }
+    for (let k = i; k < i + K; k++) covered[k] = 1;
+    let L = K;
+    while (i + L < units.length && units[j + L] === units[i + L] && j + L < i) L++;
+    if (L > best.len) best = { len: L, at: i, prev: j };
+    for (let k = i; k < i + L; k++) covered[k] = 1;
+    i += Math.max(0, L - K); // continue after the run (a short-period loop extends less than K)
+  }
+  if (best.len === 0) return { judged: true, units: units.length, K, longest: 0, copies: 1, share: 0, kind: 'none', flag: false };
+  const run = units.slice(best.at, best.at + best.len);
+  const period = periodOf(run, LOOP_MAX_PERIOD);
+  const head = units.slice(best.prev, best.prev + K).join('\u0001');
+  let copies = 0;
+  for (let i = 0; i + K <= units.length; i++) if (units.slice(i, i + K).join('\u0001') === head) { copies++; i += K - 1; }
+  let share = 0; for (const c of covered) share += c;
+  share = +(share / units.length).toFixed(3);
+  const types = new Set(units).size / units.length;
+  // The KNOWN degeneration (ocr-loop-guard, PR #3273): a short period, a type/token ratio under
+  // LOOP_MAX_TTR on a segmented script, or a block repeated LOOP_MIN_COPIES times or more. What
+  // is left — a stanza or a leaf transcribed two or three times with normal vocabulary — is O4.
+  const loop = period > 0 || (!unsegmented && types < LOOP_MAX_TTR) || copies >= LOOP_MIN_COPIES;
+  const kind = loop ? 'loop' : 'block';
+  return {
+    judged: true, units: units.length, K, longest: best.len, copies, share, period, ttr: +types.toFixed(3), kind, unsegmented,
+    flag: kind === 'block', sample: run.slice(0, unsegmented ? 60 : 24).join(unsegmented ? '' : ' '),
+  };
+}
