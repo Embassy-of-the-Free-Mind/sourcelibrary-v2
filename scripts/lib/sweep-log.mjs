@@ -50,28 +50,63 @@ function isPlainObject(value) {
  * @param {object|string} [entry.detail] - free-form context: plain object or string
  * @returns {Promise<object>} the inserted row (driver adds `_id` in place)
  */
-export async function recordSweepAction(db, { sweep, book_id, action, detail } = {}) {
-  if (!db || typeof db.collection !== 'function') {
-    throw new TypeError('recordSweepAction: first argument must be a connected Mongo db handle');
+export async function recordSweepAction(db, entry = {}) {
+  assertDb(db, 'recordSweepAction');
+  const row = buildSweepRow(entry, 'recordSweepAction');
+  await db.collection('sweep_log').insertOne(row);
+  return row;
+}
+
+/**
+ * Batch twin of recordSweepAction(), for a sweep that touches thousands of
+ * books in one pass (sync-worker's first `translation_state` stamping, ~117K
+ * books). Same row shape, same validation — and EVERY entry is validated
+ * before anything is written, so one bad entry throws with nothing
+ * half-recorded. Inserts in chunks; returns the number of rows written.
+ *
+ * @param {import('mongodb').Db} db - connected Mongo db handle (caller owns the client)
+ * @param {Array<{sweep: string, book_id: string, action: string, detail?: object|string}>} entries
+ * @param {{ chunkSize?: number }} [opts]
+ * @returns {Promise<number>}
+ */
+export async function recordSweepActions(db, entries, { chunkSize = 1000 } = {}) {
+  assertDb(db, 'recordSweepActions');
+  if (!Array.isArray(entries)) {
+    throw new TypeError('recordSweepActions: second argument must be an array of entries');
   }
+  const rows = entries.map((e) => buildSweepRow(e, 'recordSweepActions'));
+  let written = 0;
+  for (let i = 0; i < rows.length; i += chunkSize) {
+    const res = await db.collection('sweep_log').insertMany(rows.slice(i, i + chunkSize), { ordered: false });
+    written += res?.insertedCount ?? 0;
+  }
+  return written;
+}
+
+function assertDb(db, fn) {
+  if (!db || typeof db.collection !== 'function') {
+    throw new TypeError(`${fn}: first argument must be a connected Mongo db handle`);
+  }
+}
+
+function buildSweepRow({ sweep, book_id, action, detail } = {}, fn) {
   if (typeof sweep !== 'string' || !KEBAB_CASE.test(sweep)) {
     throw new TypeError(
-      `recordSweepAction: 'sweep' must be a kebab-case string (e.g. 'dedup-2026-08'), got ${JSON.stringify(sweep)}`
+      `${fn}: 'sweep' must be a kebab-case string (e.g. 'dedup-2026-08'), got ${JSON.stringify(sweep)}`
     );
   }
   if (typeof book_id !== 'string' || book_id.length === 0) {
-    throw new TypeError(`recordSweepAction: 'book_id' must be a non-empty string, got ${JSON.stringify(book_id)}`);
+    throw new TypeError(`${fn}: 'book_id' must be a non-empty string, got ${JSON.stringify(book_id)}`);
   }
   if (typeof action !== 'string' || action.length === 0) {
-    throw new TypeError(`recordSweepAction: 'action' must be a non-empty string, got ${JSON.stringify(action)}`);
+    throw new TypeError(`${fn}: 'action' must be a non-empty string, got ${JSON.stringify(action)}`);
   }
   if (detail !== undefined && typeof detail !== 'string' && !isPlainObject(detail)) {
     throw new TypeError(
-      `recordSweepAction: 'detail' must be a plain object or string when provided, got ${Object.prototype.toString.call(detail)}`
+      `${fn}: 'detail' must be a plain object or string when provided, got ${Object.prototype.toString.call(detail)}`
     );
   }
-
-  const row = {
+  return {
     timestamp: new Date(),
     sweep,
     book_id,
@@ -79,6 +114,4 @@ export async function recordSweepAction(db, { sweep, book_id, action, detail } =
     ...(detail !== undefined ? { detail } : {}),
     script: basename(process.argv[1] || 'unknown'),
   };
-  await db.collection('sweep_log').insertOne(row);
-  return row;
 }

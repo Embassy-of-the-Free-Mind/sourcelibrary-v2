@@ -490,3 +490,92 @@ export function computeTranslationMetrics(counts) {
 
   return { translation_pct, is_fully_translated, over_90_translated };
 }
+
+/**
+ * Rule version for `books.translation_state`. Bump it whenever the rule below
+ * changes: sync-worker compares the stored version and re-stamps every book on
+ * its next pass, so no backfill script is ever needed (single writer).
+ */
+export const TRANSLATION_STATE_VERSION = 1;
+
+/** The ladder, lowest first. A book sits on exactly one rung. */
+export const TRANSLATION_RUNGS = ['no_pages', 'no_text', 'transcribing', 'transcribed', 'translating', 'readable', 'complete'];
+
+/** Share of translatable pages that makes a book `readable` (the existing 90% bar, not a new one). */
+export const READABLE_MIN_TRANSLATED = 0.9;
+
+const ENGLISH_LANGUAGE_TOKENS = new Set(['english', 'en', 'eng']);
+
+/**
+ * True iff the edition's own language is English — the FIRST language named in
+ * `books.language` ("English and Hebrew" counts, "Latin; English" does not).
+ * `books.language` is the EDITION's language, not the source's
+ * (.claude/docs/invariants/language-fields.md), which is exactly the question
+ * here: can a reader read this edition without a translation? Same tokeniser as
+ * the ops spend dashboard (`lang-tally.mjs`), so the two agree on who is English.
+ */
+export function isEnglishOriginal(language) {
+  const first = String(language ?? '').toLowerCase()
+    .split(/[;,/&+]| and /)[0]
+    .trim()
+    .replace(/\s*\(.*\)$/, '');
+  return ENGLISH_LANGUAGE_TOKENS.has(first);
+}
+
+/**
+ * The translation-state ladder for one book (#5284, design:
+ * .claude/docs/translation-state.md). ONE rung per book, stored as
+ * `books.translation_state` by sync-worker and read by every surface, so "how
+ * many books are translated" has one answer instead of seven.
+ *
+ *   no_pages     pages_count 0, or content_type 'artwork' — out of every denominator
+ *   no_text      pages_ocr 0
+ *   transcribing pages_ocr < 0.9 · whole      (a preview-only book lands here, #5063)
+ *   transcribed  coverage met, nothing translated
+ *   translating  coverage met, 0 < translated < 0.9 · translatable
+ *   readable     coverage met, translated >= 0.9 · translatable
+ *   complete     coverage met, translated >= translatable
+ *
+ *   whole        = pages_count − pages_blank                 (what a reader expects)
+ *   translatable = pages_translatable when stamped (#4442), else whole
+ *
+ * The fallback denominator is never smaller than the exact one, so an
+ * unrecounted book can only read LOWER than it will once recounted — the safe
+ * direction. A book with nothing translatable (all plates) and nothing
+ * translated is `transcribed`, never `complete`: 0 ≥ 0 is not a finished book.
+ *
+ * Pure function of the counters. Inputs are returned alongside the rung so a
+ * wrong rung can be traced to the number that produced it; `computed_at` is the
+ * writer's to add. Mirror: src/lib/page-counts.ts (parity-tested).
+ */
+export function computeTranslationState(counts, { language, content_type } = {}) {
+  const pagesCount = Math.max(0, counts?.pages_count ?? 0);
+  const ocr = Math.max(0, counts?.pages_ocr ?? 0);
+  const translated = Math.max(0, counts?.pages_translated ?? 0);
+  const pagesBlank = Math.max(0, counts?.pages_blank ?? 0);
+
+  const whole = Math.max(0, pagesCount - pagesBlank);
+  const exact = typeof counts?.pages_translatable === 'number' && counts.pages_translatable >= 0;
+  const translatable = exact ? counts.pages_translatable : whole;
+  const coverage = ocr >= FULL_TRANSLATION_MIN_OCR_COVERAGE * whole;
+
+  let rung;
+  if (pagesCount === 0 || content_type === 'artwork') rung = 'no_pages';
+  else if (ocr === 0) rung = 'no_text';
+  else if (!coverage) rung = 'transcribing';
+  else if (translated === 0) rung = 'transcribed';
+  else if (translated >= translatable) rung = 'complete';
+  else if (translated >= READABLE_MIN_TRANSLATED * translatable) rung = 'readable';
+  else rung = 'translating';
+
+  return {
+    rung,
+    english_original: isEnglishOriginal(language),
+    translated,
+    translatable,
+    whole,
+    ocr,
+    exact,
+    version: TRANSLATION_STATE_VERSION,
+  };
+}
