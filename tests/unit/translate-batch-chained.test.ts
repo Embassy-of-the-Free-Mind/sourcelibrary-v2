@@ -18,7 +18,7 @@
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  enrolChainedRun, tickChained, planNextRound, PHASE, MAX_STRIKES, looksCollapsed,
+  enrolChainedRun, tickChained, planNextRound, packJobs, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-chained.mjs';
@@ -151,20 +151,25 @@ function makeGemini({
       const round = i + 1;
       const st = state(round);
       if (st !== 'JOB_STATE_SUCCEEDED') return { state: st, responses: [] };
-      const req = job.requests[0];
-      const key = req.metadata.key;
       const err = error(round);
-      if (err) return { state: st, responses: [{ metadata: { key }, error: err }] };
-      const prompt = req.contents[0].parts[0].text as string;
-      const nums = [...prompt.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
-      if (nums.length) {
-        const body = nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${text(n)}</translation>`).join('\n');
-        return { state: st, responses: [batchResponse(key, body, finish(round))] };
-      }
-      // Single page: the page whose OCR opens the "text to translate" section.
-      const m = prompt.match(/Pagina (\d+)\./);
-      const n = m ? Number(m[1]) : 0;
-      return { state: st, responses: [batchResponse(key, drop(n, round) ? '' : text(n), finish(round))] };
+      // Every request in the job answered, in REVERSE order: a shared job's responses are matched
+      // by key, never by position.
+      const responses = job.requests.map((req: any) => {
+        const key = req.metadata.key;
+        if (err) return { metadata: { key }, error: err };
+        const prompt = req.contents[0].parts[0].text as string;
+        const nums = [...prompt.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
+        if (nums.length) {
+          const tag = prompt.includes('Folium') ? 'BK2 ' : '';
+          const body = nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n)}</translation>`).join('\n');
+          return batchResponse(key, body, finish(round));
+        }
+        // Single page: the page whose OCR opens the "text to translate" section.
+        const m = prompt.match(/Pagina (\d+)\./);
+        const n = m ? Number(m[1]) : 0;
+        return batchResponse(key, drop(n, round) ? '' : text(n), finish(round));
+      }).reverse();
+      return { state: st, responses };
     },
   };
 }
@@ -220,7 +225,7 @@ describe('each round sends the prompt the realtime worker would send', () => {
     // Metered: one placeholder and one completion per round.
     expect(deps.logUsage).toHaveBeenCalledTimes(3);
     expect(deps.completeBatchUsage).toHaveBeenCalledTimes(3);
-    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ batch_job_id: 'batches/job1', input_tokens: 2000, output_tokens: 800, status: 'success' });
+    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ batch_job_id: `batches/job1#${res.run.id}`, input_tokens: 2000, output_tokens: 800, status: 'success' });
     // Provenance on the page: batch api, the round's job, the seeded context.
     const p9 = pageDoc(db, 9);
     expect(p9.translation.engine ?? p9.translation.provenance ?? p9.translation).toBeTruthy();
@@ -385,6 +390,90 @@ describe('single-page outcomes', () => {
     expect(looksCollapsed('x'.repeat(1000), '<summary>only a wrapper</summary><note>fragment</note>')).toBe(true);
     expect(looksCollapsed('x'.repeat(1000), textFor(1))).toBe(false);
     expect(looksCollapsed('short', '<summary>s</summary>')).toBe(false);
+  });
+});
+
+// ── Shared jobs across books ───────────────────────────────────────────────
+describe('ready runs of many books share one Batch job per round', () => {
+  const BOOK2 = { id: 'bk2', title: 'Liber Secundus', author: 'Anon.', language: 'Latin', published: '1610' };
+  const ocr2 = (n: number) => `Folium ${n}. ` + ocrFor(n + 40).replace(/^Pagina \d+\. /, '');
+  const PAGES2 = Array.from({ length: 12 }, (_, i) => ({ id: `q${i + 1}`, book_id: 'bk2', page_number: i + 1, ocr: { data: ocr2(i + 1) } }));
+  const twoBooks = () => makeDb({ books: [BOOK, BOOK2], pages: [...PAGES, ...PAGES2], page_revisions: [], [RUNS_COLLECTION]: [] });
+  const enrolBoth = async (d: any, deps: any) => {
+    for (const id of ['bk1', 'bk2']) expect((await enrolChainedRun(d, id, deps, { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+  };
+  const runFor = (d: any, id: string) => d.collection(RUNS_COLLECTION).findOne({ book_id: id });
+
+  it('two books share one job; each response goes to its own book by key; meter rows stay per book', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const d = twoBooks();
+    await enrolBoth(d, deps);
+    expect(gemini.submitted).toHaveLength(0); // enrolled READY, nothing sent yet
+    await tick(d, deps);
+    expect(gemini.submitted).toHaveLength(1);
+    expect(gemini.submitted[0].requests).toHaveLength(2);
+    const [r1, r2] = [await runFor(d, 'bk1'), await runFor(d, 'bk2')];
+    expect(r1.round.job.name).toBe('batches/job1');
+    expect(r2.round.job.name).toBe('batches/job1');
+    expect(r1.round.key).not.toBe(r2.round.key);
+    // One placeholder per book, keyed <job>#<runId>.
+    expect((deps.logUsage as any).mock.calls.map((c: any[]) => [c[0].book_id, c[0].batch_job_id]))
+      .toEqual([['bk1', `batches/job1#${r1.id}`], ['bk2', `batches/job1#${r2.id}`]]);
+
+    await tick(d, deps); // collect the shared job (fetched once), submit round 2 for both, shared again
+    expect(pageText(d, 'p1')).toBe(textFor(1));
+    expect(d.data.pages.find((p: Doc) => p.id === 'q1').translation.data).toBe('BK2 ' + textFor(1));
+    expect(gemini.submitted).toHaveLength(2);
+    expect(gemini.submitted[1].requests).toHaveLength(2);
+    // Each completion sums only its own response's tokens, on its own row.
+    const done = (deps.completeBatchUsage as any).mock.calls.map((c: any[]) => c[0]);
+    expect(done).toHaveLength(2);
+    expect(done.map((c: Doc) => c.batch_job_id).sort()).toEqual([`batches/job1#${r1.id}`, `batches/job1#${r2.id}`].sort());
+    for (const c of done) expect(c).toMatchObject({ input_tokens: 2000, output_tokens: 800, status: 'success' });
+
+    await tick(d, deps, 4);
+    expect((await runFor(d, 'bk1')).phase).toBe(PHASE.COMPLETE);
+    expect((await runFor(d, 'bk2')).phase).toBe(PHASE.COMPLETE);
+    for (let n = 1; n <= 12; n++) expect(d.data.pages.find((p: Doc) => p.id === `q${n}`).translation.data).toBe('BK2 ' + textFor(n));
+  });
+
+  it('a cancelled shared job strikes every run in it, and both resubmit together', async () => {
+    const gemini = makeGemini({ state: (round) => (round === 1 ? 'JOB_STATE_CANCELLED' : 'JOB_STATE_SUCCEEDED') });
+    const deps = makeDeps(gemini);
+    const d = twoBooks();
+    await enrolBoth(d, deps);
+    await tick(d, deps); // submit shared job 1
+    await tick(d, deps); // job 1 cancelled → strike both → resubmit both in job 2
+    const [r1, r2] = [await runFor(d, 'bk1'), await runFor(d, 'bk2')];
+    expect([r1.strikes, r2.strikes]).toEqual([1, 1]);
+    expect(r1.rounds[0]).toMatchObject({ outcome: 'strike', reason: 'job JOB_STATE_CANCELLED' });
+    expect(r2.rounds[0]).toMatchObject({ outcome: 'strike', reason: 'job JOB_STATE_CANCELLED' });
+    expect(gemini.submitted).toHaveLength(2);
+    expect(gemini.submitted[1].requests).toHaveLength(2);
+    const failed = (deps.completeBatchUsage as any).mock.calls.map((c: any[]) => c[0]).filter((c: Doc) => c.status === 'failed');
+    expect(failed.map((c: Doc) => c.book_id).sort()).toEqual(['bk1', 'bk2']);
+  });
+
+  it('packs at most MAX_REQUESTS_PER_JOB requests per job, one model per job', () => {
+    const p = (id: string, model: string) => ({ run: { id, model } });
+    const items = [...Array.from({ length: 51 }, (_, i) => p(`a${i}`, 'm1')), p('b0', 'm2')];
+    const jobs = packJobs(items, MAX_REQUESTS_PER_JOB);
+    expect(jobs.map((j: any) => [j.model, j.items.length])).toEqual([['m1', 50], ['m1', 1], ['m2', 1]]);
+  });
+
+  it('a run submitted before shared jobs (key rN, no meter_id) still collects and meters by job name', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    // Rewrite the open round to the old shape: key `r1`, no meter_id.
+    const run = db.data[RUNS_COLLECTION][0];
+    delete run.round.meter_id;
+    run.round.key = 'r1';
+    gemini.submitted[0].requests[0].metadata.key = 'r1';
+    await tick(db, deps);
+    expect(pageText(db, 'p1')).toBe(textFor(1));
+    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ batch_job_id: 'batches/job1', status: 'success' });
   });
 });
 
