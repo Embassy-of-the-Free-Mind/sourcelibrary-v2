@@ -12,17 +12,17 @@ Judge: opus (source-grounded, reference-free, single candidate; measure = judge 
 ## Corpus estimate (post-stratified by language; 95% CI)
 | statistic | est % | CI |
 |---|---:|---|
-| fidelity 5 | 40.1 | 31.1–50.3 |
-| fidelity ≥ 4 | 85.6 | 76.9–93 |
-| fidelity ≤ 2 | 2.9 | 0.4–5.4 |
-| any major defect | 14.3 | 7.1–22.5 |
-| omission | 12.7 | 5.5–21.1 |
-| invention | 15.7 | 8–24.2 |
-| inversion | 4.6 | 1–9.9 |
+| fidelity 5 | 40.1 | 30.5–50.3 |
+| fidelity ≥ 4 | 85.6 | 77.4–92.8 |
+| fidelity ≤ 2 | 2.9 | 0.4–5.9 |
+| any major defect | 14.3 | 7.4–22.3 |
+| omission | 12.7 | 5.4–21.1 |
+| invention | 15.7 | 7.4–25 |
+| inversion | 4.6 | 1–9.8 |
 | untranslated | 0 | 0–0 |
 | wrong_language | 0 | 0–0 |
 | wrong_page | 0 | 0–0 |
-| garble_passthrough | 9.3 | 3.2–16.3 |
+| garble_passthrough | 9.3 | 3.3–16.4 |
 | truncated | 0.8 | 0–2.5 |
 | repetition | 0 | 0–0 |
 

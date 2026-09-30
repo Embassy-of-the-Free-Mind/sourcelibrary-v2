@@ -211,6 +211,29 @@
       ]
     }
   },
+  "controls_gate": {
+    "pass": true,
+    "checks": {
+      "swap": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      },
+      "drop": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.8666666666666667,
+        "pass": true
+      },
+      "repeat": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      }
+    }
+  },
   "overall_unweighted": {
     "n": 311,
     "n_drawn": 311,
@@ -2450,29 +2473,29 @@
     "pct_fidelity_ge4": {
       "est": 89.1,
       "ci": [
-        85.4,
-        92.4
+        85.5,
+        92.5
       ]
     },
     "pct_fidelity_5": {
       "est": 41.4,
       "ci": [
-        35.3,
-        47.9
+        35.4,
+        47.8
       ]
     },
     "pct_fidelity_le2": {
       "est": 3.4,
       "ci": [
         1.5,
-        5.7
+        5.8
       ]
     },
     "flags": {
       "omission": {
         "est": 14.8,
         "ci": [
-          10.1,
+          10.4,
           19.6
         ]
       },
@@ -2487,7 +2510,7 @@
         "est": 3.9,
         "ci": [
           1.4,
-          6.9
+          6.8
         ]
       },
       "untranslated": {
@@ -2514,8 +2537,8 @@
       "garble_passthrough": {
         "est": 6.6,
         "ci": [
-          3.9,
-          9.7
+          4,
+          9.6
         ]
       },
       "truncated": {

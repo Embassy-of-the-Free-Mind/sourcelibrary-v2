@@ -28,7 +28,7 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 | month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
 |---|---:|---|---:|---|---:|---:|---:|---|---|
-| 2026-09 | 103 | 85.6 (76.9–93) | 2.9 | 14.3 (7.1–22.5) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 |
+| 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
 ---
 
@@ -56,7 +56,8 @@ was not kept, and PR #5299's `readPageFootnotes()` + assembly were applied verba
 First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker's `sanitize()` verbatim) against the
 #5216 human references, on the 114 books lite and flash were scored on. $0 (no model call; lite/flash rows reused).
 - **Paired vs lite (decision, 98 pairs):** MinerU better 10 / lite better 49 / tie 39, sign p < 0.001, median Δ
-  **+0.19 pp** [0.10, 0.86]. That is inside the ±0.2 pp PEER band, but the CI is not. Median CER 0.66% vs 0.20%.
+  **+0.19 pp** [0.10, 0.91]. That is inside the ±0.2 pp PEER band, but the CI is not. Median CER 0.66% vs 0.20%.
+  (CI recomputed 2026-09-30, #5373 — was [0.10, 0.86]; rule output unchanged.)
 - **Catastrophic 2.6% (3/114), bar 2%.** MinerU never refuses (114/114 text vs lite 98, flash 94). All three > 50% pages,
   and all five worst by eye, are **footnotes dropped whole**. MinerU reads them (re-run: `middle.json` has them as
   `page_footnote` in `discarded_blocks`), but its markdown leaves them out. 10/114 pages lose ≥ 20% of the words this way.
@@ -71,6 +72,42 @@ First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker'
   preregistration amendment first. It is not a worker change.
 - Artifact: `results/en-ocr-ref-5124/mineru-arm-2026-09-30.{md,json}`; run ids `en-mineru-5182-2026-09`,
   `en-mineru-repeat-5182-2026-09`; `PREREGISTRATION-mineru-english-5182.md`; DECISIONS.md row "MinerU as peer or tier-3".
+
+## 2026-09-30 — Were the bootstrap intervals in this file the right width? The generator cycled; 31 quoted intervals recomputed, no decision changes (#5373)
+
+**Headline: no routing or adoption decision changes. 22 of the 31 quoted intervals moved, most by a few percent of
+their width; two had been a quarter to a third too narrow (Paddle on Chinese manuscript, lite on 18th-century
+Greek). One label flips (v15's invented-tag reduction becomes decisive, by one page in 320), and the flip PR #5372
+found in its own first score is confirmed.**
+- **The fault.** `lib/paired-stats.mjs` drew from `seed = (seed * 1103515245 + 12345) & 0x7fffffff` in double
+  arithmetic. The product passes 2^53, so the low bits were rounded off before the mask kept exactly those bits:
+  13,676 distinct values in 1,000,000 draws, deciles 95,446–104,437, chi-square 106,210 over 304 bins (303 expected).
+  Three scripts carried their own copy beside the library (`stats-cross-model`, `reference-error-rate`,
+  `ocr-preprocessing/gemini-score`). All four now use mulberry32: 999,759 distinct, deciles 99,388–100,359,
+  chi-square 297.
+- **The error depended on the seed.** On paired differences shaped like #5372's (23 pages up, 11 down, 270 ties), the
+  old generator gave 0.88 of the analytic width on 38 of 40 seeds and 0.35 on two. The new one gives 0.97–1.01.
+- **Method.** Stored verdicts and scores only, $0. For each result the OLD generator had to reproduce the stored
+  interval first (`PAIRED_STATS_LEGACY_LCG=1`); only then was it recomputed. v15 needed the scorer as of d49c98985,
+  because the note verifier changed afterwards. External check: on #5372 the fixed library reproduces that PR's own
+  bootstrap exactly and sits within 0.2 pp of its analytic intervals on all nine primary cells.
+- **Largest moves** (each row below carries its own note): Paddle on Chinese manuscript Δ [−0.036, −0.014] →
+  [−0.047, −0.015]; Greek 1700–1799 lite median CER 0.077–0.122 → 0.080–0.140; Latin reference error [0.17, 2.47] →
+  [0.15, 2.78]; batch-continuity A2 [−25.5, −1.2] → [−26.5, −2.0]. Every rule that reads an interval gives the same
+  verdict: the Greek "inadequate" reads the median, the cost lane reads CI-upper ≤ +0.05, the continuity bound fails
+  for every arm before and after.
+- **Not an interval from this generator, so untouched:** leaf identity #5311 (Wilson); restraint A/B #5349 (McNemar);
+  garble #5369 and invention location #5363 (counts, precision/recall); picture boxes and the evidence dashboard
+  (their own mulberry32); every Kraken/Yigdzin arm of #5250 (Python `random`).
+- **Could not be recomputed:** the observational lite-vs-flash read (#4759). Its pairs file was never committed. Three
+  of its intervals end near zero; its report now says so.
+- **Left as they are, on purpose:** six scripts that use the same arithmetic to draw a SAMPLE or a blinded shuffle
+  (`harvest-wikisource-gt`, `contact-sheet-screen`, `neighbour-leaf-test`, `repeat-instability-draw`,
+  `suda-sol/make-pilot`, `analysis/gap-validation-gold-export`). Those draws are made and judged; changing the
+  generator would stop them reproducing. A unit test lists them and fails on a seventh.
+- *Replicated?* The generator fix is pinned by `tests/unit/paired-stats-prng.test.ts` (distinctness, uniformity,
+  interval width over twenty seeds; it fails on the old generator). *Artifact:* the corrected reports under
+  `results/`; before/after table on #5373.
 
 ## 2026-09-30 — Leaf identity: is the page image a reader sees the page that was translated? (#5274 follow-up, #4790)
 
@@ -87,7 +124,8 @@ First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker'
 **Headline: 87–89% of served pages read at fidelity ≥ 4 of 5; 3.4–3.8% are ≤ 2; 11–14% carry at least one major
 defect.** The lower fidelity / higher defect figure re-weights the quota-sampled model arm to its true share per
 language (`arm-shares.json`; lite omits more and is the majority arm); the upper is the plain language-weighted
-estimate (≥ 4: 89.1%, CI 85.3–92.5; major 11.4%, CI 7.7–15.5). Page-weighting (random page, not random book) changes
+estimate (≥ 4: 89.1%, CI 85.5–92.5; major 11.4%, CI 7.6–15.6 — CI recomputed 2026-09-30, #5373, was 85.3–92.5 and
+7.7–15.5). Page-weighting (random page, not random book) changes
 nothing (89.3%). Post-stratified by language over live translated pages; sampling limits stated in the README. Latin-script languages
 (198 books) are at 92.9% ≥ 4 / 8.6% major; non-Latin-script (113 books) at 70.8% ≥ 4 / 22.1% major. Per language,
 German, French, Italian, Dutch, Latin, English and Spanish are all ≥ 89% at ≥ 4 (directional to decision-grade n);
@@ -482,7 +520,9 @@ split is a hypothesis for a pre-registered follow-up on library pages.**
   | S2 pre-1880 date-dense | 6.4% | 4.0% | 11 / 1 / 7 | 3 of 265 / 0 of 194 | 3 of 22 |
   | S3 1880–1930 prose | 0.62% | 0.34% | 16 / 1 / 19 | 0 / 0 | 5 of 41 |
   | S4 1880–1930 date-dense | 3.5% | 4.9% | 15 / 2 / 10 | 6 of 599 / 0 of 534 | 7 of 34 |
-  | ALL | 3.95% [2.2, 6.2] | 2.62% [1.1, 4.5] | **57 / 5 / 43** (sign test p < 0.001) | **1.5% of printed numbers [0.6, 2.5], 9 pages / 0 of 750** | 17 of 122 (14%, CI 9–21%) |
+  | ALL | 3.95% [2.3, 6.1] | 2.62% [1.2, 4.6] | **57 / 5 / 43** (sign test p < 0.001) | **1.5% of printed numbers [0.6, 2.7], 9 pages / 0 of 750** | 17 of 122 (14%, CI 9–21%) |
+
+  (ALL row: CI recomputed 2026-09-30, #5373 — was [2.2, 6.2], [1.1, 4.5] and [0.6, 2.5]. The 9–21% refusal interval is analytic and stands.)
 
   Lite is better on the same page in every stratum. The Archive silently misreads about 1 printed number
   in 70 (e.g. *5180 years* → *6180* twice on one Albērūnī page, read by eye); lite made none that survived
@@ -891,7 +931,7 @@ volumes, a Helck volume filed as Sethe, an HTBM IV leaf shift) are in the README
 
 **Headline: on Siku Quanshu brush manuscript (`manuscript-regular`, 69 referenced books,
 decision-grade) PaddleOCR-VL-1.6 passes the preregistered non-inferiority rule — median
-ΔCER −0.028 (95 % CI −0.036 to −0.014), wins 57 / loses 10 / ties 2 against production
+ΔCER −0.028 (95 % CI −0.047 to −0.015; recomputed 2026-09-30, #5373, was −0.036 to −0.014), wins 57 / loses 10 / ties 2 against production
 `gemini-3.1-flash-lite`, 0 vs 14 catastrophic pages, lower invention (0.132 vs 0.201), no
 loops either side. Cost lane ADOPTED for that class. It is NOT "the better reader" by the
 stronger #4743 rule (Δ ≤ −0.05 on 38 % of pages, the rule wants 60 %). Woodblock (14
@@ -930,9 +970,12 @@ LEFT column of a right-to-left leaf and repeats a line; Paddle reads the columns
 
   | class | ref pages | median CER Paddle / lite | median Δ [95 % CI] | W/L/T (p) | catastrophic | invention | verdict |
   |---|---|---|---|---|---|---|---|
-  | manuscript-regular | 69 (20 + 49) | 0.166 / 0.260 | −0.028 [−0.036, −0.014] | 57/10/2 (p < 0.001) | 0 vs 14 | 0.132 vs 0.201 | **cost lane ADOPTED** |
+  | manuscript-regular | 69 (20 + 49) | 0.166 / 0.260 | −0.028 [−0.047, −0.015] | 57/10/2 (p < 0.001) | 0 vs 14 | 0.132 vs 0.201 | **cost lane ADOPTED** |
   | woodblock | 14 (2 + 12) | 0.174 / 0.202 | −0.010 [−0.022, +0.002] | 9/4/1 (0.27) | 0 vs 0 | 0.128 vs 0.129 | directional (n < 50) |
   | typeset | 6 (5 + 1) | 0.313 / 0.314 | 0.000 [−0.005, +0.009] | 2/2/2 (1) | 0 vs 0 | 0.098 vs 0.110 | directional (n < 50) |
+
+  (CI recomputed 2026-09-30, #5373: manuscript-regular was [−0.036, −0.014]; the other two rows and the
+  flash-preview interval below came out the same. The rule reads CI-upper ≤ +0.05, so ADOPTED stands.)
 
   flash-preview (exploratory second reader) on manuscript-regular: median Δ −0.022
   [−0.036, −0.012], 55/4/10, 0 catastrophic — Paddle and flash-preview agree lite is the
@@ -981,7 +1024,8 @@ rejected: 103 untranslatable page in the 16-page window, 44 a block over 20,000 
 the book, 4 non-prose seam page, 1 page under 200 chars. 40 of 58 seams end mid-sentence.
 
 *Controls.* (1) **H1's probe fires:** real cross-boundary consistency is 73.8% against
-3.8% [1.5, 6.8] when the same pages are scored on another same-language book's terms.
+3.8% [1.4, 7.1] when the same pages are scored on another same-language book's terms
+(CI recomputed 2026-09-30, #5373 — was [1.5, 6.8]).
 (2) **The harness runs production's configuration:** on block-k pages already translated
 by the current prompt and model, arm A reproduces the stored text as closely as two
 harness runs reproduce each other (strict match 8 pages/1 book, 0.986 vs 0.985; looser
@@ -1004,10 +1048,12 @@ builder (`tests/unit/translation-batch-continuity-ab.test.ts`).
 
 - **H1 cannot discriminate at this n, and the rule needed it to.** Only 17 of 57
   boundaries carry a term block k−1 tagged whose source form recurs in block k (42 terms).
-  Every arm fails the −5pp paired bound (B −13.9, C −10.0, D −23.5, E −11.8 lower bounds) —
-  and so does **A2, production run a second time: −12.0pp [−25.5, −1.2], 0 better / 4
+  Every arm fails the −5pp paired bound (B −13.1, C −10.0, D −23.9, E −11.8 lower bounds) —
+  and so does **A2, production run a second time: −12.0pp [−26.5, −2.0], 0 better / 4
   worse.** A bound that production fails against itself is not a quality bar. A2 was post
   hoc and descriptive; it is the most useful number here for reading the rest.
+  (CI recomputed 2026-09-30, #5373 — was B −13.9, D −23.5 and A2 [−25.5, −1.2]; C and E unchanged; every
+  arm still fails the bound.)
 - **The seam-page column is where the signal is**, and it agrees with the judge: arms that
   see the previous page's *translation* (A, A2, E) sit at 72–80%; arms that do not (B, C,
   D) sit at 32–48%. Seeing the previous page's *source* (C, D) does not carry renderings
@@ -1462,7 +1508,8 @@ the blind judge caught it. Not flipped; v16 = v15 + one sentence.**
   `gemini-3.1-flash-lite` (flat, Derek's call — the full-flash routing rests on
   OCR evidence; #4759). Verifier = `scripts/lib/page-terms-parse.mjs`, the
   build-page-terms one. Blind 30-pair Claude judge on loss. $1.26.
-- **Result.** Criteria 1–3, 5 pass: Δ +28.9 pp (CI [+14.7, +44.7]), sign test
+- **Result.** Criteria 1–3, 5 pass: Δ +28.9 pp (CI [+14.2, +44.5]; recomputed
+  2026-09-30, #5373, was [+14.7, +44.7]), sign test
   13–0; original-notes/page 0.42 → 0.77; invented tags −95%, housekeeping
   leakage −91%, inline terms +22%. Hebrew went 8% → 93% verified, Arabic
   29% → 100%: on those scripts v13's citations were mostly fabricated.
@@ -1473,6 +1520,13 @@ the blind judge caught it. Not flipped; v16 = v15 + one sentence.**
   written. Corpus-wide interpretive notes fall 1.27 → 0.81/page, every
   stratum. The "omit the note" clause is being read beyond `original:`.
 - **Replicated?** No. k=1 per (page, arm), one run.
+- **One label changes with the recomputed intervals (#5373).** The report marked
+  the invented-tag reduction (0.25 → 0.01 per page) as NOT decisive, CI
+  [−0.525, 0]. On a sound generator it is [−0.594, −0.003]: decisive, by one
+  page in 320. It is a regression gate in the favourable direction, so no
+  criterion and no recommendation changes. The stored 2026-09-12 report keeps
+  its original intervals (the verifier has changed since; reproduce it at
+  d49c98985 with `PAIRED_STATS_LEGACY_LCG=1`).
 - **Two instrument lessons.** (a) `<[^>]+>` as a tag stripper eats prose
   between `->centred<-` markers — fixed, control added. (b) A mean body
   length cannot carry a runaway-loop failure; `prompt-ab.mjs` said so in
@@ -1614,9 +1668,11 @@ diplomatic set to ≥20 pages per segment first (that is the next experiment).
 
   | arm | Δ vs Gemini | 95% CI | cost/page | speed |
   |---|---|---|---|---|
-  | kraken-catmus-cpu | **+0.18pp** | [−0.28, +0.68] | **€0** (Hetzner CPU) | 20–50s |
-  | surya2-l4 | **−0.04pp** | [−0.63, +0.46] | €0.00094 | 4.3s (98% GPU) |
-  | churro3b-l4 | −0.69pp | [−1.66, +0.06] | €0.01435 | 65.4s |
+  | kraken-catmus-cpu | **+0.18pp** | [−0.28, +0.69] | **€0** (Hetzner CPU) | 20–50s |
+  | surya2-l4 | **−0.04pp** | [−0.62, +0.49] | €0.00094 | 4.3s (98% GPU) |
+  | churro3b-l4 | −0.69pp | [−1.61, +0.09] | €0.01435 | 65.4s |
+
+  (CI recomputed 2026-09-30, #5373 — was [−0.28, +0.68], [−0.63, +0.46], [−1.66, +0.06].)
 
   None is significantly different from Gemini. All three beat every commercial
   non-Gemini arm previously run on this set (Sonnet 5 −0.63, Mistral-OCR −0.97,
@@ -1774,7 +1830,9 @@ section exists so nobody reads the gap as "nothing was run before September".
   |---|---|---|---|
   | Greek (n=18) | **0.07%** CI [0.02, 0.13] | 0.00% (5/5 exact) | 1.5pp |
   | German (n=15) | **0.06%** CI [0.02, 0.11] | 0.01% | — |
-  | Latin (n=36) | **1.15%** CI [0.17, 2.47] | 0.48% | 1.4pp |
+  | Latin (n=36) | **1.15%** CI [0.15, 2.78] | 0.48% | 1.4pp |
+
+  (CI recomputed 2026-09-30, #5373 — Latin was [0.17, 2.47]; Greek and German came out the same.)
 
   Greek and German engine differences are 20x the reference noise and stand. **The Latin
   comparison does not** — the reference error and the reported Kraken-vs-Gemini gap are the
@@ -1961,12 +2019,14 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
 ## 2026-09-21 — Which engine should read Greek print, per period? (#4925 step 2, #4744)
 
 **Headline: for 1700–1799 (53 referenced books, decision-grade) production flash-lite is
-inadequate by the preregistered threshold (median CER 0.107, CI 0.077–0.122, threshold 0.10)
-and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.009], 46
+inadequate by the preregistered threshold (median CER 0.107, CI 0.080–0.140, threshold 0.10)
+and flash-preview is the preferred reader (median CER 0.085, Δ −0.018 [−0.024, −0.010], 46
 wins / 6 losses, 0 vs 1 catastrophic). Kraken greek-cllg reads the letters as well as preview
 (0.082) but is closed for the period: it clears Δ ≤ −0.05 on 15 % of pages, not the 60 % the
 better-reader rule needs. For 1450–1699 the cell holds 48 referenced books, two short of 50,
 so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.091 (46/1/1).**
+(CI recomputed 2026-09-30, #5373 — lite's interval was 0.077–0.122 and the preview Δ [−0.024, −0.009]. Rule (a)
+reads the median against 0.10 and rule (b) the sign of CI-upper, so every verdict stands.)
 
 - **Design.** `PREREGISTRATION-greek-ext-4925.md`. One Greek-majority interior leaf per book,
   typeset print only, by-eye `greek_share ≥ 0.5`; references from First1KGreek / Perseus /
@@ -2004,8 +2064,8 @@ so it is DIRECTIONAL: lite 0.170, preview 0.088 (48 wins / 0 losses), Kraken 0.0
   shortfall is a draw-more item. Ten more pre-1700 books were sealed as a separate file (every book
   in greek.json / greek-ext.json excluded; 66 books walked). By eye, before any engine output was
   read: 9 typeset Greek leaves, 1 codex (excluded). 8 of the 9 found a reference. **Pre-1700 is now
-  decision-grade at 56: lite 0.171 [0.159, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
-  [−0.093, −0.057], 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
+  decision-grade at 56: lite 0.171 [0.158, 0.188] = inadequate; flash-preview 0.090, Δ −0.068
+  [−0.093, −0.056] (CI recomputed 2026-09-30, #5373 — was [0.159, 0.188] and [−0.093, −0.057]), 55W/1L = preferred; Kraken 0.088, Δ −0.054, 52W/3L/1T, and it passes the
   better-reader rule at 60.7 % of pages (34 of 56) against a 60 % bar — ONE page. An independent
   recompute puts that share at 57 %. Treat Kraken ≈ preview on letters, not "Kraken wins".** Spend
   $0.11. Optional-stopping note: the supplement was drawn after seeing results, but its size was

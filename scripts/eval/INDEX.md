@@ -15,7 +15,7 @@ re-implementing one is the most common way work gets duplicated here.
 |---|---|
 | `lib/embedding-eval.mjs` | `embedTexts`, `embedText`, `evaluatePage`, `evaluateCorpus`, `evaluateRunConsistency` |
 | `lib/metrics.mjs` | `tokenize`, `levenshtein`, `charSimilarity`, `cer`, `syllableSimilarity`, `mcr`, `bleu4`, `rougeL`, `cosineSimilarity`, `cosineDistance`, `cleanText`, `pairwiseMetrics`, `stripWrappers`, `normalizeCJK`, `subsequenceCER`, `SCRIPT_DEFS`, `normalizeForScript`, `subsequenceWER`, `greedySpanStats`, `windowedErrorRate`, `GUARD_THRESHOLDS`, `scoreAgainstReference`, `deEntity`, `toAgreementWords`, `agreementWords`, `SPACELESS_RE`, `scriptClassOf`, `toAgreementChars`, `agreementChars`, `agreementPrimary` |
-| `lib/paired-stats.mjs` | `resetSeed`, `mean`, `binomTwoSided`, `bootstrapCI`, `diffCI`, `seededRand`, `bootstrapRatioCI` |
+| `lib/paired-stats.mjs` | `makeRng`, `resetSeed`, `mean`, `binomTwoSided`, `bootstrapCI`, `diffCI`, `seededRand`, `bootstrapRatioCI` |
 | `lib/production-prompt.mjs` | `getProductionOcrPrompt`, `withIntervention` |
 | `lib/report.mjs` | `saveResults`, `loadLatestResults`, `listResults`, `generateConsistencyReport`, `generateEmbeddingReport`, `generateMatrixReport`, `saveBlogPost` |
 | `lib/revision-source.mjs` | `READING_SOURCES`, `MAINTENANCE_RE`, `isMaintenanceSource`, `rowIsMaintenance` |

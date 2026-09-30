@@ -8,17 +8,55 @@
  * ad-hoc threshold with no error rate attached, while this machinery was already
  * in the repo.
  *
- * `stats-cross-model.mjs` still carries its own copies; migrating it to import
- * from here is a separate change (one concern per PR) and is the obvious
- * follow-up. Until then, if you fix a bug here, fix it there too.
+ * `stats-cross-model.mjs` still carries its own copies of the three tests;
+ * migrating it to import them from here is a separate change (one concern per
+ * PR). It does draw from this module's generator (`makeRng`), so there is one
+ * PRNG to get right. If you fix a bug in a test here, fix it there too.
  *
  * The bootstrap PRNG is seeded so a CI is reproducible across runs — a
  * confidence interval that moves when you re-run the report is not auditable.
+ *
+ * THE GENERATOR (#5373). Until 2026-09-30 this was the C-library LCG
+ * `seed = (seed * 1103515245 + 12345) & 0x7fffffff`, written in double
+ * arithmetic. The product passes 2^53, so the low bits were rounded away
+ * BEFORE the mask kept exactly those bits, and the stream fell onto a short
+ * cycle: 13,676 distinct values in 1,000,000 draws. A 10,000-resample bootstrap
+ * went round it hundreds of times, so intervals came out the wrong width. It is
+ * now mulberry32, whose every step stays inside 32-bit integer arithmetic
+ * (`Math.imul`, `>>> 0`); period 2^32. `tests/unit/paired-stats-prng.test.ts`
+ * pins distinctness and uniformity.
+ *
+ * A seed therefore no longer yields the stream it did before that date. To
+ * REPRODUCE a draw, a blinded packet or an interval made earlier, run the
+ * harness with `PAIRED_STATS_LEGACY_LCG=1`; never use it for a new result.
  */
 
-let seed = 0x5eed;
-export const resetSeed = (s = 0x5eed) => { seed = s; };
-const rand = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x80000000;
+/**
+ * A seeded uniform generator on [0, 1): mulberry32. Use this, not a hand-rolled
+ * LCG, when a script needs its own stream independent of `resetSeed`.
+ */
+export function makeRng(s = 0x5eed) {
+  let state = s >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** The pre-#5373 generator, kept only so an old artifact can be reproduced. */
+function makeLegacyLcg(s) {
+  let seed = s;
+  return () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x80000000;
+}
+
+const LEGACY = process.env.PAIRED_STATS_LEGACY_LCG === '1';
+if (LEGACY) console.error('paired-stats: PAIRED_STATS_LEGACY_LCG=1 — using the pre-#5373 generator (short cycle); for reproducing old artifacts only');
+const newStream = (s) => (LEGACY ? makeLegacyLcg(s) : makeRng(s));
+
+let rand = newStream(0x5eed);
+export const resetSeed = (s = 0x5eed) => { rand = newStream(s); };
 
 export const mean = (a) => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : null);
 
