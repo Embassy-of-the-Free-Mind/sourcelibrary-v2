@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og';
+import sharp from 'sharp';
 import { getReadDb } from '@/lib/mongodb';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { Book, Page } from '@/lib/types';
@@ -24,6 +26,36 @@ import { getTranslation } from '@/lib/page-translations';
 
 export const PAGE_OG_SIZE = { width: 1200, height: 630 };
 export const PAGE_OG_CONTENT_TYPE = 'image/png';
+
+/**
+ * Width over height at which a scan is a wide leaf (palm-leaf, pothi, pecha)
+ * and the card, like the desktop reader, lays the leaf across the top with the
+ * words beneath it instead of standing it in a portrait slot. Same number as
+ * WIDE_LEAF_RATIO in Reader2C.tsx — the two surfaces should agree on what is
+ * wide (#5352).
+ */
+const WIDE_LEAF_RATIO = 1.7;
+
+/**
+ * The scan, fetched once: its bytes as a data URL for the renderer (which
+ * would otherwise fetch the same file again) and its shape, which decides the
+ * card's layout. Null on any failure, and the caller falls back to handing the
+ * renderer the URL, so a slow or missing image costs the layout choice and
+ * nothing else.
+ */
+async function loadScan(url: string): Promise<{ src: string; ratio: number | null } | null> {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) return null;
+    const bytes = Buffer.from(await res.arrayBuffer());
+    const meta = await sharp(bytes).metadata().catch(() => null);
+    const ratio = meta?.width && meta?.height ? meta.width / meta.height : null;
+    const type = res.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+    return { src: `data:${type};base64,${bytes.toString('base64')}`, ratio };
+  } catch {
+    return null;
+  }
+}
 
 export const PAGE_OG_ALT: Record<Locale, string> = {
   en: 'Page from Source Library',
@@ -105,8 +137,11 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
   // is one of the most-copied images we emit and should carry its mark.
   // enhanced_photo stays ahead of it — it is a deliberate cover-selection
   // preference and is currently ~0% populated.
-  const imageUrl = (page as any)?.enhanced_photo || page?.compressed_photo
+  const imageUrl: string | undefined = (page as any)?.enhanced_photo || page?.compressed_photo
     || (page as any)?.display_photo || page?.archived_photo || page?.photo;
+  const imageSrc = imageUrl?.replace('/full/full/', '/full/,500/');
+  const scan = imageSrc ? await loadScan(imageSrc) : null;
+  const wideLeaf = (scan?.ratio ?? 0) >= WIDE_LEAF_RATIO;
 
   // Truncate title if too long
   const displayTitle = title.length > 50 ? title.substring(0, 47) + '...' : title;
@@ -116,17 +151,71 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
   const localizedText = lang === 'en' || !page ? null : getTranslation(page, lang)?.data || null;
   const excerptLabel = localizedText ? t.ownExcerpt : t.englishExcerpt;
   const rawTranslation = localizedText || (page as any)?.translation?.data || '';
-  const translationExcerpt = rawTranslation
-    ? rawTranslation
-      .replace(/<[^>]+>/g, '')           // strip XML/HTML tags
+  // stripEditorialWrappers first: it removes the page-DESCRIBING blocks
+  // (<warning>, <script>, <meta>, …) content and all. A bare tag strip kept
+  // their prose, and a card opened with "handwritten Handwritten Jaina
+  // Devanagari script. Significant flaking…" instead of the page's words —
+  // the mistake that helper's header describes. This is a snippet surface,
+  // which is what it was written for.
+  const cleanTranslation = rawTranslation
+    ? stripEditorialWrappers(rawTranslation)
+      .replace(/<[^>]+>/g, '')           // strip the inline glosses' tags, keep their words
       .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
       .replace(/^#{1,6}\s+/gm, '')       // strip markdown headings (they ran into the prose as a literal "#")
       .replace(/\s+/g, ' ')              // collapse whitespace
       .trim()
-      .slice(0, 220)
-      .replace(/\s\S*$/, '')            // break at last full word
-    + (rawTranslation.length > 220 ? '...' : '')
     : '';
+  const translationExcerpt = cleanTranslation
+    ? cleanTranslation.slice(0, 220).replace(/\s\S*$/, '') // break at last full word
+      + (cleanTranslation.length > 220 ? '...' : '')
+    : '';
+
+  // The scan. Standing in the left slot for a page; lying across the top for a
+  // wide leaf, as tall as its shape asks up to a cap that leaves room for the
+  // words. The card's inner width is 1200 less the 32px padding each side and
+  // the 24px the slot adds.
+  const leafHeight = wideLeaf && scan?.ratio ? Math.min(300, Math.round((1200 - 64 - 48) / scan.ratio)) : undefined;
+  const scanImage = imageSrc ? (
+    <img
+      src={scan?.src ?? imageSrc}
+      alt={`Page ${pageNum}`}
+      style={{
+        maxWidth: '100%',
+        maxHeight: '100%',
+        ...(leafHeight ? { height: leafHeight } : {}),
+        objectFit: 'contain',
+        borderRadius: 8,
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+      }}
+    />
+  ) : (
+    <div
+      style={{
+        width: wideLeaf ? '60%' : '80%',
+        height: '90%',
+        background: 'rgba(255,255,255,0.1)',
+        borderRadius: 8,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="rgba(201, 168, 108, 0.5)"
+        strokeWidth="1"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    </div>
+  );
 
   return new ImageResponse(
     (
@@ -136,6 +225,7 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
           width: '100%',
           height: '100%',
           display: 'flex',
+          flexDirection: wideLeaf ? 'column' : 'row',
           fontFamily: 'Georgia, serif',
           position: 'relative',
           padding: '32px',
@@ -154,70 +244,45 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
           }}
         />
 
-        {/* Left side - Page image or placeholder */}
+        {/* The scan: the left slot for a page, the top band for a wide leaf */}
         <div
           style={{
-            width: '45%',
-            height: '100%',
+            width: wideLeaf ? '100%' : '45%',
+            height: wideLeaf ? (leafHeight ?? 300) + 48 : '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             padding: '24px',
           }}
         >
-          {imageUrl ? (
-            <img
-              src={imageUrl.replace('/full/full/', '/full/,500/')}
-              alt={`Page ${pageNum}`}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                borderRadius: 8,
-                boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                width: '80%',
-                height: '90%',
-                background: 'rgba(255,255,255,0.1)',
-                borderRadius: 8,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgba(201, 168, 108, 0.5)"
-                strokeWidth="1"
-              >
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-              </svg>
-            </div>
-          )}
+          {scanImage}
         </div>
 
-        {/* Right side - Metadata + Translation */}
+        {/* Metadata + translation: beside the page, or beneath the leaf */}
         <div
           style={{
-            width: '55%',
-            height: '100%',
+            width: wideLeaf ? '100%' : '55%',
+            height: wideLeaf ? undefined : '100%',
+            flex: wideLeaf ? 1 : undefined,
             display: 'flex',
-            flexDirection: 'column',
+            // Beneath a leaf there is a strip 200px tall to work with: the
+            // title stands on the left and the words run beside it.
+            flexDirection: wideLeaf ? 'row' : 'column',
+            alignItems: wideLeaf ? 'center' : undefined,
             justifyContent: 'center',
-            padding: '24px 32px 24px 16px',
+            // Extra room at the foot so the excerpt box clears the branding
+            // line, which sits absolutely at the bottom right.
+            padding: wideLeaf ? '0 24px 44px 24px' : '24px 32px 24px 16px',
           }}
         >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: wideLeaf ? '42%' : '100%',
+              paddingRight: wideLeaf ? 24 : 0,
+            }}
+          >
           {/* Page number badge */}
           <div
             style={{
@@ -271,11 +336,39 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
             {book?.published && <span style={{ color: 'rgba(253, 252, 249, 0.5)' }}>({book.published})</span>}
           </div>
 
+          {/* Decorative line (only when no translation) */}
+          {!translationExcerpt && (
+            <>
+              {(book?.language) && (
+                <div
+                  style={{
+                    fontSize: 20,
+                    color: 'rgba(253, 252, 249, 0.6)',
+                    display: 'flex',
+                    marginTop: 4,
+                  }}
+                >
+                  {languageName(book.language, lang)}
+                </div>
+              )}
+              <div
+                style={{
+                  width: 80,
+                  height: 2,
+                  background: 'linear-gradient(90deg, #c9a86c, transparent)',
+                  marginTop: 24,
+                }}
+              />
+            </>
+          )}
+          </div>
+
           {/* Translation excerpt — the hook that makes people click */}
           {translationExcerpt && (
             <div
               style={{
-                marginTop: 16,
+                marginTop: wideLeaf ? 0 : 16,
+                width: wideLeaf ? '58%' : undefined,
                 padding: '14px 18px',
                 background: 'rgba(253, 252, 249, 0.06)',
                 borderLeft: '3px solid rgba(201, 168, 108, 0.5)',
@@ -308,32 +401,6 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
                 {translationExcerpt}
               </div>
             </div>
-          )}
-
-          {/* Decorative line (only when no translation) */}
-          {!translationExcerpt && (
-            <>
-              {(book?.language) && (
-                <div
-                  style={{
-                    fontSize: 20,
-                    color: 'rgba(253, 252, 249, 0.6)',
-                    display: 'flex',
-                    marginTop: 4,
-                  }}
-                >
-                  {languageName(book.language, lang)}
-                </div>
-              )}
-              <div
-                style={{
-                  width: 80,
-                  height: 2,
-                  background: 'linear-gradient(90deg, #c9a86c, transparent)',
-                  marginTop: 24,
-                }}
-              />
-            </>
           )}
         </div>
 
