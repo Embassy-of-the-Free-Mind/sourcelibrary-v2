@@ -31,6 +31,13 @@
  *   --chained --loop [--interval=180] [--max-minutes=N] PAID  tick until every run is terminal
  *   --chained --status                                  FREE  open and recent chained runs
  *
+ *   --shadow --tag=ARM  with --chained --enrol/--tick/--loop/--status: SHADOW arms (eval, 2026-09-30
+ *   speed test B). Same rounds and prompts, same gates, nothing written to pages: texts stay on the
+ *   run (`run.pages`), seeds come from the run's own text, refusals land in `run.refused`. Shadow runs
+ *   have their own `mode` ('chained-shadow'), so a loop without --shadow never touches them and vice
+ *   versa; two tags may run on one book at once (the paired design). Metered under
+ *   endpoint eval/translate-batch-chained-shadow with book_id, so an envelope still sees the spend.
+ *
  * Run on Hetzner (paid Gemini is geo-blocked on the laptop):
  *   set -a; source .env.production.local; set +a
  *   node scripts/workers/translate-batch-worker.mjs --plan --book=<id>
@@ -46,7 +53,7 @@ import {
 } from '../lib/translate-batch-seam.mjs';
 import {
   enrolChainedRun, tickChained, planNextRound, estimateChainedUsd,
-  MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
+  MODE as CHAINED_MODE, SHADOW_MODE as CHAINED_SHADOW_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
 } from '../lib/translate-batch-chained.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { contentHash } from '../lib/translate-core.mjs';
@@ -225,6 +232,8 @@ async function main() {
 
 // ── Chained lane commands ──────────────────────────────────────────────────
 async function chained(db) {
+  const SHADOW = has('shadow');
+  if (SHADOW && has('enrol') && !arg('tag')) throw new Error('--chained --enrol --shadow needs --tag=ARM (the arm name)');
   // One adapter for the whole command: its key rotation remembers which key last refused, so a
   // loop does not pay a 429 on key 0 at every tick (it did, 2026-09-29 pilot log).
   const gemini = KEYS.length ? makeGeminiAdapter() : null;
@@ -259,9 +268,9 @@ async function chained(db) {
     if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID');
     const prompts = await loadTranslationPrompts(db);
     for (const id of ids) {
-      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined });
+      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined, shadow: SHADOW, tag: arg('tag') || null });
       if (!res.ok) { console.log(`  ${id}: REFUSED — ${res.reason}`); process.exitCode = 2; }
-      else console.log(`  ${id}: run ${res.run.id} est $${res.estimate} — ${res.submitted?.note}`);
+      else console.log(`  ${id}: run ${res.run.id}${SHADOW ? ` SHADOW ${arg('tag')}` : ''} est $${res.estimate} — ${res.submitted?.note}`);
     }
     return;
   }
@@ -273,11 +282,12 @@ async function chained(db) {
     const maxMinutes = Number(arg('max-minutes') || 0);
     const started = Date.now();
     for (;;) {
-      const notes = await tickChained(db, deps(), { prompts, filter: arg('run') ? { id: arg('run') } : {} });
+      const filter = { ...(arg('run') ? { id: arg('run') } : {}), ...(SHADOW && arg('tag') ? { tag: arg('tag') } : {}) };
+      const notes = await tickChained(db, deps(), { prompts, filter, shadow: SHADOW });
       const stamp = new Date().toISOString().slice(11, 19);
       for (const n of notes) console.log(`  ${stamp} ${n.book_id} ${n.run}: ${n.phase} — ${n.note}`);
-      const open = await db.collection(RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } });
-      console.log(`  ${stamp} open chained runs: ${open}`);
+      const open = await db.collection(RUNS_COLLECTION).countDocuments({ mode: SHADOW ? CHAINED_SHADOW_MODE : CHAINED_MODE, ...(SHADOW && arg('tag') ? { tag: arg('tag') } : {}), phase: { $nin: CHAINED_TERMINAL } });
+      console.log(`  ${stamp} open chained${SHADOW ? ' SHADOW' : ''} runs: ${open}`);
       if (!has('loop') || open === 0) return;
       if (maxMinutes && Date.now() - started > maxMinutes * 60000) { console.log('  --max-minutes reached; runs stay open for the next tick'); return; }
       await new Promise(r => setTimeout(r, interval));
@@ -285,14 +295,14 @@ async function chained(db) {
   }
 
   if (has('status')) {
-    const runs = await db.collection(RUNS_COLLECTION).find({ mode: CHAINED_MODE, ...(arg('book') ? { book_id: arg('book') } : {}) })
-      .project({ id: 1, book_id: 1, phase: 1, page_count: 1, cursor: 1, pending_single: 1, rounds: 1, counts: 1, estimate: 1, spent_est_usd: 1, strikes: 1, parked_reason: 1, updated_at: 1 })
+    const runs = await db.collection(RUNS_COLLECTION).find({ mode: SHADOW ? CHAINED_SHADOW_MODE : CHAINED_MODE, ...(SHADOW && arg('tag') ? { tag: arg('tag') } : {}), ...(arg('book') ? { book_id: arg('book') } : {}) })
+      .project({ id: 1, book_id: 1, tag: 1, phase: 1, page_count: 1, cursor: 1, pending_single: 1, rounds: 1, counts: 1, estimate: 1, spent_est_usd: 1, strikes: 1, parked_reason: 1, updated_at: 1 })
       .sort({ updated_at: -1 }).limit(50).toArray();
     for (const r of runs) {
       const rounds = r.rounds || [];
       const lat = rounds.filter(x => x.submitted_at && x.collected_at).map(x => (new Date(x.collected_at) - new Date(x.submitted_at)) / 60000);
       const med = lat.length ? lat.sort((a, b) => a - b)[Math.floor(lat.length / 2)].toFixed(1) : '?';
-      console.log(`${r.id}  ${r.book_id}  ${r.phase}${r.parked_reason ? ` (${r.parked_reason})` : ''}  ${r.cursor}/${r.page_count} queued, ${(r.pending_single || []).length} pending single, ${rounds.length} rounds (median ${med} min)  est $${r.estimate} spent-est $${r.spent_est_usd}  ${JSON.stringify(r.counts || {})}`);
+      console.log(`${r.id}  ${r.book_id}${r.tag ? `  [${r.tag}]` : ''}  ${r.phase}${r.parked_reason ? ` (${r.parked_reason})` : ''}  ${r.cursor}/${r.page_count} queued, ${(r.pending_single || []).length} pending single, ${rounds.length} rounds (median ${med} min)  est $${r.estimate} spent-est $${r.spent_est_usd}  ${JSON.stringify(r.counts || {})}`);
     }
     if (!runs.length) console.log('No chained runs.');
     return;

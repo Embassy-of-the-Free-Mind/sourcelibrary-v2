@@ -18,7 +18,7 @@
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  enrolChainedRun, tickChained, planNextRound, PHASE, MAX_STRIKES, looksCollapsed,
+  enrolChainedRun, tickChained, planNextRound, PHASE, MAX_STRIKES, looksCollapsed, SHADOW_MODE,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-chained.mjs';
@@ -98,6 +98,7 @@ function makeDb(seed: Record<string, Doc[]>) {
           if (Array.isArray(u)) return { matchedCount: 1, modifiedCount: 0 }; // pipeline update: not modelled
           for (const [k, v] of Object.entries(u.$set || {})) setPath(d, k, structuredClone(v));
           for (const k of Object.keys(u.$unset || {})) unsetPath(d, k);
+          for (const [k, v] of Object.entries(u.$push || {})) setPath(d, k, [...(get(d, k) || []), structuredClone(v)]);
           return { matchedCount: 1, modifiedCount: 1 };
         },
         aggregate: () => ({ toArray: async () => [] }),
@@ -408,5 +409,68 @@ describe('planNextRound', () => {
     const plan = planNextRound({ queue: refs(PAGES), cursor: 8, pending_single: [] }, docs(changed));
     expect(plan.dropped).toEqual([{ id: 'p9', reason: 'ocr_changed' }]);
     expect(plan.pages[0].page_number).toBe(10);
+  });
+});
+
+// ── Shadow arms (2026-09-30 speed test B): same rounds, nothing written to pages ─────────────
+describe('a SHADOW run keeps its texts on itself and seeds from its own output', () => {
+  const shadowTick = async (deps: any, times = 1) => {
+    let notes: any[] = [];
+    for (let i = 0; i < times; i++) notes = await tickChained(db, deps, { prompts: PROMPTS, shadow: true });
+    return notes;
+  };
+  const shadowRun = (tag: string) => db.collection(RUNS_COLLECTION).findOne({ book_id: 'bk1', mode: SHADOW_MODE, tag });
+
+  it('writes no page, seeds round 2 from its own round-1 text, and ignores a translation another lane wrote meanwhile', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true, tag: 'C' });
+    expect(res.ok).toBe(true);
+    expect(res.run.mode).toBe(SHADOW_MODE);
+    // A production loop ticks only mode 'chained': the shadow run is invisible to it.
+    expect(await tick(db, deps)).toEqual([]);
+    // Meanwhile the realtime lane writes p8 and p10 for real.
+    pageDoc(db, 8).translation = { data: 'REALTIME 8', source: 'ai' };
+    pageDoc(db, 10).translation = { data: 'REALTIME 10', source: 'ai' };
+    await shadowTick(deps); // collect round 1, submit round 2
+    for (let n = 1; n <= 20; n++) if (n !== 8 && n !== 10) expect(pageText(db, `p${n}`)).toBeUndefined();
+    expect(pageText(db, 'p8')).toBe('REALTIME 8');
+    const run = await shadowRun('C');
+    expect(run.pages.map((p: Doc) => p.page_number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(run.pages[7]).toMatchObject({ id: 'p8', text: textFor(8), round: 1, batch_job_id: 'batches/job1', context: { previous_translation: false } });
+    // Round 2 is seeded with the SHADOW text of p8, not the realtime lane's; p10 is still sent.
+    const expected2 = buildBlockTranslationPrompt({
+      prompts: PROMPTS, book: BOOK, pages: PAGES.slice(8, 16), previousTranslation: textFor(8),
+      prevOcrText: ocr(8), nextOcrText: ocr(17), pageBreak: PAGE_BREAK_SCOPED,
+    }).prompt;
+    expect(gemini.prompt(1)).toBe(expected2);
+    expect(gemini.prompt(1)).not.toContain('REALTIME');
+    expect(gemini.prompt(1)).toContain('--- Page 10 ---');
+    await shadowTick(deps, 3);
+    const done = await shadowRun('C');
+    expect(done.phase).toBe(PHASE.COMPLETE);
+    expect(done.counts).toMatchObject({ written: 20, dropped: 0 });
+    expect(done.pages).toHaveLength(20);
+    expect(pageText(db, 'p10')).toBe('REALTIME 10');
+    expect(db.data.page_revisions).toHaveLength(0);
+    // Metered under the shadow endpoint, with the book id (an envelope still sees it).
+    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ endpoint: 'eval/translate-batch-chained-shadow', book_id: 'bk1' });
+  });
+
+  it('two tags run side by side on one book; a production enrol is not blocked by them; the health gate records on the run', async () => {
+    const gemini = makeGemini({ text: (n) => (n === 3 ? 'loop '.repeat(6000) : textFor(n)) });
+    const deps = makeDeps(gemini);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true, tag: 'C' })).ok).toBe(true);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true, tag: 'C2' })).ok).toBe(true);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true, tag: 'C' })).reason).toMatch(/open-run/);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, shadow: true })).reason).toMatch(/shadow-needs-tag/);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 })).ok).toBe(true);
+    await shadowTick(deps);
+    const c = await shadowRun('C');
+    expect(c.counts).toMatchObject({ written: 7, unhealthy: 1 });
+    expect(c.refused).toEqual([expect.objectContaining({ id: 'p3', reason: 'runaway', round: 1 })]);
+    expect(pageDoc(db, 3).translation?.health_blocked).toBeUndefined();
+    expect(db.data.page_revisions.some((r: Doc) => r.source === 'health-gate-refused')).toBe(false);
+    expect((await shadowRun('C2')).counts.written).toBe(7);
   });
 });

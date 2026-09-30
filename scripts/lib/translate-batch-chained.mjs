@@ -47,6 +47,7 @@ import {
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   sanitizeTranslationTags,
+  assessTranslationHealth,
   isTranslatablePage,
   writePageTranslation,
   syncBookTranslationCounters,
@@ -65,7 +66,18 @@ import {
 } from './translate-batch-seam.mjs';
 
 export const MODE = 'chained';
+/**
+ * SHADOW runs (eval arms, 2026-09-30 speed test B): the same rounds, the same prompts, the same
+ * guards — but nothing is written to `pages`. Texts stay on the run document (`run.pages`), each
+ * round is seeded from the run's OWN earlier text (never from a translation another lane wrote
+ * meanwhile), and the health gate's refusals are recorded on the run instead of stamped on the
+ * page. A shadow run carries its own `mode` so a production loop on a checkout without this
+ * code (`tickChained` filters on `mode`) can never pick one up and write it for real; two shadow
+ * arms (`tag`) may run side by side on one book, which is the paired design.
+ */
+export const SHADOW_MODE = 'chained-shadow';
 export const ENDPOINT = 'hetzner/translate-batch-chained';
+export const SHADOW_ENDPOINT = 'eval/translate-batch-chained-shadow';
 export const REVISION_NOTE = 'translate-batch-chained';
 export const MAX_STRIKES = 3;                 // translate-worker MAX_BATCH_FAILURES
 
@@ -151,9 +163,16 @@ function roundEstimateUsd({ model, prompt, pages }) {
 
 // ── Mongo lookups the worker makes (mirrored) ──────────────────────────────
 
-/** translate-worker: the stored translation of the page before the block, if any. */
-async function seedFor(db, bookId, firstPageNumber) {
+/** A shadow run's own text for a page, by page number (its pages array is the "store"). */
+const shadowTextFor = (run, pageNumber) => (run?.pages || []).find((p) => p.page_number === pageNumber)?.text || null;
+
+/**
+ * translate-worker: the stored translation of the page before the block, if any. A shadow run
+ * seeds ONLY from its own pages: what another lane wrote to Mongo meanwhile is not this arm's text.
+ */
+async function seedFor(db, bookId, firstPageNumber, run) {
   if (!(firstPageNumber > 1)) return null;
+  if (run?.shadow) return shadowTextFor(run, firstPageNumber - 1);
   const prev = await db.collection('pages').findOne(
     { book_id: bookId, page_number: firstPageNumber - 1, 'translation.data': { $exists: true } },
     { projection: { _id: 0, 'translation.data': 1 } });
@@ -171,16 +190,29 @@ async function adjacentOcr(db, bookId, firstPageNumber, lastPageNumber) {
   return { prevOcrText: byNum.get(firstPageNumber - 1) || undefined, nextOcrText: byNum.get(lastPageNumber + 1) || undefined };
 }
 
-async function loadPageDocs(db, ids) {
+/**
+ * Fresh page docs. For a SHADOW run the served translation is replaced by the run's own: a page
+ * another lane translated meanwhile still reads as untranslated here (it is, for this arm), and a
+ * page this run already produced reads as translated (so the plan and the guards see it as done).
+ * The refusal flags (`recitation_blocked`, `safety_blocked`) are kept — those are the page's.
+ */
+async function loadPageDocs(db, ids, run) {
   const docs = await db.collection('pages').find({ id: { $in: ids } },
     { projection: { id: 1, _id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 } }).toArray();
+  if (run?.shadow) {
+    for (const d of docs) {
+      const { data: _served, health_blocked: _hb, ...rest } = d.translation || {};
+      const own = shadowTextFor(run, d.page_number);
+      d.translation = own ? { ...rest, data: own } : rest;
+    }
+  }
   return new Map(docs.map((d) => [d.id, d]));
 }
 
 /** The exact request the realtime worker would build for these pages, from the same builders. */
-export async function buildRoundRequest(db, { prompts, book, pages, kind }) {
+export async function buildRoundRequest(db, { prompts, book, pages, kind, run }) {
   const first = pages[0].page_number, last = pages[pages.length - 1].page_number;
-  const previousTranslation = await seedFor(db, book.id, first);
+  const previousTranslation = await seedFor(db, book.id, first, run);
   const { prevOcrText, nextOcrText } = await adjacentOcr(db, book.id, first, last);
   const built = kind === 'block'
     ? buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED })
@@ -198,7 +230,7 @@ function meterPlaceholder(deps, db, { run, jobName, pageCount }) {
     type: 'translation', mode: 'batch', model: run.model,
     book_id: run.book_id, page_count: pageCount,
     input_tokens: 0, output_tokens: 0, status: 'submitted',
-    batch_job_id: jobName, endpoint: ENDPOINT,
+    batch_job_id: jobName, endpoint: run.shadow ? SHADOW_ENDPOINT : ENDPOINT,
     prompt_version: String(run.prompt_ref?.version ?? ''),
     triggered_by: 'manual',
   }, db);
@@ -210,7 +242,7 @@ function meterComplete(deps, db, { run, jobName, pageCount, responses, status = 
     book_id: run.book_id, page_count: pageCount,
     input_tokens: inputTokens, output_tokens: outputTokens,
     status, ...(error ? { error_message: error } : {}),
-    batch_job_id: jobName, endpoint: ENDPOINT,
+    batch_job_id: jobName, endpoint: run.shadow ? SHADOW_ENDPOINT : ENDPOINT,
     prompt_version: String(run.prompt_ref?.version ?? ''),
     triggered_by: 'manual',
     ...(responses?.length ? {} : { insertIfMissing: false }),
@@ -235,13 +267,17 @@ async function setRun(db, run, set, deps) {
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, shadow = false, tag = null } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
-  const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
+  if (shadow && !tag) return { ok: false, reason: 'shadow-needs-tag (the arm name; two arms may run side by side)', book };
+  // A production run refuses while ANY run of the book is open; a shadow arm refuses only its own
+  // tag, so the paired arms of one experiment can run at once.
+  const openFilter = shadow ? { book_id: bookId, mode: SHADOW_MODE, tag } : { book_id: bookId, mode: { $ne: SHADOW_MODE } };
+  const open = await db.collection(RUNS_COLLECTION).findOne({ ...openFilter, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
   const { pages, excluded } = await selectPages(db, bookId, { limit });
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
@@ -251,7 +287,8 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
 
   const now = deps.now ? deps.now() : new Date();
   const run = {
-    id: newRunId(), book_id: bookId, model, mode: MODE, shadow: false,
+    id: newRunId(), book_id: bookId, model, mode: shadow ? SHADOW_MODE : MODE, shadow: !!shadow,
+    ...(shadow ? { tag, pages: [], refused: [] } : {}),
     phase: PHASE.READY, prompt_ref: null,
     queue: pages.map(ref), cursor: 0, pending_single: [],
     round: null, rounds: [], strikes: 0, dropped: [],
@@ -261,7 +298,7 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
     created_at: now, updated_at: now,
   };
   await db.collection(RUNS_COLLECTION).insertOne(run);
-  log(`[translate-batch-chained] ${bookId}: run ${run.id} — ${pages.length} pages queued, est $${estimate}`);
+  log(`[translate-batch-chained] ${bookId}: run ${run.id}${shadow ? ` SHADOW ${tag}` : ''} — ${pages.length} pages queued, est $${estimate}`);
   const sub = await submitRound(db, run, deps, { prompts });
   return { ok: true, run, estimate, submitted: sub };
 }
@@ -276,7 +313,7 @@ export async function submitRound(db, run, deps, { prompts }) {
   const log = deps.log || console.log;
   if (run.phase !== PHASE.READY) return { submitted: false, note: `phase ${run.phase}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
-  const pageDocs = await loadPageDocs(db, ids);
+  const pageDocs = await loadPageDocs(db, ids, run);
   const plan = planNextRound(run, pageDocs);
   if (plan?.dropped?.length) {
     const droppedIds = new Set(plan.dropped.map((d) => d.id));
@@ -292,7 +329,7 @@ export async function submitRound(db, run, deps, { prompts }) {
 
   if (!(await deps.budgetAllows(db, `translate-batch-chained ${run.book_id}`))) return { submitted: false, note: 'spend-dial-closed' };
   const book = await db.collection('books').findOne({ id: run.book_id });
-  const req = await buildRoundRequest(db, { prompts, book, pages: plan.pages, kind: plan.kind });
+  const req = await buildRoundRequest(db, { prompts, book, pages: plan.pages, kind: plan.kind, run });
   const est = roundEstimateUsd({ model: run.model, prompt: req.prompt, pages: plan.pages });
   if (run.spent_est_usd + est > run.approved_usd) return { submitted: false, note: `approval exhausted (est $${(run.spent_est_usd + est).toFixed(4)} > $${run.approved_usd})` };
 
@@ -318,7 +355,7 @@ export async function submitRound(db, run, deps, { prompts }) {
 
 async function finishRun(db, run, deps) {
   const log = deps.log || console.log;
-  if (run.counts?.written > 0) await syncBookTranslationCounters(db, run.book_id);
+  if (run.counts?.written > 0 && !run.shadow) await syncBookTranslationCounters(db, run.book_id);
   await setRun(db, run, { phase: PHASE.COMPLETE, completed_at: deps.now ? deps.now() : new Date() }, deps);
   log(`[translate-batch-chained] ${run.book_id}: COMPLETE — ${JSON.stringify(run.counts)} in ${(run.rounds || []).length} rounds`);
   return { submitted: false, note: 'complete' };
@@ -340,17 +377,52 @@ async function strike(db, run, deps, reason) {
 }
 
 /** translate-worker: a RECITATION / SAFETY refusal is stamped on the page so it leaves the queue. */
-async function markRefused(db, page, finishReason, deps) {
+async function markRefused(db, page, finishReason, deps, run) {
   const now = deps.now ? deps.now() : new Date();
   const recitation = /RECITATION/i.test(finishReason);
+  if (run?.shadow) return recordShadowRefusal(db, run, page, `finish ${finishReason}`, null, deps);
   await db.collection('pages').updateOne({ id: page.id }, [{ $set: { translation: { $cond: { if: { $eq: ['$translation', null] }, then: {}, else: '$translation' } } } }]).catch(() => {});
   await db.collection('pages').updateOne({ id: page.id }, { $set: recitation
     ? { 'translation.recitation_blocked': true, 'translation.recitation_at': now, 'translation.safety_reason': `batch finishReason ${finishReason}`, 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': now }
     : { 'translation.safety_blocked': true, 'translation.safety_blocked_at': now, 'translation.safety_reason': `batch finishReason ${finishReason}`, 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': now } });
 }
 
+/** A shadow run records a refusal on itself; the page is never stamped. */
+async function recordShadowRefusal(db, run, page, reason, text, deps) {
+  const entry = { id: page.id, page_number: page.page_number, reason, round: run.round?.n ?? null, ...(text ? { text } : {}), at: deps.now ? deps.now() : new Date() };
+  run.refused = [...(run.refused || []), entry];
+  await db.collection(RUNS_COLLECTION).updateOne({ id: run.id }, { $push: { refused: entry } });
+}
+
+/**
+ * A shadow run keeps the page on itself, after the same sanitize + health gate the door applies
+ * (writePageTranslation with refuseUnhealthy), with the round's provenance beside the text.
+ */
+async function keepShadowPage(db, run, book, page, text, deps) {
+  const r = run.round;
+  const clean = sanitizeTranslationTags(text);
+  const health = assessTranslationHealth(page?.ocr?.data, clean, { lang: book?.language });
+  if (!health.healthy) {
+    run.counts.unhealthy++;
+    await recordShadowRefusal(db, run, page, health.reason, clean, deps);
+    return { written: false, protected: false, unhealthy: true, reason: health.reason, text: clean };
+  }
+  const entry = {
+    id: page.id, page_number: page.page_number, text: clean, content_hash: contentHash(clean),
+    ocr_hash: contentHash(page?.ocr?.data || ''), round: r.n, kind: r.kind, batch_job_id: r.job.name,
+    prompt_sent_hash: r.prompt_sent_hash || NOT_RECORDED, context: r.context, model: run.model,
+    prompt: { id: run.prompt_ref?.id, version: run.prompt_ref?.version, hash: run.prompt_ref?.content_hash },
+    at: deps.now ? deps.now() : new Date(),
+  };
+  run.pages = [...(run.pages || []), entry];
+  run.counts.written++;
+  await db.collection(RUNS_COLLECTION).updateOne({ id: run.id }, { $push: { pages: entry } });
+  return { written: true, protected: false, text: clean };
+}
+
 /** One page through translate-core's door, with the round's provenance. */
 async function writeRoundPage(db, run, book, page, text, deps) {
+  if (run.shadow) return keepShadowPage(db, run, book, page, text, deps);
   const writePage = deps.writePage || writePageTranslation;
   const r = run.round;
   const res = await writePage(db, {
@@ -398,7 +470,7 @@ export async function collectRound(db, run, deps) {
   await meterComplete(deps, db, { run, jobName: round.job.name, pageCount: round.pages.length, responses });
 
   const book = await db.collection('books').findOne({ id: run.book_id });
-  const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id));
+  const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id), run);
   const pages = round.pages.map((p) => pageDocs.get(p.id)).filter(Boolean);
   const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), finish_reason: r.finishReason, written: 0, fallback: 0 };
   const guardsOk = (p) => contentHash(p.ocr?.data || '') === round.pages.find((x) => x.id === p.id)?.ocr_hash && !p.translation?.data && isTranslatablePage(p).ok;
@@ -438,7 +510,7 @@ export async function collectRound(db, run, deps) {
   let text = sanitizeTranslationTags(String(r.text || '').trim());
   const finish = r.finishReason || '';
   if (!text && /RECITATION|SAFETY|PROHIBITED/i.test(finish)) {
-    if (page) await markRefused(db, page, finish, deps);
+    if (page) await markRefused(db, page, finish, deps, run);
     run.counts.blocked++;
     summary.outcome = `refused ${finish}`;
     await setRun(db, run, { phase: PHASE.READY, strikes: 0, round: null, rounds: [...run.rounds, summary], pending_single: (run.pending_single || []).filter((x) => x.id !== round.pages[0].id), cursor: advanceCursorPast(run, round.pages[0].id), counts: run.counts }, deps);
@@ -478,8 +550,8 @@ function advanceCursorPast(run, pageId) {
  * Returns per-run notes. Safe to call every few minutes from cron; each run moves at most one
  * step per call (collect, then submit).
  */
-export async function tickChained(db, deps, { prompts, filter = {} } = {}) {
-  const runs = await db.collection(RUNS_COLLECTION).find({ mode: MODE, phase: { $nin: TERMINAL_PHASES }, ...filter }).toArray();
+export async function tickChained(db, deps, { prompts, filter = {}, shadow = false } = {}) {
+  const runs = await db.collection(RUNS_COLLECTION).find({ mode: shadow ? SHADOW_MODE : MODE, phase: { $nin: TERMINAL_PHASES }, ...filter }).toArray();
   const notes = [];
   for (const run of runs) {
     try {
