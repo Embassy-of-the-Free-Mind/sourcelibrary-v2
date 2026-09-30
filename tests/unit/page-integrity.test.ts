@@ -224,10 +224,22 @@ describe('O4 · a block repeated inside one page (#5135)', () => {
     expect(r).toMatchObject({ judged: true, kind: 'loop', flag: false, period: 4 });
     expect(r.share).toBeGreaterThan(0.9);
   });
-  it('reads an unsegmented script by characters and calls a block copied 213 times degeneration', () => {
-    const r = repeatedBlocks(QW['nyang-p110-tibetan-loop'].ocr);
-    expect(r).toMatchObject({ judged: true, unsegmented: true, K: REPEAT_MIN_CHARS, kind: 'loop', flag: false });
-    expect(r.copies).toBeGreaterThanOrEqual(LOOP_MIN_COPIES);
+  it('does not judge Tibetan: sūtra refrains repeat by design (70% of the first walk\'s flags, #5275)', () => {
+    expect(repeatedBlocks(QW['nyang-p110-tibetan-loop'].ocr)).toEqual({ judged: false, why: 'refrain-script' });
+  });
+  it('reads an unsegmented script by characters: a Han passage set twice is a block, copied 12 times is degeneration', () => {
+    const block = '學而時習之不亦說乎有朋自遠方來不亦樂乎人不知而不慍不亦君子乎其為人也孝弟而好犯上者鮮矣不好犯上而好作亂者未之有也';
+    const other = '道千乘之國敬事而信節用而愛人使民以時弟子入則孝出則弟謹而信汎愛眾而親仁行有餘力則以學文';
+    const twice = repeatedBlocks(block + other + block);
+    expect(twice).toMatchObject({ judged: true, unsegmented: true, K: REPEAT_MIN_CHARS, kind: 'block', flag: true, copies: 2 });
+    const many = repeatedBlocks(other + block.repeat(LOOP_MIN_COPIES + 2));
+    expect(many).toMatchObject({ judged: true, kind: 'loop', flag: false });
+  });
+  it('keeps vowel signs when comparing Devanagari words (कमल and कामला fold to the same letters)', () => {
+    const dn = (n: number) => String(n).replace(/\d/g, (d) => '०१२३४५६७८९'[+d]);
+    const a = Array.from({ length: 30 }, (_, i) => (i % 2 ? 'कमल' : 'जल') + dn(i)).join(' ');
+    const b = a.replace(/कमल/g, 'कामला').replace(/जल/g, 'जाली');
+    expect(repeatedBlocks(a + ' ' + b)).toMatchObject({ judged: true, flag: false, longest: 0 });
   });
   it('passes ordinary prose and a table whose only repeats are pipes and rules', () => {
     expect(repeatedBlocks(QW['kircher-p317-notes'].ocr)).toMatchObject({ judged: true, kind: 'none', flag: false, longest: 0 });

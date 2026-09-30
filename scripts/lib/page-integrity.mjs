@@ -699,9 +699,19 @@ export function repeatUnits(prose) {
   const p = String(prose || '');
   const sample = p.slice(0, 600);
   const unsegmented = CASELESS_UNSEGMENTED.test(sample) && (sample.match(/\s/g) || []).length < sample.length / 20;
-  if (unsegmented) return { units: [...p.replace(/\s+/g, '')].filter(c => /[\p{L}\p{N}]/u.test(c)), K: REPEAT_MIN_CHARS, unsegmented };
-  return { units: p.split(/\s+/).map(w => foldWord(w) || w.replace(/[^\p{N}]/gu, '')).filter(Boolean), K: REPEAT_MIN_TOKENS, unsegmented };
+  // Combining marks are kept: in an abugida (Devanagari) or pointed script (Hebrew, Arabic) the
+  // vowel signs ARE the word, and foldWord's mark-stripping made different words collide
+  // (वयघर for व्याघ्र) — measured in the 2026-10-01 walk.
+  if (unsegmented) return { units: [...p.normalize('NFC').replace(/\s+/g, '')].filter(c => /[\p{L}\p{N}\p{M}]/u.test(c)), K: REPEAT_MIN_CHARS, unsegmented };
+  const keepMarks = MARKED_SCRIPTS.has(dominantScript(sample));
+  const unit = keepMarks ? (w) => w.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]/gu, '') : (w) => foldWord(w) || w.replace(/[^\p{N}]/gu, '');
+  return { units: p.split(/\s+/).map(unit).filter(Boolean), K: REPEAT_MIN_TOKENS, unsegmented };
 }
+const MARKED_SCRIPTS = new Set(['devanagari', 'arabic', 'hebrew', 'syriac', 'armenian']);
+/** Scripts whose liturgical texts repeat by design (sūtra refrains, dhāraṇī): a repeated block
+ *  there cannot be told from a transcription fault by the text alone — 70% of the first walk's
+ *  flags (3,751 of 5,358), the shape #5275 met in the Tibetan leaf-drift guard. */
+export const REFRAIN_SCRIPTS = new Set(['tibetan']);
 
 /** Smallest period p ≤ maxP such that run[k] === run[k+p] for every k, else 0. */
 function periodOf(run, maxP) {
@@ -723,9 +733,10 @@ function periodOf(run, maxP) {
  * otherwise (a stanza, a paragraph, a whole leaf transcribed twice — the class #5135 names, whose
  * type/token ratio is normal). `flag` is set for 'block' only.
  *
- * UNJUDGEABLE: fewer than 2K units.
+ * UNJUDGEABLE: fewer than 2K units; a REFRAIN_SCRIPTS page (Tibetan).
  */
 export function repeatedBlocks(ocr) {
+  if (REFRAIN_SCRIPTS.has(dominantScript(proseOf(ocr)))) return { judged: false, why: 'refrain-script' };
   const { units, K, unsegmented } = repeatUnits(proseOf(ocr));
   if (units.length < 2 * K) return { judged: false, why: 'short' };
   const first = new Map();
