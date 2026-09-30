@@ -1,5 +1,4 @@
 import { ImageResponse } from 'next/og';
-import sharp from 'sharp';
 import { getReadDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
@@ -37,6 +36,34 @@ export const PAGE_OG_CONTENT_TYPE = 'image/png';
 const WIDE_LEAF_RATIO = 1.7;
 
 /**
+ * Width and height from an image's own header: JPEG (walk the segment markers
+ * to the SOF frame) or PNG (the IHDR chunk). Null for anything else or
+ * anything malformed. PRIOR ART: scripts/lib/archive-coverage.mjs
+ * `probeStoredDimensions` — the same SOF walk, but it fetches the bytes itself
+ * over a ranged GET and is a script-side .mjs; here the bytes are already in
+ * hand for the renderer. Not sharp: this render function is its own bundle,
+ * and importing sharp there returned 500 on every card (preview of #5404).
+ */
+function imageDimensions(buf: Buffer): { width: number; height: number } | null {
+  if (buf.length >= 24 && buf.readUInt32BE(0) === 0x89504e47) {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  if (buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i < buf.length - 9) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const marker = buf[i + 1];
+    // SOF0..SOF15 carry the frame dimensions; DHT/JPG/DAC share the range.
+    const isSOF = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isSOF) return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    const len = buf.readUInt16BE(i + 2);
+    if (len < 2) return null;
+    i += 2 + len;
+  }
+  return null;
+}
+
+/**
  * The scan, fetched once: its bytes as a data URL for the renderer (which
  * would otherwise fetch the same file again) and its shape, which decides the
  * card's layout. Null on any failure, and the caller falls back to handing the
@@ -48,8 +75,8 @@ async function loadScan(url: string): Promise<{ src: string; ratio: number | nul
     const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
     if (!res.ok) return null;
     const bytes = Buffer.from(await res.arrayBuffer());
-    const meta = await sharp(bytes).metadata().catch(() => null);
-    const ratio = meta?.width && meta?.height ? meta.width / meta.height : null;
+    const dims = imageDimensions(bytes);
+    const ratio = dims && dims.width && dims.height ? dims.width / dims.height : null;
     const type = res.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
     return { src: `data:${type};base64,${bytes.toString('base64')}`, ratio };
   } catch {
