@@ -78,6 +78,7 @@ const LITE_RUN = 'en-ocr-ref-5124-2026-09';   // #5216's lite read: the producti
  *  mineru         MinerU (CPU pipeline, `-m ocr`) on every scored page — no model call, $0
  *                 (PREREGISTRATION-mineru-english-5182.md)
  *  mineru-repeat  MinerU again on the same 20 seed-5182 pages — its floor, measured not assumed
+ *  mineru-fn      POST-HOC: MinerU with PR #5299's footnote step (page_footnote blocks appended) — a re-analysis, not preregistered
  */
 const ARMS = {
   lite: { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime', run_id: LITE_RUN, suffix: 'lite', issue: 5124 },
@@ -85,6 +86,9 @@ const ARMS = {
   'lite-repeat': { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime-r2', run_id: 'en-lite-repeat-5182-2026-09', suffix: 'lite-r2', issue: 5182, repeat_of: LITE_RUN, n: 20, seed: 5182 },
   mineru: { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu', run_id: 'en-mineru-5182-2026-09', suffix: 'mineru', issue: 5182, local: true },
   'mineru-repeat': { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu-r2', run_id: 'en-mineru-repeat-5182-2026-09', suffix: 'mineru-r2', issue: 5182, local: true, repeat_of: 'en-mineru-5182-2026-09', n: 20, seed: 5182 },
+  // POST-HOC (not preregistered): the same binary, with PR #5299's footnote step — `page_footnote` blocks from
+  // middle.json appended below the body. Added after the mineru arm showed every catastrophic page was a dropped footnote.
+  'mineru-fn': { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu-fn', run_id: 'en-mineru-fn-5182-2026-09', suffix: 'mineru-fn', issue: 5182, local: true, footnotes: true, post_hoc: true },
 };
 const GEMINI_ARMS = ['lite', 'flash', 'lite-repeat'];
 const ARM = ARMS[argEq('--arm', 'lite')];
@@ -960,6 +964,26 @@ function lowQuality(text) {
 }
 const MINERU_MIN_CHARS = 40;
 // ---- end verbatim ----
+// ---- verbatim from PR #5299 (scripts/workers/mineru-ocr-worker.mjs, branch worktree-fix+mineru-footnotes, 2026-09-30) ----
+function readPageFootnotes(outDir, base) {
+  const hits = [
+    path.join(outDir, base, 'ocr', `${base}_middle.json`),
+    path.join(outDir, base, 'auto', `${base}_middle.json`),
+  ].filter((p) => fs.existsSync(p));
+  if (!hits.length) return [];
+  try {
+    const d = JSON.parse(fs.readFileSync(hits[0], 'utf8'));
+    const blocks = (d?.pdf_info?.[0]?.discarded_blocks || []).filter((b) => b?.type === 'page_footnote');
+    blocks.sort((a, b) => (a.bbox?.[1] ?? 0) - (b.bbox?.[1] ?? 0));
+    return blocks
+      .map((b) => (b.lines || []).map((l) => (l.spans || []).map((s) => s.content || '').join(' ')).join(' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean);
+  } catch (e) {
+    console.warn(`  footnotes: could not read ${hits[0]}: ${String(e.message || e).slice(0, 80)}`);
+    return [];
+  }
+}
+// ---- end verbatim ----
 async function stageOcrMineru() {
   const { execFileSync } = await import('node:child_process');
   const crypto = await import('node:crypto');
@@ -986,12 +1010,16 @@ async function stageOcrMineru() {
     const perPage = Math.round((Date.now() - t0) / chunk.length);
     for (const r of chunk) {
       const row = { run_id: ARM.run_id, slug: r.slug, engine: ARM.engine, model: ARM.model, engine_version: version,
-        params: { backend: 'pipeline', method: 'ocr', device: 'cpu', nice: 15, chunk: chunk.length, post: 'mineru-ocr-worker sanitize() (verbatim)' }, attempt: 1,
+        params: { backend: 'pipeline', method: 'ocr', device: 'cpu', nice: 15, chunk: chunk.length, post: ARM.footnotes ? 'mineru-ocr-worker sanitize() (verbatim) + PR #5299 readPageFootnotes() appended below the body' : 'mineru-ocr-worker sanitize() (verbatim)' }, attempt: 1,
         ...(ARM.repeat_of ? { repeat_of: ARM.repeat_of } : {}), at: new Date().toISOString(), by: 'en-ocr-mineru-arm-5182', issue: ARM.issue, cost_usd: 0, latency_ms: perPage };
       const md = [path.join(outDir, r.slug, 'ocr', `${r.slug}.md`), path.join(outDir, r.slug, 'auto', `${r.slug}.md`)].find((p) => fs.existsSync(p));
       if (!md) { row.outcome = 'error'; row.error = err || 'no markdown output'; }
       else {
-        const raw = fs.readFileSync(md, 'utf8').trim(); const text = sanitize(raw);
+        const raw = fs.readFileSync(md, 'utf8').trim(); const body = sanitize(raw);
+        // PR #5299's assembly, verbatim: footnotes sanitized, joined one per line, below the body
+        const footnotes = ARM.footnotes ? readPageFootnotes(outDir, r.slug).map(sanitize).filter(Boolean) : [];
+        const text = footnotes.length ? `${body}\n\n${footnotes.join('\n')}` : body;
+        if (ARM.footnotes) { row.footnotes_appended = footnotes.length; row.body_hash = crypto.createHash('sha256').update(body).digest('hex').slice(0, 16); }
         row.chars = text.length;
         row.outcome = realLen(text) < MINERU_MIN_CHARS ? 'empty' : lowQuality(text) ? 'low-quality' : 'text';
         const tp = F(`texts/${r.slug}.${ARM.suffix}.txt`); fs.writeFileSync(tp, text);
@@ -1014,7 +1042,7 @@ function stageScore() {
   const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
   const outs = readJsonl(outFileOf(OCR_MODEL_LITE)).filter((o) => o.run_id === LITE_RUN);
   // #5182's arms, scored by the same function with the same normaliser; a page an arm did not run is simply absent
-  const armOuts = ['flash', 'lite-repeat', 'mineru', 'mineru-repeat'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
+  const armOuts = ['flash', 'lite-repeat', 'mineru', 'mineru-repeat', 'mineru-fn'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
   const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
   const scores = [];
   for (const r of fetched) {
