@@ -29,6 +29,7 @@ import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
+import { unwrapHiddenTranslation } from './hidden-translation.mjs';
 import { countLeafBreaks, leafBreakNote, leafUnitsHealth, dropLeafSeamBreaches } from './leaf-break.mjs';
 export { dropLeafSeamBreaches };
 
@@ -451,14 +452,111 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   return { prompt, promptRef, isEnglish, pageBreak: pageBreak ? { applied, pages: per.map((r) => ({ ...r.meta, fired: r.fired })) } : null };
 }
 
-/** Close unterminated inline tags the model sometimes emits mid-stream. */
+/** Close unterminated inline tags the model sometimes emits mid-stream, then hold the
+ *  result to the closed tag vocabulary (validateTranslationTags). */
 export function sanitizeTranslationTags(text) {
   if (!text) return text;
-  return text
+  const closed = text
     .replace(/<(margin|gloss|insert|unclear|term|heading|footnote|caption)>([^<]*?)$/gm,
       (_, tag, content) => `<${tag}>${content}</${tag}>`)
     .replace(/<\/(margin|gloss|insert|unclear|term|heading|footnote|caption)>\s*<\/\1>/g,
       (_, tag) => `</${tag}>`);
+  return validateTranslationTags(closed).text;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Write-time tag validation — page-error taxonomy class D1 (#5159).
+// The reader knows a closed set of tags: the annotation and metadata tags the prompts ask
+// for (src/lib/validateTranslation.ts VALID_XML_TAGS, NotesRenderer.extractMetadata) and the
+// HTML NotesRenderer allows (NOTES_ALLOWED_ELEMENTS). Anything else the model writes reaches
+// every surface that does NOT run the renderer — search, snippets, quotes, /text and PDF
+// exports, embeddings — as raw markup, and pseudo-HTML footnote keys (<a>, <b>) collide with
+// real elements. So, before any write: a paired unknown tag is unwrapped (its TEXT kept); a
+// LONE unknown opening tag keeps its word as ⟨word⟩ — critical editions print editorial
+// supplements as <et>, and a footnote key <a> reads the same way, so dropping it would delete
+// a word; a closing tag with no opener is dropped; an empty annotation (<margin></margin>) is
+// dropped — unless an orphan close follows it, which is the split annotation (rejoined). Known
+// tags are never touched — this is a vocabulary gate, not a re-formatter.
+// ────────────────────────────────────────────────────────────────────────────
+export const TRANSLATION_TAG_VOCABULARY = new Set([
+  // annotations rendered in the reading text
+  'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp', 'lacuna',
+  'heading', 'footnote', 'caption',
+  // metadata the renderer moves to the metadata panel
+  'meta', 'lang', 'language', 'page-num', 'folio', 'sig', 'header', 'warning', 'abbrev',
+  'vocab', 'summary', 'keywords', 'page-type', 'script', 'columns', 'scan-quality',
+  // structural markers (self-closing) and the batch response wrapper
+  'column-break', 'leaf-break', 'translation',
+  // HTML NotesRenderer allows (NOTES_ALLOWED_ELEMENTS)
+  'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
+  'em', 'strong', 'del', 'hr', 'br', 'a', 'img', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+  'span', 'div', 'sup', 'sub',
+]);
+const VOID_TAGS = new Set(['br', 'hr', 'img', 'column-break', 'leaf-break']);
+const EMPTY_DROPPABLE = new Set(['note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp', 'meta']);
+const TAG_RE = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)(\s[^<>]*?)?\s*(\/?)>/g;
+
+/**
+ * Hold a translation to TRANSLATION_TAG_VOCABULARY. Returns { text, changes } where changes
+ * lists what was done ({ op: 'unwrap'|'bracket'|'rejoin'|'drop-orphan'|'drop-empty', tag }). Pure; text
+ * outside tags is never altered, so a page with only known, balanced tags comes back
+ * byte-identical.
+ */
+export function validateTranslationTags(text) {
+  if (!text) return { text, changes: [] };
+  const src = String(text);
+  const toks = [];
+  for (const m of src.matchAll(TAG_RE)) {
+    toks.push({ start: m.index, end: m.index + m[0].length, close: m[1] === '/', raw: m[2], name: m[2].toLowerCase(), attrs: (m[3] || '').trim(), self: m[4] === '/' });
+  }
+  if (!toks.length) return { text: src, changes: [] };
+  // Pair opens and closes per tag name (a stack per name tolerates interleaving the model
+  // sometimes writes; sanitizeTranslationTags already repaired the common mis-closes).
+  const stacks = new Map();
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i];
+    if (t.self || VOID_TAGS.has(t.name)) continue;
+    const st = stacks.get(t.name) || [];
+    if (!t.close) { st.push(i); stacks.set(t.name, st); continue; }
+    if (st.length) { const o = st.pop(); toks[o].pair = i; t.pair = o; }
+  }
+  const changes = [];
+  const edits = []; // [start, end, replacement]
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i];
+    const known = TRANSLATION_TAG_VOCABULARY.has(t.name);
+    if (known) {
+      if (t.close && t.pair === undefined && !t.rejoined && !VOID_TAGS.has(t.name)) { edits.push([t.start, t.end, '']); changes.push({ op: 'drop-orphan', tag: t.name }); continue; }
+      if (!t.close && t.pair !== undefined && EMPTY_DROPPABLE.has(t.name) && !src.slice(t.end, toks[t.pair].start).trim()) {
+        // The split annotation of D1: "<margin></margin> Colossians 3. </margin>" means
+        // "<margin>Colossians 3.</margin>" — when the next same-name tag is an orphan close,
+        // keep the opener and that close (rejoin); otherwise the empty pair is dropped.
+        let k = t.pair + 1;
+        while (k < toks.length && toks[k].name !== t.name) k++;
+        if (k < toks.length && toks[k].close && toks[k].pair === undefined) {
+          edits.push([t.end, toks[t.pair].end, '']); changes.push({ op: 'rejoin', tag: t.name });
+          toks[k].rejoined = true;
+        } else {
+          edits.push([t.start, toks[t.pair].end, '']); changes.push({ op: 'drop-empty', tag: t.name });
+        }
+        i = t.pair; // skip what lay between (nothing but whitespace)
+        continue;
+      }
+      if (t.rejoined) continue;
+      // A lone opening <a> with no attributes is a footnote key or a supplied word, not a link.
+      else if (t.name === 'a' && !t.close && t.pair === undefined && !t.attrs) { edits.push([t.start, t.end, `⟨${t.raw}⟩`]); changes.push({ op: 'bracket', tag: 'a' }); }
+      continue;
+    }
+    if (!t.close && t.pair === undefined && !t.attrs && !t.self) { edits.push([t.start, t.end, `⟨${t.raw}⟩`]); changes.push({ op: 'bracket', tag: t.name }); continue; }
+    edits.push([t.start, t.end, '']);
+    if (!t.close) changes.push({ op: 'unwrap', tag: t.name });
+  }
+  if (!edits.length) return { text: src, changes };
+  edits.sort((a, b) => a[0] - b[0]);
+  let out = '', at = 0;
+  for (const [s, e, r] of edits) { if (s < at) continue; out += src.slice(at, s) + r; at = e; }
+  out += src.slice(at);
+  return { text: out, changes };
 }
 
 // The content hash now lives with the rest of the provenance vocabulary (#4613);
@@ -892,7 +990,8 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     input: translationInput({ ocrText: page?.ocr?.data ?? '', ocrUpdatedAt: page?.ocr?.updated_at, context: call.context }),
     response: call.response,
   });
-  const clean = sanitizeTranslationTags(text);
+  // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page.
+  const clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: sanitizeTranslationTags(text), type: page?.page_type }).text;
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
   // or runaway translation to pages. The refused text IS kept as evidence in
