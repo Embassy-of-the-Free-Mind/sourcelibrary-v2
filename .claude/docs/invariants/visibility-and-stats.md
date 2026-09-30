@@ -132,3 +132,38 @@ The canonical "live" filter across all public APIs is
 `visible: true && pages_count > 0` (see `/api/books/library`). The `tier` field
 is **legacy** — its only remaining reader is `src/app/page.tsx` homepage ranking
 via `highlighted_books` collection entries.
+
+## Corpus size in words ("bigger than Wikipedia")
+
+**One instrument, one log.** Every "N billion words" or "× English Wikipedia"
+claim comes from `scripts/analytics/corpus-size.mjs` (a `$sample` over `pages`,
+winsorized at 3,000 words a page; median is the floor). Run it with `--log` and
+it appends a dated row to `scripts/analytics/corpus-size-log.jsonl`; quote from
+the log, and re-run before any public number older than a month:
+
+```
+node --env-file=.env.production.local scripts/analytics/corpus-size.mjs --sample 6000 --log
+```
+
+| Date | Page docs | Headline words | Floor (median) | vs EN Wikipedia (5B) | Source |
+|---|---|---|---|---|---|
+| 2026-06-01 | 6.5M | 5–7B | | ≈ 1× | blog "How Big Is the Library?" |
+| 2026-10-01 | 22.6M | 15.2B (7.9B originals + 7.3B translations) | 10.7B | ≈ 2–3× | the log |
+
+Three things the number does NOT say, learned 2026-10-01 when "we had about as
+much as Wikipedia months ago — have we stopped translating?" turned out to be
+the wrong question:
+
+- **Growth ≠ translation.** The tripling since June is mostly hidden Internet
+  Archive imports (≈ 50K hidden books) arriving with the Archive's own OCR text.
+  Translation output over July–September was 12% of April alone (`output.json`
+  on the spend page), by choice: the $5/day dial and the holds.
+- **Translation coverage can be inflated by English books whose `translation`
+  field held their own text** (English-to-English, stopped by #5384). Until the
+  exact count of pages with genuine translation text is in the log, quote the
+  floor for the translated share.
+- **This is a different question from "how many books are translated".** That
+  one is the ladder in `../translation-state.md` (`readable_in_english`); the
+  homepage `translatedToEnglish` is the old ≥90% rule; the vision page's
+  "18,000" is the any-translated-page count and is not defensible as
+  "translated". Three surfaces, three numbers — say which one you mean.

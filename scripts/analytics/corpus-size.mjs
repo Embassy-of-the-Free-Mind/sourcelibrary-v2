@@ -18,13 +18,19 @@
 // extrapolations — expect a few percent of sampling noise.
 //
 // Run:  set -a; source .env.production.local; set +a; \
-//       node scripts/analytics/corpus-size.mjs [--sample N] [--outliers]
+//       node scripts/analytics/corpus-size.mjs [--sample N] [--outliers] [--log]
+//
+// --log appends one JSON row to scripts/analytics/corpus-size-log.jsonl so runs
+// can be compared over time (June 2026 ≈ 1× English Wikipedia → Oct 2026 ≈ 3×;
+// see the log and .claude/docs/invariants/visibility-and-stats.md § Corpus size
+// in words). A run takes about two minutes.
 
 import { MongoClient } from 'mongodb';
 
 const arg = (flag, def) => { const i = process.argv.indexOf(flag); return i > -1 ? process.argv[i + 1] : def; };
 const SAMPLE = Number(arg('--sample', 8000));
 const OUTLIERS = process.argv.includes('--outliers');
+const LOG = process.argv.includes('--log');
 // Per-page winsorization cap. A real dense double-column folio translates to at
 // most ~2,500 English words; anything above WINSOR is a duplicated/concatenated
 // ingest artifact (see --outliers), so we cap each page's contribution here.
@@ -171,6 +177,24 @@ console.log(`  OCR ${B(project(ocrS.median, ocrCov))} + TRANS ${B(project(trS.me
 console.log('\nNote: estimates are $sample extrapolations (±few %). Winsorized-mean is the');
 console.log(`headline (caps junk pages at ${WINSOR}w); median is the floor; raw-mean the inflated`);
 console.log('ceiling. Run --outliers to inspect the junk pages.\n');
+
+if (LOG) {
+  const { appendFileSync } = await import('node:fs');
+  const { fileURLToPath } = await import('node:url');
+  const { dirname, join } = await import('node:path');
+  const logPath = join(dirname(fileURLToPath(import.meta.url)), 'corpus-size-log.jsonl');
+  const floor = project(ocrS.median, ocrCov) + project(trS.median, trCov) + enrich;
+  const row = {
+    date: new Date().toISOString().slice(0, 10), sample: SAMPLE, winsor: WINSOR,
+    page_docs: totalPages, ocr_coverage: +ocrCov.toFixed(3), tr_coverage: +trCov.toFixed(3),
+    ocr_median_words: ocrS.median, tr_median_words: trS.median,
+    ocr_words: Math.round(ocrWords), tr_words: Math.round(trWords), enrich_words: Math.round(enrich),
+    total_words: Math.round(grand), floor_words: Math.round(floor),
+    en_wiki_pct: Math.round(grand / WIKI_EN * 100), note: '',
+  };
+  appendFileSync(logPath, JSON.stringify(row) + '\n');
+  console.log('logged →', logPath);
+}
 
 await client.close();
 process.exit(0);
