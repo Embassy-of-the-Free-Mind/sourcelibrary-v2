@@ -35,9 +35,10 @@
  *   ... hold            hold every listed book not held for another reason
  *   ... envelope        open the allow_scopes envelope (set-scope.mjs)
  *   ... ocr --book ID | --books N [--dry-run] [--ocr-rate 0.00225]
+ *   ... reconcile       re-derive submit state from batch_jobs after a dropped submit
  *   ... check           collect OCR job outcomes; retry unwritten pages once
  *   ... withhold        withhold stale (wrong-leaf) translations under the new OCR
- *   ... enrol [--max-open 60] [--english]
+ *   ... enrol [--max-open 60] [--english] [--book ID]
  *   ... runs            read chained run phases
  *   ... clear           clear needs_reocr on rewritten pages
  *   ... release         release every book this lane held (after the audit passes)
@@ -213,15 +214,40 @@ async function ocr(db) {
     const children = jobs.filter((j) => !j.child_job_ids);
     const submitted = children.filter((j) => j.status !== 'submit_failed').reduce((n, j) => n + (j.page_count || j.page_ids?.length || 0), 0);
     const failed = children.filter((j) => j.status === 'submit_failed').reduce((n, j) => n + (j.page_ids?.length || 0), 0);
-    b.ocr_jobs = children.map((j) => j.id);
-    b.ocr_submitted_at = t0.toISOString();
-    b.ocr_submitted = submitted; b.ocr_submit_failed = failed;
+    b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...children.map((j) => j.id)])];
+    b.ocr_submitted_at = b.ocr_submitted_at || t0.toISOString();
+    b.ocr_submitted = (b.ocr_submitted || 0) + submitted; b.ocr_submit_failed = failed;
     b.phase = submitted > 0 ? 'ocr_submitted' : 'ocr_submit_failed';
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: 'lite', retry: b.retries } });
   }
   saveState(s);
   log(`ocr: submitted ${picks.filter((b) => b.phase === 'ocr_submitted').length} books`);
   return picks.length;
+}
+
+/**
+ * Re-derive submit state from batch_jobs for books still marked pending — the bookkeeping after a
+ * submit is lost when the submitting process dies (a dropped ssh, a kill). Pages of a book that no
+ * job carries go on its retry list, so the next `ocr` submits only those.
+ */
+async function reconcile(db) {
+  const s = loadState();
+  let fixed = 0, partial = 0;
+  for (const b of s.books.filter((x) => x.phase === 'pending')) {
+    const jobs = await db.collection('batch_jobs').find({ submitted_by: OCR_CALL_SITE, type: 'ocr', book_id: b.id, created_at: { $gte: new Date(s.created_at) }, child_job_ids: { $exists: false } },
+      { projection: { id: 1, status: 1, page_ids: 1, created_at: 1 } }).toArray();
+    if (!jobs.length) continue;
+    const covered = new Set(jobs.filter((j) => j.status !== 'submit_failed').flatMap((j) => j.page_ids || []));
+    const missing = b.page_ids.filter((id) => !covered.has(id));
+    b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...jobs.map((j) => j.id)])];
+    b.ocr_submitted_at = b.ocr_submitted_at || jobs.reduce((m, j) => (j.created_at < m ? j.created_at : m), jobs[0].created_at).toISOString();
+    b.ocr_submitted = covered.size;
+    if (missing.length) { b.retry_page_ids = missing; partial++; log(`  ${b.id}: ${covered.size} pages in ${jobs.length} jobs, ${missing.length} never submitted → retry list`); }
+    else { delete b.retry_page_ids; b.phase = 'ocr_submitted'; fixed++; }
+    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'reconciled', detail: { jobs: jobs.length, covered: covered.size, missing: missing.length } });
+  }
+  saveState(s);
+  log(`reconcile: ${fixed} books marked submitted, ${partial} partially submitted (retry lists set)`);
 }
 
 /** Collect OCR outcomes. A book is done when every child job is terminal; unwritten pages get ONE retry. */
@@ -233,11 +259,10 @@ async function check(db) {
     const active = jobs.filter((j) => ACTIVE_JOB.includes(j.status));
     if (active.length) { waiting++; continue; }
     const since = new Date(b.ocr_submitted_at);
-    const targets = ocrTargets(b);
-    const written = await db.collection('pages').find({ id: { $in: targets }, 'ocr.updated_at': { $gt: since } }, { projection: { id: 1 } }).toArray();
+    const written = await db.collection('pages').find({ id: { $in: b.page_ids }, 'ocr.updated_at': { $gt: since } }, { projection: { id: 1 } }).toArray();
     const wset = new Set(written.map((p) => p.id));
-    const unwritten = targets.filter((id) => !wset.has(id));
-    b.ocr_written = (b.ocr_written || 0) + written.length;
+    const unwritten = b.page_ids.filter((id) => !wset.has(id));
+    b.ocr_written = written.length;
     b.ocr_job_statuses = Object.fromEntries(jobs.map((j) => [j.id, j.status]));
     if (unwritten.length && b.retries < 1) {
       b.retries++; b.retry_page_ids = unwritten; b.phase = 'pending'; retried++;
@@ -315,7 +340,7 @@ function loopAlive() {
 async function enrol(db) {
   const s = loadState();
   const maxOpen = Number(val('max-open', '60'));
-  const cands = s.books.filter((b) => b.phase === 'withheld' && !b.foreign_hold && (has('english') || !b.english));
+  const cands = s.books.filter((b) => b.phase === 'withheld' && !b.foreign_hold && (has('english') || !b.english) && (!val('book') || b.id === val('book')));
   let open = s.books.filter((b) => b.phase === 'tr_enrolled').length;
   if (!cands.length) { log(`enrol: nothing waiting (${open} runs open)`); return; }
   if (!loopAlive()) log('enrol: WARNING no chained --loop process on this box — runs will not tick until one starts (/root/sl-chained-restart-loop.sh)');
@@ -442,7 +467,7 @@ async function run(db) {
   }
 }
 
-const COMMANDS = { init, hold, envelope, ocr, check, withhold, enrol, runs, clear, release, status, run };
+const COMMANDS = { init, hold, envelope, ocr, reconcile, check, withhold, enrol, runs, clear, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   await withMongo(async (db) => { await COMMANDS[cmd](db); });
