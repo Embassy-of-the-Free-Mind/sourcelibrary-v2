@@ -95,3 +95,9 @@ Any change after the paid run is logged here with its date and reason, and the r
    (the definition behind outcome M, not behind the drawn strata, which stay pinned) was tightened after a
    hand read of 20 corpus flags. A footnote asterisk after a full stop now reads as closed, and a last line
    that is a numbered verse line or critical apparatus makes no claim. M is scored with the tightened version.
+
+## Result (2026-09-30) — rule output: NO MEASURABLE EFFECT, block stays out of v16
+
+Noise floor read first: A2 vs A1 invention 21.1 vs 18.3 % (risk, n 71). P: B 21.1 vs A1 18.3 %, p 0.80. Rule 1
+fails; G1–G3 hold. Mechanical M: unmarked open ends 22.5 → 8.5 % (p 0.006). Full entry: `EXPERIMENTS.md`
+2026-09-30; report `results/translation-restraint-ab-2026-09-30/report.json`.

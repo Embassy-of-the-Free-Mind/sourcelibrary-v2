@@ -1,0 +1,206 @@
+{
+  "at": "2026-09-30T08:05:56.318Z",
+  "pages": 95,
+  "judgeNoise": {
+    "pairs": 12,
+    "sameFidelity": 10,
+    "sameInvention": 10
+  },
+  "strata": {
+    "risk": {
+      "n": 71,
+      "A1": {
+        "invention": 0.183,
+        "inventionMajor": 0,
+        "omission": 0.155,
+        "fid4": 0.69,
+        "meanFid": 3.93,
+        "truncated": 0,
+        "openEndUnmarked": 0.225,
+        "markedContinues": 0,
+        "unclearPerPage": 1.423
+      },
+      "A2": {
+        "invention": 0.211,
+        "inventionMajor": 0.042,
+        "omission": 0.141,
+        "fid4": 0.676,
+        "meanFid": 3.845,
+        "truncated": 0,
+        "openEndUnmarked": 0.254,
+        "markedContinues": 0,
+        "unclearPerPage": 2
+      },
+      "B": {
+        "invention": 0.211,
+        "inventionMajor": 0.042,
+        "omission": 0.113,
+        "fid4": 0.718,
+        "meanFid": 3.972,
+        "truncated": 0,
+        "openEndUnmarked": 0.085,
+        "markedContinues": 0.338,
+        "unclearPerPage": 6.859
+      },
+      "noise_A2vA1": {
+        "invention": {
+          "A2only": 10,
+          "A1only": 8,
+          "p": 0.8145
+        },
+        "omission": {
+          "A2only": 6,
+          "A1only": 7,
+          "p": 1
+        }
+      },
+      "effect_BvA1": {
+        "invention": {
+          "Bonly": 9,
+          "A1only": 7,
+          "p": 0.8036
+        },
+        "omission": {
+          "Bonly": 5,
+          "A1only": 8,
+          "p": 0.5811
+        },
+        "openEndUnmarked": {
+          "Bonly": 1,
+          "A1only": 11,
+          "p": 0.0063
+        }
+      }
+    },
+    "control": {
+      "n": 24,
+      "A1": {
+        "invention": 0.083,
+        "inventionMajor": 0,
+        "omission": 0.292,
+        "fid4": 0.917,
+        "meanFid": 4.292,
+        "truncated": 0,
+        "openEndUnmarked": 0,
+        "markedContinues": 0,
+        "unclearPerPage": 0.042
+      },
+      "A2": {
+        "invention": 0.083,
+        "inventionMajor": 0,
+        "omission": 0.167,
+        "fid4": 0.958,
+        "meanFid": 4.333,
+        "truncated": 0,
+        "openEndUnmarked": 0,
+        "markedContinues": 0,
+        "unclearPerPage": 0.125
+      },
+      "B": {
+        "invention": 0.125,
+        "inventionMajor": 0,
+        "omission": 0.125,
+        "fid4": 0.958,
+        "meanFid": 4.5,
+        "truncated": 0.042,
+        "openEndUnmarked": 0,
+        "markedContinues": 0.167,
+        "unclearPerPage": 0.042
+      },
+      "noise_A2vA1": {
+        "invention": {
+          "A2only": 2,
+          "A1only": 2,
+          "p": 1
+        },
+        "omission": {
+          "A2only": 1,
+          "A1only": 4,
+          "p": 0.375
+        }
+      },
+      "effect_BvA1": {
+        "invention": {
+          "Bonly": 3,
+          "A1only": 2,
+          "p": 1
+        },
+        "omission": {
+          "Bonly": 1,
+          "A1only": 5,
+          "p": 0.2188
+        },
+        "openEndUnmarked": {
+          "Bonly": 0,
+          "A1only": 0,
+          "p": 1
+        }
+      }
+    },
+    "all": {
+      "n": 95,
+      "A1": {
+        "invention": 0.158,
+        "inventionMajor": 0,
+        "omission": 0.189,
+        "fid4": 0.747,
+        "meanFid": 4.021,
+        "truncated": 0,
+        "openEndUnmarked": 0.168,
+        "markedContinues": 0,
+        "unclearPerPage": 1.074
+      },
+      "A2": {
+        "invention": 0.179,
+        "inventionMajor": 0.032,
+        "omission": 0.147,
+        "fid4": 0.747,
+        "meanFid": 3.968,
+        "truncated": 0,
+        "openEndUnmarked": 0.189,
+        "markedContinues": 0,
+        "unclearPerPage": 1.526
+      },
+      "B": {
+        "invention": 0.189,
+        "inventionMajor": 0.032,
+        "omission": 0.116,
+        "fid4": 0.779,
+        "meanFid": 4.105,
+        "truncated": 0.011,
+        "openEndUnmarked": 0.063,
+        "markedContinues": 0.295,
+        "unclearPerPage": 5.137
+      },
+      "noise_A2vA1": {
+        "invention": {
+          "A2only": 12,
+          "A1only": 10,
+          "p": 0.8318
+        },
+        "omission": {
+          "A2only": 7,
+          "A1only": 11,
+          "p": 0.4807
+        }
+      },
+      "effect_BvA1": {
+        "invention": {
+          "Bonly": 12,
+          "A1only": 9,
+          "p": 0.6636
+        },
+        "omission": {
+          "Bonly": 6,
+          "A1only": 13,
+          "p": 0.1671
+        },
+        "openEndUnmarked": {
+          "Bonly": 1,
+          "A1only": 11,
+          "p": 0.0063
+        }
+      }
+    }
+  }
+}
