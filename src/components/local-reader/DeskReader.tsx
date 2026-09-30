@@ -105,6 +105,10 @@ function Runs({ runs, active, onGloss }: { runs: Run[]; active: string | null; o
             return <span key={i} className={s.unclear} title="Uncertain reading">{r.s}</span>;
           case 'sup':
             return <sup key={i}>{r.s}</sup>;
+          case 'em':
+            return <em key={i}>{r.s}</em>;
+          case 'strong':
+            return <strong key={i}>{r.s}</strong>;
           case 'break':
             return <br key={i} />;
         }

@@ -231,6 +231,8 @@
 
 /* ---------- the two texts ---------- */
 
+.text strong { font-weight: 600; }
+
 .text p {
   margin: 0 0 var(--line);
   font-size: var(--text-size);
@@ -252,18 +254,19 @@
    costs the baseline grid exactly one line. */
 .centred {
   display: block;
-  height: var(--line);
-  line-height: var(--line);
+  /* Speaker marks are one line; a proposition heading can be three. Wrap it,
+     never truncate it — hiding printed words is worse than a looser grid. */
+  min-height: var(--line);
+  line-height: 16px;
+  padding-block: 8px;
   margin: 0 0 var(--line);
   text-align: center;
+  text-wrap: balance;
   font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--rubric);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 /* `<margin>`: a note the printer set in the margin. Indented and quieter. */

@@ -52,6 +52,9 @@ export type Run =
   | { t: 'anchor'; s: string; gloss: string }
   | { t: 'unclear'; s: string }
   | { t: 'sup'; s: string }
+  /** Markdown emphasis the translation carries: `*x*` and `**x**`. */
+  | { t: 'em'; s: string }
+  | { t: 'strong'; s: string }
   | { t: 'break' };
 
 export type Block =
@@ -125,6 +128,11 @@ function reflow(s: string): string {
     .trim();
 }
 
+/** A centred line's text: tags, heading hashes and emphasis asterisks out. */
+function cleanLine(s: string): string {
+  return reflow(s.replace(/<\/?[a-z-]+[^>]*>/gi, '').replace(/#{1,6}\s*/g, '').replace(/\*{1,2}/g, ''));
+}
+
 /** Split the surviving text into paragraphs on blank lines. */
 function paragraphs(s: string): string[] {
   return s.split(/\n[ \t]*\n+/).map((p) => p.trim()).filter(Boolean);
@@ -148,7 +156,18 @@ function inlineRuns(para: string, glosses: Gloss[], nextId: () => string): Run[]
   let last = 0;
   let m: RegExpExecArray | null;
   const pushText = (s: string) => {
-    if (s) runs.push({ t: 'text', s });
+    if (!s) return;
+    // `**term**` and `*phrase*` — the translation's own markdown emphasis. Split
+    // it into runs rather than showing the asterisks.
+    const em = /\*\*([^*\n]+?)\*\*|\*([^*\n]+?)\*/g;
+    let at = 0;
+    let e: RegExpExecArray | null;
+    while ((e = em.exec(s)) !== null) {
+      if (e.index > at) runs.push({ t: 'text', s: s.slice(at, e.index) });
+      runs.push(e[1] !== undefined ? { t: 'strong', s: e[1] } : { t: 'em', s: e[2] });
+      at = em.lastIndex;
+    }
+    if (at < s.length) runs.push({ t: 'text', s: s.slice(at).replace(/\*{1,2}/g, '') });
   };
   /** Text emitted so far, for keying a note to the word before it. */
   let emitted = '';
@@ -205,15 +224,15 @@ function keyLastWord(runs: Run[], anchor: string, glossId: string) {
   if (!anchor) return;
   for (let i = runs.length - 1; i >= 0; i--) {
     const run = runs[i];
-    if (run.t !== 'text') continue;
+    if (run.t !== 'text' && run.t !== 'em' && run.t !== 'strong') continue;
     const at = run.s.lastIndexOf(anchor);
     if (at === -1) continue;
     const head = run.s.slice(0, at);
     const tail = run.s.slice(at + anchor.length);
     const replacement: Run[] = [];
-    if (head) replacement.push({ t: 'text', s: head });
+    if (head) replacement.push({ t: run.t, s: head });
     replacement.push({ t: 'anchor', s: anchor, gloss: glossId });
-    if (tail) replacement.push({ t: 'text', s: tail });
+    if (tail) replacement.push({ t: run.t, s: tail });
     runs.splice(i, 1, ...replacement);
     return;
   }
@@ -280,6 +299,9 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
   // A note is written "Lethe <note>…</note>." — the space belongs to the note,
   // and left behind it strands the full stop: "Lethe .". Close it up.
   s = s.replace(/[ \t]+(<(?:note|gloss)[^>]*>)/gi, '$1');
+  // A note can run across a blank line; the paragraph splitter below would cut
+  // it in two and leave a bare "<note>" in the text. Keep each note on one line.
+  s = s.replace(/<(note|gloss|term)([^>]*)>([\s\S]*?)<\/\1>/gi, (_, tag, attrs, inner) => `<${tag}${attrs}>${String(inner).replace(/\s*\n\s*/g, ' ')}</${tag}>`);
 
   // --- blocks ---------------------------------------------------------------
   // Marginalia and centred lines are pulled out as whole blocks in document
@@ -294,7 +316,7 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
       // a heading the printer centred; the desk sets it the same way as `->…<-`.
       const heading = /^#{1,6}\s+([\s\S]+)$/.exec(p);
       if (heading) {
-        const text = reflow(heading[1].replace(/<\/?[a-z-]+[^>]*>/gi, ''));
+        const text = cleanLine(heading[1]);
         if (text) blocks.push({ kind: 'centred', text });
         continue;
       }
@@ -312,7 +334,7 @@ export function parsePageText(raw: string | null | undefined): ParsedPage {
     } else if (centred !== undefined) {
       // `->## Heading<-` and `## ->Heading<-` both occur; the hashes are markdown
       // emphasis the desk reader expresses with small caps instead.
-      const text = reflow(centred.replace(/^#{1,6}\s*/, '').replace(/<\/?[a-z-]+[^>]*>/gi, ''));
+      const text = cleanLine(centred);
       if (text) blocks.push({ kind: 'centred', text });
     } else {
       blocks.push({ kind: 'column-break' });
