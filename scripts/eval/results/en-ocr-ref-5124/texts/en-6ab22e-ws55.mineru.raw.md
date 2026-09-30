@@ -1,7 +1,0 @@
-A molecule, as matter, is not formed by Spirit; for Spirit is spiritual consciousness alone. Hence this spiritual consciousness can form nothing unlike itself, Spirit, and Spirit is the only Creator. The material atom is an outlined falsity of consciousness, which can gather additional evidence of consciousness and life, only as it adds lie to lie. This process it names material attraction, and endows with the double capacity of creator and creation.
-
-From the beginning this lie was the false witness against the fact that Spirit is All, beside which there is no other existence. The use of a lie is, that it unwittingly confirms Truth, when handled by Christian Science, which reverses false testimony and gains a knowledge of God from opposite facts, or phenomena.
-
-This whole subject is met and solved by Christian Science according to Scripture. Thus we see that Spirit is Truth and Eternal Reality; that matter is the opposite of Spirit,—referred to in the New Testament as the flesh at war with Spirit; hence, that matter is erroneous, transitory, unreal.
-
-A further proof of this is the demonstration, according to Christian Science, that by the reduction
