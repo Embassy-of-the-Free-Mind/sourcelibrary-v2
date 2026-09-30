@@ -201,6 +201,7 @@ async function spend(db) {
 // ── OCR ────────────────────────────────────────────────────────────────────
 async function ocr(db) {
   const s = loadState();
+  await reconcile(db, s);   // a pending book that already has jobs is not pending
   let picks;
   if (val('book')) picks = s.books.filter((b) => b.id === val('book') && b.phase === 'pending');
   else picks = s.books.filter((b) => b.phase === 'pending').slice(0, Number(val('books', '50')));
@@ -258,12 +259,14 @@ async function ocr(db) {
  * submit is lost when the submitting process dies (a dropped ssh, a kill). Pages of a book that no
  * job carries go on its retry list, so the next `ocr` submits only those.
  */
-async function reconcile(db) {
-  const s = loadState();
+async function reconcile(db, s = loadState()) {
   let fixed = 0, partial = 0;
+  const all = await db.collection('batch_jobs').find({ submitted_by: OCR_CALL_SITE, type: 'ocr', created_at: { $gte: new Date(s.created_at) }, child_job_ids: { $exists: false } },
+    { projection: { id: 1, book_id: 1, status: 1, page_ids: 1, created_at: 1 } }).toArray();
+  const byBook = new Map();
+  for (const j of all) { if (!byBook.has(j.book_id)) byBook.set(j.book_id, []); byBook.get(j.book_id).push(j); }
   for (const b of s.books.filter((x) => x.phase === 'pending')) {
-    const jobs = await db.collection('batch_jobs').find({ submitted_by: OCR_CALL_SITE, type: 'ocr', book_id: b.id, created_at: { $gte: new Date(s.created_at) }, child_job_ids: { $exists: false } },
-      { projection: { id: 1, status: 1, page_ids: 1, created_at: 1 } }).toArray();
+    const jobs = byBook.get(b.id) || [];
     if (!jobs.length) continue;
     const covered = new Set(jobs.filter((j) => j.status !== 'submit_failed').flatMap((j) => j.page_ids || []));
     const missing = b.page_ids.filter((id) => !covered.has(id));
@@ -505,5 +508,7 @@ async function run(db) {
 const COMMANDS = { init, hold, envelope, ocr, reconcile, check, withhold, enrol, runs, clear, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
-  await withMongo(async (db) => { await COMMANDS[cmd](db); });
+  // noTimeout: a 50-book OCR submit runs for an hour; the 300 s script timeout force-exited the
+  // wave-1 submit before its bookkeeping and the loop re-submitted 2,020 pages (2026-09-30).
+  await withMongo(async (db) => { await COMMANDS[cmd](db); }, { noTimeout: true });
 }
