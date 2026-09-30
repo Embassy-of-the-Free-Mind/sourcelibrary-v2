@@ -1,0 +1,507 @@
+{
+ "overall": {
+  "n": 311,
+  "match": 292,
+  "mismatch": 6,
+  "uncertain": 13,
+  "rate_decided": 0.020134228187919462,
+  "wilson95": [
+   0.009259448470559914,
+   0.043223708258002355
+  ],
+  "bounds_all": [
+   0.01929260450160772,
+   0.06109324758842444
+  ]
+ },
+ "by_provider": {
+  "internet_archive": {
+   "n": 158,
+   "match": 150,
+   "mismatch": 6,
+   "uncertain": 2,
+   "rate_decided": 0.038461538461538464,
+   "wilson95": [
+    0.01774419018011971,
+    0.08136392685574578
+   ],
+   "bounds_all": [
+    0.0379746835443038,
+    0.05063291139240506
+   ]
+  },
+  "bph": {
+   "n": 54,
+   "match": 53,
+   "mismatch": 0,
+   "uncertain": 1,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.06758430445307662
+   ],
+   "bounds_all": [
+    0.0,
+    0.018518518518518517
+   ]
+  },
+  "mdz": {
+   "n": 14,
+   "match": 14,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.21531701192718142
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "harvard": {
+   "n": 13,
+   "match": 12,
+   "mismatch": 0,
+   "uncertain": 1,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.2425007574992425
+   ],
+   "bounds_all": [
+    0.0,
+    0.07692307692307693
+   ]
+  },
+  "allard_pierson": {
+   "n": 9,
+   "match": 9,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.2991527535509594
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "bsb": {
+   "n": 8,
+   "match": 8,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.3244156195108769
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "gallica": {
+   "n": 7,
+   "match": 6,
+   "mismatch": 0,
+   "uncertain": 1,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.3903430336530645
+   ],
+   "bounds_all": [
+    0.0,
+    0.14285714285714285
+   ]
+  },
+  "manchester": {
+   "n": 7,
+   "match": 5,
+   "mismatch": 0,
+   "uncertain": 2,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.43449149475208104
+   ],
+   "bounds_all": [
+    0.0,
+    0.2857142857142857
+   ]
+  },
+  "bl": {
+   "n": 7,
+   "match": 3,
+   "mismatch": 0,
+   "uncertain": 4,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.5615060804490177
+   ],
+   "bounds_all": [
+    0.0,
+    0.5714285714285714
+   ]
+  },
+  "e-rara": {
+   "n": 6,
+   "match": 6,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.3903430336530645
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "vatican": {
+   "n": 4,
+   "match": 4,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.48990002040399916
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "bodleian": {
+   "n": 3,
+   "match": 2,
+   "mismatch": 0,
+   "uncertain": 1,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.6576280471103807
+   ],
+   "bounds_all": [
+    0.0,
+    0.3333333333333333
+   ]
+  },
+  "leiden": {
+   "n": 3,
+   "match": 3,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.5615060804490177
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "bdrc": {
+   "n": 3,
+   "match": 2,
+   "mismatch": 0,
+   "uncertain": 1,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.6576280471103807
+   ],
+   "bounds_all": [
+    0.0,
+    0.3333333333333333
+   ]
+  },
+  "google_books": {
+   "n": 2,
+   "match": 2,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.6576280471103807
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "kyoto_rmda": {
+   "n": 2,
+   "match": 2,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.6576280471103807
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "slub_dresden": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "v_and_a": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "qdl": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "jstage": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "marciana": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "ndl_japan": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "b-nice": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "e-codices": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "laurenziana": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "cambridge": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  },
+  "loc": {
+   "n": 1,
+   "match": 1,
+   "mismatch": 0,
+   "uncertain": 0,
+   "rate_decided": 0.0,
+   "wilson95": [
+    0,
+    0.7934567085261071
+   ],
+   "bounds_all": [
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "non_ia": {
+  "n": 153,
+  "match": 142,
+  "mismatch": 0,
+  "uncertain": 11,
+  "rate_decided": 0.0,
+  "wilson95": [
+   0,
+   0.02634090684688045
+  ],
+  "bounds_all": [
+   0.0,
+   0.0718954248366013
+  ]
+ },
+ "mismatches": [
+  {
+   "id": "02ec073c0c",
+   "book_id": "69e41fab4fc48a88423e0693",
+   "page_number": 26,
+   "title": "Rajput Painting, Vol. 1",
+   "provider": "internet_archive",
+   "ocr_source": "batch_api",
+   "ocr_model": "gemini-3-flash-preview",
+   "url": "https://sourcelibrary.org/book/69e41fab4fc48a88423e0693?page=26",
+   "note": "display = IA leaf n25 = printed p.14 \"THE RAJPUT SCHOOLS\"; OCR = p.13 \"RAJASTHANI\" (previous leaf)"
+  },
+  {
+   "id": "05b1da1988",
+   "book_id": "69f8c1030c0c281d4bd321fd",
+   "page_number": 371,
+   "title": "Historia de Yucatán, Vol. 1",
+   "provider": "internet_archive",
+   "ocr_source": "ai",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "url": "https://sourcelibrary.org/book/69f8c1030c0c281d4bd321fd?page=371",
+   "note": "display = IA leaf n370 = printed p.359 CAPITULO XVI; OCR = printed p.354 (5 pages earlier)"
+  },
+  {
+   "id": "134c51dfa7",
+   "book_id": "6a08f9349c1b82475e159a8d",
+   "page_number": 153,
+   "title": "Geronimo's Story of His Life — taken down by S.M. Barrett, 1906 first edition",
+   "provider": "internet_archive",
+   "ocr_source": "batch_api",
+   "ocr_model": "gemini-3-flash-preview",
+   "url": "https://sourcelibrary.org/book/6a08f9349c1b82475e159a8d?page=153",
+   "note": "display = IA leaf n152 = printed p.91 \"OTHER RAIDS\"; OCR = p.90 \"GERONIMO\" (previous leaf)"
+  },
+  {
+   "id": "40d19cba36",
+   "book_id": "69e7938b80b52390feb18721",
+   "page_number": 269,
+   "title": "El Ingenioso Hidalgo Don Quixote de la Mancha",
+   "provider": "internet_archive",
+   "ocr_source": "batch_api",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "url": "https://sourcelibrary.org/book/69e7938b80b52390feb18721?page=269",
+   "note": "display = IA leaf = printed p.120 (guijarro, Cardenio); OCR = Cardenio/Luscinda villete passage, other leaf"
+  },
+  {
+   "id": "4b4d01bf24",
+   "book_id": "6a09e9ef3ca4edcd1ef01c3b",
+   "page_number": 82,
+   "title": "Glig-gamena angel-deod, or, The Sports and Pastimes of the People of England",
+   "provider": "internet_archive",
+   "ocr_source": "batch_api",
+   "ocr_model": "gemini-3-flash-preview",
+   "url": "https://sourcelibrary.org/book/6a09e9ef3ca4edcd1ef01c3b?page=82",
+   "note": "display = IA leaf n81 = printed p.14 \"SPORTS AND PASTIMES\"; OCR = p.13 \"OF THE PEOPLE OF ENGLAND\" (previous leaf)"
+  },
+  {
+   "id": "d9f45e5b0a",
+   "book_id": "69cf7bb9878f40c5945f1eea",
+   "page_number": 240,
+   "title": "The Oxyrhynchus Papyri, Part 5",
+   "provider": "internet_archive",
+   "ocr_source": "batch_api",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "url": "https://sourcelibrary.org/book/69cf7bb9878f40c5945f1eea?page=240",
+   "note": "display = IA leaf = printed p.224; OCR = p.223 (previous leaf)"
+  }
+ ]
+}
