@@ -2,7 +2,7 @@
 /**
  * stranded-text-repair-5309 — re-OCR and re-translate the pages whose text was stranded by the
  * #3368 image repair (#5309, umbrella #5376). Approved by Derek 2026-09-30: lite, Batch API,
- * books HELD throughout, hard cap $295.
+ * books HELD throughout, hard cap $265 (joint $310 with the Tingley re-read, #5224).
  *
  * PRIOR ART: scripts/workers/syriac-kraken-lane.mjs (`reenrol` — flips books to ocr_complete,
  * which hands them to the REALTIME translate worker at ~2x the batch price; refused here);
@@ -45,7 +45,7 @@
  *   ... status
  *   ... run --wave 50 --max-open 60 --interval 600   loop check→withhold→enrol→runs→clear→ocr
  * Every command takes --state F (default scripts/output/stranded-text-repair-5309/state.json)
- * and --cap 295.
+ * and --cap 265.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -80,7 +80,7 @@ export const HOLD = Object.freeze({
 const ENVELOPE_TAG = 'stranded-text-5309';
 const OCR_CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
 const ACTIVE_JOB = ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'];
-const CAP = Number(val('cap', '295'));
+const CAP = Number(val('cap', '265'));   // joint $310 with tingley-reread-5224 ($45), Derek 2026-09-30
 const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling
 const TR_RATE = 0.0012;                                 // chained estimator ≈ 2× the $0.0006 measured
 const STATE = val('state', path.join(ROOT, 'scripts/output/stranded-text-repair-5309/state.json'));
