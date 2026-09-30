@@ -45,7 +45,9 @@ code.
   no annotation, just a short check list. Seen again on #4159 the same day: three pushes produced no
   runs while `mergeable` read `CONFLICTING`. Fix: merge `origin/main` into the branch, resolve, push —
   `test` then passed in 2m27s. Check `mergeable` first so "merge main and it wakes up" is a mechanism,
-  not a superstition.
+  not a superstition. **The durable signal is the `needs-rebase` label**: `pr-needs-rebase.yml` applies
+  it within the hour of the merge that caused the conflict, with one comment naming the files that
+  collided, and removes it when the PR merges clean (#5415); `/reap-prs` and the SessionStart line read it.
 - **A recreated branch gets no CI either** — deleting and recreating a branch under an open PR leaves
   the PR pointing at runs that will never re-fire.
 
