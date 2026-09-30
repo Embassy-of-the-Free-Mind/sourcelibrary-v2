@@ -445,6 +445,33 @@ export interface ReaderStrings {
     removeImage: string;
   };
 
+  /** One quiet line above a translation whose source page was hard to read
+   *  (`pageReadCaution`, src/lib/transcription-reliability.ts). */
+  readCaution: {
+    /** `share` is 0–1: the part of the transcription the OCR marked uncertain. */
+    unclear: (share: number) => string;
+    damage: string;
+  };
+
+  /** "Report a problem with this page" — inline, under the translation. */
+  pageReport: {
+    open: string;
+    prompt: string;
+    kinds: {
+      garbled_source: string;
+      missing_text: string;
+      invented_text: string;
+      wrong_image: string;
+      wrong_language: string;
+    };
+    commentPlaceholder: string;
+    send: string;
+    sending: string;
+    cancel: string;
+    thanks: string;
+    failed: string;
+  };
+
   /** Revision history panel (public; the Restore action itself stays
    *  editor-only/English — see the file header note). */
   history: {
@@ -852,6 +879,27 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachFailed: 'That image could not be uploaded. Try a smaller one.',
       removeImage: 'Remove image',
     },
+    readCaution: {
+      unclear: (share) => `This page was hard to read: about ${Math.round(share * 100)}% of the transcription is marked uncertain, and the English there is a best guess.`,
+      damage: 'This page is damaged or faded in places, and parts of the English may rest on uncertain readings.',
+    },
+    pageReport: {
+      open: 'Report a problem with this page',
+      prompt: 'What is wrong? Choose one if it fits.',
+      kinds: {
+        garbled_source: 'Transcription is garbled',
+        missing_text: 'Text is missing',
+        invented_text: 'Translation adds things',
+        wrong_image: 'Wrong page image',
+        wrong_language: 'Wrong language',
+      },
+      commentPlaceholder: 'Anything else? (optional)',
+      send: 'Send report',
+      sending: 'Sending…',
+      cancel: 'Cancel',
+      thanks: 'Thank you. We will look at this page.',
+      failed: 'That did not send. Try again in a moment.',
+    },
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -1246,6 +1294,27 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       attachLimit: 'Hasta cuatro imágenes',
       attachFailed: 'No se pudo subir esa imagen. Prueba con una más pequeña.',
       removeImage: 'Quitar imagen',
+    },
+    readCaution: {
+      unclear: (share) => `Esta página era difícil de leer: alrededor del ${Math.round(share * 100)} % de la transcripción está marcado como dudoso, y la traducción de esas partes es una conjetura.`,
+      damage: 'Esta página está dañada o desvaída en algunas partes, y parte de la traducción puede basarse en lecturas dudosas.',
+    },
+    pageReport: {
+      open: 'Informar de un problema en esta página',
+      prompt: '¿Qué está mal? Elige una opción si encaja.',
+      kinds: {
+        garbled_source: 'La transcripción es ilegible',
+        missing_text: 'Falta texto',
+        invented_text: 'La traducción añade cosas',
+        wrong_image: 'Imagen de página equivocada',
+        wrong_language: 'Idioma equivocado',
+      },
+      commentPlaceholder: '¿Algo más? (opcional)',
+      send: 'Enviar',
+      sending: 'Enviando…',
+      cancel: 'Cancelar',
+      thanks: 'Gracias. Revisaremos esta página.',
+      failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
     },
     history: {
       title: 'Historial de revisiones',
