@@ -216,6 +216,11 @@ describe('the checker (missingProvenance) — proven red', () => {
   it('specialist and archive sources have their own required set; human text needs only the hash', () => {
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'kraken', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: { name: 'kraken', model: 'sophro-mhiro', run: 'r' } }).missing).toEqual([]);
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'kraken', updated_at: new Date(), engine: { name: 'kraken', model: 'sophro-mhiro' } }).missing).toEqual(['ocr.content_hash', 'ocr.engine.run']);
+    // MinerU (ladder tier 3) is a specialist engine too: the pre-2026-09-30 worker stamped a bare
+    // string under `engine`, which is a gap, not a block.
+    expect(mjs.missingProvenance('ocr', { data: 't', source: 'mineru', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: { name: 'mineru', model: 'mineru-pipeline', run: { id: 'r' } } }).missing).toEqual([]);
+    expect(mjs.missingProvenance('ocr', { data: 't', source: 'mineru', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: 'mineru pipeline backend (PP-OCR + PDF-Extract-Kit)' }).missing).toEqual(['ocr.engine']);
+    expect(ts.missingProvenance('ocr', { data: 't', source: 'mineru', updated_at: new Date(), content_hash: mjs.contentHash('t'), engine: { name: 'mineru', model: 'mineru-pipeline' } }).missing).toEqual(['ocr.engine.run']);
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'ia_djvu', updated_at: new Date(), content_hash: mjs.contentHash('t'), source_url: 'u', ia: { item: 'i', ingest_run: 'r' } }).missing).toEqual([]);
     expect(mjs.missingProvenance('ocr', { data: 't', source: 'ia_djvu', updated_at: new Date(), content_hash: mjs.contentHash('t'), source_url: 'u', ia: { item: 'i' } }).missing).toEqual(['ocr.ia.ingest_run']);
     expect(mjs.missingProvenance('translation', { data: 't', source: 'manual', updated_at: new Date(), content_hash: mjs.contentHash('t') }).missing).toEqual([]);

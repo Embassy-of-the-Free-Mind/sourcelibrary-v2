@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { RoomHeader, RoomFooter } from '@/components/rooms/RoomChrome';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getCachedRoom } from '@/components/rooms/room-loader';
 import { getReadDb } from '@/lib/mongodb';
 import { getRoomBooks } from '@/lib/reading-rooms';
@@ -43,6 +44,10 @@ export default async function RoomShelfPage({ params }: Props) {
 
   return (
     <>
+      {/* Tells a host page that frames this room "back on the shelf" (book: null),
+          so its address bar and frame height can follow — the book page and the
+          reader already report themselves the same way. */}
+      <EmbedNavigationReporter />
       <RoomHeader room={room} showTagline />
       <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {books.length === 0 ? (

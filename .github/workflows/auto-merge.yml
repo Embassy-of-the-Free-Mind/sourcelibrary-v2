@@ -24,6 +24,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write   # to dispatch post-deploy-warm.yml after a merge (a GITHUB_TOKEN push does not trigger it)
 
 concurrency:
   group: auto-merge
