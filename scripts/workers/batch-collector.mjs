@@ -39,6 +39,7 @@ import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
+import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 
 /**
@@ -108,24 +109,6 @@ function calculateCost(model, inputTokens, outputTokens) {
 // The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
 // asked for, so it returned [] on every page and the `length > 0` guard at the
 // write site turned that into silence.
-
-/**
- * Parse image extraction response — expects a JSON array of detected images.
- * Handles markdown code fences and extra whitespace.
- */
-function parseImageExtractionResponse(text) {
-  if (!text || typeof text !== 'string') return [];
-  // Strip markdown code fences if present
-  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-  const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) return [];
-  try {
-    const parsed = JSON.parse(jsonMatch[0]);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
 
 
 // ── Gemini API ──
@@ -482,6 +465,7 @@ async function processOneJob(db, job) {
 
     const bulkOps = [];
     let galleryDocs = null; // Populated by image_extraction jobs
+    const inheritedScanQualityByPage = new Map(); // pageId → gallery-row scan_quality (image_extraction)
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
     // fetched + sent, recorded on the batch job at submit. Lets us stamp
@@ -679,8 +663,26 @@ async function processOneJob(db, job) {
           },
         });
       } else if (job.type === 'image_extraction') {
-        // Parse JSON array of detected images from Gemini response
-        const parsed = parseImageExtractionResponse(text);
+        // The request carries the worker's responseSchema (scripts/lib/image-extraction-request.mjs),
+        // so the answer is { scan_quality, extracted_images }. The old bare-array parser matched
+        // from the first `[` — inside scan_quality.concerns — and dropped scan_quality (#4747).
+        const { extracted_images: parsed, scan_quality: scanQualityRaw } = parseImageExtractionResponse(text);
+        const pageScanQuality = scanQualityRaw
+          ? { ...scanQualityRaw, model: job.model, version: SCAN_QUALITY_VERSION, assessed_at: now }
+          : null;
+        if (pageScanQuality) {
+          const inherited = {
+            score: pageScanQuality.scan_score,
+            scan_class: pageScanQuality.scan_class,
+            illustration_fidelity: pageScanQuality.illustration_fidelity,
+            page_completeness: pageScanQuality.page_completeness,
+            concerns: pageScanQuality.concerns,
+            source: 'page_inherited',
+            version: SCAN_QUALITY_VERSION,
+            assessed_at: now,
+          };
+          inheritedScanQualityByPage.set(pageId, inherited);
+        }
         if (parsed.length > 0) {
           const detectedImages = parsed.map(img => ({
             description: img.description || '',
@@ -704,6 +706,7 @@ async function processOneJob(db, job) {
               update: {
                 $set: {
                   detected_images: detectedImages,
+                  ...(pageScanQuality ? { scan_quality: pageScanQuality } : {}),
                   image_extraction_updated_at: now,
                   updated_at: now,
                 },
@@ -738,7 +741,11 @@ async function processOneJob(db, job) {
           bulkOps.push({
             updateOne: {
               filter: { id: pageId },
-              update: { $set: { image_extraction_updated_at: now, updated_at: now } },
+              update: { $set: {
+                ...(pageScanQuality ? { scan_quality: pageScanQuality } : {}),
+                image_extraction_updated_at: now,
+                updated_at: now,
+              } },
             },
           });
         }
@@ -815,16 +822,29 @@ async function processOneJob(db, job) {
 
         // Fetch book metadata for gallery docs (incl. visible/hidden/provider so
         // batch-collected images are gallery-visible without a separate sync — #2531).
-        const bookDoc = await db.collection('books').findOne(
-          { id: job.book_id },
-          { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
-        );
+        // Per PAGE's book: a cross-book job's job.book_id is only its first book, and
+        // using it labelled every pooled crop with that book's title (#4747).
+        const galleryBookIds = [...new Set([job.book_id, ...pageInfos.map(p => p.book_id)].filter(Boolean))];
+        const bookDocs = await db.collection('books')
+          .find(
+            { id: { $in: galleryBookIds } },
+            { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
+          )
+          .toArray();
+        const bookById = new Map(bookDocs.map(b => [b.id, b]));
 
         // Build the full denormalized docs via the shared helper; override the
         // provenance fields the batch path owns (model / detected_at / batch id).
         const builtDocs = galleryDocs.map(({ pageId: pid, detectedImage, index }) => {
           const pageInfo = pageInfoMap.get(pid) || { id: pid, book_id: job.book_id };
-          const doc = buildGalleryDoc({ page: pageInfo, book: bookDoc, detectedImage, index, now });
+          const doc = buildGalleryDoc({
+            page: pageInfo,
+            book: bookById.get(pageInfo.book_id) || null,
+            detectedImage,
+            index,
+            now,
+            scanQuality: inheritedScanQualityByPage.get(pid) || null,
+          });
           doc.model = job.model;
           doc.detected_at = now;
           doc.detection_source = 'vision_model';
@@ -1186,11 +1206,16 @@ async function advancePipelineStatus(db, bookId, jobType) {
         book_id: bookId,
         'detected_images.0': { $exists: true },
       });
+      // Book-level scan_quality rollup, as the realtime worker writes it. Best-effort.
+      let scanQualityRollup = null;
+      try { scanQualityRollup = await computeBookScanQualityRollup(db, bookId); }
+      catch (err) { console.error(`  scan_quality rollup failed for ${bookId}: ${err.message}`); }
       await db.collection('books').updateOne(
         { id: bookId },
         {
           $set: {
             detected_images_count: imgCount,
+            ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}),
             'pipeline_auto.status': 'images_complete',
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),

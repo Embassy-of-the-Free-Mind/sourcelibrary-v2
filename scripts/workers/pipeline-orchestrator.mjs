@@ -24,7 +24,9 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
-import { buildPageGrounding } from '../lib/page-grounding.mjs';
+import {
+  GROUNDING_RADIUS, buildImageExtractionText, buildImageExtractionBatchRequest, computeBookScanQualityRollup,
+} from '../lib/image-extraction-request.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
@@ -2001,85 +2003,27 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
 
 /**
  * Submit image extraction via Gemini Batch API.
- * Mirrors submitOcrDirectly() but uses the image extraction prompt instead of OCR.
- * Returns detected images as JSON arrays (parsed by batch-collector).
+ * Mirrors submitCrossBookOcrBatches(): pages from many books are pooled into shared
+ * file-based batches, each page carrying its own book context + page grounding.
+ * The request (prompt, responseSchema, generationConfig, grounding) is the realtime
+ * worker's, built by scripts/lib/image-extraction-request.mjs (#4747) — PR #5238
+ * measured THAT request on the Batch API. batch-collector.mjs parses the response
+ * with the same module's parser and writes detected_images + scan_quality.
  *
- * Cost: ~50% discount vs Lambda realtime. Throughput: ~200+ books/hr vs ~50.
+ * Cost: ~50% discount vs realtime.
  */
 const IMAGE_EXTRACTION_MODEL = 'gemini-3-flash-preview'; // Vision task — bbox accuracy critical
 const IMAGE_EXTRACTION_BATCH_SIZE = 250; // Pages per file-based batch — match OCR to reduce batch creation count
-const IMAGE_EXTRACTION_INLINE_SIZE = 20;
 
-const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
-
-BOUNDING BOX (0.0-1.0 normalized coordinates):
-- x: LEFT edge (0=left, 1=right), y: TOP edge (0=top, 1=bottom)
-- width, height: span of illustration
-- TIGHTLY enclose the illustration only
-
-IMAGE TYPES (use these exactly):
-- emblem: Symbolic/allegorical with motto, often framed
-- woodcut: Bold relief print lines
-- engraving: Fine detailed intaglio lines, crosshatching
-- portrait: Depiction of a person
-- frontispiece: Decorative title page illustration
-- musical_score: Sheet music, notation, fugues (NOT "table")
-- diagram: Technical/scientific illustration
-- symbol: Alchemical, astrological symbols
-- map: Geographic representation
-
-SKIP these — do NOT include them:
-- Page ornaments, borders, decorative initials, printer's devices
-- Marbled papers, blank frames, ruled lines
-- Any element that is purely decorative with no intellectual content
-
-If the page contains no significant illustrations, return \`[]\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
-
-For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
-{
-  "description": "Brief factual description",
-  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
-  "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
-  "rotation": 0,
-  "confidence": 0.95,
-  "gallery_quality": 0.85,
-  "gallery_rationale": "Why gallery-worthy or not",
-  "metadata": {
-    "subjects": ["alchemy", "transformation"],
-    "figures": ["old man", "serpent"],
-    "symbols": ["ouroboros", "athanor"],
-    "style": "Northern European Renaissance",
-    "technique": "woodcut"
-  },
-  "museum_description": "A robed figure holds a serpent that bites its own tail while standing over a lit furnace. The ouroboros and the athanor identify the scene as one of alchemical transmutation."
-}
-
-GALLERY QUALITY (0.0-1.0):
-- 0.9-1.0: Exceptional emblems, portraits, allegorical scenes with figures
-- 0.8-0.9: Illustrations with people/figures
-- 0.6-0.8: Good illustrations without people
-- 0.4-0.6: Musical scores, alchemical symbols
-
-MUSEUM DESCRIPTION: Write 2-3 plain sentences for a museum label: first what the viewer sees, then what it depicts or means. Name concrete things. Do NOT use promotional or filler language. Avoid the words "serves as", "stands as", "a testament to", "renowned", "profound", "delve", "intricate", "vibrant", "compelling", "exemplifies", "masterful", and the construction "not only X but also Y". State what is shown, not how significant it is.
-
-Return ONLY a valid JSON array. If no significant illustrations, return: []`;
-
-// Per-page text grounding for the batch image-extraction path (#2707), mirroring
-// the realtime worker. Returns Map<pageId, groundingString>. Reads each candidate
-// page's own OCR/translation, a ±radius window of neighbour pages (usually text/
-// blank pages not in the candidate set), and the book summary as the isolated-
-// plate fallback. One window query per book.
-const BATCH_GROUNDING_RADIUS = 3;
-async function buildGroundingByPageId(db, book, candidatePages) {
-  const ids = candidatePages.map(p => p.id);
-  const cps = await db.collection('pages')
-    .find({ id: { $in: ids } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
-    .toArray();
-
+// Per-book grounding context for the batch path (#2707), mirroring the realtime
+// worker: the ±GROUNDING_RADIUS window of neighbour pages (usually text/blank pages
+// not in the candidate set) and the book summary as the isolated-plate fallback.
+// One window query per book.
+async function loadGroundingContext(db, book, pages) {
   const windowNumbers = new Set();
-  for (const p of cps) {
+  for (const p of pages) {
     if (typeof p.page_number !== 'number') continue;
-    for (let d = -BATCH_GROUNDING_RADIUS; d <= BATCH_GROUNDING_RADIUS; d++) windowNumbers.add(p.page_number + d);
+    for (let d = -GROUNDING_RADIUS; d <= GROUNDING_RADIUS; d++) windowNumbers.add(p.page_number + d);
   }
   const pagesByNumber = new Map();
   if (windowNumbers.size > 0) {
@@ -2094,265 +2038,17 @@ async function buildGroundingByPageId(db, book, candidatePages) {
     const b = await db.collection('books').findOne({ id: book.id }, { projection: { summary: 1 } });
     bookSummary = b?.summary || '';
   }
-
-  const map = new Map();
-  for (const p of cps) {
-    const neighbors = [];
-    if (typeof p.page_number === 'number') {
-      for (let n = p.page_number - BATCH_GROUNDING_RADIUS; n <= p.page_number + BATCH_GROUNDING_RADIUS; n++) {
-        if (n === p.page_number) continue;
-        const np = pagesByNumber.get(n);
-        if (np) neighbors.push({ page_number: n, ocr: np.ocr?.data, translation: np.translation?.data });
-      }
-    }
-    map.set(p.id, buildPageGrounding({
-      ocr: p.ocr?.data,
-      translation: p.translation?.data,
-      pageNumber: p.page_number,
-      neighbors,
-      bookSummary,
-      radius: BATCH_GROUNDING_RADIUS,
-    }));
-  }
-  return map;
+  return { pagesByNumber, bookSummary };
 }
 
-async function submitImageExtractionBatch(db, book, candidatePages) {
-  // Guard: check for existing active batch_jobs for this book
-  const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
-    book_id: book.id,
-    type: 'image_extraction',
-    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
-  });
-  if (activeBatchForBook > 0) {
-    console.log(`    Skipping: ${activeBatchForBook} active image extraction batch jobs already exist`);
-    return { submitted: 0, skippedDuplicate: true };
-  }
-
-  // Fetch page image URLs
-  const pages = await db.collection('pages')
-    .find({ id: { $in: candidatePages.map(p => p.id) } })
-    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
-    .toArray();
-
-  if (pages.length === 0) return { submitted: 0 };
-
-  // Minimum batch size — don't burn a batch API call for a handful of pages
-  if (pages.length < 25) {
-    console.log(`    Skipping small image batch: ${pages.length} pages (min 25)`);
-    return { submitted: 0, skippedSmallBatch: true };
-  }
-
-  console.log(`    Downloading ${pages.length} images for image extraction...`);
-  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
-  if (downloaded.length === 0) {
-    throw new Error(`All ${pages.length} image downloads failed`);
-  }
-  console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
-
-  // Build prompt with book context
-  const contextParts = [];
-  if (book.title) contextParts.push(`Book: "${book.title}"`);
-  if (book.author) contextParts.push(`Author: ${book.author}`);
-  if (book.year) contextParts.push(`Year: ${book.year}`);
-  if (book.language) contextParts.push(`Language: ${book.language}`);
-  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
-  const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
-    : '';
-  const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
-
-  // Per-page text grounding (#2707): subject identity comes from the page's own
-  // OCR <image-desc>/<summary> + nearby text, not the book's topic. Appended per
-  // item below so each page's prompt carries its own grounding.
-  const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
-
-  const useFileBased = downloaded.length > IMAGE_EXTRACTION_INLINE_SIZE;
-  const batchSize = useFileBased ? IMAGE_EXTRACTION_BATCH_SIZE : IMAGE_EXTRACTION_INLINE_SIZE;
-
-  const parentJobId = nanoid();
-  const childJobIds = [];
-  let totalSubmitted = 0;
-  let firstJobName = null;
-
-  for (let j = 0; j < downloaded.length; j += batchSize) {
-    const chunk = downloaded.slice(j, j + batchSize);
-    const childJobId = nanoid();
-    const displayName = `pipeline-images-${book.id}-${childJobId}`;
-    let batchJob;
-
-    if (useFileBased) {
-      console.log(`    Building JSONL for ${chunk.length} pages (image extraction, file-based)...`);
-      const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
-        request: {
-          contents: [{
-            parts: [
-              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
-              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
-            ],
-          }],
-          safetySettings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
-          ],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 2048,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
-        },
-        metadata: { key: item.pageId },
-      }));
-      console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
-
-      // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
-      // Non-quota errors capture into __submitErr so we always reach the unlink below.
-      let uploadKeyIndex = -1;
-      let __submitErr = null;
-      const imgBestKey = getLeastLoadedKey();
-      const imgStartKey = imgBestKey >= 0 ? imgBestKey : nextBatchKeyIndex();
-      for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-        const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
-        let fileResult;
-        try {
-          fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
-          uploadKeyIndex = uki;
-          console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
-        } catch (uploadErr) {
-          const msg = uploadErr.message || '';
-          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
-            continue;
-          }
-          __submitErr = uploadErr;
-          break;
-        }
-
-        try {
-          batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
-          recordSubmission(uki);
-          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
-            console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
-          }
-          break;
-        } catch (batchErr) {
-          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
-          const msg = batchErr.message || '';
-          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-            console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
-            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
-            continue;
-          }
-          __submitErr = batchErr;
-          break;
-        }
-      }
-      try { fs.unlinkSync(jsonlFile); } catch (_) {}
-      if (__submitErr) throw __submitErr;
-      if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
-    } else {
-      const inlineRequests = chunk.map(item => ({
-        request: {
-          contents: [{
-            parts: [
-              { text: prompt + (groundingByPageId.get(item.pageId) || '') },
-              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
-            ],
-          }],
-          safetySettings: [
-            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
-          ],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 2048,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
-        },
-        metadata: { key: item.pageId },
-      }));
-      batchJob = await createBatchJobInline(IMAGE_EXTRACTION_MODEL, inlineRequests, displayName);
-    }
-
-    if (!firstJobName) firstJobName = batchJob.name;
-
-    // Record in batch_jobs
-    await db.collection('batch_jobs').insertOne({
-      id: childJobId,
-      parent_job_id: parentJobId,
-      job_name: batchJob.name,
-      type: 'image_extraction',
-      book_id: book.id,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      status: 'pending',
-      model: IMAGE_EXTRACTION_MODEL,
-      submission_method: useFileBased ? 'file' : 'inline',
-      key_index: batchJob.keyIndex,
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
-
-    childJobIds.push(childJobId);
-    totalSubmitted += chunk.length;
-
-    // Log to Supabase gemini_usage
-    await logUsage({
-      type: 'image_extraction', mode: 'batch', model: IMAGE_EXTRACTION_MODEL,
-      book_id: book.id, book_title: book.title,
-      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
-      batch_job_id: childJobId, gemini_job_name: batchJob.name,
-      input_tokens: 0, output_tokens: 0, status: 'submitted',
-      // Committed, not yet collected: price it now so the dial sees it (#4567).
-      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
-      endpoint: 'hetzner/pipeline-orchestrator',
-    }, db);
-  }
-
-  // Create parent job if multiple children
-  if (childJobIds.length > 1) {
-    await db.collection('batch_jobs').insertOne({
-      id: parentJobId,
-      type: 'image_extraction',
-      book_id: book.id,
-      child_job_ids: childJobIds,
-      total_pages: totalSubmitted,
-      status: 'pending',
-      model: IMAGE_EXTRACTION_MODEL,
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
-  }
-
-  const method = useFileBased ? 'file-based' : 'inline';
-  return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
-}
-
-// Build per-page prompt with book context baked in
-function buildPagePrompt(book) {
-  const contextParts = [];
-  if (book.title) contextParts.push(`Book: "${book.title}"`);
-  if (book.author) contextParts.push(`Author: ${book.author}`);
-  if (book.year) contextParts.push(`Year: ${book.year}`);
-  if (book.language) contextParts.push(`Language: ${book.language}`);
-  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
-  const contextPrefix = contextParts.length > 0
-    ? `BOOK CONTEXT (background only — a hint for reading inscriptions and recognising a tradition; do NOT assert a person, figure, or scene unless it is actually visible in THIS image — a book about a subject does not mean every illustration depicts it):\n${contextParts.join(' | ')}\n\n`
-    : '';
-  return contextPrefix + IMAGE_EXTRACTION_PROMPT;
-}
-
-// Cross-book batch submission: pools pages from multiple books into shared 150-page batches.
-// Each page carries its own book-specific prompt. Reduces batch creation count by ~60%.
+// Cross-book batch submission: pools pages from every ready book into shared
+// IMAGE_EXTRACTION_BATCH_SIZE-page batches. Books of every size go through here —
+// there is no per-book path and no minimum, so a small book is never skipped
+// (and never advanced unextracted, the 2026-09-30 defect).
+// Returns { submitted, batchCount, bookIds } — bookIds are ONLY the books whose
+// pages went into a created batch; every other book keeps its status.
 async function submitCrossBookImageBatches(db, bookItems) {
   // bookItems: [{ book, candidatePages }]
-  // Returns { submitted, batchCount, bookIds }
 
   // Guard: skip books with active batch_jobs
   const filteredItems = [];
@@ -2374,16 +2070,14 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
   if (filteredItems.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
 
-  // Download images for all books, building per-page items with book context
-  const allDownloaded = []; // { pageId, image, prompt, bookId }
+  // Download images for all books, building per-page request text with book context
+  const allDownloaded = []; // { pageId, image, text, bookId }
   const bookMap = new Map(); // bookId -> book (for logging)
 
   for (const { book, candidatePages } of filteredItems) {
-    bookMap.set(book.id, book);
-
     const pages = await db.collection('pages')
       .find({ id: { $in: candidatePages.map(p => p.id) } })
-      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1 })
       .toArray();
 
     if (pages.length === 0) continue;
@@ -2396,11 +2090,12 @@ async function submitCrossBookImageBatches(db, bookItems) {
     }
     console.log(`    Downloaded ${downloaded.length}/${pages.length} images for ${book.title}`);
 
-    const prompt = buildPagePrompt(book);
-    // Per-page text grounding (#2707) for each book in the cross-book pool.
-    const groundingByPageId = await buildGroundingByPageId(db, book, candidatePages);
+    bookMap.set(book.id, book);
+    const { pagesByNumber, bookSummary } = await loadGroundingContext(db, book, pages);
+    const pageById = new Map(pages.map(p => [p.id, p]));
     for (const item of downloaded) {
-      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, grounding: groundingByPageId.get(item.pageId) || '', bookId: book.id });
+      const text = buildImageExtractionText({ book, page: pageById.get(item.pageId), pagesByNumber, bookSummary });
+      allDownloaded.push({ pageId: item.pageId, image: item.image, text, bookId: book.id });
     }
   }
 
@@ -2408,11 +2103,13 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
   console.log(`  Cross-book pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
 
-  // Split into shared batches of IMAGE_EXTRACTION_BATCH_SIZE (150)
+  // Split into shared batches of IMAGE_EXTRACTION_BATCH_SIZE
   const parentJobId = nanoid();
   const childJobIds = [];
+  const submittedBookIds = new Set();
   let totalSubmitted = 0;
   let batchCount = 0;
+  let submitError = null;
 
   for (let j = 0; j < allDownloaded.length; j += IMAGE_EXTRACTION_BATCH_SIZE) {
     const chunk = allDownloaded.slice(j, j + IMAGE_EXTRACTION_BATCH_SIZE);
@@ -2422,26 +2119,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
     console.log(`    Building JSONL for ${chunk.length} pages (cross-book batch, ${chunkBookIds.length} books)...`);
     const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
-      request: {
-        contents: [{
-          parts: [
-            { text: item.prompt + (item.grounding || '') },
-            { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
-          ],
-        }],
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-          { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
-        ],
-        generationConfig: {
-          temperature: 0.1,
-          maxOutputTokens: 2048,
-          thinkingConfig: { thinkingBudget: 0 },
-        },
-      },
+      request: buildImageExtractionBatchRequest({ text: item.text, image: item.image }),
       metadata: { key: item.pageId },
     }));
     console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
@@ -2489,8 +2167,12 @@ async function submitCrossBookImageBatches(db, bookItems) {
       }
     }
     try { fs.unlinkSync(jsonlFile); } catch (_) {}
-    if (__submitErr) throw __submitErr;
-    if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+    // Stop at the first chunk that fails, but still report the chunks already
+    // created: those books ARE in live batches and must be marked images_submitted.
+    if (__submitErr || !batchJob) {
+      submitError = __submitErr || new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+      break;
+    }
 
     // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
     await db.collection('batch_jobs').insertOne({
@@ -2512,6 +2194,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
     });
 
     childJobIds.push(childJobId);
+    for (const bid of chunkBookIds) submittedBookIds.add(bid);
     totalSubmitted += chunk.length;
     batchCount++;
 
@@ -2530,7 +2213,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
   // Create parent job if multiple children
   if (childJobIds.length > 1) {
-    const allBookIds = [...bookMap.keys()];
+    const allBookIds = [...submittedBookIds];
     await db.collection('batch_jobs').insertOne({
       id: parentJobId,
       type: 'image_extraction',
@@ -2546,7 +2229,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
     });
   }
 
-  return { submitted: totalSubmitted, batchCount, bookIds: [...bookMap.keys()] };
+  return { submitted: totalSubmitted, batchCount, bookIds: [...submittedBookIds], error: submitError };
 }
 
 // ── Main ──
@@ -4881,6 +4564,11 @@ Rules:
           const orphans = await db.collection('books').find({
             'pipeline_auto.status': from,
             $or: [{ job: { $exists: false } }, { job: null }],
+            // A Batch API image book has no `jobs` row and no book.job — its work is in
+            // batch_jobs — so this detector read every one as an orphan and rolled it
+            // back each run. Phase 8's advance owns those books: it moves them on once
+            // no image batch_job is pending, and the collector fails a stuck one (#4747).
+            ...(from === 'images_submitted' ? { 'pipeline_auto.image_extraction_batch': { $ne: true } } : {}),
           }).project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 }).toArray();
           if (orphans.length > 0) {
             // Verify no active jobs exist for these books
@@ -5417,7 +5105,6 @@ Rules:
 
           // Gather candidate pages from all books, then pool into cross-book batches
           const bookItems = []; // { book, candidatePages } for cross-book batching
-          const smallBooks = []; // books with ≤ IMAGE_EXTRACTION_INLINE_SIZE pages — keep per-book inline
 
           for (const book of readyForImages) {
             try {
@@ -5456,55 +5143,33 @@ Rules:
                 continue;
               }
 
-              // Small books (≤20 pages) use per-book inline path
-              if (bookPages.length <= IMAGE_EXTRACTION_INLINE_SIZE) {
-                smallBooks.push({ book, candidatePages: bookPages });
-              } else {
-                bookItems.push({ book, candidatePages: bookPages });
-              }
+              // Books of every size pool together. There used to be a per-book
+              // inline path for ≤20 pages whose submitter refused anything under 25,
+              // and the caller then marked the refused book images_complete — every
+              // small book advanced with no extraction (#4747, 2026-09-30).
+              bookItems.push({ book, candidatePages: bookPages });
             } catch (err) {
               log.errors.push(`Images candidate scan ${book.id}: ${err.message}`);
             }
           }
 
-          // Submit small books via per-book inline path (no cross-book pooling needed)
-          for (const { book, candidatePages } of smallBooks) {
-            try {
-              const result = await submitImageExtractionBatch(db, book, candidatePages);
-              if (result.skippedDuplicate) continue;
-              if (result.submitted === 0) {
-                await setPipelineStatus(db, book.id, 'images_complete');
-                log.images_advanced++;
-                continue;
-              }
-
-              await setPipelineStatus(db, book.id, 'images_submitted', {
-                image_extraction_batch: true,
-                image_extraction_job_name: result.jobName,
-              });
-              log.images_submitted++;
-              console.log(`  Inline image extraction submitted: ${book.title} (${result.submitted} pages, inline)`);
-              await sleep(API_DELAY_MS);
-            } catch (err) {
-              log.errors.push(`Images inline submit ${book.id}: ${err.message}`);
-            }
-          }
-
-          // Submit larger books via cross-book pooled batches
           if (bookItems.length > 0) {
             try {
               const result = await submitCrossBookImageBatches(db, bookItems);
+              // Only books whose pages are in a created batch move. A book skipped
+              // (active job, every download failed, a later chunk's create failed)
+              // keeps chapters_complete and is picked up again next run.
+              for (const bookId of result.bookIds) {
+                await setPipelineStatus(db, bookId, 'images_submitted', {
+                  image_extraction_batch: true,
+                  cross_book_batch: true,
+                });
+                log.images_submitted++;
+              }
               if (result.submitted > 0) {
-                // Set all participating books to images_submitted
-                for (const bookId of result.bookIds) {
-                  await setPipelineStatus(db, bookId, 'images_submitted', {
-                    image_extraction_batch: true,
-                    cross_book_batch: true,
-                  });
-                  log.images_submitted++;
-                }
                 console.log(`  Cross-book image extraction submitted: ${result.submitted} pages from ${result.bookIds.length} books in ${result.batchCount} batches`);
               }
+              if (result.error) log.errors.push(`Images cross-book submit: ${result.error.message}`);
             } catch (err) {
               log.errors.push(`Images cross-book submit: ${err.message}`);
             }
@@ -5638,6 +5303,9 @@ Rules:
 
               await setPipelineStatus(db, book.id, 'images_submitted', {
                 image_extraction_job_id: jobId,
+                // Clear a flag left by an earlier batch submission, or the advance
+                // below would read this as a batch book and move it on at once.
+                image_extraction_batch: false,
               });
               log.images_submitted++;
               console.log(`  Image extraction submitted: ${book.title} (${pageIds.length} pages)`);
@@ -5670,9 +5338,13 @@ Rules:
         const isBatch = book.pipeline_auto?.image_extraction_batch;
 
         if (isBatch) {
-          // Batch path: check if all batch_jobs for this book are done
+          // Batch path: check if all batch_jobs for this book are done. A cross-book
+          // job stores book_id = its FIRST book and the rest only in book_ids, so a
+          // book_id-only count read 0 for every other pooled book and advanced it in
+          // the same run it was submitted (#4747). Same query as the collector's
+          // advancePipelineStatus().
           const pendingBatch = await db.collection('batch_jobs').countDocuments({
-            book_id: book.id,
+            $or: [{ book_id: book.id }, { book_ids: book.id }],
             type: 'image_extraction',
             status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
           });
@@ -5682,9 +5354,13 @@ Rules:
                 book_id: book.id,
                 'detected_images.0': { $exists: true },
               });
+              // Book-level scan_quality rollup, as the realtime worker and the collector write it.
+              let scanQualityRollup = null;
+              try { scanQualityRollup = await computeBookScanQualityRollup(db, book.id); }
+              catch (err) { console.error(`  scan_quality rollup failed for ${book.id}: ${err.message}`); }
               await db.collection('books').updateOne(
                 { id: book.id },
-                { $set: { detected_images_count: imgCount } }
+                { $set: { detected_images_count: imgCount, ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}) } }
               );
               await setPipelineStatus(db, book.id, 'images_complete');
             }

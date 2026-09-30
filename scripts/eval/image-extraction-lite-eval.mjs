@@ -8,8 +8,10 @@
  * resolution only. scripts/eval/lib/ has no vision/bbox scorer. contact-sheet-screen.mjs
  * measures recall of a cheap screen, not box accuracy.
  *
- * Reads only. Never writes to `pages`, `gallery_images`, or `books`. Prompt, schema,
- * generationConfig and page-grounding are lifted from image-extract-worker.mjs at runtime.
+ * Reads only. Never writes to `pages`, `gallery_images`, or `books`. Prompt, schema, book
+ * context and page-grounding come from scripts/lib/image-extraction-request.mjs — the module
+ * the worker and the orchestrator's batch path both build their request from (was: lifted
+ * from the worker source by regex at runtime).
  * Written 2026-09-11 as lite-vs-flash agreement; widened 2026-09-28 — agreement with stored
  * flash is now SECONDARY, the verdict is the by-eye grade (grade-sheets → grades.json →
  * grade-score). Arms (--engine): flash, lite, lite35, lite-box2d (Gemini-native box_2d
@@ -41,9 +43,11 @@ import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { normalizeBbox as productionNormalizeBbox } from '../lib/bbox.mjs';
 import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
+import {
+  IMAGE_EXTRACTION_PROMPT, RESPONSE_SCHEMA, SAFETY_SETTINGS, GROUNDING_RADIUS, buildBookContextPrefix,
+} from '../lib/image-extraction-request.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const WORKER_PATH = path.join(__dirname, '../workers/image-extract-worker.mjs');
 
 // ── args ──
 const args = process.argv.slice(2);
@@ -60,7 +64,6 @@ const ENGINE = opt('engine', 'lite');
 const CONCURRENCY = parseInt(opt('concurrency', '6'), 10);
 const N_POS = parseInt(opt('n-pos', '200'), 10);
 const N_NEG = parseInt(opt('n-neg', '200'), 10);
-const GROUNDING_RADIUS = 3;
 
 const TAG = opt('tag', '');
 // format = how the arm is asked for boxes. xywh: production {x,y,width,height} fractions;
@@ -92,19 +95,10 @@ const usd = (model, inTok, outTok, batch = false) => {
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(IMG_CACHE, { recursive: true });
 
-// ── lift the production prompt + schema out of the worker source ──
+// ── the production prompt + schema (shared request module) ──
 function loadWorkerArtifacts() {
-  const src = fs.readFileSync(WORKER_PATH, 'utf8');
-  const m = src.match(/const IMAGE_EXTRACTION_PROMPT = `([\s\S]*?)`;\n/);
-  if (!m) throw new Error('could not find IMAGE_EXTRACTION_PROMPT in worker source');
-  // The template literal in the worker contains one escaped backtick pair (\`extracted_images: []\`).
-  const prompt = m[1].replace(/\\`/g, '`');
-  const s = src.match(/const RESPONSE_SCHEMA = (\{[\s\S]*?\n\});\n/);
-  if (!s) throw new Error('could not find RESPONSE_SCHEMA in worker source');
-  // SchemaType.X → "x" (the SDK enum values are lowercase strings; REST accepts them).
-  const schemaJs = s[1].replace(/SchemaType\.([A-Z]+)/g, (_, t) => JSON.stringify(t.toLowerCase()));
-  const schema = new Function(`return (${schemaJs});`)();
-  return { prompt, schema, promptSha: sha(prompt) };
+  const prompt = IMAGE_EXTRACTION_PROMPT;
+  return { prompt, schema: structuredClone(RESPONSE_SCHEMA), promptSha: sha(prompt) };
 }
 
 /** The production request, re-expressed for an arm that is asked for a different box format. */
@@ -154,16 +148,8 @@ function cryptoMod() {
   return _cryptoMod;
 }
 
-function buildBookContextPrefix(book) {
-  const contextParts = [];
-  if (book.title) contextParts.push(`Book: "${book.title}"`);
-  if (book.author) contextParts.push(`Author: ${book.author}`);
-  if (book.year) contextParts.push(`Year: ${book.year}`);
-  if (book.language) contextParts.push(`Language: ${book.language}`);
-  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
-  return contextParts.length > 0 ? `BOOK CONTEXT:\n${contextParts.join(' | ')}\n\n` : '';
-}
-
+// Same text as buildImageExtractionText() in the shared module; kept local because
+// sample.json carries its neighbour window as an array, not a page_number map.
 function buildRequestText(item, prompt) {
   const grounding = buildPageGrounding({
     ocr: item.page.ocr?.data,
@@ -176,8 +162,7 @@ function buildRequestText(item, prompt) {
   return buildBookContextPrefix(item.book) + prompt + grounding;
 }
 
-const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT', 'HARM_CATEGORY_DANGEROUS_CONTENT', 'HARM_CATEGORY_CIVIC_INTEGRITY']
-  .map((category) => ({ category, threshold: 'BLOCK_NONE' }));
+const SAFETY = SAFETY_SETTINGS;
 
 function generationConfigFor(schema) {
   return {

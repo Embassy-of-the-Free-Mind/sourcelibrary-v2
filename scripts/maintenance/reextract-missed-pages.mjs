@@ -62,7 +62,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
-import { readFileSync } from 'fs';
+import { IMAGE_EXTRACTION_PROMPT } from '../lib/image-extraction-request.mjs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
@@ -115,11 +115,8 @@ const TRIVIAL = new Set(['symbol', 'stamp', 'ornament', 'blank', 'exlibris', 'bo
 // Mirrors IMAGE_CANDIDATE_PAGE_TYPES in scripts/workers/image-extract-worker.mjs.
 const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
-// ── Reuse the production prompt verbatim (extract from the worker source) ──
-const workerSrc = readFileSync(new URL('../workers/image-extract-worker.mjs', import.meta.url), 'utf8');
-const pm = workerSrc.match(/IMAGE_EXTRACTION_PROMPT = `([\s\S]*?)`;/);
-if (!pm) { console.error('FATAL: could not extract IMAGE_EXTRACTION_PROMPT from worker source'); process.exit(1); }
-const PROMPT = pm[1].replace(/\\`/g, '`').replace(/\\\$/g, '$');
+// ── Reuse the production prompt verbatim (the shared request module, #4747) ──
+const PROMPT = IMAGE_EXTRACTION_PROMPT;
 
 // ── Gemini keys (mirror worker: exclude free-tier KEY_4) ──
 const API_KEYS = [
