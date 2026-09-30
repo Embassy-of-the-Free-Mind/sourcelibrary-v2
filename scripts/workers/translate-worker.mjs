@@ -43,9 +43,9 @@ import {
   dropLeafSeamBreaches,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
-import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
