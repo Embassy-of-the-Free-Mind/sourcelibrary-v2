@@ -153,7 +153,7 @@ export const visionContent: VisionContent = {
       { gift: '$50,000+', label: 'Founding Patron — 10,000 books translated; your name on the institution, and an evening with us in the Bibliotheca' },
       { gift: 'from $150,000', label: 'Underwrite a language — bring the whole library into Spanish, Arabic or Hindi, expert-reviewed, with your name on the edition' },
     ],
-    footnote: 'Gifts are tax-deductible in the US and the Netherlands.',
+    footnote: 'Gifts are tax-deductible in the Netherlands (Stichting het Wereldhart, a cultural ANBI). US donors can give tax-deductibly today through the Netherland-America Foundation; Wisdom Frontiers (US) has applied for 501(c)(3) status, and a pledge can be paid on determination.',
   },
   cta: {
     heading: 'Let’s talk',
