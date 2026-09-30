@@ -319,6 +319,20 @@ function summarise() {
     const [lo, hi] = boot(rows, perBook); const trShare = all.shifted_span ? all.shifted_span_translated / all.shifted_span : 0;
     projection = { frame_books: meta.frame_books, walked: rows.length, pages_in_runs_per_book: perBook(rows), projected_pages: Math.round(perBook(rows) * meta.frame_books), projected_ci: [Math.round(lo * meta.frame_books), Math.round(hi * meta.frame_books)], translated_share: trShare };
     console.log(`\nprojection to the ${meta.frame_books}-book frame: ${projection.projected_pages} pages in shifted runs (95% book bootstrap ${projection.projected_ci[0]}–${projection.projected_ci[1]}); ${pct(trShare)} of them carry a translation`);
+    // What READERS see is the text-wrong-on-screen subset: a run whose shown image is the record's
+    // leaf. A run whose image is ALSO the neighbouring leaf reads correctly on screen (#3368 class C).
+    if (img.size) {
+      projection.by_image = {};
+      for (const v of ['text_wrong_on_screen', 'consistent_on_screen', 'ambiguous', 'unknown', 'not_imaged']) {
+        const f = (xs) => sum(xs, (r) => (r.status === 'ok' && hasRun(r) && (img.get(r.book_id) || 'not_imaged') === v ? r.shifted_span : 0)) / xs.length;
+        const books = ok.filter((r) => hasRun(r) && (img.get(r.book_id) || 'not_imaged') === v);
+        const [l, h] = boot(rows, f); const dec = ok.filter((r) => r.decided >= 5).length;
+        projection.by_image[v] = { books: books.length, book_rate: dec ? books.length / dec : null, book_ci: wilson(books.length, dec), pages_walked: sum(books, (r) => r.shifted_span), translated_walked: sum(books, (r) => r.shifted_span_translated),
+          projected_pages: Math.round(f(rows) * meta.frame_books), projected_ci: [Math.round(l * meta.frame_books), Math.round(h * meta.frame_books)] };
+        const x = projection.by_image[v];
+        if (x.books) console.log(`  ${v.padEnd(22)} books ${x.books} (${pct(x.book_rate)} of decidable, CI ${pct(x.book_ci[0])}–${pct(x.book_ci[1])}) | pages walked ${x.pages_walked} (${x.translated_walked} translated) | projected ${x.projected_pages} (${x.projected_ci[0]}–${x.projected_ci[1]})`);
+      }
+    }
   }
   console.log('\nlargest shifted books:');
   for (const r of [...ok].filter(hasRun).sort((a, b) => b.shifted_span - a.shifted_span).slice(0, 15)) console.log(`  ${r.book_id} ${r.language.padEnd(8)} ${r.title.slice(0, 42).padEnd(42)} | in runs ${r.shifted_span}/${r.model_pages} | runs ${r.runs.slice(0, 4).map((x) => `${x.from}–${x.to}@${x.offset}`).join(' ')}${r.runs.length > 4 ? ' …' : ''} | bulk ${r.bulk_jp2_pages} | ${img.get(r.book_id) || ''}`);
