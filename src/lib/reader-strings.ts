@@ -334,6 +334,19 @@ export interface ReaderStrings {
     corpusTranscript: (name: string, org?: string) => string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
     iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
+    /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
+    manualTranscript: (model: string | null) => string;
+    /**
+     * Short forms for the transcription pane-header chip (#5186). Derived by
+     * `transcriptProvenanceLabel()` from the SAME provenance as the drawer
+     * sentences above, so header and drawer can never disagree. The model
+     * case has no string here: the chip is the model's display name itself.
+     */
+    transcriptChipIa: (engine: string | null) => string;
+    /** Tooltip on the Archive chip: the known failure mode, plus the sample agreement when measured. */
+    transcriptChipIaTitle: (agreement: number | null) => string;
+    transcriptChipManual: string;
+    transcriptChipCorpus: (shortName: string) => string;
     corpusTranslation: (name: string) => string;
     corpusNotice: string;
     corpusAiNotice: (name: string) => string;
@@ -774,6 +787,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       iaTranscript: (engine, year, agreement) =>
         `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
+      manualTranscript: (model) => model ? `Read from the scan by ${model}, corrected by hand` : 'Transcribed by hand',
+      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      transcriptChipIaTitle: (agreement) =>
+        'Archive OCR — numbers may be misread (see #5186)' +
+        (agreement != null ? ` · agrees with our sample reading on ${Math.round(agreement * 100)}% of words` : ''),
+      transcriptChipManual: 'Manual',
+      transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
       corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
@@ -1169,6 +1189,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       iaTranscript: (engine, year, agreement) =>
         `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
+      manualTranscript: (model) => model ? `Leída del escaneo por ${model}, corregida a mano` : 'Transcrita a mano',
+      transcriptChipIa: (engine) => `OCR del Internet Archive${engine ? ` · ${engine}` : ''}`,
+      transcriptChipIaTitle: (agreement) =>
+        'OCR del Archive — los números pueden estar mal leídos (véase #5186)' +
+        (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
+      transcriptChipManual: 'Manual',
+      transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
       corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
