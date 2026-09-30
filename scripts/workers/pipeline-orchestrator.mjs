@@ -27,7 +27,9 @@ import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
+import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
@@ -2728,6 +2730,7 @@ async function run() {
     transliterated: 0,
     transliterate_pages: 0,
     translate_submitted: 0,
+    translate_chained: 0,
     translate_advanced: 0,
     enriched: 0,
     chapters_extracted: 0,
@@ -4939,12 +4942,32 @@ Rules:
         // Fresh books first (never translated), then re-queue partially-translated books
         const ENGLISH_VARIANTS_P4 = ['english', 'eng', 'en'];
 
+        // TWO LANES (#4681, decided 2026-09-30). A reader request (processing_priority ≥ 90) is
+        // dispatched realtime below, as before. Every other book is ENROLLED in the chained Batch
+        // lane (scripts/lib/translate-batch-chained.mjs): the same prompt, block by block, at about
+        // a quarter of the price ($0.000609 vs $0.0024 per page, measured on 154 books). The
+        // chained tick (cron, every 5 min) submits and collects; the book stays at its status, and
+        // once every page is written this phase finds nothing left and advances it as usual.
+        // A book with an open run, or whose chained run just refused pages, is not selected while
+        // that lasts — it would take a slot every tick. PHASE4_TRANSLATE_LANE=realtime reverts.
+        const chainedOn = phase4Lane({ processing_priority: 0 }) === 'chained';
+        const chainedBusy = chainedOn ? await phase4ExcludedBookIds(db) : [];
+        const chainedGuard = chainedOn
+          ? [{ $or: [{ processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }, { id: { $nin: chainedBusy } }] }]
+          : [];
+        let chainedRoom = chainedOn
+          ? Math.max(0, PHASE4_MAX_OPEN - await db.collection(TRANSLATE_RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } }))
+          : 0;
+        let chainedPrompts = null;
+        if (chainedOn) console.log(`  Chained lane: ${chainedBusy.length} book(s) busy in a run, room for ${chainedRoom} new run(s) (max ${PHASE4_MAX_OPEN})`);
+
         let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
           // translating them produces two-page texts the split then discards.
           { $match: {
             'pipeline_auto.status': { $in: ['ocr_complete'] },
             $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+            ...(chainedGuard.length ? { $and: chainedGuard } : {}),
           } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
@@ -4966,10 +4989,11 @@ Rules:
           // `language` must survive the projection: the English filter below reads it,
           // and a projected-away field reads as undefined — which would let every
           // English book back onto the translation lane.
-          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+          // processing_priority must survive too: it picks the lane below.
+          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
-        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
 
         // THE PIPELINE DOES NOT MODERNIZE ENGLISH (#4958).
         //
@@ -5035,6 +5059,7 @@ Rules:
               pages_ocr: { $gt: 0 },
               // Spread guard (#2449)
               $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+              ...(chainedGuard.length ? { $and: chainedGuard } : {}),
             }},
             // English books are never gap-filled (#4958): an English book at `complete` has
             // 0 translated pages BY POLICY, so it always reads as "under-translated" here, and
@@ -5051,7 +5076,7 @@ Rules:
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1, ...NEWEST_FIRST } },
             { $limit: effectiveLimit },
           ]).toArray();
-          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, language: 1, image_source: 1, pipeline_auto: 1 });
+          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, image_source: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
             console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
@@ -5098,6 +5123,31 @@ Rules:
             }
 
             const label = (book.title || '').substring(0, 50);
+
+            if (phase4Lane(book) === 'chained') {
+              if (chainedRoom <= 0) {
+                console.log(`  Chained lane full (${PHASE4_MAX_OPEN} open runs), waiting: ${label}`);
+                continue;
+              }
+              if (DRY_RUN) {
+                console.log(`  Would enrol in chained lane: ${label} — ${pages.length} pages`);
+                continue;
+              }
+              chainedPrompts ??= await loadTranslationPrompts(db);
+              const routed = await enrolForPhase4(db, book, { prompts: chainedPrompts, pageCount: pages.length });
+              if (routed.lane === 'chained') {
+                chainedRoom--;
+                log.translate_chained++;
+                console.log(`  Enrolled in chained lane: ${label} — run ${routed.run.id}, ${routed.run.page_count} pages, approved $${routed.run.approved_usd}`);
+                continue;
+              }
+              if (routed.lane === 'skip') {
+                console.log(`  Not dispatched (${routed.reason}): ${label}`);
+                continue;
+              }
+              console.log(`  Chained lane refused (${routed.reason}) — dispatching realtime: ${label}`);
+            }
+
             const pageIds = pages.map(p => p.id);
             const jobId = nanoid(12);
 
@@ -5145,7 +5195,7 @@ Rules:
             log.errors.push(`Translate ${book.id}: ${err.message}`);
           }
         }
-        console.log(`  Translate dispatched: ${log.translate_submitted}, advanced: ${log.translate_advanced}`);
+        console.log(`  Translate dispatched: ${log.translate_submitted} realtime, ${log.translate_chained} chained; advanced: ${log.translate_advanced}`);
       }
     }
 
@@ -6143,6 +6193,7 @@ Rules:
             transliterated: log.transliterated,
             transliterate_pages: log.transliterate_pages,
             translate_submitted: log.translate_submitted,
+            translate_chained: log.translate_chained,
             translate_advanced: log.translate_advanced,
             enriched: log.enriched,
             chapters_extracted: log.chapters_extracted,

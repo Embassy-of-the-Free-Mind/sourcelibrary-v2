@@ -691,6 +691,65 @@ export const AUTO_STATUSES = Object.freeze([
 export const AUTO_APPROVAL_USD_PER_PAGE = 0.0012;
 /** Reader requests (processing_priority ≥ this) stay on the realtime lane, where they finish in minutes. */
 export const REALTIME_PRIORITY_FLOOR = 90;
+/**
+ * The realtime line's measured cost per page ($0.00241, 2026-09-04). Phase 4 approves a chained run
+ * up to this, because above it the batch lane saves nothing and the book is sent realtime instead.
+ */
+export const REALTIME_USD_PER_PAGE = 0.0024;
+/** Open chained runs the orchestrator may hold, shared with --enrol-auto's --max-open (cron: 60). */
+export const PHASE4_MAX_OPEN = 60;
+
+/**
+ * Which lane Phase 4 dispatches a book to (#4681, decided 2026-09-30). Reader requests
+ * (processing_priority ≥ REALTIME_PRIORITY_FLOOR) finish in minutes on the realtime lane; every
+ * other book goes to the chained Batch lane at about a quarter of the price.
+ * PHASE4_TRANSLATE_LANE=realtime in the orchestrator's environment sends everything realtime again.
+ */
+export function phase4Lane(book, env = process.env) {
+  if (String(env.PHASE4_TRANSLATE_LANE || '').toLowerCase() === 'realtime') return 'realtime';
+  return Number(book?.processing_priority) >= REALTIME_PRIORITY_FLOOR ? 'realtime' : 'chained';
+}
+
+/**
+ * Books Phase 4 must not select for the chained lane this tick: an open run of any lane (the
+ * pages are already on their way); a run this lane PARKED (re-enrol by hand once the cause is
+ * known); and a chained run that ended in the last day WITHOUT writing its whole queue — what it
+ * refused (unhealthy, recitation) must not come back every tick. A run that wrote everything does
+ * not exclude its book: Phase 4 then finds nothing left and advances it to translate_complete, or
+ * enrols the next MAX_PAGES_PER_RUN slice of a longer book.
+ */
+export async function phase4ExcludedBookIds(db, { now = new Date() } = {}) {
+  const since = new Date(now.getTime() - 24 * 3600 * 1000);
+  return db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
+    { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
+    { mode: MODE, phase: PHASE.PARKED },
+    { mode: MODE, updated_at: { $gte: since }, $expr: { $lt: [{ $ifNull: ['$counts.written', 0] }, { $ifNull: ['$page_count', 0] }] } },
+  ] });
+}
+
+/**
+ * Phase 4's chained dispatch of one book: enrol it (submit:false — the 5-minute tick packs it into
+ * a shared job), approved at pages × AUTO_APPROVAL_USD_PER_PAGE, or, when the lane's own estimate
+ * is higher (it runs ~2× high on dense books), at that estimate as long as it stays under
+ * REALTIME_USD_PER_PAGE. Returns { lane: 'chained', run } on enrolment, { lane: 'skip', reason } for
+ * a book neither lane should take now (held, open run), and { lane: 'realtime', reason } when the
+ * realtime lane should take it instead (estimate above the realtime price, nothing the batch
+ * selector would send). Spends nothing: every round is still gated at submit.
+ */
+export async function enrolForPhase4(db, book, { prompts, pageCount, deps = {} } = {}) {
+  const owed = Math.max(1, Math.min(MAX_PAGES_PER_RUN, pageCount || 0));
+  const first = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: +(owed * AUTO_APPROVAL_USD_PER_PAGE).toFixed(4), submit: false });
+  if (first.ok) return { lane: 'chained', run: first.run };
+  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason)) return { lane: 'skip', reason: first.reason };
+  const ceiling = +(owed * REALTIME_USD_PER_PAGE).toFixed(4);
+  if (first.estimate != null && first.estimate <= ceiling) {
+    const second = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: first.estimate, submit: false });
+    if (second.ok) return { lane: 'chained', run: second.run };
+    return { lane: 'realtime', reason: second.reason };
+  }
+  return { lane: 'realtime', reason: first.reason };
+}
+
 const ENGLISH = /^(english|eng|en)$/i;        // orchestrator ENGLISH_VARIANTS_P4: modernisation is reader-triggered (#4958)
 const CHINESE = /chinese|^zh(-|$)/i;
 
