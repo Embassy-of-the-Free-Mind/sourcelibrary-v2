@@ -1324,7 +1324,9 @@ function stageMineruReport() {
     if (rec && (rec.reference_error || (rec.leaf_check?.status && rec.leaf_check.status !== 'ok'))) refDropped.set(slug, rec.reference_error || `leaf_check ${rec.leaf_check.status}`);
   }
   const ok = scores.filter((s) => !s.excluded && s.leaf_check === 'ok' && !refDropped.has(s.slug));
-  const LITE = 'gemini-lite-realtime', FLASH = 'gemini-flash-realtime', MIN = 'mineru-pipeline-cpu', MR2 = 'mineru-pipeline-cpu-r2', IA = 'ia-djvu';
+  // --mineru-arm=mineru-fn reports the POST-HOC footnote arm through the same stage; the floor stays the preregistered arm's
+  const MK = argEq('--mineru-arm', 'mineru'), A = ARMS[MK]; if (!A?.local) throw new Error(`--mineru-arm must be a MinerU arm, not ${MK}`);
+  const LITE = 'gemini-lite-realtime', FLASH = 'gemini-flash-realtime', MIN0 = ARMS.mineru.engine, MIN = A.engine, MR2 = 'mineru-pipeline-cpu-r2', IA = 'ia-djvu';
   const get = (slug, e) => ok.find((s) => s.slug === slug && s.engine === e);
   const med = (xs) => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const i = (s.length - 1) / 2; return (s[Math.floor(i)] + s[Math.ceil(i)]) / 2; };
   const medCI = (xs, iters = 10000) => { if (xs.length < 2) return null; const m = []; for (let k = 0; k < iters; k++) { const b = []; for (let j = 0; j < xs.length; j++) b.push(xs[Math.floor(seededRand() * xs.length)]); m.push(med(b)); } m.sort((a, b) => a - b); return [m[Math.floor(iters * 0.025)], m[Math.floor(iters * 0.975)]]; };
@@ -1342,16 +1344,18 @@ function stageMineruReport() {
   const canBeSilent = (u) => /^\d+$/.test(u.read_as) && levenshtein(u.ref, u.read_as) <= 1;
   const mRows = readJsonl(outFileOf(ARMS.mineru.model));
   const run = (k) => { const rows = mRows.filter((o) => o.run_id === ARMS[k].run_id); return { run_id: ARMS[k].run_id, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, versions: [...new Set(rows.map((o) => o.engine_version))], median_ms_per_page: med(rows.map((o) => o.latency_ms)) }; };
-  const json = { issue: 5182, ladder_issue: 3389, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', post: 'mineru-ocr-worker sanitize() (verbatim) then en-ocr-ref-normalise@3', runs: { mineru: run('mineru'), 'mineru-repeat': run('mineru-repeat') }, floor: null, cells: [], ladder: {}, digits: {}, long_s: {}, worst: [], best: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
-  if (!json.runs.mineru.text_rows) throw new Error(`run ${json.runs.mineru.run_id} has zero text rows — a failed run, not a result`);
+  const json = { issue: 5182, ladder_issue: 3389, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', post: 'mineru-ocr-worker sanitize() (verbatim) then en-ocr-ref-normalise@3', runs: { [MK]: run(MK), 'mineru-repeat': run('mineru-repeat') }, floor: null, cells: [], ladder: {}, digits: {}, long_s: {}, worst: [], best: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
+  if (!json.runs[MK].text_rows) throw new Error(`run ${json.runs[MK].run_id} has zero text rows — a failed run, not a result`);
+  json.post_hoc = !!A.post_hoc;
   const out = [];
-  out.push('# Modern English OCR — MinerU vs lite (and flash), paired, on the #5216 reference pages (#5182, #3389)\n');
+  out.push(`# Modern English OCR — MinerU${A.footnotes ? ' + footnotes' : ''} vs lite (and flash), paired, on the #5216 reference pages (#5182, #3389)\n`);
+  if (A.post_hoc) out.push('> **POST-HOC RE-ANALYSIS, not a preregistered result.** The decision rule below was fixed in `PREREGISTRATION-mineru-english-5182.md` before the footnote step existed; the step (PR #5299: MinerU\'s `page_footnote` blocks from `middle.json` appended below the body) was added AFTER the preregistered arm showed every catastrophic page was a dropped footnote. MinerU was re-run for this arm (the first run\'s raw output was not kept), so body text can differ slightly from `en-mineru-5182-2026-09` (MinerU is not byte-deterministic — §1). Read the rule output as "what the fixed rule says of the fixed worker", not as a confirmation.\n');
   out.push(`measure: **accuracy** (CER against an independent human reference) · scorer \`${SCORER}\` unchanged · post-processing: the production worker's \`sanitize()\` (lifted verbatim from \`scripts/workers/mineru-ocr-worker.mjs\`), then \`en-ocr-ref-normalise@3\` — the same normaliser as every other engine · preregistered in \`scripts/ev${'al'}/PREREGISTRATION-mineru-english-5182.md\` · $0 (no model call; lite and flash rows are the existing store runs, not re-read)\n`);
   out.push(`Runs: ${Object.entries(json.runs).map(([k, r]) => `${k} \`${r.run_id}\` ${r.text_rows}/${r.rows} text rows, ${r.versions.join('/')}, median ${Math.round((r.median_ms_per_page || 0) / 1000)} s/page CPU`).join(' · ')}\n`);
   out.push(`References dropped after the #5182 by-eye check: ${refDropped.size} (stay dropped)\n`);
 
   // ---- 1. floor ----
-  const fl = [...new Set(ok.filter((s) => s.engine === MR2).map((s) => s.slug))].map((sl) => [get(sl, MIN), get(sl, MR2)]).filter(([a, b]) => a && b);
+  const fl = [...new Set(ok.filter((s) => s.engine === MR2).map((s) => s.slug))].map((sl) => [get(sl, MIN0), get(sl, MR2)]).filter(([a, b]) => a && b);
   const bothT = fl.filter(([a, b]) => a.metric && b.metric), dF = bothT.map(([a, b]) => a.metric.cer - b.metric.cer);
   const hashOf = (sl, k) => mRows.find((o) => o.slug === sl && o.run_id === ARMS[k].run_id && o.text_hash)?.text_hash;
   json.floor = { pages: fl.length, outcome_flips: fl.filter(([a, b]) => FAILED.has(a.outcome) !== FAILED.has(b.outcome)).length, both_text: bothT.length,
@@ -1427,7 +1431,7 @@ function stageMineruReport() {
   // An f in MinerU's word where the reference has s (fecond ← second): count MinerU words absent from the
   // reference that become a reference word when one or all of their f's are read as s.
   const longS = (sl) => {
-    const row = mRows.find((o) => o.slug === sl && o.run_id === ARMS.mineru.run_id && o.text_path); if (!row) return null;
+    const row = mRows.find((o) => o.slug === sl && o.run_id === A.run_id && o.text_path); if (!row) return null;
     const refW = new Set(words(normalise(fs.readFileSync(F(`refs/${sl}.txt`), 'utf8'))));
     const hyp = words(normalise(fs.readFileSync(path.join(HERE, row.text_path), 'utf8')));
     let n = 0; const ex = [];
@@ -1471,13 +1475,32 @@ function stageMineruReport() {
   out.push(`- pages where MinerU emits < 80% of the reference's words and the Archive text ≥ 90%: ${json.omission.length} of ${mText.length} — ${json.omission.map((x) => `${x.slug} (${pct(x.len_ratio, 0)} of words, CER ${pct(x.cer, 1)})`).join('; ')}`);
   const failedM = ok.filter((s) => s.engine === MIN && !s.metric);
   out.push(`- MinerU failed reads: ${failedM.length ? failedM.map((s) => `${s.slug} (${s.outcome}${s.shadow_metric ? `, CER of the kept text ${pct(s.shadow_metric.cer, 1)}` : ''})`).join('; ') : 'none'}`);
-  const byEye = F('mineru-arm-byeye.jsonl');
+  const byEye = F(`${A.suffix}-arm-byeye.jsonl`);
   if (fs.existsSync(byEye)) {
     out.push('\n### Read from image\n'); out.push('| page | CER (MinerU / lite) | error kind | what the image shows |\n|---|---|---|---|');
     json.by_eye = readJsonl(byEye);
     for (const b of json.by_eye) out.push(`| ${b.slug} | ${b.cer} | ${b.kind} | ${b.note} (*read from image*) |`);
   }
-  const base = F(`mineru-arm-${argEq('--date', new Date().toISOString().slice(0, 10))}`);
+  if (MK !== 'mineru') {
+    // ---- 9. before / after: the preregistered arm vs this one, same pages ----
+    const before = engStats(ok.filter((s) => s.engine === MIN0)), after = ALL.mineru;
+    const pairsB = [...new Set(ok.map((s) => s.slug))].map((sl) => [get(sl, MIN0), get(sl, LITE)]).filter(([a, b]) => a?.metric && b?.metric).map(([a, b]) => a.metric.cer - b.metric.cer);
+    const winsB = [pairsB.filter((x) => x <= -TIE).length, pairsB.filter((x) => x >= TIE).length];
+    const fnRow = (sl) => mRows.find((o) => o.slug === sl && o.run_id === A.run_id);
+    const omB = ok.filter((s) => s.engine === MIN0 && s.metric && s.metric.len_ratio < 0.8 && (get(s.slug, IA)?.metric?.len_ratio ?? 0) >= 0.9);
+    json.before_after = { before: { catastrophic_rate: before.catastrophic_rate, cer_gt_half: before.cer_gt_half, median_cer: before.median_cer, pooled_cer: before.pooled_cer, paired_median_delta: med(pairsB), mineru_better: winsB[0], lite_better: winsB[1] },
+      after: { catastrophic_rate: after.catastrophic_rate, cer_gt_half: after.cer_gt_half, median_cer: after.median_cer, pooled_cer: after.pooled_cer, paired_median_delta: ALL.median_delta, mineru_better: ALL.mineru_better, lite_better: ALL.lite_better },
+      omission_pages: omB.map((s) => ({ slug: s.slug, cer_before: s.metric.cer, cer_after: get(s.slug, MIN)?.metric?.cer ?? null, len_before: s.metric.len_ratio, len_after: get(s.slug, MIN)?.metric?.len_ratio ?? null, footnotes_appended: fnRow(s.slug)?.footnotes_appended ?? null })),
+      pages_with_footnotes_appended: mRows.filter((o) => o.run_id === A.run_id && o.footnotes_appended > 0).length };
+    const BA = json.before_after;
+    out.push('\n## 9. Before / after the footnote step (ALL cell, same pages)\n');
+    out.push('| | catastrophic | text with CER > 50% | median CER | pooled CER | paired vs lite: MinerU better / lite better | paired median Δ (pp) |\n|---|---|---|---|---|---|---|');
+    for (const [k, x] of [['preregistered arm (no footnotes)', BA.before], ['this arm (footnotes appended)', BA.after]]) out.push(`| ${k} | ${pct(x.catastrophic_rate)} | ${x.cer_gt_half} | ${pct(x.median_cer, 2)} | ${pct(x.pooled_cer, 2)} | ${x.mineru_better} / ${x.lite_better} | ${pp(x.paired_median_delta)} |`);
+    out.push(`\nPages where the step appended at least one footnote: ${BA.pages_with_footnotes_appended} of ${mRows.filter((o) => o.run_id === A.run_id).length}.\n`);
+    out.push('| omission page (preregistered arm) | CER before → after | share of reference words before → after | footnotes appended |\n|---|---|---|---|');
+    for (const x of BA.omission_pages) out.push(`| ${x.slug} | ${pct(x.cer_before, 1)} → ${pct(x.cer_after, 1)} | ${pct(x.len_before, 0)} → ${pct(x.len_after, 0)} | ${x.footnotes_appended ?? '–'} |`);
+  }
+  const base = F(`${A.suffix}-arm-${argEq('--date', new Date().toISOString().slice(0, 10))}`);
   fs.writeFileSync(`${base}.json`, JSON.stringify(json, null, 2) + '\n');
   fs.writeFileSync(`${base}.md`, out.join('\n') + '\n');
   console.log(out.join('\n'));

@@ -1378,6 +1378,7 @@
       "why": "by eye 2026-09-28 (#5182): wikilink targets leaked into the reference (\"Short Treatise on God/Book 2/3\") and the printed page numbers 70–157 are missing"
     }
   ],
+  "post_hoc": false,
   "verdict": "NEITHER",
   "rule": {
     "peer": {
