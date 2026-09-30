@@ -1,0 +1,208 @@
+{
+ "v01": {
+  "label": "cursive",
+  "note": "mixed: regular kanji, running hentaigana kana (scored cursive; sensitivity below)",
+  "mixed": true
+ },
+ "v02": {
+  "label": "regular"
+ },
+ "v03": {
+  "label": "regular"
+ },
+ "v04": {
+  "label": "cursive"
+ },
+ "v05": {
+  "label": "cursive"
+ },
+ "v06": {
+  "label": "regular"
+ },
+ "v07": {
+  "label": "cursive"
+ },
+ "v08": {
+  "label": "cursive"
+ },
+ "v09": {
+  "label": "regular",
+  "note": "large hiragana with kanji, characters separable (borderline)"
+ },
+ "v10": {
+  "label": "regular",
+  "note": "modern typeset"
+ },
+ "v11": {
+  "label": "regular",
+  "note": "blank leaf with show-through of regular kanbun"
+ },
+ "v12": {
+  "label": "regular"
+ },
+ "v13": {
+  "label": "cursive"
+ },
+ "v14": {
+  "label": "cursive"
+ },
+ "v15": {
+  "label": "regular",
+  "note": "typeset"
+ },
+ "v16": {
+  "label": "regular",
+  "note": "MS kaisho + katakana"
+ },
+ "v17": {
+  "label": "regular",
+  "note": "BLANK page inside a frame, no text"
+ },
+ "v18": {
+  "label": "regular"
+ },
+ "v19": {
+  "label": "cursive"
+ },
+ "v20": {
+  "label": "regular"
+ },
+ "v21": {
+  "label": "cursive",
+  "note": "mixed: regular kanji, running hentaigana kana (scored cursive; sensitivity below)",
+  "mixed": true
+ },
+ "v22": {
+  "label": "cursive",
+  "note": "Genji emaki MS"
+ },
+ "v23": {
+  "label": "cursive",
+  "note": "Genji MS"
+ },
+ "v24": {
+  "label": "regular"
+ },
+ "v25": {
+  "label": "cursive"
+ },
+ "v26": {
+  "label": "regular"
+ },
+ "v27": {
+  "label": "regular"
+ },
+ "v28": {
+  "label": "cursive",
+  "note": "Genji emaki MS"
+ },
+ "v29": {
+  "label": "regular",
+  "note": "Heart Sutra woodblock"
+ },
+ "v30": {
+  "label": "regular"
+ },
+ "v31": {
+  "label": "regular"
+ },
+ "v32": {
+  "label": "regular",
+  "note": "typeset"
+ },
+ "v33": {
+  "label": "regular"
+ },
+ "v34": {
+  "label": "regular"
+ },
+ "v35": {
+  "label": "cursive"
+ },
+ "v36": {
+  "label": "regular"
+ },
+ "v37": {
+  "label": "regular",
+  "note": "MS katakana kanbun"
+ },
+ "v38": {
+  "label": "cursive",
+  "note": "mixed: regular kanji, running hentaigana kana (scored cursive; sensitivity below)",
+  "mixed": true
+ },
+ "v39": {
+  "label": "cursive"
+ },
+ "v40": {
+  "label": "regular",
+  "note": "cover + modern library label, no text"
+ },
+ "v41": {
+  "label": "cursive"
+ },
+ "v42": {
+  "label": "cursive"
+ },
+ "v43": {
+  "label": "cursive"
+ },
+ "v44": {
+  "label": "cursive"
+ },
+ "v45": {
+  "label": "regular",
+  "note": "illustration with MS kaisho labels"
+ },
+ "v46": {
+  "label": "cursive"
+ },
+ "v47": {
+  "label": "cursive"
+ },
+ "v48": {
+  "label": "cursive"
+ },
+ "v49": {
+  "label": "regular"
+ },
+ "v50": {
+  "label": "regular"
+ },
+ "v51": {
+  "label": "cursive"
+ },
+ "v52": {
+  "label": "cursive"
+ },
+ "v53": {
+  "label": "cursive"
+ },
+ "v54": {
+  "label": "regular"
+ },
+ "v55": {
+  "label": "regular"
+ },
+ "v56": {
+  "label": "cursive"
+ },
+ "v57": {
+  "label": "regular",
+  "note": "MS kaisho + katakana"
+ },
+ "v58": {
+  "label": "cursive"
+ },
+ "v59": {
+  "label": "regular"
+ },
+ "v60": {
+  "label": "regular"
+ },
+ "_meta": {
+  "reader": "Claude (claude-opus-5-5), 2026-09-30",
+  "method": "each image opened at ~1000px width, two per sheet, labelled BEFORE the classifier answer was joined (draw.json not read)",
+  "rule": "cursive = connected sosho/hentaigana running text (woodblock or MS); regular = separable kaisho/gyosho, katakana-kunten kanbun, typeset; pages with no text scored as not-cursive"
+ }
+}
