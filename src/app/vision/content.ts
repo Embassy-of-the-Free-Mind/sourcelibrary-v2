@@ -95,9 +95,9 @@ export const visionContent: VisionContent = {
     'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
   ],
   image1: {
-    src: '/vision/ficino.jpg',
-    alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind',
-    caption: 'Marsilio Ficino at the Embassy of the Free Mind, Amsterdam.',
+    src: '/vision/ficino-laptop.jpg',
+    alt: 'Bronze bust of Marsilio Ficino with a laptop open to translation work, at the Embassy of the Free Mind',
+    caption: 'Marsilio Ficino, Divinus Interpres, with a laptop open to the translation of Plotinus. Embassy of the Free Mind, Amsterdam.',
   },
   bodyAfterImage1: [],
   buildHeading: 'What we need to finish',
@@ -144,7 +144,7 @@ export const visionContent: VisionContent = {
   },
   ways: {
     heading: 'Ways to take part',
-    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. Every gift is recorded in the register under your name, permanently.',
+    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. With your consent, every gift is recorded in the register under your name, permanently.',
     tiers: [
       { gift: '$100', label: 'Translates 20 books' },
       { gift: '$275', label: 'Adopt a book — one unscanned volume at the Embassy, scanned and translated, named for you; a fragile volume on the slow scanner from $500' },
@@ -153,7 +153,7 @@ export const visionContent: VisionContent = {
       { gift: '$50,000+', label: 'Founding Patron — 10,000 books translated; your name on the institution, and an evening with us in the Bibliotheca' },
       { gift: 'from $150,000', label: 'Underwrite a language — bring the whole library into Spanish, Arabic or Hindi, expert-reviewed, with your name on the edition' },
     ],
-    footnote: 'Gifts are tax-deductible in the US and the Netherlands.',
+    footnote: 'Gifts are tax-deductible in the Netherlands (Stichting het Wereldhart, a cultural ANBI). US donors can give tax-deductibly today through the Netherland-America Foundation; Wisdom Frontiers (US) has applied for 501(c)(3) status, and a pledge can be paid on determination.',
   },
   cta: {
     heading: 'Let’s talk',
