@@ -3,219 +3,219 @@
   "all|archive": {
    "books": 82,
    "pages": 178,
-   "printed": 5211.65,
-   "wrong": 266.45,
-   "rate": 0.0511,
+   "printed": 5313.55,
+   "wrong": 357.55,
+   "rate": 0.0673,
    "ci": [
-    0.0375,
-    0.0743
+    0.0474,
+    0.1037
    ],
-   "misread_rate": 0.0356,
+   "misread_rate": 0.0445,
    "misread_ci": [
-    0.0242,
-    0.0558
+    0.0302,
+    0.0711
    ],
-   "dropped_rate": 0.0143,
-   "split_rate": 0.0012,
-   "spurious": 57.45,
-   "unjudged": 11.45
+   "dropped_rate": 0.0217,
+   "split_rate": 0.0011,
+   "spurious": 61.45,
+   "unjudged": 31.700000000000003
   },
   "all|lite": {
    "books": 82,
    "pages": 178,
-   "printed": 5211.65,
-   "wrong": 93.2,
-   "rate": 0.0179,
+   "printed": 5313.55,
+   "wrong": 152.29999999999998,
+   "rate": 0.0287,
    "ci": [
-    0.0106,
-    0.0311
+    0.0162,
+    0.0534
    ],
-   "misread_rate": 0.012,
+   "misread_rate": 0.0229,
    "misread_ci": [
-    0.0063,
-    0.022
+    0.0122,
+    0.0454
    ],
-   "dropped_rate": 0.0059,
+   "dropped_rate": 0.0058,
    "split_rate": 0,
-   "spurious": 34.099999999999994,
-   "unjudged": 11.45
+   "spurious": 90.89999999999999,
+   "unjudged": 31.700000000000003
   },
   "a|archive": {
    "books": 4,
    "pages": 100,
-   "printed": 2683.4,
-   "wrong": 93.4,
-   "rate": 0.0348,
+   "printed": 2701.7,
+   "wrong": 110.7,
+   "rate": 0.041,
    "ci": [
-    0.0165,
-    0.058
+    0.0231,
+    0.0714
    ],
-   "misread_rate": 0.0199,
+   "misread_rate": 0.0254,
    "misread_ci": [
-    0.0086,
-    0.033
+    0.0127,
+    0.0476
    ],
-   "dropped_rate": 0.0127,
+   "dropped_rate": 0.0133,
    "split_rate": 0.0022,
-   "spurious": 6,
+   "spurious": 8,
    "unjudged": 0
   },
   "a|lite": {
    "books": 4,
    "pages": 100,
-   "printed": 2683.4,
-   "wrong": 22.2,
-   "rate": 0.0083,
+   "printed": 2701.7,
+   "wrong": 27.3,
+   "rate": 0.0101,
    "ci": [
-    0.0044,
-    0.0123
+    0.0053,
+    0.0156
    ],
-   "misread_rate": 0.0042,
+   "misread_rate": 0.006,
    "misread_ci": [
-    0.0016,
-    0.0082
+    0.003,
+    0.0093
    ],
    "dropped_rate": 0.0041,
    "split_rate": 0,
-   "spurious": 11.2,
+   "spurious": 16.3,
    "unjudged": 0
   },
   "b|archive": {
    "books": 78,
    "pages": 78,
-   "printed": 2528.25,
-   "wrong": 173.05,
-   "rate": 0.0684,
+   "printed": 2611.85,
+   "wrong": 246.85000000000002,
+   "rate": 0.0945,
    "ci": [
-    0.05,
-    0.1011
+    0.0641,
+    0.1463
    ],
-   "misread_rate": 0.0523,
+   "misread_rate": 0.0642,
    "misread_ci": [
-    0.0341,
-    0.0823
+    0.041,
+    0.1005
    ],
-   "dropped_rate": 0.0161,
+   "dropped_rate": 0.0303,
    "split_rate": 0,
-   "spurious": 51.45,
-   "unjudged": 11.45
+   "spurious": 53.45,
+   "unjudged": 31.700000000000003
   },
   "b|lite": {
    "books": 78,
    "pages": 78,
-   "printed": 2528.25,
-   "wrong": 71,
-   "rate": 0.0281,
+   "printed": 2611.85,
+   "wrong": 125,
+   "rate": 0.0479,
    "ci": [
-    0.0159,
-    0.0497
+    0.027,
+    0.0849
    ],
-   "misread_rate": 0.0203,
+   "misread_rate": 0.0404,
    "misread_ci": [
-    0.0101,
-    0.039
+    0.0216,
+    0.0747
    ],
-   "dropped_rate": 0.0078,
+   "dropped_rate": 0.0075,
    "split_rate": 0,
-   "spurious": 22.9,
-   "unjudged": 11.45
+   "spurious": 74.6,
+   "unjudged": 31.700000000000003
   }
  },
  "by_archive_model": {
   "ia-ocr/0.0.21|archive": {
    "books": 42,
    "pages": 90,
-   "printed": 2211.2999999999997,
-   "wrong": 116.60000000000001,
-   "rate": 0.0527,
+   "printed": 2266.4,
+   "wrong": 160.9,
+   "rate": 0.071,
    "ci": [
-    0.0258,
-    0.1005
+    0.0347,
+    0.1509
    ]
   },
   "ia-ocr/0.0.21|lite": {
    "books": 42,
    "pages": 90,
-   "printed": 2211.2999999999997,
-   "wrong": 52.2,
-   "rate": 0.0236,
+   "printed": 2266.4,
+   "wrong": 89.8,
+   "rate": 0.0396,
    "ci": [
-    0.0101,
-    0.0562
+    0.0159,
+    0.1005
    ]
   },
   "ia-ocr/0.0.13|archive": {
    "books": 3,
    "pages": 27,
-   "printed": 475,
-   "wrong": 30.5,
-   "rate": 0.0642,
+   "printed": 498,
+   "wrong": 53.5,
+   "rate": 0.1074,
    "ci": [
     0,
-    0.35
+    0.5357
    ]
   },
   "ia-ocr/0.0.13|lite": {
    "books": 3,
    "pages": 27,
-   "printed": 475,
-   "wrong": 15.5,
-   "rate": 0.0326,
+   "printed": 498,
+   "wrong": 27,
+   "rate": 0.0542,
    "ci": [
-    0.0098,
-    0.35
+    0.012,
+    0.5
    ]
   },
   "ia-ocr/0.0.14|archive": {
    "books": 20,
    "pages": 44,
-   "printed": 1659.6000000000001,
-   "wrong": 55.6,
-   "rate": 0.0335,
+   "printed": 1669.3500000000001,
+   "wrong": 65.35,
+   "rate": 0.0391,
    "ci": [
-    0.0284,
-    0.0531
+    0.0321,
+    0.0615
    ]
   },
   "ia-ocr/0.0.14|lite": {
    "books": 20,
    "pages": 44,
-   "printed": 1659.6000000000001,
-   "wrong": 14.5,
-   "rate": 0.0087,
+   "printed": 1669.3500000000001,
+   "wrong": 20.05,
+   "rate": 0.012,
    "ci": [
-    0.0032,
-    0.0282
+    0.004,
+    0.0363
    ]
   },
   "ABBYY FineReader 11.0 (Extended OCR)|archive": {
    "books": 3,
    "pages": 3,
-   "printed": 117,
-   "wrong": 13,
-   "rate": 0.1111,
+   "printed": 120,
+   "wrong": 16,
+   "rate": 0.1333,
    "ci": [
     0,
-    0.1552
+    0.1967
    ]
   },
   "ABBYY FineReader 11.0 (Extended OCR)|lite": {
    "books": 3,
    "pages": 3,
-   "printed": 117,
-   "wrong": 4,
-   "rate": 0.0342,
+   "printed": 120,
+   "wrong": 5,
+   "rate": 0.0417,
    "ci": [
-    0.0172,
+    0.0328,
     0.069
    ]
   },
   "ABBYY FineReader 8.0|archive": {
    "books": 5,
    "pages": 5,
-   "printed": 367,
-   "wrong": 9,
-   "rate": 0.0245,
+   "printed": 368,
+   "wrong": 10,
+   "rate": 0.0272,
    "ci": [
     0,
     0.0469
@@ -224,12 +224,12 @@
   "ABBYY FineReader 8.0|lite": {
    "books": 5,
    "pages": 5,
-   "printed": 367,
+   "printed": 368,
    "wrong": 3,
    "rate": 0.0082,
    "ci": [
     0,
-    0.0094
+    0.0093
    ]
   },
   "unknown|archive": {
@@ -279,18 +279,18 @@
   "ia-ocr/0.0.15|archive": {
    "books": 3,
    "pages": 3,
-   "printed": 160,
-   "wrong": 24,
-   "rate": 0.15,
+   "printed": 162,
+   "wrong": 26,
+   "rate": 0.1605,
    "ci": [
     0.0833,
-    0.2903
+    0.3125
    ]
   },
   "ia-ocr/0.0.15|lite": {
    "books": 3,
    "pages": 3,
-   "printed": 160,
+   "printed": 162,
    "wrong": 0,
    "rate": 0,
    "ci": [
@@ -323,23 +323,23 @@
   "ia-ocr/0.0.12|archive": {
    "books": 1,
    "pages": 1,
-   "printed": 28.75,
-   "wrong": 5.75,
-   "rate": 0.2,
+   "printed": 36.8,
+   "wrong": 13.8,
+   "rate": 0.375,
    "ci": [
-    0.2,
-    0.2
+    0.375,
+    0.375
    ]
   },
   "ia-ocr/0.0.12|lite": {
    "books": 1,
    "pages": 1,
-   "printed": 28.75,
-   "wrong": 0,
-   "rate": 0,
+   "printed": 36.800000000000004,
+   "wrong": 3.4499999999999997,
+   "rate": 0.0937,
    "ci": [
-    0,
-    0
+    0.0937,
+    0.0937
    ]
   },
   "ia-ocr/0.0.18|archive": {
@@ -369,108 +369,108 @@
   "1890s|archive": {
    "books": 8,
    "pages": 32,
-   "printed": 1300.45,
-   "wrong": 57.45,
-   "rate": 0.0442,
+   "printed": 1313.6999999999998,
+   "wrong": 63.9,
+   "rate": 0.0486,
    "ci": [
-    0.0151,
-    0.0603
+    0.0208,
+    0.0639
    ]
   },
   "1890s|lite": {
    "books": 8,
    "pages": 32,
-   "printed": 1300.45,
-   "wrong": 15.700000000000001,
-   "rate": 0.0121,
+   "printed": 1313.6999999999998,
+   "wrong": 26.95,
+   "rate": 0.0205,
    "ci": [
-    0.0071,
-    0.023
+    0.0087,
+    0.061
    ]
   },
   "1910s|archive": {
    "books": 7,
    "pages": 79,
-   "printed": 2154.4,
-   "wrong": 57.4,
-   "rate": 0.0266,
+   "printed": 2171.7,
+   "wrong": 73.7,
+   "rate": 0.0339,
    "ci": [
-    0.0108,
-    0.0483
+    0.0134,
+    0.0714
    ]
   },
   "1910s|lite": {
    "books": 7,
    "pages": 79,
-   "printed": 2154.4,
-   "wrong": 16.2,
-   "rate": 0.0075,
+   "printed": 2171.7,
+   "wrong": 21.3,
+   "rate": 0.0098,
    "ci": [
-    0.0029,
-    0.0124
+    0.0039,
+    0.0164
    ]
   },
   "1800s|archive": {
    "books": 6,
    "pages": 6,
-   "printed": 105,
-   "wrong": 11,
-   "rate": 0.1048,
+   "printed": 111,
+   "wrong": 17,
+   "rate": 0.1532,
    "ci": [
-    0.0496,
-    0.2143
+    0.0542,
+    0.35
    ]
   },
   "1800s|lite": {
    "books": 6,
    "pages": 6,
-   "printed": 105,
-   "wrong": 1,
-   "rate": 0.0095,
+   "printed": 111,
+   "wrong": 5,
+   "rate": 0.045,
    "ci": [
     0,
-    0.0265
+    0.1327
    ]
   },
   "1810s|archive": {
    "books": 7,
    "pages": 7,
-   "printed": 95,
-   "wrong": 4,
-   "rate": 0.0421,
+   "printed": 98,
+   "wrong": 7,
+   "rate": 0.0714,
    "ci": [
     0,
-    0.16
+    0.1867
    ]
   },
   "1810s|lite": {
    "books": 7,
    "pages": 7,
-   "printed": 95,
-   "wrong": 0,
-   "rate": 0,
+   "printed": 98,
+   "wrong": 1,
+   "rate": 0.0102,
    "ci": [
     0,
-    0
+    0.028
    ]
   },
   "1830s|archive": {
    "books": 9,
    "pages": 9,
-   "printed": 105,
-   "wrong": 11,
-   "rate": 0.1048,
+   "printed": 106,
+   "wrong": 12,
+   "rate": 0.1132,
    "ci": [
     0.0093,
-    0.2083
+    0.2254
    ]
   },
   "1830s|lite": {
    "books": 9,
    "pages": 9,
-   "printed": 105,
+   "printed": 106,
    "wrong": 1,
-   "rate": 0.0095,
+   "rate": 0.0094,
    "ci": [
     0,
     0.0366
@@ -479,42 +479,42 @@
   "1850s|archive": {
    "books": 5,
    "pages": 5,
-   "printed": 342,
-   "wrong": 14,
-   "rate": 0.0409,
+   "printed": 345,
+   "wrong": 17,
+   "rate": 0.0493,
    "ci": [
-    0.0274,
-    0.064
+    0.0278,
+    0.0751
    ]
   },
   "1850s|lite": {
    "books": 5,
    "pages": 5,
-   "printed": 342,
-   "wrong": 9,
-   "rate": 0.0263,
+   "printed": 345,
+   "wrong": 10,
+   "rate": 0.029,
    "ci": [
     0.0087,
-    0.0667
+    0.0765
    ]
   },
   "1860s|archive": {
    "books": 5,
    "pages": 5,
-   "printed": 231,
-   "wrong": 11,
-   "rate": 0.0476,
+   "printed": 233,
+   "wrong": 13,
+   "rate": 0.0558,
    "ci": [
     0.0058,
-    0.0724
+    0.0865
    ]
   },
   "1860s|lite": {
    "books": 5,
    "pages": 5,
-   "printed": 231,
+   "printed": 233,
    "wrong": 4,
-   "rate": 0.0173,
+   "rate": 0.0172,
    "ci": [
     0.0072,
     0.025
@@ -523,42 +523,42 @@
   "1880s|archive": {
    "books": 4,
    "pages": 4,
-   "printed": 22,
-   "wrong": 0,
-   "rate": 0,
+   "printed": 23,
+   "wrong": 1,
+   "rate": 0.0435,
    "ci": [
     0,
-    0
+    0.0714
    ]
   },
   "1880s|lite": {
    "books": 4,
    "pages": 4,
-   "printed": 22,
-   "wrong": 0,
-   "rate": 0,
+   "printed": 23,
+   "wrong": 1,
+   "rate": 0.0435,
    "ci": [
     0,
-    0
+    0.0714
    ]
   },
   "1920s|archive": {
    "books": 7,
    "pages": 7,
-   "printed": 210,
-   "wrong": 12,
-   "rate": 0.0571,
+   "printed": 211,
+   "wrong": 13,
+   "rate": 0.0616,
    "ci": [
     0.0083,
-    0.1333
+    0.146
    ]
   },
   "1920s|lite": {
    "books": 7,
    "pages": 7,
-   "printed": 210,
+   "printed": 211,
    "wrong": 3,
-   "rate": 0.0143,
+   "rate": 0.0142,
    "ci": [
     0,
     0.0571
@@ -589,67 +589,67 @@
   "1930s|archive": {
    "books": 7,
    "pages": 7,
-   "printed": 275.8,
-   "wrong": 37.900000000000006,
-   "rate": 0.1374,
+   "printed": 302.6,
+   "wrong": 61.7,
+   "rate": 0.2039,
    "ci": [
-    0.0264,
-    0.2737
+    0.0295,
+    0.3856
    ]
   },
   "1930s|lite": {
    "books": 7,
    "pages": 7,
-   "printed": 275.8,
-   "wrong": 32.7,
-   "rate": 0.1186,
+   "printed": 302.59999999999997,
+   "wrong": 50.8,
+   "rate": 0.1679,
    "ci": [
-    0.0265,
-    0.2557
+    0.0391,
+    0.3543
    ]
   },
   "1840s|archive": {
    "books": 7,
    "pages": 7,
-   "printed": 174.75,
-   "wrong": 22.75,
-   "rate": 0.1302,
+   "printed": 185.8,
+   "wrong": 33.8,
+   "rate": 0.1819,
    "ci": [
-    0.0565,
-    0.1646
+    0.0593,
+    0.272
    ]
   },
   "1840s|lite": {
    "books": 7,
    "pages": 7,
-   "printed": 174.75,
-   "wrong": 3,
-   "rate": 0.0172,
+   "printed": 185.8,
+   "wrong": 7.449999999999999,
+   "rate": 0.0401,
    "ci": [
-    0,
-    0.0315
+    0.0148,
+    0.0651
    ]
   },
   "1820s|archive": {
    "books": 4,
    "pages": 4,
-   "printed": 106.25,
-   "wrong": 23.950000000000003,
-   "rate": 0.2254,
+   "printed": 122.75,
+   "wrong": 40.449999999999996,
+   "rate": 0.3295,
    "ci": [
     0.1049,
-    0.4642
+    0.6213
    ]
   },
   "1820s|lite": {
    "books": 4,
    "pages": 4,
-   "printed": 106.25,
-   "wrong": 7.6,
-   "rate": 0.0715,
+   "printed": 122.75,
+   "wrong": 20.799999999999997,
+   "rate": 0.1695,
    "ci": [
     0,
-    0.1821
+    0.3754
    ]
   },
   "1870s|archive": {
@@ -688,14 +688,16 @@
    "digit 3→8": 23.8,
    "dropped (page number in the margin)": 44.4,
    "digit inserted": 15.15,
-   "dropped": 30.3,
-   "letters-for-digits": 53.05,
+   "dropped": 70.75,
+   "letters-for-digits": 101.7,
    "number split": 6,
    "digit dropped": 37.65,
    "digits 3→1,8→1": 1,
+   "digits 5→3,4→1,7→8": 1,
    "digit 2→3": 1,
-   "spurious": 57.45,
+   "spurious": 61.45,
    "digit 8→5": 1,
+   "digit 4→7": 1,
    "digit 5→6": 4,
    "digit 6→5": 5,
    "digit 4→2": 1,
@@ -721,41 +723,63 @@
   },
   "lite": {
    "letters-for-digits": 9.3,
-   "digit inserted": 15.8,
-   "spurious": 34.1,
+   "digit inserted": 26.35,
+   "spurious": 90.9,
    "null": 3,
    "dropped": 30.6,
-   "digit dropped": 9.5,
+   "digits 5→2,7→8": 1,
+   "digit dropped": 23.45,
+   "digit 1→8": 1,
+   "digits 8→9,4→0": 1,
+   "digits 8→9,7→1": 1,
    "digit 9→1": 1,
    "digit 1→3": 1,
    "digit 3→0": 1,
+   "digits 4→2,2→8": 1,
+   "digit 4→3": 1,
    "digit 4→2": 1,
+   "digits 3→2,4→8": 1,
+   "digits 4→3,6→4": 1,
    "digit 8→3": 2,
    "digit 1→7": 1.5,
    "digits 2→3,6→2,4→5": 1.5,
+   "digits 3→8,0→1": 1.5,
+   "digits 4→8,6→4": 1.5,
+   "digits 3→2,3→6,0→4": 1.5,
    "digits 2→3,7→3,7→3": 1.5,
+   "digit 2→3": 1.15,
+   "digits 1→6,2→0": 1.8,
+   "digits 8→1,8→3": 1.8,
    "digit 5→7": 1.8,
-   "digit 1→0": 1,
+   "digit 1→0": 2.15,
+   "digits 3→5,0→9,4→2": 1.65,
+   "digits 3→9,0→1,4→6": 1.65,
+   "digits 4→8,5→8,6→8": 1.65,
+   "digits 1→9,4→1,4→2": 1.65,
+   "digits 6→9,1→2,4→1,4→6": 1.65,
    "digits 7→6,7→1,7→4,6→1": 1.65,
    "digits 9→8,2→7,1→4,6→8": 1.65,
+   "digits 0→1,1→0": 1.15,
    "digits 9→7,0→2": 1,
    "digit 6→8": 1,
    "digits 2→4,1→0,7→8": 1,
    "digits 6→5,1→9": 3.4,
+   "digits 3→1,3→6": 3.4,
+   "digit 8→1": 3.4,
    "digits 1→7,2→3": 1,
    "digit 3→8": 1
   }
  },
  "errors_by_confidence": {
   "archive": {
-   "high": 243.3,
-   "medium": 56.6,
-   "low": 16
+   "high": 270,
+   "medium": 84.55,
+   "low": 56.45
   },
   "lite": {
-   "medium": 36.7,
-   "high": 68.6,
-   "low": 14
+   "medium": 74.15,
+   "high": 79.8,
+   "low": 81.25
   }
  },
  "disagreement_all_pages": {
@@ -868,10 +892,10 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 25,
-   "printed": 593,
-   "wrong": 38,
+   "printed": 594,
+   "wrong": 39,
    "misread": 22,
-   "dropped": 16,
+   "dropped": 17,
    "spurious": 0,
    "unjudged": 0,
    "split": 0
@@ -885,7 +909,7 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 25,
-   "printed": 593,
+   "printed": 594,
    "wrong": 6,
    "misread": 6,
    "dropped": 0,
@@ -902,9 +926,9 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.13",
    "pages": 25,
-   "printed": 407,
-   "wrong": 20,
-   "misread": 11,
+   "printed": 418,
+   "wrong": 31,
+   "misread": 22,
    "dropped": 6,
    "spurious": 0,
    "unjudged": 0,
@@ -919,9 +943,9 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.13",
    "pages": 25,
-   "printed": 407,
-   "wrong": 4,
-   "misread": 0,
+   "printed": 418,
+   "wrong": 5,
+   "misread": 1,
    "dropped": 4,
    "spurious": 1,
    "unjudged": 0,
@@ -936,9 +960,9 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 25,
-   "printed": 989.4,
-   "wrong": 28.4,
-   "misread": 17.4,
+   "printed": 992.7,
+   "wrong": 31.7,
+   "misread": 20.7,
    "dropped": 9,
    "spurious": 6,
    "unjudged": 0,
@@ -953,11 +977,11 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 25,
-   "printed": 989.4,
-   "wrong": 3.2,
-   "misread": 2.2,
+   "printed": 992.7,
+   "wrong": 4.300000000000001,
+   "misread": 3.3000000000000003,
    "dropped": 1,
-   "spurious": 3.2,
+   "spurious": 4.300000000000001,
    "unjudged": 0,
    "split": 0
   },
@@ -970,11 +994,11 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 25,
-   "printed": 694,
-   "wrong": 7,
-   "misread": 3,
-   "dropped": 3,
-   "spurious": 0,
+   "printed": 697,
+   "wrong": 9,
+   "misread": 4,
+   "dropped": 4,
+   "spurious": 2,
    "unjudged": 0,
    "split": 1
   },
@@ -987,11 +1011,11 @@
    "decade": 1910,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 25,
-   "printed": 694,
-   "wrong": 9,
-   "misread": 3,
+   "printed": 697,
+   "wrong": 12,
+   "misread": 6,
    "dropped": 6,
-   "spurious": 4,
+   "spurious": 8,
    "unjudged": 0,
    "split": 0
   },
@@ -1025,7 +1049,7 @@
    "wrong": 1,
    "misread": 1,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -1110,7 +1134,7 @@
    "wrong": 2,
    "misread": 2,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -1127,7 +1151,7 @@
    "wrong": 1,
    "misread": 0,
    "dropped": 1,
-   "spurious": 2,
+   "spurious": 3,
    "unjudged": 0,
    "split": 0
   },
@@ -1140,9 +1164,9 @@
    "decade": 1860,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 115,
-   "wrong": 9,
-   "misread": 8,
+   "printed": 117,
+   "wrong": 11,
+   "misread": 10,
    "dropped": 1,
    "spurious": 0,
    "unjudged": 0,
@@ -1157,7 +1181,7 @@
    "decade": 1860,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 115,
+   "printed": 117,
    "wrong": 2,
    "misread": 1,
    "dropped": 1,
@@ -1344,11 +1368,11 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 19,
-   "wrong": 3,
+   "printed": 23,
+   "wrong": 4,
    "misread": 3,
-   "dropped": 0,
-   "spurious": 0,
+   "dropped": 1,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -1361,11 +1385,11 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 19,
-   "wrong": 7,
-   "misread": 1,
+   "printed": 23,
+   "wrong": 11,
+   "misread": 5,
    "dropped": 6,
-   "spurious": 0,
+   "spurious": 5,
    "unjudged": 0,
    "split": 0
   },
@@ -1480,9 +1504,9 @@
    "decade": 1880,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 13,
-   "wrong": 0,
-   "misread": 0,
+   "printed": 14,
+   "wrong": 1,
+   "misread": 1,
    "dropped": 0,
    "spurious": 3,
    "unjudged": 0,
@@ -1497,11 +1521,11 @@
    "decade": 1880,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 13,
-   "wrong": 0,
-   "misread": 0,
+   "printed": 14,
+   "wrong": 1,
+   "misread": 1,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -1514,10 +1538,10 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 11,
-   "wrong": 0,
+   "printed": 12,
+   "wrong": 1,
    "misread": 0,
-   "dropped": 0,
+   "dropped": 1,
    "spurious": 1,
    "unjudged": 0,
    "split": 0
@@ -1531,9 +1555,9 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 11,
-   "wrong": 0,
-   "misread": 0,
+   "printed": 12,
+   "wrong": 1,
+   "misread": 1,
    "dropped": 0,
    "spurious": 0,
    "unjudged": 0,
@@ -1705,7 +1729,7 @@
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -1807,7 +1831,7 @@
    "wrong": 1,
    "misread": 1,
    "dropped": 0,
-   "spurious": 1,
+   "spurious": 4,
    "unjudged": 1,
    "split": 0
   },
@@ -2160,12 +2184,12 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.13",
    "pages": 1,
-   "printed": 30,
-   "wrong": 10.5,
-   "misread": 10.5,
-   "dropped": 0,
+   "printed": 42,
+   "wrong": 22.5,
+   "misread": 12,
+   "dropped": 10.5,
    "spurious": 0,
-   "unjudged": 0,
+   "unjudged": 4.5,
    "split": 0
   },
   {
@@ -2177,12 +2201,12 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.13",
    "pages": 1,
-   "printed": 30,
-   "wrong": 10.5,
-   "misread": 9,
+   "printed": 42,
+   "wrong": 21,
+   "misread": 19.5,
    "dropped": 1.5,
-   "spurious": 0,
-   "unjudged": 0,
+   "spurious": 1.5,
+   "unjudged": 4.5,
    "split": 0
   },
   {
@@ -2228,10 +2252,10 @@
    "decade": 1830,
    "archive_model": "ia-ocr/0.0.15",
    "pages": 1,
-   "printed": 31,
-   "wrong": 9,
+   "printed": 32,
+   "wrong": 10,
    "misread": 8,
-   "dropped": 1,
+   "dropped": 2,
    "spurious": 0,
    "unjudged": 0,
    "split": 0
@@ -2245,7 +2269,7 @@
    "decade": 1830,
    "archive_model": "ia-ocr/0.0.15",
    "pages": 1,
-   "printed": 31,
+   "printed": 32,
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
@@ -2330,10 +2354,10 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 112.45,
-   "wrong": 3.4499999999999997,
-   "misread": 3.4499999999999997,
-   "dropped": 0,
+   "printed": 115.9,
+   "wrong": 6.8999999999999995,
+   "misread": 4.6,
+   "dropped": 2.3,
    "spurious": 9.200000000000001,
    "unjudged": 3.4499999999999997,
    "split": 0
@@ -2347,11 +2371,11 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 112.45,
-   "wrong": 2.3,
-   "misread": 0,
+   "printed": 115.9,
+   "wrong": 5.75,
+   "misread": 3.4499999999999997,
    "dropped": 2.3,
-   "spurious": 5.75,
+   "spurious": 8.05,
    "unjudged": 3.4499999999999997,
    "split": 0
   },
@@ -2398,10 +2422,10 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 69.8,
-   "wrong": 21.400000000000002,
-   "misread": 21.400000000000002,
-   "dropped": 0,
+   "printed": 80.6,
+   "wrong": 32.2,
+   "misread": 28.600000000000005,
+   "dropped": 3.6,
    "spurious": 0,
    "unjudged": 2,
    "split": 0
@@ -2415,11 +2439,11 @@
    "decade": 1930,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 69.8,
-   "wrong": 14.200000000000001,
-   "misread": 12.4,
+   "printed": 80.59999999999998,
+   "wrong": 17.8,
+   "misread": 16,
    "dropped": 1.8,
-   "spurious": 0,
+   "spurious": 5.4,
    "unjudged": 2,
    "split": 0
   },
@@ -2466,10 +2490,10 @@
    "decade": 1820,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 34.5,
-   "wrong": 13.200000000000001,
-   "misread": 11.55,
-   "dropped": 1.65,
+   "printed": 51,
+   "wrong": 29.699999999999996,
+   "misread": 21.449999999999996,
+   "dropped": 8.25,
    "spurious": 0,
    "unjudged": 0,
    "split": 0
@@ -2483,9 +2507,9 @@
    "decade": 1820,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 34.5,
-   "wrong": 6.6,
-   "misread": 6.6,
+   "printed": 51,
+   "wrong": 19.799999999999997,
+   "misread": 19.799999999999997,
    "dropped": 0,
    "spurious": 0,
    "unjudged": 0,
@@ -2521,7 +2545,7 @@
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 1,
    "unjudged": 0,
    "split": 0
   },
@@ -2534,29 +2558,29 @@
    "decade": 1840,
    "archive_model": "ia-ocr/0.0.12",
    "pages": 1,
-   "printed": 28.75,
-   "wrong": 5.75,
+   "printed": 36.8,
+   "wrong": 13.8,
+   "misread": 8.05,
+   "dropped": 5.75,
+   "spurious": 0,
+   "unjudged": 1.15,
+   "split": 0
+  },
+  {
+   "side": "lite",
+   "book_id": "6a0a22d50eca358f15e83e33",
+   "set": "b",
+   "book": "The Mathematical Analysis of Logic",
+   "year": 1847,
+   "decade": 1840,
+   "archive_model": "ia-ocr/0.0.12",
+   "pages": 1,
+   "printed": 36.800000000000004,
+   "wrong": 3.4499999999999997,
    "misread": 3.4499999999999997,
-   "dropped": 2.3,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "lite",
-   "book_id": "6a0a22d50eca358f15e83e33",
-   "set": "b",
-   "book": "The Mathematical Analysis of Logic",
-   "year": 1847,
-   "decade": 1840,
-   "archive_model": "ia-ocr/0.0.12",
-   "pages": 1,
-   "printed": 28.75,
-   "wrong": 0,
-   "misread": 0,
    "dropped": 0,
-   "spurious": 1.15,
-   "unjudged": 0,
+   "spurious": 8.05,
+   "unjudged": 1.15,
    "split": 0
   },
   {
@@ -2568,12 +2592,12 @@
    "decade": 1850,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 76,
-   "wrong": 5,
+   "printed": 77,
+   "wrong": 6,
    "misread": 1,
-   "dropped": 4,
+   "dropped": 5,
    "spurious": 0,
-   "unjudged": 2,
+   "unjudged": 3,
    "split": 0
   },
   {
@@ -2585,12 +2609,12 @@
    "decade": 1850,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 76,
-   "wrong": 6,
-   "misread": 6,
+   "printed": 77,
+   "wrong": 7,
+   "misread": 7,
    "dropped": 0,
-   "spurious": 3,
-   "unjudged": 2,
+   "spurious": 6,
+   "unjudged": 3,
    "split": 0
   },
   {
@@ -2636,9 +2660,9 @@
    "decade": 1920,
    "archive_model": "ia-ocr/0.0.15",
    "pages": 1,
-   "printed": 45,
-   "wrong": 8,
-   "misread": 6,
+   "printed": 46,
+   "wrong": 9,
+   "misread": 7,
    "dropped": 2,
    "spurious": 0,
    "unjudged": 0,
@@ -2653,7 +2677,7 @@
    "decade": 1920,
    "archive_model": "ia-ocr/0.0.15",
    "pages": 1,
-   "printed": 45,
+   "printed": 46,
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
@@ -2908,10 +2932,10 @@
    "decade": 1840,
    "archive_model": "ABBYY FineReader 11.0 (Extended OCR)",
    "pages": 1,
-   "printed": 58,
-   "wrong": 9,
+   "printed": 61,
+   "wrong": 12,
    "misread": 4,
-   "dropped": 5,
+   "dropped": 8,
    "spurious": 0,
    "unjudged": 1,
    "split": 0
@@ -2925,11 +2949,11 @@
    "decade": 1840,
    "archive_model": "ABBYY FineReader 11.0 (Extended OCR)",
    "pages": 1,
-   "printed": 58,
-   "wrong": 1,
-   "misread": 1,
+   "printed": 61,
+   "wrong": 2,
+   "misread": 2,
    "dropped": 0,
-   "spurious": 0,
+   "spurious": 6,
    "unjudged": 1,
    "split": 0
   },
@@ -2942,9 +2966,9 @@
    "decade": 1850,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 173,
-   "wrong": 6,
-   "misread": 5,
+   "printed": 175,
+   "wrong": 8,
+   "misread": 7,
    "dropped": 1,
    "spurious": 0,
    "unjudged": 0,
@@ -2959,7 +2983,7 @@
    "decade": 1850,
    "archive_model": "ia-ocr/0.0.14",
    "pages": 1,
-   "printed": 173,
+   "printed": 175,
    "wrong": 2,
    "misread": 2,
    "dropped": 0,
@@ -3180,12 +3204,12 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 38.99999999999999,
+   "printed": 45.79999999999999,
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
    "spurious": 0,
-   "unjudged": 0,
+   "unjudged": 13.6,
    "split": 0
   },
   {
@@ -3197,12 +3221,12 @@
    "decade": 1890,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 38.99999999999999,
-   "wrong": 3.4,
-   "misread": 3.4,
+   "printed": 45.8,
+   "wrong": 10.2,
+   "misread": 10.2,
    "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
+   "spurious": 13.6,
+   "unjudged": 13.6,
    "split": 0
   },
   {
@@ -3282,9 +3306,9 @@
    "decade": 1800,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 10,
-   "wrong": 1,
-   "misread": 0,
+   "printed": 11,
+   "wrong": 2,
+   "misread": 1,
    "dropped": 1,
    "spurious": 1,
    "unjudged": 0,
@@ -3299,7 +3323,7 @@
    "decade": 1800,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 10,
+   "printed": 11,
    "wrong": 0,
    "misread": 0,
    "dropped": 0,
@@ -3452,10 +3476,10 @@
    "decade": 1800,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 16,
-   "wrong": 3,
-   "misread": 2,
-   "dropped": 1,
+   "printed": 21,
+   "wrong": 8,
+   "misread": 6,
+   "dropped": 2,
    "spurious": 0,
    "unjudged": 0,
    "split": 0
@@ -3469,163 +3493,163 @@
    "decade": 1800,
    "archive_model": "ia-ocr/0.0.21",
    "pages": 1,
-   "printed": 16,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "archive",
-   "book_id": "69aea4994f4f1b07d870c4c7",
-   "set": "b",
-   "book": "A Report upon the Herculaneum Manuscripts",
-   "year": 1811,
-   "decade": 1810,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 19,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "lite",
-   "book_id": "69aea4994f4f1b07d870c4c7",
-   "set": "b",
-   "book": "A Report upon the Herculaneum Manuscripts",
-   "year": 1811,
-   "decade": 1810,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 19,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "archive",
-   "book_id": "6a4a226dfd99a02b93701d12",
-   "set": "b",
-   "book": "The Life of John Jay, with Selections from his Correspondence and Miscellaneous Papers, Vo",
-   "year": 1833,
-   "decade": 1830,
-   "archive_model": "ia-ocr/0.0.14",
-   "pages": 1,
-   "printed": 2,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "lite",
-   "book_id": "6a4a226dfd99a02b93701d12",
-   "set": "b",
-   "book": "The Life of John Jay, with Selections from his Correspondence and Miscellaneous Papers, Vo",
-   "year": 1833,
-   "decade": 1830,
-   "archive_model": "ia-ocr/0.0.14",
-   "pages": 1,
-   "printed": 2,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "archive",
-   "book_id": "69de0d31f44bb4908bdcdb28",
-   "set": "b",
-   "book": "Eulis! Affectional Alchemy: The History of Love",
-   "year": 1874,
-   "decade": 1870,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 1,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "lite",
-   "book_id": "69de0d31f44bb4908bdcdb28",
-   "set": "b",
-   "book": "Eulis! Affectional Alchemy: The History of Love",
-   "year": 1874,
-   "decade": 1870,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 1,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "archive",
-   "book_id": "6ab6c9b14a4872d860709303",
-   "set": "b",
-   "book": "Short lessons in theosophy ..",
-   "year": 1889,
-   "decade": 1880,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 8,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "lite",
-   "book_id": "6ab6c9b14a4872d860709303",
-   "set": "b",
-   "book": "Short lessons in theosophy ..",
-   "year": 1889,
-   "decade": 1880,
-   "archive_model": "ia-ocr/0.0.21",
-   "pages": 1,
-   "printed": 8,
-   "wrong": 0,
-   "misread": 0,
-   "dropped": 0,
-   "spurious": 0,
-   "unjudged": 0,
-   "split": 0
-  },
-  {
-   "side": "archive",
-   "book_id": "6ab2427c87d2180b7f5e149f",
-   "set": "b",
-   "book": "Sánchi and its remains; a full description of the ancient buildings, sculptures, and insc",
-   "year": 1892,
-   "decade": 1890,
-   "archive_model": "ABBYY FineReader 8.0",
-   "pages": 1,
-   "printed": 311,
-   "wrong": 8,
+   "printed": 21,
+   "wrong": 4,
    "misread": 4,
-   "dropped": 4,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "archive",
+   "book_id": "69aea4994f4f1b07d870c4c7",
+   "set": "b",
+   "book": "A Report upon the Herculaneum Manuscripts",
+   "year": 1811,
+   "decade": 1810,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 22,
+   "wrong": 3,
+   "misread": 0,
+   "dropped": 3,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "lite",
+   "book_id": "69aea4994f4f1b07d870c4c7",
+   "set": "b",
+   "book": "A Report upon the Herculaneum Manuscripts",
+   "year": 1811,
+   "decade": 1810,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 22,
+   "wrong": 1,
+   "misread": 1,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "archive",
+   "book_id": "6a4a226dfd99a02b93701d12",
+   "set": "b",
+   "book": "The Life of John Jay, with Selections from his Correspondence and Miscellaneous Papers, Vo",
+   "year": 1833,
+   "decade": 1830,
+   "archive_model": "ia-ocr/0.0.14",
+   "pages": 1,
+   "printed": 2,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "lite",
+   "book_id": "6a4a226dfd99a02b93701d12",
+   "set": "b",
+   "book": "The Life of John Jay, with Selections from his Correspondence and Miscellaneous Papers, Vo",
+   "year": 1833,
+   "decade": 1830,
+   "archive_model": "ia-ocr/0.0.14",
+   "pages": 1,
+   "printed": 2,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "archive",
+   "book_id": "69de0d31f44bb4908bdcdb28",
+   "set": "b",
+   "book": "Eulis! Affectional Alchemy: The History of Love",
+   "year": 1874,
+   "decade": 1870,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 1,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "lite",
+   "book_id": "69de0d31f44bb4908bdcdb28",
+   "set": "b",
+   "book": "Eulis! Affectional Alchemy: The History of Love",
+   "year": 1874,
+   "decade": 1870,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 1,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "archive",
+   "book_id": "6ab6c9b14a4872d860709303",
+   "set": "b",
+   "book": "Short lessons in theosophy ..",
+   "year": 1889,
+   "decade": 1880,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 8,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "lite",
+   "book_id": "6ab6c9b14a4872d860709303",
+   "set": "b",
+   "book": "Short lessons in theosophy ..",
+   "year": 1889,
+   "decade": 1880,
+   "archive_model": "ia-ocr/0.0.21",
+   "pages": 1,
+   "printed": 8,
+   "wrong": 0,
+   "misread": 0,
+   "dropped": 0,
+   "spurious": 0,
+   "unjudged": 0,
+   "split": 0
+  },
+  {
+   "side": "archive",
+   "book_id": "6ab2427c87d2180b7f5e149f",
+   "set": "b",
+   "book": "Sánchi and its remains; a full description of the ancient buildings, sculptures, and insc",
+   "year": 1892,
+   "decade": 1890,
+   "archive_model": "ABBYY FineReader 8.0",
+   "pages": 1,
+   "printed": 312,
+   "wrong": 9,
+   "misread": 4,
+   "dropped": 5,
    "spurious": 0,
    "unjudged": 0,
    "split": 0
@@ -3639,7 +3663,7 @@
    "decade": 1890,
    "archive_model": "ABBYY FineReader 8.0",
    "pages": 1,
-   "printed": 311,
+   "printed": 312,
    "wrong": 3,
    "misread": 2,
    "dropped": 1,
@@ -3660,5 +3684,5 @@
   "b-64d9d810"
  ],
  "adjudicated_pages": 178,
- "variant": "box"
+ "variant": "all"
 }

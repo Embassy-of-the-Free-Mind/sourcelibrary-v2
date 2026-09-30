@@ -682,7 +682,9 @@ function verdict(c, side, pool = null) {
   // the box is the whole Archive WORD: "144—12," or "1705-6," or "3,000" — the blind reader reports
   // every digit in it ("14412", "17056", "3000"); a token is right when the WORD's digits are what was read
   const wd = c.word_text ? c.word_text.normalize('NFKC').replace(/\D/g, '') : null;
-  if (wd && wd !== tn && d === wd && wd.includes(tn)) return 'right';
+  // (the reader may misread the OTHER number in the box — "1732-8," read as 17323 — so the test is
+  // that the token's digits appear in a reading longer than the token)
+  if (wd && wd.length > tn.length && wd.includes(tn) && d.length > tn.length && d.includes(tn)) return 'right';
   if (c.word_ntok > 1 && d.includes(tn)) return 'right';
   return tn === d ? 'right' : 'wrong-misread';
 }
@@ -702,6 +704,13 @@ function stageScore() {
   const plan = new Map(readJsonl(F('plan.jsonl')).map((p) => [p.slug, p]));
   const pagesAll = readJsonl(F('align-pages.jsonl'));
   const rows = new Map(allPages().map((r) => [r.slug, r]));
+  // DECIMAL tables: "26.2" tokenises to 26 + 2 on one engine and 262 on the other, and a digits-only
+  // reading cannot tell them apart. A page with >= 5 decimal numbers in either engine's text is a
+  // table of measurements, out of scope like the numeric-share tables select() excluded.
+  const decimalPage = (slug) => { const r = rows.get(slug); if (!r) return false; const n = (t) => (String(t).match(/\b\d+[.,·°']\d+\b/g) || []).length; return n(liteTextOf(r)) >= 5 || n(fs.readFileSync(F(`texts/${slug}.ia-djvu.txt`), 'utf8')) >= 5; };   // lite prints 26·2 and 7°6
+  const decimalSlugs = [...plan.keys()].filter(decimalPage);
+  for (const sl of decimalSlugs) plan.delete(sl);
+  console.log(`decimal-table pages excluded at score time: ${decimalSlugs.length} ${JSON.stringify(decimalSlugs)}`);
   const events = readJsonl(F('numbers.jsonl')).filter((e) => plan.has(e.slug));
   const adjById = new Map(adj.map((c) => [c.id, c]));
   // per page: unmatched numbers each side holds (for the other-side rescue in verdict)
@@ -733,6 +742,15 @@ function stageScore() {
     if (consumed.has(e.id)) continue;
     const c = adjById.get(e.id);
     if (c && c.crop_error === 'capped') continue;   // represented by the weight of a read sibling on the same page
+    // VARIANT 'box': a 'between' crop (a lite-only number with no Archive box) anchors on the two
+    // Archive words around lite's position; on two-column indexes and tables the engines order the
+    // columns differently and the window lands on a NEIGHBOURING entry (a-45a883eb-p411: lite "285"
+    // judged against Archive's "284" row). Those verdicts are not reliable, so the headline excludes
+    // them and the 'all' variant keeps them for comparison.
+    // A TIGHT window (both anchors present, at most one Archive token between them — the token the
+    // Archive put where lite read a number, e.g. '1s96') is as precise as a box and is kept.
+    const tight = (x) => x.anchors && x.anchors.before != null && x.anchors.after != null && x.anchors.after - x.anchors.before <= 2;
+    if (VARIANT === 'box' && c && c.type === 'between' && !tight(c)) continue;
     const w = c?.weight ?? 1;
     const partner = splitPartner(e);
     if (partner && c && c.printed != null && c.printed !== 'unreadable') {
@@ -749,7 +767,7 @@ function stageScore() {
         blind.agreed_judged++;
         if (c.printed === 'none') { blind.agreed_none++; tally(e.slug, 'archive', 'spurious'); tally(e.slug, 'lite', 'spurious'); continue; }
         const wd = c.word_text ? c.word_text.normalize('NFKC').replace(/\D/g, '') : null;
-        if (c.printed === e.a || (c.word_ntok > 1 && c.printed.includes(e.a)) || (wd && c.printed === wd && wd.includes(e.a))) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
+        if (c.printed === e.a || (c.word_ntok > 1 && c.printed.includes(e.a)) || (wd && wd.length > e.a.length && wd.includes(e.a) && c.printed.length > e.a.length && c.printed.includes(e.a))) { tally(e.slug, 'archive', 'right'); tally(e.slug, 'lite', 'right'); }
         else { blind.both_wrong_same++; tally(e.slug, 'archive', 'wrong-misread'); tally(e.slug, 'lite', 'wrong-misread'); for (const s of ['archive', 'lite']) { const k = confusionClass(e.a, c.printed); conf[s][k] = (conf[s][k] || 0) + 1; examples[s].push({ id: e.id, engine: e.a, printed: c.printed, kind: 'agree', ctx: e.ctx }); } }
       } else { tally(e.slug, 'archive', 'agreed'); tally(e.slug, 'lite', 'agreed'); }   // counted correct (blind spot measured above)
       continue;
@@ -775,7 +793,7 @@ function stageScore() {
     }
   }
   const dir = path.join(STORE, 'scores', SCORER); fs.mkdirSync(dir, { recursive: true });
-  writeJsonl(path.join(dir, `${MONTH}.jsonl`), scores);
+  writeJsonl(path.join(dir, `${MONTH}${VARIANT === 'box' ? '' : '-' + VARIANT}.jsonl`), scores.map((x) => ({ ...x, variant: VARIANT })));
   // rates with book-cluster bootstrap
   resetSeed(SEED);
   const rate = (books, num = 'wrong') => bootstrapRatioCI(books.map((b) => b[num]), books.map((b) => b.printed));
@@ -795,23 +813,26 @@ function stageScore() {
   const dis = {}; for (const p of pagesAll.filter((p) => !p.skipped)) { const k = `${p.set}|${p.archive_model || '?'}`; dis[k] = dis[k] || { pages: 0, agree: 0, sub: 0, archive_only: 0, lite_only: 0 }; const d = dis[k]; d.pages++; d.agree += p.agree; d.sub += p.sub; d.archive_only += p.archive_only; d.lite_only += p.lite_only; }
   summary.disagreement_all_pages = dis;
   summary.per_book = [...perBook.values()];
-  fs.writeFileSync(F('summary.json'), JSON.stringify(summary, null, 1));
-  fs.writeFileSync(F('error-examples.json'), JSON.stringify(examples, null, 1));
+  summary.excluded_decimal_pages = decimalSlugs; summary.adjudicated_pages = perPage.size;
+  summary.variant = VARIANT;
+  const sfx = VARIANT === 'box' ? '' : `-${VARIANT}`;
+  fs.writeFileSync(F(`summary${sfx}.json`), JSON.stringify(summary, null, 1));
+  fs.writeFileSync(F(`error-examples${sfx}.json`), JSON.stringify(examples, null, 1));
   console.log(JSON.stringify(summary.sets, null, 1)); console.log('blind', JSON.stringify(blind));
 }
 const SCORER = 'numbers-scorer@1';
+const VARIANT = argEq('--variant', 'box');   // box = word-box + margin crops (headline); all = also 'between' crops
 
 /** FIXTURE — every adjudicated number, with its crop, as a pinned set any engine can be scored on */
 function stageFixture() {
   const adj = readJsonl(F('adjudicated.jsonl')).filter((c) => c.crop && c.printed != null && c.printed !== 'unreadable');
   const rows = new Map(allPages().map((r) => [r.slug, r]));
   const human = new Map(readJsonl(F('human-queue.jsonl')).filter((h) => h.human_printed != null).map((h) => [h.id, h]));
-  const dir = path.join(HERE, 'benchmark', 'numbers-crops'); fs.mkdirSync(dir, { recursive: true });
   const items = adj.map((c) => {
     const r = rows.get(c.slug); const h = human.get(c.id);
-    const file = `numbers-crops/${c.crop.split('/')[1]}`; fs.copyFileSync(F(c.crop), path.join(HERE, 'benchmark', file));
+    const file = path.relative(path.join(HERE, 'benchmark'), F(c.crop));   // the committed crop, not a second copy
     return { id: c.id, set: c.set, book_id: c.book_id, page_id: r?.page_id, page_number: r?.page_number, ia: r?.ia, leaf: r?.leaf, year: r?.year, archive_model: r?.archive_model,
-      kind: c.kind, question: c.question, box: c.box || null, anchors_box: c.anchors_box || null, leaf_wh: c.leaf_wh, ctx: c.ctx,
+      kind: c.kind, type: c.type, tight: c.type !== 'between' || (c.anchors?.before != null && c.anchors?.after != null && c.anchors.after - c.anchors.before <= 2), question: c.question, box: c.box || null, anchors_box: c.anchors_box || null, leaf_wh: c.leaf_wh, ctx: c.ctx,
       printed: h ? String(h.human_printed).replace(/[^\d]/g, '') || 'none' : c.printed, figures: c.figures, adjudicated_by: h ? 'human' : c.adjudicated_by, model_eye_printed: c.printed, confidence: c.confidence, note: c.note,
       engines: { 'ia-djvu': c.a, 'gemini-lite-realtime': c.l }, crop: file };
   });

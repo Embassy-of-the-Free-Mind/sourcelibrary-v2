@@ -113,6 +113,14 @@
    "crop": "crops/a-45a88592-p651_0_margin.jpg"
   },
   {
+   "id": "a-45a88592-p651#15",
+   "engine": "jin1836",
+   "printed": "1836",
+   "kind": "lite_only",
+   "ctx": "full demand in 1836 the town paid",
+   "crop": "crops/a-45a88592-p651_15.jpg"
+  },
+  {
    "id": "a-45a88592-p651#18",
    "engine": null,
    "printed": "8",
@@ -305,6 +313,22 @@
    "crop": "crops/a-45a88592-p1231_0_margin.jpg"
   },
   {
+   "id": "a-45a88e2e-p18#1",
+   "engine": "i",
+   "printed": "1872",
+   "kind": "lite_only",
+   "ctx": "24th of september 1872 in montpelier vermont",
+   "crop": "crops/a-45a88e2e-p18_1.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p146#8",
+   "engine": "1",
+   "printed": "1851",
+   "kind": "lite_only",
+   "ctx": "the water until 1851 when he went",
+   "crop": "crops/a-45a88e2e-p146_8.jpg"
+  },
+  {
    "id": "a-45a88e2e-p146#13",
    "engine": "19 10",
    "printed": "1910",
@@ -313,12 +337,36 @@
    "crop": "crops/a-45a88e2e-p146_13.jpg"
   },
   {
+   "id": "a-45a88e2e-p203#5",
+   "engine": "5",
+   "printed": "1915",
+   "kind": "lite_only",
+   "ctx": "bankers association in 1915 and is now",
+   "crop": "crops/a-45a88e2e-p203_5.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p250#4",
+   "engine": "1",
+   "printed": "1911",
+   "kind": "lite_only",
+   "ctx": "council and in 1911 was elected to",
+   "crop": "crops/a-45a88e2e-p250_4.jpg"
+  },
+  {
    "id": "a-45a88e2e-p250#5",
    "engine": "191",
    "printed": "1911",
    "kind": "archive_only",
    "ctx": "council and in 191 1 was elected",
    "crop": "crops/a-45a88e2e-p250_5.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p254#2",
+   "engine": "5",
+   "printed": "1915",
+   "kind": "lite_only",
+   "ctx": "day of october 1915 after thirty eight",
+   "crop": "crops/a-45a88e2e-p254_2.jpg"
   },
   {
    "id": "a-45a88e2e-p254#3",
@@ -335,6 +383,14 @@
    "kind": "sub",
    "ctx": "at no 1 10 south eleventh street",
    "crop": "crops/a-45a88e2e-p280_11.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p285#9",
+   "engine": "1",
+   "printed": "1911",
+   "kind": "lite_only",
+   "ctx": "in the year 1911 albert c kugel",
+   "crop": "crops/a-45a88e2e-p285_9.jpg"
   },
   {
    "id": "a-45a88e2e-p285#10",
@@ -359,6 +415,14 @@
    "kind": "archive_only",
    "ctx": "interests in december 191 5 in organizing",
    "crop": "crops/a-45a88e2e-p343_7.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p343#8",
+   "engine": "5",
+   "printed": "1915",
+   "kind": "lite_only",
+   "ctx": "interests in december 1915 in organizing the",
+   "crop": "crops/a-45a88e2e-p343_8.jpg"
   },
   {
    "id": "a-45a88e2e-p343#13",
@@ -409,6 +473,14 @@
    "crop": "crops/a-45a88e2e-p831_0_margin.jpg"
   },
   {
+   "id": "a-45a88e2e-p831#8",
+   "engine": "1",
+   "printed": "1911",
+   "kind": "lite_only",
+   "ctx": "away september 1 1911 they had a",
+   "crop": "crops/a-45a88e2e-p831_8.jpg"
+  },
+  {
    "id": "a-45a88e2e-p831#9",
    "engine": "191",
    "printed": "1911",
@@ -433,6 +505,22 @@
    "crop": "crops/a-45a88e2e-p930_3.jpg"
   },
   {
+   "id": "a-45a88e2e-p930#4",
+   "engine": "1",
+   "printed": "1911",
+   "kind": "lite_only",
+   "ctx": "1908 and since 1911 as president of",
+   "crop": "crops/a-45a88e2e-p930_4.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p963#7",
+   "engine": "1",
+   "printed": "1911",
+   "kind": "lite_only",
+   "ctx": "11th of october 1911 he has since",
+   "crop": "crops/a-45a88e2e-p963_7.jpg"
+  },
+  {
    "id": "a-45a88e2e-p963#8",
    "engine": "191",
    "printed": "1911",
@@ -455,6 +543,14 @@
    "kind": "lite_only",
    "ctx": "995 index 995 page",
    "crop": "crops/a-45a88e2e-p993_0_margin.jpg"
+  },
+  {
+   "id": "a-45a88e2e-p993#65",
+   "engine": "318",
+   "printed": "547",
+   "kind": "lite_only",
+   "ctx": "loomis g w 248 hynes w j",
+   "crop": "crops/a-45a88e2e-p993_65.jpg"
   },
   {
    "id": "a-45a88e2e-p993#100",
@@ -609,6 +705,22 @@
    "crop": "crops/a-45a8921b-p525_0_margin.jpg"
   },
   {
+   "id": "a-45a8921b-p555#1",
+   "engine": "2s",
+   "printed": "28",
+   "kind": "lite_only",
+   "ctx": "t m nov 28 1888 lula e",
+   "crop": "crops/a-45a8921b-p555_1.jpg"
+  },
+  {
+   "id": "a-45a8921b-p555#2",
+   "engine": "1sss",
+   "printed": "28",
+   "kind": "lite_only",
+   "ctx": "m nov 28 1888 lula e clark",
+   "crop": "crops/a-45a8921b-p555_2.jpg"
+  },
+  {
    "id": "a-45a8921b-p555#4",
    "engine": "1s90",
    "printed": "1890",
@@ -687,6 +799,14 @@
    "kind": "lite_only",
    "ctx": "univ b s 1886 ph d göttingen",
    "crop": "crops/a-45a8921b-p555_29.jpg"
+  },
+  {
+   "id": "a-45a8921b-p555#30",
+   "engine": "1sss",
+   "printed": "1888",
+   "kind": "lite_only",
+   "ctx": "ph d göttingen 1888 ll d mich",
+   "crop": "crops/a-45a8921b-p555_30.jpg"
   },
   {
    "id": "a-45a8921b-p555#34",
@@ -785,6 +905,38 @@
    "crop": "crops/a-45a883eb-p411_0_margin.jpg"
   },
   {
+   "id": "a-45a883eb-p411#49",
+   "engine": "wettstein",
+   "printed": "281",
+   "kind": "lite_only",
+   "ctx": "wilson thomas h 288 walkey harry edgar",
+   "crop": "crops/a-45a883eb-p411_49.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#54",
+   "engine": "283",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "277 winton alexander 289 walton john whittlesey",
+   "crop": "crops/a-45a883eb-p411_54.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#70",
+   "engine": "287",
+   "printed": "284",
+   "kind": "lite_only",
+   "ctx": "woodruff albert w 290 weaver s marshall",
+   "crop": "crops/a-45a883eb-p411_70.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#84",
+   "engine": "289",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "wright ernest t 292 wells thomas henry",
+   "crop": "crops/a-45a883eb-p411_84.jpg"
+  },
+  {
    "id": "b-61bc408b#0",
    "engine": null,
    "printed": "391",
@@ -817,6 +969,14 @@
    "crop": "crops/b-61bc408b_19.jpg"
   },
   {
+   "id": "b-471e4d76#8",
+   "engine": "42",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "arsenic 53 potash 45 peroxide of mercury",
+   "crop": "crops/b-471e4d76_8.jpg"
+  },
+  {
    "id": "b-471e4d76#42",
    "engine": "46",
    "printed": "45",
@@ -847,6 +1007,14 @@
    "kind": "lite_only",
    "ctx": "bibles of venice 1498 italian 1487 1490",
    "crop": "crops/b-aa854219_30.jpg"
+  },
+  {
+   "id": "b-aa854219#31",
+   "engine": "1",
+   "printed": "1491",
+   "kind": "lite_only",
+   "ctx": "italian 1487 1490 1491 of augsburg 1477",
+   "crop": "crops/b-aa854219_31.jpg"
   },
   {
    "id": "b-aa854219#34",
@@ -887,6 +1055,14 @@
    "kind": "sub",
    "ctx": "pictvris illustrata 1 540 118 tindale s",
    "crop": "crops/b-aa854219_58.jpg"
+  },
+  {
+   "id": "b-aa854219#62",
+   "engine": "1",
+   "printed": "1551",
+   "kind": "lite_only",
+   "ctx": "veteris testamenti franc 1551 86 biblical paintings",
+   "crop": "crops/b-aa854219_62.jpg"
   },
   {
    "id": "b-aa854219#65",
@@ -942,6 +1118,22 @@
    "printed": "146",
    "kind": "agree",
    "ctx": "va a cart 126 vaacatei33 va a"
+  },
+  {
+   "id": "b-83e9660d#15",
+   "engine": "prima",
+   "printed": "134",
+   "kind": "lite_only",
+   "ctx": "va a carte 128 a aristippo philo",
+   "crop": "crops/b-83e9660d_15.jpg"
+  },
+  {
+   "id": "b-83e9660d#18",
+   "engine": "140",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 144 a senocrate phil",
+   "crop": "crops/b-83e9660d_18.jpg"
   },
   {
    "id": "b-83e9660d#20",
@@ -1008,6 +1200,14 @@
    "crop": "crops/b-83e90214_1.jpg"
   },
   {
+   "id": "b-83e90214#3",
+   "engine": "4",
+   "printed": "3",
+   "kind": "lite_only",
+   "ctx": "10 amicable settlement 11 your pen will",
+   "crop": "crops/b-83e90214_3.jpg"
+  },
+  {
    "id": "b-83e90214#9",
    "engine": "000",
    "printed": "none",
@@ -1022,6 +1222,14 @@
    "kind": "archive_only",
    "ctx": "0 000 0 000 6 0 0",
    "crop": "crops/b-83e90214_10.jpg"
+  },
+  {
+   "id": "b-853be0f6#1",
+   "engine": "ist",
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "d 353 xi 27 a d 355",
+   "crop": "crops/b-853be0f6_1.jpg"
   },
   {
    "id": "b-853be0f6#2",
@@ -1168,6 +1376,22 @@
    "crop": "crops/b-7f5ea56f_2.jpg"
   },
   {
+   "id": "b-7f5ea56f#4",
+   "engine": "ail",
+   "printed": "211",
+   "kind": "lite_only",
+   "ctx": "v iv pp 211 ff 218 222",
+   "crop": "crops/b-7f5ea56f_4.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#7",
+   "engine": "oho",
+   "printed": "27",
+   "kind": "lite_only",
+   "ctx": "v iv pp 271 274 3 v",
+   "crop": "crops/b-7f5ea56f_7.jpg"
+  },
+  {
    "id": "b-7f5ea56f#16",
    "engine": "201",
    "printed": "281",
@@ -1200,6 +1424,30 @@
    "crop": "crops/b-7f5ea56f_20.jpg"
   },
   {
+   "id": "b-7f5ea56f#25",
+   "engine": "ps2",
+   "printed": "230",
+   "kind": "lite_only",
+   "ctx": "pp 246 279 281 282 284 287",
+   "crop": "crops/b-7f5ea56f_25.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#28",
+   "engine": "0",
+   "printed": "246",
+   "kind": "lite_only",
+   "ctx": "279 281 282 284 287 6 v",
+   "crop": "crops/b-7f5ea56f_28.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#33",
+   "engine": "vot",
+   "printed": "330",
+   "kind": "lite_only",
+   "ctx": "v iv pp 264 322 325 7",
+   "crop": "crops/b-7f5ea56f_33.jpg"
+  },
+  {
    "id": "b-7f5ea56f#39",
    "engine": "2717",
    "printed": "277",
@@ -1214,6 +1462,30 @@
    "kind": "sub",
    "ctx": "a on i 687",
    "crop": "crops/b-7f5ea56f_42.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#43",
+   "engine": "id",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "v iv pp 279 301 332 333",
+   "crop": "crops/b-7f5ea56f_43.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#44",
+   "engine": "p",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "iv pp 279 301 332 333 10",
+   "crop": "crops/b-7f5ea56f_44.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#46",
+   "engine": "on",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "v iv pp 260 262 277",
+   "crop": "crops/b-7f5ea56f_46.jpg"
   },
   {
    "id": "b-93702138#0",
@@ -1272,6 +1544,14 @@
    "crop": "crops/b-7d778866_12.jpg"
   },
   {
+   "id": "b-7d778866#13",
+   "engine": "à",
+   "printed": "30",
+   "kind": "lite_only",
+   "ctx": "april 23 5 30 6 1313 sept",
+   "crop": "crops/b-7d778866_13.jpg"
+  },
+  {
    "id": "b-7d778866#16",
    "engine": "1815",
    "printed": "1315",
@@ -1328,6 +1608,14 @@
    "crop": "crops/b-3741d7d7_10.jpg"
   },
   {
+   "id": "b-3741d7d7#15",
+   "engine": "if",
+   "printed": "23",
+   "kind": "lite_only",
+   "ctx": "26 water dragon 1861 55 bird 1893",
+   "crop": "crops/b-3741d7d7_15.jpg"
+  },
+  {
    "id": "b-3741d7d7#19",
    "engine": "18",
    "printed": "none",
@@ -1352,12 +1640,28 @@
    "crop": "crops/b-3741d7d7_36.jpg"
   },
   {
+   "id": "b-3741d7d7#39",
+   "engine": "1",
+   "printed": "32",
+   "kind": "lite_only",
+   "ctx": "1 hare 1899 33 hog 1868 2",
+   "crop": "crops/b-3741d7d7_39.jpg"
+  },
+  {
    "id": "b-3741d7d7#47",
    "engine": "83",
    "printed": "none",
    "kind": "archive_only",
    "ctx": "hare 1899 tl 83 1 hog 1868",
    "crop": "crops/b-3741d7d7_47.jpg"
+  },
+  {
+   "id": "b-3741d7d7#54",
+   "engine": "ser",
+   "printed": "1873",
+   "kind": "lite_only",
+   "ctx": "7 bird 1905 39 serpent 1874 8",
+   "crop": "crops/b-3741d7d7_54.jpg"
   },
   {
    "id": "b-3741d7d7#80",
@@ -1460,12 +1764,36 @@
    "ctx": "8 172 12 242 15 with patiguma"
   },
   {
+   "id": "b-de21ba5c#24",
+   "engine": "g8",
+   "printed": "58",
+   "kind": "lite_only",
+   "ctx": "3 with adhigama 58 3 4 12",
+   "crop": "crops/b-de21ba5c_24.jpg"
+  },
+  {
    "id": "b-de21ba5c#25",
    "engine": "41",
    "printed": "604",
    "kind": "archive_only",
    "ctx": "4 12 6o 41 61 8 148",
    "crop": "crops/b-de21ba5c_25.jpg"
+  },
+  {
+   "id": "b-de21ba5c#28",
+   "engine": "6o",
+   "printed": "12",
+   "kind": "lite_only",
+   "ctx": "3 4 12 60 4 61 8",
+   "crop": "crops/b-de21ba5c_28.jpg"
+  },
+  {
+   "id": "b-de21ba5c#35",
+   "engine": "po4",
+   "printed": "224",
+   "kind": "lite_only",
+   "ctx": "12 with tathāgatabhūmi 224 10 214 4",
+   "crop": "crops/b-de21ba5c_35.jpg"
   },
   {
    "id": "b-de21ba5c#38",
@@ -1481,6 +1809,22 @@
    "printed": "22018",
    "kind": "agree",
    "ctx": "12 185 3 226 18 qualified with"
+  },
+  {
+   "id": "b-de21ba5c#51",
+   "engine": "s8",
+   "printed": "88",
+   "kind": "lite_only",
+   "ctx": "3 with bhūtakoti 88 13 in the",
+   "crop": "crops/b-de21ba5c_51.jpg"
+  },
+  {
+   "id": "b-de21ba5c#52",
+   "engine": "ls",
+   "printed": "88",
+   "kind": "lite_only",
+   "ctx": "with bhūtakoti 88 13 in the sagāthakam",
+   "crop": "crops/b-de21ba5c_52.jpg"
   },
   {
    "id": "b-de21ba5c#54",
@@ -1522,6 +1866,14 @@
    "ctx": "wish prapaiies 197 200 2t1n itia vain"
   },
   {
+   "id": "b-de21ba5c#72",
+   "engine": "doushthulya",
+   "printed": "345",
+   "kind": "lite_only",
+   "ctx": "trivial reasoning darśana 345 虛妄見 dauṣṭhulya 190",
+   "crop": "crops/b-de21ba5c_72.jpg"
+  },
+  {
    "id": "b-de21ba5c#79",
    "engine": "356",
    "printed": "856",
@@ -1537,6 +1889,22 @@
    "crop": "crops/b-82f777b5_1_margin.jpg"
   },
   {
+   "id": "b-82f777b5#3",
+   "engine": "io",
+   "printed": "108162",
+   "kind": "lite_only",
+   "ctx": "48 54 81 108 162 and the",
+   "crop": "crops/b-82f777b5_3.jpg"
+  },
+  {
+   "id": "b-82f777b5#4",
+   "engine": "2",
+   "printed": "108162",
+   "kind": "lite_only",
+   "ctx": "54 81 108 162 and the double",
+   "crop": "crops/b-82f777b5_4.jpg"
+  },
+  {
    "id": "b-82f777b5#11",
    "engine": "18",
    "printed": "48",
@@ -1545,12 +1913,60 @@
    "crop": "crops/b-82f777b5_11.jpg"
   },
   {
+   "id": "b-82f777b5#16",
+   "engine": "1",
+   "printed": "1296",
+   "kind": "lite_only",
+   "ctx": "972 1024 1152 1296 1458 1536 1728",
+   "crop": "crops/b-82f777b5_16.jpg"
+  },
+  {
+   "id": "b-82f777b5#17",
+   "engine": "i5jo",
+   "printed": "296",
+   "kind": "lite_only",
+   "ctx": "1152 1296 1458 1536 1728 1944 2048",
+   "crop": "crops/b-82f777b5_17.jpg"
+  },
+  {
+   "id": "b-82f777b5#19",
+   "engine": "hi",
+   "printed": "1944",
+   "kind": "lite_only",
+   "ctx": "1458 1536 1728 1944 2048 2304 2592",
+   "crop": "crops/b-82f777b5_19.jpg"
+  },
+  {
+   "id": "b-82f777b5#23",
+   "engine": "2sy2",
+   "printed": "2304",
+   "kind": "lite_only",
+   "ctx": "1944 2048 2304 2592 2916 3072 3456",
+   "crop": "crops/b-82f777b5_23.jpg"
+  },
+  {
+   "id": "b-82f777b5#25",
+   "engine": "2yi6",
+   "printed": "2304",
+   "kind": "lite_only",
+   "ctx": "2048 2304 2592 2916 3072 3456 3888",
+   "crop": "crops/b-82f777b5_25.jpg"
+  },
+  {
    "id": "b-82f777b5#26",
    "engine": "570",
    "printed": "576",
    "kind": "sub",
    "ctx": "480 5 12 570 648 729 768",
    "crop": "crops/b-82f777b5_26.jpg"
+  },
+  {
+   "id": "b-82f777b5#29",
+   "engine": "38s8",
+   "printed": "3456",
+   "kind": "lite_only",
+   "ctx": "2916 3072 3456 3888 4374 4608 5184",
+   "crop": "crops/b-82f777b5_29.jpg"
   },
   {
    "id": "b-82f777b5#32",
@@ -1567,6 +1983,22 @@
    "kind": "sub",
    "ctx": "768 6l 72 1021 1152 rjyo 1",
    "crop": "crops/b-82f777b5_33.jpg"
+  },
+  {
+   "id": "b-82f777b5#35",
+   "engine": "6",
+   "printed": "6144",
+   "kind": "lite_only",
+   "ctx": "5184 5832 6141 6912 7776 8748 9216",
+   "crop": "crops/b-82f777b5_35.jpg"
+  },
+  {
+   "id": "b-82f777b5#38",
+   "engine": "i",
+   "printed": "6144",
+   "kind": "lite_only",
+   "ctx": "6912 7776 8748 9216 10368 and the",
+   "crop": "crops/b-82f777b5_38.jpg"
   },
   {
    "id": "b-82f777b5#43",
@@ -1601,6 +2033,22 @@
    "crop": "crops/b-15e83e33_4.jpg"
   },
   {
+   "id": "b-15e83e33#7",
+   "engine": "i",
+   "printed": "011",
+   "kind": "lite_only",
+   "ctx": "1 frac f 101 f 100 frac",
+   "crop": "crops/b-15e83e33_7.jpg"
+  },
+  {
+   "id": "b-15e83e33#9",
+   "engine": "7",
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "1 frac f 011 f 010 frac",
+   "crop": "crops/b-15e83e33_9.jpg"
+  },
+  {
    "id": "b-15e83e33#16",
    "engine": null,
    "printed": "111",
@@ -1617,6 +2065,14 @@
    "crop": "crops/b-15e83e33_21.jpg"
   },
   {
+   "id": "b-15e83e33#29",
+   "engine": "ay",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "111 h psi 111 k chi 111",
+   "crop": "crops/b-15e83e33_29.jpg"
+  },
+  {
    "id": "b-15e83e33#39",
    "engine": "110",
    "printed": "111",
@@ -1625,12 +2081,44 @@
    "crop": "crops/b-15e83e33_39.jpg"
   },
   {
+   "id": "b-15e83e33#41",
+   "engine": "g1",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "111 k chi 111 phi 110 h",
+   "crop": "crops/b-15e83e33_41.jpg"
+  },
+  {
+   "id": "b-15e83e33#42",
+   "engine": "yl",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "c frac phi 111 phi 110 frac",
+   "crop": "crops/b-15e83e33_42.jpg"
+  },
+  {
    "id": "b-15e83e33#43",
    "engine": null,
    "printed": "111",
    "kind": "lite_only",
    "ctx": "110 frac psi 111 psi 110 frac",
    "crop": "crops/b-15e83e33_43.jpg"
+  },
+  {
+   "id": "b-15e83e33#44",
+   "engine": "y",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "110 frac chi 111 chi 110",
+   "crop": "crops/b-15e83e33_44.jpg"
+  },
+  {
+   "id": "b-15e83e33#45",
+   "engine": "b",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "chi 111 chi 110",
+   "crop": "crops/b-15e83e33_45.jpg"
   },
   {
    "id": "b-d956096b#9",
@@ -1671,6 +2159,14 @@
    "kind": "archive_only",
    "ctx": "15 silicis 2 224 44 radicis caricae",
    "crop": "crops/b-d956096b_43.jpg"
+  },
+  {
+   "id": "b-d956096b#78",
+   "engine": null,
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "terræ communis 2 11 2 55 ceræ",
+   "crop": "crops/b-d956096b_78.jpg"
   },
   {
    "id": "b-8cd87214#7",
@@ -1727,6 +2223,14 @@
    "kind": "lite_only",
    "ctx": "beat 23 p 1103 d 66 porph",
    "crop": "crops/b-8cd87214_19.jpg"
+  },
+  {
+   "id": "b-8cd87214#30",
+   "engine": "6g",
+   "printed": "69",
+   "kind": "lite_only",
+   "ctx": "mai om cod 69 aelian var hist",
+   "crop": "crops/b-8cd87214_30.jpg"
   },
   {
    "id": "b-8cd87214#37",
@@ -1977,6 +2481,22 @@
    "crop": "crops/b-c6b69b11_12.jpg"
   },
   {
+   "id": "b-c6b69b11#34",
+   "engine": "v",
+   "printed": "77",
+   "kind": "lite_only",
+   "ctx": "100 90 88 77 110 99 96",
+   "crop": "crops/b-c6b69b11_34.jpg"
+  },
+  {
+   "id": "b-c6b69b11#36",
+   "engine": "no",
+   "printed": "77",
+   "kind": "lite_only",
+   "ctx": "90 88 77 110 99 96 84",
+   "crop": "crops/b-c6b69b11_36.jpg"
+  },
+  {
    "id": "b-c6b69b11#55",
    "engine": "c",
    "printed": "18",
@@ -1991,6 +2511,14 @@
    "kind": "lite_only",
    "ctx": "21 and 20 27 that is twice",
    "crop": "crops/b-c6b69b11_59.jpg"
+  },
+  {
+   "id": "b-c6b69b11#63",
+   "engine": "c",
+   "printed": "72",
+   "kind": "lite_only",
+   "ctx": "we can find 72 56 and 90",
+   "crop": "crops/b-c6b69b11_63.jpg"
   },
   {
    "id": "b-c6b69b11#64",
@@ -2049,6 +2577,14 @@
    "crop": "crops/b-ee8137ed_60.jpg"
   },
   {
+   "id": "b-ee8137ed#76",
+   "engine": "ii",
+   "printed": "11",
+   "kind": "lite_only",
+   "ctx": "hair gen xxvii 11 pl heeris iii",
+   "crop": "crops/b-ee8137ed_76.jpg"
+  },
+  {
    "id": "b-ee8137ed#78",
    "engine": "n",
    "printed": "11",
@@ -2063,6 +2599,14 @@
    "kind": "lite_only",
    "ctx": "xiv 22 xxix 11 ex xxv 25",
    "crop": "crops/b-ee8137ed_90.jpg"
+  },
+  {
+   "id": "b-ee8137ed#145",
+   "engine": "ii",
+   "printed": "11",
+   "kind": "lite_only",
+   "ctx": "27 lk xxii 11 pl herbergeries judith",
+   "crop": "crops/b-ee8137ed_145.jpg"
   },
   {
    "id": "b-f4f332d6#4",
@@ -2135,6 +2679,14 @@
    "kind": "lite_only",
    "ctx": "401 on the cabiri",
    "crop": "crops/b-93b3f4c6_0_margin.jpg"
+  },
+  {
+   "id": "b-93b3f4c6#8",
+   "engine": "2",
+   "printed": "502",
+   "kind": "lite_only",
+   "ctx": "dagdae ibid p 502 the phallic dagdae",
+   "crop": "crops/b-93b3f4c6_8.jpg"
   },
   {
    "id": "b-93b3f4c6#11",
@@ -2233,6 +2785,14 @@
    "crop": "crops/b-8c98330e_0_margin.jpg"
   },
   {
+   "id": "b-8c98330e#1",
+   "engine": "ly",
+   "printed": "19",
+   "kind": "lite_only",
+   "ctx": "col xxxvi v 19 usque ad 23",
+   "crop": "crops/b-8c98330e_1.jpg"
+  },
+  {
    "id": "b-8c98330e#5",
    "engine": "3i",
    "printed": "31",
@@ -2241,12 +2801,68 @@
    "crop": "crops/b-8c98330e_5.jpg"
   },
   {
+   "id": "b-8c98330e#6",
+   "engine": "so",
+   "printed": "3034",
+   "kind": "lite_only",
+   "ctx": "col ix lin 30 34 col xiv",
+   "crop": "crops/b-8c98330e_6.jpg"
+  },
+  {
+   "id": "b-8c98330e#7",
+   "engine": "s",
+   "printed": "3034",
+   "kind": "lite_only",
+   "ctx": "ix lin 30 34 col xiv lin",
+   "crop": "crops/b-8c98330e_7.jpg"
+  },
+  {
+   "id": "b-8c98330e#10",
+   "engine": "lo",
+   "printed": "1015",
+   "kind": "lite_only",
+   "ctx": "5 8 lin 10 15 pulchrae sunt",
+   "crop": "crops/b-8c98330e_10.jpg"
+  },
+  {
+   "id": "b-8c98330e#12",
+   "engine": "ii",
+   "printed": "1015",
+   "kind": "lite_only",
+   "ctx": "8 lin 10 15 pulchrae sunt et",
+   "crop": "crops/b-8c98330e_12.jpg"
+  },
+  {
    "id": "b-8c98330e#15",
    "engine": "i3",
    "printed": "13",
    "kind": "lite_only",
    "ctx": "col xxiii lin 13 20 col xxiv",
    "crop": "crops/b-8c98330e_15.jpg"
+  },
+  {
+   "id": "b-d870c4c7#8",
+   "engine": "ao",
+   "printed": "40",
+   "kind": "lite_only",
+   "ctx": "ducati 22 grana 40 io gennaro casanova",
+   "crop": "crops/b-d870c4c7_8.jpg"
+  },
+  {
+   "id": "b-d870c4c7#12",
+   "engine": null,
+   "printed": "17",
+   "kind": "lite_only",
+   "ctx": "1056 1428 ducati 17 30 io antonio",
+   "crop": "crops/b-d870c4c7_12.jpg"
+  },
+  {
+   "id": "b-d870c4c7#13",
+   "engine": "lass",
+   "printed": "1730",
+   "kind": "lite_only",
+   "ctx": "1428 ducati 17 30 io antonio lentari",
+   "crop": "crops/b-d870c4c7_13.jpg"
   },
   {
    "id": "b-7f5e149f#12",
@@ -2279,6 +2895,14 @@
    "kind": "lite_only",
    "ctx": "36 38 46 50 56 57 64",
    "crop": "crops/b-7f5e149f_52.jpg"
+  },
+  {
+   "id": "b-7f5e149f#108",
+   "engine": "j",
+   "printed": "40",
+   "kind": "lite_only",
+   "ctx": "1 31 39 40 87 88 91",
+   "crop": "crops/b-7f5e149f_108.jpg"
   },
   {
    "id": "b-7f5e149f#152",
@@ -2427,6 +3051,14 @@
    "crop": "crops/a-45a88e2e-p963_10.jpg"
   },
   {
+   "id": "a-45a88e2e-p993#65",
+   "engine": "248",
+   "printed": "547",
+   "kind": "lite_only",
+   "ctx": "loomis g w 248 hynes w j",
+   "crop": "crops/a-45a88e2e-p993_65.jpg"
+  },
+  {
    "id": "a-45a8921b-p399#2",
    "engine": "26",
    "printed": "none",
@@ -2441,6 +3073,14 @@
    "kind": "archive_only",
    "ctx": "st portland me 35 keyser frank nathaniel",
    "crop": "crops/a-45a8921b-p543_27.jpg"
+  },
+  {
+   "id": "a-45a8921b-p555#2",
+   "engine": "1888",
+   "printed": "28",
+   "kind": "lite_only",
+   "ctx": "m nov 28 1888 lula e clark",
+   "crop": "crops/a-45a8921b-p555_2.jpg"
   },
   {
    "id": "a-45a8921b-p555#9",
@@ -2459,6 +3099,14 @@
    "crop": "crops/a-45a8921b-p555_14.jpg"
   },
   {
+   "id": "a-45a8921b-p555#32",
+   "engine": "1884",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "college experiment station 1884 6 chemist tenn",
+   "crop": "crops/a-45a8921b-p555_32.jpg"
+  },
+  {
    "id": "a-45a8921b-p555#33",
    "engine": "1888",
    "printed": "none",
@@ -2473,6 +3121,14 @@
    "kind": "lite_only",
    "ctx": "chemistry purdue univ 1889 90 vice president",
    "crop": "crops/a-45a8921b-p555_34.jpg"
+  },
+  {
+   "id": "a-45a883eb-p124#23",
+   "engine": "1865",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "s a 1861 1865 m d",
+   "crop": "crops/a-45a883eb-p124_23.jpg"
   },
   {
    "id": "a-45a883eb-p124#25",
@@ -2531,6 +3187,30 @@
    "crop": "crops/a-45a883eb-p411_15.jpg"
   },
   {
+   "id": "a-45a883eb-p411#27",
+   "engine": "286",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "arthur baldwin jr 286 vorce myron bond",
+   "crop": "crops/a-45a883eb-p411_27.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#49",
+   "engine": "288",
+   "printed": "281",
+   "kind": "lite_only",
+   "ctx": "wilson thomas h 288 walkey harry edgar",
+   "crop": "crops/a-45a883eb-p411_49.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#54",
+   "engine": "289",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "277 winton alexander 289 walton john whittlesey",
+   "crop": "crops/a-45a883eb-p411_54.jpg"
+  },
+  {
    "id": "a-45a883eb-p411#58",
    "engine": null,
    "printed": "284",
@@ -2547,6 +3227,14 @@
    "crop": "crops/a-45a883eb-p411_59.jpg"
   },
   {
+   "id": "a-45a883eb-p411#70",
+   "engine": "290",
+   "printed": "284",
+   "kind": "lite_only",
+   "ctx": "woodruff albert w 290 weaver s marshall",
+   "crop": "crops/a-45a883eb-p411_70.jpg"
+  },
+  {
    "id": "a-45a883eb-p411#72",
    "engine": null,
    "printed": "287",
@@ -2555,12 +3243,28 @@
    "crop": "crops/a-45a883eb-p411_72.jpg"
   },
   {
+   "id": "a-45a883eb-p411#73",
+   "engine": "291",
+   "printed": "287",
+   "kind": "lite_only",
+   "ctx": "woodwirth fred j 291 webster john howard",
+   "crop": "crops/a-45a883eb-p411_73.jpg"
+  },
+  {
    "id": "a-45a883eb-p411#74",
    "engine": "john",
    "printed": "287",
    "kind": "archive_only",
    "ctx": "wilson george henry 287 wilson dr harris",
    "crop": "crops/a-45a883eb-p411_74.jpg"
+  },
+  {
+   "id": "a-45a883eb-p411#84",
+   "engine": "292",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "wright ernest t 292 wells thomas henry",
+   "crop": "crops/a-45a883eb-p411_84.jpg"
   },
   {
    "id": "a-45a883eb-p411#86",
@@ -2585,6 +3289,22 @@
    "kind": "lite_only",
    "ctx": "and 10000 x 100 1000000 but it",
    "crop": "crops/b-61bc408b_15.jpg"
+  },
+  {
+   "id": "b-61bc408b#20",
+   "engine": "100",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "x 10 x 100 these two numbers",
+   "crop": "crops/b-61bc408b_20.jpg"
+  },
+  {
+   "id": "b-471e4d76#8",
+   "engine": "45",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "arsenic 53 potash 45 peroxide of mercury",
+   "crop": "crops/b-471e4d76_8.jpg"
   },
   {
    "id": "b-471e4d76#13",
@@ -2643,6 +3363,14 @@
    "crop": "crops/b-ee80c069_9.jpg"
   },
   {
+   "id": "b-83e9660d#0",
+   "engine": "128",
+   "printed": "142",
+   "kind": "lite_only",
+   "ctx": "va a carte 128 a aristippo philo",
+   "crop": "crops/b-83e9660d_0.jpg"
+  },
+  {
    "id": "b-83e9660d#4",
    "engine": null,
    "printed": "126",
@@ -2659,11 +3387,27 @@
    "crop": "crops/b-83e9660d_6.jpg"
   },
   {
+   "id": "b-83e9660d#8",
+   "engine": "132",
+   "printed": "142",
+   "kind": "lite_only",
+   "ctx": "va a carte 132 a stilpon philo",
+   "crop": "crops/b-83e9660d_8.jpg"
+  },
+  {
    "id": "b-83e9660d#9",
    "engine": "126",
    "printed": "146",
    "kind": "agree",
    "ctx": "va a cart 126 vaacatei33 va a"
+  },
+  {
+   "id": "b-83e9660d#12",
+   "engine": "130",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 130 a theodoro philo",
+   "crop": "crops/b-83e9660d_12.jpg"
   },
   {
    "id": "b-83e9660d#13",
@@ -2672,6 +3416,54 @@
    "kind": "archive_only",
    "ctx": "a vaa carte 142 7 eo 8",
    "crop": "crops/b-83e9660d_13.jpg"
+  },
+  {
+   "id": "b-83e9660d#14",
+   "engine": "130",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 130 a theodoro phi",
+   "crop": "crops/b-83e9660d_14.jpg"
+  },
+  {
+   "id": "b-83e9660d#15",
+   "engine": "128",
+   "printed": "134",
+   "kind": "lite_only",
+   "ctx": "va a carte 128 a aristippo philo",
+   "crop": "crops/b-83e9660d_15.jpg"
+  },
+  {
+   "id": "b-83e9660d#16",
+   "engine": "138",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 138 a speusippo phi",
+   "crop": "crops/b-83e9660d_16.jpg"
+  },
+  {
+   "id": "b-83e9660d#17",
+   "engine": "134",
+   "printed": "146",
+   "kind": "lite_only",
+   "ctx": "va a carte 134 a menedemo philo",
+   "crop": "crops/b-83e9660d_17.jpg"
+  },
+  {
+   "id": "b-83e9660d#18",
+   "engine": "144",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 144 a senocrate phil",
+   "crop": "crops/b-83e9660d_18.jpg"
+  },
+  {
+   "id": "b-83e9660d#19",
+   "engine": "140",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "va a carte 140 a crifippo philo",
+   "crop": "crops/b-83e9660d_19.jpg"
   },
   {
    "id": "b-83e9660d#20",
@@ -2706,12 +3498,60 @@
    "crop": "crops/b-936fadfe_2.jpg"
   },
   {
+   "id": "b-83e90214#3",
+   "engine": "11",
+   "printed": "3",
+   "kind": "lite_only",
+   "ctx": "10 amicable settlement 11 your pen will",
+   "crop": "crops/b-83e90214_3.jpg"
+  },
+  {
+   "id": "b-83e90214#12",
+   "engine": "11",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "part 10 gains 11 honourable positions in",
+   "crop": "crops/b-83e90214_12.jpg"
+  },
+  {
+   "id": "b-853be0f6#1",
+   "engine": "27",
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "d 353 xi 27 a d 355",
+   "crop": "crops/b-853be0f6_1.jpg"
+  },
+  {
    "id": "b-9ec6922b#4",
    "engine": "1876",
    "printed": "none",
    "kind": "lite_only",
    "ctx": "mhalamhala a khosa 1876 war of makhanana",
    "crop": "crops/b-9ec6922b_4.jpg"
+  },
+  {
+   "id": "b-245fa78f#2",
+   "engine": "200",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "have lasted 3 200 000 the tirtah",
+   "crop": "crops/b-245fa78f_2.jpg"
+  },
+  {
+   "id": "b-66ac3a4c#3",
+   "engine": "146",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "in praeceptis omnibus 146 sed quae sua",
+   "crop": "crops/b-66ac3a4c_3.jpg"
+  },
+  {
+   "id": "b-66ac3a4c#4",
+   "engine": "147",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "exercitatio quaedam suscipienda 147 vobis est quamquam",
+   "crop": "crops/b-66ac3a4c_4.jpg"
   },
   {
    "id": "b-66ac3a4c#16",
@@ -2728,6 +3568,14 @@
    "kind": "archive_only",
    "ctx": "dedisse 8 eiicio 11 24 102 i",
    "crop": "crops/b-66ac3a4c_26.jpg"
+  },
+  {
+   "id": "b-66ac3a4c#30",
+   "engine": "11",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "definite practical exercise 11 quamquam a rhetorical",
+   "crop": "crops/b-66ac3a4c_30.jpg"
   },
   {
    "id": "b-2d471189#1",
@@ -2770,6 +3618,14 @@
    "crop": "crops/b-78f1d9b9_38.jpg"
   },
   {
+   "id": "b-7f5ea56f#7",
+   "engine": "271",
+   "printed": "27",
+   "kind": "lite_only",
+   "ctx": "v iv pp 271 274 3 v",
+   "crop": "crops/b-7f5ea56f_7.jpg"
+  },
+  {
    "id": "b-7f5ea56f#16",
    "engine": "287",
    "printed": "281",
@@ -2802,6 +3658,30 @@
    "crop": "crops/b-7f5ea56f_20.jpg"
   },
   {
+   "id": "b-7f5ea56f#25",
+   "engine": "281",
+   "printed": "230",
+   "kind": "lite_only",
+   "ctx": "pp 246 279 281 282 284 287",
+   "crop": "crops/b-7f5ea56f_25.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#28",
+   "engine": "284",
+   "printed": "246",
+   "kind": "lite_only",
+   "ctx": "279 281 282 284 287 6 v",
+   "crop": "crops/b-7f5ea56f_28.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#33",
+   "engine": "264",
+   "printed": "330",
+   "kind": "lite_only",
+   "ctx": "v iv pp 264 322 325 7",
+   "crop": "crops/b-7f5ea56f_33.jpg"
+  },
+  {
    "id": "b-7f5ea56f#39",
    "engine": "333",
    "printed": "277",
@@ -2824,6 +3704,38 @@
    "kind": "sub",
    "ctx": "a on i 687",
    "crop": "crops/b-7f5ea56f_42.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#43",
+   "engine": "279",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "v iv pp 279 301 332 333",
+   "crop": "crops/b-7f5ea56f_43.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#44",
+   "engine": "301",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "iv pp 279 301 332 333 10",
+   "crop": "crops/b-7f5ea56f_44.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#45",
+   "engine": "332",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "pp 279 301 332 333 10 v",
+   "crop": "crops/b-7f5ea56f_45.jpg"
+  },
+  {
+   "id": "b-7f5ea56f#46",
+   "engine": "260",
+   "printed": "239242",
+   "kind": "lite_only",
+   "ctx": "v iv pp 260 262 277",
+   "crop": "crops/b-7f5ea56f_46.jpg"
   },
   {
    "id": "b-8747df2e#30",
@@ -2858,6 +3770,22 @@
    "crop": "crops/b-3741d7d7_10.jpg"
   },
   {
+   "id": "b-3741d7d7#15",
+   "engine": "1861",
+   "printed": "23",
+   "kind": "lite_only",
+   "ctx": "26 water dragon 1861 55 bird 1893",
+   "crop": "crops/b-3741d7d7_15.jpg"
+  },
+  {
+   "id": "b-3741d7d7#18",
+   "engine": "1893",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "1861 55 bird 1893 27 serpent 1862",
+   "crop": "crops/b-3741d7d7_18.jpg"
+  },
+  {
    "id": "b-3741d7d7#21",
    "engine": "bird",
    "printed": "1891",
@@ -2872,6 +3800,30 @@
    "kind": "archive_only",
    "ctx": "fire ape 1865 11 59 1 ox",
    "crop": "crops/b-3741d7d7_36.jpg"
+  },
+  {
+   "id": "b-3741d7d7#39",
+   "engine": "33",
+   "printed": "32",
+   "kind": "lite_only",
+   "ctx": "1 hare 1899 33 hog 1868 2",
+   "crop": "crops/b-3741d7d7_39.jpg"
+  },
+  {
+   "id": "b-3741d7d7#54",
+   "engine": "39",
+   "printed": "1873",
+   "kind": "lite_only",
+   "ctx": "7 bird 1905 39 serpent 1874 8",
+   "crop": "crops/b-3741d7d7_54.jpg"
+  },
+  {
+   "id": "b-3741d7d7#93",
+   "engine": "1889",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "54 iron ape 1889 23 ox 1921",
+   "crop": "crops/b-3741d7d7_93.jpg"
   },
   {
    "id": "b-3741d7d7#106",
@@ -2942,11 +3894,43 @@
    "crop": "crops/b-de21ba5c_25.jpg"
   },
   {
+   "id": "b-de21ba5c#28",
+   "engine": "60",
+   "printed": "12",
+   "kind": "lite_only",
+   "ctx": "3 4 12 60 4 61 8",
+   "crop": "crops/b-de21ba5c_28.jpg"
+  },
+  {
    "id": "b-de21ba5c#42",
    "engine": "226",
    "printed": "22018",
    "kind": "agree",
    "ctx": "12 185 3 226 18 qualified with"
+  },
+  {
+   "id": "b-de21ba5c#47",
+   "engine": "15",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "16 with nayalakṣaṇa 15 3 with tattvam",
+   "crop": "crops/b-de21ba5c_47.jpg"
+  },
+  {
+   "id": "b-de21ba5c#52",
+   "engine": "13",
+   "printed": "88",
+   "kind": "lite_only",
+   "ctx": "with bhūtakoti 88 13 in the sagāthakam",
+   "crop": "crops/b-de21ba5c_52.jpg"
+  },
+  {
+   "id": "b-de21ba5c#59",
+   "engine": "781",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "gatigama 746 dṛṣṭigatika 781 dṛṣṭadharma 881 pratyekabuddha",
+   "crop": "crops/b-de21ba5c_59.jpg"
   },
   {
    "id": "b-de21ba5c#69",
@@ -2979,12 +3963,84 @@
    "ctx": "continuation prabkiva 203 356 w72 gua sovereign"
   },
   {
+   "id": "b-de21ba5c#80",
+   "engine": "57",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "prabhedapracāra in vyavasthānayati 57 12 143 分別觀察建立",
+   "crop": "crops/b-de21ba5c_80.jpg"
+  },
+  {
+   "id": "b-82f777b5#3",
+   "engine": "108",
+   "printed": "108162",
+   "kind": "lite_only",
+   "ctx": "48 54 81 108 162 and the",
+   "crop": "crops/b-82f777b5_3.jpg"
+  },
+  {
+   "id": "b-82f777b5#4",
+   "engine": "162",
+   "printed": "108162",
+   "kind": "lite_only",
+   "ctx": "54 81 108 162 and the double",
+   "crop": "crops/b-82f777b5_4.jpg"
+  },
+  {
+   "id": "b-82f777b5#17",
+   "engine": "1536",
+   "printed": "296",
+   "kind": "lite_only",
+   "ctx": "1152 1296 1458 1536 1728 1944 2048",
+   "crop": "crops/b-82f777b5_17.jpg"
+  },
+  {
+   "id": "b-82f777b5#23",
+   "engine": "2592",
+   "printed": "2304",
+   "kind": "lite_only",
+   "ctx": "1944 2048 2304 2592 2916 3072 3456",
+   "crop": "crops/b-82f777b5_23.jpg"
+  },
+  {
    "id": "b-82f777b5#24",
    "engine": "512",
    "printed": "12",
    "kind": "sub",
    "ctx": "432 480 5 12 570 648 729",
    "crop": "crops/b-82f777b5_24.jpg"
+  },
+  {
+   "id": "b-82f777b5#25",
+   "engine": "2916",
+   "printed": "2304",
+   "kind": "lite_only",
+   "ctx": "2048 2304 2592 2916 3072 3456 3888",
+   "crop": "crops/b-82f777b5_25.jpg"
+  },
+  {
+   "id": "b-82f777b5#29",
+   "engine": "3888",
+   "printed": "3456",
+   "kind": "lite_only",
+   "ctx": "2916 3072 3456 3888 4374 4608 5184",
+   "crop": "crops/b-82f777b5_29.jpg"
+  },
+  {
+   "id": "b-82f777b5#35",
+   "engine": "6912",
+   "printed": "6144",
+   "kind": "lite_only",
+   "ctx": "5184 5832 6141 6912 7776 8748 9216",
+   "crop": "crops/b-82f777b5_35.jpg"
+  },
+  {
+   "id": "b-82f777b5#38",
+   "engine": "9216",
+   "printed": "6144",
+   "kind": "lite_only",
+   "ctx": "6912 7776 8748 9216 10368 and the",
+   "crop": "crops/b-82f777b5_38.jpg"
   },
   {
    "id": "b-82f777b5#43",
@@ -3011,12 +4067,92 @@
    "crop": "crops/b-82f777b5_50.jpg"
   },
   {
+   "id": "b-34bd62e3#16",
+   "engine": "10",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "5 4 3 10 4 subtle acute",
+   "crop": "crops/b-34bd62e3_16.jpg"
+  },
+  {
+   "id": "b-15e83e33#3",
+   "engine": "111",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "1 frac f 111 f 110 frac",
+   "crop": "crops/b-15e83e33_3.jpg"
+  },
+  {
+   "id": "b-15e83e33#7",
+   "engine": "101",
+   "printed": "011",
+   "kind": "lite_only",
+   "ctx": "1 frac f 101 f 100 frac",
+   "crop": "crops/b-15e83e33_7.jpg"
+  },
+  {
+   "id": "b-15e83e33#9",
+   "engine": "011",
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "1 frac f 011 f 010 frac",
+   "crop": "crops/b-15e83e33_9.jpg"
+  },
+  {
+   "id": "b-15e83e33#10",
+   "engine": "010",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "f 011 f 010 frac 1 x",
+   "crop": "crops/b-15e83e33_10.jpg"
+  },
+  {
+   "id": "b-15e83e33#11",
+   "engine": "000",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "f 001 f 000 and we have",
+   "crop": "crops/b-15e83e33_11.jpg"
+  },
+  {
+   "id": "b-15e83e33#32",
+   "engine": "110",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "chi 111 phi 110 h psi 110",
+   "crop": "crops/b-15e83e33_32.jpg"
+  },
+  {
+   "id": "b-15e83e33#35",
+   "engine": "110",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "110 h psi 110 k chi 110",
+   "crop": "crops/b-15e83e33_35.jpg"
+  },
+  {
+   "id": "b-15e83e33#36",
+   "engine": "110",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "110 k chi 110 independent of h",
+   "crop": "crops/b-15e83e33_36.jpg"
+  },
+  {
    "id": "b-15e83e33#40",
    "engine": "111",
    "printed": "none",
    "kind": "lite_only",
    "ctx": "then frac phi 111 h psi 111",
    "crop": "crops/b-15e83e33_40.jpg"
+  },
+  {
+   "id": "b-15e83e33#45",
+   "engine": "110",
+   "printed": "111",
+   "kind": "lite_only",
+   "ctx": "chi 111 chi 110",
+   "crop": "crops/b-15e83e33_45.jpg"
   },
   {
    "id": "b-d956096b#0",
@@ -3075,6 +4211,22 @@
    "crop": "crops/b-d956096b_43.jpg"
   },
   {
+   "id": "b-d956096b#46",
+   "engine": "203",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "16 vitri 2 203 4 45 ligni",
+   "crop": "crops/b-d956096b_46.jpg"
+  },
+  {
+   "id": "b-d956096b#48",
+   "engine": "31",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "ligni ebeni 1 31 2 17 crystalli",
+   "crop": "crops/b-d956096b_48.jpg"
+  },
+  {
    "id": "b-d956096b#61",
    "engine": "81",
    "printed": "none",
@@ -3091,6 +4243,22 @@
    "crop": "crops/b-d956096b_65.jpg"
   },
   {
+   "id": "b-d956096b#73",
+   "engine": "23",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "vini clareti 1 23 4 25 sulphuris",
+   "crop": "crops/b-d956096b_73.jpg"
+  },
+  {
+   "id": "b-d956096b#78",
+   "engine": "11",
+   "printed": "1",
+   "kind": "lite_only",
+   "ctx": "terræ communis 2 11 2 55 ceræ",
+   "crop": "crops/b-d956096b_78.jpg"
+  },
+  {
    "id": "b-1d61de79#1",
    "engine": "18",
    "printed": "none",
@@ -3105,6 +4273,62 @@
    "kind": "lite_only",
    "ctx": "kindly rom ix 28 stood as a",
    "crop": "crops/b-1d61de79_2.jpg"
+  },
+  {
+   "id": "b-c6b69b11#16",
+   "engine": "50",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "36 40 35 50 45 48 42",
+   "crop": "crops/b-c6b69b11_16.jpg"
+  },
+  {
+   "id": "b-c6b69b11#18",
+   "engine": "45",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "40 35 50 45 48 42 60",
+   "crop": "crops/b-c6b69b11_18.jpg"
+  },
+  {
+   "id": "b-c6b69b11#22",
+   "engine": "56",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "42 60 54 56 49 70 63",
+   "crop": "crops/b-c6b69b11_22.jpg"
+  },
+  {
+   "id": "b-c6b69b11#24",
+   "engine": "63",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "56 49 70 63 64 56 80",
+   "crop": "crops/b-c6b69b11_24.jpg"
+  },
+  {
+   "id": "b-c6b69b11#26",
+   "engine": "64",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "49 70 63 64 56 80 72",
+   "crop": "crops/b-c6b69b11_26.jpg"
+  },
+  {
+   "id": "b-c6b69b11#28",
+   "engine": "72",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "56 80 72 72 63 90 81",
+   "crop": "crops/b-c6b69b11_28.jpg"
+  },
+  {
+   "id": "b-c6b69b11#36",
+   "engine": "110",
+   "printed": "77",
+   "kind": "lite_only",
+   "ctx": "90 88 77 110 99 96 84",
+   "crop": "crops/b-c6b69b11_36.jpg"
   },
   {
    "id": "b-c6b69b11#65",
@@ -3179,6 +4403,54 @@
    "crop": "crops/b-83e906c6_12.jpg"
   },
   {
+   "id": "b-83e906c6#41",
+   "engine": "1605",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "some two handled 1605 advt of learning",
+   "crop": "crops/b-83e906c6_41.jpg"
+  },
+  {
+   "id": "b-83e906c6#46",
+   "engine": "1616",
+   "printed": "1633",
+   "kind": "lite_only",
+   "ctx": "various grapes bugle 1616 ben jonson s",
+   "crop": "crops/b-83e906c6_46.jpg"
+  },
+  {
+   "id": "b-83e906c6#49",
+   "engine": "1631",
+   "printed": "1638",
+   "kind": "lite_only",
+   "ctx": "shakespeare grapes crowns 1631 love s labour",
+   "crop": "crops/b-83e906c6_49.jpg"
+  },
+  {
+   "id": "b-83e906c6#51",
+   "engine": "1634",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "various grapes shields 1634 jeremy taylor s",
+   "crop": "crops/b-83e906c6_51.jpg"
+  },
+  {
+   "id": "b-83e906c6#55",
+   "engine": "1640",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "various candlesticks shields 1640 ben jonson s",
+   "crop": "crops/b-83e906c6_55.jpg"
+  },
+  {
+   "id": "b-83e906c6#65",
+   "engine": "1655",
+   "printed": "none",
+   "kind": "lite_only",
+   "ctx": "in half shields 1655 fuller s ch",
+   "crop": "crops/b-83e906c6_65.jpg"
+  },
+  {
    "id": "b-224cc20c#2",
    "engine": "2",
    "printed": "2",
@@ -3193,6 +4465,46 @@
    "kind": "lite_only",
    "ctx": "passion 12 migration 13 power 14 unimpediment",
    "crop": "crops/b-224cc20c_5.jpg"
+  },
+  {
+   "id": "b-8c98330e#6",
+   "engine": "30",
+   "printed": "3034",
+   "kind": "lite_only",
+   "ctx": "col ix lin 30 34 col xiv",
+   "crop": "crops/b-8c98330e_6.jpg"
+  },
+  {
+   "id": "b-8c98330e#7",
+   "engine": "34",
+   "printed": "3034",
+   "kind": "lite_only",
+   "ctx": "ix lin 30 34 col xiv lin",
+   "crop": "crops/b-8c98330e_7.jpg"
+  },
+  {
+   "id": "b-8c98330e#10",
+   "engine": "10",
+   "printed": "1015",
+   "kind": "lite_only",
+   "ctx": "5 8 lin 10 15 pulchrae sunt",
+   "crop": "crops/b-8c98330e_10.jpg"
+  },
+  {
+   "id": "b-8c98330e#12",
+   "engine": "15",
+   "printed": "1015",
+   "kind": "lite_only",
+   "ctx": "8 lin 10 15 pulchrae sunt et",
+   "crop": "crops/b-8c98330e_12.jpg"
+  },
+  {
+   "id": "b-d870c4c7#13",
+   "engine": "30",
+   "printed": "1730",
+   "kind": "lite_only",
+   "ctx": "1428 ducati 17 30 io antonio lentari",
+   "crop": "crops/b-d870c4c7_13.jpg"
   },
   {
    "id": "b-7f5e149f#152",
