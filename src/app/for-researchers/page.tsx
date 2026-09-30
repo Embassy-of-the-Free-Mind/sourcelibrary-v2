@@ -184,6 +184,7 @@ export default function ForResearchersPage() {
 
         <div className="grid md:grid-cols-2 gap-4 mb-8">
           <RelatedCard href="/about/research" title="How Our Translations Work" desc="Pipeline details, models, quality signals, and benchmark studies." />
+          <RelatedCard href="/connect" title="Connect to Claude or ChatGPT" desc="Search, read and cite the library from inside your AI assistant. One URL, with a video walkthrough." />
           <RelatedCard href="/developers" title="API & MCP Server" desc="Technical documentation for programmatic access." />
           <RelatedCard href="/about/sources" title="Source Libraries" desc="The 50+ institutional partners we draw from." />
           <RelatedCard href="/explore" title="Explore the Collection" desc="Browse by subject, period, language, or collection." />
