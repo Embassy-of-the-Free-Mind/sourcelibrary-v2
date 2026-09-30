@@ -1,0 +1,23 @@
+3. Lichtenstein (Abraham ben Eliezer). Spi po   p   Sy o hon. Wilna, 1799. () . 4°. (ontains only chapters I-V.)
+
+4. . asel, 1804. Printed by Wilhelm Haas.1
+
+5. Salomon, Gotthold.2 . . .   55 Pp pn .Dessau, Moses Philippsohn, 1809. 8°.With vowels.
+
+6. Beer, Michal.   . Le huit Chapitres de Maïmonide, etc., trad. en franc. 8°. Paris, 1811.
+
+7. Acht Abschnitte8 ... aus dem Arabischen. Braunschweig, 1824. 8°.
+
+8. Falkenheim, S. Die Ethik des Maimonides oder Schemoneh Perakim; deutsch bearbeit. Königsberg, 1832. 8°.
+
+9. " . De Acht Hoofdstukken van Maimonides. Bevattende zijne Zielkundige Verhandeling. Het Hebreeuwsch op nieuw nagezien en in het Nederduitsch vertaald.4 Groningen, S. J. Oppenheim, 1845.
+
+10. Slucki, David. "   in . Contains also a biography of Samuel Ibn Tibbon and notes. Warsaw,1863.
+
+11. Wolf, Michal.   p "275 u . Lemberg, 1876 (Follows ed. Dessau, 1809). With vowels, but unreliable.
+
+## COMMENTARIES, ANNOTATED EDITIONS, AND TRANSLATIONS
+
+The commentaries on the Peraķim are found in some of the above-mentioned editions. They are the  by
+
+1 Haas was a member of the Acad. der mech. Künste in Berlin.. 2 HUb., p. 438. Salomon was a teacher at the Freischule in Dessau; Beer, Rabbi Moses ben Maimon, p. 72. 8 Catalogue of Hebrew Books in the British Museum, p. 587. 4 A copy is found in the Columbia University Library (N.Y.).

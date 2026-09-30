@@ -1,0 +1,34 @@
+Tharain c.   
+Morleo xv.   
+Deocilunon xl.   
+Cimoiod filius Arcois vij.   
+Deoord 1.   
+Bliesblituth v.   
+Dectotr'ic frater Diu xl.   
+Usconbuts xxx.   
+Carvorst xl.   
+Deo ardivois xx.   
+Vist 1.   
+Ru c.
+
+Gartnaith loc, a quo Garnart iiij. regnavere, x. annis regnavit.
+
+Breth filius Buthut vij.
+
+Vipoig namet xxx. annis regnavit.
+
+Canutulachama iiij. annis regnavit.
+
+Wradech uecla ii. annis regnavit.
+
+Gartnaich diuberr lx. annis regnavit.
+
+Talore filius Achivir lxxv. annis regnavit.
+
+Drust filius Erp c. annis regnavit et c. bella peregit; ix decimo anno regni ejus Patricius episcopus sanctus ad Hiberniam pervenit insulam.
+
+Talore filius Aniel iiij. annis regnavit.
+
+Necton morbet filius Erip xxiiij. regnavit. Tertio anno regni ejus Darlugdach abbatissa Cilledara de Hibernia exulat pro Christo ad Britanniam. Secundo anno adventus sui immolavit Nectonius Aburnethige Deo et Sancte Brigide presente Dairlugdach que cantavit alleluia super istam hostiam.
+
+Optulit igitur Nectonius magnus flius Wirp,rex omnium provinciarum Pictorum, Apurnethige Sancte Brigide, usque ad diem judicii, cum suis finibus, que posite sunt a lapide in Apurfeirt usque ad lapidem juxta Ceirfuill, id est, Lethfoss, et inde in altum usque ad Athan. Causa autem oblationis hec est. Nectonius in vita julie manens fratre suo Drusto expulsante se usque ad Hiberniam Brigidam sanctam petivit

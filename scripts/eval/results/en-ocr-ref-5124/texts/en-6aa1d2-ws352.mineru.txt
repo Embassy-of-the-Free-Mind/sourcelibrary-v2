@@ -1,0 +1,7 @@
+accompanying engraving is a most correct representation of the idol in the garments in which he is clad at different seasons of the year, as described in the narrative:—
+
+(CopY.)
+
+“Those persons having understanding, both those who are followers of the Buddhist religion and those who are friendly to his Majesty the King of Siam, are invited to listen to the following account of the image of the Budh Gotam,\* made of a solid beautiful green stone, or jasper. It is supposed to have been made by the ancient followers of the Budhist religion, but by whom it is not certainly known by the people of the present day, for its narrative account is lost in antiquity. The image was made to represent the Budh Gotam, but at what time it was made it cannot be ascertained; yet it is ascertained that it must have been made many years ago, probably within the first 2ooo years after the death of the Budh Gotam, corresponding to the year 1457 of the Christian era, for it has been worshipped for a long period.
+
+"We cannot give an account which is certainly worthy of belief, because many of the Cambodians, the Northern Siamese, and the Laos Shiang and Laos Kao, have a tradition, which is handed down to the present day, that this jasper image has been in each of their respective countries at such a time; but the evidence of these persons cannot be trusted, as they
