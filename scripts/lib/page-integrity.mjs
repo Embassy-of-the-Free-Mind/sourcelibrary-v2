@@ -389,6 +389,46 @@ export function pageNumberBreaks(pages) {
   return out;
 }
 
+/**
+ * O11 (#5142) — a `<page-num>` the book's own pagination says is wrong. The OCR reads the
+ * number off the leaf, and on ~35 of the taxonomy's 78 books it read the wrong thing: a
+ * photographer's mount number, a reversed show-through numeral (XLI for LIX), a chapter number
+ * in red, an old edition's margin reference. With no model and no image, the reference is the
+ * book itself: pageNumberBreaks() fits each numbering's line through its neighbours and sets
+ * aside short runs off that line as outliers. Each outlier here becomes a per-page verdict with
+ * the folio the pagination predicts and the likely cause:
+ *   'show-through'   the tag is an anagram of the expected folio (mirrored or transposed digits)
+ *   'other-counter'  far off the line — another counter on the leaf, not a misread digit
+ *   'misread'        near the line — a digit misread, or the printer's misnumbering
+ * The verdict says the TAG is wrong for this scan; it cannot say the image is the right leaf
+ * (I1, image one leaf off its text, needs the image — checkAlignment() in page-alignment.mjs).
+ */
+export const PN_OTHER_COUNTER_MIN = 20;     // |tag − expected| at or above this, and …
+export const PN_OTHER_COUNTER_SHARE = 0.5;  // … above this share of the expected value → another counter
+const toRoman = (n) => {
+  let out = '';
+  for (const [v, r] of [[1000, 'm'], [900, 'cm'], [500, 'd'], [400, 'cd'], [100, 'c'], [90, 'xc'], [50, 'l'], [40, 'xl'], [10, 'x'], [9, 'ix'], [5, 'v'], [4, 'iv'], [1, 'i']]) while (n >= v) { out += r; n -= v; }
+  return out;
+};
+const sortedChars = (t) => [...String(t).toLowerCase()].sort().join('');
+export function pageNumMisreads(pages) {
+  const { outliers } = pageNumberBreaks(pages);
+  const byP = new Map(pages.map(r => [r.p, r]));
+  return outliers.map((o) => {
+    const raw = (String(byP.get(o.p)?.ocr || '').match(/<page-num>([\s\S]*?)<\/page-num>/i)?.[1] || '').trim();
+    // folio values count sides (2n / 2n+1); print them back as the leaf number with its side
+    const printed = (v) => o.numbering === 'roman' ? toRoman(v) : o.numbering === 'folio' ? `${v >> 1}${v & 1 ? 'v' : 'r'}` : String(v);
+    const expectedPrinted = o.expected > 0 ? printed(o.expected) : null;
+    const tagCore = asciiDigits(raw).replace(/[^\p{L}\p{N}]/gu, '');
+    const gap = Math.abs(o.value - o.expected);
+    let cause;
+    if (expectedPrinted && tagCore.length > 1 && sortedChars(tagCore) === sortedChars(expectedPrinted) && tagCore.toLowerCase() !== expectedPrinted) cause = 'show-through';
+    else if (gap >= PN_OTHER_COUNTER_MIN && gap > PN_OTHER_COUNTER_SHARE * Math.max(1, o.expected)) cause = 'other-counter';
+    else cause = 'misread';
+    return { p: o.p, numbering: o.numbering, tag: raw, value: o.value, expected: o.expected, expectedPrinted, cause };
+  });
+}
+
 /** Positive evidence that scan i+1 follows scan i: the catchword chains, or a word broken with
  *  a hyphen at the foot of i ends in lowercase at the head of i+1. (A sentence merely left
  *  open is NOT evidence — most pages end mid-sentence, so that test passes for a missing leaf.) */
