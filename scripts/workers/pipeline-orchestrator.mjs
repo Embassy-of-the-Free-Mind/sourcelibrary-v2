@@ -1473,7 +1473,6 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     }
   }
 
-  promptSentHash = contentHash(prompt);
   console.log(`    Downloading ${pages.length} images (resize to ${OCR_IMAGE_MAX_PX}px for OCR)...`);
   const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: OCR_IMAGE_MAX_PX });
   if (downloaded.length === 0) {
@@ -1520,6 +1519,10 @@ Output structure:
   if (yearStr || book.title) {
     prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
   }
+  // Hash the FINAL prompt (spread prefix + document context included), before any
+  // request is built. This must come after `let prompt` above: referencing it earlier
+  // is a temporal-dead-zone ReferenceError that failed every OCR submit (#5227).
+  promptSentHash = contentHash(prompt);
 
   // Choose batch size based on page count.
   // Force file-based for needs_splitting books — inline doesn't work with Lite model
