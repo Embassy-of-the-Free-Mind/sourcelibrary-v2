@@ -2,6 +2,8 @@
 
 **Read this when:** Writing `visible` / `hidden` / `hidden_reason`, touching homepage stats, or reading `is_first_translation` on a render path.
 
+**Design in progress:** `.claude/docs/publication-state.md` (#5303) replaces `visible`/`hidden`/`hidden_reason` with one `publication` state, one writer (`setPublication()`) and named views. Until its step 1 lands, the rules below govern the legacy fields.
+
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
 ---
