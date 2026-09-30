@@ -280,7 +280,12 @@ function phasePackets() {
     p.splice(Math.floor(seededRand() * (p.length + 1)), 0, { ...src, id: pid });
   }
   const pdir = path.join(DIR, 'packets'); fs.mkdirSync(pdir, { recursive: true });
-  packets.forEach((chunk, p) => fs.writeFileSync(path.join(pdir, `packet-${String(p + 1).padStart(2, '0')}.jsonl`), chunk.map((x) => JSON.stringify(x)).join('\n') + '\n'));
+  // JSONL for the record, and the same items as plain text: a judge reads a 10K-char JSON line badly.
+  packets.forEach((chunk, p) => {
+    const base = path.join(pdir, `packet-${String(p + 1).padStart(2, '0')}`);
+    fs.writeFileSync(`${base}.jsonl`, chunk.map((x) => JSON.stringify(x)).join('\n') + '\n');
+    fs.writeFileSync(`${base}.md`, chunk.map((x, i) => `\n\n######## ITEM ${i + 1}/${chunk.length}  id=${x.id}  language=${x.language}\n\n==== SOURCE ====\n${x.source}\n\n==== TRANSLATION ====\n${x.translation}\n`).join(''));
+  });
   fs.writeFileSync(path.join(DIR, 'packet-key.json'), JSON.stringify(key));
   console.log(`${items.length + REPEATS} items (${REPEATS} repeats) in ${N} packets of ≤${Math.max(...packets.map((p) => p.length))} → ${pdir}`);
 }
