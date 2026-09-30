@@ -33,6 +33,14 @@ This is observational and SUGGESTIVE, not decisive. The confounds are listed bel
 | **OCR chars of the page** | **4,130** | **14,439** | **+10,309 [+8,600, +11,700]** | 114 / 23 |
 | body chars per OCR char | 0.98 | 0.59 | −0.40 [−0.58, −0.26] | 39 / 98 |
 
+**Intervals not recomputed (2026-09-30, #5373).** These intervals were drawn with the bootstrap generator that
+turned out to cycle (`lib/paired-stats.mjs` before #5373). They cannot be redone: the per-page pairs file was
+never committed and `report.json` keeps no per-book values. On the results that could be redone, most bounds
+moved by a few percent of the interval's width, and two intervals had been a quarter to a third too narrow. Three
+intervals here end close to zero and should
+be read as "could go either way": inline terms [+0.2, +11.3], housekeeping leakage [−0.35, −0.02] and the paired
+verified-note rate [−0.43, +0.01]. The point estimates and the judge result do not depend on the generator.
+
 Reading:
 
 - **Fabrication-shaped metrics do not favour flash.** Invented tags are equal; the verified-note rate is *higher* on lite (not significantly). Lite's notes are as real as flash's.

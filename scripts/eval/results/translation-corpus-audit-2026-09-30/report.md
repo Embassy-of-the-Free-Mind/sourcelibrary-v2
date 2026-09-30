@@ -2,6 +2,8 @@
 
 Judge: opus (source-grounded, reference-free, single candidate; measure = judge rating, NOT accuracy). 311 pages from 311 books, one interior page per book, seed 20260930.
 
+**Controls gate: PASS** (swap ≥ 93% rated ≤2, drop ≥ 87% flagged omission, repeat ≥ 93% within one; ≥ 10 of each).
+
 ## Controls (read first)
 - swap (translation of another page): 15/15 rated ≤2, 15/15 flagged wrong_page
 - drop (middle ~35% removed): 15/15 flagged omission, 15/15 rated ≤3
@@ -10,17 +12,17 @@ Judge: opus (source-grounded, reference-free, single candidate; measure = judge 
 ## Corpus estimate (post-stratified by language; 95% CI)
 | statistic | est % | CI |
 |---|---:|---|
-| fidelity 5 | 41.4 | 35.3–47.9 |
-| fidelity ≥ 4 | 89.1 | 85.4–92.4 |
-| fidelity ≤ 2 | 3.4 | 1.5–5.7 |
+| fidelity 5 | 41.4 | 35.4–47.8 |
+| fidelity ≥ 4 | 89.1 | 85.5–92.5 |
+| fidelity ≤ 2 | 3.4 | 1.5–5.8 |
 | any major defect | 11.4 | 7.6–15.6 |
-| omission | 14.8 | 10.1–19.6 |
+| omission | 14.8 | 10.4–19.6 |
 | invention | 11.2 | 7.6–15.1 |
-| inversion | 3.9 | 1.4–6.9 |
+| inversion | 3.9 | 1.4–6.8 |
 | untranslated | 0 | 0–0 |
 | wrong_language | 0 | 0–0 |
 | wrong_page | 0.4 | 0–1.3 |
-| garble_passthrough | 6.6 | 3.9–9.7 |
+| garble_passthrough | 6.6 | 4–9.6 |
 | truncated | 0 | 0–0.1 |
 | repetition | 0 | 0–0 |
 
