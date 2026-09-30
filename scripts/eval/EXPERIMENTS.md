@@ -97,7 +97,6 @@ byte-identical: Kraken on CPU is deterministic too).
 - **Artifact.** `scripts/eval/results/ocr-preprocessing-2026-09-29-r3.json` (+ `-r3/` texts, timings, prep meta, GT manifest,
   draw log). Store run_id `5250r3-syriac-kraken-2026-09-29`. Dashboard cells
   `image-arms/syriac-estrangela-{dark,clean}-fresh/line_cer_n2/<arm>` with the new "Predicted → verdict" column.
-||||||| parent of c91ba8729 (Translation corpus audit (#5274): verdicts, report, hand read, store rows, EXPERIMENTS + DECISIONS)
 
 ## 2026-09-29 — Round 2 of #5250: do tighter band crops help Yigdzin, and do the untested photometric arms help Yigdzin or Kraken? (#5250)
 
