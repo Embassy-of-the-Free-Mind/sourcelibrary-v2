@@ -50,6 +50,7 @@ import {
   assessTranslationHealth,
   isTranslatablePage,
   translatablePageFilter,
+  sameLanguageReason,
   writePageTranslation,
   syncBookTranslationCounters,
   getTranslateModelForBook,
@@ -379,6 +380,8 @@ export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageI
   for (const p of docs) {
     const v = isTranslatablePage(p);
     if (!v.ok) { excluded[v.reason] = (excluded[v.reason] || 0) + 1; continue; }
+    // #5154: an English page is never sent to be "translated" into English
+    if (sameLanguageReason({ page: p })) { excluded.same_language = (excluded.same_language || 0) + 1; continue; }
     pages.push(p);
     if (pages.length >= limit) break;
   }
@@ -449,6 +452,7 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds =
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
+  if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
   // The realtime lane owns a book in translate_submitted; running both would pay twice.
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: TERMINAL_PHASES } });
@@ -681,6 +685,7 @@ export async function writeRun(db, run, deps) {
       if (contentHash(page.ocr?.data || '') !== ref.ocr_hash) { counts.ocr_changed++; continue; }
       if (page.translation?.data) { counts.already_translated++; continue; }
       if (!isTranslatablePage(page).ok) { counts.not_translatable++; continue; }
+      if (sameLanguageReason({ book, page })) { counts.same_language = (counts.same_language || 0) + 1; continue; }
 
       let text = draft;
       if (seamIds.has(ref.id)) {
