@@ -233,13 +233,21 @@ async function chained(db) {
   // One adapter for the whole command: its key rotation remembers which key last refused, so a
   // loop does not pay a 429 on key 0 at every tick (it did, 2026-09-29 pilot log).
   const gemini = KEYS.length ? makeGeminiAdapter() : null;
-  const deps = () => ({
-    gemini, logUsage, completeBatchUsage, syncPage: syncPageUpdate,
-    budgetAllows: async (d, label) => {
-      const bookId = label.split(' ').pop();
-      return gateAllowsBook(await budgetAllowsDispatchScoped(d, label), bookId);
-    },
-  });
+  // One deps object per tick (or enrol pass), and the scoped gate is asked ONCE per object: the
+  // gate re-sums every envelope's spend on each call (~3 s), which at 180 open runs made a tick
+  // spend ~9 minutes gating (2026-09-30 load test). Each book is still checked against the
+  // tick's gate; spend can pass the ceiling by at most one tick's rounds (~$0.3 at 180 runs).
+  const deps = () => {
+    let gate = null;
+    return {
+      gemini, logUsage, completeBatchUsage, syncPage: syncPageUpdate,
+      budgetAllows: async (d, label) => {
+        const bookId = label.split(' ').pop();
+        gate ??= budgetAllowsDispatchScoped(d, 'translate-batch-chained tick');
+        return gateAllowsBook(await gate, bookId);
+      },
+    };
+  };
 
   if (has('plan')) {
     const bookId = arg('book');
