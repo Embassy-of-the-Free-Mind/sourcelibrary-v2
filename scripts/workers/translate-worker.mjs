@@ -51,6 +51,7 @@ import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selectiv
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
+import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
@@ -1190,6 +1191,9 @@ async function selfDispatch(db, limit) {
   const LANE_FILTER = phase4Lane({ processing_priority: 0 }) === 'chained'
     ? { processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }
     : {};
+  // A book with an open translate_batch_runs run (either lane) is never taken:
+  // its pages are already on their way (#5429).
+  const OPEN_RUN_FILTER = notInOpenRun(await openRunBookIds(db));
 
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
@@ -1201,6 +1205,7 @@ async function selfDispatch(db, limit) {
       $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
       ...SCOPE_FILTER,
       ...LANE_FILTER,
+      ...OPEN_RUN_FILTER,
     } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
@@ -1231,6 +1236,7 @@ async function selfDispatch(db, limit) {
         $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
         ...SCOPE_FILTER,
         ...LANE_FILTER,
+        ...OPEN_RUN_FILTER,
       } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
