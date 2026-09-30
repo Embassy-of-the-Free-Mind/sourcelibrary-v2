@@ -7,6 +7,7 @@ import { getClientIp } from '@/lib/rate-limit';
 
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { sanitizeFeedbackImages } from '@/lib/feedback-images';
+import { parsePageReport, pageReportMessage } from '@/lib/page-report';
 
 /**
  * One constant, shared with the `submit_feedback` tool schema that advertises it.
@@ -23,7 +24,15 @@ export async function POST(request: NextRequest) {
     if (limited) return limited;
 
     const body = await request.json();
-    const { message, page, name, email, wantsToHelp, images: rawImages } = body;
+    const { page, name, email, wantsToHelp, images: rawImages } = body;
+
+    // A page report (the reader's "report a problem with this page" control) may
+    // arrive with no comment at all — the class, or the bare flag, IS the message.
+    // It is stored as an ordinary feedback row with a structured `page_report`
+    // beside the message, so every existing triage surface reads it unchanged.
+    const pageReport = parsePageReport(body.page_report);
+    const comment = typeof body.message === 'string' ? body.message.trim() : '';
+    const message = pageReport ? pageReportMessage(pageReport, comment) : body.message;
 
     if (!message || typeof message !== 'string' || message.trim().length < MIN_FEEDBACK_MESSAGE) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
@@ -81,6 +90,7 @@ export async function POST(request: NextRequest) {
       // Absent, never an empty array: rows without pictures stay shaped like
       // every row before this field existed.
       ...(images.length ? { images } : {}),
+      ...(pageReport ? { page_report: pageReport } : {}),
     };
 
     await db.collection('feedback').insertOne(doc);

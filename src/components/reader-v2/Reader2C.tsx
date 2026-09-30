@@ -11,6 +11,7 @@ import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import { ReadCautionNote, PageProblemReport } from './PageProblem';
 import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
@@ -3717,11 +3718,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                    {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
+                    <PageProblemReport page={r.currentPage} book={r.book} />
                   </div>
                 </div>
               )}
@@ -4078,11 +4081,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
+                <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} />
               </div>
             </section>
           )}
