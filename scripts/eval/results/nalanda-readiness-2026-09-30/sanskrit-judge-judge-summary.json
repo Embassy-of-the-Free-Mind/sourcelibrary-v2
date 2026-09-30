@@ -1,0 +1,262 @@
+{
+ "judges": {
+  "A": 9,
+  "B": 9
+ },
+ "controls": {
+  "ctrl_reference": {
+   "n": 4,
+   "fidelity_median": 1.5,
+   "fidelity_mean": 1.5,
+   "ge4": 0,
+   "omission": 4,
+   "invention": 4,
+   "inversion": 0
+  },
+  "ctrl_wrong_page": {
+   "n": 4,
+   "fidelity_median": 1.0,
+   "fidelity_mean": 1,
+   "ge4": 0,
+   "omission": 4,
+   "invention": 4,
+   "inversion": 0
+  }
+ },
+ "served": {
+  "served": {
+   "n": 18,
+   "fidelity_median": 4.0,
+   "fidelity_mean": 4.06,
+   "ge4": 17,
+   "omission": 6,
+   "invention": 2,
+   "inversion": 0
+  }
+ },
+ "per_page": [
+  {
+   "id": "brahmasutra_108",
+   "A:served": "4",
+   "A:ctrl_reference": "2OI",
+   "A:reason": "T1 covers the whole page (end of 2.2.26, 2.2.27, Vijnanavadin purvapaksa at 2.2.28) with one slip (clay/threads-modification clause rendered as permeated by non-existence); T2 is the Thibaut text itself, starting before the page (sutra 26 opening) and truncated mid-2.2.26, omitting 2.2.27 and 2.2.28",
+   "B:served": "4",
+   "B:ctrl_reference": "2OI",
+   "B:reason": "T1 covers 2.2.26 end through 2.2.28 opening (sahopalambha-niyama) with a minor slip on śarāvādayo … tantvādivikārāḥ; T2 is the Thibaut reference verbatim, opening with the preceding page and stopping mid-2.2.26, omitting 2.2.27 and 2.2.28 entirely"
+  },
+  {
+   "id": "brahmasutra_194",
+   "A:served": "4OI",
+   "A:ctrl_reference": "1OI",
+   "A:reason": "T1 follows the page through 3.3.42 siddhanta and the 3.3.43 purvapaksa but drops the bailva/yupa example and imports head-will-fall-off from the Upanishad (source quotes only tam ced avidvan prastosyasi); T2 is Thibaut text mostly preceding the page plus footnotes, ending at the parnamayi analogy",
+   "B:served": "3OI",
+   "B:ctrl_reference": "1OI",
+   "B:reason": "T1 covers 3.3.42 siddhānta and 3.3.43 opening but conflates the prayāja/parṇamayī distinction, drops the vākyabheda and bailva/yūpa steps, and adds \"your head will fall off\" absent from the page; T2 is Thibaut verbatim with footnotes, mostly preceding pūrvapakṣa, ending at the page start"
+  },
+  {
+   "id": "brahmasutra_35",
+   "A:served": "4O",
+   "A:reason": "T1 = Thibaut through the 1.2.23 alternative view and renders the 1.2.24 purvapaksa correctly, but replaces the two quoted Rgveda verses (visvasma agnim..., vaisvanarasya sumatau...) with a bare mention and drops kasmai devaya havisa vidhema",
+   "B:served": "4O",
+   "B:reason": "T1 matches Thibaut on 1.2.23 (form of bhūtayoni, teacher analogy, Hiraṇyagarbha view) and the 1.2.24 pūrvapakṣa, but drops the two Ṛgveda quotations (viśvasmā agniṃ…, vaiśvānarasya sumatau…) and renders adṛśyatvādiguṇaka as without qualities"
+  },
+  {
+   "id": "manu_352",
+   "A:ctrl_wrong_page": "1OI",
+   "A:served": "4",
+   "A:reason": "T1 translates commentary on Manu 4.214-216 (smiths, vintners, dyers), not this page (3.77-79); T2 matches source and Buhler 3.77-78 throughout, one slip in Medhatithi on 3.79 (atyanta glossed as nitya conflated)",
+   "B:ctrl_wrong_page": "1OI",
+   "B:served": "5",
+   "B:reason": "T1 translates commentary on verses 214–216 (food of smiths, actors, dyers), not this page; T2 covers the 3.77 commentaries, verse 78 (= Bühler: supported by the householder with knowledge and food) with all six commentaries, and verse 79 opening"
+  },
+  {
+   "id": "manu_586",
+   "A:served": "4O",
+   "A:reason": "T1 matches source and Buhler 4.214-216 in the commentaries it renders, but drops the page-opening continuation of the preceding commentary on 4.214 (seller of sacrifice, actor=nata, tailor=saucika, ungrateful) before Raghavananda",
+   "B:served": "4O",
+   "B:reason": "T1 renders verses 215–216 (= Bühler: blacksmith, Nishada, stage-player, goldsmith, basket-maker, dealer in weapons) and all their commentaries accurately, but drops the opening carry-over commentary on 214 (yāga-seller, śailūṣa, tunnavāya, kṛtaghna) before Rāghavānanda"
+  },
+  {
+   "id": "manu_850",
+   "A:served": "4",
+   "A:reason": "T1 covers all commentaries on 142-145 and verse 143 matches Bühler; minor slip: Medhātithi on 145 caturmuhūrtaśeṣā rendered four watches instead of four muhūrtas",
+   "B:served": "4",
+   "B:reason": "T1 matches Bühler 142-143 and covers all commentaries; minor slip in Medhātithi on 145 rendering catur-muhūrta-śeṣā as \"four watches\" instead of four muhūrtas"
+  },
+  {
+   "id": "yogasutra_166",
+   "A:served": "5",
+   "A:reason": "T1 matches Woods on sūtras 36-38, bhāṣya and Vācaspati (pauper/wealth simile, threefold anguish); vyutthāna as waking state is a term choice, not an error",
+   "B:served": "4",
+   "B:reason": "T1 = Woods for sūtras 36-38, bhāṣya and Vācaspati; minor slip in 37 gloss dropping abhisaṃhita (one who aims at) so the supreme goal loses its subject, and uktāḥ rendered as arise"
+  },
+  {
+   "id": "yogasutra_217",
+   "A:served": "4",
+   "A:ctrl_wrong_page": "1OI",
+   "A:reason": "T1 follows Woods on IV.34, bhāṣya, Vācaspati and closing verses, but garbles verse 1 line (paraloka/meya/jña as afterlife meditation) and colophon; T2 is page 166 (sūtras III.36-38), not this page",
+   "B:served": "4",
+   "B:ctrl_wrong_page": "1OI",
+   "B:reason": "T1 = Woods on IV.34, bhāṣya, Vācaspati and colophons, with the first summary verse slightly garbled (paraloka/meya/jña siddhis read as afterlife); T2 translates a different page (III.36-38), none of IV.34"
+  },
+  {
+   "id": "yogasutra_97",
+   "A:served": "4",
+   "A:reason": "T1 matches Woods on end of II.19 and II.20 bhāṣya/Vācaspati (mirror-reflection, not homogeneous nor utterly heterogeneous); minor slip: bhūtendriyāṇi saṃsṛṣṭāni viviccante rendered as manifested after being separated rather than formed therein and distinguished",
+   "B:served": "4",
+   "B:reason": "T1 = Woods for end of II.19 bhāṣya/gloss and II.20 sūtra, bhāṣya, Vācaspati; minor slips: saṃsṛṣṭāni viviccyante as manifested after being separated, and the gloss viśeṣaṇāni dharmāḥ compressed"
+  }
+ ],
+ "served_by_judge": {
+  "A": {
+   "n": 9,
+   "fidelity_median": 4,
+   "fidelity_mean": 4.11,
+   "ge4": 9,
+   "omission": 3,
+   "invention": 1,
+   "inversion": 0
+  },
+  "B": {
+   "n": 9,
+   "fidelity_median": 4,
+   "fidelity_mean": 4,
+   "ge4": 8,
+   "omission": 3,
+   "invention": 1,
+   "inversion": 0
+  }
+ },
+ "served_by_work": {
+  "yogasutra": {
+   "n": 6,
+   "fidelity_median": 4.0,
+   "fidelity_mean": 4.17,
+   "ge4": 6,
+   "omission": 0,
+   "invention": 0,
+   "inversion": 0
+  },
+  "brahmasutra": {
+   "n": 6,
+   "fidelity_median": 4.0,
+   "fidelity_mean": 3.83,
+   "ge4": 5,
+   "omission": 4,
+   "invention": 2,
+   "inversion": 0
+  },
+  "manu": {
+   "n": 6,
+   "fidelity_median": 4.0,
+   "fidelity_mean": 4.17,
+   "ge4": 6,
+   "omission": 2,
+   "invention": 0,
+   "inversion": 0
+  }
+ },
+ "ctrl_reference_by_judge": {
+  "A": {
+   "n": 2,
+   "fidelity_median": 1.5,
+   "fidelity_mean": 1.5,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  },
+  "B": {
+   "n": 2,
+   "fidelity_median": 1.5,
+   "fidelity_mean": 1.5,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  }
+ },
+ "ctrl_reference_by_work": {
+  "yogasutra": {
+   "n": 0,
+   "fidelity_median": null,
+   "fidelity_mean": null,
+   "ge4": 0,
+   "omission": 0,
+   "invention": 0,
+   "inversion": 0
+  },
+  "brahmasutra": {
+   "n": 4,
+   "fidelity_median": 1.5,
+   "fidelity_mean": 1.5,
+   "ge4": 0,
+   "omission": 4,
+   "invention": 4,
+   "inversion": 0
+  },
+  "manu": {
+   "n": 0,
+   "fidelity_median": null,
+   "fidelity_mean": null,
+   "ge4": 0,
+   "omission": 0,
+   "invention": 0,
+   "inversion": 0
+  }
+ },
+ "ctrl_wrong_page_by_judge": {
+  "A": {
+   "n": 2,
+   "fidelity_median": 1.0,
+   "fidelity_mean": 1,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  },
+  "B": {
+   "n": 2,
+   "fidelity_median": 1.0,
+   "fidelity_mean": 1,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  }
+ },
+ "ctrl_wrong_page_by_work": {
+  "yogasutra": {
+   "n": 2,
+   "fidelity_median": 1.0,
+   "fidelity_mean": 1,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  },
+  "brahmasutra": {
+   "n": 0,
+   "fidelity_median": null,
+   "fidelity_mean": null,
+   "ge4": 0,
+   "omission": 0,
+   "invention": 0,
+   "inversion": 0
+  },
+  "manu": {
+   "n": 2,
+   "fidelity_median": 1.0,
+   "fidelity_mean": 1,
+   "ge4": 0,
+   "omission": 2,
+   "invention": 2,
+   "inversion": 0
+  }
+ },
+ "agreement": {
+  "cells": 13,
+  "exact": 10,
+  "within1": 13
+ }
+}
