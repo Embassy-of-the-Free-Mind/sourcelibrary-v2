@@ -68,9 +68,13 @@ export function leafSeamsPreserved(ocrText, translationText) {
  * The #5176 guards, per leaf (#5260 item 4). `echo` — the leaf's translation is its source
  * verbatim (page-integrity echoedSource, whole-unit share) — needs the book's `lang` like the
  * page-level tier and is skipped without it. `leaf-drift` — the translation of leaf k absorbed
- * the opening clause of leaf k+1 (block-drift detectBlockDrift, with the leaves standing in for
- * consecutive pages). Returns { healthy, reason, unit } with `unit` the 0-based leaf that failed.
- * A text with no seam returns healthy: the page-level gate already judged it.
+ * the opening clause of leaf k+1, or rendered it on both leaves (block-drift detectBlockDrift and
+ * duplicatedAcrossBoundary, with the leaves standing in for consecutive pages). A run the two
+ * leaves' translations share is a duplication only when the SOURCE leaves do not share it too
+ * (block-drift sourceRepeatsAcrossBoundary, #5275): the Kanjur's refrain recurs across 57 of 168
+ * seams of the canonical pilot book, and each was refused here as `duplicated` until the test
+ * was grounded in the source. Returns { healthy, reason, unit } with `unit` the 0-based leaf
+ * that failed. A text with no seam returns healthy: the page-level gate already judged it.
  */
 export function leafUnitsHealth(ocrText, translationText, { lang } = {}) {
   const src = splitLeafUnits(ocrText);
