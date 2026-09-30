@@ -112,9 +112,9 @@ export const visionContent: VisionContent = {
     'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
   ],
   image1: {
-    src: '/vision/ficino-laptop.jpg',
-    alt: 'Bronze bust of Marsilio Ficino with a laptop open to translation work, at the Embassy of the Free Mind',
-    caption: 'Marsilio Ficino, Divinus Interpres, with a laptop open to the translation of Plotinus. Embassy of the Free Mind, Amsterdam.',
+    src: '/vision/ficino.jpg',
+    alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind',
+    caption: 'Marsilio Ficino at the Embassy of the Free Mind, Amsterdam.',
   },
   bodyAfterImage1: [],
   buildHeading: 'What we need to finish',
