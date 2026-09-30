@@ -4,6 +4,28 @@ Wrap up the session: commit, push, reap, hand off.
 sessions are usually still running, and that's fine: every step below is safe to run
 concurrently with them. No new work, no questions, no strategic advice.
 
+## 0. Nothing undone leaves with you
+
+The point of closing a window is that its work is either **finished** or **owned by
+something that outlives the window**. A handoff file alone is neither: measured
+2026-09-30, September had 214 ops handoffs, 98 of them saying "not run / blocked /
+awaiting", and 81 background sessions dead mid-task that nobody noticed — the work
+simply stopped when the window did (inventory: #5354). So before step 1, list every
+loose end from this session and give each one exactly one of these:
+
+- **Finish it now** if it is under ~15 minutes (merge the green PR, apply the label,
+  run the one command). This is the default.
+- **An active issue** — open or update one, with the definition of done and the next
+  command to run, and put `Owner: #<issue>` on any handoff you write.
+- **A dispatched session** — `claude --bg "Read <handoff> and execute to done"`, and
+  check its `state.json` two minutes later; a `blocked` there is not a dispatch.
+- **A decision row** in the ops `DECISIONS-PENDING.md`, with a recommended default,
+  if it is above the spend floor or on the hold list.
+
+A background session you started stays running — never stop or reap it here. What
+you may not do is close with "next steps" in prose and no owner: that is how work
+disappears.
+
 ## 1. Commit and push whatever is here
 
 - `git status` — if there are uncommitted changes, commit them with a clear message
