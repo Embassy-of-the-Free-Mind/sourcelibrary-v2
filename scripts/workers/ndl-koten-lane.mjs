@@ -39,7 +39,7 @@ import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
@@ -251,14 +251,13 @@ async function apply() {
       // the English on a rewritten page was made from text that is gone: say so ON THE PAGE, never hide it
       const stale = await markTranslationsStale(db, writes.map((w) => ({ id: w.p.id, text: w.text })), now, LANE);
       totals.stale_marked += stale;
-      const [counts] = await P.aggregate(buildVisiblePageCountPipeline(bid)).toArray();
-      await B.updateOne({ _id: book._id }, { $set: { pages_ocr: counts?.with_ocr ?? 0, pages_translated: counts?.with_translation ?? 0, updated_at: now } });
+      const { after: counts } = await recountBook(db, book.id, { reason: LANE, now });
       const loopsFixed = writes.filter((w) => w.oldLoop).length;
       await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'retranscribed', detail: { issue: LANE_ISSUE, engine: `ndl-koten/v${NDL.version}`, route: writes[0].r.route, pages_written: modified, loops_replaced: loopsFixed, first_writes: writes.filter((w) => !w.p.ocr?.data).length, run: RUN, translations_marked_stale: stale } });
       await db.collection('book_events').updateOne(
         { book_id: bid, type: BOOK_EVENT },
         { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LANE, 'details.issue': LANE_ISSUE, 'details.engine': `ndl-koten/v${NDL.version}`, 'details.route': writes[0].r.route, 'details.repo': NDL.repo },
-          $set: { 'details.last_apply_at': now, 'details.pages_ocr_after': counts?.with_ocr ?? null, 'details.planned': books[bid]?.planned ?? null },
+          $set: { 'details.last_apply_at': now, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.planned': books[bid]?.planned ?? null },
           $inc: { 'details.pages_written': modified, 'details.loops_replaced': loopsFixed, 'details.translations_marked_stale': stale } },
         { upsert: true },
       );
