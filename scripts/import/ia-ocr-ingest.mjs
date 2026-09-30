@@ -37,6 +37,17 @@
  * Options: --min-ref-pages 5  --cache <dir> (keeps the XML)  --max-offset 3  --min-offset-share 0.6
  *          --min-agreement X   OVERRIDE the per-language cutoff for every book in the run (dry-run
  *                              sweeps only; it also scores languages the policy excludes, e.g. Greek)
+ *          --cohort-off        score English books WITHOUT the #5124 page cohort (dry run only; the
+ *                              negative control for the digits gate)
+ *
+ * ENGLISH PAGE COHORT (#5124, adopted by Derek 2026-09-30). A book that passes the agreement gate is
+ * no longer filled whole. For English, a leaf takes the Archive's text only when the book is
+ * 1880–1930, the leaf has no 2+-digit number except its confirmed folio, and >= 90% of its letters
+ * are Latin script — or when the OCR lane already refused that page as RECITATION (fallback: the
+ * Archive's text instead of nothing). The rest waits for lite. Measured reason: lite beats the
+ * Archive 57/5/43 on proofread pages and the Archive silently misreads ~1.5% of printed numbers.
+ * Rule + evidence: scripts/lib/ia-ocr-cohort.mjs. Each page records its decision in
+ * `ocr.agreement_ref.page_gate`.
  *
  * CUTOFF IS PER LANGUAGE (#4790, 2026-09-13). The delivered text was measured (CER of the written
  * page against a fresh model read, one interior page per book) and the right cutoff differs by
@@ -105,6 +116,7 @@ import { referenceTrigramSet, isImplausible, DEFAULT_MIN_PLAUSIBILITY } from '..
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
+import { IA_ARCHIVE_COHORT, archiveCohortDecision, confirmedFolios, publicationYear } from '../lib/ia-ocr-cohort.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
@@ -142,6 +154,14 @@ const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
 const CACHE = arg('--cache', null);
 const IDS_FILE = arg('--ids', null);
 const SOURCE = 'ia_djvu';
+// ENGLISH PAGE COHORT (#5124, adopted 2026-09-30). An accepted English book no longer fills every
+// fillable leaf: a leaf takes the Archive's text only inside the measured cohort (1880–1930, no
+// number of two or more digits bar the confirmed folio, >= 90% Latin letters), or as the fallback
+// on a page the OCR lane refused as recitation. Everything else is left for lite. The rule and its
+// evidence live in scripts/lib/ia-ocr-cohort.mjs. `--cohort-off` scores without it (the negative
+// control for the digits gate); it is refused with --apply.
+const COHORT_OFF = process.argv.includes('--cohort-off');
+if (COHORT_OFF && APPLY) { console.error('--cohort-off is a dry-run diagnostic; it cannot be combined with --apply'); process.exit(2); }
 
 // BY-EYE REFERENCE (2026-09-26, Derek: "or, you could look at them manually… find the title page
 // and evaluate the ocr quality"; "dont use tesseract"). A held book has no model pages, so the
@@ -226,6 +246,25 @@ const decode = (s) => s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(
 // calibrated on that score — never re-inline a tokenizer here.
 /** Model OCR that carries an image description or a plate/illustration page-type: not a text page. */
 const isPlatePage = (t) => /<image-desc\b|\[Image:|<page-type>\s*(plate|illustration|image|photograph|figure|map)\b/i.test(t);
+/**
+ * Apply the English page cohort to a book's fillable leaves. Returns the admitted entries, each
+ * carrying its decision (`gate`), and tallies refusals into `summary`. Non-English books pass
+ * through unchanged (admitted_by 'language_not_gated'), as does every book under --cohort-off.
+ */
+function applyCohort(b, language, leaves, fill, summary) {
+  if (COHORT_OFF) return fill.map((e) => ({ ...e, gate: null }));
+  const folios = confirmedFolios(leaves);
+  const year = publicationYear(b);
+  const out = [];
+  for (const e of fill) {
+    const d = archiveCohortDecision({ language, year, text: leaves[e.k], folios: folios[e.k], page: e.p });
+    if (!d.admit) { summary[`cohort_refused_${d.reason}`]++; continue; }
+    if (d.admitted_by === 'cohort') summary.cohort_admitted++;
+    if (d.admitted_by === 'recitation_fallback') summary.recitation_fallback++;
+    out.push({ ...e, gate: { rule: IA_ARCHIVE_COHORT.rule, year, ...d } });
+  }
+  return out;
+}
 const median = (xs) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 
 /** leaf index (0-based) for a page: from the IA photo URL, else page_number - 1 */
@@ -257,7 +296,8 @@ await withMongo(async (db) => {
   if (BY_EYE.size) console.log(`by-eye reference: ${BY_EYE.size} verdicts from ${BY_EYE_FILE}; ${books.length} of those books still have untranscribed pages`);
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, script_loss: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, script_loss: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0,
+    cohort_admitted: 0, recitation_fallback: 0, cohort_refused_year: 0, cohort_refused_numbers: 0, cohort_refused_script: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -275,7 +315,7 @@ await withMongo(async (db) => {
     const detectedLang = normalizeLanguageToken(Array.isArray(meta.detected_lang) ? meta.detected_lang[0] : meta.detected_lang);
     const bookLangs = [b.language, ...(Array.isArray(b.languages) ? b.languages : [])].map(normalizeLanguageToken).filter(Boolean);
     const langMismatch = !!(detectedLang && bookLangs.length && !bookLangs.includes(detectedLang));
-    const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
+    const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.recitation_count': 1, 'ocr.recitation_blocked': 1, 'ocr.last_skip': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
 
     const eye = BY_EYE.get(bid);
     if (eye) {
@@ -298,9 +338,10 @@ await withMongo(async (db) => {
       // Skipped = read leaves marked skip + every leaf the reader listed from the contact sheets.
       const skipped = new Set([...eye.leaves.filter((l) => l.verdict === 'skip').map((l) => l.leaf), ...(eye.skip_leaves || [])]);
       const notSkipped = wordOk.filter(({ k }) => !skipped.has(k));
-      const fill = notSkipped.filter(({ k }) => !isImplausible(leaves[k], refSetE, DEFAULT_MIN_PLAUSIBILITY));
+      const plausibleE = notSkipped.filter(({ k }) => !isImplausible(leaves[k], refSetE, DEFAULT_MIN_PLAUSIBILITY));
+      const fill = accepted ? applyCohort(b, gate.language, leaves, plausibleE, summary) : plausibleE;
       const v = !accepted ? (eye.verdict !== 'accept' ? 'REJECT_BY_EYE' : misaligned.length ? 'MISALIGNED' : 'LANG_MISMATCH') : 'ACCEPT_BY_EYE';
-      console.log(`  ${v} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | read by ${eye.reader} on ${String(eye.read_at).slice(0, 10)}, leaves ${eye.leaves.map((l) => `${l.leaf}:${l.verdict}`).join(',')}${misaligned.length ? ` | leaf/page mismatch on ${misaligned.map((l) => l.leaf).join(',')}` : ''} | IA leaves ${leaves.length}/${pages.length} | fillable ${fill.length} (reader-skipped ${wordOk.length - notSkipped.length}, garbage skipped ${cand.length - wordOk.length}, implausible skipped ${notSkipped.length - fill.length}) | ${eye.note || ''}`);
+      console.log(`  ${v} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | read by ${eye.reader} on ${String(eye.read_at).slice(0, 10)}, leaves ${eye.leaves.map((l) => `${l.leaf}:${l.verdict}`).join(',')}${misaligned.length ? ` | leaf/page mismatch on ${misaligned.map((l) => l.leaf).join(',')}` : ''} | IA leaves ${leaves.length}/${pages.length} | fillable ${fill.length} (reader-skipped ${wordOk.length - notSkipped.length}, garbage skipped ${cand.length - wordOk.length}, implausible skipped ${notSkipped.length - plausibleE.length}, outside the English cohort ${plausibleE.length - fill.length}) | ${eye.note || ''}`);
       if (!accepted) { summary.rejected++; continue; }
       summary.accepted++; summary.scored++;
       if (!APPLY) { summary.pages_written += fill.length; continue; }
@@ -398,11 +439,13 @@ await withMongo(async (db) => {
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
     const scriptNote = scriptPages > 0 ? ` | NON-LATIN on ${scriptPages} of our pages${ALLOW_SCRIPT_LOSS ? ' (override: filling anyway)' : ''}` : '';
     console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}${scriptNote}`);
+    const cohortFill = verdict === 'ACCEPT' ? applyCohort(b, gate.language, leaves, fillable, summary) : fillable;
+    if (verdict === 'ACCEPT' && cohortFill.length !== fillable.length) console.log(`     English cohort (#5124): ${cohortFill.length} of ${fillable.length} fillable leaves admitted (${cohortFill.filter((e) => e.gate?.admitted_by === 'recitation_fallback').length} as recitation fallback); the rest are left for lite`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; if (verdict === 'SCRIPT_LOSS') summary.script_loss++; continue; }
     summary.accepted++;
-    if (!APPLY) { summary.pages_written += fillable.length; continue; }
+    if (!APPLY) { summary.pages_written += cohortFill.length; continue; }
 
-    summary.pages_written += await writeFill(db, b, bid, iaId, meta, leaves, fillable,
+    summary.pages_written += await writeFill(db, b, bid, iaId, meta, leaves, cohortFill,
       { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2) },
       { agreement_median: +med.toFixed(3), ref_pages: scores.length });
   }
@@ -419,14 +462,18 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
   const now = new Date();
   await saveRevisionsBeforeOverwrite(db, fillable.map(({ p }) => p.id), 'ocr', { reason: 'ia_ocr_ingest' });
   let n = 0;
-  for (const { p, k } of fillable) {
+  for (const { p, k, gate } of fillable) {
     // Pipeline update: `ocr` is literally null on many never-OCR'd pages, and a dotted
     // $set cannot create fields inside null (MongoServerError 28 — crashed the first
     // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
     const ocrFields = {
       data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
       source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
-      agreement_ref: agreementRef,
+      // The page-level cohort decision (#5124) rides with the book-level admission, per page.
+      agreement_ref: gate ? { ...agreementRef, page_gate: gate } : agreementRef,
+      // A recitation-fallback page now HAS text, so the "no text obtainable, skip it" block no longer
+      // describes it; recitation_count and last_skip stay as the record of the refusal.
+      ...(gate?.admitted_by === 'recitation_fallback' ? { recitation_blocked: false, recitation_fallback_at: now } : {}),
       ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
       content_hash: contentHash(leaves[k]),
     };
