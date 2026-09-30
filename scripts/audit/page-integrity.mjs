@@ -4,12 +4,13 @@
 // scans are in order or whether a translation is short or echoed. The detectors live in
 // scripts/lib/page-integrity.mjs (pure, tested).
 /**
- * page-integrity — seven exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
+ * page-integrity — eight exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
  * catchword continuity, printed page-number sequence, duplicate consecutive scans, truncated
  * translations, echoed source (2026-09-24), and from the page-error taxonomy (2026-09-25):
- * <vocab> words absent from the body (O5 #5136) and a block repeated inside one page (O4 #5135).
+ * <vocab> words absent from the body (O5 #5136) and a block repeated inside one page (O4 #5135);
+ * and text hidden in the continuity <meta> (#5305 tq9).
  * MEASUREMENT ONLY: writes files, touches no store.
- * The two new signals need a FRESH --out directory: a resumed shard skips books already scanned.
+ * The new signals need a FRESH --out directory: a resumed shard skips books already scanned.
  *
  * Checkpointed per book: every book's lines (its flags, then one `book` row with its counts) are
  * appended in ONE write, and a restart skips every book that already has a `book` row in its
