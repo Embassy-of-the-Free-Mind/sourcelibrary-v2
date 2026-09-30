@@ -1,0 +1,671 @@
+{
+  "generated_at": "2026-09-30T14:16:26.346Z",
+  "meta": {
+    "frame": "IA books with pages_ocr > 0",
+    "frame_books": 31187,
+    "seed": "5309",
+    "opts": {
+      "window": 8,
+      "minScore": 0.3,
+      "minMargin": 0.15,
+      "minTokens": 40,
+      "farMinScore": 0.5
+    },
+    "updated_at": "2026-09-30T10:33:10.325Z"
+  },
+  "walked": 2639,
+  "status": {
+    "ok": 2560,
+    "no_xml": 79
+  },
+  "verdicts": {
+    "plate": 41962,
+    "short": 9466,
+    "aligned": 106824,
+    "low": 110192,
+    "shifted": 12355,
+    "ambiguous": 367,
+    "far": 248,
+    "no_leaf_url": 536,
+    "no_leaf_text": 579
+  },
+  "offsets": {
+    "0": 106824,
+    "1": 6,
+    "2": 16,
+    "4": 4,
+    "6": 2,
+    "8": 1,
+    "-1": 9492,
+    "-5": 163,
+    "-7": 76,
+    "-3": 2265,
+    "-2": 312,
+    "-4": 18
+  },
+  "books_by_offset": {
+    "6": 1,
+    "-1": 64,
+    "-7": 1,
+    "-3": 13,
+    "-2": 3,
+    "-5": 3
+  },
+  "blocks": [
+    {
+      "label": "ALL",
+      "books": 2560,
+      "books_decidable": 775,
+      "books_with_run": 82,
+      "book_rate": 0.10580645161290322,
+      "book_ci": [
+        0.08606100214275836,
+        0.12944058380231696
+      ],
+      "model_pages": 282529,
+      "decided": 118631,
+      "shifted": 12344,
+      "page_rate": 0.10405374649122068,
+      "page_ci": [
+        0.07397101725012684,
+        0.1387874842399321
+      ],
+      "shifted_span": 18019,
+      "shifted_span_translated": 16960,
+      "far": 248
+    },
+    {
+      "label": "live (visible, pages > 0)",
+      "books": 1948,
+      "books_decidable": 515,
+      "books_with_run": 67,
+      "book_rate": 0.13009708737864079,
+      "book_ci": [
+        0.10375935359026961,
+        0.16191248151316082
+      ],
+      "model_pages": 252207,
+      "decided": 104739,
+      "shifted": 11358,
+      "page_rate": 0.10844098186921777,
+      "page_ci": [
+        0.07277473291412886,
+        0.14741658092018228
+      ],
+      "shifted_span": 16790,
+      "shifted_span_translated": 16322,
+      "far": 247
+    },
+    {
+      "label": "not live",
+      "books": 612,
+      "books_decidable": 260,
+      "books_with_run": 15,
+      "book_rate": 0.057692307692307696,
+      "book_ci": [
+        0.035270209037698445,
+        0.09299462865279463
+      ],
+      "model_pages": 30322,
+      "decided": 13892,
+      "shifted": 986,
+      "page_rate": 0.07097610135329686,
+      "page_ci": [
+        0.025461574351796308,
+        0.12812560573754603
+      ],
+      "shifted_span": 1229,
+      "shifted_span_translated": 638,
+      "far": 1
+    },
+    {
+      "label": "has bulk_jp2 pages",
+      "books": 1682,
+      "books_decidable": 452,
+      "books_with_run": 81,
+      "book_rate": 0.17920353982300885,
+      "book_ci": [
+        0.14659550377671177,
+        0.2172185930499052
+      ],
+      "model_pages": 162552,
+      "decided": 68039,
+      "shifted": 12306,
+      "page_rate": 0.18086685577389439,
+      "page_ci": [
+        0.1271568568508387,
+        0.23996883023977722
+      ],
+      "shifted_span": 17980,
+      "shifted_span_translated": 16922,
+      "far": 242
+    },
+    {
+      "label": "no bulk_jp2 pages",
+      "books": 878,
+      "books_decidable": 323,
+      "books_with_run": 1,
+      "book_rate": 0.0030959752321981426,
+      "book_ci": [
+        0.0005467107983287012,
+        0.017326167072786846
+      ],
+      "model_pages": 119977,
+      "decided": 50592,
+      "shifted": 38,
+      "page_rate": 0.0007511068943706515,
+      "page_ci": [
+        0.000308107067205854,
+        0.0014115827129459538
+      ],
+      "shifted_span": 39,
+      "shifted_span_translated": 38,
+      "far": 6
+    },
+    {
+      "label": "held ia-wrong-leaf-4790",
+      "books": 9,
+      "books_decidable": 9,
+      "books_with_run": 9,
+      "book_rate": 1,
+      "book_ci": [
+        0.7008472464490406,
+        1
+      ],
+      "model_pages": 568,
+      "decided": 530,
+      "shifted": 516,
+      "page_rate": 0.9735849056603774,
+      "page_ci": [
+        0.9655455291222313,
+        1
+      ],
+      "shifted_span": 522,
+      "shifted_span_translated": 357,
+      "far": 4
+    },
+    {
+      "label": "not held",
+      "books": 2551,
+      "books_decidable": 766,
+      "books_with_run": 73,
+      "book_rate": 0.09530026109660575,
+      "book_ci": [
+        0.0764794885250858,
+        0.11816003212435688
+      ],
+      "model_pages": 281961,
+      "decided": 118101,
+      "shifted": 11828,
+      "page_rate": 0.10015156518573086,
+      "page_ci": [
+        0.06918144430195021,
+        0.1338630860279912
+      ],
+      "shifted_span": 17497,
+      "shifted_span_translated": 16603,
+      "far": 244
+    },
+    {
+      "label": "lang chinese",
+      "books": 1071,
+      "books_decidable": 2,
+      "books_with_run": 0,
+      "book_rate": 0,
+      "book_ci": [
+        0,
+        0.6576280471103807
+      ],
+      "model_pages": 30049,
+      "decided": 338,
+      "shifted": 0,
+      "page_rate": 0,
+      "page_ci": [
+        0,
+        0
+      ],
+      "shifted_span": 0,
+      "shifted_span_translated": 0,
+      "far": 0
+    },
+    {
+      "label": "lang latin",
+      "books": 806,
+      "books_decidable": 238,
+      "books_with_run": 12,
+      "book_rate": 0.05042016806722689,
+      "book_ci": [
+        0.029074249110593402,
+        0.08604903819812437
+      ],
+      "model_pages": 94284,
+      "decided": 22678,
+      "shifted": 1898,
+      "page_rate": 0.08369344739395009,
+      "page_ci": [
+        0.03196485381002878,
+        0.14301771423433143
+      ],
+      "shifted_span": 3854,
+      "shifted_span_translated": 3705,
+      "far": 51
+    },
+    {
+      "label": "lang english",
+      "books": 350,
+      "books_decidable": 312,
+      "books_with_run": 44,
+      "book_rate": 0.14102564102564102,
+      "book_ci": [
+        0.10675942775846872,
+        0.18402430687306812
+      ],
+      "model_pages": 59713,
+      "decided": 46748,
+      "shifted": 4597,
+      "page_rate": 0.09833575767947292,
+      "page_ci": [
+        0.05325036022302504,
+        0.15198114023704473
+      ],
+      "shifted_span": 6699,
+      "shifted_span_translated": 6111,
+      "far": 6
+    },
+    {
+      "label": "lang greek",
+      "books": 75,
+      "books_decidable": 47,
+      "books_with_run": 4,
+      "book_rate": 0.0851063829787234,
+      "book_ci": [
+        0.03359357946971309,
+        0.19931805195022648
+      ],
+      "model_pages": 27967,
+      "decided": 11099,
+      "shifted": 722,
+      "page_rate": 0.06505090548698081,
+      "page_ci": [
+        0.005310723935525948,
+        0.14376321353065538
+      ],
+      "shifted_span": 925,
+      "shifted_span_translated": 830,
+      "far": 3
+    },
+    {
+      "label": "lang german",
+      "books": 64,
+      "books_decidable": 45,
+      "books_with_run": 4,
+      "book_rate": 0.08888888888888889,
+      "book_ci": [
+        0.035110548134203154,
+        0.207338511683657
+      ],
+      "model_pages": 11860,
+      "decided": 7581,
+      "shifted": 162,
+      "page_rate": 0.021369212504946576,
+      "page_ci": [
+        0.0006262721152340692,
+        0.050699542872974096
+      ],
+      "shifted_span": 162,
+      "shifted_span_translated": 162,
+      "far": 185
+    },
+    {
+      "label": "lang sanskrit",
+      "books": 34,
+      "books_decidable": 14,
+      "books_with_run": 2,
+      "book_rate": 0.14285714285714285,
+      "book_ci": [
+        0.04009307373792117,
+        0.399419077638637
+      ],
+      "model_pages": 6671,
+      "decided": 1266,
+      "shifted": 112,
+      "page_rate": 0.08846761453396525,
+      "page_ci": [
+        0,
+        0.3543046357615894
+      ],
+      "shifted_span": 661,
+      "shifted_span_translated": 649,
+      "far": 0
+    },
+    {
+      "label": "lang french",
+      "books": 34,
+      "books_decidable": 29,
+      "books_with_run": 3,
+      "book_rate": 0.10344827586206896,
+      "book_ci": [
+        0.03581424038130106,
+        0.26385447247069155
+      ],
+      "model_pages": 10940,
+      "decided": 6746,
+      "shifted": 806,
+      "page_rate": 0.11947820930922028,
+      "page_ci": [
+        0.000321285140562249,
+        0.28872081552121015
+      ],
+      "shifted_span": 1136,
+      "shifted_span_translated": 1129,
+      "far": 1
+    },
+    {
+      "label": "lang russian",
+      "books": 31,
+      "books_decidable": 30,
+      "books_with_run": 2,
+      "book_rate": 0.06666666666666667,
+      "book_ci": [
+        0.01847663532769335,
+        0.2132381772107209
+      ],
+      "model_pages": 12166,
+      "decided": 10183,
+      "shifted": 23,
+      "page_rate": 0.0022586664047923007,
+      "page_ci": [
+        0.00009000090000900009,
+        0.007342320654790563
+      ],
+      "shifted_span": 27,
+      "shifted_span_translated": 4,
+      "far": 0
+    },
+    {
+      "label": "lang italian",
+      "books": 28,
+      "books_decidable": 15,
+      "books_with_run": 2,
+      "book_rate": 0.13333333333333333,
+      "book_ci": [
+        0.037360469891359285,
+        0.3788249920651624
+      ],
+      "model_pages": 8390,
+      "decided": 3153,
+      "shifted": 1212,
+      "page_rate": 0.384395813510942,
+      "page_ci": [
+        0,
+        0.707499253062444
+      ],
+      "shifted_span": 1234,
+      "shifted_span_translated": 1233,
+      "far": 0
+    },
+    {
+      "label": "lang dutch",
+      "books": 6,
+      "books_decidable": 6,
+      "books_with_run": 0,
+      "book_rate": 0,
+      "book_ci": [
+        0,
+        0.3903430336530645
+      ],
+      "model_pages": 1915,
+      "decided": 845,
+      "shifted": 0,
+      "page_rate": 0,
+      "page_ci": [
+        0,
+        0
+      ],
+      "shifted_span": 0,
+      "shifted_span_translated": 0,
+      "far": 0
+    },
+    {
+      "label": "lang japanese",
+      "books": 5,
+      "books_decidable": 0,
+      "books_with_run": 0,
+      "book_rate": null,
+      "book_ci": [
+        null,
+        null
+      ],
+      "model_pages": 2022,
+      "decided": 0,
+      "shifted": 0,
+      "page_rate": null,
+      "page_ci": [
+        null,
+        null
+      ],
+      "shifted_span": 0,
+      "shifted_span_translated": 0,
+      "far": 0
+    },
+    {
+      "label": "lang arabic",
+      "books": 4,
+      "books_decidable": 1,
+      "books_with_run": 0,
+      "book_rate": 0,
+      "book_ci": [
+        0,
+        0.7934567085261071
+      ],
+      "model_pages": 1182,
+      "decided": 9,
+      "shifted": 0,
+      "page_rate": 0,
+      "page_ci": [
+        0,
+        0
+      ],
+      "shifted_span": 0,
+      "shifted_span_translated": 0,
+      "far": 0
+    },
+    {
+      "label": "ia_djvu text (free lane)",
+      "books": 110,
+      "books_decidable": 85,
+      "books_with_run": 9,
+      "book_rate": 0.10588235294117647,
+      "book_ci": [
+        0.05671176515955124,
+        0.18913702639755714
+      ],
+      "model_pages": 0,
+      "decided": 15821,
+      "shifted": 955,
+      "page_rate": 0.060362808924846724,
+      "page_ci": [
+        0.012161609074431387,
+        0.14787061994609163
+      ],
+      "shifted_span": 956,
+      "shifted_span_translated": 0,
+      "far": 0
+    }
+  ],
+  "ocr_runs": {
+    "ai|gemini-3-flash-preview": {
+      "pages": 86142,
+      "aligned": 27440,
+      "shifted": 252
+    },
+    "ai|gemini-2.5-flash": {
+      "pages": 729,
+      "aligned": 575,
+      "shifted": 11
+    },
+    "pipeline_preview|gemini-3.1-flash-lite": {
+      "pages": 2830,
+      "aligned": 1297,
+      "shifted": 110
+    },
+    "batch_api|gemini-3-flash-preview": {
+      "pages": 114277,
+      "aligned": 46715,
+      "shifted": 3784
+    },
+    "batch_api|gemini-3.1-flash-lite-preview": {
+      "pages": 54657,
+      "aligned": 19326,
+      "shifted": 6701
+    },
+    "batch_api|gemini-3.1-flash-lite": {
+      "pages": 12941,
+      "aligned": 9203,
+      "shifted": 824
+    },
+    "pipeline_preview|gemini-3.1-flash-lite-preview": {
+      "pages": 5571,
+      "aligned": 1286,
+      "shifted": 559
+    },
+    "ai|gemini-3.1-flash-lite-preview": {
+      "pages": 943,
+      "aligned": 100,
+      "shifted": 0
+    },
+    "ai|gemini-3.1-flash-lite": {
+      "pages": 1154,
+      "aligned": 806,
+      "shifted": 68
+    },
+    "model|gemini-3.1-flash-lite-preview": {
+      "pages": 89,
+      "aligned": 17,
+      "shifted": 0
+    },
+    "pipeline_preview|gemini-3-flash-preview": {
+      "pages": 1824,
+      "aligned": 0,
+      "shifted": 0
+    },
+    "model|gemini-3-flash-preview": {
+      "pages": 1,
+      "aligned": 0,
+      "shifted": 0
+    },
+    "kraken|kraken/omnisyr": {
+      "pages": 1151,
+      "aligned": 0,
+      "shifted": 0
+    },
+    "batch_api|gemini-2.5-flash": {
+      "pages": 107,
+      "aligned": 35,
+      "shifted": 46
+    },
+    "system|gemini-3.1-flash-lite-preview": {
+      "pages": 68,
+      "aligned": 0,
+      "shifted": 0
+    },
+    "mineru|mineru-pipeline": {
+      "pages": 44,
+      "aligned": 24,
+      "shifted": 0
+    },
+    "manual|manual": {
+      "pages": 1,
+      "aligned": 0,
+      "shifted": 0
+    }
+  },
+  "projection": {
+    "frame_books": 31187,
+    "walked": 2639,
+    "pages_in_runs_per_book": 6.803713527851459,
+    "projected_pages": 212187,
+    "projected_ci": [
+      143999,
+      286025
+    ],
+    "translated_share": 0.9412287030356845,
+    "by_image": {
+      "text_wrong_on_screen": {
+        "books": 29,
+        "book_rate": 0.03741935483870968,
+        "book_ci": [
+          0.02617811591976454,
+          0.05322390883083944
+        ],
+        "pages_walked": 8642,
+        "translated_walked": 8372,
+        "projected_pages": 102129,
+        "projected_ci": [
+          57210,
+          158901
+        ]
+      },
+      "consistent_on_screen": {
+        "books": 50,
+        "book_rate": 0.06451612903225806,
+        "book_ci": [
+          0.04927717737081328,
+          0.08405108860778876
+        ],
+        "pages_walked": 7915,
+        "translated_walked": 7289,
+        "projected_pages": 93537,
+        "projected_ci": [
+          49008,
+          147178
+        ]
+      },
+      "ambiguous": {
+        "books": 6,
+        "book_rate": 0.007741935483870968,
+        "book_ci": [
+          0.0035528404721920947,
+          0.016787110552509206
+        ],
+        "pages_walked": 1398,
+        "translated_walked": 1244,
+        "projected_pages": 16521,
+        "projected_ci": [
+          2104,
+          36529
+        ]
+      },
+      "unknown": {
+        "books": 0,
+        "book_rate": 0,
+        "book_ci": [
+          0,
+          0.004932453530987558
+        ],
+        "pages_walked": 0,
+        "translated_walked": 0,
+        "projected_pages": 0,
+        "projected_ci": [
+          0,
+          0
+        ]
+      },
+      "not_imaged": {
+        "books": 0,
+        "book_rate": 0,
+        "book_ci": [
+          0,
+          0.004932453530987558
+        ],
+        "pages_walked": 0,
+        "translated_walked": 0,
+        "projected_pages": 0,
+        "projected_ci": [
+          0,
+          0
+        ]
+      }
+    }
+  }
+}
