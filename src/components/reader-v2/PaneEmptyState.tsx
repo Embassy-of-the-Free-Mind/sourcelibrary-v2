@@ -6,6 +6,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useStableSession } from '@/hooks/useStableSession';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 import type { StoredTranslationState } from '@/lib/translation-completeness';
+import { translationPaneEmptyState } from '@/lib/translation-pane-state';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
@@ -149,6 +150,21 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
         {t.blankPage}
       </p>
     );
+  }
+
+  // An English book is not "untranslated" (#4958; .claude/docs/pipeline.md
+  // "English Modernization"): the pipeline never translates English, so an
+  // empty translation pane is the NORMAL state of an English edition — or, for
+  // a pre-1700 one, a modernization nobody has asked for yet. Neither is a
+  // "ready to translate" and neither gets a request CTA or a pipeline button;
+  // this branch renders the same for every role. `translationPaneEmptyState`
+  // owns the decision so the copy here cannot drift from it.
+  const englishState = translationPaneEmptyState(book);
+  if (englishState === 'english-reading-text') {
+    return <EmptyPane label={t.englishReadingText} body={t.englishReadingTextBody} />;
+  }
+  if (englishState === 'english-not-modernized') {
+    return <EmptyPane label={t.notModernized} body={t.notModernizedBody} />;
   }
 
   // OCR done, translation missing. shouldShowTranslationRequestCta owns
