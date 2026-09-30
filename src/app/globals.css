@@ -459,6 +459,29 @@ body:has([data-reader-v2]) {
 }
 .rv2-strip-in { animation: rv2-strip-in 180ms ease-out both; }
 
+/* Desktop reader, wide leaf (palm-leaf, pothi, pecha): the scan spans the full
+   width on top and the text panes sit in a row beneath it, instead of three
+   columns with the leaf as a strip in one of them (#5352). The scan row is as
+   tall as the leaf's shape asks at that width, up to --rv2-leaf-max-h.
+   Two ways in, one rule: the reader sets data-wide-leaf on the panes once it
+   is running; before that, WIDE_LEAF_PREPAINT_SCRIPT (Reader2C.tsx) marks
+   <html>, so a landing does not paint the columns first and then jump
+   (#5367). The variables come from Reader2C.tsx, which owns the numbers. */
+html[data-rv2-wide-leaf] main.rv2-panes,
+main.rv2-panes[data-wide-leaf] {
+  display: grid;
+  grid-template-columns: repeat(var(--rv2-text-panes), minmax(0, 1fr));
+  grid-template-rows:
+    min(var(--rv2-leaf-max-h), calc((100vw - var(--rv2-scan-chrome-x)) / var(--rv2-leaf-ratio) + var(--rv2-scan-chrome-y)))
+    minmax(0, 1fr);
+}
+html[data-rv2-wide-leaf] main.rv2-panes > section[data-scan-pane],
+main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
+  grid-column: 1 / -1;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+}
+
 /* A page turn used to be an instant swap, which read as a flicker rather than
    a change. The new page settles in over a short rise — enough to register
    that something moved, short enough not to sit between the reader and the

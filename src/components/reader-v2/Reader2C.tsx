@@ -91,6 +91,18 @@ const WIDE_LEAF_MAX_H = '50dvh';
  *  vertical padding, and its horizontal padding. */
 const SCAN_PANE_CHROME_Y = 38 + 2 * 22;
 const SCAN_PANE_CHROME_X = 2 * 24;
+/**
+ * Stacks a wide leaf BEFORE hydration (#5367). The reader only learns a scan's
+ * shape from the image, and its own code is not running until the bundle has
+ * arrived — measured 0.3 s after first paint on a fast connection and 3 to 5 s
+ * on a slow one, during which a wide leaf sat in the column layout and then
+ * jumped. This runs as the HTML is parsed: it waits for the scan's header,
+ * and for a wide leaf marks <html> so the stacking rule in globals.css
+ * applies at once. It also leaves the ratio on `window` for the reader to
+ * start from. Once the reader mounts it takes the mark off and owns the
+ * layout (see the mount effect beside `scanRatio`).
+ */
+const WIDE_LEAF_PREPAINT_SCRIPT = `(function(){var w=window;if(w.__rv2Hydrated)return;var img=document.querySelector('main.rv2-panes section[data-scan-pane] img');if(!img)return;var t=Date.now();function mark(){if(w.__rv2Hydrated)return true;var a=img.naturalWidth,b=img.naturalHeight;if(!a||!b)return false;var r=a/b;w.__rv2LeafRatio=r;if(r>=${WIDE_LEAF_RATIO}){var e=document.documentElement;e.style.setProperty('--rv2-leaf-ratio',String(r));e.setAttribute('data-rv2-wide-leaf','');}return true;}function poll(){if(mark())return;if(Date.now()-t<15000)requestAnimationFrame(poll);}img.addEventListener('load',mark,{once:true});poll();})();`;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -3149,6 +3161,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const ratio = size.w / size.h;
     setScanRatio(prev => (Math.abs(prev - ratio) > 0.005 ? ratio : prev));
   }, []);
+  // Take over from WIDE_LEAF_PREPAINT_SCRIPT: start from the shape it measured
+  // and remove its mark from <html>, in one commit before the next paint, so
+  // the layout it set up does not flicker as the reader's own takes its place.
+  // The measurement is read once and deleted: it belongs to the page that was
+  // landed on, and a later client-side move to another book must not inherit it.
+  useLayoutEffect(() => {
+    const w = window as unknown as { __rv2Hydrated?: boolean; __rv2LeafRatio?: number };
+    w.__rv2Hydrated = true;
+    if (w.__rv2LeafRatio) setScanRatio(w.__rv2LeafRatio);
+    delete w.__rv2LeafRatio;
+    const root = document.documentElement;
+    root.removeAttribute('data-rv2-wide-leaf');
+    root.style.removeProperty('--rv2-leaf-ratio');
+  }, []);
   const ocrCorpusInfo = pageTextCorpus(r.currentPage);
   const translationCorpusInfo = translationCorpus(r.currentPage);
   const shareUrl = typeof window !== 'undefined'
@@ -3220,14 +3246,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // instead, with the text panes in a row beneath it: the scan row is as tall
   // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H. Decided
   // per page from the loaded image, like the phone pane (#5352).
+  //
+  // The rule itself is in globals.css (`main.rv2-panes[data-wide-leaf]`), fed
+  // by these variables, because it has to work before this component is
+  // running: see WIDE_LEAF_PREPAINT_SCRIPT. The ratio is left off until the
+  // reader has one of its own, so the script's value on <html> shows through.
   const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
   const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
-  const wideLeafGrid = stackWideLeaf
-    ? {
-        gridTemplateColumns: `repeat(${textPaneCount}, minmax(0, 1fr))`,
-        gridTemplateRows: `min(${WIDE_LEAF_MAX_H}, calc((100vw - ${DESKTOP_RAIL_W + SCAN_PANE_CHROME_X}px) / ${scanRatio} + ${SCAN_PANE_CHROME_Y}px)) minmax(0, 1fr)`,
-      }
-    : undefined;
+  const panesStyle = {
+    '--rv2-text-panes': String(textPaneCount),
+    '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
+    '--rv2-scan-chrome-x': `${DESKTOP_RAIL_W + SCAN_PANE_CHROME_X}px`,
+    '--rv2-scan-chrome-y': `${SCAN_PANE_CHROME_Y}px`,
+    ...(stackWideLeaf ? { '--rv2-leaf-ratio': String(scanRatio) } : {}),
+  } as React.CSSProperties;
 
 
   // The text of a neighbouring page is already prefetched, but its scan is
@@ -3558,19 +3590,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <main
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
-          className={`relative min-h-0 ${stackWideLeaf ? 'grid' : 'flex'}`}
-          style={wideLeafGrid}
+          data-wide-leaf={stackWideLeaf ? '' : undefined}
+          className="rv2-panes relative flex min-h-0"
+          style={panesStyle}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section
-              className={`min-w-0 min-h-0 flex flex-col ${stackWideLeaf ? 'border-b' : 'flex-1 border-r'}`}
-              style={{
-                background: SURFACE.scanBed, borderColor: 'var(--border-medium)',
-                gridColumn: stackWideLeaf ? '1 / -1' : undefined,
-              }}
+              data-scan-pane
+              className="flex-1 min-w-0 min-h-0 flex flex-col border-r"
+              style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}
             >
               <PaneHeader
                 right={
@@ -3796,6 +3827,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </div>
           )}
         </main>
+        {/* After the panes, so the scan <img> it looks for is already parsed. */}
+        <script dangerouslySetInnerHTML={{ __html: WIDE_LEAF_PREPAINT_SCRIPT }} />
 
         {/* Filmstrip — page control, collapses smoothly */}
         <div
