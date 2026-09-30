@@ -139,7 +139,7 @@ function makeGemini({
   const submitted: Array<{ model: string; requests: any[]; displayName: string; name: string }> = [];
   return {
     submitted,
-    prompt(i: number) { return submitted[i].requests[0].contents[0].parts[0].text as string; },
+    prompt(i: number, j = 0) { return submitted[i].requests[j].contents[0].parts[0].text as string; },
     async submit({ model, requests, displayName }: any) {
       const name = `batches/job${submitted.length + 1}`;
       submitted.push({ model, requests, displayName, name });
@@ -231,41 +231,59 @@ describe('each round sends the prompt the realtime worker would send', () => {
     expect(p9.translation.engine ?? p9.translation.provenance ?? p9.translation).toBeTruthy();
   });
 
-  it('a short block is discarded whole; its pages go single-page, one per round, each seeded by the last', async () => {
-    // Round 1: the model drops page 5 → 7 of 8 entries → block-shift guard discards the block.
-    const gemini = makeGemini({ drop: (n, round) => round === 1 && n === 5 });
+  it('a discarded 8-block resolves in 2 rounds: all its pages go single-page in ONE round, seeded only where the predecessor is stored', async () => {
+    // Round 2 (block p9–16): the model drops page 12 → 7 of 8 entries → block-shift guard discards it.
+    const gemini = makeGemini({ drop: (n, round) => round === 2 && n === 12 });
     const deps = makeDeps(gemini);
     await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
-    await tick(db, deps); // collect round 1: discarded; submit round 2 = single p1
+    await tick(db, deps); // collect round 1 (p1–8 written), submit block p9–16
+    await tick(db, deps); // collect round 2: discarded; submit round 3 = eight singles
     let run = await runOf(db);
-    expect(run.rounds[0]).toMatchObject({ kind: 'block', discarded: 'short-block', written: 0, fallback: 8 });
-    expect(run.pending_single.map((p: Doc) => p.page_number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
-    expect(pageText(db, 'p1')).toBeUndefined();
-    expect(gemini.prompt(1)).toBe(buildTranslationPrompt({
-      prompts: PROMPTS, book: BOOK, ocrText: ocrFor(1), previousTranslation: null,
-      prevOcrText: undefined, nextOcrText: ocr(2), pageBreak: PAGE_BREAK_SCOPED,
+    expect(run.rounds[1]).toMatchObject({ kind: 'block', discarded: 'short-block', written: 0, fallback: 8 });
+    expect(run.pending_single.map((p: Doc) => p.page_number)).toEqual([9, 10, 11, 12, 13, 14, 15, 16]);
+    expect(gemini.submitted).toHaveLength(3);
+    expect(gemini.submitted[2].requests).toHaveLength(8);
+    expect(run.round.units.map((u: Doc) => u.context.previous_translation)).toEqual([true, false, false, false, false, false, false, false]);
+    // p9 is seeded with p8's STORED translation; p10's predecessor is in the same round, so it is not.
+    expect(gemini.prompt(2, 0)).toBe(buildTranslationPrompt({
+      prompts: PROMPTS, book: BOOK, ocrText: ocrFor(9), previousTranslation: textFor(8),
+      prevOcrText: ocr(8), nextOcrText: ocr(10), pageBreak: PAGE_BREAK_SCOPED,
+    }).prompt);
+    expect(gemini.prompt(2, 1)).toBe(buildTranslationPrompt({
+      prompts: PROMPTS, book: BOOK, ocrText: ocrFor(10), previousTranslation: null,
+      prevOcrText: ocr(9), nextOcrText: ocr(11), pageBreak: PAGE_BREAK_SCOPED,
     }).prompt);
 
-    await tick(db, deps); // collect p1, submit p2 seeded with p1's stored text
-    expect(pageText(db, 'p1')).toBe(textFor(1));
-    expect(gemini.prompt(2)).toBe(buildTranslationPrompt({
-      prompts: PROMPTS, book: BOOK, ocrText: ocrFor(2), previousTranslation: textFor(1),
-      prevOcrText: ocr(1), nextOcrText: ocr(3), pageBreak: PAGE_BREAK_SCOPED,
-    }).prompt);
-
-    await tick(db, deps, 7); // p2..p8 collected; the next block submitted
+    await tick(db, deps); // collect all eight singles in one go; the next block submitted
     run = await runOf(db);
     expect(run.pending_single).toEqual([]);
-    for (let n = 1; n <= 8; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
-    // Round 10 is block p9–16, seeded with p8 — the chain resumes where production would.
-    expect(gemini.prompt(9)).toBe(buildBlockTranslationPrompt({
-      prompts: PROMPTS, book: BOOK, pages: PAGES.slice(8, 16), previousTranslation: textFor(8),
-      prevOcrText: ocr(8), nextOcrText: ocr(17), pageBreak: PAGE_BREAK_SCOPED,
+    for (let n = 9; n <= 16; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+    // Round 4 is block p17–20, seeded with p16 — the chain resumes where production would.
+    expect(gemini.prompt(3)).toBe(buildBlockTranslationPrompt({
+      prompts: PROMPTS, book: BOOK, pages: PAGES.slice(16, 20), previousTranslation: textFor(16),
+      prevOcrText: ocr(16), nextOcrText: undefined, pageBreak: PAGE_BREAK_SCOPED,
     }).prompt);
-    await tick(db, deps, 3);
+    await tick(db, deps, 2);
     run = await runOf(db);
     expect(run.phase).toBe(PHASE.COMPLETE);
+    expect(run.rounds).toHaveLength(4);
     expect(run.counts).toMatchObject({ written: 20, single_fallbacks: 8 });
+  });
+
+  it('in a round of singles, a page whose request errored stays pending while the others are written', async () => {
+    const gemini = makeGemini({ drop: (n, round) => (round === 1 && n === 5) || (round === 2 && n === 3) });
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    await tick(db, deps); // round 1 discarded → 8 singles
+    await tick(db, deps); // round 2: p3 came back empty, the rest written
+    let run = await runOf(db);
+    expect(run.strikes).toBe(0);
+    expect(run.round.units.map((u: Doc) => u.pages[0].page_number)).toEqual([3]);
+    expect(run.round.units[0].context.previous_translation).toBe(true); // p2 is stored now
+    await tick(db, deps);
+    run = await runOf(db);
+    expect(pageText(db, 'p3')).toBe(textFor(3));
+    expect(run.pending_single).toEqual([]);
   });
 });
 
@@ -373,16 +391,17 @@ describe('guards at the write', () => {
 // ── Refusals and the collapse retry ────────────────────────────────────────
 describe('single-page outcomes', () => {
   it('a RECITATION refusal on a single page is stamped as production stamps it, and the run moves on', async () => {
-    // Round 1 drops p5 → 8 singles; p5's single comes back empty with finishReason RECITATION.
-    const gemini = makeGemini({ drop: (n, round) => (round === 1 && n === 5) || (n === 5 && round > 1), finish: (round) => (round === 6 ? 'RECITATION' : 'STOP') });
+    // Round 1 drops p5 → 8 singles in round 2; p5's comes back empty with finishReason RECITATION.
+    const gemini = makeGemini({ drop: (n) => n === 5, finish: (round) => (round === 2 ? 'RECITATION' : 'STOP') });
     const deps = makeDeps(gemini);
     await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
-    await tick(db, deps, 6); // round 1 collected, p1..p4 singles collected, p5 single collected (round 6)
+    await tick(db, deps, 2); // round 1 collected; the eight singles collected (round 2)
     const p5 = pageDoc(db, 5);
     expect(p5.translation?.recitation_blocked).toBe(true);
+    expect(pageText(db, 'p6')).toBe(textFor(6));
     const run = await runOf(db);
     expect(run.counts.blocked).toBe(1);
-    expect(run.pending_single.map((p: Doc) => p.page_number)).toEqual([6, 7, 8]);
+    expect(run.pending_single).toEqual([]);
     expect(run.phase).toBe(PHASE.SUBMITTED);
   });
 
@@ -416,7 +435,7 @@ describe('ready runs of many books share one Batch job per round', () => {
     const [r1, r2] = [await runFor(d, 'bk1'), await runFor(d, 'bk2')];
     expect(r1.round.job.name).toBe('batches/job1');
     expect(r2.round.job.name).toBe('batches/job1');
-    expect(r1.round.key).not.toBe(r2.round.key);
+    expect(r1.round.units[0].key).not.toBe(r2.round.units[0].key);
     // One placeholder per book, keyed <job>#<runId>.
     expect((deps.logUsage as any).mock.calls.map((c: any[]) => [c[0].book_id, c[0].batch_job_id]))
       .toEqual([['bk1', `batches/job1#${r1.id}`], ['bk2', `batches/job1#${r2.id}`]]);
@@ -466,10 +485,12 @@ describe('ready runs of many books share one Batch job per round', () => {
     const gemini = makeGemini();
     const deps = makeDeps(gemini);
     await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
-    // Rewrite the open round to the old shape: key `r1`, no meter_id.
+    // Rewrite the open round to the old shape: the request's fields on the round, key `r1`, no meter_id.
     const run = db.data[RUNS_COLLECTION][0];
+    const { key: _k, pages: _p, ...unit } = run.round.units[0];
+    Object.assign(run.round, unit, { key: 'r1' });
+    delete run.round.units;
     delete run.round.meter_id;
-    run.round.key = 'r1';
     gemini.submitted[0].requests[0].metadata.key = 'r1';
     await tick(db, deps);
     expect(pageText(db, 'p1')).toBe(textFor(1));

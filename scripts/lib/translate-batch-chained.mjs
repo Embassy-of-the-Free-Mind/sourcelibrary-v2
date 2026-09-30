@@ -22,20 +22,20 @@
  * SHAPE OF A RUN (one book, one document in `translate_batch_runs`, mode: 'chained'):
  *
  *   enrol   queue = the pages the realtime worker would translate (selectPages), in order
- *   round n plan the next request: the pending single page if the previous round left one,
- *           else the next block (planBlocks, the worker's partition) — seed + adjacent OCR
+ *   round n plan the next requests: every pending single page if the previous round left any (one
+ *           request each), else the next block (planBlocks, the worker's partition) — seed + adjacent OCR
  *           from Mongo — the request rides in a Batch job SHARED with every other ready run's
  *           (≤ MAX_REQUESTS_PER_JOB per job, one model per job) — meter a placeholder per run,
  *           keyed `<job>#<runId>` so each book keeps its own meter row
  *   collect parse as the worker parses (parseBlockTranslations: 15% truncation reject,
  *           positional fallback, BLOCK-SHIFT discard; dropDriftedPages), write every page that
  *           came back through translate-core's door (refuseUnhealthy), queue every page that did
- *           not as a single-page request for the following rounds (the worker's
- *           missing-from-batch path, one page per round so each is seeded by the last) —
+ *           not as a single-page request for the next round (the worker's missing-from-batch
+ *           path; all of them in one round, each seeded only if its predecessor is stored) —
  *           complete the meter — plan the next round
  *   done    queue exhausted and nothing pending → `complete`; counters synced
  *
- * A dead or cancelled job, or an errored request, is a STRIKE: the same plan is resubmitted
+ * A dead or cancelled job, or a round whose every request errored, is a STRIKE: the same plan is resubmitted
  * next round; MAX_STRIKES in a row parks the run (the worker's MAX_BATCH_FAILURES). A block
  * that parsed nothing is a strike too; a block discarded short, or with a drifted boundary, is
  * not — its pages go single-page, as in production.
@@ -122,8 +122,11 @@ const ref = (p) => ({ id: p.id, page_number: p.page_number, ocr_hash: contentHas
  *   { kind: 'single'|'block', pages: [docs], dropped: [{id, reason}] } or null when nothing is left.
  * Pages whose OCR changed since enrolment, or that were translated meanwhile (the realtime lane
  * or a human), or that no longer pass isTranslatablePage, are DROPPED from the plan and
- * reported — never sent, never overwritten. A pending single page comes first, alone: the
- * worker translates fallback pages one after another, each seeded by the previous.
+ * reported — never sent, never overwritten. Pending single pages come first, ALL of them in one
+ * round, one request each: the worker translates fallback pages one after another, each seeded by
+ * the previous, but here that cost one ~5-minute round per page (an 8-page discarded block took 8
+ * rounds). A page whose predecessor's translation is already stored is still seeded from it; the
+ * rest go unseeded, and their provenance says so (context.previous_translation false).
  */
 export function planNextRound(run, pageDocs) {
   const dropped = [];
@@ -136,10 +139,8 @@ export function planNextRound(run, pageDocs) {
     if (!v.ok) { dropped.push({ id: r.id, reason: `not_translatable:${v.reason}` }); return null; }
     return p;
   };
-  for (const r of run.pending_single || []) {
-    const p = live(r);
-    if (p) return { kind: 'single', pages: [p], dropped };
-  }
+  const pending = (run.pending_single || []).map(live).filter(Boolean);
+  if (pending.length) return { kind: 'single', pages: pending, dropped };
   const rest = [];
   for (const r of (run.queue || []).slice(run.cursor || 0)) {
     const p = live(r);
@@ -284,7 +285,24 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
 }
 
 /**
- * Plan and build a READY run's next request, with every refusal that sends nothing: a closed dial,
+ * The requests of one round. A block is ONE request; a round of single pages is one request PER
+ * PAGE, all in the same round (the discarded block's pages no longer wait for each other). A
+ * round from before this shape carried its one request's fields on the round itself.
+ */
+export function unitsOf(round) {
+  if (round.units) return round.units;
+  return [{ key: round.key, pages: round.pages, prompt_sent_hash: round.prompt_sent_hash, prompt_sent_chars: round.prompt_sent_chars, max_output_tokens: round.max_output_tokens, context: round.context, retry: round.retry, first_text: round.first_text }];
+}
+
+/** The first text of a page whose single translation looked collapsed, awaiting its one retry. */
+function collapseRetryText(run, pageId) {
+  const hit = (run.collapse_retries || []).find((c) => c.page_id === pageId);
+  if (hit) return hit.first_text;
+  return run.collapse_retry?.page_id === pageId ? run.collapse_retry.first_text : undefined;  // pre-units shape
+}
+
+/**
+ * Plan and build a READY run's next requests, with every refusal that sends nothing: a closed dial,
  * or a running estimate past the approval (the run stays READY and the next tick tries again — a
  * closed dial reopens at midnight; an approval is topped up by the operator), or a finished queue
  * (the run completes). Returns { prepared } or { submitted: false, note }.
@@ -308,23 +326,53 @@ async function prepareRound(db, run, deps, { prompts }) {
 
   if (!(await deps.budgetAllows(db, `translate-batch-chained ${run.book_id}`))) return { submitted: false, note: 'spend-dial-closed' };
   const book = await db.collection('books').findOne({ id: run.book_id });
-  const req = await buildRoundRequest(db, { prompts, book, pages: plan.pages, kind: plan.kind });
-  const est = roundEstimateUsd({ model: run.model, prompt: req.prompt, pages: plan.pages });
-  if (run.spent_est_usd + est > run.approved_usd) return { submitted: false, note: `approval exhausted (est $${(run.spent_est_usd + est).toFixed(4)} > $${run.approved_usd})` };
-
   const n = (run.rounds || []).length + 1;
-  // The key names the run as well as the round: responses in a shared job are told apart by it.
-  const key = `${run.id}:r${n}`;
-  return { prepared: { run, plan, req, est, n, key, request: batchRequest({ key, prompt: req.prompt, maxOutputTokens: req.maxOutputTokens }) } };
+  const groups = plan.kind === 'block' ? [plan.pages] : plan.pages.map((p) => [p]);
+  const units = [];
+  const requests = [];
+  let est = 0;
+  for (const pages of groups) {
+    // Seeded from the STORED translation of the page before, as the worker seeds: a fallback page
+    // whose predecessor is in this same round goes unseeded (context.previous_translation false).
+    const req = await buildRoundRequest(db, { prompts, book, pages, kind: plan.kind });
+    est += roundEstimateUsd({ model: run.model, prompt: req.prompt, pages });
+    // The key names the run as well as the round (and the page, for singles): a shared job's
+    // responses are told apart by it.
+    const key = plan.kind === 'block' ? `${run.id}:r${n}` : `${run.id}:r${n}:p${pages[0].page_number}`;
+    const unit = {
+      key, pages: pages.map(ref),
+      prompt_sent_hash: contentHash(req.prompt), prompt_sent_chars: req.prompt.length, max_output_tokens: req.maxOutputTokens,
+      context: req.context, prompt_ref: req.promptRef,
+    };
+    // A collapsed single page is retried once (worker translatePageGuarded): the first text rides
+    // along so the better of the two is kept.
+    const first = plan.kind === 'single' ? collapseRetryText(run, pages[0].id) : undefined;
+    if (first !== undefined) { unit.retry = true; unit.first_text = first; }
+    units.push(unit);
+    requests.push(batchRequest({ key, prompt: req.prompt, maxOutputTokens: req.maxOutputTokens }));
+  }
+  if (run.spent_est_usd + est > run.approved_usd) return { submitted: false, note: `approval exhausted (est $${(run.spent_est_usd + est).toFixed(4)} > $${run.approved_usd})` };
+  return { prepared: { run, plan, units, requests, est, n } };
 }
 
-/** Split prepared rounds into jobs: one model per job, at most `max` requests each. */
+/**
+ * Split prepared rounds into jobs: one model per job, at most `max` requests each. A run's
+ * requests stay in one job (its round has one job); a run with more than `max` rides alone.
+ */
 export function packJobs(prepared, max = MAX_REQUESTS_PER_JOB) {
   const byModel = new Map();
   for (const p of prepared) byModel.set(p.run.model, [...(byModel.get(p.run.model) || []), p]);
   const jobs = [];
-  for (const [model, items] of byModel) for (let i = 0; i < items.length; i += max) jobs.push({ model, items: items.slice(i, i + max) });
-  return jobs;
+  for (const [model, items] of byModel) {
+    let cur = null;
+    for (const p of items) {
+      const size = p.requests?.length ?? 1;
+      if (!cur || cur.size + size > max) { cur = { model, items: [], size: 0 }; jobs.push(cur); }
+      cur.items.push(p);
+      cur.size += size;
+    }
+  }
+  return jobs.map(({ model, items }) => ({ model, items }));
 }
 
 /**
@@ -343,30 +391,30 @@ export async function submitRounds(db, runs, deps, { prompts }) {
     } catch (e) { out.set(run.id, { submitted: false, note: `ERROR ${e.message?.slice(0, 160)}` }); }
   }
   for (const { model, items } of packJobs(prepared)) {
+    const requests = items.flatMap((p) => p.requests);
     const label = items.length === 1 ? `${items[0].run.book_id}-${items[0].run.id}-r${items[0].n}` : `${items.length}runs-${Date.now().toString(36)}`;
     let job;
     try {
-      job = await deps.gemini.submit({ model, requests: items.map((p) => p.request), displayName: `tbc-${label}` });
+      job = await deps.gemini.submit({ model, requests, displayName: `tbc-${label}` });
     } catch (e) {
       for (const p of items) out.set(p.run.id, { submitted: false, note: `submit failed: ${e.message?.slice(0, 160)}` });
       continue;
     }
     const now = deps.now ? deps.now() : new Date();
-    for (const { run, plan, req, est, n, key } of items) {
+    for (const { run, plan, units, est, n } of items) {
       const meterId = meterIdFor(job.name, run.id);
       const round = {
-        n, key, kind: plan.kind, pages: plan.pages.map(ref),
-        prompt_sent_hash: contentHash(req.prompt), prompt_sent_chars: req.prompt.length, max_output_tokens: req.maxOutputTokens,
-        context: req.context, est_usd: +est.toFixed(5),
-        job: { name: job.name, key_index: job.keyIndex, submitted_at: now, requests: items.length },
+        n, kind: plan.kind, pages: plan.pages.map(ref), units: units.map(({ prompt_ref, ...u }) => u),
+        est_usd: +est.toFixed(5),
+        job: { name: job.name, key_index: job.keyIndex, submitted_at: now, requests: requests.length },
         meter_id: meterId,
       };
-      // A collapsed single page is retried once (worker translatePageGuarded): the first text rides
-      // along so the better of the two is kept.
-      if (plan.kind === 'single' && run.collapse_retry?.page_id === plan.pages[0].id) { round.retry = true; round.first_text = run.collapse_retry.first_text; }
-      await setRun(db, run, { phase: PHASE.SUBMITTED, round, collapse_retry: null, prompt_ref: run.prompt_ref || req.promptRef, spent_est_usd: +(run.spent_est_usd + est).toFixed(5) }, deps);
+      await setRun(db, run, { phase: PHASE.SUBMITTED, round, collapse_retry: null, prompt_ref: run.prompt_ref || units[0].prompt_ref, spent_est_usd: +(run.spent_est_usd + est).toFixed(5) }, deps);
       await meterPlaceholder(deps, db, { run, jobName: meterId, pageCount: plan.pages.length });
-      log(`[translate-batch-chained] ${run.book_id}: round ${n} — ${plan.kind} p${plan.pages[0].page_number}${plan.pages.length > 1 ? `–${plan.pages[plan.pages.length - 1].page_number}` : ''}${req.context.previous_translation ? ' seeded' : ' unseeded'} → ${job.name}${items.length > 1 ? ` (shared, ${items.length} requests)` : ''}`);
+      const seeded = units.filter((u) => u.context.previous_translation).length;
+      const span = `p${plan.pages[0].page_number}${plan.pages.length > 1 ? `–${plan.pages[plan.pages.length - 1].page_number}` : ''}`;
+      const seedNote = units.length === 1 ? (seeded ? ' seeded' : ' unseeded') : ` ${units.length} singles, ${seeded} seeded`;
+      log(`[translate-batch-chained] ${run.book_id}: round ${n} — ${plan.kind} ${span}${seedNote} → ${job.name}${requests.length > units.length ? ` (shared, ${requests.length} requests)` : ''}`);
       out.set(run.id, { submitted: true, note: `round ${n} ${job.name}` });
     }
   }
@@ -411,8 +459,8 @@ async function markRefused(db, page, finishReason, deps) {
     : { 'translation.safety_blocked': true, 'translation.safety_blocked_at': now, 'translation.safety_reason': `batch finishReason ${finishReason}`, 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': now } });
 }
 
-/** One page through translate-core's door, with the round's provenance. */
-async function writeRoundPage(db, run, book, page, text, deps) {
+/** One page through translate-core's door, with the provenance of the request that produced it. */
+async function writeRoundPage(db, run, book, page, text, deps, unit) {
   const writePage = deps.writePage || writePageTranslation;
   const r = run.round;
   const res = await writePage(db, {
@@ -420,10 +468,10 @@ async function writeRoundPage(db, run, book, page, text, deps) {
     jobId: run.id, note: REVISION_NOTE, refuseUnhealthy: true,
     call: {
       call_site: 'scripts/lib/translate-batch-chained.mjs', api: 'batch', model: run.model,
-      prompt_sent_hash: r.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: r.prompt_sent_chars,
-      generationConfig: { maxOutputTokens: r.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } },
+      prompt_sent_hash: unit.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: unit.prompt_sent_chars,
+      generationConfig: { maxOutputTokens: unit.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } },
       run: { batch_job_id: r.job.name, job_id: run.id, round: r.n, code_version: run.code_version || NOT_RECORDED, host: run.host || NOT_RECORDED },
-      context: r.context,
+      context: unit.context,
     },
   });
   if (res.written) {
@@ -445,24 +493,27 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   const log = deps.log || console.log;
   if (run.phase !== PHASE.SUBMITTED) return { advanced: false, note: `phase ${run.phase}` };
   const round = run.round;
+  const units = unitsOf(round);
   // `fetched` is the job fetched once by tickChained for every run in it; alone, fetch it here.
   const { state, responses: all } = fetched || await deps.gemini.fetch(round.job.name);
   // A round submitted before shared jobs (no meter_id) had a job of its own, metered by job name.
   const meterId = round.meter_id || round.job.name;
-  // Only this run's response: a shared job holds other books' answers, and the meter row for
-  // this book must sum only this book's tokens. A lone job may fall back to its only response.
+  // Only this run's responses: a shared job holds other books' answers, and the meter row for
+  // this book must sum only this book's tokens. A lone old-shape job may fall back to its only one.
   const texts = (all || []).map(responseTextOf);
-  let at = texts.findIndex((t) => t.key === round.key);
-  if (at < 0 && !round.meter_id && texts.length === 1) at = 0;
-  const responses = at >= 0 ? [all[at]] : [];
+  const found = units.map((u) => texts.findIndex((t) => t.key === u.key));
+  if (units.length === 1 && found[0] < 0 && !round.meter_id && texts.length === 1) found[0] = 0;
+  const responses = found.filter((i) => i >= 0).map((i) => all[i]);
+  const answerOf = (i) => (found[i] >= 0 ? texts[found[i]] : null);
   if (DEAD_STATES.has(state)) {
     await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses, status: 'failed', error: state });
     return strike(db, run, deps, `job ${state}`);
   }
   if (!DONE_STATES.has(state)) return { advanced: false, note: state };
 
-  const r = at >= 0 ? texts[at] : null;
-  if (!r || r.error) {
+  const answered = units.map((_, i) => answerOf(i)).filter((r) => r && !r.error);
+  if (!answered.length) {
+    const r = answerOf(0);
     await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses, status: 'failed', error: r?.error || 'no response' });
     return strike(db, run, deps, r?.error ? `request error: ${r.error}` : 'no response for key');
   }
@@ -471,10 +522,12 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   const book = await db.collection('books').findOne({ id: run.book_id });
   const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id));
   const pages = round.pages.map((p) => pageDocs.get(p.id)).filter(Boolean);
-  const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), finish_reason: r.finishReason, written: 0, fallback: 0 };
+  const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), written: 0, fallback: 0 };
   const guardsOk = (p) => contentHash(p.ocr?.data || '') === round.pages.find((x) => x.id === p.id)?.ocr_hash && !p.translation?.data && isTranslatablePage(p).ok;
 
   if (round.kind === 'block') {
+    const r = answerOf(0);
+    summary.finish_reason = r.finishReason;
     const parsed = parseBlockTranslations(r.text, pages);
     const { translations } = parsed;
     const { drifted } = dropDriftedPages(pages, translations);
@@ -489,7 +542,7 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     const pending = [];
     for (const p of pages) {
       const text = translations.get(p.page_number);
-      if (text && guardsOk(p)) { const res = await writeRoundPage(db, run, book, p, text, deps); if (res.written) summary.written++; }
+      if (text && guardsOk(p)) { const res = await writeRoundPage(db, run, book, p, text, deps, units[0]); if (res.written) summary.written++; }
       else if (!text) { pending.push(ref(p)); summary.fallback++; }
       else run.dropped.push({ id: p.id, reason: 'guard-at-collect' });
     }
@@ -504,35 +557,53 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     return { advanced: true, note: `block wrote ${summary.written}/${pages.length}` };
   }
 
-  // Single page.
-  const page = pages[0];
-  let text = sanitizeTranslationTags(String(r.text || '').trim());
-  const finish = r.finishReason || '';
-  if (!text && /RECITATION|SAFETY|PROHIBITED/i.test(finish)) {
-    if (page) await markRefused(db, page, finish, deps);
-    run.counts.blocked++;
-    summary.outcome = `refused ${finish}`;
-    await setRun(db, run, { phase: PHASE.READY, strikes: 0, round: null, rounds: [...run.rounds, summary], pending_single: (run.pending_single || []).filter((x) => x.id !== round.pages[0].id), cursor: advanceCursorPast(run, round.pages[0].id), counts: run.counts }, deps);
-    log(`[translate-batch-chained] ${run.book_id}: p${page?.page_number} refused (${finish}) — marked`);
-    return { advanced: true, note: `refused ${finish}` };
+  // Single pages, one request each. A page leaves the plan when it is written, refused, or fails a
+  // guard; it stays for the next round when its request errored, came back empty, or collapsed
+  // (retried once). A round in which no page left and none began its collapse retry is a strike.
+  const resolved = new Set();
+  const retries = (run.collapse_retries || []).filter((c) => !units.some((u) => u.pages[0].id === c.page_id));
+  const outcomes = [];
+  for (let i = 0; i < units.length; i++) {
+    const unit = units[i];
+    const page = pageDocs.get(unit.pages[0].id);
+    const r = answerOf(i);
+    if (!r || r.error) { outcomes.push('error'); continue; }
+    let text = sanitizeTranslationTags(String(r.text || '').trim());
+    const finish = r.finishReason || '';
+    if (!text && /RECITATION|SAFETY|PROHIBITED/i.test(finish)) {
+      if (page) await markRefused(db, page, finish, deps);
+      run.counts.blocked++;
+      resolved.add(unit.pages[0].id);
+      outcomes.push(`refused ${finish}`);
+      log(`[translate-batch-chained] ${run.book_id}: p${page?.page_number} refused (${finish}) — marked`);
+      continue;
+    }
+    if (!text) { outcomes.push(`empty ${finish}`); continue; }
+    if (page && looksCollapsed(page.ocr?.data, text) && !unit.retry) {
+      // Retry once, next round; keep this text to compare.
+      retries.push({ page_id: page.id, first_text: text });
+      outcomes.push('collapsed-retry');
+      log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} looks collapsed (${strippedBodyLen(text)} body chars) — retrying once`);
+      continue;
+    }
+    if (unit.retry && unit.first_text && strippedBodyLen(unit.first_text) > strippedBodyLen(text)) text = unit.first_text;
+    if (page && guardsOk(page)) { const res = await writeRoundPage(db, run, book, page, text, deps, unit); if (res.written) summary.written++; }
+    else run.dropped.push({ id: unit.pages[0].id, reason: 'guard-at-collect' });
+    resolved.add(unit.pages[0].id);
+    outcomes.push('done');
   }
-  if (!text) return strike(db, run, deps, `single page empty (finish ${finish})`);
-  if (page && looksCollapsed(page.ocr?.data, text) && !round.retry) {
-    // Retry once, next round; keep this text to compare.
-    await setRun(db, run, { phase: PHASE.READY, strikes: 0, rounds: [...run.rounds, { ...summary, outcome: 'collapsed-retry' }], round: null, collapse_retry: { page_id: page.id, first_text: text } }, deps);
-    log(`[translate-batch-chained] ${run.book_id}: p${page.page_number} looks collapsed (${strippedBodyLen(text)} body chars) — retrying once`);
-    return { advanced: true, note: 'collapsed, retrying' };
-  }
-  if (round.retry && round.first_text && strippedBodyLen(round.first_text) > strippedBodyLen(text)) text = round.first_text;
-  if (page && guardsOk(page)) { const res = await writeRoundPage(db, run, book, page, text, deps); if (res.written) summary.written++; }
-  else if (page) run.dropped.push({ id: page.id, reason: 'guard-at-collect' });
+  const moved = resolved.size + outcomes.filter((o) => o === 'collapsed-retry').length;
+  if (!moved) return strike(db, run, deps, `singles: ${[...new Set(outcomes)].join(', ')}`);
+  summary.outcomes = outcomes;
   await setRun(db, run, {
     phase: PHASE.READY, strikes: 0, round: null, rounds: [...run.rounds, summary],
-    pending_single: (run.pending_single || []).filter((x) => x.id !== round.pages[0].id), cursor: advanceCursorPast(run, round.pages[0].id),
-    counts: run.counts, dropped: run.dropped,
+    pending_single: (run.pending_single || []).filter((x) => !resolved.has(x.id)),
+    cursor: [...resolved].reduce((c, id) => advanceCursorPast({ ...run, cursor: c }, id), run.cursor || 0),
+    counts: run.counts, dropped: run.dropped, collapse_retries: retries, collapse_retry: null,
   }, deps);
-  log(`[translate-batch-chained] ${run.book_id}: round ${round.n} single p${page?.page_number}: ${summary.written ? 'written' : 'not written'}`);
-  return { advanced: true, note: `single ${summary.written ? 'written' : 'not written'}` };
+  const left = units.length - resolved.size;
+  log(`[translate-batch-chained] ${run.book_id}: round ${round.n} ${units.length} single(s): wrote ${summary.written}${left ? `, ${left} carried to the next round` : ''}`);
+  return { advanced: true, note: `singles wrote ${summary.written}/${units.length}` };
 }
 
 /** A single page that came from the queue head (not from pending) moves the cursor past itself. */
