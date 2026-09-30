@@ -558,5 +558,10 @@ export function fromLocale(locale) {
 export function displayLabel(codes, locale = 'en') {
   const names = (codes || []).map((c) => languageName(c, locale)).filter(Boolean);
   if (names.length === 0) return null;
-  return new Intl.ListFormat([locale || 'en'], { style: 'long', type: 'conjunction' }).format(names);
+  try {
+    return new Intl.ListFormat([locale || 'en'], { style: 'long', type: 'conjunction' }).format(names);
+  } catch {
+    // A malformed locale (from a URL, say) must not take the page down.
+    return new Intl.ListFormat(['en'], { style: 'long', type: 'conjunction' }).format(names);
+  }
 }

@@ -357,6 +357,8 @@ describe('toLanguageCodes: a closed vocabulary', () => {
     expect(displayLabel(['grc', 'lat'])).toBe('Greek and Latin');
     expect(displayLabel(['lat'])).toBe('Latin');
     expect(displayLabel([])).toBeNull();
+    expect(displayLabel(['grc', 'lat'], 'not a locale!')).toBe('Greek and Latin');
+    expect(languageName('lat', 'not a locale!')).toBe('Latin');
     expect(toBcp47('lat')).toBe('la');
     expect(fromLocale('es-ES')).toBe('spa');
   });
