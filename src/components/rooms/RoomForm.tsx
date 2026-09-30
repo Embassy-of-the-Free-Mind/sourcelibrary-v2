@@ -69,9 +69,6 @@ export default function RoomForm({ initial, submitLabel, saving, error, onSubmit
     return () => { alive = false; };
   }, []);
 
-  useEffect(() => {
-    if (!slugTouched) setSlug(slugify(name));
-  }, [name, slugTouched]);
 
   const slugProblem = useMemo(() => {
     if (!slug) return null;
@@ -108,7 +105,8 @@ export default function RoomForm({ initial, submitLabel, saving, error, onSubmit
         <div>
           <label htmlFor="room-name" className={LABEL} style={LABEL_STYLE}>Room name</label>
           <input id="room-name" className={FIELD} style={FIELD_STYLE} value={name} maxLength={80}
-            onChange={e => setName(e.target.value)} placeholder="The Zosimos Reading Room" required />
+            onChange={e => { setName(e.target.value); if (!slugTouched) setSlug(slugify(e.target.value)); }}
+            placeholder="The Zosimos Reading Room" required />
         </div>
         <div>
           <label htmlFor="room-slug" className={LABEL} style={LABEL_STYLE}>URL name</label>
