@@ -85,6 +85,13 @@ Artifact: `scripts/eval/results/ia-model-ocr-off-leaf-2026-09-30/`, `scripts/aud
 
 ---
 
+## 2026-09-30 — Why is Gemini OCR off-leaf on IA bulk_jp2 books, and which pages exactly? (#5309)
+
+- **Design.** Four #5309 control pages were read in Mongo: repair timestamps, `needs_reocr` flags, and OCR dates set against `archived_at`. From that, a timestamp classifier (`strandedByImageRepair`) was run over all 710 image-repaired books and checked against the #5398 detector's 2,639-book sample.
+- **Result.** The cause is the #3368 image repair of 2026-07-29. It corrected the images under 111,296 pages whose OCR had read the shifted image. It flagged them `needs_reocr`, which nothing reads, so no re-OCR followed. That is 399 books (380 live) and 105,316 translated pages. Against the detector: 27 of its 29 reader-visible books are on the list (the other 2 are a show-through false positive and one unrelated 4-page book), 6,001 of its 6,006 shifted pages are on the list, and 0 of its 50 image-shifted books are. The defect is not live: new post-fix OCR lands only on never-repaired, self-consistent (class C) books. Repair, not run: ≈ $255 with both steps on batch. Letting gap-fill do the translation instead costs ≈ $344.
+- *Replicated?* External check against an independent instrument (the #5398 text-vs-djvu detector), as above.
+- **Artifact.** `scripts/eval/results/stranded-image-repair-text-2026-09-30/`, `scripts/audit/stranded-image-repair-text.mjs`.
+
 ## 2026-09-30 — Chained Batch lane at scale (#4681): 154 books at once in shared jobs — $0.00061/page, ~4,700 pages/hour at full concurrency, 5.4% of rounds cancelled
 
 **Question.** Does the chained lane (2026-09-29 entry below) hold its price and guard rates when

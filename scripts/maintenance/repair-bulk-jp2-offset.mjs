@@ -21,7 +21,10 @@
  * so their text currently agrees with what the reader sees. Fixing the images
  * BREAKS those pages. They are flagged `needs_reocr` here and must be re-OCR'd
  * (paid) in a follow-up pass. Repairing images without that step trades one
- * misalignment for another.
+ * misalignment for another. Nothing reads `needs_reocr` (#5309): that is exactly
+ * what happened after the 2026-07-29 run, so --apply now refuses to strand
+ * pages unless --reocr-issue names the owner of their re-OCR, and
+ * scripts/audit/stranded-image-repair-text.mjs lists them until they are redone.
  *
  * Reversible: the images being overwritten are just the neighbouring leaf, always
  * refetchable from IA. Nothing unique is destroyed. OCR/translation are untouched.
@@ -50,6 +53,7 @@ const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d :
 const APPLY = args.includes('--apply');
 const VERIFY_ONLY = args.includes('--verify-only');
 const FROM_AUDIT = flag('from-audit');       // JSONL from scripts/audit/bulk-archive-alignment.mjs
+const REOCR_ISSUE = flag('reocr-issue');    // issue that owns re-OCR of pages this repair strands (#5309)
 const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a), []);
 // Page fetches per book, against archive.org. Kept modest deliberately: this
 // sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
@@ -181,6 +185,13 @@ async function repairBook(db, bookId) {
     return;
   }
   if (!APPLY) return console.log('  [DRY RUN] no writes — pass --apply');
+  // #5309: the 2026-07-29 run of this script flagged 111K pages needs_reocr and
+  // nothing ever read the flag, so correcting the images put a neighbouring
+  // leaf's text and translation beside every one of them, for two months.
+  // Repairing images that strand text is only safe with the re-OCR owned.
+  if (split.consistent > 0 && !REOCR_ISSUE) {
+    return console.log(`  [REFUSE] ${split.consistent} pages would be stranded (text read the shifted image) — pass --reocr-issue <N> naming the issue that owns their re-OCR; audit with scripts/audit/stranded-image-repair-text.mjs`);
+  }
 
   let done = 0, failed = 0, idx = 0;
   async function worker() {
@@ -223,6 +234,7 @@ async function recordOutcome(db, book, bulk, after, split, failed) {
       'archive_metadata.jp2_offset_repaired_at': new Date(),
       'archive_metadata.jp2_offset_post_verdict': after.verdict,
       'archive_metadata.jp2_offset_needs_reocr': split.consistent,
+      ...(REOCR_ISSUE ? { 'archive_metadata.jp2_offset_reocr_issue': Number(REOCR_ISSUE) } : {}),
       updated_at: new Date(),
     },
   });
