@@ -11,6 +11,7 @@ import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import { ReadCautionNote, PageProblemReport } from './PageProblem';
 import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
@@ -3348,7 +3349,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               about the page rather than the book. Cancel and Save sit beside
               the title because that is where the edit began, and because a
               save button next to the view toggles reads as saving a view. */}
-          <a
+          <BackToBook
+            framed={isEmbedded}
             href={embedHref(`/book/${r.bookPath}`)}
             className={`${BAR_CONTROL} min-w-0 max-w-[46%] no-underline group !justify-start gap-2 pl-1.5 pr-3`}
             style={barControlStyle()}
@@ -3368,7 +3370,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {bookByline(r.book)}
               </span>
             </span>
-          </a>
+          </BackToBook>
           {editing ? (
             <div className="flex items-center gap-1.5">
               <button
@@ -3717,11 +3719,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                    {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
+                    <PageProblemReport page={r.currentPage} book={r.book} />
                   </div>
                 </div>
               )}
@@ -3851,7 +3855,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <Logo white mini />
               </span>
             )}
-            <a
+            <BackToBook
+              framed={isEmbedded}
               href={embedHref(`/book/${r.bookPath}`)}
               className="flex-1 min-w-0 no-underline"
               title={t.toolbar.backToTheBookPage}
@@ -3861,7 +3866,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
                 {r.book.display_title || r.book.title}
               </div>
-            </a>
+            </BackToBook>
             {/* One button rather than a bare avatar: the account, Support and
                 Feedback all live behind it, which is where a phone expects
                 them and where they stop competing with the reading controls. */}
@@ -4078,11 +4083,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
+                <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} />
               </div>
             </section>
           )}
@@ -4344,4 +4351,16 @@ function ChapterList({
       })}
     </>
   );
+}
+
+/**
+ * Back to the book page. Framed (partner embed or reading room) it is a client-side
+ * Link so the frame makes no history entry of its own (#5266); standalone it stays a
+ * plain anchor, as the rest of the reader's exits do.
+ */
+function BackToBook({ framed, href, className, style, title, children }: {
+  framed: boolean; href: string; className?: string; style?: React.CSSProperties; title?: string; children: React.ReactNode;
+}) {
+  if (framed) return <Link href={href} prefetch={false} className={className} style={style} title={title}>{children}</Link>;
+  return <a href={href} className={className} style={style} title={title}>{children}</a>;
 }

@@ -4,8 +4,10 @@
   "hold": [
     { "reason": "auth / security / sessions",
       "globs": ["src/lib/auth.ts", "src/lib/auth*", "src/proxy.ts", "src/middleware*", "src/app/api/auth/**", "src/lib/session*", "src/lib/withAuth*"] },
-    { "reason": "money: payments, spend controls, crons",
-      "globs": ["src/lib/stripe.ts", "src/app/api/stripe/**", "src/app/api/donate/**", "src/app/support/**", "src/lib/membership-email.ts", "vercel.json", "scripts/workers/crontab.production", "infrastructure/hetzner-crontab", "scripts/lib/spend-guard*", "scripts/lib/gemini-script-client.mjs", "src/lib/gemini-client.ts", "scripts/lib/set-dial*"] },
+    { "reason": "money: payments, spend controls, crons and their handlers",
+      "globs": ["src/lib/stripe.ts", "src/app/api/stripe/**", "src/app/api/donate/**", "src/app/support/**", "src/lib/membership-email.ts", "vercel.json", "src/app/api/cron/**", "scripts/workers/crontab.production", "infrastructure/hetzner-crontab", "scripts/lib/spend-guard*", "scripts/lib/gemini-script-client.mjs", "src/lib/gemini-client.ts", "scripts/lib/set-dial*"] },
+    { "reason": "page-image storage keys (the #3362 class: a book-independent key shares images between books and nothing fails loudly)",
+      "globs": ["src/lib/r2-key.ts", "scripts/lib/r2-key.mjs", "src/lib/storage.ts"] },
     { "reason": "public copy Derek has not seen",
       "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
     { "reason": "tenant lockdown surface",

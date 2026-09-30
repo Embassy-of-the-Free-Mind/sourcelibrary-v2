@@ -521,8 +521,14 @@ const { data: bookCalls } = await supabaseAdmin
   `/api/batch-save`, `/api/books/[id]/stitch-translations`): 0 usage rows in the 30 days before
   2026-09-28; listed as PENDING in the writer-guard test until `ai.ts` returns the call record.
   The Lambda bundle (`scripts/aws-lambda/*`) also has no CI deploy — "merged" is not "in effect".
-- **MinerU lane** (`scripts/workers/mineru-ocr-worker.mjs`, `source: 'mineru'`) writes no engine
-  block; a specialist lane outside #4613's Gemini scope, wants the Kraken/Yigdzin shape.
+- **MinerU lane** (`scripts/workers/mineru-ocr-worker.mjs`, `source: 'mineru'`): CLOSED 2026-09-30.
+  It now writes a `specialist-engine/1` block (MinerU version from the binary, licence, backend
+  and method, run id + code_version + host, the image url, and the Gemini refusal stamps it
+  fills after, under `engine.ladder`), `content_hash`, a revision snapshot (no-op on a first
+  fill, doctrine), a human-edit guard in the update filter, and `sweep_log` + `book_events`
+  rows per book. `missingProvenance` checks `mineru` with the `kraken`/`bdrc` rule. The 2,586
+  rows written before that date carry only the bare string under `engine` and are not
+  backfilled (rule 3).
 - **`ocr.prompt_version` is a label, not a version** on realtime-OCR rows (`'v5.2026-02'`); the
   DB version is in `engine.prompt.version`. 24 files read the label, so it stays.
 - **Book-level fields** (`summary`, `reading_summary`, `index`, `chapters`) carry model +

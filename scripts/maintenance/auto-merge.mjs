@@ -43,10 +43,26 @@ function gating(pr) {
   return { test: byName.test, DCO: byName.DCO };
 }
 
+// `gh pr list` reports mergeable=UNKNOWN for EVERY open PR right after anything
+// lands on main (GitHub invalidates them all at once and recomputes lazily, on a
+// per-PR request). Since this job runs after merges by design, reading the list
+// alone would find nothing to merge, forever. Asking for one PR forces the
+// computation — same fix as reap-prs.mjs resolveMergeable(). First run after
+// the 2026-09-30 launch: 7 of 7 candidates UNKNOWN, "nothing to merge".
+function resolveMergeable(pr, attempts = 3) {
+  for (let i = 0; i < attempts && pr.mergeable === 'UNKNOWN'; i++) {
+    if (i) execSync('sleep 2');
+    const fresh = JSON.parse(sh(`gh pr view ${pr.number} --json mergeable`));
+    if (fresh.mergeable) pr = { ...pr, mergeable: fresh.mergeable };
+  }
+  return pr;
+}
+
 function candidates() {
   const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName'));
   const out = [];
-  for (const pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
+  for (let pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
+    pr = resolveMergeable(pr);
     const labels = pr.labels.map((l) => l.name);
     const g = gating(pr);
     const why = [];
@@ -92,6 +108,23 @@ function main() {
   sh(`gh pr comment ${pr.number} --body "Auto-merged by auto-merge.yml: tier:auto, test+DCO green, interlock clear, main quiet ${gap.toFixed(0)} min. Rules: scripts/maintenance/pr-tier-rules.json"`);
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
+  dispatchWarm(pr.number);
+}
+
+// A push made with GITHUB_TOKEN never triggers `push` workflows (GitHub's
+// recursion guard), so post-deploy-warm.yml — the Cloudflare purge + re-warm
+// that stops stale HTML pointing at dead CSS chunks for 24h — must be started
+// by hand here for any merge Vercel will build. Paths mirror that workflow's
+// `on.push.paths`. deploy-hetzner.yml is not dispatched: Hetzner pulls hourly.
+const WARM_PATHS = [/^src\//, /^public\//, /^next\.config\.ts$/, /^vercel\.json$/, /^package(-lock)?\.json$/];
+function dispatchWarm(number) {
+  const view = JSON.parse(sh(`gh pr view ${number} --json files,mergeCommit`));
+  const paths = (view.files || []).map((f) => f.path);
+  if (!paths.some((p) => WARM_PATHS.some((re) => re.test(p)))) { console.log('no app files changed — no Vercel build, no warm needed'); return; }
+  const sha = view.mergeCommit?.oid;
+  if (!sha) { console.log('::warning::merge commit SHA unknown — run post-deploy-warm.yml by hand'); return; }
+  sh(`gh workflow run post-deploy-warm.yml --ref main -f sha=${sha}`);
+  console.log(`dispatched post-deploy-warm.yml for ${sha}`);
 }
 
 main();
