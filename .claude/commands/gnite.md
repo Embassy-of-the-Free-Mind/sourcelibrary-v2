@@ -30,8 +30,21 @@ List every open loop this window owns, then settle each one:
 - **Background sessions (`claude --bg`) keep running — never stop, reap, or wait on them.**
   List them (`claude agents`) and name each in the goodnight with where it reports.
 
-Anything you cannot finish goes in the handoff (step 3) or as a line in the goodnight
-with its owner. The goodnight never hides an open loop.
+Then give every loose end exactly **one** owner — a handoff file alone is not one
+(September 2026: 214 ops handoffs, 98 saying "not run / blocked / awaiting", and 81
+background sessions dead mid-task that nobody noticed; inventory #5354):
+
+- **Finish it now** if it is under ~15 minutes (merge the green PR, apply the label,
+  run the one command). This is the default.
+- **An active issue** — open or update one, with the definition of done and the next
+  command to run, and put `Owner: #<issue>` on any handoff you write.
+- **A dispatched session** — `claude --bg "Read <handoff> and execute to done"`, and
+  check its `state.json` two minutes later; a `blocked` there is not a dispatch.
+- **A decision row** in the ops `DECISIONS-PENDING.md`, with a recommended default,
+  if it is above the spend floor or on the hold list.
+
+What you may not do is close with "next steps" in prose and no owner. The goodnight
+never hides an open loop.
 
 ## 1. Commit and push whatever is here
 
