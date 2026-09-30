@@ -40,13 +40,17 @@ import {
   buildBlockTranslationPrompt,
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
+  dropLeafSeamBreaches,
 } from '../lib/translate-core.mjs';
+import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
@@ -69,6 +73,10 @@ const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce bat
 // to the lite model that garbles them. Parity with src/lib/types/ai-models.ts
 // is pinned by tests/unit/translate-core-parity.test.ts.
 const PROMPT_VERSION = 'v10';
+// Provenance identity of this writer (#4613).
+const CALL_SITE = 'scripts/workers/translate-worker.mjs';
+const CODE_VERSION = await codeVersion();
+const HOST = host();
 
 // ── Gemini API keys ──
 // Exclude GEMINI_API_KEY_4 (free tier, 15 RPM) — too slow for sustained translation throughput.
@@ -278,10 +286,14 @@ async function translatePage(db, page, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
+  // One object, sent AND recorded (#4613). No temperature is set here, so the page's record
+  // will say it came from the model default (1.0) — the fact, not a tidier fiction.
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor([page]), thinkingConfig: { thinkingBudget: 0 } };
+  // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor([page]), thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig,
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -296,6 +308,10 @@ async function translatePage(db, page, book, prevTranslation) {
     outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
+    call: {
+      model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null },
+    },
   };
 }
 
@@ -330,6 +346,15 @@ async function translatePageGuarded(db, page, book, prevTranslation) {
       console.log(`  [collapse-guard] ${book.id} p${page.page_number}: still thin after retry (${strippedBodyLen(result.text)} body chars)`);
     }
   }
+  // Leaf seams (#5260): a page holding two leaves must come back with the marker between them. One
+  // retry; a page that still bridges the seam is refused at the write gate (reason 'leaf-seam'),
+  // which keeps the text as evidence and leaves the page untranslated rather than bridged.
+  const seams = leafSeamsPreserved(page.ocr?.data, result.text);
+  if (!seams.ok) {
+    const retry = await translatePage(db, page, book, prevTranslation);
+    if (leafSeamsPreserved(page.ocr?.data, retry.text).ok) result = retry;
+    else console.log(`  [leaf-seam] ${book.id} p${page.page_number}: ${seams.ocr} seam(s) in the source, ${seams.tr} in the translation after retry — the write gate decides`);
+  }
   return result;
 }
 
@@ -346,10 +371,12 @@ async function translateBatch(db, pages, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } };
+  // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig,
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -373,6 +400,12 @@ async function translateBatch(db, pages, book, prevTranslation) {
   if (drifted.length) {
     console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: clause moved across ${drifted.map(d => `${d.prev}→${d.next}`).join(', ')} — re-translating those pages single-page`);
   }
+  // A leaf seam the block bridged (#5260): the page drops out of the map and takes the
+  // single-page path, where translatePageGuarded retries and the write gate refuses.
+  const { breached } = dropLeafSeamBreaches(pages, translations);
+  if (breached.length) {
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: leaf seam not preserved on ${breached.map(b => `p${b.page} (${b.ocr}→${b.tr})`).join(', ')} — re-translating those pages single-page`);
+  }
 
   return {
     translations, // Map<pageNumber, translatedText>
@@ -382,6 +415,10 @@ async function translateBatch(db, pages, book, prevTranslation) {
     outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
+    call: {
+      model: selectedModel, promptText: prompt, generationConfig, modelVersion: result.response?.modelVersion || null,
+      context: { previous_translation: !!prevTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: PAGE_BREAK_SCOPED ? 'scoped' : null, block: { pages: pages.length, first_page: pages[0].page_number } },
+    },
   };
 }
 
@@ -411,11 +448,24 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
   return saveRevisionShared(db, pageId, field, { jobId });
 }
 
+// What produced this page's text (#4613): the call record from translatePage/translateBatch,
+// plus THIS page's OCR text hash — a later re-OCR must be visible as orphaning the English.
+function engineFor(page, book, promptRef, call) {
+  return geminiEngine({
+    call_site: CALL_SITE, api: 'realtime', model: call?.model || getModelForBook(book),
+    prompt: { id: promptRef?.id, name: promptRef?.name, version: promptRef?.version ?? PROMPT_VERSION, hash: promptRef?.content_hash, text: call?.promptText },
+    generationConfig: call?.generationConfig,
+    run: { job_id: book?.job?.job_id || null, code_version: CODE_VERSION, host: HOST },
+    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: call?.context }),
+    response: { modelVersion: call?.modelVersion },
+  });
+}
+
 // ── Write a single page translation to DB ──
 // `promptRef` is the prompt reference returned by translatePage / translateBatch.
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
-async function writePageTranslation(db, page, text, book, promptRef) {
+async function writePageTranslation(db, page, text, book, promptRef, call) {
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -432,11 +482,11 @@ async function writePageTranslation(db, page, text, book, promptRef) {
     console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused, evidence kept`);
     return { written: false, reason: health.reason };
   }
+  const engine = engineFor(page, book, promptRef, call); // throws on a missing call record — no partial provenance
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
     translation: {
       data: text,
-      content_hash: contentHash(text),
       language: 'English',
       model: getModelForBook(book),
       updated_at: new Date(),
@@ -445,6 +495,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
       prompt_id: promptRef?.id,
       prompt_hash: promptRef?.content_hash,
       prompt_name: promptRef?.name,
+      ...translationProvenance(text, engine),
     },
     updated_at: new Date(),
   };
@@ -455,7 +506,7 @@ async function writePageTranslation(db, page, text, book, promptRef) {
 
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
-async function bulkWritePageTranslations(db, entries, book, promptRef) {
+async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -475,8 +526,11 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
   }
   if (entries.length === 0) return;
   if (entries.length === 1) {
-    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
+    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
   }
+  // Build every page's record BEFORE any write: a missing call record fails the whole block here
+  // rather than after some pages are stored.
+  const engines = new Map(entries.map(({ page }) => [page.id, engineFor(page, book, promptRef, call)]));
   // Save revisions before overwriting (parallel, non-blocking)
   await Promise.all(entries.map(({ page }) =>
     saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id)
@@ -490,7 +544,6 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
         $set: {
           translation: {
             data: text,
-            content_hash: contentHash(text),
             language: 'English',
             model,
             updated_at: now,
@@ -499,6 +552,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef) {
             prompt_id: promptRef?.id,
             prompt_hash: promptRef?.content_hash,
             prompt_name: promptRef?.name,
+            ...translationProvenance(text, engines.get(page.id)),
           },
           updated_at: now,
         },
@@ -558,7 +612,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       ],
     })
     .sort({ page_number: 1 })
-    .project({ id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 })
+    .project({ id: 1, page_number: 1, 'ocr.data': 1, 'ocr.updated_at': 1, page_type: 1 })
     .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
 
@@ -598,6 +652,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Same-language pages (#5154) ──────────────────────────────────────────
+  // A page already written in English is COPIED, not sent to the model. Asked to "translate"
+  // English into English, the model abridges, modernises and drifts (the page-error taxonomy's
+  // T12: dropped footnotes, condensed commentary, "Brake Wind" → "Broke Wind"), and the reader
+  // of the translation panel never reads the author. The copy is the transcription verbatim,
+  // costs nothing, and carries its own provenance (source 'same-language').
+  const sameLanguage = pages.filter(p => englishSource(p.ocr?.data).english);
+  if (sameLanguage.length > 0) {
+    for (const p of sameLanguage) {
+      await saveRevisionBeforeOverwrite(db, p.id, 'translation', job?.id);
+      const translation = await sameLanguageTranslation(p, { jobId: job?.id });
+      const setPayload = { translation, updated_at: new Date() };
+      await db.collection('pages').updateOne({ id: p.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
+      syncPageUpdate(p.id, setPayload);
+    }
+    console.log(`  [${label}] SAME LANGUAGE: copied ${sameLanguage.length} English page(s) through — no model call (#5154)`);
+    const copied = new Set(sameLanguage.map(p => p.id));
+    pages.splice(0, pages.length, ...pages.filter(p => !copied.has(p.id)));
   }
 
   if (pages.length === 0) {
@@ -699,7 +773,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       try {
         const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
-        await writePageTranslation(db, page, result.text, book, result.promptRef);
+        await writePageTranslation(db, page, result.text, book, result.promptRef, result.call);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await logUsage({
@@ -807,7 +881,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
               batchTranslated++;
               translated++;
               globalCounter.count++;
@@ -847,7 +921,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Bulk-write all successfully parsed translations in one round trip
         if (bulkEntries.length > 0) {
-          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef);
+          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef, result.call);
         }
 
         // Log batch usage
@@ -883,7 +957,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef);
+              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
               translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;

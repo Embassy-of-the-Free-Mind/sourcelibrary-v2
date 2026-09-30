@@ -128,6 +128,12 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   `npx vercel ls sourcelibrary-v2 --meta githubCommitSha=$SHA` returns only YOUR commit's deployment
   and its `● Building`/`● Ready`/`● Error`. Builds run 5–6 min, so the still-building window is the
   common case after a merge, not a rarity.
+  **When that filter returns nothing for a commit that plainly has a build** (2026-09-28: three
+  squash merges in a row, all three came back empty while the first was `● Ready`), fall back to
+  `npx vercel ls sourcelibrary-v2 | grep Production` for the newest deployments and
+  `npx vercel inspect <deployment-url> --logs | grep Commit:` to read which commit each carries.
+  Three merges minutes apart: expect the FIRST to build and the later ones to show Canceled — fine
+  when the later ones are scripts-only, a redeploy when one of them changed `src/`.
 - **A Production build showing Canceled after ~12s** is usually the *ignored build step* skipping a
   no-op (docs/scripts-only) merge — that owes no purge at all; check who canceled before diagnosing.
 - **Pipeline/worker scripts (`scripts/**`) need no Vercel deploy** — the Hetzner box auto-pulls

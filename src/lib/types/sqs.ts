@@ -89,6 +89,8 @@ export interface OcrWriteResult extends WriteResultBase {
     detectedImages?: unknown[];
     sourceUrl?: string;          // Exact image URL sent to the model (provenance, #2297)
     codeVersion?: string;        // Git SHA / release of the producing code (#2297)
+    /** What the call SENT (#4613) — src/lib/ai.ts AICallRecord; the write processor builds the engine block from it. */
+    call?: { model: string; promptText: string; generationConfig: Record<string, unknown>; modelVersion: string | null };
   };
   geminiUsage?: GeminiUsagePayload;
 }

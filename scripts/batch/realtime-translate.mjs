@@ -44,6 +44,7 @@ import {
   isDegenerateSource,
 } from '../lib/translate-core.mjs';
 import { translationStaleness, STALE_FIELD } from '../lib/stale-translation.mjs';
+import { codeVersion, host } from '../lib/write-provenance.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
@@ -100,16 +101,18 @@ function getNextKey() {
 // --- Gemini API call ---
 async function callGemini(promptText, apiKey, model) {
   const url = `${GEMINI_API_BASE}/models/${model}:generateContent?key=${apiKey}`;
+  // One object, sent AND recorded (#4613): the page's engine block is built from it.
+  const generationConfig = {
+    temperature: 0.2,
+    maxOutputTokens: 16384,
+    thinkingConfig: { thinkingBudget: 0 },
+  };
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts: [{ text: promptText }] }],
-      generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 16384,
-        thinkingConfig: { thinkingBudget: 0 },
-      },
+      generationConfig,
     }),
     signal: AbortSignal.timeout(120000),
   });
@@ -131,8 +134,16 @@ async function callGemini(promptText, apiKey, model) {
     // Discarding it is how a half-page reached readers as the whole page (#4890).
     finishReason: candidate?.finishReason || null,
     usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: outputTokensFrom(usage) },
+    generationConfig,
+    modelVersion: result.modelVersion || null,
   };
 }
+
+// Provenance identity of this writer (#4613).
+const CALL_SITE = 'scripts/batch/realtime-translate.mjs';
+const CODE_VERSION = await codeVersion();
+const HOST = host();
+const RUN_ID = `realtime-translate/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
 
 // --- Translation prompts — DB-owned, loaded once via translate-core ---
 async function getPrompts(db) {
@@ -252,6 +263,13 @@ async function processBook(book, pages, prompts, db, globalStats) {
       const w = await writePageTranslation(db, {
         page, book, text: result.text, promptRef, model,
         note: 'retranslate_stale', extraSet: translationMeta,
+        // What produced this text (#4613): the exact prompt sent, the settings sent, the run.
+        call: {
+          call_site: CALL_SITE, api: 'realtime', model, promptText: prompt,
+          generationConfig: result.generationConfig, response: { modelVersion: result.modelVersion },
+          run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
+          context: { previous_translation: !!previousTranslation },
+        },
       });
 
       // Non-blocking usage log (the Gemini call happened either way)

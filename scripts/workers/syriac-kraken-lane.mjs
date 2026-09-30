@@ -349,7 +349,7 @@ async function apply() {
       let modified = 0;
       const unset = Object.fromEntries([...STALE_OCR_FIELDS, 'translation.health_blocked', 'translation.health_blocked_at'].map((k) => [k, '']));
       for (const w of writes) {
-        const set = ocrSetFields(w.text, w.r.engine, w.r.route, { run: RUN, now, secs: secsBy.get(w.r.pn) ?? null });
+        const set = ocrSetFields(w.text, w.r.engine, w.r.route, { run: RUN, now, secs: secsBy.get(w.r.pn) ?? null, imageUrl: w.r.src || null });
         // Pipeline update because `ocr` is literally null on never-read pages and a dotted
         // $set cannot create fields inside null (the error that crashed the first IA apply,
         // 2026-09-12). Every value is $literal: in a pipeline a string beginning with `$`
@@ -481,7 +481,7 @@ async function release() {
 
 // ── status ─────────────────────────────────────────────────────────────────────────────
 
-function status() {
+async function status() {
   const plan = readJsonl(F.plan);
   const applied = readJsonl(F.applied), fail = readJsonl(F.fail), refused = readJsonl(F.refused), skipped = readJsonl(F.skipped), runs = readJsonl(F.runs);
   const read = plan.filter((r) => fs.existsSync(outTxt(r.bid, r.pn))).length;

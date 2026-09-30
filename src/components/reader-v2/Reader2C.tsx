@@ -11,6 +11,7 @@ import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import { ReadCautionNote, PageProblemReport } from './PageProblem';
 import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
@@ -76,6 +77,20 @@ const MOBILE_TOOLBAR_H = 52;
 const SHEET_TOP_GAP = 24;
 /** How far the sheet has to be pulled down before letting go puts it away. */
 const SHEET_DISMISS_PULL = 90;
+/** Width of the desktop tool rail, the first column of the desktop grid. */
+const DESKTOP_RAIL_W = 66;
+/** Width over height at which a scan counts as a wide leaf (palm-leaf, pothi,
+ *  pecha) and the desktop panes stack instead of sitting side by side. Above
+ *  an unsplit two-page spread (about 1.3 to 1.6), so an ordinary book keeps
+ *  its columns (#5352). */
+const WIDE_LEAF_RATIO = 1.7;
+/** Most of the screen a stacked wide leaf may take before the text beneath it
+ *  gets too short to read. */
+const WIDE_LEAF_MAX_H = '50dvh';
+/** What the desktop scan pane wraps around the image: its 38px header, its
+ *  vertical padding, and its horizontal padding. */
+const SCAN_PANE_CHROME_Y = 38 + 2 * 22;
+const SCAN_PANE_CHROME_X = 2 * 24;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -3200,6 +3215,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
   const deepzoomManifest = (r.currentPage as unknown as { deepzoom?: DeepZoomManifest }).deepzoom;
 
+  // A wide leaf in one of three side-by-side columns is a strip a few lines
+  // tall floating in an empty pane. On the desktop it gets the full width
+  // instead, with the text panes in a row beneath it: the scan row is as tall
+  // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H. Decided
+  // per page from the loaded image, like the phone pane (#5352).
+  const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
+  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  const wideLeafGrid = stackWideLeaf
+    ? {
+        gridTemplateColumns: `repeat(${textPaneCount}, minmax(0, 1fr))`,
+        gridTemplateRows: `min(${WIDE_LEAF_MAX_H}, calc((100vw - ${DESKTOP_RAIL_W + SCAN_PANE_CHROME_X}px) / ${scanRatio} + ${SCAN_PANE_CHROME_Y}px)) minmax(0, 1fr)`,
+      }
+    : undefined;
+
 
   // The text of a neighbouring page is already prefetched, but its scan is
   // not, so a page turn showed the words instantly and then waited on the
@@ -3335,7 +3364,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
            stretched the track to 700px a pane and pushed the header, the view
            toggles, the pager and the whole translation pane past the right
            edge — with html overflow hidden, unreachable. */
-        style={{ gridTemplateColumns: '66px minmax(0, 1fr)', gridTemplateRows: '58px minmax(0, 1fr) auto' }}
+        style={{ gridTemplateColumns: `${DESKTOP_RAIL_W}px minmax(0, 1fr)`, gridTemplateRows: '58px minmax(0, 1fr) auto' }}
       >
         {/* Top bar — full width, single identity lockup top-left */}
         <header
@@ -3348,7 +3377,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               about the page rather than the book. Cancel and Save sit beside
               the title because that is where the edit began, and because a
               save button next to the view toggles reads as saving a view. */}
-          <a
+          <BackToBook
+            framed={isEmbedded}
             href={embedHref(`/book/${r.bookPath}`)}
             className={`${BAR_CONTROL} min-w-0 max-w-[46%] no-underline group !justify-start gap-2 pl-1.5 pr-3`}
             style={barControlStyle()}
@@ -3368,7 +3398,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {bookByline(r.book)}
               </span>
             </span>
-          </a>
+          </BackToBook>
           {editing ? (
             <div className="flex items-center gap-1.5">
               <button
@@ -3528,15 +3558,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <main
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
-          className="relative flex min-h-0"
+          className={`relative min-h-0 ${stackWideLeaf ? 'grid' : 'flex'}`}
+          style={wideLeafGrid}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section
-              className="flex-1 min-w-0 flex flex-col border-r"
-              style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}
+              className={`min-w-0 min-h-0 flex flex-col ${stackWideLeaf ? 'border-b' : 'flex-1 border-r'}`}
+              style={{
+                background: SURFACE.scanBed, borderColor: 'var(--border-medium)',
+                gridColumn: stackWideLeaf ? '1 / -1' : undefined,
+              }}
             >
               <PaneHeader
                 right={
@@ -3571,6 +3605,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onNaturalSize={onScanNaturalSize}
                   onEdgePageTurn={onScanEdgeTurn}
                 />
                 {witness && (
@@ -3717,11 +3752,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                    {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
+                    <PageProblemReport page={r.currentPage} book={r.book} />
                   </div>
                 </div>
               )}
@@ -3851,7 +3888,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <Logo white mini />
               </span>
             )}
-            <a
+            <BackToBook
+              framed={isEmbedded}
               href={embedHref(`/book/${r.bookPath}`)}
               className="flex-1 min-w-0 no-underline"
               title={t.toolbar.backToTheBookPage}
@@ -3861,7 +3899,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
                 {r.book.display_title || r.book.title}
               </div>
-            </a>
+            </BackToBook>
             {/* One button rather than a bare avatar: the account, Support and
                 Feedback all live behind it, which is where a phone expects
                 them and where they stop competing with the reading controls. */}
@@ -4078,11 +4116,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
+                <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} />
               </div>
             </section>
           )}
@@ -4344,4 +4384,16 @@ function ChapterList({
       })}
     </>
   );
+}
+
+/**
+ * Back to the book page. Framed (partner embed or reading room) it is a client-side
+ * Link so the frame makes no history entry of its own (#5266); standalone it stays a
+ * plain anchor, as the rest of the reader's exits do.
+ */
+function BackToBook({ framed, href, className, style, title, children }: {
+  framed: boolean; href: string; className?: string; style?: React.CSSProperties; title?: string; children: React.ReactNode;
+}) {
+  if (framed) return <Link href={href} prefetch={false} className={className} style={style} title={title}>{children}</Link>;
+  return <a href={href} className={className} style={style} title={title}>{children}</a>;
 }

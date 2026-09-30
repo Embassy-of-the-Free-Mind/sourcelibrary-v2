@@ -1,8 +1,37 @@
+---
+description: "Wrap up the session: commit, push, reap, hand off."
+# Wrap-up is routine; don't spend scarce Fable quota on it. Applies to this command's turn only.
+model: opus
+---
 Wrap up the session: commit, push, reap, hand off.
 
 "gnite" means **this window is closing** — not that every window is. Other Claude
 sessions are usually still running, and that's fine: every step below is safe to run
 concurrently with them. No new work, no questions, no strategic advice.
+
+**Closing the window kills everything that lives only in it.** Finishing is the point of
+gnite: work in flight is either done, or handed to something that outlives the window,
+before you say goodnight. "No new work" means don't *start* anything — not "stop mid-task".
+
+## 0. Inventory what is in flight — nothing dies silently
+
+List every open loop this window owns, then settle each one:
+
+- **Background tasks and monitors started here** (`run_in_background` Bash, Monitor, a
+  build/CI watcher, a `/loop`). They die with the window. If the result matters, get it
+  now if it's minutes away (a build finishing, a check going green); otherwise move it to
+  something durable — `claude --bg`, a Hetzner cron, a scheduled agent — that writes its
+  result to an issue or file, never to this chat.
+- **Promises made in this chat** ("I'll tell you when CI is green", "I'll ping when the
+  build is Ready"). Keep it now, or turn it into a durable owner and say who that is.
+- **Half-done work**: an open PR not yet green (babysit it to green or hand it off),
+  a merge whose production build isn't verified, a data push not read back, a
+  paid job not reconciled.
+- **Background sessions (`claude --bg`) keep running — never stop, reap, or wait on them.**
+  List them (`claude agents`) and name each in the goodnight with where it reports.
+
+Anything you cannot finish goes in the handoff (step 3) or as a line in the goodnight
+with its owner. The goodnight never hides an open loop.
 
 ## 1. Commit and push whatever is here
 
@@ -124,4 +153,5 @@ up something big, file an issue rather than starting work.
 
 ## 5. Say goodnight
 
-A short summary of where we left off and what's next. That's all.
+A short summary of where we left off and what's next, plus **what is still running and who
+owns it** (from step 0) — or "nothing left in flight". That's all.

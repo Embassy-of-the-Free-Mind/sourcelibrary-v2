@@ -49,9 +49,15 @@ load_env_file() {
       
       # Only export AWS, MongoDB, Gemini, Blob, and SQS variables
       if [[ "$line" =~ ^(AWS_|MONGODB_|GEMINI_|BLOB_|SQS_) ]]; then
-        # Remove leading/trailing whitespace and export
+        # Remove leading/trailing whitespace, then the surrounding quotes a
+        # `KEY="value"` line carries: a literal quote exported into
+        # AWS_ACCESS_KEY_ID makes `aws sts get-caller-identity` fail and the
+        # deploy report "credentials not configured" while the same file works
+        # everywhere else (2026-09-28: three deploy attempts lost to this).
         line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-        export "$line"
+        key="${line%%=*}"; val="${line#*=}"
+        if [[ "$val" =~ ^\"(.*)\"$ ]] || [[ "$val" =~ ^\'(.*)\'$ ]]; then val="${BASH_REMATCH[1]}"; fi
+        export "$key=$val"
       fi
     done < "$env_file"
   fi

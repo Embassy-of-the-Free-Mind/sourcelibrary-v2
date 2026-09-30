@@ -93,6 +93,11 @@ import path from 'node:path';
 import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
+
+// Provenance of THIS ingest (#4613) — the Archive's engine is in the `ia` block; this says
+// which run of ours copied it, so two ingests of the same item are distinguishable.
+const INGEST_RUN = `ia-ocr-ingest/${new Date().toISOString().slice(0, 19)}/${host()}@${await codeVersion()}`;
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
@@ -422,7 +427,8 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
       data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
       source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
       agreement_ref: agreementRef,
-      ia: iaProvenance(iaId, meta),
+      ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
+      content_hash: contentHash(leaves[k]),
     };
     const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
       [{ $set: { ocr: { $mergeObjects: [{ $ifNull: ['$ocr', {}] }, { $literal: ocrFields }] }, updated_at: now } }]);

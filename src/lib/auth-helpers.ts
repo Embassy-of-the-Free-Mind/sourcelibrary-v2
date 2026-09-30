@@ -62,7 +62,7 @@ async function getTenantMembershipRole(
  *
  * Fail-closed: returns false on any lookup error.
  */
-async function isPlatformSuperadmin(email: string | null | undefined): Promise<boolean> {
+export async function isPlatformSuperadmin(email: string | null | undefined): Promise<boolean> {
   if (!email) return false;
   const normalized = email.toLowerCase();
 

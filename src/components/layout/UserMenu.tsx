@@ -153,6 +153,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               My Lists
             </Link>
             <Link
+              href="/rooms"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Reading Rooms
+            </Link>
+            <Link
               href="/reading-history"
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
@@ -210,6 +218,22 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Feedback
                 </Link>
+                {/* Spend (#5225) is allow-listed on the server, narrower than
+                    "admin". The JWT can't see that list, but a superadmin role
+                    is minted from the same sources the page gate re-checks
+                    (PLATFORM_ADMIN_EMAILS / null-tenant superadmin membership),
+                    so this link only appears for accounts the page will admit.
+                    Listed non-superadmin viewers reach it from the admin nav. */}
+                {role === 'superadmin' && (
+                  <Link
+                    href="/admin/spend"
+                    className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                    style={{ color: 'var(--text-primary)' }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Spend
+                  </Link>
+                )}
               </>
             )}
             <button

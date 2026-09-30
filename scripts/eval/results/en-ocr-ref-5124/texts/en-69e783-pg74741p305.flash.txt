@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>305</page-num>
+<header>Chap. XIX. The Four-coulter'd Plough.</header>
+
+*Note*, That the Shortening of the Chain does also a little incline the Point of the Share towards the Left.
+
+*Fig.* 20. is the Iron-wilds. The Leg A is of one Piece with that which has the Notch, and that passes thro' the Leg B by the Loop at *a*; both which Legs pass thro' the Box, and are pinned in behind it, by the crooked Pins C, D. This Figure is seen with its Crooks on it, both in *Fig.* 1. and *Fig.* 2. *Note*, That the Holes in the Box, thro' which these Legs pass, must not be made at right Angles with the Box, but must incline upwards, so that the Fore-part of the Wilds may be higher than the Hinder-part, or else the Upper-part of the Crow-staves would lean quite back when the Plough is drawn. If the Beasts that draw immediately next to the Plough be very high, their Traces must be the longer; else they and the Wilds making too small an Angle with the Tow-chain at the Box, when they draw hard, the Wheels will rise from the Ground, and be apt to overturn: This Angle I suppose should not be less than of 160 Degrees, and the Angle made by the Tow-chain or Traces that are drawn by the Cattle that go before them, will make an Angle with the Tow-chain at the Box yet much more obtuse. The Use of these Notches in the Wilds is, to give the Plough a broader or narrower Furrow: If the Links are moved to the Notches on the right Hand, it brings the Wheels towards the left Hand, which gives a greater Furrow; and when the Links are moved toward the left Hand, it gives a less Furrow, by bringing the Wheels towards the right Hand.
+
+The Distance betwixt the Two Legs of the Wilds is Eight Inches and an half; the Length of the Legs is Nineteen Inches. They must be of convenient Strength. The Links being placed in Notches distant from one another, prevents one Wheel from advancing before the other; which would happen, if the Links were both in One Notch, or in Two adjoining Notches,
+
+<meta>catchword: Notches,</meta>
+<sig>X</sig>
+
+<vocab>Iron-wilds, Crow-staves, Tow-chain, Furrow, Four-coulter'd Plough</vocab>

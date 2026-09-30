@@ -1,0 +1,22 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>appendix</page-type>
+<page-num>363</page-num>
+<header>APPENDICES</header>
+
+lybread. Now, all these women were tried at Chelmsford in 1645, and their examinations and confessions printed in *A true and exact Relation*. The wording has been changed a little, several things have been added, but the facts are similar; see *A true and exact Relation*, 10, 11, 13-15, 27. When the author of the Worcester pamphlet came to narrate the execution he wandered away from his text and invented some new particulars. The women were "burnt at the stak." They made a "yelling and howling." Two of them were very "stubborn and refractory." Cf. below, § 10.
+
+*The Devill seen at St. Albans, Being a true Relation How the Devill was seen there in a Cellar, in the likenesse of a Ram; and how a Butcher came and cut his throat, and sold some of it, and dressed the rest for himselfe, inviting many to supper . . . , 1648.* A clever lampoon.
+
+### § 5.—COMMONWEALTH AND PROTECTORATE (see ch. IX).
+
+*The Divels Delusions or A faithfull relation of John Palmer and Elizabeth Knott two notorious Witches lately condemned at the Sessions of Oyer and Terminer in St. Albans . . . , 1649.* The narrative purports to be taken from a letter sent from St. Alban's. It deals with the practices of two good witches who were finally discovered to be black witches. The tale has no outside confirmation.
+
+*Wonderfull News from the North, Or a True Relation of the Sad and Grievous Torments Inflicted upon the Bodies of three Children of Mr. George Muschamp, late of the County of Northumberland, by Witchcraft, . . . As also the prosecution of the sayd Witches, as by Oaths, and their own Confessions will appear and by the Indictment found by the Jury against one of them, at the Sessions of the Peace held at Alnwick, the 24 day of April 1650, London, 1650.* Preface signed: "Thine, Mary Moore." This pamphlet bears all through the marks of a true narrative. It is written evidently by a friend of the Mistress Muschamp who had such difficulty in persuading the north country justices, judges, and sheriffs to act. The names and the circumstances fit in with other known facts.
+
+*The strange Witch at Greenwich haunting a Wench, 1650.* Unimportant.
+
+*A Strange Witch at Greenwich, 1650.*
+
+<vocab>Chelmsford, Worcester, St. Albans, John Palmer, Elizabeth Knott, Oyer and Terminer, George Muschamp, Northumberland, Alnwick, Mary Moore, Greenwich, witchcraft, black witches</vocab>

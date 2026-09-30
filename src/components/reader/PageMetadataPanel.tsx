@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { X, FileText, Languages, Clock, User, Cpu, Tag, BookOpen, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
-import { Page, Book } from '@/lib/types';
+import { Page, Book, GeminiEngine, SpecialistEngine } from '@/lib/types';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 
 interface PageMetadataPanelProps {
@@ -217,6 +217,11 @@ export default function PageMetadataPanel({
   const ocrMeta = extractMetadataFromText(page.ocr?.data || '');
   const translationMeta = extractMetadataFromText(page.translation?.data || '');
   const hasEditionContext = !!bookHref;
+  // `ocr.engine` is a union (#4613): a Gemini record, or a specialist model's citation
+  // (Kraken, BDRC). The specialist block's `name` is a plain string, so narrow by hand.
+  const ocrEngine = page.ocr?.engine;
+  const gemini: GeminiEngine | null = ocrEngine && ocrEngine.name === 'gemini' ? (ocrEngine as GeminiEngine) : null;
+  const specialist: SpecialistEngine | null = ocrEngine && ocrEngine.name !== 'gemini' ? (ocrEngine as SpecialistEngine) : null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -449,36 +454,55 @@ export default function PageMetadataPanel({
                 )}
               </>
             )}
-            {page.ocr?.engine && (
+            {gemini && (
+              <>
+                {/* A Gemini read (#4613): the settings that produced the text, by content.
+                    Two pages with the same model and prompt label can differ materially
+                    when these differ, so they are shown, not assumed. */}
+                <MetadataRow label="Engine" value={`gemini · ${gemini.api}`} mono />
+                <MetadataRow label="Prompt sent" value={`v${gemini.prompt.version} · ${gemini.prompt.sent_hash}`} mono />
+                {'temperature' in gemini.generation && (
+                  <MetadataRow
+                    label="Generation"
+                    value={`temperature ${gemini.generation.temperature ?? '?'} · thinking ${gemini.generation.thinking_budget ?? gemini.generation.thinking ?? '?'} · max ${gemini.generation.max_output_tokens ?? '?'} tokens${gemini.generation.defaulted.length ? ` (defaults: ${gemini.generation.defaulted.join(', ')})` : ''}`}
+                  />
+                )}
+                {'status' in gemini.generation && (
+                  <MetadataRow label="Generation" value="not recorded (written before the settings were kept)" />
+                )}
+                <MetadataRow label="Written by" value={`${gemini.call_site} @ ${gemini.run.code_version}`} mono />
+              </>
+            )}
+            {specialist && (
               <>
                 {/* A specialist engine read this page (#4883): say which, and cite the
                     model weights, the way the IA rows above cite the Archive's engine. */}
-                <MetadataRow label="Engine" value={[page.ocr.engine.name, page.ocr.engine.version].filter(Boolean).join(' ')} mono />
-                <MetadataRow label="Engine model" value={page.ocr.engine.model_label || page.ocr.engine.model} />
-                {page.ocr.engine.model_doi && (
+                <MetadataRow label="Engine" value={[specialist.name, specialist.version].filter(Boolean).join(' ')} mono />
+                <MetadataRow label="Engine model" value={specialist.model_label || specialist.model} />
+                {specialist.model_doi && (
                   <MetadataRow
                     label="Model DOI"
                     value={
-                      <a href={`https://doi.org/${page.ocr.engine.model_doi}`} target="_blank" rel="noopener noreferrer" className="underline">
-                        {page.ocr.engine.model_doi}
+                      <a href={`https://doi.org/${specialist.model_doi}`} target="_blank" rel="noopener noreferrer" className="underline">
+                        {specialist.model_doi}
                       </a>
                     }
                   />
                 )}
-                {!page.ocr.engine.model_doi && page.ocr.engine.model_url && (
+                {!specialist.model_doi && specialist.model_url && (
                   <MetadataRow
                     label="Model weights"
                     value={
-                      <a href={page.ocr.engine.model_url} target="_blank" rel="noopener noreferrer" className="underline">
-                        {page.ocr.engine.model}{page.ocr.engine.revision ? ` @ ${page.ocr.engine.revision.slice(0, 8)}` : ''}
+                      <a href={specialist.model_url} target="_blank" rel="noopener noreferrer" className="underline">
+                        {specialist.model}{specialist.revision ? ` @ ${specialist.revision.slice(0, 8)}` : ''}
                       </a>
                     }
                   />
                 )}
-                {page.ocr.engine.licence && <MetadataRow label="Model licence" value={page.ocr.engine.licence} />}
-                {page.ocr.engine.segmenter && <MetadataRow label="Segmentation" value={`${page.ocr.engine.segmenter} · ${page.ocr.engine.direction}`} />}
-                {page.ocr.verdict && (
-                  <MetadataRow label="Adjudication" value={`${page.ocr.verdict.verdict === 'SERVE' ? 'served' : 'marked unreadable'} · ${page.ocr.verdict.rule}`} />
+                {specialist.licence && <MetadataRow label="Model licence" value={specialist.licence} />}
+                {specialist.segmenter && <MetadataRow label="Segmentation" value={`${specialist.segmenter} · ${specialist.direction}`} />}
+                {page.ocr?.verdict && (
+                  <MetadataRow label="Adjudication" value={`${page.ocr.verdict!.verdict === 'SERVE' ? 'served' : 'marked unreadable'} · ${page.ocr.verdict!.rule}`} />
                 )}
               </>
             )}

@@ -237,7 +237,8 @@ function getFaqs(bookCount: string): FAQItem[] {
         <p>
           Our <Link href="/developers" className="underline">API and MCP server</Link> provide
           programmatic access with per-page citation URLs, making it easy to reference
-          specific passages.
+          specific passages. To use the library from inside Claude or ChatGPT, follow the{' '}
+          <Link href="/connect" className="underline">connection guide</Link>.
         </p>
       </>
     ),

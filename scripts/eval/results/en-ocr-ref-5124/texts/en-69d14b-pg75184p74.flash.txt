@@ -1,0 +1,10 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>74</page-num>
+<meta>The text on the reverse side of the page is visible through the paper (show-through), but does not impede the transcription of the primary text.</meta>
+
+from the celebration of orgies, and from those sacred rites of the mother of the Gods, which are performed at home. For the common law of the city ordains that these shall not be performed by women. To which may be added, that these rites introduce ebriety, and mental alienation. It is necessary, however, that she who is the mistress of a family, and presides over domestic affairs, should be temperate and undefiled.
+
+<vocab>orgies, sacred rites, mother of the Gods, common law, ebriety, mental alienation, mistress of a family, temperate</vocab>

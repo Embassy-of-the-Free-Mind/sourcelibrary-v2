@@ -19,6 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
@@ -27,6 +28,11 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
 const TARGET_PROMPT = 'v5.2026-02';
+// Provenance identity of this writer (#4613).
+const CALL_SITE = 'scripts/batch/realtime-reocr-efm.mjs';
+const CODE_VERSION = await codeVersion();
+const HOST = host();
+const RUN_ID = `realtime-reocr-efm/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02']; // v3+ acceptable
 const SKIP_SOURCES = ['manual', 'manual-correction'];
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -84,6 +90,7 @@ async function fetchImageBuffer(url) {
   return {
     data: Buffer.from(buffer).toString('base64'),
     mimeType,
+    bytes: buffer.byteLength,
   };
 }
 
@@ -97,14 +104,26 @@ async function getOcrPrompt(db) {
   console.log(`Using prompt: ${prompt.name} v${prompt.version}`);
 
   const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
-  return prompt.content
-    .replace('{language_instruction}', languageInstruction)
-    .replace('{language}', '');
+  // The text SENT and the template it came from, kept apart (#4613): the block on the page
+  // hashes the sent text; `ref` cites the stored prompt. The `prompt_version` label this
+  // script has always stamped is NOT the DB version — the engine block carries the truth.
+  return {
+    text: prompt.content
+      .replace('{language_instruction}', languageInstruction)
+      .replace('{language}', ''),
+    ref: { id: prompt._id?.toString(), name: prompt.name, version: String(prompt.version ?? ''), hash: prompt.content_hash ?? null },
+  };
 }
 
 // --- Gemini API call ---
 async function callGemini(imageBase64, mimeType, promptText, apiKey) {
   const url = `${GEMINI_API_BASE}/models/${TARGET_MODEL}:generateContent?key=${apiKey}`;
+  // One object, sent AND recorded (#4613).
+  const generationConfig = {
+    temperature: 0.1,
+    maxOutputTokens: 16384,
+    thinkingConfig: { thinkingBudget: 0 },
+  };
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -115,11 +134,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
           { inlineData: { mimeType, data: imageBase64 } },
         ],
       }],
-      generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: 16384,
-        thinkingConfig: { thinkingBudget: 0 },
-      },
+      generationConfig,
     }),
     signal: AbortSignal.timeout(180000),
   });
@@ -143,6 +158,8 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
       inputTokens: usage.promptTokenCount || 0,
       outputTokens: outputTokensFrom(usage),
     },
+    generationConfig,
+    modelVersion: result.modelVersion || null,
   };
 }
 
@@ -154,7 +171,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
 // `length > 0` guard below turned that into silence.
 
 // --- Process one page ---
-async function processPage(page, promptText, db) {
+async function processPage(page, ocrPrompt, db) {
   const imageUrl = getPageImageUrl(page);
   if (!imageUrl) return { pageId: page.id, status: 'skip', reason: 'no image' };
 
@@ -166,7 +183,7 @@ async function processPage(page, promptText, db) {
     const image = await fetchImageBuffer(imageUrl);
 
     // Call Gemini
-    const result = await callGemini(image.data, image.mimeType, promptText, keyInfo.key);
+    const result = await callGemini(image.data, image.mimeType, ocrPrompt.text, keyInfo.key);
     const durationMs = Date.now() - startTime;
 
     if (!result.text || result.text.length < 5) {
@@ -200,6 +217,16 @@ async function processPage(page, promptText, db) {
     // Retain existing OCR as a revision before overwriting (#3240)
     await saveRevisionBeforeOverwrite(db, page.id, 'ocr', { reason: 'reocr_realtime' });
 
+    // What produced this text (#4613), built by the one builder.
+    const engine = geminiEngine({
+      call_site: CALL_SITE, api: 'realtime', model: TARGET_MODEL,
+      prompt: { ...ocrPrompt.ref, text: ocrPrompt.text },
+      generationConfig: result.generationConfig,
+      run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
+      input: imageInput({ url: imageUrl, mime: image.mimeType, bytes: image.bytes }),
+      response: { modelVersion: result.modelVersion },
+    });
+
     // Save to MongoDB
     await db.collection('pages').updateOne(
       { id: page.id },
@@ -212,6 +239,7 @@ async function processPage(page, promptText, db) {
             updated_at: new Date(),
             source: 'ai',
             prompt_version: TARGET_PROMPT,
+            ...ocrProvenance(result.text, engine),
           },
           ...(pageType && { page_type: pageType }),
           ...(columns && { columns }),
@@ -275,7 +303,7 @@ async function processPage(page, promptText, db) {
 }
 
 // --- Concurrent processor ---
-async function processBatch(pages, promptText, db) {
+async function processBatch(pages, ocrPrompt, db) {
   let completed = 0, failed = 0, skipped = 0;
   let totalTokens = 0;
   let rateLimited = false;
@@ -287,7 +315,7 @@ async function processBatch(pages, promptText, db) {
 
     const chunk = pages.slice(i, i + CONCURRENCY);
     const results = await Promise.allSettled(
-      chunk.map(page => processPage(page, promptText, db))
+      chunk.map(page => processPage(page, ocrPrompt, db))
     );
 
     for (const r of results) {
@@ -411,10 +439,10 @@ async function main() {
     }
 
     // Get prompt
-    const promptText = await getOcrPrompt(db);
+    const ocrPrompt = await getOcrPrompt(db);
 
     // Process
-    const result = await processBatch(pages, promptText, db);
+    const result = await processBatch(pages, ocrPrompt, db);
 
     console.log(`\n=== Summary ===`);
     console.log(`Completed: ${result.completed}`);

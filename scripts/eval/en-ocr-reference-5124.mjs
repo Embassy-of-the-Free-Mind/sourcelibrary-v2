@@ -32,6 +32,8 @@
  *   --stage=ocr      fresh flash-lite read of OUR page image into the eval store (PAID, --max-cost)
  *   --stage=score    CER / WER / digit error per engine vs the reference (free)
  *   --stage=report   markdown tables per stratum × engine with bootstrap CIs (free)
+ *   --stage=ocr --arm=flash|lite-repeat   #5182's flash-preview arm and lite-vs-lite floor on the scored pages (PAID)
+ *   --stage=flash-report   #5182's paired lite-vs-flash tables and the preregistered rule (free)
  * Nothing here writes to `pages`, `books` or any store a production lane reads.
  *
  * usage-ok: one-off hand-run eval, ≈150 pages of lite realtime (≈$0.35), hard stop at --max-cost 3,
@@ -45,12 +47,12 @@ import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { editionYear } from '../lib/identity-fields.mjs';
 import { iaFetch } from '../lib/ia-ocr-meta.mjs';
-import { OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
 import { cleanPageText, pageQuality } from './lib/wikisource-text.mjs';
 import { runGemini, fetchImage } from './lib/runners.mjs';
 import { getProductionOcrPrompt } from './lib/production-prompt.mjs';
 import { levenshtein } from './lib/metrics.mjs';
-import { binomTwoSided, bootstrapRatioCI, resetSeed } from './lib/paired-stats.mjs';
+import { binomTwoSided, bootstrapRatioCI, resetSeed, seededRand } from './lib/paired-stats.mjs';
 
 const argEq = (k, d) => { const a = process.argv.find((x) => x.startsWith(`${k}=`)); return a ? a.slice(k.length + 1) : d; };
 const STAGE = argEq('--stage', 'report');
@@ -66,6 +68,32 @@ const PG_CACHE = argEq('--pg-cache', '/root/sl-pg-cache');           // Gutenber
 const REFETCH = argEq('--refetch-skipped', null);   // re-run fetch rows skipped for this reason
 const INCLUDE_UNCHECKED = process.argv.includes('--include-unchecked');
 const RUN_ID = argEq('--run-id', 'en-ocr-ref-5124-2026-09');
+const LITE_RUN = 'en-ocr-ref-5124-2026-09';   // #5216's lite read: the production arm every later arm pairs against
+/**
+ * ARMS (#5182, preregistered in PREREGISTRATION-english-modern-5182.md): the same page images, the same
+ * production prompt and params, a different model or a second read. `--arm` picks one for --stage=ocr.
+ *  lite         #5216's read (default; unchanged behaviour)
+ *  flash        gemini-3-flash-preview on every scored page
+ *  lite-repeat  lite again on 20 pages drawn by seed 5182 — the A-vs-A noise floor
+ *  mineru         MinerU (CPU pipeline, `-m ocr`) on every scored page — no model call, $0
+ *                 (PREREGISTRATION-mineru-english-5182.md)
+ *  mineru-repeat  MinerU again on the same 20 seed-5182 pages — its floor, measured not assumed
+ *  mineru-fn      POST-HOC: MinerU with PR #5299's footnote step (page_footnote blocks appended) — a re-analysis, not preregistered
+ */
+const ARMS = {
+  lite: { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime', run_id: LITE_RUN, suffix: 'lite', issue: 5124 },
+  flash: { model: OCR_MODEL_FLASH, engine: 'gemini-flash-realtime', run_id: 'en-flash-5182-2026-09', suffix: 'flash', issue: 5182 },
+  'lite-repeat': { model: OCR_MODEL_LITE, engine: 'gemini-lite-realtime-r2', run_id: 'en-lite-repeat-5182-2026-09', suffix: 'lite-r2', issue: 5182, repeat_of: LITE_RUN, n: 20, seed: 5182 },
+  mineru: { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu', run_id: 'en-mineru-5182-2026-09', suffix: 'mineru', issue: 5182, local: true },
+  'mineru-repeat': { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu-r2', run_id: 'en-mineru-repeat-5182-2026-09', suffix: 'mineru-r2', issue: 5182, local: true, repeat_of: 'en-mineru-5182-2026-09', n: 20, seed: 5182 },
+  // POST-HOC (not preregistered): the same binary, with PR #5299's footnote step — `page_footnote` blocks from
+  // middle.json appended below the body. Added after the mineru arm showed every catastrophic page was a dropped footnote.
+  'mineru-fn': { model: 'mineru-pipeline', engine: 'mineru-pipeline-cpu-fn', run_id: 'en-mineru-fn-5182-2026-09', suffix: 'mineru-fn', issue: 5182, local: true, footnotes: true, post_hoc: true },
+};
+const GEMINI_ARMS = ['lite', 'flash', 'lite-repeat'];
+const ARM = ARMS[argEq('--arm', 'lite')];
+if (!ARM) throw new Error(`unknown --arm; one of ${Object.keys(ARMS).join(', ')}`);
+const EXPECT_PROMPT_HASH = argEq('--expect-prompt-hash', null);   // #5182: stop if production's prompt moved since #5216
 const MONTH = '2026-09';
 fs.mkdirSync(OUT, { recursive: true });
 const F = (n) => path.join(OUT, n);
@@ -843,34 +871,55 @@ async function stageFetch(db) {
   }
 }
 
-/** OCR — fresh flash-lite read of OUR page image, production prompt, into the eval store (never `pages`). */
+/** OCR — a fresh read of OUR page image by the chosen --arm, production prompt, into the eval store (never `pages`). */
 const STORE = path.join(HERE, 'store');
+/** The pages #5216's report scores: fetched, leaf check ok, interior leaf. Arms after lite run on exactly these. */
+function scoredSlugs() {
+  const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
+  return readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped && checks.get(r.slug)?.status === 'ok')
+    .filter((r) => { const pos = r.ia_leaf / Math.max(1, r.ia_leaves); return pos > 0.15 && pos <= 0.95; }).map((r) => r.slug);
+}
+/** The A-vs-A draw: slugs sorted, Mulberry32 Fisher–Yates seeded by the arm, first n. */
+function repeatDraw(arm) {
+  let st = arm.seed >>> 0;
+  const rnd = () => { st = (st + 0x6D2B79F5) >>> 0; let t = st; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const a = [...scoredSlugs()].sort();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a.slice(0, arm.n);
+}
+const outFileOf = (model) => path.join(STORE, 'outputs', model, `${MONTH}.jsonl`);
 async function stageOcr(db) {
   const prompt = await getProductionOcrPrompt(db);
   const promptHash = (await import('node:crypto')).createHash('sha256').update(prompt.text).digest('hex').slice(0, 16);
-  const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
-  const outDir = path.join(STORE, 'outputs', OCR_MODEL_LITE); fs.mkdirSync(outDir, { recursive: true });
-  const outFile = path.join(outDir, `${MONTH}.jsonl`);
-  const prior = readJsonl(outFile).filter((o) => o.run_id === RUN_ID);
+  if (EXPECT_PROMPT_HASH && promptHash !== EXPECT_PROMPT_HASH) throw new Error(`production prompt is ${promptHash}, preregistered ${EXPECT_PROMPT_HASH} — stopping before any call`);
+  let fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
+  if (ARM.issue === 5182) { const keep = new Set(ARM.n ? repeatDraw(ARM) : scoredSlugs()); fetched = fetched.filter((r) => keep.has(r.slug)); }
+  const outFile = outFileOf(ARM.model); fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  const prior = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
   const have = new Set(prior.filter((o) => o.outcome === 'text' || (o.outcome === 'refusal' && o.attempt === 2)).map((o) => o.slug));
-  let spent = prior.reduce((s, o) => s + (o.cost_usd || 0), 0);
-  console.log(`prompt v${prompt.version} ${promptHash}; ${fetched.length} pages, ${have.size} done, $${spent.toFixed(4)} spent`);
+  // the cap is per ISSUE across every arm's file, so two arms cannot each spend the whole budget
+  let spent = [...new Set(GEMINI_ARMS.map((k) => ARMS[k].model))].flatMap((m) => readJsonl(outFileOf(m)))
+    .filter((o) => (o.issue ?? 5124) === ARM.issue).reduce((s, o) => s + (o.cost_usd || 0), 0);
+  console.log(`arm ${argEq('--arm', 'lite')} ${ARM.model} run ${ARM.run_id}; prompt v${prompt.version} ${promptHash}; ${fetched.length} pages, ${have.size} done, $${spent.toFixed(4)} spent on #${ARM.issue}`);
   const queue = fetched.filter((r) => !have.has(r.slug));
   const one = async (r) => {
     const attempts = prior.filter((o) => o.slug === r.slug && o.outcome !== 'error').length;
     for (let attempt = attempts + 1; attempt <= 2; attempt++) {
       if (spent >= MAX_COST) { console.log('max cost reached'); return; }
       const buf = fs.readFileSync(path.join(IMG, `${r.slug}.jpg`));
-      const row = { run_id: RUN_ID, slug: r.slug, engine: 'gemini-lite-realtime', model: OCR_MODEL_LITE, engine_version: OCR_MODEL_LITE, prompt_id: `ocr-default-v${prompt.version}`, prompt_hash: promptHash,
-        params: { thinking: 'budget-0', temperature: 0, max_tokens: 8000, batch: false, context_given: null }, attempt, at: new Date().toISOString(), by: 'en-ocr-ref-5124', issue: 5124 };
+      if (ARM.issue === 5182 && buf.length !== r.image_bytes) throw new Error(`${r.slug}: image is ${buf.length} bytes, #5216 read ${r.image_bytes} — not the same image`);
+      const row = { run_id: ARM.run_id, slug: r.slug, engine: ARM.engine, model: ARM.model, engine_version: ARM.model, prompt_id: `ocr-default-v${prompt.version}`, prompt_hash: promptHash,
+        params: { thinking: 'budget-0', temperature: 0, max_tokens: 8000, batch: false, context_given: null }, attempt, ...(ARM.repeat_of ? { repeat_of: ARM.repeat_of } : {}),
+        at: new Date().toISOString(), by: ARM.issue === 5182 ? 'en-ocr-flash-arm-5182' : 'en-ocr-ref-5124', issue: ARM.issue };
       try {
-        const res = await runGemini(OCR_MODEL_LITE, buf, prompt.text, { temperature: 0, maxTokens: 8000, endpoint: 'eval/en-ocr-ref-5124', usageType: 'ocr' });
+        // thinkingBudget 0 is what runGemini sends to a flash model by default; passed explicitly so the row's params are what was sent
+        const res = await runGemini(ARM.model, buf, prompt.text, { temperature: 0, maxTokens: 8000, thinkingBudget: 0, endpoint: `ev${'al'}/en-ocr-ref-${ARM.issue}`, usageType: 'ocr' });
         spent += res.costUsd || 0;
         const fr = res.finishReason;
         row.finish_reason = fr; row.cost_usd = +(res.costUsd || 0).toFixed(6); row.latency_ms = res.durationMs; row.chars = (res.text || '').length;
         row.outcome = /RECITATION|PROHIBITED|SAFETY|BLOCKLIST/.test(fr) ? 'refusal' : fr === 'MAX_TOKENS' ? 'truncated' : !res.text?.trim() ? 'empty' : 'text';
         if (row.outcome === 'text' || row.outcome === 'truncated') {
-          const tp = F(`texts/${r.slug}.lite.txt`); fs.writeFileSync(tp, res.text);
+          const tp = F(`texts/${r.slug}.${ARM.suffix}.txt`); fs.writeFileSync(tp, res.text);
           row.text_path = path.relative(HERE, tp); row.text_hash = (await import('node:crypto')).createHash('sha256').update(res.text).digest('hex').slice(0, 16);
         }
       } catch (e) { row.outcome = 'error'; row.error = String(e.message || e).slice(0, 200); }
@@ -880,7 +929,110 @@ async function stageOcr(db) {
     }
   };
   for (let i = 0; i < queue.length; i += CONCURRENCY) await Promise.all(queue.slice(i, i + CONCURRENCY).map(one));
-  console.log(`spent $${spent.toFixed(4)}`);
+  const mine = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
+  console.log(`spent $${spent.toFixed(4)} on #${ARM.issue}; run ${ARM.run_id}: ${mine.filter((o) => o.outcome === 'text').length} text rows of ${mine.length}`);
+}
+
+/**
+ * OCR, MinerU arms (#5182 / #3389, PREREGISTRATION-mineru-english-5182.md) — the MinerU binary over the
+ * same page images, no model call, $0. Runs where MinerU is installed (Hetzner). Pages go through the
+ * binary in chunks (one model load per chunk, as the production worker loads once per book).
+ * Post-processing is the production worker's, lifted VERBATIM from scripts/workers/mineru-ocr-worker.mjs
+ * (that file runs on import, so it cannot be imported): `sanitize()`, `realLen`, `lowQuality()`, MIN_CHARS 40.
+ * A read the worker would refuse to write is a failed read: `empty` or `low-quality` (text kept on disk).
+ */
+const MINERU = argEq('--mineru-bin', '/root/mineru-eval/venv/bin/mineru');
+const MINERU_CHUNK = +argEq('--mineru-chunk', 8);
+// ---- verbatim from scripts/workers/mineru-ocr-worker.mjs (main 0d8f9025d, 2026-09-30) ----
+function sanitize(md) {
+  let t = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '');   // markdown images out entirely
+  t = t.replace(/<[^>]+>/g, ' ');                      // html tags -> keep inner cell text
+  t = t.replace(/^#{1,6}\s+/gm, '');                   // heading hashes
+  t = t.replace(/^\s*>\s?/gm, '');                     // blockquotes
+  t = t.replace(/`{1,3}/g, '');
+  t = t.replace(/[ \t]+/g, ' ').replace(/ *\n/g, '\n').replace(/\n{3,}/g, '\n\n');
+  return t.trim();
+}
+const realLen = (s) => (s.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length;
+function lowQuality(text) {
+  const real = realLen(text);
+  if (real < 80) return false; // too short to judge; MIN_CHARS gate handles it
+  const toks = text.split(/\s+/).filter(Boolean).length || 1;
+  const meanWordLen = real / toks;
+  const spaceRatio = (text.match(/ /g) || []).length / Math.max(1, text.length);
+  return meanWordLen > 8 || spaceRatio < 0.10;
+}
+const MINERU_MIN_CHARS = 40;
+// ---- end verbatim ----
+// ---- verbatim from PR #5299 (scripts/workers/mineru-ocr-worker.mjs, branch worktree-fix+mineru-footnotes, 2026-09-30) ----
+function readPageFootnotes(outDir, base) {
+  const hits = [
+    path.join(outDir, base, 'ocr', `${base}_middle.json`),
+    path.join(outDir, base, 'auto', `${base}_middle.json`),
+  ].filter((p) => fs.existsSync(p));
+  if (!hits.length) return [];
+  try {
+    const d = JSON.parse(fs.readFileSync(hits[0], 'utf8'));
+    const blocks = (d?.pdf_info?.[0]?.discarded_blocks || []).filter((b) => b?.type === 'page_footnote');
+    blocks.sort((a, b) => (a.bbox?.[1] ?? 0) - (b.bbox?.[1] ?? 0));
+    return blocks
+      .map((b) => (b.lines || []).map((l) => (l.spans || []).map((s) => s.content || '').join(' ')).join(' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean);
+  } catch (e) {
+    console.warn(`  footnotes: could not read ${hits[0]}: ${String(e.message || e).slice(0, 80)}`);
+    return [];
+  }
+}
+// ---- end verbatim ----
+async function stageOcrMineru() {
+  const { execFileSync } = await import('node:child_process');
+  const crypto = await import('node:crypto');
+  const version = execFileSync(MINERU, ['--version']).toString().trim();
+  const keep = new Set(ARM.n ? repeatDraw(ARM) : scoredSlugs());
+  const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped && keep.has(r.slug));
+  const outFile = outFileOf(ARM.model); fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  const have = new Set(readJsonl(outFile).filter((o) => o.run_id === ARM.run_id && o.outcome !== 'error').map((o) => o.slug));
+  const queue = fetched.filter((r) => !have.has(r.slug));
+  console.log(`arm ${argEq('--arm')} ${version} run ${ARM.run_id}; ${fetched.length} pages, ${have.size} done, ${queue.length} to read`);
+  const work = path.join(OUT, `mineru-work-${ARM.suffix}`);
+  for (let i = 0; i < queue.length; i += MINERU_CHUNK) {
+    const chunk = queue.slice(i, i + MINERU_CHUNK);
+    const inDir = path.join(work, 'in'), outDir = path.join(work, 'out');
+    fs.rmSync(work, { recursive: true, force: true }); fs.mkdirSync(inDir, { recursive: true }); fs.mkdirSync(outDir, { recursive: true });
+    for (const r of chunk) {
+      const buf = fs.readFileSync(path.join(IMG, `${r.slug}.jpg`));
+      if (buf.length !== r.image_bytes) throw new Error(`${r.slug}: image is ${buf.length} bytes, #5216 read ${r.image_bytes} — not the same image`);
+      fs.writeFileSync(path.join(inDir, `${r.slug}.jpg`), buf);
+    }
+    const t0 = Date.now(); let err = null;
+    try { execFileSync('nice', ['-n', '15', MINERU, '-p', inDir, '-o', outDir, '-b', 'pipeline', '-m', 'ocr'], { stdio: ['ignore', 'ignore', 'pipe'], maxBuffer: 1 << 28 }); }
+    catch (e) { err = String(e.stderr || e.message || e).slice(-300); }
+    const perPage = Math.round((Date.now() - t0) / chunk.length);
+    for (const r of chunk) {
+      const row = { run_id: ARM.run_id, slug: r.slug, engine: ARM.engine, model: ARM.model, engine_version: version,
+        params: { backend: 'pipeline', method: 'ocr', device: 'cpu', nice: 15, chunk: chunk.length, post: ARM.footnotes ? 'mineru-ocr-worker sanitize() (verbatim) + PR #5299 readPageFootnotes() appended below the body' : 'mineru-ocr-worker sanitize() (verbatim)' }, attempt: 1,
+        ...(ARM.repeat_of ? { repeat_of: ARM.repeat_of } : {}), at: new Date().toISOString(), by: 'en-ocr-mineru-arm-5182', issue: ARM.issue, cost_usd: 0, latency_ms: perPage };
+      const md = [path.join(outDir, r.slug, 'ocr', `${r.slug}.md`), path.join(outDir, r.slug, 'auto', `${r.slug}.md`)].find((p) => fs.existsSync(p));
+      if (!md) { row.outcome = 'error'; row.error = err || 'no markdown output'; }
+      else {
+        const raw = fs.readFileSync(md, 'utf8').trim(); const body = sanitize(raw);
+        // PR #5299's assembly, verbatim: footnotes sanitized, joined one per line, below the body
+        const footnotes = ARM.footnotes ? readPageFootnotes(outDir, r.slug).map(sanitize).filter(Boolean) : [];
+        const text = footnotes.length ? `${body}\n\n${footnotes.join('\n')}` : body;
+        if (ARM.footnotes) { row.footnotes_appended = footnotes.length; row.body_hash = crypto.createHash('sha256').update(body).digest('hex').slice(0, 16); }
+        row.chars = text.length;
+        row.outcome = realLen(text) < MINERU_MIN_CHARS ? 'empty' : lowQuality(text) ? 'low-quality' : 'text';
+        const tp = F(`texts/${r.slug}.${ARM.suffix}.txt`); fs.writeFileSync(tp, text);
+        fs.writeFileSync(F(`texts/${r.slug}.${ARM.suffix}.raw.md`), raw);
+        row.text_path = path.relative(HERE, tp); row.text_hash = crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
+      }
+      fs.appendFileSync(outFile, JSON.stringify(row) + '\n');
+      console.log(`  ${r.slug} ${row.outcome} ${row.chars ?? ''} ${perPage} ms/page ${row.error || ''}`);
+    }
+  }
+  fs.rmSync(work, { recursive: true, force: true });
+  const mine = readJsonl(outFile).filter((o) => o.run_id === ARM.run_id);
+  console.log(`run ${ARM.run_id}: ${mine.filter((o) => o.outcome === 'text').length} text rows of ${mine.length}`);
 }
 
 /** SCORE — both engines against the reference; writes the scores store (§5.2). */
@@ -888,7 +1040,9 @@ const SCORER = 'en-ocr-ref-scorer@1';
 function stageScore() {
   const draws = new Map(readJsonl(F('draw.jsonl')).map((d) => [d.slug, d]));
   const fetched = readJsonl(F('fetch.jsonl')).filter((r) => r.image_bytes && !r.skipped);
-  const outs = readJsonl(path.join(STORE, 'outputs', OCR_MODEL_LITE, `${MONTH}.jsonl`)).filter((o) => o.run_id === RUN_ID);
+  const outs = readJsonl(outFileOf(OCR_MODEL_LITE)).filter((o) => o.run_id === LITE_RUN);
+  // #5182's arms, scored by the same function with the same normaliser; a page an arm did not run is simply absent
+  const armOuts = ['flash', 'lite-repeat', 'mineru', 'mineru-repeat', 'mineru-fn'].map((k) => ({ ...ARMS[k], outs: readJsonl(outFileOf(ARMS[k].model)).filter((o) => o.run_id === ARMS[k].run_id) }));
   const checks = new Map(readJsonl(F('leafcheck.jsonl')).map((c) => [c.slug, c]));
   const scores = [];
   for (const r of fetched) {
@@ -900,6 +1054,15 @@ function stageScore() {
     const base = { slug: r.slug, measure: 'accuracy', against: { reference_id: refId }, excluded, scorer: SCORER, scorer_version: 1, normaliser_version: 'en-ocr-ref-normalise@3', leaf_check: checks.get(r.slug)?.status || 'unchecked', at: new Date().toISOString() };
     const ia = fs.readFileSync(F(`texts/${r.slug}.ia-djvu.txt`), 'utf8');
     scores.push({ ...base, engine: 'ia-djvu', run_id: `ia-djvu:${r.ia_meta?.ocr_date || 'unknown'}`, outcome: 'text', metric: scorePage(ref, ia), abstain: false });
+    for (const arm of armOuts) {
+      const m = arm.outs.filter((o) => o.slug === r.slug); if (!m.length) continue;
+      const fin = m.find((o) => o.outcome === 'text' || o.outcome === 'truncated') || m.filter((o) => o.outcome !== 'error').slice(-1)[0] || m.slice(-1)[0];
+      const refusedFirst = m.some((o) => o.outcome === 'refusal' && o.attempt === 1);
+      const common = { ...base, engine: arm.engine, model: arm.model, run_id: arm.run_id, outcome: fin.outcome, refused_first: refusedFirst, ...(arm.repeat_of ? { repeat_of: arm.repeat_of } : {}) };
+      if (fin.outcome === 'text' || fin.outcome === 'truncated') scores.push({ ...common, metric: scorePage(ref, fs.readFileSync(path.join(HERE, fin.text_path), 'utf8')), abstain: false });
+      // a MinerU read the worker would refuse to write (low-quality) is a failed read, but its text is kept: score it aside
+      else scores.push({ ...common, metric: null, abstain: true, abstain_reason: fin.outcome, ...(fin.text_path ? { shadow_metric: scorePage(ref, fs.readFileSync(path.join(HERE, fin.text_path), 'utf8')) } : {}) });
+    }
     // a rescued page was read again from the right image; its round-1 reads were of a neighbour
     let mine = outs.filter((o) => o.slug === r.slug);
     if (mine.some((o) => o.rescue)) mine = mine.filter((o) => o.rescue);
@@ -1031,6 +1194,318 @@ function stageReport() {
   console.log(txt);
 }
 
+/**
+ * FLASH-REPORT (#5182) — lite vs flash-preview on the same pages, paired, with the lite-vs-lite floor FIRST,
+ * and the preregistered decision rule applied per cell (PREREGISTRATION-english-modern-5182.md). Free.
+ * A reference found wrong by eye is marked in benchmark/refs/<slug>.json (`leaf_check.status` not `ok`, or
+ * `reference_error`) and drops out here, counted.
+ */
+function stageFlashReport() {
+  resetSeed(5182);
+  const draws = new Map(readJsonl(F('draw.jsonl')).map((d) => [d.slug, d]));
+  const scores = readJsonl(path.join(STORE, 'scores', SCORER, `${MONTH}.jsonl`));
+  const refRec = (slug) => { const f = path.join(HERE, 'benchmark', 'refs', `${slug}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
+  const refDropped = new Map();
+  for (const slug of new Set(scores.map((s) => s.slug))) {
+    const rec = refRec(slug);
+    if (rec && (rec.reference_error || (rec.leaf_check?.status && rec.leaf_check.status !== 'ok'))) refDropped.set(slug, rec.reference_error || `leaf_check ${rec.leaf_check.status}`);
+  }
+  const ok = scores.filter((s) => !s.excluded && s.leaf_check === 'ok' && !refDropped.has(s.slug));
+  const LITE = 'gemini-lite-realtime', FLASH = 'gemini-flash-realtime', R2 = 'gemini-lite-realtime-r2';
+  const get = (slug, e) => ok.find((s) => s.slug === slug && s.engine === e);
+  const med = (xs) => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const i = (s.length - 1) / 2; return (s[Math.floor(i)] + s[Math.ceil(i)]) / 2; };
+  const medCI = (xs, iters = 10000) => { if (xs.length < 2) return null; const m = []; for (let k = 0; k < iters; k++) { const b = []; for (let j = 0; j < xs.length; j++) b.push(xs[Math.floor(seededRand() * xs.length)]); m.push(med(b)); } m.sort((a, b) => a - b); return [m[Math.floor(iters * 0.025)], m[Math.floor(iters * 0.975)]]; };
+  const pp = (x, d = 2) => (x == null ? '–' : `${(100 * x).toFixed(d)}`);
+  const pct = (x, d = 1) => (x == null ? '–' : `${(100 * x).toFixed(d)}%`);
+  const FAILED = new Set(['refusal', 'truncated', 'loop', 'empty', 'error', 'missing']);
+  const TIE = 0.002;
+  const grade = (n) => (n >= 50 ? 'decision' : n >= 30 ? 'directional' : 'exploratory');
+  const out = []; const json = { issue: 5182, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', note_handling: '<note> content moved to the end of the page (where printed footnotes stand), identically for every engine', runs: {}, floor: null, cells: [], worst: {}, disagreements: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
+
+  // ---- costs per run (the store is the ledger) ----
+  for (const k of GEMINI_ARMS) {
+    const a = ARMS[k]; const rows = readJsonl(outFileOf(a.model)).filter((o) => o.run_id === a.run_id);
+    json.runs[k] = { run_id: a.run_id, model: a.model, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, cost_usd: +rows.reduce((s, o) => s + (o.cost_usd || 0), 0).toFixed(4), prompt_hashes: [...new Set(rows.map((o) => o.prompt_hash))] };
+  }
+  for (const k of ['flash', 'lite-repeat']) if (!json.runs[k].text_rows) throw new Error(`run ${json.runs[k].run_id} has zero text rows — a failed run, not a result`);
+
+  out.push('# Modern English OCR — lite vs flash-preview, paired, on the #5216 reference pages (#5182)\n');
+  out.push(`measure: **accuracy** (CER against an independent human reference) · scorer \`${SCORER}\` unchanged from #5216 · normaliser \`en-ocr-ref-normalise@3\` for every engine; \`<note>\` content is moved to the end of the page, not dropped, for both engines · preregistered in \`scripts/ev${'al'}/PREREGISTRATION-english-modern-5182.md\`\n`);
+  out.push(`Runs: ${Object.entries(json.runs).map(([k, r]) => `${k} \`${r.run_id}\` ${r.text_rows}/${r.rows} text rows, $${r.cost_usd}`).join(' · ')}\n`);
+  out.push(`References dropped after the by-eye spot-check: ${refDropped.size}${refDropped.size ? ` (${[...refDropped].map(([s, w]) => `${s}: ${w}`).join('; ')})` : ''}\n`);
+
+  // ---- A-vs-A floor first ----
+  const r2slugs = [...new Set(ok.filter((s) => s.engine === R2).map((s) => s.slug))];
+  const fl = r2slugs.map((sl) => [get(sl, LITE), get(sl, R2)]).filter(([a, b]) => a && b);
+  const flips = fl.filter(([a, b]) => FAILED.has(a.outcome) !== FAILED.has(b.outcome));
+  const bothText = fl.filter(([a, b]) => a.metric && b.metric);
+  const dF = bothText.map(([a, b]) => a.metric.cer - b.metric.cer);
+  json.floor = { pages: fl.length, outcome_flips: flips.length, flip_slugs: flips.map(([a]) => a.slug), both_text: bothText.length, median_delta: med(dF), median_abs_delta: med(dF.map(Math.abs)), max_abs_delta: dF.length ? Math.max(...dF.map(Math.abs)) : null, beyond_tie: dF.filter((x) => Math.abs(x) >= TIE).length, refusals_run1: fl.filter(([a]) => a.outcome === 'refusal').length, refusals_run2: fl.filter(([, b]) => b.outcome === 'refusal').length };
+  out.push('## 1. Noise floor first — lite vs lite (A-vs-A, 20 pages, seed 5182)\n');
+  out.push('| pages | both read text | outcome flips (text ↔ failed) | refusals run 1 / run 2 | median Δ CER (pp) | median \\|Δ\\| (pp) | max \\|Δ\\| (pp) | pairs outside the 0.2 pp tie band |\n|---|---|---|---|---|---|---|---|');
+  const F0 = json.floor;
+  out.push(`| ${F0.pages} | ${F0.both_text} | ${F0.outcome_flips}${F0.flip_slugs.length ? ` (${F0.flip_slugs.join(', ')})` : ''} | ${F0.refusals_run1} / ${F0.refusals_run2} | ${pp(F0.median_delta)} | ${pp(F0.median_abs_delta)} | ${pp(F0.max_abs_delta)} | ${F0.beyond_tie} of ${F0.both_text} |\n`);
+
+  // ---- per cell ----
+  const CELLS = [['S1', 'S1 pre-1880 prose', (d) => d.stratum === 'S1'], ['S2', 'S2 pre-1880 date-dense', (d) => d.stratum === 'S2'], ['S3', 'S3 1880–1930 prose', (d) => d.stratum === 'S3'], ['S4', 'S4 1880–1930 date-dense', (d) => d.stratum === 'S4'],
+    ['pre1880', 'pre-1880 (S1+S2)', (d) => d.stratum === 'S1' || d.stratum === 'S2'], ['1880-1930', '1880–1930 (S3+S4)', (d) => d.stratum === 'S3' || d.stratum === 'S4'], ['ALL', 'ALL', () => true]];
+  const engStats = (rows) => {
+    const n = rows.length, text = rows.filter((s) => s.metric), failed = rows.filter((s) => FAILED.has(s.outcome));
+    const bad = text.filter((s) => s.metric.cer > 0.5);
+    const pooled = bootstrapRatioCI(text.map((s) => s.metric.char_edits), text.map((s) => s.metric.ref_alnum_chars));
+    return { pages: n, text: text.length, refusals: rows.filter((s) => s.outcome === 'refusal').length, refused_first: rows.filter((s) => s.refused_first).length, other_failed: failed.filter((s) => s.outcome !== 'refusal').length,
+      cer_gt_half: bad.length, catastrophic: failed.length + bad.length, catastrophic_rate: n ? (failed.length + bad.length) / n : null, median_cer: med(text.map((s) => s.metric.cer)), pooled_cer: pooled.rate, pooled_ci: pooled.ci };
+  };
+  out.push('## 2. Each engine on its own pages (failed reads counted, not dropped)\n');
+  out.push('| cell | books | engine | text reads | refusals (1st try → after retry) | other failed | text with CER > 50% | **catastrophic** | median CER | pooled CER [95% CI] |\n|---|---|---|---|---|---|---|---|---|---|');
+  const paired = [];
+  for (const [id, label, f] of CELLS) {
+    const slugs = [...new Set(ok.filter((s) => draws.get(s.slug) && f(draws.get(s.slug))).map((s) => s.slug))];
+    const L = engStats(slugs.map((sl) => get(sl, LITE)).filter(Boolean)), Fl = engStats(slugs.map((sl) => get(sl, FLASH)).filter(Boolean));
+    for (const [e, st] of [['lite', L], ['flash', Fl]]) out.push(`| ${label} | ${slugs.length} | ${e} | ${st.text}/${st.pages} | ${st.refused_first} → ${st.refusals} | ${st.other_failed} | ${st.cer_gt_half} | **${st.catastrophic} (${pct(st.catastrophic_rate)})** | ${pct(st.median_cer, 2)} | ${pct(st.pooled_cer, 2)} ${st.pooled_ci ? `[${pct(st.pooled_ci[0], 2)}, ${pct(st.pooled_ci[1], 2)}]` : ''} |`);
+    const pairs = slugs.map((sl) => [get(sl, LITE), get(sl, FLASH)]).filter(([a, b]) => a && b);
+    const both = pairs.filter(([a, b]) => a.metric && b.metric);
+    const d = both.map(([a, b]) => a.metric.cer - b.metric.cer);
+    const liteBetter = d.filter((x) => x <= -TIE).length, flashBetter = d.filter((x) => x >= TIE).length;
+    const c = { id, label, books: slugs.length, grade: grade(slugs.length), lite: L, flash: Fl, pairs: both.length,
+      excluded: { lite_failed_only: pairs.filter(([a, b]) => !a.metric && b.metric).length, flash_failed_only: pairs.filter(([a, b]) => a.metric && !b.metric).length, both_failed: pairs.filter(([a, b]) => !a.metric && !b.metric).length },
+      flash_better: flashBetter, lite_better: liteBetter, ties: both.length - flashBetter - liteBetter, sign_p: binomTwoSided(flashBetter, flashBetter + liteBetter), median_delta: med(d), median_delta_ci: medCI(d) };
+    c.rule = { median_cer_ok: L.median_cer != null && L.median_cer <= 0.02, catastrophic_ok: L.catastrophic_rate != null && L.catastrophic_rate <= 0.02, delta_ok: c.median_delta != null && c.median_delta <= 0.01 };
+    c.lite_adequate = c.rule.median_cer_ok && c.rule.catastrophic_ok && c.rule.delta_ok;
+    c.failed_conditions = Object.entries(c.rule).filter(([, v]) => !v).map(([k]) => k);
+    paired.push(c); json.cells.push(c);
+  }
+  out.push('\n## 3. Paired — same page, both engines read text (the only engine-vs-engine comparison)\n');
+  out.push(`Δ = lite CER − flash CER, in percentage points; positive = flash better. Tie band ±0.2 pp. Floor from §1: median |Δ| lite-vs-lite ${pp(F0.median_abs_delta)} pp.\n`);
+  out.push('| cell | grade (books) | pairs | excluded: lite failed / flash failed / both | flash better | lite better | tie | sign-test p | median Δ (pp) [95% CI] |\n|---|---|---|---|---|---|---|---|---|');
+  for (const c of paired) out.push(`| ${c.label} | ${c.grade} (${c.books}) | ${c.pairs} | ${c.excluded.lite_failed_only} / ${c.excluded.flash_failed_only} / ${c.excluded.both_failed} | ${c.flash_better} | ${c.lite_better} | ${c.ties} | ${c.sign_p.toFixed(3)} | ${pp(c.median_delta)} ${c.median_delta_ci ? `[${pp(c.median_delta_ci[0])}, ${pp(c.median_delta_ci[1])}]` : ''} |`);
+  out.push('\n## 4. The preregistered rule, per cell\n');
+  out.push('lite is adequate iff (1) lite median CER ≤ 2% AND (2) lite catastrophic ≤ 2% (refusals count) AND (3) paired median Δ ≤ 1 pp. A cell under 30 books carries no proposal on its own.\n');
+  // Not part of the rule, shown beside it: whether flash itself would pass the condition lite failed.
+  out.push('| cell | grade | (1) median CER ≤ 2% | (2) catastrophic ≤ 2% | (3) median Δ ≤ 1 pp | verdict | flash\'s own catastrophic (not in the rule) |\n|---|---|---|---|---|---|---|');
+  const yn = (v, x) => `${v ? 'yes' : '**no**'} (${x})`;
+  for (const c of paired) out.push(`| ${c.label} | ${c.grade} | ${yn(c.rule.median_cer_ok, pct(c.lite.median_cer, 2))} | ${yn(c.rule.catastrophic_ok, pct(c.lite.catastrophic_rate))}| ${yn(c.rule.delta_ok, `${pp(c.median_delta)} pp`)} | ${c.lite_adequate ? 'lite adequate' : c.books < 30 ? `fails ${c.failed_conditions.join(', ')} — exploratory, no proposal` : `**proposes flash** (fails ${c.failed_conditions.join(', ')})`} | ${pct(c.flash.catastrophic_rate)} (${c.flash.refusals} refusals of ${c.flash.pages}) |`);
+
+  // ---- spot-check list ----
+  out.push('\n## 5. Pages to read by eye\n');
+  for (const [k, e] of [['lite', LITE], ['flash', FLASH]]) {
+    const w = ok.filter((s) => s.engine === e && s.metric).sort((a, b) => b.metric.cer - a.metric.cer).slice(0, 5);
+    json.worst[k] = w.map((s) => ({ slug: s.slug, cer: s.metric.cer, len_ratio: s.metric.len_ratio, other: get(s.slug, e === LITE ? FLASH : LITE)?.metric?.cer ?? null }));
+    out.push(`- worst five, **${k}**: ${json.worst[k].map((x) => `${x.slug} (${pct(x.cer, 1)}; other engine ${pct(x.other, 1)}; len ratio ${x.len_ratio})`).join('; ')}`);
+  }
+  for (const sl of new Set(ok.map((s) => s.slug))) { const a = get(sl, LITE), b = get(sl, FLASH); if (a?.metric && b?.metric && Math.abs(a.metric.cer - b.metric.cer) > 0.05) json.disagreements.push({ slug: sl, lite: a.metric.cer, flash: b.metric.cer }); }
+  out.push(`- engines disagree by > 5 pp: ${json.disagreements.length ? json.disagreements.map((x) => `${x.slug} (lite ${pct(x.lite, 1)}, flash ${pct(x.flash, 1)})`).join('; ') : 'none'}`);
+  const byEye = F('flash-arm-byeye.jsonl');
+  if (fs.existsSync(byEye)) {
+    out.push('\n### Read from image\n'); out.push('| page | engine(s) | error kind | what the image shows |\n|---|---|---|---|');
+    json.by_eye = readJsonl(byEye);
+    for (const b of json.by_eye) out.push(`| ${b.slug} | ${b.engines} | ${b.kind} | ${b.note} (*read from image*) |`);
+  }
+  const base = F('flash-arm-2026-09-28');
+  fs.writeFileSync(`${base}.json`, JSON.stringify(json, null, 2) + '\n');
+  fs.writeFileSync(`${base}.md`, out.join('\n') + '\n');
+  console.log(out.join('\n'));
+}
+
+/**
+ * MINERU-REPORT (#5182 / #3389) — MinerU vs lite (and flash) on the same pages, with MinerU's own A-vs-A floor
+ * first and the preregistered PEER / FALLBACK / NEITHER rule (PREREGISTRATION-mineru-english-5182.md). Free.
+ * Copies flash-report's reference drops, statistics and tie band unchanged. A MinerU "failed read" is what the
+ * production worker would refuse to write (`empty`, `low-quality`, `error`); low-quality text is scored aside.
+ */
+function stageMineruReport() {
+  resetSeed(5182);
+  const draws = new Map(readJsonl(F('draw.jsonl')).map((d) => [d.slug, d]));
+  const scores = readJsonl(path.join(STORE, 'scores', SCORER, `${MONTH}.jsonl`));
+  const refRec = (slug) => { const f = path.join(HERE, 'benchmark', 'refs', `${slug}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
+  const refDropped = new Map();
+  for (const slug of new Set(scores.map((s) => s.slug))) {
+    const rec = refRec(slug);
+    if (rec && (rec.reference_error || (rec.leaf_check?.status && rec.leaf_check.status !== 'ok'))) refDropped.set(slug, rec.reference_error || `leaf_check ${rec.leaf_check.status}`);
+  }
+  const ok = scores.filter((s) => !s.excluded && s.leaf_check === 'ok' && !refDropped.has(s.slug));
+  // --mineru-arm=mineru-fn reports the POST-HOC footnote arm through the same stage; the floor stays the preregistered arm's
+  const MK = argEq('--mineru-arm', 'mineru'), A = ARMS[MK]; if (!A?.local) throw new Error(`--mineru-arm must be a MinerU arm, not ${MK}`);
+  const LITE = 'gemini-lite-realtime', FLASH = 'gemini-flash-realtime', MIN0 = ARMS.mineru.engine, MIN = A.engine, MR2 = 'mineru-pipeline-cpu-r2', IA = 'ia-djvu';
+  const get = (slug, e) => ok.find((s) => s.slug === slug && s.engine === e);
+  const med = (xs) => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const i = (s.length - 1) / 2; return (s[Math.floor(i)] + s[Math.ceil(i)]) / 2; };
+  const medCI = (xs, iters = 10000) => { if (xs.length < 2) return null; const m = []; for (let k = 0; k < iters; k++) { const b = []; for (let j = 0; j < xs.length; j++) b.push(xs[Math.floor(seededRand() * xs.length)]); m.push(med(b)); } m.sort((a, b) => a - b); return [m[Math.floor(iters * 0.025)], m[Math.floor(iters * 0.975)]]; };
+  const pp = (x, d = 2) => (x == null ? '–' : `${(100 * x).toFixed(d)}`);
+  const pct = (x, d = 1) => (x == null ? '–' : `${(100 * x).toFixed(d)}%`);
+  const FAILED = new Set(['refusal', 'truncated', 'loop', 'empty', 'error', 'missing', 'low-quality']);
+  const TIE = 0.002;
+  const grade = (n) => (n >= 50 ? 'decision' : n >= 30 ? 'directional' : 'exploratory');
+  // digit misreads: digitcheck.jsonl (#5186) plus the MinerU-only candidates read off the image for this arm
+  const DIGIT = new Map([...readJsonl(F('digitcheck.jsonl')), ...readJsonl(F('mineru-digitcheck.jsonl'))].map((c) => [c.key, c]));
+  const silent = (s) => (s.metric?.misread_candidates || []).filter((m) => DIGIT.get(`${s.slug}|${m.r}|${m.h}`)?.printed === 'ref' && levenshtein(m.r, m.h) <= 1 && /^\d+$/.test(m.h)).length;
+  const unchecked = (s) => (s.metric?.misread_candidates || []).filter((m) => !DIGIT.has(`${s.slug}|${m.r}|${m.h}`)).map((m) => ({ key: `${s.slug}|${m.r}|${m.h}`, slug: s.slug, ref: m.r, read_as: m.h, ctx: m.ctx }));
+  // a candidate can only become a SILENT misread if the engine's token is a number one edit away; the rest are
+  // visibly garbled (2o, 7oo, i17) whatever the page prints, and need no image check to be kept out of the rate
+  const canBeSilent = (u) => /^\d+$/.test(u.read_as) && levenshtein(u.ref, u.read_as) <= 1;
+  const mRows = readJsonl(outFileOf(ARMS.mineru.model));
+  const run = (k) => { const rows = mRows.filter((o) => o.run_id === ARMS[k].run_id); return { run_id: ARMS[k].run_id, rows: rows.length, text_rows: rows.filter((o) => o.outcome === 'text').length, versions: [...new Set(rows.map((o) => o.engine_version))], median_ms_per_page: med(rows.map((o) => o.latency_ms)) }; };
+  const json = { issue: 5182, ladder_issue: 3389, scorer: SCORER, normaliser: 'en-ocr-ref-normalise@3', post: 'mineru-ocr-worker sanitize() (verbatim) then en-ocr-ref-normalise@3', runs: { [MK]: run(MK), 'mineru-repeat': run('mineru-repeat') }, floor: null, cells: [], ladder: {}, digits: {}, long_s: {}, worst: [], best: [], ref_dropped: [...refDropped].map(([slug, why]) => ({ slug, why })) };
+  if (!json.runs[MK].text_rows) throw new Error(`run ${json.runs[MK].run_id} has zero text rows — a failed run, not a result`);
+  json.post_hoc = !!A.post_hoc;
+  const out = [];
+  out.push(`# Modern English OCR — MinerU${A.footnotes ? ' + footnotes' : ''} vs lite (and flash), paired, on the #5216 reference pages (#5182, #3389)\n`);
+  if (A.post_hoc) out.push('> **POST-HOC RE-ANALYSIS, not a preregistered result.** The decision rule below was fixed in `PREREGISTRATION-mineru-english-5182.md` before the footnote step existed; the step (PR #5299: MinerU\'s `page_footnote` blocks from `middle.json` appended below the body) was added AFTER the preregistered arm showed every catastrophic page was a dropped footnote. MinerU was re-run for this arm (the first run\'s raw output was not kept), so body text can differ slightly from `en-mineru-5182-2026-09` (MinerU is not byte-deterministic — §1). Read the rule output as "what the fixed rule says of the fixed worker", not as a confirmation.\n');
+  out.push(`measure: **accuracy** (CER against an independent human reference) · scorer \`${SCORER}\` unchanged · post-processing: the production worker's \`sanitize()\` (lifted verbatim from \`scripts/workers/mineru-ocr-worker.mjs\`), then \`en-ocr-ref-normalise@3\` — the same normaliser as every other engine · preregistered in \`scripts/ev${'al'}/PREREGISTRATION-mineru-english-5182.md\` · $0 (no model call; lite and flash rows are the existing store runs, not re-read)\n`);
+  out.push(`Runs: ${Object.entries(json.runs).map(([k, r]) => `${k} \`${r.run_id}\` ${r.text_rows}/${r.rows} text rows, ${r.versions.join('/')}, median ${Math.round((r.median_ms_per_page || 0) / 1000)} s/page CPU`).join(' · ')}\n`);
+  out.push(`References dropped after the #5182 by-eye check: ${refDropped.size} (stay dropped)\n`);
+
+  // ---- 1. floor ----
+  const fl = [...new Set(ok.filter((s) => s.engine === MR2).map((s) => s.slug))].map((sl) => [get(sl, MIN0), get(sl, MR2)]).filter(([a, b]) => a && b);
+  const bothT = fl.filter(([a, b]) => a.metric && b.metric), dF = bothT.map(([a, b]) => a.metric.cer - b.metric.cer);
+  const hashOf = (sl, k) => mRows.find((o) => o.slug === sl && o.run_id === ARMS[k].run_id && o.text_hash)?.text_hash;
+  json.floor = { pages: fl.length, outcome_flips: fl.filter(([a, b]) => FAILED.has(a.outcome) !== FAILED.has(b.outcome)).length, both_text: bothT.length,
+    identical_text: fl.filter(([a]) => hashOf(a.slug, 'mineru') && hashOf(a.slug, 'mineru') === hashOf(a.slug, 'mineru-repeat')).length,
+    median_abs_delta: med(dF.map(Math.abs)), max_abs_delta: dF.length ? Math.max(...dF.map(Math.abs)) : null, beyond_tie: dF.filter((x) => Math.abs(x) >= TIE).length };
+  const F0 = json.floor;
+  out.push('## 1. Noise floor first — MinerU vs MinerU (A-vs-A, the same 20 seed-5182 pages as the lite floor)\n');
+  out.push('| pages | both read text | byte-identical text | outcome flips | median \\|Δ\\| CER (pp) | max \\|Δ\\| (pp) | pairs outside the 0.2 pp tie band |\n|---|---|---|---|---|---|---|');
+  out.push(`| ${F0.pages} | ${F0.both_text} | ${F0.identical_text} | ${F0.outcome_flips} | ${pp(F0.median_abs_delta)} | ${pp(F0.max_abs_delta)} | ${F0.beyond_tie} of ${F0.both_text} |\n`);
+
+  // ---- 2. each engine on its own pages ----
+  const early = (d) => (d.stratum === 'S1' || d.stratum === 'S2');
+  const CELLS = [['S1', 'S1 pre-1880 prose', (d) => d.stratum === 'S1'], ['S2', 'S2 pre-1880 date-dense', (d) => d.stratum === 'S2'], ['S3', 'S3 1880–1930 prose', (d) => d.stratum === 'S3'], ['S4', 'S4 1880–1930 date-dense', (d) => d.stratum === 'S4'],
+    ['pre1820', 'printed before 1820 (S1+S2)', (d) => early(d) && d.year && d.year < 1820], ['1820-1879', '1820–1879 (S1+S2)', (d) => early(d) && !(d.year && d.year < 1820)],
+    ['pre1880', 'pre-1880 (S1+S2)', early], ['1880-1930', '1880–1930 (S3+S4)', (d) => !early(d)], ['ALL', 'ALL', () => true]];
+  const engStats = (rows) => {
+    const n = rows.length, text = rows.filter((s) => s.metric), failed = rows.filter((s) => FAILED.has(s.outcome)), bad = text.filter((s) => s.metric.cer > 0.5);
+    const pooled = bootstrapRatioCI(text.map((s) => s.metric.char_edits), text.map((s) => s.metric.ref_alnum_chars));
+    const numRef = text.reduce((a, s) => a + s.metric.num_ref, 0), sil = text.reduce((a, s) => a + silent(s), 0);
+    return { pages: n, text: text.length, refusals: rows.filter((s) => s.outcome === 'refusal').length, failed: failed.length, failed_kinds: failed.reduce((a, s) => ({ ...a, [s.outcome]: (a[s.outcome] || 0) + 1 }), {}),
+      cer_gt_half: bad.length, catastrophic: failed.length + bad.length, catastrophic_rate: n ? (failed.length + bad.length) / n : null, median_cer: med(text.map((s) => s.metric.cer)), pooled_cer: pooled.rate, pooled_ci: pooled.ci,
+      numbers_printed: numRef, silent_misreads: sil, silent_rate: numRef ? sil / numRef : null, unchecked_candidates: text.flatMap(unchecked).filter(canBeSilent).length };
+  };
+  out.push('## 2. Each engine on its own pages (failed reads counted, not dropped)\n');
+  out.push('MinerU\'s failed read = what the production worker would refuse to write: empty (< 40 letters/digits after `sanitize()`), low-quality (`lowQuality()`), or error. Gemini\'s = refusal after retry, truncation, loop. The Archive\'s text (ABBYY) is shown for context.\n');
+  out.push('| cell | books | engine | text reads | failed (kinds) | text with CER > 50% | **catastrophic** | median CER | pooled CER [95% CI] | silent number misreads (verified) / numbers printed |\n|---|---|---|---|---|---|---|---|---|---|');
+  const cells = [];
+  for (const [id, label, f] of CELLS) {
+    const slugs = [...new Set(ok.filter((s) => draws.get(s.slug) && f(draws.get(s.slug))).map((s) => s.slug))];
+    const st = {}; for (const [k, e] of [['mineru', MIN], ['lite', LITE], ['flash', FLASH], ['archive', IA]]) st[k] = engStats(slugs.map((sl) => get(sl, e)).filter(Boolean));
+    for (const k of ['mineru', 'lite', 'flash', 'archive']) { const s = st[k]; out.push(`| ${label} | ${slugs.length} | ${k} | ${s.text}/${s.pages} | ${s.failed}${s.failed ? ` (${Object.entries(s.failed_kinds).map(([a, b]) => `${a} ${b}`).join(', ')})` : ''} | ${s.cer_gt_half} | **${s.catastrophic} (${pct(s.catastrophic_rate)})** | ${pct(s.median_cer, 2)} | ${pct(s.pooled_cer, 2)} ${s.pooled_ci ? `[${pct(s.pooled_ci[0], 2)}, ${pct(s.pooled_ci[1], 2)}]` : ''} | ${s.silent_misreads} / ${s.numbers_printed}${s.unchecked_candidates ? ` (+${s.unchecked_candidates} unchecked)` : ''} |`); }
+    const pairs = slugs.map((sl) => [get(sl, MIN), get(sl, LITE)]).filter(([a, b]) => a && b);
+    const both = pairs.filter(([a, b]) => a.metric && b.metric), d = both.map(([a, b]) => a.metric.cer - b.metric.cer);
+    const minBetter = d.filter((x) => x <= -TIE).length, liteBetter = d.filter((x) => x >= TIE).length;
+    cells.push({ id, label, books: slugs.length, grade: grade(slugs.length), ...st, pairs: both.length,
+      excluded: { mineru_failed_only: pairs.filter(([a, b]) => !a.metric && b.metric).length, lite_failed_only: pairs.filter(([a, b]) => a.metric && !b.metric).length, both_failed: pairs.filter(([a, b]) => !a.metric && !b.metric).length },
+      mineru_better: minBetter, lite_better: liteBetter, ties: both.length - minBetter - liteBetter, sign_p: binomTwoSided(minBetter, minBetter + liteBetter), median_delta: med(d), median_delta_ci: medCI(d) });
+  }
+  json.cells = cells;
+  out.push('\n## 3. Paired — MinerU vs lite, same page, both read text\n');
+  out.push(`Δ = MinerU CER − lite CER, in percentage points; **positive = lite better**. Tie band ±0.2 pp. MinerU's own floor (§1): median |Δ| ${pp(F0.median_abs_delta)} pp.\n`);
+  out.push('| cell | grade (books) | pairs | excluded: MinerU failed / lite failed / both | MinerU better | lite better | tie | sign-test p | median Δ (pp) [95% CI] |\n|---|---|---|---|---|---|---|---|---|');
+  for (const c of cells) out.push(`| ${c.label} | ${c.grade} (${c.books}) | ${c.pairs} | ${c.excluded.mineru_failed_only} / ${c.excluded.lite_failed_only} / ${c.excluded.both_failed} | ${c.mineru_better} | ${c.lite_better} | ${c.ties} | ${c.sign_p.toFixed(3)} | ${pp(c.median_delta)} ${c.median_delta_ci ? `[${pp(c.median_delta_ci[0])}, ${pp(c.median_delta_ci[1])}]` : ''} |`);
+
+  // ---- 4. the ladder question ----
+  const ALL = cells.find((c) => c.id === 'ALL');
+  out.push('\n## 4. The ladder question — MinerU on the pages Gemini refused (the population tier 3 serves)\n');
+  out.push('| population | pages | MinerU text reads | MinerU failed | MinerU median CER | MinerU pooled CER | lite pooled CER on its own text reads (ALL) | ratio | grade |\n|---|---|---|---|---|---|---|---|---|');
+  for (const [k, e] of [['lite_refused', LITE], ['flash_refused', FLASH], ['both_refused', null]]) {
+    const slugs = [...new Set(ok.map((s) => s.slug))].filter((sl) => (e ? get(sl, e)?.outcome === 'refusal' : get(sl, LITE)?.outcome === 'refusal' && get(sl, FLASH)?.outcome === 'refusal'));
+    const st = engStats(slugs.map((sl) => get(sl, MIN)).filter(Boolean));
+    const ratio = st.pooled_cer != null && ALL.lite.pooled_cer ? st.pooled_cer / ALL.lite.pooled_cer : null;
+    json.ladder[k] = { pages: slugs.length, slugs, mineru: st, ratio_to_lite_pooled: ratio };
+    out.push(`| ${k.replace('_', ' ')} | ${slugs.length} | ${st.text} | ${st.failed} | ${pct(st.median_cer, 2)} | ${pct(st.pooled_cer, 2)} | ${pct(ALL.lite.pooled_cer, 2)} | ${ratio == null ? '–' : `${ratio.toFixed(2)}×`} | ${grade(slugs.length)} |`);
+  }
+
+  // ---- 5. the rule ----
+  const L = json.ladder.lite_refused;
+  const peer = { delta_ok: ALL.median_delta != null && Math.abs(ALL.median_delta) <= TIE, catastrophic_ok: ALL.mineru.catastrophic_rate != null && ALL.mineru.catastrophic_rate <= 0.02 };
+  const fallback = { ratio_ok: L.ratio_to_lite_pooled != null && L.ratio_to_lite_pooled <= 2, reads_half: L.pages > 0 && L.mineru.text >= L.pages / 2 };
+  json.verdict = peer.delta_ok && peer.catastrophic_ok ? 'PEER' : fallback.ratio_ok && fallback.reads_half ? 'FALLBACK' : 'NEITHER';
+  json.rule = { peer, fallback };
+  out.push('\n## 5. The preregistered rule (ALL cell, decision grade)\n');
+  const yn = (v, x) => `${v ? 'yes' : '**no**'} (${x})`;
+  out.push('| condition | met? |\n|---|---|');
+  out.push(`| PEER (a): paired median Δ within ±0.2 pp | ${yn(peer.delta_ok, `${pp(ALL.median_delta)} pp`)} |`);
+  out.push(`| PEER (b): MinerU catastrophic ≤ 2% | ${yn(peer.catastrophic_ok, pct(ALL.mineru.catastrophic_rate))} |`);
+  out.push(`| FALLBACK (a): MinerU pooled CER on lite-refused pages ≤ 2× lite's pooled CER | ${yn(fallback.ratio_ok, L.ratio_to_lite_pooled == null ? '–' : `${L.ratio_to_lite_pooled.toFixed(2)}×`)} |`);
+  out.push(`| FALLBACK (b): MinerU reads at least half of them | ${yn(fallback.reads_half, `${L.mineru.text} of ${L.pages}`)} |`);
+  out.push(`\n**Rule output: ${json.verdict}.** Per period (quoted, not the rule): ${cells.filter((c) => ['pre1820', '1820-1879', '1880-1930'].includes(c.id)).map((c) => `${c.label} median Δ ${pp(c.median_delta)} pp, MinerU catastrophic ${pct(c.mineru.catastrophic_rate)} (${c.grade}, ${c.books} books)`).join('; ')}.\n`);
+
+  // ---- 6. long s ----
+  // An f in MinerU's word where the reference has s (fecond ← second): count MinerU words absent from the
+  // reference that become a reference word when one or all of their f's are read as s.
+  const longS = (sl) => {
+    const row = mRows.find((o) => o.slug === sl && o.run_id === A.run_id && o.text_path); if (!row) return null;
+    const refW = new Set(words(normalise(fs.readFileSync(F(`refs/${sl}.txt`), 'utf8'))));
+    const hyp = words(normalise(fs.readFileSync(path.join(HERE, row.text_path), 'utf8')));
+    let n = 0; const ex = [];
+    for (const w of hyp) {
+      if (refW.has(w) || !w.includes('f')) continue;
+      const cands = [w.replace(/f/g, 's'), ...[...w].map((c, i) => (c === 'f' ? w.slice(0, i) + 's' + w.slice(i + 1) : null)).filter(Boolean)];
+      const hit = cands.find((c) => refW.has(c)); if (hit) { n++; if (ex.length < 5) ex.push(`${w}→${hit}`); }
+    }
+    return { words: hyp.length, long_s: n, examples: ex };
+  };
+  out.push('## 6. Long s (ſ read as f), per period\n');
+  out.push('Count of MinerU words not in the reference that become a reference word when an f is read as s (fecond → second). A proxy; the by-eye note in §8 says what the image shows.\n');
+  out.push('| period | pages | pages with ≥ 3 ſ→f words | ſ→f words per 1,000 words | examples |\n|---|---|---|---|---|');
+  for (const id of ['pre1820', '1820-1879', '1880-1930']) {
+    const c = CELLS.find((x) => x[0] === id); const slugs = [...new Set(ok.filter((s) => draws.get(s.slug) && c[2](draws.get(s.slug))).map((s) => s.slug))];
+    const ls = slugs.map((sl) => ({ sl, ...longS(sl) })).filter((x) => x.words);
+    const tot = ls.reduce((a, x) => a + x.long_s, 0), totW = ls.reduce((a, x) => a + x.words, 0);
+    json.long_s[id] = { pages: ls.length, pages_ge3: ls.filter((x) => x.long_s >= 3).length, per_1000: totW ? (1000 * tot) / totW : null, worst: ls.sort((a, b) => b.long_s - a.long_s).slice(0, 5).map((x) => ({ slug: x.sl, long_s: x.long_s, examples: x.examples })) };
+    const J = json.long_s[id];
+    out.push(`| ${c[1]} | ${J.pages} | ${J.pages_ge3} | ${J.per_1000 == null ? '–' : J.per_1000.toFixed(1)} | ${J.worst.filter((x) => x.long_s).slice(0, 3).map((x) => `${x.slug}: ${x.examples.slice(0, 3).join(', ')}`).join('; ') || '–'} |`);
+  }
+
+  // ---- 7. digits ----
+  const mText = ok.filter((s) => s.engine === MIN && s.metric);
+  const un = mText.flatMap(unchecked);
+  json.digits = { unchecked_could_be_silent: un.filter(canBeSilent), visibly_garbled_unchecked: un.filter((u) => !canBeSilent(u)).map((u) => u.key) };
+  out.push('\n## 7. Number misreads (the #5186 measure)\n');
+  out.push(`Silent misreads = a printed number read as another number, verified off the image (digitcheck.jsonl; MinerU-only candidates in mineru-digitcheck.jsonl, where \`split\` = digits right but spaced apart by the engine). ALL cell: MinerU ${ALL.mineru.silent_misreads} / ${ALL.mineru.numbers_printed} (${pct(ALL.mineru.silent_rate, 2)}), lite ${ALL.lite.silent_misreads} / ${ALL.lite.numbers_printed} (${pct(ALL.lite.silent_rate, 2)}), Archive ${ALL.archive.silent_misreads} / ${ALL.archive.numbers_printed} (${pct(ALL.archive.silent_rate, 2)}). Candidates that could still be silent and are unchecked: ${json.digits.unchecked_could_be_silent.length}${json.digits.unchecked_could_be_silent.length ? ` — ${json.digits.unchecked_could_be_silent.map((u) => u.key).join('; ')}` : ''}. Visibly garbled numbers in MinerU's text (o for 0, i for 1 — not silent, not in the rate): ${json.digits.visibly_garbled_unchecked.length}.\n`);
+
+  // ---- 8. by eye ----
+  const sorted = [...mText].sort((a, b) => a.metric.cer - b.metric.cer);
+  json.best = sorted.slice(0, 5).map((s) => ({ slug: s.slug, cer: s.metric.cer, lite: get(s.slug, LITE)?.metric?.cer ?? null }));
+  json.worst = sorted.slice(-5).reverse().map((s) => ({ slug: s.slug, cer: s.metric.cer, len_ratio: s.metric.len_ratio, lite: get(s.slug, LITE)?.metric?.cer ?? null }));
+  out.push('## 8. Pages to read by eye\n');
+  out.push(`- best five, MinerU: ${json.best.map((x) => `${x.slug} (${pct(x.cer, 2)}; lite ${pct(x.lite, 2)})`).join('; ')}`);
+  out.push(`- worst five, MinerU: ${json.worst.map((x) => `${x.slug} (${pct(x.cer, 1)}; lite ${pct(x.lite, 1)}; len ratio ${x.len_ratio})`).join('; ')}`);
+  // OMISSION: MinerU's pipeline backend files footnotes as `page_footnote` in middle.json's discarded_blocks, beside
+  // the running head, so the markdown the worker keeps has none. A page where MinerU emits < 80% of the reference's
+  // words while the Archive text (which keeps footnotes) emits ≥ 90% is counted here; the by-eye rows say which are footnotes.
+  json.omission = mText.filter((s) => s.metric.len_ratio < 0.8 && (get(s.slug, IA)?.metric?.len_ratio ?? 0) >= 0.9).map((s) => ({ slug: s.slug, cer: s.metric.cer, len_ratio: s.metric.len_ratio, archive_len_ratio: get(s.slug, IA).metric.len_ratio }));
+  out.push(`- pages where MinerU emits < 80% of the reference's words and the Archive text ≥ 90%: ${json.omission.length} of ${mText.length} — ${json.omission.map((x) => `${x.slug} (${pct(x.len_ratio, 0)} of words, CER ${pct(x.cer, 1)})`).join('; ')}`);
+  const failedM = ok.filter((s) => s.engine === MIN && !s.metric);
+  out.push(`- MinerU failed reads: ${failedM.length ? failedM.map((s) => `${s.slug} (${s.outcome}${s.shadow_metric ? `, CER of the kept text ${pct(s.shadow_metric.cer, 1)}` : ''})`).join('; ') : 'none'}`);
+  const byEye = F(`${A.suffix}-arm-byeye.jsonl`);
+  if (fs.existsSync(byEye)) {
+    out.push('\n### Read from image\n'); out.push('| page | CER (MinerU / lite) | error kind | what the image shows |\n|---|---|---|---|');
+    json.by_eye = readJsonl(byEye);
+    for (const b of json.by_eye) out.push(`| ${b.slug} | ${b.cer} | ${b.kind} | ${b.note} (*read from image*) |`);
+  }
+  if (MK !== 'mineru') {
+    // ---- 9. before / after: the preregistered arm vs this one, same pages ----
+    const before = engStats(ok.filter((s) => s.engine === MIN0)), after = ALL.mineru;
+    const pairsB = [...new Set(ok.map((s) => s.slug))].map((sl) => [get(sl, MIN0), get(sl, LITE)]).filter(([a, b]) => a?.metric && b?.metric).map(([a, b]) => a.metric.cer - b.metric.cer);
+    const winsB = [pairsB.filter((x) => x <= -TIE).length, pairsB.filter((x) => x >= TIE).length];
+    const fnRow = (sl) => mRows.find((o) => o.slug === sl && o.run_id === A.run_id);
+    const omB = ok.filter((s) => s.engine === MIN0 && s.metric && s.metric.len_ratio < 0.8 && (get(s.slug, IA)?.metric?.len_ratio ?? 0) >= 0.9);
+    json.before_after = { before: { catastrophic_rate: before.catastrophic_rate, cer_gt_half: before.cer_gt_half, median_cer: before.median_cer, pooled_cer: before.pooled_cer, paired_median_delta: med(pairsB), mineru_better: winsB[0], lite_better: winsB[1] },
+      after: { catastrophic_rate: after.catastrophic_rate, cer_gt_half: after.cer_gt_half, median_cer: after.median_cer, pooled_cer: after.pooled_cer, paired_median_delta: ALL.median_delta, mineru_better: ALL.mineru_better, lite_better: ALL.lite_better },
+      omission_pages: omB.map((s) => ({ slug: s.slug, cer_before: s.metric.cer, cer_after: get(s.slug, MIN)?.metric?.cer ?? null, len_before: s.metric.len_ratio, len_after: get(s.slug, MIN)?.metric?.len_ratio ?? null, footnotes_appended: fnRow(s.slug)?.footnotes_appended ?? null })),
+      pages_with_footnotes_appended: mRows.filter((o) => o.run_id === A.run_id && o.footnotes_appended > 0).length };
+    const BA = json.before_after;
+    out.push('\n## 9. Before / after the footnote step (ALL cell, same pages)\n');
+    out.push('| | catastrophic | text with CER > 50% | median CER | pooled CER | paired vs lite: MinerU better / lite better | paired median Δ (pp) |\n|---|---|---|---|---|---|---|');
+    for (const [k, x] of [['preregistered arm (no footnotes)', BA.before], ['this arm (footnotes appended)', BA.after]]) out.push(`| ${k} | ${pct(x.catastrophic_rate)} | ${x.cer_gt_half} | ${pct(x.median_cer, 2)} | ${pct(x.pooled_cer, 2)} | ${x.mineru_better} / ${x.lite_better} | ${pp(x.paired_median_delta)} |`);
+    out.push(`\nPages where the step appended at least one footnote: ${BA.pages_with_footnotes_appended} of ${mRows.filter((o) => o.run_id === A.run_id).length}.\n`);
+    out.push('| omission page (preregistered arm) | CER before → after | share of reference words before → after | footnotes appended |\n|---|---|---|---|');
+    for (const x of BA.omission_pages) out.push(`| ${x.slug} | ${pct(x.cer_before, 1)} → ${pct(x.cer_after, 1)} | ${pct(x.len_before, 0)} → ${pct(x.len_after, 0)} | ${x.footnotes_appended ?? '–'} |`);
+  }
+  const base = F(`${A.suffix}-arm-${argEq('--date', new Date().toISOString().slice(0, 10))}`);
+  fs.writeFileSync(`${base}.json`, JSON.stringify(json, null, 2) + '\n');
+  fs.writeFileSync(`${base}.md`, out.join('\n') + '\n');
+  console.log(out.join('\n'));
+}
+
 // withMongo kills a script after 300 s by default; the Wikisource and Gutenberg walks take longer.
 const LONG = { timeoutMs: 4 * 3600 * 1000 };
 async function main() {
@@ -1046,8 +1521,11 @@ async function main() {
   if (STAGE === 'queue') return withMongo(stageQueue, LONG);
   if (STAGE === 'digitpack') return stageDigitpack();
   if (STAGE === 'rescue') return withMongo(stageRescue, LONG);
+  if (STAGE === 'ocr' && ARM.local) return stageOcrMineru();
   if (STAGE === 'ocr') return withMongo(stageOcr, LONG);
   if (STAGE === 'score') return stageScore();
+  if (STAGE === 'flash-report') return stageFlashReport();
+  if (STAGE === 'mineru-report') return stageMineruReport();
   throw new Error(`unknown stage ${STAGE}`);
 }
 await main();

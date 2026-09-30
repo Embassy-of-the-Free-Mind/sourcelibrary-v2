@@ -1,0 +1,1505 @@
+{
+  "issue": 5182,
+  "ladder_issue": 3389,
+  "scorer": "en-ocr-ref-scorer@1",
+  "normaliser": "en-ocr-ref-normalise@3",
+  "post": "mineru-ocr-worker sanitize() (verbatim) then en-ocr-ref-normalise@3",
+  "runs": {
+    "mineru-fn": {
+      "run_id": "en-mineru-fn-5182-2026-09",
+      "rows": 122,
+      "text_rows": 122,
+      "versions": [
+        "mineru, version 3.4.0"
+      ],
+      "median_ms_per_page": 22413
+    },
+    "mineru-repeat": {
+      "run_id": "en-mineru-repeat-5182-2026-09",
+      "rows": 20,
+      "text_rows": 20,
+      "versions": [
+        "mineru, version 3.4.0"
+      ],
+      "median_ms_per_page": 22984
+    }
+  },
+  "floor": {
+    "pages": 20,
+    "outcome_flips": 0,
+    "both_text": 20,
+    "identical_text": 12,
+    "median_abs_delta": 0,
+    "max_abs_delta": 0.001,
+    "beyond_tie": 0
+  },
+  "cells": [
+    {
+      "id": "S1",
+      "label": "S1 pre-1880 prose",
+      "books": 24,
+      "grade": "exploratory",
+      "mineru": {
+        "pages": 24,
+        "text": 24,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0084,
+        "pooled_cer": 0.018221376121838457,
+        "pooled_ci": [
+          0.010073096808700303,
+          0.02749956579632953
+        ],
+        "numbers_printed": 7,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 24,
+        "text": 22,
+        "refusals": 2,
+        "failed": 2,
+        "failed_kinds": {
+          "refusal": 2
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 2,
+        "catastrophic_rate": 0.08333333333333333,
+        "median_cer": 0.0011,
+        "pooled_cer": 0.006935753024614101,
+        "pooled_ci": [
+          0.0022103303862261517,
+          0.01284796573875803
+        ],
+        "numbers_printed": 7,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 24,
+        "text": 22,
+        "refusals": 2,
+        "failed": 2,
+        "failed_kinds": {
+          "refusal": 2
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 2,
+        "catastrophic_rate": 0.08333333333333333,
+        "median_cer": 0.00075,
+        "pooled_cer": 0.005307940572404044,
+        "pooled_ci": [
+          0.0009595087315294569,
+          0.010577770654699895
+        ],
+        "numbers_printed": 7,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "archive": {
+        "pages": 24,
+        "text": 24,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 1,
+        "catastrophic": 1,
+        "catastrophic_rate": 0.041666666666666664,
+        "median_cer": 0.00965,
+        "pooled_cer": 0.06178455756916459,
+        "pooled_ci": [
+          0.010875424821282082,
+          0.15301924677995984
+        ],
+        "numbers_printed": 7,
+        "silent_misreads": 1,
+        "silent_rate": 0.14285714285714285,
+        "unchecked_candidates": 0
+      },
+      "pairs": 22,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 2,
+        "both_failed": 0
+      },
+      "mineru_better": 1,
+      "lite_better": 12,
+      "ties": 9,
+      "sign_p": 0.003417968750000001,
+      "median_delta": 0.0040999999999999995,
+      "median_delta_ci": [
+        0.0005499999999999999,
+        0.017799999999999996
+      ]
+    },
+    {
+      "id": "S2",
+      "label": "S2 pre-1880 date-dense",
+      "books": 20,
+      "grade": "exploratory",
+      "mineru": {
+        "pages": 20,
+        "text": 20,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.03615,
+        "pooled_cer": 0.03903362686499064,
+        "pooled_ci": [
+          0.019627007607776838,
+          0.06529889071487263
+        ],
+        "numbers_printed": 236,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 20,
+        "text": 17,
+        "refusals": 3,
+        "failed": 3,
+        "failed_kinds": {
+          "refusal": 3
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 3,
+        "catastrophic_rate": 0.15,
+        "median_cer": 0.0045,
+        "pooled_cer": 0.01313912661838929,
+        "pooled_ci": [
+          0.004283631060882246,
+          0.0241675323965225
+        ],
+        "numbers_printed": 165,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 20,
+        "text": 15,
+        "refusals": 5,
+        "failed": 5,
+        "failed_kinds": {
+          "refusal": 5
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 5,
+        "catastrophic_rate": 0.25,
+        "median_cer": 0.0011,
+        "pooled_cer": 0.011235955056179775,
+        "pooled_ci": [
+          0.001189390635531063,
+          0.024105303810504634
+        ],
+        "numbers_printed": 147,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 1
+      },
+      "archive": {
+        "pages": 20,
+        "text": 20,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.02175,
+        "pooled_cer": 0.042501254733768305,
+        "pooled_ci": [
+          0.022618054728146472,
+          0.06721742395794217
+        ],
+        "numbers_printed": 236,
+        "silent_misreads": 1,
+        "silent_rate": 0.00423728813559322,
+        "unchecked_candidates": 0
+      },
+      "pairs": 17,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 3,
+        "both_failed": 0
+      },
+      "mineru_better": 3,
+      "lite_better": 7,
+      "ties": 7,
+      "sign_p": 0.3437500000000002,
+      "median_delta": 0.0017000000000000001,
+      "median_delta_ci": [
+        0,
+        0.025900000000000003
+      ]
+    },
+    {
+      "id": "S3",
+      "label": "S3 1880–1930 prose",
+      "books": 41,
+      "grade": "directional",
+      "mineru": {
+        "pages": 41,
+        "text": 41,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0016,
+        "pooled_cer": 0.0054016892555490085,
+        "pooled_ci": [
+          0.0032805044308111793,
+          0.008122185927430034
+        ],
+        "numbers_printed": 12,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 41,
+        "text": 36,
+        "refusals": 5,
+        "failed": 5,
+        "failed_kinds": {
+          "refusal": 5
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 5,
+        "catastrophic_rate": 0.12195121951219512,
+        "median_cer": 0.0010999999999999998,
+        "pooled_cer": 0.00336661693255289,
+        "pooled_ci": [
+          0.0018390452290186013,
+          0.0051611718247772985
+        ],
+        "numbers_printed": 12,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 41,
+        "text": 35,
+        "refusals": 5,
+        "failed": 6,
+        "failed_kinds": {
+          "error": 1,
+          "refusal": 5
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 6,
+        "catastrophic_rate": 0.14634146341463414,
+        "median_cer": 0.0015,
+        "pooled_cer": 0.0033293151943057228,
+        "pooled_ci": [
+          0.0018230647089957461,
+          0.0053678620901954745
+        ],
+        "numbers_printed": 12,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "archive": {
+        "pages": 41,
+        "text": 41,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0038,
+        "pooled_cer": 0.006236495776861127,
+        "pooled_ci": [
+          0.00417934523591304,
+          0.008776507424450875
+        ],
+        "numbers_printed": 12,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "pairs": 36,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 5,
+        "both_failed": 0
+      },
+      "mineru_better": 4,
+      "lite_better": 9,
+      "ties": 23,
+      "sign_p": 0.2668457031250001,
+      "median_delta": 0,
+      "median_delta_ci": [
+        0,
+        0.001
+      ]
+    },
+    {
+      "id": "S4",
+      "label": "S4 1880–1930 date-dense",
+      "books": 29,
+      "grade": "exploratory",
+      "mineru": {
+        "pages": 29,
+        "text": 29,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0048,
+        "pooled_cer": 0.01659473807761065,
+        "pooled_ci": [
+          0.004666403609600439,
+          0.03648196292331481
+        ],
+        "numbers_printed": 564,
+        "silent_misreads": 2,
+        "silent_rate": 0.0035460992907801418,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 29,
+        "text": 23,
+        "refusals": 6,
+        "failed": 6,
+        "failed_kinds": {
+          "refusal": 6
+        },
+        "cer_gt_half": 1,
+        "catastrophic": 7,
+        "catastrophic_rate": 0.2413793103448276,
+        "median_cer": 0.0051,
+        "pooled_cer": 0.036646515769248794,
+        "pooled_ci": [
+          0.004676970173685665,
+          0.10454605004585353
+        ],
+        "numbers_printed": 505,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 29,
+        "text": 22,
+        "refusals": 7,
+        "failed": 7,
+        "failed_kinds": {
+          "refusal": 7
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 7,
+        "catastrophic_rate": 0.2413793103448276,
+        "median_cer": 0.0057,
+        "pooled_cer": 0.007325106926896416,
+        "pooled_ci": [
+          0.0036098809998530864,
+          0.01184457605084501
+        ],
+        "numbers_printed": 386,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 1
+      },
+      "archive": {
+        "pages": 29,
+        "text": 29,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0082,
+        "pooled_cer": 0.021343830693945357,
+        "pooled_ci": [
+          0.009042135347896576,
+          0.040596536491927605
+        ],
+        "numbers_printed": 564,
+        "silent_misreads": 9,
+        "silent_rate": 0.015957446808510637,
+        "unchecked_candidates": 0
+      },
+      "pairs": 23,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 6,
+        "both_failed": 0
+      },
+      "mineru_better": 2,
+      "lite_better": 6,
+      "ties": 15,
+      "sign_p": 0.2890625,
+      "median_delta": 0.0007,
+      "median_delta_ci": [
+        0,
+        0.0018999999999999998
+      ]
+    },
+    {
+      "id": "pre1820",
+      "label": "printed before 1820 (S1+S2)",
+      "books": 19,
+      "grade": "exploratory",
+      "mineru": {
+        "pages": 19,
+        "text": 19,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0448,
+        "pooled_cer": 0.04058694973462379,
+        "pooled_ci": [
+          0.02998289566354764,
+          0.04929801605545143
+        ],
+        "numbers_printed": 112,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 19,
+        "text": 18,
+        "refusals": 1,
+        "failed": 1,
+        "failed_kinds": {
+          "refusal": 1
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 1,
+        "catastrophic_rate": 0.05263157894736842,
+        "median_cer": 0.0075,
+        "pooled_cer": 0.0186207541873304,
+        "pooled_ci": [
+          0.0077833345072902725,
+          0.02928943413372479
+        ],
+        "numbers_printed": 102,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 19,
+        "text": 15,
+        "refusals": 4,
+        "failed": 4,
+        "failed_kinds": {
+          "refusal": 4
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 4,
+        "catastrophic_rate": 0.21052631578947367,
+        "median_cer": 0.0017,
+        "pooled_cer": 0.017469709777402084,
+        "pooled_ci": [
+          0.004306014066312616,
+          0.030625785724263166
+        ],
+        "numbers_printed": 84,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "archive": {
+        "pages": 19,
+        "text": 19,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0471,
+        "pooled_cer": 0.05063434848011807,
+        "pooled_ci": [
+          0.03451516722841587,
+          0.06580421146953405
+        ],
+        "numbers_printed": 112,
+        "silent_misreads": 1,
+        "silent_rate": 0.008928571428571428,
+        "unchecked_candidates": 0
+      },
+      "pairs": 18,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 1,
+        "both_failed": 0
+      },
+      "mineru_better": 1,
+      "lite_better": 14,
+      "ties": 3,
+      "sign_p": 0.0009765625000000009,
+      "median_delta": 0.02055,
+      "median_delta_ci": [
+        0.00715,
+        0.0372
+      ]
+    },
+    {
+      "id": "1820-1879",
+      "label": "1820–1879 (S1+S2)",
+      "books": 25,
+      "grade": "exploratory",
+      "mineru": {
+        "pages": 25,
+        "text": 25,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0019,
+        "pooled_cer": 0.02075517860055456,
+        "pooled_ci": [
+          0.005020628233393726,
+          0.0448339676664688
+        ],
+        "numbers_printed": 131,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 25,
+        "text": 21,
+        "refusals": 4,
+        "failed": 4,
+        "failed_kinds": {
+          "refusal": 4
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 4,
+        "catastrophic_rate": 0.16,
+        "median_cer": 0.0011,
+        "pooled_cer": 0.0034622312676912998,
+        "pooled_ci": [
+          0.0013050787471244028,
+          0.0072074618428490675
+        ],
+        "numbers_printed": 70,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 25,
+        "text": 22,
+        "refusals": 3,
+        "failed": 3,
+        "failed_kinds": {
+          "refusal": 3
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 3,
+        "catastrophic_rate": 0.12,
+        "median_cer": 0.00025,
+        "pooled_cer": 0.0025194156804733726,
+        "pooled_ci": [
+          0.00048755713560182833,
+          0.00666073681815361
+        ],
+        "numbers_printed": 70,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 1
+      },
+      "archive": {
+        "pages": 25,
+        "text": 25,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 1,
+        "catastrophic": 1,
+        "catastrophic_rate": 0.04,
+        "median_cer": 0.0038,
+        "pooled_cer": 0.05256075680965585,
+        "pooled_ci": [
+          0.006178566909873054,
+          0.14296378401610604
+        ],
+        "numbers_printed": 131,
+        "silent_misreads": 1,
+        "silent_rate": 0.007633587786259542,
+        "unchecked_candidates": 0
+      },
+      "pairs": 21,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 4,
+        "both_failed": 0
+      },
+      "mineru_better": 3,
+      "lite_better": 5,
+      "ties": 13,
+      "sign_p": 0.7265625000000002,
+      "median_delta": 0.0006,
+      "median_delta_ci": [
+        0,
+        0.0011000000000000038
+      ]
+    },
+    {
+      "id": "pre1880",
+      "label": "pre-1880 (S1+S2)",
+      "books": 44,
+      "grade": "directional",
+      "mineru": {
+        "pages": 44,
+        "text": 44,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.010849999999999999,
+        "pooled_cer": 0.02904569238618431,
+        "pooled_ci": [
+          0.017289003701591348,
+          0.04440236975508459
+        ],
+        "numbers_printed": 243,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 44,
+        "text": 39,
+        "refusals": 5,
+        "failed": 5,
+        "failed_kinds": {
+          "refusal": 5
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 5,
+        "catastrophic_rate": 0.11363636363636363,
+        "median_cer": 0.002,
+        "pooled_cer": 0.009958827932841407,
+        "pooled_ci": [
+          0.0045259272705270165,
+          0.01598080729951887
+        ],
+        "numbers_printed": 172,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 44,
+        "text": 37,
+        "refusals": 7,
+        "failed": 7,
+        "failed_kinds": {
+          "refusal": 7
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 7,
+        "catastrophic_rate": 0.1590909090909091,
+        "median_cer": 0.001,
+        "pooled_cer": 0.007972748762975906,
+        "pooled_ci": [
+          0.0023519727171164816,
+          0.013946417213508944
+        ],
+        "numbers_printed": 154,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 1
+      },
+      "archive": {
+        "pages": 44,
+        "text": 44,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 1,
+        "catastrophic": 1,
+        "catastrophic_rate": 0.022727272727272728,
+        "median_cer": 0.01245,
+        "pooled_cer": 0.051755437168519595,
+        "pooled_ci": [
+          0.022618275261102418,
+          0.10584762780345003
+        ],
+        "numbers_printed": 243,
+        "silent_misreads": 2,
+        "silent_rate": 0.00823045267489712,
+        "unchecked_candidates": 0
+      },
+      "pairs": 39,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 5,
+        "both_failed": 0
+      },
+      "mineru_better": 4,
+      "lite_better": 19,
+      "ties": 16,
+      "sign_p": 0.002599477767944334,
+      "median_delta": 0.0019,
+      "median_delta_ci": [
+        0.0006,
+        0.0169
+      ]
+    },
+    {
+      "id": "1880-1930",
+      "label": "1880–1930 (S3+S4)",
+      "books": 70,
+      "grade": "decision",
+      "mineru": {
+        "pages": 70,
+        "text": 70,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.00245,
+        "pooled_cer": 0.01072369946166857,
+        "pooled_ci": [
+          0.004792441830558461,
+          0.02095766137399258
+        ],
+        "numbers_printed": 576,
+        "silent_misreads": 2,
+        "silent_rate": 0.003472222222222222,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 70,
+        "text": 59,
+        "refusals": 11,
+        "failed": 11,
+        "failed_kinds": {
+          "refusal": 11
+        },
+        "cer_gt_half": 1,
+        "catastrophic": 12,
+        "catastrophic_rate": 0.17142857142857143,
+        "median_cer": 0.0022,
+        "pooled_cer": 0.018324276507013775,
+        "pooled_ci": [
+          0.003951122219697544,
+          0.053407343509732585
+        ],
+        "numbers_printed": 517,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 70,
+        "text": 57,
+        "refusals": 12,
+        "failed": 13,
+        "failed_kinds": {
+          "error": 1,
+          "refusal": 12
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 13,
+        "catastrophic_rate": 0.18571428571428572,
+        "median_cer": 0.0022,
+        "pooled_cer": 0.005078272096401097,
+        "pooled_ci": [
+          0.0031976952075437,
+          0.007650527812856319
+        ],
+        "numbers_printed": 398,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 1
+      },
+      "archive": {
+        "pages": 70,
+        "text": 70,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.005050000000000001,
+        "pooled_cer": 0.013419649526491573,
+        "pooled_ci": [
+          0.006961355214399153,
+          0.023155696411233443
+        ],
+        "numbers_printed": 576,
+        "silent_misreads": 9,
+        "silent_rate": 0.015625,
+        "unchecked_candidates": 0
+      },
+      "pairs": 59,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 11,
+        "both_failed": 0
+      },
+      "mineru_better": 6,
+      "lite_better": 15,
+      "ties": 38,
+      "sign_p": 0.07835388183593743,
+      "median_delta": 0,
+      "median_delta_ci": [
+        0,
+        0.0011
+      ]
+    },
+    {
+      "id": "ALL",
+      "label": "ALL",
+      "books": 114,
+      "grade": "decision",
+      "mineru": {
+        "pages": 114,
+        "text": 114,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0045,
+        "pooled_cer": 0.018415756754602695,
+        "pooled_ci": [
+          0.01134168380382626,
+          0.026696984154375564
+        ],
+        "numbers_printed": 819,
+        "silent_misreads": 2,
+        "silent_rate": 0.002442002442002442,
+        "unchecked_candidates": 0
+      },
+      "lite": {
+        "pages": 114,
+        "text": 98,
+        "refusals": 16,
+        "failed": 16,
+        "failed_kinds": {
+          "refusal": 16
+        },
+        "cer_gt_half": 1,
+        "catastrophic": 17,
+        "catastrophic_rate": 0.14912280701754385,
+        "median_cer": 0.002,
+        "pooled_cer": 0.014637968002638958,
+        "pooled_ci": [
+          0.005655042412818096,
+          0.03818990642736616
+        ],
+        "numbers_printed": 689,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 0
+      },
+      "flash": {
+        "pages": 114,
+        "text": 94,
+        "refusals": 19,
+        "failed": 20,
+        "failed_kinds": {
+          "error": 1,
+          "refusal": 19
+        },
+        "cer_gt_half": 0,
+        "catastrophic": 20,
+        "catastrophic_rate": 0.17543859649122806,
+        "median_cer": 0.0014,
+        "pooled_cer": 0.00630231229664953,
+        "pooled_ci": [
+          0.003882997348806963,
+          0.010102879389166479
+        ],
+        "numbers_printed": 552,
+        "silent_misreads": 0,
+        "silent_rate": 0,
+        "unchecked_candidates": 2
+      },
+      "archive": {
+        "pages": 114,
+        "text": 114,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 1,
+        "catastrophic": 1,
+        "catastrophic_rate": 0.008771929824561403,
+        "median_cer": 0.00595,
+        "pooled_cer": 0.029514027257511757,
+        "pooled_ci": [
+          0.01524215233088613,
+          0.051482763811530934
+        ],
+        "numbers_printed": 819,
+        "silent_misreads": 11,
+        "silent_rate": 0.013431013431013432,
+        "unchecked_candidates": 0
+      },
+      "pairs": 98,
+      "excluded": {
+        "mineru_failed_only": 0,
+        "lite_failed_only": 16,
+        "both_failed": 0
+      },
+      "mineru_better": 10,
+      "lite_better": 34,
+      "ties": 54,
+      "sign_p": 0.0003881309029338813,
+      "median_delta": 0.0007999999999999999,
+      "median_delta_ci": [
+        0,
+        0.0015
+      ]
+    }
+  ],
+  "ladder": {
+    "lite_refused": {
+      "pages": 16,
+      "slugs": [
+        "en-69ae90-ws101",
+        "en-6ab6d1-ws76",
+        "en-695434-ws122",
+        "en-69b633-ws166",
+        "en-6a31b2-ws117",
+        "en-6ab236-pg50170p76",
+        "en-6a58a3-pg35687p276",
+        "en-6ab237-pg67996p297",
+        "en-699079-pg74335p860",
+        "en-69af0a-pg77434p252",
+        "en-6a98b9-pg48770p349",
+        "en-69e41f-ws98",
+        "en-6ab243-ws214",
+        "en-699079-ws170",
+        "en-6ab6da-ws107",
+        "en-6a4a33-pg47110p397"
+      ],
+      "mineru": {
+        "pages": 16,
+        "text": 16,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.00205,
+        "pooled_cer": 0.013876339228088293,
+        "pooled_ci": [
+          0.0025750732905475003,
+          0.02626712221421183
+        ],
+        "numbers_printed": 130,
+        "silent_misreads": 2,
+        "silent_rate": 0.015384615384615385,
+        "unchecked_candidates": 0
+      },
+      "ratio_to_lite_pooled": 0.9479689548157669
+    },
+    "flash_refused": {
+      "pages": 19,
+      "slugs": [
+        "en-69ae90-ws101",
+        "en-6ab6d1-ws76",
+        "en-695434-ws122",
+        "en-69b633-ws166",
+        "en-6a499d-ws169",
+        "en-6a31b2-ws117",
+        "en-6ab236-pg50170p76",
+        "en-6a0b25-pg77434p155",
+        "en-6a58a3-pg35687p276",
+        "en-699079-pg74335p860",
+        "en-69af0a-pg77434p252",
+        "en-6a0b25-pg77434p282",
+        "en-6a98b9-pg48770p349",
+        "en-69e41f-ws98",
+        "en-699079-ws170",
+        "en-6ab6da-ws107",
+        "en-69e009-ws100",
+        "en-6a4a33-pg47110p397",
+        "en-699079-pg41110p268"
+      ],
+      "mineru": {
+        "pages": 19,
+        "text": 19,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.0024,
+        "pooled_cer": 0.02102707170903079,
+        "pooled_ci": [
+          0.010071626553966904,
+          0.03217880015684224
+        ],
+        "numbers_printed": 267,
+        "silent_misreads": 2,
+        "silent_rate": 0.00749063670411985,
+        "unchecked_candidates": 0
+      },
+      "ratio_to_lite_pooled": 1.4364747692603232
+    },
+    "both_refused": {
+      "pages": 14,
+      "slugs": [
+        "en-69ae90-ws101",
+        "en-6ab6d1-ws76",
+        "en-695434-ws122",
+        "en-69b633-ws166",
+        "en-6a31b2-ws117",
+        "en-6ab236-pg50170p76",
+        "en-6a58a3-pg35687p276",
+        "en-699079-pg74335p860",
+        "en-69af0a-pg77434p252",
+        "en-6a98b9-pg48770p349",
+        "en-69e41f-ws98",
+        "en-699079-ws170",
+        "en-6ab6da-ws107",
+        "en-6a4a33-pg47110p397"
+      ],
+      "mineru": {
+        "pages": 14,
+        "text": 14,
+        "refusals": 0,
+        "failed": 0,
+        "failed_kinds": {},
+        "cer_gt_half": 0,
+        "catastrophic": 0,
+        "catastrophic_rate": 0,
+        "median_cer": 0.00205,
+        "pooled_cer": 0.01474149731494156,
+        "pooled_ci": [
+          0.002561374472947945,
+          0.028449393638929142
+        ],
+        "numbers_printed": 130,
+        "silent_misreads": 2,
+        "silent_rate": 0.015384615384615385,
+        "unchecked_candidates": 0
+      },
+      "ratio_to_lite_pooled": 1.0070726560055288
+    }
+  },
+  "digits": {
+    "unchecked_could_be_silent": [],
+    "visibly_garbled_unchecked": [
+      "en-69ae66-ws159|69|7",
+      "en-69ae66-ws159|20|2o",
+      "en-69ae66-ws159|150|15o",
+      "en-6991eb-ws75|39|7",
+      "en-69afd2-ws125|500|50o",
+      "en-69afd2-ws125|700|7oo",
+      "en-69afd2-ws125|200|2oo",
+      "en-69afd2-ws125|400|4oo",
+      "en-69afd2-ws125|300|3oo",
+      "en-69d8ca-ws596|117|i17",
+      "en-699200-ws404|1440|144o",
+      "en-699066-ws261|20|2o",
+      "en-699069-pg31511p363|10|1o",
+      "en-699069-pg31511p363|1650|165o",
+      "en-699069-pg31511p363|1650|165o",
+      "en-6a58a3-pg35687p276|10|1o",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|12|i2",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|26",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-6a58a3-pg35687p276|10|io",
+      "en-69dc24-pg57292p38|040|04o",
+      "en-69dc24-pg57292p38|000|ooo",
+      "en-69dc24-pg57292p38|000|ooo",
+      "en-69dc24-pg57292p38|000|ooo",
+      "en-69dc24-pg57292p38|720|72o",
+      "en-69dc24-pg57292p38|320|32o",
+      "en-69dc24-pg57292p38|000|ooo",
+      "en-6a0b25-pg77434p282|1800|180o",
+      "en-6a98b9-pg48770p349|12|5",
+      "en-6a98b9-pg48770p349|13|0",
+      "en-6a98b9-pg48770p349|12|8",
+      "en-6aa1d2-ws352|2000|2ooo",
+      "en-69e783-pg74741p305|20|2o",
+      "en-69e783-pg74741p305|160|16o"
+    ]
+  },
+  "long_s": {
+    "pre1820": {
+      "pages": 19,
+      "pages_ge3": 12,
+      "per_1000": 81.27633955448525,
+      "worst": [
+        {
+          "slug": "en-6a0b25-pg77434p155",
+          "long_s": 95,
+          "examples": [
+            "ftand→stand",
+            "alfo→also",
+            "largeft→largest",
+            "ftill→still",
+            "leffer→lesser"
+          ]
+        },
+        {
+          "slug": "en-69af0a-pg77434p252",
+          "long_s": 67,
+          "examples": [
+            "fome→some",
+            "adminiftred→administred",
+            "fhall→shall",
+            "fame→same",
+            "themfelves→themselves"
+          ]
+        },
+        {
+          "slug": "en-6a0b25-pg77434p282",
+          "long_s": 66,
+          "examples": [
+            "fo→so",
+            "reft→rest",
+            "fame→same",
+            "lefs→less",
+            "fet→set"
+          ]
+        },
+        {
+          "slug": "en-695910-ws125",
+          "long_s": 62,
+          "examples": [
+            "fometimes→sometimes",
+            "fail→sail",
+            "fecond→second",
+            "ftormy→stormy",
+            "fand→sand"
+          ]
+        },
+        {
+          "slug": "en-699066-ws261",
+          "long_s": 56,
+          "examples": [
+            "brimftone→brimstone",
+            "manifeft→manifest",
+            "expreffed→expressed",
+            "fignifieth→signifieth",
+            "deftruction→destruction"
+          ]
+        }
+      ]
+    },
+    "1820-1879": {
+      "pages": 25,
+      "pages_ge3": 0,
+      "per_1000": 0,
+      "worst": [
+        {
+          "slug": "en-69e41e-ws298",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69b63f-ws179",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-6a98bb-ws214",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69906a-ws249",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-6aa35e-ws29",
+          "long_s": 0,
+          "examples": []
+        }
+      ]
+    },
+    "1880-1930": {
+      "pages": 70,
+      "pages_ge3": 0,
+      "per_1000": 0,
+      "worst": [
+        {
+          "slug": "en-6aa1d4-ws78",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69b99f-ws176",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69e806-ws11",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69ae66-ws159",
+          "long_s": 0,
+          "examples": []
+        },
+        {
+          "slug": "en-69ae90-ws101",
+          "long_s": 0,
+          "examples": []
+        }
+      ]
+    }
+  },
+  "worst": [
+    {
+      "slug": "en-6aa1d5-ws52",
+      "cer": 0.3038,
+      "len_ratio": 0.7798,
+      "lite": 0.0518
+    },
+    {
+      "slug": "en-699200-ws404",
+      "cer": 0.2179,
+      "len_ratio": 0.9905,
+      "lite": 0.0013
+    },
+    {
+      "slug": "en-6a58a3-pg35687p276",
+      "cer": 0.1033,
+      "len_ratio": 0.964,
+      "lite": null
+    },
+    {
+      "slug": "en-69ee64-ws183",
+      "cer": 0.1016,
+      "len_ratio": 1.0679,
+      "lite": 0
+    },
+    {
+      "slug": "en-6aa734-pg72452p172",
+      "cer": 0.0654,
+      "len_ratio": 0.9812,
+      "lite": 0
+    }
+  ],
+  "best": [
+    {
+      "slug": "en-6aa1d4-ws78",
+      "cer": 0,
+      "lite": 0
+    },
+    {
+      "slug": "en-69e41e-ws298",
+      "cer": 0,
+      "lite": 0
+    },
+    {
+      "slug": "en-6ab22e-ws55",
+      "cer": 0,
+      "lite": 0
+    },
+    {
+      "slug": "en-6ab6d1-ws76",
+      "cer": 0,
+      "lite": null
+    },
+    {
+      "slug": "en-69d149-ws303",
+      "cer": 0,
+      "lite": 0
+    }
+  ],
+  "ref_dropped": [
+    {
+      "slug": "en-6ab6d1-ws63",
+      "why": "by eye 2026-09-28 (#5182): image markup leaked into the reference (\"center|200px|\" before the Fig. 14 caption)"
+    },
+    {
+      "slug": "en-69bd9b-ws128",
+      "why": "by eye 2026-09-28 (#5182): the leader-dot template leaked as \"pr.5\" and replaced the printed row numbers (12.–20.) and times (10.2″ … 14.8″) of the table"
+    },
+    {
+      "slug": "en-69bd9b-pg48225p119",
+      "why": "by eye 2026-09-28 (#5182): Gutenberg cut carries the caption of the plate facing p. 118 (not on this leaf) and omits the printed table (Husband/Wife/Difference)"
+    },
+    {
+      "slug": "en-69a552-pg38870p391",
+      "why": "by eye 2026-09-28 (#5182): Gutenberg cut appends the chapter endnotes [74]-[76]; the leaf prints no footnotes (half-empty chapter-end page)"
+    },
+    {
+      "slug": "en-69ad65-pg64037p436",
+      "why": "by eye 2026-09-28 (#5182): Gutenberg renumbers the footnotes 90–94 where the page prints 49–53, and the footnote bodies are not on this reference page"
+    },
+    {
+      "slug": "en-69aec1-ws406",
+      "why": "by eye 2026-09-28 (#5182): long s is deleted in the reference, not transcribed (\"compre ion\", \"pre ent\" for compreſſion, preſent)"
+    },
+    {
+      "slug": "en-699063-ws324",
+      "why": "by eye 2026-09-28 (#5182): reference omits the four-line verse quotation (\"When 10 years had elapsed ...\") that is printed mid-page"
+    },
+    {
+      "slug": "en-695434-ws146",
+      "why": "by eye 2026-09-28 (#5182): wikilink targets leaked into the reference (\"Short Treatise on God/Book 2/3\") and the printed page numbers 70–157 are missing"
+    }
+  ],
+  "post_hoc": true,
+  "verdict": "PEER",
+  "rule": {
+    "peer": {
+      "delta_ok": true,
+      "catastrophic_ok": true
+    },
+    "fallback": {
+      "ratio_ok": true,
+      "reads_half": true
+    }
+  },
+  "omission": [
+    {
+      "slug": "en-6aa1d5-ws52",
+      "cer": 0.3038,
+      "len_ratio": 0.7798,
+      "archive_len_ratio": 1.0325
+    }
+  ],
+  "before_after": {
+    "before": {
+      "catastrophic_rate": 0.02631578947368421,
+      "cer_gt_half": 3,
+      "median_cer": 0.00665,
+      "pooled_cer": 0.06165318402805452,
+      "paired_median_delta": 0.00195,
+      "mineru_better": 10,
+      "lite_better": 49
+    },
+    "after": {
+      "catastrophic_rate": 0,
+      "cer_gt_half": 0,
+      "median_cer": 0.0045,
+      "pooled_cer": 0.018415756754602695,
+      "paired_median_delta": 0.0007999999999999999,
+      "mineru_better": 10,
+      "lite_better": 34
+    },
+    "omission_pages": [
+      {
+        "slug": "en-69ae66-ws159",
+        "cer_before": 0.5471,
+        "cer_after": 0.0113,
+        "len_before": 0.4555,
+        "len_after": 1.0021,
+        "footnotes_appended": 1
+      },
+      {
+        "slug": "en-69ae90-ws101",
+        "cer_before": 0.2746,
+        "cer_after": 0.0051,
+        "len_before": 0.7259,
+        "len_after": 1.0117,
+        "footnotes_appended": 2
+      },
+      {
+        "slug": "en-6ab22a-ws62",
+        "cer_before": 0.2349,
+        "cer_after": 0,
+        "len_before": 0.7486,
+        "len_after": 1,
+        "footnotes_appended": 2
+      },
+      {
+        "slug": "en-699249-ws259",
+        "cer_before": 0.7716,
+        "cer_after": 0.0059,
+        "len_before": 0.3636,
+        "len_after": 1.0091,
+        "footnotes_appended": 4
+      },
+      {
+        "slug": "en-6aa1d5-ws52",
+        "cer_before": 0.3038,
+        "cer_after": 0.3038,
+        "len_before": 0.7798,
+        "len_after": 0.7798,
+        "footnotes_appended": 0
+      },
+      {
+        "slug": "en-69ad66-ws43",
+        "cer_before": 0.2944,
+        "cer_after": 0.0163,
+        "len_before": 0.6959,
+        "len_after": 1.0276,
+        "footnotes_appended": 7
+      },
+      {
+        "slug": "en-69b9a2-ws132",
+        "cer_before": 0.4673,
+        "cer_after": 0,
+        "len_before": 0.5361,
+        "len_after": 1,
+        "footnotes_appended": 1
+      },
+      {
+        "slug": "en-699200-ws404",
+        "cer_before": 0.2879,
+        "cer_after": 0.2179,
+        "len_before": 0.7017,
+        "len_after": 0.9905,
+        "footnotes_appended": 2
+      },
+      {
+        "slug": "en-6a58ed-ws52",
+        "cer_before": 0.6281,
+        "cer_after": 0.0098,
+        "len_before": 0.359,
+        "len_after": 1.0256,
+        "footnotes_appended": 3
+      },
+      {
+        "slug": "en-6ab22a-ws164",
+        "cer_before": 0.3234,
+        "cer_after": 0.0016,
+        "len_before": 0.691,
+        "len_after": 0.9985,
+        "footnotes_appended": 1
+      }
+    ],
+    "pages_with_footnotes_appended": 26
+  }
+}

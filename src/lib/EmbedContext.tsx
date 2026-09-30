@@ -2,6 +2,7 @@
 
 import { createContext, useContext } from 'react';
 import { usePathname } from 'next/navigation';
+import { getRoomPrefixFromPathname, withRoomPrefix } from '@/lib/reading-rooms-paths';
 
 /**
  * EmbedContext indicates whether the page is being displayed in embedded mode.
@@ -38,6 +39,9 @@ export function useEmbedHref(): (href: string) => string {
     // — which the proxy skips and no route serves, returning 404.
     const pathname = usePathname();
     const onEmbedRoute = pathname?.startsWith('/embed/') ?? false;
+    // Self-serve reading rooms (#5266) are the same surface one namespace
+    // over: /rooms/<slug>/book/… must stay under /rooms/<slug>.
+    const roomPrefix = getRoomPrefixFromPathname(pathname);
     
     // Extract the embed prefix including tenant: /embed/bph from /embed/bph/book/...
     let embedPrefix = '/embed';
@@ -50,6 +54,7 @@ export function useEmbedHref(): (href: string) => string {
     }
 
     return (href: string) => {
+        if (roomPrefix) return withRoomPrefix(href, roomPrefix);
         if (!onEmbedRoute) return href;
         return withEmbedNamespace(href, embedPrefix);
     };

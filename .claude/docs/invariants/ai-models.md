@@ -10,6 +10,9 @@ owns the OCR-routing detail and `measurement-instruments.md` owns grounding.
 
 ## The rules
 
+- **Batch API unless the caller says realtime (#5244).** Hand-run paid OCR is
+  `scripts/batch/bulk-reocr-local.mjs` (page list, book list, one book; held books keep
+  their status); `realtime-ocr.mjs` costs ~2× and refuses to run without `--realtime`.
 - **Summary / index generation.** The enrich-worker uses `gemini-3.1-flash-lite` for
   every phase — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5),
   collection assignment (Phase 7.6). NEVER use models older than v3.

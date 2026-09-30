@@ -42,8 +42,10 @@
  * network and no spend.
  */
 import {
-  translationPromptHeader,
   buildTranslationPrompt,
+  buildBlockTranslationPrompt,
+  LEAF_BREAK_ONLY,
+  dropLeafSeamBreaches,
   sanitizeTranslationTags,
   assessTranslationHealth,
   isTranslatablePage,
@@ -54,6 +56,7 @@ import {
   contentHash,
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
+import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
@@ -126,20 +129,20 @@ export function maxOutputTokensFor(pages) {
 /**
  * The block prompt with NO continuity seed. A block of one uses the single-page prompt
  * (buildTranslationPrompt without a previous translation), as the realtime worker does; a
- * longer block uses the worker's multi-page wording byte for byte.
+ * longer block uses translate-core's block prompt (buildBlockTranslationPrompt, which since
+ * 2026-09-25 IS the worker's multi-page wording — this file carried a byte-identical copy of it
+ * until #5260, and the copy is gone so the two cannot drift).
+ *
+ * `LEAF_BREAK_ONLY` (#5260): a page carrying `<leaf-break/>` gets the leaf note and the leaf
+ * rule; every other page — and this lane's page-break behaviour, which was never measured with
+ * the #5103 devices — is byte-identical to what was sent before.
  */
 export function blockPrompt({ prompts, book, pages }) {
   if (pages.length === 1) {
-    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data });
+    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, pageBreak: LEAF_BREAK_ONLY });
     return { prompt, promptRef, isEnglish };
   }
-  const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
-  let prompt = header;
-  const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += `\n**Pages to ${verb}:**\n`;
-  for (const p of pages) prompt += `\n--- Page ${p.page_number} ---\n${p.ocr.data}\n`;
+  const { prompt, promptRef, isEnglish } = buildBlockTranslationPrompt({ prompts, book, pages, pageBreak: LEAF_BREAK_ONLY });
   return { prompt, promptRef, isEnglish };
 }
 
@@ -178,6 +181,9 @@ export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
   // undrafted, so they are not written from this block and go back to the queue.
   const { drifted } = dropDriftedPages(pages, out);
   if (drifted.length && onDrift) onDrift(drifted);
+  // A leaf seam the block bridged (#5260): undrafted, back to the queue, same as a drift.
+  const { breached } = dropLeafSeamBreaches(pages, out);
+  if (breached.length && onDrift) onDrift(breached.map((b) => ({ prev: b.page, next: b.page, kind: 'leaf-seam', fragment: `${b.ocr} seam(s) in source, ${b.tr} in translation` })));
   return out;
 }
 
@@ -462,10 +468,15 @@ export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow 
   if (!(await deps.budgetAllows(db, `translate-batch-seam ${bookId}`))) return { ok: false, reason: 'spend-dial-closed', book, estimate };
 
   let promptRef = null;
+  // Per block: the exact prompt text sent (hashed) and the output cap sent — the two things
+  // that differ between blocks and that every page of the block must be able to cite (#4613).
+  const blockSent = [];
   const requests = blocks.map((pages, k) => {
     const built = blockPrompt({ prompts, book, pages });
     promptRef = built.promptRef;
-    return batchRequest({ key: `b${k}`, prompt: built.prompt, maxOutputTokens: maxOutputTokensFor(pages) });
+    const maxOutputTokens = maxOutputTokensFor(pages);
+    blockSent.push({ prompt_sent_hash: contentHash(built.prompt), prompt_sent_chars: built.prompt.length, max_output_tokens: maxOutputTokens });
+    return batchRequest({ key: `b${k}`, prompt: built.prompt, maxOutputTokens });
   });
   const runId = newRunId();
   const job = await deps.gemini.submit({ model, requests, displayName: `tbs-translate-${bookId}-${runId}` });
@@ -479,8 +490,12 @@ export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow 
     prompt_ref: promptRef,
     blocks: blocks.map((pages, k) => ({
       key: `b${k}`,
+      ...blockSent[k],
       pages: pages.map(p => ({ id: p.id, page_number: p.page_number, ocr_hash: contentHash(p.ocr.data) })),
     })),
+    // Submit-time half of every page's provenance (#4613); writeRun completes it per page.
+    code_version: await codeVersion(),
+    host: host(),
     page_count: plan.pages.length,
     excluded: plan.excluded,
     estimate,
@@ -670,6 +685,16 @@ export async function writeRun(db, run, deps) {
       const res = await writePage(db, {
         page, book, text, promptRef, model: run.model,
         jobId: run.id, note: REVISION_NOTE, refuseUnhealthy: true,
+        // What produced this text (#4613): the block's prompt (by hash) and cap as sent, the
+        // Batch job, and whether the seam repair's text won over the draft.
+        // A run submitted before these were kept says so (markers), rather than guessing.
+        call: {
+          call_site: 'scripts/lib/translate-batch-seam.mjs', api: 'batch', model: run.model,
+          prompt_sent_hash: b.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: b.prompt_sent_chars,
+          generationConfig: b.max_output_tokens ? { maxOutputTokens: b.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } } : notRecorded(`run ${run.id} was submitted before #4613 recorded generation settings`),
+          run: { batch_job_id: run.translate_job?.name, job_id: run.id, code_version: run.code_version || NOT_RECORDED, host: run.host || NOT_RECORDED },
+          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true },
+        },
       });
       if (res.written) {
         counts.written++;

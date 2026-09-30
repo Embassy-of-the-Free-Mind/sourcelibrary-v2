@@ -1,0 +1,33 @@
+name: Park stale issues
+
+# Weekly: close idle, unassigned `enhancement` issues with a `parked` label
+# (scripts/maintenance/park-stale-issues.mjs). Reopenable; nothing is deleted.
+# Bugs, user-feedback, epics, security and anything assigned are never touched.
+
+on:
+  schedule:
+    - cron: '30 6 * * 1'   # Mondays 06:30 UTC
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Actually park (default: dry-run listing)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  park:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Park
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/maintenance/park-stale-issues.mjs ${{ (github.event_name == 'schedule' || inputs.apply == true) && '--apply' || '' }}

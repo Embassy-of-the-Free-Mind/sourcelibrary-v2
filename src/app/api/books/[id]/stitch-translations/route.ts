@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { getGeminiClient } from '@/lib/gemini-client';
+import { getGeminiClient, acceptsZeroThinking } from '@/lib/gemini-client';
+import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '@/lib/write-provenance';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
-import { contentHash } from '@/lib/steganographia';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
@@ -213,7 +213,19 @@ export const POST = withAuth(async (request, session, context) => {
               {
                 $set: {
                   'translation.data': newTranslation,
-                  'translation.content_hash': contentHash(newTranslation),
+                  // What produced the stitched opening (#4613): the stitch prompt by content, the
+                  // model, and the PRIOR translation it rewrote (input.source_field = 'translation').
+                  ...(() => {
+                    const prov = translationProvenance(newTranslation, geminiEngine({
+                      call_site: 'src/app/api/books/[id]/stitch-translations/route.ts', api: 'realtime', model: modelId,
+                      prompt: { id: null, name: 'stitch', version: stitchPrompt.version, hash: null, text: prompt },
+                      generationConfig: acceptsZeroThinking(modelId) ? { thinkingConfig: { thinkingBudget: 0 } } : {}, // what getGeminiClient() adds at the boundary
+                      run: { code_version: codeVersion(), host: host() },
+                      input: translationInput({ ocrText: currTranslation, sourceField: 'translation', context: { stitched_with_previous_page: prevPage.page_number, sentences_replaced: numToReplace } }),
+                      response: { modelVersion: (result.response as { modelVersion?: string }).modelVersion },
+                    }));
+                    return { 'translation.content_hash': prov.content_hash, 'translation.engine': prov.engine };
+                  })(),
                   'translation.stitched': true,
                   'translation.stitch_model': modelId,
                   updated_at: new Date(),

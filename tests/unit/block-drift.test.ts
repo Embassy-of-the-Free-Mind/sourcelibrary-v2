@@ -16,6 +16,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   detectBlockDrift, continuationFragment, dropDriftedPages, duplicatedAcrossBoundary,
+  sourceRepeatsAcrossBoundary, blockDriftBoundaries, SOURCE_REPEAT_MIN_TOKENS,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/block-drift.mjs';
@@ -56,6 +57,35 @@ describe('duplicatedAcrossBoundary — N+1\'s opening on BOTH pages', () => {
     const m = new Map([[19, DUP[0].trPrev], [20, DUP[0].trNext]]);
     expect(dropDriftedPages(pages, m).drifted.map((d: any) => d.kind)).toEqual(['duplicated']);
     expect(m.size).toBe(0);
+  });
+
+  // #5275: a shared run is a duplication only when the SOURCE does not repeat across the boundary.
+  it('the source of no #5021 boundary repeats across it, so the refrain exemption changes none of these verdicts', () => {
+    for (const c of [...CASES, ...DUP]) expect(sourceRepeatsAcrossBoundary(c.ocrPrev, c.ocrNext)).toBeNull();
+  });
+
+  it('a refrain the source carries on both pages is not a duplication; the same English with a source that does not repeat is', () => {
+    // A litany whose source repeats its formula at the foot of page N and the head of N+1 (six
+    // words or more, the floor), rendered faithfully on both.
+    const FORMULA = 'Ora pro nobis sancta Dei genitrix ut digni efficiamur promissionibus Christi';
+    // Filler that does not repeat itself: distinct sentences on each side of the boundary.
+    const LAT_A = 'Sancta Maria mater misericordiae vita dulcedo et spes nostra salve. Ad te clamamus exsules filii Hevae gementes et flentes in hac lacrimarum valle. Eia ergo advocata nostra illos tuos misericordes oculos ad nos converte.';
+    const LAT_B = 'Regina angelorum regina patriarcharum regina prophetarum intercede. Turris eburnea domus aurea foederis arca ianua caeli stella matutina. Salus infirmorum refugium peccatorum consolatrix afflictorum auxilium christianorum.';
+    const ocrPrev = `${LAT_A} ${FORMULA}.`, ocrNext = `${FORMULA}. ${LAT_B}`;
+    const EN_FORMULA = 'Pray for us, holy Mother of God, that we may be made worthy of the promises of Christ, now and at the hour of our death, world without end, amen and amen.';
+    const EN_A = 'Holy Mary, mother of mercy, our life, our sweetness and our hope, hail. To thee we cry, banished children of Eve, mourning and weeping in this valley of tears. Turn then, our advocate, those merciful eyes of thine towards us.';
+    const EN_B = 'Queen of angels, queen of patriarchs, queen of prophets, intercede. Tower of ivory, house of gold, ark of the covenant, gate of heaven, morning star. Health of the sick, refuge of sinners, comfort of the afflicted, help of Christians.';
+    const trPrev = `${EN_A} ${EN_FORMULA}`, trNext = `${EN_FORMULA} ${EN_B}`;
+    expect(duplicatedAcrossBoundary(trPrev, trNext)?.len).toBeGreaterThanOrEqual(150);
+    expect(sourceRepeatsAcrossBoundary(ocrPrev, ocrNext)?.len).toBeGreaterThanOrEqual(SOURCE_REPEAT_MIN_TOKENS);
+    const pages = [{ page_number: 1, ocr: { data: ocrPrev } }, { page_number: 2, ocr: { data: ocrNext } }];
+    expect(blockDriftBoundaries(pages, new Map([[1, trPrev], [2, trNext]]))).toEqual([]);
+    // The formula on page N+1's source only: page N's translation copied it, and the guard says so.
+    const plain = [{ page_number: 1, ocr: { data: LAT_A } }, { page_number: 2, ocr: { data: ocrNext } }];
+    expect(blockDriftBoundaries(plain, new Map([[1, trPrev], [2, trNext]])).map((d: any) => d.kind)).toEqual(['duplicated']);
+    // No source at all (a caller without OCR): the duplicate verdict stands as before.
+    const bare = [{ page_number: 1 }, { page_number: 2 }];
+    expect(blockDriftBoundaries(bare, new Map([[1, trPrev], [2, trNext]])).map((d: any) => d.kind)).toEqual(['duplicated']);
   });
 });
 

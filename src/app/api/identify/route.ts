@@ -22,6 +22,14 @@ export const dynamic = 'force-dynamic';
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
+// Ownership bookplates are provenance, not content. The BPH pastes its pelican
+// ex-libris into ~900 of the books it lends us, and the CLIP index holds every copy:
+// without this, an emblem-shaped photo's candidate list is a wall of the same plate
+// (#5200). `resource_type` on a gallery row is the gallery image's `type`.
+const PROVENANCE_TYPES = new Set(['exlibris', 'bookplate']);
+const isContentMatch = (m: { source_type: string; resource_type: string | null }) =>
+  !(m.source_type === 'gallery_image' && m.resource_type != null && PROVENANCE_TYPES.has(m.resource_type));
+
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 
 Analyze this photograph and extract identifying information. The image may be:
@@ -123,9 +131,18 @@ function parseArtworkBbox(raw: unknown): { ymin: number; xmin: number; ymax: num
 }
 
 export async function POST(request: NextRequest) {
-  const rl = checkRateLimit({ name: 'identify', limit: 10, windowSeconds: 3600 }, getClientIp(request));
+  // 60/hour per IP (was 10). A museum's guest wifi NATs every visitor to one
+  // address, and 10 tripped during a single 12-photo test (#3193 Phase 3).
+  // Worst case per address per instance-hour: ~60 × ($0.005–0.01) — the
+  // identification, the 20-image comparison and, when nothing is confirmed,
+  // the grounded web check. Per-device tokens are the real fix for exhibits.
+  const rl = checkRateLimit({ name: 'identify', limit: 60, windowSeconds: 3600 }, getClientIp(request));
   if (!rl.allowed) {
-    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+    const minutes = Math.max(1, Math.ceil(rl.retryAfter / 60));
+    return NextResponse.json(
+      { error: `Too many identifications from this network in the last hour — try again in about ${minutes} min` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+    );
   }
 
   let base64: string;
@@ -228,7 +245,7 @@ export async function POST(request: NextRequest) {
           console.error('[identify] CLIP search error:', error.message);
           return [];
         }
-        return (data || []) as ClipMatch[];
+        return ((data || []) as ClipMatch[]).filter(isContentMatch);
       } catch (e) {
         // CLIP search is optional — don't fail the whole request
         console.warn('[identify] CLIP search unavailable:', e instanceof Error ? e.message : String(e));
@@ -341,7 +358,7 @@ export async function POST(request: NextRequest) {
             match_threshold: 0.25,
             match_count: 12,
           }).abortSignal(AbortSignal.timeout(8000));
-          return error ? [] : ((data || []) as ClipMatch[]);
+          return error ? [] : ((data || []) as ClipMatch[]).filter(isContentMatch);
         };
         const [a, b2] = await Promise.all([queryOne(cropBuf), queryOne(tightBuf).catch(() => [] as ClipMatch[])]);
         if (a.length === 0 && b2.length === 0) return null;

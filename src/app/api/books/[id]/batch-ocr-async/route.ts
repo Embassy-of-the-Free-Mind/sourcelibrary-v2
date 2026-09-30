@@ -11,8 +11,11 @@ import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
-import { contentHash } from '@/lib/steganographia';
+import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
+
+/** Provenance identity of this route (#4613): it both submits and collects. */
+const ROUTE_CALL_SITE = 'src/app/api/books/[id]/batch-ocr-async/route.ts';
 
 export const maxDuration = 300;
 
@@ -269,7 +272,7 @@ Output structure:
     };
 
     // Step 1: Validate image URLs and fetch images (parallel with concurrency limit)
-    const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
+    const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string }; url: string }> = [];
     let skippedBadUrl = 0;
 
     // First pass: collect valid URLs
@@ -299,7 +302,7 @@ Output structure:
         chunk.map(async ({ page, url }) => {
           const image = await fetchImageAsBase64(url);
           if (!image) return null;
-          return { id: page.id, pageNumber: page.page_number, image };
+          return { id: page.id, pageNumber: page.page_number, image, url };
         })
       );
       for (const r of results) {
@@ -323,6 +326,16 @@ Output structure:
 
     // Step 2: Build batch requests
     const effectivePPR = Math.max(1, Math.min(pagesPerRequest, 10)); // Clamp 1-10
+    // ONE generation config, sent in every request and recorded on the batch job (#4613),
+    // so the page's engine block cannot drift from what was sent. Multi-page requests get
+    // the cap for a FULL group, also on a short last group — a ceiling, not a target.
+    const ocrGenerationConfig = {
+      temperature: 0.1,
+      maxOutputTokens: effectivePPR > 1 ? Math.min(65536, 4096 * effectivePPR) : 16384,
+      thinkingConfig: { thinkingBudget: 0 },
+    };
+    // Per page, the hash of the exact prompt text sent (the multi-page wrapper differs by group size).
+    const promptSentHashByPage = new Map<string, { hash: string; chars: number }>();
 
     if (effectivePPR > 1) {
       // Multi-page mode: group images into single requests
@@ -331,7 +344,9 @@ Output structure:
         const parts: Array<Record<string, unknown>> = [];
         const chunkPageIds: string[] = [];
 
-        parts.push({ text: `You will OCR ${chunk.length} page images. For each page, produce your complete OCR transcription wrapped in a <page id="PAGE_ID"> tag, where PAGE_ID matches the ID shown before each image.\n\nWithin each <page> block, follow these OCR instructions:\n\n${prompt}\n\nProduce one <page> block per image, in order:\n` });
+        const wrapper = `You will OCR ${chunk.length} page images. For each page, produce your complete OCR transcription wrapped in a <page id="PAGE_ID"> tag, where PAGE_ID matches the ID shown before each image.\n\nWithin each <page> block, follow these OCR instructions:\n\n${prompt}\n\nProduce one <page> block per image, in order:\n`;
+        parts.push({ text: wrapper });
+        for (const p of chunk) promptSentHashByPage.set(p.id, { hash: contentHash(wrapper), chars: wrapper.length });
 
         for (const p of chunk) {
           chunkPageIds.push(p.id);
@@ -344,17 +359,14 @@ Output structure:
           pageIds: chunkPageIds,
           request: {
             contents: [{ parts, role: 'user' }],
-            config: {
-              temperature: 0.1,
-              maxOutputTokens: Math.min(65536, 4096 * chunk.length),
-              thinkingConfig: { thinkingBudget: 0 },
-            },
+            config: ocrGenerationConfig,
           },
         });
       }
     } else {
       // Single-page mode (original behavior)
       for (const p of preparedPages) {
+        promptSentHashByPage.set(p.id, { hash: contentHash(prompt), chars: prompt.length });
         batchRequests.push({
           key: p.id,
           pageIds: [p.id],
@@ -366,11 +378,7 @@ Output structure:
               ],
               role: 'user',
             }],
-            config: {
-              temperature: 0.1,
-              maxOutputTokens: 16384,
-              thinkingConfig: { thinkingBudget: 0 },
-            },
+            config: ocrGenerationConfig,
           },
         });
       }
@@ -416,6 +424,16 @@ Output structure:
         language,
         force,
         ...promptProvenance,
+        // What every page of this job will say produced it (#4613); the collect branch below
+        // completes it per page with the image and the job name.
+        provenance: batchJobProvenance({
+          call_site: ROUTE_CALL_SITE, model,
+          prompt: { id: promptRef.id, name: promptRef.name, version: promptRef.version, hash: promptRef.content_hash, text: prompt },
+          generationConfig: ocrGenerationConfig,
+          run: { code_version: codeVersion(), host: host() },
+        }),
+        submitted_by: ROUTE_CALL_SITE,
+        page_sources: preparedPages.map((p) => ({ page_id: p.id, source_url: p.url, prompt_sent_hash: promptSentHashByPage.get(p.id)?.hash, prompt_sent_chars: promptSentHashByPage.get(p.id)?.chars })),
         ocr_generation: ocrGeneration, // #2449 generation guard
         page_ids: allPageIds,
         page_count: allPageIds.length,
@@ -781,7 +799,15 @@ export const GET = withAuth(async (request, session, context) => {
               {
                 $set: {
                   'ocr.data': text,
-                  'ocr.content_hash': contentHash(text),
+                  ...(() => {
+                    const pageSrc = (jobDoc.page_sources as Array<{ page_id: string; source_url?: string; prompt_sent_hash?: string; prompt_sent_chars?: number }> | undefined)?.find((s) => s.page_id === pageId);
+                    const prov = ocrProvenance(text, engineFromBatchJob(jobDoc, {
+                      batch_job_id: jobDoc.job_name, collected_by: ROUTE_CALL_SITE, now: new Date(),
+                      input: pageSrc?.source_url ? imageInput({ url: pageSrc.source_url }) : notRecorded('batch job carried no page_sources'),
+                      prompt_sent_hash: pageSrc?.prompt_sent_hash, prompt_sent_chars: pageSrc?.prompt_sent_chars,
+                    }));
+                    return { 'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine };
+                  })(),
                   'ocr.updated_at': now,
                   'ocr.model': jobDoc.model,
                   'ocr.language': jobDoc.language,

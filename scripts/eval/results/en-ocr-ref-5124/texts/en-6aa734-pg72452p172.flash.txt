@@ -1,0 +1,36 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>172</page-num>
+<header>TRAVELS IN AFRICA,</header>
+
+At Sakarra a great number exist, among which ten are of a large size. The smaller ones are sometimes almost undistinguishable from the sand-hills, and are dilapidated; the stones being used as materials for building at Kahira, Jizé, &c.
+
+The two largest of the pyramids are at about the distance of two hours and a half from Jizé, and are well known to all who have visited Egypt. The dimensions of that which has been opened I found to be as follow:
+
+| | Feet. | Inches. |
+|:---|:---:|:---:|
+| Great chamber | 34 | 5 |
+| Breadth | 17 | 2 |
+| Sarcophagus | 7 | 8 |
+| Breadth | 3 | 2 |
+| Depth within | 2 | 10½ |
+| Thickness | 0 | 6 |
+
+The galleries and great chamber are situated due North and South, allowing for the variation of the needle.
+
+| | Feet. | Inches. |
+|:---|:---:|:---:|
+| The first passage descending | 105 | 1 |
+| Small chamber, length | 18 | 9 |
+| —————— breadth | 17 | 1 |
+| Antichamber, length | 7 | 5 |
+| Main gallery, upper part | 150 | 0 |
+| —————— lower part | 148 | 0 |
+| Passage to inferior chamber | 109 | 1 |
+
+<sig>An</sig>
+
+<meta>Catchword: An</meta>
+<vocab>Sakarra, Kahira, Jizé, Egypt, pyramids, Sarcophagus, dimensions, Great chamber, Antichamber</vocab>

@@ -1,0 +1,100 @@
+{
+  "schema": "provenance-history/1",
+  "prior_art": "PRIOR ART: scripts/eval/lib/revision-source.mjs — names which MECHANISM wrote a `source` label so page_revisions can be segmented, but carries no generation settings and no dates; scripts/lib/write-provenance.mjs MODEL_DEFAULTS — the published model defaults this table refers to. Neither says what settings a page written in a given month ran under, which is what this table does.",
+  "compiled": "2026-09-28",
+  "purpose": "What we can INFER, from git and from the fields old rows carry, about the generation settings behind pages written BEFORE the #4613 writers went live (Hetzner pull 2026-09-28T16:21Z). Every entry is an inference from code constants dated by `git log -S`, never an observation: nothing in these rows was recorded at write time. Read through inferHistoricalGeneration() in scripts/lib/write-provenance.mjs; never copy a value from here onto a page as if it were observed.",
+  "floor": "2026-09-28T16:21:00Z",
+  "model_defaults_note": "A setting a writer did not send ran at the model's published default (GET /v1beta/models/<id>, looked up 2026-09-28): temperature 1, topP 0.95, topK 64, outputTokenLimit 65536, thinking on (dynamic). MODEL_DEFAULTS in write-provenance.mjs is the table.",
+  "rules": [
+    {
+      "id": "batch-ocr",
+      "field": "ocr",
+      "when": { "source": ["batch_api", "pipeline_preview"], "from": "2026-02-19", "to": "2026-09-28T16:21:00Z" },
+      "writer": "scripts/workers/pipeline-orchestrator.mjs (submit) → batch-collector.mjs / collect-batch-results.mjs (write); or src/app/api/books/[id]/batch-ocr-async (same constants)",
+      "generation": { "temperature": 0.1, "max_output_tokens": 16384, "thinking_budget": 0 },
+      "basis": ["5e1f1d3d6 2026-02-21 orchestrator: temperature 0.1 / maxOutputTokens 16384 / thinkingBudget 0", "8ca2d4fd3 2026-02-19 batch-ocr-async: same"],
+      "caveat": "batch-ocr-async multi-page requests (ocr.pages_per_request > 1) used maxOutputTokens = min(65536, 4096 × pages); the batch job row (ocr.batch_job_id) gives model and, on ~27% of jobs, prompt_hash."
+    },
+    {
+      "id": "realtime-ocr-script",
+      "field": "ocr",
+      "when": { "source": ["ai"], "code_version": "absent", "from": "2026-06-01", "to": "2026-09-15" },
+      "writer": "scripts/batch/realtime-ocr.mjs or realtime-reocr-efm.mjs (neither stamped code_version)",
+      "generation": { "temperature": 0.1, "max_output_tokens": 16384, "thinking_budget": 0 },
+      "basis": ["ea0d2adeb 2026-02-20 realtime-ocr created with these constants", "39068ef96 2026-06-01 the Lambda write path started stamping ocr.code_version, which is what separates the two 'ai' writers from this date"],
+      "caveat": "Before 2026-06-01 an `ai` OCR row cannot be told apart from the Lambda path — see rule ocr-ai-ambiguous."
+    },
+    {
+      "id": "realtime-ocr-script-flagged-cap",
+      "field": "ocr",
+      "when": { "source": ["ai"], "code_version": "absent", "from": "2026-09-15", "to": "2026-09-28T16:21:00Z" },
+      "writer": "scripts/batch/realtime-ocr.mjs",
+      "generation": { "temperature": 0.1, "max_output_tokens": null, "thinking_budget": 0 },
+      "basis": ["d3f373a55 2026-09-15 the cap became a flag (--max-output-tokens, default 16384) and runs did pass other values (the Keely/Tesla lane: 6000)"],
+      "caveat": "max_output_tokens is not recoverable per page for this window."
+    },
+    {
+      "id": "lambda-ocr-thinking-on",
+      "field": "ocr",
+      "when": { "source": ["ai"], "code_version": "present", "from": "2026-06-01", "to": "2026-09-03" },
+      "writer": "src/workers/ocr-processor-logic.ts → write-processor-logic.ts (Lambda, via src/lib/ai.ts)",
+      "generation": { "temperature": 1, "max_output_tokens": 65536, "thinking_budget": null, "thinking": "model_default_dynamic" },
+      "basis": ["src/lib/ai.ts set no generationConfig until ee6804c89 2026-09-03 (#4591): temperature, cap and thinking were the model defaults", "39068ef96 2026-06-01 code_version stamped by the Lambda write path"],
+      "caveat": "This is the population #4581 measured against thinking-off reads: 74% word agreement (Latin), 43% character agreement (Classical Chinese) on the same images."
+    },
+    {
+      "id": "lambda-ocr-thinking-off",
+      "field": "ocr",
+      "when": { "source": ["ai"], "code_version": "present", "from": "2026-09-03", "to": "2026-09-28T16:21:00Z" },
+      "writer": "Lambda OCR path",
+      "generation": { "temperature": 1, "max_output_tokens": 65536, "thinking_budget": 0 },
+      "basis": ["ee6804c89 2026-09-03 THINKING_OFF_CONFIG = { thinkingConfig: { thinkingBudget: 0 } } and nothing else"],
+      "caveat": "The Lambda path wrote nothing in the 30 days before 2026-09-28 (gemini_usage); rows in this window are few."
+    },
+    {
+      "id": "ocr-ai-ambiguous",
+      "field": "ocr",
+      "when": { "source": ["ai"], "to": "2026-06-01" },
+      "writer": "ambiguous: Lambda path (temperature 1, thinking on) OR realtime-ocr.mjs (0.1, thinking off) — no field on the row separates them before code_version was stamped",
+      "generation": null,
+      "basis": ["the two writers stamped identical fields until 39068ef96 2026-06-01"],
+      "caveat": "Do not guess. gemini_usage (Mongo, endpoint 'scripts/realtime-ocr.mjs', page_ids) can settle individual pages."
+    },
+    {
+      "id": "batch-translation",
+      "field": "translation",
+      "when": { "source": ["batch_api"], "from": "2026-02-19", "to": "2026-09-28T16:21:00Z" },
+      "writer": "src/app/api/books/[id]/batch-translate-async (submit + collect) or the Hetzner collectors",
+      "generation": { "temperature": 0.1, "max_output_tokens": 16384, "thinking_budget": 0 },
+      "basis": ["eef05ed9c 2026-02-19 batch-translate-async constants"],
+      "caveat": "translate-batch-seam.mjs (hetzner/translate-batch-seam, 2026-09-24 on) writes through the realtime door with source 'ai', not here."
+    },
+    {
+      "id": "translation-ai-before-cap",
+      "field": "translation",
+      "when": { "source": ["ai"], "from": "2026-03-22", "to": "2026-08-09" },
+      "writer": "scripts/workers/translate-worker.mjs (dominant) — but realtime-translate.mjs (temperature 0.2, thinking off since 2026-02-20) and retranslate-pages.mjs stamp the same fields",
+      "generation": { "temperature": null, "max_output_tokens": 65536, "thinking_budget": null, "thinking": "model_default_dynamic" },
+      "basis": ["e91d2252f 2026-03-22 translate-worker created with NO generationConfig (all model defaults)", "f1a5e0bcb 2026-08-09 the per-page output cap arrived"],
+      "caveat": "temperature is 1 (worker) or 0.2 (realtime-translate script) — writer ambiguous per row, so not inferred."
+    },
+    {
+      "id": "translation-ai-cap-thinking-on",
+      "field": "translation",
+      "when": { "source": ["ai"], "from": "2026-08-09", "to": "2026-09-04" },
+      "writer": "translate-worker.mjs (dominant); see previous rule for the ambiguity",
+      "generation": { "temperature": null, "max_output_tokens": null, "thinking_budget": null, "thinking": "model_default_dynamic" },
+      "basis": ["f1a5e0bcb 2026-08-09 maxOutputTokensFor(pages) — per page, not recoverable", "a5134cc8b 2026-09-04 thinkingBudget 0 in translate-worker"],
+      "caveat": "Thinking was ON in the worker in this window."
+    },
+    {
+      "id": "translation-ai-thinking-off",
+      "field": "translation",
+      "when": { "source": ["ai"], "from": "2026-09-04", "to": "2026-09-28T16:21:00Z" },
+      "writer": "translate-worker.mjs (dominant); realtime-translate.mjs agrees on thinking; retranslate-pages.mjs (rare, maintenance) still ran thinking on",
+      "generation": { "temperature": null, "max_output_tokens": null, "thinking_budget": 0 },
+      "basis": ["a5134cc8b 2026-09-04"],
+      "caveat": "temperature 1 (worker) or 0.2 (script); cap per page."
+    }
+  ]
+}

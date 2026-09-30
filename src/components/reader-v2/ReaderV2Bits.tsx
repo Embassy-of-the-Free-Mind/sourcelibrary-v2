@@ -396,6 +396,32 @@ export function ScanViewer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page.id]);
 
+  // On a landing, report the page's shape as soon as the browser has read the
+  // image header, not when the last byte arrives: the desktop reader arranges
+  // its panes by that shape (#5352), and waiting for the whole scan left the
+  // wrong arrangement on screen for the length of the download. First image
+  // only. On a page turn the element still answers with the PREVIOUS page's
+  // dimensions until the new header is in, so there onLoad stays the signal.
+  useEffect(() => {
+    const el = imgRef.current;
+    if (!el || el.complete) return;
+    let frame = 0;
+    const deadline = Date.now() + 10_000;
+    const poll = () => {
+      if (natural.current) return;
+      if (el.naturalWidth && el.naturalHeight) {
+        natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+        onNaturalSize?.(natural.current);
+        measure();
+        return;
+      }
+      if (Date.now() < deadline) frame = requestAnimationFrame(poll);
+    };
+    frame = requestAnimationFrame(poll);
+    return () => cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const zoomed = zoom > 1;
 
   // Scroll offsets computed alongside a zoom change, applied before paint so

@@ -1,0 +1,722 @@
+{
+  "6a4f015bb18250223e2f3b62": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite-realtime",
+    "P3": "doclayout-local",
+    "P4": "qwen235-realtime",
+    "P5": "lite35-realtime",
+    "P6": "lite-batch",
+    "P7": "lite-box2d-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a4b63b43029d1cf3f8e8ea3": {
+    "P1": "lite-realtime",
+    "P2": "lite35-realtime",
+    "P3": "doclayout-local",
+    "P4": "qwen235-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "lite-batch",
+    "P8": "flash-realtime"
+  },
+  "6a267ce06c1f37c9c4f37799": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite35-realtime",
+    "P3": "lite-batch",
+    "P4": "doclayout-local",
+    "P5": "lite-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a4f3d3739ecc8e27dc655a4": {
+    "P1": "lite-batch",
+    "P2": "qwen235-realtime",
+    "P3": "flash-realtime",
+    "P4": "lite35-realtime",
+    "P5": "lite-box2d-realtime",
+    "P6": "doclayout-local",
+    "P7": "flash-r2-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a3c711239b4508b04e51705": {
+    "P1": "lite-box2d-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "lite-realtime",
+    "P4": "lite35-realtime",
+    "P5": "lite-batch",
+    "P6": "doclayout-local",
+    "P7": "flash-r2-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a42eb1a06e6ead3ac541d37": {
+    "P1": "lite35-realtime",
+    "P2": "lite-batch",
+    "P3": "doclayout-local",
+    "P4": "lite-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "flash-realtime",
+    "P8": "flash-r2-realtime"
+  },
+  "6a76d4be6ba8d6d1d3f8e529": {
+    "P1": "doclayout-local",
+    "P2": "lite-batch",
+    "P3": "lite-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "lite35-realtime",
+    "P6": "flash-r2-realtime",
+    "P7": "flash-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a4f88a114134c1ad056da82": {
+    "P1": "flash-realtime",
+    "P2": "lite-batch",
+    "P3": "lite-realtime",
+    "P4": "qwen235-realtime",
+    "P5": "lite-box2d-realtime",
+    "P6": "lite35-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "doclayout-local"
+  },
+  "69f65d95753ef1ae77ca4856": {
+    "P1": "qwen235-realtime",
+    "P2": "flash-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "lite-realtime",
+    "P5": "doclayout-local",
+    "P6": "lite-batch",
+    "P7": "lite35-realtime",
+    "P8": "flash-r2-realtime"
+  },
+  "6a3cec298642f0445b15a1ac": {
+    "P1": "qwen235-realtime",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "lite-realtime",
+    "P5": "lite35-realtime",
+    "P6": "flash-realtime",
+    "P7": "lite-batch",
+    "P8": "doclayout-local"
+  },
+  "6a4a7e5d20c510eceebc56ab": {
+    "P1": "flash-r2-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "lite-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "doclayout-local",
+    "P6": "flash-realtime",
+    "P7": "lite35-realtime",
+    "P8": "lite-batch"
+  },
+  "6a42714362d175ca9e4e262a": {
+    "P1": "flash-realtime",
+    "P2": "doclayout-local",
+    "P3": "flash-r2-realtime",
+    "P4": "qwen235-realtime",
+    "P5": "lite-box2d-realtime",
+    "P6": "lite35-realtime",
+    "P7": "lite-realtime",
+    "P8": "lite-batch"
+  },
+  "6a42705a62d175ca9e4e1021": {
+    "P1": "lite35-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-batch"
+  },
+  "6a3c709c39b4508b04e4ff78": {
+    "P1": "flash-realtime",
+    "P2": "doclayout-local",
+    "P3": "flash-r2-realtime",
+    "P4": "lite35-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite-batch"
+  },
+  "6a42a71a831988adcb772cae": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite-realtime",
+    "P3": "qwen235-realtime",
+    "P4": "lite-batch",
+    "P5": "doclayout-local",
+    "P6": "flash-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a492368a45b99e46af93b35": {
+    "P1": "lite-realtime",
+    "P2": "lite35-realtime",
+    "P3": "lite-batch",
+    "P4": "doclayout-local",
+    "P5": "lite-box2d-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a3c67c739b4508b04e390ab": {
+    "P1": "doclayout-local",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-realtime",
+    "P4": "flash-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite35-realtime",
+    "P7": "lite-batch",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a20326018654bf8e1902bbc": {
+    "P1": "flash-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite35-realtime",
+    "P5": "lite-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "lite-batch",
+    "P8": "flash-r2-realtime"
+  },
+  "6a4b47e29f73a2728aaba0ea": {
+    "P1": "qwen235-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-batch",
+    "P7": "lite35-realtime",
+    "P8": "doclayout-local"
+  },
+  "69f338d7876dd827cbc54353": {
+    "P1": "lite-batch",
+    "P2": "lite35-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "flash-realtime",
+    "P5": "lite-realtime",
+    "P6": "doclayout-local",
+    "P7": "qwen235-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a4a5e9a4107674feb04d716": {
+    "P1": "lite-batch",
+    "P2": "flash-r2-realtime",
+    "P3": "lite35-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "lite-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "flash-realtime",
+    "P8": "doclayout-local"
+  },
+  "6a3c621040c88a541d8f2573": {
+    "P1": "lite-batch",
+    "P2": "lite35-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-realtime",
+    "P5": "doclayout-local",
+    "P6": "qwen235-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a3c70c401fe4f593c1d49f1": {
+    "P1": "flash-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite-batch",
+    "P4": "qwen235-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite35-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-realtime"
+  },
+  "6a4bbedc6a8b1dab563dcd89": {
+    "P1": "flash-realtime",
+    "P2": "lite-batch",
+    "P3": "lite-realtime",
+    "P4": "qwen235-realtime",
+    "P5": "doclayout-local",
+    "P6": "lite-box2d-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a3cc146ec254ff6cae0ad6b": {
+    "P1": "flash-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "lite-batch",
+    "P6": "lite-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite35-realtime"
+  },
+  "6a45254f3f399e60338182eb": {
+    "P1": "flash-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite35-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-batch"
+  },
+  "6a51d66d3616846663596560": {
+    "P1": "lite-box2d-realtime",
+    "P2": "lite-realtime",
+    "P3": "lite-batch",
+    "P4": "lite35-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "doclayout-local",
+    "P7": "qwen235-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a426b5e28e9db2e39c00e05": {
+    "P1": "doclayout-local",
+    "P2": "lite-realtime",
+    "P3": "qwen235-realtime",
+    "P4": "lite35-realtime",
+    "P5": "lite-batch",
+    "P6": "flash-r2-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a3c789501fe4f593c209558": {
+    "P1": "flash-realtime",
+    "P2": "lite35-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite-batch",
+    "P5": "lite-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "qwen235-realtime",
+    "P8": "flash-r2-realtime"
+  },
+  "69d13d09578b80f3e6257e12": {
+    "P1": "qwen235-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-realtime",
+    "P4": "doclayout-local",
+    "P5": "lite35-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "lite-batch",
+    "P8": "flash-r2-realtime"
+  },
+  "6a431cca79855e32e46427f8": {
+    "P1": "lite35-realtime",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "flash-realtime",
+    "P5": "doclayout-local",
+    "P6": "qwen235-realtime",
+    "P7": "lite-batch",
+    "P8": "lite-realtime"
+  },
+  "6a3cb8943dce6cfad748eadf": {
+    "P1": "lite-batch",
+    "P2": "flash-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "qwen235-realtime",
+    "P5": "lite35-realtime",
+    "P6": "lite-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a4a5a054107674feb04cf22": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite-realtime",
+    "P4": "lite35-realtime",
+    "P5": "flash-realtime",
+    "P6": "doclayout-local",
+    "P7": "qwen235-realtime",
+    "P8": "lite-batch"
+  },
+  "6a4f7450bed82fff535d30b3": {
+    "P1": "lite-batch",
+    "P2": "lite-realtime",
+    "P3": "flash-realtime",
+    "P4": "doclayout-local",
+    "P5": "lite-box2d-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a4b5e0d162167e7c1e5cb42": {
+    "P1": "lite-batch",
+    "P2": "lite-box2d-realtime",
+    "P3": "qwen235-realtime",
+    "P4": "lite35-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-realtime",
+    "P7": "doclayout-local",
+    "P8": "flash-realtime"
+  },
+  "69b4cc8bd5b6c3815e1a1242": {
+    "P1": "lite-box2d-realtime",
+    "P2": "lite-realtime",
+    "P3": "lite35-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "doclayout-local",
+    "P6": "qwen235-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-batch"
+  },
+  "6a42ef3906e6ead3ac549d11": {
+    "P1": "qwen235-realtime",
+    "P2": "lite-batch",
+    "P3": "doclayout-local",
+    "P4": "lite-box2d-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite35-realtime",
+    "P7": "lite-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a446e52d4792484c6c16b39": {
+    "P1": "flash-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "lite-batch",
+    "P5": "lite-realtime",
+    "P6": "lite35-realtime",
+    "P7": "doclayout-local",
+    "P8": "flash-r2-realtime"
+  },
+  "6a3cbae83dce6cfad749ffb0": {
+    "P1": "lite-batch",
+    "P2": "doclayout-local",
+    "P3": "flash-r2-realtime",
+    "P4": "flash-realtime",
+    "P5": "lite35-realtime",
+    "P6": "lite-box2d-realtime",
+    "P7": "qwen235-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a4a37637517ab961c0334aa": {
+    "P1": "doclayout-local",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite-realtime",
+    "P4": "lite35-realtime",
+    "P5": "lite-batch",
+    "P6": "flash-r2-realtime",
+    "P7": "flash-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a76d5c5f28570a9bf4e9430": {
+    "P1": "lite-realtime",
+    "P2": "flash-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "lite35-realtime",
+    "P5": "doclayout-local",
+    "P6": "flash-r2-realtime",
+    "P7": "lite-batch",
+    "P8": "qwen235-realtime"
+  },
+  "6a3c73fc01fe4f593c1ed27a": {
+    "P1": "lite-batch",
+    "P2": "qwen235-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite-box2d-realtime",
+    "P5": "lite-realtime",
+    "P6": "lite35-realtime",
+    "P7": "flash-realtime",
+    "P8": "flash-r2-realtime"
+  },
+  "6a4f428cc3a6efa5a4998644": {
+    "P1": "lite-batch",
+    "P2": "lite-realtime",
+    "P3": "lite35-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "doclayout-local",
+    "P7": "lite-box2d-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a49159da9e39181572e23c7": {
+    "P1": "doclayout-local",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-batch",
+    "P4": "qwen235-realtime",
+    "P5": "flash-realtime",
+    "P6": "lite-realtime",
+    "P7": "lite35-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a3cb71357c1f37219c4ecf2": {
+    "P1": "qwen235-realtime",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-batch",
+    "P4": "doclayout-local",
+    "P5": "lite-realtime",
+    "P6": "lite35-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a4a69757b720133514b0bf3": {
+    "P1": "lite35-realtime",
+    "P2": "lite-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite-box2d-realtime",
+    "P5": "lite-batch",
+    "P6": "flash-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a425530dfbbb4d07aa4f650": {
+    "P1": "flash-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite35-realtime",
+    "P4": "lite-batch",
+    "P5": "doclayout-local",
+    "P6": "flash-r2-realtime",
+    "P7": "lite-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a3cbb3e3dce6cfad74a1e78": {
+    "P1": "qwen235-realtime",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-batch",
+    "P4": "doclayout-local",
+    "P5": "lite-realtime",
+    "P6": "flash-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a425401343d756d34e37da7": {
+    "P1": "lite-box2d-realtime",
+    "P2": "lite-batch",
+    "P3": "doclayout-local",
+    "P4": "lite35-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "flash-realtime",
+    "P7": "lite-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a3c652a39b4508b04e2c986": {
+    "P1": "qwen235-realtime",
+    "P2": "lite35-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-batch",
+    "P5": "doclayout-local",
+    "P6": "lite-box2d-realtime",
+    "P7": "lite-realtime",
+    "P8": "flash-realtime"
+  },
+  "6a3c63710339d4df9abcbc49": {
+    "P1": "lite35-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "doclayout-local",
+    "P4": "flash-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "lite-batch"
+  },
+  "6a4b07cde3f5ea0395c71405": {
+    "P1": "qwen235-realtime",
+    "P2": "doclayout-local",
+    "P3": "lite35-realtime",
+    "P4": "lite-batch",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a3c625f40c88a541d8f3e73": {
+    "P1": "flash-r2-realtime",
+    "P2": "flash-realtime",
+    "P3": "lite35-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "doclayout-local",
+    "P6": "lite-batch",
+    "P7": "qwen235-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a42d0fee76baa13aa855c8e": {
+    "P1": "flash-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite-batch",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a426e4628e9db2e39c06f98": {
+    "P1": "lite-box2d-realtime",
+    "P2": "flash-r2-realtime",
+    "P3": "lite-batch",
+    "P4": "doclayout-local",
+    "P5": "lite35-realtime",
+    "P6": "flash-realtime",
+    "P7": "qwen235-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a3c639a93327f06e83519e5": {
+    "P1": "lite-box2d-realtime",
+    "P2": "lite-batch",
+    "P3": "qwen235-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "lite-realtime",
+    "P6": "doclayout-local",
+    "P7": "flash-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a50020bbdcf926c5d24efe4": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite35-realtime",
+    "P4": "qwen235-realtime",
+    "P5": "lite-realtime",
+    "P6": "doclayout-local",
+    "P7": "flash-realtime",
+    "P8": "lite-batch"
+  },
+  "6a3cb60f3dce6cfad7484f88": {
+    "P1": "lite-box2d-realtime",
+    "P2": "flash-realtime",
+    "P3": "lite35-realtime",
+    "P4": "lite-realtime",
+    "P5": "doclayout-local",
+    "P6": "lite-batch",
+    "P7": "flash-r2-realtime",
+    "P8": "qwen235-realtime"
+  },
+  "6a42ad675207af7c42f4f5dd": {
+    "P1": "flash-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "lite-batch",
+    "P4": "lite-realtime",
+    "P5": "lite35-realtime",
+    "P6": "flash-r2-realtime",
+    "P7": "qwen235-realtime",
+    "P8": "doclayout-local"
+  },
+  "6a4a629b3a479d44b0037c22": {
+    "P1": "flash-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "lite35-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-batch"
+  },
+  "6a3c765301fe4f593c1fa66f": {
+    "P1": "doclayout-local",
+    "P2": "qwen235-realtime",
+    "P3": "flash-realtime",
+    "P4": "lite-batch",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a3c677caf3c49b59c5d3d8a": {
+    "P1": "lite35-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "flash-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "doclayout-local",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite-batch"
+  },
+  "6a44d133e46c70aa65d3d429": {
+    "P1": "lite35-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "flash-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-batch"
+  },
+  "6a43797b9a1e0c918b689148": {
+    "P1": "doclayout-local",
+    "P2": "qwen235-realtime",
+    "P3": "flash-realtime",
+    "P4": "flash-r2-realtime",
+    "P5": "lite-batch",
+    "P6": "lite-realtime",
+    "P7": "lite-box2d-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a3cbd93f9474f825c1629e9": {
+    "P1": "lite-box2d-realtime",
+    "P2": "flash-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "lite35-realtime",
+    "P7": "doclayout-local",
+    "P8": "lite-batch"
+  },
+  "6a4fbac36c11f99c0e4276b9": {
+    "P1": "lite-realtime",
+    "P2": "lite35-realtime",
+    "P3": "lite-box2d-realtime",
+    "P4": "flash-realtime",
+    "P5": "qwen235-realtime",
+    "P6": "flash-r2-realtime",
+    "P7": "lite-batch",
+    "P8": "doclayout-local"
+  },
+  "6a429ddb831988adcb764c59": {
+    "P1": "lite-batch",
+    "P2": "qwen235-realtime",
+    "P3": "flash-realtime",
+    "P4": "lite35-realtime",
+    "P5": "doclayout-local",
+    "P6": "lite-box2d-realtime",
+    "P7": "flash-r2-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a3cbccbec254ff6cadf3349": {
+    "P1": "qwen235-realtime",
+    "P2": "flash-realtime",
+    "P3": "doclayout-local",
+    "P4": "flash-r2-realtime",
+    "P5": "lite-realtime",
+    "P6": "lite-batch",
+    "P7": "lite35-realtime",
+    "P8": "lite-box2d-realtime"
+  },
+  "6a3c6f4501fe4f593c1caacc": {
+    "P1": "qwen235-realtime",
+    "P2": "lite-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-box2d-realtime",
+    "P5": "lite35-realtime",
+    "P6": "doclayout-local",
+    "P7": "flash-realtime",
+    "P8": "lite-batch"
+  },
+  "6a3c73b401fe4f593c1eaad2": {
+    "P1": "lite-realtime",
+    "P2": "lite-box2d-realtime",
+    "P3": "qwen235-realtime",
+    "P4": "doclayout-local",
+    "P5": "flash-r2-realtime",
+    "P6": "lite-batch",
+    "P7": "flash-realtime",
+    "P8": "lite35-realtime"
+  },
+  "6a42bb105207af7c42f6d164": {
+    "P1": "flash-r2-realtime",
+    "P2": "lite35-realtime",
+    "P3": "doclayout-local",
+    "P4": "lite-batch",
+    "P5": "lite-box2d-realtime",
+    "P6": "qwen235-realtime",
+    "P7": "flash-realtime",
+    "P8": "lite-realtime"
+  },
+  "6a3cb7b83dce6cfad7487f46": {
+    "P1": "lite-box2d-realtime",
+    "P2": "qwen235-realtime",
+    "P3": "flash-r2-realtime",
+    "P4": "lite-realtime",
+    "P5": "lite35-realtime",
+    "P6": "flash-realtime",
+    "P7": "lite-batch",
+    "P8": "doclayout-local"
+  }
+}

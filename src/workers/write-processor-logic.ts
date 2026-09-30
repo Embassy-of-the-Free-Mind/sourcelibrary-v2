@@ -21,6 +21,7 @@ import { retryDbWrite } from '@/lib/retry-utils';
 import { checkJobCompletion } from '@/lib/job-completion';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import { createRevision } from '@/lib/page-revisions';
+import { geminiEngine, imageInput, ocrProvenance, notRecorded, NOT_RECORDED, host } from '@/lib/write-provenance';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import type { PageJobType } from '@/lib/types/job';
 import type {
@@ -74,7 +75,7 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     // Save revision before overwriting OCR (no-op on first write)
     try { await createRevision(pageId, 'ocr', jobId); } catch {}
     // Save OCR result to page
-    const { text, language, model, promptVersion, promptId, promptHash, promptName, pageType, columns, scriptType, detectedImages, sourceUrl, codeVersion } = message.data;
+    const { text, language, model, promptVersion, promptId, promptHash, promptName, pageType, columns, scriptType, detectedImages, sourceUrl, codeVersion, call } = message.data;
     // Degeneration-loop guard (#4850): a read that stopped transcribing and repeated
     // one unit. Refused here as a failed page, with the text kept in `page_revisions`
     // (`createRevision` above snapshots what was there, not the incoming loop, so the
@@ -93,9 +94,20 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
       await safeCheckCompletion(db, jobId, bookId, targetPageIds, 'ocr');
       return;
     }
+    // What produced this text (#4613): the OCR processor's call record, this page's image and job.
+    // An older message (no `call`) gets explicit markers, never invented settings.
+    const engine = geminiEngine({
+      call_site: 'src/workers/write-processor-logic.ts', api: 'realtime', model,
+      prompt: { id: promptId, name: promptName, version: promptVersion, hash: promptHash, text: call?.promptText, sent_hash: call ? undefined : NOT_RECORDED },
+      generationConfig: call?.generationConfig ?? notRecorded('OCR message carried no call record (sent before #4613)'),
+      run: { job_id: jobId, code_version: codeVersion || NOT_RECORDED, host: host() },
+      input: sourceUrl ? imageInput({ url: sourceUrl }) : notRecorded('OCR message carried no sourceUrl'),
+      response: { modelVersion: call?.modelVersion ?? undefined },
+    });
     const ocrSetPayload = {
       ocr: {
         data: text,
+        ...ocrProvenance(text, engine),
         language,
         model,
         updated_at: new Date(),

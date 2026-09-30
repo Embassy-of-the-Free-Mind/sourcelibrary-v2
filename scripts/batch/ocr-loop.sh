@@ -6,6 +6,15 @@
 #   set -a; source .env.production.local; set +a; nohup bash scripts/batch/ocr-loop.sh > /tmp/ocr-loop.log 2>&1 &
 #
 # To stop gracefully: touch /tmp/ocr-stop
+#
+# REALTIME, ~2x the Batch API price (#5244). The batch equivalent is
+#   node scripts/batch/bulk-reocr-local.mjs --new-only --limit=N --reason="..."
+# This loop runs only when that choice is made explicitly: SL_ALLOW_REALTIME=1.
+
+if [ "$SL_ALLOW_REALTIME" != "1" ]; then
+  echo "ocr-loop.sh runs realtime OCR (~2x batch price). Use scripts/batch/bulk-reocr-local.mjs, or set SL_ALLOW_REALTIME=1 to choose realtime deliberately (#5244)." >&2
+  exit 2
+fi
 
 BATCH_SIZE=${1:-8000}
 CONCURRENCY=${2:-50}
@@ -31,6 +40,7 @@ while true; do
   echo "=== Round $ROUND at $(date) ==="
 
   node scripts/batch/realtime-ocr.mjs \
+    --realtime \
     --no-ocr \
     --status=$STATUS \
     --limit=$BATCH_SIZE \

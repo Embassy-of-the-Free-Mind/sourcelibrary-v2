@@ -1,0 +1,32 @@
+-- match_clip_images: search 10 IVFFlat lists instead of 1 (#3193).
+--
+-- clip_embeddings (333,487 rows on 2026-09-29: 217,969 gallery crops, 90,452
+-- covers, 25,066 artworks) is indexed by `ivfflat (embedding vector_cosine_ops)
+-- WITH (lists = 32)`, built when the table held ~10K rows. pgvector's default
+-- `ivfflat.probes = 1` means every query scans ONE of the 32 lists — the one
+-- whose (stale) centroid is nearest the query — and never sees a true match
+-- filed under a neighbouring list, however similar it is.
+--
+-- Measured on the live table (scripts/eval/clip-index-recall.mjs, 63 simulated
+-- visitor photos from scripts/eval/identify-bench.mjs, crop query, true gallery
+-- image's rank):
+--
+--                   top-1   top-10   not in top-200
+--   probes = 1      21/63   32/63    21        <- production today
+--   probes = 4      30/63   40/63    10
+--   probes = 10     30/63   40/63    10        (identical to exact at depth 200)
+--   exact scan      30/63   40/63    10
+--
+-- Latency of this function's query shape (10 random query vectors, median):
+-- probes=1 464 ms, probes=4 506 ms, probes=10 543 ms, exact 1,742 ms. So +~80 ms
+-- inside an identify request that takes ~9 s end to end.
+--
+-- Setting the GUC on the function scopes it to this RPC only (it does not
+-- change the database default). Callers: /api/identify (two lanes),
+-- /api/gallery, /api/gallery/similar, /api/embassy/voice-search.
+--
+-- Rebuilding the index with lists ≈ rows/1000 would be the fuller fix; it takes
+-- a table lock and a long build, so it is left for a separate, scheduled change.
+
+ALTER FUNCTION public.match_clip_images(vector, double precision, integer)
+  SET ivfflat.probes = 10;

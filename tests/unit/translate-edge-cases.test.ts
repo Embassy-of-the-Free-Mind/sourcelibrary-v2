@@ -98,6 +98,8 @@ const writeArgs = {
   book: { language: 'latin' },
   text: 'New AI translation.',
   promptRef: { id: 'x', name: 'Standard Translation', version: 12 },
+  // what produced the text (#4613) — the door refuses a write without it
+  call: { call_site: 'tests/unit/translate-edge-cases.test.ts', promptText: 'PROMPT', generationConfig: {}, run: { code_version: 'test', host: 'test' } },
 };
 
 describe('writePageTranslation human-edit guard', () => {

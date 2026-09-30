@@ -1,0 +1,50 @@
+name: Auto-merge tier:auto PRs
+
+# Merges ONE green `tier:auto` PR per run (scripts/maintenance/auto-merge.mjs):
+# test + DCO green, no `blocked`, settled ≥10 min, main quiet ≥8 min (one
+# Vercel build at a time), entities-sweep interlock clear. `tier:hold` PRs are
+# never touched — a human merges those. Labels come from pr-tier.yml.
+#
+# To stop a specific PR: add the `blocked` label. To stop everything: disable
+# this workflow in the Actions tab.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_run:
+    workflows: ['Unit & Integration Tests']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Print what would merge, merge nothing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write   # to dispatch post-deploy-warm.yml after a merge (a GITHUB_TOKEN push does not trigger it)
+
+concurrency:
+  group: auto-merge
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --omit=dev --ignore-scripts
+      - name: Merge one ready PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: node scripts/maintenance/auto-merge.mjs ${{ inputs.dry_run == true && '--dry-run' || '' }}

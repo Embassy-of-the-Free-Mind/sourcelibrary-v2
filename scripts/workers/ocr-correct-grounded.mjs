@@ -47,6 +47,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { normalizeLongS, isCorrectionAcceptable, detectLongSArtefacts } from '../lib/early-modern-text.mjs';
+import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 
@@ -111,13 +112,16 @@ async function correctPage(page, bookId) {
   const b64 = Buffer.from(await resp.arrayBuffer()).toString('base64');
   const before = page.ocr.data;
 
+  // Sent AND recorded (#4613): the page's engine block is built from these same values.
+  const promptText = PROMPT + before.replace(/<[^>]+>/g, '').trim() + '\n--- END TRANSCRIPTION ---';
+  const generationConfig = { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } };
   const r = await ai.models.generateContent({
     model: MODEL,
     contents: [{ role: 'user', parts: [
-      { text: PROMPT + before.replace(/<[^>]+>/g, '').trim() + '\n--- END TRANSCRIPTION ---' },
+      { text: promptText },
       { inlineData: { mimeType: 'image/jpeg', data: b64 } },
     ]}],
-    config: { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } },
+    config: generationConfig,
   });
 
   // An unattended worker that writes no usage row is money the dial cannot see
@@ -147,8 +151,21 @@ async function correctPage(page, bookId) {
   // The model does not reliably honour the ſ instruction — normalise deterministically.
   text = normalizeLongS(text);
   const verdict = isCorrectionAcceptable(text, before);
-  return { text, verdict, finish, before };
+  // The prompt embeds the page's own prior transcription, so its sent hash is per page —
+  // which is the point: the record says exactly what this correction was asked to do.
+  const engine = geminiEngine({
+    call_site: 'scripts/workers/ocr-correct-grounded.mjs', api: 'realtime', model: MODEL,
+    prompt: { id: null, name: 'grounded-correction (inline)', version: 'inline', hash: null, text: promptText },
+    generationConfig,
+    run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
+    input: imageInput({ url }),
+    response: { modelVersion: r.modelVersion },
+  });
+  return { text, verdict, finish, before, engine };
 }
+const RUN_ID = `ocr-correct-grounded/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
+const CODE_VERSION = await codeVersion();
+const HOST = host();
 
 let totals = { pages: 0, written: 0, rejected: 0, skipped: 0 };
 for (const book of books) {
@@ -187,8 +204,11 @@ for (const book of books) {
       }
       if (APPLY) {
         await saveRevisionsBeforeOverwrite(db, [p.id], 'ocr', { reason: 'grounded_correction' });
+        const prov = ocrProvenance(v.text, v.engine);
         await db.collection('pages').updateOne({ id: p.id }, { $set: {
           'ocr.data': v.text,
+          'ocr.content_hash': prov.content_hash,
+          'ocr.engine': prov.engine,
           'ocr.source': 'mineru+gemini-grounded',
           'ocr.model': MODEL,
           'ocr.corrected_from': 'mineru',

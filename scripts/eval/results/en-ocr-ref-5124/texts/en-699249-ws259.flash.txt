@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>Hyndluljoth</header>
+<page-num>[ 225 ]</page-num>
+
+23. "Hervarth, Hjorvarth, Hrani, Angantyr,
+Bui and Brami, Barri and Reifnir,
+Tind and Tyrfing, the Haddings twain,—
+And all are thy kinsmen, Ottar, thou fool!
+
+24. "Eastward in Bolm were born of old
+The sons of Arngrim and Eyfura;
+With berserk-tumult and baleful deed
+Like fire o'er land and sea they fared,—
+And all are thy kinsmen, Ottar, thou fool!
+
+25. "The sons of Jormunrek all of yore
+To the gods in death were as offerings given;
+
+---
+
+23. Stanzas 23 and 24 name the twelve Berserkers, the sons of Arngrim and Eyfura, the story of whom is told in the *Hervarar-saga* and the *Orvar-Oddssaga*. Saxo Grammaticus tells of the battle between them and Hjalmar and Orvar-Odd. Line 1 does not appear in the manuscript, but is added from the list of names given in the sagas. The Berserkers were wild warriors, distinguished above all by the fits of frenzy to which they were subject in battle; during these fits they howled like wild beasts, foamed at the mouth, and gnawed the iron rims of their shields. At such times they were proof against steel or fire, but when the fever abated they were weak. The etymology of the word *berserk* is disputed; probably, however, it means "bear-shirt."
+
+24. The manuscript omits the first half of line 1, here supplied from the *Orvar-Oddssaga*. *Bolm*: probably the island of Bolmsö, in the Swedish province of Smaland. In the manuscript and in most editions stanza 24 is followed by lines 3-4 of stanza 22. Some editors reject line 5 as spurious.
+
+25. In the manuscript line 1 stands after line 4 of stanza 29. Probably a stanza enumerating Jormunrek's sons has been lost. Many editors combine lines 3-4 of stanza 22 and lines 2-4 of
+
+<vocab>Hyndluljoth, Hervarth, Hjorvarth, Hrani, Angantyr, Bui, Brami, Barri, Reifnir, Tind, Tyrfing, Haddings, Ottar, Bolm, Arngrim, Eyfura, berserk, Jormunrek, Hervarar-saga, Orvar-Oddssaga, Saxo Grammaticus, Hjalmar, Bolmsö, Smaland</vocab>

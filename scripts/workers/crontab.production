@@ -188,3 +188,8 @@
 */10 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
 # Monday 08:10 — volumes that bill while their instance is stopped/archived, with approximate cost
 10 8 * * 1 cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply --weekly" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
+# Weekly CLIP index integrity audit (#5195): drift / orphans / missing-from-index. Installed live 2026-09-28.
+45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
+# Monthly translation corpus audit, stage 1 = the draw (#5301, runbook scripts/eval/translation-corpus-audit/MONTHLY.md).
+# No model call, no spend; pushes branch eval/tca-<YYYY-MM>. Stage 2 (the judge) is a claude.ai routine on the 2nd.
+30 4 1 * * [ -f /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh ] && flock -n /tmp/sl-tca-monthly.lock bash /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh >> /var/log/sourcelibrary/tca-monthly.log 2>&1

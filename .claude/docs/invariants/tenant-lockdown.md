@@ -1,6 +1,6 @@
 # Tenant subdomain lockdown
 
-**Read this when:** Touching `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, `src/lib/tenant-global-paths.ts`, or any component that builds a URL rendered on a partner subdomain.
+**Read this when:** Touching `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, `src/app/rooms/**`, `src/lib/reading-rooms*.ts`, `src/lib/tenant-global-paths.ts`, or any component that builds a URL rendered on a partner subdomain or inside a reading room.
 
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
@@ -35,3 +35,35 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 **The preview trap has a second form: visiting the preview host directly.** No `Host:` header needed — a preview URL is `sourcelibrary-v2-git-*.vercel.app`, which is *not* a `.sourcelibrary.org` subdomain, so every host-gated code path (`isTenantSubdomain`, `useEmbedContext`) correctly evaluates to false and the tenant branch never executes. A check there can only ever pass. #3383 shipped a double-mounted menu onto EFM's public landing page this way: it was "verified" on a preview at the **path-based** `/embed/bph`, where the buggy guard happened to work, while the collision only exists behind the subdomain rewrite. **If a behaviour depends on the host or on a proxy rewrite, a preview cannot verify it — only the real subdomain can, after deploy.**
 
 **Never branch on `usePathname()` in a component that can render on a tenant host.** The proxy *rewrites* `/` → `/embed/<tenant>` internally, but `usePathname()` returns the **browser** path (`/`). So a check like `pathname.startsWith('/embed/')` fires on the apex — where it is not needed — and is silently inert on the subdomain, where it is. That inverted guard is exactly what #3383 shipped. Gate on the host (`useEmbedContext`) or on the `x-tenant-*` headers the proxy stamps, never on the public path.
+
+## Self-serve reading rooms (`/rooms/<slug>`, #5266)
+
+A reading room is the partner-room machinery opened to any signed-in reader: a
+shelf built on a collection or one of their lists, with the global book page
+and reader rendered in embedded mode underneath it. Same invariants, three
+differences to keep straight:
+
+1. **Admission is membership, checked on the READ side.** `findBookInRoom`
+   (`src/lib/reading-rooms.ts`) is the only admission check; every route under
+   `/rooms/[slug]/book/*` calls it before rendering and 307s to the shelf on
+   a miss. "Not found" and "not in this room" are the same answer on purpose.
+   It fails closed on a lookup error. Do not add a room route that renders a
+   book without it.
+2. **`isEmbedded` comes from the pathname, not from `x-tenant-*` headers.**
+   The proxy stamps no tenant headers for rooms (there is no tenant), so the
+   server-side `getTenantContext()` is null and no tenant filtering applies —
+   correct, rooms hold global books. The client hooks (`useEmbedContext`,
+   `useEmbedHref`, `EmbedHistoryPatch`, the root layout's pre-paint script)
+   recognise `/rooms/<slug>` through `src/lib/reading-rooms-paths.ts`. The
+   book page gets `isEmbedded` via the `tenantContext` prop with `id: null`.
+   **Tell:** a reader inside a room whose page-turn links go to `/book/…` —
+   the hook stopped recognising the room.
+3. **Framing is per room.** The proxy's X-Frame-Options block allows a room
+   from the hostnames in its `allowed_origins`, looked up on request; the
+   management pages `/rooms`, `/rooms/new`, `/rooms/manage/*` are DENY like
+   the rest of the site. `RESERVED_ROOM_SEGMENTS` must list every
+   non-slug folder under `src/app/rooms/`.
+
+Rooms are `noindex` until the spam surface of user-made public pages is
+understood; their books are already indexed at the canonical `/book` URLs.
+

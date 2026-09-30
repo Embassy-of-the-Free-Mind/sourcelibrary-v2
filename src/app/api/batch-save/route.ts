@@ -6,6 +6,10 @@ import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance } from '@/lib/write-provenance';
+
+/** Provenance identity of this route (#4613). */
+const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
 export const maxDuration = 300;
@@ -132,6 +136,10 @@ export const POST = withAuth(async (request, session) => {
                 $set: {
                   ocr: {
                     data: text,
+                    ...ocrProvenance(text, engineFromBatchJob({ id: job.id, model: job.model, prompt_id: job.prompt_reference?.id, prompt_name: job.prompt_reference?.name, prompt_version: job.prompt_reference?.version, prompt_hash: job.prompt_reference?.content_hash, created_at: job.created_at }, {
+                      batch_job_id: job.id, collected_by: ROUTE_CALL_SITE, now: new Date(),
+                      input: notRecorded('batch-save receives collected results; the submitter recorded no per-page image'),
+                    })),
                     updated_at: now,
                     model: job.model,
                     language: job.language,
@@ -153,6 +161,10 @@ export const POST = withAuth(async (request, session) => {
                 $set: {
                   translation: {
                     data: text,
+                    ...translationProvenance(text, engineFromBatchJob({ id: job.id, model: job.model, prompt_id: job.prompt_reference?.id, prompt_name: job.prompt_reference?.name, prompt_version: job.prompt_reference?.version, prompt_hash: job.prompt_reference?.content_hash, created_at: job.created_at }, {
+                      batch_job_id: job.id, collected_by: ROUTE_CALL_SITE, now: new Date(),
+                      input: notRecorded('batch-save receives collected results; the submitter recorded no source text hash'),
+                    })),
                     updated_at: now,
                     model: job.model,
                     source_language: job.language,

@@ -1842,7 +1842,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 : hasSummary
                   ? (
                     <>
-                      {linkEntities(summaryText!, summaryEntities)}
+                      {linkEntities(summaryText!, embedPolicy.showEncyclopediaLinks ? summaryEntities : [])}
                       {lang !== 'en' && <span className="block mt-3 text-sm" style={{ color: '#948d80' }}>{t.summaryIsEnglish}</span>}
                     </>
                   )
@@ -2388,7 +2388,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <div className="prose-content max-w-none">
                     {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
                       <p key={i} className="mb-4 last:mb-0">
-                        {linkEntities(paragraph, summaryEntities)}
+                        {linkEntities(paragraph, embedPolicy.showEncyclopediaLinks ? summaryEntities : [])}
                       </p>
                     ))}
                   </div>

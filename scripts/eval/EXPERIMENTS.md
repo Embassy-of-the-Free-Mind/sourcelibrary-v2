@@ -18,6 +18,445 @@ person pays for it again.
 The replication column exists because of 2026-09-02, below.
 
 ---
+## Monthly translation corpus audit (#5301) — does the served defect rate move?
+
+One entry for the series, one row per month (newest first); the row is written by the stage-2 routine
+(`scripts/eval/translation-corpus-audit/MONTHLY.md`). Design: ~100 books, one interior page each, 15 languages,
+post-stratified by live translated pages, no arm quota, fresh seed, 45 blinded controls, Opus subagent judge.
+A month whose controls fail gets no row. Baseline is the 2026-09-30 one-off below (311 books, arm-quota draw —
+compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judged, never accuracy.
+
+| month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
+|---|---:|---|---:|---|---:|---:|---:|---|---|
+| 2026-09 | 103 | 85.6 (76.9–93) | 2.9 | 14.3 (7.1–22.5) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 |
+
+---
+
+## 2026-09-30 (later) — POST-HOC: the same MinerU rule, re-applied with PR #5299's footnote step (#5182)
+
+**Headline: with footnotes kept, the fixed rule says PEER, but this is a re-analysis, not a preregistered result.**
+The rule was fixed before the footnote step existed. The step was designed after seeing the preregistered arm's
+failures (entry below). MinerU was re-run (`en-mineru-fn-5182-2026-09`, $0, CPU) because the first run's raw output
+was not kept, and PR #5299's `readPageFootnotes()` + assembly were applied verbatim. Footnotes were appended on 26/122 pages.
+- **ALL cell, before → after:** catastrophic 2.6% → **0.0%**; median CER 0.66% → 0.45%; pooled 6.17% → 1.84%.
+  Paired vs lite: MinerU better 10 / lite better 49 → 10 / **34**, median Δ +0.19 → **+0.08 pp** [0.00, 0.15].
+- **Ladder (exploratory, n = 16):** pooled CER on lite-refused pages 3.30% → 1.39% = **0.95×** lite's pooled rate.
+- **By period:** 1880–1930 median Δ 0.00 pp (decision, 70 books); 1820–1879 +0.06 pp (exploratory, 25); **before 1820 still
+  +2.05 pp** (long s — the footnote step does not touch it).
+- **Omission pages:** 8 of 10 repaired to ≤ 1.6% CER. Two were not: en-6aa1d5-ws52 (notes already in the body; the
+  residual error is elsewhere, Hebrew among it) and en-699200-ws404 (note appended, 21.8% remains). Neither was read by eye.
+- **Caveat that the median hides:** lite still wins the page-by-page count 34–10 (sign p < 0.001). PEER here means
+  "within 0.2 pp at the median", which the rule's authors chose, not "as good as lite on every page".
+- *Replicated?* No. A fresh preregistration on new pages, or a second draw, is what would confirm it.
+- Artifact: `results/en-ocr-ref-5124/mineru-fn-arm-2026-09-30.{md,json}` (§9 = before/after); DECISIONS.md second MinerU row.
+
+## 2026-09-30 — MinerU on the English reference pages: peer engine, tier-3 fallback, or neither? (#5182, #3389)
+
+**Headline: the preregistered rule says NEITHER, narrowly on both counts, and the main failure is mechanical.**
+First accuracy measurement of MinerU (3.4.0, CPU pipeline, `-m ocr`, the worker's `sanitize()` verbatim) against the
+#5216 human references, on the 114 books lite and flash were scored on. $0 (no model call; lite/flash rows reused).
+- **Paired vs lite (decision, 98 pairs):** MinerU better 10 / lite better 49 / tie 39, sign p < 0.001, median Δ
+  **+0.19 pp** [0.10, 0.86]. That is inside the ±0.2 pp PEER band, but the CI is not. Median CER 0.66% vs 0.20%.
+- **Catastrophic 2.6% (3/114), bar 2%.** MinerU never refuses (114/114 text vs lite 98, flash 94). All three > 50% pages,
+  and all five worst by eye, are **footnotes dropped whole**. MinerU reads them (re-run: `middle.json` has them as
+  `page_footnote` in `discarded_blocks`), but its markdown leaves them out. 10/114 pages lose ≥ 20% of the words this way.
+- **Ladder (exploratory, n = 16):** MinerU reads every page lite refused, median CER 0.21%, but pooled 3.30% = **2.25×**
+  lite's pooled 1.46% (bar 2×). The pooled number is dragged by the same footnote pages.
+- **Before 1820 (19 books):** median Δ +2.34 pp. Long s read as f on 12/19 pages (81 per 1,000 words; 0 after 1820).
+- **Digits:** silent misreads 2/819 (one "Prop. 11"→"1", twice) vs lite 0/689 and the Archive 11/819; plus 40
+  visibly garbled (`2o`, `7oo`). Formula lines come out as `$$ 8 0 \times 1 8 9 8 0 $$` LaTeX, which `sanitize()` keeps.
+- **Floor:** MinerU is not byte-deterministic (12/20 identical), but the CER floor is 0.00 pp median, 0.10 pp max.
+- By eye: 10 pages + one pre-1820 page, `mineru-arm-byeye.jsonl`. Reference error found: en-699249-ws289 prints 118, ref has 119.
+- *Replicated?* No. A footnote-restored arm (append the `page_footnote` blocks) is the obvious next run and needs a
+  preregistration amendment first. It is not a worker change.
+- Artifact: `results/en-ocr-ref-5124/mineru-arm-2026-09-30.{md,json}`; run ids `en-mineru-5182-2026-09`,
+  `en-mineru-repeat-5182-2026-09`; `PREREGISTRATION-mineru-english-5182.md`; DECISIONS.md row "MinerU as peer or tier-3".
+
+## 2026-09-30 — Leaf identity: is the page image a reader sees the page that was translated? (#5274 follow-up, #4790)
+
+- **Design.** The 311 audit pages (one per book, the same draw, not redrawn). Each served `display_photo` was compared with its OCR text on page number, header and first/last lines. Eight Sonnet subagents read 291 pages ($0). The 20 eye-subset pages were reused. Every mismatch was arbitrated by opening the display image AND the source leaf `pages.photo` points at.
+- **Result. Wrong leaf on 6 of 298 decidable pages: 2.0% (Wilson 95% CI 0.9–4.3%). All 6 are Internet Archive: 6 of 156 = 3.8% (CI 1.8–8.1%). Non-IA: 0 of 142 (CI 0–2.6%).** 13 pages were undecidable (Tibetan, cursive MSS), so the upper bound is 6.1%.
+- **The image is right in all six; the TEXT is shifted.** The display image equals the IA leaf; the OCR is the previous page (5 cases) or 5 pages earlier (1 case).
+- **The OCR run does not protect.** All six are Gemini OCR: 5 `batch_api`, 1 realtime `ai`. So the existing `ia_djvu`-only detectors (`ia-ocr-leaf-drift`, `ia-ocr-page-plausibility`) are blind to them.
+- **Consequence.** The #4790 concern is IA-specific in this sample, not corpus-wide. But it extends beyond `ia_djvu` text to Gemini-OCR'd IA books.
+- *Replicated?* No. Book-wide extent is unmeasured and needs a detector.
+- **Artifact.** `scripts/eval/results/leaf-identity-2026-09-30/` (README, verdicts.jsonl, summary.json, worker-instructions.md).
+
+## 2026-09-30 — Translation corpus audit: how faithful is a random SERVED translation, by language, model and period? (#5274)
+
+**Headline: 87–89% of served pages read at fidelity ≥ 4 of 5; 3.4–3.8% are ≤ 2; 11–14% carry at least one major
+defect.** The lower fidelity / higher defect figure re-weights the quota-sampled model arm to its true share per
+language (`arm-shares.json`; lite omits more and is the majority arm); the upper is the plain language-weighted
+estimate (≥ 4: 89.1%, CI 85.3–92.5; major 11.4%, CI 7.7–15.5). Page-weighting (random page, not random book) changes
+nothing (89.3%). Post-stratified by language over live translated pages; sampling limits stated in the README. Latin-script languages
+(198 books) are at 92.9% ≥ 4 / 8.6% major; non-Latin-script (113 books) at 70.8% ≥ 4 / 22.1% major. Per language,
+German, French, Italian, Dutch, Latin, English and Spanish are all ≥ 89% at ≥ 4 (directional to decision-grade n);
+Greek 75% / 22% major (36 books); Sanskrit 50% ≥ 4 with omission on 58% of pages (the English philological apparatus
+around the Sanskrit is condensed into a note); Tibetan 64%, Korean 50%, Japanese 67% (exploratory n).
+**The dominant defect class is minor mistranslation (153 of 336 defects); the dominant MAJOR class is fluent prose over
+garbled OCR** (`garble_passthrough`, 6.6% of pages, 15 major) and invention (11.2% of pages, 15 major; several are
+text imported from adjacent pages, the #5026 context-leak shape). Untranslated, wrong-language, truncated and
+repetition defects were all 0 in the interior-page draw (the 66,525 truncations of #5055 sit at page ends the draw
+does not sample; that count stands).
+**Arms (unpaired, model follows the book — not a causal comparison):** lite 82.5% ≥ 4 / omission 20.1% / invention
+8.4%; flash 87.3% / 8.9% / 14.6%. Lite omits more, flash invents more. The lite arm is also the newer prompt era
+("11", "v10"); flash is mostly "v2". A paired re-translation would be needed to separate model from prompt from book.
+- **Design.** Seeded draw (`draw.mjs --seed 20260930`): one interior page (15% front / 5% back skipped) per book from
+  live books (`visible ≠ false`, `hidden ≠ true`, `pages_translated > 0`), 15 languages with quotas (Latin 60 …
+  Japanese 6), per-language quota on translation-model arm; 311 pages / 311 books. Exclusions: non-text page types,
+  OCR < 200 chars, translation < 100 chars, `translation.source` ∉ {ai, batch_api}, `edited_by`. Judge: Claude Opus
+  (a different family from the Gemini translator — a Gemini self-judge scored κ 0.107 on Suda), source-grounded,
+  reference-free, single-candidate fidelity 1–5 + nine flags + defect list (`JUDGE-PROMPT.md`), 15 items per blinded
+  packet. **measure = `judged`**, never accuracy (no independent reference).
+- **Controls, read first:** 15 swap (another page's translation) → 15/15 rated ≤ 2 and flagged wrong_page; 15 drop
+  (middle ~35% removed) → 15/15 flagged omission; 15 repeat (same item twice) → 11/15 exact, 15/15 within 1, 13/15
+  identical flags. The judge's noise is ± 1 on about a quarter of pages and never more.
+- **Second judge:** Sonnet on 8 packets (107 main items): exact 67.3%, within 1: 100%, no disagreement ≥ 2; its
+  controls 5/5 swap, 5/5 drop; its arm split matches (lite 77% ≥ 4, flash 89%).
+- **Hand read (20 pages, all 15 languages, images opened, `eye-notes.md`):** 20 of 21 judge-flagged defects confirmed,
+  1 unverifiable at scan resolution, 0 rejected; 0 missed major defects on the nine fidelity-5 pages. **Two of the
+  20 pages (both Internet Archive scans: Oxyrhynchus Papyri V p.240, Don Quixote 1605 p.269) serve a display image
+  one leaf away from the page that was transcribed and translated** — the translation is faithful to its source and
+  the reader still sees the wrong page beside it. A text-only judge cannot see this; the fidelity numbers above are
+  conditional on the served image being the transcribed leaf (#4790 class). Two of 20 pages have a catalogue
+  language that is not the page's (Arabic → German; Korean → Classical Chinese), as eval-design §3.2 predicts.
+- **Replicated?** No. Second judge on a third of the sample agrees; the draw is seeded and re-runnable. The
+  lite-vs-flash split is confounded and must not be read as a model result.
+- **Spend.** $0 API (subscription subagents: 24 Opus + 8 Sonnet packets, ≈ 4M subagent tokens). No re-translation.
+- **Artifact.** `scripts/eval/results/translation-corpus-audit-2026-09-30/` (manifest, items, verdicts/{opus,sonnet},
+  report.{md,json}, eye-notes.md). Store: `scripts/eval/store/scores/translation-corpus-audit-judge@1/2026-09.jsonl`
+  (476 rows, `run_id translation-corpus-audit-2026-09-30`). Scripts: `scripts/eval/translation-corpus-audit/`.
+  Dashboard: no translation cell exists on `/platform/admin/ocr-evidence` yet — follow-up. Decision rows: DECISIONS.md
+  "Translation". Report page: linked from #5274.
+## 2026-09-29 — Round 3 of #5250: do the round-2 Kraken photometric gains hold on FRESH Syriac pages? (#5250, follow-up #5277)
+
+**Headline: YES, every pre-registered prediction confirmed, per stratum.** Kraken Sophro Mhiro, order-free line CER N2
+(lower is better), 80 fresh published-GT folios (40 Jerusalem SMMJ 36 dark spreads, 40 ÖNB Cod. Syr. 1 clean leaves;
+overlap with rounds 1–2: 0, asserted by `syriac-draw-r3.py`), A/A floor 0 in both strata (15 + 15 repeat reads, 30/30
+byte-identical: Kraken on CPU is deterministic too).
+- **Dark spreads** (baseline median 0.162): **sauvola 38–2, −3.8 pp** (0.111); **unsharp 37–3, −2.1 pp**; **denoise 35–4–1,
+  −1.5 pp**. All three confirm. `flatten` had no prediction and **hurts** here: 11–29, +1.4 pp worse (round 2 had it null,
+  8–12). Its losses go as far as +8.4 pp on a page.
+- **Clean leaves** (baseline median 0.248): **flatten 40–0, −10.6 pp** (0.248 → 0.138; the round-2 figure was −10.0 pp) and
+  **unsharp 39–0–1, −4.2 pp** confirm. `denoise` was predicted null and is null (18–22, p 0.64). Flatten reads more of the
+  page: median 834 characters against 736 for `none` (GT 912), and every one of the 40 pages gains (min −2.0 pp, max −27 pp).
+- **The pre-registration's text said "flatten HURTS clean".** That contradicts round 2's own measurement (20–0 helps), so
+  the amendments comment (posted before any read) judged the cell against round 2's direction. Against the literal text the
+  cell would read "denied"; the results JSON carries both (`prediction_note`).
+- **By eye** (image opened, `onb-syr1-0228_00000243`): flatten strips the yellow paper cast and evens the background, the
+  red rubric points survive, the ink comes out lighter and browner. Consistent with round 2's reading.
+- **Design.** Pre-registered on #5250 ("Round 3", 2026-09-29) + amendments (comment 5890832946). Arms none / unsharp /
+  denoise / flatten, sauvola on dark only; predictions written down before the run. Decision rule: sign matches the
+  prediction AND |median Δ| > the stratum's A/A p90 AND sign test p < 0.05.
+- **Scope, still.** One manuscript per stratum, external pages, so the strata stay `exploratory` on the dashboard and the
+  confirmation is *within-manuscript*: fresh folios of the same two codices. Whether "dark spread" and "clean leaf"
+  transfer to library captures is untested, and the two winning arms are opposite in kind (flatten hurts dark; round 1:
+  sauvola hurts clean 6–14), so a misclassified page gets the arm that hurts it. **No lane change in this round**; the
+  per-stratum step behind a capture-class classifier is #5277.
+- **Replicated?** This IS the replication of round 2's exploratory result, on disjoint pages. Not yet replicated on a third
+  manuscript or on library captures.
+- **Spend.** $0. Hetzner CPU, one Kraken worker at nice 10, 390 reads in 9.25 h (13:08–22:23Z; Jerusalem spreads ≈ 115 s,
+  ÖNB leaves ≈ 50 s), 0 errors, 0 empty reads.
+- **Artifact.** `scripts/eval/results/ocr-preprocessing-2026-09-29-r3.json` (+ `-r3/` texts, timings, prep meta, GT manifest,
+  draw log). Store run_id `5250r3-syriac-kraken-2026-09-29`. Dashboard cells
+  `image-arms/syriac-estrangela-{dark,clean}-fresh/line_cer_n2/<arm>` with the new "Predicted → verdict" column.
+
+## 2026-09-29 — Round 2 of #5250: do tighter band crops help Yigdzin, and do the untested photometric arms help Yigdzin or Kraken? (#5250)
+
+**Headline, bands: NO. Band crops do not beat the production leafcrop for Yigdzin.** Under the pre-registered merge rule
+`leaf-3band` gains +3 matched Derge syllables (60–35, p 0.013, floor 1). That trips the literal decision rule. But
+identity falls 9 pp (8–90) and 95/118 pages carry a duplicated line. The cause (read from the reads, shown on #5250):
+the lower band's copy of the overlap line comes back **without its above-line vowel signs** (ད་ for དེ་). The cut
+sits in the ink valley, and gigu/drengbu rise into it. So that copy scores 0.55–0.74 against the upper copy and the
+0.8 merge keeps it. Post hoc (not pre-registered), dropping the overlap line unconditionally makes both band arms
+null on identity AND matched (3band 49–39, median 0, p 0.34). The matched "gain" was the duplicate aligning to
+repeated sutra formulae. `leaf-lines` was skipped per the pre-registration: BDRC PhotiLines matched the book's line
+mode on only 2 of the first 17 pages, so ≥ 95/100 was unreachable.
+**Headline, photometric: NULL for Yigdzin, POSITIVE for Kraken.** Yigdzin: unsharp, gamma 0.8/1.2, flatten, gray and
+denoise are all within the floor on identity, matched syllables and lines. The 18 controls stay 18/18 at 14 lines.
+Kraken (Sophro Mhiro, order-free line CER N2, lower is better) is a different story:
+- **unsharp** helps both manuscripts: dark Jerusalem spreads 17–3 (−1.8 pp); clean ÖNB leaves 20–0 (−5.1 pp).
+- **flatten** helps ÖNB: 20–0, 0.236 → 0.130. By eye, it strips the paper tint and the facing-page show-through, and it
+  reads 13% more characters, toward the GT length.
+- **denoise** helps Jerusalem: 18–2 (−1.8 pp).
+- **gamma12** hurts slightly: 4–16.
+- **sauvola** on the dark stratum: 20–0 (−4.2 pp). This is BYTE-IDENTICAL to round 1 (Kraken is deterministic, same
+  20 pages), so it REPRODUCES the post-hoc finding and adds no independent evidence.
+- **Design.** Pre-registered on #5250 ("Round 2", 2026-09-29).
+  - Tibetan: the round-1 100 Derge-referenced pages (seed 5250, locus fixed) + 18 controls. Every arm is paired against
+    `leafcrop`. The A/A floor is leafcrop vs leafcrop-repeat on 30 pages: p90 |Δ| = 0.002 identity, 1 syllable, 0
+    lines.
+  - Band geometry (tibetan-prep-r2.py): nominal cuts divide leafsplit's text extent; each cut sits in an ink-profile
+    valley; one line is shared. Fixed BEFORE any read after an eye-check: detrend (16/118 pages found no pitch) and a
+    cross-leaf octave fix (two-line overlaps).
+  - Syriac: the round-1 40 pages as two pre-registered strata (jerusalem36 dark, onb-syr1 clean). A/A floor 0.
+    Baseline `none` is byte-identical to round 1 (40/40).
+- **Replicated?** The round-2 leafcrop control reproduces round 1: 87/118 byte-identical, paired identity 7–11–82,
+  p 0.48. The Kraken photometric gains are one manuscript per stratum and external pages, so they are **exploratory**.
+  The next step is a pre-registered run on library Syriac pages (unsharp everywhere; flatten on clean leaves;
+  sauvola/denoise on dark captures) before any Syriac lane routing change.
+- **Spend.** GPU: sl-mitra-1 L4 running 10:58–12:24Z = 1.44 h ≈ **€1.13**. It was API-stopped and confirmed `stopped`
+  12:24:26Z. From 09:34Z the poweron got `out_of_stock` until the 12th retry, and nothing billed while it was stopped.
+  Gemini: $0.
+- **Artifact.** `scripts/eval/results/ocr-preprocessing-2026-09-29-r2.json` (+ `-r2/` texts, geometry, gate log). Store
+  run_ids `5250r2-tibetan-yigdzin-2026-09-29` and `5250r2-syriac-kraken-2026-09-29`. Dashboard cells
+  `image-arms/{tibetan-dbu-can,syriac-estrangela-dark,syriac-estrangela-clean}/…` on
+  `/platform/admin/ocr-evidence#image-arms`.
+
+## 2026-09-29 — Does a stronger image matcher (DINOv2-small, SigLIP2) beat CLIP ViT-B/32 for /identify, and where does CLIP actually lose? (#3193 Phase 2)
+
+- **Question.** The Embassy visitor photographs a plate and `/identify` should land on that page. After Phase 1
+  (crop index, query crop, Gemini rerank of the top candidates), what was left was (a) sibling woodcuts from the same
+  book outranking the true one and (b) perspective shear. Does an instance-level model fix those, at what CPU cost?
+- **Design.** `measure: accuracy` (retrieval rank of the known true gallery image). `scripts/eval/identify-bench.mjs`
+  with three new strata beside `main` (24 plates from 24 books, wall recipe): `shear` (the same 24 plates under the
+  2026-09-26 sample test's 12% affine shear, dark wall, blur), `siblings` (12 books with ≥ 6 illustrations; up to 60
+  of each book's other illustrations added to the pool), `named` (the three known misses by id: Aldrovandi serpents,
+  Musaeum metallicum, Rehe palace plans). Same pool, same wall photos, same bbox crops through every model; only the
+  embedding changes. Models ran on Hetzner CPU (`identify-matcher-server.mjs`, transformers v4 in a scratch dir, fp32
+  unless stated): `onnx-community/dinov2-small-ONNX` (CLS and GeM-pooled patch tokens) and
+  `onnx-community/siglip2-base-patch16-224-ONNX` (vision tower). Three pools: **random** (1,194 images), **hard
+  negatives** (the same + each target's top-50 CLIP neighbours mined from the LIVE `clip_embeddings` index, 3,716),
+  and the **live index itself** for CLIP (`scripts/eval/clip-index-recall.mjs`, 333K rows).
+- **Positive control.** Plain run first (n=24, pool 400): Runion 23/24 (July: 23/24), B 15/24 (July 17/24,
+  re-sampled set), Bcrop 23/24. CLIP numbers reproduced exactly between two runs on the same frozen set (B 13, Bcrop 21).
+- **Result 1: the index, not the model, was hiding matches.** `clip_embeddings` is `ivfflat lists=32` (built at ~10K
+  rows) and `match_clip_images` runs at the default `probes=1`: one list in 32. Crop query, 63 targets, live table:
+
+  | search | top-1 | top-10 | not in top-200 |
+  |---|---|---|---|
+  | probes = 1 (production) | 21 | 32 | 21 |
+  | probes = 4 / 10 / exact (identical to depth 200) | 30 | 40 | 10 |
+
+  +~80 ms per query at probes=10 (543 vs 464 ms median). Fix: PR #5256 (one `ALTER FUNCTION … SET ivfflat.probes = 10`),
+  verified in a rolled-back transaction (six targets exact-ranked #1 went from absent in the RPC's top-20 to #1).
+  What still outranks the true image at scale (33 targets, read from catalogue descriptions, NOT by eye): 14 are
+  sibling illustrations of the same book, 19 similar-looking images from other books (another botanical woodcut,
+  another musical score); no covers or artwork copies.
+- **Result 2: matchers, crop query, top-1 / top-10 / top-20 of 63** (paired vs CLIP on top-1, two-sided sign test):
+
+  | pool | CLIP | DINOv2-s CLS | DINOv2-s GeM | SigLIP2 |
+  |---|---|---|---|---|
+  | random 1,194 | 49 / 62 / 63 | 56 / 62 / 63 (+11 −4, p=.12) | 54 / 61 / 61 | **59 / 63 / 63** (+12 −2, p=.013) |
+  | hard negatives 3,716 | 34 / 46 / 47 | **52** / 56 / 58 (+21 −3, p<.001) | 50 / 56 / 57 | 47 / **61 / 63** (+16 −3, p=.004) |
+
+  Uncropped wall photo, hard negatives, top-1: CLIP 21, DINOv2 CLS 45, SigLIP2 47 (+26 −0). Sibling stratum, crop,
+  random pool: CLIP 6/12, DINOv2 CLS 11/12, SigLIP2 10/12. End to end with the Gemini rerank on the random pool every
+  arm scored 63/63 — at 1.2K candidates the true image is always in the top 10, so the difference only shows at scale.
+- **Result 3: quantisation kills SigLIP2's gain.** Same frozen set, q8 (`model_quantized`): 633 ms/image (2.7× faster)
+  but crop top-1 49/63 against 48 for CLIP in that run and 59 at fp32. Budget fp32.
+- **Decision (proposed, Derek's call).** SigLIP2 fp32 as the recall model feeding the rerank: it is the only arm with
+  full top-20 recall under CLIP-mined hard negatives, and its misses are rank 2–4 (the rerank's job), where DINOv2's
+  fall to rank 31–96 on maps, tables and scores. The mining bias runs AGAINST SigLIP2 (the negatives are CLIP's
+  confusers and SigLIP2 is the CLIP-like model), so its margin is if anything understated. Not measured: each model's
+  OWN confusers at 333K — that is what the shadow table's switch-over test is for. Plan and cost in #3193.
+- **Cost.** $0 GPU. Gemini estimated at $1–2 across the five runs (describes + reranks; not metered per run). CPU: SigLIP2 fp32 ~1.3–1.4 s/image on
+  the shared Hetzner box (6,160 images measured), DINOv2-small ~0.9 s.
+- *Replicated?* The matcher ranking was run on two pools (random, hard-negative) of the same 63 targets; CLIP's
+  numbers reproduced exactly across reruns of a frozen set. Not replicated on a second sample of targets.
+- **Artifacts.** `scripts/eval/results/identify-matcher-bench-2026-09-28.json` (random pool, fp32 + reranks),
+  `…-2026-09-28-siglip2-q8.json`, `…-2026-09-28-index-recall.json`, `…-2026-09-28-hardneg-set.json` (reproduce with
+  `--set`), `…-2026-09-29-hardneg.json`. `run_id: identify-matcher-bench-2026-09-28`. Not an OCR cell, so no
+  `benchmark-dashboard-data.mjs` entry.
+
+## 2026-09-29 — Does image preprocessing (binarise / contrast / deskew / upscale / crop) help any OCR engine on our pages? Paired, four scripts, three engines (#5250)
+
+**Headline: cropping helps Yigdzin; no enhancement helps any engine. Per-leaf crop is the only arm that beats the
+current input anywhere. On Tibetan (100 Derge-referenced books) it recovers a median +46 matched Derge syllables per
+page (98–2) and brings the 18 hand-verified "1 short" controls to 18/18. Leafcrop has been production since 09-28.
+Otsu binarisation HURTS on every engine where it is measured: Yigdzin identity −0.028 (16–81), flash-lite Latin
+−0.6 pp CER (7–30), flash-lite CJK −0.5 pp (14–29). Sauvola, CLAHE, deskew and 2× Lanczos upscaling are null or
+negligible for Yigdzin and flash-lite. On Kraken (Syriac, 40 external pages) CLAHE and a native page crop HURT
+(3–37, 1–39). Binarisation splits by manuscript, post hoc: Sauvola 20–0 −4.2 pp on the dark Jerusalem spreads,
+6–14 worse on the clean ÖNB leaves. Decision: add no preprocessing step to the OCR crop path. The Syriac Sauvola
+split is a hypothesis for a pre-registered follow-up on library pages.**
+
+- **Question.** Pre-registered on #5250 (Derek, "do it"). Leaf-splitting was the only image-side change ever
+  tested (#4722: 6/18 → 18/18). Does binarisation, contrast, deskew or upscaling help, above all for the GPU engines,
+  and above all for the 50,210 Tibetan pages marked `ocr.unreadable`?
+- **Design.** `measure: accuracy`, paired: same page, same engine, same prompt and decode; only the image differs.
+  Arms: none (production 2400 px Lanczos cap), otsu, sauvola (w 25, k 0.2), clahe (clip 2, tile 8), deskew
+  (projection profile ±5°), upscale2x (Lanczos). Crops: Tibetan `leafcrop` (production partition crops) plus
+  exploratory leaf+enhancement combos; Syriac `gutter` (the lane's `findGutter`) and `pagecrop` (native crop,
+  spreads split at the fold, added before any read because the gutter never fires on this set).
+  **A/A noise floor first on 30 pages per stratum.** An arm counts iff |median Δ| > p90 |Δ_AA| and the sign
+  test p < 0.05; the rule was posted before any arm was read. Strata:
+  - Tibetan: Yigdzin-v1 @ 50506eb6 on sl-mitra-1 (production per-leaf worker, image source swapped). 100 books,
+    one interior page each, seed 5250. A page counts as referenced when production text hits Derge at identity
+    ≥ 0.85 in the window. The locus is fixed at draw time. Metrics: identity (precision), matched syllables,
+    lines. Plus the 18 #4722 controls and 50 MARK pages (one per book).
+  - Syriac: Kraken 7.1 Sophro Mhiro, default segmenter, RTL, on 40 published-GT MS pages (HTR Winter School,
+    external). Metric: order-free line CER N2 (09-16 instrument).
+  - Greek+Latin: flash-lite (production OCR prompt v16, hash 360c5a07…, T 0). 50 Greek benchmark pages with refs
+    (canonical, not leaf-checked) + 50 la.wikisource proofread pages (leaf-exact, external).
+  - CJK: flash-lite on 96 benchmark Chinese pages with Kanripo/CBETA refs (canonical, not leaf-checked).
+  - Scoring for both flash-lite strata: windowed CER (`scoreAgainstReference`). A page abstains when its `none`
+    read fails the guard; any other failed or unaligned read scores 1.0.
+- **Noise floor.** 0 on every stratum. Yigdzin whole-page A/A has 28/30 identical, and leaf A/A p90 is
+  0.002 identity. Kraken is 30/30 identical. flash-lite at T 0 is 24/24 and 21/21 identical on scored pairs.
+- **Result: Tibetan** (n=100 books; gains vs `none` unless noted).
+  - leafcrop: matched +46 (98–2), identity +0.011 (84–16), lines +1 (92–2).
+  - otsu: identity −0.028 (16–81), so HURTS.
+  - clahe: matched +2 (60–36, p 0.02), counts but is ~0.4% of a page.
+  - sauvola, deskew, upscale2x: null.
+  - vs leafcrop: leaf+otsu matched −3 (18–74), HURTS. leaf+sauvola/clahe/deskew null.
+  - Controls at 14 lines: leafcrop 18/18, none 2/18, whole-page enhancements 3–8/18.
+  - MARK structural acceptance: none 25/50, leafcrop 45/50, leaf+sauvola/clahe 46/50. By eye (10 accepted
+    leafcrop pages, read from image, line-start level): 5/10 dbu-can read correctly; 5/10 dbu-med cursive, which I
+    cannot verify. **Structure is not correctness**, and 6/10 already passed on the whole-page read.
+- **Result: Syriac** (n=40, baseline 0.186, which reproduces the 09-16 figure of 0.188).
+  - clahe +4.0 pp (3–37) and pagecrop +7.0 pp (1–39), both HURT. Pagecrop reads 15% fewer characters on the
+    Jerusalem spreads.
+  - upscale2x −0.2 pp (28–11): counts, negligible.
+  - sauvola −2.0 pp (26–14, p 0.08) and otsu (20–20): no.
+  - Post hoc by manuscript: Jerusalem sauvola 20–0 −4.2 pp, ÖNB 6–14 worse.
+- **Result: Greek+Latin** (84 scored, 16 abstained; baseline Greek 0.068, Latin 0.008).
+  - Latin: otsu +0.6 pp (7–30) and sauvola +0.06 pp (10–23), both HURT.
+  - Greek: every arm null.
+  - clahe, deskew, upscale2x: null.
+- **Result: CJK** (53 scored, 43 abstained on wide canonical windows; baseline 0.168).
+  - otsu +0.5 pp (14–29), HURTS.
+  - Everything else null.
+- **Deviations.**
+  - Syriac: 40 pages, not 50, because the published GT has 40.
+  - Syriac reads ran on the sl-mitra-1 GPU. Hetzner CPU OOM-killed three Kraken processes, and the laptop slept
+    mid-run. All 330 reads are from one device.
+  - Greek/Latin is canonical Greek plus external Latin.
+  - The Tibetan leaf+enhancement combos were exploratory additions.
+- **Replicated?** No; k=1 per arm. The A/A floors are 0, so per-page differences are the arm, not decode noise.
+  The Tibetan positive control reproduced #4722.
+- **Grade.**
+  - Tibetan: decision-grade (100 books), canonical-dependent.
+  - Syriac: exploratory (external, 2 MSS).
+  - Greek+Latin: directional (84).
+  - CJK: directional (53 scored), canonical-dependent.
+- **Decision.** No preprocessing step for the OCR path. Keep leafcrop. Do not binarise for Yigdzin or flash-lite.
+  The cursive (dbu-med) part of the MARK cohort stays MARK: no arm makes it verifiable. Taken on #5250, pending
+  Derek.
+- **Cost.**
+  - Gemini: **$2.55 metered** (1,257 `gemini_usage` rows, endpoint `eval/ocr-preprocessing-5250`; realtime,
+    because the metered client has no batch path).
+  - GPU: **3.88 h L4 ≈ €3.06**, €0.06 over the €3 cap, because the box restarted to pull the Syriac outputs.
+  - Hetzner/laptop CPU: free.
+- **run_ids.** `5250-tibetan-yigdzin-2026-09-29`, `5250-syriac-kraken-2026-09-29`,
+  `5250-greek-latin-flash-lite-2026-09-29`, `5250-cjk-woodblock-flash-lite-2026-09-29`.
+- **Artifacts.**
+  - Results: `results/ocr-preprocessing-2026-09-29.json` (tables + one row per page × arm) and
+    `results/ocr-preprocessing-2026-09-29/` (raw texts, draws, prep meta, call log).
+  - Store: `store/outputs/{bdrc-yigdzin-v1,kraken-sophro-mhiro,gemini-3.1-flash-lite}/2026-09.jsonl` and
+    `store/scores/ocr-preproc-5250@1/`.
+  - Scripts: `ocr-preprocessing/`.
+  - Dashboard: `/platform/admin/ocr-evidence#image-arms` (cells `image-arms/<stratum>/<metric>/<arm>`).
+## 2026-09-28 — Is flash-lite adequate on modern English print, or should it go to flash-preview? Paired on the #5216 references (#5182)
+
+- **Question.** English (`LATIN_SCRIPT_LANGUAGES` → lite) was never compared with flash-preview against a
+  truth. Does flash-preview read modern English print materially better than lite?
+- **Design.** `measure: accuracy`. Preregistered before any call (`PREREGISTRATION-english-modern-5182.md`).
+  The 122 referenced pages of #5216 (one page per book; strata S1–S4 by print date × date-dense page), the
+  same page images (byte count asserted) and the same production prompt v16 (`prompt_hash 360c5a076090bf07`
+  asserted), thinking 0, temperature 0, realtime, one retry on refusal. Arms: flash-preview on all 122; lite a
+  second time on 20 pages (seed 5182) as the A-vs-A floor; lite's #5216 read reused. Scored with
+  `en-ocr-ref-scorer@1` unchanged; `<note>` content moved to the page end for both engines. Catastrophic =
+  refusal/truncated/empty/error after retry, or CER > 50%. By eye: the worst five per engine, two rounds
+  (11 pages opened); **8 references were wrong** (Wikisource template/markup leaks, Gutenberg plate captions,
+  renumbered or chapter-end footnotes, dropped long s, a dropped verse block) and were marked
+  `reference_error` in `benchmark/refs/` and dropped, leaving **114 books**.
+- **Result.**
+  - **Floor first:** lite vs lite on 20 pages — the 16 pairs that both read text are **byte-identical in
+    CER (Δ 0.00 pp on all 16)**, but **3 of 20 flip between text and refusal** (refusals 1 → 4). Text at
+    temperature 0 is stable; RECITATION refusal is not.
+  - **Paired, 114 books (decision grade), 92 pairs:** flash better 14, lite better 3, tie 75 (±0.2 pp);
+    sign-test p = 0.013; **median Δ 0.00 pp [0.00, 0.00]**. 1880–1930 (70 books, decision): 7 / 3 / 46,
+    p = 0.34, median Δ 0.00. pre-1880 (44, directional): 7 / 0 / 29, p = 0.016, median Δ 0.00. Flash wins
+    more often than lite, by amounts too small to move the median.
+  - **Each engine:** median CER lite 0.20%, flash 0.14%; pooled CER lite 1.46% vs flash 0.63%. The pooled gap
+    is mostly **one page**: a two-column index that lite laid out as a table, interleaving the columns
+    (62% CER, words right, order wrong, *read from image*). Flash has no read of that page (the one
+    rate-limited error), so it is not in the paired set.
+  - **Refusals are the failure, and flash has them too:** catastrophic lite **14.9%** (16 refusals + 1 layout
+    page), flash **17.5%** (19 refusals + 1 error). **14 of lite's 16 refusals are also flash
+    refusals.** The pool is Gutenberg/Wikisource books, a selection toward text the models have memorised.
+  - **Rule (preregistered):** lite passes (1) median CER ≤ 2% and (3) median Δ ≤ 1 pp in every cell, and
+    fails (2) catastrophic ≤ 2% in every cell, because of refusals. By the letter, the rule **proposes flash**
+    for 1880–1930, pre-1880 and ALL. **Flash fails the same condition by as much or more**, so switching the
+    model does not fix what the rule caught. The proposal on #5182: **keep lite**; treat RECITATION refusal as
+    its own lane (a fallback read, not a different model). Derek's call; no routing change in this PR.
+  - By eye, beyond the reference defects: both engines silently **modernise the print** on a 1651 page
+    ("Vtter" → "Utter"; the printer's "burnetb" → "burneth"), and marginal notes land at different points in
+    the text flow than the reference puts them. Neither engine does better on these.
+- **Replicated?** No. The floor shows text reads are deterministic at temperature 0, but refusals are not.
+- **Grade.** 114 books pooled and 70 for 1880–1930 = decision; pre-1880 44 = directional; S1/S2/S4 < 30 =
+  exploratory. Pool = books Wikisource/Gutenberg volunteers chose (legible, canonical, *memorised*): the
+  refusal rate here overstates the corpus rate, and the CERs understate it. No post-1930 print.
+- **Cost / run_id.** `en-flash-5182-2026-09` $0.4298 (170 rows: retries and 503/429 errors included);
+  `en-lite-repeat-5182-2026-09` $0.0357. Total **$0.47** of a $5 cap. One flash page
+  (`en-6aa1d4-ws78`) stayed `error` (repeated 429 on one key); it is counted as a failed read.
+- **Dashboard.** `benchmark-dashboard-data.mjs` does not read the store yet (#5121 open); not regenerated.
+- **Artifact.** `results/en-ocr-ref-5124/flash-arm-2026-09-28.{md,json}`, `flash-arm-byeye.jsonl`,
+  `store/outputs/gemini-3-flash-preview/2026-09.jsonl`, `store/scores/en-ocr-ref-scorer@1/2026-09.jsonl`;
+  `en-ocr-reference-5124.mjs --stage=ocr --arm=flash|lite-repeat`, `--stage=flash-report`.
+## 2026-09-28 — Which cheap model draws ACCURATE picture boxes? Seven arms, boxes graded by eye against the page (#4747, widened)
+
+- **Question.** Image extraction runs on full `gemini-3-flash-preview` realtime because a 5-page test
+  rejected flash-lite. Is any cheaper model/mode as good at the thing readers see — the crop — and can
+  the Keely/Tesla release (~$28 of extraction on flash) be done for a few dollars?
+- **Design.** `measure: accuracy` (boxes graded against the image), agreement with stored flash kept
+  as secondary. 240 pages, one per book, 240 books: 120 pages the production flash worker boxed in the
+  last 90 d, 120 it ran and found nothing on (first 30K index-order rows per class, seeded pick).
+  Every arm ran the production prompt/schema/grounding (lifted from the worker at runtime) on the same
+  cached image bytes: flash realtime ×2 (test-retest), flash Batch API, 3.1-flash-lite realtime + Batch,
+  3.1-lite asked for Gemini's native `box_2d` [ymin,xmin,ymax,xmax] 0–1000, 3.5-flash-lite (thinking
+  `minimal` — it 400s on budget 0, #5232), Qwen3-VL-235B-A22B-Instruct via OpenRouter (native `bbox_2d`
+  [x1,y1,x2,y2] relative 0–1000 per Qwen's 2d_grounding cookbook), DocLayout-YOLO DocStructBench on
+  Hetzner CPU (free; `figure` class, conf 0.25). **Grading:** blinded composites (one panel per arm,
+  order shuffled per page, key withheld), 48 stratified positive pages + 24 of the 71 flash-negative
+  pages on which any arm fired; each box T tight / L loose / C cropped / W wrong / D duplicate, plus
+  missed pictures, per `grading/RUBRIC.md`. Graded by three Opus subagents that opened every sheet
+  (label: *read from image by a model grader*), 4 overlap pages graded by all three: pictures agree
+  12/12, box letters 94.9%, tight-vs-not 97.4%. Lead read the calibration page and 4 panels of page
+  011 by eye: 4/4 agree with the grader. Primary number: **box accuracy = tight boxes / true pictures**.
+- **Result (positives: 48 pages, 38 true pictures; page-bootstrap 95% CI).**
+
+  | arm | box accuracy | usable (T+L) | picture recall | T/L/C/W/D | FP boxes on 24 fired negatives | vs flash W–L–T | $/1K pages |
+  |---|---|---|---|---|---|---|---|
+  | flash realtime (production) | **81.6%** [68, 92] | 84% | 95% | 31/1/4/8/0 | 5 | — | $3.70 |
+  | flash realtime re-run | 78.9% [66, 91] | 82% | 92% | 30/1/4/9/0 | 5 | 0–1–47 | $3.96 |
+  | Qwen3-VL-235B (OpenRouter) | **63.2%** [47, 79] | 66% | 87% | 24/1/8/4/0 | 1 | 4–11–33 | $1.67 |
+  | DocLayout-YOLO (CPU) | 23.7% [11, 38] | 68% | 89% | 9/17/8/9/7 | 19 | 1–23–24 | $0 |
+  | 3.1-lite native box_2d | 21.1% [8, 34] | 32% | 97% | 8/4/25/9/0 | 8 | 2–25–21 | $1.41 |
+  | 3.5-flash-lite | 13.2% [3, 25] | 45% | 63% | 5/12/7/4/1 | 5 | 2–28–18 | $3.82 |
+  | 3.1-lite Batch | 10.5% [2, 21] | 34% | 100% | 4/9/25/9/0 | 8 | 2–29–17 | $0.71 |
+  | 3.1-lite realtime | 7.9% [0, 18] | 29% | 100% | 3/8/27/10/0 | 8 | 1–29–18 | $1.42 |
+
+  - **3.1-lite FINDS every picture but CROPS most of them** (27 of 38 cut). Not a unit bug: on
+    single-box pages its median edge offsets from flash are 0.5–3% of the page, spread (MAD) 1.5–3.5%
+    per edge — per-page noise, which no fixed correction removes (`geometry.txt`). Asking for Gemini's
+    native box format helps (8% → 21%) but not enough. Batch ≈ realtime for lite, as expected.
+  - **3.5-flash-lite** costs as much as flash and misses 37% of pictures: dominated.
+  - **Qwen3-VL** is the only cheap arm in reach: 45% of flash's price, fewest false positives, edges
+    within ~0.5% of flash's when both agree; its misses are mostly C (drops an engraved frame line or
+    the caption inside the frame).
+  - **Flash via Batch API reproduces flash realtime:** every box matched at IoU ≥ 0.9 on 88.9% of
+    pages vs the realtime re-run's own 90.0% (noise floor), at **$1.90/1K** (half price). 5/240
+    requests came back "operation was cancelled" (transient; the batch collector retries). Not
+    separately graded — inferred from box identity with the graded realtime arm.
+  - Side finding: 10 of 48 flash-"positive" pages hold no true illustration (Siku Quanshu cover labels,
+    bookplates, a watermark radiograph) — flash's W boxes are real errors, not grader noise.
+- **Verdict.** Keep **gemini-3-flash-preview** for extraction; do not move boxes to 3.1-lite in any mode.
+  The cheaper path that keeps box quality is **flash on the Batch API** (~50% off, same boxes) — Keely/
+  Tesla ≈ $14 instead of $28, not "a few dollars". Qwen3-VL is a possible second step (−18pp tight) and
+  would need its own prompt work (frame/caption inclusion) before it is a candidate. Routing change is
+  Derek's call; nothing in the worker was touched.
+- **Limits.** n = 38 pictures, so CIs are wide. Paired per page: flash beats 3.1-lite 29–1 (decisive);
+  flash beats Qwen 11–4 (two-sided sign test p ≈ 0.12 — "probably worse than flash", not settled). Positives are
+  mostly single-picture pages (118/120 had one stored box), so multi-figure plates are barely tested.
+  Negatives came from flash, so pictures flash never surfaced on unsampled pages are unmeasured.
+- **Replicated?** Test-retest only (flash ×2 + flash batch). Grader agreement measured on 4 pages × 3.
+- **Cost.** $4.45 paid (flash $1.84 over two runs + $0.45 batch, 3.5-lite $0.92, Qwen $0.40, 3.1-lite
+  $0.34 + $0.34 + $0.17), every call metered as `gemini_usage` type `eval`; grading on subscription.
+- **Artifact.** `scripts/eval/image-extraction-lite-eval.mjs`, `image-extraction-doclayout.py`,
+  `results/image-extraction-bbox-2026-09-28/` (raw outputs, grades, key, rubric, geometry). Sheets
+  (43 MB) on Hetzner `/root/bbox-eval-4747/repo/scripts/eval/results/image-extraction-lite-2026-09-28/grading/sheets`.
 
 ## 2026-09-30 — Which engine reads printed NUMBERS correctly? Engine disagreements adjudicated blind on the page image (#5224; feeds #5124, #5186)
 
@@ -2296,3 +2735,101 @@ writes them; judged against the ingest's own parse and fixed in the pack. (2) Th
 printed on each contact-sheet cell is a usable screen for which leaves to open. (3) A readable page
 can still hold a destroyed table: skip that leaf, don't reject the book. Still not measured: CER of
 the written pages and the paired comparison with the paid gate.
+
+## 2026-09-29 — Chained Batch API translation lane, pilot on 5 stalled books (#4681): production's prompt one block per round, 847 pages written at $0.00056/pg (4.3× under realtime), median round 2.7 min, 16% of rounds cancelled and all recovered
+
+**Question.** Can the Batch API run production's translation loop — the chained seed, the
+page-break device, the parse and health guards — rather than the unseeded-blocks-plus-seam-repair
+design that lost on fidelity (2026-09-25, PR #5104; #5085)? A single job cannot chain, but the
+27 shadow runs of 2026-09-24 round-tripped in 3–10 min, so the chain can run ACROSS jobs.
+
+**Design.** `scripts/lib/translate-batch-chained.mjs` (branch `worktree-batch-chained-rounds`):
+each round submits one block per book — the worker's `planBlocks` partition, seeded with the stored
+translation of the page before it, built by `buildBlockTranslationPrompt` / `buildTranslationPrompt`
+with `PAGE_BREAK_SCOPED` and the adjacent OCR. The unit tests pin the prompt byte-for-byte to what
+the realtime builders return for the same inputs, so no judged A/B was run: this is an operational
+pilot, not a quality claim. Pages a block did not return (short-block discard, drift, 15% truncation)
+go single-page one per round, each seeded by the last. Dead job / errored request / block parsed 0 =
+strike, same plan next round, 3 strikes park. Guards at the write: OCR hash, translated meanwhile,
+`isTranslatablePage`, the health gate through `writePageTranslation`.
+
+**Books (envelope chained-pilot-2026-09-29, $3, closed same day).** Five from the stalled cohort
+(translation started, under 90%, not held, not English): Proclus *In Timaeum* (Latin, 121 pages
+queued), Hasidic discourses (Hebrew, 61), Papus *Traité élémentaire de magie pratique* (French, 71),
+Garcia de Orta *Aromatum* (Latin, 300 = the per-run cap), Theophrastus *Enquiry into Plants* (Loeb,
+Greek with facing English, 300). Two other candidates (Avicenna *Canon*, *Glossa ordinaria*) were
+refused at planning: every remaining page is `ocr-loop` — those are re-OCR work, not translation.
+
+**Result.**
+| book | written | rounds | strikes | short-block | drift | refused | round median |
+|---|---|---|---|---|---|---|---|
+| Proclus | 121/121 | 26 | 4 | 0 | 3 | 0 | 2.7 min |
+| Hasidic | 61/61 | 17 | 4 | 0 | 0 | 0 | 2.9 |
+| Papus | 71/71 | 12 | 2 | 0 | 0 | 0 | 2.9 |
+| Garcia de Orta | 300/300 | 66 | 10 | 1 | 4 | 0 | 2.5 |
+| Theophrastus | 294/300 | 83 | 12 | 3 | 1 | 6 | 2.7 |
+
+172 successful rounds, 32 cancelled by the Batch API (16%; both shapes — `JOB_STATE_CANCELLED`
+and `{error: "The operation was cancelled."}` inside a SUCCEEDED job; they cluster by submission
+minute; $0 billed for them; every one recovered on the next round, no run parked). Latency over
+all 172 rounds: median 2.7, p90 4.3, max 6.0 min. Measured from the Supabase meter rows
+(endpoint `hetzner/translate-batch-chained`): 1,094,201 input + 454,525 output tokens,
+**$0.4777 for 913 payload pages** ($0.00052/payload page; $0.00056 per written page) against the
+realtime line's $0.00241/pg measured 2026-09-04 — 4.3×. Every written page carries the full
+provenance block (api batch, call site, round, batch job, seeded context). The 6 refusals are the
+production gates doing their job on a bilingual edition: 2 English facing pages collapsed to a
+wrapper, 4 Greek pages caught by the echo gate. Hand-read seam (Proclus 524|525, the join between
+a March 2026 realtime translation and the lane's first page): catchword consumed once, no
+duplication. A crude alignment proxy flagged 70 odd pages of the Loeb — the facing-page structure
+(the Greek page's translation matches the printed English opposite), zero flags on the other four.
+
+**Not measured.** Fidelity against production on the same pages (by construction the prompt is the
+same; a paired judge would measure model noise, see the A/A floors of 2026-09-25). Behaviour above
+~100 books in flight: one job per book per round meets the 100-concurrent-jobs cap per key, shared
+with the OCR lanes (keys 0 and 4 refused every submit with 429 during the pilot and rotation
+absorbed it); grouping books into one job per round needs composite meter keys.
+
+**Decision.** The seam-repair design (#4912/#4973 arm Et) is superseded; do not re-propose it. Next:
+the stalled cohort (105 books / 13,970 pages) and the fully-OCR'd zero-translation cohort (280 books /
+56,317 pages) through this lane under an envelope, ≈$40 at the measured rate; then the default-flip
+question for the whole line.
+
+## 2026-09-30 — Duplicate-run guard grounded in the source (#5275): the 57 refrain pages the per-leaf guard refused go 57 → 0, the narrative book and the #5021 fixtures are untouched, 10 of 229 page-level duplicate flags on a 1,000-book mirror sample are released, all of them the source repeating itself
+
+**Why:** the #5260 re-pilot (2026-09-29) refused 57 of 168 seam pages of the canonical Tibetan pilot
+book as `leaf-drift` / `duplicated`: the sūtra's refrain ("…are non-dual; they cannot be divided, are
+not separate, and are not distinct. Through the purity of…") recurs on both leaves, and
+`duplicatedAcrossBoundary` reads the text's own repetition as leaf 2's opening copied onto leaf 1.
+The $226 batch retranslation of the Tibetan cohort (#4523) runs the same guard, and the Kanjur
+volumes are refrain end to end. No model spend.
+
+**Fix.** `sourceRepeatsAcrossBoundary(ocrPrev, ocrNext)` in `scripts/lib/block-drift.mjs`: the same
+windows as the translation check (last 40% of N, first 10% / ≥ 60 tokens of N+1) on the SOURCE,
+share a run of ≥ 6 tokens → a run the two translations share is the refrain, not a duplication, and
+`blockDriftBoundaries` goes on to the `moved` test instead. Tokens are runs of letters, marks and
+digits — a Tibetan syllable — because the Yigdzin OCR spells each recurrence a little differently
+and the 40-char shingles of `sharedRun` found the source repeating on only 20 of the 57; syllable
+runs found it on all 57 (the audit script's LEAK count makes the same distinction with character
+runs, sized on cased-script prose). A missing source keeps the old verdict.
+
+**Sized on the two pilot books** (Mongo `pages`, read-only; the 57 refused texts from Hetzner
+`/root/leaf-break/refused-evidence.jsonl`, now `tests/fixtures/leaf-break/refrain-seams-5275.json`):
+source run across the seam on the 57 refused pages 7–38 syllables (shortest 7, floor 6); on the
+148 seam pages of the narrative rnam thar 0–5 on 138 and 6–12 on 10 (a stock formula on both
+leaves) — its 146 served translations had 0 duplicate flags, so there is no real duplication there
+for the exemption to hide. `assessTranslationHealth` on the 57: **refused 57 → 0**; the same 57
+translations against a source whose second leaf is a narrative leaf (no repeat): **57 refused**,
+so the verdict is the source's. The pilot's bridged p.283 and a bridged refrain page stay `leaf-seam`.
+
+**Page level, measured before flipping** (`blockDriftBoundaries` serves the block lanes too):
+`~/sl-corpus` mirror, 1,000 books seeded 5275, 295 with consecutive translated pairs, **72,671 pairs,
+229 duplicate flags, 10 exempted (4.4%)** — read by their text: two Avestan prayers (Ashem Vohu,
+Yatha Ahu Vairyo), a Mishnah refrain (Hullin, "in the Land and outside the Land…"), a Sumerian
+hymn refrain (Ur-Namma), a Sanskrit verse quoted on both pages, a Latin sentence the source prints
+twice, a Kircher table header (Musurgia), a `[Musical notation]` placeholder run, and two `&nbsp;`
+runs. Every one is the source repeating; none is a copied opening. The 9 #5021 fixtures and the
+duplicated-boundary fixture measure 0 and keep their verdicts (pinned in `tests/unit/block-drift.test.ts`).
+
+**Not caught, by design:** a real duplication on a page whose source also repeats a ≥ 6-token
+formula across the boundary — the guard cannot tell the copy from the refrain without alignment.
+Measured exposure: 10 of 148 narrative seam pages have such a formula, and 0 duplicate flags.

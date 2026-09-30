@@ -27,7 +27,7 @@
  *             page_number ≤ --leaves (25) and ocr.source 'ia_djvu' → a page-ids file for
  *             realtime-ocr.mjs. A page already re-read is no longer 'ia_djvu' and drops out.
  *
- *             node scripts/batch/realtime-ocr.mjs --page-ids-file=<out>/pages.json --model=lite \
+ *             node scripts/batch/realtime-ocr.mjs --realtime --page-ids-file=<out>/pages.json --model=lite \
  *               --reason="#4815 front matter" --concurrency=20 --limit=4000
  *
  *   --record  after the run: for every planned page find the page_revisions row realtime-ocr
@@ -108,7 +108,7 @@ async function plan(db) {
   console.log(`lane books ${lane.length} (held ${held.length}, live ${live.length})`);
   console.log(`front matter (page_number ≤ ${LEAVES}) in live books: ${pages.length} pages; Archive-read: ${target.length}; blocked ${blocked.length}; already attempted ${attempted.length}; TO READ ${todo.length} in ${perBook.size} books`);
   console.log(`excluded with the held books: ${heldPages} Archive-read front-matter pages`);
-  console.log(`wrote ${outPath('pages.json')} — feed it to realtime-ocr.mjs --page-ids-file`);
+  console.log(`wrote ${outPath('pages.json')} — feed it to realtime-ocr.mjs --realtime --page-ids-file (realtime on purpose: --record reads the rows that script writes)`);
 }
 
 /** What realtime-ocr did to each planned page, from the two records it leaves. */

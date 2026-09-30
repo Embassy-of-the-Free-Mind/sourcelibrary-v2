@@ -1,0 +1,10 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>16</page-num>
+<header>THE THEORY OF PSYCHOANALYSIS</header>
+
+phantasy, did not make things better. On the contrary, still worse, since we are forced to the conclusion that we find in the infantile phantasy at least one positive sexual manifestation. It is no longer some brutal accidental impression from the outside, but a positive sexual manifestation created by the child itself, and this very often with unmistakable clearness. Even real traumatic events of an outspoken sexual type do not always happen to a child quite *without its coöperation*, but are not infrequently apparently *prepared and brought about by the child itself*. Abraham stated this, proving his statement with evidence of the greatest interest, and this, in connection with many other experiences of the same kind, makes it very probable that even really sexual scenes are frequently called forth and supported by the peculiar psychological state of the child's mind. Perfectly independently from psychoanalytic investigation, medical criminology has discovered striking parallels to this psychoanalytic statement.
+
+<vocab>phantasy, infantile phantasy, sexual manifestation, traumatic events, coöperation, Abraham, psychological state, psychoanalytic investigation, medical criminology</vocab>

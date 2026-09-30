@@ -224,6 +224,34 @@ for (const [stratum, file] of latest) {
 }
 if (mismatches.length) { console.error('SELF-CHECK FAILED:\n  ' + mismatches.join('\n  ')); process.exit(1); }
 
+// ── Image-preprocessing arms (#5250): same engine, same pages, only the image differs. ──
+// Read from results/ocr-preprocessing-<date>.json (ocr-preprocessing/build-results.py). Every delta here is a GAIN
+// (positive = the arm is better than its baseline), already paired by the stratum's scorer; nothing is recomputed.
+const imageArms = [];
+for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^ocr-preprocessing-\d{4}-\d{2}-\d{2}(-r\d+)?\.json$/.test(f)).sort()) {
+  const r = JSON.parse(fs.readFileSync(path.join(__dirname, 'results', f), 'utf8'));
+  const push = (stratum, s, metric, table, baseline, floor, sub = null) => {
+    for (const [arm, c] of Object.entries(table)) {
+      imageArms.push({ cell_id: `image-arms/${stratum}${sub ? `/${sub}` : ''}/${metric}/${arm}`, file: f, run_id: s.run_id, stratum, sub, engine: s.engine,
+        measure: s.measure, metric, arm, baseline: c.baseline || 'none', baseline_median: baseline, n: c.n, wins: c.wins, losses: c.losses, ties: c.ties,
+        median_gain: c.median_delta ?? c.median_gain, ci95: c.ci95, p_sign: c.sign_p, counts: c.counts,
+        floor_p90: (typeof floor === 'function' ? floor(c) : floor)?.p90_abs ?? null, grade: s.grade,
+        // confirmatory rounds (round 3+) carry the pre-registered prediction and the verdict; earlier rounds have neither
+        prediction: c.prediction ?? null, verdict: c.verdict ?? null });
+    }
+  };
+  for (const [stratum, s] of Object.entries(r.strata)) {
+    if (s.tables && s.tables.identity) {            // Tibetan: identity, matched syllables, lines
+      for (const [metric, t] of Object.entries(s.tables)) push(stratum, s, metric, t.paired, null, c => (c.baseline === 'leafcrop' ? t.noise_floor?.leaf : t.noise_floor?.whole));
+    } else if (s.paired) {                         // Syriac
+      push(stratum, s, 'line_cer_n2', s.paired, s.baseline_median, s.noise_floor);
+    } else if (s.tables) {                         // Gemini strata, pooled + per script
+      for (const [sub, t] of Object.entries(s.tables)) push(stratum, s, 'windowed_cer', t.paired, t.baseline_median, s.noise_floor, sub === 'all' ? null : sub);
+    }
+  }
+  sources.push({ file: `results/${f}` });
+}
+
 const gradeCount = cells.reduce((m, c) => ((m[c.grade] = (m[c.grade] || 0) + 1), m), {});
 const out = {
   generated_from: sources,
@@ -232,6 +260,7 @@ const out = {
   totals: { page_engine_rows: rows.length, pages: new Set(rows.map(r => `${r.stratum}|${r.slug}`)).size, cells: cells.length, cells_by_grade: gradeCount },
   sufficiency,
   cells,
+  image_arms: imageArms,
 };
 fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
 console.log(`rows ${rows.length} · pages ${out.totals.pages} · cells ${cells.length} · ${JSON.stringify(gradeCount)}`);

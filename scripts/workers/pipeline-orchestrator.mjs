@@ -28,6 +28,7 @@ import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -103,6 +104,16 @@ async function getCodeVersion() {
   }
   return _codeVersion;
 }
+// The OCR batch request's generation settings — ONE object, sent in every request and
+// recorded on the batch job's `provenance` (#4613), so the page's engine block cannot
+// drift from what was sent. The per-page image is resized to OCR_IMAGE_MAX_PX.
+const OCR_GENERATION_CONFIG = Object.freeze({
+  temperature: 0.1,
+  maxOutputTokens: 16384,
+  thinkingConfig: { thinkingBudget: 0 },
+});
+const OCR_IMAGE_MAX_PX = 1500;
+const PROVENANCE_CALL_SITE = 'scripts/workers/pipeline-orchestrator.mjs';
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 1000;  // Pages per file-based batch. With 1500px resize, 1000 pages = ~500MB JSONL (well under 2GB File API limit). Google recommends 1K-5K. Experiment 2026-04-13: identical OCR quality at 1500px vs full-res.
 const CROSS_BOOK_BATCH_SIZE = 250; // Smaller batches for cross-book OCR — 500-page cross-book batches have 24% success vs 51% single-book. Half size = less blast radius on Gemini cancellation.
@@ -1462,8 +1473,9 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     }
   }
 
-  console.log(`    Downloading ${pages.length} images (resize to 1500px for OCR)...`);
-  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: 1500 });
+  promptSentHash = contentHash(prompt);
+  console.log(`    Downloading ${pages.length} images (resize to ${OCR_IMAGE_MAX_PX}px for OCR)...`);
+  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: OCR_IMAGE_MAX_PX });
   if (downloaded.length === 0) {
     throw new Error(`All ${pages.length} image downloads failed`);
   }
@@ -1471,6 +1483,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   const ocrPromptRef = await getOcrPromptFromDb(db);
   let prompt = ocrPromptRef.text;
+  let promptSentHash; // set after the spread prefix below, before any request is built
 
   // Spread OCR: for BPH two-page spread books, prepend instructions to process
   // both pages separately with <split-position> and <page-break/> markers.
@@ -1543,11 +1556,7 @@ Output structure:
             { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
             { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
           ],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 16384,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
+          generationConfig: OCR_GENERATION_CONFIG,
         },
         metadata: { key: item.pageId },
       }));
@@ -1619,11 +1628,7 @@ Output structure:
             { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
             { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
           ],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 16384,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
+          generationConfig: OCR_GENERATION_CONFIG,
         },
         metadata: { key: item.pageId },
       }));
@@ -1643,7 +1648,7 @@ Output structure:
       // OCR provenance (#2297): the exact image URL fetched + sent for each page,
       // so batch-collector can stamp ocr.source_url at write-back. getPageSource
       // already chose this URL in downloadImagesParallel.
-      page_sources: chunk.map(c => ({ page_id: c.pageId, source_url: c.sourceUrl || null })),
+      page_sources: chunk.map(c => ({ page_id: c.pageId, source_url: c.sourceUrl || null, prompt_sent_hash: promptSentHash, prompt_sent_chars: prompt.length })),
       code_version: await getCodeVersion(),
       page_count: chunk.length,
       status: 'pending',
@@ -1652,6 +1657,16 @@ Output structure:
       prompt_id: ocrPromptRef.id,
       prompt_name: ocrPromptRef.name,
       prompt_hash: ocrPromptRef.content_hash,
+      // What every page of this job will say produced it (#4613); batch-collector
+      // completes it per page with the image and the job id.
+      provenance: batchJobProvenance({
+        call_site: PROVENANCE_CALL_SITE, model: ocrModel,
+        prompt: { id: ocrPromptRef.id, name: ocrPromptRef.name, version: ocrPromptRef.version, hash: ocrPromptRef.content_hash, text: prompt },
+        generationConfig: OCR_GENERATION_CONFIG,
+        run: { code_version: await getCodeVersion(), host: os.hostname() },
+        image_resized_to_px: OCR_IMAGE_MAX_PX,
+      }),
+      submitted_by: PROVENANCE_CALL_SITE,
       submission_method: useFileBased ? 'file' : 'inline',
       key_index: batchJob.keyIndex,
       ocr_generation: ocrGeneration, // #2449 generation guard
@@ -1825,7 +1840,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     }
 
     console.log(`    Downloading ${pages.length} images for ${(book.title || '').substring(0, 40)} (resize 1500px)...`);
-    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: 1500 });
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: OCR_IMAGE_MAX_PX });
     if (downloaded.length === 0) {
       console.log(`    WARNING: All ${pages.length} downloads failed for ${(book.title || '').substring(0, 40)}`);
       continue;
@@ -1834,7 +1849,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
 
     bookMap.set(book.id, book);
     for (const item of downloaded) {
-      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id, sourceUrl: item.sourceUrl });
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, promptSentHash: contentHash(prompt), bookId: book.id, sourceUrl: item.sourceUrl });
     }
   }
 
@@ -1862,11 +1877,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
         { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
       ],
-      generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: 16384,
-        thinkingConfig: { thinkingBudget: 0 },
-      },
+      generationConfig: OCR_GENERATION_CONFIG,
     },
     metadata: { key: item.pageId },
   }));
@@ -1925,7 +1936,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     book_ids: chunkBookIds,
     page_ids: allDownloaded.map(d => d.pageId),
     // OCR provenance (#2297) — exact image fetched per page, for batch-collector.
-    page_sources: allDownloaded.map(d => ({ page_id: d.pageId, source_url: d.sourceUrl || null })),
+    page_sources: allDownloaded.map(d => ({ page_id: d.pageId, source_url: d.sourceUrl || null, prompt_sent_hash: d.promptSentHash, prompt_sent_chars: d.prompt.length })),
     code_version: await getCodeVersion(),
     page_count: allDownloaded.length,
     status: 'pending',
@@ -1934,6 +1945,16 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     prompt_id: basePromptRef.id,
     prompt_name: basePromptRef.name,
     prompt_hash: basePromptRef.content_hash,
+    // Job-level provenance (#4613) hashes the BASE prompt; each page's own sent hash is on
+    // page_sources above, because the document-context suffix differs per book.
+    provenance: batchJobProvenance({
+      call_site: PROVENANCE_CALL_SITE, model: ocrModel,
+      prompt: { id: basePromptRef.id, name: basePromptRef.name, version: basePromptRef.version, hash: basePromptRef.content_hash, text: basePrompt },
+      generationConfig: OCR_GENERATION_CONFIG,
+      run: { code_version: await getCodeVersion(), host: os.hostname() },
+      image_resized_to_px: OCR_IMAGE_MAX_PX,
+    }),
+    submitted_by: PROVENANCE_CALL_SITE,
     submission_method: 'file',
     key_index: batchJob.keyIndex,
     cross_book: true,
@@ -4967,13 +4988,37 @@ Rules:
         // reader, refusing to spend where there is nothing to modernize. A date cannot
         // do that: presses dropped long ſ unevenly between roughly 1790 and 1810, and
         // our own OCR preserves the glyph on some pages of a book and not others.
+        //
+        // An English book still has to LEAVE `ocr_complete` (#5271). Dropping it from the
+        // list here left it with no phase that selects it: Phase 3.5 only gates, 3.7 is
+        // non-Latin, and the "no pages need translation → translate_complete" advance below
+        // sits inside the loop over the filtered list. Every English book that reached
+        // ocr_complete after #4958 (2026-09-21) would sit there forever — no summary, no
+        // cover, never `complete` — and the held English shelves (#4966, Keely/Tesla) were
+        // about to be released into exactly that. So the English books get the same
+        // advance the loop gives a book with nothing left to translate, with the same
+        // OCR-incomplete guard: nothing to translate BY POLICY is still nothing to translate.
         {
-          const before = freshBooks.length;
+          // The filter line keeps its literal shape: tests/unit/english-modernization-is-reader-triggered.test.ts
+          // pins it by regex, so the guard fails loudly if the filter is ever loosened.
+          const englishBooks = freshBooks.filter((b) => ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase()));
           freshBooks = freshBooks.filter(
             (b) => !ENGLISH_VARIANTS_P4.includes(String(b.language || '').toLowerCase())
           );
-          const skipped = before - freshBooks.length;
-          if (skipped > 0) console.log(`  Skipped ${skipped} English book(s) — modernization is reader-triggered, not dispatched`);
+          if (englishBooks.length > 0) console.log(`  Skipped ${englishBooks.length} English book(s) — modernization is reader-triggered, not dispatched`);
+          for (const book of englishBooks) {
+            const totalOcr = book.pages_ocr || 0;
+            const totalPages = book.pages_count || 0;
+            if (totalOcr < totalPages * 0.8 && totalPages > 30) {
+              // Same bar as the loop below: a preview-only book goes back for full OCR.
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'archive_complete');
+              console.log(`  OCR incomplete (${totalOcr}/${totalPages}), recycling for full OCR: ${book.title}`);
+              continue;
+            }
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
+            log.translate_advanced++;
+            console.log(`  English, nothing to translate by policy (#4958) → translate_complete: ${book.title}`);
+          }
         }
 
         // If no fresh books, re-queue partially-translated books (gap-fill)

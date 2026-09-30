@@ -42,6 +42,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
   'scripts/maintenance/repair-ia-ocr-leaf-offset.mjs': 'moves stored text between pages (#3368); introduces no new text',
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
+  'scripts/maintenance/backfill-leaf-break-markers.mjs': 'inserts the <leaf-break/> marker between the stored leaf reads of a page (#5260); introduces no new text, and the text was loop-screened when apply-reocr-verdicts.mjs served it',
   'scripts/split-book.mjs': 'splits stored text across new page docs',
   'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",

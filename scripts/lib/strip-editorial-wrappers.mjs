@@ -128,7 +128,10 @@ export function stripEditorialWrappers(text, opts) {
           // AI's plate descriptions into quotable text. Parity with the TS twin
           // (src/lib/strip-editorial-wrappers.ts) — change both together.
           .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' '),
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' ')
+          // `<leaf-break/>` (#5260): the seam between two leaves on one page is a paragraph
+          // break in plain text. Parity with the TS twin — change both together.
+          .replace(/<leaf-break\s*\/?>/gi, '\n\n'),
       ),
     ),
   );

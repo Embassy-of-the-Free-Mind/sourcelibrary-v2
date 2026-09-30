@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'archive-ocr-against-proofread-pages',
+    title: 'Checking the Archive\u2019s OCR against proofread pages',
+    subtitle:
+      'On 122 English pages with an independent proofread transcription, our own reader is better on the same page in every cohort, and in a first, preliminary count the Internet Archive\u2019s OCR text silently misreads about one printed number in seventy. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
+    date: '28 September 2026',
+    readTime: '8 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6990631aef12272ffdc8f4aa/324.jpg',
+    imageAlt: 'Page 300 of Sachau\u2019s 1879 translation of al-B\u012br\u016bn\u012b\u2019s Chronology of Ancient Nations, which prints 5180 years twice; the Archive\u2019s text has 6180 both times.',
+  },
+  {
     slug: 'how-we-measure-ocr-quality',
     title: 'How We Measure OCR Quality',
     subtitle:

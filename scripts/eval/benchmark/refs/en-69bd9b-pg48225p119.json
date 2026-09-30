@@ -28,5 +28,6 @@
     "finish_reason": null
   },
   "reference_error_rate": null,
-  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end."
+  "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
+  "reference_error": "by eye 2026-09-28 (#5182): Gutenberg cut carries the caption of the plate facing p. 118 (not on this leaf) and omits the printed table (Husband/Wife/Difference)"
 }
