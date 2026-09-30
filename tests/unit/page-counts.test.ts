@@ -87,6 +87,7 @@ describe('page-counts convention (#3293)', () => {
       translatable: 3,
       translated_translatable: 2,
       blank: 0,
+      archived: 0,
     });
   });
 
@@ -115,8 +116,10 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.translated_translatable).toBeLessThanOrEqual(stats.translatable);
     // And the blank leaf's placeholder is still excluded from pages_translated.
     expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
-    // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
-    expect(stats.blank).toBe(2);
+    // pages_blank is `page_type: 'blank'` with OCR — the blank leaf only, not the
+    // bookplate (design decision 3, #5325). It must name the same set that
+    // with_translation excludes, or numerator and denominator drift apart (#3747).
+    expect(stats.blank).toBe(1);
   });
 
   it('.ts and .mjs NEVER_TRANSLATED_PAGE_TYPES stay in lock-step (#4685)', () => {
