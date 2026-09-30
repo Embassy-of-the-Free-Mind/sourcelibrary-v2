@@ -23,6 +23,13 @@
  * mismatch depends on the image shown (`display_photo`): `--stage=images` dHashes it against IIIF
  * at leaf k and at leaf k+offset for books with a shifted run — shown = k means the text is wrong
  * on screen; shown = k+offset means text and image agree on screen and both are off the record.
+ * Measured on the controls (2026-09-30): the six #5309 books all read `text_wrong_on_screen`; six
+ * of the eight negative-control books that carry a run read `consistent_on_screen` (the #3368
+ * image shift, where the page is right on screen). So a run is not by itself a reader-visible
+ * defect; always quote the image verdict with it. The image stage looks at MODEL-lane runs only.
+ *
+ * NON-LATIN SCRIPTS. Where the Archive's engine cannot read the script (Chinese, most Sanskrit),
+ * no leaf clears the floor and the pages abstain as `low`: the book is undecidable, never aligned.
  *
  * SAMPLING. Books are walked in a fixed pseudo-random order (sha1 of seed + book id), so any
  * prefix of the walk is a simple random sample of the frame and a resumed run continues the same
@@ -259,7 +266,7 @@ async function stageImages() {
 }
 
 // ---------- stage: summary ----------
-const wilson = (k, n, z = 1.96) => { if (!n) return [null, null]; const p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), h = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [(c - h) / d, (c + h) / d]; };
+const wilson = (k, n, z = 1.96) => { if (!n) return [null, null]; const p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), h = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [Math.max(0, (c - h) / d), Math.min(1, (c + h) / d)]; };
 const pct = (x, d = 1) => (x == null ? '–' : `${(100 * x).toFixed(d)}%`);
 function summarise() {
   const seen = new Set(); const rows = readJsonl(OUT).filter((r) => (seen.has(r.book_id) ? false : seen.add(r.book_id)));
