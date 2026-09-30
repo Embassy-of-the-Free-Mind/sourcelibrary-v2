@@ -41,6 +41,7 @@ work. Measured 2026-08-08: **87,777** such pages, 99.8% of them under 120 charac
   `scripts/lib/page-counts.mjs` (TS twin `src/lib/page-counts.ts`). `hasTranslation()`
   stays literal on purpose — "carries text" and "counts as translated work" are
   different questions, and conflating them is the whole bug.
+- **Who may write these counters, and the one function that does** → `../page-counts.md` (2026-09-30: five implementations of the counting rule were live, and the two-hourly reconciler reverts the canonical one on `pages_ocr` and `pages_blank`).
 - **Fix the definition, not the call site.** Writers that run their own query must
   match it: `scripts/workers/sync-worker.mjs` (aggregation) and
   `scripts/batch/realtime-translate.mjs` (`countDocuments`). The batch collectors and
