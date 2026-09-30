@@ -4,7 +4,7 @@ PRIOR ART: `scripts/lib/page-counts.mjs` (+ TS twin `src/lib/page-counts.ts`) â€
 
 **Read this when:** writing any of `pages_count`, `pages_ocr`, `pages_translated`, `pages_translatable`, `pages_blank`, `pages_archived` on a `books` document; adding a job that creates, hides, splits, OCRs, translates, clears or archives pages; dividing by one of those counters on a surface; or investigating a count that disagrees with what the reader shows.
 
-**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are the issues linked from both. Until step 2 lands, two definitions of `pages_ocr` and `pages_blank` are live and alternate every two hours (see "Why this exists").
+**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are #5325â€“#5329 and #5331, linked from both. Until step 2 lands, two definitions of `pages_ocr` and `pages_blank` are live and alternate every two hours (see "Why this exists").
 
 ---
 
@@ -141,12 +141,12 @@ Negative controls in the PR: one violating file per shape (inline `$set`, hoiste
 
 Each step is a GitHub issue linked from #4499 and #5302. The order is writer, reconciler, then callers, then creation, then the long tail, then the audit.
 
-1. **Writer.** `PAGE_COUNT_ACCUMULATORS`, `buildCorpusPageCountPipeline()`, `isArchivedPage`, `recountBook()` in both twins. Decision 3 applied to `blank`. Parity test and the widened shape guard with the full baseline. `recount-page-stats.mjs` calls `recountBook()`. No caller changes and no data writes.
-2. **Reconciler.** `sync-worker.mjs` imports the corpus pipeline, writes all six counters including `pages_translatable`, and logs per-counter tallies. **This is the data write** for the 10,282 books and the stale-high ones (decision 2). It lands with a dry-run tally in the PR.
-3. **Live writers.** Request-path routes (tenant and global twins together), workers, batch collectors, archive writers, and both `$inc` sites call `recountBook()`. Each file leaves the baseline in the same commit. The `pages_archived` all-pages predicate in `archive-images/route.ts` goes. Per-file before/after on a book with soft-hidden pages.
-4. **Creation.** `initialPageCounters(n)` in `makeBookDoc()`. The import routes and `insertBookIfNew()` use it. The importers that hand-build documents are the #3969/`field-sprawl.md` burn-down; they are not new work here.
-5. **One-off scripts.** The 27 maintenance scripts call `recountBook()` when next run or touched. Scripts with no run in 90 days move to `scripts/_archived/`, which is a move, not a deletion. `scripts/tmp-*` writers are archived.
-6. **Audit** as above, plus the Hetzner crontab line and a dated run recorded on the issue.
+1. **Writer.** (#5325) `PAGE_COUNT_ACCUMULATORS`, `buildCorpusPageCountPipeline()`, `isArchivedPage`, `recountBook()` in both twins. Decision 3 applied to `blank`. Parity test and the widened shape guard with the full baseline. `recount-page-stats.mjs` calls `recountBook()`. No caller changes and no data writes.
+2. **Reconciler.** (#5326) `sync-worker.mjs` imports the corpus pipeline, writes all six counters including `pages_translatable`, and logs per-counter tallies. **This is the data write** for the 10,282 books and the stale-high ones (decision 2). It lands with a dry-run tally in the PR.
+3. **Live writers.** (#5327) Request-path routes (tenant and global twins together), workers, batch collectors, archive writers, and both `$inc` sites call `recountBook()`. Each file leaves the baseline in the same commit. The `pages_archived` all-pages predicate in `archive-images/route.ts` goes. Per-file before/after on a book with soft-hidden pages.
+4. **Creation.** (#5328) `initialPageCounters(n)` in `makeBookDoc()`. The import routes and `insertBookIfNew()` use it. The importers that hand-build documents are the #3969/`field-sprawl.md` burn-down; they are not new work here.
+5. **One-off scripts.** (#5329) The 27 maintenance scripts call `recountBook()` when next run or touched. Scripts with no run in 90 days move to `scripts/_archived/`, which is a move, not a deletion. `scripts/tmp-*` writers are archived.
+6. **Audit** (#5331) as above, plus the Hetzner crontab line and a dated run recorded on the issue.
 
 The ladder's `translation-state.md` step 8(a) and (b) are steps 2 and 3 here. Its step 8(c), `content_type`, is not a page count and stays with #5292.
 
