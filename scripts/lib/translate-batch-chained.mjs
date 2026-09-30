@@ -24,7 +24,9 @@
  *   enrol   queue = the pages the realtime worker would translate (selectPages), in order
  *   round n plan the next request: the pending single page if the previous round left one,
  *           else the next block (planBlocks, the worker's partition) — seed + adjacent OCR
- *           from Mongo — submit one Batch job with one request — meter a placeholder
+ *           from Mongo — the request rides in a Batch job SHARED with every other ready run's
+ *           (≤ MAX_REQUESTS_PER_JOB per job, one model per job) — meter a placeholder per run,
+ *           keyed `<job>#<runId>` so each book keeps its own meter row
  *   collect parse as the worker parses (parseBlockTranslations: 15% truncation reject,
  *           positional fallback, BLOCK-SHIFT discard; dropDriftedPages), write every page that
  *           came back through translate-core's door (refuseUnhealthy), queue every page that did
@@ -68,6 +70,20 @@ export const MODE = 'chained';
 export const ENDPOINT = 'hetzner/translate-batch-chained';
 export const REVISION_NOTE = 'translate-batch-chained';
 export const MAX_STRIKES = 3;                 // translate-worker MAX_BATCH_FAILURES
+/**
+ * Requests per shared Batch job. One job per book per round made N books N jobs every ~5 minutes
+ * against the ~100-jobs-per-key cap; sharing makes it ⌈N/50⌉. A job that dies strikes every run
+ * in it, so the cap also bounds how many runs one API cancel sets back.
+ */
+export const MAX_REQUESTS_PER_JOB = 50;
+
+/**
+ * A run's meter key inside a shared job. completeBatchUsage matches its placeholder on this exact
+ * string, so each book in a job keeps its own gemini_usage row. Wherever the value is used as a
+ * Gemini job name, strip the `#…` (baseJobName).
+ */
+export const meterIdFor = (jobName, runId) => `${jobName}#${runId}`;
+export const baseJobName = (batchJobId) => String(batchJobId || '').split('#')[0];
 
 /** Run phases. Terminal: complete, parked, failed. */
 export const PHASE = Object.freeze({
@@ -235,7 +251,7 @@ async function setRun(db, run, set, deps) {
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
@@ -262,18 +278,18 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   };
   await db.collection(RUNS_COLLECTION).insertOne(run);
   log(`[translate-batch-chained] ${bookId}: run ${run.id} — ${pages.length} pages queued, est $${estimate}`);
-  const sub = await submitRound(db, run, deps, { prompts });
+  // submit:false leaves the run READY for the next tick, which packs it into a shared job with the rest.
+  const sub = submit ? await submitRound(db, run, deps, { prompts }) : { submitted: false, note: 'enrolled; next tick submits' };
   return { ok: true, run, estimate, submitted: sub };
 }
 
 /**
- * Submit the next round for a READY run. Returns { submitted: boolean, note }.
- * Refuses on a closed dial or when the running estimate would pass the approval — the run stays
- * READY and the next tick tries again (a closed dial reopens at midnight; an approval is topped up
- * by the operator).
+ * Plan and build a READY run's next request, with every refusal that sends nothing: a closed dial,
+ * or a running estimate past the approval (the run stays READY and the next tick tries again — a
+ * closed dial reopens at midnight; an approval is topped up by the operator), or a finished queue
+ * (the run completes). Returns { prepared } or { submitted: false, note }.
  */
-export async function submitRound(db, run, deps, { prompts }) {
-  const log = deps.log || console.log;
+async function prepareRound(db, run, deps, { prompts }) {
   if (run.phase !== PHASE.READY) return { submitted: false, note: `phase ${run.phase}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
   const pageDocs = await loadPageDocs(db, ids);
@@ -297,23 +313,69 @@ export async function submitRound(db, run, deps, { prompts }) {
   if (run.spent_est_usd + est > run.approved_usd) return { submitted: false, note: `approval exhausted (est $${(run.spent_est_usd + est).toFixed(4)} > $${run.approved_usd})` };
 
   const n = (run.rounds || []).length + 1;
-  const key = `r${n}`;
-  const request = batchRequest({ key, prompt: req.prompt, maxOutputTokens: req.maxOutputTokens });
-  const job = await deps.gemini.submit({ model: run.model, requests: [request], displayName: `tbc-${run.book_id}-${run.id}-${key}` });
-  const now = deps.now ? deps.now() : new Date();
-  const round = {
-    n, key, kind: plan.kind, pages: plan.pages.map(ref),
-    prompt_sent_hash: contentHash(req.prompt), prompt_sent_chars: req.prompt.length, max_output_tokens: req.maxOutputTokens,
-    context: req.context, est_usd: +est.toFixed(5),
-    job: { name: job.name, key_index: job.keyIndex, submitted_at: now },
-  };
-  // A collapsed single page is retried once (worker translatePageGuarded): the first text rides
-  // along so the better of the two is kept.
-  if (plan.kind === 'single' && run.collapse_retry?.page_id === plan.pages[0].id) { round.retry = true; round.first_text = run.collapse_retry.first_text; }
-  await setRun(db, run, { phase: PHASE.SUBMITTED, round, collapse_retry: null, prompt_ref: run.prompt_ref || req.promptRef, spent_est_usd: +(run.spent_est_usd + est).toFixed(5) }, deps);
-  await meterPlaceholder(deps, db, { run, jobName: job.name, pageCount: plan.pages.length });
-  log(`[translate-batch-chained] ${run.book_id}: round ${n} — ${plan.kind} p${plan.pages[0].page_number}${plan.pages.length > 1 ? `–${plan.pages[plan.pages.length - 1].page_number}` : ''}${req.context.previous_translation ? ' seeded' : ' unseeded'} → ${job.name}`);
-  return { submitted: true, note: `round ${n} ${job.name}` };
+  // The key names the run as well as the round: responses in a shared job are told apart by it.
+  const key = `${run.id}:r${n}`;
+  return { prepared: { run, plan, req, est, n, key, request: batchRequest({ key, prompt: req.prompt, maxOutputTokens: req.maxOutputTokens }) } };
+}
+
+/** Split prepared rounds into jobs: one model per job, at most `max` requests each. */
+export function packJobs(prepared, max = MAX_REQUESTS_PER_JOB) {
+  const byModel = new Map();
+  for (const p of prepared) byModel.set(p.run.model, [...(byModel.get(p.run.model) || []), p]);
+  const jobs = [];
+  for (const [model, items] of byModel) for (let i = 0; i < items.length; i += max) jobs.push({ model, items: items.slice(i, i + max) });
+  return jobs;
+}
+
+/**
+ * Submit the next round of every READY run given, sharing Batch jobs across books. Returns a Map
+ * runId → { submitted, note }. A job that fails to submit leaves its runs READY (nothing was
+ * recorded), and the next tick tries again.
+ */
+export async function submitRounds(db, runs, deps, { prompts }) {
+  const log = deps.log || console.log;
+  const out = new Map();
+  const prepared = [];
+  for (const run of runs) {
+    try {
+      const r = await prepareRound(db, run, deps, { prompts });
+      if (r.prepared) prepared.push(r.prepared); else out.set(run.id, r);
+    } catch (e) { out.set(run.id, { submitted: false, note: `ERROR ${e.message?.slice(0, 160)}` }); }
+  }
+  for (const { model, items } of packJobs(prepared)) {
+    const label = items.length === 1 ? `${items[0].run.book_id}-${items[0].run.id}-r${items[0].n}` : `${items.length}runs-${Date.now().toString(36)}`;
+    let job;
+    try {
+      job = await deps.gemini.submit({ model, requests: items.map((p) => p.request), displayName: `tbc-${label}` });
+    } catch (e) {
+      for (const p of items) out.set(p.run.id, { submitted: false, note: `submit failed: ${e.message?.slice(0, 160)}` });
+      continue;
+    }
+    const now = deps.now ? deps.now() : new Date();
+    for (const { run, plan, req, est, n, key } of items) {
+      const meterId = meterIdFor(job.name, run.id);
+      const round = {
+        n, key, kind: plan.kind, pages: plan.pages.map(ref),
+        prompt_sent_hash: contentHash(req.prompt), prompt_sent_chars: req.prompt.length, max_output_tokens: req.maxOutputTokens,
+        context: req.context, est_usd: +est.toFixed(5),
+        job: { name: job.name, key_index: job.keyIndex, submitted_at: now, requests: items.length },
+        meter_id: meterId,
+      };
+      // A collapsed single page is retried once (worker translatePageGuarded): the first text rides
+      // along so the better of the two is kept.
+      if (plan.kind === 'single' && run.collapse_retry?.page_id === plan.pages[0].id) { round.retry = true; round.first_text = run.collapse_retry.first_text; }
+      await setRun(db, run, { phase: PHASE.SUBMITTED, round, collapse_retry: null, prompt_ref: run.prompt_ref || req.promptRef, spent_est_usd: +(run.spent_est_usd + est).toFixed(5) }, deps);
+      await meterPlaceholder(deps, db, { run, jobName: meterId, pageCount: plan.pages.length });
+      log(`[translate-batch-chained] ${run.book_id}: round ${n} — ${plan.kind} p${plan.pages[0].page_number}${plan.pages.length > 1 ? `–${plan.pages[plan.pages.length - 1].page_number}` : ''}${req.context.previous_translation ? ' seeded' : ' unseeded'} → ${job.name}${items.length > 1 ? ` (shared, ${items.length} requests)` : ''}`);
+      out.set(run.id, { submitted: true, note: `round ${n} ${job.name}` });
+    }
+  }
+  return out;
+}
+
+/** Submit the next round for one READY run, in a job of its own. Returns { submitted, note }. */
+export async function submitRound(db, run, deps, { prompts }) {
+  return (await submitRounds(db, [run], deps, { prompts })).get(run.id);
 }
 
 async function finishRun(db, run, deps) {
@@ -379,23 +441,32 @@ async function writeRoundPage(db, run, book, page, text, deps) {
  * Collect a SUBMITTED run's job if it has finished: parse, write, queue fallbacks, plan on.
  * Idempotent while the job is running. Returns { advanced, note }.
  */
-export async function collectRound(db, run, deps) {
+export async function collectRound(db, run, deps, { fetched } = {}) {
   const log = deps.log || console.log;
   if (run.phase !== PHASE.SUBMITTED) return { advanced: false, note: `phase ${run.phase}` };
   const round = run.round;
-  const { state, responses } = await deps.gemini.fetch(round.job.name);
+  // `fetched` is the job fetched once by tickChained for every run in it; alone, fetch it here.
+  const { state, responses: all } = fetched || await deps.gemini.fetch(round.job.name);
+  // A round submitted before shared jobs (no meter_id) had a job of its own, metered by job name.
+  const meterId = round.meter_id || round.job.name;
+  // Only this run's response: a shared job holds other books' answers, and the meter row for
+  // this book must sum only this book's tokens. A lone job may fall back to its only response.
+  const texts = (all || []).map(responseTextOf);
+  let at = texts.findIndex((t) => t.key === round.key);
+  if (at < 0 && !round.meter_id && texts.length === 1) at = 0;
+  const responses = at >= 0 ? [all[at]] : [];
   if (DEAD_STATES.has(state)) {
-    await meterComplete(deps, db, { run, jobName: round.job.name, pageCount: round.pages.length, responses, status: 'failed', error: state });
+    await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses, status: 'failed', error: state });
     return strike(db, run, deps, `job ${state}`);
   }
   if (!DONE_STATES.has(state)) return { advanced: false, note: state };
 
-  const r = (responses || []).map(responseTextOf).find((t) => t.key === round.key) || (responses || []).map(responseTextOf)[0];
+  const r = at >= 0 ? texts[at] : null;
   if (!r || r.error) {
-    await meterComplete(deps, db, { run, jobName: round.job.name, pageCount: round.pages.length, responses, status: 'failed', error: r?.error || 'no response' });
+    await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses, status: 'failed', error: r?.error || 'no response' });
     return strike(db, run, deps, r?.error ? `request error: ${r.error}` : 'no response for key');
   }
-  await meterComplete(deps, db, { run, jobName: round.job.name, pageCount: round.pages.length, responses });
+  await meterComplete(deps, db, { run, jobName: meterId, pageCount: round.pages.length, responses });
 
   const book = await db.collection('books').findOne({ id: run.book_id });
   const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id));
@@ -474,22 +545,29 @@ function advanceCursorPast(run, pageId) {
 }
 
 /**
- * One scheduler pass over every open chained run: collect what finished, submit what is ready.
- * Returns per-run notes. Safe to call every few minutes from cron; each run moves at most one
- * step per call (collect, then submit).
+ * One scheduler pass over every open chained run: collect what finished, then submit every ready
+ * run's next round in shared jobs. Each job is fetched ONCE for all the runs in it. Returns
+ * per-run notes. Safe to call every few minutes from cron; each run moves at most one step per
+ * call (collect, then submit).
  */
 export async function tickChained(db, deps, { prompts, filter = {} } = {}) {
   const runs = await db.collection(RUNS_COLLECTION).find({ mode: MODE, phase: { $nin: TERMINAL_PHASES }, ...filter }).toArray();
-  const notes = [];
-  for (const run of runs) {
-    try {
-      let note = '';
-      if (run.phase === PHASE.SUBMITTED) note = (await collectRound(db, run, deps)).note;
-      if (run.phase === PHASE.READY) note += (note ? '; ' : '') + (await submitRound(db, run, deps, { prompts })).note;
-      notes.push({ run: run.id, book_id: run.book_id, phase: run.phase, note });
-    } catch (e) {
-      notes.push({ run: run.id, book_id: run.book_id, phase: run.phase, note: `ERROR ${e.message?.slice(0, 160)}` });
+  const notes = new Map(runs.map((run) => [run.id, '']));
+  const add = (run, note) => notes.set(run.id, (notes.get(run.id) ? `${notes.get(run.id)}; ` : '') + note);
+
+  const byJob = new Map();
+  for (const run of runs) if (run.phase === PHASE.SUBMITTED && run.round?.job?.name) byJob.set(run.round.job.name, [...(byJob.get(run.round.job.name) || []), run]);
+  for (const [jobName, inJob] of byJob) {
+    let fetched;
+    try { fetched = await deps.gemini.fetch(jobName); } catch (e) { for (const run of inJob) add(run, `ERROR fetch ${e.message?.slice(0, 160)}`); continue; }
+    for (const run of inJob) {
+      try { add(run, (await collectRound(db, run, deps, { fetched })).note); } catch (e) { add(run, `ERROR ${e.message?.slice(0, 160)}`); }
     }
   }
-  return notes;
+
+  const ready = runs.filter((run) => run.phase === PHASE.READY);
+  const submitted = await submitRounds(db, ready, deps, { prompts });
+  for (const run of ready) if (submitted.has(run.id)) add(run, submitted.get(run.id).note);
+
+  return runs.map((run) => ({ run: run.id, book_id: run.book_id, phase: run.phase, note: notes.get(run.id) }));
 }

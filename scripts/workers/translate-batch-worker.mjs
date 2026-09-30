@@ -25,7 +25,7 @@
  *
  *   --chained --plan   --book=ID                        FREE  queue, blocks, estimate
  *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
- *                                                             submit its first round
+ *                                                             submit the first rounds in shared jobs
  *   --chained --tick                                    PAID  one pass: collect finished rounds,
  *                                                             write pages, submit next rounds
  *   --chained --loop [--interval=180] [--max-minutes=N] PAID  tick until every run is terminal
@@ -45,7 +45,7 @@ import {
   planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, batchRequestToJsonlLine, RUNS_COLLECTION, TERMINAL_PHASES,
 } from '../lib/translate-batch-seam.mjs';
 import {
-  enrolChainedRun, tickChained, planNextRound, estimateChainedUsd,
+  enrolChainedRun, tickChained, submitRounds, planNextRound, estimateChainedUsd,
   MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
 } from '../lib/translate-batch-chained.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
@@ -258,11 +258,15 @@ async function chained(db) {
     const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
     if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID');
     const prompts = await loadTranslationPrompts(db);
+    // Enrol every book first, then submit their first rounds together: N books share ⌈N/50⌉ jobs.
+    const enrolled = [];
     for (const id of ids) {
-      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined });
+      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined, submit: false });
       if (!res.ok) { console.log(`  ${id}: REFUSED — ${res.reason}`); process.exitCode = 2; }
-      else console.log(`  ${id}: run ${res.run.id} est $${res.estimate} — ${res.submitted?.note}`);
+      else { enrolled.push(res.run); console.log(`  ${id}: run ${res.run.id} est $${res.estimate}`); }
     }
+    const submitted = await submitRounds(db, enrolled, deps(), { prompts });
+    for (const run of enrolled) console.log(`  ${run.book_id}: ${submitted.get(run.id)?.note}`);
     return;
   }
 
