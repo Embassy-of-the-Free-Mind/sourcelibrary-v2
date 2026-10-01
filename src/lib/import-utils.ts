@@ -433,6 +433,8 @@ export async function importBookFromIIIF(
     ...(config.identifier_field || {}),
     ...(config.work_id ? { work_id: config.work_id } : {}),
     thumbnail: pageImages[0]?.thumbnail || '',
+    // A paged import is a text; declare it rather than leave it null (#5292c).
+    content_type: 'book',
     pages_count: pageCount,
     pages_ocr: 0,
     pages_translated: 0,
