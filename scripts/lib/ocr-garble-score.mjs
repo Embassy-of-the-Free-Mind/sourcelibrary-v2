@@ -38,6 +38,7 @@
  */
 import { sourceProse } from './block-drift.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 // ── scripts ────────────────────────────────────────────────────────────────────────────────
 
@@ -311,11 +312,11 @@ const STILL_LEGIBLE_RE = /(remains?|still|is|are|fully|clearly|otherwise) (clear
  */
 export function ocrSelfCaution(ocr) {
   const body = String(ocr || '').replace(NON_BODY_RE, '');
-  const plainLen = body.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+  const plainLen = stripMarkupTags(body, '').replace(/\s+/g, ' ').trim().length;
   if (plainLen >= 60) {
     let unclear = 0;
     for (const m of body.matchAll(/<unclear[^>]*>([\s\S]*?)<\/unclear>/gi)) {
-      unclear += m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+      unclear += stripMarkupTags(m[1], '').replace(/\s+/g, ' ').trim().length;
     }
     if (unclear / plainLen >= 0.1) return 'unclear';
   }

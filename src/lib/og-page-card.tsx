@@ -8,6 +8,7 @@ import { localizedTitle } from '@/lib/localized';
 import type { LocalizedBookMap } from '@/lib/localized';
 import { languageName } from '@/lib/book-i18n';
 import { getTranslation } from '@/lib/page-translations';
+import { stripMarkupTags } from '@/lib/strip-markup-tags';
 
 /**
  * The reader-page share card, in the reader's language.
@@ -117,8 +118,7 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
   const excerptLabel = localizedText ? t.ownExcerpt : t.englishExcerpt;
   const rawTranslation = localizedText || (page as any)?.translation?.data || '';
   const translationExcerpt = rawTranslation
-    ? rawTranslation
-      .replace(/<[^>]+>/g, '')           // strip XML/HTML tags
+    ? stripMarkupTags(rawTranslation, '') // strip XML/HTML tags (keeps text after ->centred<- lines, #5564)
       .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
       .replace(/^#{1,6}\s+/gm, '')       // strip markdown headings (they ran into the prose as a literal "#")
       .replace(/\s+/g, ' ')              // collapse whitespace

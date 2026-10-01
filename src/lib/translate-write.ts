@@ -27,6 +27,7 @@
 import type { Db } from 'mongodb';
 import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
+import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 
 /**
@@ -91,7 +92,7 @@ export function imageDescLen(text: string | null | undefined): number {
   if (!text) return 0;
   let total = 0;
   for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
-    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+    total += stripMarkupTags(m[1]).replace(/\s+/g, ' ').trim().length;
   }
   return total;
 }

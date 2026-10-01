@@ -46,6 +46,8 @@
  * unmade decision.
  */
 
+import { stripMarkupTags } from './strip-markup-tags';
+
 export type TranscriptionReliability = {
   /** Machine-readable so a caller can decide how loudly to render it. */
   level: 'unreliable';
@@ -132,11 +134,11 @@ export function pageReadCaution(
   const ocr = page?.ocr;
   if (!ocr?.data || ocr.unreadable) return null;
   const body = ocr.data.replace(NON_BODY, '');
-  const plainLen = body.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+  const plainLen = stripMarkupTags(body, '').replace(/\s+/g, ' ').trim().length;
   if (plainLen >= MIN_BODY_CHARS) {
     let unclear = 0;
     for (const m of body.matchAll(/<unclear[^>]*>([\s\S]*?)<\/unclear>/gi)) {
-      unclear += m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+      unclear += stripMarkupTags(m[1], '').replace(/\s+/g, ' ').trim().length;
     }
     const share = unclear / plainLen;
     if (share >= UNCLEAR_SHARE_THRESHOLD) return { reason: 'unclear', share };

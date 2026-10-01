@@ -17,6 +17,7 @@
 
 import type { Db } from 'mongodb';
 import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
+import { stripMarkupTags } from '@/lib/strip-markup-tags';
 
 export interface GhostDetectionResult {
   bookId: string;
@@ -29,9 +30,7 @@ export interface GhostDetectionResult {
  * Extract a bag of words from OCR text, ignoring XML tags and short tokens.
  */
 function extractWords(text: string): Set<string> {
-  const cleaned = text
-    .replace(/<[^>]+>/g, ' ')  // Strip XML/HTML tags
-    .toLowerCase();
+  const cleaned = stripMarkupTags(text).toLowerCase(); // strip tags without eating ->centred<- lines (#5564)
   const words = cleaned.match(/[a-z\u00c0-\u024f]{4,}/g) || [];
   return new Set(words);
 }
