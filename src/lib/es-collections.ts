@@ -170,6 +170,29 @@ export function spanishReaderHref(book: { slug?: string; id: string; pages_count
 const PUBLIC_COLLECTION = { visible: true, collection_type: { $ne: 'visual_art' } };
 
 /**
+ * Which of these slugs have a Spanish page (`/es/collections/<slug>`) — the
+ * same filter `getEsCollection` applies, so a link built from it cannot 404.
+ *
+ * Stricter than the English page (`visible: { $ne: false }`, visual-art
+ * included), so a collection can be live at `/collections/x` and 404 at
+ * `/es/collections/x`; `localePath` cannot see the difference because it only
+ * knows route SHAPES. Measured 2026-10-01: a Spanish Librarian turn linked
+ * `/es/collections/alchemists-studio` and `/es/collections/emblems-great-work`,
+ * both 200 in English and 404 in Spanish, and the citation check passed them.
+ */
+export async function esCollectionSlugs(
+  db: { collection: (name: string) => { find: (q: object) => { project: (p: object) => { toArray: () => Promise<unknown[]> } } } },
+  slugs: string[],
+): Promise<Set<string>> {
+  if (slugs.length === 0) return new Set();
+  const docs = await db.collection('collections')
+    .find({ slug: { $in: slugs }, ...PUBLIC_COLLECTION })
+    .project({ _id: 0, slug: 1 })
+    .toArray() as { slug: string }[];
+  return new Set(docs.map(d => d.slug));
+}
+
+/**
  * What leads the Spanish collections index, in order.
  *
  * Separate from `PINNED_COLLECTION_SLUGS` on purpose: that list is the English

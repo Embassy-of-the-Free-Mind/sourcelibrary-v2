@@ -9,6 +9,7 @@ import {
 } from '@/lib/embassy/citation-fixes';
 import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
 import { semanticSiteSearch } from '@/lib/semantic-search';
+import { esCollectionSlugs } from '@/lib/es-collections';
 import {
   localizedTitle,
   localizedEditionFilter,
@@ -873,7 +874,10 @@ async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
   const base = siteBase(lang);
   let browseUrl: string | null = null;
   if (linkable?.kind === 'collection') {
-    browseUrl = `${base}/collections/${linkable.value}`;
+    // Not every collection has a Spanish page (esCollectionSlugs); fall back
+    // to the English one rather than hand over an /es link that 404s.
+    const hasTwin = lang === 'en' || (await esCollectionSlugs(db, [linkable.value])).has(linkable.value);
+    browseUrl = `${hasTwin ? base : siteBase('en')}/collections/${linkable.value}`;
   } else if (linkable?.kind === 'readable' && linkable.value === 'es') {
     browseUrl = `${base}/collections/en-espanol`;
   } else if (linkable?.kind === 'language') {
@@ -1037,8 +1041,17 @@ async function executeTool(
         context = `No page on Source Library's own site matches "${query}". Do not write a link to a page for it — any URL you compose will not exist.\n`;
       } else {
         const site = 'https://sourcelibrary.org';
+        // localePath knows route shapes, not which collections have an /es
+        // page — ask the store, and keep the English URL where there is none.
+        const collectionSlug = (u: string) => u.match(/^\/collections\/([^/?#]+)$/)?.[1];
+        const wanted = lang === 'en' ? [] : hits.map(h => collectionSlug(h.url)).filter((s): s is string => !!s);
+        const esLive = wanted.length > 0 ? await esCollectionSlugs(await getDb(), wanted).catch(() => new Set<string>()) : new Set<string>();
+        const link = (u: string) => {
+          const slug = collectionSlug(u);
+          return `${site}${slug && !esLive.has(slug) ? u : localePath(u, lang)}`;
+        };
         context = `Source Library's own pages matching "${query}" (best first). Link a page with EXACTLY the URL given; these pages are in English.\n\n`
-          + hits.map((h, i) => `${i + 1}. [${kind(h.page_type)}] ${h.title}\n   URL: ${site}${localePath(h.url, lang)}\n   Passage: ${h.snippet}`).join('\n\n')
+          + hits.map((h, i) => `${i + 1}. [${kind(h.page_type)}] ${h.title}\n   URL: ${link(h.url)}\n   Passage: ${h.snippet}`).join('\n\n')
           + '\n';
       }
       return {
@@ -1258,7 +1271,7 @@ The library is organized into thematic collections. The **search** tool takes an
 ${collectionContext ? `\n**This conversation started inside the "${collectionContext}" collection.** Unless the user clearly shifts to a different subject, pass \`collection: "${collectionContext}"\` on your searches so results stay focused there.\n` : ''}
 Available collection slugs (slug — name):
 ${catalog}
-
+${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not every collection has a ${lang === 'es' ? 'Spanish' : 'localized'} page, so never build a \`/${lang}/collections/<slug>\` URL yourself — link a collection only with a URL a tool returned this turn (browse_catalog, search_site).\n` : ''}
 `
     : '';
 
@@ -1920,12 +1933,12 @@ export async function verifyCitations(
  * so it is always dead, no lookup needed.
  */
 async function verifyNonBookLinks(text: string): Promise<string[]> {
-  const { plural, singular } = findCitedCollectionSlugs(text);
+  const { plural, singular, spanish } = findCitedCollectionSlugs(text);
   const artworkSlugs = new Set(findCitedArtworkSlugs(text));
   const collectionSlugs = new Set(plural);
   const dead: string[] = singular.map(s => `/collection/${s}`);
 
-  if (artworkSlugs.size === 0 && collectionSlugs.size === 0) return dead;
+  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0) return dead;
   const db = await getDb();
 
   if (artworkSlugs.size > 0) {
@@ -1950,6 +1963,14 @@ async function verifyNonBookLinks(text: string): Promise<string[]> {
     const live = new Set(found.map(c => c.slug as string));
     const redirects = collectionRedirects as Record<string, string>;
     for (const s of wanted) if (!live.has(s) && !redirects[s]) dead.push(`/collections/${s}`);
+  }
+
+  // A slug live in English can still 404 under /es (esCollectionSlugs).
+  const spanishWanted = [...new Set(spanish)].filter(s => !dead.includes(`/collections/${s}`));
+  if (spanishWanted.length > 0) {
+    const redirects = collectionRedirects as Record<string, string>;
+    const esLive = await esCollectionSlugs(db, spanishWanted.map(s => redirects[s] ?? s));
+    for (const s of spanishWanted) if (!esLive.has(redirects[s] ?? s)) dead.push(`/es/collections/${s}`);
   }
 
   return dead;
