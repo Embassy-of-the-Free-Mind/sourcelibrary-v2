@@ -1,0 +1,534 @@
+{
+  "_about": "Error ladder for /research/quality (#5576). OCR rungs come from the benchmark (scripts/eval/results/benchmark/*.json, engine gemini-3.1-flash-lite, reads on the Hetzner bench root); translation rungs from the 2026-09-30 corpus audit (Opus judge). Every excerpt was checked against the scan by eye on 2026-10-01 ('read from image'). Crop boxes are in the image's own pixels. Segment kinds: same; wrong = the engine misread what the scan shows; missing = on the scan (or in the source) but absent from the output; variant = differs from the reference, but the scan agrees with the engine (a spelling convention or another edition); invented = in the English with nothing behind it on the page.",
+  "ocr": [
+    {
+      "key": "ocr-0.5",
+      "level": "0.5%",
+      "cer": 0.005,
+      "language": "Latin",
+      "script": "Latin type, long s",
+      "book": "Agricola, De re metallica (Basel, 1657), printed p. 386",
+      "year": 1657,
+      "href": "https://sourcelibrary.org/book/69b6a4c6080b19f98fd20d95?page=404",
+      "image": "https://images.sourcelibrary.org/pages/69b6a4c6080b19f98fd20d95/0404.jpg",
+      "size": [
+        1200,
+        2117
+      ],
+      "crop": {
+        "x": 230,
+        "y": 300,
+        "w": 960,
+        "h": 260
+      },
+      "alt": "Six lines of Latin roman type from De re metallica, Book X, on the silver-refining furnace",
+      "reference_source": "la.wikisource proofread page of the 1556 edition (same text)",
+      "excerpt_letters": 200,
+      "reference": [
+        {
+          "text": "fornix, qui priore parte existit, altus est pedes tres. Sed ipse focus longus pedes quinque, latus quatuor: à lateribus & posteriore parte muri sunt integri: à priore ",
+          "kind": "same"
+        },
+        {
+          "text": "u",
+          "kind": "variant"
+        },
+        {
+          "text": "erò alter fornix alteri superpositus est",
+          "kind": "same"
+        }
+      ],
+      "engine": [
+        {
+          "text": "fornix, qui priore parte exiſtit, altus eſt pedes tres. Sed ipſe focus longus pedes quinque, latus quatuor: à lateribus & poſteriore parte muri ſunt integri: à priore ",
+          "kind": "same"
+        },
+        {
+          "text": "v",
+          "kind": "variant"
+        },
+        {
+          "text": "erò alter fornix alteri ſuperpoſitus eſt",
+          "kind": "same"
+        }
+      ],
+      "note": "In 200 letters there is one difference, and the scan sides with the engine: the print has verò with a v, the reference spells it with a u. Long s (ſ) counts as s.",
+      "allows": "Read, quote and search as it stands. What is left is spelling convention, not misreading.",
+      "credit": {
+        "text": "Scan: e-rara (Swiss rare books). Public-domain work; our record lists the licence as unknown.",
+        "href": "https://www.e-rara.ch/i3f/v21/4806499/manifest"
+      }
+    },
+    {
+      "key": "ocr-2",
+      "level": "2%",
+      "cer": 0.02,
+      "language": "Hebrew",
+      "script": "Hebrew square script, pointed",
+      "book": "Biblia Hebraica, ed. Michaelis (Halle, 1720), Genesis 1",
+      "year": 1720,
+      "href": "https://sourcelibrary.org/book/6952e4bc77f38f6761bc7db1?page=45",
+      "image": "https://images.sourcelibrary.org/pages/6952e4bc77f38f6761bc7db1/0045.jpg",
+      "size": [
+        2000,
+        3316
+      ],
+      "crop": {
+        "x": 380,
+        "y": 830,
+        "w": 1350,
+        "h": 190
+      },
+      "alt": "Genesis 1:2–3 in pointed Hebrew type; the second line ends with the word יְהִי",
+      "reference_source": "Sefaria, Masoretic text (Genesis 1:1–5)",
+      "excerpt_letters": 60,
+      "dir": "rtl",
+      "reference": [
+        {
+          "text": "וְרוּחַ אֱלֹהִים מְרַחֶפֶת עַל־פְּנֵי הַמָּיִם: וַיֹּאמֶר אֱלֹהִים ",
+          "kind": "same"
+        },
+        {
+          "text": "יְהִי",
+          "kind": "missing"
+        },
+        {
+          "text": " אוֹר וַיְהִי־אוֹר:",
+          "kind": "same"
+        }
+      ],
+      "engine": [
+        {
+          "text": "וְרוּחַ אֱלֹהִים מְרַחֶפֶת עַל־פְּנֵי הַמָּיִם: וַיֹּאמֶר אֱלֹהִים אוֹר וַיְהִי־אוֹר:",
+          "kind": "same"
+        }
+      ],
+      "note": "The engine dropped one word, יְהִי (\"let there be\"), where it ends a printed line. \"And God said, Let there be light\" becomes \"And God said light\". Points are not counted.",
+      "allows": "Read and translate. Before quoting, check the line against the scan: errors cluster at line ends, and one lost word can change a sentence.",
+      "credit": {
+        "text": "Scan: Internet Archive. Public domain.",
+        "href": "https://archive.org/details/bibliahebraicaex1720mich"
+      }
+    },
+    {
+      "key": "ocr-5",
+      "level": "4%",
+      "cer": 0.042,
+      "language": "Classical Armenian",
+      "script": "Armenian bolorgir type",
+      "book": "Eznik of Kołb, Against the Sects (Venice, 1826), printed p. 109",
+      "year": 1826,
+      "href": "https://sourcelibrary.org/book/69a5e9bb787d6e9b8d42e183?page=120",
+      "image": "https://images.sourcelibrary.org/pages/69a5e9bb787d6e9b8d42e183/0120.jpg",
+      "size": [
+        1500,
+        2654
+      ],
+      "crop": {
+        "x": 150,
+        "y": 1560,
+        "w": 1340,
+        "h": 460
+      },
+      "alt": "Five lines of Armenian type from Eznik's Against the Sects",
+      "reference_source": "TITUS e-text of the Mariès–Mercier critical edition (1959)",
+      "excerpt_letters": 80,
+      "reference": [
+        {
+          "text": "ոչ առնիցեն ։ Զի արարածոց պաշտ",
+          "kind": "same"
+        },
+        {
+          "text": "աւ",
+          "kind": "variant"
+        },
+        {
+          "text": "ն մատուցանելոյ վարդապե",
+          "kind": "same"
+        },
+        {
+          "text": "ա",
+          "kind": "variant"
+        },
+        {
+          "text": " այլ ոք չէր , բայց միայն սատանայ ։",
+          "kind": "same"
+        }
+      ],
+      "engine": [
+        {
+          "text": "ոչ առնիցեն . զի արարածոց պաշ-տ",
+          "kind": "same"
+        },
+        {
+          "text": "օ",
+          "kind": "variant"
+        },
+        {
+          "text": "ն մատուցանելոյ վարդապե",
+          "kind": "same"
+        },
+        {
+          "text": "տ",
+          "kind": "variant"
+        },
+        {
+          "text": " այլ ոք չէր , բայց միայն սատանայ ։",
+          "kind": "same"
+        }
+      ],
+      "note": "Both marked differences side with the engine on the scan. The 1826 print spells պաշտօն with օ where the critical edition writes աւ, and the e-text has վարդապեա where the print has վարդապետ. Punctuation is not counted. Against a modern edition, part of a 4% rate is spelling, not misreading.",
+      "allows": "Read, translate and search, allowing for old spellings. Check a quotation against the scan.",
+      "credit": {
+        "text": "Scan: digitised by Google, via the Internet Archive. Public domain.",
+        "href": "https://archive.org/details/EznkayKoghbatsioyBagrewandayEpiskoposiEghtsAghandots"
+      }
+    },
+    {
+      "key": "ocr-10",
+      "level": "10%",
+      "cer": 0.097,
+      "language": "Classical Chinese",
+      "script": "woodblock print, vertical",
+      "book": "劉敞, 劉氏春秋意林 (Liu Chang, Chunqiu yilin), leaf 66",
+      "year": null,
+      "href": "https://sourcelibrary.org/book/6a3c6cd1c4e8626320dbbedb?page=66",
+      "image": "https://images.sourcelibrary.org/pages/6a3c6cd1c4e8626320dbbedb/0066.jpg",
+      "size": [
+        3847,
+        3231
+      ],
+      "crop": {
+        "x": 3280,
+        "y": 640,
+        "w": 450,
+        "h": 2500
+      },
+      "alt": "The first three columns of the right-hand page, beginning 為兄當此之時",
+      "reference_source": "Kanripo e-text of the work (another edition)",
+      "excerpt_letters": 58,
+      "reference": [
+        {
+          "text": "為兄當此之時",
+          "kind": "same"
+        },
+        {
+          "text": "鱄",
+          "kind": "missing"
+        },
+        {
+          "text": "以全身不離於惡名為智以",
+          "kind": "same"
+        },
+        {
+          "text": "母",
+          "kind": "variant"
+        },
+        {
+          "text": "使其兄有誅弟之惡為義以不翹世以自絜為忠以不仕而能矯國之失為廉可為重",
+          "kind": "same"
+        },
+        {
+          "text": "己",
+          "kind": "variant"
+        },
+        {
+          "text": "乎是乃君",
+          "kind": "same"
+        }
+      ],
+      "engine": [
+        {
+          "text": "為兄當此之時",
+          "kind": "same"
+        },
+        {
+          "text": "鱣",
+          "kind": "wrong"
+        },
+        {
+          "text": "以全身不離於惡名為智以",
+          "kind": "same"
+        },
+        {
+          "text": "毋",
+          "kind": "variant"
+        },
+        {
+          "text": "使其兄有誅弟之惡為義以不翹世以自絜為忠以不仕而能矯國之失為廉可為重",
+          "kind": "same"
+        },
+        {
+          "text": "已",
+          "kind": "variant"
+        },
+        {
+          "text": "乎是乃君",
+          "kind": "same"
+        }
+      ],
+      "note": "One real misread: 鱄, the rare first character of a personal name, read as the look-alike 鱣. The other two differences are the reference's; this leaf prints 毋 and 已. Much of this page's 10% is the reference, which starts eight characters early, on the previous page.",
+      "allows": "Follow the sense and search for common words. Names, rare characters and numbers need the scan. Do not quote unchecked.",
+      "credit": {
+        "text": "Scan: Harvard Library, Harvard University. Public domain.",
+        "href": "https://sourcelibrary.org/book/6a3c6cd1c4e8626320dbbedb"
+      }
+    },
+    {
+      "key": "ocr-20",
+      "level": "18%",
+      "cer": 0.18,
+      "language": "Ancient Greek",
+      "script": "Greek type with ligatures and abbreviations",
+      "book": "[Plutarch], Placita philosophorum (Basel, 1531), p. 53",
+      "year": 1531,
+      "href": "https://sourcelibrary.org/book/6a50871078825bd7fde75fda?page=53",
+      "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11217298_00053/full/full/0/default.jpg",
+      "size": [
+        1707,
+        2417
+      ],
+      "crop": {
+        "x": 60,
+        "y": 1470,
+        "w": 1380,
+        "h": 175
+      },
+      "alt": "Three lines of 16th-century Greek type with ligatures, on the tides of the Atlantic",
+      "reference_source": "Perseus, Bernardakis's Teubner edition (1888)",
+      "excerpt_letters": 120,
+      "reference": [
+        {
+          "text": "κινοῦντ",
+          "kind": "same"
+        },
+        {
+          "text": "ο",
+          "kind": "variant"
+        },
+        {
+          "text": "ς καὶ συμπεριφέροντ",
+          "kind": "same"
+        },
+        {
+          "text": "ο",
+          "kind": "variant"
+        },
+        {
+          "text": "ς· ὑφʼ ὧν ἐμβαλλόντων μὲν προωθουμένην ἀνοιδεῖν τὴν Ἀτλαντικὴν θάλασσαν, ",
+          "kind": "same"
+        },
+        {
+          "text": "καὶ πατασκευάζειν",
+          "kind": "missing"
+        },
+        {
+          "text": " τὴν πλήμμυραν",
+          "kind": "same"
+        }
+      ],
+      "engine": [
+        {
+          "text": "κινοῦντ",
+          "kind": "same"
+        },
+        {
+          "text": "ε",
+          "kind": "variant"
+        },
+        {
+          "text": "ς καὶ συμπεριφέροντ",
+          "kind": "same"
+        },
+        {
+          "text": "ε",
+          "kind": "variant"
+        },
+        {
+          "text": "ς, ὑφ᾽ ὧν ἐμβαλλόντων μὲν, προωθουμένην ἀνοιδεῖν τὴν ἀτλαντικὴν θάλασσαν, ",
+          "kind": "same"
+        },
+        {
+          "text": "ἐπὶ πᾶσκυάζειν",
+          "kind": "wrong"
+        },
+        {
+          "text": " τὴν πλημμύραν",
+          "kind": "same"
+        }
+      ],
+      "note": "The print writes καί as a single sign and the verb ending -σκευάζειν with ligatures. The engine read them as ἐπὶ πᾶσκυάζειν, which is not a Greek word. The -ντες endings are the 1531 print's; the 1888 reference has -ντος. A second engine scored 9% on the same page.",
+      "allows": "Distinctive words can still be found by search. Reading needs the scan beside the text, and nothing should be quoted or translated unchecked.",
+      "credit": {
+        "text": "Scan: Bayerische Staatsbibliothek, Munich. No copyright, non-commercial use only (NoC-NC 1.0).",
+        "href": "https://www.digitale-sammlungen.de/view/bsb11217298?page=53"
+      }
+    }
+  ],
+  "translation": [
+    {
+      "key": "tr-5",
+      "rating": 5,
+      "language": "Latin",
+      "book": "Flavii Aviani Fabulae, ed. Cannegieter (1731), printed p. 270",
+      "year": 1731,
+      "href": "https://sourcelibrary.org/book/flavii-aviani-fabulae-avianus/page/69e72c5aa409200ea79f466f",
+      "image": "https://images.sourcelibrary.org/pages/69e72c5aa409200ea79f4545/0298.jpg",
+      "size": [
+        1866,
+        3000
+      ],
+      "crop": {
+        "x": 360,
+        "y": 185,
+        "w": 1340,
+        "h": 190
+      },
+      "alt": "Latin type: Prologus libri primi, & multa alia arguunt, non paucis scripsisse has fabulas Phaedrum",
+      "transcriptionLang": "la",
+      "transcription": [
+        {
+          "text": "multa alia arguunt, non paucis scripsisse has fabulas Phaedrum, sed omnibus, neque tantum ad privatum dolorem leniendum, sed & ad famam publice aucupandam.",
+          "kind": "same"
+        }
+      ],
+      "english": [
+        {
+          "text": "many other things argue that Phaedrus did not write these fables for a few, but for everyone, and not only to soothe private grief, but also to hunt for fame publicly.",
+          "kind": "same"
+        }
+      ],
+      "defect": "None. The judge: the commentary and its verse quotations are rendered faithfully.",
+      "allows": "Read and cite the English as a working translation, with the Latin beside it.",
+      "credit": {
+        "text": "Scan: digitised by Google, via the Internet Archive. Public domain.",
+        "href": "https://archive.org/details/bub_gb_95tHAAAAYAAJ"
+      }
+    },
+    {
+      "key": "tr-4",
+      "rating": 4,
+      "language": "Latin (in a German book)",
+      "book": "Elucidarius Chymicus (1617), printed p. 43",
+      "year": 1617,
+      "href": "https://sourcelibrary.org/book/elucidarius-chymicus-oder-erleuchterung-und-deutliche-barbarossa-2/page/69b51e63768235dc65992906",
+      "image": "https://images.sourcelibrary.org/pages/69b51e63768235dc659928d8/0046.jpg",
+      "size": [
+        1008,
+        1805
+      ],
+      "crop": {
+        "x": 60,
+        "y": 160,
+        "w": 920,
+        "h": 120
+      },
+      "alt": "Two lines of Latin type: substantia, quæ quæritur, cum ea, ex qua depromi debet",
+      "transcriptionLang": "la",
+      "transcription": [
+        {
+          "text": "substantia",
+          "kind": "missing"
+        },
+        {
+          "text": ", quæ quæritur, cum ea, ex qua depromi debet.",
+          "kind": "same"
+        }
+      ],
+      "english": [
+        {
+          "text": "which is sought, with that from which it must be taken.",
+          "kind": "same"
+        }
+      ],
+      "defect": "Minor omission: the English drops the first word, \"substantia\" (the substance).",
+      "allows": "Read and follow the argument. Check the original before quoting a sentence.",
+      "credit": {
+        "text": "Scan: Bayerische Staatsbibliothek, Munich. No copyright, non-commercial use only (NoC-NC 1.0).",
+        "href": "https://www.digitale-sammlungen.de/view/bsb10252680"
+      }
+    },
+    {
+      "key": "tr-3",
+      "rating": 3,
+      "language": "Ancient Greek",
+      "book": "Pindar, Olympian 10, in Pindari Olympia … (1513), printed p. 49",
+      "year": 1513,
+      "href": "https://sourcelibrary.org/book/pindari-olympia-pythia-nemea-isthmia-callimachi-hymni-qui-in/page/6a08573115c643eb1af5aeff",
+      "image": "https://images.sourcelibrary.org/pages/6a08573115c643eb1af5aeae/0081.jpg",
+      "size": [
+        1617,
+        2500
+      ],
+      "crop": {
+        "x": 300,
+        "y": 1040,
+        "w": 1000,
+        "h": 330
+      },
+      "alt": "Four lines of Greek type ending δάπε δὲ κυκνεία μάχα καὶ ὑπέρβιον ἡρακλέα",
+      "transcriptionLang": "grc",
+      "transcription": [
+        {
+          "text": "δάπε δὲ Κυκνεία μάχα καὶ ὑπέρβιον Ἡρακλέα·",
+          "kind": "same"
+        }
+      ],
+      "english": [
+        {
+          "text": "For they tell of the Cycnean battle and the overbearing Heracles.",
+          "kind": "wrong"
+        }
+      ],
+      "defect": "Major mistranslation: the Greek says the battle with Cycnus routed even mighty Heracles. Three smaller clauses on the page are also reshaped.",
+      "allows": "Find the passage and get its gist. Do not quote or rely on the English for a claim.",
+      "credit": {
+        "text": "Scan: National Central Library of Rome, via the Internet Archive. Public domain.",
+        "href": "https://archive.org/details/bub_gb_jkV36x6F7gIC"
+      }
+    },
+    {
+      "key": "tr-2",
+      "rating": 2,
+      "language": "Classical Chinese",
+      "book": "徐光啟, 農政全書 (Xu Guangqi, Nongzheng quanshu), leaf 31",
+      "year": 1782,
+      "href": "https://sourcelibrary.org/book/nong-zheng-quan-shu-complete-treatise-on-agricultural-guangqi/page/69af0ea2067c0c26ee26e646",
+      "image": "https://images.sourcelibrary.org/pages/69af0ea2067c0c26ee26e607/0063.jpg",
+      "size": [
+        780,
+        1048
+      ],
+      "crop": {
+        "x": 105,
+        "y": 100,
+        "w": 160,
+        "h": 850
+      },
+      "alt": "The last two columns of the page, ending 內六十四成積五億",
+      "transcriptionLang": "zh",
+      "transcription": [
+        {
+          "text": "以畝法積百步而一得九百一十七萬三千六百二十九畝四分四釐內六十四成積五億",
+          "kind": "same"
+        }
+      ],
+      "english": [
+        {
+          "text": "dividing the area by 100 bu yields 9,173,629.44 mu. Within this, 64 parts total ",
+          "kind": "same"
+        },
+        {
+          "text": "576,000,000 bu, providing 5,760,000 mu of farmland. The corners total 36 parts, equal to 324,000,000 bu … Together, this yields 9,000,000 mu of tax-paying farmland.",
+          "kind": "invented"
+        }
+      ],
+      "defect": "Major invention: the page ends at 積五億 (\"an area of five hundred million\"). The English goes on to finish the calculation with sums that are not on the page.",
+      "allows": "Use only to locate the passage. The English cannot be read, quoted or cited without the original.",
+      "credit": {
+        "text": "Scan: Zhejiang University Library, via the Internet Archive. Public domain.",
+        "href": "https://archive.org/details/06049884.cn"
+      }
+    }
+  ]
+}
