@@ -35,6 +35,22 @@ export const PAUSE_KEYS = Object.freeze(['archive', 'ocr', 'translate', 'enrich'
  * numbers that were written into `paused_phases` by hand; names are the two words
  * the realtime workers read. Each now pauses EVERY lane of its step, not only the
  * reader that used to understand it.
+ *
+ * WIDENED ON PURPOSE (#5492). Every alias pauses a SUPERSET of what the entry paused
+ * before, never less, so an old entry still stops what it stopped:
+ *   'translation'  was translate-worker run start → every translate lane (realtime, chained, seam, Phase 4)
+ *   'enrichment'   was enrich-worker              → also orchestrator Phases 6 and 7
+ *   1.5            was orchestrator Phase 1.5     → all OCR, incl. full OCR (Phase 2), 1.25, 1.45, 1.6, 3.7
+ *   2              was orchestrator Phase 2       → all OCR, as 1.5
+ *   4              was orchestrator Phase 4       → every translate lane
+ *   5              was orchestrator Phase 5       → also every translate lane (Phase 5 still stops too, by its
+ *                                                   exact number; a bare 'translate' key does not stop it)
+ *   6, 7           was that orchestrator phase    → the whole enrich step, incl. the whole enrich-worker
+ *   8              was orchestrator Phase 8       → image extraction dispatch + image-extract-worker. NOT the
+ *                                                   free Phase 8 advance, which asks only the exact number 8
+ *                                                   (shouldRunExactPhase) so paid extractions are collected.
+ * `paused_phases` was [] in production when this landed (2026-10-01), so the widening
+ * changed nothing live.
  */
 export const PAUSE_ALIASES = Object.freeze({
   translation: 'translate',

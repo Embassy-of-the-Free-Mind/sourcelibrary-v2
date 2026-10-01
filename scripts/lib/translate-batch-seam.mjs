@@ -561,11 +561,9 @@ export async function advanceRun(db, run, deps) {
   const log = deps.log || console.log;
 
   if (run.phase === PHASE.TRANSLATE_SUBMITTED) {
-    // This step ends by submitting the repair job, and it meters the translate job on the way:
-    // a pause must stop it BEFORE either, or a resumed run would meter the same job twice. The
-    // run stays translate_submitted and moves on the first --advance after the pause lifts.
-    const paused = brakeStopsBook(await translateSubmitBrake(db), run.book_id);
-    if (paused) return { phase: run.phase, advanced: false, note: paused };
+    // Collecting the finished translate job is free and is NOT stopped by a pause: the job is
+    // already paid for, and a pause that outlasts Gemini's result retention would lose it
+    // (#5496 review). Only the repair SUBMIT below is paid, so only it asks the brake.
     const { state, responses } = await deps.gemini.fetch(run.translate_job.name);
     if (DEAD_STATES.has(state)) {
       await meterComplete(deps, db, { run, jobName: run.translate_job.name, pageCount: run.page_count, kind: 'translate', responses, status: 'failed', error: state });
@@ -615,6 +613,19 @@ export async function advanceRun(db, run, deps) {
     if (pairs.length === 0) {
       await setPhase(db, run, PHASE.READY_TO_WRITE, { drafts: draftRows, block_notes: blockNotes, seams: [], seams_skipped: skipped, repairs: [] }, deps);
       return { phase: run.phase, advanced: true, note: 'no seams' };
+    }
+    // The translate job is metered above, so the run must leave translate_submitted now, or the
+    // next --advance would meter it again. Under a pause it goes straight to ready_to_write with
+    // the drafts — as a dead repair job does: the seams lose their repair, the book keeps its
+    // translation, and nothing new is sent.
+    const paused = brakeStopsBook(await translateSubmitBrake(db), run.book_id);
+    if (paused) {
+      await setPhase(db, run, PHASE.READY_TO_WRITE, {
+        drafts: draftRows, block_notes: blockNotes, seams: pairs, seams_skipped: skipped,
+        repairs: [], repair_failure: `repair not submitted: ${paused}`,
+      }, deps);
+      log(`[translate-batch-seam] ${run.book_id}: ${paused} — repair not submitted, writing drafts`);
+      return { phase: run.phase, advanced: true, note: `${paused} — repair not submitted, writing drafts` };
     }
     const book = await db.collection('books').findOne({ id: run.book_id });
     const requests = pairs.map(({ prevId, seamId }) => {

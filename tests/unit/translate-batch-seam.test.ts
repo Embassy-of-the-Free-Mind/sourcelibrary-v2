@@ -469,7 +469,7 @@ describe('nothing is sent to Gemini when a pre-flight refuses', () => {
     }
   });
 
-  it('a pause set after submit stops advanceRun before it fetches, meters, or submits the repair job (#5492)', async () => {
+  it('a pause set after submit still collects, meters and writes the paid translate job; it stops only the repair submit (#5496 review)', async () => {
     const db = makeDb({ books: [BOOK], pages: PAGES, system_config: [{ _id: 'processing_control', paused_phases: [] }] });
     const gemini = makeGemini();
     const deps = makeDeps(gemini);
@@ -477,13 +477,20 @@ describe('nothing is sent to Gemini when a pre-flight refuses', () => {
     expect(gemini.submitted).toHaveLength(1);
     db.data.system_config[0].paused_phases = ['translate'];
     const fetch = vi.spyOn(gemini, 'fetch');
-    expect(await advanceRun(db, run, deps)).toMatchObject({ advanced: false, phase: PHASE.TRANSLATE_SUBMITTED, note: 'translate step paused' });
-    expect(fetch).not.toHaveBeenCalled();
-    expect(deps.completeBatchUsage).not.toHaveBeenCalled();
+    const step = await advanceRun(db, run, deps);
+    expect(step).toMatchObject({ advanced: true, phase: PHASE.READY_TO_WRITE });
+    expect(step.note).toMatch(/translate step paused — repair not submitted/);
+    expect(fetch).toHaveBeenCalledTimes(1); // collected
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1); // metered exactly once
+    expect(gemini.submitted).toHaveLength(1); // no repair job
+    expect(run.repair_failure).toMatch(/repair not submitted: translate step paused/);
+    // Still paused: writing is free, so the drafts land; seams keep their draft.
+    const final = await runToEnd(db, deps);
+    expect(final.phase).toBe(PHASE.WRITTEN);
+    expect(final.write_counts).toMatchObject({ written: 20, repaired: 0 });
+    expect(pageText(db, 'p9')).toBe(draftFor(9));
     expect(gemini.submitted).toHaveLength(1);
-    db.data.system_config[0].paused_phases = [];
-    expect((await advanceRun(db, run, deps)).advanced).toBe(true);
-    expect(gemini.submitted).toHaveLength(2); // the repair job, once the pause lifts
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1); // never metered twice
   });
 
   it('a held book, a book the realtime lane owns, and a book with an open run', async () => {

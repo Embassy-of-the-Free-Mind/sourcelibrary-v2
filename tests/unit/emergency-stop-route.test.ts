@@ -68,7 +68,7 @@ describe('emergency-stop validates the keys it is given', () => {
 });
 
 describe('a full stop reaches every lane', () => {
-  it('sets the global flag AND every key, and parks open batch translation runs', async () => {
+  it('sets the global flag AND every key, and parks only the runs about to submit', async () => {
     const res = await post();
     const j = await res.json();
     expect(j.translate_batch_runs_parked).toBe(3);
@@ -76,7 +76,12 @@ describe('a full stop reaches every lane', () => {
     expect(update.$set.paused).toBe(true);
     expect(update.$set.paused_phases).toEqual(['archive', 'ocr', 'translate', 'enrich', 'images', 'embeddings']);
     const [filter, pipeline] = runWrites()[0].args as [Doc, Doc[]];
-    expect(filter.phase.$nin).toEqual(expect.arrayContaining(['complete', 'parked', 'failed', 'written', 'shadow_complete']));
+    // Never a run already at Gemini: its collection is free and must continue (#5496 review).
+    expect(filter.phase.$in).toEqual(['round_ready', 'round_submitting']);
+    expect(filter.phase.$nin).toBeUndefined();
+    for (const atGemini of ['round_submitted', 'translate_submitted', 'repair_submitted', 'ready_to_write']) {
+      expect(filter.phase.$in).not.toContain(atGemini);
+    }
     expect(pipeline[0].$set.phase).toBe('parked');
     expect(pipeline[0].$set.emergency_stop.prior_phase).toBe('$phase');
   });
@@ -104,7 +109,7 @@ describe('resume', () => {
     expect(runWrites()).toHaveLength(1);
   });
 
-  it('a global-only pause becomes every key but the resumed one (it only ever stops more)', async () => {
+  it('a global-only pause becomes every key but the resumed one (and the flag is cleared)', async () => {
     control = { paused: true, paused_phases: [] };
     const j = await (await post('?resume=true&key=ocr')).json();
     expect(j.paused_phases).toEqual(['archive', 'translate', 'enrich', 'images', 'embeddings']);
