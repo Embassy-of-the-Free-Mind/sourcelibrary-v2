@@ -184,7 +184,7 @@ async function measure(vol, canvases, pages, claim) {
       samples.push({ canvas: ci, label, side: pages[claim[ci]].label, image_url: url, read_sha: sha16(text), class: cls, score });
       log(`  v${vol} canvas ${ci} (${label}) read ${score.read_syllables} syl: identity ${score.identity} shift ${score.measured_shift} control ${score.control} far ${score.far_control}${score.global_best ? ` global ${JSON.stringify(score.global_best)}` : ''} → ${cls}`);
     }
-    if (!samples.some((x) => x.class === 'uninformative')) break;
+    if (!samples.some((x) => x.class === 'uninformative' || x.class === 'weak')) break;
   }
   v.measurement = { engine: READ_ENGINE, at: new Date().toISOString(), rules: ALIGN_RULES, claim_key: claimKey, samples, cost_usd: 0 };
   v.measurement.verdict = volumeVerdict(samples);
@@ -325,7 +325,7 @@ async function importVolume(db, vol) {
     measured_shift: 0, ...(v.claim_mode === 'index' ? { measured_offset: v.offset_measurement?.offset } : {}), samples: m.verdict.scored, read_engine: m.engine,
     min_identity: Math.min(...m.samples.filter((s) => s.class === 'aligned').map((s) => s.score.identity)),
     max_control: Math.max(...m.samples.filter((s) => s.class === 'aligned').map((s) => s.score.control)),
-    uninformative_reads: m.verdict.uninformative.length,
+    uninformative_reads: m.verdict.uninformative.length, weak_reads: (m.verdict.weak || []).length,
     rules: ALIGN_RULES, measured_at: m.at,
   } : null;
   const ocrFor = (i) => {

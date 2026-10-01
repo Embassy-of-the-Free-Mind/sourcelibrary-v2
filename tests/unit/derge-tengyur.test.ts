@@ -61,6 +61,12 @@ describe('derge-tengyur scoring', () => {
     expect(volumeVerdict([ok, ok, ok, ok, bad]).pass).toBe(false);
     expect(volumeVerdict([ok, ok, ok]).pass).toBe(false);
   });
+  it('a weak read is inconclusive: it neither refuses nor counts (v139 f. 115b)', () => {
+    const ok = { canvas: 1, label: '2a', score: sc({}) };
+    const weak = { canvas: 3, label: '115b', score: sc({ identity: 0.785, best_identity: 0.785, control: 0.732 }) };
+    expect(volumeVerdict([ok, ok, ok, ok, weak]).pass).toBe(true);
+    expect(volumeVerdict([ok, ok, ok, weak]).pass).toBe(false);
+  });
 });
 
 describe('derge-tengyur index mode (no folio labels in the manifest)', () => {
