@@ -119,7 +119,7 @@ export default async function AdminDashboard() {
         </p>
       </header>
 
-      <nav className="sticky top-0 z-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2 bg-[var(--bg-warm,#f7f5f2)]/95 backdrop-blur border-b border-stone-200 flex gap-1 overflow-x-auto text-xs" aria-label="Sections">
+      <nav className="sticky top-0 z-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2 bg-[var(--bg-warm,#f7f5f2)] border-b border-stone-200 flex gap-1 overflow-x-auto text-xs" aria-label="Sections">
         {NAV.map(([id, l]) => <a key={id} href={`#${id}`} className="shrink-0 px-2.5 py-1 rounded-full text-stone-700 hover:bg-stone-200/60">{l}</a>)}
       </nav>
 
@@ -138,7 +138,7 @@ export default async function AdminDashboard() {
             { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '—', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
             { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '—', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
             { l: latestSpendMonth ? `Spend, ${monthLabel(latestSpendMonth.month)}` : 'Spend', v: latestSpendMonth ? fmtUsd(monthTotal(latestSpendMonth)) : 'allow-listed', n: latestSpendMonth ? 'vendors, before people' : 'see /admin/spend' },
-            { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics ? `${metrics.social.feedbackUnread} unread` : undefined },
+            { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics?.social ? `${metrics.social.feedbackUnread} unread` : undefined },
           ]} />
         )}
         <p className="text-xs text-stone-500 max-w-3xl leading-snug">Hidden books are imports waiting for processing or review, duplicates, and takedowns; the warehouse holds imports not yet enrolled in the pipeline. Neither is on the site. Everything below is about live books unless it says otherwise.</p>

@@ -54,7 +54,8 @@ export function LineChart({ labels, series, unit = 'count', height = H, log = fa
   const all = series.flatMap(s => s.data.filter((v): v is number => v != null));
   const max = niceMax(Math.max(1, ...all));
   const minV = Math.min(0, ...all), nmin = minV < 0 ? -niceMax(-minV) : 0; // negative values (pages leaving a count) get their own band below zero
-  const minLog = Math.max(1, Math.min(...all.filter(v => v > 0)));
+  const positives = all.filter(v => v > 0);
+  const minLog = positives.length ? Math.max(1, Math.min(...positives)) : 1;
   const y = (v: number) => {
     if (log) { const lo = Math.log10(minLog), hiV = Math.log10(max); return PAD.t + ih - (ih * (Math.log10(Math.max(v, minLog)) - lo)) / Math.max(1e-9, hiV - lo); }
     return PAD.t + ih - (ih * (v - nmin)) / (max - nmin);
