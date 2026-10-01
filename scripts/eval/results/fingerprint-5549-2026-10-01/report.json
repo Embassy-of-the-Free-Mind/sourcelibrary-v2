@@ -56,36 +56,36 @@
     "archive-control · before model cutoff · not predictable": {
      "n": 36,
      "books": 17,
-     "ours": 6,
-     "ours_rate": 0.167,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.079,
-      0.319
+      0,
+      0.096
      ],
      "ours_book_boot": [
-      0.032,
-      0.297
+      0,
+      0
      ],
-     "correct": 4,
-     "correct_rate": 0.111,
+     "correct": 5,
+     "correct_rate": 0.139,
      "correct_wilson": [
-      0.044,
-      0.253
+      0.061,
+      0.287
      ],
-     "other": 26
+     "other": 31
     },
     "archive-control · before model cutoff": {
      "n": 42,
      "books": 18,
-     "ours": 6,
-     "ours_rate": 0.143,
+     "ours": 2,
+     "ours_rate": 0.048,
      "ours_wilson": [
-      0.067,
-      0.278
+      0.013,
+      0.158
      ],
      "ours_book_boot": [
-      0.026,
-      0.255
+      0,
+      0.121
      ],
      "correct": 5,
      "correct_rate": 0.119,
@@ -93,41 +93,41 @@
       0.052,
       0.25
      ],
-     "other": 31
+     "other": 35
     },
     "archive-control · misread not sequence-predictable": {
      "n": 40,
      "books": 19,
-     "ours": 6,
-     "ours_rate": 0.15,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.071,
-      0.291
+      0,
+      0.088
      ],
      "ours_book_boot": [
-      0.029,
-      0.269
+      0,
+      0
      ],
-     "correct": 4,
-     "correct_rate": 0.1,
+     "correct": 5,
+     "correct_rate": 0.125,
      "correct_wilson": [
-      0.04,
-      0.231
+      0.055,
+      0.261
      ],
-     "other": 30
+     "other": 35
     },
     "archive-control · public >= 30 days": {
      "n": 46,
      "books": 20,
-     "ours": 6,
-     "ours_rate": 0.13,
+     "ours": 2,
+     "ours_rate": 0.043,
      "ours_wilson": [
-      0.061,
-      0.257
+      0.012,
+      0.145
      ],
      "ours_book_boot": [
-      0.026,
-      0.241
+      0,
+      0.111
      ],
      "correct": 5,
      "correct_rate": 0.109,
@@ -135,20 +135,20 @@
       0.047,
       0.23
      ],
-     "other": 35
+     "other": 39
     },
     "archive-control": {
      "n": 46,
      "books": 20,
-     "ours": 6,
-     "ours_rate": 0.13,
+     "ours": 2,
+     "ours_rate": 0.043,
      "ours_wilson": [
-      0.061,
-      0.257
+      0.012,
+      0.145
      ],
      "ours_book_boot": [
-      0.026,
-      0.241
+      0,
+      0.111
      ],
      "correct": 5,
      "correct_rate": 0.109,
@@ -156,7 +156,7 @@
       0.047,
       0.23
      ],
-     "other": 35
+     "other": 39
     },
     "ours · after model cutoff · not predictable": {
      "n": 9,
@@ -190,7 +190,7 @@
      ],
      "ours_book_boot": [
       0,
-      0.385
+      0.429
      ],
      "correct": 0,
      "correct_rate": 0,
@@ -232,7 +232,7 @@
      ],
      "ours_book_boot": [
       0,
-      0.385
+      0.429
      ],
      "correct": 0,
      "correct_rate": 0,
@@ -253,7 +253,7 @@
      ],
      "ours_book_boot": [
       0,
-      0.385
+      0.429
      ],
      "correct": 0,
      "correct_rate": 0,
@@ -266,84 +266,84 @@
     "ours-shared-with-archive · after model cutoff · not predictable": {
      "n": 9,
      "books": 5,
-     "ours": 1,
-     "ours_rate": 0.111,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.02,
-      0.435
+      0,
+      0.299
      ],
      "ours_book_boot": [
       0,
-      0.214
+      0
      ],
-     "correct": 0,
-     "correct_rate": 0,
+     "correct": 1,
+     "correct_rate": 0.111,
      "correct_wilson": [
-      0,
-      0.299
+      0.02,
+      0.435
      ],
      "other": 8
     },
     "ours-shared-with-archive · after model cutoff": {
      "n": 9,
      "books": 5,
-     "ours": 1,
-     "ours_rate": 0.111,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.02,
-      0.435
+      0,
+      0.299
      ],
      "ours_book_boot": [
       0,
-      0.214
+      0
      ],
-     "correct": 0,
-     "correct_rate": 0,
+     "correct": 1,
+     "correct_rate": 0.111,
      "correct_wilson": [
-      0,
-      0.299
+      0.02,
+      0.435
      ],
      "other": 8
     },
     "ours-shared-with-archive · misread not sequence-predictable": {
      "n": 9,
      "books": 5,
-     "ours": 1,
-     "ours_rate": 0.111,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.02,
-      0.435
+      0,
+      0.299
      ],
      "ours_book_boot": [
       0,
-      0.214
+      0
      ],
-     "correct": 0,
-     "correct_rate": 0,
+     "correct": 1,
+     "correct_rate": 0.111,
      "correct_wilson": [
-      0,
-      0.299
+      0.02,
+      0.435
      ],
      "other": 8
     },
     "ours-shared-with-archive · public < 30 days": {
      "n": 7,
      "books": 3,
-     "ours": 1,
-     "ours_rate": 0.143,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.026,
-      0.513
+      0,
+      0.354
      ],
      "ours_book_boot": [
       0,
-      0.25
+      0
      ],
-     "correct": 0,
-     "correct_rate": 0,
+     "correct": 1,
+     "correct_rate": 0.143,
      "correct_wilson": [
-      0,
-      0.354
+      0.026,
+      0.513
      ],
      "other": 6
     },
@@ -371,21 +371,21 @@
     "ours-shared-with-archive": {
      "n": 9,
      "books": 5,
-     "ours": 1,
-     "ours_rate": 0.111,
+     "ours": 0,
+     "ours_rate": 0,
      "ours_wilson": [
-      0.02,
-      0.435
+      0,
+      0.299
      ],
      "ours_book_boot": [
       0,
-      0.214
+      0
      ],
-     "correct": 0,
-     "correct_rate": 0,
+     "correct": 1,
+     "correct_rate": 0.111,
      "correct_wilson": [
-      0,
-      0.299
+      0.02,
+      0.435
      ],
      "other": 8
     }
