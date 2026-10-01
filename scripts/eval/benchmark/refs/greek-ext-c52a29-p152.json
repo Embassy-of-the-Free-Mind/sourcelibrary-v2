@@ -38,5 +38,8 @@
       "gemini-3.1-flash-lite-b:0.04"
     ],
     "letters_after": 602
-  }
+  },
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/OpenGreekAndLatin/First1KGreek",
+  "licence_checked": "2026-10-01"
 }

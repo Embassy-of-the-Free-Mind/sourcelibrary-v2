@@ -12,5 +12,9 @@
   "url": "https://github.com/kanripo/KR6r0116/blob/master/KR6r0116_002.txt",
   "etext_chars": 7641,
   "window_chars": 190,
-  "overlap": 0.66
+  "overlap": 0.66,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
 }

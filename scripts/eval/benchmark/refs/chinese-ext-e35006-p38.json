@@ -10,5 +10,9 @@
   "url": "https://github.com/kanripo/KR3k0046",
   "etext_chars": 22309,
   "window_chars": 184,
-  "overlap": 0.794
+  "overlap": 0.794,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
 }
