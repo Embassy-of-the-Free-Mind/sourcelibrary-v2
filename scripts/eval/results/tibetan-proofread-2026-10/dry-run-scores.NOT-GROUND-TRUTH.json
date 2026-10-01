@@ -1,0 +1,151 @@
+{
+ "summary": {
+  "dir": "scripts/eval/tibetan-proofread/dry-run",
+  "roles": [
+   "model-dry-run"
+  ],
+  "is_ground_truth": false,
+  "n_pages": 5,
+  "n_books": 5,
+  "pages_with_dropped_lines": 1,
+  "dropped_lines": 1,
+  "unreadable_lines": 0,
+  "edited_lines": 4,
+  "by_stratum": {
+   "kangyur": {
+    "n": 3,
+    "n_scored": 3,
+    "n_judged_unusable": 0,
+    "pooled_identity": 0.9942,
+    "pooled_recall": 0.9742,
+    "median_identity": 0.9963,
+    "median_derge": 0.956,
+    "dropped_lines": 1,
+    "unreadable_lines": 0,
+    "judgements": {
+     "none": 3
+    }
+   },
+   "mark": {
+    "n": 2,
+    "n_scored": 0,
+    "n_judged_unusable": 2,
+    "pooled_identity": null,
+    "pooled_recall": null,
+    "median_identity": null,
+    "median_derge": null,
+    "dropped_lines": 0,
+    "unreadable_lines": 0,
+    "judgements": {
+     "unusable": 2
+    }
+   }
+  },
+  "kangyur_by_seam": {
+   "marked": {
+    "n": 1,
+    "median_identity": 0.9963,
+    "median_derge": 0.956
+   },
+   "unmarked": {
+    "n": 2,
+    "median_identity": 0.9932,
+    "median_derge": 0.9474
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "69e7aaf75f1a22ab19a907e7_223",
+   "seq": 1,
+   "stratum": "kangyur",
+   "leaf_seam": "unmarked",
+   "derge_identity": 0.9591,
+   "judgement": null,
+   "served_syllables": 513,
+   "corrected_syllables": 512,
+   "matches": 506,
+   "identity": 0.9864,
+   "recall": 0.9883,
+   "unreadable_lines": 0,
+   "dropped_lines": 0,
+   "edited_lines": 3,
+   "edited_by": "Claude Opus 5.5",
+   "role": "model-dry-run"
+  },
+  {
+   "id": "69e7abb65f1a22ab19a9cd4c_220",
+   "seq": 2,
+   "stratum": "kangyur",
+   "leaf_seam": "marked",
+   "derge_identity": 0.956,
+   "judgement": null,
+   "served_syllables": 545,
+   "corrected_syllables": 546,
+   "matches": 543,
+   "identity": 0.9963,
+   "recall": 0.9945,
+   "unreadable_lines": 0,
+   "dropped_lines": 0,
+   "edited_lines": 1,
+   "edited_by": "Claude Opus 5.5",
+   "role": "model-dry-run"
+  },
+  {
+   "id": "69e7ab485f1a22ab19a95e06_223",
+   "seq": 5,
+   "stratum": "kangyur",
+   "leaf_seam": "unmarked",
+   "derge_identity": 0.9357,
+   "judgement": null,
+   "served_syllables": 498,
+   "corrected_syllables": 530,
+   "matches": 498,
+   "identity": 1,
+   "recall": 0.9396,
+   "unreadable_lines": 0,
+   "dropped_lines": 1,
+   "edited_lines": 0,
+   "edited_by": "Claude Opus 5.5",
+   "role": "model-dry-run"
+  },
+  {
+   "id": "69e77a330fc6fc955e35e721_78",
+   "seq": 31,
+   "stratum": "mark",
+   "leaf_seam": "unmarked",
+   "derge_identity": null,
+   "judgement": "unusable",
+   "served_syllables": 0,
+   "corrected_syllables": 0,
+   "matches": 0,
+   "identity": null,
+   "recall": null,
+   "unreadable_lines": 0,
+   "dropped_lines": 0,
+   "edited_lines": 0,
+   "excluded": "judged unusable",
+   "edited_by": "Claude Opus 5.5",
+   "role": "model-dry-run"
+  },
+  {
+   "id": "6a14e12b2f45ee330c273c8b_202",
+   "seq": 34,
+   "stratum": "mark",
+   "leaf_seam": "unmarked",
+   "derge_identity": null,
+   "judgement": "unusable",
+   "served_syllables": 0,
+   "corrected_syllables": 0,
+   "matches": 0,
+   "identity": null,
+   "recall": null,
+   "unreadable_lines": 0,
+   "dropped_lines": 0,
+   "edited_lines": 0,
+   "excluded": "judged unusable",
+   "edited_by": "Claude Opus 5.5",
+   "role": "model-dry-run"
+  }
+ ]
+}
