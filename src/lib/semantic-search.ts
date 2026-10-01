@@ -37,7 +37,27 @@ export class SemanticSearchError extends Error {
 // count to record from it. What embedding costs is measured on the writer side
 // instead (#4162, scripts/lib/embedding-usage.mjs); the two calls in this file
 // are one short query embedding per search.
-export async function getQueryEmbedding(query: string): Promise<number[] | null> {
+// One query embedding per distinct query, shared by the lanes that run in
+// parallel for a single search (book, site) — the promise is cached, so
+// concurrent callers await the same request instead of each paying for one.
+const QUERY_EMBEDDING_CACHE_MAX = 200;
+const queryEmbeddingCache = new Map<string, Promise<number[] | null>>();
+
+export function getQueryEmbedding(query: string): Promise<number[] | null> {
+  const cached = queryEmbeddingCache.get(query);
+  if (cached) return cached;
+  const p = fetchQueryEmbedding(query).then((v) => {
+    if (!v) queryEmbeddingCache.delete(query); // never cache a failure
+    return v;
+  });
+  if (queryEmbeddingCache.size >= QUERY_EMBEDDING_CACHE_MAX) {
+    queryEmbeddingCache.delete(queryEmbeddingCache.keys().next().value as string);
+  }
+  queryEmbeddingCache.set(query, p);
+  return p;
+}
+
+async function fetchQueryEmbedding(query: string): Promise<number[] | null> {
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) return null;
 
@@ -114,6 +134,50 @@ export async function semanticBookSearch(
     language: row.language,
     summary_text: row.summary_text,
     metadata: row.metadata,
+    similarity: Number(row.similarity) || 0,
+  }));
+}
+
+// ── Site content search (issue #1180) ─────────────────────────────
+
+export interface SemanticSiteResult {
+  url: string;
+  page_type: 'blog' | 'collection' | 'page' | 'feature';
+  title: string;
+  snippet: string;
+  similarity: number;
+}
+
+/**
+ * The site's own writing — blog essays, collection intros, editorial pages —
+ * from `site_pages` (written by scripts/workers/embed-site-pages.mjs). Best
+ * chunk per page. Main site only: `filter_tenant` NULL never returns a
+ * tenant's rows.
+ *
+ * Floor calibrated 2026-10-01 on 1,282 chunks: real queries 0.65–0.80
+ * ("how do you measure OCR quality" → the OCR-quality essay at 0.80, "how can
+ * I donate" → /support at 0.65); nonsense ("xyzzy qwerty") tops out at 0.59
+ * and "the" at 0.63.
+ */
+export const SITE_SIM_FLOOR = 0.64;
+
+export async function semanticSiteSearch(query: string, limit: number = 3): Promise<SemanticSiteResult[]> {
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+
+  const { data, error } = await supabase.rpc('match_site_pages', {
+    query_embedding: JSON.stringify(queryEmbedding),
+    match_threshold: SITE_SIM_FLOOR,
+    match_count: limit,
+    filter_tenant: null,
+  });
+  if (error) throw new SemanticSearchError('match_site_pages', error.message);
+
+  return (data || []).map((row: any) => ({
+    url: row.url,
+    page_type: row.page_type,
+    title: row.title,
+    snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
     similarity: Number(row.similarity) || 0,
   }));
 }

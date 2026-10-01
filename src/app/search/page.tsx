@@ -151,6 +151,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
+  const [siteResults, setSiteResults] = useState<{ url: string; page_type: 'blog' | 'collection' | 'page' | 'feature'; title: string; snippet: string }[]>([]);
   const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string; card_framing?: CardFraming }[]>([]);
 
   // Semantic results (parallel search agent)
@@ -453,6 +454,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setBookResults([]); setBookTotal(0);
       setIndexResults([]); setIndexTotal(0);
       setCollectionResults([]);
+      setSiteResults([]);
       setImageResults([]); setImageTotal(0);
       setCatalogResults([]); setCatalogTotal(0);
       setMatchQuality(null);
@@ -474,6 +476,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           setImageResults(cached.images);
           setImageTotal(cached.imageTotal);
           setMatchQuality(cached.matchQuality ?? null);
+          setSiteResults(cached.site ?? []);
           setLoading(false);
           return;
         }
@@ -586,6 +589,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           }
           baseImagesSet.current = true;
           setCollectionResults((data as any).collections?.results || []);
+          setSiteResults((data as any).site?.results || []);
           const mq = ((data as any).match_quality === 'weak' || (data as any).match_quality === 'strong')
             ? (data as any).match_quality : null;
           setMatchQuality(mq);
@@ -598,6 +602,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             index, indexTotal: iTotal,
             images, imageTotal: imTotal,
             matchQuality: mq,
+            site: (data as any).site?.results || [],
           });
           // Evict old cache entries
           if (searchCache.current.size > 50) {
@@ -619,7 +624,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             setIndexResults([]); setIndexTotal(0);
             setImageResults([]); setImageTotal(0);
             setMatchQuality(null);
-            setCollectionResults([]); setSemanticResults([]); setSemanticDegraded(false);
+            setCollectionResults([]); setSiteResults([]); setSemanticResults([]); setSemanticDegraded(false);
             // Stop the parallel AI-expand stream so nothing leaks past the wall.
             aiAbortRef.current?.();
             setAiResults([]); setAiNarration(''); setAiStreaming(false);
@@ -804,7 +809,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
-  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null }>());
+  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null; site?: typeof siteResults }>());
   const CACHE_TTL = 60_000; // 1 minute
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
@@ -1495,7 +1500,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             <span className="text-2xl shrink-0" aria-hidden>{knownEntity.icon || '📚'}</span>
             <div className="min-w-0 flex-1">
               <div className="text-xs uppercase tracking-wide text-muted">
-                {knownEntity.kind === 'reading-room' ? t.kindReadingRoom : knownEntity.kind === 'library' ? t.kindLibrary : t.kindCollection}
+                {knownEntity.kind === 'reading-room' ? t.kindReadingRoom : knownEntity.kind === 'library' ? t.kindLibrary : knownEntity.kind === 'feature' ? t.kindFeature : t.kindCollection}
               </div>
               <div className="font-serif font-medium text-primary group-hover:text-accent-rust transition-colors">
                 {knownEntity.title} <span aria-hidden>→</span>
@@ -1718,6 +1723,30 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </div>
           );
 
+          // The site's own writing (#1180): essays, collection intros and
+          // editorial pages that answer the query. SL-wide and English-only,
+          // so hidden in embed mode and on localized surfaces.
+          const siteLinks = siteResults.filter(r => r.url !== knownEntity?.href); // the "go here" card already shows it
+          const siteSection = !embed && !localized && siteLinks.length > 0 && (
+            <>
+              <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                {t.fromTheSite}
+              </h2>
+              <ul className="space-y-2">
+                {siteLinks.map(r => (
+                  <li key={r.url}>
+                    <Link href={r.url} className="block px-4 py-3 rounded-lg border border-border-light hover:border-accent-gold transition-colors">
+                      <span className="text-[11px] uppercase tracking-wide text-muted">{t.sitePageType(r.page_type)}</span>
+                      <span className="block text-sm font-medium text-primary">{r.title}</span>
+                      <span className="block text-sm text-secondary line-clamp-2">{r.snippet}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          );
+
           // Catalog matches: bibliographic-only entries from the BPH catalog
           // (works that exist on the shelf but aren't yet digitized). Shown as
           // a compact list — the catalog page is the destination for power use.
@@ -1784,6 +1813,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               {weakMatchBanner}
               {passageSection}
               {collectionCards}
+              {siteSection}
               {narrationBlock}
               {displayHint === 'images_first' ? (
                 <>

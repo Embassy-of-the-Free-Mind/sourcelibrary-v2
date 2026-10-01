@@ -115,6 +115,7 @@ export interface SearchStrings {
   // ---- known-entity capture ----
   kindReadingRoom: string;
   kindLibrary: string;
+  kindFeature: string;
   kindCollection: string;
 
   // ---- unified-view section headings ----
@@ -129,6 +130,8 @@ export interface SearchStrings {
   passages: string;
   searchingPageContent: string;
   catalogMatches: string;
+  fromTheSite: string;
+  sitePageType: (type: 'blog' | 'collection' | 'page' | 'feature') => string;
   works: (n: number) => string;
   searchingCatalog: string;
   openAllCatalogueMatches: (n: string) => string;
@@ -278,6 +281,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
 
     kindReadingRoom: 'Reading room',
     kindLibrary: 'Library partner',
+    kindFeature: 'Tool',
     kindCollection: 'Collection',
 
     illustrations: 'Illustrations',
@@ -291,6 +295,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     passages: 'Passages',
     searchingPageContent: 'Searching page content...',
     catalogMatches: 'Catalog matches',
+    fromTheSite: 'From the site',
+    sitePageType: (type) => (type === 'blog' ? 'Essay' : type === 'collection' ? 'Collection' : type === 'feature' ? 'Tool' : 'Page'),
     works: (n) => (n === 1 ? 'work' : 'works'),
     searchingCatalog: 'Searching catalog...',
     openAllCatalogueMatches: (n) => `Open all ${n} catalogue matches`,
@@ -409,6 +415,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
 
     kindReadingRoom: 'Sala de lectura',
     kindLibrary: 'Biblioteca asociada',
+    kindFeature: 'Herramienta',
     kindCollection: 'Colección',
 
     illustrations: 'Ilustraciones',
@@ -422,6 +429,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     passages: 'Pasajes',
     searchingPageContent: 'Buscando en el texto de las páginas...',
     catalogMatches: 'Coincidencias en el catálogo',
+    fromTheSite: 'En el sitio',
+    sitePageType: (type) => (type === 'blog' ? 'Ensayo' : type === 'collection' ? 'Colección' : type === 'feature' ? 'Herramienta' : 'Página'),
     works: (n) => (n === 1 ? 'obra' : 'obras'),
     searchingCatalog: 'Buscando en el catálogo...',
     openAllCatalogueMatches: (n) => `Ver las ${n} coincidencias del catálogo`,

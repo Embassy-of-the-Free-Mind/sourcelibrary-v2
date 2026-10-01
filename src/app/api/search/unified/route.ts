@@ -10,7 +10,7 @@ import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, type SemanticSiteResult } from '@/lib/semantic-search';
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -223,6 +223,18 @@ export async function GET(request: NextRequest) {
     const emptyCollections = { results: [] as CollectionResult[] };
 
     const emptyLexicalArtworks: ArtworkSearchResult[] = [];
+
+    // Site lane (#1180): the site's own writing — blog essays, collection
+    // intros, editorial pages — from `site_pages`. Main site only: a tenant's
+    // reading room never shows SL-wide pages. Started before the book lanes so
+    // it shares their query embedding (getQueryEmbedding caches the promise).
+    const emptySite: { results: SemanticSiteResult[] } = { results: [] };
+    const siteResultPromise = tenantContext.id
+      ? Promise.resolve(emptySite)
+      : withTimeout(
+          semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
+          emptySite, 'site', 4000,
+        );
 
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, lexicalArtworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
@@ -636,6 +648,12 @@ export async function GET(request: NextRequest) {
       ...collectionsWithTenantSlug.results.map((r: any) => [r.name, r.description].filter(Boolean).join(' ')),
     ]);
 
+    // A collection already shown as a card is not repeated as a site link.
+    const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
+    const siteResult = {
+      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
+    };
+
     return NextResponse.json({
       query,
       match_quality: matchQuality,
@@ -646,6 +664,7 @@ export async function GET(request: NextRequest) {
       semantic: scopedSemantic,
       artworks: filteredArtworks,
       collections: collectionsWithTenantSlug,
+      site: siteResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',

@@ -68,6 +68,7 @@ const UNATTENDED = [
     mainGate: 'scripts/workers/translate-batch-worker.mjs' },
   { match: 'enrich-worker.mjs', spends: true, gated: true, note: 'gated (#3855)' },
   { match: 'embed-gemini.mjs', spends: true, gated: true, note: 'pause + dial (#3855)' },
+  { match: 'embed-site-pages.mjs', spends: true, gated: true, note: 'dial via budgetAllowsDispatchScoped; weekly, fractions of a cent (#1180)' },
   { match: 'batch-collector.mjs', spends: false, gated: false,
     note: 'collects finished batches; writes results, submits nothing' },
   { match: 'archive-bulk.mjs', spends: false, gated: false, note: 'free archiver (#2616)' },
