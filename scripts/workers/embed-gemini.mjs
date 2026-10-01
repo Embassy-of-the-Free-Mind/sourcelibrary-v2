@@ -51,6 +51,7 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -231,8 +232,8 @@ const db = mongoClient.db('bookstore');
 {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (!BOOK_ID) {
-    if (control?.paused) {
-      console.log('[embed-gemini] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[embed-gemini] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await mongoClient.close();
       process.exit(0);
     }

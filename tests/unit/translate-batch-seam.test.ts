@@ -458,6 +458,34 @@ describe('nothing is sent to Gemini when a pre-flight refuses', () => {
     });
   }
 
+  it('the pause (#5492): a translate step pause in any spelling, or a global pause without a scope for the book', async () => {
+    for (const c of [{ paused_phases: ['translate'] }, { paused_phases: ['translation'] }, { paused_phases: [5] }, { paused: true }, { paused: true, allow_scopes: { t: { book_ids: ['other'] } } }]) {
+      const db = makeDb({ books: [BOOK], pages: PAGES, system_config: [{ _id: 'processing_control', ...c }] });
+      const gemini = makeGemini();
+      const res = await startRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+      expect(res.ok).toBe(false);
+      expect(res.reason).toMatch(/paused/);
+      expect(gemini.submitted).toHaveLength(0);
+    }
+  });
+
+  it('a pause set after submit stops advanceRun before it fetches, meters, or submits the repair job (#5492)', async () => {
+    const db = makeDb({ books: [BOOK], pages: PAGES, system_config: [{ _id: 'processing_control', paused_phases: [] }] });
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const { run } = await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted).toHaveLength(1);
+    db.data.system_config[0].paused_phases = ['translate'];
+    const fetch = vi.spyOn(gemini, 'fetch');
+    expect(await advanceRun(db, run, deps)).toMatchObject({ advanced: false, phase: PHASE.TRANSLATE_SUBMITTED, note: 'translate step paused' });
+    expect(fetch).not.toHaveBeenCalled();
+    expect(deps.completeBatchUsage).not.toHaveBeenCalled();
+    expect(gemini.submitted).toHaveLength(1);
+    db.data.system_config[0].paused_phases = [];
+    expect((await advanceRun(db, run, deps)).advanced).toBe(true);
+    expect(gemini.submitted).toHaveLength(2); // the repair job, once the pause lifts
+  });
+
   it('a held book, a book the realtime lane owns, and a book with an open run', async () => {
     for (const book of [
       { ...BOOK, pipeline_auto: { hold: { reason: 'ia-wrong-leaf-4790' } } },

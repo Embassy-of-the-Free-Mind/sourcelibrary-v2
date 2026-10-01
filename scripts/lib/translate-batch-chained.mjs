@@ -72,7 +72,7 @@ import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs'
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 import {
   planBlocks, maxOutputTokensFor, batchRequest, responseTextOf, selectPages,
-  RUNS_COLLECTION, MAX_PAGES_PER_RUN,
+  RUNS_COLLECTION, MAX_PAGES_PER_RUN, translateSubmitBrake, brakeStopsBook,
 } from './translate-batch-seam.mjs';
 
 export const MODE = 'chained';
@@ -426,7 +426,18 @@ export async function submitRounds(db, runs, deps, { prompts }) {
   const out = new Map();
   const prepared = [];
   const release = async (run) => { if (run.phase === PHASE.SUBMITTING) await setRun(db, run, { phase: PHASE.READY, claimed_at: null }, deps); };
+  // The pause, before anything is claimed or planned (#5492). This lane read no pause at all
+  // until then: the dial was the only brake that reached it. A paused run stays READY and the
+  // first tick after the pause lifts submits it.
+  const brake = await translateSubmitBrake(db);
+  if (brake.stop) {
+    if (runs.length) log(`[translate-batch-chained] ${brake.stop} — submitting nothing (${runs.length} ready run(s) wait)`);
+    for (const run of runs) out.set(run.id, { submitted: false, note: brake.stop });
+    return out;
+  }
   for (const run of runs) {
+    const outOfScope = brakeStopsBook(brake, run.book_id);
+    if (outOfScope) { out.set(run.id, { submitted: false, note: outOfScope }); continue; }
     // Claim first. Two tickers that both read a run as READY (a hand-run tick beside the loop,
     // or a long enrol pass whose runs sat READY for minutes) must not both submit it: on
     // 2026-09-30 a second ticker re-submitted ~150 freshly enrolled runs 34 s after the first,
@@ -444,6 +455,12 @@ export async function submitRounds(db, runs, deps, { prompts }) {
   for (const { model, items } of packJobs(prepared)) {
     const requests = items.flatMap((p) => p.requests);
     const label = items.length === 1 ? `${items[0].run.book_id}-${items[0].run.id}-r${items[0].n}` : `${items.length}runs-${Date.now().toString(36)}`;
+    // Planning a tick's rounds takes minutes at scale; a pause set meanwhile stops the next job.
+    const late = await translateSubmitBrake(db);
+    if (late.stop) {
+      for (const p of items) { await release(p.run); out.set(p.run.id, { submitted: false, note: late.stop }); }
+      continue;
+    }
     let job;
     try {
       job = await deps.gemini.submit({ model, requests, displayName: `tbc-${label}` });
