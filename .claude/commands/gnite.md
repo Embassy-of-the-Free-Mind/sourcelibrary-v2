@@ -46,6 +46,32 @@ background sessions dead mid-task that nobody noticed; inventory #5354):
 What you may not do is close with "next steps" in prose and no owner. The goodnight
 never hides an open loop.
 
+## 0. Exposure — what closing the tab, sleeping, or powering off would lose
+
+Derek closes the lid a lot, and he decides whether to from this answer, so it comes
+FIRST. Run the machine-wide report, then add what only this session can see:
+
+```
+bash ~/.claude/scripts/gnite-exposure.sh "$(git rev-parse --show-toplevel)"
+```
+
+The script lists background Claude sessions working on this laptop, detached
+`nohup` jobs, and every worktree with uncommitted or unpushed work. It cannot see
+this session's own background tasks, monitors, or subagents — list those yourself.
+Then answer, one line each, with counts:
+
+- **close this tab →** this session's background tasks, monitors and subagents die;
+  everything else survives.
+- **sleep the laptop →** background sessions stall (the `bg-resume` sweep revives the
+  ones that died on sleep, a limit, or the network within ~30 min of waking); detached
+  jobs pause, and one holding a remote stream may drop.
+- **power off →** every background session and detached job dies; uncommitted files and
+  unpushed commits stay on this disk only, invisible to every other machine.
+
+Cloud sessions (`claude --cloud`) and Hetzner sessions are never at risk from the
+laptop. If the script is missing (another machine), say so and answer from `claude
+agents` and `git status` instead.
+
 ## 1. Commit and push whatever is here
 
 - `git status` — if there are uncommitted changes, commit them with a clear message
