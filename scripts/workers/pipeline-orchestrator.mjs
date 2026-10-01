@@ -34,6 +34,7 @@ import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REA
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { LONG_S_GLYPH_VARIANT, withLongSLine, longSRetryApplies } from '../lib/ocr-long-s-retry.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -1425,7 +1426,7 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
-async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
+async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVariant } = {}) {
   const ocrModel = modelOverride || getOcrModelForBook(book);
   const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
@@ -1527,7 +1528,13 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
   const ocrPromptRef = await getOcrPromptFromDb(db);
+  // RECITATION retry tiers send the long-s glyph line (#5521); the collector folds ſ back to s.
   let prompt = ocrPromptRef.text;
+  if (promptVariant === LONG_S_GLYPH_VARIANT) {
+    // A moved anchor must not spend this book's retry budget: warn loudly and send the plain prompt,
+    // recorded as no variant, so the collector does not fold a read that never asked for ſ.
+    try { prompt = withLongSLine(prompt); } catch (e) { console.warn(`    WARNING ${e.message} — retrying without the long-s line`); promptVariant = undefined; }
+  }
   let promptSentHash; // set after the spread prefix below, before any request is built
 
   // Spread OCR: for BPH two-page spread books, prepend instructions to process
@@ -1706,6 +1713,7 @@ Output structure:
       prompt_id: ocrPromptRef.id,
       prompt_name: ocrPromptRef.name,
       prompt_hash: ocrPromptRef.content_hash,
+      prompt_variant: promptVariant || null,
       // What every page of this job will say produced it (#4613); batch-collector
       // completes it per page with the image and the job id.
       provenance: batchJobProvenance({
@@ -1755,6 +1763,7 @@ Output structure:
       prompt_id: ocrPromptRef.id,
       prompt_name: ocrPromptRef.name,
       prompt_hash: ocrPromptRef.content_hash,
+      prompt_variant: promptVariant || null,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -4145,13 +4154,17 @@ Rules:
           const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
           // Tier 2 is flash-preview only when OCR_LITE_ONLY is off (ocr-routing.mjs);
           // under lite-only it re-runs lite, and a second refusal still falls to tier 3.
+          // Both Gemini tiers re-read with the long-s glyph line on Latin-script books (#5521). Under
+          // OCR_LITE_ONLY the two tiers were otherwise the SAME request as the refused one, and a plain
+          // repeat is refused again on 22 of 26 pages; the glyph line returned text on 22 of 23.
+          const promptVariant = (isLiteRetry || isRecitationRetry) && longSRetryApplies(book) ? LONG_S_GLYPH_VARIANT : undefined;
           const ocrOpts = isLiteRetry
-            ? { modelOverride: ocrEscalationModel() }
+            ? { modelOverride: ocrEscalationModel(), promptVariant }
             : isRecitationRetry
-              ? { modelOverride: OCR_MODEL_LITE }
+              ? { modelOverride: OCR_MODEL_LITE, promptVariant }
               : {};
-          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${ocrEscalationModel()}: ${label}`);
-          else if (isRecitationRetry) console.log(`  RECITATION retry (tier 1) with ${OCR_MODEL_LITE}: ${label}`);
+          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${ocrEscalationModel()}${promptVariant ? ' + long-s line' : ''}: ${label}`);
+          else if (isRecitationRetry) console.log(`  RECITATION retry (tier 1) with ${OCR_MODEL_LITE}${promptVariant ? ' + long-s line' : ''}: ${label}`);
           else console.log(`  Submitting OCR: ${label}...`);
           const result = await submitOcrDirectly(db, book, ocrOpts);
 

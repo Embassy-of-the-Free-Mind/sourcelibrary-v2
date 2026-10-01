@@ -43,6 +43,7 @@ import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -550,6 +551,12 @@ async function processOneJob(db, job) {
       }
     }
 
+    // ── Long-s retry fold (#5521) ───────────────────────────────────────────
+    // A RECITATION retry asks for the printed long s (ſ); the house convention stores it as s.
+    if (job.type === 'ocr' && job.prompt_variant === LONG_S_GLYPH_VARIANT) {
+      for (const r of pageResults) r.text = foldLongS(r.text);
+    }
+
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
@@ -627,6 +634,7 @@ async function processOneJob(db, job) {
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,
           'ocr.prompt_name': job.prompt_name,
+          ...(job.prompt_variant ? { 'ocr.prompt_variant': job.prompt_variant } : {}),
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': inputTokens,
           'ocr.output_tokens': outputTokens,
