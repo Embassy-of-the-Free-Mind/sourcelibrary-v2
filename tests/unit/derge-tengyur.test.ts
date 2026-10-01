@@ -1,0 +1,59 @@
+import { describe, it, expect } from 'vitest';
+import { parseVolume, pageText, claimByLabel, syllables, nwIdentity, sampleClass, volumeVerdict } from '../../scripts/lib/derge-tengyur.mjs';
+
+const RAW = [
+  '﻿[1a]',
+  '[1b]',
+  '[1b.1]{D1109}༄༅༅། །རྒྱ་གར་སྐད་དུ། བི་ཤིཥྚ་སྟ་བཿ། བོད་སྐད་དུ།',
+  '[1b.2]#ཁྱད་པར་དུ་འཕགས་པའི་བསྟོད་པ།',
+  '[2a]',
+  '[2a.1]སྐྱོན་མི་མངའ་ལ་ཡོན་ཏན་ལྡན། །གང་ཕྱིར་འཇིག་རྟེན་སྐྱོན་ལ་དགའ།',
+].join('\n');
+
+describe('derge-tengyur parseVolume / pageText', () => {
+  it('splits sides on folio markers and records Tohoku boundaries', () => {
+    const p = parseVolume(RAW);
+    expect(p.map((x: { label: string }) => x.label)).toEqual(['1a', '1b', '2a']);
+    expect(p[0].lines).toEqual([]);
+    expect(p[1].tohoku).toEqual(['D1109']);
+  });
+  it('keeps the apparatus verbatim but escapes a line-initial # for Markdown', () => {
+    const t = pageText(parseVolume(RAW)[1]);
+    expect(t.startsWith('{D1109}༄༅༅།')).toBe(true);
+    expect(t.split('\n')[1].startsWith('\\#ཁྱད')).toBe(true);
+  });
+});
+
+describe('derge-tengyur claimByLabel', () => {
+  it('walks forward and leaves a label with no side unclaimed (missing image / extra leaf)', () => {
+    const p = parseVolume(RAW);
+    expect(claimByLabel(['1b', '2a', '2b'], p)).toEqual([1, 2, null]);
+    expect(claimByLabel([null, '2a'], p)).toEqual([null, 2]);
+  });
+});
+
+describe('derge-tengyur scoring', () => {
+  it('identity is the share of the read the reference accounts for', () => {
+    const a = syllables('སྐྱོན་མི་མངའ་ལ་ཡོན་ཏན་ལྡན།');
+    expect(nwIdentity(a, a)).toBe(1);
+    expect(nwIdentity(a, syllables('རྒྱ་གར་སྐད་དུ།'))).toBeLessThan(0.3);
+  });
+  const sc = (o: object) => ({ read_syllables: 400, identity: 0.9, measured_shift: 0, best_identity: 0.9, control: 0.15, global_best: null, ...o });
+  it('a read that matches nothing anywhere is uninformative, not misaligned', () => {
+    expect(sampleClass(sc({ identity: 0.1, best_identity: 0.1, global_best: { shift: -84, identity: 0.145 } }))).toBe('uninformative');
+  });
+  it('a read that matches a far side is misaligned', () => {
+    expect(sampleClass(sc({ identity: 0.1, best_identity: 0.1, global_best: { shift: 12, identity: 0.9 } }))).toBe('misaligned');
+    expect(sampleClass(sc({ measured_shift: 1, best_identity: 0.9, identity: 0.2 }))).toBe('misaligned');
+  });
+  it('a noisy read at shift 0 that clears the control is aligned (v4 f. 208b)', () => {
+    expect(sampleClass(sc({ identity: 0.594, best_identity: 0.594, control: 0.149 }))).toBe('aligned');
+  });
+  it('one misaligned informative sample refuses the volume; too few informative reads refuses it', () => {
+    const ok = { canvas: 1, label: '2a', score: sc({}) };
+    const bad = { canvas: 2, label: '3a', score: sc({ measured_shift: 2, best_identity: 0.9, identity: 0.2 }) };
+    expect(volumeVerdict([ok, ok, ok, ok]).pass).toBe(true);
+    expect(volumeVerdict([ok, ok, ok, ok, bad]).pass).toBe(false);
+    expect(volumeVerdict([ok, ok, ok]).pass).toBe(false);
+  });
+});
