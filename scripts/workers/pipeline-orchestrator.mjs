@@ -55,6 +55,7 @@ import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { projectCanonicals, projectTotal, projectMembers, keysWithRoom, isFileQuotaError } from '../lib/gemini-batch-keys.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -127,6 +128,7 @@ const OCR_IMAGE_MAX_PX = 1500;
 const PROVENANCE_CALL_SITE = 'scripts/workers/pipeline-orchestrator.mjs';
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 1000;  // Pages per file-based batch. With 1500px resize, 1000 pages = ~500MB JSONL (well under 2GB File API limit). Google recommends 1K-5K. Experiment 2026-04-13: identical OCR quality at 1500px vs full-res.
+const PASS2_POOL_PAGES = OCR_FILE_BATCH_SIZE; // Phase 2 Pass 2 packs whole books into one job of up to this many pages (#5544)
 const CROSS_BOOK_BATCH_SIZE = 250; // Smaller batches for cross-book OCR — 500-page cross-book batches have 24% success vs 51% single-book. Half size = less blast radius on Gemini cancellation.
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 1000;  // Max pages to OCR per book — raised from 500 to match larger batch size
@@ -233,7 +235,10 @@ if (BOOK_OVERRIDE && ONLY_PHASE === null) {
 let ENROLL_LIMIT = 100;
 let ARCHIVE_LIMIT = 500;
 let OCR_SUBMIT_LIMIT = 200;
-const MAX_ACTIVE_BATCH_OCR = 60; // Gemini concurrent batch limit is 100 total (OCR + images). Keep headroom for image extraction.
+// Google's limit is 100 concurrent batch jobs PER PROJECT (ai.google.dev/gemini-api/docs/rate-limits).
+// Our keys are 3 projects (#5544). This total is counted over distinct projects and across every
+// lane that shares the keys, so it must leave room for them as well as for image extraction.
+const MAX_ACTIVE_BATCH_OCR = 200;
 let METADATA_ENRICH_LIMIT = 50;
 let TRANSLATE_SUBMIT_LIMIT = 50;
 let MAX_INFLIGHT_TRANSLATIONS = 60; // Total books in translate_submitted — caps concurrent workers
@@ -1095,7 +1100,34 @@ function nextBatchKeyIndex() {
 const _geminiKeyLoads = new Array(GEMINI_SDK_CLIENTS.length).fill(0);
 let _geminiKeyLoadsAt = 0; // timestamp of last refresh
 
-const MAX_ACTIVE_PER_KEY = 30; // Hard cap per GCP project — Gemini stalls above this
+// Per GCP project (alias keys share one count). Google allows 100 concurrent; the
+// #1038 stall was ~200 jobs PENDING on one project, i.e. over that limit. 80 leaves
+// 20 per project for image extraction and the other lanes. Was 30 per KEY, which
+// with two keys per project double-counted (#5544).
+const MAX_ACTIVE_PER_KEY = 80;
+// Key index -> first key index in the same GCP project (identity until the first refresh).
+let _keyCanonicals = GEMINI_SDK_CLIENTS.map((_, i) => i);
+// Projects whose File API upload hit the storage quota this run. They can still
+// run INLINE batches, so this is not load and is never counted as load (#5544).
+const _uploadFullKeys = new Set();
+function markUploadFull(ki) {
+  for (const i of projectMembers(ki, _keyCanonicals)) _uploadFullKeys.add(i);
+}
+// A batches.create 429 means the project itself is full: mark every key in it.
+function markProjectFull(ki) {
+  for (const i of projectMembers(ki, _keyCanonicals)) _geminiKeyLoads[i] = MAX_ACTIVE_PER_KEY;
+}
+/** Keys a FILE-based batch can go to: room, not batch-broken, File API not full. Least loaded first. */
+function uploadKeyOrder() {
+  return keysWithRoom(_geminiKeyLoads, {
+    canonicals: _keyCanonicals, cap: MAX_ACTIVE_PER_KEY,
+    excluded: new Set([..._batchBrokenKeys, ..._uploadFullKeys]),
+  });
+}
+/** Keys an INLINE batch can go to (the File API quota does not apply). */
+function inlineKeyOrder() {
+  return keysWithRoom(_geminiKeyLoads, { canonicals: _keyCanonicals, cap: MAX_ACTIVE_PER_KEY, excluded: _batchBrokenKeys });
+}
 
 // Batch-broken keys (#2455): a key that returns FAILED_PRECONDITION from
 // batches.create can't run Batch API at all (free tier / unbilled project).
@@ -1118,13 +1150,16 @@ function markKeyBatchBroken(ki, context) {
  */
 async function getGeminiKeyLoads() {
   const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
-  let total = 0;
+  const fingerprints = [];
   for (let i = 0; i < GEMINI_SDK_CLIENTS.length; i++) {
     let count = 0;
+    const firstNames = [];
     try {
       const pager = await GEMINI_SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
       let consecutiveInactive = 0;
       for await (const job of pager) {
+        // Two keys listing a common job are one GCP project (#5544).
+        if (firstNames.length < 20) firstNames.push(job.name);
         if (activeStates.has(job.state)) {
           count++;
           consecutiveInactive = 0;
@@ -1138,10 +1173,14 @@ async function getGeminiKeyLoads() {
       count = MAX_ACTIVE_PER_KEY; // Assume full if we can't check — don't submit blindly
     }
     _geminiKeyLoads[i] = count;
-    total += count;
+    fingerprints.push(firstNames);
   }
+  _keyCanonicals = projectCanonicals(fingerprints);
+  // Alias keys mirror their project's count, so a local recordSubmission stays consistent.
+  for (let i = 0; i < _geminiKeyLoads.length; i++) _geminiKeyLoads[i] = _geminiKeyLoads[_keyCanonicals[i]];
   _geminiKeyLoadsAt = Date.now();
-  return { total, perKey: [..._geminiKeyLoads] };
+  const total = projectTotal(_geminiKeyLoads, _keyCanonicals);
+  return { total, perKey: [..._geminiKeyLoads], canonicals: [..._keyCanonicals] };
 }
 
 /** Backwards-compatible wrapper. */
@@ -1156,16 +1195,8 @@ async function getActiveGeminiJobCount() {
  * Uses cached counts (updated every submission cycle) + local tracking.
  */
 function getLeastLoadedKey() {
-  let bestKey = -1;
-  let bestCount = Infinity;
-  for (let i = 0; i < _geminiKeyLoads.length; i++) {
-    if (_batchBrokenKeys.has(i)) continue; // batch-broken key (#2455) — never select
-    if (_geminiKeyLoads[i] < MAX_ACTIVE_PER_KEY && _geminiKeyLoads[i] < bestCount) {
-      bestCount = _geminiKeyLoads[i];
-      bestKey = i;
-    }
-  }
-  return bestKey;
+  // Batch-broken keys (#2455) are never selected; alias keys route through their project's first key.
+  return inlineKeyOrder()[0] ?? -1;
 }
 
 /**
@@ -1175,7 +1206,7 @@ function getLeastLoadedKey() {
  */
 function recordSubmission(keyIndex) {
   if (keyIndex >= 0 && keyIndex < _geminiKeyLoads.length) {
-    _geminiKeyLoads[keyIndex]++;
+    for (const i of projectMembers(keyIndex, _keyCanonicals)) _geminiKeyLoads[i]++;
   }
 }
 
@@ -1189,8 +1220,8 @@ async function canSubmitMore() {
   if (Date.now() - _geminiKeyLoadsAt > 120_000) {
     await getGeminiKeyLoads();
   }
-  // Global cap: don't exceed MAX_ACTIVE_BATCH_OCR across all keys
-  const totalActive = _geminiKeyLoads.reduce((sum, n) => sum + n, 0);
+  // Global cap: don't exceed MAX_ACTIVE_BATCH_OCR across all projects (each counted once)
+  const totalActive = projectTotal(_geminiKeyLoads, _keyCanonicals);
   if (totalActive >= MAX_ACTIVE_BATCH_OCR) {
     return false;
   }
@@ -1265,11 +1296,8 @@ async function createBatchJobInline(model, requests, displayName) {
     metadata: r.metadata,
   }));
 
-  // Least-loaded key first, then try others on quota exhaustion (429)
-  const bestKey = getLeastLoadedKey();
-  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
-  for (let attempt = 0; attempt < GEMINI_SDK_CLIENTS.length; attempt++) {
-    const ki = (startKey + attempt) % GEMINI_SDK_CLIENTS.length;
+  // Least-loaded project first, then try others on quota exhaustion (429)
+  for (const ki of inlineKeyOrder()) {
     try {
       const batchJob = await GEMINI_SDK_CLIENTS[ki].batches.create({
         model,
@@ -1282,7 +1310,7 @@ async function createBatchJobInline(model, requests, displayName) {
       const msg = err.message || '';
       console.log(`    Key ${ki} failed: ${msg.substring(0, 150)}`);
       if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-        _geminiKeyLoads[ki] = MAX_ACTIVE_PER_KEY; // Mark as full
+        markProjectFull(ki);
         continue;
       }
       if (msg.includes('FAILED_PRECONDITION') || msg.includes('Precondition check failed')) {
@@ -1430,8 +1458,9 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVari
   const ocrModel = modelOverride || getOcrModelForBook(book);
   const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
+  // book_ids too: a book packed into a cross-book job is not its book_id (#5544, #5498).
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
-    book_id: book.id,
+    $or: [{ book_id: book.id }, { book_ids: book.id }],
     type: 'ocr',
     status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
   });
@@ -1624,10 +1653,8 @@ Output structure:
       // Non-quota errors capture into __submitErr so we always reach the unlink below.
       let uploadKeyIndex = -1;
       let __submitErr = null;
-      const bestKey = getLeastLoadedKey();
-      const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
-      for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-        const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
+      // Projects with room and File API space, least loaded first (#5544).
+      for (const uki of uploadKeyOrder()) {
         let fileResult;
         try {
           fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
@@ -1635,9 +1662,9 @@ Output structure:
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
           const msg = uploadErr.message || '';
-          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
-            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+          if (isFileQuotaError(msg)) {
+            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next project...`);
+            markUploadFull(uki); // inline batches can still use this project — not load (#5544)
             continue;
           }
           __submitErr = uploadErr;
@@ -1656,7 +1683,7 @@ Output structure:
           const msg = batchErr.message || '';
           if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
-            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+            markProjectFull(uki);
             continue;
           }
           __submitErr = batchErr;
@@ -1804,6 +1831,18 @@ const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-bo
  *   measures the least representative part of the book. Measured on #5014: a
  *   book scored 0.624 on its front matter (REJECTED at the 0.80 English gate)
  *   whose body text agreed at 0.987. Mutually exclusive with maxPagesPerBook.
+ * @param opts.poolPages        Page cap for the one job this call submits.
+ *   Defaults to CROSS_BOOK_BATCH_SIZE.
+ * @param opts.wholeBooksOnly   Take a book only if ALL its remaining pages fit
+ *   in the room left in the pool, and skip it otherwise. Phase 2 Pass 2 needs
+ *   this: it marks every pooled book `ocr_submitted`, and the collector moves
+ *   `ocr_submitted -> ocr_complete` once no batch is outstanding, without
+ *   counting pages. A book cut at the pool edge would be called done with its
+ *   tail never sent (#5544).
+ * @returns {{ submitted, batchCount, bookIds, jobName, consideredBookIds }}
+ *   `consideredBookIds` lists every book this call looked at, whether it was
+ *   pooled, skipped for an active batch, skipped as too big, or had nothing to
+ *   OCR. A caller that loops can drop those books and never re-offer them.
  */
 async function submitCrossBookOcrBatches(db, books, opts = {}) {
   const {
@@ -1812,7 +1851,10 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     ocrSource = null,
     model = OCR_MODEL_LITE,
     interiorSample = null,
+    poolPages = CROSS_BOOK_BATCH_SIZE,
+    wholeBooksOnly = false,
   } = opts;
+  if (interiorSample && wholeBooksOnly) throw new Error('submitCrossBookOcrBatches: interiorSample samples a book; wholeBooksOnly takes all of it');
   if (interiorSample && maxPagesPerBook) throw new Error('submitCrossBookOcrBatches: interiorSample and maxPagesPerBook select different pages; pass one');
   const ocrModel = model;
   const basePromptRef = await getOcrPromptFromDb(db);
@@ -1820,7 +1862,9 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
 
   // Guard: skip books with active batch_jobs or needs_splitting
   const eligible = [];
+  const considered = new Set();
   for (const book of books) {
+    considered.add(book.id);
     if (book.needs_splitting) continue; // Spread books need special prompt, keep per-book
     const activeBatch = await db.collection('batch_jobs').countDocuments({
       $or: [{ book_id: book.id }, { book_ids: book.id }],
@@ -1833,7 +1877,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     }
     eligible.push(book);
   }
-  if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+  if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds: [...considered] };
 
   // Generation guard (#2449): per-book OCR generations, stamped on the job so
   // the collector can drop pages of any book that was reset after submit.
@@ -1847,11 +1891,15 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   const allDownloaded = []; // { pageId, image, prompt, bookId }
   const bookMap = new Map();
 
+  // Books past the point where the pool filled were never looked at: hand them back.
+  const lookedAt = new Set();
   for (const book of eligible) {
-    if (allDownloaded.length >= CROSS_BOOK_BATCH_SIZE) break;
+    if (allDownloaded.length >= poolPages) break;
+    lookedAt.add(book.id);
 
-    const poolRoom = CROSS_BOOK_BATCH_SIZE - allDownloaded.length;
-    const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : poolRoom;
+    const poolRoom = poolPages - allDownloaded.length;
+    // wholeBooksOnly reads one page past the room, so "exactly fills it" and "overflows" differ.
+    const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : wholeBooksOnly ? poolRoom + 1 : poolRoom;
     const pageFilter = {
       book_id: book.id,
       page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
@@ -1863,6 +1911,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
             { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
             { cropped_photo: { $exists: true, $nin: [null, ''] } },
             { photo: { $exists: true, $ne: null } },
+            // Same image sources as submitOcrDirectly: a whole-book pool must see every page it would (#5544).
+            { photo_original: { $exists: true, $ne: null } },
           ]
         },
         notBlockedForModel(model),
@@ -1888,6 +1938,13 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     }
 
     if (pages.length === 0) continue;
+    if (wholeBooksOnly && pages.length > poolRoom) {
+      // Too big for what is left of this pool. It may fit an emptier pool on a later call,
+      // so leave it un-considered unless the pool was empty (then it can never fit, and
+      // the caller sends it per book).
+      if (allDownloaded.length > 0) lookedAt.delete(book.id);
+      continue;
+    }
 
     // Build book-specific prompt with provenance context
     let prompt = basePrompt;
@@ -1911,7 +1968,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     }
   }
 
-  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+  const consideredBookIds = [...considered].filter(id => lookedAt.has(id) || !eligible.some(b => b.id === id));
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds };
   console.log(`  Cross-book OCR pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
 
   // Build and submit a single cross-book batch
@@ -1945,19 +2003,17 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   // Non-quota errors capture into __submitErr so we always reach the unlink below.
   let batchJob = null;
   let __submitErr = null;
-  const bestKey = getLeastLoadedKey();
-  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
-  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-    const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
+  // Projects with room and File API space, least loaded first (#5544).
+  for (const uki of uploadKeyOrder()) {
     let fileResult;
     try {
       fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
       console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
     } catch (uploadErr) {
       const msg = uploadErr.message || '';
-      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-        console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
-        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+      if (isFileQuotaError(msg)) {
+        console.log(`    Upload key ${uki} FILE API quota exhausted, trying next project...`);
+        markUploadFull(uki); // inline batches can still use this project — not load (#5544)
         continue;
       }
       __submitErr = uploadErr;
@@ -1973,7 +2029,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
       const msg = batchErr.message || '';
       if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
         console.log(`    Batch create key ${uki} quota exhausted, trying next...`);
-        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        markProjectFull(uki);
         continue;
       }
       __submitErr = batchErr;
@@ -2038,7 +2094,10 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     );
   }
 
-  // Log usage
+  // Log usage. ONE row per job: batch-collector's completeBatchUsage PATCHes every
+  // row carrying this batch_job_id with the whole job's cost, so per-book rows
+  // would multiply it. Envelope spend is metered by book_id, so the pool's cost
+  // counts against the first book's envelope only (#5544 — known gap).
   await logUsage({
     type: 'ocr', mode: 'batch', model: ocrModel,
     book_id: chunkBookIds[0],
@@ -2051,7 +2110,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   }, db);
 
   console.log(`  Cross-book OCR submitted: ${allDownloaded.length} pages from ${chunkBookIds.length} books — ${batchJob.name}`);
-  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds };
+  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds, jobName: batchJob.name, consideredBookIds };
 }
 
 /**
@@ -2181,19 +2240,17 @@ async function submitCrossBookImageBatches(db, bookItems) {
     // Non-quota errors capture into __submitErr so we always reach the unlink below.
     let batchJob = null;
     let __submitErr = null;
-    const crossBestKey = getLeastLoadedKey();
-    const crossStartKey = crossBestKey >= 0 ? crossBestKey : nextBatchKeyIndex();
-    for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-      const uki = (crossStartKey + attempt) % GEMINI_BATCH_KEYS.length;
+    // Projects with room and File API space, least loaded first (#5544).
+    for (const uki of uploadKeyOrder()) {
       let fileResult;
       try {
         fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
         console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
       } catch (uploadErr) {
         const msg = uploadErr.message || '';
-        if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
-          console.log(`    Upload key ${uki} quota exhausted, trying next...`);
-          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        if (isFileQuotaError(msg)) {
+          console.log(`    Upload key ${uki} FILE API quota exhausted, trying next project...`);
+          markUploadFull(uki); // inline batches can still use this project — not load (#5544)
           continue;
         }
         __submitErr = uploadErr;
@@ -2212,7 +2269,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
         const msg = batchErr.message || '';
         if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
           console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
-          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+          markProjectFull(uki);
           continue;
         }
         __submitErr = batchErr;
@@ -3946,7 +4003,7 @@ Rules:
         type: 'ocr',
         status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       });
-      console.log(`  Gemini per-key: [${keyLoads.perKey.join(', ')}] (cap ${MAX_ACTIVE_PER_KEY}/key) | Total: ${geminiActiveJobs} | DB: ${activeBatchOcr}`);
+      console.log(`  Gemini per-key: [${keyLoads.perKey.join(', ')}] → projects [${keyLoads.canonicals.join(', ')}] (cap ${MAX_ACTIVE_PER_KEY}/project) | Total: ${geminiActiveJobs} over projects | DB: ${activeBatchOcr}${_uploadFullKeys.size ? ` | File API full: [${[..._uploadFullKeys].join(', ')}]` : ''}`);
 
       // Gate: if no key has room, don't even query candidates
       const ocrLimit = getLeastLoadedKey() >= 0 ? OCR_SUBMIT_LIMIT : 0;
@@ -4124,7 +4181,79 @@ Rules:
         logQueueHead(dedupedFull);
       }
 
-      for (const book of dedupedFull) {
+      // Pack Pass 2 (#5544). One book per job let 1–3 books through a run: a
+      // 2-page remainder took a whole concurrent-job slot. Whole books only
+      // (see submitCrossBookOcrBatches' wholeBooksOnly), one model per job.
+      // Spread books need the spread prompt, and RECITATION retries carry a
+      // model override, so both stay on the per-book path below. So does
+      // every book a pool looked at and did not take: a book with nothing left
+      // to OCR, one with an active batch, one too big for a pool, one whose
+      // downloads failed. The per-book path already handles each of those.
+      let perBookFull = dedupedFull;
+      let packingQuotaExhausted = false;
+      let dialClosed = false;
+      if (dedupedFull.length > 0) {
+        const isPackable = (b) => !b.needs_splitting
+          && b.pipeline_auto?.recitation_retry !== true
+          && b.pipeline_auto?.recitation_retry_lite !== true;
+        const byModel = new Map();
+        for (const b of dedupedFull.filter(isPackable)) {
+          const m = getOcrModelForBook(b);
+          if (!byModel.has(m)) byModel.set(m, []);
+          byModel.get(m).push(b);
+        }
+        const leftover = new Set(dedupedFull.filter(b => !isPackable(b)).map(b => b.id));
+        if (DRY_RUN) {
+          for (const [m, group] of byModel) console.log(`  Would pack ${group.length} Pass 2 books for ${m} (whole books, ≤${PASS2_POOL_PAGES} pages per job)`);
+        } else {
+          // A packed job carries up to PASS2_POOL_PAGES pages (~$2 at batch flash-lite), so a run
+          // can now commit far more than the 1–3 books it used to. Re-read the dial before every
+          // pool after the first, so a run stops when the dial or the envelope closes rather
+          // than at the end of the phase.
+          let poolsSubmitted = 0;
+          for (const [m, group] of byModel) {
+            let queue = group;
+            while (queue.length > 0 && !packingQuotaExhausted && !dialClosed && await canSubmitMore()) {
+              if (poolsSubmitted > 0 && !await budgetAllowsDispatchForPhase('Phase 2 Pass 2 (packed pool)')) {
+                dialClosed = true;
+                break;
+              }
+              let r;
+              try {
+                r = await submitCrossBookOcrBatches(db, queue, {
+                  model: m, poolPages: PASS2_POOL_PAGES, wholeBooksOnly: true, advanceStatus: false,
+                });
+              } catch (err) {
+                const msg = err.message || String(err);
+                if (msg === 'ALL_KEYS_QUOTA_EXHAUSTED') {
+                  console.log('  All keys quota exhausted during Pass 2 packing');
+                  packingQuotaExhausted = true;
+                } else {
+                  console.error(`  Pass 2 packing error: ${msg.substring(0, 120)} — falling back to per-book`);
+                  for (const b of queue) leftover.add(b.id);
+                }
+                break;
+              }
+              // Same status write as the per-book path, through the same guards.
+              for (const id of r.bookIds) {
+                await setPipelineStatus(db, id, 'ocr_submitted', { ocr_job_name: r.jobName, retry_count: 0 });
+                log.ocr_submitted++;
+              }
+              const pooled = new Set(r.bookIds);
+              for (const id of r.consideredBookIds) if (!pooled.has(id)) leftover.add(id);
+              const done = new Set(r.consideredBookIds);
+              queue = queue.filter(b => !done.has(b.id));
+              if (r.submitted === 0) break;
+              poolsSubmitted++;
+              console.log(`  Pass 2 packed: ${r.submitted} pages from ${r.bookIds.length} books in one job (${m})`);
+              await sleep(API_DELAY_MS);
+            }
+          }
+          perBookFull = dedupedFull.filter(b => leftover.has(b.id));
+        }
+      }
+
+      for (const book of packingQuotaExhausted || dialClosed ? [] : perBookFull) {
         if (!await canSubmitMore()) {
           console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
           break;
@@ -4245,9 +4374,12 @@ Rules:
           if (job) isComplete = true;
         } else if (jobName) {
           const batchJob = await db.collection('batch_jobs').findOne({
-            book_id: book.id,
+            // A Pass 2 packed job lists this book in book_ids, not book_id (#5544).
+            $and: [
+              { $or: [{ book_id: book.id }, { book_ids: book.id }] },
+              { $or: [{ job_name: jobName }, { gemini_job_name: jobName }] },
+            ],
             type: 'ocr',
-            $or: [{ job_name: jobName }, { gemini_job_name: jobName }],
             status: { $in: ['completed', 'saved', 'completed_with_errors', 'failed'] },
           });
           const parentJob = !batchJob
@@ -4292,7 +4424,7 @@ Rules:
           if (remainingOcr > 0) {
             // Check if there are uncollected batch_jobs — collector may not have saved results yet
             const uncollectedBatch = await db.collection('batch_jobs').countDocuments({
-              book_id: book.id,
+              $or: [{ book_id: book.id }, { book_ids: book.id }],
               type: 'ocr',
               status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved' — results not yet written to pages
             });
