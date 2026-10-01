@@ -697,15 +697,32 @@ export const isCollapsed = (ocr, tr) => {
 /**
  * Runaway / repetition loop: translation body far longer than its own OCR
  * body. Body-based to avoid false positives on low-OCR pages (headers,
- * image-only). The 3× ratio deliberately clears normal CJK→English expansion
- * (~3× in chars — #2532 found length-ratio runaway flags were ~97% false
- * positives on CJK; real loops need a repetition metric, this only catches
- * the gross ones).
+ * image-only). Real loops need a repetition metric; this only catches the
+ * gross ones (#2532 found length-ratio runaway flags were ~97% false
+ * positives on CJK).
+ *
+ * The ratio is per script. 3× clears alphabetic sources. It does NOT clear
+ * Han: on 314 dense, healthy, already-translated Chinese pages (120 books,
+ * OCR body ≥ 300, Han ≥ 60% of it; measured 2026-10-01, #5566) English ran
+ * p50 6.6×, p99 10.5×, max 12.75× the source, and 98.7% of pages exceeded 3×
+ * — so the Batch lane, which refuses an unhealthy page at the door, wrote 2 of
+ * 34 classical-Chinese pages and stamped the rest `runaway`. A Han-dominant
+ * source (≥ HAN_DOMINANT of its body) gets CJK_EXCESS_RATIO instead; the
+ * 20,000-character absolute cap still catches a looping page of any script.
  */
+export const EXCESS_RATIO = 3;
+export const CJK_EXCESS_RATIO = 16;
+export const HAN_DOMINANT = 0.5;
+const HAN_CHAR = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
 export const isExcess = (ocr, tr) => {
   if ((tr || '').length > 20000) return true;
   const ob = bodyLen(ocr), tb = bodyLen(tr);
-  return ob >= 300 && tb > ob * 3;
+  if (ob < 300) return false;
+  // Counted on the same body bodyLen measures: metadata blocks (<vocab>, <warning>, …) list Han
+  // terms on Latin pages too, and must not tip a Latin page into the Han ratio.
+  const body = String(ocr || '').replace(blockRe, ' ').replace(looseRe, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ');
+  const han = (body.match(HAN_CHAR) || []).length;
+  return tb > ob * (han / ob >= HAN_DOMINANT ? CJK_EXCESS_RATIO : EXCESS_RATIO);
 };
 
 /**
