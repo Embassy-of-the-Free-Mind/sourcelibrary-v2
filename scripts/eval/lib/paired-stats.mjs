@@ -45,8 +45,12 @@ export function makeRng(s = 0x5eed) {
   };
 }
 
-/** The pre-#5373 generator, kept only so an old artifact can be reproduced. */
-function makeLegacyLcg(s) {
+/**
+ * The pre-#5373 generator, kept only so an old artifact can be reproduced. Exported for the
+ * draw scripts whose samples were made with it and are committed (they would stop reproducing
+ * on makeRng); a NEW draw uses makeRng. Bit-identical to the inline `% 2147483648` form.
+ */
+export function makeLegacyLcg(s) {
   let seed = s;
   return () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x80000000;
 }
