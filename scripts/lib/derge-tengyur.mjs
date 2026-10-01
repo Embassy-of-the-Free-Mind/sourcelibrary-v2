@@ -237,3 +237,34 @@ export function volumeVerdict(samples, rules = ALIGN_RULES) {
     reasons,
   };
 }
+
+/**
+ * Where in the volume does this read belong? Scores the read against every side and returns the
+ * best side index, its identity, and the runner-up identity at a side ≥ 2 away (the control).
+ * Used where BDRC's manifest carries no folio labels (I1441 = vol. 125 has only "img. N"), so the
+ * canvas → side offset must be MEASURED from the reads rather than claimed by a label.
+ */
+export function locateRead(readText, pages) {
+  const read = syllables(readText);
+  const scores = pages.map((p) => (p.lines.length ? nwIdentity(read, syllables(p.lines.join(' '))) : 0));
+  let best = 0;
+  for (let i = 1; i < scores.length; i++) if (scores[i] > scores[best]) best = i;
+  const control = Math.max(0, ...scores.filter((_, i) => Math.abs(i - best) >= 2));
+  const r4 = (x) => Math.round(x * 1000) / 1000;
+  return { read_syllables: read.length, index: best, side: pages[best]?.label ?? null, identity: r4(scores[best] ?? 0), control: r4(control) };
+}
+
+/**
+ * The offset (side index − canvas index) a set of located reads agrees on, or null with a reason.
+ * Every informative read (identity ≥ informativeFloor, margin over its control ≥ minMargin, or the
+ * v3 near-verbatim allowance) must give the SAME offset — a missing or extra image part-way through
+ * the volume would split them, and an index mapping across such a break would be wrong after it.
+ */
+export function agreedOffset(located, rules = ALIGN_RULES) {
+  const ok = located.filter(({ loc }) => loc.read_syllables >= rules.minReadSyllables && loc.identity >= rules.informativeFloor
+    && (loc.identity - loc.control >= rules.minMargin || (loc.identity >= rules.verbatimIdentity && loc.identity - loc.control >= rules.verbatimMargin)));
+  if (ok.length < rules.minScored - 1) return { offset: null, reason: `only ${ok.length} reads located with confidence (need ${rules.minScored - 1})` };
+  const offs = [...new Set(ok.map(({ canvas, loc }) => loc.index - canvas))];
+  if (offs.length !== 1) return { offset: null, reason: `located reads disagree on the offset: ${offs.join(', ')}` };
+  return { offset: offs[0], reason: null, located: ok.length };
+}
