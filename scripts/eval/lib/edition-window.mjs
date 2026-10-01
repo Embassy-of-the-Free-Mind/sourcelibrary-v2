@@ -60,7 +60,12 @@ export function cutEditionWindow(editionWords, editionText, probeText, script, {
   const probe = foldedWords(stripTags(probeText), script).map(x => x.w);
   if (probe.length < minProbeWords) return null;
   const words = editionWords.map(x => x.w);
-  const w = wordWindow(words, probe, 3);
+  let w = wordWindow(words, probe, 3), matchKey = 'bigram';
+  // Early prints abbreviate (hns = habens, ptas = potestas, p = per, q; = que) while a modern edition
+  // expands, so adjacent-word pairs rarely survive and the bigram vote finds nothing (Vitruvius 1511
+  // vs Krohn 1912: 7 of 15 pages under 0.35). Long words are rarely abbreviated, so fall back to a
+  // vote on them alone; the alignment trim below tolerates the abbreviations as substitutions.
+  if (w.overlap < 0.35) { const lw = longWordWindow(words, probe); if (lw.overlap > w.overlap) { w = lw; matchKey = 'long-words'; } }
   // The bigram vote LOCATES the passage but cannot TRIM it: common pairs (καὶ οὐ, et in) hit all
   // through the vote window, so first-to-last hit spans all of it (measured: 1,355 edition words cut
   // for an 819-word page). Trim by fitting alignment instead: the probe against the best SUBSTRING
@@ -72,7 +77,20 @@ export function cutEditionWindow(editionWords, editionText, probeText, script, {
   if (to <= from) return null;
   const a = editionWords[from].start, b = editionWords[to - 1].end;
   return { window: editionText.slice(a, b), overlap: w.overlap, shared: w.shared, probe_words: probe.length,
-    span_wer: span ? +span.wer.toFixed(3) : null, from_char: a, to_char: b };
+    span_wer: span ? +span.wer.toFixed(3) : null, match_key: matchKey, from_char: a, to_char: b };
+}
+
+// Vote on the probe's long words (≥ 6 letters) in a sliding window of the probe's length; overlap is
+// the share of DISTINCT long probe words present in the best window.
+export function longWordWindow(words, probe, minLen = 6) {
+  const P = new Set(probe.filter(x => x.length >= minLen));
+  const L = Math.max(40, Math.round(probe.length * 1.3));
+  if (!P.size) return { from: 0, to: 0, overlap: 0, shared: 0 };
+  let best = 0, at = 0; const inWin = new Map(); let distinct = 0;
+  const add = x => { if (!P.has(x)) return; const n = (inWin.get(x) || 0) + 1; inWin.set(x, n); if (n === 1) distinct++; };
+  const del = x => { if (!P.has(x)) return; const n = inWin.get(x) - 1; inWin.set(x, n); if (n === 0) distinct--; };
+  for (let i = 0; i < words.length; i++) { add(words[i]); if (i >= L) del(words[i - L]); if (distinct > best) { best = distinct; at = Math.max(0, i - L + 1); } }
+  return { from: at, to: Math.min(words.length, at + L), overlap: best / P.size, shared: best };
 }
 
 // Fitting alignment (free skip at both ends of `ref`): the substring of ref that `hyp` matches best.
