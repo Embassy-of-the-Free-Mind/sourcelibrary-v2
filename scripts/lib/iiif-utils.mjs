@@ -30,6 +30,10 @@ export const DOMAIN_LIMITS = {
   'iiif.wellcomecollection.org': 5,
   'www.e-rara.ch': 2,
   'digi.vatlib.it': 3,
+  // Heidelberg UB: no published policy, no robots crawl-delay for /iiif/. Matches
+  // archive-ocr.mjs's entry rather than inheriting DEFAULT_LIMIT (5/s) by accident
+  // when its #4397 lane starts (2026-10 acquisition wave, #5457).
+  'digi.ub.uni-heidelberg.de': 2,
   // Claremont Colleges Digital Library (CONTENTdm). Its dmQuery endpoint 502s
   // under a 500-row page at the default 5/s (2026-09-16); ask politely.
   'ccdl.claremont.edu': 2,
@@ -97,10 +101,27 @@ function decayPenalty(b, now) {
 export function getDomainLimit(url) {
   try {
     const host = new URL(url).hostname;
-    return DOMAIN_LIMITS[host] ?? DEFAULT_LIMIT;
+    const base = DOMAIN_LIMITS[host] ?? DEFAULT_LIMIT;
+    const cap = _rateCaps.get(host);
+    return cap != null ? Math.min(base, cap) : base;
   } catch {
     return DEFAULT_LIMIT;
   }
+}
+
+// Per-process caps, LOWER-ONLY (#4397 host lanes). The limiter's state lives in
+// this process, so two processes on one host each get the full DOMAIN_LIMITS
+// rate. A lane running beside the hourly archive-acquired cron on a shared host
+// (e-rara, gallica) must therefore take a share of the budget, not all of it;
+// a host whose robots.txt asks for less than the table says gets honoured here.
+// `Math.min` makes raising a host's rate through this seam impossible by
+// construction: a higher rate is a change to DOMAIN_LIMITS, made on evidence.
+const _rateCaps = new Map();
+export function capDomainLimit(host, rate) {
+  if (!host || !Number.isFinite(rate) || rate <= 0) {
+    throw new TypeError(`capDomainLimit: need a host and a positive rate, got ${JSON.stringify(host)}=${rate}`);
+  }
+  _rateCaps.set(host, rate);
 }
 
 function bucketFor(host) {
