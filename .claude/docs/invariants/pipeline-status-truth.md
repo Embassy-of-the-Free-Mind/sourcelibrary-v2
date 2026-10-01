@@ -6,6 +6,10 @@ advancing `pipeline_auto.status` from anywhere, adding a guard that asserts some
 
 *Added 2026-08-08 from #3740 / PR #3765.*
 
+**Successor design:** `../pipeline-next-step.md` (#5469) — one derived `nextStep(book)` that
+phases select on, an exit for every blocked reason, and a lane registry. Until its cutovers
+land, the rules below govern every status write.
+
 ---
 
 **`pipeline_auto.status` is what every phase selects on.** Written ahead of its output, a
