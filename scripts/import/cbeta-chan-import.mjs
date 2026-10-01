@@ -62,6 +62,7 @@ const HOLD = {
   source: 'cbeta-chan-import',
 };
 const TEXT_SOURCE = 'cbeta-xml-p5';
+const TRANSLATE_HOLD = 'cbeta-chan-translate-5566';
 const PIPELINE = 'cbeta-chan-fit-5566';
 const LICENCE = 'CC BY-NC-SA 4.0 (CBETA)';
 const LICENCE_URL = 'https://www.cbeta.org/copyright.php';
@@ -104,7 +105,8 @@ const TEXTS = {
   T2000: {
     cbeta: 'T2000', xml: 'T/T47/T47n2000.xml', canonRef: 'T47n2000', work_id: 'kr:KR6q0065',
     title: '虛堂和尚語錄', english: 'Recorded Sayings of Master Xutang', author: '虛堂智愚 (Xutang Zhiyu); 妙源 (Miaoyuan), comp.',
-    source: ndl(['2576515', '2576516', '2576517', '2576518', '2576519', '2576520', '2576521', '2576522', '2576523', '2576524'], '寛文9 [1669] edition', 1669),
+    // The 寛文9 [1669] print (2576515…24) is the annotated 犁耕 edition: 3/511 spreads fit. This is the plain text.
+    source: ndl(['2543706', '2543707', '2543708', '2543709'], 'old movable-type edition (古活字版), Keichō era [1596–1615]', null),
   },
   T2003: {
     cbeta: 'T2003', xml: 'T/T48/T48n2003.xml', canonRef: 'T48n2003', work_id: 'kr:KR6q0078',
@@ -140,6 +142,22 @@ const TEXTS = {
     cbeta: 'X1372', xml: 'X/X69/X69n1372.xml', canonRef: 'X69n1372', work_id: 'kr:KR6q0306',
     title: '無文道燦禪師語錄', english: 'Recorded Sayings of Chan Master Wuwen Daocan', author: '無文道燦 (Wuwen Daocan); 惟康 (Weikang), comp.',
     source: ndl(['2545279'], 'Song print (宋刊), bound with 無文印', null),
+  },
+  // ── mode 1: books we already hold ──
+  T2003N: {
+    cbeta: 'T2003', xml: 'T/T48/T48n2003.xml', canonRef: 'T48n2003', work_id: null,
+    title: '佛果圜悟禪師碧巖錄', english: 'Blue Cliff Record', author: '雪竇重顯; 圜悟克勤',
+    source: { kind: 'held', reader: 'ndl', books: ['69bd05f8e26ef4b094821d72', '69bd063ae26ef4b094821ddf'], edition: '新鐫碧巌集, 1894 (NDL)', rights: NDL_RIGHTS },
+  },
+  T2005N: {
+    cbeta: 'T2005', xml: 'T/T48/T48n2005.xml', canonRef: 'T48n2005', work_id: null,
+    title: '無門關', english: 'Gateless Gate', author: '無門慧開',
+    source: { kind: 'held', reader: 'ndl', books: ['69bd068be26ef4b094821e3e'], edition: '冠註無門関, 1910 (NDL)', rights: NDL_RIGHTS },
+  },
+  X1565: {
+    cbeta: 'X1565', xml: 'X/X80/X80n1565.xml', canonRef: 'X80n1565', work_id: null,
+    title: '五燈會元', english: 'Compendium of the Five Lamps', author: '普濟 (Puji)',
+    source: { kind: 'held', reader: 'gemini', books: ['6a3cc1baec254ff6cae0e99d', '6a3cc1bdec254ff6cae0eaf8', '6a3cc1bbf9474f825c172777', '6a3cc1beec254ff6cae0ebb5', '6a3cc1c1ec254ff6cae0edc2', '6a3cc1bfec254ff6cae0ec64', '6a3cc1c0ec254ff6cae0ecff', '6a3cc1c2ec254ff6cae0ee53', '6a3cc1c3ec254ff6cae0ef14', '6a3cc1c7ec254ff6cae0f042', '6a3cc1cbf9474f825c17281e', '6a3cc1c6ec254ff6cae0ef7f', '6a3cc1ccec254ff6cae0f113', '6a3cc1ccf9474f825c1728bb', '6a3cc1cff9474f825c17296e', '6a3cc1d0f9474f825c172a4b', '6a3cc1d1f9474f825c172bb9', '6a3cc1d0f9474f825c172a4c', '6a3cc1d4f9474f825c172c59', '6a3cc1d6f9474f825c172e49'], edition: 'IA/CADAL 五燈會元 (20 vols)', rights: 'Internet Archive, publicdomain (already held)' },
   },
   X1318: {
     cbeta: 'X1318', xml: 'X/X68/X68n1318.xml', canonRef: 'X68n1318', work_id: 'kr:KR6q0265',
@@ -200,7 +218,8 @@ async function loadText() {
 // NDL: the IIIF manifest gives the canvases; NDL's own OCR of each page (lab.ndl.go.jp full text,
 // NDL classical-text OCR — an engine that has never seen CBETA) is the independent cheap read. It
 // costs nothing, so no Gemini call is made for verification.
-async function sourcePages() {
+async function sourcePages(db) {
+  if (T.source.kind === 'held') return heldPages(db);
   if (T.source.kind !== 'ndl') throw new Error(`no adapter for source kind ${T.source.kind}`);
   const pages = [];
   for (const [vi, pid] of T.source.volumes.entries()) {
@@ -218,7 +237,86 @@ async function sourcePages() {
   }
   return pages;
 }
-const READ_ENGINE = { name: 'NDL classical-text OCR (lab.ndl.go.jp full text)', url: 'https://lab.ndl.go.jp/dl/api/book/fulltext-json/' };
+const NDL_READ = { name: 'NDL classical-text OCR (lab.ndl.go.jp full text)', url: 'https://lab.ndl.go.jp/dl/api/book/fulltext-json/' };
+const PAGE_MODEL = 'gemini-3.1-flash-lite';
+const GEMINI_READ = { name: `this library's OCR of the page where it has one, else a ${PAGE_MODEL} column read`, url: null };
+const READ_ENGINE = T?.source?.reader === 'gemini' ? GEMINI_READ : NDL_READ;
+
+// ── mode 1: books we already hold ──────────────────────────────────────────
+// Pages come from our own `pages` rows (never re-created). The read is NDL's OCR when the scan is
+// NDL's; otherwise the page's existing OCR (an independent read of the image — written before
+// CBETA was ever fitted) and, for a page with no text, a flash-lite read laid out one printed column
+// per line. Existing OCR is never overwritten: such pages are measured and their agreement with
+// the fitted span is reported, nothing more.
+const META_BLOCKS = /<(vocab|warning|page-num|language|script|page-type|columns|header|footer|sig|meta|image-desc|scan-quality|summary|keywords|detected-images)\b[^>]*>[\s\S]*?<\/\1>/gi;
+const cleanOcr = (t) => String(t || '').replace(META_BLOCKS, '\n').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ').replace(/^#+\s*/gm, '');
+const PAGE_PROMPT = 'This is one page (or an opened spread) of a classical Chinese woodblock print. Transcribe the main text exactly as printed, column by column in reading order (right to left), writing ONE output line per printed column, top to bottom. A stretch of small double-line interlinear characters belongs to its column: read its right sub-column, then its left, in the same output line. Omit the block-centre margin (title, juan number, leaf number) and any stamps or handwritten notes. Output only the characters and line breaks — no punctuation, no commentary.';
+
+async function pageRead(p, cache) {
+  if (cache[p.pageId]) return cache[p.pageId];
+  const img = Buffer.from(await (await fetchRetry(p.photo)).arrayBuffer());
+  let r;
+  try {
+    r = await callGemini({ model: PAGE_MODEL, prompt: PAGE_PROMPT, imageParts: [img], endpoint: 'scripts/import/cbeta-chan-import.mjs', type: 'ocr', triggeredBy: 'cbeta-chan-5566 verification read', bookId: p.bookId, pageIds: [p.pageId], maxOutputTokens: 3000 });
+  } catch (e) { r = { text: '', finishReason: `error: ${String(e.message).slice(0, 120)}`, inputTokens: 0, outputTokens: 0 }; }
+  const out = { text: r.text || '', finish: r.finishReason, usd: costOf(PAGE_MODEL, r.inputTokens || 0, r.outputTokens || 0), at: new Date().toISOString() };
+  if (!String(out.finish).startsWith('error')) cache[p.pageId] = out;
+  return out;
+}
+
+async function heldPages(db) {
+  if (!db) throw new Error('held source needs the database');
+  const pages = [];
+  const CACHE = path.join(TDIR, 'page-reads.json');
+  const cache = fs.existsSync(CACHE) ? JSON.parse(fs.readFileSync(CACHE, 'utf8')) : {};
+  const todo = [];
+  const only = val('only') ? new Set(String(val('only')).split(',').map(Number)) : null;   // trial on some volumes (1-based)
+  for (const [vi, bookId] of T.source.books.entries()) {
+    if (only && !only.has(vi + 1)) continue;
+    const book = await db.collection('books').findOne({ id: bookId }, { projection: { id: 1, image_source: 1 } });
+    if (!book) throw new Error(`held book ${bookId} not found`);
+    const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $gt: 0 } }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, image_width: 1, image_height: 1, ocr: 1 } }).sort({ page_number: 1 }).toArray();
+    let ndlByPage = null;
+    if (T.source.reader === 'ndl') {
+      const pid = String(book.image_source?.source_url || book.image_source?.iiif_manifest || '').match(/iiif\/(\d+)\/manifest/)?.[1];
+      if (!pid) throw new Error(`${bookId}: no NDL pid in image_source`);
+      const full = await cached(path.join(WORK, 'ndl', `${pid}.json`), `https://lab.ndl.go.jp/dl/api/book/fulltext-json/${pid}`, 'json');
+      ndlByPage = new Map(full.list.map((x) => [x.page, x]));
+      book.ndl_pid = pid;
+    }
+    for (const r of rows) {
+      const p = { vol: vi, pid: bookId, n: r.page_number, bookId, pageId: r.id, photo: r.archived_photo || r.photo, width: r.image_width, height: r.image_height,
+        existing: !!(r.ocr?.data && r.ocr.source !== TEXT_SOURCE), ours: r.ocr?.source === TEXT_SOURCE };
+      if (ndlByPage) {
+        const m = String(r.photo || '').match(/\/R(\d{7})\//);
+        const x = ndlByPage.get(m ? Number(m[1]) : r.page_number);
+        p.read = x?.contents || '';
+        p.lines = JSON.parse(x?.coordjson || '[]').map((e) => ({ text: e.contenttext, box: [e.xmin, e.ymin, e.xmax, e.ymax], h: e.ymax - e.ymin }));
+        p.service = `https://dl.ndl.go.jp/api/iiif/${book.ndl_pid}/R${String(m ? Number(m[1]) : r.page_number).padStart(7, '0')}`;
+        p.read_url = `${NDL_READ.url}${book.ndl_pid}`;
+      } else if (p.existing) {
+        p.read = cleanOcr(r.ocr.data);
+        p.read_url = `existing ocr (${r.ocr.model || r.ocr.source || 'unknown'})`;
+      } else {
+        todo.push(p);
+      }
+      pages.push(p);
+    }
+  }
+  // Pages with no text get the column read (cached; never paid twice).
+  let done = 0;
+  const queue = [...todo];
+  const worker = async () => {
+    for (let p = queue.shift(); p; p = queue.shift()) {
+      const r = await pageRead(p, cache);
+      p.read = r.text; p.read_url = `${PAGE_MODEL} column read`;
+      if (++done % 50 === 0) { fs.writeFileSync(CACHE, JSON.stringify(cache)); log(`  page reads ${done}/${todo.length} ($${Object.values(cache).reduce((n, x) => n + (x.usd || 0), 0).toFixed(3)})`); }
+    }
+  };
+  if (todo.length) { log(`${textKey}: ${todo.length} pages without text need a read`); await Promise.all([1, 2, 3, 4].map(worker)); fs.writeFileSync(CACHE, JSON.stringify(cache)); }
+  for (const p of pages) if (!p.lines) p.lines = String(p.read || '').split('\n').filter((l) => l.trim()).map((l) => ({ text: l, box: [null, null, null, null], h: 0 }));
+  return pages;
+}
 
 // ── measure ────────────────────────────────────────────────────────────────
 const EDGE_MODEL = 'gemini-3.1-flash-lite';
@@ -250,10 +348,10 @@ async function edgeRead(p, col, cache) {
   return out;
 }
 
-async function measure() {
+async function measure(db) {
   const { sha, ex, F, map, structural } = await loadText();
-  const src = await sourcePages();
-  const pages = src.map((p) => ({ read: foldHan(p.read).f, lines: p.lines.map((l) => ({ f: foldHan(l.text).f, h: l.h, x0: l.box[0], y0: l.box[1], x1: l.box[2], y1: l.box[3] })) }));
+  const src = await sourcePages(db);
+  const pages = src.map((p) => ({ read: foldHan(p.read).f, lines: p.lines.map((l) => ({ f: foldHan(l.text).f, h: l.h, x0: l.box[0] ?? undefined, y0: l.box[1] ?? undefined, x1: l.box[2] ?? undefined, y1: l.box[3] ?? undefined })) }));
   const idx = buildIndex(F);
   // Pass 1: NDL's reads alone. Pass 2: a second read of the edge columns where they disagree.
   let fit = fitBook(pages, F, idx, structural);
@@ -282,7 +380,7 @@ async function measure() {
   const reads = pages.map((p) => p.read);
   const rows = src.map((p, i) => {
     const r = fit.pages[i];
-    const row = { i, vol: p.vol, pid: p.pid, n: p.n, read_chars: reads[i].length };
+    const row = { i, vol: p.vol, pid: p.pid, n: p.n, read_chars: reads[i].length, ...(T.source.kind === 'held' ? { page_id: p.pageId, existing_ocr: p.existing, read_url: p.read_url } : {}) };
     if (!r.span) return { ...row, written: false, why: r.why };
     const v = verifyPage(i, reads, spans, F);
     const text = spanText(ex.text, map, r.span[0], r.span[1], F);
@@ -298,12 +396,14 @@ async function measure() {
     measured_at: new Date().toISOString(), edge_reads: Object.keys(cache).length, edge_usd: +edgeUsd.toFixed(4),
     typed: { chars: ex.text.length, han: F.length, unresolved_gaiji: ex.unresolvedGaiji },
     pages: rows.length, written: rows.filter((r) => r.written).length,
+    ...(T.source.kind === 'held' ? { held: { writable: rows.filter((r) => r.written && !r.existing_ocr).length, existing_ocr_fitted: rows.filter((r) => r.written && r.existing_ocr).length, existing_ocr: rows.filter((r) => r.existing_ocr).length } } : {}),
     refused: Object.entries(rows.filter((r) => !r.written).reduce((m, r) => { const k = String(r.why).split(/[ ;]/)[0].replace(/-?\d+$/, ''); m[k] = (m[k] || 0) + 1; return m; }, {})),
     boundaries: Object.entries(fit.boundaries.reduce((m, b) => { const k = b.position != null ? (b.votes?.variant_gap ? 'set-variant-gap' : b.votes?.last2 != null || b.votes?.first2 != null ? 'set-with-second-read' : b.votes?.structural != null ? 'set-structural' : 'set-columns-agree') : String(b.why).replace(/-\d+$/, ''); m[k] = (m[k] || 0) + 1; return m; }, {})),
     controls: summarise(rows.filter((r) => r.verify)),
     rows,
   };
   fs.writeFileSync(path.join(TDIR, 'fit.json'), JSON.stringify(out));
+  if (out.held) log(`${textKey}: held — ${JSON.stringify(out.held)}`);
   log(`${textKey}: ${out.written}/${out.pages} pages pass; refused ${JSON.stringify(out.refused)}; boundaries ${JSON.stringify(out.boundaries)}; ${JSON.stringify(out.controls)}; edge reads ${out.edge_reads} ($${out.edge_usd})`);
 }
 function summarise(rows) {
@@ -331,7 +431,8 @@ async function apply(db) {
   const fit = JSON.parse(fs.readFileSync(path.join(TDIR, 'fit.json'), 'utf8'));
   const { sha, ex, F, map } = await loadText();
   if (sha !== fit.xml_sha) throw new Error(`fit.json was measured on xml-p5 ${fit.xml_sha}, the pin is now ${sha} — re-measure`);
-  const pages = await sourcePages();
+  if (T.source.kind === 'held') return applyHeld(db, fit, sha, ex, F, map);
+  const pages = await sourcePages(db);
   const books = db.collection('books');
   const pagesC = db.collection('pages');
   const now = new Date();
@@ -384,7 +485,11 @@ async function apply(db) {
       log(`vol ${v + 1} ${pid}: created ${book.id}`);
     } else log(`vol ${v + 1} ${pid}: adopting ${book.id}`);
     const h = await holdBook(db, book.id, { ...HOLD, detail: { text: T.cbeta, ndl_pid: pid } });
-    if (!['held', 'already_held'].includes(h.outcome)) throw new Error(`${pid}: hold ${h.outcome} — refusing to write pages`);
+    if (!['held', 'already_held'].includes(h.outcome)) {
+      // This job's own translation hold (cbeta-chan-translate-5566) keeps every lane off the book too.
+      const cur = await books.findOne({ id: book.id }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+      if (cur?.pipeline_auto?.hold?.reason !== TRANSLATE_HOLD) throw new Error(`${pid}: hold ${h.outcome} — refusing to write pages`);
+    }
 
     const existing = new Map((await pagesC.find({ book_id: book.id }, { projection: { page_number: 1, ocr: 1 } }).toArray()).map((p) => [p.page_number, p]));
     const toInsert = [];
@@ -459,7 +564,7 @@ function ocrFor(row, sha, ex, map, F, fit, p) {
     },
     alignment: {
       method: 'neighbour anchors: the page\'s boundaries are where the independent reads of the adjacent pages meet in the typed text (rules in scripts/lib/cbeta-fit.mjs)',
-      read_engine: READ_ENGINE.name, read_url: `${READ_ENGINE.url}${p.pid}`,
+      read_engine: READ_ENGINE.name, read_url: p.read_url || `${READ_ENGINE.url}${p.pid}`,
       identity: row.verify.identity, coverage: row.verify.coverage, control: row.verify.control, margin: row.verify.margin,
       span_chars: row.verify.span_chars, read_chars: row.verify.read_chars, boundary_votes: row.edges,
       second_read_engine: fit.edge_engine,
@@ -469,8 +574,91 @@ function ocrFor(row, sha, ex, map, F, fit, p) {
   };
 }
 
+/**
+ * Mode 1: write fitted text onto our own pages that have NO text, in books whose two by-eye pages
+ * passed (checked from the measured spans BEFORE anything is written — a held book may already be
+ * public). Existing OCR is never touched; its agreement with the fitted span is reported.
+ */
+async function applyHeld(db, fit, sha, ex, F, map) {
+  const pages = await sourcePages(db);
+  const pagesC = db.collection('pages');
+  const now = new Date();
+  const med = (xs) => { const t = [...xs].sort((a, b) => a - b); return t.length ? t[Math.floor(t.length / 2)] : null; };
+  for (const [v, bookId] of T.source.books.entries()) {
+    const vp = pages.filter((p) => p.vol === v);
+    const vr = fit.rows.filter((r) => r.vol === v);
+    const hashes = new Map(vr.filter((r) => r.written).map((r) => [String(r.n), r.content_hash]));
+    const ev = Object.entries(state.eyecheck[bookId] || {}).filter(([n, e]) => e.content_hash && hashes.get(n) === e.content_hash);
+    const agree = vr.filter((r) => r.existing_ocr && r.verify).map((r) => r.verify.identity);
+    const base = { book_id: bookId, vol: v + 1, mode: 'held', pages: vp.length, existing_ocr: vp.filter((p) => p.existing).length,
+      existing_fitted: vr.filter((r) => r.existing_ocr && r.written).length, existing_identity_median: med(agree),
+      writable: vr.filter((r) => r.written && !r.existing_ocr).length, rules: fit.rules.version };
+    if (ev.length < 2 || ev.some(([, e]) => e.verdict !== 'pass')) {
+      state.books[bookId] = { ...(state.books[bookId] || {}), ...base, awaiting: 'by-eye check of 2 measured pages' };
+      saveState();
+      log(`${bookId}: by-eye check not passed on the measured text (${ev.map(([n, e]) => `p${n}:${e.verdict}`).join(' ') || 'none'}) — nothing written`);
+      continue;
+    }
+    const h = await holdBook(db, bookId, { ...HOLD, detail: { text: T.cbeta, mode: 'held' } });
+    if (!['held', 'already_held'].includes(h.outcome)) { log(`${bookId}: hold ${h.outcome} — skipped`); continue; }
+    let written = 0, refitted = 0, withdrawn = 0, keptExisting = 0;
+    for (const p of vp) {
+      if (p.existing) continue;
+      const row = vr.find((r) => r.n === p.n);
+      const ocr = row?.written ? ocrFor(row, sha, ex, map, F, fit, p) : null;
+      const cur = await pagesC.findOne({ id: p.pageId }, { projection: { ocr: 1 } });
+      if (cur?.ocr?.data && cur.ocr.source !== TEXT_SOURCE) { keptExisting++; continue; }   // text arrived since the measure
+      if (isHumanEdited(cur?.ocr)) continue;
+      if (ocr && !cur?.ocr?.data) {
+        const u = await pagesC.updateOne({ id: p.pageId, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { $set: { ocr, updated_at: now } });
+        written += u.modifiedCount;
+      } else if (ocr && cur.ocr.pipeline === PIPELINE && cur.ocr.content_hash !== ocr.content_hash) {
+        await pagesC.updateOne({ id: p.pageId, 'ocr.pipeline': PIPELINE }, { $set: { ocr, updated_at: now } }); refitted++;
+      } else if (!ocr && cur?.ocr?.pipeline === PIPELINE) {
+        await pagesC.updateOne({ id: p.pageId, 'ocr.pipeline': PIPELINE }, { $unset: { ocr: '' }, $set: { updated_at: now } }); withdrawn++;
+      }
+    }
+    await recountBook(db, bookId, { reason: IMPORTER });
+    const nText = await pagesC.countDocuments({ book_id: bookId, 'ocr.source': TEXT_SOURCE });
+    state.books[bookId] = { ...(state.books[bookId] || {}), ...base, awaiting: null, written: nText, refused: vr.filter((r) => !r.written && !r.existing_ocr).length, kept_existing: keptExisting, refitted, withdrawn, at: now.toISOString() };
+    saveState();
+    log(`${bookId}: ${vp.length} pages; ${nText} with fitted text (+${written}, re-fitted ${refitted}, withdrawn ${withdrawn}); existing OCR on ${base.existing_ocr} pages, ${base.existing_fitted} of them fit (median identity ${base.existing_identity_median})`);
+  }
+}
+
+/** Held books: the by-eye pages are cut from the MEASURED fit, before anything is written. */
+async function eyecheckHeld(db) {
+  const fit = JSON.parse(fs.readFileSync(path.join(TDIR, 'fit.json'), 'utf8'));
+  const { ex, F, map } = await loadText();
+  const dir = path.join(TDIR, 'eyecheck');
+  fs.mkdirSync(dir, { recursive: true });
+  for (const [v, bookId] of T.source.books.entries()) {
+    const cand = fit.rows.filter((r) => r.vol === v && r.written && !r.existing_ocr);
+    if (cand.length < 2) { log(`${bookId}: only ${cand.length} writable pages`); continue; }
+    const ent = state.eyecheck[bookId] || {};
+    const hashNow = new Map(cand.map((r) => [String(r.n), r.content_hash]));
+    for (const n of Object.keys(ent)) if (ent[n].content_hash !== hashNow.get(n)) delete ent[n];
+    state.eyecheck[bookId] = ent;
+    if (Object.keys(ent).length >= 2) { log(`${bookId}: 2 pages already checked on their current text`); continue; }
+    const seed = parseInt(bookId.slice(-6), 16);
+    const picks = [cand[seed % Math.ceil(cand.length / 2)], cand[Math.ceil(cand.length / 2) + (seed % Math.floor(cand.length / 2))]]
+      .filter((r) => !ent[String(r.n)]).slice(0, 2 - Object.keys(ent).length);
+    for (const r of picks) {
+      const pg = await db.collection('pages').findOne({ id: r.page_id }, { projection: { photo: 1, archived_photo: 1 } });
+      const stem = path.join(dir, `${bookId}-p${r.n}`);
+      const url = pg.archived_photo || pg.photo;
+      if (!fs.existsSync(`${stem}.jpg`)) fs.writeFileSync(`${stem}.jpg`, Buffer.from(await (await fetchRetry(url)).arrayBuffer()));
+      fs.writeFileSync(`${stem}.txt`, spanText(ex.text, map, r.span[0], r.span[1], F));
+      ent[String(r.n)] = { pid: bookId, image: `${stem}.jpg`, content_hash: r.content_hash, verdict: null };
+      log(`${bookId} p${r.n}: ${stem}.jpg / .txt`);
+    }
+  }
+  saveState();
+}
+
 // ── by-eye check ───────────────────────────────────────────────────────────
 async function eyecheck(db) {
+  if (T.source.kind === 'held') return eyecheckHeld(db);
   const dir = path.join(TDIR, 'eyecheck');
   fs.mkdirSync(dir, { recursive: true });
   for (const [pid, b] of Object.entries(state.books)) {
@@ -520,7 +708,20 @@ async function release(db) {
     const cur = new Map((await db.collection('pages').find({ book_id: b.book_id, page_number: { $in: evAll.map(([n]) => Number(n)) } }, { projection: { page_number: 1, 'ocr.content_hash': 1 } }).toArray()).map((p) => [String(p.page_number), p.ocr?.content_hash]));
     const ev = evAll.filter(([n, e]) => e.content_hash && cur.get(n) === e.content_hash).map(([, e]) => e);
     if (ev.length < 2 || ev.some((e) => e.verdict !== 'pass')) { log(`${pid}: by-eye check not passed (${ev.map((e) => e.verdict).join(',')}) — stays hidden and held`); continue; }
-    const book = await db.collection('books').findOne({ id: b.book_id }, { projection: { pipeline_auto: 1 } });
+    const book = await db.collection('books').findOne({ id: b.book_id }, { projection: { pipeline_auto: 1, visible: 1, hidden_reason: 1 } });
+    if (b.mode === 'held') {
+      if (b.awaiting) { log(`${pid}: ${b.awaiting} — not released`); continue; }
+      // Our own books keep their pipeline position: the hold restores the status they held at.
+      if (isHeld(book) && book.pipeline_auto.hold.reason === HOLD.reason) {
+        const r = await releaseBook(db, b.book_id, { note: `CBETA fit written; by-eye check passed on 2 pages (#${ISSUE})`, source: HOLD.source });
+        log(`${pid}: release ${r.outcome} → ${r.to}`);
+      }
+      // Visibility of a book this job did not create is not this job's decision: it was hidden by
+      // another process (unprocessed, curation…), and only part of it now carries text.
+      b.published = book.visible === true ? 'already-public' : 'left-hidden'; b.released_at = new Date().toISOString(); saveState();
+      log(`${pid}: visibility unchanged (${b.published})`);
+      continue;
+    }
     if (isHeld(book) && book.pipeline_auto.hold.reason === HOLD.reason) {
       // ocr_complete, not the held-from status: the pages carry their text, and the OCR queue
       // (archive_complete) must not re-read the refused pages on the general dial.
@@ -586,7 +787,7 @@ async function report(db) {
 
 const COMMANDS = { measure, apply, eyecheck, verdict, release, translate, report };
 if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} --text <${Object.keys(TEXTS).join('|')}>`); process.exit(2); }
-if (['measure', 'verdict'].includes(cmd)) await COMMANDS[cmd]();
+if (cmd === 'verdict' || (cmd === 'measure' && T.source.kind !== 'held')) await COMMANDS[cmd]();
 else {
   if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI missing — run with node --env-file=/root/sourcelibrary/.env.production.local');
   const client = new MongoClient(process.env.MONGODB_URI);

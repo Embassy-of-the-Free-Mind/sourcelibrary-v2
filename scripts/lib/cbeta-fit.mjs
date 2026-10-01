@@ -248,6 +248,7 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    variant, or characters printed faintly that neither engine read); the column geometry places
  *    them (see `slack`), and the gap is recorded on the boundary (variant_gap).
  *  - v5: an edge column must also lie inside the text frame horizontally (margin labels refused).
+ *  - v6: between two anchored pages a boundary needs a vote from each side of the break (see fitBook).
  *  - v4 edge columns are chosen by GEOMETRY (`edgeColumn`): a column that starts at the frame top,
  *    however short — a paragraph's last line is a real edge column, a margin label is not.
  *
@@ -261,7 +262,7 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    short for the read (lengthRatio).
  */
 export const FIT_RULES = Object.freeze({
-  version: 5,
+  version: 6,
   anchorIdentity: 0.5, anchorMin: 40,
   minIdentity: 0.6, minCoverage: 0.6, minMargin: 0.3,
   lengthRatio: [0.6, 1.7],
@@ -444,6 +445,16 @@ export function fitBook(pages, F, idx, structural = [0, F.length], evidence = ne
     const struct = !A || !B ? nearStruct(at) : [];
     const votes = { last: last.own, first: first.own, last2: last.second, first2: first.second, structural: struct.length === 1 ? struct[0] : null };
     let position = decideVotes(Object.values(votes));
+    // v6: between two anchored pages the boundary must be seen from BOTH sides — at least one read
+    // of the earlier page's last column and one of the later page's first column. Two engines
+    // reading the same column agree with each other whatever that column is: on 新鐫碧巌集 the
+    // indented verse closing a page was not taken as its last column, both engines read the column
+    // before it, and their two votes outvoted the next page's start, so the verse moved pages.
+    if (position != null && A && B) {
+      const lastSide = [votes.last, votes.last2].includes(position);
+      const firstSide = [votes.first, votes.first2].includes(position);
+      if (!(lastSide && firstSide)) position = null;
+    }
     // Both engines agree where each column ends/begins, and a few typed characters sit between the
     // two columns: the print does not carry them (an edition variant — 帝意彌堅 is in the Taishō,
     // not on the Gozan block), so no column can claim them. They close the earlier page.

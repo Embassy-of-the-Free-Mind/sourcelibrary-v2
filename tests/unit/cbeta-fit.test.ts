@@ -100,6 +100,17 @@ describe('cbeta-fit fitBook + verifyPage (synthetic book)', () => {
   it('cuts every page on its true leaf boundary although both edge characters are misread', () => {
     expect(fit.pages.map((p) => p.span)).toEqual([[0, 60], [60, 120], [120, 180], [180, 240], [240, 300], [300, 360]]);
   });
+  it('refuses a boundary seen from one side only (two reads of the same column outvoting the other page)', () => {
+    // Page 2's real last column (an indented verse) is missing from its lines, so its "last column"
+    // ends 20 characters early, read identically by both engines; page 3's first column disagrees.
+    const p2 = pages[2];
+    const cut = { read: p2.read, lines: p2.lines.slice(0, 2) };
+    const ev = new Map([['2:last', p2.lines[1].f]]);
+    const f2 = fitBook([...pages.slice(0, 2), cut, ...pages.slice(3)], F, idx, [0, F.length], ev);
+    expect(f2.pages[2].span).toBeNull();
+    expect(f2.pages[3].span).toBeNull();
+  });
+
   it('verifies each page against wrong-page controls', () => {
     const spans = fit.pages.map((p) => p.span);
     const v = verifyPage(2, pages.map((p) => p.read), spans, F);
