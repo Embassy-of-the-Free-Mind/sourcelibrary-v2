@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
+import type { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { getSiteStats } from '@/lib/site-stats';
 import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 import Link from 'next/link';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
+import { CompletionSection } from '@/components/progress/CompletionCharts';
+import { LIBRARY_DASHBOARD_ID, type LibraryDashboard } from '@/lib/library-dashboard';
 import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -235,6 +238,34 @@ async function getLadderCounts(): Promise<{ readable: number; complete: number }
   }
 }
 
+/**
+ * Per-book completion from the nightly library snapshot
+ * (scripts/analytics/snapshot-library-dashboard.mjs → system_config.library_dashboard).
+ * One projected findOne, no aggregation on request. Null when the snapshot
+ * predates the completion fields, so the section is left out rather than
+ * drawn with zeros.
+ */
+async function getCompletion() {
+  try {
+    const doc = await (await getReadDb()).collection('system_config').findOne(
+      { _id: LIBRARY_DASHBOARD_ID as unknown as ObjectId },
+      { projection: { completion: 1, byCentury: 1, languagesAll: 1, 'totals.readableLive': 1, 'totals.live': 1 }, maxTimeMS: 5000 },
+    ) as Partial<LibraryDashboard> | null;
+    if (!doc?.completion?.books || !doc.languagesAll?.length || !doc.totals?.live?.books) return null;
+    return {
+      completion: doc.completion,
+      century: doc.byCentury ?? [],
+      languages: doc.languagesAll,
+      liveBooks: doc.totals.live.books,
+      livePages: doc.totals.live.pages,
+      liveTranslatedPages: doc.totals.live.translated,
+      readable: doc.totals.readableLive,
+    };
+  } catch {
+    return null;
+  }
+}
+
 // ── Components ────────────────────────────────────────────────────────
 
 function ProgressBar({ value, max, color = 'bg-amber-600' }: { value: number; max: number; color?: string }) {
@@ -274,7 +305,7 @@ function fmt(n: number): string {
 // ── Page ──────────────────────────────────────────────────────────────
 
 export default async function ProgressPage() {
-  const [data, live, siteStats, ladder] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats(), getLadderCounts()]);
+  const [data, live, siteStats, ladder, completion] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats(), getLadderCounts(), getCompletion()]);
   // One FT number site-wide (#3015): the get_sl_progress RPC re-derives the raw
   // is_first_translation flag, which drifts above the verified public count.
   // Always show the canonical homepage_stats figure instead.
@@ -310,6 +341,9 @@ export default async function ProgressPage() {
         <StatCard icon={Languages} label="Translated" value={`${data.pct_translated.toFixed(1)}%`} sub={`${fmt(data.total_translated)} editions`} />
         <StatCard icon={Globe2} label="In Source Library" value={fmt(data.total_in_sl)} sub="OCR&apos;d and translated" />
       </div>
+
+      {/* Same readable count as the ladder cards below, when the live count answered. */}
+      {completion && <CompletionSection {...completion} readable={ladder?.readable ?? completion.readable} />}
 
       {/* The opportunity */}
       <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
