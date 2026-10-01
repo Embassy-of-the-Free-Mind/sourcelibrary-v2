@@ -1,0 +1,17 @@
+# Merge drivers for append-mostly ledgers (#5436).
+#
+# `merge=union` keeps BOTH sides' lines on a conflicting hunk instead of stopping.
+# It applies to LOCAL merges and rebases only: GitHub's mergeability check and
+# merge button ignore .gitattributes, so a PR can still read CONFLICTING on
+# GitHub while `git rebase origin/main` resolves it cleanly here. The structural
+# fix for the hot ledgers is one file per entry (scripts/eval/experiments/) with
+# EXPERIMENTS.md generated on main; union is the belt for the files that stay
+# append-mostly.
+#
+# A row both sides EDITED is kept twice, adjacent — re-read the hunk after a rebase.
+scripts/eval/DECISIONS.md               merge=union
+scripts/eval/experiments/_series-*.md   merge=union
+# Invariant docs that sessions append incidents to; flagged by
+# scripts/audit/append-only-ledgers.mjs on 2026-10-01 (88% and 82% insertion-only).
+.claude/docs/invariants/measurement-instruments.md  merge=union
+.claude/docs/invariants/language-fields.md          merge=union

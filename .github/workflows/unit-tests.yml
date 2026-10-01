@@ -35,6 +35,16 @@ jobs:
       - name: Lint plain-node scripts (no-undef)
         run: npx eslint -c eslint.scripts.config.mjs "scripts/**/*.mjs" --quiet
 
+      # scripts/eval/EXPERIMENTS.md and INDEX.md are generated on main after merge
+      # (eval-ledgers-regenerate.yml, #5436). A PR that hand-edits one re-creates
+      # the append-to-one-tail conflict that blocked 6 of 11 PRs on 2026-10-01; a
+      # PR that regenerates one correctly is allowed but told it was unnecessary.
+      - name: Generated eval ledgers untouched
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/audit/append-only-ledgers.mjs --pr ${{ github.event.pull_request.number }}
+
       # Static source check — no network, no secrets — so it gates PRs here
       # rather than running nightly. Vercel Blob is retired in favour of R2
       # (#3645); this refuses new hardcoded Blob URLs (plain OR percent-encoded)

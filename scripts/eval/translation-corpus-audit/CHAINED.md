@@ -58,12 +58,13 @@ the branch (`eval/tca-chained-<DATE>`); call it `$BRANCH` and the date `$DATE`. 
    - Exit 3 (controls fail): no `--store`, no EXPERIMENTS row; the run is not reported as a rate.
 6. Pick five pages for a by-eye check: the three lowest-fidelity main items and two seam items, with their `url`
    from the manifest. List them in the PR body.
-7. Add one entry to `scripts/eval/EXPERIMENTS.md` (newest first, under a heading
-   `## <DATE> — Chained Batch lane: random-sample fidelity of pages the lane wrote (#4681)`): n books, n seeded /
+7. Add one entry as a NEW file `scripts/eval/experiments/<DATE>-chained-batch-lane-fidelity-4681.md` (never edit
+   `EXPERIMENTS.md` itself — main regenerates it, #5436), beginning with the heading
+   `## <DATE> · Chained Batch lane: random-sample fidelity of pages the lane wrote (#4681)`: n books, n seeded /
    n seam, fidelity ≥ 4 with CI, any major defect with CI, omission, invention, the seam split, controls as k/n,
    `measure: judged`, and the two comparison rates from the Design table with the sentence that says whether the
    seam stratum is inside, below or above the 38% device-break rate.
-8. Commit `$DIR` (verdicts, report, seam-split), the store file and `EXPERIMENTS.md` with `git commit -s`. Push to
+8. Commit `$DIR` (verdicts, report, seam-split), the store file and the new experiments file with `git commit -s`. Push to
    `$BRANCH`; if refused, to `claude/tca-chained-$DATE`.
 9. Open a PR to `main`. Title when the gate passed:
    `eval(translation-corpus-audit): chained lane <DATE> — ≥4 <est>% (<ci>), major <est>% (<ci>), seam major <x>%, n=<books> (#4681)`;
