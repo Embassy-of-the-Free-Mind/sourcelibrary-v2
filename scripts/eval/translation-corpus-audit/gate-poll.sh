@@ -59,6 +59,26 @@ for d in "$REPO"/scripts/eval/results/speedtest-a-gate/w-*/; do
   append_ops "$row" "$w" "$verdict" && touch "$local_dir/.applied"
 done
 
+# Trend WARN (requested by sourcelibrary-c0, 2026-10-01): two judged windows running above the 6.9% baseline
+# (chained-lane sample 2026-10-01, PR #5423) by more than this judge's A/A floor (2.8 pp, EXPERIMENTS.md 2026-09-30
+# restraint A/B) → one #4681 comment per window. Not an ABORT: the 30% bound in gate-row.mjs still decides that.
+BASE=0.069; FLOOR=0.028
+trend=$(node -e '
+const fs=require("fs"),p=require("path"),d=process.argv[1];
+const rows=fs.readdirSync(d).filter(w=>w.startsWith("w-")&&fs.existsSync(p.join(d,w,"gate-row.json"))).sort()
+  .map(w=>({w,...JSON.parse(fs.readFileSync(p.join(d,w,"gate-row.json"),"utf8"))})).filter(r=>r.rate!=null&&r.verdict!=="NOT_JUDGED");
+const [a,b]=rows.slice(-2), lim=+process.argv[2]+ +process.argv[3];
+if(a&&b&&a.rate>lim&&b.rate>lim) console.log(`${b.w}\t${a.w} ${(a.rate*100).toFixed(1)}% (${a.defective}/${a.n}), ${b.w} ${(b.rate*100).toFixed(1)}% (${b.defective}/${b.n})`);
+' "$REPO/scripts/eval/results/speedtest-a-gate" "$BASE" "$FLOOR")
+if [ -n "$trend" ]; then
+  tw=${trend%%$'\t'*}; detail=${trend#*$'\t'}
+  if [ ! -e "$ROOT/gate/$tw/.trend-warned" ]; then
+    mkdir -p "$ROOT/gate/$tw"; touch "$ROOT/gate/$tw/.trend-warned"
+    say "TREND WARN $detail"
+    comment "WARN (trend, not ABORT) — speed test A quality gate: two windows running above the chained-lane baseline of 6.9% major defects (PR #5423) by more than the judge's A/A floor (2.8 pp): $detail. The 30% ABORT bound holds. Note sampling noise at n≈55 is ±~7 pp (2 SE at 6.9%); the final report should explain the gap (seam share, longer books, the #5426 fix landing)."
+  fi
+fi
+
 # Silence is not a verdict: a window drawn 3 h ago with no row means the routine did not run.
 for m in "$ROOT"/gate/w-*/manifest.jsonl; do
   [ -e "$m" ] || continue
