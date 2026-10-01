@@ -44,6 +44,7 @@
  *   ... clear           clear needs_reocr on rewritten pages
  *   ... echofix         withhold block siblings shifted by an echo refusal (#5435) and re-enrol
  *   ... residual --from <audit.jsonl> [--model flash]   re-queue the pages the audit still calls stranded
+ *   ... gaps            re-queue cleared books whose run (≤300 pages) left rewritten pages untranslated
  *   ... release         release every book this lane held (after the audit passes)
  *   ... status
  *   ... run --wave 25 --max-open 40 --interval 600 [--slice 120]   loop check→withhold→enrol→runs→clear→ocr
@@ -446,6 +447,25 @@ async function enrol(db) {
   log(`enrol: ${enrolled} enrolled, ${open} open`);
 }
 
+/** Rewritten stranded pages of a book that still have no translation (a chained run covers at most MAX_PAGES_PER_RUN = 300). */
+async function untranslatedLeft(db, s, b) {
+  return db.collection('pages').countDocuments({ id: { $in: b.page_ids }, 'ocr.updated_at': { $gte: new Date(s.created_at) }, 'ocr.data': { $exists: true, $nin: [null, ''] }, page_type: { $nin: ['blank'] },
+    $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': '' }, { 'translation.data': null }] });
+}
+
+/** Cleared non-English books that still carry untranslated rewritten pages go back to `withheld` for another run. */
+async function gaps(db) {
+  const s = loadState();
+  let books = 0, pages = 0;
+  for (const b of s.books.filter((x) => x.phase === 'cleared' && !x.english && !x.foreign_hold && x.run_id && (x.tr_rounds || 1) < 6)) {
+    const left = await untranslatedLeft(db, s, b);
+    if (!left) continue;
+    b.gap_prev_phase = b.phase; b.phase = 'withheld'; b.tr_rounds = (b.tr_rounds || 1) + 1; b.gap_pages = left; books++; pages += left;
+  }
+  saveState(s);
+  log(`gaps: ${books} books / ${pages} untranslated pages re-queued for another chained run`);
+}
+
 async function runs(db) {
   const s = loadState();
   const mine = s.books.filter((b) => b.phase === 'tr_enrolled');
@@ -459,7 +479,12 @@ async function runs(db) {
     if (!r) continue;
     b.tr_progress = `${r.cursor}/${r.page_count}`; b.tr_spent_est = r.spent_est_usd;
     if (!TERMINAL_PHASES.includes(r.phase)) continue;
-    b.phase = r.phase === 'complete' ? 'tr_done' : `tr_${r.phase}`; b.tr_counts = r.counts; b.tr_parked_reason = r.parked_reason || null; b.tr_done_at = new Date().toISOString();
+    b.tr_counts = r.counts; b.tr_parked_reason = r.parked_reason || null; b.tr_done_at = new Date().toISOString();
+    // A run covers ≤ 300 pages: a bigger book needs another run for the rest (bounded, so a page the
+    // health gate refuses every time cannot loop forever).
+    const left = r.phase === 'complete' ? await untranslatedLeft(db, s, b) : 0;
+    if (left > 0 && (r.counts?.written || 0) > 0 && (b.tr_rounds || 1) < 6) { b.phase = 'withheld'; b.tr_rounds = (b.tr_rounds || 1) + 1; b.gap_pages = left; log(`  ${b.id}: run complete, ${left} pages still untranslated → another run (round ${b.tr_rounds})`); }
+    else b.phase = r.phase === 'complete' ? 'tr_done' : `tr_${r.phase}`;
     finished++;
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: `chained-${r.phase}`, detail: { run: b.run_id, counts: r.counts, spent_est_usd: r.spent_est_usd, parked_reason: r.parked_reason || null } });
   }
@@ -617,7 +642,7 @@ async function run(db) {
   }
 }
 
-const COMMANDS = { init, hold, envelope, ocr, reconcile, check, echofix, residual, withhold, enrol, runs, clear, release, status, run };
+const COMMANDS = { init, hold, envelope, ocr, reconcile, check, echofix, residual, gaps, withhold, enrol, runs, clear, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   // noTimeout: a 50-book OCR submit runs for an hour; the 300 s script timeout force-exited the
