@@ -1,5 +1,4 @@
 import { getReadDb } from '@/lib/mongodb';
-import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout, coverOverride, cardImageCandidates } from '@/lib/collections-utils';
@@ -11,6 +10,7 @@ import { type HomeLang } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
 import { localizedEditionFilterIndexed } from '@/lib/localized';
 import type { Locale } from '@/lib/locale-path';
+import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -523,14 +523,13 @@ export interface HomeCounts {
   illustrationCount: number;
 }
 
-// Last refreshed from production 2026-05-26. Only used if Mongo + Supabase are both unreachable.
-const FALLBACK_COUNTS: HomeCounts = { totalBooks: 13869, readableInEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 105, artworkCount: 13743, illustrationCount: 122550 };
+// The shared, dated fallback (site-stats.ts) — only used if Mongo is unreachable.
+const FALLBACK_COUNTS: HomeCounts = SITE_STATS_FALLBACK;
 
 async function getBookCounts(): Promise<HomeCounts> {
-  // 1. MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;
+  // MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;
   // also writable on demand via scripts/maintenance/update-homepage-stats.mjs).
-  // Preferred over Supabase because it counts the `readable_in_english` view
-  // (books.translation_state), which books_catalog does not mirror yet (#3402 step 4).
+  // It counts the `readable_in_english` view (books.translation_state).
   try {
     const db = await getReadDb();
     const cached = await db.collection('system_config').findOne(
@@ -549,43 +548,12 @@ async function getBookCounts(): Promise<HomeCounts> {
         illustrationCount: cached.illustrationCount ?? FALLBACK_COUNTS.illustrationCount,
       };
     }
-  } catch { /* DB unreachable — try Supabase */ }
+  } catch { /* DB unreachable — use the dated fallback */ }
 
-  // 2. Supabase fallback (fast but uses pages_translated > 0, not the readable_in_english view)
-  try {
-    const [totalRes, firstTransRes] = await Promise.all([
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).gt('pages_translated', 0),
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).eq('is_first_translation', true).gt('pages_translated', 0),
-    ]);
-
-    if (totalRes.count && totalRes.count > 0) {
-      let authorCount = FALLBACK_COUNTS.authorCount;
-      let languageCount = FALLBACK_COUNTS.languageCount;
-      try {
-        const db = await getReadDb();
-        const cached = await db.collection('system_config').findOne(
-          { _id: 'homepage_stats' } as any,
-          { maxTimeMS: 2000 }
-        );
-        if (cached?.authorCount) authorCount = cached.authorCount;
-        if (cached?.languageCount) languageCount = cached.languageCount;
-      } catch { /* MongoDB unavailable — use fallback */ }
-
-      return {
-        totalBooks: totalRes.count,
-        readableInEnglish: totalRes.count,
-        firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
-        authorCount,
-        languageCount,
-        artworkCount: FALLBACK_COUNTS.artworkCount,
-        illustrationCount: FALLBACK_COUNTS.illustrationCount,
-      };
-    }
-  } catch { /* Supabase unreachable */ }
-
-  return FALLBACK_COUNTS;
+  // No Supabase fallback: books_catalog has no translation rung yet (#5288), and
+  // the old one counted `pages_translated > 0` books as both the library total
+  // and the readable count — a third definition of "readable" (#5501).
+  return { ...FALLBACK_COUNTS };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
