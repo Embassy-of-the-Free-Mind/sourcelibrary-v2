@@ -66,6 +66,7 @@ import {
   BLOCK_TAGS,
 } from './translate-core.mjs';
 import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
@@ -117,7 +118,7 @@ const COLLAPSE_BODY_CAP = 300;
 const wrapperRe = new RegExp(`<(${BLOCK_TAGS.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
 export function strippedBodyLen(text) {
   if (!text) return 0;
-  return String(text).replace(wrapperRe, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  return stripMarkupTags(String(text).replace(wrapperRe, ' ')).replace(/\s+/g, ' ').trim().length;
 }
 export function looksCollapsed(ocrData, text) {
   return (ocrData || '').length > COLLAPSE_OCR_FLOOR && strippedBodyLen(text) < COLLAPSE_BODY_CAP;

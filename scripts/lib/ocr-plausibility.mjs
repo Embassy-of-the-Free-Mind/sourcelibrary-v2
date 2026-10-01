@@ -37,13 +37,14 @@
  * class does carry is the engine's own per-word confidence (`x_wconf` in the Archive's hOCR file),
  * which this helper does not read; see #4784.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 const WORD = /\p{L}+/gu;
 
 /** In-word letter trigrams of a text (lowercased, NFC; tags stripped). */
 export function letterTrigrams(text) {
   const out = [];
-  const words = String(text || '').replace(/<[^>]+>/g, ' ').toLowerCase().normalize('NFC').match(WORD) || [];
+  const words = stripMarkupTags(text).toLowerCase().normalize('NFC').match(WORD) || [];
   for (const w of words) if (w.length >= 3) for (let i = 0; i + 3 <= w.length; i++) out.push(w.slice(i, i + 3));
   return out;
 }
