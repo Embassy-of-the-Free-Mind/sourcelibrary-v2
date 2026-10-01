@@ -27,6 +27,7 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { foldGreekWord } from './build-greek-corpus.mjs';
+import { wordWindow } from './lib/edition-window.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -197,19 +198,7 @@ function loadCorpus() {
 // over-long window charges every engine for text the page never printed; with the trim on all
 // bigrams, Greek windows ran to 1.7× the probe because και/δε/τα bigrams occur everywhere in the
 // e-text around the page (measured on the sealed greek stratum, 2026-09-19).
-function wordWindow(words, probeWords, contentMin = 0) {
-  const P = new Set(); for (let i = 0; i + 1 < probeWords.length; i++) P.add(probeWords[i] + ' ' + probeWords[i + 1]);
-  const L = Math.max(40, Math.round(probeWords.length * 1.3));
-  const votes = new Float64Array(words.length + 1);
-  for (let i = 0; i + 1 < words.length; i++) if (P.has(words[i] + ' ' + words[i + 1])) votes[i] = 1;
-  let best = 0, at = 0, run = 0;
-  for (let i = 0; i < votes.length; i++) { run += votes[i]; if (i >= L) run -= votes[i - L]; if (run > best) { best = run; at = Math.max(0, i - L + 1); } }
-  const s = Math.max(0, at - Math.round(L * 0.15)), e = Math.min(words.length, at + L + Math.round(L * 0.15));
-  const content = i => words[i].length >= contentMin && words[i + 1].length >= contentMin;
-  let first = -1, last = -1; for (let i = s; i + 1 < e; i++) if (P.has(words[i] + ' ' + words[i + 1]) && content(i)) { if (first < 0) first = i; last = i + 2; }
-  const from = first < 0 ? s : Math.max(s, first - 3), to = first < 0 ? e : Math.min(e, last + 3);
-  return { window: words.slice(from, to).join(' '), from, to, overlap: P.size ? Math.min(1, best / P.size) : 0, shared: best };
-}
+// wordWindow lives in lib/edition-window.mjs (shared with build-edition-refs.mjs, #5488).
 
 // ── Greek (greek, greek-ext; #4925 step 2, #4744): local First1KGreek + Perseus corpus flattened by
 // build-greek-corpus.mjs (<id>.txt accented, <id>.fold.txt diacritic-folded), then el.wikisource ──
