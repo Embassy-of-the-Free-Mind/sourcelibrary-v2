@@ -22,6 +22,7 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
+import { stemmedQueryRegex } from '@/lib/search/word-forms';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -306,9 +307,10 @@ export async function GET(request: NextRequest) {
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
-      // Collection search: match collection names/descriptions (~300 docs, fast)
+      // Collection search: match collection names/descriptions (~300 docs, fast).
+      // Stemmed so "botanical" finds the Botany collection (#5517).
       withTimeout(
-        searchCollections(db, queryRegex, matchQuery).catch(() => emptyCollections),
+        searchCollections(db, stemmedQueryRegex(matchQuery), matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);
