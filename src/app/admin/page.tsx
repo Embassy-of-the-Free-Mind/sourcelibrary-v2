@@ -9,10 +9,8 @@ import {
   readHomepageStats, readLibraryDashboard, readMetricsHistory, readMetricsSnapshot,
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
-import {
-  Bars, HBars, Legend, LineChart, Panel, PipelineCumulative, RAMP, SERIES,
-  dayLabel, fmtFull, fmtK, fmtUsd, monthLabel,
-} from './DashboardCharts';
+import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
+import { RAMP, SERIES, dayLabel, fmtFull, fmtK, fmtUsd, monthLabel } from './dashboard-format';
 
 /**
  * /admin — the whole library on one page (#3943, replaces the 2026-05 GitHub-dark
@@ -180,7 +178,7 @@ export default async function AdminDashboard() {
             </Panel>
             <div className="md:col-span-full min-w-0">
               <Panel title="Books added to the live library, by month" note="By the month each record was created. Most of the June 2026 imports still wait for OCR (see “What’s left”).">
-                <Bars labels={L.addedByMonth.map(m => monthLabel(m.month))} series={[{ name: 'Books', data: L.addedByMonth.map(m => m.books) }]} height={200} ariaLabel="Live books by month of creation" />
+                <Bars labels={L.addedByMonth.map(m => monthLabel(m.month))} series={[{ name: 'Books', data: L.addedByMonth.map(m => m.books) }]} height={200} w={1100} ariaLabel="Live books by month of creation" />
               </Panel>
             </div>
           </Grid2>
@@ -220,7 +218,7 @@ export default async function AdminDashboard() {
             <div className="md:col-span-full min-w-0">
               <Panel title="Monthly cost by vendor" note={`Report generated ${new Date(spend.generated).toISOString().slice(0, 10)}. Not counted: ${spend.monthly.excluded.length} items (v0 seats, GitHub, the other projects sharing the Supabase and Atlas organisations).`}>
                 <Legend names={spend.monthly.vendors} />
-                <Bars labels={spend.monthly.months.map(m => monthLabel(m.month))} series={spend.monthly.vendors.map(v => ({ name: v, data: spend!.monthly.months.map(m => m.vendors[v]?.v ?? 0) }))} format={n => fmtUsd(n)} valueFormat={n => '$' + Math.round(n).toLocaleString('en-US')} ariaLabel="Monthly spend by vendor" />
+                <Bars labels={spend.monthly.months.map(m => monthLabel(m.month))} series={spend.monthly.vendors.map(v => ({ name: v, data: spend!.monthly.months.map(m => m.vendors[v]?.v ?? 0) }))} unit="usd" w={1100} ariaLabel="Monthly spend by vendor" />
               </Panel>
             </div>
             {spend.output && (
@@ -232,7 +230,7 @@ export default async function AdminDashboard() {
             {L && L.gemini.length > 0 && (
               <Panel title="Model spend per day, by job" note="Metered at the call (gemini_usage_daily), last 90 days, list price before batch discounts and tax. Goes quiet when the pipeline is paused.">
                 <Legend names={['OCR', 'Translation', 'Index, summaries, chapters', 'Other']} colors={[SERIES[0], SERIES[1], SERIES[6], SERIES[4]]} />
-                <Bars labels={L.gemini.map(d => dayLabel(d.day))} series={[{ name: 'OCR', color: SERIES[0], data: L.gemini.map(d => d.ocr) }, { name: 'Translation', color: SERIES[1], data: L.gemini.map(d => d.translation) }, { name: 'Index, summaries, chapters', color: SERIES[6], data: L.gemini.map(d => d.enrich) }, { name: 'Other', color: SERIES[4], data: L.gemini.map(d => d.other) }]} format={n => fmtUsd(n)} valueFormat={n => '$' + n.toFixed(2)} ariaLabel="Model spend per day by job" />
+                <Bars labels={L.gemini.map(d => dayLabel(d.day))} series={[{ name: 'OCR', color: SERIES[0], data: L.gemini.map(d => d.ocr) }, { name: 'Translation', color: SERIES[1], data: L.gemini.map(d => d.translation) }, { name: 'Index, summaries, chapters', color: SERIES[6], data: L.gemini.map(d => d.enrich) }, { name: 'Other', color: SERIES[4], data: L.gemini.map(d => d.other) }]} unit="usd2" ariaLabel="Model spend per day by job" />
               </Panel>
             )}
           </Grid2>
@@ -270,10 +268,10 @@ export default async function AdminDashboard() {
               <Bars labels={metrics.series.signupsByDay.slice(0, -1).map(d => dayLabel(d.date))} series={[{ name: 'New accounts', data: metrics.series.signupsByDay.slice(0, -1).map(d => d.n) }]} height={200} ariaLabel="New accounts per day" />
             </Panel>
             <Panel title="What people search for" note={`${fmtFull(metrics.search.human)} human searches in 30 days, ${fmtFull(metrics.search.zeroResult)} with no result. Zero-result queries are mostly truncated typeahead; the named works are acquisition leads.`}>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm min-w-0">
                 {[['Top queries', metrics.search.topQueries.slice(0, 10)], ['Found nothing', metrics.search.zeroQueries.slice(0, 10)]].map(([t, rows]) => (
-                  <table key={t as string} className="min-w-0"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">{t as string}</th><th className="text-right py-1 font-medium">n</th></tr></thead>
-                    <tbody>{(rows as { query: string; count: number }[]).map(q => <tr key={q.query} className="border-t border-stone-100"><td className="py-0.5 pr-2 truncate max-w-[220px]">{q.query}</td><td className="py-0.5 text-right tabular-nums">{q.count}</td></tr>)}</tbody></table>
+                  <table key={t as string} className="min-w-0 w-full table-fixed"><thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 font-medium">{t as string}</th><th className="text-right py-1 font-medium">n</th></tr></thead>
+                    <tbody>{(rows as { query: string; count: number }[]).map(q => <tr key={q.query} className="border-t border-stone-100"><td className="py-0.5 pr-2"><span className="block truncate">{q.query}</span></td><td className="py-0.5 text-right tabular-nums w-10">{q.count}</td></tr>)}</tbody></table>
                 ))}
               </div>
             </Panel>
@@ -314,13 +312,13 @@ export default async function AdminDashboard() {
         <div className="rounded border border-stone-200 bg-white p-4">
           <dl className="grid gap-x-5 gap-y-2 text-sm text-stone-700" style={{ gridTemplateColumns: 'minmax(130px, 190px) 1fr' }}>
             {([
-              ['Live book', <><code className="font-mono text-xs bg-stone-100 px-1 rounded">visible: true</code> and at least one page image: the public filter every site surface uses. Artworks are counted separately.</>],
-              ['Readable in English', <>The translation ladder’s <code className="font-mono text-xs bg-stone-100 px-1 rounded">readable</code> and <code className="font-mono text-xs bg-stone-100 px-1 rounded">complete</code> rungs (90%+ of translatable pages translated, text itself 90%+ transcribed) plus English originals at transcribed or above. One definition for the board, the card and the spend page (#3402); the homepage’s older rule counts preview-only books and is being retired.</>],
-              ['Transcribed, translated', <>Sums of the per-book counters <code className="font-mono text-xs bg-stone-100 px-1 rounded">pages_ocr</code> and <code className="font-mono text-xs bg-stone-100 px-1 rounded">pages_translated</code>. A blank leaf never counts as translated (#3747).</>],
+              ['Live book', <><code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">visible: true</code> and at least one page image: the public filter every site surface uses. Artworks are counted separately.</>],
+              ['Readable in English', <>The translation ladder’s <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">readable</code> and <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">complete</code> rungs (90%+ of translatable pages translated, text itself 90%+ transcribed) plus English originals at transcribed or above. One definition for the board, the card and the spend page (#3402); the homepage’s older rule counts preview-only books and is being retired.</>],
+              ['Transcribed, translated', <>Sums of the per-book counters <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">pages_ocr</code> and <code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">pages_translated</code>. A blank leaf never counts as translated (#3747).</>],
               ['Next step', <>The draft rule from #5469, recomputed read-only every night: what each book needs next given its counters, regardless of the status label it carries.</>],
               ['Spend', <>The private spend report the ops repo pushes (vendor invoices, Google Cloud billing export, Atlas CLI). Shown only to the spend allow-list; people and hours never appear here.</>],
               ['Readers', <>The daily metrics snapshot (05:45 UTC) over first-party page-view logs. Sessions are IP plus browser, so a person on two devices is two readers. Bots are filtered by user agent and pace.</>],
-              ['Freshness', <>Breakdowns and the pipeline series: daily at 05:55 UTC on Hetzner (<code className="font-mono text-xs bg-stone-100 px-1 rounded">scripts/analytics/snapshot-library-dashboard.mjs</code>). Totals and enrichment: hourly (<code className="font-mono text-xs bg-stone-100 px-1 rounded">/api/cron/dashboard-snapshot</code>). Nothing on this page is computed when you load it.</>],
+              ['Freshness', <>Breakdowns and the pipeline series: daily at 05:55 UTC on Hetzner (<code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">scripts/analytics/snapshot-library-dashboard.mjs</code>). Totals and enrichment: hourly (<code className="font-mono text-xs bg-stone-100 px-1 rounded break-all">/api/cron/dashboard-snapshot</code>). Nothing on this page is computed when you load it.</>],
             ] as [string, ReactNode][]).map(([k, v]) => <div key={k} className="contents"><dt className="font-medium text-stone-900">{k}</dt><dd className="min-w-0 max-w-3xl">{v}</dd></div>)}
           </dl>
         </div>

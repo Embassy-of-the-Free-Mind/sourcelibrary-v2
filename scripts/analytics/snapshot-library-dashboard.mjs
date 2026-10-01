@@ -123,7 +123,9 @@ await withMongo(async (db) => {
   lap('next step');
 
   // Pipeline history: last snapshot of each day since the record began (2026-02-19).
+  // The hetzner-worker source writes snapshots with every counter at 0 (~30K rows); they only carry active_batch.
   const pipelineDays = (await db.collection('pipeline_snapshots').aggregate([
+    { $match: { 'pages.total': { $gt: 0 } } },
     { $sort: { timestamp: 1 } },
     { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: "$timestamp" } }, books: { $last: '$books' }, pages: { $last: '$pages' }, funnel: { $last: '$funnel' } } },
     { $sort: { _id: 1 } },

@@ -11,17 +11,12 @@
  */
 import { useMemo, useState, type ReactNode } from 'react';
 
-export const SERIES = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#4a3aa7', '#e34948'];
-/** Blue ordinal ramp, light to dark, for ordered categories (ladder rungs, pages at each state). */
-export const RAMP = ['#cde2fb', '#9ec5f4', '#6da7ec', '#3987e5', '#256abf', '#184f95'];
+import { SERIES, fmtFull, fmtK, fmtUsd } from './dashboard-format';
 
-export const fmtK = (n: number | null | undefined) =>
-  n == null ? '—' : Math.abs(n) >= 1e6 ? (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M' : Math.abs(n) >= 1000 ? (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K' : String(Math.round(n));
-export const fmtFull = (n: number | null | undefined) => n == null ? '—' : Math.round(n).toLocaleString('en-US');
-export const fmtUsd = (n: number | null | undefined) => n == null ? '—' : n >= 1000 ? '$' + (n / 1000).toFixed(1) + 'K' : '$' + Math.round(n);
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-export const dayLabel = (d: string) => `${+d.slice(8, 10)} ${MONTHS[+d.slice(5, 7) - 1]}`;
-export const monthLabel = (m: string) => `${MONTHS[+m.slice(5, 7) - 1]} ’${m.slice(2, 4)}`;
+export type Unit = 'count' | 'usd' | 'usd2';
+const axisFmt = (u: Unit) => (u === 'count' ? fmtK : fmtUsd);
+const valueFmt = (u: Unit) => (u === 'count' ? fmtFull : u === 'usd' ? (n: number) => '$' + Math.round(n).toLocaleString('en-US') : (n: number) => '$' + n.toFixed(2));
+export { SERIES, RAMP } from './dashboard-format';
 
 function niceMax(v: number) {
   if (v <= 0) return 1;
@@ -43,27 +38,30 @@ export function Legend({ names, colors }: { names: string[]; colors?: string[] }
   );
 }
 
-const W = 720, H = 260, PAD = { l: 44, r: 8, t: 10, b: 24 };
+const H = 260, PAD = { l: 44, r: 8, t: 10, b: 24 };
+/** viewBox width: match the rendered width so 10px axis text stays 10px (560 for a half panel, 1100 for a full one). */
 
 export interface LineSeries { name: string; data: (number | null)[]; color?: string; fill?: boolean }
 
 /** Multi-series line chart on one y axis. `labels` are x positions (one per index); hover shows every series at that index. */
-export function LineChart({ labels, series, format = fmtK, height = H, log = false, ariaLabel }: {
-  labels: string[]; series: LineSeries[]; format?: (n: number | null) => string; height?: number; log?: boolean; ariaLabel: string;
+export function LineChart({ labels, series, unit = 'count', height = H, log = false, ariaLabel, w: W = 560 }: {
+  labels: string[]; series: LineSeries[]; unit?: Unit; height?: number; log?: boolean; ariaLabel: string; w?: number;
 }) {
   const [hi, setHi] = useState<number | null>(null);
+  const format = axisFmt(unit), vf = valueFmt(unit);
   const n = labels.length;
   const iw = W - PAD.l - PAD.r, ih = height - PAD.t - PAD.b;
   const all = series.flatMap(s => s.data.filter((v): v is number => v != null));
   const max = niceMax(Math.max(1, ...all));
+  const minV = Math.min(0, ...all), nmin = minV < 0 ? -niceMax(-minV) : 0; // negative values (pages leaving a count) get their own band below zero
   const minLog = Math.max(1, Math.min(...all.filter(v => v > 0)));
   const y = (v: number) => {
     if (log) { const lo = Math.log10(minLog), hiV = Math.log10(max); return PAD.t + ih - (ih * (Math.log10(Math.max(v, minLog)) - lo)) / Math.max(1e-9, hiV - lo); }
-    return PAD.t + ih - (ih * v) / max;
+    return PAD.t + ih - (ih * (v - nmin)) / (max - nmin);
   };
   const x = (i: number) => PAD.l + (n <= 1 ? iw / 2 : (iw * i) / (n - 1));
-  const ticks = log ? [minLog, Math.sqrt(minLog * max), max] : [0, max / 4, max / 2, (3 * max) / 4, max];
-  const xTicks = useMemo(() => { const step = Math.max(1, Math.ceil(n / 7)); return labels.map((l, i) => (i % step === 0 ? i : -1)).filter(i => i >= 0); }, [labels, n]);
+  const ticks = log ? [minLog, Math.sqrt(minLog * max), max] : nmin < 0 ? [nmin, nmin / 2, 0, max / 2, max] : [0, max / 4, max / 2, (3 * max) / 4, max];
+  const xTicks = useMemo(() => { const step = Math.max(1, Math.ceil(n / Math.max(4, Math.floor(W / 100)))); return labels.map((l, i) => (i % step === 0 ? i : -1)).filter(i => i >= 0); }, [labels, n, W]);
   const paths = series.map(s => {
     let d = '', open = false;
     s.data.forEach((v, i) => { if (v == null || (log && v <= 0)) { open = false; return; } d += `${open ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)} `; open = true; });
@@ -86,7 +84,7 @@ export function LineChart({ labels, series, format = fmtK, height = H, log = fal
         ))}
         {xTicks.map(i => <text key={i} x={x(i)} y={height - 8} fontSize={10} textAnchor="middle" fill="#78716c">{labels[i]}</text>)}
         {series.map((s, si) => s.fill && (
-          <path key={'f' + si} d={paths[si] ? `${paths[si]}L${x(s.data.length - 1).toFixed(1)} ${y(0)} L${x(0)} ${y(0)} Z` : ''} fill={s.color ?? SERIES[si]} opacity={0.1} />
+          <path key={'f' + si} d={paths[si] ? `${paths[si]}L${x(s.data.length - 1).toFixed(1)} ${y(Math.max(0, nmin))} L${x(0)} ${y(Math.max(0, nmin))} Z` : ''} fill={s.color ?? SERIES[si]} opacity={0.1} />
         ))}
         {series.map((s, si) => <path key={si} d={paths[si]} fill="none" stroke={s.color ?? SERIES[si]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />)}
         {hi != null && (
@@ -99,7 +97,7 @@ export function LineChart({ labels, series, format = fmtK, height = H, log = fal
       {hi != null && (
         <div className="pointer-events-none absolute top-1 rounded border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800 shadow-sm" style={{ left: `${Math.min(80, Math.max(2, (x(hi) / W) * 100))}%`, transform: x(hi) > W * 0.7 ? 'translateX(-105%)' : 'none' }}>
           <div className="font-medium">{labels[hi]}</div>
-          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '—' : fmtFull(s.data[hi])}</div>)}
+          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '—' : vf(s.data[hi] as number)}</div>)}
         </div>
       )}
     </div>
@@ -109,17 +107,18 @@ export function LineChart({ labels, series, format = fmtK, height = H, log = fal
 export interface BarSeries { name: string; data: number[]; color?: string }
 
 /** Vertical bars; several series stack. Hover shows the column's values. */
-export function Bars({ labels, series, format = fmtK, height = H, ariaLabel, valueFormat }: {
-  labels: string[]; series: BarSeries[]; format?: (n: number | null) => string; height?: number; ariaLabel: string; valueFormat?: (n: number) => string;
+export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w: W = 560 }: {
+  labels: string[]; series: BarSeries[]; unit?: Unit; height?: number; ariaLabel: string; w?: number;
 }) {
   const [hi, setHi] = useState<number | null>(null);
+  const format = axisFmt(unit);
   const n = labels.length;
   const iw = W - PAD.l - PAD.r, ih = height - PAD.t - PAD.b;
   const totals = labels.map((_, i) => series.reduce((a, s) => a + (s.data[i] || 0), 0));
   const max = niceMax(Math.max(1, ...totals));
   const slot = iw / Math.max(1, n), bw = Math.min(24, slot * 0.7);
-  const vf = valueFormat ?? fmtFull;
-  const xTicks = useMemo(() => { const step = Math.max(1, Math.ceil(n / 8)); return labels.map((l, i) => (i % step === 0 ? i : -1)).filter(i => i >= 0); }, [labels, n]);
+  const vf = valueFmt(unit);
+  const xTicks = useMemo(() => { const step = Math.max(1, Math.ceil(n / Math.max(4, Math.floor(W / 90)))); return labels.map((l, i) => (i % step === 0 ? i : -1)).filter(i => i >= 0); }, [labels, n, W]);
   return (
     <div className="relative">
       <svg viewBox={`0 0 ${W} ${height}`} role="img" aria-label={ariaLabel} className="w-full h-auto block" onMouseLeave={() => setHi(null)}>
@@ -158,8 +157,8 @@ export function Bars({ labels, series, format = fmtK, height = H, ariaLabel, val
 }
 
 /** Horizontal bar list: one row per item, segments stack left to right; the number at the end is the row total. */
-export function HBars({ rows, colors = SERIES, labelWidth = 150, sub, title }: {
-  rows: { label: string; values: number[]; sub?: string; title?: string }[]; colors?: string[]; labelWidth?: number; sub?: boolean; title?: (r: { label: string; values: number[] }) => string;
+export function HBars({ rows, colors = SERIES, labelWidth = 150, sub }: {
+  rows: { label: string; values: number[]; sub?: string; title?: string }[]; colors?: string[]; labelWidth?: number; sub?: boolean;
 }) {
   const max = Math.max(1, ...rows.map(r => r.values.reduce((a, b) => a + b, 0)));
   return (
@@ -167,7 +166,7 @@ export function HBars({ rows, colors = SERIES, labelWidth = 150, sub, title }: {
       {rows.map(r => {
         const tot = r.values.reduce((a, b) => a + b, 0);
         return (
-          <div key={r.label} className="grid items-center gap-2.5" style={{ gridTemplateColumns: `minmax(90px, ${labelWidth}px) 1fr` }} title={r.title ?? title?.(r) ?? `${r.label}: ${fmtFull(tot)}`}>
+          <div key={r.label} className="grid items-center gap-2.5" style={{ gridTemplateColumns: `minmax(90px, ${labelWidth}px) 1fr` }} title={r.title ?? `${r.label}: ${fmtFull(tot)}`}>
             <div className="min-w-0 truncate text-stone-800">{r.label}{sub && r.sub && <span className="block text-[11px] text-stone-500">{r.sub}</span>}</div>
             <div className="flex items-center gap-0.5 h-[18px] min-w-0">
               {r.values.map((v, i) => v > 0 && <div key={i} className="h-full" style={{ width: `${(82 * v) / max}%`, background: colors[i % colors.length], borderRadius: i === r.values.length - 1 || r.values.slice(i + 1).every(x => !x) ? '0 4px 4px 0' : 0 }} />)}
@@ -203,7 +202,7 @@ export function PipelineCumulative({ labels, series }: { labels: string[]; serie
           ))}
         </div>
       </div>
-      <LineChart labels={labels} series={series} log={log} ariaLabel="Cumulative pages by stage" />
+      <LineChart labels={labels} series={series} log={log} w={1100} ariaLabel="Cumulative pages by stage" />
     </div>
   );
 }
