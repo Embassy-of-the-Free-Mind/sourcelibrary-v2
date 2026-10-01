@@ -35,12 +35,26 @@
  *   --limit=N               max books this run
  *   --publish               import live+visible (default: hidden)
  *   --dry-run               no writes
+ *
+ * Acquisition-wave options (#5457):
+ *   --min-canvases=N        skip candidates whose cached manifest has fewer than N canvases
+ *   --max-year=N            only date_earliest <= N (undated candidates are excluded)
+ *   --oai-id-re=<regex>     only candidates whose oai_id matches (Vatican fonds by shelfmark)
+ *   --open-only             only manifests whose rights parse as open (public-domain / cc-by / full-access)
+ *   --campaign=<tag>        stamp acquisition_campaign on every book (what archive-acquired --campaign selects)
+ *   --hold-reason=<kebab> --hold-release="<sentence>" [--hold-issue=N]
+ *                           put every new book on a pipeline hold (scripts/lib/pipeline-hold.mjs), so no
+ *                           OCR / translation / enrichment lane selects it until the hold is released
+ *   --max-pages=N           page budget for THIS run: stop before the import that would cross it
+ *   --checkpoint=<file>     append one JSON line per imported book (resume needs none: candidate status is the state)
  */
 
 import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { holdBook } from '../lib/pipeline-hold.mjs';
+import { appendFileSync } from 'node:fs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -55,6 +69,16 @@ const PROVIDER_NAME = args['provider-name'] || null;
 const LIMIT = parseInt(args.limit) || 100000;
 const PUBLISH = 'publish' in args;
 const DRY_RUN = 'dry-run' in args;
+const MIN_CANVASES = parseInt(args['min-canvases']) || 0;
+const MAX_YEAR = parseInt(args['max-year']) || null;
+const OAI_ID_RE = args['oai-id-re'] ? new RegExp(args['oai-id-re']) : null;
+const OPEN_ONLY = 'open-only' in args;
+const CAMPAIGN = args.campaign || null;
+const MAX_PAGES = parseInt(args['max-pages']) || Infinity;
+const CHECKPOINT = args.checkpoint || null;
+const HOLD = args['hold-reason'] ? { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue']) || null, source: 'import-from-cache' } : null;
+if (HOLD && !HOLD.release) { console.error('--hold-reason needs --hold-release="<what must be true before the hold is lifted>"'); process.exit(2); }
+const OPEN_RIGHTS = ['public-domain', 'cc-by', 'full-access'];
 
 const slugify = (t, max = 70) => (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, max).replace(/-$/, '');
 const normTitle = t => (t || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
@@ -68,6 +92,10 @@ async function uniqueSlug(base) { let slug = base || 'item', i = 2; while (await
 const filter = { status: 'discovered', 'manifest_cache.harvested_at': { $exists: true } };
 if (SOURCE) filter.source = SOURCE;
 if (COLLECTION) filter.categories = COLLECTION;
+if (MIN_CANVASES) filter['manifest_cache.canvas_count'] = { $gte: MIN_CANVASES };
+if (MAX_YEAR) filter.date_earliest = { $lte: MAX_YEAR };
+if (OAI_ID_RE) filter.oai_id = OAI_ID_RE;
+if (OPEN_ONLY) filter['manifest_cache.rights'] = { $in: OPEN_RIGHTS };
 const cands = await db.collection('import_candidates').find(filter).limit(LIMIT).toArray();
 console.log(`[import-cache] ${cands.length} cached candidates (source=${SOURCE || 'all'}, collection=${COLLECTION || 'all'}) → ${SL_COLLECTION || '(no collection)'}, ${PUBLISH ? 'PUBLISH' : 'hidden'}${FACSIMILE ? ', facsimile' : ''}\n`);
 
@@ -98,13 +126,17 @@ for (const c of cands) {
   const author = c.author && c.author !== 'Unknown' ? c.author : 'Unknown';
   const year = yearFrom(c.date_text);
 
+  if (pagesTotal + pages.length > MAX_PAGES) { console.log(`  [budget] next book (${pages.length}pp) would take this run past --max-pages=${MAX_PAGES} — stopping at ${pagesTotal} pages`); break; }
+
   if (DRY_RUN) {
     if (idx <= 15) console.log(`  ${isArtwork ? 'ART ' : 'BOOK'} | ${title.slice(0, 48)} | ${author.slice(0, 18)} | ${pages.length}pp | ${mc.rights}`);
     isArtwork ? artworks++ : books++; pagesTotal += pages.length; continue;
   }
 
   const now = new Date();
-  const slug = await uniqueSlug(slugify(title));
+  // slugify keeps [a-z0-9] only, so a non-Latin title slugs to '' and every one of them would probe
+  // item, item-2, item-3 … — one findOne per earlier collision. Fall back to the source id instead.
+  const slug = await uniqueSlug(slugify(title) || slugify(`${c.source}-${c.source_id || c.oai_id || c._id}`));
   const bookId = new ObjectId();
   const facsimile = isArtwork || FACSIMILE;
   const fields = {
@@ -114,7 +146,7 @@ for (const c of cands) {
     published: c.date_text || 'Unknown', ...(year ? { year } : {}),
     thumbnail: pages[0].thumbnail || pages[0].photo || '',
     ...(isArtwork ? { image_display: pages[0].photo, image_source_url: pages[0].photo, commons_full_url: pages[0].photo } : {}),
-    pageCount: pages.length, pages_count: pages.length, pages_ocr: 0, pages_translated: 0, pages_archived: 0,
+    pages_count: pages.length, pages_ocr: 0, pages_translated: 0, pages_archived: 0,
     content_type: isArtwork ? 'artwork' : 'book',
     resource_type: isArtwork ? ARTWORK_TYPE : (BOOK_TYPE || undefined),
     status: PUBLISH ? 'live' : 'draft', hidden: !PUBLISH, visible: PUBLISH,
@@ -131,6 +163,8 @@ for (const c of cands) {
     dublin_core: { dc_identifier: [fp], dc_source: c.source_url || c.manifest_url },
     ...(c.metadata?.shelfmark ? { shelfmark: c.metadata.shelfmark } : {}),
     ...(c.metadata?.subject_geographic ? { subject_geographic: c.metadata.subject_geographic } : {}),
+    ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
+    ...(c.languages?.length > 1 ? { languages: c.languages } : {}),
     source_fingerprint: fp, normalized_title: normTitle(title), normalized_author: normAuthor(author),
     created_at: now, updated_at: now,
   };
@@ -144,6 +178,12 @@ for (const c of cands) {
     // The gate declined this candidate; the reason is a row in `dedup_skips`.
     if (!acquired.inserted) { skipped++; console.log(`  SKIP ${title.slice(0, 40)} — ${acquired.message}`); continue; }
     doc = acquired.doc;
+    // Hold BEFORE the pages exist, so there is no moment when a lane can see a book with pages and
+    // no hold. holdBook records a book_events row and an audit_log row; the reason says why.
+    if (HOLD) {
+      const h = await holdBook(db, doc.id, HOLD);
+      if (h.outcome !== 'held' && h.outcome !== 'already_held') console.log(`  [hold] ${doc.id} → ${h.outcome}`);
+    }
     if (!isArtwork) {
       const CHUNK = 500;
       for (let s = 0; s < pages.length; s += CHUNK) {
@@ -152,10 +192,11 @@ for (const c of cands) {
       }
     }
     await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: doc.id, imported_at: now } });
+    if (CHECKPOINT) appendFileSync(CHECKPOINT, JSON.stringify({ at: now.toISOString(), source: c.source, candidate: String(c._id), book_id: doc.id, pages: pages.length, title: title.slice(0, 120) }) + '\n');
     existingFp.set(fp, doc.id);
     isArtwork ? artworks++ : books++; pagesTotal += pages.length;
     if ((artworks + books) <= 3 || (artworks + books) % 50 === 0) console.log(`  ${isArtwork ? 'ART' : 'BOOK'} [${artworks + books}] ${title.slice(0, 45)} (${pages.length}pp) → /book/${slug}`);
-  } catch (e) { failed++; console.log(`  [fail] ${c.source_id} → ${e.message.slice(0, 80)}`); }
+  } catch (e) { failed++; console.log(`  [fail] ${c.source_id || c.oai_id || c._id} → ${e.message.slice(0, 160)}`); }
 }
 
 console.log(`\n[import-cache] done: ${artworks} artworks + ${books} books (${pagesTotal} pages), ${skipped} already-present, ${failed} failed`);
