@@ -89,6 +89,8 @@ const UNATTENDED = [
     note: 'daily paid-vs-got ledger: reads usage stores, batch_jobs, pages and the billing export; writes one ops_reports row; no model call (#5499)' },
   { match: 'model-usage-snapshot.mjs', spends: false, gated: false,
     note: '/about/models counts: checkpointed walk over pages + gallery_images, Supabase count estimates; writes one ops_reports row; no model call (#5601)' },
+  { match: 'daily-digest.mjs', spends: false, gated: false,
+    note: 'reads both usage stores, logs and gh; sends one Telegram/GitHub message; no model call (#5441)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
