@@ -325,7 +325,9 @@ export function edgeColumn(lines, side, rules = FIT_RULES) {
   const charH = med(tall.map((l) => l.h / l.f.length));
   // v5: a column lies inside the text frame horizontally. Library labels and handwritten marks in
   // the outer margins (支那, 撰述, 文明 on the 1657 圓悟語錄) start at the frame top too.
-  const framed = tall.filter((l) => l.x0 != null);
+  // The frame is spanned by every line of ≥ 3 characters that starts at the frame top — not only
+  // full-height columns, or a leaf whose only text is a short juan-closing column falls outside it.
+  const framed = lines.filter((l) => l.x0 != null && l.f.length >= 3 && (l.y0 == null || l.y0 <= top + rules.columnTopSlack * charH));
   const colW = framed.length ? med(framed.map((l) => l.x1 - l.x0)) : 0;
   const fx0 = framed.length ? Math.min(...framed.map((l) => l.x0)) - 0.6 * colW : -Infinity;
   const fx1 = framed.length ? Math.max(...framed.map((l) => l.x1)) + 0.6 * colW : Infinity;
