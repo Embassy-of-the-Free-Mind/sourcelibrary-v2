@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6991d67a8c1030b12444b537",
+    "title": "The Ascent to the Mount of Vision",
+    "published": "1699",
+    "source": "EEBO-TCP A49864",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9826,
+    "median_char_acc_windowed": 0.982,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6991d67a-p2",
+      "page": 2,
+      "overlap": 1,
+      "probe_words": 293,
+      "ref_chars": 1760,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.093,
+      "char_acc": 0.9795,
+      "char_acc_windowed": 0.9774
+    },
+    {
+      "slug": "ed-6991d67a-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 344,
+      "ref_chars": 2000,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.9819,
+      "char_acc_windowed": 0.9813
+    },
+    {
+      "slug": "ed-6991d67a-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 307,
+      "ref_chars": 1801,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9854,
+      "char_acc_windowed": 0.9847
+    },
+    {
+      "slug": "ed-6991d67a-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 93,
+      "ref_chars": 523,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9714,
+      "char_acc_windowed": 0.9714
+    },
+    {
+      "slug": "ed-6991d67a-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 368,
+      "ref_chars": 2030,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.053,
+      "char_acc": 0.98,
+      "char_acc_windowed": 0.9787
+    },
+    {
+      "slug": "ed-6991d67a-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 351,
+      "ref_chars": 1991,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.056,
+      "char_acc": 0.9826,
+      "char_acc_windowed": 0.982
+    },
+    {
+      "slug": "ed-6991d67a-p33",
+      "page": 33,
+      "overlap": 1,
+      "probe_words": 349,
+      "ref_chars": 2023,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9828,
+      "char_acc_windowed": 0.9828
+    },
+    {
+      "slug": "ed-6991d67a-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 425,
+      "ref_chars": 2388,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.048,
+      "char_acc": 0.9877,
+      "char_acc_windowed": 0.9856
+    }
+  ]
+}

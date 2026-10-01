@@ -1,0 +1,114 @@
+{
+  "summary": {
+    "book_id": "6a48d985df05f7ea342b77fb",
+    "title": "Ecclesiastes Solomonis. Auctore Joan. Viviano. Canticum Solomonis: nec non Epigrammata sacra, per Ja. Duportum. Accedunt Georgii Herberti Musæ responsoriæ ad Andreæ Melvini Anti-tami-cami-categoriam.",
+    "published": "1662",
+    "source": "EEBO-TCP A65140",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "no-window": 1,
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9474,
+    "median_char_acc_windowed": 0.9352,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a48d985-p2",
+      "page": 2,
+      "skipped": "no-window",
+      "overlap": 0.294
+    },
+    {
+      "slug": "ed-6a48d985-p6",
+      "page": 6,
+      "overlap": 0.553,
+      "probe_words": 48,
+      "ref_chars": 486,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.431,
+      "char_acc": 0.6877,
+      "char_acc_windowed": 0.6877,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a48d985-p9",
+      "page": 9,
+      "overlap": 0.945,
+      "probe_words": 92,
+      "ref_chars": 811,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.09,
+      "char_acc": 0.9826,
+      "char_acc_windowed": 0.9045
+    },
+    {
+      "slug": "ed-6a48d985-p14",
+      "page": 14,
+      "overlap": 0.933,
+      "probe_words": 136,
+      "ref_chars": 1076,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9474,
+      "char_acc_windowed": 0.9474
+    },
+    {
+      "slug": "ed-6a48d985-p15",
+      "page": 15,
+      "overlap": 0.963,
+      "probe_words": 135,
+      "ref_chars": 1122,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.082,
+      "char_acc": 0.9352,
+      "char_acc_windowed": 0.9352
+    },
+    {
+      "slug": "ed-6a48d985-p16",
+      "page": 16,
+      "overlap": 0.955,
+      "probe_words": 133,
+      "ref_chars": 1080,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.078,
+      "char_acc": 0.9525,
+      "char_acc_windowed": 0.9461
+    },
+    {
+      "slug": "ed-6a48d985-p17",
+      "page": 17,
+      "overlap": 0.962,
+      "probe_words": 133,
+      "ref_chars": 1116,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.077,
+      "char_acc": 0.9364,
+      "char_acc_windowed": 0.9352
+    },
+    {
+      "slug": "ed-6a48d985-p22",
+      "page": 22,
+      "overlap": 0.922,
+      "probe_words": 129,
+      "ref_chars": 1086,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.095,
+      "char_acc": 0.9299,
+      "char_acc_windowed": 0.9248
+    }
+  ]
+}

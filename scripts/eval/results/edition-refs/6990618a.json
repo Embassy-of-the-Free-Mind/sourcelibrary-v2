@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6990618a322e01b1349a5136",
+    "title": "A Confirmation and Discovery of Witchcraft",
+    "published": "1648",
+    "source": "EEBO-TCP A61373",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9776,
+    "median_char_acc_windowed": 0.9751,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6990618a-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 461,
+      "ref_chars": 2749,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.053,
+      "char_acc": 0.9784,
+      "char_acc_windowed": 0.9751
+    },
+    {
+      "slug": "ed-6990618a-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 411,
+      "ref_chars": 2458,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.055,
+      "char_acc": 0.9857,
+      "char_acc_windowed": 0.9801
+    },
+    {
+      "slug": "ed-6990618a-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 421,
+      "ref_chars": 2514,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.97,
+      "char_acc_windowed": 0.9675
+    },
+    {
+      "slug": "ed-6990618a-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 454,
+      "ref_chars": 2558,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.056,
+      "char_acc": 0.9798,
+      "char_acc_windowed": 0.9753
+    },
+    {
+      "slug": "ed-6990618a-p49",
+      "page": 49,
+      "overlap": 0.879,
+      "probe_words": 466,
+      "ref_chars": 2566,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.179,
+      "char_acc": 0.9458,
+      "char_acc_windowed": 0.9413
+    },
+    {
+      "slug": "ed-6990618a-p50",
+      "page": 50,
+      "overlap": 1,
+      "probe_words": 460,
+      "ref_chars": 2576,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9776,
+      "char_acc_windowed": 0.9757
+    },
+    {
+      "slug": "ed-6990618a-p63",
+      "page": 63,
+      "overlap": 1,
+      "probe_words": 396,
+      "ref_chars": 2378,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.073,
+      "char_acc": 0.9727,
+      "char_acc_windowed": 0.9695
+    },
+    {
+      "slug": "ed-6990618a-p64",
+      "page": 64,
+      "overlap": 1,
+      "probe_words": 382,
+      "ref_chars": 2164,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.057,
+      "char_acc": 0.9763,
+      "char_acc_windowed": 0.9728
+    }
+  ]
+}

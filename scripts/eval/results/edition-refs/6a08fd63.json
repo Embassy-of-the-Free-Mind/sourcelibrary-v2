@@ -1,0 +1,120 @@
+{
+  "summary": {
+    "book_id": "6a08fd6325e3a402b23b3e15",
+    "title": "The Famous Tragedy of the Rich Jew of Malta",
+    "published": "1633",
+    "source": "EEBO-TCP A06991",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "guard-refused": 2
+    },
+    "median_char_acc": 0.9643,
+    "median_char_acc_windowed": 0.9497,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a08fd63-p9",
+      "page": 9,
+      "overlap": 0.464,
+      "probe_words": 240,
+      "ref_chars": 1603,
+      "engine": "mineru-pipeline",
+      "aligned": false,
+      "guard_wer": 0.472,
+      "char_acc": 0.8652,
+      "char_acc_windowed": 0.8568,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a08fd63-p27",
+      "page": 27,
+      "overlap": 0.895,
+      "probe_words": 256,
+      "ref_chars": 1633,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.124,
+      "char_acc": 0.9427,
+      "char_acc_windowed": 0.9256
+    },
+    {
+      "slug": "ed-6a08fd63-p29",
+      "page": 29,
+      "overlap": 0.972,
+      "probe_words": 297,
+      "ref_chars": 1878,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.071,
+      "char_acc": 0.9519,
+      "char_acc_windowed": 0.9497
+    },
+    {
+      "slug": "ed-6a08fd63-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 278,
+      "ref_chars": 1718,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9693,
+      "char_acc_windowed": 0.8335
+    },
+    {
+      "slug": "ed-6a08fd63-p54",
+      "page": 54,
+      "overlap": 0.76,
+      "probe_words": 290,
+      "ref_chars": 1812,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.166,
+      "char_acc": 0.9339,
+      "char_acc_windowed": 0.9298
+    },
+    {
+      "slug": "ed-6a08fd63-p67",
+      "page": 67,
+      "overlap": 0.618,
+      "probe_words": 248,
+      "ref_chars": 1711,
+      "engine": "mineru-pipeline",
+      "aligned": false,
+      "guard_wer": 0.384,
+      "char_acc": 0.9141,
+      "char_acc_windowed": 0.9076,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a08fd63-p68",
+      "page": 68,
+      "overlap": 0.981,
+      "probe_words": 270,
+      "ref_chars": 1644,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.048,
+      "char_acc": 0.9722,
+      "char_acc_windowed": 0.9689
+    },
+    {
+      "slug": "ed-6a08fd63-p73",
+      "page": 73,
+      "overlap": 0.96,
+      "probe_words": 259,
+      "ref_chars": 1700,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9643,
+      "char_acc_windowed": 0.9635
+    }
+  ]
+}

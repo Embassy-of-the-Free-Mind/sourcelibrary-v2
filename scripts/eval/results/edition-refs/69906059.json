@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69906059ef12272ffdc8cef1",
+    "title": "A Description of Helioscopes, and Some Other Instruments",
+    "published": "1676",
+    "source": "EEBO-TCP A44317",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9835,
+    "median_char_acc_windowed": 0.9824,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69906059-p2",
+      "page": 2,
+      "overlap": 0.874,
+      "probe_words": 89,
+      "ref_chars": 988,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.112,
+      "char_acc": 0.9385,
+      "char_acc_windowed": 0.9192
+    },
+    {
+      "slug": "ed-69906059-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 390,
+      "ref_chars": 2313,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9856,
+      "char_acc_windowed": 0.985
+    },
+    {
+      "slug": "ed-69906059-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 399,
+      "ref_chars": 2360,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9818,
+      "char_acc_windowed": 0.9818
+    },
+    {
+      "slug": "ed-69906059-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 431,
+      "ref_chars": 2378,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.053,
+      "char_acc": 0.9827,
+      "char_acc_windowed": 0.9816
+    },
+    {
+      "slug": "ed-69906059-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 450,
+      "ref_chars": 2442,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.049,
+      "char_acc": 0.9835,
+      "char_acc_windowed": 0.9824
+    },
+    {
+      "slug": "ed-69906059-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 425,
+      "ref_chars": 2330,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.04,
+      "char_acc": 0.9855,
+      "char_acc_windowed": 0.985
+    },
+    {
+      "slug": "ed-69906059-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 382,
+      "ref_chars": 2294,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.064,
+      "char_acc": 0.9761,
+      "char_acc_windowed": 0.975
+    },
+    {
+      "slug": "ed-69906059-p33",
+      "page": 33,
+      "overlap": 1,
+      "probe_words": 376,
+      "ref_chars": 2255,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.9842,
+      "char_acc_windowed": 0.9842
+    }
+  ]
+}

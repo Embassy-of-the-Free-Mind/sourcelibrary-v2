@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69905cfcaaa7f10ed4cfd289",
+    "title": "Observations upon Experimental Philosophy (with The Blazing World)",
+    "published": "1666",
+    "source": "EEBO-TCP A53049",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9694,
+    "median_char_acc_windowed": 0.9664,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69905cfc-p377",
+      "page": 377,
+      "overlap": 1,
+      "probe_words": 260,
+      "ref_chars": 1441,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.102,
+      "char_acc": 0.9709,
+      "char_acc_windowed": 0.9656
+    },
+    {
+      "slug": "ed-69905cfc-p519",
+      "page": 519,
+      "overlap": 1,
+      "probe_words": 276,
+      "ref_chars": 1520,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.106,
+      "char_acc": 0.5732,
+      "char_acc_windowed": 0.9616
+    },
+    {
+      "slug": "ed-69905cfc-p530",
+      "page": 530,
+      "overlap": 1,
+      "probe_words": 264,
+      "ref_chars": 1603,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.078,
+      "char_acc": 0.9694,
+      "char_acc_windowed": 0.9664
+    },
+    {
+      "slug": "ed-69905cfc-p579",
+      "page": 579,
+      "overlap": 1,
+      "probe_words": 268,
+      "ref_chars": 1540,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9693,
+      "char_acc_windowed": 0.9677
+    },
+    {
+      "slug": "ed-69905cfc-p588",
+      "page": 588,
+      "overlap": 1,
+      "probe_words": 284,
+      "ref_chars": 1606,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.059,
+      "char_acc": 0.9681,
+      "char_acc_windowed": 0.9657
+    },
+    {
+      "slug": "ed-69905cfc-p600",
+      "page": 600,
+      "overlap": 1,
+      "probe_words": 260,
+      "ref_chars": 1515,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.117,
+      "char_acc": 0.9652,
+      "char_acc_windowed": 0.9627
+    },
+    {
+      "slug": "ed-69905cfc-p604",
+      "page": 604,
+      "overlap": 1,
+      "probe_words": 263,
+      "ref_chars": 1541,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.052,
+      "char_acc": 0.9741,
+      "char_acc_windowed": 0.9709
+    },
+    {
+      "slug": "ed-69905cfc-p630",
+      "page": 630,
+      "overlap": 1,
+      "probe_words": 243,
+      "ref_chars": 1406,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.9743,
+      "char_acc_windowed": 0.9708
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "summary": {
+    "book_id": "69b6362b1c1c21a37382b490",
+    "title": "M. Vitruvius per Iocundum solito castigatior factus cum figuris et tabula ut iam legi et intelligi possit",
+    "published": "1511",
+    "source": "Source Library OCR of Krohn 1912 (Teubner), book 69af1100c59ddc7f44a8550d",
+    "licence": "public-domain",
+    "script": "latin",
+    "pages_tried": 15,
+    "referenced": 4,
+    "skips": {
+      "no-window": 2,
+      "guard-refused": 9
+    },
+    "median_char_acc": 0.9208,
+    "median_char_acc_windowed": 0.8126,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69b6362b-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.115
+    },
+    {
+      "slug": "ed-69b6362b-p17",
+      "page": 17,
+      "overlap": 0.39,
+      "probe_words": 177,
+      "ref_chars": 1404,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.546,
+      "char_acc": 0.8398,
+      "char_acc_windowed": 0.7455,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p26",
+      "page": 26,
+      "overlap": 0.494,
+      "probe_words": 211,
+      "ref_chars": 1475,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.477,
+      "char_acc": 0.8907,
+      "char_acc_windowed": 0.725,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p28",
+      "page": 28,
+      "skipped": "no-window",
+      "overlap": 0.262
+    },
+    {
+      "slug": "ed-69b6362b-p43",
+      "page": 43,
+      "overlap": 0.471,
+      "probe_words": 203,
+      "ref_chars": 1511,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.454,
+      "char_acc": 0.8591,
+      "char_acc_windowed": 0.8081,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p64",
+      "page": 64,
+      "overlap": 0.644,
+      "probe_words": 310,
+      "ref_chars": 2534,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.361,
+      "char_acc": 0.7241,
+      "char_acc_windowed": 0.7641,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p69",
+      "page": 69,
+      "overlap": 0.492,
+      "probe_words": 123,
+      "ref_chars": 786,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.38,
+      "char_acc": 0.8835,
+      "char_acc_windowed": 0.6972,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p92",
+      "page": 92,
+      "overlap": 0.567,
+      "probe_words": 161,
+      "ref_chars": 1043,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.174,
+      "char_acc": 0.9341,
+      "char_acc_windowed": 0.9159
+    },
+    {
+      "slug": "ed-69b6362b-p98",
+      "page": 98,
+      "overlap": 0.457,
+      "probe_words": 325,
+      "ref_chars": 2392,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.371,
+      "char_acc": 0.8991,
+      "char_acc_windowed": 0.8121,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p141",
+      "page": 141,
+      "overlap": 0.398,
+      "probe_words": 251,
+      "ref_chars": 1954,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.359,
+      "char_acc": 0.914,
+      "char_acc_windowed": 0.8536,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p143",
+      "page": 143,
+      "overlap": 0.712,
+      "probe_words": 370,
+      "ref_chars": 3950,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.278,
+      "char_acc": 0.8434,
+      "char_acc_windowed": 0.8126
+    },
+    {
+      "slug": "ed-69b6362b-p152",
+      "page": 152,
+      "overlap": 0.408,
+      "probe_words": 420,
+      "ref_chars": 3847,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.381,
+      "char_acc": 0.8529,
+      "char_acc_windowed": 0.8187,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69b6362b-p153",
+      "page": 153,
+      "overlap": 0.376,
+      "probe_words": 187,
+      "ref_chars": 851,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.327,
+      "char_acc": 0.9208,
+      "char_acc_windowed": 0.7433
+    },
+    {
+      "slug": "ed-69b6362b-p174",
+      "page": 174,
+      "overlap": 0.637,
+      "probe_words": 416,
+      "ref_chars": 3787,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.314,
+      "char_acc": 0.832,
+      "char_acc_windowed": 0.7955
+    },
+    {
+      "slug": "ed-69b6362b-p181",
+      "page": 181,
+      "overlap": 0.494,
+      "probe_words": 187,
+      "ref_chars": 1479,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": false,
+      "guard_wer": 0.42,
+      "char_acc": 0.8892,
+      "char_acc_windowed": 0.8304,
+      "skipped": "guard-refused"
+    }
+  ]
+}

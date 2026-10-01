@@ -1,0 +1,102 @@
+{
+  "summary": {
+    "book_id": "69906056ef12272ffdc8cdee",
+    "title": "An Attempt to Prove the Motion of the Earth from Observations",
+    "published": "1674",
+    "source": "EEBO-TCP A44315",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 4,
+    "skips": {
+      "guard-refused": 1,
+      "probe-too-short": 1,
+      "no-window": 2
+    },
+    "median_char_acc": 0.985,
+    "median_char_acc_windowed": 0.9837,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69906056-p2",
+      "page": 2,
+      "overlap": 0.588,
+      "probe_words": 35,
+      "ref_chars": 264,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.415,
+      "char_acc": 0.8103,
+      "char_acc_windowed": 0.7069,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69906056-p9",
+      "page": 9,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69906056-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.141
+    },
+    {
+      "slug": "ed-69906056-p17",
+      "page": 17,
+      "skipped": "no-window",
+      "overlap": 0.081
+    },
+    {
+      "slug": "ed-69906056-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 444,
+      "ref_chars": 2580,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.064,
+      "char_acc": 0.9791,
+      "char_acc_windowed": 0.9791
+    },
+    {
+      "slug": "ed-69906056-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 430,
+      "ref_chars": 2528,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.051,
+      "char_acc": 0.9841,
+      "char_acc_windowed": 0.9837
+    },
+    {
+      "slug": "ed-69906056-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 405,
+      "ref_chars": 2408,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.046,
+      "char_acc": 0.985,
+      "char_acc_windowed": 0.985
+    },
+    {
+      "slug": "ed-69906056-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 399,
+      "ref_chars": 2329,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.053,
+      "char_acc": 0.9873,
+      "char_acc_windowed": 0.9667
+    }
+  ]
+}

@@ -34,6 +34,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { loadRefText } from './lib/private-refs.mjs';
 import { levenshtein, normalizeCJK, scoreAgainstReference } from './lib/metrics.mjs';
 import { binomTwoSided } from './lib/paired-stats.mjs';
 
@@ -200,7 +201,13 @@ for (const stratum of strata) {
   const texts = {};   // slug -> engine -> raw text | null
   for (const s of slugs) { texts[s] = {}; for (const e of engines) { const f = path.join(outRoot, e, `${s}.txt`); texts[s][e] = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; } }
   const refText = {};
-  for (const s of slugs) { const f = path.join(REFS_DIR, `${s}.txt`); if (fs.existsSync(f)) refText[s] = fs.readFileSync(f, 'utf8'); }
+  const privateSkips = {};   // in-copyright references whose text is not on this machine (#5488)
+  for (const s of slugs) {
+    const r = loadRefText(REFS_DIR, s);
+    if (r.text != null) refText[s] = r.text;
+    else if (r.skipped !== 'no-reference') privateSkips[r.skipped] = (privateSkips[r.skipped] || 0) + 1;
+  }
+  if (Object.keys(privateSkips).length) console.warn(`  ${stratum}: private references not scored here: ${JSON.stringify(privateSkips)} (set SL_PRIVATE_REFS_DIR)`);
 
   const pages = [];
   const textless = [];

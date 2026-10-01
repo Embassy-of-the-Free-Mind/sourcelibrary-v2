@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "book_id": "6991d6648c1030b12444b0ec",
+    "title": "A Fountain of Gardens, Vol. 2",
+    "published": "1697",
+    "source": "EEBO-TCP A49867",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9709,
+    "median_char_acc_windowed": 0.9703,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6991d664-p203",
+      "page": 203,
+      "overlap": 1,
+      "probe_words": 209,
+      "ref_chars": 1166,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.963,
+      "char_acc": 0.9664,
+      "char_acc_windowed": 0.9653,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6991d664-p281",
+      "page": 281,
+      "overlap": 1,
+      "probe_words": 157,
+      "ref_chars": 977,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.072,
+      "char_acc": 0.9703,
+      "char_acc_windowed": 0.9703
+    },
+    {
+      "slug": "ed-6991d664-p295",
+      "page": 295,
+      "overlap": 0.992,
+      "probe_words": 126,
+      "ref_chars": 770,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9676,
+      "char_acc_windowed": 0.9676
+    },
+    {
+      "slug": "ed-6991d664-p314",
+      "page": 314,
+      "overlap": 1,
+      "probe_words": 208,
+      "ref_chars": 1165,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.094,
+      "char_acc": 0.9606,
+      "char_acc_windowed": 0.9596
+    },
+    {
+      "slug": "ed-6991d664-p351",
+      "page": 351,
+      "overlap": 1,
+      "probe_words": 221,
+      "ref_chars": 1196,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9841,
+      "char_acc_windowed": 0.9841
+    },
+    {
+      "slug": "ed-6991d664-p352",
+      "page": 352,
+      "overlap": 1,
+      "probe_words": 223,
+      "ref_chars": 1168,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.101,
+      "char_acc": 0.9709,
+      "char_acc_windowed": 0.9699
+    },
+    {
+      "slug": "ed-6991d664-p365",
+      "page": 365,
+      "overlap": 0.985,
+      "probe_words": 205,
+      "ref_chars": 1174,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.088,
+      "char_acc": 0.9734,
+      "char_acc_windowed": 0.9723
+    },
+    {
+      "slug": "ed-6991d664-p392",
+      "page": 392,
+      "overlap": 1,
+      "probe_words": 205,
+      "ref_chars": 1184,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9767,
+      "char_acc_windowed": 0.9767
+    }
+  ]
+}
