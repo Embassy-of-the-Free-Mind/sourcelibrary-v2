@@ -1006,9 +1006,13 @@ async function markFailed(db, bookId, error, retryCount) {
 // Phases paused via DB (system_config.processing_control.paused_phases)
 let PAUSED_PHASES = new Set();
 
-function shouldRun(phase) {
+// `phase` is the pause switch: paused_phases:[phase] stops this phase and nothing else.
+// `cronPhase` is the `--phase N` run the phase rides in, for phases with no cron line of
+// their own (Phase 0.5 runs in `--phase 1`, Phase 1.95 in `--phase 2`). It does not make
+// the phase pausable by the host's switch (#5472).
+function shouldRun(phase, cronPhase = phase) {
   if (PAUSED_PHASES.has(phase)) return false;
-  return ONLY_PHASE === null || ONLY_PHASE === phase;
+  return ONLY_PHASE === null || ONLY_PHASE === phase || ONLY_PHASE === cronPhase;
 }
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
@@ -2557,8 +2561,9 @@ async function run() {
     // (See CLAUDE.md: don't gate artwork on resource_type alone.)
     const ARTWORK_MATCH = { content_type: { $ne: 'book' }, $or: [{ content_type: 'artwork' }, { resource_type: { $in: ARTWORK_TYPES } }] };
 
-    // ── Phase 0: Skip artworks that somehow entered the pipeline ──
-    if (shouldRun(1)) {
+    // ── Phase 0.5: Skip artworks that somehow entered the pipeline ──
+    // Own pause switch (paused_phases:[0.5]); still runs in the `--phase 1` cron (#5472).
+    if (shouldRun(0.5, 1)) {
       const artworks = await db.collection('books').find({
         // Catch artwork at ANY pre-terminal stage, not just early ones. Some slip all the way
         // to finalize where Phase 9 mis-flags them "Empty book: 0 pages" (single-object
@@ -2567,7 +2572,7 @@ async function run() {
         ...ARTWORK_MATCH,
       }).project({ id: 1, title: 1 }).toArray();
       if (artworks.length > 0) {
-        console.log(`\n--- Phase 0: Skipping ${artworks.length} artworks ---`);
+        console.log(`\n--- Phase 0.5: Skipping ${artworks.length} artworks ---`);
         if (!DRY_RUN) {
           for (const art of artworks) {
             await setPipelineStatus(db, art.id, 'complete', { skipped: 'artwork' });
@@ -3661,7 +3666,9 @@ Rules:
     // Books sit in warehouse during archiving to reduce Atlas load. Once archive_complete,
     // they must be promoted to the live collection before OCR can run.
     // The old Vercel cron that did this was archived — this replaces it.
-    if (shouldRun(2)) {
+    // Own pause switch (paused_phases:[1.95]), so pausing OCR (2) no longer stops promotion;
+    // still runs in the `--phase 2` cron (#5472).
+    if (shouldRun(1.95, 2)) {
       const PROMOTE_LIMIT = 50; // Each book copies all pages — keep moderate to avoid Atlas spikes
       const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
       const promoteCandidates = await db.collection('books_warehouse')
