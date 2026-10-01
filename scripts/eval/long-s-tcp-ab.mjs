@@ -38,7 +38,7 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { MongoClient } from 'mongodb';
 import { cutEditionWindow, foldedWords } from './lib/edition-window.mjs';
-import { scoreAgainstReference, normalizeForScript } from './lib/metrics.mjs';
+import { scoreAgainstReference, normalizeForScript, agreementWords } from './lib/metrics.mjs';
 import { getProductionOcrPrompt, withIntervention } from './lib/production-prompt.mjs';
 import { runGemini, fetchImage } from './lib/runners.mjs';
 import { binomTwoSided } from './lib/paired-stats.mjs';
@@ -51,6 +51,8 @@ const TCP_DIR = arg('tcp-dir'); const STAGE = arg('stage', 'report'); const ARM 
 const MAX_COST = +arg('max-cost', 4); const CONC = +arg('concurrency', 4); const SEED = 5488; const PER_BOOK = 2;
 const OUT = path.join(HERE, 'results', 'long-s-tcp-ab'); fs.mkdirSync(OUT, { recursive: true });
 const ANCHOR = '**Medieval abbreviation handling:**';
+// LONG_S_LINE_S keeps production's convention (v16 writes long s as plain s; it never outputs ſ).
+export const LONG_S_LINE_S = '**Long s (ſ):** In print before about 1800 the long s (ſ) is the letter s, not f. It has no crossbar, or only a nub on the left side of the stem; f has a full crossbar. Transcribe it as an ordinary s. Never output f for a long s: "so", "must", "shall", "first", "these" — not "fo", "muft", "fhall", "firft", "thefe".';
 export const LONG_S_LINE = '**Long s (ſ):** In print before about 1800 the long s (ſ) is the letter s, not f. It has no crossbar, or only a nub on the left side of the stem; f has a full crossbar. Transcribe it as ſ. Never output f for a long s: "ſo", "muſt", "ſhall", "firſt", "theſe" — not "fo", "muft", "fhall", "firft", "thefe".';
 
 function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -98,11 +100,11 @@ async function stageRun(db) {
   const { draw } = JSON.parse(fs.readFileSync(path.join(OUT, 'draw.json'), 'utf8'));
   const live = await getProductionOcrPrompt(db);
   const MODEL = ARM.startsWith('L') ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
-  const prompt = ARM.endsWith('B') ? withIntervention(live.text, ANCHOR, LONG_S_LINE) : live.text;
+  const prompt = ARM.endsWith('B') ? withIntervention(live.text, ANCHOR, LONG_S_LINE) : ARM.endsWith('C') ? withIntervention(live.text, ANCHOR, LONG_S_LINE_S) : live.text;
   const hash = crypto.createHash('sha256').update(prompt).digest('hex').slice(0, 16);
   const outFile = path.join(OUT, `outputs-${ARM}.jsonl`);
   const done = new Set(readJsonl(outFile).filter(o => o.text != null).map(o => `${o.book}:${o.page}`));
-  let spent = ['A', 'A2', 'B', 'LA', 'LB'].flatMap(a => readJsonl(path.join(OUT, `outputs-${a}.jsonl`))).reduce((s, o) => s + (o.cost_usd || 0), 0);
+  let spent = ['A', 'A2', 'B', 'LA', 'LB', 'LC'].flatMap(a => readJsonl(path.join(OUT, `outputs-${a}.jsonl`))).reduce((s, o) => s + (o.cost_usd || 0), 0);
   console.log(`arm ${ARM} model ${MODEL} prompt v${live.version} ${hash}; ${draw.length} pages, ${done.size} done, $${spent.toFixed(3)} spent`);
   const queue = draw.filter(d => !done.has(`${d.book}:${d.page}`));
   const one = async (d) => {
@@ -124,7 +126,7 @@ async function stageRun(db) {
 
 function stageReport() {
   const { draw } = JSON.parse(fs.readFileSync(path.join(OUT, 'draw.json'), 'utf8'));
-  const ARMS = ['A', 'A2', 'B', 'LA', 'LB'].filter(a => fs.existsSync(path.join(OUT, `outputs-${a}.jsonl`)));
+  const ARMS = ['A', 'A2', 'B', 'LA', 'LB', 'LC'].filter(a => fs.existsSync(path.join(OUT, `outputs-${a}.jsonl`)));
   const rows = Object.fromEntries(ARMS.map(a => [a, new Map(readJsonl(path.join(OUT, `outputs-${a}.jsonl`)).map(o => [`${o.book}:${o.page}`, o]))]));
   // Refusals: paired over every drawn page (a refusal is an outcome, not a missing value).
   const refused = (a, k) => !rows[a].get(k)?.text;
@@ -140,11 +142,90 @@ function stageReport() {
     return { pages: ds.length, accuracy: { ...sign(ds), median_delta: sorted.length ? +sorted[Math.floor(sorted.length / 2)].toFixed(4) : null }, long_s_errors: { first: lx, second: ly, opportunities: opp, pages: sign(ls) } };
   };
   const report = { drawn: draw.length, refusals: Object.fromEntries(ARMS.map(a => [a, draw.filter(d => refused(a, `${d.book}:${d.page}`)).length])) };
-  for (const [x, y] of [['A', 'A2'], ['A', 'B'], ['LA', 'LB'], ['A', 'LA']]) if (ARMS.includes(x) && ARMS.includes(y)) report[`${x}_vs_${y}`] = { refusals: refusalPair(x, y), ...textPair(x, y) };
+  for (const [x, y] of [['A', 'A2'], ['A', 'B'], ['LA', 'LB'], ['LA', 'LC'], ['A', 'LA']]) if (ARMS.includes(x) && ARMS.includes(y)) report[`${x}_vs_${y}`] = { refusals: refusalPair(x, y), ...textPair(x, y) };
   fs.writeFileSync(path.join(OUT, 'report.json'), JSON.stringify(report, null, 1) + '\n');
   console.log(JSON.stringify(report, null, 1));
 }
 
+// ── Inertness check (no reference needed): on strata the line should NOT touch, B must differ from A no
+// more than A differs from its own repeat. Flash-lite, 40 books per stratum, one random OCR'd page each.
+const INERT_STRATA = [
+  { key: 'english-1850-1899', language: /^english/i, from: 1850, to: 1899 },
+  { key: 'latin-1500-1599', language: /^latin/i, from: 1500, to: 1599 },
+  { key: 'german-1600-1799', language: /^german/i, from: 1600, to: 1799 },
+];
+async function stageDrawInert(db) {
+  const r = rng(SEED + 1); const draw = [];
+  for (const st of INERT_STRATA) {
+    const books = await db.collection('books').aggregate([
+      { $match: { visible: true, pages_count: { $gt: 20 }, language: st.language } },
+      { $project: { id: 1, published: 1 } }]).toArray();
+    const inRange = books.filter(b => { const y = +(String(b.published || '').match(/\b1[4-9]\d\d\b/) || [0])[0]; return y >= st.from && y <= st.to; });
+    for (let i = inRange.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [inRange[i], inRange[j]] = [inRange[j], inRange[i]]; }
+    let n = 0;
+    for (const b of inRange) {
+      if (n >= 40) break;
+      const pages = await db.collection('pages').find({ book_id: b.id, 'ocr.data': { $type: 'string' } }, { projection: { page_number: 1, 'ocr.data': 1 } }).toArray();
+      const textual = pages.filter(p => p.ocr.data.replace(/<[^>]+>[^<]*<\/[^>]+>/g, '').length > 800);
+      if (!textual.length) continue;
+      draw.push({ stratum: st.key, book: b.id, page: textual[Math.floor(r() * textual.length)].page_number }); n++;
+    }
+  }
+  fs.writeFileSync(path.join(OUT, 'draw-inert.json'), JSON.stringify({ seed: SEED + 1, draw }, null, 1) + '\n');
+  console.log(`inert draw: ${draw.length} pages`, JSON.stringify(Object.fromEntries(INERT_STRATA.map(s => [s.key, draw.filter(d => d.stratum === s.key).length]))));
+}
+async function stageRunInert(db, arm) {
+  const { draw } = JSON.parse(fs.readFileSync(path.join(OUT, 'draw-inert.json'), 'utf8'));
+  const live = await getProductionOcrPrompt(db);
+  const prompt = arm === 'IB' ? withIntervention(live.text, ANCHOR, LONG_S_LINE) : arm === 'IC' ? withIntervention(live.text, ANCHOR, LONG_S_LINE_S) : live.text;
+  const outFile = path.join(OUT, `inert-${arm}.jsonl`);
+  const done = new Set(readJsonl(outFile).map(o => `${o.book}:${o.page}`));
+  let spent = readJsonl(outFile).reduce((s, o) => s + (o.cost_usd || 0), 0);
+  const queue = draw.filter(d => !done.has(`${d.book}:${d.page}`));
+  const one = async (d) => {
+    if (spent >= MAX_COST) return;
+    const row = { arm, stratum: d.stratum, book: d.book, page: d.page, model: OCR_MODEL_LITE, prompt_version: live.version };
+    try {
+      const page = await db.collection('pages').findOne({ book_id: d.book, page_number: d.page });
+      const buf = await fetchImage(getPageSource(page));
+      const res = await runGemini(OCR_MODEL_LITE, buf, prompt, { temperature: 0, maxTokens: 8000, thinkingBudget: 0, endpoint: 'eval/long-s-tcp-ab', usageType: 'ocr' });
+      spent += res.costUsd || 0; Object.assign(row, { finish_reason: res.finishReason, cost_usd: +(res.costUsd || 0).toFixed(6), text: res.text || '' });
+    } catch (e) { row.error = String(e.message || e).slice(0, 200); }
+    fs.appendFileSync(outFile, JSON.stringify(row) + '\n');
+  };
+  for (let i = 0; i < queue.length; i += CONC) await Promise.all(queue.slice(i, i + CONC).map(one));
+  console.log(`inert ${arm}: ${queue.length} pages, $${spent.toFixed(3)}`);
+}
+const INERT_B = arg('inert-b', 'IB');
+function stageReportInert() {
+  const { draw } = JSON.parse(fs.readFileSync(path.join(OUT, 'draw-inert.json'), 'utf8'));
+  const get = a => new Map(readJsonl(path.join(OUT, `inert-${a}.jsonl`)).map(o => [`${o.book}:${o.page}`, o]));
+  const IA = get('IA'), IA2 = get('IA2'), IB = fs.existsSync(path.join(OUT, `inert-${INERT_B}.jsonl`)) ? get(INERT_B) : new Map();
+  const out = {};
+  for (const st of INERT_STRATA) {
+    const ds = draw.filter(d => d.stratum === st.key); const noise = [], effect = []; const ref = { IA: 0, IA2: 0, IB: 0 }; let longS = { IA: 0, IB: 0 };
+    for (const d of ds) {
+      const k = `${d.book}:${d.page}`; const a = IA.get(k), a2 = IA2.get(k), b = IB.get(k);
+      for (const [n, m] of [['IA', a], ['IA2', a2], ['IB', b]]) if (!m?.text) ref[n]++;
+      if (a?.text) longS.IA += (a.text.match(/ſ/g) || []).length; if (b?.text) longS.IB += (b.text.match(/ſ/g) || []).length;
+      if (a?.text && a2?.text && b?.text) { noise.push(1 - agreementWords(a.text, a2.text)); effect.push(1 - agreementWords(a.text, b.text)); }
+    }
+    const med = xs => { const s = [...xs].sort((p, q) => p - q); return s.length ? +s[Math.floor(s.length / 2)].toFixed(4) : null; };
+    const mean = xs => xs.length ? +(xs.reduce((p, q) => p + q, 0) / xs.length).toFixed(4) : null;
+    let w = 0, l = 0; for (let i = 0; i < noise.length; i++) { if (effect[i] > noise[i]) w++; else if (effect[i] < noise[i]) l++; }
+    out[st.key] = { pages: ds.length, compared: noise.length, refusals: ref, glyph_long_s_in_output: longS,
+      word_disagreement: { A_vs_A2_noise: { median: med(noise), mean: mean(noise) }, A_vs_B: { median: med(effect), mean: mean(effect) }, pages_B_moved_more: w, pages_B_moved_less: l, p: +binomTwoSided(Math.min(w, l), w + l).toFixed(4) } };
+  }
+  fs.writeFileSync(path.join(OUT, 'report-inert.json'), JSON.stringify(out, null, 1) + '\n');
+  console.log(JSON.stringify(out, null, 1));
+}
+
+if (STAGE.endsWith('inert')) {
+  const c = STAGE === 'report-inert' ? null : await MongoClient.connect(process.env.MONGODB_URI);
+  try { if (STAGE === 'draw-inert') await stageDrawInert(c.db('bookstore')); else if (STAGE === 'run-inert') await stageRunInert(c.db('bookstore'), ARM); else stageReportInert(); }
+  finally { await c?.close(); }
+  process.exit(0);
+}
 if (!TCP_DIR && STAGE !== 'report') { console.error('--tcp-dir required'); process.exit(1); }
 const client = STAGE === 'report' ? null : await MongoClient.connect(process.env.MONGODB_URI);
 try {

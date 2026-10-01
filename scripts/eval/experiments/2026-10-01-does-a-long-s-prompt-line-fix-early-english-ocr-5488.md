@@ -23,4 +23,12 @@
 
 **Not measured.** How many production pages are recitation-refused: `ocr.recitation_count` is unindexed and a count timed out after 180 s. Whether the line changes anything on post-1800 print or non-English scripts. The generalisation beyond EEBO books, which are the most memorised English print there is.
 
-**Proposed.** OCR prompt v17 = v16 + `LONG_S_LINE` (the text is in `long-s-tcp-ab.mjs`). This is a production prompt change and Derek's call. Before it ships: an A/B of one post-1800 English stratum and one non-English stratum (Latin 1500s), to show the line is inert there.
+**Inertness check (same session, flash-lite, 40 books per stratum, reference-free: B-vs-A word disagreement against the A-vs-A2 repeat).** The ſ line is **not** inert, and the reason changes the recommendation:
+- Live v16 **never outputs ſ** (0 glyphs on any stratum). Production's convention is long s written as plain s.
+- The ſ line switches the convention. It put 2,034 ſ into Latin 1500s and 1,205 into German 1600–1799 output. Word disagreement against baseline rose to 25% / 17%, against a noise floor of 4.7% / 0%. English 1850–99 has no ſ and was unaffected.
+- **Variant C** ("long s is s, not f; write it as an ordinary s", `LONG_S_LINE_S`), on the same 142 TCP pages with lite: refusals 24 → 18 (15 / 9 discordant, p = 0.31, not significant). Long-s misreads 136 → 122, not significant. Even C leaks ſ (663 Latin, 95 German).
+- So **the refusal drop comes from writing the glyph**. That fits the recitation filter matching normalised text it has seen, but it is not proven.
+
+**Recommendation (replaces the v17 proposal).** Keep v16 as the default. Add a recitation-ladder tier: when a page is refused as RECITATION, re-read it with `LONG_S_LINE` and fold ſ → s before storing, so stored text keeps today's convention. On the lite arms the ſ prompt returned text on **22 of the 23** pages the live prompt refused (`LA_vs_LB`: 23 / 6 / both 1). Changing the house convention to diplomatic ſ is a separate product decision (search and translation would need folding) and is not proposed here.
+
+Cost: $2.90 total across all arms (TCP arms $2.01 incl. LC, inertness arms $0.89).
