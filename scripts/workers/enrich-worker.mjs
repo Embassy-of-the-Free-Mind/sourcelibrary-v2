@@ -41,6 +41,7 @@ import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
@@ -1435,10 +1436,12 @@ async function main() {
 
   // Check pause status
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  // Selective unpause: scoped books enrich while globally paused; the explicit
-  // enrichment-phase pause still hard-stops regardless of scope.
-  if (control?.paused_phases?.includes('enrichment') || !shouldBypassPause(control)) {
-    const reason = control?.paused_phases?.includes('enrichment') ? 'enrichment phase paused' : 'pipeline paused';
+  // Selective unpause: scoped books enrich while globally paused; the step pause
+  // ('enrich', or the legacy 'enrichment' / 6 / 7 — scripts/lib/pause.mjs, #5492)
+  // still hard-stops regardless of scope.
+  const enrichPaused = isPaused(control, 'enrich');
+  if (enrichPaused || !shouldBypassPause(control)) {
+    const reason = enrichPaused ? 'enrich step paused' : 'pipeline paused';
     console.log(`[ENRICH] ${reason}, exiting`);
     await db.collection('cron_runs').insertOne({
       cron: 'hetzner-enrich-worker', timestamp: new Date(),

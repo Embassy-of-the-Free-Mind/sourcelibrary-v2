@@ -57,6 +57,8 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
+import { isPaused } from './pause.mjs';
+import { shouldBypassPause, hasScope, resolveScopeBookIds } from '../workers/lib/selective-unpause.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
@@ -404,6 +406,30 @@ export function gateAllowsBook(gate, bookId) {
   return gate.envelopeIds.has(bookId);
 }
 
+/**
+ * May the batch translation lanes (this one and the chained lane) SUBMIT anything right now?
+ * Read fresh from processing_control before each submit (#5492): until then neither lane read
+ * the pause at all, so the chained lane — the main translation lane — kept submitting through
+ * every pause, and only the dial stopped it. Returns { stop, scopeIds }:
+ *   stop      the reason nothing may be sent ('translate step paused' | 'pipeline paused'), or null
+ *   scopeIds  under a global pause with a selective-unpause scope, the only books that may run
+ * A step pause is absolute; a scope bypasses only the global pause, as for every other lane.
+ */
+export async function translateSubmitBrake(db) {
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (isPaused(control, 'translate')) return { stop: 'translate step paused', scopeIds: null };
+  if (!shouldBypassPause(control)) return { stop: 'pipeline paused', scopeIds: null };
+  if (control?.paused && hasScope(control)) return { stop: null, scopeIds: await resolveScopeBookIds(db, control) };
+  return { stop: null, scopeIds: null };
+}
+
+/** The brake's verdict for one book: a reason it may not be sent, or null. */
+export function brakeStopsBook(brake, bookId) {
+  if (brake?.stop) return brake.stop;
+  if (brake?.scopeIds && !brake.scopeIds.has(String(bookId))) return 'pipeline paused (book outside the selective-unpause scope)';
+  return null;
+}
+
 const newRunId = () => `tbs_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 
 function meterPlaceholder(deps, db, { run, jobName, pageCount, kind }) {
@@ -465,6 +491,8 @@ export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow 
   if (!(Number(approvedUsd) >= estimate.total_usd)) {
     return { ok: false, reason: `estimate $${estimate.total_usd} exceeds approved $${approvedUsd ?? 0}`, book, estimate };
   }
+  const paused = brakeStopsBook(await translateSubmitBrake(db), bookId);
+  if (paused) return { ok: false, reason: paused, book, estimate };
   if (!(await deps.budgetAllows(db, `translate-batch-seam ${bookId}`))) return { ok: false, reason: 'spend-dial-closed', book, estimate };
 
   let promptRef = null;
@@ -533,6 +561,9 @@ export async function advanceRun(db, run, deps) {
   const log = deps.log || console.log;
 
   if (run.phase === PHASE.TRANSLATE_SUBMITTED) {
+    // Collecting the finished translate job is free and is NOT stopped by a pause: the job is
+    // already paid for, and a pause that outlasts Gemini's result retention would lose it
+    // (#5496 review). Only the repair SUBMIT below is paid, so only it asks the brake.
     const { state, responses } = await deps.gemini.fetch(run.translate_job.name);
     if (DEAD_STATES.has(state)) {
       await meterComplete(deps, db, { run, jobName: run.translate_job.name, pageCount: run.page_count, kind: 'translate', responses, status: 'failed', error: state });
@@ -582,6 +613,19 @@ export async function advanceRun(db, run, deps) {
     if (pairs.length === 0) {
       await setPhase(db, run, PHASE.READY_TO_WRITE, { drafts: draftRows, block_notes: blockNotes, seams: [], seams_skipped: skipped, repairs: [] }, deps);
       return { phase: run.phase, advanced: true, note: 'no seams' };
+    }
+    // The translate job is metered above, so the run must leave translate_submitted now, or the
+    // next --advance would meter it again. Under a pause it goes straight to ready_to_write with
+    // the drafts — as a dead repair job does: the seams lose their repair, the book keeps its
+    // translation, and nothing new is sent.
+    const paused = brakeStopsBook(await translateSubmitBrake(db), run.book_id);
+    if (paused) {
+      await setPhase(db, run, PHASE.READY_TO_WRITE, {
+        drafts: draftRows, block_notes: blockNotes, seams: pairs, seams_skipped: skipped,
+        repairs: [], repair_failure: `repair not submitted: ${paused}`,
+      }, deps);
+      log(`[translate-batch-seam] ${run.book_id}: ${paused} — repair not submitted, writing drafts`);
+      return { phase: run.phase, advanced: true, note: `${paused} — repair not submitted, writing drafts` };
     }
     const book = await db.collection('books').findOne({ id: run.book_id });
     const requests = pairs.map(({ prevId, seamId }) => {
