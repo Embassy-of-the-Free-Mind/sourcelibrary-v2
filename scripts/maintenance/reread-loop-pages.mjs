@@ -71,14 +71,17 @@ const PASSES = {
   1: { model: 'gemini-3.1-flash-lite', temperature: 0.7 },
   2: { model: 'gemini-3-flash-preview', temperature: 0.1 },
 };
-const MAX_OUTPUT_TOKENS = 16384;
+// 8,192 tokens is ~25K+ characters of Latin — at or past HALLUCINATION_LIMIT, which the verdict
+// refuses anyway. A higher cap only bills a runaway: on the mini test two lite-0.7 pages ran to
+// 43K and 59K characters (#5194 proposes the same cap for production OCR).
+const MAX_OUTPUT_TOKENS = 8192;
 // File-based jobs, bounded by bytes first and pages second (bulk-reocr-local.mjs defaults, #3974).
 // An inline request carries only ~15 MB, and these pages' images are large enough that it held
 // ONE page per job — the first production run submitted 138 single-page jobs before it was stopped.
 const FILE_MAX_BYTES = 40 * 1024 * 1024;
 const FILE_MAX_PAGES = 500;
 /** Batch-rate cost per page measured on the pilot (#3878), × 1.5 headroom for the estimate. */
-const EST_USD_PER_PAGE = { 1: 0.0024 * 1.5, 2: 0.0049 * 1.5 };
+const EST_USD_PER_PAGE = { 1: 0.0046 * 1.5, 2: 0.0049 * 1.5 }; // pass 1 re-measured on the file-based mini test (runaways included)
 const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
   'HARM_CATEGORY_DANGEROUS_CONTENT', 'HARM_CATEGORY_CIVIC_INTEGRITY'].map(category => ({ category, threshold: 'BLOCK_NONE' }));
 const HUMAN_GUARD = { 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' } };
