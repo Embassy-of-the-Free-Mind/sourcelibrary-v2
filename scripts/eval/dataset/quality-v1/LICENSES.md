@@ -21,9 +21,10 @@ site content. Attribute as: Source Library / Embassy of the Free Mind, sourcelib
 
 | File | Rows | Licence |
 |---|---:|---|
-| `references/included-cc-by-sa-4-0.jsonl` | 87 | CC-BY-SA-4.0 |
+| `references/included-cc-by-sa.jsonl` | 79 | CC-BY-SA |
+| `references/included-cc-by-sa-4-0.jsonl` | 233 | CC-BY-SA-4.0 |
 | `references/included-pd-us-project-gutenberg.jsonl` | 35 | PD-US (Project Gutenberg) |
-| `references/pointers.jsonl` | 417 | no text (pointer only) |
+| `references/pointers.jsonl` | 192 | no text (pointer only) |
 
 A reference window's text is included only when its record carries a `licence` field naming
 CC BY-SA or public domain. CC BY-NC-SA sources (CBETA), in-copyright editions, and every record
