@@ -131,7 +131,7 @@ const CANCELLED = { code: 1, message: 'The operation was cancelled.' };
  * the page's text. Tests override per page via `textFor` / `drop` / `state` / `error`.
  */
 function makeGemini({
-  text = (n: number) => textFor(n),
+  text = (n: number, _round?: number) => textFor(n),
   drop = (_n: number, _round: number): boolean => false,
   state = (_round: number): string => 'JOB_STATE_SUCCEEDED',
   error = (_round: number): any => null,
@@ -163,13 +163,13 @@ function makeGemini({
         const nums = [...prompt.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
         if (nums.length) {
           const tag = prompt.includes('Folium') ? 'BK2 ' : '';
-          const body = blockBody(nums, round) ?? nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n)}</translation>`).join('\n');
+          const body = blockBody(nums, round) ?? nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n, round)}</translation>`).join('\n');
           return batchResponse(key, body, finish(round));
         }
         // Single page: the page whose OCR opens the "text to translate" section.
         const m = prompt.match(/Pagina (\d+)\./);
         const n = m ? Number(m[1]) : 0;
-        return batchResponse(key, drop(n, round) ? '' : text(n), finish(round));
+        return batchResponse(key, drop(n, round) ? '' : text(n, round), finish(round));
       }).reverse();
       return { state: st, responses };
     },
@@ -384,6 +384,34 @@ describe('guards at the write', () => {
     expect(p3.translation?.health_blocked).toBe('runaway');
     expect(db.data.page_revisions.some((r: Doc) => r.page_id === 'p3' && r.source === 'health-gate-refused')).toBe(true);
     expect((await runOf(db)).counts).toMatchObject({ written: 7, unhealthy: 1 });
+  });
+
+  it('a block whose first entry echoes its source is discarded whole: the shifted siblings are never written (#4681 echo-shift)', async () => {
+    // The 2026-10-01 shape: entry 1 = page 1's own Latin, entries 2..8 = the English of the page BEFORE each.
+    // The count matches, so neither the short-block guard nor the positional fallback can see it.
+    // Real Latin prose for page 1 (the fixture's word list has no function words, and the echo tier
+    // only judges prose-like text): the 1700s page the defect was found on.
+    const ECHO = 'peccatum homicidii, nisi homicidio jam secuto; in dubio autem, num fetus ille fuerit mas, an femina, irregularitas incurritur. '
+      + 'Quaeritur: quaenam ex verbis absolutionis pertineant ad essentiam formae, et sint necessaria ad valorem sacramenti? '
+      + 'Resp. Quamvis doctores inter se pugnent, et alii scripserint haec verba esse solum de necessitate praecepti, tamen negari non potest '
+      + 'major probabilitas sententiae dicentis verba illa spectare quoque ad essentiam formae, nam ea est plurium opinio.';
+    pageDoc(db, 1).ocr.data = ECHO;
+    // Round 1 (the block) comes back echoed-and-shifted; the single-page re-sends come back right.
+    const gemini = makeGemini({ text: (n, round) => (round === 1 ? (n === 1 ? ECHO : textFor(n - 1)) : textFor(n)) });
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 }); // submits round 1 = block p1–8
+    await tick(db, deps); // collect round 1: discarded whole; submit round 2 = eight singles
+    let run = await runOf(db);
+    expect(run.rounds[0]).toMatchObject({ kind: 'block', discarded: 'echo-shift', echoed: [1], written: 0, fallback: 8 });
+    for (let n = 1; n <= 8; n++) expect(pageDoc(db, n).translation?.data).toBeUndefined();
+    expect(pageDoc(db, 1).translation?.health_blocked).toBeUndefined(); // not refused: re-sent single-page like the rest
+    expect(run.counts).toMatchObject({ written: 0, unhealthy: 0, single_fallbacks: 8 });
+    expect(run.round.kind).toBe('single');
+    expect(run.round.units).toHaveLength(8);
+    await tick(db, deps); // collect the singles: each page gets ITS OWN translation
+    run = await runOf(db);
+    for (let n = 2; n <= 8; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+    expect(run.counts).toMatchObject({ written: 8, unhealthy: 0 });
   });
 
   it('a closed dial leaves the run ready and submits nothing; an estimate over the approval refuses enrolment', async () => {

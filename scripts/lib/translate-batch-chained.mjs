@@ -56,6 +56,7 @@ import {
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   parseBlockTranslations,
+  assessTranslationHealth,
   sanitizeTranslationTags,
   isTranslatablePage,
   writePageTranslation,
@@ -591,6 +592,22 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
     summary.finish_reason = r.finishReason;
     const parsed = parseBlockTranslations(r.text, pages);
     const { translations } = parsed;
+    // Echo-shift guard (#4681 by-eye, 2026-10-01): a block in which the model handed one page's
+    // SOURCE back as its "translation" is a block whose other entries are one slot off. Seen on
+    // book 69b6307b…, block p16–23: p16 came back as its own Latin, and p17–23 each carried the
+    // English of the page BEFORE it. The per-page health gate refused the echo and wrote the seven
+    // shifted pages as labelled (each a faithful translation of the wrong page — the defect class
+    // a text-only judge rates fidelity 1). The count matched, so the short-block guard could not
+    // fire. Labels in such a block cannot be trusted: discard it whole, every page goes single-page.
+    const echoed = pages.filter((p) => {
+      const t = translations.get(p.page_number);
+      return t && assessTranslationHealth(p.ocr?.data || '', t, { lang: book?.language }).reason === 'echo';
+    });
+    if (echoed.length) {
+      translations.clear();
+      summary.discarded = 'echo-shift';
+      summary.echoed = echoed.map((p) => p.page_number);
+    }
     const { drifted } = dropDriftedPages(pages, translations);
     if (parsed.discarded) summary.discarded = parsed.discarded;
     if (drifted.length) summary.drifted = drifted.map((d) => `${d.prev}→${d.next}`);
