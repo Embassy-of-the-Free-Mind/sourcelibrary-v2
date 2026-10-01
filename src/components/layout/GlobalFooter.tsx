@@ -30,6 +30,15 @@ const PARTNERS: Partner[] = [
   { name: 'Frond Studio', src: '/partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
 ];
 
+// Folium shows on sourcelibrary.org only. Partner subdomains keep exactly the
+// row they have today (order included): a tenant reading room is the
+// partner's surface, so changes there wait for the partner. The Folium PNG
+// keeps some transparent space above and below, so the long one-line
+// wordmark sits at the same visual weight as the stacked logos beside it.
+const GLOBAL_PARTNERS: Partner[] = [
+  { name: 'Folium', src: '/partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
+];
+
 // Source Library's own accounts. Kept beside PARTNERS so the two lists that
 // render in the footer's lower zones live together. These are also mirrored in
 // the homepage `sameAs` array (src/components/seo/HomePageSchema.tsx) — update
@@ -185,7 +194,7 @@ export default function GlobalFooter() {
         {/* Zone 3: Partners */}
         <div className="py-8">
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-            {PARTNERS.map((partner) => (
+            {(isEmbedded ? PARTNERS : [...PARTNERS, ...GLOBAL_PARTNERS].sort((a, b) => a.name.localeCompare(b.name))).map((partner) => (
               <a
                 key={partner.name}
                 href={partner.href}
