@@ -206,8 +206,15 @@ export function scoreRead(readText, pages, claimed, { span = 6, far = null, floo
  * to folio, so a wrong side two leaves away can legitimately share most of the page: v84 f. 18b read
  * 0.998 at its side against 0.812 two sides off (a ~75-syllable gap), and the flat 0.25 margin
  * refused a volume whose every informative read picked shift 0.
+ *
+ * v4 (2026-10-01): a WEAK read — best at shift 0 but not clearing the control — is INCONCLUSIVE, not
+ * a refusal: it does not point anywhere else, it just cannot discriminate. It triggers the second
+ * sampling round like an uninformative read, and the volume needs ≥ minScored ALIGNED reads and no
+ * misaligned one. Measured on v139 f. 115b (Abhidharma prose on the four wheel-turning kings, which
+ * repeats with a period of two sides): 0.785 at shift 0, 0.732 at shift +2; by eye all seven line
+ * starts are 115b's and not 116b's.
  */
-export const ALIGN_RULES = Object.freeze({ version: 3, informativeFloor: 0.4, minMargin: 0.25, verbatimIdentity: 0.9, verbatimMargin: 0.1, minScored: 4, minReadSyllables: 40 });
+export const ALIGN_RULES = Object.freeze({ version: 4, informativeFloor: 0.4, minMargin: 0.25, verbatimIdentity: 0.9, verbatimMargin: 0.1, minScored: 4, minReadSyllables: 40 });
 
 export function sampleClass(score, rules = ALIGN_RULES) {
   if (!score || score.read_syllables < rules.minReadSyllables) return 'uninformative';
@@ -222,18 +229,51 @@ export function sampleClass(score, rules = ALIGN_RULES) {
 
 export function volumeVerdict(samples, rules = ALIGN_RULES) {
   const cls = samples.map((s) => ({ s, c: sampleClass(s.score, rules) }));
-  const informative = cls.filter((x) => x.c !== 'uninformative');
+  const aligned = cls.filter((x) => x.c === 'aligned');
   const reasons = [];
-  if (informative.length < rules.minScored) reasons.push(`only ${informative.length} informative reads (need ${rules.minScored})`);
-  for (const { s, c } of informative) {
+  if (aligned.length < rules.minScored) reasons.push(`only ${aligned.length} aligned reads (need ${rules.minScored})`);
+  for (const { s, c } of cls) {
+    if (c !== 'misaligned') continue;
     const sc = s.score;
-    if (c === 'misaligned') reasons.push(`canvas ${s.canvas} (${s.label}) best matches shift ${sc.global_best && sc.best_identity < rules.informativeFloor ? sc.global_best.shift : sc.measured_shift}`);
-    else if (c === 'weak') reasons.push(`canvas ${s.canvas} (${s.label}) margin ${(sc.identity - sc.control).toFixed(3)} < ${rules.minMargin}`);
+    reasons.push(`canvas ${s.canvas} (${s.label}) best matches shift ${sc.global_best && sc.best_identity < rules.informativeFloor ? sc.global_best.shift : sc.measured_shift}`);
   }
+  const tag = (x) => `${x.s.canvas} (${x.s.label})`;
   return {
     pass: reasons.length === 0,
-    scored: informative.length,
-    uninformative: cls.filter((x) => x.c === 'uninformative').map((x) => `${x.s.canvas} (${x.s.label})`),
+    scored: aligned.length,
+    uninformative: cls.filter((x) => x.c === 'uninformative').map(tag),
+    weak: cls.filter((x) => x.c === 'weak').map(tag),
     reasons,
   };
+}
+
+/**
+ * Where in the volume does this read belong? Scores the read against every side and returns the
+ * best side index, its identity, and the runner-up identity at a side ≥ 2 away (the control).
+ * Used where BDRC's manifest carries no folio labels (I1441 = vol. 125 has only "img. N"), so the
+ * canvas → side offset must be MEASURED from the reads rather than claimed by a label.
+ */
+export function locateRead(readText, pages) {
+  const read = syllables(readText);
+  const scores = pages.map((p) => (p.lines.length ? nwIdentity(read, syllables(p.lines.join(' '))) : 0));
+  let best = 0;
+  for (let i = 1; i < scores.length; i++) if (scores[i] > scores[best]) best = i;
+  const control = Math.max(0, ...scores.filter((_, i) => Math.abs(i - best) >= 2));
+  const r4 = (x) => Math.round(x * 1000) / 1000;
+  return { read_syllables: read.length, index: best, side: pages[best]?.label ?? null, identity: r4(scores[best] ?? 0), control: r4(control) };
+}
+
+/**
+ * The offset (side index − canvas index) a set of located reads agrees on, or null with a reason.
+ * Every informative read (identity ≥ informativeFloor, margin over its control ≥ minMargin, or the
+ * v3 near-verbatim allowance) must give the SAME offset — a missing or extra image part-way through
+ * the volume would split them, and an index mapping across such a break would be wrong after it.
+ */
+export function agreedOffset(located, rules = ALIGN_RULES) {
+  const ok = located.filter(({ loc }) => loc.read_syllables >= rules.minReadSyllables && loc.identity >= rules.informativeFloor
+    && (loc.identity - loc.control >= rules.minMargin || (loc.identity >= rules.verbatimIdentity && loc.identity - loc.control >= rules.verbatimMargin)));
+  if (ok.length < rules.minScored - 1) return { offset: null, reason: `only ${ok.length} reads located with confidence (need ${rules.minScored - 1})` };
+  const offs = [...new Set(ok.map(({ canvas, loc }) => loc.index - canvas))];
+  if (offs.length !== 1) return { offset: null, reason: `located reads disagree on the offset: ${offs.join(', ')}` };
+  return { offset: offs[0], reason: null, located: ok.length };
 }

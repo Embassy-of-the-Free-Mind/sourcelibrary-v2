@@ -50,7 +50,7 @@ import { isHumanEdited } from '../lib/syriac-kraken-lane.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import {
   parseVolume, pageText, syllables, canvasFolioLabel, claimByLabel, scoreRead, sampleClass, volumeVerdict,
-  ALIGN_RULES, sha16,
+  locateRead, agreedOffset, ALIGN_RULES, sha16,
 } from '../lib/derge-tengyur.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
@@ -154,7 +154,9 @@ function yigdzinRead(dir) {
  */
 async function measure(vol, canvases, pages, claim) {
   const v = ckpt.volumes[vol] ||= {};
-  if (v.measurement?.engine === READ_ENGINE && v.measurement.rules?.version === ALIGN_RULES.version) return v.measurement;
+  // The cache is keyed on what was claimed, too: a re-claim (index mode, a new offset) re-verifies.
+  const claimKey = `${v.claim_mode || 'label'}:${v.offset_measurement?.offset ?? ''}`;
+  if (v.measurement?.engine === READ_ENGINE && v.measurement.rules?.version === ALIGN_RULES.version && (v.measurement.claim_key ?? 'label:') === claimKey) return v.measurement;
   const cand = canvases.map((c, i) => i).filter((i) => claim[i] != null && syllables(pages[claim[i]].lines.join(' ')).length >= 150);
   const round = (phase) => Array.from({ length: SAMPLES }, (_, k) => cand[Math.floor(((k + phase) / SAMPLES) * cand.length)]).filter((x) => x != null);
   const dir = path.join(WORK, 'samples', `v${String(vol).padStart(3, '0')}`);
@@ -182,12 +184,38 @@ async function measure(vol, canvases, pages, claim) {
       samples.push({ canvas: ci, label, side: pages[claim[ci]].label, image_url: url, read_sha: sha16(text), class: cls, score });
       log(`  v${vol} canvas ${ci} (${label}) read ${score.read_syllables} syl: identity ${score.identity} shift ${score.measured_shift} control ${score.control} far ${score.far_control}${score.global_best ? ` global ${JSON.stringify(score.global_best)}` : ''} → ${cls}`);
     }
-    if (!samples.some((x) => x.class === 'uninformative')) break;
+    if (!samples.some((x) => x.class === 'uninformative' || x.class === 'weak')) break;
   }
-  v.measurement = { engine: READ_ENGINE, at: new Date().toISOString(), rules: ALIGN_RULES, samples, cost_usd: 0 };
+  v.measurement = { engine: READ_ENGINE, at: new Date().toISOString(), rules: ALIGN_RULES, claim_key: claimKey, samples, cost_usd: 0 };
   v.measurement.verdict = volumeVerdict(samples);
   saveCkpt();
   return v.measurement;
+}
+
+/** Index mode: read SAMPLES canvases spread through the volume and locate each among ALL sides. */
+async function measureOffset(vol, canvases, pages) {
+  const v = ckpt.volumes[vol] ||= {};
+  if (v.offset_measurement?.engine === READ_ENGINE && v.offset_measurement.rules?.version === ALIGN_RULES.version) return v.offset_measurement;
+  const dir = path.join(WORK, 'samples', `v${String(vol).padStart(3, '0')}-offset`);
+  fs.mkdirSync(dir, { recursive: true });
+  const n = canvases.length;
+  // Phase 0.75 — away from the 0.5 / 0.25 phases the verification rounds use, so the canvases that
+  // MEASURE the offset are not the ones that VERIFY it.
+  const picks = [...new Set(Array.from({ length: SAMPLES }, (_, k) => Math.floor(((k + 0.75) / SAMPLES) * n)))].filter((i) => i < n);
+  for (const ci of picks) {
+    const f = path.join(dir, `c${ci}.jpg`);
+    if (!fs.existsSync(f)) fs.writeFileSync(f, Buffer.from(await (await fetchRetry(`${imageServiceOf(canvases[ci])}/full/1600,/0/default.jpg`)).arrayBuffer()));
+  }
+  const out = yigdzinRead(dir);
+  const located = picks.map((ci) => {
+    const tf = path.join(out, `c${ci}.txt`);
+    const loc = locateRead(fs.existsSync(tf) ? fs.readFileSync(tf, 'utf8') : '', pages);
+    log(`  v${vol} canvas ${ci}: best side ${loc.side} (index ${loc.index}, offset ${loc.index - ci}) identity ${loc.identity} control ${loc.control}`);
+    return { canvas: ci, loc };
+  });
+  v.offset_measurement = { engine: READ_ENGINE, rules: ALIGN_RULES, at: new Date().toISOString(), located, ...agreedOffset(located) };
+  saveCkpt();
+  return v.offset_measurement;
 }
 
 function volumeTitle(vol, file) {
@@ -209,9 +237,21 @@ async function importVolume(db, vol) {
   if (mlabel !== `volume ${vol}`) throw new Error(`I${ig}: manifest label "${mlabel}" is not "volume ${vol}"`);
   const canvases = manifest.sequences[0].canvases;
   const pages = parseVolume(fs.readFileSync(path.join(ETEXT, 'text', file), 'utf8'));
-  const claim = claimByLabel(canvases.map(canvasFolioLabel), pages);
+  const labels = canvases.map(canvasFolioLabel);
+  let claim;
+  if (labels.filter(Boolean).length >= canvases.length * 0.5) {
+    v.claim_mode = 'label';
+    claim = claimByLabel(labels, pages);
+  } else {
+    // No folio labels in the manifest: measure the offset on one round of reads, then let the
+    // ordinary verification (measure) test the offset on independent canvases.
+    v.claim_mode = 'index';
+    const om = await measureOffset(vol, canvases, pages);
+    log(`v${vol}: no folio labels — measured offset ${om.offset ?? 'NONE'}${om.reason ? ` (${om.reason})` : ''}`);
+    claim = canvases.map((_, i) => (om.offset != null && i + om.offset >= 0 && i + om.offset < pages.length ? i + om.offset : null));
+  }
   v.canvases = canvases.length; v.text_sides = pages.length; v.claimed = claim.filter((x) => x != null).length;
-  log(`v${vol} I${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed by label`);
+  log(`v${vol} I${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed (${v.claim_mode})`);
 
   const m = await measure(vol, canvases, pages, claim);
   log(`v${vol}: verdict ${m.verdict.pass ? 'PASS' : 'REFUSE'} (${m.verdict.scored} scored)${m.verdict.reasons.length ? ' — ' + m.verdict.reasons.join('; ') : ''} [$${m.cost_usd}]`);
@@ -279,11 +319,13 @@ async function importVolume(db, vol) {
 
   const pass = m.verdict.pass;
   const alignment = pass ? {
-    method: 'bdrc-canvas-label → esukhia folio marker, verified by sampled reads',
-    measured_shift: 0, samples: m.verdict.scored, read_engine: m.engine,
+    method: v.claim_mode === 'index'
+      ? 'canvas index + measured offset → esukhia side (manifest has no folio labels), verified by independent sampled reads'
+      : 'bdrc-canvas-label → esukhia folio marker, verified by sampled reads',
+    measured_shift: 0, ...(v.claim_mode === 'index' ? { measured_offset: v.offset_measurement?.offset } : {}), samples: m.verdict.scored, read_engine: m.engine,
     min_identity: Math.min(...m.samples.filter((s) => s.class === 'aligned').map((s) => s.score.identity)),
     max_control: Math.max(...m.samples.filter((s) => s.class === 'aligned').map((s) => s.score.control)),
-    uninformative_reads: m.verdict.uninformative.length,
+    uninformative_reads: m.verdict.uninformative.length, weak_reads: (m.verdict.weak || []).length,
     rules: ALIGN_RULES, measured_at: m.at,
   } : null;
   const ocrFor = (i) => {
@@ -321,7 +363,8 @@ async function importVolume(db, vol) {
       if (ocr && !ex.ocr?.data) {
         // Human-edit guard: only fill an empty page that nobody edited.
         if (isHumanEdited(ex.ocr)) { textKeptHuman++; continue; }
-        const r = await pagesC.updateOne({ _id: ex._id, 'ocr.data': { $exists: false } }, { $set: { ocr, updated_at: now } });
+        const label = canvasFolioLabel(c) ? {} : { page_label: `f. ${ocr.text_edition.folio}` };
+        const r = await pagesC.updateOne({ _id: ex._id, 'ocr.data': { $exists: false } }, { $set: { ocr, ...label, updated_at: now } });
         textWritten += r.modifiedCount;
       } else if (ex.ocr?.data) textWritten += ex.ocr.source === TEXT_SOURCE ? 1 : 0;
       continue;
@@ -329,7 +372,7 @@ async function importVolume(db, vol) {
     const _id = new ObjectId();
     toInsert.push(makePageDoc({
       _id: String(_id), id: String(_id), book_id: book.id, page_number: i + 1,
-      page_label: canvasFolioLabel(c) ? `f. ${canvasFolioLabel(c)}` : null,
+      page_label: canvasFolioLabel(c) ? `f. ${canvasFolioLabel(c)}` : (ocr ? `f. ${ocr.text_edition.folio}` : null),
       source_ref: service.replace(/^https:\/\/iiif\.bdrc\.io\//, ''),
       photo, photo_original: photo,
       image_width: c.width, image_height: c.height,

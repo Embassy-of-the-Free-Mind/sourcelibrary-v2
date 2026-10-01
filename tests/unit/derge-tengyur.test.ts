@@ -61,4 +61,23 @@ describe('derge-tengyur scoring', () => {
     expect(volumeVerdict([ok, ok, ok, ok, bad]).pass).toBe(false);
     expect(volumeVerdict([ok, ok, ok]).pass).toBe(false);
   });
+  it('a weak read is inconclusive: it neither refuses nor counts (v139 f. 115b)', () => {
+    const ok = { canvas: 1, label: '2a', score: sc({}) };
+    const weak = { canvas: 3, label: '115b', score: sc({ identity: 0.785, best_identity: 0.785, control: 0.732 }) };
+    expect(volumeVerdict([ok, ok, ok, ok, weak]).pass).toBe(true);
+    expect(volumeVerdict([ok, ok, ok, weak]).pass).toBe(false);
+  });
+});
+
+describe('derge-tengyur index mode (no folio labels in the manifest)', () => {
+  const loc = (canvas: number, index: number, identity = 0.95, control = 0.2) => ({ canvas, loc: { read_syllables: 400, index, side: null, identity, control } });
+  it('agrees on one offset when every confident read gives it', async () => {
+    const { agreedOffset } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect(agreedOffset([loc(10, 11), loc(100, 101), loc(200, 201), loc(300, 301)]).offset).toBe(1);
+  });
+  it('refuses when reads disagree (an image missing part-way) or too few are confident', async () => {
+    const { agreedOffset } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect(agreedOffset([loc(10, 11), loc(100, 101), loc(200, 200), loc(300, 300)]).offset).toBeNull();
+    expect(agreedOffset([loc(10, 11), loc(100, 101, 0.3), loc(200, 201, 0.3)]).offset).toBeNull();
+  });
 });
