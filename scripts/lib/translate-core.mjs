@@ -718,7 +718,10 @@ export const isExcess = (ocr, tr) => {
   if ((tr || '').length > 20000) return true;
   const ob = bodyLen(ocr), tb = bodyLen(tr);
   if (ob < 300) return false;
-  const han = (String(ocr || '').replace(/<[^<>]*>/g, ' ').match(HAN_CHAR) || []).length;
+  // Counted on the same body bodyLen measures: metadata blocks (<vocab>, <warning>, …) list Han
+  // terms on Latin pages too, and must not tip a Latin page into the Han ratio.
+  const body = String(ocr || '').replace(blockRe, ' ').replace(looseRe, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ');
+  const han = (body.match(HAN_CHAR) || []).length;
   return tb > ob * (han / ob >= HAN_DOMINANT ? CJK_EXCESS_RATIO : EXCESS_RATIO);
 };
 
