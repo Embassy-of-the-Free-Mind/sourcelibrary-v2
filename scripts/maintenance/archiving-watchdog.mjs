@@ -12,11 +12,21 @@
  * This watchdog finds stuck books, probes their source, and self-heals:
  *   - restricted   (IA access-restricted / printdisabled)  -> park needs_attention
  *   - dead         (sample page 403/404/410)               -> park needs_attention
- *   - unreachable  (timeout / 000 / 5xx)                    -> stamp + retry; park only
- *                                                              after --escalate-days
+ *   - unreachable  (timeout / 000 / 5xx)                    -> stamp + retry; after
+ *                                                              --escalate-days, CONFIRM
+ *                                                              (below) before parking
  *   - archivable   (sample page 200, not yet on R2)         -> trigger on-demand
  *                                                              archive to R2 via API
  *   - progressing  (Mac-only worker actively archiving)     -> leave alone
+ *
+ * Escalation is confirmed, not inferred (#4611). An unreachable book past
+ * --escalate-days is re-probed by scripts/lib/archive-confirm-gone.mjs — 3 pages
+ * spread through the book, 45 s timeout, 3 attempts, one request at a time per
+ * host, plus IA item metadata. Only a definite 403/404/410 on every sample parks
+ * it (archive_verdict 'escalated'); a page that answers clears the stall; anything
+ * else stays 'unreachable' and is retried next run. The confirmation is recorded on
+ * the book as pipeline_auto.archive_confirm. Before this, 709 of 721 books parked
+ * "likely gone" were alive (#5462).
  *
  * Everything is logged to the `watchdog_runs` collection and stdout — nothing
  * is parked silently. Reversible: parked books keep their pages and can be
@@ -33,11 +43,14 @@
  *   --escalate-days=N park 'unreachable' books once they've been unreachable
  *                     this long (default 7)
  *   --probe-limit=N   max books to probe this run (default 500)
+ *   --confirm-limit=N max escalation confirmations this run (default 20); the rest
+ *                     stay 'unreachable' and are confirmed on a later run
  *   --rearchive       trigger on-demand R2 archiving for 'archivable' books
  *                     (default off — classification still reports them)
  */
 import { MongoClient } from 'mongodb';
 import { ARCHIVABLE_SOURCES_REGEX } from '../lib/archivable-sources.mjs';
+import { confirmGone, createHostQueue, CONFIRM_DEFAULTS } from '../lib/archive-confirm-gone.mjs';
 
 const ARGS = process.argv.slice(2);
 const APPLY = ARGS.includes('--apply');
@@ -49,6 +62,7 @@ const numArg = (name, def) => {
 const STALE_HOURS = numArg('stale-hours', 6);
 const ESCALATE_DAYS = numArg('escalate-days', 7);
 const PROBE_LIMIT = numArg('probe-limit', 500);
+const CONFIRM_LIMIT = numArg('confirm-limit', 20);
 const PROBE_TIMEOUT_MS = 12000;
 const PROBE_CONCURRENCY = 6;
 
@@ -201,6 +215,30 @@ async function main() {
     }));
   }
 
+  // Confirm before parking (#4611). The first pass above is one 12 s attempt at concurrency 6
+  // — fine for the cheap 'unreachable' stamp, not for a terminal verdict. Books run in
+  // parallel; the shared host queue keeps it to one request at a time per host.
+  const toConfirm = buckets.escalated.splice(0);
+  const deferred = toConfirm.splice(CONFIRM_LIMIT);
+  for (const e of deferred) buckets.unreachable.push({ ...e, first: false, why: `${e.why}; escalation confirm deferred (--confirm-limit)` });
+  const withHost = createHostQueue({ gapMs: CONFIRM_DEFAULTS.hostGapMs });
+  const confirmed = await Promise.all(toConfirm.map(async (e) => {
+    const pages = await db.collection('pages').find({
+      book_id: e.b.id,
+      $or: [{ archived_photo: { $exists: false } }, { archived_photo: { $regex: /^failed:/ } }],
+    }).sort({ page_number: 1 }).project({ photo: 1, photo_original: 1 }).toArray();
+    const urls = pages.map(p => p.photo_original || p.photo).filter(u => /^https?:\/\//.test(u || ''));
+    const ia = e.provider === 'internet_archive' ? iaIdentifier(e.b) : null;
+    return { ...e, confirm: await confirmGone({ urls, iaIdentifier: ia }, { withHost }) };
+  }));
+  for (const e of confirmed) {
+    const { verdict, reason } = e.confirm;
+    log(`[watchdog] confirm ${verdict.padEnd(11)} ${(e.b.title || '').slice(0, 40)} — ${reason}`);
+    if (verdict === 'gone') buckets.escalated.push(e);
+    else if (verdict === 'alive') buckets.archivable.push({ ...e, why: reason });
+    else buckets.unreachable.push({ ...e, first: false, why: `${e.why}; confirm: ${reason}` });
+  }
+
   // Apply actions
   for (const { b } of buckets.restricted) {
     await setStatus(db, b, 'needs_attention', { error: 'IA access-restricted (lending/printdisabled) — page images undownloadable', archive_verdict: 'restricted' });
@@ -208,13 +246,17 @@ async function main() {
   for (const { b, url } of buckets.dead) {
     await setStatus(db, b, 'needs_attention', { error: `source page returned 403/404/410 — stale URL: ${(url || '').slice(0, 120)}`, archive_verdict: 'dead' });
   }
-  for (const { b, since } of buckets.escalated) {
-    await setStatus(db, b, 'needs_attention', { error: `source unreachable since ${since} (>${ESCALATE_DAYS}d) — likely gone`, archive_verdict: 'escalated' });
+  for (const { b, since, confirm } of buckets.escalated) {
+    await setStatus(db, b, 'needs_attention', {
+      error: `source unreachable since ${since} (>${ESCALATE_DAYS}d), confirmed gone: ${confirm.reason}`,
+      archive_verdict: 'escalated', archive_confirm: confirm.evidence,
+    });
   }
-  for (const { b, first, why } of buckets.unreachable) {
+  for (const { b, first, why, confirm } of buckets.unreachable) {
     if (APPLY) {
       const set = { 'pipeline_auto.archive_stall.last_checked': new Date(), 'pipeline_auto.archive_stall.why': why, updated_at: new Date() };
       if (first) set['pipeline_auto.archive_stall.unreachable_since'] = new Date();
+      if (confirm) set['pipeline_auto.archive_confirm'] = confirm.evidence;
       await db.collection('books').updateOne({ id: b.id }, { $set: set });
     }
   }
@@ -223,10 +265,11 @@ async function main() {
   // behind it (#4872), 618 of them already fully archived. The archiver clears it too, on any
   // page that actually lands; this covers books the archiver has not reached yet.
   const recovered = buckets.archivable.filter(({ b }) => b.pipeline_auto?.archive_stall);
-  for (const { b } of recovered) {
+  for (const { b, confirm } of recovered) {
     if (APPLY) {
       await db.collection('books').updateOne({ id: b.id }, {
-        $unset: { 'pipeline_auto.archive_stall': '' }, $set: { updated_at: new Date() },
+        $unset: { 'pipeline_auto.archive_stall': '' },
+        $set: { updated_at: new Date(), ...(confirm ? { 'pipeline_auto.archive_confirm': confirm.evidence } : {}) },
       });
     }
   }
@@ -241,6 +284,10 @@ async function main() {
   const summary = {
     restricted: buckets.restricted.length, dead: buckets.dead.length,
     unreachable: buckets.unreachable.length, escalated: buckets.escalated.length,
+    confirm: { checked: confirmed.length, deferred: deferred.length,
+      gone: confirmed.filter(e => e.confirm.verdict === 'gone').length,
+      alive: confirmed.filter(e => e.confirm.verdict === 'alive').length,
+      unconfirmed: confirmed.filter(e => e.confirm.verdict === 'unconfirmed').length },
     archivable: buckets.archivable.length, progressing: buckets.progressing.length,
   };
   log('\n[watchdog] verdicts:', JSON.stringify(summary));
