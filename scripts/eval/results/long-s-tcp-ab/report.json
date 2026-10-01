@@ -1,0 +1,118 @@
+{
+ "drawn": 142,
+ "refusals": {
+  "A": 28,
+  "A2": 26,
+  "B": 9,
+  "LA": 24,
+  "LB": 7
+ },
+ "A_vs_A2": {
+  "refusals": {
+   "refused_first_only": 6,
+   "refused_second_only": 4,
+   "both": 22,
+   "p": 0.75391
+  },
+  "pages": 110,
+  "accuracy": {
+   "better": 17,
+   "worse": 18,
+   "tied": 75,
+   "p": 1,
+   "median_delta": 0
+  },
+  "long_s_errors": {
+   "first": 51,
+   "second": 50,
+   "opportunities": 3822,
+   "pages": {
+    "better": 2,
+    "worse": 1,
+    "tied": 107,
+    "p": 1
+   }
+  }
+ },
+ "A_vs_B": {
+  "refusals": {
+   "refused_first_only": 24,
+   "refused_second_only": 5,
+   "both": 4,
+   "p": 0.00055
+  },
+  "pages": 109,
+  "accuracy": {
+   "better": 35,
+   "worse": 30,
+   "tied": 44,
+   "p": 0.6201,
+   "median_delta": 0
+  },
+  "long_s_errors": {
+   "first": 52,
+   "second": 18,
+   "opportunities": 3861,
+   "pages": {
+    "better": 6,
+    "worse": 5,
+    "tied": 98,
+    "p": 1
+   }
+  }
+ },
+ "LA_vs_LB": {
+  "refusals": {
+   "refused_first_only": 23,
+   "refused_second_only": 6,
+   "both": 1,
+   "p": 0.00232
+  },
+  "pages": 112,
+  "accuracy": {
+   "better": 47,
+   "worse": 28,
+   "tied": 37,
+   "p": 0.037,
+   "median_delta": 0
+  },
+  "long_s_errors": {
+   "first": 138,
+   "second": 85,
+   "opportunities": 3994,
+   "pages": {
+    "better": 21,
+    "worse": 19,
+    "tied": 72,
+    "p": 0.8746
+   }
+  }
+ },
+ "A_vs_LA": {
+  "refusals": {
+   "refused_first_only": 10,
+   "refused_second_only": 6,
+   "both": 18,
+   "p": 0.4545
+  },
+  "pages": 108,
+  "accuracy": {
+   "better": 39,
+   "worse": 50,
+   "tied": 19,
+   "p": 0.2891,
+   "median_delta": 0
+  },
+  "long_s_errors": {
+   "first": 53,
+   "second": 127,
+   "opportunities": 3830,
+   "pages": {
+    "better": 4,
+    "worse": 34,
+    "tied": 70,
+    "p": 0
+   }
+  }
+ }
+}
