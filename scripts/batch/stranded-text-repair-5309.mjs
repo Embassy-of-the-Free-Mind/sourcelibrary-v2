@@ -508,8 +508,15 @@ async function release(db) {
 async function echofix(db) {
   const s = loadState();
   let books = 0, pages = 0;
-  for (const b of s.books.filter((x) => ['cleared', 'tr_done', 'tr_parked', 'tr_failed'].includes(x.phase) && x.run_id)) {
-    const refusals = await db.collection('page_revisions').find({ book_id: b.id, source: 'health-gate-refused', reason: 'echo', created_at: { $gte: new Date(s.created_at) } }, { projection: { page_id: 1 } }).toArray();
+  // One scan, not one per book: page_revisions has no index for this shape and a per-book loop
+  // timed out the socket on the loaded box (2026-10-01).
+  const cands = s.books.filter((x) => ['cleared', 'tr_done', 'tr_parked', 'tr_failed'].includes(x.phase) && x.run_id);
+  const allRefusals = await db.collection('page_revisions').find({ book_id: { $in: cands.map((b) => b.id) }, source: 'health-gate-refused', reason: 'echo', created_at: { $gte: new Date(s.created_at) } }, { projection: { page_id: 1, book_id: 1 } }).toArray();
+  const refByBook = new Map();
+  for (const r of allRefusals) { if (!refByBook.has(r.book_id)) refByBook.set(r.book_id, []); refByBook.get(r.book_id).push(r); }
+  log(`echofix: ${allRefusals.length} echo refusals in ${refByBook.size} books`);
+  for (const b of cands) {
+    const refusals = refByBook.get(b.id) || [];
     if (!refusals.length) continue;
     const refused = await db.collection('pages').find({ id: { $in: refusals.map((r) => r.page_id) } }, { projection: { page_number: 1 } }).toArray();
     const nums = refused.map((p) => p.page_number);
@@ -582,5 +589,5 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   // noTimeout: a 50-book OCR submit runs for an hour; the 300 s script timeout force-exited the
   // wave-1 submit before its bookkeeping and the loop re-submitted 2,020 pages (2026-09-30).
-  await withMongo(async (db) => { await COMMANDS[cmd](db); }, { noTimeout: true });
+  await withMongo(async (db) => { await COMMANDS[cmd](db); }, { noTimeout: true, socketTimeoutMs: 600_000 });
 }
