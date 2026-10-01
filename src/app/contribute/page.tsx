@@ -131,7 +131,7 @@ export default async function ParticipatePage() {
             </div>
             <div>
               <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.translatedCount.toLocaleString('en-US')}</div>
-              <div className="text-sm text-muted mt-0.5">books with translations</div>
+              <div className="text-sm text-muted mt-0.5">books readable in English</div>
             </div>
             <div>
               <div className="text-2xl md:text-3xl font-semibold text-primary">{formatNumber(stats.galleryCount)}+</div>
