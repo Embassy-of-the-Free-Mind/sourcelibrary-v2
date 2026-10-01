@@ -55,6 +55,10 @@ import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation

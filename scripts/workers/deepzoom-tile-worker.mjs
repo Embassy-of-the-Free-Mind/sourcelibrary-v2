@@ -29,6 +29,10 @@ import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const arg = (name, dflt) => {
   const i = process.argv.indexOf(name);

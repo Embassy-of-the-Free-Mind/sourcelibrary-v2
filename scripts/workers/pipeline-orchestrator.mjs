@@ -52,6 +52,10 @@ import { holdViolation } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // Fields consolidated away from `books` (#3969). The warehouse copy of a book is
 // a snapshot taken before those consolidations, so promoting it verbatim puts

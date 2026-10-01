@@ -41,6 +41,10 @@ import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 /**
  * Save current page content as a revision before overwriting — delegates to the

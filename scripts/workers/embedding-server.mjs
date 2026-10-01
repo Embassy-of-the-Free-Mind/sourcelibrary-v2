@@ -18,6 +18,10 @@
 
 import http from 'http';
 import { pipeline } from '@xenova/transformers';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const PORT = parseInt(process.env.EMBED_PORT || '3456');
 const MODEL = 'Xenova/multilingual-e5-base';

@@ -51,6 +51,10 @@ import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import fs from 'fs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // ── CLI (explicit-list mode, see header) ──
 const ARGV = process.argv.slice(2);
