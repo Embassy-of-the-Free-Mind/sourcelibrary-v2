@@ -60,12 +60,6 @@ import { projectCanonicals, projectTotal, projectMembers, keysWithRoom, isFileQu
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
 
-// Fields consolidated away from `books` (#3969). The warehouse copy of a book is
-// a snapshot taken before those consolidations, so promoting it verbatim puts
-// them back (#4858: 2,489 `tenant_id` and 87 `pageCount` re-grown this way).
-const RETIRED_BOOK_FIELDS = JSON.parse(
-  fs.readFileSync(new URL('../lib/books-known-fields.json', import.meta.url), 'utf8'),
-).retired;
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -1047,7 +1041,7 @@ let PAUSED_PHASES = new Set();
 
 // `phase` is the pause switch: paused_phases:[phase] stops this phase and nothing else.
 // `cronPhase` is the `--phase N` run the phase rides in, for phases with no cron line of
-// their own (Phase 0.5 runs in `--phase 1`, Phase 1.95 in `--phase 2`). It does not make
+// their own (Phase 0.5 runs in `--phase 1`). It does not make
 // the phase pausable by the host's switch (#5472).
 function shouldRun(phase, cronPhase = phase) {
   if (PAUSED_PHASES.has(phase)) return false;
@@ -2825,36 +2819,6 @@ async function run() {
         }
       }
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
-
-      // Also check warehouse books for archive completion
-      // Archive workers update pages_archived on warehouse books, but Phase 1 only checks live.
-      // Use pages_archived >= pages_count as a fast check (no per-page queries needed).
-      const WAREHOUSE_ARCHIVE_CHECK_LIMIT = 200;
-      const warehouseArchiving = await db.collection('books_warehouse')
-        .find({
-          'pipeline_auto.status': 'archiving',
-          pages_count: { $gt: 0 },
-          pages_archived: { $exists: true, $gt: 0 },
-        })
-        .project({ id: 1, title: 1, pages_count: 1, pages_archived: 1 })
-        .limit(WAREHOUSE_ARCHIVE_CHECK_LIMIT)
-        .toArray();
-
-      let warehouseCompleted = 0;
-      for (const book of warehouseArchiving) {
-        if (book.pages_archived >= book.pages_count) {
-          if (!DRY_RUN) {
-            await db.collection('books_warehouse').updateOne(
-              { id: book.id },
-              { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() } }
-            );
-          }
-          warehouseCompleted++;
-        }
-      }
-      if (warehouseCompleted > 0 || warehouseArchiving.length > 0) {
-        console.log(`  Warehouse archive check: ${warehouseCompleted}/${warehouseArchiving.length} completed (${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archiving' })} total archiving)`);
-      }
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
@@ -3761,127 +3725,8 @@ Rules:
       console.log(`  AI metadata classified: ${metadataEnriched} books`);
     }
 
-    // ── Phase 1.95: Warehouse promotion (books_warehouse -> live books) ──
-    // Books sit in warehouse during archiving to reduce Atlas load. Once archive_complete,
-    // they must be promoted to the live collection before OCR can run.
-    // The old Vercel cron that did this was archived — this replaces it.
-    // Own pause switch (paused_phases:[1.95]), so pausing OCR (2) no longer stops promotion;
-    // still runs in the `--phase 2` cron (#5472).
-    if (shouldRun(1.95, 2)) {
-      const PROMOTE_LIMIT = 50; // Each book copies all pages — keep moderate to avoid Atlas spikes
-      const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
-      const promoteCandidates = await db.collection('books_warehouse')
-        .aggregate([
-          // promoted_to filter is CRITICAL: promotion marks the warehouse copy
-          // promoted_to:'live' but never changes pipeline_auto.status, so
-          // without it every promoted book stays a candidate forever and the
-          // same top-50 get re-promoted every cycle — each pass $set the STALE
-          // warehouse doc over the live one, silently reverting live edits
-          // (caught 2026-07-05: a #3002 collection re-tag kept undoing itself).
-          { $match: { 'pipeline_auto.status': 'archive_complete', promoted_to: { $ne: 'live' } } },
-          { $addFields: {
-            _priority: {
-              $switch: {
-                branches: [
-                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 },
-                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_WH] }, then: 2 },
-                ],
-                default: 1,
-              },
-            },
-          }},
-          { $sort: { _priority: 1, ...NEWEST_FIRST } },
-          { $project: { id: 1, title: 1, pages_count: 1 } },
-          { $limit: PROMOTE_LIMIT },
-        ])
-        .toArray();
-
-      if (promoteCandidates.length > 0) {
-        console.log(`\n--- Phase 1.95: Warehouse promotion ---`);
-        console.log(`  Candidates: ${promoteCandidates.length} (of ${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archive_complete' })} total)`);
-        let promoted = 0;
-        for (const candidate of promoteCandidates) {
-          try {
-            const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
-            if (!book) continue;
-            for (const f of RETIRED_BOOK_FIELDS) delete book[f];
-
-            // Check if book already exists in live (can have different _id)
-            const existingLive = await db.collection('books').findOne(
-              { id: candidate.id },
-              { projection: { _id: 1, slug: 1, collections: 1, visible: 1, hidden: 1 } }
-            );
-            if (existingLive) {
-              // Update in place, preserving live _id and live slug.
-              // The live slug may have been disambiguated on first promotion
-              // (e.g. `foo-2`), while warehouse still holds the original `foo`.
-              // Overwriting would re-trigger E11000 against the record that
-              // owns `foo` in live.
-              // Also preserve live-side curation: collections tags and the
-              // visible/hidden pair are edited on the LIVE doc (merges,
-              // enrich assignment, curators) — the warehouse copy is a stale
-              // snapshot and must not roll them back.
-              const { _id, ...bookWithoutId } = book;
-              if (existingLive.slug) delete bookWithoutId.slug;
-              if (existingLive.collections !== undefined) delete bookWithoutId.collections;
-              if (existingLive.visible !== undefined) delete bookWithoutId.visible;
-              if (existingLive.hidden !== undefined) delete bookWithoutId.hidden;
-              bookWithoutId.updated_at = new Date();
-              await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
-            } else {
-              // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
-              if (book.slug) {
-                const slugConflict = await db.collection('books').findOne(
-                  { slug: book.slug, id: { $ne: book.id } },
-                  { projection: { _id: 1 } }
-                );
-                if (slugConflict) {
-                  let suffix = 2;
-                  while (suffix < 100) {
-                    const candidate = `${book.slug}-${suffix}`;
-                    const exists = await db.collection('books').findOne({ slug: candidate }, { projection: { _id: 1 } });
-                    if (!exists) { book.slug = candidate; break; }
-                    suffix++;
-                  }
-                  console.log(`    Slug conflict resolved: ${book.slug}`);
-                }
-              }
-              await db.collection('books').insertOne(book);
-            }
-
-            // Move pages — handle _id conflicts by stripping _id for upserts matched by book_id+page_number
-            const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
-            if (pages.length > 0) {
-              const bulkOps = pages.map(page => {
-                // tenant_id is retired on pages too (#4858) — don't carry it over.
-                const { _id, tenant_id: _retired, ...pageWithoutId } = page;
-                return {
-                  updateOne: {
-                    filter: { book_id: page.book_id, page_number: page.page_number },
-                    update: { $set: pageWithoutId },
-                    upsert: true,
-                  },
-                };
-              });
-              await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
-            }
-
-            // Mark warehouse copy as promoted but keep it (permanent backup)
-            await db.collection('books_warehouse').updateOne(
-              { id: candidate.id },
-              { $set: { promoted_at: new Date(), promoted_to: 'live' } }
-            );
-
-            promoted++;
-          } catch (err) {
-            log.errors.push(`Promote ${candidate.id}: ${err.message}`);
-            console.error(`  ERROR promoting ${candidate.title?.slice(0, 60)}: ${err.message}`);
-          }
-        }
-        console.log(`  Promoted: ${promoted} books to live collection`);
-      }
-    }
+    // (Phase 1.95, warehouse promotion, was removed when the warehouse
+    // collections were retired 2026-10 and merged into books/pages, #5470.)
 
     // ── Phase 1.97: Trailing-dupe dedup (archive_complete, before OCR) ──
     // IA's PDF→page extraction often repeats a back cover / title page hundreds

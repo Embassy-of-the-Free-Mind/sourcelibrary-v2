@@ -126,7 +126,7 @@ export default async function AdminDashboard() {
       <Section id="glance" title="At a glance">
         {!L || !live ? <Missing what="The daily breakdown snapshot" how="On Hetzner: node scripts/analytics/snapshot-library-dashboard.mjs (cron 05:55 UTC)." /> : (
           <Tiles tiles={[
-            { l: 'Live books', v: fmtFull(live.books), n: snap ? `${fmtK(snap.data.invisible?.total_books ?? 0)} more hidden · ${fmtK(snap.data.warehouse?.total_books ?? 0)} in the warehouse` : undefined },
+            { l: 'Live books', v: fmtFull(live.books), n: snap ? `${fmtK(snap.data.invisible?.total_books ?? 0)} more hidden` : undefined },
             { l: 'Pages readers can open', v: fmtK(live.pages), n: all ? `${fmtK(all.pages)} across every book with pages` : undefined },
             { l: 'Readable in English', v: fmtFull(L.totals.readableLive), n: `${pct(L.totals.readableLive, live.books)} of live books` },
             { l: 'Transcribed', v: pct(live.ocr, live.pages), n: lastDay && monthAgo && lastDay.ocr != null && monthAgo.ocr != null ? `${fmtK(live.ocr)} live pages · ${signed(lastDay.ocr - monthAgo.ocr)} in 30 days (all books)` : `${fmtK(live.ocr)} live pages` },
@@ -140,7 +140,7 @@ export default async function AdminDashboard() {
             { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics?.social ? `${metrics.social.feedbackUnread} unread` : undefined },
           ]} />
         )}
-        <p className="text-xs text-stone-500 max-w-3xl leading-snug">Hidden books are imports waiting for processing or review, duplicates, and takedowns; the warehouse holds imports not yet enrolled in the pipeline. Neither is on the site. Everything below is about live books unless it says otherwise.</p>
+        <p className="text-xs text-stone-500 max-w-3xl leading-snug">Hidden books are imports waiting for processing or review, duplicates, and takedowns. They are not on the site. Everything below is about live books unless it says otherwise.</p>
       </Section>
 
       {/* ───────── The library ───────── */}

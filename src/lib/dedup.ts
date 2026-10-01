@@ -21,9 +21,10 @@ export interface DedupMatch {
   /** Whether the already-existing match is public. Hidden matches still count as
    * duplicates — this lets callers/auditors distinguish a live dup from a backlog one. */
   matchedVisible?: boolean;
-  /** Which collection the match was found in: 'books' (live) or 'books_warehouse'
-   * (acquired+archived, awaiting promotion). Both count as duplicates. */
-  matchedCollection?: 'books' | 'books_warehouse';
+  /** Which collection the match was found in. Always 'books' since the
+   * warehouse collections were retired 2026-10 (#5470); kept so the
+   * acquisition skip log keeps its shape. */
+  matchedCollection?: 'books';
   /** The matched record's publication year, or null when it states none.
    * Load-bearing for skip review: an edition-key skip where EITHER side lacks a
    * year rests on normalized title + surname alone, which is weaker evidence
@@ -223,7 +224,7 @@ export function sourceFingerprint(book: FingerprintInput): string | null {
  * duplicate groups where the scalar finds 139.
  *
  * The scalar `source_fingerprint` is unchanged and still written — everything
- * downstream (indexes, audits, the warehouse) keeps reading it.
+ * downstream (indexes, audits) keeps reading it.
  *
  * DELIBERATELY EXCLUDED — this set must stay a set of DIGITAL-OBJECT ids:
  *   - bare `dc:` values. `dublin_core.dc_identifier` is a string (not an array)
@@ -363,11 +364,9 @@ export function deriveSourceIdentifiers(url: string | null | undefined): string[
 // import into at volume). We surface the match's visibility instead of hiding it.
 const VIS_PROJ = { id: 1, title: 1, display_title: 1, year: 1, published: 1, visible: 1, hidden: 1, edition_key: 1 };
 
-// Check BOTH the live library and the warehouse. `books_warehouse` holds books
-// we've already acquired + archived that are awaiting promotion to `books`
-// (pipeline Phase 1.95). A duplicate there is still a duplicate — skipping the
-// warehouse re-acquires ~items we already hold. (issue: warehouse dedup gap)
-const COLLECTIONS: Array<'books' | 'books_warehouse'> = ['books', 'books_warehouse'];
+// Collections dedup searches. Only `books` since the warehouse collections
+// were retired 2026-10 and their content merged into `books` (#5470).
+const COLLECTIONS: Array<'books'> = ['books'];
 
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -395,7 +394,7 @@ function escapeRegex(s: string): string {
  *     the key carries the volume, so the lookup lands on the right printing.
  *
  * The candidate's key is computed on the fly; the stored side was stamped by
- * Phase 0 (identity-worker covers `books` AND `books_warehouse`).
+ * Phase 0 (identity-worker).
  */
 export async function editionKeyTierMatches(
   db: Db,
@@ -637,13 +636,12 @@ export async function checkDuplicate(
 }
 
 /**
- * Backfill normalized fields and source fingerprints on a collection.
- * Run once to populate, then maintained at import time. Defaults to `books`;
- * pass 'books_warehouse' to populate the warehouse so dedup can match it.
+ * Backfill normalized fields and source fingerprints on `books`.
+ * Run once to populate, then maintained at import time.
  */
 export async function backfillDedupFields(
   db: Db,
-  collectionName: 'books' | 'books_warehouse' = 'books'
+  collectionName: 'books' = 'books'
 ): Promise<{ updated: number; skipped: number }> {
   const cursor = db.collection(collectionName).find(
     { $or: [

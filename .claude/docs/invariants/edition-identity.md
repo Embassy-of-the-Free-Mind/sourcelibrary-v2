@@ -46,11 +46,9 @@ Two call sites, and only two:
 - `scripts/workers/identity-worker.mjs`, cron on Hetzner every 2h, which stamps
   any book missing the fields **however it was inserted** — this is what closes
   the 47-direct-insert-scripts hole, and it runs even while the pipeline is
-  paused (zero AI cost; the pause exists to stop paid work). Since 2026-08-08 it
-  covers `books_warehouse` too (backfilled: 22,542 stamped, 100 unkeyable) —
-  import dedup queries the warehouse alongside the live library, so an unstamped
-  warehouse row is invisible to any identity-keyed tier. `stale_missing` in
-  `cron_runs` is the COMBINED count across both collections.
+  paused (zero AI cost; the pause exists to stop paid work). It covers `books`
+  only: the warehouse collection it also stamped (2026-08-08 to 2026-10) was
+  merged into `books` and retired (#5470), and dedup no longer queries it.
 
 Field convention: **absent = never computed** (the worker's queue), **null =
 computed, unkeyable** (stub title — a correct terminal state, not a gap). Never
@@ -77,7 +75,7 @@ catches it (by stripping the non-Latin half). Fix the recall gap
 shadow block and `titleAuthorTierMatches()`. Audit scripts replaying
 books already in the DB must pass `{ shadowLog: false }`. The shadow block is
 fenced — it must never fail an import. Corollary of the flip: dedup recall now
-DEPENDS on Phase 0 stamping both `books` and `books_warehouse` — an unstamped
+DEPENDS on Phase 0 stamping `books` — an unstamped
 row is invisible to tier 2 (tiers 1/3 still catch same-source re-imports).
 
 ## `edition_key_quality` is not decoration — gate on it
