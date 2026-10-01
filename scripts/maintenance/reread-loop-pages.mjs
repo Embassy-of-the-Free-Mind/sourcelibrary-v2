@@ -46,12 +46,15 @@
  * Kill switch: touch scripts/output/reread-loop/STOP — submit and apply refuse to start.
  */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { rereadVerdict, storedLoops, decide } from '../lib/reread-verdict.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { contentHash } from '../lib/translate-core.mjs';
+import { batchJobProvenance, engineFromBatchJob, imageInput, ocrProvenance, codeVersion } from '../lib/write-provenance.mjs';
+import { extractPageType, extractColumns } from '../lib/ocr-result-parse.mjs';
 import { STALE_OCR_FIELDS } from '../lib/syriac-kraken-lane.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -158,6 +161,13 @@ async function submit() {
     .replace('{language}', '');
   s.prompt = { id: prompt._id?.toString(), name: prompt.name, version: prompt.version, hash: contentHash(promptText) };
   const { model, temperature } = PASSES[pass];
+  const generationConfig = { temperature, maxOutputTokens: MAX_OUTPUT_TOKENS, thinkingConfig: { thinkingBudget: 0 } };
+  // The #4613 engine block, recorded at submit and completed per page at apply (as the collector does).
+  const provenance = batchJobProvenance({
+    call_site: CALL_SITE, model,
+    prompt: { id: s.prompt.id, name: s.prompt.name, version: s.prompt.version, hash: s.prompt.hash, text: promptText },
+    generationConfig, run: { code_version: await codeVersion(), host: os.hostname() },
+  });
   let chunk = [], bytes = 0, failed = 0;
   const flush = async () => {
     if (!chunk.length) return;
@@ -167,7 +177,7 @@ async function submit() {
     });
     const j = await r.json();
     if (!r.ok) throw new Error(`batch create ${r.status}: ${JSON.stringify(j).slice(0, 300)}`);
-    s.jobs.push({ pass, model, temperature, job: j.name, page_ids: chunk.map(c => c.page_id), submitted_at: new Date().toISOString(), collected: false });
+    s.jobs.push({ pass, model, temperature, provenance, job: j.name, page_ids: chunk.map(c => c.page_id), submitted_at: new Date().toISOString(), collected: false });
     save(s);
     console.log(`pass ${pass}: ${j.name} (${chunk.length} pages)`);
     chunk = []; bytes = 0;
@@ -181,7 +191,7 @@ async function submit() {
       request: {
         contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: (r.headers.get('content-type') || 'image/jpeg').split(';')[0], data } }] }],
         safetySettings: SAFETY,
-        generationConfig: { temperature, maxOutputTokens: MAX_OUTPUT_TOKENS, thinkingConfig: { thinkingBudget: 0 } },
+        generationConfig,
       },
       metadata: { key: p.page_id },
     } });
@@ -264,15 +274,25 @@ async function apply() {
     for (const { p, d } of serve) {
       const r = s.results[p.page_id][d.pass];
       const text = fs.readFileSync(path.join(DIR, `pass${d.pass}`, `${p.page_id}.txt`), 'utf8');
+      const job = s.jobs.find(j => j.job === r.job);
+      const prov = ocrProvenance(text, engineFromBatchJob(job, { batch_job_id: r.job, input: imageInput({ url: p.url }), collected_by: CALL_SITE, now }));
+      const pageType = extractPageType(text);
+      const columns = extractColumns(text);
       const set = {
-        'ocr.data': text, 'ocr.model': r.model, 'ocr.updated_at': now, 'ocr.content_hash': contentHash(text),
+        'ocr.data': text, 'ocr.model': r.model, 'ocr.updated_at': now, 'ocr.language': p.language,
+        'ocr.has_warning': /<warning[\s>]/i.test(text),
+        // A narrower provenance label than 'batch_api', as the collector allows, so the
+        // measurement stack can segment this lane's pages (.claude/docs/data-provenance.md).
+        'ocr.source': REASON, 'ocr.source_url': p.url,
         'ocr.prompt_id': s.prompt?.id ?? null, 'ocr.prompt_version': s.prompt?.version ?? null, 'ocr.prompt_hash': s.prompt?.hash ?? null,
-        'ocr.batch_job_id': r.job, 'ocr.pipeline': REASON,
+        'ocr.prompt_name': s.prompt?.name ?? null, 'ocr.batch_job_id': r.job, 'ocr.pipeline': REASON,
+        'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine,
+        ...(pageType ? { page_type: pageType } : {}), ...(columns ? { columns } : {}),
         'ocr.reread': { issue: ISSUE, run: RUN, pass: d.pass, temperature: r.temperature, replaced: p.stored, verdict: { reasons: r.reasons, script: r.script }, at: now, by: CALL_SITE },
         updated_at: now,
       };
       const unset = STALE_OCR_FIELDS.filter(f => !(f in set));
-      const res = await db.collection('pages').updateOne({ id: p.page_id, ...HUMAN_GUARD }, [ENSURE_OCR, { $set: literal(set) }, { $unset: [...unset, 'ocr.unreadable', 'ocr.unreadable_reason'] }]);
+      const res = await db.collection('pages').updateOne({ id: p.page_id, ...HUMAN_GUARD }, [ENSURE_OCR, { $set: literal(set) }, { $unset: unset }]);
       if (res.modifiedCount === 1) served++; else totals.raced++;
     }
     for (const { p, d } of mark) {
