@@ -1,0 +1,107 @@
+{
+ "leaf_position": {
+  "pages": 166234,
+  "short": 26599,
+  "short_leaves": {
+   "3-leaf:0,1,2": 5345,
+   "3-leaf:0": 3712,
+   "2-leaf:0": 3470,
+   "2-leaf:1": 2642,
+   "3-leaf:2": 2558,
+   "2-leaf:0,1": 2443,
+   "3-leaf:1": 1294,
+   "3-leaf:0,1": 1080,
+   "3-leaf:1,2": 968,
+   "3-leaf:0,2": 518,
+   "4-leaf:0": 482,
+   "4-leaf:0,1,2,3": 381
+  }
+ },
+ "leaf_count": {
+  "at-mode": {
+   "n": 145859,
+   "short": 19339,
+   "mean_line_deficit": 0.04
+  },
+  "below-mode": {
+   "n": 26772,
+   "short": 25818,
+   "mean_line_deficit": 7.7
+  },
+  "above-mode": {
+   "n": 3711,
+   "short": 308,
+   "mean_line_deficit": -6.09
+  }
+ },
+ "rejected_leaf": {
+  "accepted": 150453,
+  "rejected:fewer-syllables": 21613,
+  "rejected:duplication": 2956,
+  "duplication:leaf-read-only:leaf-has-more-lines": 2936,
+  "rejected:fewer-lines": 617,
+  "rejected:loop": 575,
+  "loop:leaf-read-only:leaf-has-more-lines": 527,
+  "rejected:over-segmented": 252,
+  "loop:old-read-also-loops:leaf-has-more-lines": 47,
+  "rejected:validity-drop": 46,
+  "duplication:leaf-read-only:not-more": 20,
+  "loop:leaf-read-only:not-more": 1
+ },
+ "missing_lines": {
+  "sampled_pages": 2638,
+  "line_delta_leaf_minus_whole": {
+   "-3": 198,
+   "-2": 110,
+   "-1": 308,
+   "0": 1603,
+   "1": 285,
+   "2": 75,
+   "3": 59
+  },
+  "missing_whole_page_lines_by_position": {
+   "interior": 491,
+   "within-1-line-of-a-cut": 305,
+   "last": 59,
+   "first": 30
+  }
+ },
+ "served": {
+  "served_pages_in_books_of_10+": 275390,
+  "short_vs_book_median": 53984,
+  "short_share": 0.196,
+  "by_read": {
+   "serves-whole:never-leaf-read": {
+    "n": 98940,
+    "short": 7333,
+    "short_by_2+": 3574
+   },
+   "serves-leaf": {
+    "n": 150410,
+    "short": 30585,
+    "short_by_2+": 24961
+   },
+   "serves-whole:leaf-rejected": {
+    "n": 26040,
+    "short": 16066,
+    "short_by_2+": 12737
+   }
+  }
+ },
+ "gain": {
+  "reread-todo": {
+   "n": 104125,
+   "median_rel_syllable_gain": 0.15,
+   "p25": 0.071,
+   "p75": 0.284,
+   "gain_10pct+": 62928
+  },
+  "atmode-ext": {
+   "n": 46328,
+   "median_rel_syllable_gain": 0.086,
+   "p25": 0.049,
+   "p75": 0.169,
+   "gain_10pct+": 20884
+  }
+ }
+}
