@@ -3,6 +3,7 @@ import { sortCollections, sanitizeThumbnail, coverOverride } from '@/lib/collect
 import { toGalleryCardUrl } from '@/lib/utils';
 import { ES_COLLECTION_NAMES } from '@/lib/home-i18n';
 import { isNativeEdition, localizedCollection, localizedEditionFilter, localizedEditionFilterIndexed, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
+import type { StoredTranslationState } from '@/lib/translation-completeness';
 
 /**
  * Data for the Spanish collection routes (`/es/collections`, `/es/collections/[id]`).
@@ -44,6 +45,8 @@ export interface EsCollectionBook {
   pages_ocr?: number;
   pages_translated?: number;
   pages_translated_es?: number;
+  /** The stamped translation rung (#5287); the card's status line reads it. */
+  translation_state?: StoredTranslationState | null;
   localized?: LocalizedBookMap;
   is_first_translation?: boolean;
   ft_disposition?: string;
@@ -308,7 +311,8 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
       {
         projection: {
           _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, year: 1, language: 1,
-          pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1, is_first_translation: 1, ft_disposition: 1,
+          pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
+          'translation_state.rung': 1, 'translation_state.english_original': 1, is_first_translation: 1, ft_disposition: 1,
           thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, read_count: 1, 'chapters.pageNumber': 1,
         },
         // Spanish editions first, then the most-read.
@@ -374,6 +378,7 @@ export async function getEsCollection(slug: string): Promise<EsCollectionDetail 
         projection: {
           _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, year: 1, language: 1,
           pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
+          'translation_state.rung': 1, 'translation_state.english_original': 1,
           is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
         },
         sort: { year: 1, title: 1 },

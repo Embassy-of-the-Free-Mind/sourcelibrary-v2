@@ -50,6 +50,7 @@ import {
 } from './ReaderV2Bits';
 import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
+import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -672,7 +673,11 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
 
   const pagesCount = Number(full?.pages_count) || 0;
   const hasOcr = Number(full?.pages_ocr) > 0;
-  const hasTranslations = Number(full?.pages_translated) > pagesCount / 2;
+  // Rung `readable`/`complete` (#5287); unstamped books keep the >50% bar.
+  const verdict = translationVerdict(full as TranslationStateSource | null);
+  const hasTranslations = verdict !== null
+    ? verdict === 'complete' || verdict === 'translated'
+    : Number(full?.pages_translated) > pagesCount / 2;
   const imgLicense = full?.image_license as string | undefined;
   const imgProvider = (full?.image_provider as string | undefined)?.toLowerCase();
   const year = Number(full?.year_published) || undefined;
