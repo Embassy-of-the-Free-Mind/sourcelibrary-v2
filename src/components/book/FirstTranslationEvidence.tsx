@@ -33,6 +33,7 @@ import {
   type LegacyDisposition,
 } from '@/lib/first-translation/types';
 import { translationCoverage, isTranslationReadable } from '@/lib/first-translation/derive';
+import { storedRung, translationCompleteness, type StoredTranslationState } from '@/lib/translation-completeness';
 import {
   firstTranslationBadge,
   firstTranslationDescription,
@@ -74,6 +75,9 @@ interface EvidenceBook {
   pages_ocr?: number | null;
   pages_blank?: number | null;
   pages_count?: number | null;
+  pages_translatable?: number | null;
+  /** The stamped rung (#5287); the readable gate and progress note read it. */
+  translation_state?: StoredTranslationState | null;
   prior_translation?: PriorTranslationCredit;
   first_translation?: {
     verdict?: FirstTranslationVerdict;
@@ -332,7 +336,13 @@ export default async function FirstTranslationEvidence({
 
   // #3435: the claim can be true while the English edition is nowhere near
   // readable. Keep the badge, qualify it — and say how far along it actually is.
-  const coverage = translationCoverage(book);
+  // A stamped book (#5287) states its share over the WHOLE book's translatable
+  // pages — the ladder's denominator — so a preview-only book the gate refuses
+  // does not then read "about 100% … available". Unstamped: the old share.
+  const completeness = translationCompleteness(book);
+  const coverage = storedRung(book) !== null
+    ? (completeness.translatable > 0 ? completeness.translated / completeness.translatable : null)
+    : translationCoverage(book);
   const inProgress = isFirst && !isTranslationReadable(book);
 
   // A verified, publishable prior-translation credit (#3026). Populated only on

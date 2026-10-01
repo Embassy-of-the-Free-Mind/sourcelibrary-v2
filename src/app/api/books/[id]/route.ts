@@ -84,6 +84,9 @@ export const GET = withApiAuth(async (
       // translation-of-a-translation from a source text.
       original_language: 1, text_role: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
+      // The stamped translation rung (#5287) — the reader's whole-book
+      // download panel reads it instead of its own page arithmetic.
+      'translation_state.rung': 1, 'translation_state.english_original': 1,
       // Per-language edition counters, so get_book can report `editions`
       // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
       // Spanish edition by accident (#4095).

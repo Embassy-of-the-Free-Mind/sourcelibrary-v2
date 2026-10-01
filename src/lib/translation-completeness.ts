@@ -29,6 +29,8 @@
  * fallback path below.
  */
 
+import { TRANSLATION_RUNGS, type TranslationRung } from './page-counts';
+
 export interface TranslationCountsSource {
   pages_count?: number | null;
   pages_translated?: number | null;
@@ -84,4 +86,72 @@ export function translationCompleteness(book: TranslationCountsSource): Translat
 /** Convenience for the many call sites that only want the number. */
 export function translationPercent(book: TranslationCountsSource): number {
   return translationCompleteness(book).percent;
+}
+
+// ── The stored rung (#5287) ─────────────────────────────────────────────────
+// Book-level "is this translated" questions read `books.translation_state`, the
+// ladder stamped by sync-worker (#5284, `computeTranslationState()` in
+// page-counts). Call sites never compute a rung. When the field is absent the
+// book is UNSTAMPED, not untranslated: the helpers below return `null` and the
+// caller keeps its pre-ladder arithmetic as the fallback. Design and the view
+// definitions: .claude/docs/translation-state.md.
+
+/** The slice of `books.translation_state` a reader needs. Project both keys. */
+export interface StoredTranslationState {
+  rung?: string | null;
+  english_original?: boolean | null;
+}
+
+export interface TranslationStateSource {
+  translation_state?: StoredTranslationState | null;
+}
+
+/** Mongo projection for {@link TranslationStateSource}; spread into inclusion projections. */
+export const TRANSLATION_STATE_PROJECTION = {
+  'translation_state.rung': 1,
+  'translation_state.english_original': 1,
+} as const;
+
+/** The stamped rung, or `null` when the book is unstamped (or carries an unknown value). */
+export function storedRung(book: TranslationStateSource | null | undefined): TranslationRung | null {
+  const rung = book?.translation_state?.rung;
+  return typeof rung === 'string' && (TRANSLATION_RUNGS as readonly string[]).includes(rung)
+    ? (rung as TranslationRung)
+    : null;
+}
+
+/** `readable` or `complete`: the translation can be read as the book's primary text. */
+export function isReadableRung(rung: TranslationRung): boolean {
+  return rung === 'readable' || rung === 'complete';
+}
+
+/**
+ * The `readable_in_english` view for one book: translated to the 90% bar, or an
+ * English original that is transcribed. `null` = unstamped.
+ */
+export function isReadableInEnglish(book: TranslationStateSource | null | undefined): boolean | null {
+  const rung = storedRung(book);
+  if (rung === null) return null;
+  if (isReadableRung(rung)) return true;
+  return !!book?.translation_state?.english_original && (rung === 'transcribed' || rung === 'translating');
+}
+
+/**
+ * The one reader-facing verdict, so a book shows the same label everywhere
+ * (decision 2 in the design doc: "Translated" from `readable`, "Complete" only
+ * at `complete`):
+ *   - `complete`         rung `complete` (100% of translatable pages)
+ *   - `translated`       rung `readable` (≥ 90%)
+ *   - `english_original` readable as printed — an English edition, transcribed
+ *   - `none`             stamped but below the bar: show a percentage, not a verdict
+ *   - `null`             unstamped — the caller falls back to its own counters
+ */
+export type TranslationVerdict = 'complete' | 'translated' | 'english_original' | 'none';
+
+export function translationVerdict(book: TranslationStateSource | null | undefined): TranslationVerdict | null {
+  const rung = storedRung(book);
+  if (rung === null) return null;
+  if (rung === 'complete') return 'complete';
+  if (rung === 'readable') return 'translated';
+  return isReadableInEnglish(book) ? 'english_original' : 'none';
 }

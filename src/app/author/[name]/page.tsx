@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { translationPercent } from '@/lib/translation-percent';
+import { translationPercent } from '@/lib/translation-completeness';
 import { ftRenderProps } from '@/lib/first-translation/render';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -91,7 +91,7 @@ interface AuthorPageProps {
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
-  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_translatable: 1, year: 1,
   summary: 1, is_first_translation: 1,
   // What ftRenderProps needs to pick the claim register (#3726 Tier 3). The
   // old `ft_disposition: 1` projected a field Mongo books never had.
@@ -119,7 +119,7 @@ function computeBooks(raw: any[]): Book[] {
       pages_translated: b.pages_translated || 0,
       // Shared definition. The formula that stood here divided by
       // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books because
-      // "blank" leaves do get translated. See src/lib/translation-percent.ts.
+      // "blank" leaves do get translated. One formula: src/lib/translation-completeness.ts.
       translation_percent: translationPercent(b),
       ft_disposition: ft.disposition,
       ft_claim: ft.claim,

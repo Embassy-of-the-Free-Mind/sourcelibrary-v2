@@ -73,7 +73,7 @@ These are built from the counters. `translation-state.md` owns their use, and th
 | **remaining** | `max(0, translatable − pages_translated)` | backlog pricing |
 | **archive progress** | `pages_archived / pages_count` | archive selectors, watchdog |
 
-`translation_percent` (stored) has had no writer since the `sync-page-counts` cron was archived (`src/lib/translation-percent.ts` header). It is not a quantity. `translation-state.md` step 7 deletes it.
+`translation_percent` (stored) has had no writer since the `sync-page-counts` cron was archived (header of the retired `src/lib/translation-percent.ts`, #5287). It is not a quantity. `translation-state.md` step 7 deletes it.
 
 ## The single writer
 

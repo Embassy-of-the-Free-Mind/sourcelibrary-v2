@@ -65,6 +65,7 @@ import {
   type ScreenedBook,
 } from '@/lib/first-translation/candidate';
 import { firstTranslationClause } from '@/lib/first-translation-labels';
+import { storedRung, translationCompleteness, translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import { heroMosaicCurrent, heroMosaicRouteUrl, heroMosaicSource, type HeroMosaicFields } from '@/lib/hero-mosaic-version';
@@ -947,14 +948,30 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   });
   const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
   const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
-  const readablePages = Math.max(1, ocrCount - pagesBlank);
-  const translatedPct = Math.min(100, Math.round((translatedCount / readablePages) * 100));
+  // One denominator for "how translated" (#4505/#5287): translatable pages of the
+  // WHOLE book, never OCR'd pages — dividing by `pages_ocr − pages_blank` let a
+  // 25-page preview read as 100% translated (#5063).
+  const translatedPct = translationCompleteness({
+    pages_count: totalPages,
+    pages_translated: translatedCount,
+    pages_translatable: (book as unknown as { pages_translatable?: number | null }).pages_translatable,
+    pages_blank: pagesBlank,
+  }).percent;
+  // The stamped rung (`books.translation_state`) decides the verdict; null =
+  // unstamped, and the counters above stand in for it.
+  const translationState = (book as unknown as TranslationStateSource).translation_state;
+  const verdict = translationVerdict({ translation_state: translationState });
+  const translationRung = storedRung({ translation_state: translationState });
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
-  const hasTranslations = translatedCount > totalPages / 2; // >50% translated
+  // Translation is a primary view at rung `readable`/`complete` (#5287).
+  // Unstamped fallback: the pre-ladder >50% bar.
+  const hasTranslations = verdict !== null
+    ? verdict === 'complete' || verdict === 'translated'
+    : translatedCount > totalPages / 2;
   // Image-download access classification (mirrors classifyImageAccess in lib/purchases.ts):
   //  - 'open': PD / CC-BY / BPH / pre-1930 → flows through the normal member/pay gate
   //  - 'nc-free': NC-licensed → free for any signed-in user, never charged
@@ -1772,7 +1789,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </span>
                   {translatedPct > 0 && (
                     <span title={t.translatedTooltip(translatedCount)} style={{ color: '#86c98f' }}>
-                      {translatedPct >= 100 ? '✓' : `${translatedPct}%`} {t.translated}
+                      {verdict === 'complete'
+                        ? `✓ ${t.translationComplete}`
+                        : verdict === 'translated' || (verdict === null && translatedPct >= 100)
+                          ? `✓ ${t.translated}`
+                          : `${translatedPct}% ${t.translated}`}
                     </span>
                   )}
                   {!!book.is_first_translation && translatedCount > 0 && ftClause && (
@@ -2166,7 +2187,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {embedPolicy.showRelatedEditions &&
                 (book as any).work_id &&
                 totalPages > 0 &&
-                translatedCount / totalPages < 0.05 &&
+                // Effectively untranslated: stamped below `translating` and not
+                // an English original, or (unstamped) under 5% of pages.
+                (verdict !== null
+                  ? verdict === 'none' && translationRung !== 'translating'
+                  : translatedCount / totalPages < 0.05) &&
                 !['modern-translation', 'period-translation'].includes((book as any).text_role) && (
                   <Suspense fallback={null}>
                     <TranslatedSiblingNotice
@@ -2398,7 +2423,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     </AISection>
                   )}
                 </>
-              ) : hasTranslations ? (
+              ) : hasTranslations || translatedCount > 0 ? (
+                // A book part-way up the ladder is not "No translation yet" —
+                // that branch is for a book with no translated page at all.
                 <p className="text-stone-500 text-sm">
                   No summary yet.{' '}
                   <FeedbackWidget

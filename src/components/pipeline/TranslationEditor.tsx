@@ -61,6 +61,7 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import type { StoredTranslationState } from '@/lib/translation-completeness';
 import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
 
@@ -933,6 +934,7 @@ export default function TranslationEditor({
     translationUpdatedAt: page.translation?.updated_at,
     modernizedText,
     bookPagesTranslated: book.pages_translated,
+    bookTranslationState: (book as { translation_state?: StoredTranslationState | null }).translation_state,
     bookPagesCount: book.pages_count,
   });
   useEffect(() => {
