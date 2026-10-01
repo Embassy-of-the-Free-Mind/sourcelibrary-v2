@@ -22,6 +22,7 @@
  *   nice -n 10 node scripts/maintenance/clip-v4-shadow-reembed.mjs \
  *     [--clip-url=http://localhost:3458] [--concurrency=2] [--limit=N] [--dry-run] [--from-start] \
  *     [--state-dir=/var/log/sourcelibrary/clip-v4] [--only-url=S | --exclude-url=S] [--pause-ms=N]
+ *     [--stop-after-failures=200]   (exit 3 when a host keeps refusing)
  *
  * Needs the shadow columns (scripts/migration/clip-embeddings-v4-shadow.sql).
  * Next: scripts/audit/clip-v4-shadow-verify.mjs, then the cutover SQL.
@@ -79,21 +80,43 @@ if (DRY_RUN) { await db.end(); process.exit(0); }
 let cursor = !FROM_START && fs.existsSync(CHECKPOINT) ? fs.readFileSync(CHECKPOINT, 'utf8').trim() : '';
 if (cursor) log(`resuming after id ${cursor}`);
 
-let done = 0, failed = 0, skipped = 0;
+let done = 0, failed = 0, skipped = 0, stopped = false;
 const t0 = Date.now();
 
+// The SERVER being down is not a row failure. On 2026-10-01 the v4 server was
+// OOM-killed twice; each time it was back within seconds, but the worker had
+// already marked ~17-20K rows failed in a burst of instant connection errors.
+// Wait for it instead (10 tries, 30 s apart) and only then give up.
+async function postBatch(rows) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(`${CLIP_URL}/embed-images`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: rows.map(r => r.image_url) }),
+        signal: AbortSignal.timeout(10 * 60_000),
+      });
+      if (!res.ok) throw new Error(`embed-images HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      if (attempt >= 10) throw e;
+      log(`server unreachable (${e.message}), retry ${attempt}/10 in 30s`);
+      await new Promise(r => setTimeout(r, 30_000));
+    }
+  }
+}
+
+// A host that refuses everything (MDZ's 25,001-requests/day quota answers 429
+// once spent) would otherwise walk the whole pass marking rows failed and keep
+// spending the quota the archiver needs. Stop after a run of row failures.
+let consecutiveFailures = 0;
+const STOP_AFTER = parseInt(opt('stop-after-failures', '200'));
+
 async function embedBatch(rows) {
-  const res = await fetch(`${CLIP_URL}/embed-images`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ urls: rows.map(r => r.image_url) }),
-    signal: AbortSignal.timeout(10 * 60_000),
-  });
-  if (!res.ok) throw new Error(`embed-images HTTP ${res.status}`);
-  const data = await res.json();
+  const data = await postBatch(rows);
   const ok = [];
   data.results.forEach((r, i) => {
-    if (r.embedding && r.embedding.length === 512) ok.push({ ...rows[i], embedding: r.embedding });
-    else { failed++; fs.appendFileSync(FAILURES, JSON.stringify({ id: rows[i].id, url: rows[i].image_url, reason: r.error || 'no embedding', at: new Date().toISOString() }) + '\n'); }
+    if (r.embedding && r.embedding.length === 512) { consecutiveFailures = 0; ok.push({ ...rows[i], embedding: r.embedding }); }
+    else { failed++; consecutiveFailures++; fs.appendFileSync(FAILURES, JSON.stringify({ id: rows[i].id, url: rows[i].image_url, reason: r.error || 'no embedding', at: new Date().toISOString() }) + '\n'); }
   });
   if (ok.length) {
     const params = [];
@@ -116,7 +139,7 @@ while (true) {
   // A small pool: overlaps image fetches with inference without starving the box.
   for (let i = 0; i < batches.length; i += CONCURRENCY) {
     await Promise.all(batches.slice(i, i + CONCURRENCY).map(b => embedBatch(b).catch(e => {
-      failed += b.length;
+      failed += b.length; consecutiveFailures += b.length;
       for (const r of b) fs.appendFileSync(FAILURES, JSON.stringify({ id: r.id, url: r.image_url, reason: `batch: ${e.message}`, at: new Date().toISOString() }) + '\n');
     })));
     if (PAUSE_MS) await new Promise(r => setTimeout(r, PAUSE_MS));
@@ -126,8 +149,10 @@ while (true) {
   const secs = (Date.now() - t0) / 1000;
   log(`${done} written, ${failed} failed, ${skipped} skipped — ${(done / secs).toFixed(2)}/s — at ${cursor}`);
   if (LIMIT && done + failed >= LIMIT) break;
+  if (consecutiveFailures >= STOP_AFTER) { log(`STOPPING: ${consecutiveFailures} consecutive row failures — the source host is refusing (quota?); rerun later`); stopped = true; break; }
 }
 
 const { rows: [after] } = await db.query(`SELECT count(*) FILTER (WHERE ${DUE})::int AS due FROM clip_embeddings`);
 log(`DONE this pass: ${done} written, ${failed} failed, ${skipped} skipped; ${after.due} rows still due (failures in ${FAILURES})`);
 await db.end();
+if (stopped) process.exit(3);
