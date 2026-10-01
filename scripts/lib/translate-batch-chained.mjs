@@ -289,7 +289,7 @@ async function claimRun(db, run, deps) {
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
@@ -297,10 +297,12 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit });
+  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
   const estimate = estimateChainedUsd({ prompts, book, pages, model });
+  // dryRun: every refusal above, then stop — the queue and price an enrol would make, nothing written.
+  if (dryRun) return { ok: true, dryRun: true, book, model, pages, excluded, estimate };
   if (!(Number(approvedUsd) >= estimate)) return { ok: false, reason: `estimate $${estimate} exceeds approved $${approvedUsd ?? 0}`, book, estimate };
 
   const now = deps.now ? deps.now() : new Date();

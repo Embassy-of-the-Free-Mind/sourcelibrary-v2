@@ -26,6 +26,9 @@
  *   --chained --plan   --book=ID                        FREE  queue, blocks, estimate
  *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
  *                                                             submit the first rounds in shared jobs
+ *             [--pages-file=F] [--exclude-withheld]          F = JSON { bookId: [pageId] }: queue only
+ *             [--dry-run]                                    those pages (implies --exclude-withheld);
+ *                                                             --dry-run plans + prices, enrols nothing
  *   --chained --enrol-auto [--limit=40] [--max-open=60] PAID  enrol what the gap-fill would want
  *             [--zero-only] [--min-pages=N]                     (AUTO_STATUSES), each approved at
  *             [--exclude-chinese] [--include-hidden]            pages × $0.0012, then submit;
@@ -307,14 +310,33 @@ async function chained(db) {
   }
 
   if (has('enrol')) {
-    if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
+    // Page-level targeting: --pages-file=FILE is JSON { bookId: [pageId, …] }; only those pages
+    // are queued (still re-checked by selectPages), and it implies --exclude-withheld.
+    const pagesByBook = arg('pages-file') ? JSON.parse(fs.readFileSync(arg('pages-file'), 'utf8')) : null;
+    const excludeWithheld = has('exclude-withheld') || !!pagesByBook;
     const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
-    if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID');
+    if (!ids.length && pagesByBook) ids.push(...Object.keys(pagesByBook));
+    if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID (or --pages-file)');
+    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld });
     const prompts = await loadTranslationPrompts(db);
+    if (has('dry-run')) {
+      // FREE: the queue and estimate each enrol would make; nothing written, nothing sent.
+      let pagesTotal = 0, usdTotal = 0;
+      for (const id of ids) {
+        const plan = await enrolChainedRun(db, id, deps(), { prompts, limit: arg('limit') ? Number(arg('limit')) : undefined, dryRun: true, ...target(id) });
+        if (!plan.ok) { console.log(`  ${id}: REFUSED — ${plan.reason}`); continue; }
+        const est = plan.estimate;
+        pagesTotal += plan.pages.length; usdTotal += est;
+        console.log(`  ${id}  ${String(plan.book.language).slice(0, 12).padEnd(12)} ${String(plan.pages.length).padStart(4)}pp  ${plan.model}  est $${est}  ${String(plan.book.title || '').slice(0, 50)}`);
+      }
+      console.log(`  DRY RUN: ${pagesTotal} pages, estimate $${usdTotal.toFixed(4)} — nothing enrolled`);
+      return;
+    }
+    if (KEYS.length === 0) throw new Error('No GEMINI_API_KEY* set');
     // Enrol every book first, then submit their first rounds together: N books share ⌈N/50⌉ jobs.
     const enrolled = [];
     for (const id of ids) {
-      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined, submit: false });
+      const res = await enrolChainedRun(db, id, deps(), { prompts, approvedUsd: arg('approved-usd'), limit: arg('limit') ? Number(arg('limit')) : undefined, submit: false, ...target(id) });
       if (!res.ok) { console.log(`  ${id}: REFUSED — ${res.reason}`); process.exitCode = 2; }
       else { enrolled.push(res.run); console.log(`  ${id}: run ${res.run.id} est $${res.estimate}`); }
     }

@@ -751,3 +751,46 @@ describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reade
     expect(again.reason).toMatch(/^open-run/);
   });
 });
+
+// ── Page-level targeting (eternity finish pass, #5513) ─────────────────────
+describe('enrol can be narrowed to named pages and kept off withheld pages', () => {
+  const withhold = (n: number) => { pageDoc(db, n).translation_withheld = { reason: 'withhold-stale-translation-4523', withheld_at: new Date() }; };
+
+  it('by default a withheld page is queued (the #5309 driver relies on it)', async () => {
+    withhold(2);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.run.queue.map((q: Doc) => q.id)).toContain('p2');
+  });
+
+  it('excludeWithheld drops withheld pages from the queue', async () => {
+    withhold(2); withhold(5);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, excludeWithheld: true });
+    const ids = res.run.queue.map((q: Doc) => q.id);
+    expect(ids).not.toContain('p2');
+    expect(ids).not.toContain('p5');
+    expect(ids).toHaveLength(N_PAGES - 2);
+  });
+
+  it('pageIds queues only those pages, still minus withheld ones', async () => {
+    withhold(4);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, pageIds: ['p3', 'p4', 'p9'], excludeWithheld: true });
+    expect(res.run.queue.map((q: Doc) => q.id)).toEqual(['p3', 'p9']);
+  });
+
+  it('an empty page list enrols nothing', async () => {
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, pageIds: [] });
+    expect(res).toMatchObject({ ok: false, reason: 'nothing-to-translate' });
+  });
+});
+
+describe('enrol dryRun', () => {
+  it('prices the queue and writes nothing', async () => {
+    const gemini = makeGemini();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, dryRun: true, pageIds: ['p1', 'p2'] });
+    expect(res).toMatchObject({ ok: true, dryRun: true });
+    expect(res.pages.map((p: Doc) => p.id)).toEqual(['p1', 'p2']);
+    expect(res.estimate).toBeGreaterThan(0);
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(0);
+    expect(gemini.submitted).toHaveLength(0);
+  });
+});
