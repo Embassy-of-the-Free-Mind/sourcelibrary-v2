@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
+import ErrorLadder from './ErrorLadder';
 
 // Every number on this page is embedded at build from a committed file in
 // scripts/eval/ (see SOURCES). No request-time fetch, so ISR cannot cache a
@@ -339,6 +340,105 @@ function DecisionsTable() {
           </tbody>
         ))}
       </table>
+    </div>
+  );
+}
+
+/* ── Page furniture for the results part: block headings, callouts, key findings, contents ── */
+function Block({ id, title, lede, children }: { id: string; title: string; lede?: ReactNode; children: ReactNode }) {
+  return (
+    <section id={id} className="mt-14 scroll-mt-24">
+      <h2 className="text-xl md:text-2xl text-primary mb-3 text-balance">{title}</h2>
+      {lede && <p className="text-secondary leading-relaxed mb-5 max-w-3xl">{lede}</p>}
+      {children}
+    </section>
+  );
+}
+
+function Callout({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <aside className="my-6 border-l-2 border-accent-rust bg-white/60 rounded-r px-4 py-3 max-w-3xl">
+      <div className="text-sm font-semibold text-primary mb-1">{title}</div>
+      <div className="text-sm text-secondary leading-relaxed">{children}</div>
+    </aside>
+  );
+}
+
+const KEY_FINDINGS: { figure: string; text: ReactNode; href: string }[] = [
+  { figure: '89%', text: <>of served pages rated faithful to their transcription by a model judge (CI 85–92); 71% for non-Latin scripts.</>, href: '#s4' },
+  { figure: '⅔', text: <>of translated pages are Latin, English or German, where transcription error is measured at 0.6–5.3%.</>, href: '#by-language' },
+  { figure: 'Greek', text: <>is the largest gap: a tenth of the library, 11% character error on the current engine, 75% rated faithful.</>, href: '#by-language' },
+  { figure: '13%', text: <>of translated pages (French, Italian, Dutch, Spanish) have no transcription measurement yet.</>, href: '#by-language' },
+  { figure: '0', text: <>results checked by a person who reads the language. A reader panel is preregistered.</>, href: '#s6' },
+];
+
+function KeyFindings() {
+  return (
+    <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 list-none p-0 m-0">
+      {KEY_FINDINGS.map(f => (
+        <li key={f.figure} className="border border-light rounded bg-white/60 p-3 min-w-0">
+          <a href={f.href} className="block group">
+            <div className="text-2xl text-primary font-serif tabular-nums mb-1">{f.figure}</div>
+            <div className="text-sm text-secondary leading-snug group-hover:text-primary">{f.text}</div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+const CONTENTS: { group: string; items: [string, string][] }[] = [
+  { group: 'Results', items: [['#by-language', 'Quality by language'], ['#error-ladder', 'What an error rate looks like'], ['#engines', 'The engines'], ['#decisions', 'Which engine does what, and why'], ['#at-a-glance', 'Quality by test']] },
+  { group: 'The paper', items: [['#s1', '1. The reader’s question'], ['#s2', '2. Related work'], ['#s3', '3. Transcription'], ['#s4', '4. Translation'], ['#s5', '5. What none of this measures'], ['#s6', '6. The reader panel'], ['#s7', '7. Limitations'], ['#s8', '8. Data and code'], ['#s9', '9. References']] },
+];
+
+function Contents() {
+  return (
+    <nav aria-label="Contents" className="grid gap-6 sm:grid-cols-2 text-sm border-y border-light py-5">
+      {CONTENTS.map(g => (
+        <div key={g.group}>
+          <div className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-2">{g.group}</div>
+          <ul className="list-none p-0 m-0 space-y-1">
+            {g.items.map(([href, label]) => (
+              <li key={href}><a href={href} className="text-secondary hover:text-accent-rust">{label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  );
+}
+
+/* ── The engines: what each reader of a page is ── */
+type Engine = { name: string; maker: string; kind: 'commercial API' | 'open model' | 'existing text'; role: string; strengths: string; failures: string; issue?: number };
+const ENGINES: Engine[] = [
+  { name: 'Gemini 3.1 Flash-Lite', maker: 'Google', kind: 'commercial API', role: 'Reads every new transcription batch since 11 September 2026, in every language, and translates every page.', strengths: 'Cheapest Gemini model; close to Flash on clean European print.', failures: 'On hard scripts it can write plausible text that is not on the page (Tibetan, Jawi, Syriac); refuses about one English page in seven as “recitation”; loops on some manuscripts.' },
+  { name: 'Gemini 3 Flash', maker: 'Google', kind: 'commercial API', role: 'Read most non-Latin-script pages before 11 September 2026.', strengths: 'Lower error than Flash-Lite on Greek and Chinese in our benchmarks.', failures: 'About twice the input price of Flash-Lite; shares its recitation and refusal behaviour on famous texts.' },
+  { name: 'PaddleOCR-VL 1.6', maker: 'Baidu (PaddlePaddle)', kind: 'open model', role: 'Proposed reader for Chinese manuscripts; piloted on our own server.', strengths: 'On Siku Quanshu manuscripts, 0.9% of pages catastrophically wrong against Flash-Lite’s 10.6%.', failures: 'Its output does not yet fit our page format; no writer accepts it today.', issue: 5547 },
+  { name: 'Kraken', maker: 'open source, with community-trained models', kind: 'open model', role: 'Reads Syriac (Beth Mardutho models); tested for Greek.', strengths: 'Reads what is on the leaf instead of a remembered text; trainable on a script.', failures: 'Only as good as the model for the script and hand; rejected for 18th-century Greek.', issue: 4883 },
+  { name: 'Yigdzin (BDRC)', maker: 'Buddhist Digital Resource Center', kind: 'open model', role: 'Re-reads Tibetan pages.', strengths: '0.88 identity with the Derge e-text, against 0.41 for Gemini.', failures: 'Specialised to Tibetan; needs its own page-layout handling.', issue: 4523 },
+  { name: 'NDL classical OCR v3', maker: 'National Diet Library, Japan', kind: 'open model', role: 'Proposed for Japanese cursive (kuzushiji).', strengths: 'Coherent on cursive pages where both Gemini models looped or invented.', failures: 'No reference texts yet, so its accuracy is unmeasured.', issue: 4745 },
+  { name: 'MinerU', maker: 'OpenDataLab', kind: 'open model', role: 'Candidate fallback for English print when Gemini refuses.', strengths: 'Never refuses; strong on layout.', failures: 'Read worse than Flash-Lite page by page (10 to 49) and dropped footnotes before a fix.', issue: 5182 },
+  { name: 'Internet Archive text layer', maker: 'the Internet Archive', kind: 'existing text', role: 'The OCR text published with each Archive scan; kept as a provisional first read on import.', strengths: 'Free and already there.', failures: 'Flash-Lite read better on 57 books to 5; misreads about 1.5% of printed numbers.', issue: 5186 },
+];
+
+function EngineCards() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {ENGINES.map(e => (
+        <article key={e.name} className="border border-light rounded bg-white/60 p-4 min-w-0">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-3 mb-2">
+            <h3 className="text-lg text-primary font-semibold">{e.name}</h3>
+            <span className="text-xs text-muted">{e.maker} · {e.kind}</span>
+          </div>
+          <dl className="text-sm leading-snug space-y-1.5">
+            <div><dt className="inline text-muted">Role: </dt><dd className="inline text-secondary">{e.role}</dd></div>
+            <div><dt className="inline text-muted">Good at: </dt><dd className="inline text-secondary">{e.strengths}</dd></div>
+            <div><dt className="inline text-muted">Fails by: </dt><dd className="inline text-secondary">{e.failures}</dd></div>
+          </dl>
+          {e.issue && <a href={`${GH_ISSUE}${e.issue}`} className="text-xs text-accent-rust hover:underline mt-2 inline-block">Evidence: #{e.issue}</a>}
+        </article>
+      ))}
     </div>
   );
 }
@@ -856,22 +956,33 @@ export default function ResearchQualityPage() {
             Source Library publishes AI transcriptions and English translations of historical books in more than fifteen languages. A reader asks one thing of any page: does this English say what is printed on this leaf? We split that question into three links: the image shown is the leaf transcribed, the transcription matches the image, and the translation matches the transcription. We then ask which link each of our quality instruments actually measures.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            Transcription. Where a reference text exists, we measure accuracy. On Latin print the character error rate is {pc1(LATIN_FLASH.median)} for one engine and {pc1(LATIN_LITE.median)} for the cheaper one, which now reads every new page. Most scripts and periods still have too few reference pages to decide anything. Reading a page twice and comparing the reads is a cheaper screen. On pages held out from tuning it finds a little over half of the pages a judge called garbled, and only about 30% of the pages it flags are garbled. It also caught all six pages we already knew showed the wrong leaf, and found a seventh.
+            <strong className="text-primary">Transcription.</strong> Where a reference text exists, we measure accuracy. On Latin print the character error rate is {pc1(LATIN_FLASH.median)} for one engine and {pc1(LATIN_LITE.median)} for the cheaper one, which now reads every new page. Most scripts and periods still have too few reference pages to decide anything. Reading a page twice and comparing the reads is a cheaper screen. On pages held out from tuning it finds a little over half of the pages a judge called garbled, and only about 30% of the pages it flags are garbled. It also caught all six pages we already knew showed the wrong leaf, and found a seventh.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            Translation. A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
+            <strong className="text-primary">Translation.</strong> A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            By language. The picture is uneven. Latin, English and German, two-thirds of translated pages, have measured transcription (0.6–5.3% character error on the current engine) and the judge rated 92–97% of their pages faithful. Greek, a tenth of the library, is the largest gap: 11% character error on the current engine (6.6% on Flash) and 75% rated faithful. French, Italian, Dutch and Spanish, about 13% of translated pages, have no transcription measurement at all, and most smaller languages have too few judged books to compare with each other. Chinese shows 19–25% character error, but against other editions of the same texts, so part of that may be variant characters rather than misreads. The grid below gives every language.
+            <strong className="text-primary">By language.</strong> The picture is uneven. Latin, English and German, two-thirds of translated pages, have measured transcription (0.6–5.3% character error on the current engine) and the judge rated 92–97% of their pages faithful. Greek, a tenth of the library, is the largest gap: 11% character error on the current engine (6.6% on Flash) and 75% rated faithful. French, Italian, Dutch and Spanish, about 13% of translated pages, have no transcription measurement at all, and most smaller languages have too few judged books to compare with each other. Chinese shows 19–25% character error, but against other editions of the same texts, so part of that may be variant characters rather than misreads. The grid below gives every language.
           </p>
           <p className="text-secondary leading-relaxed">
-            The missing part. None of these measurements involves a human reader. We preregister a standing panel of volunteers who read the source languages. Each is asked one question about one page drawn from the judge&rsquo;s own monthly sample. We will report how often the readers agree with the judge, what each side misses, and how many volunteers answer when asked.
+            <strong className="text-primary">The missing part.</strong> None of these measurements involves a human reader. We preregister a standing panel of volunteers who read the source languages. Each is asked one question about one page drawn from the judge&rsquo;s own monthly sample. We will report how often the readers agree with the judge, what each side misses, and how many volunteers answer when asked.
           </p>
         </section>
 
-        {/* ── By language ── */}
-        <section id="by-language" className="mb-12">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Quality by language</h2>
+        {/* ── Key findings and contents ── */}
+        <section aria-label="Key findings" className="mb-8">
+          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-3">Key findings</h2>
+          <KeyFindings />
+        </section>
+        <Contents />
+
+        {/* ── Results ── */}
+        <div className="mt-12">
+          <div className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Results</div>
+        </div>
+
+        <Block id="by-language" title="Quality by language">
+
           <p className="text-secondary leading-relaxed mb-4">
             One row per catalogue language, largest first. The question for each row is how good its pages are and how sure we are. Character error is measured against a published e-text, one page per book; Flash-Lite has read every new page since 11 September 2026, and Flash, which read most non-Latin pages before then, is shown for comparison. The translation column is the share of pages a model judge rated faithful (4 or 5 of 5), which is a model&rsquo;s judgement and not accuracy. No row has yet been checked by a person who reads the language (§6).
           </p>
@@ -879,11 +990,32 @@ export default function ResearchQualityPage() {
           <p className="text-xs text-muted leading-relaxed mt-3">
             Grades count the books behind a cell: under 30 exploratory, 30 to 49 directional, 50 or more decision-grade. Translation figures pool every monthly random-sample audit, counting each book once ({byLanguage.translation_books} books so far). Share of translated pages is each language&rsquo;s share of live translated pages at the audit draw. Generated {byLanguage.generated} by scripts/eval/quality-by-language.mjs.<N n={1} /><N n={6} />
           </p>
-        </section>
+        
+        </Block>
 
-        {/* ── At a glance ── */}
-        <section id="at-a-glance" className="mb-12">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Quality by test</h2>
+        <Block id="error-ladder" title="What an error rate looks like" lede="A character error rate or a judge rating means little until it is seen. Each rung is a real page from the measurements above, with what that level of error allows a reader to do.">
+          <ErrorLadder />
+        </Block>
+
+        <Block id="engines" title="The engines" lede="A page can be read by a commercial model or by an open model trained for one script. These are the readers in use or under test, what each is good at, and how each fails.">
+          <EngineCards />
+        </Block>
+
+        <Block id="decisions" title="Which engine does what, and why">
+
+          <p className="text-secondary leading-relaxed mb-4">
+            The measurements above exist to choose engines and prompts. Each row is one of those choices: what was compared, on what evidence, what it found, and what was decided. A rule for each comparison was written down before the run. &ldquo;Decided&rdquo; means a person signed off; &ldquo;pending&rdquo; means the result is in and the decision is not; &ldquo;open&rdquo; means the evidence cannot yet settle it, or practice differs from it.
+          </p>
+          <DecisionsTable />
+          <Callout title="One decision cuts across the transcription rows">
+            Since 11 September 2026, to hold down cost, every new transcription batch runs on Gemini Flash-Lite, in every language. The per-script choices above (Flash for Greek, Chinese and other non-Latin scripts) describe pages read before that date and the routing the experiments support; Syriac and Tibetan are read outside Gemini and are unaffected. The full ledger, with every run and its re-measure trigger, is <a href={`${GH}scripts/eval/DECISIONS.md`} className="text-accent-rust hover:underline">scripts/eval/DECISIONS.md</a>.
+          </Callout>
+
+        
+        </Block>
+
+        <Block id="at-a-glance" title="Quality by test">
+
           <p className="text-secondary leading-relaxed mb-4">
             Every quality test in this draft, grouped by the link it checks. &ldquo;Checked against&rdquo; is the point: only the rows checked against published texts measure accuracy, and no row is yet checked against a person. The evidence grade counts independent books or pages: under 30 is exploratory, 30 to 49 directional, 50 or more decision-grade.
           </p>
@@ -891,19 +1023,10 @@ export default function ResearchQualityPage() {
           <p className="text-xs text-muted leading-relaxed mt-3">
             Bars show a share on a 0–100% scale, with the dot at the estimate and the line spanning the 95% interval; rows without a bar report a quantity that is not a share. A grade says how many units stand behind a row, not that the row measures the right thing.
           </p>
-        </section>
+        
+        </Block>
 
-        {/* ── Decisions ── */}
-        <section id="decisions" className="mb-12">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Which engine does what, and why</h2>
-          <p className="text-secondary leading-relaxed mb-4">
-            The measurements above exist to choose engines and prompts. Each row is one of those choices: what was compared, on what evidence, what it found, and what was decided. A rule for each comparison was written down before the run. &ldquo;Decided&rdquo; means a person signed off; &ldquo;pending&rdquo; means the result is in and the decision is not; &ldquo;open&rdquo; means the evidence cannot yet settle it, or practice differs from it.
-          </p>
-          <DecisionsTable />
-          <p className="text-secondary leading-relaxed mt-4">
-            One decision cuts across the transcription rows. Since 11 September 2026, to hold down cost, every new transcription batch runs on Gemini Flash-Lite, in every language. The per-script choices above (Flash for Greek, Chinese and other non-Latin scripts) describe pages read before that date and the routing the experiments support; Syriac and Tibetan are read outside Gemini and are unaffected. The full ledger, with every run and its re-measure trigger, is <a href={`${GH}scripts/eval/DECISIONS.md`} className="text-accent-rust hover:underline">scripts/eval/DECISIONS.md</a>.
-          </p>
-        </section>
+        <div className="mt-16 text-xs uppercase tracking-[0.16em] text-muted font-semibold">The paper</div>
 
         {/* ── 1 ── */}
         <Section n={1} title="The reader's question">
