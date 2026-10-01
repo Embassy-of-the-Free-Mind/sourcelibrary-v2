@@ -25,6 +25,7 @@
  */
 
 import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { addEmbedUsage } from './embedding-usage.mjs';
 
 export const EMBED_MODEL = 'gemini-embedding-2-preview';
@@ -60,9 +61,8 @@ const MAX_TEXT_CHARS = 50000;
  */
 export function cleanPageText(text, { maxChars = MAX_CHARS } = {}) {
   if (!text || typeof text !== 'string') return '';
-  return stripEditorialWrappers(text)
-    .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
+  return stripMarkupTags(stripEditorialWrappers(text)
+    .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' '))
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, maxChars);

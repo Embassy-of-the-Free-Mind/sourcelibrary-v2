@@ -17,6 +17,15 @@ import { pageReadCaution } from '../../src/lib/transcription-reliability';
 import { imageDescLen } from '../../src/lib/translate-write';
 import { cleanText } from '../../scripts/eval/lib/metrics.mjs';
 import { stripTags } from '../../scripts/eval/lib/edition-window.mjs';
+// The scripts/lib follow-up sites (#5579).
+import { stripOcrMetadata } from '../../scripts/lib/language-content-classify.mjs';
+import { letterTrigrams } from '../../scripts/lib/ocr-plausibility.mjs';
+import { cleanPageText } from '../../scripts/lib/page-embedding-text.mjs';
+import { parseTranslationTerms, parseOcrVocab } from '../../scripts/lib/page-terms-parse.mjs';
+import { letterCount } from '../../scripts/lib/syriac-kraken-lane.mjs';
+import { pageProse } from '../../scripts/lib/title-page-ocr.mjs';
+import { strippedBodyLen } from '../../scripts/lib/translate-batch-chained.mjs';
+import { pageSkeleton } from '../../scripts/lib/translit-skeleton.mjs';
 
 // Verbatim shape of the Jonson *Catiline* 1611 page that scored "omitted 100+ words" (#5564).
 const REPRO = '->**Fulvia, Galla,**<-\n->**Servant.**<-\nThose Roomes doe smell extremely…\n<vocab>Fulvia</vocab>';
@@ -96,5 +105,65 @@ describe('call sites keep the body after a centred line', () => {
   it('eval cleanText and edition-window stripTags', () => {
     expect(cleanText(REPRO, 'latin')).toContain('Those Roomes');
     expect(stripTags(REPRO)).toContain('Those Roomes');
+  });
+});
+
+describe('scripts/lib follow-up sites keep the body after a centred line (#5579)', () => {
+  // The issue's repro, plus a body tag after the text. Most sites strip <vocab> blocks
+  // before the generic strip, which leaves the repro's `<-` with no `>` to run to; the
+  // inline <i> survives those block strips, so only the second page pins those sites.
+  const PAGES = [
+    '->**Servant.**<-\nThose Roomes doe smell extremely\n<vocab>x</vocab>',
+    '->**Servant.**<-\nThose Roomes doe <i>smell</i> extremely\n<vocab>x</vocab>',
+  ];
+  const BODY = 'Those Roomes doe smell extremely';
+
+  it('negative control: the bare pattern loses the body of both pages', () => {
+    for (const p of PAGES) expect(p.replace(/<[^>]+>/g, ' ')).not.toContain('Those Roomes');
+  });
+
+  it('language-content-classify stripOcrMetadata', () => {
+    for (const p of PAGES) expect(stripOcrMetadata(p)).toContain('Those Roomes');
+  });
+
+  it('ocr-plausibility letterTrigrams', () => {
+    for (const p of PAGES) expect(letterTrigrams(p)).toEqual(expect.arrayContaining(['roo', 'oom', 'mel']));
+  });
+
+  it('page-embedding-text cleanPageText (the embedding input)', () => {
+    for (const p of PAGES) expect(cleanPageText(p)).toContain(BODY);
+    // stripEditorialWrappers already unwrapped a same-line `->x<-`, so only a pair that
+    // spans lines (or a stray `<-`) used to cut the embedding text. Pin those.
+    expect(cleanPageText('->**Fulvia,\nServant.**<-\nThose Roomes doe <i>smell</i> extremely')).toContain(BODY);
+    expect(cleanPageText('Servant.<-\nThose Roomes doe <i>smell</i> extremely')).toContain(BODY);
+  });
+
+  it('page-terms-parse keeps the context before a <term> and the term itself', () => {
+    const tr = '->**Servant.**<-\nThose Roomes doe <i>smell</i> of <term>frankincense</term> <gloss>olibanum</gloss>';
+    const [row] = parseTranslationTerms(tr, null);
+    expect(row.term).toBe('frankincense');
+    expect(row.context).toContain('Those Roomes');
+    expect(parseOcrVocab('<vocab>->Servant<- (a man), Roome (<i>chamber</i>)</vocab>').map(r => r.term))
+      .toEqual(expect.arrayContaining(['Servant', 'Roome']));
+  });
+
+  it('syriac-kraken-lane letterCount', () => {
+    // Servant + Those Roomes doe smell extremely + x — the <vocab> body is page text here.
+    for (const p of PAGES) expect(letterCount(p)).toBe('ServantThoseRoomesdoesmellextremelyx'.length);
+  });
+
+  it('title-page-ocr pageProse', () => {
+    for (const p of PAGES) expect(pageProse(p)).toContain(BODY);
+  });
+
+  it('translate-batch-chained strippedBodyLen', () => {
+    for (const p of PAGES) expect(strippedBodyLen(p)).toBeGreaterThanOrEqual(BODY.length);
+  });
+
+  it('translit-skeleton pageSkeleton', () => {
+    const word = 'ἀλλοπρόσαλλος';
+    const greek = `->Λόγος<-\n${word}\n<vocab>x</vocab>`;
+    expect(greek.replace(/<[^>]+>/g, ' ')).not.toContain(word);
+    expect(pageSkeleton('Greek', greek).str).toContain(pageSkeleton('Greek', word).str);
   });
 });

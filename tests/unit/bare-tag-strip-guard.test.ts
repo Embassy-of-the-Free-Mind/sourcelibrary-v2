@@ -22,16 +22,6 @@ const ALLOW: Record<string, string> = {
   'scripts/lib/strip-markup-tags.mjs': 'the helper itself (markers removed first)',
   'src/lib/strip-editorial-wrappers.ts': 'mentioned in a comment only',
   'scripts/eval/lib/wikisource-text.mjs': 'Wikisource wikitext/HTML references, never OCR output',
-  // Follow-ups for #5564: these do run over OCR/translation text but were outside
-  // the first pass. Remove each line as it is switched to stripMarkupTags.
-  'scripts/lib/language-content-classify.mjs': 'follow-up #5564',
-  'scripts/lib/ocr-plausibility.mjs': 'follow-up #5564',
-  'scripts/lib/page-embedding-text.mjs': 'follow-up #5564',
-  'scripts/lib/page-terms-parse.mjs': 'follow-up #5564',
-  'scripts/lib/syriac-kraken-lane.mjs': 'follow-up #5564 (Syriac Kraken output, no centring markers expected)',
-  'scripts/lib/title-page-ocr.mjs': 'follow-up #5564',
-  'scripts/lib/translate-batch-chained.mjs': 'follow-up #5564',
-  'scripts/lib/translit-skeleton.mjs': 'follow-up #5564',
 };
 
 function walk(dir: string, out: string[] = []): string[] {
