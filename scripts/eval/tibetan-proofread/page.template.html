@@ -1,0 +1,283 @@
+<title>Kangyur Proofreading Desk</title>
+<!-- PRIOR ART: scripts/eval/build-gold-annotator.mjs (self-contained annotator HTML) — labels books with a verdict; this edits page text line by line beside the leaf image. Built by build-page.mjs; see README.md. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tibetan:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a reading desk. Folio list on the left; the leaf image pinned above its transcription on the right,
+   one editable row per manuscript line, the vermilion of the leaf's own ruling as the only accent. */
+:root {
+  --bg: #eef0f1; --panel: #f9fafa; --ink: #1d2328; --muted: #5f6a72; --rule: #cfd5d9;
+  --accent: #b23a26; --accent-soft: #f3dcd6; --ok: #2f6b45; --ok-soft: #dcebe0; --warn: #8a5a00; --warn-soft: #f5e7c8;
+  --field: #ffffff; --mount: #3c4650;
+  --tib: "Noto Serif Tibetan", "Jomolhari", "Microsoft Himalaya", "Kailasa", serif;
+  --body: "Source Serif 4", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15191c; --panel: #1c2226; --ink: #e4e8ea; --muted: #97a2a9; --rule: #2f383e;
+  --accent: #e0745f; --accent-soft: #46261f; --ok: #7cc495; --ok-soft: #1f3a29; --warn: #e3b55c; --warn-soft: #3d3016;
+  --field: #11161a; --mount: #0d1013; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15191c; --panel: #1c2226; --ink: #e4e8ea; --muted: #97a2a9; --rule: #2f383e;
+  --accent: #e0745f; --accent-soft: #46261f; --ok: #7cc495; --ok-soft: #1f3a29; --warn: #e3b55c; --warn-soft: #3d3016;
+  --field: #11161a; --mount: #0d1013; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.app { display: grid; grid-template-columns: 250px minmax(0, 1fr); height: 100%; }
+aside { border-right: 1px solid var(--rule); background: var(--panel); display: flex; flex-direction: column; min-height: 0; }
+.brand { padding: 16px 16px 12px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
+.brand h1 { font-size: 17px; margin: 0; font-weight: 600; text-wrap: balance; }
+.brand p { margin: 0; color: var(--muted); font-size: 13px; }
+label.small { font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; display: grid; gap: 4px; }
+input[type=text], textarea { font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 8px; }
+input[type=text]:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.progress { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--ok); width: 0; }
+ol.folios { list-style: none; margin: 0; padding: 6px 0; overflow-y: auto; flex: 1; }
+ol.folios button { width: 100%; text-align: left; background: none; border: 0; padding: 7px 16px; display: grid; grid-template-columns: 26px minmax(0,1fr) auto; gap: 8px; align-items: center; color: var(--ink); cursor: pointer; font: 13px var(--body); }
+ol.folios button:hover { background: var(--bg); }
+ol.folios button[aria-current="true"] { background: var(--accent-soft); }
+ol.folios .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+ol.folios .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip { font: 11px var(--mono); padding: 1px 6px; border-radius: 9px; background: var(--rule); color: var(--muted); }
+.chip.progress-c { background: var(--warn-soft); color: var(--warn); }
+.chip.done { background: var(--ok-soft); color: var(--ok); }
+.side-foot { border-top: 1px solid var(--rule); padding: 12px 16px; display: grid; gap: 8px; }
+button.btn { font: 13px var(--body); border: 1px solid var(--rule); background: var(--field); color: var(--ink); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+button.btn:hover { border-color: var(--muted); }
+button.primary { background: var(--ok); border-color: var(--ok); color: var(--panel); font-weight: 600; }
+.store { font-size: 12px; color: var(--muted); }
+main { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.head { padding: 12px 20px; border-bottom: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; background: var(--panel); }
+.head h2 { margin: 0; font-size: 18px; font-weight: 600; text-wrap: balance; }
+.head .meta { font: 12px var(--mono); color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+.head a { color: var(--accent); }
+.leaf { position: relative; background: var(--mount); height: 44vh; min-height: 220px; overflow: auto; border-bottom: 3px solid var(--rule); cursor: grab; }
+.leaf img { display: block; max-width: none; user-select: none; }
+.zoom { position: sticky; top: 8px; left: 8px; float: left; z-index: 2; display: flex; gap: 4px; margin: 8px; }
+.zoom button { font: 12px var(--mono); background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; cursor: pointer; }
+.zoom button[aria-pressed="true"] { background: var(--accent); color: var(--panel); border-color: var(--accent); }
+.lines { flex: 1; overflow-y: auto; padding: 14px 20px 40px; display: grid; gap: 6px; align-content: start; }
+.how { color: var(--muted); font-size: 13px; max-width: 70ch; margin: 0 0 6px; }
+.row { display: grid; grid-template-columns: 34px minmax(0,1fr) auto; gap: 8px; align-items: start; }
+.row .ln { font: 12px var(--mono); color: var(--muted); padding-top: 9px; text-align: right; font-variant-numeric: tabular-nums; }
+.row textarea { font: 22px/1.75 var(--tib); width: 100%; resize: none; field-sizing: content; min-height: 2.6em; padding: 4px 10px; border-left: 3px solid transparent; }
+.row.changed textarea { border-left-color: var(--warn); }
+.row.inserted textarea { border-left-color: var(--accent); background: var(--accent-soft); }
+.row.unreadable textarea { text-decoration: line-through; color: var(--muted); }
+.row .tools { display: flex; gap: 4px; padding-top: 6px; }
+.row .tools button { font: 12px var(--body); border: 1px solid var(--rule); background: var(--panel); color: var(--muted); border-radius: 3px; padding: 3px 7px; cursor: pointer; white-space: nowrap; }
+.row .tools button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.seam { display: flex; align-items: center; gap: 10px; color: var(--accent); font: 12px var(--mono); margin: 4px 0 4px 42px; }
+.seam::before, .seam::after { content: ""; flex: 1; border-top: 1px dashed var(--accent); }
+.foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-top: 10px; }
+.foot textarea { flex: 1 1 280px; min-height: 2.4em; field-sizing: content; font-size: 14px; }
+.msg { font-size: 13px; color: var(--muted); }
+.msg.err { color: var(--accent); }
+#exportBox { width: 100%; min-height: 8em; font: 12px var(--mono); }
+@media (max-width: 760px) { .app { grid-template-columns: 1fr; height: auto; } aside { max-height: 40vh; } .row { grid-template-columns: 28px minmax(0,1fr); } .row .tools { grid-column: 2; flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <aside>
+    <div class="brand">
+      <h1>Kangyur Proofreading Desk</h1>
+      <p>30 leaves from the British Library's Bhutanese Kangyurs. Correct the machine transcription against the leaf.</p>
+      <label class="small" for="readerName">Your name
+        <input type="text" id="readerName" autocomplete="name" placeholder="Name as it should appear in the record">
+      </label>
+      <div class="progress" id="progressText">0 of 30 done</div>
+      <div class="bar"><i id="progressBar"></i></div>
+    </div>
+    <ol class="folios" id="folios"></ol>
+    <div class="side-foot">
+      <div class="store" id="storeState">Connecting to the shared record…</div>
+      <button class="btn" id="exportBtn" type="button">Export corrections (JSON)</button>
+      <textarea id="exportBox" hidden readonly aria-label="Exported corrections"></textarea>
+    </div>
+  </aside>
+  <main>
+    <div class="head">
+      <h2 id="pageTitle"></h2>
+      <div class="meta" id="pageMeta"></div>
+    </div>
+    <div class="leaf" id="leaf">
+      <div class="zoom" role="group" aria-label="Image zoom">
+        <button type="button" data-z="fit" aria-pressed="true">Fit</button>
+        <button type="button" data-z="1.6">1.6×</button>
+        <button type="button" data-z="2.4">2.4×</button>
+      </div>
+      <img id="leafImg" alt="Manuscript leaf image" draggable="false">
+    </div>
+    <div class="lines" id="lines"></div>
+  </main>
+</div>
+
+<script>
+const PAGES = /*__PAGES__*/[];
+const LS = 'kangyur-proofread-v1:';
+const TAG = /^\s*<[^>]+>\s*$/;
+const lsGet = (k) => { try { return JSON.parse(localStorage.getItem(LS + k) || 'null'); } catch { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(LS + k, JSON.stringify(v)); } catch {} };
+
+// state[id] = { rows: [{served_index, text, unreadable, inserted, tag}], status, note, saved_at }
+const state = {};
+function fresh(p) {
+  return { rows: p.lines.map((t, i) => ({ served_index: i, text: t, unreadable: false, inserted: false, tag: TAG.test(t) })), status: 'todo', note: '', saved_at: null };
+}
+for (const p of PAGES) state[p.id] = lsGet('page:' + p.id) || fresh(p);
+let current = Math.max(0, PAGES.findIndex((p) => p.id === lsGet('current')));
+let zoom = 'fit';
+let db = null, readerId = null, canWrite = true;
+
+const $ = (id) => document.getElementById(id);
+$('readerName').value = lsGet('reader') || '';
+$('readerName').addEventListener('change', () => lsSet('reader', $('readerName').value.trim()));
+
+function exportRecord(p) {
+  const s = state[p.id];
+  return {
+    id: p.id, served_text_sha256: p.served_text_sha256, status: s.status,
+    corrected_text: s.rows.map((r) => r.text).join('\n'),
+    unreadable_lines: s.rows.map((r, i) => (r.unreadable ? i : -1)).filter((i) => i >= 0),
+    dropped_lines: s.rows.filter((r) => r.inserted && r.text.trim()).length,
+    lines: s.rows, note: s.note, reader_name: $('readerName').value.trim() || null, reader_id: readerId, saved_at: s.saved_at,
+  };
+}
+
+function renderList() {
+  const ol = $('folios'); ol.textContent = '';
+  PAGES.forEach((p, i) => {
+    const s = state[p.id];
+    const li = document.createElement('li');
+    const b = document.createElement('button'); b.type = 'button';
+    b.setAttribute('aria-current', String(i === current));
+    const n = document.createElement('span'); n.className = 'n'; n.textContent = String(p.seq).padStart(2, '0');
+    const t = document.createElement('span'); t.className = 't'; t.textContent = p.title || p.id;
+    const c = document.createElement('span'); c.className = 'chip ' + (s.status === 'done' ? 'done' : s.status === 'progress' ? 'progress-c' : '');
+    c.textContent = s.status === 'done' ? 'done' : s.status === 'progress' ? 'started' : 'to do';
+    b.append(n, t, c); b.addEventListener('click', () => go(i)); li.append(b); ol.append(li);
+  });
+  const done = PAGES.filter((p) => state[p.id].status === 'done').length;
+  $('progressText').textContent = `${done} of ${PAGES.length} done`;
+  $('progressBar').style.width = (100 * done / PAGES.length) + '%';
+}
+
+function applyZoom() {
+  const img = $('leafImg'), box = $('leaf');
+  document.querySelectorAll('.zoom button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === zoom)));
+  img.style.width = zoom === 'fit' ? (box.clientWidth - 2) + 'px' : (box.clientWidth * parseFloat(zoom)) + 'px';
+}
+document.querySelectorAll('.zoom button').forEach((b) => b.addEventListener('click', () => { zoom = b.dataset.z; applyZoom(); }));
+window.addEventListener('resize', applyZoom);
+// drag to pan
+(() => { const box = $('leaf'); let d = null;
+  box.addEventListener('pointerdown', (e) => { if (e.target.closest('.zoom')) return; d = { x: e.clientX, y: e.clientY, l: box.scrollLeft, t: box.scrollTop }; box.setPointerCapture(e.pointerId); });
+  box.addEventListener('pointermove', (e) => { if (!d) return; box.scrollLeft = d.l - (e.clientX - d.x); box.scrollTop = d.t - (e.clientY - d.y); });
+  box.addEventListener('pointerup', () => { d = null; }); })();
+
+let draftTimer = null;
+function touch(p) {
+  const s = state[p.id];
+  if (s.status === 'todo') { s.status = 'progress'; renderList(); }
+  clearTimeout(draftTimer); draftTimer = setTimeout(() => lsSet('page:' + p.id, s), 400);
+}
+
+function renderPage() {
+  const p = PAGES[current], s = state[p.id];
+  lsSet('current', p.id);
+  $('pageTitle').textContent = `${p.seq}. ${p.title || ''}`;
+  const meta = $('pageMeta'); meta.textContent = '';
+  const add = (txt, href) => { const el = document.createElement(href ? 'a' : 'span'); el.textContent = txt; if (href) { el.href = href; el.target = '_blank'; el.rel = 'noopener'; } meta.append(el); };
+  add(`p. ${p.page_number}`); add(p.leaf_seam === 'marked' ? 'leaf seam marked' : 'leaf seam not marked');
+  add(p.full_img.includes('/archived/') ? 'full-resolution image ↗' : 'larger image ↗', p.full_img); add('open in Source Library ↗', p.reader_url);
+  const img = $('leafImg'); img.src = p.img; img.onload = applyZoom; $('leaf').scrollTo(0, 0);
+
+  const box = $('lines'); box.textContent = '';
+  const how = document.createElement('p'); how.className = 'how';
+  how.textContent = 'Edit each line to match the leaf exactly, syllable by syllable. Do not normalise spelling to another edition. If the machine skipped a line, add it with "Missing line below". If you cannot read a line on the leaf, mark it unreadable.';
+  box.append(how);
+  let ln = 0;
+  s.rows.forEach((r, i) => {
+    if (r.tag) { const sm = document.createElement('div'); sm.className = 'seam'; sm.textContent = 'next leaf'; box.append(sm); return; }
+    ln++;
+    const row = document.createElement('div'); row.className = 'row';
+    const served = r.served_index == null ? null : p.lines[r.served_index];
+    const cls = () => { row.classList.toggle('changed', !r.inserted && r.text !== served); row.classList.toggle('inserted', r.inserted); row.classList.toggle('unreadable', r.unreadable); };
+    const n = document.createElement('div'); n.className = 'ln'; n.textContent = r.inserted ? '+' : ln;
+    const ta = document.createElement('textarea'); ta.id = `l-${p.seq}-${i}`; ta.value = r.text; ta.rows = 1; ta.lang = 'bo'; ta.spellcheck = false;
+    ta.setAttribute('aria-label', r.inserted ? 'Added line' : `Line ${ln}`);
+    ta.addEventListener('input', () => { r.text = ta.value.replace(/\n/g, ' '); if (ta.value !== r.text) ta.value = r.text; cls(); touch(p); });
+    const tools = document.createElement('div'); tools.className = 'tools';
+    const un = document.createElement('button'); un.type = 'button'; un.textContent = 'Unreadable'; un.setAttribute('aria-pressed', String(r.unreadable));
+    un.addEventListener('click', () => { r.unreadable = !r.unreadable; un.setAttribute('aria-pressed', String(r.unreadable)); cls(); touch(p); });
+    const ins = document.createElement('button'); ins.type = 'button'; ins.textContent = 'Missing line below';
+    ins.addEventListener('click', () => { s.rows.splice(i + 1, 0, { served_index: null, text: '', unreadable: false, inserted: true, tag: false }); touch(p); renderPage(); document.getElementById(`l-${p.seq}-${i + 1}`)?.focus(); });
+    tools.append(un, ins);
+    if (r.inserted) { const del = document.createElement('button'); del.type = 'button'; del.textContent = 'Remove'; del.addEventListener('click', () => { s.rows.splice(i, 1); touch(p); renderPage(); }); tools.append(del); }
+    else if (r.text !== served) { const rv = document.createElement('button'); rv.type = 'button'; rv.textContent = 'Revert'; rv.addEventListener('click', () => { r.text = served; touch(p); renderPage(); }); tools.append(rv); }
+    row.append(n, ta, tools); cls(); box.append(row);
+  });
+  const foot = document.createElement('div'); foot.className = 'foot';
+  const note = document.createElement('textarea'); note.id = `note-${p.seq}`; note.placeholder = 'Note on this leaf (optional): damage, a second hand, anything you were unsure of'; note.value = s.note;
+  note.addEventListener('input', () => { s.note = note.value; touch(p); });
+  const done = document.createElement('button'); done.type = 'button'; done.className = 'btn primary'; done.textContent = current < PAGES.length - 1 ? 'Save and go to next leaf' : 'Save';
+  done.addEventListener('click', async () => { s.status = 'done'; await save(p); if (current < PAGES.length - 1) go(current + 1); else renderList(); });
+  const later = document.createElement('button'); later.type = 'button'; later.className = 'btn'; later.textContent = 'Save, not finished';
+  later.addEventListener('click', async () => { if (s.status === 'todo') s.status = 'progress'; await save(p); renderList(); });
+  const msg = document.createElement('span'); msg.className = 'msg'; msg.id = 'saveMsg'; msg.textContent = s.saved_at ? `Saved ${new Date(s.saved_at).toLocaleString()}` : '';
+  foot.append(note, later, done, msg); box.append(foot);
+  box.scrollTo(0, 0);
+}
+
+async function save(p) {
+  const s = state[p.id]; s.saved_at = new Date().toISOString(); lsSet('page:' + p.id, s);
+  const msg = $('saveMsg');
+  if (!db || !canWrite) { if (msg) { msg.className = 'msg'; msg.textContent = 'Saved in this browser only. Use Export when you finish.'; } return; }
+  try {
+    await db.collection('corrections').doc(p.id).set(JSON.parse(JSON.stringify(exportRecord(p))));
+    if (msg) { msg.className = 'msg'; msg.textContent = `Saved to the shared record ${new Date(s.saved_at).toLocaleTimeString()}`; }
+  } catch (e) {
+    if (e && e.code === 'invalid_argument') canWrite = false;
+    if (msg) { msg.className = 'msg err'; msg.textContent = 'Could not save to the shared record (' + (e && e.code || 'error') + '). Your work is kept in this browser; use Export when you finish.'; }
+  }
+}
+
+function go(i) { current = i; renderList(); renderPage(); }
+
+$('exportBtn').addEventListener('click', async () => {
+  const payload = JSON.stringify({ set: 'tibetan-proofread-2026-10', exported_at: new Date().toISOString(), reader_name: $('readerName').value.trim() || null, pages: PAGES.map(exportRecord) }, null, 1);
+  let saved = false;
+  try { const dl = await claude.use('downloads'); if (dl) { await dl.save({ filename: 'kangyur-proofread-corrections.json', data: payload }); saved = true; } } catch {}
+  const box = $('exportBox'); box.hidden = false; box.value = payload;
+  if (!saved) { box.select(); try { await navigator.clipboard.writeText(payload); $('storeState').textContent = 'Copied the export to the clipboard.'; } catch { $('storeState').textContent = 'Select the text below and copy it.'; } }
+});
+
+renderList(); renderPage();
+
+(async () => {
+  try {
+    if (!window.claude?.use) throw 0;
+    const [d, u] = await Promise.all([claude.use('db'), claude.use('user')]);
+    if (u) { try { readerId = await u.id(); } catch {} const w = u.can ? await u.can('data.write') : null; if (w === false) canWrite = false; }
+    if (!d) throw 0;
+    db = d;
+    $('storeState').textContent = canWrite ? 'Saving to the shared record.' : 'View only: saves stay in this browser.';
+    db.collection('corrections').onSnapshot((snap) => {
+      let changed = false;
+      for (const doc of snap.docs) {
+        const rec = doc.data(); const s = state[doc.id];
+        if (!rec || !s || !rec.lines) continue;
+        if (!s.saved_at || (rec.saved_at && rec.saved_at > s.saved_at)) {
+          state[doc.id] = { rows: JSON.parse(JSON.stringify(rec.lines)), status: rec.status || 'progress', note: rec.note || '', saved_at: rec.saved_at };
+          changed = true;
+        }
+      }
+      if (changed) { renderList(); renderPage(); }
+    }, () => { $('storeState').textContent = 'Shared record unavailable: saves stay in this browser.'; });
+  } catch { $('storeState').textContent = 'Shared record unavailable: saves stay in this browser. Use Export when you finish.'; }
+})();
+</script>
