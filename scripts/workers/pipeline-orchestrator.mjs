@@ -45,6 +45,7 @@ import os from 'os';
 import path from 'path';
 import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
 import { decideFinalize } from '../lib/finalize-decision.mjs';
+import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
@@ -918,6 +919,16 @@ function statusOutputViolation(book, status, extra = {}) {
   return `status '${status}' claims ${claim.want}, book has none and no ${claim.skip} was recorded`;
 }
 
+// Preview-stub guard (#4719). ENFORCED by default. Unlike the output guard above, it
+// introduces no new predicate: it applies the bar Phase 9 already enforces
+// (`decideFinalize`) to the writers that run before Phase 9. Set
+// PREVIEW_STUB_GUARD=observe to record the hits and still advance.
+const PREVIEW_STUB_GUARD_ENFORCE = previewStubGuardEnforced();
+
+// Per-run tally, copied into cron_runs.actions at the end of the run. A redirect must
+// show up in the run log as well as on the book.
+const previewStubGuardStats = { requeued: 0, parked: 0, observed: 0, by_status: {} };
+
 async function setPipelineStatus(db, bookId, status, extra = {}) {
   const book = await db.collection('books').findOne(
     { id: bookId },
@@ -926,6 +937,8 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
         title: 1, pipeline_auto: 1,
         summary: 1, chapters: 1, cover_page: 1,
         pages_ocr: 1, pages_archived: 1, pages_count: 1,
+        // Preview-stub guard reads these. A projected-away counter would read as 0.
+        pages_blank: 1, content_type: 1, resource_type: 1,
       },
     }
   );
@@ -947,6 +960,26 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
       timestamp: new Date(),
     }).catch(() => {});
     return;
+  }
+
+  // A post-OCR status on a book whose OCR is still the 25-page preview sends it back to
+  // the OCR queue instead (#4719). It runs before the output guard because it can
+  // change which status gets written. The redirect goes back through this function,
+  // so archive_complete is checked by the hold and output guards like any other write.
+  const stub = book ? await resolvePreviewStub(db, bookId, book, status) : null;
+  if (stub) {
+    const tag = stub.action === 'requeue' ? 'requeued' : 'parked';
+    console.log(`  [preview-stub-guard] ${bookId}: ${stub.reason}${PREVIEW_STUB_GUARD_ENFORCE ? ` → ${stub.status}` : ' (observe)'}`);
+    await recordPreviewStubRefusal(db, bookId, {
+      stub, attempted: status, prevStatus, title: book?.title, source: 'pipeline-orchestrator', enforced: PREVIEW_STUB_GUARD_ENFORCE,
+    });
+    previewStubGuardStats.by_status[status] = (previewStubGuardStats.by_status[status] || 0) + 1;
+    if (!PREVIEW_STUB_GUARD_ENFORCE) {
+      previewStubGuardStats.observed++;
+    } else {
+      previewStubGuardStats[tag]++;
+      return setPipelineStatus(db, bookId, stub.status, stub.extra);
+    }
   }
 
   const violation = book ? statusOutputViolation(book, status, extra) : null;
@@ -5832,6 +5865,12 @@ Rules:
     console.log(`  Finalized: ${log.finalized} | Needs attention: ${log.needs_attention}`);
     console.log(`  Stale retried: ${log.stale_retried} | Stale failed: ${log.stale_failed}`);
     if (log.zombie_jobs_cancelled > 0) console.log(`  Zombie jobs cancelled: ${log.zombie_jobs_cancelled}`);
+    {
+      const g = previewStubGuardStats;
+      if (g.requeued + g.parked + g.observed > 0) {
+        console.log(`  Preview-stub guard: ${g.requeued} requeued, ${g.parked} parked, ${g.observed} observed — refused ${JSON.stringify(g.by_status)}`);
+      }
+    }
     if (log.errors.length > 0) {
       console.log(`  Errors (${log.errors.length}):`);
       for (const err of log.errors.slice(0, 30)) {
@@ -5889,6 +5928,7 @@ Rules:
             stale_retried: log.stale_retried,
             stale_failed: log.stale_failed,
             zombie_jobs_cancelled: log.zombie_jobs_cancelled,
+            preview_stub_guard: previewStubGuardStats,
           },
           errors: [..._batchBrokenKeyEvents, ...log.errors].slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: _batchBrokenKeyEvents.length + log.errors.length,
