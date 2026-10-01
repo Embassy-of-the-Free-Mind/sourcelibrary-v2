@@ -282,6 +282,67 @@ function LanguageGrid() {
   );
 }
 
+/* ── Decisions the evidence drove: which engine does what, and the experiment behind it ── */
+// Plain-language rows from scripts/eval/DECISIONS.md (the ledger is the source of truth; update it first).
+type Decision = { area: 'OCR' | 'Translation'; question: string; compared: string; evidence: string; result: string; decision: string; status: 'decided' | 'pending' | 'open'; issue: number };
+const DECISIONS: Decision[] = [
+  { area: 'OCR', question: 'English print 1800–1930: is the cheaper engine good enough?', compared: 'Gemini Flash-Lite vs Gemini Flash', evidence: 'Accuracy against published texts, 114 books (decision-grade)', result: 'Flash read better on 14 pages, Flash-Lite on 3, 75 tied; median difference 0. Both refused 15–18% of pages as recitation.', decision: 'Keep Flash-Lite; add a fallback for refused pages.', status: 'decided', issue: 5182 },
+  { area: 'OCR', question: 'English print: can an open-source engine take a share?', compared: 'MinerU vs Gemini Flash-Lite', evidence: 'Accuracy, 114 books (decision-grade)', result: 'Flash-Lite better page by page, 49 to 10. MinerU dropped footnotes, which is fixable.', decision: 'Proposed: MinerU only as a fallback when Gemini refuses, after the footnote fix.', status: 'pending', issue: 5182 },
+  { area: 'OCR', question: 'Internet Archive imports: can the Archive’s own OCR replace a paid read?', compared: 'Archive OCR vs Gemini Flash-Lite', evidence: 'Accuracy, 122 books (directional)', result: 'Flash-Lite better 57 to 5. The Archive misreads about 1.5% of printed numbers.', decision: 'Archive text kept only as a provisional first read.', status: 'decided', issue: 5186 },
+  { area: 'OCR', question: 'Chinese manuscripts: a cheaper open model?', compared: 'PaddleOCR-VL 1.6 vs Gemini Flash-Lite', evidence: 'Accuracy against Kanripo and CBETA, 69 books (decision-grade)', result: 'Within the preset margin of Flash-Lite; not a better reader.', decision: 'Adopted as a cost lane, to be verified on live pages.', status: 'pending', issue: 4743 },
+  { area: 'OCR', question: 'Siku Quanshu manuscripts (7,894 held books): which engine before they go live?', compared: 'PaddleOCR-VL vs Gemini Flash-Lite vs Flash', evidence: 'Accuracy against Kanripo and CBETA, 433 books (decision-grade); preregistered', result: 'Pages read catastrophically wrong (over half the characters): Flash-Lite 10.6%, Flash 3.7%, Paddle 0.9%. Median error is 18–26% for all three, which points at edition differences in the reference.', decision: 'Proposed: Paddle for the whole cohort, after removing duplicates. Follow-up tests whether Kanripo text can replace OCR where it exists (#5568).', status: 'pending', issue: 5547 },
+  { area: 'OCR', question: 'Greek, 1450–1799: which engine per period?', compared: 'Gemini Flash, Flash-Lite, Kraken (open source)', evidence: 'Accuracy against Perseus and First1KGreek, 56 and 53 books (decision-grade)', result: 'Flash passed in both periods. Kraken read better than Flash-Lite before 1700 and failed after.', decision: 'Flash for Greek. Since 11 September all new OCR runs on Flash-Lite instead (see below).', status: 'open', issue: 4744 },
+  { area: 'OCR', question: 'Syriac: can Gemini read it?', compared: 'Gemini vs Kraken models from Beth Mardutho', evidence: 'Accuracy against published editions', result: 'Gemini returned fluent scripture that was not on the page; 19% of pages matched the right passage.', decision: 'Never Gemini for Syriac; a Kraken lane reads it.', status: 'decided', issue: 4883 },
+  { area: 'OCR', question: 'Tibetan: is Flash-Lite trustworthy?', compared: 'Gemini vs the BDRC model', evidence: 'Agreement with the Derge e-text', result: 'BDRC 0.88 identity vs Gemini 0.41; Flash-Lite failed on about a third of pages (loops, wrong script, recitation).', decision: 'Flash-Lite not used as a reader; pages re-read with Yigdzin.', status: 'decided', issue: 4523 },
+  { area: 'OCR', question: 'Japanese cursive (kuzushiji): who can read it?', compared: 'NDL classical OCR v3 vs Gemini Flash and Flash-Lite', evidence: '45 pages read by eye; no reference texts', result: 'NDL coherent where both Gemini engines looped or invented.', decision: 'NDL proposed for cursive pages; how many is undecided.', status: 'pending', issue: 4745 },
+  { area: 'OCR', question: 'German, French, Dutch: may they stay on Flash-Lite?', compared: 'Gemini Flash-Lite vs Flash', evidence: 'Agreement only (0.97, 0.95, 0.92), not accuracy', result: 'Agreement cannot settle it.', decision: 'Unjudged until reference texts exist.', status: 'open', issue: 5124 },
+  { area: 'Translation', question: 'Non-Latin scripts: translate with the cheaper engine?', compared: 'Gemini Flash-Lite vs Flash', evidence: '137 books, 303 paired pages, a blind judge on 30 (preference, not accuracy)', result: 'No comprehension failures on Flash-Lite.', decision: 'Flash-Lite for all translation.', status: 'decided', issue: 4759 },
+  { area: 'Translation', question: 'Batch API at half the price?', compared: 'Batch lane vs production lane', evidence: 'Source-grounded judge', result: 'Production more faithful, 25 to 18; the batch repair step dropped carried text.', decision: 'Not adopted.', status: 'decided', issue: 4681 },
+  { area: 'Translation', question: 'Prompt v15 with verified notes?', compared: 'Prompt v13 vs v15', evidence: 'Preregistered A/B', result: 'Verified notes rose from 67% to 96%, but interpretive notes fell 36% and body text 26%.', decision: 'Not adopted.', status: 'decided', issue: 4767 },
+  { area: 'Translation', question: 'Tibetan retranslation: which engine?', compared: 'Gemini Flash, Flash-Lite, MITRA-MT', evidence: 'Accuracy against 84000 human translations, 21 pages (exploratory)', result: 'MITRA invented on half its pages; Flash and Flash-Lite both scored a median 5 of 5.', decision: 'MITRA rejected; engine choice pending.', status: 'pending', issue: 4742 },
+];
+const STATUS_STYLE: Record<Decision['status'], string> = {
+  decided: 'text-primary border-accent-rust',
+  pending: 'text-secondary border-light',
+  open: 'text-muted border-dashed border-light',
+};
+
+function DecisionsTable() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[760px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted">
+            <th className="py-2 pr-3 font-medium">Question</th>
+            <th className="py-2 pr-3 font-medium">Compared</th>
+            <th className="py-2 pr-3 font-medium">Evidence</th>
+            <th className="py-2 pr-3 font-medium">Result</th>
+            <th className="py-2 font-medium">Decision</th>
+          </tr>
+        </thead>
+        {(['OCR', 'Translation'] as const).map(area => (
+          <tbody key={area}>
+            <tr><td colSpan={5} className="pt-4 pb-1 text-primary font-semibold">{area === 'OCR' ? 'Transcription engines' : 'Translation engines and prompts'}</td></tr>
+            {DECISIONS.filter(d => d.area === area).map(d => (
+              <tr key={d.question} className="border-b border-light align-top">
+                <td className="py-2 pr-3 text-primary leading-snug">{d.question}</td>
+                <td className="py-2 pr-3 text-secondary leading-snug">{d.compared}</td>
+                <td className="py-2 pr-3 text-muted leading-snug">{d.evidence}</td>
+                <td className="py-2 pr-3 text-secondary leading-snug">{d.result}</td>
+                <td className="py-2 text-secondary leading-snug">
+                  <span className={`inline-block whitespace-nowrap rounded border px-1.5 py-0.5 text-[11px] mr-1.5 ${STATUS_STYLE[d.status]}`}>{d.status}</span>
+                  {d.decision}{' '}
+                  <a href={`${GH_ISSUE}${d.issue}`} className="text-accent-rust hover:underline whitespace-nowrap">#{d.issue}</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ))}
+      </table>
+    </div>
+  );
+}
+
 /* ── At a glance: every instrument, what it was checked against, and how much evidence ── */
 // Proportions carry k/n so the interval is computed here; other rows quote the cited source.
 // Grade uses the paper's own rule on independent units (books or pages): <30 exploratory,
@@ -829,6 +890,18 @@ export default function ResearchQualityPage() {
           <GlanceTable />
           <p className="text-xs text-muted leading-relaxed mt-3">
             Bars show a share on a 0–100% scale, with the dot at the estimate and the line spanning the 95% interval; rows without a bar report a quantity that is not a share. A grade says how many units stand behind a row, not that the row measures the right thing.
+          </p>
+        </section>
+
+        {/* ── Decisions ── */}
+        <section id="decisions" className="mb-12">
+          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Which engine does what, and why</h2>
+          <p className="text-secondary leading-relaxed mb-4">
+            The measurements above exist to choose engines and prompts. Each row is one of those choices: what was compared, on what evidence, what it found, and what was decided. A rule for each comparison was written down before the run. &ldquo;Decided&rdquo; means a person signed off; &ldquo;pending&rdquo; means the result is in and the decision is not; &ldquo;open&rdquo; means the evidence cannot yet settle it, or practice differs from it.
+          </p>
+          <DecisionsTable />
+          <p className="text-secondary leading-relaxed mt-4">
+            One decision cuts across the transcription rows. Since 11 September 2026, to hold down cost, every new transcription batch runs on Gemini Flash-Lite, in every language. The per-script choices above (Flash for Greek, Chinese and other non-Latin scripts) describe pages read before that date and the routing the experiments support; Syriac and Tibetan are read outside Gemini and are unaffected. The full ledger, with every run and its re-measure trigger, is <a href={`${GH}scripts/eval/DECISIONS.md`} className="text-accent-rust hover:underline">scripts/eval/DECISIONS.md</a>.
           </p>
         </section>
 
