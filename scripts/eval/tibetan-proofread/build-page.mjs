@@ -45,7 +45,7 @@ if (!process.argv.includes('--skip-images')) {
 }
 
 const pages = rows.map((r) => ({
-  seq: r.seq, id: r.id, title: r.title, page_number: r.page_number, leaf_seam: r.leaf_seam,
+  seq: r.seq, id: r.id, stratum: r.stratum, title: r.title, page_number: r.page_number, leaf_seam: r.leaf_seam,
   reader_url: r.reader_url, full_img: r.archived_photo || r.display_photo, served_text_sha256: r.served_text_sha256,
   img: `img/${r.seq}.jpg`, lines: r.served_text.split('\n'),
 }));

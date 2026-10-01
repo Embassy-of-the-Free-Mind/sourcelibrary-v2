@@ -41,6 +41,10 @@ ol.folios button:hover { background: var(--bg); }
 ol.folios button[aria-current="true"] { background: var(--accent-soft); }
 ol.folios .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
 ol.folios .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+ol.folios li.part { font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 12px 16px 4px; border-top: 1px solid var(--rule); margin-top: 6px; }
+.judge { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; font-size: 13px; color: var(--muted); }
+.judge button { font: 13px var(--body); border: 1px solid var(--rule); background: var(--panel); color: var(--ink); border-radius: 3px; padding: 3px 9px; cursor: pointer; }
+.judge button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
 .chip { font: 11px var(--mono); padding: 1px 6px; border-radius: 9px; background: var(--rule); color: var(--muted); }
 .chip.progress-c { background: var(--warn-soft); color: var(--warn); }
 .chip.done { background: var(--ok-soft); color: var(--ok); }
@@ -70,6 +74,7 @@ main { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
 .row .tools { display: flex; gap: 4px; padding-top: 6px; }
 .row .tools button { font: 12px var(--body); border: 1px solid var(--rule); background: var(--panel); color: var(--muted); border-radius: 3px; padding: 3px 7px; cursor: pointer; white-space: nowrap; }
 .row .tools button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.markup { font: 12px var(--mono); color: var(--muted); margin-left: 42px; opacity: .7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .seam { display: flex; align-items: center; gap: 10px; color: var(--accent); font: 12px var(--mono); margin: 4px 0 4px 42px; }
 .seam::before, .seam::after { content: ""; flex: 1; border-top: 1px dashed var(--accent); }
 .foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-top: 10px; }
@@ -85,11 +90,11 @@ main { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
   <aside>
     <div class="brand">
       <h1>Kangyur Proofreading Desk</h1>
-      <p>30 leaves from the British Library's Bhutanese Kangyurs. Correct the machine transcription against the leaf.</p>
+      <p>40 leaves from the British Library's Tibetan manuscripts: 30 from Bhutanese Kangyurs, then 10 from other texts. Correct the machine transcription against the leaf.</p>
       <label class="small" for="readerName">Your name
         <input type="text" id="readerName" autocomplete="name" placeholder="Name as it should appear in the record">
       </label>
-      <div class="progress" id="progressText">0 of 30 done</div>
+      <div class="progress" id="progressText"></div>
       <div class="bar"><i id="progressBar"></i></div>
     </div>
     <ol class="folios" id="folios"></ol>
@@ -119,14 +124,17 @@ main { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
 <script>
 const PAGES = /*__PAGES__*/[];
 const LS = 'kangyur-proofread-v1:';
-const TAG = /^\s*<[^>]+>\s*$/;
+// Machine markup, not manuscript text: blank lines, lines with no Tibetan letters (headings such as
+// "**Folio 127, Recto**", "---"), and whole-line elements (<leaf-break/>, <page-num>…</page-num>, <vocab>…</vocab>).
+// Mostly from Gemini reads (the "mark" stratum). score.mjs drops the same lines from both sides.
+const isMarkup = (t) => !t.trim() || !/[ཀ-ྼ]/.test(t) || /^\s*<([\w-]+)[^>]*\/>\s*$/.test(t) || /^\s*<([\w-]+)[^>]*>[\s\S]*<\/\1>\s*$/.test(t);
 const lsGet = (k) => { try { return JSON.parse(localStorage.getItem(LS + k) || 'null'); } catch { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(LS + k, JSON.stringify(v)); } catch {} };
 
 // state[id] = { rows: [{served_index, text, unreadable, inserted, tag}], status, note, saved_at }
 const state = {};
 function fresh(p) {
-  return { rows: p.lines.map((t, i) => ({ served_index: i, text: t, unreadable: false, inserted: false, tag: TAG.test(t) })), status: 'todo', note: '', saved_at: null };
+  return { rows: p.lines.map((t, i) => ({ served_index: i, text: t, unreadable: false, inserted: false, tag: isMarkup(t) })), status: 'todo', note: '', judgement: null, saved_at: null };
 }
 for (const p of PAGES) state[p.id] = lsGet('page:' + p.id) || fresh(p);
 let current = Math.max(0, PAGES.findIndex((p) => p.id === lsGet('current')));
@@ -144,7 +152,7 @@ function exportRecord(p) {
     corrected_text: s.rows.map((r) => r.text).join('\n'),
     unreadable_lines: s.rows.map((r, i) => (r.unreadable ? i : -1)).filter((i) => i >= 0),
     dropped_lines: s.rows.filter((r) => r.inserted && r.text.trim()).length,
-    lines: s.rows, note: s.note, reader_name: $('readerName').value.trim() || null, reader_id: readerId, saved_at: s.saved_at,
+    lines: s.rows, note: s.note, judgement: s.judgement || null, reader_name: $('readerName').value.trim() || null, reader_id: readerId, saved_at: s.saved_at,
   };
 }
 
@@ -152,6 +160,7 @@ function renderList() {
   const ol = $('folios'); ol.textContent = '';
   PAGES.forEach((p, i) => {
     const s = state[p.id];
+    if (i > 0 && p.stratum !== PAGES[i - 1].stratum) { const h = document.createElement('li'); h.className = 'part'; h.textContent = 'Part 2 · other texts'; ol.append(h); }
     const li = document.createElement('li');
     const b = document.createElement('button'); b.type = 'button';
     b.setAttribute('aria-current', String(i === current));
@@ -192,17 +201,19 @@ function renderPage() {
   $('pageTitle').textContent = `${p.seq}. ${p.title || ''}`;
   const meta = $('pageMeta'); meta.textContent = '';
   const add = (txt, href) => { const el = document.createElement(href ? 'a' : 'span'); el.textContent = txt; if (href) { el.href = href; el.target = '_blank'; el.rel = 'noopener'; } meta.append(el); };
-  add(`p. ${p.page_number}`); add(p.leaf_seam === 'marked' ? 'leaf seam marked' : 'leaf seam not marked');
+  add(p.stratum === 'mark' ? 'Part 2 · other texts' : 'Part 1 · Kangyur'); add(`p. ${p.page_number}`); if (p.leaf_seam === 'marked') add('leaf seam marked');
   add(p.full_img.includes('/archived/') ? 'full-resolution image ↗' : 'larger image ↗', p.full_img); add('open in Source Library ↗', p.reader_url);
   const img = $('leafImg'); img.src = p.img; img.onload = applyZoom; $('leaf').scrollTo(0, 0);
 
   const box = $('lines'); box.textContent = '';
   const how = document.createElement('p'); how.className = 'how';
-  how.textContent = 'Edit each line to match the leaf exactly, syllable by syllable. Do not normalise spelling to another edition. If the machine skipped a line, add it with "Missing line below". If you cannot read a line on the leaf, mark it unreadable.';
+  how.textContent = 'Edit each line to match the leaf exactly, syllable by syllable. Do not normalise spelling to another edition. If the machine skipped a line, add it with "Missing line below". If you cannot read a line on the leaf, mark it unreadable.'
+    + (p.stratum === 'mark' ? ' Part 2 leaves come from texts the machine was least sure of. Start with the overall judgement at the bottom; if the transcription is not this leaf at all, choosing "Wrong text or unusable" and saving is enough.' : '');
   box.append(how);
   let ln = 0;
   s.rows.forEach((r, i) => {
-    if (r.tag) { const sm = document.createElement('div'); sm.className = 'seam'; sm.textContent = 'next leaf'; box.append(sm); return; }
+    if (r.tag && /<leaf-break\/>/.test(r.text)) { const sm = document.createElement('div'); sm.className = 'seam'; sm.textContent = 'next leaf'; box.append(sm); return; }
+    if (r.tag) { if (r.text.trim()) { const mk = document.createElement('div'); mk.className = 'markup'; mk.textContent = r.text; mk.title = 'Machine markup, not part of the leaf: ignore'; box.append(mk); } return; }
     ln++;
     const row = document.createElement('div'); row.className = 'row';
     const served = r.served_index == null ? null : p.lines[r.served_index];
@@ -222,6 +233,14 @@ function renderPage() {
     row.append(n, ta, tools); cls(); box.append(row);
   });
   const foot = document.createElement('div'); foot.className = 'foot';
+  const judge = document.createElement('div'); judge.className = 'judge'; judge.setAttribute('role', 'group');
+  const jl = document.createElement('span'); jl.textContent = 'Overall, the machine transcription of this leaf is:'; judge.append(jl);
+  for (const [k, label] of [['usable', 'Usable, few errors'], ['many-errors', 'Many errors'], ['unusable', 'Wrong text or unusable']]) {
+    const jb = document.createElement('button'); jb.type = 'button'; jb.textContent = label; jb.setAttribute('aria-pressed', String(s.judgement === k));
+    jb.addEventListener('click', () => { s.judgement = s.judgement === k ? null : k; judge.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === jb && s.judgement === k))); touch(p); });
+    judge.append(jb);
+  }
+  foot.append(judge);
   const note = document.createElement('textarea'); note.id = `note-${p.seq}`; note.placeholder = 'Note on this leaf (optional): damage, a second hand, anything you were unsure of'; note.value = s.note;
   note.addEventListener('input', () => { s.note = note.value; touch(p); });
   const done = document.createElement('button'); done.type = 'button'; done.className = 'btn primary'; done.textContent = current < PAGES.length - 1 ? 'Save and go to next leaf' : 'Save';
@@ -272,7 +291,7 @@ renderList(); renderPage();
         const rec = doc.data(); const s = state[doc.id];
         if (!rec || !s || !rec.lines) continue;
         if (!s.saved_at || (rec.saved_at && rec.saved_at > s.saved_at)) {
-          state[doc.id] = { rows: JSON.parse(JSON.stringify(rec.lines)), status: rec.status || 'progress', note: rec.note || '', saved_at: rec.saved_at };
+          state[doc.id] = { rows: JSON.parse(JSON.stringify(rec.lines)), status: rec.status || 'progress', note: rec.note || '', judgement: rec.judgement || null, saved_at: rec.saved_at };
           changed = true;
         }
       }

@@ -64,7 +64,11 @@ export function nwMatches(a, b) {
 }
 // ---- end port ----
 
-const TAG = /^\s*<[^>]+>\s*$/;
+// Machine markup, not manuscript text: blank lines, lines with no Tibetan letters (headings such as
+// "**Folio 127, Recto**", "---"), and whole-line elements (<leaf-break/>, <page-num>…</page-num>, <vocab>…</vocab>).
+// Mostly from Gemini reads (the "mark" stratum). page.template.html greys out the same lines.
+const isMarkup = (t) => !t.trim() || !/[ཀ-ྼ]/.test(t) || /^\s*<([\w-]+)[^>]*\/>\s*$/.test(t) || /^\s*<([\w-]+)[^>]*>[\s\S]*<\/\1>\s*$/.test(t);
+const TAG = { test: isMarkup };
 const readJsonl = (f) => fs.readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const manifest = new Map(readJsonl(MANIFEST).map((r) => [r.id, r]));
 const sha = (t) => crypto.createHash('sha256').update(t, 'utf8').digest('hex');
@@ -75,10 +79,16 @@ export function scorePage(m, rec) {
   const dropServed = new Set(rows.filter((r) => r.unreadable && r.served_index != null).map((r) => r.served_index));
   const served = servedLines.filter((t, i) => !TAG.test(t) && !dropServed.has(i)).join('\n');
   const corrected = rows.filter((r) => !r.unreadable && !TAG.test(r.text)).map((r) => r.text).join('\n');
+  // A leaf judged "wrong text or unusable" may be saved without retyping it (the page says so), so its
+  // unedited text would score identity 1.0. It counts as unusable, never as an identity.
+  if (rec.judgement === 'unusable') {
+    return { id: m.id, seq: m.seq, stratum: m.stratum, leaf_seam: m.leaf_seam, derge_identity: m.derge_identity, judgement: 'unusable',
+      served_syllables: 0, corrected_syllables: 0, matches: 0, identity: null, recall: null, unreadable_lines: 0, dropped_lines: 0, edited_lines: 0, excluded: 'judged unusable' };
+  }
   const a = syllables(served), b = syllables(corrected);
   const matches = nwMatches(a, b);
   return {
-    id: m.id, seq: m.seq, leaf_seam: m.leaf_seam, derge_identity: m.derge_identity,
+    id: m.id, seq: m.seq, stratum: m.stratum, leaf_seam: m.leaf_seam, derge_identity: m.derge_identity, judgement: rec.judgement || null,
     served_syllables: a.length, corrected_syllables: b.length, matches,
     identity: a.length ? +(matches / a.length).toFixed(4) : null,
     recall: b.length ? +(matches / b.length).toFixed(4) : null,
@@ -88,7 +98,7 @@ export function scorePage(m, rec) {
   };
 }
 
-const median = (xs) => { const s = [...xs].sort((x, y) => x - y); const k = s.length; return k ? +(k % 2 ? s[(k - 1) / 2] : (s[k / 2 - 1] + s[k / 2]) / 2).toFixed(4) : null; };
+const median = (xs0) => { const xs = xs0.filter((x) => x != null); const s = [...xs].sort((x, y) => x - y); const k = s.length; return k ? +(k % 2 ? s[(k - 1) / 2] : (s[k / 2 - 1] + s[k / 2]) / 2).toFixed(4) : null; };
 
 const isMain = process.argv[1] && fileURLToPath(import.meta.url) === fs.realpathSync(path.resolve(process.argv[1]));
 if (!isMain) {
@@ -110,7 +120,7 @@ if (!isMain) {
       id: m.id, page_id: m.page_id, book_id: m.book_id, page_number: m.page_number, reader_url: m.reader_url,
       served_engine: m.served_engine, served_text_sha256: m.served_text_sha256,
       corrected_text: rec.corrected_text, corrected_text_sha256: sha(rec.corrected_text),
-      unreadable_lines: rec.unreadable_lines || [], dropped_lines: rec.dropped_lines ?? 0, lines: rec.lines, note: rec.note || '',
+      unreadable_lines: rec.unreadable_lines || [], dropped_lines: rec.dropped_lines ?? 0, judgement: rec.judgement || null, lines: rec.lines, note: rec.note || '',
       provenance: {
         edited_by: reader, role, is_ground_truth: role === 'human',
         date: arg('--date', (rec.saved_at || new Date().toISOString()).slice(0, 10)),
@@ -142,19 +152,22 @@ if (!isMain) {
   const summary = {
     dir: path.relative(REPO, fs.realpathSync(dir)), roles: [...roles], is_ground_truth: [...roles].every((r) => r === 'human'),
     n_pages: pages.length, n_books: new Set(pages.map((p) => p.id.split('_')[0])).size,
-    pooled_identity: +(sum('matches') / sum('served_syllables')).toFixed(4),
-    pooled_recall: +(sum('matches') / sum('corrected_syllables')).toFixed(4),
-    median_identity: median(pages.map((p) => p.identity)),
-    median_derge_identity_same_pages: median(pages.map((p) => p.derge_identity)),
     pages_with_dropped_lines: pages.filter((p) => p.dropped_lines > 0).length, dropped_lines: sum('dropped_lines'),
     unreadable_lines: sum('unreadable_lines'), edited_lines: sum('edited_lines'),
-    by_seam: Object.fromEntries(['marked', 'unmarked'].map((s) => { const g = pages.filter((p) => p.leaf_seam === s); return [s, { n: g.length, median_identity: median(g.map((p) => p.identity)), median_derge: median(g.map((p) => p.derge_identity)) }]; })),
+    // Report the strata separately: kangyur is the Derge-anchored ceiling; mark (MARK_UNRELIABLE, mostly Gemini text)
+    // has no reference at all and must never be pooled into the kangyur number.
+    by_stratum: Object.fromEntries(['kangyur', 'mark'].map((st) => { const g = pages.filter((p) => p.stratum === st); const t = (k) => g.reduce((s, p) => s + p[k], 0);
+      return [st, { n: g.length, n_scored: g.filter((p) => p.identity != null).length, n_judged_unusable: g.filter((p) => p.judgement === 'unusable').length,
+        pooled_identity: t('served_syllables') ? +(t('matches') / t('served_syllables')).toFixed(4) : null, pooled_recall: t('corrected_syllables') ? +(t('matches') / t('corrected_syllables')).toFixed(4) : null,
+        median_identity: median(g.map((p) => p.identity)), median_derge: median(g.map((p) => p.derge_identity)), dropped_lines: t('dropped_lines'), unreadable_lines: t('unreadable_lines'),
+        judgements: g.reduce((m, p) => ({ ...m, [p.judgement || 'none']: (m[p.judgement || 'none'] || 0) + 1 }), {}) }]; })),
+    kangyur_by_seam: Object.fromEntries(['marked', 'unmarked'].map((s) => { const g = pages.filter((p) => p.stratum === 'kangyur' && p.leaf_seam === s); return [s, { n: g.length, median_identity: median(g.map((p) => p.identity)), median_derge: median(g.map((p) => p.derge_identity)) }]; })),
   };
   const out = { summary, pages };
   if (arg('--out')) fs.writeFileSync(arg('--out'), JSON.stringify(out, null, 1) + '\n');
   if (!summary.is_ground_truth) console.log('NOT GROUND TRUTH — includes model-corrected pages; numbers test the pipeline only.');
   console.log(JSON.stringify(summary, null, 1));
-  for (const p of pages) console.log(`${String(p.seq).padStart(2)} ${p.id}  identity ${p.identity}  recall ${p.recall}  derge ${p.derge_identity}  edited ${p.edited_lines}  dropped ${p.dropped_lines}  unreadable ${p.unreadable_lines}  [${p.role}]`);
+  for (const p of pages) console.log(`${String(p.seq).padStart(2)} ${p.stratum.padEnd(7)} ${p.id}  identity ${p.identity}  recall ${p.recall}  derge ${p.derge_identity}  edited ${p.edited_lines}  dropped ${p.dropped_lines}  unreadable ${p.unreadable_lines}  judgement ${p.judgement || '-'}  [${p.role}]`);
 } else {
   console.error('usage: score.mjs ingest|score … (see header)'); process.exit(1);
 }

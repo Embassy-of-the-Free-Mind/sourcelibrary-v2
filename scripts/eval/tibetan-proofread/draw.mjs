@@ -42,8 +42,12 @@ const META_1001 = arg('--meta-1001');
 const OUT = arg('--out', path.join(REPO, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl'));
 const LO = 0.90, HI = 0.97, N_TWO_LEAF = 10, N_SINGLE = 20;
 
-let seed = 20261003; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
-const shuffle = (a) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const makeShuffle = (s0) => {
+  let seed = s0; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+  const shuffle = (a) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  return { rnd, shuffle };
+};
+const { shuffle } = makeShuffle(20261003);
 const readJsonl = (f) => fs.readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const sha = (t) => crypto.createHash('sha256').update(t, 'utf8').digest('hex');
 
@@ -74,7 +78,6 @@ const pages = await db.collection('pages').find(
 ).toArray();
 const byKey = new Map(pages.map((p) => [`${p.book_id}_${p.page_number}`, p]));
 const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(inBand.map((c) => c.book_id))] } }, { projection: { id: 1, title: 1, display_title: 1 } }).toArray()).map((b) => [b.id, b]));
-await client.close();
 
 let changed = 0, missing = 0;
 const live = [];
@@ -97,23 +100,21 @@ if (twoLeaf.length < N_TWO_LEAF || single.length < N_SINGLE) throw new Error(`sh
 
 const picked = shuffle([...twoLeaf, ...single]);
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-const out = picked.map((c, i) => {
-  const p = c.page; const b = books.get(c.book_id) || {};
+const toRow = (seq, stratum, p, b, extra) => {
+  const leafBreaks = (p.ocr.data.match(/<leaf-break\/>/g) || []).length;
   return {
-    seq: i + 1,
-    id: c.id,
+    seq,
+    stratum,
+    id: `${p.book_id}_${p.page_number}`,
     page_id: p.id,
-    book_id: c.book_id,
-    page_number: c.page_number,
+    book_id: p.book_id,
+    page_number: p.page_number,
     title: b.display_title || b.title || null,
-    reader_url: `https://sourcelibrary.org/book/${c.book_id}?page=${c.page_number}`,
-    leaf_seam: c.leaf_breaks === 1 ? 'marked' : 'unmarked',
-    leaf_breaks: c.leaf_breaks,
+    reader_url: `https://sourcelibrary.org/book/${p.book_id}?page=${p.page_number}`,
+    leaf_seam: leafBreaks === 1 ? 'marked' : 'unmarked',
+    leaf_breaks: leafBreaks,
     lines: p.ocr.data.split('\n').filter((l) => l.trim() && !/^<[^>]+>$/.test(l.trim())).length,
-    derge_identity: c.derge_identity,
-    derge_vol: c.derge_vol,
-    derge_imgnum: c.derge_imgnum,
-    derge_draw: c.draw,
+    ...extra,
     served_engine: p.ocr.model,
     served_content_hash: p.ocr.content_hash || null,
     served_updated_at: p.ocr.updated_at || null,
@@ -129,7 +130,38 @@ const out = picked.map((c, i) => {
     image_height: p.image_metadata?.height || p.image_height || null,
     served_text: p.ocr.data,
   };
-});
+};
+const out = picked.map((c, i) => toRow(i + 1, 'kangyur', c.page, books.get(c.book_id) || {},
+  { derge_identity: c.derge_identity, derge_vol: c.derge_vol, derge_imgnum: c.derge_imgnum, derge_draw: c.draw }));
+console.error(`kangyur: ${out.length} pages from ${new Set(out.map((r) => r.book_id)).size} books; seam marked ${out.filter((r) => r.leaf_seam === 'marked').length}; derge identity median ${out.map((r) => r.derge_identity).sort()[15]}`);
+
+// ---- stratum "mark" (added 2026-10-01, sourcelibrary-e1 / Derek): N_MARK pages whose served verdict is
+// MARK_UNRELIABLE (pages.ocr.verdict, stamped by the #4523 verdict runs), one per BL Tibetan book, seed 20261004,
+// served text >= 600 chars, books already in the kangyur stratum excluded. Track B (PR #5459) found these pages
+// off-index for every reference we hold, so a human read is the only instrument. MEASURED 2026-10-01: 99% of the
+// 78,403 such pages serve GEMINI text (the verdict judged the Yigdzin read; Gemini stayed served), so this stratum
+// measures what readers see, not Yigdzin.
+const N_MARK = 10, MIN_CHARS = 600;
+const mark = makeShuffle(20261004);
+const srcOf = (b) => b.image_source?.provider || b.image_source?.type || (typeof b.image_source === 'string' ? b.image_source : null);
+const tibBooks = await db.collection('books').find({ language: 'Tibetan', visible: true, pages_count: { $gt: 0 } }, { projection: { id: 1, title: 1, display_title: 1, image_source: 1 } }).toArray();
+const taken = new Set(out.map((r) => r.book_id));
+const blBooks = mark.shuffle(tibBooks.filter((b) => /^bl$/i.test(srcOf(b) || '') && !taken.has(b.id)).sort((x, y) => (x.id < y.id ? -1 : 1)));
+const PROJ = { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.content_hash': 1, 'ocr.updated_at': 1, 'ocr.verdict': 1, display_photo: 1, photo: 1, photo_original: 1, 'archive_metadata.source_url': 1, 'image_metadata.width': 1, 'image_metadata.height': 1, image_width: 1, image_height: 1 };
+let tried = 0;
+for (const b of blBooks) {
+  if (out.length >= picked.length + N_MARK) break;
+  tried++;
+  const cand = (await db.collection('pages').find({ book_id: b.id, 'ocr.verdict.verdict': 'MARK_UNRELIABLE' }, { projection: PROJ }).sort({ page_number: 1 }).toArray())
+    .filter((p) => (p.ocr.data || '').length >= MIN_CHARS);
+  if (!cand.length) continue;
+  const p = cand[Math.floor(mark.rnd() * cand.length)];
+  const v = p.ocr.verdict;
+  out.push(toRow(out.length + 1, 'mark', p, b, { derge_identity: null, verdict: v.verdict, verdict_rule: v.rule, verdict_agree_wood: v.agree_wood ?? null, verdict_agree_uchan: v.agree_uchan ?? null, verdict_align_src: v.align_src ?? null, verdict_judged_engine: v.judged_engine, verdict_run: v.run }));
+}
+console.error(`mark: ${out.length - picked.length} pages (books tried ${tried}); served engines ${JSON.stringify(out.filter((r) => r.stratum === 'mark').reduce((m, r) => ({ ...m, [r.served_engine]: (m[r.served_engine] || 0) + 1 }), {}))}`);
+if (out.length < picked.length + N_MARK) throw new Error('short mark draw');
+await client.close();
+
 fs.writeFileSync(OUT, out.map((r) => JSON.stringify(r)).join('\n') + '\n');
 console.error(`wrote ${out.length} pages from ${new Set(out.map((r) => r.book_id)).size} books -> ${path.relative(REPO, OUT)}`);
-console.error(`seam marked ${out.filter((r) => r.leaf_seam === 'marked').length}; derge identity median ${out.map((r) => r.derge_identity).sort()[15]}`);
