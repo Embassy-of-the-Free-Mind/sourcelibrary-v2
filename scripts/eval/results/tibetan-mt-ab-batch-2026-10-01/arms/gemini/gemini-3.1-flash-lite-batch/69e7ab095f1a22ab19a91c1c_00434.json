@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab095f1a22ab19a91c1c_00434",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Through the wisdom born of hearing, one understands that in the realm of animals, there are those who subsist on the food of joy <note>a metaphorical term for the sustenance derived from afflicted states</note> characterized by defilement. In the forest depths, there is a great serpent called <term>Ajagara</term> <gloss>python</gloss> that lives by consuming the food of joy and air. There are also creatures such as the <term>Golgolika</term> <gloss>a type of small insect or worm</gloss>, those dwelling in mountain crevices, and others.\n\nWhile the gods of the clear light subsist on the food of joy that is free from malice, the food of joy for animals consists of holding onto grudges and possessing a mind that clings tightly to resentment. Thinking about which actions lead to rebirth in such states, one examines this with the wisdom born of hearing. It is determined that those who have a predominance of hatred, or whose nature is essentially hateful, are in harmony with the causes of resentment. If one who has a predominance of ignorance commits the act of killing, upon the separation of the body, they will fall into the lower realms and be reborn among the hell-beings.\n\nIf one who possesses the basis for resentment and the food of joy is reborn among animals, they will consume the food of joy and air. If, due to having equal merit with humans, they are reborn as a human, one observes that in accordance with that karma and its corresponding cause, they will constantly and suddenly become involved in conflicts with others without any apparent reason.\n\nThen, the monk who understands the ripening of the fruits of karma examines the vast world of animals in another way. Thinking about how those who move within the water are reborn, they examine this with the wisdom born of hearing. Those who are weak in intellect and weak in consciousness, who die while tormented by thirst, will, upon the separation of the body, fall into the lower realms and be reborn as those who move within the water.\n\n<summary>This text explains the karmic causes for rebirth in the animal realm, specifically linking states of hatred, ignorance, and resentment to the nature of an animal's existence and subsequent human behavioral patterns.</summary>\n<keywords>Karma, Rebirth, Animal Realm, Hatred, Ignorance, Wisdom born of hearing, Ajagara, Golgolika</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2664,
+ "outputTokens": 496,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.0007050000000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1329,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

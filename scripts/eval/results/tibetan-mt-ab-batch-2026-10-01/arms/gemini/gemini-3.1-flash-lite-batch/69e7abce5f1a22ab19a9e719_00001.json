@@ -1,0 +1,20 @@
+{
+ "id": "69e7abce5f1a22ab19a9e719_00001",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "༄༅༅། ། In the Tibetan language: The Summary of the Empowerment <term>Vajra-mukhya-nirdesha</term> <gloss>Instruction on the Essence of Empowerment</gloss>.\n\nHomage to the glorious <term>Vajrasattva</term> <gloss>Diamond Being</gloss>.\n\nZla-ba bzang-po <gloss>Moon-Excellent</gloss> requested: \"Teacher, regarding the seven types of empowerment and the three types...\"\n\n<summary>This text introduces the summary of empowerment rituals within the Vajrayana tradition, beginning with a formal homage to Vajrasattva and a request for instruction from a student named Zla-ba bzang-po.</summary>\n<keywords>Vajrasattva, empowerment, initiation, Zla-ba bzang-po, Vajrayana, ritual instruction</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1899,
+ "outputTokens": 185,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.000376125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 139,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

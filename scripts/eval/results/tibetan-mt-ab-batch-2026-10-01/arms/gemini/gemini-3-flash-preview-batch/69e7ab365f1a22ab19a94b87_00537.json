@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab365f1a22ab19a94b87_00537",
+ "arm": "gemini-3-flash-preview",
+ "text": "Ask! Then, the merchant's son Sudhana <note>Tibetan: Nor-bzangs; the protagonist of the Gandavyuha Sutra</note>, who was diligent in the heroic power of a Bodhisattva and in the purification of earnest application, had a mind that became exceedingly luminous through the appearance of a Bodhisattva's strength. He possessed the heart of a firm Bodhisattva who cannot be overcome by others and who has crossed over the limits of doubt. He was without discouragement, being clad in the excellent armor of a Bodhisattva's aspiration. He was diligent in dwelling within and fully increasing the firm intention of a Bodhisattva. He possessed the intention to fully receive the rain from the clouds of a Bodhisattva's conduct. He possessed a mental continuum that was never satiated by the rain from the clouds of a Bodhisattva's Dharma. He had made manifest the aspiration to enter into all the qualities of a Bodhisattva. Desiring to give of himself entirely to gather all living beings by transforming their dispositions, he desired to seize all beings and lead them out from the great wilderness of <term>Samsara</term> <gloss>the cycle of suffering and rebirth</gloss>. He was never satiated by seeing, hearing, and serving spiritual friends <note>Tibetan: dge-ba'i bshes-gnyen; Sanskrit: kalyanamitra</note>. Possessing the generation of immeasurable reverence for the Dharma, he prostrated with his head at the two feet of the monk Sagaradhvaja <note>Tibetan: Blta-na-sdug-pa; literally \"Beautiful to Behold\"</note>. After circumambulating the monk Sagaradhvaja to the right hundreds of thousands of times and looking at him again and again, he departed from the presence of the monk Sagaradhvaja.\n\n<summary>The merchant's son Sudhana reflects on his Bodhisattva vows and spiritual qualities before paying final respects to the monk Sagaradhvaja and continuing his journey.</summary>\n<keywords>Sudhana, Sagaradhvaja, Bodhisattva, Samsara, spiritual friend, Gandavyuha Sutra, Dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2518,
+ "outputTokens": 463,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.001324,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1070,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

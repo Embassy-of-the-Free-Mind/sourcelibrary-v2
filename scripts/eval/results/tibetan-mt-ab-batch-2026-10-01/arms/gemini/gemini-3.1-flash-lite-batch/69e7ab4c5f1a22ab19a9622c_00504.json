@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab4c5f1a22ab19a9622c_00504",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Because the nature of emptiness is non-existent, the Bodhisattva is not perceived at the final limit. Because the essence of non-existence is the emptiness of emptiness, the Bodhisattva is not perceived at the final limit. Because the essence of non-existence is the emptiness of seclusion, the Bodhisattva is not perceived at the final limit. Because the non-existence of things is the non-existence of the essence of emptiness, and because the essence of existing emptiness is the non-existence of essence, the Bodhisattva is not perceived at the final limit. Because the essence of non-existence is the non-existence of emptiness, the Bodhisattva is not perceived in the middle.\n\nThe essence of non-existence is emptiness. Because the essence of non-existence is the emptiness of seclusion, the Bodhisattva is not perceived in the middle. The Bodhisattva is not perceived in the middle. The Bodhisattva is not perceived in the three <note>referring to the three times: past, present, and future</note>. The Bodhisattva is not perceived in the middle. Because the essence of non-existence is the emptiness of emptiness, the Bodhisattva is not perceived in the middle. Why is this? Venerable son of Sharadvati <note>a name for Shariputra, a primary disciple of the Buddha</note>, the non-existence of the essence of emptiness, the emptiness of the essence of non-existence, the seclusion of the essence of non-existence, and the non-existence of the essence of the emptiness of non-existence do not perceive a past limit.\n\n<summary>This text discusses the philosophical concept of emptiness (shunyata) and the non-perception of the Bodhisattva across the limits of time and space.</summary>\n<keywords>Bodhisattva, emptiness, shunyata, Shariputra, non-existence, essence</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2593,
+ "outputTokens": 396,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.0006211249999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1152,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}
