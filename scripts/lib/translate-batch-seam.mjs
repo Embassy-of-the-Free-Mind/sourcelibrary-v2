@@ -353,10 +353,18 @@ export function estimateRunUsd({ prompts, book, blocks, model }) {
  * The pages the realtime worker would translate for this book, in order: the canonical
  * translatable filter, no translation yet, not health-blocked, and every page re-checked
  * with isTranslatablePage (blank-from-OCR, empty body, looping source #4850).
+ *
+ * Page-level targeting (opt-in, both default off so the gap-fill and the #5309 driver are
+ * unchanged): `pageIds` narrows the queue to those pages; `excludeWithheld` skips pages carrying
+ * `translation_withheld` — a repair lane (#5309, #4523) owns those, and a finish pass that
+ * translated them would race it. The #5309 driver deliberately translates withheld pages, which
+ * is why this is not the default.
  */
-export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
+export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false } = {}) {
   const docs = await db.collection('pages').find({
     book_id: bookId,
+    ...(pageIds ? { id: { $in: [...pageIds] } } : {}),
+    ...(excludeWithheld ? { translation_withheld: { $exists: false } } : {}),
     ...translatablePageFilter(),
     'translation.health_blocked': { $exists: false },
     $or: [
@@ -437,7 +445,7 @@ function meterComplete(deps, db, { run, jobName, pageCount, kind, responses, sta
  * Plan a run for one book without touching Gemini: the blocks, the seams, the refusals.
  * Returns { ok, reason?, book, pages, blocks, excluded, model }.
  */
-export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
+export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false } = {}) {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
@@ -445,7 +453,7 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: TERMINAL_PHASES } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit });
+  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const blocks = planBlocks(pages);
   return { ok: true, book, pages, blocks, excluded, model: getTranslateModelForBook(book) };
