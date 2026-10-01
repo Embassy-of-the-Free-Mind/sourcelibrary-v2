@@ -72,8 +72,11 @@ const PASSES = {
   2: { model: 'gemini-3-flash-preview', temperature: 0.1 },
 };
 const MAX_OUTPUT_TOKENS = 16384;
-const INLINE_PAGES = 20;
-const INLINE_MAX_BYTES = 15 * 1024 * 1024;
+// File-based jobs, bounded by bytes first and pages second (bulk-reocr-local.mjs defaults, #3974).
+// An inline request carries only ~15 MB, and these pages' images are large enough that it held
+// ONE page per job — the first production run submitted 138 single-page jobs before it was stopped.
+const FILE_MAX_BYTES = 40 * 1024 * 1024;
+const FILE_MAX_PAGES = 500;
 /** Batch-rate cost per page measured on the pilot (#3878), × 1.5 headroom for the estimate. */
 const EST_USD_PER_PAGE = { 1: 0.0024 * 1.5, 2: 0.0049 * 1.5 };
 const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
@@ -147,12 +150,14 @@ async function submit() {
   if (!PASSES[pass]) throw new Error('--pass=1|2');
   if (!(approved > 0)) throw new Error('submit needs --approved-usd (the ceiling this run may spend)');
   const s = load();
-  if (s.jobs.some(j => j.pass === pass)) throw new Error(`pass ${pass} already submitted for ${RUN}`);
-  let todo = s.pages;
+  // Resumable: a page already in one of this pass's jobs is not sent again.
+  const sent = new Set(s.jobs.filter(j => j.pass === pass).flatMap(j => j.page_ids));
+  let todo = s.pages.filter(p => !sent.has(p.page_id));
   if (pass === 2) {
     if (s.jobs.some(j => j.pass === 1 && !j.collected)) throw new Error('pass 1 not fully collected');
-    todo = s.pages.filter(p => !s.results[p.page_id]?.[1]?.accept);
+    todo = todo.filter(p => !s.results[p.page_id]?.[1]?.accept);
   }
+  if (!todo.length) { console.log(`pass ${pass}: nothing left to submit`); return; }
   const est = todo.length * EST_USD_PER_PAGE[pass];
   const spent = s.jobs.reduce((t, j) => t + (j.cost_usd || 0), 0);
   if (spent + est > approved) throw new Error(`refusing: spent $${spent.toFixed(2)} + estimate $${est.toFixed(2)} > approved $${approved}`);
@@ -173,9 +178,11 @@ async function submit() {
   let chunk = [], bytes = 0, failed = 0;
   const flush = async () => {
     if (!chunk.length) return;
+    const displayName = `${REASON}-${RUN}-p${pass}-${s.jobs.length}`;
+    const fileName = await uploadJsonl(chunk.map(c => JSON.stringify(c.req)).join('\n'), displayName);
     const r = await fetch(`${API}/models/${model}:batchGenerateContent?key=${apiKey()}`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ batch: { display_name: `${REASON}-${RUN}-p${pass}-${s.jobs.length}`, input_config: { requests: { requests: chunk.map(c => c.req) } } } }),
+      body: JSON.stringify({ batch: { display_name: displayName, input_config: { file_name: fileName } } }),
     });
     const j = await r.json();
     if (!r.ok) throw new Error(`batch create ${r.status}: ${JSON.stringify(j).slice(0, 300)}`);
@@ -188,13 +195,14 @@ async function submit() {
     const r = await fetch(p.url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'Mozilla/5.0 (SourceLibrary reread-loop)' } }).catch(() => null);
     if (!r?.ok) { failed++; s.results[p.page_id] = { ...(s.results[p.page_id] || {}), [pass]: { accept: false, reasons: ['image-fetch-failed'] } }; continue; }
     const data = Buffer.from(await r.arrayBuffer()).toString('base64');
-    if (chunk.length >= INLINE_PAGES || bytes + data.length > INLINE_MAX_BYTES) await flush();
+    if (chunk.length && (chunk.length >= FILE_MAX_PAGES || bytes + data.length > FILE_MAX_BYTES)) await flush();
     chunk.push({ page_id: p.page_id, req: {
       request: {
         contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: (r.headers.get('content-type') || 'image/jpeg').split(';')[0], data } }] }],
         safetySettings: SAFETY,
         generationConfig,
       },
+      // The JSONL shape bulk-reocr-local.mjs submits and batch-collector.mjs reads back.
       metadata: { key: p.page_id },
     } });
     bytes += data.length;
@@ -202,6 +210,27 @@ async function submit() {
   await flush();
   save(s);
   console.log(`pass ${pass}: submitted ${todo.length - failed} pages; ${failed} image fetches failed (recorded)`);
+}
+
+/** Upload a JSONL body to the File API (resumable protocol); returns the file name. */
+async function uploadJsonl(body, displayName) {
+  const start = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey()}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start',
+      'X-Goog-Upload-Header-Content-Length': String(Buffer.byteLength(body)), 'X-Goog-Upload-Header-Content-Type': 'text/plain',
+    },
+    body: JSON.stringify({ file: { displayName } }),
+  });
+  if (!start.ok) throw new Error(`upload start ${start.status}: ${await start.text()}`);
+  const url = start.headers.get('X-Goog-Upload-URL');
+  if (!url) throw new Error('no upload URL returned');
+  for (let attempt = 1; ; attempt++) {
+    const put = await fetch(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body }).catch(e => ({ ok: false, status: e.message }));
+    if (put.ok) { const info = await put.json(); if (!info.file?.name) throw new Error('upload returned no file name'); return info.file.name; }
+    if (attempt >= 3) throw new Error(`upload PUT failed: ${put.status}`);
+    await new Promise(r => setTimeout(r, 30000));
+  }
 }
 
 /** @returns {Promise<number>} 0 when every job is collected, 3 while any is still running */
@@ -218,12 +247,18 @@ async function collect() {
       j.collected = true; j.state = state; save(s); continue;
     }
     if (!/SUCCEEDED/.test(state)) { pending++; continue; }
-    const resp = r.response?.inlinedResponses?.inlinedResponses || r.response?.inlinedResponses || [];
+    let resp = r.response?.inlinedResponses?.inlinedResponses || r.response?.inlinedResponses || [];
+    const outFile = r.response?.responsesFile || r.dest?.fileName;
+    if (outFile) {
+      const f = await fetch(`${API}/${outFile}:download?alt=media&key=${apiKey()}`);
+      if (!f.ok) { console.log(`${j.job}: results file not downloadable yet (${f.status})`); pending++; continue; }
+      resp = (await f.text()).trim().split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
+    }
     const usageByBook = new Map();
     const textDir = path.join(DIR, `pass${j.pass}`);
     fs.mkdirSync(textDir, { recursive: true });
     for (const x of resp) {
-      const id = x.metadata?.key; const p = byId.get(id);
+      const id = x.key ?? x.metadata?.key; const p = byId.get(id);
       if (!p) continue;
       const c = x.response?.candidates?.[0];
       const text = c?.content?.parts?.map(q => q.text || '').join('') || '';
