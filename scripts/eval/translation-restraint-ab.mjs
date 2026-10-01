@@ -76,6 +76,31 @@ export function buildArms(v15) {
   return { A1: v16, A2: v16, B: v16r };
 }
 
+// ── the v16 CANDIDATE as it now stands: the arms above, plus the bare continuity marker ──────
+// Added after this A/B ran (#5363, #5376; Derek 2026-09-30), so `buildArms` — the text the
+// recorded verdicts were made under — is left exactly as it was, and the candidate is built here.
+//
+// Since v11 the list of bracket replacements has offered the model
+// `<meta>continues from previous page: ...</meta>`. That `...` is a door: on a page that opens
+// mid-sentence the model writes the page's own lines after the colon, inside a tag every reader
+// surface strips. Full mirror, 2026-09-30 (scripts/audit/hidden-meta-scan.mjs): 187,343 of
+// 247,804 continuity metas carry text after the marker, and on 3,218 pages that text is ≥ 80% of
+// the page. The continuity rule lower down in the same prompt already asks for the bare marker;
+// this edit makes the two lines agree.
+export const V16_MARKER_OLD = '  - Context from previous page → <meta>continues from previous page: ...</meta>';
+export const V16_MARKER_NEW = '  - Context from previous page → <meta>continues from previous page</meta>, the marker alone. Write nothing after it inside the tag: every word of this page, including the end of a sentence that began on the previous page, belongs in the translation itself.';
+
+/**
+ * The v16 candidate text: v15 + the note-scope sentence (#4767) + the bare continuity marker
+ * (#5376). NOT seeded and NOT default — it becomes a `prompts` row only through the #4767 re-run
+ * (a paired A/B under scripts/eval/translation-prompt-ab.mjs), and flipping it is Derek's call.
+ */
+export function buildV16(v15) {
+  const v16 = buildArms(v15).A1;
+  if (v16.split(V16_MARKER_OLD).length !== 2) throw new Error('v16 marker anchor not found exactly once — the row changed; re-read it before building v16');
+  return v16.replace(V16_MARKER_OLD, () => V16_MARKER_NEW);
+}
+
 const sha = (t) => createHash('sha256').update(t).digest('hex').slice(0, 12);
 const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
 
@@ -340,6 +365,9 @@ function phaseScore() {
   console.log(JSON.stringify(report, null, 2));
 }
 
-const phase = ['draw', 'submit', 'collect', 'packets', 'score'].find(has);
-if (!phase) { console.error('pass one of --draw --submit --collect --packets --score'); process.exit(1); }
-await ({ draw: phaseDraw, submit: phaseSubmit, collect: phaseCollect, packets: phasePackets, score: phaseScore })[phase]();
+// Run only as a script: a test imports buildArms/buildV16 without starting a phase.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const phase = ['draw', 'submit', 'collect', 'packets', 'score'].find(has);
+  if (!phase) { console.error('pass one of --draw --submit --collect --packets --score'); process.exit(1); }
+  await ({ draw: phaseDraw, submit: phaseSubmit, collect: phaseCollect, packets: phasePackets, score: phaseScore })[phase]();
+}
