@@ -1,0 +1,138 @@
+{
+  "seed": 2026100104,
+  "at": "2026-10-01T04:25:03.817Z",
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained",
+    "since": "2026-09-30T22:15:00.000Z",
+    "until": "2026-10-01T04:15:00.000Z",
+    "book_ids_file": null
+  },
+  "n_books": 45,
+  "n_seams": 10,
+  "weights": {
+    "Greek": {
+      "books": 42,
+      "translated_pages": 2154
+    },
+    "French": {
+      "books": 24,
+      "translated_pages": 1858
+    },
+    "Sanskrit": {
+      "books": 5,
+      "translated_pages": 693
+    },
+    "Tibetan": {
+      "books": 3,
+      "translated_pages": 29
+    },
+    "Latin": {
+      "books": 249,
+      "translated_pages": 17869
+    },
+    "German": {
+      "books": 25,
+      "translated_pages": 1931
+    },
+    "Italian": {
+      "books": 4,
+      "translated_pages": 549
+    },
+    "Russian": {
+      "books": 6,
+      "translated_pages": 1458
+    },
+    "Greek, English": {
+      "books": 1,
+      "translated_pages": 216
+    },
+    "Unknown": {
+      "books": 1,
+      "translated_pages": 16
+    },
+    "Pali": {
+      "books": 2,
+      "translated_pages": 507
+    },
+    "Hebrew": {
+      "books": 4,
+      "translated_pages": 0
+    },
+    "Ge'ez": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Arabic": {
+      "books": 15,
+      "translated_pages": 9
+    },
+    "Spanish": {
+      "books": 2,
+      "translated_pages": 0
+    },
+    "Dutch": {
+      "books": 1,
+      "translated_pages": 132
+    },
+    "Javanese": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Malay": {
+      "books": 4,
+      "translated_pages": 0
+    },
+    "Bugis": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Yucatec Maya": {
+      "books": 2,
+      "translated_pages": 0
+    },
+    "English": {
+      "books": 6,
+      "translated_pages": 0
+    }
+  },
+  "visits": {
+    "books_visited": 45,
+    "seeded_main": 45,
+    "seam_main": 10,
+    "extras": 45
+  },
+  "exclusions": {
+    "page_type": 1574,
+    "short_translation": 8,
+    "short_ocr": 2
+  },
+  "arms": {
+    "lite": 45
+  },
+  "eligibility": [
+    {
+      "book_id": "699249bca2d53df4853bf2a0",
+      "title": "Tibet's Great Yogi Milarepa",
+      "pages": 14,
+      "last_write": "2026-09-30T22:30:36.735Z",
+      "why": [
+        "held (speedtest-a-exclude-2026-10) since 2026-09-30T22:19:15.907Z"
+      ]
+    },
+    {
+      "book_id": "69aea85d1cbf28a363a4f63c",
+      "title": "Wirtschaft und Gesellschaft",
+      "pages": 221,
+      "last_write": "2026-10-01T04:12:53.707Z",
+      "why": [
+        "processing_priority 95"
+      ]
+    }
+  ],
+  "controls": {
+    "swap": 10,
+    "drop": 10,
+    "repeat": 10
+  }
+}

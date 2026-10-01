@@ -1,0 +1,25 @@
+{
+ "at": "2026-10-01T07:26:23.921Z",
+ "window": "2026-09-30T22:15:00.000Z/2026-10-01T04:15:00.000Z",
+ "abort": [],
+ "warn": [
+  {
+   "book_id": "699249bca2d53df4853bf2a0",
+   "title": "Tibet's Great Yogi Milarepa",
+   "pages": 14,
+   "why": "run tbc_muomy9ya_l227ei in flight when the hold landed (2026-09-30T22:19:15.907Z); parked 2026-09-30T22:34:38.061Z, no write after parking",
+   "run": "tbc_muomy9ya_l227ei"
+  },
+  {
+   "book_id": "69aea85d1cbf28a363a4f63c",
+   "title": "Wirtschaft und Gesellschaft",
+   "pages": 221,
+   "why": "processing_priority 95 (standing score or gap-fill enrolment; Phase 4 floor does not cover --enrol-auto)",
+   "runs": [
+    "tbc_muopf6p4_xao03r"
+   ]
+  }
+ ],
+ "exempt": [],
+ "abort_count": 0
+}
