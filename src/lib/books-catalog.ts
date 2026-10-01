@@ -11,6 +11,7 @@
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
 import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
+import { matchStem, keywordVariants } from '@/lib/search/word-forms';
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -550,8 +551,8 @@ export async function searchBooksCatalog(
   if (isPhrase) {
     // Exact phrase only — already handled by phraseFilters
   } else if (words.length >= 2) {
-    const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
-    const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
+    const titleAnds = words.map(w => `title.ilike.%${matchStem(w)}%`).join(',');
+    const displayAnds = words.map(w => `display_title.ilike.%${matchStem(w)}%`).join(',');
     const authorAnds = words.map(w => `author.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds}),and(${authorAnds})`;
 
@@ -573,8 +574,8 @@ export async function searchBooksCatalog(
     if (contentWords.length >= 2 && contentWords.length <= 3) {
       for (const w of contentWords) {
         const others = contentWords.filter(o => o !== w);
-        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
-        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        const titlePart = others.map(o => `title.ilike.%${matchStem(o)}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${matchStem(o)}%`).join(',');
         orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
         orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
       }
@@ -582,8 +583,12 @@ export async function searchBooksCatalog(
   } else {
     // Single word: also match against language and subject_keywords
     orFilter += `,language.ilike.%${safe}%`;
-    // subject_keywords array contains — catches "panchatantra", "alchemy", etc.
-    orFilter += `,subject_keywords.cs.{"${safe}"}`;
+    // subject_keywords overlap — catches "panchatantra", "alchemy", etc.
+    // Related word forms (#5517): "botanical" also finds titles with "Botan…" and
+    // books keyed "botany". The stem is a prefix of the word, so this only widens.
+    const stem = matchStem(safe.trim());
+    if (stem !== safe.trim().toLowerCase()) orFilter += `,title.ilike.%${stem}%,display_title.ilike.%${stem}%`;
+    orFilter += `,subject_keywords.ov.{${keywordVariants(safe.trim()).map(v => `"${v}"`).join(',')}}`;
   }
 
   let query = supabase
@@ -657,8 +662,8 @@ export async function searchBookIds(
     // Exact phrase only — already handled by phraseFilters
   } else if (words.length >= 2) {
     // Add word-level AND: title contains ALL words (handles spelling variants)
-    const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
-    const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
+    const titleAnds = words.map(w => `title.ilike.%${matchStem(w)}%`).join(',');
+    const displayAnds = words.map(w => `display_title.ilike.%${matchStem(w)}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
 
     // Cross-field AND: some words in title + some in author
@@ -667,8 +672,8 @@ export async function searchBookIds(
     if (contentWords.length >= 2 && contentWords.length <= 3) {
       for (const w of contentWords) {
         const others = contentWords.filter(o => o !== w);
-        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
-        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        const titlePart = others.map(o => `title.ilike.%${matchStem(o)}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${matchStem(o)}%`).join(',');
         orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
         orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
       }
@@ -677,8 +682,12 @@ export async function searchBookIds(
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     // This is fast since it's a single ilike on an indexed field
     orFilter += `,language.ilike.%${safe}%`;
-    // subject_keywords array contains — catches terms like "panchatantra", "alchemy", "metallurgy"
-    orFilter += `,subject_keywords.cs.{"${safe}"}`;
+    // subject_keywords overlap — catches terms like "panchatantra", "alchemy", "metallurgy"
+    // Related word forms (#5517): "botanical" also finds titles with "Botan…" and
+    // books keyed "botany". The stem is a prefix of the word, so this only widens.
+    const stem = matchStem(safe.trim());
+    if (stem !== safe.trim().toLowerCase()) orFilter += `,title.ilike.%${stem}%,display_title.ilike.%${stem}%`;
+    orFilter += `,subject_keywords.ov.{${keywordVariants(safe.trim()).map(v => `"${v}"`).join(',')}}`;
   }
 
   let query = supabase
