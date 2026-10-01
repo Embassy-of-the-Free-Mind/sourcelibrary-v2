@@ -42,6 +42,7 @@
  *   ... enrol [--max-open 60] [--english] [--book ID]   release → chained enrol (book stays released)
  *   ... runs            read chained run phases
  *   ... clear           clear needs_reocr on rewritten pages
+ *   ... echofix         withhold block siblings shifted by an echo refusal (#5435) and re-enrol
  *   ... release         release every book this lane held (after the audit passes)
  *   ... status
  *   ... run --wave 25 --max-open 40 --interval 600 [--slice 120]   loop check→withhold→enrol→runs→clear→ocr
@@ -496,6 +497,47 @@ async function release(db) {
   log(`release: ${n} books released to their prior status. Remove the envelope: set-scope.mjs --tag ${ENVELOPE_TAG} --remove --by done`);
 }
 
+// ── echo-shift end-pass (#5435) ────────────────────────────────────────────
+/**
+ * Before PR #5435 the chained lane, when the model echoed one page's source inside a block,
+ * refused that page but wrote its siblings one slot off (each the translation of the page before).
+ * Tell: a page_revisions row with source `health-gate-refused`, reason `echo`. Every written page
+ * of the same block (`translation.engine.input.context.block.first_page`) is withheld here and the
+ * book goes back to `withheld`, so `enrol` re-sends them. Run AFTER #5435 is live on the box.
+ */
+async function echofix(db) {
+  const s = loadState();
+  let books = 0, pages = 0;
+  for (const b of s.books.filter((x) => ['cleared', 'tr_done', 'tr_parked', 'tr_failed'].includes(x.phase) && x.run_id)) {
+    const refusals = await db.collection('page_revisions').find({ book_id: b.id, source: 'health-gate-refused', reason: 'echo', created_at: { $gte: new Date(s.created_at) } }, { projection: { page_id: 1 } }).toArray();
+    if (!refusals.length) continue;
+    const refused = await db.collection('pages').find({ id: { $in: refusals.map((r) => r.page_id) } }, { projection: { page_number: 1 } }).toArray();
+    const nums = refused.map((p) => p.page_number);
+    const near = await db.collection('pages').find({ book_id: b.id, page_number: { $in: nums.flatMap((n) => Array.from({ length: 17 }, (_, i) => n - 8 + i)) }, 'translation.engine.input.context.block.first_page': { $exists: true } },
+      { projection: { id: 1, page_number: 1, translation: 1 } }).toArray();
+    const victims = new Map();
+    for (const n of nums) {
+      // the block that contained the refused page: first_page ≤ n < first_page + pages
+      const blocks = near.map((p) => p.translation.engine.input.context.block).filter((bl) => bl.first_page <= n && n < bl.first_page + bl.pages);
+      const firsts = new Set(blocks.map((bl) => bl.first_page));
+      for (const p of near) if (firsts.has(p.translation.engine.input.context.block.first_page) && translationText(p.translation)) victims.set(p.id, p);
+    }
+    if (!victims.size) continue;
+    const ids = [...victims.keys()];
+    const saved = await saveRevisionsBeforeOverwrite(db, ids, 'translation', { reason: 'echo-shift-5435', keepMeta: true });
+    if (saved !== ids.length) { log(`  ${b.id}: revisions ${saved} != ${ids.length} — skipped`); continue; }
+    const now = new Date();
+    const ops = [...victims.values()].map((p) => ({ updateOne: { filter: { id: p.id, 'translation.data': p.translation.data }, update: withholdUpdate(p, 'echo_shift_block', now) } }));
+    const r = await db.collection('pages').bulkWrite(ops, { ordered: false });
+    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'echo-shift-withheld', detail: { refused: nums, withheld: r.modifiedCount, pages: [...victims.values()].map((p) => p.page_number).sort((a, c) => a - c) } });
+    b.echo_withheld = (b.echo_withheld || 0) + r.modifiedCount; b.echo_prev_phase = b.phase; b.phase = 'withheld'; delete b.run_id;
+    books++; pages += r.modifiedCount;
+    log(`  ${b.id}: ${nums.length} echo refusals → ${r.modifiedCount} shifted siblings withheld (pages ${[...victims.values()].map((p) => p.page_number).sort((a, c) => a - c).join(',')}) → re-enrol`);
+    saveState(s);
+  }
+  log(`echofix: ${books} books, ${pages} pages withheld for re-translation`);
+}
+
 // ── status / run ───────────────────────────────────────────────────────────
 async function status(db) {
   const s = loadState();
@@ -535,7 +577,7 @@ async function run(db) {
   }
 }
 
-const COMMANDS = { init, hold, envelope, ocr, reconcile, check, withhold, enrol, runs, clear, release, status, run };
+const COMMANDS = { init, hold, envelope, ocr, reconcile, check, echofix, withhold, enrol, runs, clear, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   // noTimeout: a 50-book OCR submit runs for an hour; the 300 s script timeout force-exited the
