@@ -44,7 +44,7 @@
  *   ... clear           clear needs_reocr on rewritten pages
  *   ... release         release every book this lane held (after the audit passes)
  *   ... status
- *   ... run --wave 50 --max-open 60 --interval 600   loop check→withhold→enrol→runs→clear→ocr
+ *   ... run --wave 25 --max-open 40 --interval 600 [--slice 120]   loop check→withhold→enrol→runs→clear→ocr
  * Every command takes --state F (default scripts/output/stranded-text-repair-5309/state.json)
  * and --cap 265.
  */
@@ -201,6 +201,7 @@ async function spend(db) {
 // ── OCR ────────────────────────────────────────────────────────────────────
 async function ocr(db) {
   const s = loadState();
+  for (const b of s.books) if (b.phase === 'ocr_submit_failed' && (b.submit_attempts || 1) < 3) { b.phase = 'pending'; }
   await reconcile(db, s);   // a pending book that already has jobs is not pending
   let picks;
   if (val('book')) picks = s.books.filter((b) => b.id === val('book') && b.phase === 'pending');
@@ -214,26 +215,38 @@ async function ocr(db) {
   if (sp.usd + inflightTr + add > CAP) { log('ocr: CAP — not submitting'); s.cap_hit = new Date().toISOString(); saveState(s); return 0; }
 
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const file = path.join(LOG_DIR, `pages-${stamp}.json`);
-  const ids = picks.flatMap((b) => ocrTargets(b));
-  fs.writeFileSync(file, JSON.stringify(ids));
-  if (!has('dry-run')) {
-    // Snapshot the old text WITH its provenance (source_url names the shifted image) before the
-    // collector's own named-column snapshot replaces it.
-    let saved = 0;
-    for (let i = 0; i < ids.length; i += 500) saved += await saveRevisionsBeforeOverwrite(db, ids.slice(i, i + 500), 'ocr', { reason: SWEEP, keepMeta: true });
-    log(`ocr: ${saved} ocr revisions snapshotted (keepMeta)`);
-  }
-  const t0 = new Date();
-  const argv = ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, '--model=lite',
-    `--reason=${SWEEP}: re-OCR against the repaired image; the text beside it was a neighbouring leaf (#5309)`];
-  if (has('dry-run')) argv.push('--dry-run');
   const logFile = path.join(LOG_DIR, `ocr-${stamp}.log`);
-  const res = spawnSync(process.execPath, argv, { cwd: ROOT, env: process.env, encoding: 'utf8', maxBuffer: 64 << 20 });
-  fs.writeFileSync(logFile, (res.stdout || '') + (res.stderr || ''));
-  const tail = (res.stdout || '').trim().split('\n').filter((l) => /^(Books|Pages|Estimated|NOT SUBMITTED|\(dry run)/.test(l));
-  console.log(tail.map((l) => '  ' + l).join('\n'));
-  if (res.status !== 0) log(`ocr: bulk-reocr-local exited ${res.status} — see ${logFile}`);
+  const t0 = new Date();
+  // One child process per book and per SLICE pages: bulk-reocr-local holds a book's images in
+  // memory while it builds the JSONL, and the box OOM-killed three 2 GB submits of 50-book waves
+  // (2026-10-01 00:21, 01:14). A slice bounds that at ~SLICE × image size.
+  const SLICE = Number(val('slice', '120'));
+  let n = 0;
+  for (const b of picks) {
+    const ids = ocrTargets(b);
+    if (!has('dry-run')) {
+      // Snapshot the old text WITH its provenance (source_url names the shifted image) before the
+      // collector's own named-column snapshot replaces it. Idempotent enough: a second snapshot of
+      // the same text is a duplicate row, not a loss.
+      let saved = 0;
+      for (let i = 0; i < ids.length; i += 500) saved += await saveRevisionsBeforeOverwrite(db, ids.slice(i, i + 500), 'ocr', { reason: SWEEP, keepMeta: true });
+      b.ocr_revisions = (b.ocr_revisions || 0) + saved;
+    }
+    for (let i = 0; i < ids.length; i += SLICE) {
+      const file = path.join(LOG_DIR, `pages-${stamp}-${b.id}-${i}.json`);
+      fs.writeFileSync(file, JSON.stringify(ids.slice(i, i + SLICE)));
+      const argv = ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, '--model=lite',
+        `--reason=${SWEEP}: re-OCR against the repaired image; the text beside it was a neighbouring leaf (#5309)`];
+      if (has('dry-run')) argv.push('--dry-run');
+      const res = spawnSync(process.execPath, argv, { cwd: ROOT, env: process.env, encoding: 'utf8', maxBuffer: 64 << 20 });
+      fs.appendFileSync(logFile, `=== ${b.id} slice ${i} (${Math.min(SLICE, ids.length - i)} pages)\n` + (res.stdout || '') + (res.stderr || ''));
+      const tail = (res.stdout || '').trim().split('\n').filter((l) => /^(Pages|Estimated|NOT SUBMITTED)/.test(l));
+      if (res.status !== 0) log(`  ${b.id} slice ${i}: bulk-reocr-local exited ${res.status} — see ${logFile}`);
+      else log(`  ${b.id} slice ${i}: ${tail.join('; ')}`);
+      fs.unlinkSync(file);
+    }
+    n++;
+  }
   if (has('dry-run')) return 0;
 
   // What the submit actually recorded, per book: child jobs (they carry job_name) and failures.
@@ -246,8 +259,9 @@ async function ocr(db) {
     b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...children.map((j) => j.id)])];
     b.ocr_submitted_at = b.ocr_submitted_at || t0.toISOString();
     b.ocr_submitted = (b.ocr_submitted || 0) + submitted; b.ocr_submit_failed = failed;
-    b.phase = submitted > 0 ? 'ocr_submitted' : 'ocr_submit_failed';
-    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: 'lite', retry: b.retries } });
+    b.submit_attempts = (b.submit_attempts || 0) + 1;
+    b.phase = submitted > 0 ? 'ocr_submitted' : (b.submit_attempts < 3 ? 'pending' : 'ocr_submit_failed');
+    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: 'lite', retry: b.retries, attempt: b.submit_attempts } });
   }
   saveState(s);
   log(`ocr: submitted ${picks.filter((b) => b.phase === 'ocr_submitted').length} books`);
@@ -487,7 +501,7 @@ async function status(db) {
 }
 
 async function run(db) {
-  const wave = Number(val('wave', '50')), interval = Number(val('interval', '600')) * 1000;
+  const wave = Number(val('wave', '25')), interval = Number(val('interval', '600')) * 1000;
   for (;;) {
     await check(db); await withhold(db); await enrol(db); await runs(db); await clear(db);
     const s = loadState();
