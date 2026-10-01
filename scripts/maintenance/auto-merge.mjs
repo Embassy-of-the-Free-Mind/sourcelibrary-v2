@@ -118,6 +118,7 @@ function main() {
   sh(`gh pr merge ${pr.number} --squash --delete-branch`);
   console.log(`merged #${pr.number}; the rest wait ${BUILD_GAP_MIN} min for the build`);
   dispatchWarm(pr.number);
+  dispatchLedgers(pr.number);
   return ready.length > 1 ? BUILD_GAP_MIN + 1 : null;
 }
 
@@ -146,6 +147,18 @@ function dispatchWarm(number) {
   if (!sha) { console.log('::warning::merge commit SHA unknown — run post-deploy-warm.yml by hand'); return; }
   sh(`gh workflow run post-deploy-warm.yml --ref main -f sha=${sha}`);
   console.log(`dispatched post-deploy-warm.yml for ${sha}`);
+}
+
+// Same recursion guard, second victim: eval-ledgers-regenerate.yml rebuilds the
+// generated scripts/eval/EXPERIMENTS.md and INDEX.md on push to main, and a
+// token merge never fires it (#5390 on 2026-10-01 landed an entry nobody
+// regenerated). Dispatch it for any merge that touched scripts/eval/.
+function dispatchLedgers(number) {
+  const view = JSON.parse(sh(`gh pr view ${number} --json files`));
+  const paths = (view.files || []).map((f) => f.path);
+  if (!paths.some((p) => p.startsWith('scripts/eval/'))) return;
+  sh('gh workflow run eval-ledgers-regenerate.yml --ref main');
+  console.log('dispatched eval-ledgers-regenerate.yml (scripts/eval/ changed)');
 }
 
 emitRetry(main());
