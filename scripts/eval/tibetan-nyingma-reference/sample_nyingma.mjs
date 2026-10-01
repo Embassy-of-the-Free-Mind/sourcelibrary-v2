@@ -4,13 +4,14 @@
 // collection, and per book ONE random page per served verdict class (SERVE / MARK_UNRELIABLE / none), so each class
 // is one-page-per-book. Read-only. Seed 20261002.
 //   cd /root/sourcelibrary && node --env-file=.env.production.local /root/nyingma-ref/sample_nyingma.mjs
+import { makeLegacyLcg } from '../lib/paired-stats.mjs';
 import { createRequire } from 'module';
 import fs from 'fs';
 const require = createRequire('/root/sourcelibrary/package.json');
 const { MongoClient } = require('mongodb');
 const OUT = process.env.OUT || '/root/nyingma-ref/draw/';
 fs.mkdirSync(OUT, { recursive: true });
-let seed = 20261002; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+const rnd = makeLegacyLcg(20261002); // the draw committed with this script was made with this generator (#5373)
 // rNying rgyud / rNying ma rgyud 'bum / Tshamdrak / mTshams brag. NOT "Kanjur rGyud 'bum" (the Kanjur tantra section).
 const NYINGMA = /rnying ?(ma'?i? )?rgyud|tsham ?drak|mtshams ?brag|rnying ma rgyud 'bum/i;
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
