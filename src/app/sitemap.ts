@@ -68,12 +68,30 @@ async function safeQuery<T>(
   }
 }
 
-export async function generateSitemaps() {
+// The build calls generateSitemaps() once per prerendered chunk, not once per
+// build: one build log on 2026-10-01 shows 61 book-count runs, each fetching
+// ~58K book docs (~9 s, so most hit maxTimeMS and fell back to 10,000 books,
+// silently dropping every book chunk past the second). Memoise per process;
+// the TTL keeps a warm runtime instance from serving stale counts (#5545).
+const SITEMAP_IDS_TTL_MS = 60 * 60 * 1000;
+let sitemapIdsCache: { at: number; ids: Promise<{ id: number }[]> } | null = null;
+
+export function generateSitemaps() {
+  if (!sitemapIdsCache || Date.now() - sitemapIdsCache.at > SITEMAP_IDS_TTL_MS) {
+    const ids = computeSitemapIds();
+    sitemapIdsCache = { at: Date.now(), ids };
+    // A rejected promise must not be served for an hour.
+    ids.catch(() => { sitemapIdsCache = null; });
+  }
+  return sitemapIdsCache.ids;
+}
+
+async function computeSitemapIds() {
   // Count books to determine how many chunks we need
   const bookCount = await safeQuery('book-count', async (db) => {
     return db.collection('books').countDocuments(
       { visible: true, slug: { $exists: true, $ne: null }, pages_ocr: { $gt: 0 } },
-      { maxTimeMS: 10000 }
+      { maxTimeMS: 30000 }
     );
   }, 10000);
 
@@ -294,16 +312,32 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
 // (`/book/<slug>/page/<id>`) so no per-page book join is needed here.
 async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
   return safeQuery('indexable-pages', async (db) => {
-    // sort by _id so skip/limit pagination is stable across chunks; served by
-    // the seo_indexable_id_partial compound index (a single-field index on
-    // seo_indexable alone makes the planner full-scan in _id order → timeout).
-    const pages = await db.collection('pages').find(
-      { seo_indexable: true, seo_url: { $exists: true, $ne: null } },
+    // Two steps, so the skip walks index keys and never page documents (#5545).
+    // A filter on seo_url (not in the index) puts the SKIP above the FETCH:
+    // chunk k fetched k×5000 full page docs just to discard them, ~15M fetches
+    // per build across ~80 chunks, which evicted Atlas's cache for readers.
+    // Step 1 is covered by seo_indexable_id_partial (keys only): find the
+    // chunk's first _id. Step 2 fetches only that chunk's 5,000 docs.
+    const pagesColl = db.collection('pages');
+    const [start] = await pagesColl.find(
+      { seo_indexable: true },
+      {
+        projection: { _id: 1 },
+        sort: { _id: 1 },
+        skip: chunkIndex * PAGES_PER_CHUNK,
+        limit: 1,
+        hint: 'seo_indexable_id_partial',
+        maxTimeMS: 30000,
+      }
+    ).toArray();
+    if (!start) return [];
+    const pages = await pagesColl.find(
+      { seo_indexable: true, _id: { $gte: start._id } },
       {
         projection: { _id: 0, seo_url: 1, updated_at: 1 },
         sort: { _id: 1 },
-        skip: chunkIndex * PAGES_PER_CHUNK,
         limit: PAGES_PER_CHUNK,
+        hint: 'seo_indexable_id_partial',
         maxTimeMS: 60000,
       }
     ).toArray();
