@@ -1,0 +1,336 @@
+{
+ "aligned": 36,
+ "both_ends_match": 22,
+ "wilson": [
+  0.449,
+  0.752
+ ],
+ "shifted_at_an_edge": 10,
+ "other_edge_miss": 4,
+ "rows": [
+  {
+   "slug": "chinese-cohort-5547-1ccdad-p29",
+   "pb": "KR1h0003_WYG_012-14a",
+   "dice": 0.973,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-5d27bf-p84",
+   "pb": "KR3a0078_WYG_065-41b",
+   "dice": 0.938,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-4884f8-p75",
+   "pb": "KR1d0068_WYG_061-37a",
+   "dice": 0.951,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-1b2b4c-p81",
+   "pb": "KR3j0161_WYG_032-40a",
+   "dice": 0.81,
+   "start": false,
+   "end": false,
+   "shiftStart": true,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-1f37f6-p60",
+   "pb": "KR1j0059_WYG_004-7b",
+   "dice": 0.875,
+   "start": false,
+   "end": true,
+   "shiftStart": true,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1589e1-p111",
+   "pb": "KR3k0056_WYG_014-55a",
+   "dice": 0.792,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1e37f3-p113",
+   "pb": "KR1e0089_WYG_004-5b",
+   "dice": 0.98,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-8e181b-p39",
+   "pb": "KR1a0034_WYG_008-19a",
+   "dice": 0.932,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-5dbe2e-p116",
+   "pb": "KR1b0010_WYG_006-7b",
+   "dice": 0.975,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-489739-p158",
+   "pb": "KR1d0068_WYG_018-26b",
+   "dice": 0.62,
+   "start": false,
+   "end": false,
+   "shiftStart": true,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-216fad-p69",
+   "pb": "KR3e0096_WYG_017-34b",
+   "dice": 0.936,
+   "start": false,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1bd7f3-p106",
+   "pb": "KR1c0042_WYG_006-53a",
+   "dice": 0.921,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-e42fe2-p95",
+   "pb": "KR3j0040_WYG_011-13a",
+   "dice": 0.897,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1e6e3d-p90",
+   "pb": "KR1e0095_WYG_010-3a",
+   "dice": 0.969,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-dfd090-p157",
+   "pb": "KR6s0093_WYG_020-21a",
+   "dice": 0.951,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-dfebb8-p51",
+   "pb": "KR3a0085_WYG_002-6a",
+   "dice": 0.985,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-20f11b-p48",
+   "pb": "KR3k0003_WYG_086-23b",
+   "dice": 0.893,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1687bf-p98",
+   "pb": "KR3h0070_WYG_115-16a",
+   "dice": 0.98,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1f233d-p118",
+   "pb": "KR3k0044_WYG_050-5b",
+   "dice": 0.892,
+   "start": false,
+   "end": true,
+   "shiftStart": true,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-484e56-p68",
+   "pb": "KR1b0004_WYG_003-33b",
+   "dice": 0.945,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-5d9761-p104",
+   "pb": "KR3j0180_WYG_045-13a",
+   "dice": 0.915,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-e5814c-p51",
+   "pb": "KR1e0122_WYG_008-7a",
+   "dice": 0.971,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-206f84-p147",
+   "pb": "KR6r0014_WYG_003-73a",
+   "dice": 0.854,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-e45762-p36",
+   "pb": "KR3g0018_WYG_030-17b",
+   "dice": 0.969,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-49d299-p81",
+   "pb": "KR3k0026_WYG_000-39a",
+   "dice": 0.971,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-493195-p54",
+   "pb": "KR1e0021_WYG_014-7b",
+   "dice": 0.791,
+   "start": false,
+   "end": false,
+   "shiftStart": true,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-e4cadd-p17",
+   "pb": "KR1h0016_WYG_001-5a",
+   "dice": 0.994,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1ddf24-p49",
+   "pb": "KR1d0021_WYG_011-24a",
+   "dice": 0.934,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-1ef65d-p130",
+   "pb": "KR1e0066_WYG_006-27b",
+   "dice": 0.947,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1cc663-p145",
+   "pb": "KR1h0003_WYG_005-31b",
+   "dice": 0.932,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-e39166-p28",
+   "pb": "KR3k0049_WYG_019-13b",
+   "dice": 0.939,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-167a17-p97",
+   "pb": "KR3h0070_WYG_061-27a",
+   "dice": 0.874,
+   "start": true,
+   "end": false,
+   "shiftStart": false,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-c50486-p132",
+   "pb": "KR1d0068_WYG_005-21b",
+   "dice": 0.894,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-e506a8-p42",
+   "pb": "KR1d0057_WYG_154-20b",
+   "dice": 0.933,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  },
+  {
+   "slug": "chinese-cohort-5547-1d89bb-p120",
+   "pb": "KR3a0108_WYG_037-59b",
+   "dice": 0.879,
+   "start": false,
+   "end": false,
+   "shiftStart": true,
+   "shiftEnd": true
+  },
+  {
+   "slug": "chinese-cohort-5547-158d4c-p41",
+   "pb": "KR3k0056_WYG_020-20a",
+   "dice": 0.863,
+   "start": true,
+   "end": true,
+   "shiftStart": false,
+   "shiftEnd": false
+  }
+ ]
+}

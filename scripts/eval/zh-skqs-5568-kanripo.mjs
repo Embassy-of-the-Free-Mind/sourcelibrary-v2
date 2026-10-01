@@ -24,6 +24,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { pathToFileURL } from 'url';
 import { makeRng } from './lib/paired-stats.mjs';
 
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -46,8 +47,8 @@ export const han = s => [...String(s || '').normalize('NFC')].filter(c => /\p{Sc
 const VARIANTS = { 徳: '德', 増: '增', 䘮: '喪', 録: '錄', 説: '說', 衞: '衛', 庿: '廟', 蔵: '藏', 逺: '遠', 嵗: '歲', 圎: '圓', 曽: '曾', 黄: '黃', 爲: '為', 𤣥: '玄', 摠: '總', 盖: '蓋', 却: '卻', 卽: '即', 旣: '既', 敎: '教', 毎: '每', 靑: '青', 呉: '吳', 别: '別', 兾: '冀', 竒: '奇', 着: '著', 隂: '陰', 恊: '協' };
 export const fold = s => [...han(s)].map(c => VARIANTS[c] || c).join('');
 const bigrams = s => { const m = new Map(); for (let i = 0; i + 1 < s.length; i++) { const g = s.slice(i, i + 2); m.set(g, (m.get(g) || 0) + 1); } return m; };
-export function dice(a, b) {
-  const A = bigrams(a), B = bigrams(b);
+export function dice(a, b, Bcached, Acached) {
+  const A = Acached || bigrams(a), B = Bcached || bigrams(b);
   let inter = 0, na = 0, nb = 0;
   for (const v of A.values()) na += v;
   for (const v of B.values()) nb += v;
@@ -163,10 +164,13 @@ async function pbPages(krId, ref, juans) {
 /** Juan files to search: the title's range ± 5 (Siku volume juan are often off by a few from Kanripo's file numbers), else all. */
 const nearJuan = (w, r) => (r ? w.juan_files.filter(j => j >= r.lo - 5 && j <= r.hi + 5) : w.juan_files);
 
-function best(textFolded, pages) {
+function best(textFolded, pages, lo = 0, hi = pages.length) {
   let b = null, second = 0;
-  pages.forEach((p, i) => {
-    const d = dice(textFolded, p.text);
+  const A = bigrams(textFolded);
+  pages.slice(lo, hi).forEach((p, k) => {
+    const i = lo + k;
+    if (!p.bg) p.bg = bigrams(p.text);
+    const d = dice(null, null, p.bg, A);
     if (!b || d > b.dice) { if (b) second = Math.max(second, b.dice); b = { i, dice: d }; } else if (d > second) second = d;
   });
   return b ? { ...b, second } : null;
@@ -174,7 +178,10 @@ function best(textFolded, pages) {
 
 function loadSealed() {
   const sealed = JSON.parse(fs.readFileSync(path.join(SIB, 'scripts/eval/benchmark/chinese-cohort-5547.json'), 'utf8'));
-  const cls = slug => { try { return JSON.parse(fs.readFileSync(path.join(SIB, 'scripts/eval/benchmark/script-class', `${slug}.json`), 'utf8')).script_class; } catch { return null; } };
+  // #5547 first wrote one file per page, then bundled them into one JSONL (same rows); read either.
+  const bundle = path.join(SIB, 'scripts/eval/benchmark/script-class/chinese-cohort-5547.jsonl');
+  const byslug = fs.existsSync(bundle) ? Object.fromEntries(fs.readFileSync(bundle, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)).map(r => [r.slug, r.script_class])) : null;
+  const cls = slug => { if (byslug) return byslug[slug] ?? null; try { return JSON.parse(fs.readFileSync(path.join(SIB, 'scripts/eval/benchmark/script-class', `${slug}.json`), 'utf8')).script_class; } catch { return null; } };
   return sealed.pages.map(p => ({ ...p, script_class: cls(p.slug) }));
 }
 const readOut = (engine, slug) => { try { return fs.readFileSync(path.join(BENCH_OUT, engine, `${slug}.txt`), 'utf8'); } catch { return null; } };
@@ -286,14 +293,17 @@ async function drift() {
     const krId = (b.work_id || '').replace(/^kr:/, '');
     const w = await workInfo(krId);
     if (!w.witness) { out.push({ book_id: b.book_id, title: b.title, work: krId, reason: 'no witness' }); continue; }
-    const pages = await pbPages(krId, w.witness, nearJuan(w, juanRange(b.title)));
-    const pbIndex = new Map(pages.map((p, i) => [p.pb, i]));
+    // whole work: the title's juan number does not reliably name the Kanripo file (align diagnostics)
+    const pages = await pbPages(krId, w.witness, w.juan_files);
     const seq = [];
     for (const f of files) {
       const t = fold(fs.readFileSync(path.join(dir, f), 'utf8'));
       const pn = +f.slice(0, -4);
       if (t.length < 20) { seq.push({ page: pn, chars: t.length, aligned: false, why: 'short' }); continue; }
-      const m = best(t, pages);
+      // neighbourhood of the last aligned page first (±60 Kanripo pages); the whole work only if that fails
+      const last = [...seq].reverse().find(x => x.aligned);
+      let m = last ? best(t, pages, Math.max(0, last.idx - 60), Math.min(pages.length, last.idx + 60)) : null;
+      if (!m || m.dice < THRESH) { const full = best(t, pages); if (!m || full.dice > m.dice) m = full; }
       seq.push({ page: pn, chars: t.length, pb: pages[m.i].pb, idx: m.i, dice: +m.dice.toFixed(3), runner_up: +m.second.toFixed(3), aligned: m.dice >= THRESH });
     }
     // offsets: idx − page for aligned pages; runs of constant offset
@@ -329,8 +339,71 @@ async function drift() {
   fs.writeFileSync(path.join(DIR, 'drift.json'), JSON.stringify(out, null, 1));
 }
 
-if (CMD === 'coverage') await coverage();
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
+if (!isMain) { /* imported by the test-2 script for drawSample and the text helpers */ }
+else if (CMD === 'coverage') await coverage();
 else if (CMD === 'align') await align();
 else if (CMD === 'drift') await drift();
+else if (CMD === 'diag') {
+  // Diagnostic only (not the preregistered rule): search EVERY juan file of the work for the given slugs.
+  for (const slug of process.argv.slice(3)) {
+    const p = loadSealed().find(x => x.slug === slug);
+    const w = await workInfo(p.work_id.slice(3));
+    const pages = await pbPages(w.id, w.witness, w.juan_files);
+    for (const eng of ['paddleocr-vl-1.6', 'gemini-3-flash-preview']) {
+      const b = best(fold(readOut(eng, slug)), pages);
+      console.log(slug, eng, pages.length, 'pb pages', pages[b.i].pb, b.dice.toFixed(3), b.second.toFixed(3));
+    }
+  }
+}
+else if (CMD === 'boundary') {
+  // Does the aligned Kanripo page START and END where the scan page does? Paddle also reads the 版心
+  // margin (欽定四庫全書, 卷N, the leaf number), so margin lines are dropped first. Edge = first/last
+  // 15 characters; matched when bigram Dice ≥ 0.5. A miss is classed SHIFT when that edge is found
+  // (Dice ≥ 0.5) within 15–60 characters of the other side's edge — the page break falls a column or
+  // so away from the scan's — else OTHER (a misread edge, double-column notes read in another order).
+  const A = JSON.parse(fs.readFileSync(path.join(DIR, 'align.json'), 'utf8')).rows.filter(r => r.aligned);
+  const body = t => String(t).split('\n').filter(l => fold(l).length >= 4 && !/四庫全書/.test(l) && !/^\s*卷[〇一二三四五六七八九十百之上中下]+\s*$/.test(l)).map(fold).join('');
+  const E = 15;
+  const near = (edge, txt, from, to) => { let b = 0; for (let k = from; k + E <= Math.min(txt.length, to + E); k++) b = Math.max(b, dice(edge, txt.slice(k, k + E))); return b; };
+  const rows = A.map(r => {
+    const P = body(readOut('paddleocr-vl-1.6', r.slug)), K = fold(fs.readFileSync(path.join(DIR, 'kanripo-pages', `${r.slug}.txt`), 'utf8'));
+    const start = dice(K.slice(0, E), P.slice(0, E)) >= 0.5, end = dice(K.slice(-E), P.slice(-E)) >= 0.5;
+    const rev = x => [...x].reverse().join('');
+    const shiftStart = !start && (near(K.slice(0, E), P, E, 60) >= 0.5 || near(P.slice(0, E), K, E, 60) >= 0.5);
+    const shiftEnd = !end && (near(rev(K).slice(0, E), rev(P), E, 60) >= 0.5 || near(rev(P).slice(0, E), rev(K), E, 60) >= 0.5);
+    return { slug: r.slug, pb: r.pb, dice: r.dice, start, end, shiftStart, shiftEnd };
+  });
+  const both = rows.filter(r => r.start && r.end).length;
+  const shifted = rows.filter(r => r.shiftStart || r.shiftEnd).length;
+  const out = { aligned: rows.length, both_ends_match: both, wilson: wilson(both, rows.length), shifted_at_an_edge: shifted, other_edge_miss: rows.length - both - shifted, rows };
+  fs.writeFileSync(path.join(DIR, 'boundary.json'), JSON.stringify(out, null, 1));
+  console.log(JSON.stringify({ ...out, rows: rows.filter(r => !(r.start && r.end)) }));
+}
+else if (CMD === 'write-dryrun') {
+  // What a provenance-complete write of Kanripo text to one page would carry (the Syriac-lane standard:
+  // source, licence, revision, content_hash) — PRINTED, never written. `ocr.source: 'kanripo'` is not
+  // in write-provenance's specialist list, so today's checker would accept this $set without `engine`.
+  const { contentHash, missingProvenance } = await import('../lib/write-provenance.mjs');
+  const rows = JSON.parse(fs.readFileSync(path.join(DIR, 'align.json'), 'utf8')).rows.filter(r => r.aligned);
+  const r = rows[0];
+  const w = await workInfo(r.work);
+  const text = fs.readFileSync(path.join(DIR, 'kanripo-pages', `${r.slug}.txt`), 'utf8');
+  const probe = readOut('paddleocr-vl-1.6', r.slug);
+  const data = `<language>Chinese</language>\n<script>handwritten</script>\n\n${text}`;
+  const now = new Date('2026-10-01T00:00:00Z');
+  const set = {
+    'ocr.data': data, 'ocr.content_hash': contentHash(data), 'ocr.language': 'Chinese', 'ocr.source': 'kanripo', 'ocr.pipeline': 'kanripo-align-5568', 'ocr.updated_at': now,
+    'ocr.engine': {
+      name: 'kanripo-align', model: 'char-bigram-dice/1', run: 'kanripo-align-5568/dry-run',
+      text_source: { repository: `https://github.com/kanripo/${r.work}`, branch: w.witness, commit: w.witness_sha, file: `${r.work}_${String(+r.pb.split('_').pop().split('-')[0]).padStart(3, '0')}.txt`, pb: r.pb, url: `https://github.com/kanripo/${r.work}/blob/${w.witness_sha}/${r.work}_${r.pb.split('_').pop().split('-')[0]}.txt` },
+      licence: { statement: 'CC BY-SA 4.0 (organisation profile, https://github.com/kanripo)', per_text: 'not stated (no licence field, LICENSE file or Readme line in the repository)', checked: '2026-10-01' },
+      alignment: { probe_engine: 'paddleocr-vl-1.6', probe_content_hash: contentHash(probe), dice: r.dice, runner_up: r.runner_up, threshold: THRESH },
+      input: { image_url: `https://images.sourcelibrary.org/archived/${r.book_id}/${r.page_number}.jpg` },
+    },
+  };
+  const sub = Object.fromEntries(Object.entries(set).map(([k, v]) => [k.replace(/^ocr\./, ''), v]));
+  console.log(JSON.stringify({ page: { book_id: r.book_id, page_number: r.page_number }, $set: set, missingProvenance_today: missingProvenance('ocr', sub), missingProvenance_without_engine: missingProvenance('ocr', { ...sub, engine: undefined }) }, null, 1));
+}
 else if (CMD === 'sample') console.log(JSON.stringify(drawSample().picked.map(p => p.slug)));
 else { console.error('usage: coverage | align | drift | sample'); process.exit(1); }
