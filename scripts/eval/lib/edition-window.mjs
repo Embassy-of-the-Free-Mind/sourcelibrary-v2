@@ -9,6 +9,7 @@
  */
 
 import { SCRIPT_DEFS } from './metrics.mjs';
+import { stripMarkupTags } from '../../lib/strip-markup-tags.mjs';
 
 // Word-bigram vote: the densest run of the probe's bigrams in `words`, trimmed to the first/last hit ±3.
 export function wordWindow(words, probeWords, contentMin = 0) {
@@ -40,7 +41,7 @@ export function foldWord(w, script) {
 }
 
 // Strip OCR tags (<page-num>, <header>, <margin>…) to bare text; keep it for matching only.
-export const stripTags = t => String(t || '').replace(/<(meta|image-desc|figure|scan-quality|language|page-type|columns|detected-images|vocab|warning|script)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ');
+export const stripTags = t => stripMarkupTags(String(t || '').replace(/<(meta|image-desc|figure|scan-quality|language|page-type|columns|detected-images|vocab|warning|script)\b[^>]*>[\s\S]*?<\/\1>/gi, ' '));
 
 /** Words of `text` in `script`, folded, each with its [start, end) offset in the original text. */
 export function foldedWords(text, script) {

@@ -6,6 +6,8 @@
  * CER, MCR, and script-aware tokenization.
  */
 
+import { stripMarkupTags } from '../../lib/strip-markup-tags.mjs';
+
 // ── Script-aware tokenizers ────────────────────────────────────────
 
 const TOKENIZERS = {
@@ -203,9 +205,9 @@ const SCRIPT_FILTERS = {
 
 export function cleanText(text, script) {
   if (!text) return '';
-  let cleaned = text
-    // Strip XML tags (<language>, <note>, <meta>, <scan-quality>, etc.)
-    .replace(/<[^>]+>/g, '')
+  // Strip XML tags (<language>, <note>, <meta>, <scan-quality>, etc.) — centring
+  // markers first, or a `<-` eats the body up to the next `>` (#5564).
+  let cleaned = stripMarkupTags(text, '')
     // Strip markdown heading markers
     .replace(/^#{1,6}\s+/gm, '')
     // Strip markdown bold/italic

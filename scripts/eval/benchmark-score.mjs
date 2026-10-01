@@ -37,6 +37,7 @@ import { fileURLToPath } from 'url';
 import { loadRefText } from './lib/private-refs.mjs';
 import { levenshtein, normalizeCJK, scoreAgainstReference } from './lib/metrics.mjs';
 import { binomTwoSided } from './lib/paired-stats.mjs';
+import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -53,9 +54,10 @@ if (!ROOT) { console.error('--root required'); process.exit(1); }
 // ── normalisation ──────────────────────────────────────────────────
 const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'japanese', 'japanese-ext']);
 function normAlpha(s) {
-  return String(s || '')
-    .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ').replace(/```[a-z]*/g, ' ')
+  // Tags out WITHOUT eating the body after a ->centred<- line (#5564).
+  return stripMarkupTags(String(s || '')
+    .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' '))
+    .replace(/```[a-z]*/g, ' ')
     .normalize('NFC').toLowerCase().replace(/ſ/g, 's').replace(/[’‘ʼ`´]/g, "'").replace(/[“”„]/g, '"')
     .replace(/[‐‑‒–—―¬]/g, '-').replace(/(\p{L})-\s*\n\s*/gu, '$1')   // rejoin hyphenated line breaks
     .replace(/\s+/g, ' ').trim();
@@ -72,7 +74,7 @@ function normCJK(s) {
   s = foldVariants(s);
   // Han + kana + Hangul kept; Latin digits dropped; punctuation and layout dropped (normalizeCJK
   // keeps only Han/ideographic — extend for kana so Japanese pages are scored on their kana too).
-  const t = String(s || '').replace(/<[^>]+>/g, ' ').normalize('NFC');
+  const t = stripMarkupTags(s).normalize('NFC');
   return [...t].filter(c => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}〇]/u.test(c)).join('');
 }
 const cjkTokens = s => [...s];

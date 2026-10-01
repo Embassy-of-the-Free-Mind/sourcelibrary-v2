@@ -8,6 +8,8 @@
  * `tests/unit/page-grounding.test.ts` pins both.
  */
 
+import { stripMarkupTags } from './strip-markup-tags';
+
 // Mirror of SKIP_MARKUP_RULES in image-extraction-filter.ts.
 const TRIVIAL_RULES: ReadonlyArray<{ type: string; significance: string }> = [
   { type: 'symbol', significance: '*' },
@@ -65,7 +67,7 @@ function firstSummary(...sources: Array<string | null | undefined>): string {
 /** Strip all tags and collapse whitespace — the page's readable body text. */
 export function strippedBody(text: string | null | undefined): string {
   if (!text) return '';
-  return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return stripMarkupTags(text).replace(/\s+/g, ' ').trim();
 }
 
 export interface GroundingNeighbor {

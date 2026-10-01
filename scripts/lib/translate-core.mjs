@@ -26,6 +26,7 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
@@ -655,7 +656,7 @@ export function imageDescLen(text) {
   if (!text) return 0;
   let total = 0;
   for (const m of String(text).matchAll(/<image-desc\b[^>]*>([\s\S]*?)<\/image-desc>/gi)) {
-    total += m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+    total += stripMarkupTags(m[1]).replace(/\s+/g, ' ').trim().length;
   }
   return total;
 }
