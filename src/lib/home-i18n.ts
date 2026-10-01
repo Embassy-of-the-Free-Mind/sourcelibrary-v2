@@ -177,7 +177,7 @@ const en: HomeStrings = {
   askSourceSubtitle: 'Put a question to thousands of primary sources and get an answer — with citations to the originals you can read for yourself.',
 
   collectionsHeading: 'Collections',
-  translationsLabel: 'translations',
+  translationsLabel: 'readable in English',
   firstTimeLabel: 'for the first time',
   artworksLabel: 'artworks',
   illustrationsLabel: 'illustrations',
@@ -288,7 +288,7 @@ const es: HomeStrings = {
   askSourceSubtitle: 'Haz una pregunta a miles de fuentes primarias y recibe una respuesta, con citas a los originales que puedes leer por ti mismo.',
 
   collectionsHeading: 'Colecciones',
-  translationsLabel: 'traducciones',
+  translationsLabel: 'legibles en inglés',
   firstTimeLabel: 'por primera vez',
   artworksLabel: 'obras de arte',
   illustrationsLabel: 'ilustraciones',

@@ -22,7 +22,7 @@ export default async function AboutPage() {
     // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
     // defensible floor.
     { value: '100+', label: 'languages' },
-    { value: fmt(stats.readableInEnglish), label: 'translated to English', href: '/search?has_translation=true' },
+    { value: fmt(stats.readableInEnglish), label: 'readable in English', href: '/search?has_translation=true' },
     { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
     { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
   ];
