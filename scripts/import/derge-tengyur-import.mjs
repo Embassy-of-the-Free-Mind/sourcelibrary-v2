@@ -47,6 +47,7 @@ import { makePageDoc } from '../lib/book-docs.mjs';
 import { holdBook } from '../lib/pipeline-hold.mjs';
 import { initialPublication } from '../lib/publication.mjs';
 import { isHumanEdited } from '../lib/syriac-kraken-lane.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import {
   parseVolume, pageText, syllables, canvasFolioLabel, claimByLabel, scoreRead, sampleClass, volumeVerdict,
   ALIGN_RULES, sha16,
@@ -341,7 +342,7 @@ async function importVolume(db, vol) {
   for (let k = 0; k < toInsert.length; k += 500) await pagesC.insertMany(toInsert.slice(k, k + 500), { ordered: false });
   const nPages = await pagesC.countDocuments({ book_id: book.id });
   const nText = await pagesC.countDocuments({ book_id: book.id, 'ocr.source': TEXT_SOURCE });
-  await books.updateOne({ id: book.id }, { $set: { pages_count: nPages, pages_ocr: nText, updated_at: new Date() } });
+  await recountBook(db, book.id, { reason: IMPORTER });
   Object.assign(v, { done: true, pages: nPages, pages_text: nText, refused, text_kept_human: textKeptHuman, verdict: m.verdict.pass ? 'pass' : 'refused', finished_at: new Date().toISOString() });
   saveCkpt();
   log(`v${vol}: ${nPages} pages, ${nText} with aligned text; refused ${JSON.stringify(refused)}`);
