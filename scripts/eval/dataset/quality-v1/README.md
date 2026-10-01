@@ -144,7 +144,8 @@ have changed since; `ocr_hash` and `translation_hash` identify the version.
 
 No volunteer or reader data (none exists yet). Nothing from the sealed benchmark reserve
 (eval-design §3.4): a reference row marked `reserve: true` never leaves as text. No personal
-names: rows carry ids, not catalogue titles or authors.
+data: no reader, volunteer or contributor names. Audit rows carry book and page ids, not catalogue
+titles or authors; the historical texts themselves of course name people.
 
 ## Canary
 
