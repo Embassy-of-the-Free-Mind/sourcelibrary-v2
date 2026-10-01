@@ -241,10 +241,12 @@ def run_variant(poets, rows, args, fold):
         if "wrong_place_line" in r: L["wrong-place-same-poet"].append(r["wrong_place_line"])
         if "wrong_poet_line" in r: L["wrong-poet-global"].append(r["wrong_poet_line"])
     cs = {k: q(v) for k, v in C.items()}; ls = {k: q(v) for k, v in L.items()}
+    # an arm that locates no page has no sequence controls and no wrong-place line control (#5525 Stage 1b, Kraken)
+    mx = lambda d, *ks: max((d[k]["max"] for k in ks if d.get(k)), default=0.0)
     sep_seq = bool(cs.get("exact") and cs["exact"]["min"] >= 0.97 and cs["noise-0.05"]["min"] >
-                   max(cs["wrong-page"]["max"], cs["wrong-place-same-poet"]["max"]))
+                   mx(cs, "wrong-page", "wrong-place-same-poet"))
     sep_line = bool(ls.get("exact") and ls["exact"]["min"] >= 0.97 and ls["noise-0.05"]["min"] >
-                    max(ls["wrong-place-same-poet"]["max"], ls["wrong-poet-global"]["max"]))
+                    mx(ls, "wrong-place-same-poet", "wrong-poet-global"))
     summ = {"controls_sequence": cs, "controls_line": ls, "separate_sequence": sep_seq, "separate_line": sep_line,
             "status": dict(collections.Counter(r["status"] for r in res))}
     for metric in ("acc", "precision", "line_local", "lines_ok_local", "line_global", "lines_ok_global"):
