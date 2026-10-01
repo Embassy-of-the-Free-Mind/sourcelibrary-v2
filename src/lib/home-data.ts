@@ -514,7 +514,8 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
 
 export interface HomeCounts {
   totalBooks: number;
-  translatedToEnglish: number;
+  /** Named view `readable_in_english` (translation-state.md); cached by prewarm-browse.mjs. */
+  readableInEnglish: number;
   firstTranslationCount: number;
   authorCount: number;
   languageCount: number;
@@ -523,13 +524,13 @@ export interface HomeCounts {
 }
 
 // Last refreshed from production 2026-05-26. Only used if Mongo + Supabase are both unreachable.
-const FALLBACK_COUNTS: HomeCounts = { totalBooks: 13869, translatedToEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 105, artworkCount: 13743, illustrationCount: 122550 };
+const FALLBACK_COUNTS: HomeCounts = { totalBooks: 13869, readableInEnglish: 13534, firstTranslationCount: 6911, authorCount: 5523, languageCount: 105, artworkCount: 13743, illustrationCount: 122550 };
 
 async function getBookCounts(): Promise<HomeCounts> {
   // 1. MongoDB system_config cache (refreshed daily by scripts/maintenance/prewarm-browse.mjs;
   // also writable on demand via scripts/maintenance/update-homepage-stats.mjs).
-  // Preferred over Supabase because it uses the >=90% "readable" threshold which
-  // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
+  // Preferred over Supabase because it counts the `readable_in_english` view
+  // (books.translation_state), which books_catalog does not mirror yet (#3402 step 4).
   try {
     const db = await getReadDb();
     const cached = await db.collection('system_config').findOne(
@@ -539,7 +540,8 @@ async function getBookCounts(): Promise<HomeCounts> {
     if (cached?.totalBooks) {
       return {
         totalBooks: cached.totalBooks,
-        translatedToEnglish: cached.translatedToEnglish,
+        // `translatedToEnglish` is the pre-#5286 key, kept as an alias for one release.
+        readableInEnglish: cached.readableInEnglish ?? cached.translatedToEnglish ?? FALLBACK_COUNTS.readableInEnglish,
         firstTranslationCount: cached.firstTranslationCount,
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
@@ -549,7 +551,7 @@ async function getBookCounts(): Promise<HomeCounts> {
     }
   } catch { /* DB unreachable — try Supabase */ }
 
-  // 2. Supabase fallback (fast but uses pages_translated > 0, not >=90% threshold)
+  // 2. Supabase fallback (fast but uses pages_translated > 0, not the readable_in_english view)
   try {
     const [totalRes, firstTransRes] = await Promise.all([
       supabase.from('books_catalog').select('id', { count: 'exact', head: true })
@@ -573,7 +575,7 @@ async function getBookCounts(): Promise<HomeCounts> {
 
       return {
         totalBooks: totalRes.count,
-        translatedToEnglish: totalRes.count,
+        readableInEnglish: totalRes.count,
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
         authorCount,
         languageCount,

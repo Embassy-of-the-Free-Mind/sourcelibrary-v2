@@ -290,3 +290,42 @@ export function computeTranslationState(
     version: TRANSLATION_STATE_VERSION,
   };
 }
+
+// ── Named views over the ladder (#5286, translation-state.md § Named views) ──
+// TS twin of the block at the end of scripts/lib/page-counts.mjs. Every
+// headline count reads one of these BY NAME; never re-type the rule in a caller.
+
+/** `readable_in_english` rungs for a non-English edition. */
+export const READABLE_RUNGS: readonly TranslationRung[] = ['readable', 'complete'];
+/** Extra rungs at which an English original is already readable (its text IS English). */
+export const ENGLISH_ORIGINAL_READABLE_RUNGS: readonly TranslationRung[] = ['transcribed', 'translating'];
+
+/** `readable_in_english` as a Mongo query filter (spread it beside `visible`/`pages_count`). */
+export const READABLE_IN_ENGLISH_FILTER: Readonly<Document> = Object.freeze({
+  $or: [
+    { 'translation_state.rung': { $in: [...READABLE_RUNGS] } },
+    { 'translation_state.english_original': true, 'translation_state.rung': { $in: [...ENGLISH_ORIGINAL_READABLE_RUNGS] } },
+  ],
+});
+
+/** `readable_in_english` as an aggregation boolean (for `$cond` inside a `$group`). */
+export const READABLE_IN_ENGLISH_EXPR: Readonly<Document> = Object.freeze({
+  $or: [
+    { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...READABLE_RUNGS]] },
+    {
+      $and: [
+        { $eq: ['$translation_state.english_original', true] },
+        { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...ENGLISH_ORIGINAL_READABLE_RUNGS]] },
+      ],
+    },
+  ],
+});
+
+/** True iff a stored state is in `readable_in_english` (the JS form of the filter above). */
+export function isReadableInEnglish(
+  state: Pick<TranslationState, 'rung' | 'english_original'> | null | undefined,
+): boolean {
+  if (!state?.rung) return false;
+  return READABLE_RUNGS.includes(state.rung) ||
+    (state.english_original === true && ENGLISH_ORIGINAL_READABLE_RUNGS.includes(state.rung));
+}

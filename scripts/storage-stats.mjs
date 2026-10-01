@@ -50,7 +50,8 @@ try {
   out.books = {
     total: await b.estimatedDocumentCount(),
     visible: await b.countDocuments({ $nor: [{ hidden: true }, { visible: false }] }),
-    fully_translated: await b.countDocuments({ is_fully_translated: true }),
+    // The `complete` rung of translation_state (#5286, translation-state.md).
+    fully_translated: await b.countDocuments({ 'translation_state.rung': 'complete' }),
   };
 } finally {
   await client.close();
