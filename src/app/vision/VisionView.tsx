@@ -420,8 +420,8 @@ export default function VisionView({
             })}
           </section>
 
-          {/* Photo collage */}
-          <figure className="my-12 -mx-2 md:-mx-8">
+          {/* Photo collage — flush with the text column, so its edges line up with the paragraphs */}
+          <figure className="my-12">
             <div
               className={`grid gap-2 md:gap-3 ${
                 content.montage.images.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'
@@ -492,7 +492,7 @@ export default function VisionView({
         </article>
 
         {/* ── The plan ── */}
-        <section className="mt-24 max-w-[68ch]">
+        <section className="mt-24 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
           {F({
             as: 'h2',
             path: 'plan.heading',
@@ -533,7 +533,7 @@ export default function VisionView({
 
         {/* ── Ways to take part ── */}
         {content.ways && (
-          <section className="mt-20 max-w-[68ch]">
+          <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
             {F({
               as: 'h2',
               path: 'ways.heading',
@@ -579,7 +579,7 @@ export default function VisionView({
         )}
 
         {/* ── CTA ── */}
-        <section className="mt-20 max-w-[68ch] border-t border-primary/10 pt-12">
+        <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch] border-t border-primary/10 pt-12">
           {F({
             as: 'h2',
             path: 'cta.heading',

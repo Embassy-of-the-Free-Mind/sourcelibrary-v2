@@ -14,9 +14,15 @@
 // derived in the private ops repo, docs/program-budget-5yr-2026-09.md. Corpus
 // figures measured 2026-09-07 (visible books at the site's readable bar; the
 // untranslated pool = books with pages_count > 0 under 90% translated).
+// Rechecked 2026-10-01: 92,198 books with pages (any visibility, incl. 1,517
+// Kloss takedowns and duplicates); 16,599 live books at the readable bar
+// (homepage_stats.translatedToEnglish) — so the letter says 88,000 / 16,000 /
+// 72,000, which add up and match the budget's 72,000-book pool. When #5289
+// lands these should read the translation-state views instead of literals.
+// Spelling: American (Derek, 2026-10-01).
 // Unit-cost provenance: the machine cost of a single pass is MEASURED on
 // /admin/spend (September 2026 bill: translation ≈ $0.003/page, OCR ≈ $0.0006/page,
-// whole backlog ≈ $48–63K at list price). The 2.3¢/page budget rate is a PROGRAMME
+// whole backlog ≈ $48–63K at list price). The 2.3¢/page budget rate is a PROGRAM
 // rate (repeat passes, hard scripts, image extraction, failed runs); the copy below
 // must say so and never present it as the bare cost of one pass.
 //
@@ -97,7 +103,7 @@ export const visionContent: VisionContent = {
     image: '/vision/hero.jpg',
     imageAlt: 'Historical illustration from the Bibliotheca Philosophica Hermetica',
   },
-  dateline: 'Amsterdam, September 2026',
+  dateline: 'Amsterdam, October 2026',
   salutation: 'Dear friend,',
   lead: 'The last time the world translated its ancient wisdom, it ignited the Renaissance. I think we can do it again.',
   bodyBeforeQuote: [
@@ -105,11 +111,11 @@ export const visionContent: VisionContent = {
     'Source Library began when I learned that I couldn’t read Marsilio Ficino’s own philosophical works — because most of the Renaissance itself has never been translated. Debora Shuger, a Renaissance scholar at UCLA, estimates that **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). At current rates of human translation, it would take more than 10,000 years to finish it all.',
     'And, of course, there is so much more than Latin: massive bodies of untranslated texts in Chinese, Sanskrit, Tibetan, Arabic, Hebrew and dozens of other languages.',
     'At the onset of Superintelligence, we want to make sure that all ancient source texts are available to AI — and to people, through AI.',
-    'How can you trust it? Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike licence, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
+    'How can you trust it? Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike license, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
   ],
   bodyBeforeImage1: [
-    'Today, Source Library holds about **88,000 books** in over fifty languages. More than **18,000** of them can already be read in translation, nearly five million pages, most of them in English for the first time. The other **72,000** are scanned and catalogued but not yet readable. To get a sense of the scale, the library already holds more words than English Wikipedia.',
-    'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the statue of Marsilio Ficino assisting with the Source Library translation work.',
+    'Today, Source Library holds about **88,000 books** in over fifty languages. More than **16,000** of them can already be read in translation, nearly five million pages, most of them in English for the first time. The other **72,000** are scanned and cataloged but not yet readable. To get a sense of the scale, the library already holds more words than English Wikipedia.',
+    'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the bust of Marsilio Ficino that watches over the Source Library translation work.',
   ],
   image1: {
     src: '/vision/ficino.jpg',
@@ -121,7 +127,7 @@ export const visionContent: VisionContent = {
   bodyBuild: [
     'Source Library has been a labor of love and now we want to open it up so that others can pour theirs in — through contributions of time and funding.',
     'When it comes to funding, we’ve raised $60,000 so far from two incredible donors, but have spent over $120,000 to make this resource free and open. It is my hope to find other donors who want to help participate in the *largest historical translation project in history.* We can, of course, offer in return our good karma, amazing parties, and specially collected rare books from our collection.',
-    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. Hosting alone is about $3,000 per month; at full working pace, with the AI translation running, it is about $12,000 per month, not including any human labor. On the AI translations, we’ve spent about $85,000 in tokens to create about 20,000 translated books. Since then the cost has fallen sharply: a single pass now costs under a dollar a book. We budget $5 a book so that every book is re-read as better models arrive, the hard scripts get special handling, and scholars can check the results. Everything so far has been done entirely by volunteers.',
+    'Let me share more about our costs. To run something the size of Wikipedia, we have monthly costs for hosting, databases and processing. Hosting alone is about $3,000 per month; at full working pace, with the AI translation running, it is $11,000 to $15,000 per month, not including any human labor. On AI translation, we’ve spent about $85,000 in tokens so far, on some 20,000 books. Since then the cost has fallen sharply: a single pass now costs under a dollar a book. We budget $5 a book so that every book is re-read as better models arrive, the hard scripts get special handling, and scholars can check the results. Everything so far has been done entirely by volunteers.',
   ],
   vision: {
     heading: 'Where we will be in 2031',
@@ -130,7 +136,7 @@ export const visionContent: VisionContent = {
       '**On the order of a million books readable in translation**: every ancient source text that anyone has scanned, from the Renaissance Latin that was never translated to the Chinese, Sanskrit, Tibetan and Arabic corpora, open to anyone and to AI.',
       '**Every line checkable against its scan.** Translation and original side by side, on every page of every book.',
       '**The core of the tradition in scholarly editions**, reviewed by experts language by language and citable by DOI.',
-      '**The Embassy’s three thousand undigitised books scanned and translated**, two thousand of which exist in no other collection, with collections from partner libraries in India, Indonesia and elsewhere joining on the same open terms.',
+      '**The Embassy’s three thousand undigitized books scanned and translated**, two thousand of which exist in no other collection, with collections from partner libraries in India, Indonesia and elsewhere joining on the same open terms.',
       '**A global stewardship community** of amateur and professional scholars who decide what belongs, correct and annotate the translations, and keep the archive improving every year instead of going stale.',
       '**A foundation that runs it**, with the staff, the reserve and the legal footing to keep every page online for the long term.',
     ],
@@ -144,10 +150,10 @@ export const visionContent: VisionContent = {
         title: 'Read everything we hold',
         cost: '$762,000',
         body: [
-          'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and catalogued. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac.',
-          'The rest of the first year builds the organisation that makes those translations trustworthy: the foundation and its legal footing, a director, a part-time engineer to run the pipeline, and the hosting that keeps every page online.',
+          'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and cataloged. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac.',
+          'The rest of the first year builds the organization that makes those translations trustworthy: the foundation and its legal footing, a director, a part-time engineer to run the pipeline, and the hosting that keeps every page online.',
         ],
-        promise: 'By next summer, every book we hold, about 100,000, has a first translation, and there is an organisation responsible for it.',
+        promise: 'By next summer, every one of the 88,000 books we hold has a first translation, and there is an organization responsible for it.',
       },
       {
         years: 'Years 2–3',
@@ -184,7 +190,7 @@ export const visionContent: VisionContent = {
     caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica.',
   },
   bodyConvener: [
-    'So here is the ask. The first year needs **$762,000**, and it buys something you can check: by next summer, every book we hold has a first translation, and there is an organisation responsible for it. Simply keeping the library running at its current pace, while that is raised, takes about **$150,000 to $200,000** for the coming year.',
+    'So here is the ask. The first year needs **$762,000**, and it buys something you can check: by next summer, every book we hold has a first translation, and there is an organization responsible for it. Simply keeping the library running at its current pace, while that is raised, takes about **$150,000 to $200,000** for the coming year.',
     'If you want to participate in this historical project, please reach out. I would be happy to arrange a time online or on location at the Embassy of the Free Mind.',
   ],
   signoff: 'With gratitude,',
@@ -211,7 +217,7 @@ export const visionContent: VisionContent = {
   },
   ways: {
     heading: 'Ways to take part',
-    intro: 'Across the translation programme the budget works out to about $5 a book, and the levels below are priced on that. The first levels fund year one; adopting a manuscript funds the scanning in years two and three; underwriting a language funds years four and five. With your consent, every gift is recorded in the register under your name, permanently.',
+    intro: 'Across the translation program the budget works out to about $5 a book, and the levels below are priced on that. The first levels fund year one; adopting a manuscript funds the scanning in years two and three; underwriting a language funds years four and five. With your consent, every gift is recorded in the register under your name, permanently.',
     tiers: [
       { gift: '$100', label: 'Translates 20 books' },
       { gift: '$275', label: 'Adopt a book — one unscanned volume at the Embassy, scanned and translated, named for you; a fragile volume on the slow scanner from $500' },
