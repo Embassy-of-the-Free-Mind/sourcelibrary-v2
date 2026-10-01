@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "699061933d9181cce82fb5aa",
+    "title": "The Wonderfull Discoverie of Witches in the Countie of Lancaster",
+    "published": "1613",
+    "source": "EEBO-TCP A09875",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.963,
+    "median_char_acc_windowed": 0.9473,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69906193-p9",
+      "page": 9,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69906193-p26",
+      "page": 26,
+      "overlap": 0.975,
+      "probe_words": 168,
+      "ref_chars": 1070,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.091,
+      "char_acc": 0.9678,
+      "char_acc_windowed": 0.8021
+    },
+    {
+      "slug": "ed-69906193-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 91,
+      "ref_chars": 594,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9578,
+      "char_acc_windowed": 0.9473
+    },
+    {
+      "slug": "ed-69906193-p43",
+      "page": 43,
+      "overlap": 0.871,
+      "probe_words": 32,
+      "ref_chars": 243,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.189,
+      "char_acc": 0.8922,
+      "char_acc_windowed": 0.8862
+    },
+    {
+      "slug": "ed-69906193-p55",
+      "page": 55,
+      "overlap": 1,
+      "probe_words": 269,
+      "ref_chars": 1610,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.118,
+      "char_acc": 0.9705,
+      "char_acc_windowed": 0.969
+    },
+    {
+      "slug": "ed-69906193-p76",
+      "page": 76,
+      "overlap": 0.857,
+      "probe_words": 112,
+      "ref_chars": 574,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.085,
+      "char_acc": 0.963,
+      "char_acc_windowed": 0.9586
+    },
+    {
+      "slug": "ed-69906193-p94",
+      "page": 94,
+      "overlap": 1,
+      "probe_words": 155,
+      "ref_chars": 917,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9744,
+      "char_acc_windowed": 0.969
+    },
+    {
+      "slug": "ed-69906193-p176",
+      "page": 176,
+      "overlap": 1,
+      "probe_words": 210,
+      "ref_chars": 1224,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.084,
+      "char_acc": 0.9472,
+      "char_acc_windowed": 0.9452
+    }
+  ]
+}

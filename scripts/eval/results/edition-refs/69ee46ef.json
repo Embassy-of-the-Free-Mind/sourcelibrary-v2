@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69ee46ef6dd925d126f40e22",
+    "title": "Britannia Antiqua Illustrata: or, the Antiquities of Ancient Britain",
+    "published": "1676",
+    "source": "EEBO-TCP A61366",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.97,
+    "median_char_acc_windowed": 0.951,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69ee46ef-p325",
+      "page": 325,
+      "overlap": 0.833,
+      "probe_words": 44,
+      "ref_chars": 312,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.078,
+      "char_acc": 0.8863,
+      "char_acc_windowed": 0.8588
+    },
+    {
+      "slug": "ed-69ee46ef-p340",
+      "page": 340,
+      "overlap": 1,
+      "probe_words": 351,
+      "ref_chars": 2196,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.97,
+      "char_acc_windowed": 0.8985
+    },
+    {
+      "slug": "ed-69ee46ef-p367",
+      "page": 367,
+      "overlap": 1,
+      "probe_words": 161,
+      "ref_chars": 1171,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.055,
+      "char_acc": 0.97,
+      "char_acc_windowed": 0.8009
+    },
+    {
+      "slug": "ed-69ee46ef-p404",
+      "page": 404,
+      "overlap": 1,
+      "probe_words": 750,
+      "ref_chars": 4622,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.051,
+      "char_acc": 0.9795,
+      "char_acc_windowed": 0.9731
+    },
+    {
+      "slug": "ed-69ee46ef-p405",
+      "page": 405,
+      "overlap": 1,
+      "probe_words": 678,
+      "ref_chars": 4320,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.131,
+      "char_acc": 0.9099,
+      "char_acc_windowed": 0.8742
+    },
+    {
+      "slug": "ed-69ee46ef-p418",
+      "page": 418,
+      "overlap": 1,
+      "probe_words": 732,
+      "ref_chars": 4337,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9839,
+      "char_acc_windowed": 0.9828
+    },
+    {
+      "slug": "ed-69ee46ef-p445",
+      "page": 445,
+      "overlap": 0.9,
+      "probe_words": 717,
+      "ref_chars": 4337,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.121,
+      "char_acc": 0.9661,
+      "char_acc_windowed": 0.965
+    },
+    {
+      "slug": "ed-69ee46ef-p581",
+      "page": 581,
+      "overlap": 1,
+      "probe_words": 417,
+      "ref_chars": 2505,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.077,
+      "char_acc": 0.9636,
+      "char_acc_windowed": 0.951
+    }
+  ]
+}

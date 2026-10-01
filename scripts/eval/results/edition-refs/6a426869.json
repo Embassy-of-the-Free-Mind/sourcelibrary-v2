@@ -1,0 +1,104 @@
+{
+  "summary": {
+    "book_id": "6a426869aedf4c943f91eac4",
+    "title": "Thomæ Hobbesii Malmesburiensis vita· Authore seipso.",
+    "published": "1679",
+    "source": "EEBO-TCP A44021",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 2
+    },
+    "median_char_acc": 0.9569,
+    "median_char_acc_windowed": 0.9569,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a426869-p1",
+      "page": 1,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a426869-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a426869-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 160,
+      "ref_chars": 1281,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.052,
+      "char_acc": 0.9569,
+      "char_acc_windowed": 0.9569
+    },
+    {
+      "slug": "ed-6a426869-p7",
+      "page": 7,
+      "overlap": 0.931,
+      "probe_words": 175,
+      "ref_chars": 1302,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.9444,
+      "char_acc_windowed": 0.9444
+    },
+    {
+      "slug": "ed-6a426869-p9",
+      "page": 9,
+      "overlap": 0.956,
+      "probe_words": 159,
+      "ref_chars": 1282,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.075,
+      "char_acc": 0.957,
+      "char_acc_windowed": 0.957
+    },
+    {
+      "slug": "ed-6a426869-p14",
+      "page": 14,
+      "overlap": 0.935,
+      "probe_words": 171,
+      "ref_chars": 1293,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9519,
+      "char_acc_windowed": 0.942
+    },
+    {
+      "slug": "ed-6a426869-p15",
+      "page": 15,
+      "overlap": 0.945,
+      "probe_words": 164,
+      "ref_chars": 1276,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.069,
+      "char_acc": 0.954,
+      "char_acc_windowed": 0.954
+    },
+    {
+      "slug": "ed-6a426869-p16",
+      "page": 16,
+      "overlap": 0.938,
+      "probe_words": 162,
+      "ref_chars": 1176,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.058,
+      "char_acc": 0.9683,
+      "char_acc_windowed": 0.9672
+    }
+  ]
+}

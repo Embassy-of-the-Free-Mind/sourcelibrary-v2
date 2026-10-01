@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69bf60fd065df5d87d778bb3",
+    "title": "The History of the Vaudois",
+    "published": "1692",
+    "source": "EEBO-TCP A28933",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9739,
+    "median_char_acc_windowed": 0.9657,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69bf60fd-p76",
+      "page": 76,
+      "overlap": 0.928,
+      "probe_words": 193,
+      "ref_chars": 1155,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.129,
+      "char_acc": 0.9417,
+      "char_acc_windowed": 0.9417
+    },
+    {
+      "slug": "ed-69bf60fd-p94",
+      "page": 94,
+      "overlap": 1,
+      "probe_words": 176,
+      "ref_chars": 1100,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.076,
+      "char_acc": 0.9765,
+      "char_acc_windowed": 0.9765
+    },
+    {
+      "slug": "ed-69bf60fd-p100",
+      "page": 100,
+      "overlap": 1,
+      "probe_words": 196,
+      "ref_chars": 1114,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.069,
+      "char_acc": 0.9877,
+      "char_acc_windowed": 0.9877
+    },
+    {
+      "slug": "ed-69bf60fd-p119",
+      "page": 119,
+      "overlap": 1,
+      "probe_words": 202,
+      "ref_chars": 1159,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9743,
+      "char_acc_windowed": 0.9743
+    },
+    {
+      "slug": "ed-69bf60fd-p153",
+      "page": 153,
+      "overlap": 1,
+      "probe_words": 150,
+      "ref_chars": 883,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.106,
+      "char_acc": 0.9562,
+      "char_acc_windowed": 0.9562
+    },
+    {
+      "slug": "ed-69bf60fd-p155",
+      "page": 155,
+      "overlap": 1,
+      "probe_words": 199,
+      "ref_chars": 1175,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.095,
+      "char_acc": 0.9657,
+      "char_acc_windowed": 0.9657
+    },
+    {
+      "slug": "ed-69bf60fd-p213",
+      "page": 213,
+      "overlap": 0.867,
+      "probe_words": 193,
+      "ref_chars": 1145,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.212,
+      "char_acc": 0.9503,
+      "char_acc_windowed": 0.9503
+    },
+    {
+      "slug": "ed-69bf60fd-p224",
+      "page": 224,
+      "overlap": 1,
+      "probe_words": 139,
+      "ref_chars": 880,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.151,
+      "char_acc": 0.9739,
+      "char_acc_windowed": 0.8636
+    }
+  ]
+}

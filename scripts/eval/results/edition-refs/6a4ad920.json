@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a4ad920d6371d99e766879c",
+    "title": "Patriarcha: or, the Natural Power of Kings",
+    "published": "1680",
+    "source": "EEBO-TCP A41308",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9636,
+    "median_char_acc_windowed": 0.9636,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4ad920-p16",
+      "page": 16,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a4ad920-p32",
+      "page": 32,
+      "overlap": 1,
+      "probe_words": 184,
+      "ref_chars": 1038,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.092,
+      "char_acc": 0.9684,
+      "char_acc_windowed": 0.9684
+    },
+    {
+      "slug": "ed-6a4ad920-p49",
+      "page": 49,
+      "overlap": 1,
+      "probe_words": 198,
+      "ref_chars": 1157,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.069,
+      "char_acc": 0.9612,
+      "char_acc_windowed": 0.9612
+    },
+    {
+      "slug": "ed-6a4ad920-p66",
+      "page": 66,
+      "overlap": 1,
+      "probe_words": 172,
+      "ref_chars": 1039,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.101,
+      "char_acc": 0.9636,
+      "char_acc_windowed": 0.9636
+    },
+    {
+      "slug": "ed-6a4ad920-p83",
+      "page": 83,
+      "overlap": 1,
+      "probe_words": 209,
+      "ref_chars": 1142,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.099,
+      "char_acc": 0.9627,
+      "char_acc_windowed": 0.9627
+    },
+    {
+      "slug": "ed-6a4ad920-p99",
+      "page": 99,
+      "overlap": 1,
+      "probe_words": 206,
+      "ref_chars": 1160,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.08,
+      "char_acc": 0.9685,
+      "char_acc_windowed": 0.9685
+    },
+    {
+      "slug": "ed-6a4ad920-p116",
+      "page": 116,
+      "overlap": 1,
+      "probe_words": 190,
+      "ref_chars": 1096,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.077,
+      "char_acc": 0.9707,
+      "char_acc_windowed": 0.9707
+    },
+    {
+      "slug": "ed-6a4ad920-p133",
+      "page": 133,
+      "overlap": 1,
+      "probe_words": 176,
+      "ref_chars": 1110,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.081,
+      "char_acc": 0.9561,
+      "char_acc_windowed": 0.9561
+    }
+  ]
+}
