@@ -640,7 +640,14 @@ export async function GET(request: NextRequest) {
     // Honest-failure flag (#4281): lanes merge by rank, so a set of stray
     // token matches renders exactly like a real answer. If no result across
     // any lane contains ALL the query's tokens, say so instead of bluffing.
+    // A collection already shown as a card is not repeated as a site link.
+    const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
+    const siteResult = {
+      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
+    };
+
     const matchQuality = assessMatchQuality(query, [
+      ...siteResult.results.map(r => [r.title, r.snippet].join(' ')),
       ...scopedBooks.results.map((r: any) => [r.title, r.display_title, r.author, r.summary].filter(Boolean).join(' ')),
       ...scopedIndex.results.map((r: any) => [r.term, r.book_title].filter(Boolean).join(' ')),
       ...scopedGallery.results.map((r: any) => [r.description, r.bookTitle].filter(Boolean).join(' ')),
@@ -649,12 +656,6 @@ export async function GET(request: NextRequest) {
       ...filteredArtworks.results.map((r: any) => [r.title, r.display_title, r.author].filter(Boolean).join(' ')),
       ...collectionsWithTenantSlug.results.map((r: any) => [r.name, r.description].filter(Boolean).join(' ')),
     ]);
-
-    // A collection already shown as a card is not repeated as a site link.
-    const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
-    const siteResult = {
-      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
-    };
 
     return NextResponse.json({
       query,

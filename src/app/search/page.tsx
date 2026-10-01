@@ -1736,10 +1736,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               <ul className="space-y-2">
                 {siteLinks.map(r => (
                   <li key={r.url}>
-                    <Link href={r.url} className="block px-4 py-3 rounded-lg border border-border-light hover:border-accent-gold transition-colors">
+                    {/* Same surface and title face as BookResultCard, so a site link reads as a result, not a different widget. */}
+                    <Link href={r.url} className="block px-4 py-3 bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
                       <span className="text-[11px] uppercase tracking-wide text-muted">{t.sitePageType(r.page_type)}</span>
-                      <span className="block text-sm font-medium text-primary">{r.title}</span>
-                      <span className="block text-sm text-secondary line-clamp-2">{r.snippet}</span>
+                      <span className="block text-lg font-medium text-primary font-serif leading-snug line-clamp-2">{r.title}</span>
+                      <span className="block text-sm text-secondary line-clamp-2 mt-0.5">{r.snippet}</span>
                     </Link>
                   </li>
                 ))}
@@ -1801,7 +1802,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             query,
             passageResults.map(r => [r.title, r.display_title, r.author, r.snippet].filter(Boolean).join(' ')),
           ) === 'strong';
-          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && (
+          // A "From the site" answer is a match by meaning (similarity floor in
+          // semanticSiteSearch); a banner saying nothing matches, above an essay
+          // that answers the question, contradicts it (#1180).
+          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && !siteSection && (
             <div className="px-4 py-3 rounded-lg border border-border-light bg-warm/60">
               <p className="text-sm font-medium text-primary">{t.weakMatchTitle(query)}</p>
               <p className="text-sm text-secondary mt-0.5">{t.weakMatchBody}</p>
