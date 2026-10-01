@@ -535,6 +535,15 @@ const REFERENCE_TEXTS: { name: string; use: string; href: string }[] = [
   { name: 'GRETIL', use: 'Sanskrit and other Indic e-texts', href: 'https://gretil.sub.uni-goettingen.de/gretil.html' },
 ];
 
+const REFERENCE_LICENCES: { source: string; supplies: string; licence: string; use: string }[] = [
+  { source: 'Project Gutenberg', supplies: 'English print, 1800–1930', licence: 'Public domain in the US', use: 'Scoring; export allowed' },
+  { source: 'English Wikisource', supplies: 'English print', licence: 'CC BY-SA 4.0', use: 'Scoring; export with attribution, share-alike' },
+  { source: 'Perseus canonical-greekLit, First1KGreek', supplies: 'Greek', licence: 'CC BY-SA 4.0 (repository licence)', use: 'Scoring; export with attribution, share-alike' },
+  { source: 'Kanseki Repository (Kanripo)', supplies: 'Classical Chinese', licence: 'CC BY-SA (“all content created by us”)', use: 'Scoring; export with attribution, share-alike' },
+  { source: 'CBETA', supplies: 'Chinese Buddhist canon', licence: 'CC BY-NC-SA 4.0, non-commercial; some base editions are excluded', use: 'Scoring only; blocked from export' },
+  { source: '84000', supplies: 'Human English translations of the Tibetan canon', licence: 'To be confirmed from 84000’s permissions page', use: 'Scoring only until confirmed' },
+];
+
 const cite = (key: string) => {
   const i = REFERENCES.findIndex(r => r.key === key);
   return <a href={`#ref-${key}`} className="text-accent-rust hover:underline">[{i + 1}]</a>;
@@ -756,6 +765,45 @@ export default function ResearchQualityPage() {
               </li>
             ))}
           </ol>
+
+          {/* Text from the #5495 comment, verbatim; licences checked against each source on 2026-10-01. */}
+          <h3 className="text-lg text-primary font-semibold mb-3">Reference texts and their licences</h3>
+          <P>
+            We do not buy or license reference texts. Every reference is either in the public domain or published by its maker under an open licence that permits research use, and we use each one only for scoring. A reference text is never served to readers and is never included in an exported dataset unless its licence allows that.
+          </P>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm text-secondary">
+              <thead>
+                <tr className="border-b border-light text-left text-muted">
+                  <th className="py-1.5 pr-4 font-medium">Source</th>
+                  <th className="py-1.5 pr-4 font-medium">What it supplies</th>
+                  <th className="py-1.5 pr-4 font-medium">Licence (as stated by the source)</th>
+                  <th className="py-1.5 font-medium">How we use it</th>
+                </tr>
+              </thead>
+              <tbody>
+                {REFERENCE_LICENCES.map(r => (
+                  <tr key={r.source} className="border-b border-light align-top">
+                    <td className="py-1.5 pr-4 text-primary">{r.source}</td>
+                    <td className="py-1.5 pr-4">{r.supplies}</td>
+                    <td className="py-1.5 pr-4">{r.licence}</td>
+                    <td className="py-1.5">{r.use}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <P>
+            Several of these texts are copyrighted editions, such as the Taishō canon inside CBETA or the TEI encodings in Perseus. We use them because their rights holders released them under these terms, not because the underlying works are old. Where the terms are non-commercial, the reference is used for research scoring inside Source Library and is never part of anything we sell or license.
+          </P>
+          <P>Two further routes are open but unused:</P>
+          <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
+            <li><strong>Text and data mining exceptions.</strong> EU law (Directive 2019/790, Articles 3 and 4) allows text and data mining of lawfully accessed works for scientific research. A copyrighted modern edition could then serve as a reference without the publisher&rsquo;s licence. We have not relied on this. If we do, it will be through the research partner, with counsel&rsquo;s view first.</li>
+            <li><strong>Quotation.</strong> Short excerpts shown in a paper, such as a line of reference beside the engine&rsquo;s reading, fall under the quotation right. Excerpts are kept to what the comparison needs.</li>
+          </ul>
+          <P>
+            Volunteer readers&rsquo; answers are contributed data, not reference texts. Letter 1 asks for consent to publish them, and the dataset credits readers by name unless they decline.
+          </P>
         </Section>
 
         {/* ── 8 ── */}
