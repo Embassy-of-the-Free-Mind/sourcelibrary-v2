@@ -17,14 +17,18 @@ import {
 } from '../../scripts/lib/gemini-batch-keys.mjs';
 
 // The 2026-10-01 shape: keys 1/4 and 2/3 are one project each.
-const FP = ['a', 'b', 'c', 'c', 'b'];
+const FP = [['batches/a1', 'batches/a2'], ['batches/b1'], ['batches/c1', 'batches/c2'], ['batches/c1', 'batches/c2'], ['batches/b1']];
 
 describe('projectCanonicals', () => {
   it('maps alias keys to the first key of their project', () => {
     expect(projectCanonicals(FP)).toEqual([0, 1, 2, 2, 1]);
   });
-  it('never merges keys on an empty fingerprint', () => {
-    expect(projectCanonicals([null, null, '', undefined])).toEqual([0, 1, 2, 3]);
+  it('never merges keys that listed nothing', () => {
+    expect(projectCanonicals([null, [], undefined, []])).toEqual([0, 1, 2, 3]);
+  });
+  it('keeps the alias when a job lands between the two list calls', () => {
+    // key 3 lists one newer job that key 2 did not see yet
+    expect(projectCanonicals([['batches/x'], ['batches/c1', 'batches/c2'], ['batches/new', 'batches/c1']])).toEqual([0, 1, 1]);
   });
 });
 

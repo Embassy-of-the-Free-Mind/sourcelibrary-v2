@@ -22,18 +22,20 @@
 
 /**
  * Map each key to the first key in the same project. Two keys are one project
- * when their fingerprints (e.g. the names of the first batches each one lists)
- * are equal and non-empty. An empty fingerprint proves nothing, so that key
- * stays its own project.
- * @param {(string|null|undefined)[]} fingerprints
+ * when they list a common batch job: job names (`batches/<id>`) are unique, so
+ * a shared name can only mean a shared project. Matching on overlap rather than
+ * on an identical list keeps the alias when another lane creates a job between
+ * the two list calls. A key that listed nothing stays its own project.
+ * @param {(string[]|null|undefined)[]} jobNames newest job names each key lists
  * @returns {number[]} canonical index per key
  */
-export function projectCanonicals(fingerprints) {
-  const first = new Map();
-  return fingerprints.map((fp, i) => {
-    if (!fp) return i;
-    if (!first.has(fp)) first.set(fp, i);
-    return first.get(fp);
+export function projectCanonicals(jobNames) {
+  const owner = new Map(); // job name -> canonical key
+  return jobNames.map((names, i) => {
+    const hit = (names || []).find(n => owner.has(n));
+    const canonical = hit !== undefined ? owner.get(hit) : i;
+    for (const n of names || []) if (!owner.has(n)) owner.set(n, canonical);
+    return canonical;
   });
 }
 

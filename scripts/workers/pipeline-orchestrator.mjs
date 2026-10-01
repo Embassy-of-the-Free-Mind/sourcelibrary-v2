@@ -1157,8 +1157,8 @@ async function getGeminiKeyLoads() {
       const pager = await GEMINI_SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
       let consecutiveInactive = 0;
       for await (const job of pager) {
-        // Two keys listing the same newest jobs are one GCP project (#5544).
-        if (firstNames.length < 10) firstNames.push(job.name);
+        // Two keys listing a common job are one GCP project (#5544).
+        if (firstNames.length < 20) firstNames.push(job.name);
         if (activeStates.has(job.state)) {
           count++;
           consecutiveInactive = 0;
@@ -1172,7 +1172,7 @@ async function getGeminiKeyLoads() {
       count = MAX_ACTIVE_PER_KEY; // Assume full if we can't check — don't submit blindly
     }
     _geminiKeyLoads[i] = count;
-    fingerprints.push(firstNames.length ? firstNames.join(',') : null);
+    fingerprints.push(firstNames);
   }
   _keyCanonicals = projectCanonicals(fingerprints);
   // Alias keys mirror their project's count, so a local recordSubmission stays consistent.
@@ -1902,6 +1902,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
             { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
             { cropped_photo: { $exists: true, $nin: [null, ''] } },
             { photo: { $exists: true, $ne: null } },
+            // Same image sources as submitOcrDirectly: a whole-book pool must see every page it would (#5544).
+            { photo_original: { $exists: true, $ne: null } },
           ]
         },
         notBlockedForModel(model),
