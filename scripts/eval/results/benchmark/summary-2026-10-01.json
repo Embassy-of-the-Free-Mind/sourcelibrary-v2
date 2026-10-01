@@ -1,0 +1,208 @@
+{
+  "eebo-tcp-5488": {
+    "stratum": "eebo-tcp-5488",
+    "issue": 5488,
+    "date": "2026-10-01",
+    "n_pages": 72,
+    "n_with_ref": 72,
+    "ref_mismatch": [],
+    "textless": [
+      "ed-6ab5a4019e89e2a1f4139282-p94"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 72,
+        "empty": 6,
+        "loop": 0,
+        "ref": {
+          "n": 72,
+          "median_cer": 0.045,
+          "mean_cer": 0.133,
+          "catastrophic": 6,
+          "median_gap": 0,
+          "median_seq": 0.95
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.007,
+          "mean": 0.017,
+          "n_engines": 2,
+          "ref_median": 0.039,
+          "ref_mean": 0.061
+        },
+        "paired_vs_ref": {
+          "n": 72,
+          "wins": 52,
+          "losses": 14,
+          "ties": 6,
+          "median_delta_cer": 0.003,
+          "p_sign": 0,
+          "invention_wins": 56,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "ed-6990619a3d9181cce82fb669-p17",
+            "title": "The Witches of Northamptonshire",
+            "year": 1612,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a4376a3e296c55144956689-p15",
+            "title": "Artis logicæ compendium.",
+            "year": 1691,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a4a4551c0f3ec200c7de18c-p16",
+            "title": "Ad clerum. A sermon preached at a visitation holden at Grantham, Lincoln: Octob.8. 1641.",
+            "year": 1670,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+            "title": "Women's Speaking Justified, Proved and Allowed of by the Scriptures",
+            "year": 1666,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a58ecd0c6cd8f987106893f-p9",
+            "title": "Concerning the Sum or Substance of Our Religion",
+            "year": 1666,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 72,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 72,
+          "median_cer": 0.057,
+          "mean_cer": 0.079,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.863
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.055,
+          "mean": 0.124,
+          "n_engines": 2,
+          "ref_median": 0.168,
+          "ref_mean": 0.165
+        },
+        "worst": [
+          {
+            "slug": "ed-6a42eff906e6ead3ac54bab4-p16",
+            "title": "Endimion and Phoebe Ideas Latmus. Phoebus erit nostra princeps et carminis author",
+            "year": 1595,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.248,
+            "gap": 0.092,
+            "invention": 0.008,
+            "has_ref": true,
+            "unsupported": [
+              "μείζη"
+            ]
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.167,
+            "gap": 0.078,
+            "invention": 0.029,
+            "has_ref": true,
+            "unsupported": [
+              "befotted",
+              "dæmons",
+              "dæmoniacis"
+            ]
+          },
+          {
+            "slug": "ed-6958e07cd34d35c8156624c8-p86",
+            "title": "Kalendarium Hortense: The Gardners Almanac",
+            "year": 1666,
+            "cer": 0.14,
+            "gap": 0,
+            "invention": 0.217,
+            "has_ref": true,
+            "unsupported": [
+              "hortenfe",
+              "rifes",
+              "fuccefs",
+              "juft",
+              "feafon",
+              "likewife",
+              "feeds",
+              "alfo"
+            ]
+          },
+          {
+            "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+            "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+            "year": 1563,
+            "cer": 0.139,
+            "gap": 0.011,
+            "invention": 0.227,
+            "has_ref": true,
+            "unsupported": [
+              "philofophers",
+              "fuperparticuler",
+              "propor",
+              "tion",
+              "contagneth",
+              "leffer",
+              "fure",
+              "teyneth"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
