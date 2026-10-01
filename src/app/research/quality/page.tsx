@@ -792,6 +792,21 @@ export default function ResearchQualityPage() {
             ))}
           </ol>
 
+          <h3 className="text-lg text-primary font-semibold mb-3">Datasets</h3>
+          <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
+            <li>
+              <strong>Source Library quality dataset, v1.</strong> One downloadable bundle behind this draft, split by licence (#5531):{' '}
+              <a href={`${GH.replace('/blob/', '/tree/')}scripts/eval/dataset/quality-v1`} className="text-accent-rust hover:underline break-all">scripts/eval/dataset/quality-v1</a>. DOI to follow.
+            </li>
+            <li>
+              <strong>Result folders behind the figures.</strong>{' '}
+              <a href={`${GH.replace('/blob/', '/tree/')}scripts/eval/results/translation-corpus-audit-2026-09-30`} className="text-accent-rust hover:underline break-all">translation-corpus-audit-2026-09-30</a>{' '}
+              (Figures 2, 4 and 5: draw, verdicts, controls, eye notes) and{' '}
+              <a href={`${GH.replace('/blob/', '/tree/')}scripts/eval/results/two-read-garble-5313-2026-09-30`} className="text-accent-rust hover:underline break-all">two-read-garble-5313-2026-09-30</a>{' '}
+              (Figure 3: reads, sweep, three-read classes), both under scripts/eval/results.
+            </li>
+          </ul>
+
           {/* Text from the #5495 comment, verbatim; licences checked against each source on 2026-10-01. */}
           <h3 className="text-lg text-primary font-semibold mb-3">Reference texts and their licences</h3>
           <P>
