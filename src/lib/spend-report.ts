@@ -192,6 +192,39 @@ export async function getSpendReport(): Promise<SpendReportDoc | null> {
   return doc;
 }
 
+/** The daily paid-vs-got ledger row (#5499), written by scripts/audit/paid-vs-got.mjs --apply. */
+export const PAID_VS_GOT_TYPE = 'paid_vs_got_daily';
+export interface PaidVsGotLane {
+  lane: string; paid_usd: number; batch_usd: number; estimate_usd: number;
+  pages_written: number | null; per_1k_usd: number | null; waste_usd: number; waste_pct: number;
+}
+export interface PaidVsGotDoc {
+  _id: string;
+  day: string;
+  generated_at: Date | string;
+  verdict: { status: 'PASS' | 'WARN' | 'FAIL'; fails: string[]; warns: string[] };
+  headline: PaidVsGotLane[];
+  collection?: { open: number; at_gemini: number; oldest_h: number };
+}
+
+/** The most recent ledger row, or null (never written, or unreadable — the section then hides). */
+export async function getLatestPaidVsGot(): Promise<PaidVsGotDoc | null> {
+  try {
+    const db = await getDb();
+    const [doc] = await db
+      .collection<PaidVsGotDoc>(OPS_REPORTS_COLLECTION)
+      .find({ type: PAID_VS_GOT_TYPE } as Record<string, unknown>, {
+        projection: { day: 1, generated_at: 1, verdict: 1, headline: 1, 'collection.open': 1, 'collection.at_gemini': 1, 'collection.oldest_h': 1 },
+      })
+      .sort({ day: -1 })
+      .limit(1)
+      .toArray();
+    return doc && Array.isArray(doc.headline) ? doc : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Strip the people-only sections for viewers not on that list. Never mutates. */
 export function redactForViewer(data: SpendData, viewer: SpendViewer): SpendData {
   if (viewer.canSeePeople) return data;

@@ -101,6 +101,13 @@
 # says whether it can be switched to enforce.
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-status-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/status-output-drift.mjs" >> /var/log/sourcelibrary/status-output-drift.log 2>&1
 
+# Paid-vs-got daily ledger (#5499): yesterday's Gemini spend by lane from COLLECTED usage rows
+# against pages written (page provenance), open batches by age (FAIL past 40 h; Gemini expires
+# them at 48 h), duplicate/repeat/paid-for-nothing waste, and on Mondays the invoice vs metered
+# vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
+# and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
+10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+
 # CLIP index integrity (#5195, weekly Sunday 4:45am): does clip_embeddings still agree with
 # gallery_images? Counts drift (row names the wrong book), orphans (row names no gallery row)
 # and missing (a crop with no row). All three are silent by construction — a wrong book_id
