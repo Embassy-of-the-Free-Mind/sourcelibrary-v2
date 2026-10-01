@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import EditOverlayGate from '@/components/edit-overlay/EditOverlayGate';
 
 // Every number on this page is embedded at build from a committed file in
 // scripts/eval/ (see SOURCES). No request-time fetch, so ISR cannot cache a
@@ -1009,6 +1010,8 @@ export default function ResearchQualityPage() {
           </p>
         </Section>
       </article>
+      {/* ?edit: a co-author edits and comments in the browser, exports one JSON (#5583). Renders nothing otherwise. */}
+      <EditOverlayGate target="article.prose-content" commit={process.env.VERCEL_GIT_COMMIT_SHA} />
     </ContentPageLayout>
   );
 }
