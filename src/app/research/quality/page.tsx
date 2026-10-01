@@ -37,6 +37,7 @@ const SOURCES = [
   { path: 'scripts/eval/translation-corpus-audit/HUMAN-CALIBRATION.md', what: 'Protocol for the reader panel (§6 of this draft).' },
   { path: '.claude/docs/ocr-memorization-paper.md', what: 'Working paper on the memorisation subsidy: matched canonical and non-canonical passages on pages of the same books.' },
   { path: 'scripts/eval/experiments/2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md', what: 'Syriac OCR against published Syriac and published English: wrong passages and text not in the Bible (#4883).' },
+  { path: 'scripts/eval/results/quality-paper-stats-2026-10-01/report.md', what: 'Chance-corrected judge agreement, held-out screen performance and AUC, Wilson intervals on small counts, and the reader panel’s sample sizes (scripts/eval/quality-paper-stats.mjs).' },
 ] as const;
 
 function N({ n }: { n: number }) {
@@ -181,6 +182,117 @@ function ChainFigure() {
           <span className="flex items-center"><CoverMark c="no" />does not cover</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ── At a glance: every instrument, what it was checked against, and how much evidence ── */
+// Proportions carry k/n so the interval is computed here; other rows quote the cited source.
+// Grade uses the paper's own rule on independent units (books or pages): <30 exploratory,
+// 30–49 directional, ≥50 decision-grade.
+type Grade = 'decision-grade' | 'directional' | 'exploratory' | 'not run';
+type GlanceRow = {
+  test: string;
+  against: string;
+  result: string;
+  bar?: { k: number; n: number } | { p: number; lo: number; hi: number };
+  barLabel?: string;
+  grade: Grade;
+  note: number[];
+};
+const GLANCE: { link: string; rows: GlanceRow[] }[] = [
+  {
+    link: '1. Leaf — the image shown is the leaf transcribed',
+    rows: [
+      { test: 'Three-read signature', against: 'Scans read by a model', result: 'Caught 6 of 6 known wrong leaves; no false alarm on 258 right leaves', bar: { k: 6, n: 6 }, barLabel: 'known wrong leaves caught', grade: 'exploratory', note: [4, 13] },
+      { test: 'How often the leaf is wrong', against: 'Scans read by a model', result: '2 of 20 audited pages', bar: { k: 2, n: 20 }, barLabel: 'pages showing the wrong leaf', grade: 'exploratory', note: [7, 13] },
+    ],
+  },
+  {
+    link: '2. Transcription — the text matches the image',
+    rows: [
+      { test: 'Accuracy, Latin print, Flash', against: 'Published e-texts', result: 'Median character error 0.7% (CI 0.4–1.2), 68 books', grade: 'decision-grade', note: [1] },
+      { test: 'Accuracy, Latin print, Flash-Lite', against: 'Published e-texts', result: 'Median character error 1.7% (CI 0.7–3.7), 62 books', grade: 'decision-grade', note: [1] },
+      { test: 'Printed numbers, English 1800–1930', against: 'Crops read blind by a model', result: 'Flash-Lite 1.8% wrong, Archive OCR 5.1%; 5,212 numbers', grade: 'directional', note: [3] },
+      { test: 'Two-read screen for garble', against: 'The judge’s garble flag', result: 'AUC 0.79–0.83; held out, finds 55–58% of garble, 28% of flags are garble', grade: 'exploratory', note: [4, 13] },
+      { test: 'Japanese, Sanskrit, Arabic, Korean, Persian, Ge’ez, Pali', against: 'No reference pages', result: 'Accuracy unknown', grade: 'not run', note: [2] },
+    ],
+  },
+  {
+    link: '3. Translation — the English matches the transcription',
+    rows: [
+      { test: 'Judge catches planted faults', against: 'Swapped and cut translations', result: '30 of 30 caught', bar: { k: 30, n: 30 }, barLabel: 'planted faults caught', grade: 'directional', note: [6, 13] },
+      { test: 'Judge agrees with a second judge', against: 'Claude Sonnet, 107 pages', result: 'Sound or not: κ 0.56 (CI 0.32–0.76); 1–5 scale: weighted κ 0.73', grade: 'decision-grade', note: [13] },
+      { test: 'Judge’s flags hold up on the scan', against: 'Scans read by a model', result: '20 of 21 flagged defects confirmed', bar: { k: 20, n: 21 }, barLabel: 'flags confirmed', grade: 'exploratory', note: [7, 13] },
+      { test: 'Served pages the judge rates 4–5', against: 'The judge, 311 books', result: '89% (CI 85.5–92.5); 87–89% across weightings', bar: { p: 0.891, lo: 0.855, hi: 0.925 }, barLabel: 'pages rated faithful', grade: 'decision-grade', note: [6] },
+    ],
+  },
+  {
+    link: 'All three links at once',
+    rows: [
+      { test: 'Readers of the source language', against: 'People', result: 'Preregistered, not yet run (§6)', grade: 'not run', note: [10] },
+    ],
+  },
+];
+
+function GlanceBar({ bar, label }: { bar: NonNullable<GlanceRow['bar']>; label: string }) {
+  const { p, lo, hi } = 'k' in bar ? { p: bar.k / bar.n, lo: wilson(bar.k, bar.n)[0], hi: wilson(bar.k, bar.n)[1] } : bar;
+  const W = 120, x = (v: number) => 4 + v * (W - 8);
+  const text = `${'k' in bar ? `${bar.k}/${bar.n}, ` : ''}${pct(p)} ${label} (95% CI ${pct(lo)}–${pct(hi)})`;
+  return (
+    <svg viewBox={`0 0 ${W} 14`} className="w-[7.5rem] h-auto shrink-0" role="img" aria-label={text}>
+      <title>{text}</title>
+      <line x1={x(0)} x2={x(1)} y1={7} y2={7} stroke="var(--border-light)" strokeWidth="1" />
+      <line x1={x(0)} x2={x(0)} y1={3} y2={11} stroke="var(--border-light)" strokeWidth="1" />
+      <line x1={x(1)} x2={x(1)} y1={3} y2={11} stroke="var(--border-light)" strokeWidth="1" />
+      <line x1={x(lo)} x2={x(hi)} y1={7} y2={7} stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round" />
+      <circle cx={x(p)} cy={7} r="3.5" fill="var(--accent-rust)" />
+    </svg>
+  );
+}
+
+const GRADE_STYLE: Record<Grade, string> = {
+  'decision-grade': 'text-primary border-accent-rust',
+  directional: 'text-secondary border-light',
+  exploratory: 'text-muted border-light',
+  'not run': 'text-muted border-dashed border-light',
+};
+
+function GlanceTable() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[640px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted">
+            <th className="py-2 pr-3 font-medium">Test</th>
+            <th className="py-2 pr-3 font-medium">Checked against</th>
+            <th className="py-2 pr-3 font-medium">Result</th>
+            <th className="py-2 pr-3 font-medium">0–100%, 95% CI</th>
+            <th className="py-2 font-medium">Evidence</th>
+          </tr>
+        </thead>
+        {GLANCE.map(g => (
+          <tbody key={g.link}>
+            <tr>
+              <td colSpan={5} className="pt-4 pb-1 text-primary font-semibold">{g.link}</td>
+            </tr>
+            {g.rows.map(r => (
+              <tr key={r.test} className="border-b border-light align-top">
+                <td className="py-2 pr-3 text-primary leading-snug">{r.test}</td>
+                <td className="py-2 pr-3 text-secondary leading-snug">{r.against}</td>
+                <td className="py-2 pr-3 text-secondary leading-snug tabular-nums">
+                  {r.result}
+                  {r.note.map(n => <N key={n} n={n} />)}
+                </td>
+                <td className="py-2 pr-3">{r.bar && r.barLabel ? <GlanceBar bar={r.bar} label={r.barLabel} /> : null}</td>
+                <td className="py-2">
+                  <span className={`inline-block whitespace-nowrap rounded border px-1.5 py-0.5 text-xs ${GRADE_STYLE[r.grade]}`}>{r.grade}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ))}
+      </table>
     </div>
   );
 }
@@ -587,13 +699,25 @@ export default function ResearchQualityPage() {
             Source Library publishes AI transcriptions and English translations of historical books in more than fifteen languages. A reader asks one thing of any page: does this English say what is printed on this leaf? We split that question into three links: the image shown is the leaf transcribed, the transcription matches the image, and the translation matches the transcription. We then ask which link each of our quality instruments actually measures.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            Transcription. Where a reference text exists, we measure accuracy. On Latin print the character error rate is 0.7% for one engine and 1.7% for the cheaper one. Most scripts and periods still have too few reference pages to decide anything. Reading a page twice and comparing the reads is a cheaper screen. It finds 70–74% of the pages a judge called garbled, but only about 30% of the pages it flags are garbled. It also identified all seven known cases where the image shown was not the leaf transcribed.
+            Transcription. Where a reference text exists, we measure accuracy. On Latin print the character error rate is 0.7% for one engine and 1.7% for the cheaper one. Most scripts and periods still have too few reference pages to decide anything. Reading a page twice and comparing the reads is a cheaper screen. On pages held out from tuning it finds a little over half of the pages a judge called garbled, and only about 30% of the pages it flags are garbled. It also caught all six pages we already knew showed the wrong leaf, and found a seventh.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
             Translation. A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
           </p>
           <p className="text-secondary leading-relaxed">
             The missing part. None of these measurements involves a human reader. We preregister a standing panel of volunteers who read the source languages. Each is asked one question about one page drawn from the judge&rsquo;s own monthly sample. We will report how often the readers agree with the judge, what each side misses, and how many volunteers answer when asked.
+          </p>
+        </section>
+
+        {/* ── At a glance ── */}
+        <section id="at-a-glance" className="mb-12">
+          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">At a glance</h2>
+          <p className="text-secondary leading-relaxed mb-4">
+            Every quality test in this draft, grouped by the link it checks. &ldquo;Checked against&rdquo; is the point: only the rows checked against published texts measure accuracy, and no row is yet checked against a person. The evidence grade counts independent books or pages: under 30 is exploratory, 30 to 49 directional, 50 or more decision-grade.
+          </p>
+          <GlanceTable />
+          <p className="text-xs text-muted leading-relaxed mt-3">
+            Bars show a share on a 0–100% scale, with the dot at the estimate and the line spanning the 95% interval; rows without a bar report a quantity that is not a share. A grade says how many units stand behind a row, not that the row measures the right thing.
           </p>
         </section>
 
@@ -670,18 +794,18 @@ export default function ResearchQualityPage() {
             One narrower accuracy check reads the numbers. On English books printed 1800–1930, every printed number on which two engines disagreed was cropped from the page image and read blind by a model, with no engine&rsquo;s reading on the sheet. Of 5,212 printed numbers across 82 books, the Internet Archive&rsquo;s own OCR had 5.1% wrong (CI 3.8–7.4) and Flash-Lite 1.8% (CI 1.1–3.1). This is directional, and the reader of the crops was a model, not a person.<N n={3} />
           </P>
           <P>
-            <strong>A screen where no reference exists.</strong> Reading a page a second time and comparing the two reads costs a tenth to a fifth of a cent per page. We tested it on 327 pages the translation judge (§4) had rated, one per book, using the judge&rsquo;s garble flag as the label: 32 pages were flagged. A fresh Flash-Lite read that agreed with the served text on less than 70% of its tokens flagged 70 pages, 20 of them garbled: precision 29%, recall 74%. A fresh Flash read gave 30% and 70%.<N n={4} /><N n={5} /> The screen finds most garbled pages and mostly flags pages that are not. On Latin-script pages it does not separate at all (precision about 10%); 24 of the 30 garbled pages it could judge were in non-Latin scripts.<N n={4} />
+            <strong>A screen where no reference exists.</strong> Reading a page a second time and comparing the two reads costs a tenth to a fifth of a cent per page. We tested it on 327 pages the translation judge (§4) had rated, one per book, using the judge&rsquo;s garble flag as the label: 32 pages were flagged. A fresh Flash-Lite read that agreed with the served text on less than 70% of its tokens flagged 70 pages, 20 of them garbled: precision 29%, recall 74%. A fresh Flash read gave 30% and 70%.<N n={4} /><N n={5} /> Those figures are flattering, because the 0.7 threshold was chosen on these same pages. Choosing the threshold on a random half and scoring it on the other half, repeated a thousand times, recall falls to 55% (lite) and 58% (Flash), and precision stays near 28%. A measure that needs no threshold says the same: a garbled page has a lower agreement than a sound one 79% of the time for the lite read (AUC 0.79, CI 0.70–0.88) and 83% for Flash (CI 0.77–0.89).<N n={13} /> The screen finds about half the garbled pages and mostly flags pages that are not. On Latin-script pages it does not separate at all (precision about 10%); 24 of the 30 garbled pages it could judge were in non-Latin scripts.<N n={4} />
           </P>
           <P>
-            Two cautions keep these numbers in proportion. The label is itself a model&rsquo;s: re-run on the same pages, the judge reproduced its own garble flag with a precision of 51–58% (Figure 3). So the screen cannot reach a high precision against this label even if it were perfect. And when model readers looked at 18 of the &ldquo;hard&rdquo; pages against the scan, the served text was unreliable on 8 (44%, CI 25–66).<N n={4} />
+            Two cautions keep these numbers in proportion. The label is itself a model&rsquo;s: re-run on the same pages, the judge reproduced its own garble flag with a precision of 51–58% (Figure 3). So the screen cannot reach a high precision against this label even if it were perfect. Corrected for chance, the screen agrees with the label at κ = 0.29.<N n={13} /> And when model readers looked at 18 of the &ldquo;hard&rdquo; pages against the scan, the served text was unreliable on 8 (44%, CI 25–66).<N n={4} />
           </P>
           <P>
-            The same reads did one thing cleanly. When the served text disagrees with both fresh reads (agreement under 0.3) while the fresh reads agree with each other (0.9 or more), the served text is likely to belong to a different leaf. All seven known wrong-leaf pages had this signature, and none of the 258 pages confirmed by eye as the right leaf did.<N n={4} /> This is the instrument in Figure 1 that reaches link 1.
+            The same reads did one thing cleanly. When the served text disagrees with both fresh reads (agreement under 0.3) while the fresh reads agree with each other (0.9 or more), the served text is likely to belong to a different leaf. All six wrong-leaf pages known before the test had this signature, and it found a seventh; all seven pages that carried it showed the wrong leaf when read against the scan, and none of the 258 pages confirmed as the right leaf carried it.<N n={4} /> These are small counts. Six of six is consistent with a true catch rate as low as 61%, and 0 of 258 with a false-alarm rate up to 1.5% (95% Wilson intervals).<N n={13} /> This is the instrument in Figure 1 that reaches link 1.
           </P>
 
           <Figure
             n={3}
-            caption={<>The two-read screen at the 0.7 agreement threshold, scored against the judge&rsquo;s garble flag on the audited pages. Dots are point estimates with 95% Wilson intervals<span className="whitespace-nowrap"> {cite('wilson1927')}</span> computed from the counts shown; the &ldquo;hard page&rdquo; recall is reported without a count. The judge&rsquo;s own repeat is drawn as the range over three re-runs: it shows how well the label agrees with itself, a practical limit on what any screen can score against it. The approach is related to Consensus Entropy {cite('zhang2025')}, which uses agreement between several vision-language models to flag bad OCR.<N n={4} /><N n={5} /></>}
+            caption={<>The two-read screen at the 0.7 agreement threshold, scored against the judge&rsquo;s garble flag on the audited pages. These are in-sample figures, on the pages the threshold was chosen on; held out, recall is 55–58% (§3). Dots are point estimates with 95% Wilson intervals<span className="whitespace-nowrap"> {cite('wilson1927')}</span> computed from the counts shown; the &ldquo;hard page&rdquo; recall is reported without a count. The judge&rsquo;s own repeat is drawn as the range over three re-runs: it shows how well the label agrees with itself, a practical limit on what any screen can score against it. The approach is related to Consensus Entropy {cite('zhang2025')}, which uses agreement between several vision-language models to flag bad OCR.<N n={4} /><N n={5} /></>}
           >
             <ScreenFigure />
           </Figure>
@@ -693,7 +817,7 @@ export default function ResearchQualityPage() {
             We drew one interior page from each of 311 books across 15 catalogue languages (seed 20260930) and asked Claude Opus to rate each served translation against the transcription it was made from, on a 1–5 fidelity scale, and to list each defect by type and severity.<N n={6} /> The judge sees the transcription and the English. It does not see the scan, and it has no reference translation. Its defect categories (omission, invention, inversion, mistranslation and others, each minor or major) are close to the MQM error typology {cite('freitag2021')}. Asking a large model for a direct judgement of translation quality follows GEMBA {cite('kocmi2023')}, with the difference that our judge is given the source text.
           </P>
           <P>
-            <strong>Controls first.</strong> Before any rating is read, planted items test the judge. Fifteen translations were swapped for the translation of another page; the judge rated all 15 at 2 or lower. Fifteen had their middle third removed; it flagged omission on all 15. Fifteen items were judged twice; 11 got the identical rating and all 15 were within one point.<N n={6} /> The run would not have been reported had the controls failed.
+            <strong>Controls first.</strong> Before any rating is read, planted items test the judge. Fifteen translations were swapped for the translation of another page; the judge rated all 15 at 2 or lower. Fifteen had their middle third removed; it flagged omission on all 15. Fifteen items were judged twice; 11 got the identical rating and all 15 were within one point.<N n={6} /> Fifteen planted items each is enough to show the judge is not blind to these faults, not to measure how often it misses them: 15 of 15 is consistent with a catch rate as low as 80%, and 11 of 15 identical with anything from 48% to 89%.<N n={13} /> The run would not have been reported had the controls failed.
           </P>
 
           <Figure n={4} caption={<>Planted controls, 15 items each. Filled squares pass. For the repeat control, outlined squares are items whose second rating differed by one point. The gate was set before the run.<N n={6} /></>}>
@@ -701,7 +825,7 @@ export default function ResearchQualityPage() {
           </Figure>
 
           <P>
-            <strong>The estimate.</strong> Weighted by language, the judge rated 89.1% of served pages 4 or 5 (95% CI 85.5–92.5), 3.4% at 2 or lower, and found a major defect on 11.4% (CI 7.6–15.6). The most common flags were omission (14.8%), invention (11.2%), garble carried through from the transcription (6.6%), and inversion (3.9%).<N n={6} /> For Latin-script books the share at 4 or 5 was 92.9% (198 books); for non-Latin scripts, 70.8% (113 books).<N n={6} /> Figure 5 gives the per-language counts. Most cells are small, and the intervals say so.
+            <strong>The estimate.</strong> The quantity estimated is the share of served translated pages, in the 15 sampled languages, that the judge rates 4 or 5. Each language&rsquo;s share of the sample is re-weighted to its share of live translated pages (Latin 40%, English 16%, German 12%, Greek 10%, the other eleven 22%), and the interval is a bootstrap over books within each language. Weighted this way, the judge rated 89.1% of served pages 4 or 5 (95% CI 85.5–92.5), 3.4% at 2 or lower, and found a major defect on 11.4% (CI 7.6–15.6). The headline does not depend much on the weighting. Weighting each book by its number of translated pages, so that the unit is a random page and not a random book, gives 89.3%. Correcting for the sample&rsquo;s even split between the two translation models, which production does not share, gives 87.2%. The share with a major defect moves more, from 11.4% to 14.4%. The most common flags were omission (14.8%), invention (11.2%), garble carried through from the transcription (6.6%), and inversion (3.9%).<N n={6} /> For Latin-script books the share at 4 or 5 was 92.9% (198 books); for non-Latin scripts, 70.8% (113 books).<N n={6} /> Figure 5 gives the per-language counts. Most cells are small, and the intervals say so.
           </P>
 
           <Figure
@@ -712,7 +836,7 @@ export default function ResearchQualityPage() {
           </Figure>
 
           <P>
-            <strong>Checking the judge.</strong> A second judge (Claude Sonnet) rated 107 of the same pages; the two gave the identical rating on 67.3% and were within one point on all 107.<N n={6} /> That is agreement between two models of one family, not accuracy. For a stronger check, a model opened the scan of 20 pages, drawn at random from the audit, and read it against the transcription and the English. Of 21 defects the judge had flagged on those pages, 20 were confirmed and none rejected; on the 9 pages the judge rated 5, no major defect had been missed.<N n={7} /> But on 2 of the 20 pages, both Internet Archive scans, the image shown was a different printed page from the one transcribed and translated. The judge rated both translations as faithful, correctly, because they are faithful to their text. Figure 2 shows one of them.
+            <strong>Checking the judge.</strong> A second judge (Claude Sonnet) rated 107 of the same pages; the two gave the identical rating on 67.3% and were within one point on all 107.<N n={6} /> Raw agreement flatters a scale where most ratings are 4 or 5. Corrected for chance, the agreement on the 1–5 scale is a quadratic-weighted κ of 0.73 (CI 0.60–0.83). On the decision the estimate rests on, sound (4–5) or not, the two agree on 89% of pages, but κ is 0.56 (CI 0.32–0.76): moderate. Gwet&rsquo;s AC1, which is less affected by how rare one answer is, gives 0.85 (CI 0.75–0.93). Opus is the more lenient of the two: it called 88% of these pages sound, Sonnet 82%.<N n={13} /> That is agreement between two models of one family, not accuracy. For a stronger check, a model opened the scan of 20 pages, drawn at random from the audit, and read it against the transcription and the English. Of 21 defects the judge had flagged on those pages, 20 were confirmed (95% CI 77–99%) and none rejected; on the 9 pages the judge rated 5, no major defect had been missed.<N n={7} /><N n={13} /> But on 2 of the 20 pages, both Internet Archive scans, the image shown was a different printed page from the one transcribed and translated. The judge rated both translations as faithful, correctly, because they are faithful to their text. Figure 2 shows one of them.
           </P>
 
         </Section>
@@ -721,7 +845,7 @@ export default function ResearchQualityPage() {
         <Section n={5} title="What none of this measures">
           <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
             <li><strong>A human reading.</strong> Every instrument above is a model, or a model reading an image. None has been checked against a person who reads the source language. The judge&rsquo;s own error rate is therefore unknown.<N n={9} /></li>
-            <li><strong>Leaf identity at scale.</strong> We have a signature that catches wrong leaves and a count of two in twenty on one hand-read sample. We do not have a rate.<N n={2} /></li>
+            <li><strong>Leaf identity at scale.</strong> We have a signature that catches wrong leaves and a count of two in twenty on one hand-read sample. Two in twenty is consistent with anything from 3% to 30% of pages.<N n={13} /> We do not have a rate. A sample large enough to give one to within a few points is the cheapest measurement missing from this draft.<N n={2} /></li>
             <li><strong>Transcription accuracy in most scripts.</strong> Where no reference exists, a second read measures agreement. Two engines that share a training corpus can agree on the same error, or on a familiar text that is not on the page.</li>
             <li><strong>Scripts the judge reads poorly.</strong> The judge&rsquo;s rating of a Rashi-script or kuzushiji page is only as good as its reading of that script, and we have not measured that.</li>
             <li><strong>The book&rsquo;s metadata.</strong> Title, author and date against the title page are a fourth link, for the book rather than the page. Only a by-eye check on a few books per stratum covers it.<N n={9} /></li>
@@ -734,10 +858,13 @@ export default function ResearchQualityPage() {
             The panel asks volunteers who read a source language the reader&rsquo;s question directly. Each receives one page at a time by email: the scan, the transcription and the English. They answer one question: <em>Does the English say what this page says?</em> The answers are Yes; No, with a line on where; or Can&rsquo;t tell. The question covers the whole chain, and the &ldquo;where&rdquo; line tells us which link failed.<N n={10} />
           </P>
           <P>
-            The pages are the judge&rsquo;s own monthly random draw, one interior page per book, starting with the 30 September audit less its wrong-leaf pages. Readers get pages in the language they named, in seeded random order, and never see the judge&rsquo;s verdict. Each answer is stored with a hash of the transcription and of the translation it was given against, so an answer on text that has since changed is set aside. When a reader and the judge disagree, the page goes to a second reader of that language; if the second reader agrees with the first, the human verdict stands, and otherwise the page is listed as unresolved with both answers.<N n={10} />
+            The pages are the judge&rsquo;s own monthly random draw, one interior page per book, starting with the 30 September audit less its wrong-leaf pages. Readers get pages in the language they named and never see the judge&rsquo;s verdict. Pages alternate between those the judge called defective and those it called sound, each in seeded random order. Only about one page in seven is judged defective, so under plain random order a reader would rarely see one: about 265 answers before 40 fell on defective pages.<N n={13} /> Each answer is stored with a hash of the transcription and of the translation it was given against, so an answer on text that has since changed is set aside.<N n={10} />
           </P>
           <P>
-            We will report three things, monthly and cumulatively: how often readers agree with the judge, with n and a Wilson interval, separately for pages the judge called sound and pages it called defective; a catalogue of what readers found that the judge missed and the reverse, each with its page and the reader&rsquo;s words; and the response funnel, from letters sent to pages answered, by language. Sensitivity, specificity and per-language rates wait until there are enough answers to support them.<N n={10} />
+            Second readers serve two purposes, kept apart. One answered page in five, chosen by a seeded draw before the first answer is read, goes to a second reader whatever the first one said. Those pages measure how often two readers agree with each other, which is the ceiling for any judge: if two readers agree on 85% of pages, a judge that agrees with readers 85% of the time is doing as well as a reader. Every page where a reader and the judge disagree also goes to a second reader, but only for the catalogue of findings. Checking only the disagreements would let a second reader overturn a reader but never a reader who agreed with the judge, so it could only push measured agreement up. Diagnostic-test research knows this as discrepant resolution.<N n={10} />
+          </P>
+          <P>
+            We will report, monthly and cumulatively: agreement with the judge, separately for pages it called sound and pages it called defective, each with n, the number of readers, and an interval that allows for one reader answering many pages; the overall figure, re-weighted to the draw&rsquo;s own mix because defective pages are over-represented; agreement between two readers, as κ, once 40 pages have been double-read; a catalogue of what readers found that the judge missed and the reverse, each with its page and the reader&rsquo;s words; and the response funnel, from letters sent to pages answered, by language. For agreement on sound pages (expected near 90%), 34 answers give an interval of ±10 points. For defective pages, where agreement may be nearer 50–70%, the same precision takes 78–93 answers; month 0 holds 47 such pages. Figures are marked preliminary until they reach these sizes. Sensitivity and specificity, treating readers as the reference, are reported only next to the reader–reader figure; per-language rates wait for 30 answers in a language.<N n={10} /><N n={13} />
           </P>
           <P>
             Status on the date of this draft: the protocol is written and awaits sign-off and an ethics approval. No page has been sent and there are no results. Readers will be credited by name in the acknowledgements unless they prefer not to be.<N n={10} />
@@ -749,7 +876,8 @@ export default function ResearchQualityPage() {
           <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
             <li><strong>One sample, one judge.</strong> The audit is one draw of 311 pages, rated by one judge with one prompt. The by-language cells are mostly under 20 books, and the per-language rankings in Figure 5 are within each other&rsquo;s intervals for most pairs.</li>
             <li><strong>The translation models are not compared.</strong> Pages were translated by whichever model the book went through, so model and book are confounded. The audit does not say which model translates better.<N n={2} /></li>
-            <li><strong>The screen was tuned on its own sample.</strong> The 0.7 threshold and the three-read classes were chosen on the same 327 pages they are reported on, and the result has not been replicated.<N n={4} /></li>
+            <li><strong>The screen was tuned on its own sample.</strong> The 0.7 threshold and the three-read classes were chosen on the same 327 pages they are reported on. Cross-validation on those pages lowers the recall from 70–74% to 55–58%, but it is not a replication on a new draw.<N n={4} /><N n={13} /></li>
+            <li><strong>Many cells, no correction.</strong> The evidence table has 1,188 cells and Figure 5 has fifteen languages. We test no hypotheses and rank no languages. With this many intervals, some will miss their true value by chance alone, so a single cell that stands out should be re-measured before it is acted on.</li>
             <li><strong>&ldquo;By eye&rdquo; means a model reading an image.</strong> The leaf-identity counts, the flag precision and the number adjudication all rest on model readers of scans. That is stronger than a text-only check and weaker than a person.<N n={9} /></li>
             <li><strong>The catalogue language is not always the page&rsquo;s.</strong> Two of the 20 hand-read pages were in a different language from their catalogue label, so per-language figures describe catalogue strata, not scripts on the page.<N n={7} /></li>
             <li><strong>Pages change.</strong> Served text is re-read and repaired. The specimen in Figure 2b has been fixed since the audit; every figure here is dated to the run that produced it.</li>
