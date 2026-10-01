@@ -205,6 +205,15 @@ export function makeBookDoc(fields) {
     const fps = sourceFingerprints(doc);
     if (fps.length > 0) doc.source_fingerprints = fps;
   }
+  // Declare what the record IS at birth (#5292c). A record with no
+  // `resource_type` is already read as a text by every artwork check
+  // (isArtworkRecord in src/lib/artwork-record.ts), so 'book' only makes that
+  // explicit; leaving it null let 29,656 live books depend on the reading rule
+  // instead of the field. Artwork importers set `resource_type` (and usually
+  // content_type 'artwork') and are untouched; an explicit caller value wins.
+  if (doc.content_type == null && doc.resource_type == null) {
+    doc.content_type = 'book';
+  }
   return doc;
 }
 
