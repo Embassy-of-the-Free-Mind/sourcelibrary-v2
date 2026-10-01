@@ -45,13 +45,16 @@ const contentCandidates = main.filter((m) => {
 const strat = (s) => { const xs = main.filter((m) => m.stratum === s); return { n: xs.length, major: xs.filter((m) => isMajor(verdicts[m.id])).length }; };
 
 const n = main.length, rate = n ? defective.length / n : null;
-const scopeAbort = Number(args['eligibility-abort'] || 0);
+// scope.json (gate-scope.mjs, written on Hetzner at draw time) classifies the eligibility candidates; an explicit
+// --eligibility-abort overrides it.
+const scope = fs.existsSync(path.join(DIR, 'scope.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'scope.json'), 'utf8')) : null;
+const scopeAbort = args['eligibility-abort'] != null ? Number(args['eligibility-abort']) : (scope?.abort_count || 0);
 const confirmedContent = args['confirmed-content'] != null ? Number(args['confirmed-content']) : null;
 const controlsPass = report ? !!report.controls_gate?.pass : null;
 const reasons = [];
 if (n >= 20 && rate > 0.30) reasons.push(`major-defect rate ${(rate * 100).toFixed(1)}% > 30% (n=${n})`);
 if (confirmedContent != null && confirmedContent >= 2) reasons.push(`${confirmedContent} hand-confirmed whole-sentence invention / echo pages`);
-if (scopeAbort > 0) reasons.push(`${scopeAbort} scope violations (enrolled after hold / English / priority >= 90)`);
+if (scopeAbort > 0) reasons.push(`${scopeAbort} scope violations (${scope?.abort?.length ? scope.abort.map((a) => `${a.book_id}: ${a.why}`).join('; ') : 'enrolled after hold / write after park / English'})`);
 const verdict = controlsPass === false ? 'NOT_JUDGED' : reasons.length ? 'ABORT' : confirmedContent == null && contentCandidates.length >= 2 ? 'HAND_READ_PENDING' : 'OK';
 
 const row = {
@@ -61,6 +64,7 @@ const row = {
   controls: report?.controls_gate ? Object.fromEntries(Object.entries(report.controls_gate.checks).map(([k, c]) => [k, `${Math.round(c.rate * c.n)}/${c.n}`])) : null,
   content_candidates: contentCandidates.length, confirmed_content: confirmedContent,
   eligibility: (log.eligibility || []).map((e) => ({ book_id: e.book_id, why: e.why, pages: e.pages })),
+  scope: scope ? { abort: scope.abort, warn: scope.warn.map((w) => `${w.book_id}: ${w.why}`), exempt: scope.exempt.length } : null,
   by_eye: [...main].sort((a, b) => verdicts[a.id].fidelity - verdicts[b.id].fidelity).slice(0, 5).map((m) => m.url),
 };
 console.log(JSON.stringify(row));
