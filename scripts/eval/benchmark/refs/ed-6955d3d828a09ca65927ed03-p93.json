@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A29017",
+  "edition": "EEBO-TCP A29017 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6955d3d828a09ca65927ed03",
+  "page_number": 93,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 84321,
+    "to_char": 85263,
+    "overlap": 0.98,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts those Accidents, the Shape; ends what it doth after other things then",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:28.970Z",
+  "text_location": "repo",
+  "text_sha256": "c44d3b7b7ac5ece4b8eb7580454deba2bcabe7a3c466f542fd275dd832d721d8",
+  "unit": {
+    "chars": 942
+  }
+}

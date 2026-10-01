@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A20813",
+  "edition": "EEBO-TCP A20813 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a42eff906e6ead3ac54bab4",
+  "page_number": 16,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 7429,
+    "to_char": 8562,
+    "overlap": 0.968,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts one fragment line before Which euer; ends at catchword His dainty hand",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:25.813Z",
+  "text_location": "repo",
+  "text_sha256": "12f1ec3c8c8aeba7040629934c647d3e91ff77bd1cb71556d063b23cfb5009de",
+  "unit": {
+    "chars": 1133
+  }
+}

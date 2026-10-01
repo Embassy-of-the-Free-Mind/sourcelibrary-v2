@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A62554",
+  "edition": "EEBO-TCP A62554 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a43851557a09c2c0fcc0005",
+  "page_number": 17,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 20609,
+    "to_char": 22321,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Libri Theologici Octavo list 1-30; ref has a few words of prior page",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:48.578Z",
+  "text_location": "repo",
+  "text_sha256": "8ec8bd30f5e5231a520bf1921a5c6ee651f76f6818141d1b5869c5430964d4f0",
+  "unit": {
+    "chars": 1712
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A67819",
+  "edition": "EEBO-TCP A67819 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a43001a4e06bc233ecf5ef6",
+  "page_number": 16,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 4306,
+    "to_char": 4840,
+    "overlap": 0.667,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "starts 'universos in mutuum Subsidium'; ends 'fumum abeat' + catchword",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:50.548Z",
+  "text_location": "repo",
+  "text_sha256": "86aa286ec6991b8e929f77ea57d0569cf80f8f54a3b4e62925b319abd9abb894",
+  "unit": {
+    "chars": 534
+  }
+}

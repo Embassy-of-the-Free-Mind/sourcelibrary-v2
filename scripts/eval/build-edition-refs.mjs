@@ -19,8 +19,9 @@
  *   should be "in-copyright", which keeps the text out of this repo.
  *
  * Without --write it only reports. With --write each accepted page becomes a private reference
- * (`ed-<book8>-p<n>`): text in the private dir, record in benchmark/refs/. Every refused page is a recorded
- * skip with its reason in results/edition-refs/<book8>.json, never silently dropped.
+ * (`ed-<book id>-p<n>`): text in the private dir, record in benchmark/refs/. Every refused page is a recorded
+ * skip with its reason in results/edition-refs/<book id>.json, never silently dropped. (Reports written before
+ * 2026-10-01 evening are named by an 8-character id prefix.)
  *
  * What the score is and is not:
  *  - The window is located with our production read of the page (the probe) and then padded, so the
@@ -73,7 +74,9 @@ async function main() {
   if (args.pages) { const [a, b] = String(args.pages).split('-').map(Number); chosen = pages.filter(p => p.page_number >= a && p.page_number <= (b || a)); }
   else if (args.draw) { const r = rng(Number(args.seed ?? 1)); chosen = [...pages].sort(() => r() - 0.5).slice(0, Number(args.draw)).sort((x, y) => x.page_number - y.page_number); }
 
-  const short = String(BOOK).replace(/[^0-9a-z]/gi, '').slice(0, 8);
+  // The whole id, not a prefix: an ObjectId opens with its creation second, so books imported in the same
+  // batch share their first 8 hex digits, and a prefix slug let one book's reference overwrite another's.
+  const short = String(BOOK).replace(/[^0-9a-z]/gi, '');
   const rows = [];
   for (const p of chosen) {
     const slug = `ed-${short}-p${p.page_number}`;

@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A05389",
+  "edition": "EEBO-TCP A05389 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "699fcd429ff0f1d2c4517fff",
+  "page_number": 28,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 10498,
+    "to_char": 11088,
+    "overlap": 0.971,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Body Super particuler to thys figure; ref adds few neighbouring heading words",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:21.353Z",
+  "text_location": "repo",
+  "text_sha256": "1d14bba818ccc1acab35f2b6890516ef8da1daa855cfb8a6965a451d5ad98500",
+  "unit": {
+    "chars": 590
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A43282",
+  "edition": "EEBO-TCP A43282 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69b18625c4be2cdd0edc549e",
+  "page_number": 137,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 150945,
+    "to_char": 152237,
+    "overlap": 0.879,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts Quest. 4, ends 'that Church'; matches.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:35.292Z",
+  "text_location": "repo",
+  "text_sha256": "270242f5f2ec563ad02ddd798defc317857649cdd02c5065c62ed4f1175469a8",
+  "unit": {
+    "chars": 1292
+  }
+}

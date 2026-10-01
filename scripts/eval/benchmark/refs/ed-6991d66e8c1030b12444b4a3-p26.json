@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A49865",
+  "edition": "EEBO-TCP A49865 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6991d66e8c1030b12444b4a3",
+  "page_number": 26,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 55711,
+    "to_char": 58532,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts one short phrase early before Oh my Friends; ends Unity plus catchword.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:41.558Z",
+  "text_location": "repo",
+  "text_sha256": "32c9b8f98302b3b06332d34ec38ad08751dbfc8e8c4d516f729520ae100222d9",
+  "unit": {
+    "chars": 2821
+  }
+}
