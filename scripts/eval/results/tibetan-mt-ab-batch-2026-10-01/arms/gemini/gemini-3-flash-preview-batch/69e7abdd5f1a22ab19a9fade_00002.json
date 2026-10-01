@@ -1,0 +1,20 @@
+{
+ "id": "69e7abdd5f1a22ab19a9fade_00002",
+ "arm": "gemini-3-flash-preview",
+ "text": "I bow down to the Victorious Ones.\n\nI prostrate to you. You are the Virtuous Mother of all the Victorious Ones <note>original: \"rgyal ba\", referring to the Buddhas</note> of the past, the future, and the present. You are the Goddess, the Daughter of the Victorious Ones. You possess a nature that is without inherent nature. I shall speak the name of that Virtuous One who has become the Mother of the Buddhas. Let those who desire prosperity listen.\n\nThe Perfection of Wisdom <note>original: \"shes rab kyi pha rol tu phyin pa\", Sanskrit: Prajnaparamita</note>, and All-Knowingness <note>original: \"thams cad mkhyen pa nyid\", Sanskrit: Sarvajñatā</note>, and the Knowledge of all aspects of the path <note>original: \"lam gyi rnam pa thams cad mkhyen pa\", Sanskrit: Mārgākārajñatā</note> <unclear>rest of line not transcribed</unclear>\n\n<summary>This page contains a devotional opening and praise to the Mother of all Buddhas, identifying her with the Perfection of Wisdom. It introduces the technical categories of Buddhist omniscience and the paths to enlightenment.</summary>\n<keywords>Victorious Ones, Buddhas, Mother of Buddhas, Perfection of Wisdom, Prajnaparamita, All-Knowingness, Path Knowledge, Goddess</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2109,
+ "outputTokens": 310,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.00099225,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 429,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

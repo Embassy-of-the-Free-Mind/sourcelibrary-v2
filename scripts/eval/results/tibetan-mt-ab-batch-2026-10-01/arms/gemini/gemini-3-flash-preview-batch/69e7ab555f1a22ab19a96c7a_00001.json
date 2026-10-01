@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab555f1a22ab19a96c7a_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "The purity of the Noble Eightfold Path <note>original: \"’phags pa’i lam yan lag brgyad pa\"</note>, the purity of form <note>original: \"gzugs\"</note>, and the purity of omniscience <note>original: \"rnam pa thams cad mkhyen pa nyid\"</note> are non-dual. They cannot be divided into two; they are not separate and cannot be differentiated. Through the purity of the Noble Eightfold Path comes the purity of sensation <note>original: \"tshor ba\"</note>. Through the purity of sensation comes the purity of omniscience. In this way, the purity of the Noble Eightfold Path and the purity of sensation and\n\n<summary>This page discusses the non-dual nature of the Noble Eightfold Path, form, and omniscience within the context of Buddhist philosophy. It emphasizes that these states of purity are inseparable and lead to the realization of all-knowing wisdom.</summary>\n<keywords>Noble Eightfold Path, omniscience, non-duality, purity, sensation, form, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2036,
+ "outputTokens": 231,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.0008555,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 367,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

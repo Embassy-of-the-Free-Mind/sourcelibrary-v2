@@ -167,4 +167,4 @@ if (judges.length === 2) {
 out.per_page = testPages.map((id) => ({ id, ...Object.fromEntries(judges.map((j) => [j, Object.fromEntries(ENGINES.map((a) => [a, decoded[j][id]?.[a] ? `${decoded[j][id][a].fidelity}${decoded[j][id][a].invention ? 'I' : ''}${decoded[j][id][a].omission ? 'O' : ''}${decoded[j][id][a].inversion ? 'X' : ''}` : null]))])), reasons: Object.fromEntries(judges.map((j) => [j, decoded[j][id]?._reason])) }));
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
-console.log(JSON.stringify({ controls: out.controls, engines: Object.fromEntries(ENGINES.map((a) => [a, out.engines[a].pooled])), rules: { issue: out.rules.issue.by_judge, handoff: { pick: out.rules.handoff.pick, eligible: out.rules.handoff.eligible, best: best } }, agreement: out.agreement }, null, 1));
+console.log(JSON.stringify({ controls: out.controls, engines: Object.fromEntries(ENGINES.map((a) => [a, out.engines[a].pooled])), rules: { issue: out.rules.issue?.by_judge ?? null, handoff: { pick: out.rules.handoff.pick, eligible: out.rules.handoff.eligible, best: best } }, agreement: out.agreement }, null, 1));
