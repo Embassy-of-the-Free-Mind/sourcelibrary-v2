@@ -105,7 +105,7 @@ async function getCensusData(): Promise<CensusData> {
     catalog_records: catalogResult.count ?? 0,
     languages,
     sl_first_translations: Number(homepageStats.firstTranslationCount),
-    sl_books_readable: Number(homepageStats.translatedToEnglish || 0),
+    sl_books_readable: Number(homepageStats.readableInEnglish ?? homepageStats.translatedToEnglish ?? 0),
     corpus_readable: Number(vc.readable || 0),
     corpus_checked: Number(vc.checked || 0),
     corpus_checked_pct: Number(vc.pct || 0),

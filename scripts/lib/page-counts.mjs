@@ -579,3 +579,57 @@ export function computeTranslationState(counts, { language, content_type } = {})
     version: TRANSLATION_STATE_VERSION,
   };
 }
+
+// ── Named views over the ladder (#5286, translation-state.md § Named views) ──
+// Every headline count reads one of these BY NAME; never re-type the rule in a
+// caller. Mirror: src/lib/page-counts.ts (parity-tested). Both forms read the
+// stored `translation_state`, so a book sync-worker has not stamped yet is in
+// no view — translationStateStampCoverage() is the read-side check for that.
+
+/** `readable_in_english` rungs for a non-English edition. */
+export const READABLE_RUNGS = Object.freeze(['readable', 'complete']);
+/** Extra rungs at which an English original is already readable (its text IS English). */
+export const ENGLISH_ORIGINAL_READABLE_RUNGS = Object.freeze(['transcribed', 'translating']);
+
+/** `readable_in_english` as a Mongo query filter (spread it beside `visible`/`pages_count`). */
+export const READABLE_IN_ENGLISH_FILTER = Object.freeze({
+  $or: [
+    { 'translation_state.rung': { $in: [...READABLE_RUNGS] } },
+    { 'translation_state.english_original': true, 'translation_state.rung': { $in: [...ENGLISH_ORIGINAL_READABLE_RUNGS] } },
+  ],
+});
+
+/** `readable_in_english` as an aggregation boolean (for `$cond` inside a `$group`). */
+export const READABLE_IN_ENGLISH_EXPR = Object.freeze({
+  $or: [
+    { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...READABLE_RUNGS]] },
+    {
+      $and: [
+        { $eq: ['$translation_state.english_original', true] },
+        { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...ENGLISH_ORIGINAL_READABLE_RUNGS]] },
+      ],
+    },
+  ],
+});
+
+/** True iff a stored state is in `readable_in_english` (the JS form of the filter above). */
+export function isReadableInEnglish(state) {
+  if (!state?.rung) return false;
+  return READABLE_RUNGS.includes(state.rung) ||
+    (state.english_original === true && ENGLISH_ORIGINAL_READABLE_RUNGS.includes(state.rung));
+}
+
+/**
+ * Share of books matching `filter` that carry a stamped `translation_state`.
+ * A view counted before sync-worker has stamped the corpus reads as a collapse
+ * (0 on 2026-10-01, the morning step 1 merged), so a headline writer checks
+ * this and refuses to publish a view below `min` instead of writing the hole.
+ */
+export async function translationStateStampCoverage(books, filter, { min = 0.99 } = {}) {
+  const [total, stamped] = await Promise.all([
+    books.countDocuments(filter),
+    books.countDocuments({ ...filter, 'translation_state.rung': { $type: 'string' } }),
+  ]);
+  const share = total ? stamped / total : 1;
+  return { total, stamped, share, ok: share >= min };
+}

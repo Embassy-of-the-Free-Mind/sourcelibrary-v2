@@ -2,7 +2,8 @@ import { getReadDb } from '@/lib/mongodb';
 
 export type SiteStats = {
   totalBooks: number;
-  translatedToEnglish: number;
+  /** Named view `readable_in_english` (translation-state.md). */
+  readableInEnglish: number;
   firstTranslationCount: number;
   authorCount: number;
   languageCount: number;
@@ -14,7 +15,7 @@ export type SiteStats = {
 // on 2026-06-21; the live read below keeps the page current day-to-day.
 const FALLBACK: SiteStats = {
   totalBooks: 16328,
-  translatedToEnglish: 15506,
+  readableInEnglish: 15506,
   firstTranslationCount: 5696,
   authorCount: 6199,
   languageCount: 162,
@@ -36,7 +37,8 @@ export async function getSiteStats(): Promise<SiteStats> {
     if (s?.totalBooks) {
       return {
         totalBooks: s.totalBooks,
-        translatedToEnglish: s.translatedToEnglish ?? FALLBACK.translatedToEnglish,
+        // `translatedToEnglish` is the pre-#5286 key, kept as an alias for one release.
+        readableInEnglish: s.readableInEnglish ?? s.translatedToEnglish ?? FALLBACK.readableInEnglish,
         firstTranslationCount: s.firstTranslationCount ?? FALLBACK.firstTranslationCount,
         authorCount: s.authorCount ?? FALLBACK.authorCount,
         languageCount: s.languageCount ?? FALLBACK.languageCount,

@@ -44,7 +44,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
   return (
     <div className="min-h-screen">
-      <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
+      <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.readableInEnglish} />
 
       {/* Video Hero */}
       <HeroSection lang={lang} />
@@ -134,7 +134,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                   {t.bySubjectLead}{' '}
                   <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                   {' '}&middot;{' '}
-                  <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                  <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.readableInEnglish)} {t.translationsLabel}</Link>
                   {' '}&middot;{' '}
                   <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
                   {counts.artworkCount > 0 && (
