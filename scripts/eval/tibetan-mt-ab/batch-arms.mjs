@@ -87,6 +87,7 @@ for (const model of ARMS) {
       try {
         const file = await ai.files.upload({ file: tmp, config: { mimeType: 'text/plain', displayName: `tmab-${model}` } });
         for (let i = 0; i < 30; i++) { const st = (await ai.files.get({ name: file.name }))?.state; if (st === 'ACTIVE') break; if (st === 'FAILED') throw new Error('file FAILED'); await sleep(2000); }
+        // usage-ok: eval harness — each Batch job is priced from its own usage into scripts/eval/results/tibetan-mt-ab-batch-*/results.json and the ops spend ledger by hand; not a production call site
         const created = await ai.batches.create({ model, src: { fileName: file.name }, config: { displayName: `tibetan-mt-ab batch ${model}` } });
         try { await ai.files.delete({ name: file.name }); } catch { /* reaped by batch-collector's sweeper */ }
         job = { name: created.name, keyIndex, submitted_at: new Date().toISOString(), requests: units.length };
