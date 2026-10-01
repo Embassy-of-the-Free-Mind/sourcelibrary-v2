@@ -1,0 +1,250 @@
+{
+  "summary": {
+    "book_id": "adefe2d5-88a7-4595-9885-903a93abee51",
+    "title": "Divini Platonis Opera omnia",
+    "published": "1590",
+    "source": "Perseus (Burnet OCT 1900-07)",
+    "licence": "CC-BY-SA-4.0",
+    "script": "greek",
+    "pages_tried": 20,
+    "referenced": 18,
+    "skips": {
+      "no-window": 1,
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9648,
+    "median_char_acc_windowed": 0.9443,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-adefe2d5-p26",
+      "page": 26,
+      "skipped": "no-window",
+      "overlap": 0.076
+    },
+    {
+      "slug": "ed-adefe2d5-p43",
+      "page": 43,
+      "overlap": 0.816,
+      "probe_words": 793,
+      "ref_chars": 4936,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.092,
+      "char_acc": 0.9648,
+      "char_acc_windowed": 0.9501
+    },
+    {
+      "slug": "ed-adefe2d5-p60",
+      "page": 60,
+      "overlap": 0.837,
+      "probe_words": 771,
+      "ref_chars": 4472,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.214,
+      "char_acc": 0.9315,
+      "char_acc_windowed": 0.8892
+    },
+    {
+      "slug": "ed-adefe2d5-p71",
+      "page": 71,
+      "overlap": 0.656,
+      "probe_words": 791,
+      "ref_chars": 4777,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.289,
+      "char_acc": 0.8792,
+      "char_acc_windowed": 0.8378
+    },
+    {
+      "slug": "ed-adefe2d5-p87",
+      "page": 87,
+      "overlap": 1,
+      "probe_words": 798,
+      "ref_chars": 4642,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9776,
+      "char_acc_windowed": 0.9602
+    },
+    {
+      "slug": "ed-adefe2d5-p93",
+      "page": 93,
+      "overlap": 1,
+      "probe_words": 883,
+      "ref_chars": 4402,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.115,
+      "char_acc": 0.9384,
+      "char_acc_windowed": 0.9107
+    },
+    {
+      "slug": "ed-adefe2d5-p103",
+      "page": 103,
+      "overlap": 1,
+      "probe_words": 811,
+      "ref_chars": 4347,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.14,
+      "char_acc": 0.9386,
+      "char_acc_windowed": 0.9066
+    },
+    {
+      "slug": "ed-adefe2d5-p106",
+      "page": 106,
+      "overlap": 0.923,
+      "probe_words": 762,
+      "ref_chars": 4470,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.103,
+      "char_acc": 0.9668,
+      "char_acc_windowed": 0.945
+    },
+    {
+      "slug": "ed-adefe2d5-p147",
+      "page": 147,
+      "overlap": 0.731,
+      "probe_words": 808,
+      "ref_chars": 4519,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.125,
+      "char_acc": 0.974,
+      "char_acc_windowed": 0.9465
+    },
+    {
+      "slug": "ed-adefe2d5-p313",
+      "page": 313,
+      "overlap": 0.957,
+      "probe_words": 699,
+      "ref_chars": 4154,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.068,
+      "char_acc": 0.9687,
+      "char_acc_windowed": 0.9501
+    },
+    {
+      "slug": "ed-adefe2d5-p343",
+      "page": 343,
+      "overlap": 0.786,
+      "probe_words": 766,
+      "ref_chars": 4535,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.117,
+      "char_acc": 0.9667,
+      "char_acc_windowed": 0.9443
+    },
+    {
+      "slug": "ed-adefe2d5-p347",
+      "page": 347,
+      "overlap": 0.906,
+      "probe_words": 719,
+      "ref_chars": 4653,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.101,
+      "char_acc": 0.9517,
+      "char_acc_windowed": 0.9383
+    },
+    {
+      "slug": "ed-adefe2d5-p367",
+      "page": 367,
+      "overlap": 0.827,
+      "probe_words": 747,
+      "ref_chars": 4449,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.098,
+      "char_acc": 0.9623,
+      "char_acc_windowed": 0.9419
+    },
+    {
+      "slug": "ed-adefe2d5-p408",
+      "page": 408,
+      "overlap": 0.902,
+      "probe_words": 796,
+      "ref_chars": 4669,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.04,
+      "char_acc": 0.9836,
+      "char_acc_windowed": 0.9687
+    },
+    {
+      "slug": "ed-adefe2d5-p409",
+      "page": 409,
+      "overlap": 0.954,
+      "probe_words": 788,
+      "ref_chars": 4677,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.9626,
+      "char_acc_windowed": 0.9356
+    },
+    {
+      "slug": "ed-adefe2d5-p451",
+      "page": 451,
+      "overlap": 0.883,
+      "probe_words": 786,
+      "ref_chars": 4468,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.106,
+      "char_acc": 0.951,
+      "char_acc_windowed": 0.9237
+    },
+    {
+      "slug": "ed-adefe2d5-p469",
+      "page": 469,
+      "overlap": 0.902,
+      "probe_words": 803,
+      "ref_chars": 4695,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.071,
+      "char_acc": 0.966,
+      "char_acc_windowed": 0.9445
+    },
+    {
+      "slug": "ed-adefe2d5-p470",
+      "page": 470,
+      "overlap": 1,
+      "probe_words": 738,
+      "ref_chars": 4479,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.059,
+      "char_acc": 0.9724,
+      "char_acc_windowed": 0.9547
+    },
+    {
+      "slug": "ed-adefe2d5-p679",
+      "page": 679,
+      "overlap": 0.636,
+      "probe_words": 821,
+      "ref_chars": 4864,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.216,
+      "char_acc": 0.9183,
+      "char_acc_windowed": 0.8976
+    },
+    {
+      "slug": "ed-adefe2d5-p877",
+      "page": 877,
+      "skipped": "probe-too-short"
+    }
+  ]
+}
