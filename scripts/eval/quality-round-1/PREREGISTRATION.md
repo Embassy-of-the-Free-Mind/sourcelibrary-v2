@@ -74,23 +74,23 @@ candidates are sorted by `id`, then shuffled with `makeRng(20261001 + cellIndex)
 A cell with fewer than 20 eligible books takes all of them and says so. `draw.mjs` is the frame;
 `draw-2026-10-01.json` is the committed result, with every book screened out and why.
 
-## The draw (run 2026-10-01T07:55Z, read-only; reproduced id-for-id by a second run)
+## The draw (as amended by Amendment 1; read-only; reproducible id-for-id)
 
 | cell | eligible candidates | screened | drawn | pages | OCR pages at draw | statuses at draw |
 |---|---:|---:|---:|---:|---:|---|
 | latin__ia | 3260 | 1 | 20 | 6813 | 928 | needs_attention 12, archiving 5, parked 1, archive_complete 2 |
 | latin__other | 15105 | 5 | 20 | 6133 | 150 | archive_complete 17, needs_attention 2, archiving 1 |
 | vernacular__ia | 627 | 0 | 20 | 8654 | 553 | needs_attention 9, archive_complete 11 |
-| vernacular__other | 1533 | 4 | 20 | 4139 | 1463 | archive_complete 16, needs_attention 3, parked 1 |
+| vernacular__other | 1532 | 6 | 20 | 5718 | 2135 | archive_complete 15, needs_attention 5 |
 | greek__ia | 174 | 7 | 20 | 7182 | 664 | failed 1, needs_attention 13, archive_complete 6 |
 | greek__other | 2403 | 257 | 20 | 6487 | 75 | archive_complete 20 |
 | semitic_persian__ia | 40 | 1 | 20 | 6058 | 968 | archive_complete 15, needs_attention 4, failed 1 |
 | semitic_persian__other | 181 | 1 | 20 | 5810 | 975 | archive_complete 20 |
 | cjk__ia | 3754 | 0 | 20 | 3211 | 307 | needs_attention 12, archive_complete 8 |
-| cjk__other | 473 | 0 | 20 | 1939 | 298 | archive_complete 10, parked 9, needs_attention 1 |
+| cjk__other | 179 | 1 | 20 | 2903 | 623 | archive_complete 13, needs_attention 7 |
 | indic__ia | 898 | 1 | 20 | 3615 | 643 | archive_complete 20 |
 | indic__other | 83 | 66 | 17 (short) | 3696 | 473 | archive_complete 16, needs_attention 1 |
-| **total** | | | **237** | **63737** | 7497 | |
+| **total** | | | **237** | **66280** | 8494 | |
 
 `indic__other` is short: 66 of its 83 candidates failed the RECORD-tier archive check, so it takes all 17 eligible books. `greek__other` screened out 257, mostly BSB books whose pages are not on R2. A catalogue mislabel is drawn as catalogued: for example, 阿彌陀經要解 is catalogued Persian and sits in `semitic_persian__ia`. Per-language routing reads the same field, so that is part of what is measured.
 
@@ -205,4 +205,17 @@ anything; read a judge's verdict without its controls; quote one meter store.
 
 ## Amendments
 
-(none yet)
+### Amendment 1 — 2026-10-01T07:58Z, before any enrolment or spend: books parked for a pending decision are out
+
+The first committed draw had 10 books at `pipeline_auto.status: parked` whose park was a decision,
+not a budget park: 9 in `cjk__other` were `reason: awaiting kuzushiji OCR benchmark` (Japanese
+cursive; Gemini must not read them before #5100 decides), and 1 in `vernacular__other` had a
+non-budget `parked_reason`. Those are holds by another name, and enrolling them would override a
+lane decision. **The frame now excludes `parked` books unless `parked_reason` is the budget park
+`ocr-backlog-age-scope-*`** ("unpark to resume").
+
+Re-running the draw under the amended frame changes only the two cells that held such a book.
+Their pools changed, so each was reshuffled whole rather than one-for-one. The other 10 cells
+are unchanged id-for-id. The envelope's book list was replaced to match (`--replace-books`)
+before any book was enrolled. The draw's book ids and pages above are the amended ones (237 books,
+66,280 pages). No measure, threshold or ship rule changed.

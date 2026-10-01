@@ -26,6 +26,7 @@ import { mapLegacyReason } from '../../lib/publication.mjs';
 import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
 
 const SEED = 20261001;
+const OWN_SCOPE = 'quality-round-1-2026-10';
 const PER_CELL = 20;
 const MIN_PAGES = 40;
 const MAX_PAGES = 600;
@@ -49,6 +50,7 @@ const LIFTABLE_REASONS = new Set([null, 'launch_curation', 'unprocessed', 'unarc
 // Statuses that are holds by another name, and statuses at or past image extraction (re-queuing
 // those would re-run Phase 8 and duplicate gallery rows; the pipeline has already finished them).
 const HOLD_LIKE_STATUSES = ['held', 'loop_quarantine_hold', 'paused'];
+const BUDGET_PARK_RE = /^ocr-backlog-age-scope-/;
 const PAST_IMAGES_STATUSES = ['images_submitted', 'images_complete', 'cover_selected', 'complete'];
 
 function groupOf(language) {
@@ -92,8 +94,10 @@ await withMongo(async (db) => {
   const B = db.collection('books');
   // A book already inside another scope/envelope is funded and measured by that run.
   const control = (await db.collection('system_config').findOne({ _id: 'processing_control' })) || {};
-  const inOtherScope = [...new Set(Object.values(control.allow_scopes || {}).flatMap((s) => (s.book_ids || []).map(String)))];
-  const scopeCollections = [...new Set(Object.values(control.allow_scopes || {}).flatMap((s) => s.collections || []))];
+  // This round's own envelope (opened after the draw) is not "another" scope.
+  const others = Object.entries(control.allow_scopes || {}).filter(([tag]) => tag !== OWN_SCOPE).map(([, s]) => s);
+  const inOtherScope = [...new Set(others.flatMap((s) => (s.book_ids || []).map(String)))];
+  const scopeCollections = [...new Set(others.flatMap((s) => s.collections || []))];
   const base = {
     pages_count: { $gte: MIN_PAGES, $lte: MAX_PAGES },
     ...NOT_HELD,
@@ -105,6 +109,9 @@ await withMongo(async (db) => {
     tenant: { $exists: false },
     ...(scopeCollections.length ? { collections: { $nin: scopeCollections } } : {}),
     $or: [{ visible: { $ne: true } }, { 'pipeline_auto.status': { $ne: 'complete' } }],
+    // Amendment 1: a book parked for a pending lane/design decision (kuzushiji OCR benchmark, NAS
+    // ingest design, M309) is a hold by another name; only the budget park may be lifted.
+    $nor: [{ 'pipeline_auto.status': 'parked', 'pipeline_auto.parked_reason': { $not: BUDGET_PARK_RE } }],
   };
   const rows = await B.find(base, {
     projection: { id: 1, title: 1, author: 1, year: 1, language: 1, provider: 1, 'image_source.provider': 1, ia_identifier: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, visible: 1, hidden_reason: 1, 'pipeline_auto.status': 1, processing_priority: 1, text_role: 1 },
