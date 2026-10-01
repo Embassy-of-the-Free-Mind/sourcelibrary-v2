@@ -30,6 +30,7 @@
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { repeatedBlocks } from './page-integrity.mjs';
 import { transcriptionBody } from './blank-page-guard.mjs';
+import { isTruncatedCandidate } from './truncated-response.mjs';
 
 /** Same ceiling the batch collector drops responses at. */
 export const HALLUCINATION_LIMIT = 25000;
@@ -86,9 +87,10 @@ export function allowedScripts(language) {
  * @param {object} opts
  * @param {string} [opts.language]     books.language
  * @param {string} [opts.finishReason] the candidate's finishReason
+ * @param {boolean} [opts.truncated]   isTruncatedCandidate(candidate), when the caller has the candidate
  * @returns {{ accept: boolean, reasons: string[], body: number, script: string|null, nearLoopShare: number }}
  */
-export function rereadVerdict(text, { language = null, finishReason = null } = {}) {
+export function rereadVerdict(text, { language = null, finishReason = null, truncated = null } = {}) {
   const t = String(text || '');
   const body = transcriptionBody(t);
   const reasons = [];
@@ -100,7 +102,7 @@ export function rereadVerdict(text, { language = null, finishReason = null } = {
 
   const unclear = [...t.matchAll(/<unclear[^>]*>([\s\S]*?)<\/unclear>/gi)].reduce((s, m) => s + m[1].length, 0);
   if (body.length < MIN_READ_CHARS || (body.length && unclear / body.length >= MAX_UNCLEAR_SHARE)) reasons.push('declined');
-  if (finishReason === 'MAX_TOKENS') reasons.push('max-tokens');
+  if (truncated ?? isTruncatedCandidate({ finishReason })) reasons.push('max-tokens');
   if (body.length > HALLUCINATION_LIMIT) reasons.push('runaway');
 
   const script = bodyScript(body);

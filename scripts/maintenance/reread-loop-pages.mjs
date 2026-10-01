@@ -56,7 +56,9 @@ import { contentHash } from '../lib/translate-core.mjs';
 import { batchJobProvenance, engineFromBatchJob, imageInput, ocrProvenance, codeVersion } from '../lib/write-provenance.mjs';
 import { extractPageType, extractColumns } from '../lib/ocr-result-parse.mjs';
 import { STALE_OCR_FIELDS } from '../lib/syriac-kraken-lane.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
+import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
+import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { logUsage, calculateUsageCost } from '../workers/lib/supabase-usage-logger.mjs';
 
@@ -226,7 +228,7 @@ async function collect() {
       const c = x.response?.candidates?.[0];
       const text = c?.content?.parts?.map(q => q.text || '').join('') || '';
       fs.writeFileSync(path.join(textDir, `${id}.txt`), text);
-      const v = rereadVerdict(text, { language: p.language, finishReason: c?.finishReason });
+      const v = rereadVerdict(text, { language: p.language, truncated: isTruncatedCandidate(c) });
       s.results[id] = { ...(s.results[id] || {}), [j.pass]: { ...v, finish: c?.finishReason ?? null, model: j.model, temperature: j.temperature, job: j.job } };
       const u = x.response?.usageMetadata || {};
       const b = usageByBook.get(p.book_id) || { in: 0, out: 0, pages: 0 };
@@ -274,6 +276,8 @@ async function apply() {
     for (const { p, d } of serve) {
       const r = s.results[p.page_id][d.pass];
       const text = fs.readFileSync(path.join(DIR, `pass${d.pass}`, `${p.page_id}.txt`), 'utf8');
+      // The write boundary's own screen (#4850), re-run on the exact bytes about to be stored.
+      if (loopVerdict(text).refuse) { totals.raced++; continue; }
       const job = s.jobs.find(j => j.job === r.job);
       const prov = ocrProvenance(text, engineFromBatchJob(job, { batch_job_id: r.job, input: imageInput({ url: p.url }), collected_by: CALL_SITE, now }));
       const pageType = extractPageType(text);
@@ -302,10 +306,9 @@ async function apply() {
       if (res.modifiedCount === 1) marked++; else totals.raced++;
     }
     totals.SERVE += served; totals.MARK += marked;
-    const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-    await db.collection('books').updateOne({ id: bookId }, { $set: { pages_ocr: counts?.with_ocr ?? 0, pages_translated: counts?.with_translation ?? 0, updated_at: now } });
+    const recount = await recountBook(db, bookId, { reason: CALL_SITE, now });
     await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'reread-loop-pages',
-      detail: { issue: ISSUE, run: RUN, served, marked, pages_ocr_after: counts?.with_ocr ?? null } });
+      detail: { issue: ISSUE, run: RUN, served, marked, pages_ocr_after: recount.after?.pages_ocr ?? null } });
   }
   fs.writeFileSync(path.join(DIR, write ? 'apply-report.json' : 'dry-run-report.json'), JSON.stringify({ totals, report }, null, 1));
   console.log(`${write ? 'APPLIED' : 'dry-run'} ${RUN}: ${JSON.stringify(totals)} → ${path.join(DIR, write ? 'apply-report.json' : 'dry-run-report.json')}`);
