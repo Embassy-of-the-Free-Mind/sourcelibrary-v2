@@ -4,7 +4,7 @@ PRIOR ART: `scripts/lib/page-counts.mjs` (+ TS twin `src/lib/page-counts.ts`) �
 
 **Read this when:** writing any of `pages_count`, `pages_ocr`, `pages_translated`, `pages_translatable`, `pages_blank`, `pages_archived` on a `books` document; adding a job that creates, hides, splits, OCRs, translates, clears or archives pages; dividing by one of those counters on a surface; or investigating a count that disagrees with what the reader shows.
 
-**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are #5325–#5329 and #5331, linked from both. Until step 2 lands, two definitions of `pages_ocr` and `pages_blank` are live and alternate every two hours (see "Why this exists").
+**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are #5325–#5329 and #5331, linked from both. Step 2 (#5326) ended the two alternating definitions of `pages_ocr` and `pages_blank` (see "Why this exists"): the reconciler now counts with `PAGE_COUNT_ACCUMULATORS` and writes all six counters through `recountSet()`.
 
 ---
 
@@ -104,6 +104,7 @@ These are built from the counters. `translation-state.md` owns their use, and th
 - It uses the shared accumulator and writes all six counters on mismatch. That includes `pages_translatable`, which it does not write today. Its first run after step 2 therefore writes the 10,282 missing and the stale-high ones. It is a data write by a cron, so it is decision 2.
 - It logs a per-counter mismatch tally (`count 3, ocr 12, translatable 40…`) instead of one number. A reconciler that fixes a lot of one counter is reporting a broken job-time writer, and today nobody can tell which counter it fixed.
 - It stays pause-exempt. The counters describe pages that exist whether or not the pipeline runs.
+- `--dry-run --counts-only` prints the same tally and writes nothing. That is how the first-run tally on the #5326 PR was made. A missing counter is a mismatch, not a zero (`diffPageCounters()`), and that is how the 10,282 books get their `pages_translatable`.
 
 ## Freshness
 

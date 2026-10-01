@@ -16,10 +16,13 @@
     "recount-page-stats.mjs, converted in the same PR) plus three the appendix missed and the",
     "widened scanner found: scripts/lib/translate-core.mjs (syncBookTranslationCounters,",
     "hoisted $set, subset), scripts/workers/batch-split-bph.mjs (hoisted setDoc, private",
-    "count) and src/lib/uploads/utils.ts (hoisted, counts ALL pages including soft-hidden)."
+    "count) and src/lib/uploads/utils.ts (hoisted, counts ALL pages including soft-hidden).",
+    "",
+    "2026-10-01 (#5326): scripts/workers/sync-worker.mjs left \u2014 the reconciler writes through",
+    "recountSet() from page-counts, all six counters or none."
   ],
   "generated_at": "2026-09-30",
-  "count": 69,
+  "count": 68,
   "files": [
     "scripts/batch/collect-batch-results.mjs",
     "scripts/batch/collect-multipage-ocr.mjs",
@@ -66,7 +69,6 @@
     "scripts/workers/batch-split-bph.mjs",
     "scripts/workers/mineru-ocr-worker.mjs",
     "scripts/workers/pipeline-orchestrator.mjs",
-    "scripts/workers/sync-worker.mjs",
     "scripts/workers/syriac-kraken-lane.mjs",
     "scripts/workers/translate-worker.mjs",
     "src/app/api/[tenant]/books/[id]/batch-translate-async/route.ts",
