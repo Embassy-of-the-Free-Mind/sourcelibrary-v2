@@ -151,7 +151,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
-  const [siteResults, setSiteResults] = useState<{ url: string; page_type: 'blog' | 'collection' | 'page'; title: string; snippet: string }[]>([]);
+  const [siteResults, setSiteResults] = useState<{ url: string; page_type: 'blog' | 'collection' | 'page' | 'feature'; title: string; snippet: string }[]>([]);
   const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string; card_framing?: CardFraming }[]>([]);
 
   // Semantic results (parallel search agent)
@@ -1500,7 +1500,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             <span className="text-2xl shrink-0" aria-hidden>{knownEntity.icon || '📚'}</span>
             <div className="min-w-0 flex-1">
               <div className="text-xs uppercase tracking-wide text-muted">
-                {knownEntity.kind === 'reading-room' ? t.kindReadingRoom : knownEntity.kind === 'library' ? t.kindLibrary : t.kindCollection}
+                {knownEntity.kind === 'reading-room' ? t.kindReadingRoom : knownEntity.kind === 'library' ? t.kindLibrary : knownEntity.kind === 'feature' ? t.kindFeature : t.kindCollection}
               </div>
               <div className="font-serif font-medium text-primary group-hover:text-accent-rust transition-colors">
                 {knownEntity.title} <span aria-hidden>→</span>
@@ -1726,14 +1726,15 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // The site's own writing (#1180): essays, collection intros and
           // editorial pages that answer the query. SL-wide and English-only,
           // so hidden in embed mode and on localized surfaces.
-          const siteSection = !embed && !localized && siteResults.length > 0 && (
+          const siteLinks = siteResults.filter(r => r.url !== knownEntity?.href); // the "go here" card already shows it
+          const siteSection = !embed && !localized && siteLinks.length > 0 && (
             <>
               <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
                 {t.fromTheSite}
               </h2>
               <ul className="space-y-2">
-                {siteResults.map(r => (
+                {siteLinks.map(r => (
                   <li key={r.url}>
                     <Link href={r.url} className="block px-4 py-3 rounded-lg border border-border-light hover:border-accent-gold transition-colors">
                       <span className="text-[11px] uppercase tracking-wide text-muted">{t.sitePageType(r.page_type)}</span>

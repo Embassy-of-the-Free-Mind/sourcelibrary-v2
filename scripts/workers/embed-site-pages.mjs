@@ -12,6 +12,8 @@
  *   blog        — every /blog/<slug> in the live sitemap (the sitemap reads the
  *                 same `posts` array the blog index renders), crawled, <main> text
  *   page        — the editorial pages in STATIC_PAGES below, crawled
+ *   feature     — tools (/identify, /ngrams…) from src/lib/site-features.json:
+ *                 meta description + the names a reader would type
  *   collection  — Mongo `collections` (same filter as the unified-search
  *                 collections lane): name, subtitle, description, expanded_description.
  *                 Read from the store, not crawled — the rendered page is mostly book cards.
@@ -34,6 +36,7 @@ import { MongoClient } from 'mongodb';
 import { embedTexts, EMBED_MODEL } from '../lib/page-embedding-text.mjs';
 import { newEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import SITE_FEATURES from '../../src/lib/site-features.json' with { type: 'json' };
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -143,6 +146,22 @@ async function collectionPages(db) {
   })).filter((p) => p.text.length > 0);
 }
 
+/**
+ * Tools (/identify, /ngrams, …) from src/lib/site-features.json — the same
+ * registry the search page's "go here" card matches exactly. Tool pages are
+ * mostly interactive UI with little server-rendered prose, so the page's own
+ * meta description plus the names a reader would use is what gets embedded.
+ */
+export function featurePages() {
+  return SITE_FEATURES.map((f) => ({
+    url: f.href,
+    page_type: 'feature',
+    title: f.title,
+    tenant_id: null,
+    text: `${f.description}\n\nAlso known as: ${f.aliases.join(', ')}.`,
+  }));
+}
+
 // ── Main ───────────────────────────────────────────────────────────
 
 async function main() {
@@ -166,6 +185,16 @@ async function main() {
   if (!ONLY || ONLY === 'blog') pages.push(...await crawlPages(await blogPaths(), 'blog', skipped));
   if (!ONLY || ONLY === 'page') pages.push(...await crawlPages(STATIC_PAGES, 'page', skipped));
   if (!ONLY || ONLY === 'collection') pages.push(...await collectionPages(db));
+  if (!ONLY || ONLY === 'feature') {
+    // A tool that is also crawled as an editorial page (/census, /developers)
+    // keeps one entry: its prose, with the feature's names appended.
+    const byUrl = new Map(pages.map((p) => [p.url, p]));
+    for (const f of featurePages()) {
+      const crawled = byUrl.get(f.url);
+      if (crawled) crawled.text += `\n\n${f.text}`;
+      else if (!STATIC_PAGES.includes(f.url)) pages.push(f); // --only=feature must not clobber a page row
+    }
+  }
 
   const rows = [];
   for (const p of pages) {

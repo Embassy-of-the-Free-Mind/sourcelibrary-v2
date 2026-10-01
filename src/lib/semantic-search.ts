@@ -142,7 +142,7 @@ export async function semanticBookSearch(
 
 export interface SemanticSiteResult {
   url: string;
-  page_type: 'blog' | 'collection' | 'page';
+  page_type: 'blog' | 'collection' | 'page' | 'feature';
   title: string;
   snippet: string;
   similarity: number;

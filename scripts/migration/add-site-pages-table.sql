@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS site_pages (
   id             TEXT PRIMARY KEY,          -- `${url}#${chunk}`
   url            TEXT NOT NULL,             -- path, e.g. /blog/philosophers-stone
   chunk          INT  NOT NULL,
-  page_type      TEXT NOT NULL,             -- 'blog' | 'collection' | 'page'
+  page_type      TEXT NOT NULL,             -- 'blog' | 'collection' | 'page' | 'feature'
   title          TEXT NOT NULL,
   text           TEXT NOT NULL,             -- the chunk as embedded; shown as the snippet
   tenant_id      TEXT,                      -- NULL = main site; else the tenant's collection
