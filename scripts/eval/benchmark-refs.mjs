@@ -111,6 +111,18 @@ function loadCatalog() {
   }
   return catalog;
 }
+// Licence of each reference source, as the source states it (checked 2026-10-01). Every record
+// this script writes carries it, so the eval-design §4.1 rule can apply: NC or unknown licences
+// are usable for scoring and blocked from any export.
+export const REFERENCE_LICENCES = {
+  CBETA: { licence: 'CC-BY-NC-SA-4.0', licence_url: 'https://www.cbeta.org/copyright.php' },
+  Kanripo: { licence: 'CC-BY-SA', licence_url: 'https://www.kanripo.org/about', licence_note: 'version not stated by the source' },
+  'Perseus canonical-greekLit': { licence: 'CC-BY-SA-4.0', licence_url: 'https://github.com/PerseusDL/canonical-greekLit' },
+  First1KGreek: { licence: 'CC-BY-SA-4.0', licence_url: 'https://github.com/OpenGreekAndLatin/First1KGreek' },
+  'el.wikisource': { licence: 'CC-BY-SA-4.0', licence_url: 'https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use' },
+};
+export const licenceOf = source => ({ licence: 'unknown', ...REFERENCE_LICENCES[source], licence_checked: '2026-10-01' });
+
 const CN_NUM = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 function cnNumber(s) { // 卷十六 → 16 ; 卷一百四十 → 140
   let n = 0, cur = 0;
@@ -366,7 +378,7 @@ if (STRATUM === 'syriac') {
     const note = { slug: p.slug, substratum: p.substratum, title: p.title, probes: Object.keys(probes) };
     const src = await corpusLookup(probes);
     if (!src || src.overlap < 0.25) { note.reason = src ? `best text ${src.work} overlap ${src.overlap.toFixed(2)} < 0.25` : 'no corpus text shares ≥ 8 word bigrams with any engine output'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason}`); continue; }
-    Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, url: src.url, overlap: +src.overlap.toFixed(3), probe_engine: src.probe_engine, shared_bigrams: src.shared_bigrams, window_words: src.window.split(' ').length });
+    Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, url: src.url, overlap: +src.overlap.toFixed(3), probe_engine: src.probe_engine, shared_bigrams: src.shared_bigrams, window_words: src.window.split(' ').length, ...licenceOf(src.source) });
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     built++; console.log(`  ✓ ${p.slug}: ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} via ${src.probe_engine}`);
   }
@@ -393,6 +405,7 @@ if (STRATUM.startsWith('greek')) {
     if (!src) { note.reason = 'no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)'; tally.none++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
     Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, edition: src.edition, url: src.url, phrase_hits: src.phrase_hits, etext_chars: src.etext_chars, window_words: src.window_words, window_chars: src.window.length, overlap: +src.overlap.toFixed(3) });
     if (src.overlap < MIN_OVERLAP) { note.reason = `work identified but window overlap ${src.overlap.toFixed(2)} < ${MIN_OVERLAP} (probe too noisy, or the page is commentary/paratext around the work)`; tally.work_only++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  ~ ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
+    Object.assign(note, licenceOf(src.source));
     const trimmed = alignTrim(src.window, greekReads(p)); note.align_trim = trimmed.note; src.window = trimmed.window; note.window_chars = src.window.length;
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     tally.built++; tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.by_sub[p.substratum] = (tally.by_sub[p.substratum] || 0) + 1;
@@ -425,7 +438,7 @@ for (const p of pages) {
   }
   if (!src) { note.reason = note.reason || 'no work identified (CBETA search / Kanripo catalogue)'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
   const win = trimWindow(w.window, probe);
-  Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3) });
+  Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3), ...licenceOf(src.source) });
   if (w.overlap < MIN_OVERLAP) { note.reason = `overlap ${w.overlap.toFixed(2)} < ${MIN_OVERLAP}: page is not (cleanly) in this e-text`; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
   if (!DRY) { fs.writeFileSync(outTxt, win); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
   built++; console.log(`  ✓ ${p.slug}: ${src.source} ${src.work} j${src.juan} overlap ${w.overlap.toFixed(2)} window ${win.length} / probe ${probe.length}`);

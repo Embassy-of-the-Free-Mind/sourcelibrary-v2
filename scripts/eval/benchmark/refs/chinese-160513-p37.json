@@ -10,5 +10,8 @@
   "url": "https://cbetaonline.dila.edu.tw/JB044_001",
   "etext_chars": 17246,
   "window_chars": 116,
-  "overlap": 0.767
+  "overlap": 0.767,
+  "licence": "CC-BY-NC-SA-4.0",
+  "licence_url": "https://www.cbeta.org/copyright.php",
+  "licence_checked": "2026-10-01"
 }

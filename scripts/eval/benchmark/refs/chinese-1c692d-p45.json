@@ -11,5 +11,9 @@
   "etext_chars": 44942,
   "window_chars": 241,
   "overlap": 0.212,
-  "reason": "overlap 0.21 < 0.35: page is not (cleanly) in this e-text"
+  "reason": "overlap 0.21 < 0.35: page is not (cleanly) in this e-text",
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
 }
