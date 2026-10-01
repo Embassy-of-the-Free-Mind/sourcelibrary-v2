@@ -276,6 +276,7 @@ async function files(db) {
     let token = null;
     const cands = [];
     do {
+      // usage-ok: File API list/delete only (frees the 20 GB upload quota) — no generation call, nothing billed. OCR/translation spend is metered by the scripts this driver shells out to.
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/files?key=${key}&pageSize=100${token ? `&pageToken=${token}` : ''}`);
       if (!res.ok) { log(`files: list ${res.status}`); break; }
       const data = await res.json();
