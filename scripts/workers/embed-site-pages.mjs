@@ -76,7 +76,12 @@ export function extractMainText(html) {
   const main = html.match(/<main[\s>][\s\S]*<\/main>/i)?.[0]
     ?? html.match(/<body[\s>][\s\S]*<\/body>/i)?.[0]
     ?? html;
-  const title = decodeEntities(html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] || '').replace(/\s*[|—–-]\s*(Source Library|Research Notes)\s*$/i, '').trim();
+  // Titles stack site suffixes ("How We Measure OCR Quality - Research Notes | Source Library"): strip until none is left.
+  let title = decodeEntities(html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] || '').trim();
+  for (let prev = ''; prev !== title;) {
+    prev = title;
+    title = title.replace(/\s*[|—–-]\s*(Source Library|Research Notes)\s*$/i, '').trim();
+  }
   const text = main
     .replace(/<(script|style|svg|noscript|nav|header|footer|template)[\s>][\s\S]*?<\/\1>/gi, ' ')
     .replace(/<\/(p|div|h[1-6]|li|blockquote|section|article|tr|figcaption)>/gi, '\n\n')

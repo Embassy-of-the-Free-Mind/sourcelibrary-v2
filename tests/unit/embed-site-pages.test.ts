@@ -22,6 +22,11 @@ describe('extractMainText', () => {
     expect(text).not.toMatch(/Browse Collections|__next_f|chart label|project of the EFM/);
   });
 
+  it('strips stacked site suffixes from the title', () => {
+    const stacked = '<title>How We Measure OCR Quality - Research Notes | Source Library</title><main><p>x</p></main>';
+    expect(extractMainText(stacked).title).toBe('How We Measure OCR Quality');
+  });
+
   it('separates block elements into paragraphs', () => {
     const { text } = extractMainText(html);
     expect(text.split('\n\n')[0]).toBe('How We Measure OCR Quality');
