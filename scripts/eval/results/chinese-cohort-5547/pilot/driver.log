@@ -1,0 +1,16 @@
+2026-10-01T16:43:47Z created 3f5f53cd-3a0a-4acf-aeec-5234e66d261c lease-until=2026-10-01T21:43:47Z
+2026-10-01T16:43:48Z poweron: {"task": {"id": "00000000-0000-0000-0000-000000000000", "description": "fake task", "status": "pending", "href_from": "/
+2026-10-01T16:43:59Z state: running 151.115.85.26
+2026-10-01T16:54:37Z SSH-FAIL
+5332
+787M	/root/pv/img
+-rw------- 1 root root 52 Oct  1 16:58 /etc/gpu-idle.env
+NVIDIA L4, 23034 MiB
+launched
+launched
+launched
+launched
+2026-10-01T20:36:30Z pulled 3422 page texts
+2026-10-01T20:37:02Z STOPPED 3f5f53cd-3a0a-4acf-aeec-5234e66d261c
+2026-10-01T20:37:11Z volume 97361aac-39a1-447e-a43d-0c646f444814 delete -> 204
+2026-10-01T20:37:11Z deleted server 3f5f53cd-3a0a-4acf-aeec-5234e66d261c

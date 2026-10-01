@@ -1,0 +1,249 @@
+{
+ "seed": 5547,
+ "drawn_at": "2026-10-01T16:42:51.957Z",
+ "rule": "held books whose sealed chinese-cohort-5547 page is eye-classified manuscript-regular; Mulberry32(5547) draw without replacement over the id-sorted pool",
+ "pool": 287,
+ "books": [
+  {
+   "book_id": "6a3c6523af3c49b59c5caf81",
+   "title": "御定佩文韻府·卷一百六之一 (vol 727)",
+   "pages_count": 165,
+   "pages_listed": 165,
+   "no_image": 0,
+   "work_id": "kr:KR3k0059"
+  },
+  {
+   "book_id": "6a3c6f7d01fe4f593c1ccdad",
+   "title": "孟子注疏·卷十二上~卷十三下 (vol 16)",
+   "pages_count": 189,
+   "pages_listed": 189,
+   "no_image": 0,
+   "work_id": "kr:KR1h0003"
+  },
+  {
+   "book_id": "6a3c782301fe4f593c206f84",
+   "title": "釋氏稽古略·卷三 (vol 3)",
+   "pages_count": 246,
+   "pages_listed": 246,
+   "no_image": 0,
+   "work_id": "kr:KR6r0014"
+  },
+  {
+   "book_id": "6a3c724401fe4f593c1ddcd0",
+   "title": "周官集注·卷六 (vol 6)",
+   "pages_count": 146,
+   "pages_listed": 146,
+   "no_image": 0,
+   "work_id": "kr:KR1d0021"
+  },
+  {
+   "book_id": "6a3cb7f93dce6cfad7489e24",
+   "title": "詩集傳名物鈔·卷一 (vol 9)",
+   "pages_count": 123,
+   "pages_listed": 123,
+   "no_image": 0,
+   "work_id": "kr:KR1c0027"
+  },
+  {
+   "book_id": "6a3c74a539b4508b04e5814c",
+   "title": "春秋繁露·卷七~卷十一 (vol 2)",
+   "pages_count": 141,
+   "pages_listed": 141,
+   "no_image": 0,
+   "work_id": "kr:KR1e0122"
+  },
+  {
+   "book_id": "6a3cbdd0ec254ff6cadfa73d",
+   "title": "證治準繩·卷四十三 (vol 40)",
+   "pages_count": 130,
+   "pages_listed": 130,
+   "no_image": 0,
+   "work_id": "kr:KR3e0078"
+  },
+  {
+   "book_id": "6a3c621340c88a541d8f277f",
+   "title": "西清古鑑·卷十七~卷十八 (vol 14)",
+   "pages_count": 140,
+   "pages_listed": 140,
+   "no_image": 0,
+   "work_id": "kr:KR3h0089"
+  },
+  {
+   "book_id": "6a3c763f01fe4f593c1f9c80",
+   "title": "漢上易傳·卷一 (vol 16)",
+   "pages_count": 180,
+   "pages_listed": 180,
+   "no_image": 0,
+   "work_id": "kr:KR1a0024"
+  },
+  {
+   "book_id": "6a3c775401fe4f593c2014eb",
+   "title": "葉八白易傳·卷三~卷四 (vol 2)",
+   "pages_count": 171,
+   "pages_listed": 171,
+   "no_image": 0,
+   "work_id": "kr:KR1a0102"
+  },
+  {
+   "book_id": "6a3c6e5001fe4f593c1c1895",
+   "title": "周官總義·卷八~卷十一 (vol 4)",
+   "pages_count": 163,
+   "pages_listed": 163,
+   "no_image": 0,
+   "work_id": "kr:KR1d0009"
+  },
+  {
+   "book_id": "6a3c6f4c01fe4f593c1cafd9",
+   "title": "經稗·卷一~卷二 (vol 1)",
+   "pages_count": 197,
+   "pages_listed": 197,
+   "no_image": 0,
+   "work_id": "kr:KR1g0025"
+  },
+  {
+   "book_id": "6a3c68e2af3c49b59c5dd4a8",
+   "title": "普濟方·卷三十二~卷三十三 (vol 23)",
+   "pages_count": 232,
+   "pages_listed": 232,
+   "no_image": 0,
+   "work_id": "kr:KR3e0067"
+  },
+  {
+   "book_id": "6a3c629c40c88a541d8f4f2c",
+   "title": "御定佩文韻府·卷二十之五 (vol 84)",
+   "pages_count": 128,
+   "pages_listed": 128,
+   "no_image": 0,
+   "work_id": "kr:KR3k0059"
+  },
+  {
+   "book_id": "6a3cb8b93dce6cfad748fe8e",
+   "title": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "pages_count": 137,
+   "pages_listed": 137,
+   "no_image": 0,
+   "work_id": "kr:KR3j0076"
+  },
+  {
+   "book_id": "6a3c643e39b4508b04e256b2",
+   "title": "御定佩文韻府·卷四十七之四 (vol 491)",
+   "pages_count": 105,
+   "pages_listed": 105,
+   "no_image": 0,
+   "work_id": "kr:KR3k0059"
+  },
+  {
+   "book_id": "6a3c625240c88a541d8f36f3",
+   "title": "御定佩文韻府·卷四之二 (vol 8)",
+   "pages_count": 120,
+   "pages_listed": 120,
+   "no_image": 0,
+   "work_id": "kr:KR3k0059"
+  },
+  {
+   "book_id": "6a3c6327879008ba7e1665c5",
+   "title": "御定佩文韻府·卷九十之二~卷九十之三 (vol 219)",
+   "pages_count": 221,
+   "pages_listed": 221,
+   "no_image": 0,
+   "work_id": "kr:KR3k0059"
+  },
+  {
+   "book_id": "6a3c6fb139b4508b04e4c75a",
+   "title": "孟子傳·卷四~卷六 (vol 10)",
+   "pages_count": 144,
+   "pages_listed": 144,
+   "no_image": 0,
+   "work_id": "kr:KR1h0013"
+  },
+  {
+   "book_id": "6a3c6eb701fe4f593c1c54c2",
+   "title": "春秋正傳·卷二十五~卷二十六 (vol 11)",
+   "pages_count": 180,
+   "pages_listed": 180,
+   "no_image": 0,
+   "work_id": "kr:KR1e0076"
+  },
+  {
+   "book_id": "6a3c69c539b4508b04e3e37a",
+   "title": "普濟方·卷三百四十一~卷三百四十二 (vol 239)",
+   "pages_count": 226,
+   "pages_listed": 226,
+   "no_image": 0,
+   "work_id": "kr:KR3e0067"
+  },
+  {
+   "book_id": "6a3cbab03dce6cfad749dcb8",
+   "title": "名賢氏族言行類稿·卷五十三~卷五十六 (vol 22)",
+   "pages_count": 232,
+   "pages_listed": 232,
+   "no_image": 0,
+   "work_id": "kr:KR3k0026"
+  },
+  {
+   "book_id": "6a3c74d501fe4f593c1f2cb9",
+   "title": "萬姓統譜·卷八十八~卷九十 (vol 31)",
+   "pages_count": 168,
+   "pages_listed": 168,
+   "no_image": 0,
+   "work_id": "kr:KR3k0044"
+  },
+  {
+   "book_id": "6a3c6b3739b4508b04e41d84",
+   "title": "說略·卷十六~卷十七 (vol 8)",
+   "pages_count": 139,
+   "pages_listed": 139,
+   "no_image": 0,
+   "work_id": "kr:KR3k0048"
+  },
+  {
+   "book_id": "6a3c60e540c88a541d8ebbdc",
+   "title": "御定駢字類編·卷七十五 — Imperial Parallel Characters (vol 257)",
+   "pages_count": 117,
+   "pages_listed": 117,
+   "no_image": 0,
+   "work_id": "kr:KR3k0056"
+  },
+  {
+   "book_id": "6a3c75e039b4508b04e5e3e8",
+   "title": "傳信適用方·卷下 (vol 2)",
+   "pages_count": 142,
+   "pages_listed": 142,
+   "no_image": 0,
+   "work_id": "kr:KR3e0034"
+  },
+  {
+   "book_id": "6a3c5e9840c88a541d8e3bb5",
+   "title": "御定康熙字典·卷七 (vol 42)",
+   "pages_count": 141,
+   "pages_listed": 141,
+   "no_image": 0,
+   "work_id": "kr:KR1j0048"
+  },
+  {
+   "book_id": "6a3c7a6501fe4f593c216fad",
+   "title": "續名醫類案·卷十七 (vol 10)",
+   "pages_count": 113,
+   "pages_listed": 113,
+   "no_image": 0,
+   "work_id": "kr:KR3e0096"
+  },
+  {
+   "book_id": "6a3c6af4af3c49b59c5ebb13",
+   "title": "欽定協紀辨方書·卷二十九~卷三十 (vol 21)",
+   "pages_count": 135,
+   "pages_listed": 135,
+   "no_image": 0,
+   "work_id": "kr:KR3g0051"
+  },
+  {
+   "book_id": "6a3c793701fe4f593c20df47",
+   "title": "藝文類聚·卷十五~卷十六 (vol 8)",
+   "pages_count": 121,
+   "pages_listed": 121,
+   "no_image": 0,
+   "work_id": "kr:KR3k0003"
+  }
+ ],
+ "fetch_failed": []
+}
