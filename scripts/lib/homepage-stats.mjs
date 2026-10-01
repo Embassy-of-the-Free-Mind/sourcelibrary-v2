@@ -84,6 +84,9 @@ export async function computeHomepageStats(db, { log = console } = {}) {
   if (stampCoverage.ok) {
     stats.readableInEnglish = readableInEnglish;
     stats.translatedToEnglish = readableInEnglish; // alias for one release (#5286)
+    // `updatedAt` moves on every run; this moves only when the view was published,
+    // so a value held back by the stamp-coverage check is visibly stale.
+    stats.readableInEnglishAt = stats.updatedAt;
   } else {
     log.warn(`readableInEnglish NOT written: only ${stampCoverage.stamped}/${stampCoverage.total} live books carry translation_state (${(100 * stampCoverage.share).toFixed(1)}% < 99%) — sync-worker has not finished stamping; previous value kept.`);
   }

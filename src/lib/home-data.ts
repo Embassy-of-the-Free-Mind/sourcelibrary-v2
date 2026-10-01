@@ -541,7 +541,7 @@ async function getBookCounts(): Promise<HomeCounts> {
       return {
         totalBooks: cached.totalBooks,
         // `translatedToEnglish` is the pre-#5286 key, kept as an alias for one release.
-        readableInEnglish: cached.readableInEnglish ?? cached.translatedToEnglish,
+        readableInEnglish: cached.readableInEnglish ?? cached.translatedToEnglish ?? FALLBACK_COUNTS.readableInEnglish,
         firstTranslationCount: cached.firstTranslationCount,
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
