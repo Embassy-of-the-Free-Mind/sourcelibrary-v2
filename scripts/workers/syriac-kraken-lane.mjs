@@ -57,6 +57,10 @@ import {
   STALE_OCR_FIELDS, reenrolDecision, isHumanEdited, hasRealTranslation, markTranslationsStale,
   findGutter, cutAtGutter,
 } from '../lib/syriac-kraken-lane.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const argv = process.argv.slice(2);
 const CMD = argv[0];

@@ -48,8 +48,11 @@ import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
-import { startHeartbeat } from './lib/worker-heartbeat.mjs';
+import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import pg from 'pg';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // Selective-unpause scope confinement, set in main() after the pause check.
 // Empty {} in normal operation so the full enrich queue is unaffected.

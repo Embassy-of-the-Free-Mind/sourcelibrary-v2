@@ -48,6 +48,10 @@
 
 import { MongoClient } from 'mongodb';
 import { computeIdentityFields } from '../lib/identity-fields.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const argv = process.argv.slice(2);

@@ -58,6 +58,10 @@ import { contentHash } from '../lib/translate-core.mjs';
 import { logUsage, completeBatchUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate } from './lib/supabase-page-writer.mjs';
 import { probeBatchJob } from './lib/batch-reconcile.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
