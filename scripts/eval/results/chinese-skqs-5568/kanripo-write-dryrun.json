@@ -1,0 +1,50 @@
+{
+ "page": {
+  "book_id": "6a3c6f7d01fe4f593c1ccdad",
+  "page_number": 29
+ },
+ "$set": {
+  "ocr.data": "<language>Chinese</language>\n<script>handwritten</script>\n\n子受而不答孟子為齊卿相之時居處於平陸齊之下邑儲子為齊相以幣帛交孟子孟子亦受之而不答他\n日由鄒之任至不見儲子言孟子異日自鄒之任國乃見其季子自平陸徃齊國乃不見儲子屋廬子喜曰至\n為相與屋廬子見孟子於此二人見與不見故喜而言曰連於今日得間隙與夫子為語矣故問孟子曰夫子\n徃任國乃見季子徃齊國乃不見儲子是為其儲子為齊相故欲輕之歟曰非也至為其不成享也孟子答之\n曰非為其為相故不見而輕之耳以其尚書洛誥篇有云享多儀言享見之禮多儀法也如儀不及享獻之物\n是曰不享以其無儀法雖有物以享之但亦如不享耳惟在上者不役使下之志於享也是以我不見儲子者\n為其儀不及物不成享也我所以受之幣而不見答也屋廬子悦至得之平陸屋廬子已曉故聞孟子言而喜\n悦或人見屋廬子故問之曰此洛誥云是何之謂屋廬子答之曰季子以其守國故不得越境親至鄒國見孟",
+  "ocr.content_hash": "bbb9cc020fcb4aae",
+  "ocr.language": "Chinese",
+  "ocr.source": "kanripo",
+  "ocr.pipeline": "kanripo-align-5568",
+  "ocr.updated_at": "2026-10-01T00:00:00.000Z",
+  "ocr.engine": {
+   "name": "kanripo-align",
+   "model": "char-bigram-dice/1",
+   "run": "kanripo-align-5568/dry-run",
+   "text_source": {
+    "repository": "https://github.com/kanripo/KR1h0003",
+    "branch": "WYG",
+    "commit": "f986c5c8e4ff7570c5a24fc3fad3539815b944b9",
+    "file": "KR1h0003_012.txt",
+    "pb": "KR1h0003_WYG_012-14a",
+    "url": "https://github.com/kanripo/KR1h0003/blob/f986c5c8e4ff7570c5a24fc3fad3539815b944b9/KR1h0003_012.txt"
+   },
+   "licence": {
+    "statement": "CC BY-SA 4.0 (organisation profile, https://github.com/kanripo)",
+    "per_text": "not stated (no licence field, LICENSE file or Readme line in the repository)",
+    "checked": "2026-10-01"
+   },
+   "alignment": {
+    "probe_engine": "paddleocr-vl-1.6",
+    "probe_content_hash": "e06a92a69e348635",
+    "dice": 0.973,
+    "runner_up": 0.307,
+    "threshold": 0.6
+   },
+   "input": {
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6f7d01fe4f593c1ccdad/29.jpg"
+   }
+  }
+ },
+ "missingProvenance_today": {
+  "missing": [],
+  "markers": []
+ },
+ "missingProvenance_without_engine": {
+  "missing": [],
+  "markers": []
+ }
+}

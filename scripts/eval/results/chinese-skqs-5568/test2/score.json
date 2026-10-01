@@ -1,0 +1,180 @@
+{
+ "cost_usd": 0.518,
+ "judgements": 214,
+ "parse_errors": 0,
+ "control_identical": {
+  "n": 10,
+  "tie_and_not_material": 10
+ },
+ "retest": {
+  "n": 12,
+  "material_agree": 9,
+  "better_agree": 7,
+  "both_agree": 5,
+  "material_agreement": 0.75
+ },
+ "judge_valid": true,
+ "kinds": {
+  "L-P": {
+   "n": 40,
+   "material": 36,
+   "material_rate": 0.9,
+   "material_wilson": [
+    0.769,
+    0.96
+   ],
+   "L_better": 11,
+   "P_better": 26,
+   "TIE": 3,
+   "sign_p": 0.0201
+  },
+  "P-K": {
+   "n": 36,
+   "material": 29,
+   "material_rate": 0.806,
+   "material_wilson": [
+    0.65,
+    0.902
+   ],
+   "P_better": 20,
+   "K_better": 11,
+   "TIE": 5,
+   "sign_p": 0.1496
+  },
+  "L-K": {
+   "n": 36,
+   "material": 29,
+   "material_rate": 0.806,
+   "material_wilson": [
+    0.65,
+    0.902
+   ],
+   "L_better": 16,
+   "K_better": 18,
+   "TIE": 2,
+   "sign_p": 0.8642
+  },
+  "P-PP": {
+   "n": 40,
+   "material": 22,
+   "material_rate": 0.55,
+   "material_wilson": [
+    0.398,
+    0.693
+   ],
+   "P_better": 8,
+   "PP_better": 24,
+   "TIE": 8,
+   "sign_p": 0.007
+  },
+  "P-P2": {
+   "n": 40,
+   "material": 27,
+   "material_rate": 0.675,
+   "material_wilson": [
+    0.52,
+    0.799
+   ],
+   "P_better": 20,
+   "P2_better": 14,
+   "TIE": 6,
+   "sign_p": 0.3915
+  }
+ },
+ "T2a_LP_vs_floor": {
+  "n": 40,
+  "only_first": 10,
+  "only_floor": 1,
+  "p": 0.0117
+ },
+ "T2b_PK_vs_floor": {
+  "n": 36,
+  "only_first": 7,
+  "only_floor": 3,
+  "p": 0.3438
+ },
+ "rules": {
+  "T2a_ocr_engine_changes_english": true,
+  "T2b_kanripo_improves_over_paddle": false,
+  "T2c_punctuation_pass": true
+ },
+ "punct_pass": {
+  "valid": 40,
+  "rejected": 0,
+  "han_cer_median": 0
+ },
+ "examples_material_LP": [
+  {
+   "slug": "chinese-cohort-5547-e506a8-p42",
+   "better": "P",
+   "differences": "Translation B claims the auspicious rites occupy the 'end' of the five rites, whereas Translation A omits this specific structural claim found in the text."
+  },
+  {
+   "slug": "chinese-cohort-5547-1ef65d-p130",
+   "better": "P",
+   "differences": "Translation A identifies the final commentator as Wang Kuai, while Translation B identifies him as Wang Yan; additionally, Translation A ends mid-sentence while Translation B completes the thought."
+  },
+  {
+   "slug": "chinese-cohort-5547-489739-p158",
+   "better": "L",
+   "differences": "Translation A identifies the target of instruction as 'soldiers' while Translation B correctly identifies them as 'scholars' (shi 士), and they differ on the specific name of the commentator Hu."
+  },
+  {
+   "slug": "chinese-cohort-5547-158d4c-p41",
+   "better": "P",
+   "differences": "Translation B reverses the reading order of the page, starting from the left side and moving to the right, whereas the original text and Translation A follow the standard right-to-left columns."
+  },
+  {
+   "slug": "chinese-cohort-5547-8e181b-p39",
+   "better": "L",
+   "differences": "Translation B includes an attribution to 'Kong' (Kong Yingda) and a different title for the work in the margin, while Translation A identifies the source as 'Essentials of the Sea of Meanings of the Zhouyi'."
+  },
+  {
+   "slug": "chinese-cohort-5547-1f37f6-p60",
+   "better": "P",
+   "differences": "Translation B correctly identifies and translates the headwords (乂, 沒, 密, 載, 再, 節, 跡, 瘵, 蔡, 察, 卒, 菜) which are largely missing or conflated in Translation A."
+  },
+  {
+   "slug": "chinese-cohort-5547-1bd7f3-p106",
+   "better": "P",
+   "differences": "Translation A claims the account of Gong Liu restoring the legacy is not supported by evidence, whereas the page and Translation B state that the claims regarding his name/title lack evidence while the restoration itself is part of the narrative."
+  },
+  {
+   "slug": "chinese-cohort-5547-e45762-p36",
+   "better": "L",
+   "differences": "Translation A claims Mars does not have a regular path while Translation B claims it moves constantly, and they differ on whether the 180-day period involves retreating or guarding."
+  }
+ ],
+ "examples_material_PK": [
+  {
+   "slug": "chinese-cohort-5547-4884f8-p75",
+   "better": "K",
+   "differences": "Translation A includes a title and page number found in the margin and a concluding phrase about a 'complete collection' not present in the source text, while Translation B cuts off mid-sentence at the end of the page."
+  },
+  {
+   "slug": "chinese-cohort-5547-c50486-p132",
+   "better": "P",
+   "differences": "Translation B incorrectly translates 'not mentioned in the presence of others' as 'not mentioned in her presence' and misinterprets the relationship between mother and wife taboos."
+  },
+  {
+   "slug": "chinese-cohort-5547-1e37f3-p113",
+   "better": "P",
+   "differences": "Translation A misinterprets the name of the historical figure 'Tu' (突) as 'emergency' and 'Zhai Zhong Zu' (祭仲足) as 'Zhai Zhong Zuo', while Translation B correctly identifies the names and titles."
+  },
+  {
+   "slug": "chinese-cohort-5547-493195-p54",
+   "better": "P",
+   "differences": "Translation B includes the final sentence of the page and the marginalia (Jin Qianshan, Section Thirteen) which Translation A omits."
+  },
+  {
+   "slug": "chinese-cohort-5547-5d27bf-p84",
+   "better": "P",
+   "differences": "Translation B includes the book title and volume number from the margin, and provides a more literal translation of the final quote from Xunzi."
+  },
+  {
+   "slug": "chinese-cohort-5547-1d89bb-p120",
+   "better": "P",
+   "differences": "Translation B includes the opening sentence regarding Zheng Xuan and the exhalations/inhalations of qi, whereas Translation A omits this and begins mid-sentence."
+  }
+ ]
+}

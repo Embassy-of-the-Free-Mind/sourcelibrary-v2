@@ -1,0 +1,99 @@
+{
+ "pages": 2713,
+ "books": 17,
+ "empty": 0,
+ "over_25k": 0,
+ "loop_refuse": 1,
+ "page_type": 0,
+ "columns": 0,
+ "detected_images": 0,
+ "translatable": 2589,
+ "not_translatable": {
+  "no-body": 123,
+  "ocr-loop": 1
+ },
+ "blank_from_ocr": 0,
+ "degenerate": 1,
+ "unverified_script": 0,
+ "kana_pages": 940,
+ "markup_pages": 43,
+ "margin_line_pages": 688,
+ "han_chars": 522233,
+ "provenance_missing_as_paddle": 0,
+ "provenance_missing_without_engine": 0,
+ "wrappers_stripped_changes_text": 0,
+ "img_tag_pages": 24,
+ "table_tag_pages": 19,
+ "examples": {
+  "kana": [
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 6,
+    "line": "老一でこえー"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 8,
+    "line": "全り口万全"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 10,
+    "line": "ク"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 11,
+    "line": "たこっ直へき"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 21,
+    "line": "でこしうんい"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 26,
+    "line": "・・・・"
+   }
+  ],
+  "markup": [
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 4,
+    "line": "<div style=\"text-align: center;\"><img src=\"imgs/img_in_chart_box_42_39_623_895.j"
+   },
+   {
+    "book": "6a3c6523af3c49b59c5caf81",
+    "page": 164,
+    "line": "<div style=\"text-align: center;\"><img src=\"imgs/img_in_image_box_41_37_623_889.j"
+   },
+   {
+    "book": "6a3c6f7d01fe4f593c1ccdad",
+    "page": 94,
+    "line": "<table><tr><td>金定四庫全書</td></tr><tr><td>卷十二下考證</td></tr><tr><td></td></tr><tr><td"
+   },
+   {
+    "book": "6a3c6f7d01fe4f593c1ccdad",
+    "page": 187,
+    "line": "<div style=\"text-align: center;\"><img src=\"imgs/img_in_image_box_31_38_607_886.j"
+   },
+   {
+    "book": "6a3c6f7d01fe4f593c1ccdad",
+    "page": 188,
+    "line": "<table><tr><td>欽定四庫全書</td></tr><tr><td>卷十三下考證</td></tr><tr><td></td></tr><tr><td"
+   },
+   {
+    "book": "6a3c782301fe4f593c206f84",
+    "page": 51,
+    "line": "<table><tr><td>宗玄理以至翻習經傳子史小學蒼雅天竺悉曇諸部異執四章五明祕呪儀軌篇頌書蹤一皆博綜大歷十一年禮文殊於五臺往義眉拜普賢却還五臺居大華嚴寺"
+   }
+  ]
+ },
+ "build_translation_prompt": {
+  "ok": true,
+  "chars": 158,
+  "body_len": 43
+ },
+ "note_provenance": "missingProvenance treats any source outside {ai,batch_api,pipeline_preview,kraken,bdrc,mineru,ia_djvu} as content_hash+updated_at only — a paddle write with no engine block passes"
+}
