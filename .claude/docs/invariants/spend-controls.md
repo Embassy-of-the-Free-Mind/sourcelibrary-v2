@@ -60,6 +60,13 @@ priced. Scales with in-flight batch size.
   `spend-perimeter.mjs` passed `translate-worker` because the *file* mentioned
   `budgetAllowsDispatch` — in a helper off the spending path. Hours later that
   worker drained a queue through the ceiling. Check the **path**, not the file.
+- **Translation has TWO dispatchers — orchestrator Phase 4 and `translate-worker`
+  `selfDispatch()` — and a routing rule must be applied to both (#5429).** #5411 sent
+  priority < 90 to the chained Batch lane in Phase 4 only; self-dispatch kept feeding
+  realtime at ~4× the price until #5430 gave it the same floor (`LANE_FILTER`) and #5431
+  made it skip books with an open run (`scripts/workers/lib/self-dispatch-lane.mjs`). **Tell:** a routing flip whose per-page
+  bill does not move (split `gemini_usage` by endpoint: `hetzner/translate-worker` vs
+  `hetzner/translate-batch-chained`).
 - **A per-call cost is a rate, not an amount.** "Preview OCR is not free… ~$2.73"
   was written three weeks before the same code cost $392. Multiply by the
   acquisition rate before calling something negligible.
