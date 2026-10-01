@@ -358,7 +358,9 @@ async function processBook(db, book) {
   }
 
   if (candidatePages.length === 0) {
-    if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete');
+    // The skip is a fact about the book, so it is recorded even when the status is preserved (#5477).
+    if (!book._preserveStatus) await setPipelineStatus(db, book.id, 'images_complete', { images_skipped_reason: 'no_candidates' });
+    else await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.images_skipped_reason': 'no_candidates' } });
     return { title: book.title, pages: 0, images: 0, skipped: true };
   }
 
@@ -540,7 +542,9 @@ async function processBook(db, book) {
     book_id: book.id,
     'detected_images.0': { $exists: true },
   });
-  const bookUpdate = { detected_images_count: imgCount, updated_at: now };
+  // `images_done_at` records that extraction ran, whatever the status does below; it is the
+  // `images` input of pipeline_next (#5477).
+  const bookUpdate = { detected_images_count: imgCount, updated_at: now, 'pipeline_auto.images_done_at': now };
 
   // Phase 2: roll up page-level scan_quality (v2) into book.scan_quality so downstream
   // use cases (dedupe, re-source queue, dashboards) don't have to aggregate on the fly.

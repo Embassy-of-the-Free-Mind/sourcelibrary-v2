@@ -103,6 +103,13 @@ export const BOOK_FIELDS = Object.freeze([
   // ONLY writer is scripts/workers/sync-worker.mjs via computeTranslationState()
   // in scripts/lib/page-counts.mjs; an importer that set it at insert would be
   // a second writer. Registered in books-known-fields.json for the $set lint.
+  // NOT here either: `pipeline_next` — { step, reason, in_flight, recheck_at, owner,
+  // inputs: { rung, archived, verdict, hold, job }, version, computed_at }, the
+  // book's next pipeline step or the reason it is blocked (#5477,
+  // .claude/docs/pipeline-next-step.md). Derived, never imported: its writers are
+  // sync-worker and stampNextStep() in scripts/lib/pipeline-next-step.mjs, one
+  // rule. OBSERVE ONLY until each lane's cutover (#5469 step 5). Registered in
+  // books-known-fields.json for the $set lint.
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
