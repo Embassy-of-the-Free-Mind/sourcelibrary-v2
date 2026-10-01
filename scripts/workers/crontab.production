@@ -167,6 +167,12 @@
 # usage rows over the trailing 7 days; exit 3 + one email/day above 10%. Gated on the
 # read-only service-account key so the line is inert wherever the key is absent.
 30 8 * * * cd /root/sourcelibrary && [ -f /root/.gcp/spend-reconcile.json ] && flock -n /tmp/sl-spend-gap.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-reconcile.mjs --days=7 --check-gap --alert" >> /var/log/sourcelibrary/spend-gap.log 2>&1
+# Paid-vs-got daily ledger (#5499): yesterday's Gemini spend by lane from COLLECTED usage rows
+# against pages written (page provenance), open batches by age (FAIL past 40 h; Gemini expires
+# them at 48 h), duplicate/repeat/paid-for-nothing waste, and on Mondays the invoice vs metered
+# vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
+# and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
+10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
 
 # GPU lease watchdog (#4909): stops rented Scaleway GPUs whose lease-until tag has passed, via the
 # provider API (a guest poweroff is "stopped in place" and still billed); nags on untagged running GPUs.

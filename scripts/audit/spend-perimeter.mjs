@@ -85,6 +85,8 @@ const UNATTENDED = [
     note: 'read-only counts over books; no model call, no write (#4890)' },
   { match: 'clip-index-integrity.mjs', spends: false, gated: false,
     note: 'read-only join of clip_embeddings to gallery_images; no model call, no write (#5195)' },
+  { match: 'paid-vs-got.mjs', spends: false, gated: false,
+    note: 'daily paid-vs-got ledger: reads usage stores, batch_jobs, pages and the billing export; writes one ops_reports row; no model call (#5499)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },

@@ -240,7 +240,7 @@ async function serviceAccountToken() {
   return j.access_token;
 }
 
-async function googleToken() {
+export async function googleToken() {
   if (process.env.GOOGLE_OAUTH_ACCESS_TOKEN) return process.env.GOOGLE_OAUTH_ACCESS_TOKEN;
   const sa = await serviceAccountToken();
   if (sa) return sa;
@@ -338,7 +338,7 @@ async function fetchSkus(token) {
  * export were ever re-created. Re-derive with:
  *   bq ls --project_id=gen-lang-client-0352480887 billing_export
  */
-const BILLING_EXPORT = {
+export const BILLING_EXPORT = {
   projectId: 'gen-lang-client-0352480887',
   table: '`gen-lang-client-0352480887.billing_export.gcp_billing_export_resource_v1_010186_B7EF88_329F51`',
   location: 'EU',
@@ -359,7 +359,7 @@ const BILLING_EXPORT = {
  * the caller can recognise a missing-permission message and say exactly what
  * is missing rather than guessing.
  */
-async function bigQuery(token, sql) {
+export async function bigQuery(token, sql) {
   const r = await fetch(
     `https://bigquery.googleapis.com/bigquery/v2/projects/${BILLING_EXPORT.projectId}/queries`,
     {
@@ -587,10 +587,13 @@ async function billedInput(token, projectId) {
 // meter" is worse than no number — it is the exact shape of the bug this file
 // exists to detect.
 
-/** Mongo fallback store, by model and by endpoint. */
-async function meteredMongo(db) {
+/**
+ * Mongo fallback store, by model and by endpoint. `win` defaults to this
+ * script's own window; paid-vs-got.mjs passes its weekly windows (#5499).
+ */
+export async function meteredMongo(db, win = { start, end }) {
   const rows = await db.collection('gemini_usage').aggregate([
-    { $match: { timestamp: { $gte: start, $lt: end } } },
+    { $match: { timestamp: { $gte: win.start, $lt: win.end } } },
     { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status', mode: '$mode',
                        day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } } },
                 calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
@@ -611,12 +614,12 @@ async function meteredMongo(db) {
  * (PGRST123), so page and sum client-side — with an explicit `order`, because
  * an unordered range samples the query plan rather than the population.
  */
-async function meteredSupabase() {
+export async function meteredSupabase(win = { start, end }) {
   const url = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return { error: 'SUPABASE_SERVICE_ROLE_KEY not set' };
   const groups = new Map();
-  const qs = `timestamp=gte.${start.toISOString()}&timestamp=lt.${end.toISOString()}`;
+  const qs = `timestamp=gte.${win.start.toISOString()}&timestamp=lt.${win.end.toISOString()}`;
   try {
     for (let from = 0; ; from += 1000) {
       // 600 pages = 600K rows/month. Past that the sum is truncated, which is a
