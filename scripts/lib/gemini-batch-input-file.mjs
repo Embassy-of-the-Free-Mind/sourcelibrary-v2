@@ -17,6 +17,7 @@
  * anything this misses. Neither is reusable by a script that talks REST.
  */
 
+// usage-ok: File API DELETE only — no model call, nothing billed.
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 /**
