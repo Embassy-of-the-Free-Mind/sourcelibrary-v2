@@ -22,8 +22,8 @@
 //   4. Copy pages with their `_id`/`id` preserved. `tenant_id` dropped (retired). Any image URL that
 //      fails isBookScopedUrl() — the #3362 `archived/undefined/N.jpg` key — is DROPPED from the page
 //      (with its archive_metadata) and its value logged: that object is another book's page.
-//   5. Verify `pages` holds exactly the warehouse page count for the book, recompute
-//      `pages_archived` from the scoped URLs, then mark the warehouse copy promoted (existing
+//   5. Verify `pages` holds exactly the warehouse page count for the book, recount its counters
+//      through recountBook() (the one counter writer, #5325), then mark the warehouse copy promoted (existing
 //      convention: promoted_to/promoted_at).
 //
 // Every book writes one JSONL checkpoint line (before/after) to --log; a re-run skips books already
@@ -41,6 +41,7 @@ import { isBookScopedUrl } from '../lib/r2-key.mjs';
 import { computeIdentityFields, buildEditionKey } from '../lib/identity-fields.mjs';
 import { sourceFingerprints, sourceFingerprint } from '../lib/source-fingerprints.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -237,7 +238,8 @@ async function main() {
         const live = await P.countDocuments({ book_id: id });
         rec.live_pages = live;
         if (live !== rec.warehouse_pages) throw new Error(`page count mismatch: pages ${live} vs pages_warehouse ${rec.warehouse_pages} — warehouse NOT marked promoted; re-run resumes`);
-        await B.updateOne({ id }, { $set: { pages_archived: archived, updated_at: new Date() } });
+        // Counters have one writer (#5325): recountBook() recomputes pages_archived and the rest.
+        await recountBook(db, id, { reason: SWEEP });
         await W.updateOne({ id }, { $set: { promoted_at: new Date(), promoted_to: 'live' } });
         await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'promoted_from_warehouse', detail: { pages: live, poisoned_pages_dropped: poisonedPages, held: HOLD_REASON, publication: 'hidden/curation', slug: rec.after?.slug ?? null, dedup_matches: rec.dedup_matches.map((m) => `${m.tier}:${m.book_id}`) } });
       }
