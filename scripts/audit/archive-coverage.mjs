@@ -24,6 +24,9 @@
  *   node scripts/audit/archive-coverage.mjs --master-samples 150
  *   node scripts/audit/archive-coverage.mjs --by-host          # gap per source host (#4397 lanes)
  *   node scripts/audit/archive-coverage.mjs --json out.json
+ *   node scripts/audit/archive-coverage.mjs --campaign acquisition-wave-2026-10 --books 20000
+ *                                         # one acquisition wave only (#5457); with --books >= the
+ *                                         # wave's size the RECORD tier is a census, not a sample
  *
  * Sampling note: books are drawn with $sample, NOT by natural order. Reading
  * the head of a collection samples insertion order, not the population — a
@@ -53,6 +56,8 @@ const has = (k) => process.argv.includes(k);
 const BOOK_SAMPLE = Number(arg('--books', 400));
 const MASTER_SAMPLES = Number(arg('--master-samples', 80));
 const BY_HOST = has('--by-host');
+const CAMPAIGN = typeof arg('--campaign', null) === 'string' ? arg('--campaign', null) : null;
+const SCOPE = CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {};
 const JSON_OUT = typeof arg('--json', null) === 'string' ? arg('--json', null) : null;
 
 const pct = (n, d) => (d ? `${((100 * n) / d).toFixed(2)}%` : '—');
@@ -66,13 +71,13 @@ async function main() {
   const pages = db.collection('pages');
 
   const started = new Date();
-  console.log(`archive-coverage — ${started.toISOString()}\n`);
+  console.log(`archive-coverage — ${started.toISOString()}${CAMPAIGN ? ` — scope: acquisition_campaign ${CAMPAIGN}` : ''}\n`);
 
   // ---- corpus shape (cheap, exact) ----
   const [totalBooks, withPages, markedComplete] = await Promise.all([
-    books.countDocuments({}),
-    books.countDocuments({ pages_count: { $gt: 0 } }),
-    books.countDocuments({ archive_status: 'archive_complete' }),
+    books.countDocuments(SCOPE),
+    books.countDocuments({ ...SCOPE, pages_count: { $gt: 0 } }),
+    books.countDocuments({ ...SCOPE, archive_status: 'archive_complete' }),
   ]);
   console.log('CORPUS');
   console.log(`  book records              ${num(totalBooks)}`);
@@ -83,9 +88,9 @@ async function main() {
   // Sampling books (not pages) keeps the per-book page lookups indexed; a
   // corpus-wide $group over 20M page docs exceeds Atlas's operation time limit.
   const sample = await books.aggregate([
-    { $match: { pages_count: { $gt: 0 } } },
+    { $match: { ...SCOPE, pages_count: { $gt: 0 } } },
     { $sample: { size: BOOK_SAMPLE } },
-    { $project: { _id: 1, pages_count: 1, archive_status: 1 } },
+    { $project: { _id: 1, id: 1, pages_count: 1, archive_status: 1 } },
   ], { maxTimeMS: 300000 }).toArray();
 
   const record = emptyRecordTally();
@@ -96,7 +101,9 @@ async function main() {
   const masterCandidates = [];
 
   for (const b of sample) {
-    const id = b._id.toString();
+    // pages.book_id holds books.id, which is NOT _id.toString() on the 16K books whose _id was
+    // re-minted (book-deletion-and-identity.md) — those read as having no pages at all.
+    const id = b.id ?? b._id.toString();
     const docs = await pages.find({ book_id: id })
       .project({ archived_photo: 1, photo: 1, photo_original: 1, cropped_photo: 1, display_photo: 1, thumbnail_blob: 1, image_thumb: 1 })
       .toArray();
