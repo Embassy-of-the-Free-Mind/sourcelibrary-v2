@@ -1,0 +1,4 @@
+# Hand-read, w-1001T0415 (replacement gate session, 2026-10-01 07:30Z, read-from-text)
+
+- 8075676de7 https://sourcelibrary.org/book/69af0fb1024c2bf29528514f?page=711 confirmed: NO. Source ends 'с октября 1841 г. до половины мая.' mid-sentence; translation completes '...May 1842' and adds 'The text begins on this quarter-sheet with the words... Gogol took this scrap with him abroad.' Content is the continuation onto the next page (page-break relocation of real book text), not fabricated. read-from-text
+- 0f94aa9cae https://sourcelibrary.org/book/69b21ecc4522d8c1db3bd618?page=143 confirmed: NO for invention/echo; YES as a defect. Loeb facing page: translation omits the Theopompus paragraph and the start of XIV, then continues past 'Aeginetans ... re-' into the Melians, the famine, the ephors decree and Theramenes - the next page's text. Real Plutarch, shifted toward the following page (same shape as the shifted-block class, #5426), not invention. read-from-text
