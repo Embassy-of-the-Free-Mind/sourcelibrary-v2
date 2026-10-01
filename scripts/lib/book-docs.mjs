@@ -97,6 +97,12 @@ export const BOOK_FIELDS = Object.freeze([
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
   // when recountBook() (scripts/lib/page-counts.mjs) last wrote all six counters (#5325)
   'page_counts_at',
+  // NOT here, deliberately: `translation_state` — { rung, english_original,
+  // translated, translatable, whole, ocr, exact, version, computed_at }, the
+  // translation-state ladder (#5284, .claude/docs/translation-state.md). Its
+  // ONLY writer is scripts/workers/sync-worker.mjs via computeTranslationState()
+  // in scripts/lib/page-counts.mjs; an importer that set it at insert would be
+  // a second writer. Registered in books-known-fields.json for the $set lint.
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',

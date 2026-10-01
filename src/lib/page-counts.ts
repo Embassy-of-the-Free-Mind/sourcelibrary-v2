@@ -204,3 +204,89 @@ export async function recountBook(
   await books.updateOne({ id: bookId }, { $set });
   return { matched: true, reason, before, after, changed };
 }
+
+// ── Translation state (#5284) ──────────────────────────────────────────────
+// TS twin of computeTranslationState() in scripts/lib/page-counts.mjs; the
+// rule, its reasons and the ladder table live there and in
+// .claude/docs/translation-state.md. Keep the two in lock-step:
+// tests/unit/page-counts.test.ts imports BOTH over one fixture table.
+
+/** Rule version; a bump makes sync-worker re-stamp every book. Mirror of the .mjs constant. */
+export const TRANSLATION_STATE_VERSION = 1;
+
+export const TRANSLATION_RUNGS = ['no_pages', 'no_text', 'transcribing', 'transcribed', 'translating', 'readable', 'complete'] as const;
+export type TranslationRung = (typeof TRANSLATION_RUNGS)[number];
+
+/** Minimum OCR'd share of the whole book before any rung above `transcribing` (#5063). */
+export const FULL_TRANSLATION_MIN_OCR_COVERAGE = 0.9;
+/** Share of translatable pages that makes a book `readable`. */
+export const READABLE_MIN_TRANSLATED = 0.9;
+
+/** Stored shape of `books.translation_state` (written only by sync-worker). */
+export interface TranslationState {
+  rung: TranslationRung;
+  english_original: boolean;
+  translated: number;
+  translatable: number;
+  whole: number;
+  ocr: number;
+  /** `pages_translatable` was present; false means the `whole` fallback was used. */
+  exact: boolean;
+  version: number;
+  computed_at?: Date;
+}
+
+export interface TranslationStateCounts {
+  pages_count?: number | null;
+  pages_ocr?: number | null;
+  pages_translated?: number | null;
+  pages_blank?: number | null;
+  pages_translatable?: number | null;
+}
+
+const ENGLISH_LANGUAGE_TOKENS = new Set(['english', 'en', 'eng']);
+
+/** True iff the FIRST language named in `books.language` (the edition's language) is English. */
+export function isEnglishOriginal(language: unknown): boolean {
+  const first = String(language ?? '').toLowerCase()
+    .split(/[;,/&+]| and /)[0]
+    .trim()
+    .replace(/\s*\(.*\)$/, '');
+  return ENGLISH_LANGUAGE_TOKENS.has(first);
+}
+
+export function computeTranslationState(
+  counts: TranslationStateCounts | null | undefined,
+  { language, content_type }: { language?: unknown; content_type?: unknown } = {},
+): Omit<TranslationState, 'computed_at'> {
+  const pagesCount = Math.max(0, counts?.pages_count ?? 0);
+  const ocr = Math.max(0, counts?.pages_ocr ?? 0);
+  const translated = Math.max(0, counts?.pages_translated ?? 0);
+  const pagesBlank = Math.max(0, counts?.pages_blank ?? 0);
+
+  const whole = Math.max(0, pagesCount - pagesBlank);
+  const pt = counts?.pages_translatable;
+  const exact = typeof pt === 'number' && pt >= 0;
+  const translatable = exact ? pt : whole;
+  const coverage = ocr >= FULL_TRANSLATION_MIN_OCR_COVERAGE * whole;
+
+  let rung: TranslationRung;
+  if (pagesCount === 0 || content_type === 'artwork') rung = 'no_pages';
+  else if (ocr === 0) rung = 'no_text';
+  else if (!coverage) rung = 'transcribing';
+  else if (translated === 0) rung = 'transcribed';
+  else if (translated >= translatable) rung = 'complete';
+  else if (translated >= READABLE_MIN_TRANSLATED * translatable) rung = 'readable';
+  else rung = 'translating';
+
+  return {
+    rung,
+    english_original: isEnglishOriginal(language),
+    translated,
+    translatable,
+    whole,
+    ocr,
+    exact,
+    version: TRANSLATION_STATE_VERSION,
+  };
+}
