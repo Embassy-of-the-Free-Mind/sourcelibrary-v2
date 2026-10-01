@@ -43,11 +43,30 @@ Every score row (§5) carries `measure`, one of:
 | `agreement` | **another engine's** output on the same leaf | "agreement with X" only | errors both engines share; **recitation** (engines agree on memorised text, #5093) |
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
+| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
 
 Rules:
 - A surface (dashboard cell, EXPERIMENTS entry, issue comment, paper table) prints the `measure` word next to the number. Today the page (`src/app/platform/(protected)/admin/ocr-evidence/page.tsx`) says "Median error" and "Proxy" in a footnote and never "accuracy" or "agreement"; `benchmark-dashboard-data.mjs` will emit `measure` per cell, the page renders it, and a cell without it fails the JSON build (#5119).
 - `agreement` and `stability` are **screening** signals: they can send pages to a human or to a reference queue; they cannot close a decision. The `.claude/docs/ocr-quality-measurement-loop.md` stability loop stays exactly that.
 - The word *quality* appears in prose only with a citation to an `accuracy` cell.
+- `judged` may gate a decision where a preregistration fixes the rule in advance and the judge's controls pass (quality round 1, #5438), but the number is still reported as a judge rating, and the decision carries the judge's unmeasured error.
+
+### 2.1 The reader's chain: which study covers which link
+
+Added 2026-10-01. A reader asks one thing of a served page: *does this English say what is printed on this leaf?* That answer has three links, and each study covers only some of them. Before quoting any study as "quality", name the link it measured.
+
+| Link | Typical failure | Accuracy (reference) | Screen (agreement, stability) | Judged | Human reader of the original |
+|---|---|---|---|---|---|
+| 1. Leaf: the image shown is the leaf transcribed | wrong leaf (#4790, #5311) | none | three-read signature, 7 of 7 (#5313) | **blind**: the judge sees no image | yes |
+| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/DECISIONS.md`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
+| 3. Translation: the English says what the text says | omission, invention, inversion | Tibetan vs 84000 only (§8) | none | corpus audit + monthly rerun (#5274); quality round 1 (#5438) | yes |
+
+What follows from the table:
+
+- **Only a human reader spans all three links.** The judge spans link 3 and a little of link 2. So the human study's main outcome is the whole-chain verdict; agreement with the judge on link 3 is the second use of the same replies.
+- **The judge now gates publication.** Quality round 1 ships a stratum when the judge rates ≤ 10% of n ≥ 20 pages with a major defect. At that n, an observed 2 of 20 has a 95% interval of about 3–30%, before any judge error. Calibrating the judge is therefore on the critical path of what readers see, not an extra for the paper.
+- **"By eye" in these studies is a model reading the image** (labelled `read-from-image`). It is a stronger check than text alone, and it is still not a human reference.
+- Metadata (title, author, date against the title page) is a fourth link for the book rather than the page; round 1 checks it by eye on 5 books per stratum, and nothing else measures it.
 
 ## 3. One page registry across every study
 

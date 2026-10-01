@@ -1,21 +1,24 @@
 # Human readers versus the machine judge: study protocol
 
-PRIOR ART: `.claude/docs/community-quality-review-design.md` (the panel design, credit and abstention rules, Phase 0; this protocol is its first round, specialised to the corpus audit), `.claude/docs/eval-design.md` (vocabulary, one-page-per-book, landing rule; followed here), `calibration-tasks.mjs` (queues the same pages for the /check route; reused for the page set, not the contact method). None of them fixes recruitment, page assignment, reply coding or the analysis for this study.
+PRIOR ART: `.claude/docs/community-quality-review-design.md` (the panel design, credit and abstention rules, Phase 0; this protocol is its first round, specialised to the corpus audit), `.claude/docs/eval-design.md` (vocabulary, one-page-per-book, landing rule; followed here), `calibration-tasks.mjs` (queues the same pages for the /check route; reused for the page set, not the contact method), `../quality-round-1/PREREGISTRATION.md` (#5438; uses the same judge to decide publication, and is the main reason the judge needs calibrating). None of them fixes recruitment, page assignment, reply coding or the analysis for this study. The community design says round 1 should be OCR adjudication rather than translation review; this protocol keeps that question by asking readers about the transcription as well as the English, and by making the whole-chain verdict (RQ2) a primary outcome.
 
 Status: **draft for Derek's sign-off, 2026-10-01. Nothing sent under it yet** (two [TEST] proofs to Derek only). Issues: #5406 (this round), #5274 (the audit it calibrates), #3560 (volunteer strategy), #4916 (the paper). Once signed off, this file is the preregistration: its commit hash and date go in the paper, and any later change is a dated amendment at the bottom, never an edit above it.
 
 ## 1. Who reads this and what it decides
 
-Derek, and the TU Delft co-authors of #4916, deciding whether the corpus audit's headline (most served pages judged faithful, by Claude Opus with no human reference) can be reported as anything more than a judge rating. The study also answers the community design's Phase 0 question: will people who offered to help actually read a page when asked.
+Derek, and the prospective TU Delft co-authors of #4916, deciding whether the corpus audit's headline (most served pages judged faithful, by Claude Opus with no human reference) can be reported as anything more than a judge rating. Since 2026-10-01 the same judge also decides which strata of the backlog are published (quality round 1, #5438), so its validity now bears on what readers see, not only on what the paper can claim. `.claude/docs/eval-design.md` §2.1 maps which study covers which link between the page and the English; a reader of the original is the only instrument that covers all three.
+
+The study also answers the community design's Phase 0 question: will people who offered to help actually read a page when asked.
 
 The paper section this produces is a methods-and-results section on calibrating an LLM judge with volunteer expert readers. It is written so that section can be drafted from §4 to §8 without re-deciding anything.
 
 ## 2. Research questions
 
 - **RQ1, recruitment.** Of library volunteers who described a reading knowledge of a historical language, what share agree to read one page, and what share return a verdict? By language, by stated competence, and by whether they had offered review work specifically.
-- **RQ2, judge validity.** On the same pages, how often does the Opus judge's verdict agree with an expert reader's? Reported as the judge's sensitivity and specificity for a material defect, with the human verdict as reference.
-- **RQ3, reader reliability.** Where two readers judge the same page, how often do they agree?
-- **RQ4, what the judge misses.** A qualitative catalogue of defects readers report that the judge did not, and the reverse.
+- **RQ2, the whole chain (primary).** On the pages readers judge, how often is the served English true to the scan: right leaf, right transcription, faithful translation? And how well does the judge's rating, which never saw the scan, predict that?
+- **RQ3, judge validity on the translation (primary).** Where the transcription is right, how often does the Opus judge's verdict agree with an expert reader's? Reported as the judge's sensitivity and specificity for a material defect, with the human verdict as reference.
+- **RQ4, reader reliability.** Where two readers judge the same page, how often do they agree?
+- **RQ5, what the judge misses.** A qualitative catalogue of defects readers report that the judge did not, and the reverse.
 
 Out of scope: a human estimate of corpus-wide accuracy. The pilot cannot reach the 35 books per language that needs (`community-quality-review-design.md`, "How many"). Korean and Syriac have no readers in the pool and are reported as a gap.
 
@@ -29,6 +32,8 @@ Out of scope: a human estimate of corpus-wide accuracy. The pilot cannot reach t
 |---|---|---|
 | judge-defect | Opus fidelity ≤ 3 | 47 |
 | judge-sound | Opus fidelity ≥ 4 | 264 |
+
+Equal numbers where the language allows it. A language with fewer judge-defect pages than it has readers uses all of them and fills the rest from judge-sound; the weights in §7 absorb the difference.
 
 Readers are never told which stratum a page came from or what the judge said. Estimates are reweighted to the frame (§7). This is standard verification-bias design and is reported as such.
 
@@ -66,7 +71,7 @@ Tier coding is done by two coders independently; disagreements go to the lower t
 
 **Each person reads one language**, the one they named. A person is never sent a page in a language they did not name.
 
-**Ethics.** This study collects judgments from people and reports how people responded to a request, so it is research with human participants. If #4916 is a TU Delft paper, the TU Delft Human Research Ethics Committee should see it before wave 1 is sent; data collected before approval may not be usable in the paper. The risk is minimal: no deception, no sensitive data, adults volunteering expertise. **This is the one decision that blocks sending.** See §10.
+**Ethics.** This study collects judgments from people and reports how people responded to a request, so it is research with human participants. #4916 is planned with TU Delft co-authors, so the TU Delft Human Research Ethics Committee should see this protocol before wave 1 is sent; data collected before approval may not be usable in the paper. The risk is minimal: no deception, no sensitive data, adults volunteering expertise. **This is the one decision that blocks sending.** See §10.
 
 ## 5. Procedure
 
@@ -109,15 +114,17 @@ Coded verdicts are stored in `volunteer_ratings` (queue `translation-check`) wit
 | Human | `translation_drift`, `both_off` | `both_sound` |
 | Judge | fidelity ≤ 3 | fidelity ≥ 4 |
 
-`transcription_off` and `unclear` are excluded from the RQ2 table and reported separately: a wrong transcription is a different failure (#4523), and the judge was never shown the scan.
+For RQ3, `transcription_off` is excluded, because a wrong transcription is a different failure (#4523) and the judge was never shown the scan. For RQ2 it is the point: every verdict except `unclear` counts, and the human defect column becomes `translation_drift`, `transcription_off` or `both_off`. A wrong-leaf report (the reader says the scan is not the page transcribed) is coded `transcription_off` with a `wrong_leaf` note and counted in RQ2. `unclear` is excluded from both and reported.
 
 **RQ1.** The response funnel per language and tier: sent, agreed, returned a verdict, took a second page. Proportions with Wilson 95% intervals. Offered versus not offered compared descriptively; the pilot is not powered to test it.
 
-**RQ2.** Judge sensitivity and specificity against the human reference, with inverse-probability weights for the enrichment in §3, and bootstrap 95% intervals over books. Pooled across languages first; per language only where a language has at least 15 verdicts. Cohen's κ alongside raw agreement, because most pages are sound and raw agreement flatters.
+**RQ2.** The share of pages sound end to end, reweighted to the frame (§3), with bootstrap 95% intervals over books; then the same sensitivity, specificity and κ as RQ3, with the judge's rating against the whole-chain verdict. The gap between the RQ2 and RQ3 figures is how much the judge's blindness to the scan costs.
 
-**RQ3.** Krippendorff's α on overlap pages, which tolerates missing ratings.
+**RQ3.** Judge sensitivity and specificity against the human reference, with inverse-probability weights for the enrichment in §3, and bootstrap 95% intervals over books. Pooled across languages first; per language only where a language has at least 15 verdicts. Cohen's κ alongside raw agreement, because most pages are sound and raw agreement flatters.
 
-**RQ4.** Every defect a reader names is listed beside the judge's defect list for that page, sorted into: both found, reader only, judge only.
+**RQ4.** Krippendorff's α on overlap pages, which tolerates missing ratings.
+
+**RQ5.** Every defect a reader names is listed beside the judge's defect list for that page, sorted into: both found, reader only, judge only.
 
 **Bias checks, reported whatever they show.** Non-response by language and by judge stratum, to see whether readers decline harder pages. The screen-out rate by language. Pages where the text changed after the verdict.
 
@@ -125,9 +132,11 @@ Coded verdicts are stored in `volunteer_ratings` (queue `translation-check`) wit
 
 ## 8. What can and cannot be claimed
 
-Can say, with n and intervals: in this sample, the judge's verdict agreed with expert readers on X of Y pages; the judge caught A of B defects readers found; C of D volunteers agreed to help when asked.
+With 34 candidates, no single language is expected to reach 15 verdicts, so RQ2 and RQ3 will be pooled results; the per-language rule is there in case later waves reach it.
 
-Cannot say: a corpus accuracy figure; anything about a language with fewer than 15 verdicts beyond listing them; anything about Korean or Syriac. The headline in #5274 stays a judge rating until RQ2 says otherwise.
+Can say, with n and intervals: in this sample, X of Y served pages were sound from scan to English; the judge's verdict agreed with expert readers on X of Y pages; the judge caught A of B defects readers found; C of D volunteers agreed to help when asked.
+
+Cannot say: a corpus accuracy figure; anything about a language with fewer than 15 verdicts beyond listing them; anything about Korean or Syriac. The headline in #5274, and the ship rule in #5438, stay judge ratings until RQ3 says otherwise.
 
 ## 9. Credit
 
@@ -139,6 +148,7 @@ Per the community design decision of 2026-08-04: a reader who returns a verdict 
 2. **Letter 1 adds the paper and credit sentence.** Recommended: yes, one sentence.
 3. **Two coders.** Recommended: Derek plus one independent coder; a Claude coder is acceptable only if labelled as such.
 4. **Wave 2 trigger.** Recommended: one third of wave 1 agreeing.
+5. **Add quality round 1's judged pages to the frame.** Round 1 publishes strata on the judge's rating, but its pages are not in this frame, so this study would calibrate the judge on served pages and not on the pages it is shipping. Recommended: yes, as a second frame drawn under the same rules once round 1's judging is done, reported separately from the 311.
 
 ## 11. Landing
 
