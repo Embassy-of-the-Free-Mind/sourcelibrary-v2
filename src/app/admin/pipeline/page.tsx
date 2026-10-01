@@ -1,5 +1,9 @@
 'use client';
 
+// /admin/pipeline — the control page: funnel with re-enroll actions, cron health, stalls, cron decisions, needs-attention books, error categories, velocity. 30s refresh.
+// /admin/realtime is the live tape: each running job's page progress, batch jobs, last-hour calls and cost by type, 30-min throughput, 5-min activity feed.
+// Both read /api/admin/realtime; this page uses only its counts and adds /api/analytics/pipeline (#5501).
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import {
@@ -183,6 +187,9 @@ export default function PipelineDashboard() {
             <h1 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>
               Pipeline Health
             </h1>
+            <Link href="/admin/realtime" className="text-xs hover:underline" style={{ color: 'var(--text-muted)' }}>
+              Live jobs &amp; activity &rarr;
+            </Link>
             {!paused && (
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: 'var(--accent-sage)' }} />
