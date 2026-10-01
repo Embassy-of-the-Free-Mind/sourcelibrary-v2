@@ -142,7 +142,8 @@ async function main() {
   }
   await disconnect();
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.writeFileSync(OUT, JSON.stringify({ summary, rows: rows.filter(r => r.dup || r.same_work_juan_unknown) }, null, 1));
+  // rows: the exact-key books only (the counted tier), compact — the overlap tier verified at 3/30 and is not used
+  fs.writeFileSync(OUT, JSON.stringify({ summary, rows: rows.filter(r => r.exact).map(r => ({ id: r.id, title: r.title, work_id: r.work_id, pages: r.pages, juan: r.juan, exact_with: r.exact_with.map(o => o.id) })) }));
   console.log(JSON.stringify(summary, null, 1));
 }
 if (process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]))) main().catch(e => { console.error(e); process.exit(1); });
