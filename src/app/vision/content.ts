@@ -197,7 +197,7 @@ export const visionContent: VisionContent = {
   signature: {
     name: 'Derek Lomas, PhD',
     role: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
-    email: 'team@sourcelibrary.org',
+    email: 'derek@sourcelibrary.org',
     photo: '/founder-derek.jpg',
   },
   plan: {
@@ -232,9 +232,9 @@ export const visionContent: VisionContent = {
     heading: 'Let’s talk',
     body: 'I would be glad to show you the library, in person at the Embassy in Amsterdam or on a call, and to go through the budget with you.',
     primaryLabel: 'Let’s talk',
-    primaryHref: 'mailto:team@sourcelibrary.org?subject=Source%20Library%20%E2%80%94%20let%E2%80%99s%20talk',
+    primaryHref: 'mailto:derek@sourcelibrary.org?subject=Source%20Library%20%E2%80%94%20let%E2%80%99s%20talk',
     secondaryLabel: 'Make a gift',
     secondaryHref: '/support',
-    footer: 'This address comes straight to me.',
+    footer: 'Write to me at [derek@sourcelibrary.org](mailto:derek@sourcelibrary.org). I’m happy to talk by phone, video or WhatsApp, whichever suits you.',
   },
 };
