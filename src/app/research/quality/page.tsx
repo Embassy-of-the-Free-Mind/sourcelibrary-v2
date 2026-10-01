@@ -201,6 +201,8 @@ type Specimen = {
   transcriptionLang: string;
   english: string;
   note: ReactNode;
+  /** Holding institution and rights, checked against image_source.rights_normalized and the source on 2026-10-01 (#5495). */
+  credit: { text: string; href: string };
 };
 
 const SPECIMENS: Specimen[] = [
@@ -218,6 +220,7 @@ const SPECIMENS: Specimen[] = [
     transcriptionLang: 'zh',
     english: 'The Image says: Thunder at the foot of the Mountain. … People all say: The "Thunder Vow" … is like the vow of a child.',
     note: <>The transcription has 白 for 曰 and 願 for 頤. The English translates the misread faithfully, so the hexagram&rsquo;s name becomes &ldquo;Thunder Vow&rdquo;. The judge flagged it as garble carried through, and the model read of the scan confirmed it.</>,
+    credit: { text: 'Scan: Harvard Library, Harvard University. Public domain.', href: 'https://nrs.lib.harvard.edu/URN-3:FHCL:1184543:MANIFEST:2' },
   },
   {
     key: 'leaf',
@@ -233,6 +236,7 @@ const SPECIMENS: Specimen[] = [
     transcriptionLang: 'en',
     english: '842. THEOPOMPUS (OR CRATIPPUS), HELLENICA 223 … He was taken prisoner in 407 BCE, but was later released …',
     note: <>The text is printed page 223. The translation is faithful to it, and the judge rated it 5 of 5; it could not have known that the reader sees page 224 beside it. Text as served on 30 September 2026; the page has since been re-read from its image.</>,
+    credit: { text: 'Scan: Duke University Libraries, digitised by the Internet Archive. Public domain.', href: 'https://archive.org/details/oxyrhynchuspapyrunse_69' },
   },
   {
     key: 'inversion',
@@ -248,6 +252,7 @@ const SPECIMENS: Specimen[] = [
     transcriptionLang: 'sa',
     english: 'One should remember the names of the deities of the directions in the afternoon and at night\n\nIndeed, one should remember them. 3',
     note: <>The transcription has the negative (<em>na hi smaret</em>, split across the line break). The English drops it and turns a prohibition into an injunction.</>,
+    credit: { text: 'Scan: Dharmartha Trust, Raghunath Temple, Jammu, via the Internet Archive. CC0 1.0.', href: 'https://archive.org/details/PrashnaDeepakamAlm28Shlf36289DevanagariJyotish' },
   },
 ];
 
@@ -292,7 +297,8 @@ function SpecimenRow({ s }: { s: Specimen }) {
         </div>
       </div>
       <p className="text-sm text-muted leading-relaxed mt-3">
-        The scan {s.scanNote}. {s.note}
+        The scan {s.scanNote}. {s.note}{' '}
+        <a href={s.credit.href} className="text-accent-rust hover:underline">{s.credit.text}</a>
       </p>
     </div>
   );
@@ -616,7 +622,7 @@ export default function ResearchQualityPage() {
 
           <Figure
             n={2}
-            caption={<>Three pages from the translation audit (§4), each shown as a crop of the scan the reader sees, an excerpt of the transcription, and an excerpt of the English, as served on 30 September 2026. Ellipses mark omitted text. Each scan was opened and read for this figure. Panel (a) is garble that a text-only judge can catch because it is visible in the transcription. Panel (b) is a failure no text-only instrument can see. Panel (c) is a translation error proper.<N n={7} /><N n={8} /></>}
+            caption={<>Three pages from the translation audit (§4), each shown as a crop of the scan the reader sees, an excerpt of the transcription, and an excerpt of the English, as served on 30 September 2026. Ellipses mark omitted text. Each scan was opened and read for this figure. Panel (a) is garble that a text-only judge can catch because it is visible in the transcription. Panel (b) is a failure no text-only instrument can see. Panel (c) is a translation error proper. Each panel credits the institution that holds the original; rights were checked for each scan before use.<N n={7} /><N n={8} /></>}
           >
             <div>
               {SPECIMENS.map(s => <SpecimenRow key={s.key} s={s} />)}
