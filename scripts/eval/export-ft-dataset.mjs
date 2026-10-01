@@ -46,6 +46,7 @@ import { execSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CANARY_TEXT } from '../lib/dataset-canary.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -375,13 +376,16 @@ if (existsSync(datasheetSrc)) {
   writeFileSync(join(OUT_DIR, 'DATASHEET.md'), readFileSync(datasheetSrc));
 }
 
+// Benchmark canary (#5524) — deposit-ft-dataset.mjs refuses a snapshot without it.
+writeFileSync(join(OUT_DIR, 'CANARY.txt'), CANARY_TEXT + '\n');
+
 // Manifest last, so it can checksum the rest.
 let gitSha = 'unknown';
 try {
   gitSha = execSync('git rev-parse HEAD', { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
 } catch { /* fine outside a checkout */ }
 
-const files = ['attempts.jsonl', 'attempts.csv', 'verdicts.jsonl', 'verdicts.csv', 'screening_decisions.jsonl', 'taxonomy.json', 'reference-set-summary.json']
+const files = ['CANARY.txt', 'attempts.jsonl', 'attempts.csv', 'verdicts.jsonl', 'verdicts.csv', 'screening_decisions.jsonl', 'taxonomy.json', 'reference-set-summary.json']
   .concat(existsSync(join(OUT_DIR, 'DATASHEET.md')) ? ['DATASHEET.md'] : []);
 
 const manifest = {
