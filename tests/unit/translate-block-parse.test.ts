@@ -47,6 +47,17 @@ describe('parseBlockTranslations — the block-shift guard', () => {
     expect(r.translations.size).toBe(0);
   });
 
+  it('a block that comes back with MORE entries than pages is discarded whole (#5426: 9 for 8, every label one page off)', () => {
+    // The 69b6307b p16–23 shape: an extra leading entry, then page N's label carrying page N−1's text.
+    const over = [entry(6, 'Continued from the previous page.'), ...pages.map((p) => entry(p.page_number + 1, TR[p.page_number]))].join('\n');
+    const r = parseBlockTranslations(over, pages);
+    expect(r.returned).toBe(9);
+    expect(r.discarded).toBe('over-block');
+    expect(r.translations.size).toBe(0);
+    // The failure this prevents: no page is handed its neighbour's text.
+    expect(r.translations.get(7)).toBeUndefined();
+  });
+
   it('negative control — the same block with all eight entries is accepted, each on its own page', () => {
     const full = pages.map((p) => entry(p.page_number, TR[p.page_number])).join('\n');
     const r = parseBlockTranslations(full, pages);
