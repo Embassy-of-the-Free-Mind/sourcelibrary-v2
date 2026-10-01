@@ -42,7 +42,7 @@ import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { isHumanEdited } from '../lib/syriac-kraken-lane.mjs';
 import {
-  flattenVersion, buildStream, buildIndex, anchorAt, locate, spanText, normHe, sha16,
+  flattenVersion, buildStream, buildIndex, anchorAt, fitEnd, locate, spanText, normHe, sha16,
   licenceAllowed, krakenLetters, gramBag, containment, FIT_RULES, fitClass, POINTING_RE,
 } from '../lib/sefaria-fit.mjs';
 
@@ -74,8 +74,20 @@ export const BOOKS = {
   '69c7b45e25ec2ba5ccd7f5be': { name: "Tikkunei ha-Zohar (1706)", version: 'json/Kabbalah/Zohar/Tikkunei Zohar/Hebrew/Tikkunei Zohar - Vocalized.json' },
   '69c7b18425ec2ba5ccd7f44e': { name: 'Pardes Rimmonim (Cordovero, 1786)', version: 'json/Kabbalah/Ramak/Pardes Rimmonim/Hebrew/Pardes Rimonim.json' },
   '69b3e677304c1c6b3950b41f': { name: 'Zohar on Genesis–Exodus (MS Bodley Or. 574)', version: null, refused: 'every Hebrew version of Zohar on Sefaria has licence "unknown" (Vocalized Zohar, Israel 2013; Sulam Edition, Jerusalem 1945; Hebrew Translation) — not PD/CC0/CC-BY' },
-  '69b3e5b5304c1c6b395099fd': { name: "Luria's Commentary on the Zohar of Genesis (MS Oppenheim 509)", version: null, refused: null },
-  '6a357f1ac6e2d5bb56a64539': { name: 'Talmud Yerushalmi (1922)', version: null, refused: null },
+  // Sha'ar Ma'amarei Rashbi is Vital's arrangement of Luria's Zohar commentary (PD); whether this
+  // manuscript follows it is MEASURED by the plan (monotone location), not assumed.
+  '69b3e5b5304c1c6b395099fd': { name: "Luria's Commentary on the Zohar of Genesis (MS Oppenheim 509)", version: "json/Kabbalah/Arizal and Chaim Vital/Sha'ar Ma'amarei Rashbi/Hebrew/Shaar Maamarei Rashbi.json" },
+  // Seder Nezikin, in the volume's order; Guggenheimer's text is CC-BY (Mechon-Mamre and Venice: "unknown").
+  '6a357f1ac6e2d5bb56a64539': { name: 'Talmud Yerushalmi, Seder Nezikin (1922)', version: [
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Bava Kamma/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Bava Metzia/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Bava Batra/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Sanhedrin/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Makkot/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Shevuot/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Avodah Zarah/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+    'json/Talmud/Yerushalmi/Seder Nezikin/Jerusalem Talmud Horayot/Hebrew/The Jerusalem Talmud, edition by Heinrich W. Guggenheimer. Berlin, De Gruyter, 1999-2015.json',
+  ] },
 };
 
 const log = (m) => console.log(`${new Date().toISOString().slice(11, 19)} ${m}`);
@@ -83,7 +95,7 @@ const bookDir = (id) => path.join(WORK, 'books', id);
 const planFile = (id) => path.join(bookDir(id), 'plan.json');
 
 async function loadVersion(rel) {
-  const f = path.join(WORK, 'sefaria', path.basename(rel));
+  const f = path.join(WORK, 'sefaria', rel.split('/').slice(-3).join('__'));
   if (!fs.existsSync(f)) {
     fs.mkdirSync(path.dirname(f), { recursive: true });
     const res = await fetch(EXPORT + rel.split('/').map(encodeURIComponent).join('/'));
@@ -96,12 +108,46 @@ async function loadVersion(rel) {
   return { json, file_sha256: sha16(raw.toString('utf8')), rel };
 }
 
+/**
+ * One stream from one or more version files (a multi-tractate volume lists them in print order).
+ * Each segment carries `src` (index into `sources`) and a ref prefixed with its file's title.
+ */
+async function loadSefaria(cfg) {
+  const rels = Array.isArray(cfg.version) ? cfg.version : [cfg.version];
+  const sources = [], segments = [];
+  for (const rel of rels) {
+    const v = await loadVersion(rel);
+    const src = sources.length;
+    sources.push({ title: v.json.title, versionTitle: v.json.versionTitle, license: v.json.license, versionSource: v.json.versionSource, export_path: v.rel, file_sha16: v.file_sha256 });
+    for (const seg of flattenVersion(v.json)) segments.push({ ...seg, src, ref: rels.length > 1 ? `${v.json.title} ${seg.ref}` : seg.ref });
+  }
+  return { sources, stream: buildStream(segments) };
+}
+
 /** Body text of a stored reading: the model's editorial/apparatus blocks dropped, tags stripped. */
 export function bodyText(ocr) {
   return String(ocr || '')
     .replace(/<(header|margin|page-num|sig|image-desc|vocab|meta|warning|scan-quality|language|script|page-type|columns|catchword|footnote|note|summary)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/^#+\s*/gm, '');
+}
+
+/**
+ * The boundary of a neighbour page, from whichever of its readings (stored OCR, Kraken read of its
+ * image) aligns best above CHANCE — the same boundary letters aligned in a far window of the text.
+ */
+function bestAnchor(t, side, win, index, stream) {
+  let best = null;
+  for (const v of t.variants || []) {
+    const a = anchorAt(v.q, index, stream, { side, ...win });
+    if (a.pos == null) { if (!best) best = { ...a, via: v.via, chance: 0 }; continue; }
+    const piece = side === 'end' ? v.q.slice(-150) : v.q.slice(0, 150);
+    const farAt = (a.pos + Math.floor(stream.letters.length / 2)) % Math.max(1, stream.letters.length - 800);
+    const chance = fitEnd(side === 'end' ? piece : [...piece].reverse().join(''), side === 'end' ? stream.letters.slice(farAt, farAt + 800) : [...stream.letters.slice(farAt, farAt + 800)].reverse().join('')).identity;
+    const cand = { ...a, via: v.via, chance };
+    if (!best || best.pos == null || cand.identity - cand.chance > best.identity - best.chance) best = cand;
+  }
+  return best || { pos: null, reason: 'no usable reading', identity: 0, chance: 0 };
 }
 
 // ── plan ──────────────────────────────────────────────────────────────────
@@ -123,10 +169,9 @@ async function plan(db) {
     log(`${cfg.name}: ${targets.length} targets — REFUSED: ${out.refused}`);
     return out;
   }
-  const v = await loadVersion(cfg.version);
-  const stream = buildStream(flattenVersion(v.json));
+  const { sources, stream } = await loadSefaria(cfg);
   const index = buildIndex(stream.letters, 5);
-  out.sefaria = { title: v.json.title, versionTitle: v.json.versionTitle, license: v.json.license, versionSource: v.json.versionSource, export_path: v.rel, file_sha16: v.file_sha256, letters: stream.letters.length };
+  out.sefaria = { ...sources[0], sources, letters: stream.letters.length };
 
   // Every page with body text is located coarsely (whole-page 5-gram voting). A page whose position
   // is not monotone with its text neighbours (a repetition loop, a recited passage from elsewhere,
@@ -145,26 +190,44 @@ async function plan(db) {
   });
   for (const t of text) { const r = locate(t.q, index, { slack: 64 }); t.s = r.pos; t.share = r.share; }
   monotoneAt(text);
-  for (const t of text) {
-    if (t.monotone) continue;
-    const kq = readOf(t.p.page_number);
-    if (!kq || kq.length < FIT_RULES.minTextLetters) continue;
-    const r = locate(kq, index, { slack: 64 });
-    t.alt = { q: kq, s: r.pos, share: r.share, via: 'kraken-read' };
-  }
-  // Judge each Kraken alternative against the stored-OCR pages that DID locate.
+  // Every text page that has a Kraken read gets it as a second variant; a page is usable if EITHER
+  // variant locates monotone against the stored-OCR pages around it.
   text.forEach((t, k) => {
-    if (t.monotone || !t.alt) return;
-    const probe = [...text.slice(0, k), { ...t, ...t.alt }, ...text.slice(k + 1)];
+    t.variants = t.monotone ? [{ q: t.q, s: t.s, share: t.share, via: 'stored-ocr' }] : [];
+    const kq = readOf(t.p.page_number);
+    if (!kq || kq.length < FIT_RULES.minTextLetters) return;
+    const r = locate(kq, index, { slack: 64 });
+    const probe = [...text.slice(0, k), { ...t, q: kq, s: r.pos, via: 'kraken-read' }, ...text.slice(k + 1)];
     monotoneAt(probe);
-    if (probe[k].monotone) Object.assign(t, t.alt, { monotone: true, stored_s: t.s });
+    if (probe[k].monotone) t.variants.push({ q: kq, s: r.pos, share: r.share, via: 'kraken-read' });
   });
+  for (const t of text) if (!t.monotone && t.variants.length) Object.assign(t, t.variants[0], { monotone: true, stored_s: t.s });
   const textById = new Map(text.map((t) => [t.p.id, t]));
   const lens = text.map((t) => t.q.length).sort((a, b) => a - b);
   const median = lens.length ? lens[Math.floor(lens.length / 2)] : null;
   out.median_page_letters = median;
   out.text_pages = text.length;
   out.monotone_pages = text.filter((t) => t.monotone).length;
+  // How much page text per unit of Sefaria text: for consecutive (by page number) stored-OCR pages that
+  // both locate, page letters ÷ the Sefaria letters between their starts. ≈1 when the print holds just
+  // this text; ≈3–5 when it also prints a commentary around it (then the page's text is NOT the span).
+  const adv = [];
+  for (let k = 0; k + 1 < text.length; k++) {
+    const a = text[k], b = text[k + 1];
+    if (!a.monotone || !b.monotone || a.via !== 'stored-ocr' || b.via !== 'stored-ocr') continue;
+    if (b.p.page_number !== a.p.page_number + 1 || b.s <= a.s) continue;
+    adv.push(a.q.length / (b.s - a.s));
+  }
+  adv.sort((x, y) => x - y);
+  out.page_to_text_ratio = adv.length ? { median: +adv[Math.floor(adv.length / 2)].toFixed(2), pairs: adv.length } : null;
+
+  // Book gate: an edition that does not follow the version (few pages locate in order), or a print that
+  // carries a commentary around the text (pages hold > readSpanRatio × the version's text), is refused
+  // whole — no page of it could pass, and reading it would only spend CPU to say so.
+  const monoShare = text.length ? out.monotone_pages / text.length : 0;
+  const ptr = out.page_to_text_ratio?.median;
+  if (monoShare < FIT_RULES.minMonotoneShare) out.book_refused = `the edition does not follow the Sefaria version: ${out.monotone_pages}/${text.length} text pages locate in order (< ${FIT_RULES.minMonotoneShare * 100}%)${ptr != null ? `; page/text ratio ${ptr}` : ''}`;
+  else if (ptr != null && (ptr < FIT_RULES.readSpanRatio[0] || ptr > FIT_RULES.readSpanRatio[1])) out.book_refused = `each page carries ${ptr}× the Sefaria version's text (median of ${out.page_to_text_ratio.pairs} consecutive located pages) — the print has a commentary/apparatus the version lacks, so a fitted span would be a partial page`;
 
   // Runs: maximal sequences of pages WITHOUT body text, bounded by text pages. Every page of a run is
   // read (the split needs them all); only targets are written.
@@ -180,18 +243,19 @@ async function plan(db) {
     const r = { pages: run.map((p) => p.page_number), prev: prev?.p.page_number ?? null, next: next?.p.page_number ?? null,
       prev_coarse: prev ? { s: prev.s, share: +prev.share.toFixed(3), monotone: prev.monotone, via: prev.via } : null,
       next_coarse: next ? { s: next.s, share: +next.share.toFixed(3), monotone: next.monotone, via: next.via } : null };
-    if (!prev || !next) r.refused_reason = `no text page ${!prev ? 'before' : 'after'} the run`;
+    if (out.book_refused) r.refused_reason = out.book_refused;
+    else if (!prev || !next) r.refused_reason = `no text page ${!prev ? 'before' : 'after'} the run`;
     else if (!prev.monotone) r.refused_reason = `previous page p${prev.p.page_number}: its OCR does not locate consistently in the Sefaria text`;
     else if (!next.monotone) r.refused_reason = `next page p${next.p.page_number}: its OCR does not locate consistently in the Sefaria text`;
     else if (next.s <= prev.s) r.refused_reason = 'neighbour pages out of order against Sefaria';
     else {
       const win = { lo: Math.max(0, prev.s - 500), hi: next.s + next.q.length + 500 };
-      const A = anchorAt(prev.q, index, stream, { side: 'end', ...win });
-      const B = anchorAt(next.q, index, stream, { side: 'start', ...win });
-      const ev = (x) => ({ pos: x.pos, share: +(x.share || 0).toFixed(3), identity: +(x.identity || 0).toFixed(3), reason: x.reason || null });
+      const A = bestAnchor(prev, 'end', win, index, stream);
+      const B = bestAnchor(next, 'start', win, index, stream);
+      const ev = (x) => ({ pos: x.pos, via: x.via || null, identity: +(x.identity || 0).toFixed(3), chance: +(x.chance || 0).toFixed(3), reason: x.reason || null });
       r.anchor_prev = ev(A); r.anchor_next = ev(B);
-      const ok = (x) => x.pos != null && x.identity >= FIT_RULES.anchorIdentity;
-      const why = (x) => (x.pos == null ? x.reason : `boundary alignment identity ${x.identity.toFixed(2)} < ${FIT_RULES.anchorIdentity}`);
+      const ok = (x) => x.pos != null && x.identity >= FIT_RULES.anchorIdentity && x.identity - x.chance >= FIT_RULES.anchorMargin;
+      const why = (x) => (x.pos == null ? x.reason : `boundary alignment identity ${x.identity.toFixed(2)} (chance ${x.chance.toFixed(2)}) below ${FIT_RULES.anchorIdentity} / +${FIT_RULES.anchorMargin}`);
       if (!ok(A)) r.refused_reason = `previous-page anchor: ${why(A)}`;
       else if (!ok(B)) r.refused_reason = `next-page anchor: ${why(B)}`;
       else if (B.pos <= A.pos) r.refused_reason = `anchors out of order (${A.pos} → ${B.pos})`;
@@ -203,7 +267,11 @@ async function plan(db) {
       }
     }
     out.runs.push(r);
-    for (const nb of [pages[i0 - 1], pages[j + 1]]) if (nb) out.read_also.push({ page_number: nb.page_number, image: nb.photo || nb.archived_photo });
+    // Neighbours to read: the previous page always (the stored OCR degenerates toward the END of a
+    // page — measured on Zohar Chadash: end-boundary identity at chance, start-boundary 0.6–0.8), the
+    // next page only when its stored OCR does not locate.
+    if (!out.book_refused && pages[i0 - 1]) out.read_also.push({ page_number: pages[i0 - 1].page_number, image: pages[i0 - 1].photo || pages[i0 - 1].archived_photo });
+    if (!out.book_refused && pages[j + 1] && !(next?.variants || []).some((v) => v.via === 'stored-ocr')) out.read_also.push({ page_number: pages[j + 1].page_number, image: pages[j + 1].photo || pages[j + 1].archived_photo });
     for (const p of run) {
       out.pages.push({ id: p.id, page_number: p.page_number, run: out.runs.length - 1, target: isTarget.has(p.id), image: p.photo || p.archived_photo, human: isHumanEdited(p.ocr),
         verdict: r.refused_reason ? 'refused' : 'pending', reason: r.refused_reason || null });
@@ -211,7 +279,7 @@ async function plan(db) {
     i = j + 1;
   }
   fs.writeFileSync(planFile(id), JSON.stringify(out, null, 1));
-  const c = (k) => out.pages.filter((p) => p.verdict === k).length;
+  const c = (k) => out.pages.filter((p) => p.target !== false && p.verdict === k).length;
   const reasons = {};
   for (const r of out.runs) if (r.refused_reason) { const k = r.refused_reason.replace(/[\d.]+/g, '#').slice(0, 60); reasons[k] = (reasons[k] || 0) + r.pages.length; }
   log(`${cfg.name}: ${targets.length} targets in ${out.runs.length} runs; median page ${median} letters; spanned ${c('pending')}, refused ${c('refused')}`);
@@ -244,6 +312,7 @@ function krakenBatch(pairs) {
 async function read() {
   const id = val('book');
   const pl = JSON.parse(fs.readFileSync(planFile(id), 'utf8'));
+  if (pl.book_refused || pl.refused) { log(`read: book refused — ${pl.book_refused || pl.refused}`); return; }
   const dir = path.join(bookDir(id), 'reads');
   fs.mkdirSync(dir, { recursive: true });
   // Every page of a spanned run is read (a run is split by its pages' read lengths), refused runs are not.
@@ -271,8 +340,7 @@ async function score() {
   const id = val('book');
   const pl = JSON.parse(fs.readFileSync(planFile(id), 'utf8'));
   const cfg = BOOKS[id];
-  const v = await loadVersion(cfg.version);
-  const stream = buildStream(flattenVersion(v.json));
+  const { stream } = await loadSefaria(cfg);
   const dir = path.join(bookDir(id), 'reads');
   const readOf = (n) => { const f = path.join(dir, `${n}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
   const far = Math.floor(stream.letters.length / 2);
@@ -302,6 +370,7 @@ async function score() {
       p.reason = cls === 'verified' ? (p.human ? 'human-edited page' : null)
         : cls === 'uninformative' ? `read uninformative (${sc.read_letters} letters; precision ${sc.precision})`
         : cls === 'misaligned' ? `read fits shift ${sc.best_shift} better than the fitted span`
+        : cls === 'coverage' ? `read ${sc.read_letters} letters vs span ${sc.span_letters}: the page carries text the Sefaria version does not (or the span is wrong) — a partial page is not written`
         : `F1 ${sc.f1} vs wrong-page control ${sc.control}: below margin ${FIT_RULES.minMargin} / ratio ${FIT_RULES.minRatio}`;
     }
   }
@@ -338,8 +407,7 @@ async function write(db) {
   const dry = has('dry-run');
   const pl = JSON.parse(fs.readFileSync(planFile(id), 'utf8'));
   const cfg = BOOKS[id];
-  const v = await loadVersion(cfg.version);
-  const stream = buildStream(flattenVersion(v.json));
+  const { stream } = await loadSefaria(cfg);
   const pointedPrint = !!pl.print_pointed;
   const now = new Date();
   let written = 0, raced = 0;
@@ -347,13 +415,14 @@ async function write(db) {
     let text = spanText(stream, p.span.a, p.span.b);
     if (!pointedPrint) text = text.replace(POINTING_RE, '').normalize('NFC');
     const refs = [stream.segments[stream.seg[p.span.a]].ref, stream.segments[stream.seg[p.span.b - 1]].ref];
+    const src = pl.sefaria.sources[stream.segments[stream.seg[p.span.a]].src];
     const ocr = {
       data: text, content_hash: sha16(text), language: 'Hebrew', source: TEXT_SOURCE, pipeline: PIPELINE,
-      model: `sefaria/${pl.sefaria.versionTitle}`,
+      model: `sefaria/${src.versionTitle}`,
       text_edition: {
-        name: `Sefaria — ${pl.sefaria.title}, “${pl.sefaria.versionTitle}”`, title: pl.sefaria.title, versionTitle: pl.sefaria.versionTitle,
-        licence: pl.sefaria.license, licence_source: 'the version\'s own `license` field in the Sefaria export file', version_source: pl.sefaria.versionSource,
-        export: `${EXPORT}${pl.sefaria.export_path}`, export_sha16: pl.sefaria.file_sha16, refs: { from: refs[0], to: refs[1] },
+        name: `Sefaria — ${src.title}, “${src.versionTitle}”`, title: src.title, versionTitle: src.versionTitle,
+        licence: src.license, licence_source: 'the version\'s own `license` field in the Sefaria export file', version_source: src.versionSource,
+        export: `${EXPORT}${src.export_path}`, export_sha16: src.file_sha16, refs: { from: refs[0], to: refs[1] },
         letters: { from: p.span.a, to: p.span.b }, conventions: CONVENTIONS, issue: ISSUE,
       },
       alignment: {

@@ -270,8 +270,9 @@ export function containment(A, B) {
  * Zohar Chadash p13, Pardes p38, Tikkunei p33, each against its located span and shifted spans).
  *
  * Anchors: a text page (stored OCR, or a Kraken read of its image when the OCR does not locate)
- * must locate MONOTONE with its stored-OCR neighbours; its boundary letters must align at ≥
- * anchorIdentity (chance, measured against far windows: 0.26–0.37). A span must be within spanRatio
+ * must locate MONOTONE with its stored-OCR neighbours; its 150 boundary letters must align at ≥
+ * anchorIdentity AND ≥ anchorMargin above chance (the same letters aligned in a far window; measured
+ * 0.26–0.37). A span must be within spanRatio
  * of (book median letters per page × pages in the run).
  *
  * Verification (per page): score = F1 of letter-4-gram precision (read ⊂ span) and recall (span ⊂
@@ -281,10 +282,15 @@ export function containment(A, B) {
  * (|shift| ≥ 2 and a far span) by ≥ minMargin absolute AND ≥ minRatio × (calibration: located spans
  * 0.22 vs controls 0.09–0.10; the Tikkunei page, whose print carries a commentary Sefaria lacks,
  * 0.10 vs 0.10 — refused, as it should be). Everything else is refused.
+ *
+ * COVERAGE (added the same day, still before any pilot score): the read's letter count must be within
+ * readSpanRatio of the span's. A page whose print carries text the Sefaria version does not — a
+ * commentary around the text (the Vilna-layout Yerushalmi; the 1706 Tikkunei with its commentary) —
+ * reads 2–3× its span; writing the span alone would store a PARTIAL transcription as the page's text.
  */
 export const FIT_RULES = Object.freeze({
-  version: 1, minTextLetters: 300, anchorIdentity: 0.45, spanRatio: [0.5, 1.8],
-  minReadLetters: 300, informativeFloor: 0.12, minMargin: 0.08, minRatio: 1.8,
+  version: 1, minTextLetters: 300, minMonotoneShare: 0.2, anchorIdentity: 0.45, anchorMargin: 0.12, spanRatio: [0.5, 1.8],
+  minReadLetters: 300, informativeFloor: 0.12, minMargin: 0.08, minRatio: 1.8, readSpanRatio: [0.6, 1.6],
 });
 
 export function fitClass(score, rules = FIT_RULES) {
@@ -292,5 +298,7 @@ export function fitClass(score, rules = FIT_RULES) {
   const best = score.by_shift?.[score.best_shift] ?? score.f1;
   if (best < rules.informativeFloor) return 'uninformative';
   if (score.best_shift !== 0) return 'misaligned';
+  const cov = score.span_letters ? score.read_letters / score.span_letters : 0;
+  if (cov < rules.readSpanRatio[0] || cov > rules.readSpanRatio[1]) return 'coverage';
   return score.f1 - score.control >= rules.minMargin && score.f1 >= rules.minRatio * score.control ? 'verified' : 'weak';
 }

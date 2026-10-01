@@ -75,11 +75,13 @@ describe('sefaria-fit verification', () => {
     expect(containment(new Map(), B)).toBe(0);
   });
   it('writes only when shift 0 is best and clearly beats the wrong-page control', () => {
-    const base = { read_letters: 4000, best_shift: 0 };
+    const base = { read_letters: 4000, span_letters: 4200, best_shift: 0 };
     expect(fitClass({ ...base, f1: 0.22, control: 0.09, by_shift: { 0: 0.22 } })).toBe('verified');
     expect(fitClass({ ...base, f1: 0.15, control: 0.10, by_shift: { 0: 0.15 } })).toBe('weak');
     expect(fitClass({ ...base, best_shift: 2, f1: 0.12, control: 0.2, by_shift: { 0: 0.12, 2: 0.2 } })).toBe('misaligned');
     expect(fitClass({ ...base, f1: 0.05, control: 0.04, by_shift: { 0: 0.05 } })).toBe('uninformative');
+    // A page that also prints a commentary reads ~3× its span: never written as if complete.
+    expect(fitClass({ ...base, span_letters: 1300, f1: 0.22, control: 0.09, by_shift: { 0: 0.22 } })).toBe('coverage');
     expect(fitClass({ ...base, read_letters: FIT_RULES.minReadLetters - 1, f1: 0.5, control: 0, by_shift: { 0: 0.5 } })).toBe('uninformative');
   });
 });
