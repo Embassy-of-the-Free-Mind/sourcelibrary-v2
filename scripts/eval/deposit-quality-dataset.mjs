@@ -103,7 +103,9 @@ if (DRY) {
 }
 if (!process.env.ZENODO_ACCESS_TOKEN) { console.error('ZENODO_ACCESS_TOKEN is not set.'); process.exit(1); }
 
-const headers = (extra = {}) => ({ Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, ...extra });
+// Zenodo's firewall answers Node's default User-Agent with an HTML 403 ("unusual traffic from your network")
+// even when the token is good (2026-10-01); a named agent passes.
+const headers = (extra = {}) => ({ Authorization: `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': 'sourcelibrary-eval/1.0 (+https://sourcelibrary.org)', ...extra });
 async function ok(resp, context) {
   if (resp.ok) return resp;
   throw new Error(`Zenodo ${context}: HTTP ${resp.status} — ${(await resp.text()).slice(0, 400)}`);
