@@ -4,7 +4,9 @@ PRIOR ART: .claude/docs/invariants/visibility-and-stats.md — owns the opposite
 
 **Read this when:** hiding, unhiding or taking down a book; writing `visible`, `hidden` or `hidden_reason`; writing any query that asks "is this book public?"; adding a surface that copies a book id, an image id or a visibility flag into another store.
 
-**Status:** design, 2026-09-30. Tracking issue #5303, umbrella #5302. The migration steps are #5340–#5346. Until step 1 lands, the three legacy fields are what exists, and `visibility-and-stats.md` governs them.
+**Status:** design, 2026-09-30. Tracking issue #5303, umbrella #5302. The migration steps are #5340–#5346. **Step 1 (#5340) is code:** `scripts/lib/publication.mjs` + `src/lib/publication.ts` (writer, views, the reviewed `LEGACY_REASON_MAP`), `scripts/maintenance/backfill-publication-state.mjs` (dry-run; `--apply` not yet run). Until the backfill runs, `publicationFilter()` expands to the legacy fields and `visibility-and-stats.md` governs them; new code calls the writer anyway.
+
+Two mapping calls the step-1 PR made beyond this doc, both reviewable in `LEGACY_REASON_MAP`: `awaiting_permission_*` (a holder's permission pending) is `hidden`/`rights`, not a takedown; an owner's removal request is a takedown. Every rights-class reason on a book that is not `visible: false` stays `unpublished` in the backfill and is counted as a conflict, because promoting it would change what the reader gate serves.
 
 ---
 

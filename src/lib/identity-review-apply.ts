@@ -1,6 +1,7 @@
 import { revalidatePath } from 'next/cache';
 import type { Db, Document } from 'mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { setPublicationMany } from '@/lib/publication';
 
 /**
  * The write half of the identity-review surface (#3846, batched in #4271).
@@ -209,19 +210,16 @@ export async function applyKeeperChoice(
   }
   const others = memberIds.filter((m) => m !== opts.keeperId);
 
-  const hidden = await db.collection('books').updateMany(
-    { id: { $in: others }, visible: true },
-    {
-      $set: {
-        hidden: true,
-        visible: false,
-        hidden_reason: 'duplicate',
-        hidden_at: now,
-        duplicate_of: opts.keeperId,
-        updated_at: now,
-      },
-    },
-  );
+  // Through the publication writer (#5340): only members public right now are
+  // hidden, and it bumps updated_at for the catalog sync.
+  const hidden = await setPublicationMany(db, others, {
+    state: 'hidden',
+    reason: 'duplicate',
+    duplicateOf: opts.keeperId,
+    by: opts.reviewer,
+    from: ['public'],
+    now,
+  });
 
   await db.collection('edition_keeper_queue').updateOne(
     { _id: editionKey as never },
@@ -242,7 +240,7 @@ export async function applyKeeperChoice(
     editionKey,
     status: 'kept',
     keeper: opts.keeperId,
-    hidden: hidden.modifiedCount,
+    hidden: hidden.written.length,
     paths: [`/book/${opts.keeperId}`, ...others.map((o) => `/book/${o}`)],
   };
 }
