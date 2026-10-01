@@ -247,6 +247,7 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    typed characters lie between them, the print does not carry those characters (an edition
  *    variant, or characters printed faintly that neither engine read); the column geometry places
  *    them (see `slack`), and the gap is recorded on the boundary (variant_gap).
+ *  - v5: an edge column must also lie inside the text frame horizontally (margin labels refused).
  *  - v4 edge columns are chosen by GEOMETRY (`edgeColumn`): a column that starts at the frame top,
  *    however short — a paragraph's last line is a real edge column, a margin label is not.
  *
@@ -260,7 +261,7 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    short for the read (lengthRatio).
  */
 export const FIT_RULES = Object.freeze({
-  version: 4,
+  version: 5,
   anchorIdentity: 0.5, anchorMin: 40,
   minIdentity: 0.6, minCoverage: 0.6, minMargin: 0.3,
   lengthRatio: [0.6, 1.7],
@@ -322,7 +323,14 @@ export function edgeColumn(lines, side, rules = FIT_RULES) {
   const top = med(tall.map((l) => l.y0 ?? 0));
   const bottom = med(tall.map((l) => l.y1 ?? 0));
   const charH = med(tall.map((l) => l.h / l.f.length));
-  const isColStart = (l) => l.f.length >= 1 && (l.y0 == null || l.y0 <= top + rules.columnTopSlack * charH);
+  // v5: a column lies inside the text frame horizontally. Library labels and handwritten marks in
+  // the outer margins (支那, 撰述, 文明 on the 1657 圓悟語錄) start at the frame top too.
+  const framed = tall.filter((l) => l.x0 != null);
+  const colW = framed.length ? med(framed.map((l) => l.x1 - l.x0)) : 0;
+  const fx0 = framed.length ? Math.min(...framed.map((l) => l.x0)) - 0.6 * colW : -Infinity;
+  const fx1 = framed.length ? Math.max(...framed.map((l) => l.x1)) + 0.6 * colW : Infinity;
+  const inFrame = (l) => l.x0 == null || ((l.x0 + l.x1) / 2 >= fx0 && (l.x0 + l.x1) / 2 <= fx1);
+  const isColStart = (l) => l.f.length >= 1 && inFrame(l) && (l.y0 == null || l.y0 <= top + rules.columnTopSlack * charH);
   const order = side === 'first' ? lines.map((_, k) => k) : lines.map((_, k) => lines.length - 1 - k);
   const starts = order.filter((k) => isColStart(lines[k]));
   if (!starts.length) return null;

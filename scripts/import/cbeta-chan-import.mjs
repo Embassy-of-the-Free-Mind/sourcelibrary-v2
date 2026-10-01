@@ -73,18 +73,78 @@ const TR_RATE = 0.0012;   // chained AUTO_APPROVAL_USD_PER_PAGE (2× measured), 
  * The texts. `source.kind` names the scan adapter; `volumes` are in reading order. Rights are
  * checked per source before a text is added here (and recorded in `rights`).
  */
+const NDL_RIGHTS = 'NDL item rights code "pdm" (Public Domain Mark), permission rule "internet" (dl.ndl.go.jp/api/item/search, read 2026-10-01)';
+const ndl = (volumes, edition, year) => ({ kind: 'ndl', volumes, edition, year, rights: NDL_RIGHTS });
 const TEXTS = {
   T2076: {
-    cbeta: 'T2076', xml: 'T/T51/T51n2076.xml', canonRef: 'T51n2076',
-    work_id: 'kr:KR6q0003',
-    title: '景德傳燈錄', english: 'Jingde Record of the Transmission of the Lamp',
-    author: '道原 (Daoyuan)',
-    source: {
-      kind: 'ndl', volumes: ['2569893', '2569894', '2569895', '2569896', '2569897', '2569898', '2569790', '2569813', '2569899', '2569900'],
-      edition: 'Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45',
-      year: 1348,
-      rights: 'NDL item rights code "pdm" (Public Domain Mark), permission rule "internet" (dl.ndl.go.jp/api/item/search, read 2026-10-01)',
-    },
+    cbeta: 'T2076', xml: 'T/T51/T51n2076.xml', canonRef: 'T51n2076', work_id: 'kr:KR6q0003',
+    title: '景德傳燈錄', english: 'Jingde Record of the Transmission of the Lamp', author: '道原 (Daoyuan)',
+    source: ndl(['2569893', '2569894', '2569895', '2569896', '2569897', '2569898', '2569790', '2569813', '2569899', '2569900'], 'Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45', 1348),
+  },
+  T1988: {
+    cbeta: 'T1988', xml: 'T/T47/T47n1988.xml', canonRef: 'T47n1988', work_id: 'kr:KR6q0073',
+    title: '雲門匡真禪師廣錄', english: 'Extensive Record of Chan Master Yunmen Kuangzhen', author: '雲門文偃 (Yunmen Wenyan); 守堅 (Shoujian), comp.',
+    source: ndl(['2544321', '2544322', '2544323'], 'old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊', 1613),
+  },
+  T1985: {
+    cbeta: 'T1985', xml: 'T/T47/T47n1985.xml', canonRef: 'T47n1985', work_id: 'kr:KR6q0053',
+    title: '鎮州臨濟慧照禪師語錄', english: 'Record of Linji (Recorded Sayings of Chan Master Linji Huizhao of Zhenzhou)', author: '臨濟義玄 (Linji Yixuan); 慧然 (Huiran), comp.',
+    source: ndl(['2532108'], 'Gozan edition (五山版), Nanbokuchō period [1336–1392]', null),
+  },
+  T1997: {
+    cbeta: 'T1997', xml: 'T/T47/T47n1997.xml', canonRef: 'T47n1997', work_id: 'kr:KR6q0059',
+    title: '圓悟佛果禪師語錄', english: 'Recorded Sayings of Chan Master Yuanwu Foguo', author: '圜悟克勤 (Yuanwu Keqin); 紹隆 (Shaolong) et al., comp.',
+    source: ndl(['2559927', '2559928', '2559929'], '明暦3 [1657] edition', 1657),
+  },
+  T1999: {
+    cbeta: 'T1999', xml: 'T/T47/T47n1999.xml', canonRef: 'T47n1999', work_id: 'kr:KR6q0064',
+    title: '密菴和尚語錄', english: 'Recorded Sayings of Master Mi\'an', author: '密菴咸傑 (Mi\'an Xianjie); 崇岳 (Chongyue), 了悟 (Liaowu) et al., comp.',
+    source: ndl(['2569889', '2569890'], 'Gozan edition (五山版), Nanbokuchō period [1336–1392]', null),
+  },
+  T2000: {
+    cbeta: 'T2000', xml: 'T/T47/T47n2000.xml', canonRef: 'T47n2000', work_id: 'kr:KR6q0065',
+    title: '虛堂和尚語錄', english: 'Recorded Sayings of Master Xutang', author: '虛堂智愚 (Xutang Zhiyu); 妙源 (Miaoyuan), comp.',
+    source: ndl(['2576515', '2576516', '2576517', '2576518', '2576519', '2576520', '2576521', '2576522', '2576523', '2576524'], '寛文9 [1669] edition', 1669),
+  },
+  T2003: {
+    cbeta: 'T2003', xml: 'T/T48/T48n2003.xml', canonRef: 'T48n2003', work_id: 'kr:KR6q0078',
+    title: '佛果圜悟禪師碧巖錄', english: 'Blue Cliff Record', author: '雪竇重顯 (Xuedou Chongxian), verses; 圜悟克勤 (Yuanwu Keqin), commentary',
+    source: ndl(['2543612', '2543613', '2543614', '2543615', '2543616'], 'Gozan edition (五山版), Muromachi period', null),
+  },
+  T1998A: {
+    cbeta: 'T1998A', xml: 'T/T47/T47n1998A.xml', canonRef: 'T47n1998A', work_id: 'kr:KR6q0060',
+    title: '大慧普覺禪師語錄', english: 'Recorded Sayings of Chan Master Dahui Pujue', author: '大慧宗杲 (Dahui Zonggao); 蘊聞 (Yunwen), comp.',
+    source: ndl(['2559970', '2559971', '2559972'], 'Edo-period edition, 12 juan', null),
+  },
+  X1359: {
+    cbeta: 'X1359', xml: 'X/X69/X69n1359.xml', canonRef: 'X69n1359', work_id: 'kr:KR6q0293',
+    title: '應菴曇華禪師語錄', english: 'Recorded Sayings of Chan Master Ying\'an Tanhua', author: '應菴曇華 (Ying\'an Tanhua); 守詮 (Shouquan) et al., comp.',
+    source: ndl(['2543568'], 'Gozan edition (五山版), 正應元 [1288]', 1288),
+  },
+  X1381: {
+    cbeta: 'X1381', xml: 'X/X70/X70n1381.xml', canonRef: 'X70n1381', work_id: 'kr:KR6q0314',
+    title: '破菴祖先禪師語錄', english: 'Recorded Sayings of Chan Master Po\'an Zuxian', author: '破菴祖先 (Po\'an Zuxian); 圓照 (Yuanzhao) et al., comp.',
+    source: ndl(['2532099'], 'Gozan edition (五山版), 應安3 [1370]', 1370),
+  },
+  X1377: {
+    cbeta: 'X1377', xml: 'X/X70/X70n1377.xml', canonRef: 'X70n1377', work_id: 'kr:KR6q0311',
+    title: '松源崇嶽禪師語錄', english: 'Recorded Sayings of Chan Master Songyuan Chongyue', author: '松源崇嶽 (Songyuan Chongyue); 善開 (Shankai) et al., comp.',
+    source: ndl(['2537781'], '元祿4 [1691] edition', 1691),
+  },
+  X1367: {
+    cbeta: 'X1367', xml: 'X/X69/X69n1367.xml', canonRef: 'X69n1367', work_id: 'kr:KR6q0301',
+    title: '笑隱大訢禪師語錄', english: 'Recorded Sayings of Chan Master Xiaoyin Daxin', author: '笑隱大訢 (Xiaoyin Daxin); 延俊 (Yanjun) et al., comp.',
+    source: ndl(['2532110'], 'Gozan edition (五山版), early Muromachi', null),
+  },
+  X1372: {
+    cbeta: 'X1372', xml: 'X/X69/X69n1372.xml', canonRef: 'X69n1372', work_id: 'kr:KR6q0306',
+    title: '無文道燦禪師語錄', english: 'Recorded Sayings of Chan Master Wuwen Daocan', author: '無文道燦 (Wuwen Daocan); 惟康 (Weikang), comp.',
+    source: ndl(['2545279'], 'Song print (宋刊), bound with 無文印', null),
+  },
+  X1318: {
+    cbeta: 'X1318', xml: 'X/X68/X68n1318.xml', canonRef: 'X68n1318', work_id: 'kr:KR6q0265',
+    title: '續古尊宿語要', english: 'Further Essential Sayings of the Ancient Worthies', author: '師明 (Shiming), comp.',
+    source: ndl(['2545267', '2545268', '2545269', '2545270', '2545271'], 'Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6', 1139),
   },
 };
 
@@ -203,15 +263,18 @@ async function measure() {
   log(`${textKey}: pass 1 — ${fit.pages.filter((x) => x.span).length} pages fitted; ${needs.length} edge columns to read a second time`);
   const evidence = new Map();
   let done = 0;
-  for (const nd of needs) {
-    const [i, side] = nd.split(':');
-    const p = src[Number(i)];
-    const col = edgeColumn(pages[Number(i)].lines, side);
-    if (!col?.box) continue;
-    const r = await edgeRead(p, col, cache);
-    if (++done % 25 === 0) { fs.writeFileSync(CACHE, JSON.stringify(cache)); log(`  edge reads ${done}/${needs.length}`); }
-    if (r.text) evidence.set(nd, foldHan(r.text).f);
-  }
+  const queue = [...needs];
+  const worker = async () => {
+    for (let nd = queue.shift(); nd; nd = queue.shift()) {
+      const [i, side] = nd.split(':');
+      const col = edgeColumn(pages[Number(i)].lines, side);
+      if (!col?.box) continue;
+      const r = await edgeRead(src[Number(i)], col, cache);
+      if (++done % 50 === 0) { fs.writeFileSync(CACHE, JSON.stringify(cache)); log(`  edge reads ${done}/${needs.length}`); }
+      if (r.text) evidence.set(nd, foldHan(r.text).f);
+    }
+  };
+  await Promise.all([1, 2, 3, 4].map(worker));
   fs.writeFileSync(CACHE, JSON.stringify(cache));
   if (needs.length) fit = fitBook(pages, F, idx, structural, evidence);
   const edgeUsd = Object.values(cache).reduce((n, r) => n + (r.usd || 0), 0);
@@ -257,6 +320,7 @@ function summarise(rows) {
 function volumeTitle(v, juanRange) {
   const n = T.source.volumes.length;
   const j = juanRange ? (juanRange[0] === juanRange[1] ? `卷${juanRange[0]}` : `卷${juanRange[0]}–${juanRange[1]}`) : null;
+  if (n === 1) return { title: T.title, display_title: `${T.title} (${T.english})` };
   return {
     title: `${T.title}${j ? ` ${j}` : ''} (vol ${v + 1} of ${n})`,
     display_title: `${T.title} (${T.english})${j ? `, ${j.replace('卷', 'juan ')}` : ''} — vol. ${v + 1} of ${n}`,
@@ -288,7 +352,7 @@ async function apply(db) {
         title: t.title, display_title: t.display_title, original_title: T.title,
         author: T.author,
         language: 'Classical Chinese', languages: ['Classical Chinese'],
-        year: T.source.year, published: T.source.edition,
+        ...(T.source.year ? { year: T.source.year } : {}), published: T.source.edition,
         content_type: 'book',
         collections: ['zen-chan', 'chinese-buddhist-texts'],
         work_id: T.work_id,
