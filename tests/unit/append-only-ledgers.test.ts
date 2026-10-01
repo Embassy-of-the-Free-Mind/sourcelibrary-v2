@@ -11,7 +11,7 @@ import { mkdtempSync, writeFileSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { describe, it, expect, afterAll } from 'vitest';
-import { buildExperiments } from '../../scripts/eval/build-experiments.mjs';
+import { buildExperiments, adoptOrphans } from '../../scripts/eval/build-experiments.mjs';
 import { appendStats, classify, unionPatterns, REGENERATED_ON_MAIN } from '../../scripts/audit/append-only-ledgers.mjs';
 
 const dirs: string[] = [];
@@ -52,6 +52,29 @@ describe('buildExperiments', () => {
     expect(problems.some((p) => p.includes('2026-10-01-wrong-date.md') && p.includes('must match'))).toBe(true);
     expect(problems.some((p) => p.startsWith('notes.md'))).toBe(true);
     expect(problems.some((p) => p.includes('2026-10-02-marker.md') && p.includes('conflict'))).toBe(true);
+  });
+
+  it('adoptOrphans moves an entry that a PR still wrote into EXPERIMENTS.md into its own file, once', () => {
+    const d = tmp({
+      'README.md': '# Log\n',
+      '2026-09-30-known.md': '## 2026-09-30 · Known question (#1)\n\n- **Result.** x\n',
+    });
+    const ledger = join(tmp({}), 'EXPERIMENTS.md'); // the committed file lives beside the dir, not in it
+    writeFileSync(ledger, [
+      '# Log', '', '---',
+      '## 2026-10-01 — Orphan question: lite vs flash on Yigdzin (#4742)', '', '- **Result.** y', '', '---', '',
+      '## 2026-09-30 · Known question (#1)', '', '- **Result.** x', '',
+      '## Older runs', '', 'note', '',
+    ].join('\n'));
+    const created = adoptOrphans(ledger, d);
+    expect(created).toEqual(['2026-10-01-orphan-question-lite-vs-flash-on-yigdzin-4742.md']);
+    const { text, problems, counts } = buildExperiments(d);
+    expect(problems).toEqual([]);
+    expect(counts.dated).toBe(2);
+    expect(text).toContain('## 2026-10-01 — Orphan question');
+    expect(text.indexOf('## 2026-10-01')).toBeLessThan(text.indexOf('## 2026-09-30'));
+    // idempotent: the adopted heading is now known; the undated note is never adopted
+    expect(adoptOrphans(ledger, d)).toEqual([]);
   });
 
   it('names a missing README as a problem instead of throwing', () => {

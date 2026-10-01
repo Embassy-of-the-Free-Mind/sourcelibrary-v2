@@ -31,6 +31,10 @@
  *
  * The write refuses off `main` without --force: regenerating in a PR is the
  * habit that made the file a collider. View with --print; main regenerates it.
+ *
+ * A write first ADOPTS any dated entry that is in the committed EXPERIMENTS.md
+ * but in no source file (a PR that still appended to the old file) into its own
+ * file, so regeneration never drops an entry. See adoptOrphans().
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -85,12 +89,56 @@ export function buildExperiments(srcDir = SRC) {
   return { text, problems, counts: { series: series.length, dated: dated.length, notes: notes.length } };
 }
 
+/**
+ * Transition safety: a PR opened before #5436 (or one that ignored the gate) can
+ * still land an entry in the committed EXPERIMENTS.md. Regenerating would drop
+ * it silently. So before a write, every dated `## YYYY-MM-DD …` section in the
+ * committed file whose heading is in none of the source files is ADOPTED: written
+ * to experiments/YYYY-MM-DD-<slug>.md. Returns the files created.
+ */
+export function adoptOrphans(outPath = OUT, srcDir = SRC) {
+  if (!fs.existsSync(outPath)) return [];
+  const text = fs.readFileSync(outPath, 'utf8');
+  const known = new Set();
+  for (const n of fs.readdirSync(srcDir)) {
+    if (!n.endsWith('.md') || n === 'README.md') continue;
+    known.add(fs.readFileSync(path.join(srcDir, n), 'utf8').split('\n')[0].trim());
+  }
+  const lines = text.split('\n');
+  const starts = lines.flatMap((l, i) => (/^## /.test(l) ? [i] : []));
+  const slug = (s) => s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
+  const created = [];
+  for (let k = 0; k < starts.length; k++) {
+    const a = starts[k], b = k + 1 < starts.length ? starts[k + 1] : lines.length;
+    const heading = lines[a].trim();
+    const m = heading.match(/^## (20\d\d-\d\d-\d\d)\b\s*(.*)$/);
+    if (!m || known.has(heading)) continue;
+    const body = lines.slice(a, b);
+    while (body.length && (body[body.length - 1].trim() === '' || body[body.length - 1].trim() === '---')) body.pop();
+    const issue = (m[2].match(/#(\d{3,5})/) || [])[1];
+    let words = slug(m[2].replace(/\(#[^)]*\)/g, '').replace(/\(logged [^)]*\)/g, '')).slice(0, 9).join('-') || 'entry';
+    if (issue) words += `-${issue}`;
+    let name = `${m[1]}-${words}`, n = 2;
+    while (fs.existsSync(path.join(srcDir, `${name}.md`))) name = `${m[1]}-${words}-${n++}`;
+    fs.writeFileSync(path.join(srcDir, `${name}.md`), body.join('\n') + '\n');
+    known.add(heading);
+    created.push(`${name}.md`);
+  }
+  return created;
+}
+
 function currentBranch() {
   try { return execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
   catch { return ''; }
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  const writing = !has('--print') && !has('--check');
+  if (writing) {
+    const adopted = adoptOrphans();
+    for (const n of adopted) console.log(`adopted an entry still written to EXPERIMENTS.md → experiments/${n}`);
+  }
   const { text, problems, counts } = buildExperiments();
   for (const p of problems) console.error(`build-experiments: ${p}`);
   if (has('--print')) { process.stdout.write(text); process.exit(problems.length ? 1 : 0); }
