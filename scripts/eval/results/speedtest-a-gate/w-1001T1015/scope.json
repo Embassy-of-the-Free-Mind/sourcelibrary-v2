@@ -1,0 +1,36 @@
+{
+ "at": "2026-10-01T10:25:39.723Z",
+ "window": "2026-10-01T04:15:00.000Z/2026-10-01T10:15:00.000Z",
+ "abort": [],
+ "warn": [
+  {
+   "book_id": "69aea85d1cbf28a363a4f63c",
+   "title": "Wirtschaft und Gesellschaft",
+   "pages": 79,
+   "why": "processing_priority 95 (standing score or gap-fill enrolment; Phase 4 floor does not cover --enrol-auto)",
+   "runs": [
+    "tbc_muopf6p4_xao03r"
+   ]
+  },
+  {
+   "book_id": "69bd93a22d11455793b3fae6",
+   "title": "Die Mysterien des Mithra",
+   "pages": 16,
+   "why": "processing_priority 95 (standing score or gap-fill enrolment; Phase 4 floor does not cover --enrol-auto)",
+   "runs": [
+    "tbc_mup5amyx_zq9heq"
+   ]
+  },
+  {
+   "book_id": "69bd9579d9007d72ade0c390",
+   "title": "Bundehesh: Liber Pehlvicus",
+   "pages": 48,
+   "why": "processing_priority 95 (standing score or gap-fill enrolment; Phase 4 floor does not cover --enrol-auto)",
+   "runs": [
+    "tbc_mup5it3h_vch148"
+   ]
+  }
+ ],
+ "exempt": [],
+ "abort_count": 0
+}

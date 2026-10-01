@@ -1,0 +1,203 @@
+{
+  "seed": 2026100110,
+  "at": "2026-10-01T10:25:04.834Z",
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained",
+    "since": "2026-10-01T04:15:00.000Z",
+    "until": "2026-10-01T10:15:00.000Z",
+    "book_ids_file": null
+  },
+  "n_books": 45,
+  "n_seams": 10,
+  "weights": {
+    "Greek": {
+      "books": 57,
+      "translated_pages": 4479
+    },
+    "French": {
+      "books": 26,
+      "translated_pages": 385
+    },
+    "Sanskrit": {
+      "books": 11,
+      "translated_pages": 582
+    },
+    "Tibetan": {
+      "books": 3,
+      "translated_pages": 0
+    },
+    "Latin": {
+      "books": 291,
+      "translated_pages": 4729
+    },
+    "German": {
+      "books": 28,
+      "translated_pages": 174
+    },
+    "Italian": {
+      "books": 11,
+      "translated_pages": 1138
+    },
+    "Russian": {
+      "books": 8,
+      "translated_pages": 245
+    },
+    "Greek, English": {
+      "books": 1,
+      "translated_pages": 10
+    },
+    "Unknown": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Pali": {
+      "books": 2,
+      "translated_pages": 0
+    },
+    "Avestan": {
+      "books": 1,
+      "translated_pages": 48
+    },
+    "Hebrew": {
+      "books": 5,
+      "translated_pages": 188
+    },
+    "Chinese": {
+      "books": 45,
+      "translated_pages": 3804
+    },
+    "e": {
+      "books": 6,
+      "translated_pages": 1055
+    },
+    "Arabic": {
+      "books": 18,
+      "translated_pages": 299
+    },
+    "Ge'ez": {
+      "books": 2,
+      "translated_pages": 275
+    },
+    "Korean": {
+      "books": 2,
+      "translated_pages": 441
+    },
+    "Hawaiian": {
+      "books": 1,
+      "translated_pages": 216
+    },
+    "Spanish": {
+      "books": 6,
+      "translated_pages": 247
+    },
+    "Akkadian": {
+      "books": 2,
+      "translated_pages": 270
+    },
+    "Persian": {
+      "books": 3,
+      "translated_pages": 189
+    },
+    "Quiché Maya": {
+      "books": 1,
+      "translated_pages": 56
+    },
+    "Danish": {
+      "books": 3,
+      "translated_pages": 295
+    },
+    "Old English": {
+      "books": 1,
+      "translated_pages": 120
+    },
+    "Middle High German": {
+      "books": 1,
+      "translated_pages": 104
+    },
+    "Portuguese": {
+      "books": 1,
+      "translated_pages": 112
+    },
+    "Polish": {
+      "books": 1,
+      "translated_pages": 104
+    },
+    "Japanese": {
+      "books": 2,
+      "translated_pages": 0
+    },
+    "Dutch": {
+      "books": 2,
+      "translated_pages": 22
+    },
+    "Javanese": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Malay": {
+      "books": 4,
+      "translated_pages": 0
+    },
+    "Bugis": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Yucatec Maya": {
+      "books": 2,
+      "translated_pages": 0
+    },
+    "English": {
+      "books": 6,
+      "translated_pages": 0
+    }
+  },
+  "visits": {
+    "books_visited": 45,
+    "seeded_main": 45,
+    "seam_main": 10,
+    "extras": 45
+  },
+  "exclusions": {
+    "page_type": 1831,
+    "short_translation": 6,
+    "short_ocr": 4
+  },
+  "arms": {
+    "lite": 45
+  },
+  "eligibility": [
+    {
+      "book_id": "69aea85d1cbf28a363a4f63c",
+      "title": "Wirtschaft und Gesellschaft",
+      "pages": 79,
+      "last_write": "2026-10-01T06:01:31.271Z",
+      "why": [
+        "processing_priority 95"
+      ]
+    },
+    {
+      "book_id": "69bd93a22d11455793b3fae6",
+      "title": "Die Mysterien des Mithra",
+      "pages": 16,
+      "last_write": "2026-10-01T06:37:53.976Z",
+      "why": [
+        "processing_priority 95"
+      ]
+    },
+    {
+      "book_id": "69bd9579d9007d72ade0c390",
+      "title": "Bundehesh: Liber Pehlvicus",
+      "pages": 48,
+      "last_write": "2026-10-01T06:56:04.048Z",
+      "why": [
+        "processing_priority 95"
+      ]
+    }
+  ],
+  "controls": {
+    "swap": 10,
+    "drop": 10,
+    "repeat": 10
+  }
+}
