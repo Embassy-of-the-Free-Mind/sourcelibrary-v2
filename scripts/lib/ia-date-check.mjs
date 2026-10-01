@@ -23,6 +23,8 @@
  * never read as "old" on the date alone.
  */
 
+// Bump on ANY rule change: write-ia-date-check.mjs skips rows already carrying this METHOD,
+// so a changed rule under an unchanged name would silently never be written.
 export const METHOD = 'ia-date-rules-v3';
 
 const ISLAMICATE = /^(ara|ar|arabic|per|fas|fa|persian|farsi|urd|ur|urdu|ota|ottoman|ottoman turkish|pus|pashto|snd|sindhi|kas|kashmiri|uig|uighur|uyghur)$/i;
@@ -155,7 +157,7 @@ export function classifyIaDate(cand, ia) {
   // Digital Scriptorium legacy mirror: every page image is the same screenshot of a web
   // catalogue record ("Number of Images Available: 0"), never the manuscript. Measured
   // 16/16 (6 in the two validation rounds, 10 more by page hash), 5,150 items.
-  if (list(ia.collection).includes('ds-legacy-data')) return { verdict: 'modern', reason: 'web-catalogue-screenshot:ds-legacy-data', date_ce: null, provenance: 'patron' };
+  if (list(ia.collection).includes('ds-legacy-data')) return { verdict: 'modern', reason: 'web-catalogue-screenshot:ds-legacy-data', date_ce: null, provenance: provenanceOf(ia, cand) };
   const prov = provenanceOf(ia, cand);
   const langs = languagesOf(cand, ia);
   const title = asciiDigits([first(ia.title) || cand?.title || '', first(ia.subject)].join(' '));
@@ -216,6 +218,6 @@ export function classifyIaDate(cand, ia) {
   // A pre-1900-looking year in the title ('… 8th Ed. (1884)') blocks the base rate below.
   if (/(?:^|[\s(\[,،])(1[2-8]\d\d)(?=[\s)\],.،]|$)/.test(title)) return out('unknown', 'patron-title-old-year');
   // A patron upload with no usable date and no manuscript signal: base rate, not proof.
-  // v1 validation read 13/13 such items as modern prints/PDFs from the title page.
+  // Validation read 25/25 such items (two rounds) as modern prints/PDFs from the title page.
   return out('modern', `patron-undated:${cv.why || 'no-date'}`);
 }
