@@ -178,6 +178,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             </Link>
             {isAdmin && (
               <>
+                {/* The one-page library dashboard (#3943): holdings, pipeline,
+                    what's left, spend (allow-listed), readers. First because it
+                    is the page an admin opens to see where things stand. */}
+                <Link
+                  href="/admin"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Dashboard
+                </Link>
                 <Link
                   href="/analytics"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
