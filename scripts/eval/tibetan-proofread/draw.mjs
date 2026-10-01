@@ -22,6 +22,7 @@
 //     --scores-1001 scores-1001.jsonl --meta-1001 tib-sample-meta-1001.jsonl
 // (the 09-30 scores are in the repo; the other four files live on Hetzner under /root/tibetan-eval/
 //  nalanda-2026-09-30/ and redraw-2026-10-01/.)
+import { makeLegacyLcg } from '../lib/paired-stats.mjs';
 import { createRequire } from 'module';
 import crypto from 'crypto';
 import fs from 'fs';
@@ -43,7 +44,7 @@ const OUT = arg('--out', path.join(REPO, 'scripts/eval/results/tibetan-proofread
 const LO = 0.90, HI = 0.97, N_TWO_LEAF = 10, N_SINGLE = 20;
 
 const makeShuffle = (s0) => {
-  let seed = s0; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+  const rnd = makeLegacyLcg(s0); // the draw committed with this script was made with this generator (#5373)
   const shuffle = (a) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   return { rnd, shuffle };
 };
