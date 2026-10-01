@@ -207,14 +207,14 @@ Translation shares the registry (same books, same interior-page rule, same reser
 A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 
 1. Outputs and scores are on `main` in the store (§5), with `run_id` and cost.
-2. `scripts/eval/EXPERIMENTS.md` has an entry in its existing format (date · question · design · result · replicated? · artifact), plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
+2. `scripts/eval/experiments/<date>-<slug>.md` exists — one new file per entry, in the existing format (date · question · design · result · replicated? · artifact); `EXPERIMENTS.md` is generated from these on `main` and is never edited in a PR (#5436) — plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
 5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
-- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `EXPERIMENTS.md` and in `scripts/eval/store/**`.
+- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `scripts/eval/experiments/**`, `EXPERIMENTS.md` and `scripts/eval/store/**` (`tests/unit/no-conflict-markers.test.ts` sweeps every tracked text file). **Generated-ledger check**: a PR that hand-edits `EXPERIMENTS.md` or `INDEX.md` fails CI (`scripts/audit/append-only-ledgers.mjs --pr`); the weekly `append-only-ledgers.yml` flags the next file that acquires the append-to-one-tail shape (#5436).
 - **Store schema check**: every appended line validates against §5 (required fields, `measure` enum, `outcome` enum, `book_id` uniqueness per stratum).
 - **Zero-output check**: a `run_id` with no `outcome: text` rows is marked `failed` in the run index.
 - **Checkpoint rule**: any corpus walk feeding the store writes a checkpoint every 100K items and materialises its id list before slow work.
@@ -348,7 +348,7 @@ Reading the table:
 | `scripts/eval/dataset/v0.*`, `observations/` (#3235) | a **view** over the store, exported by `export-eval-dataset.mjs` honouring `reserve` and `licence` (its licence policy — include / pointer-only with `reference_sha256` — is kept) | no data moves; `build-observations.mjs` re-scores at build time today and keeps doing so from store outputs; `v0.4-difficulty` stays reference-free by design |
 | `ground-truth/` (55 pinned library pages), `ground-truth-ws/` (121 external), `reference-works/*.json` | reference records (`origin: library` / `external`), `leaf_check: unchecked` until read | index builder; the `_note` and `page_class` fields carry over |
 | Translation A/B packets (`translation-*-ab.mjs`, judge outputs) | store `outputs` (arm texts, `context_given`) + `scores` with `measure: preference`, `against.judge_packet_id`, same-arm tie rate per packet | converter per script; packets without pinned text hashes are imported with `text_hash: null` and marked `unpinned` |
-| `EXPERIMENTS.md` (2,034 lines) | unchanged, plus a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
+| `EXPERIMENTS.md` (3,064 lines on 2026-10-01) | split into one file per entry under `scripts/eval/experiments/` and GENERATED on main (#5436); a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
 | `PREREGISTRATION-*.md` (8) | unchanged; new ones add the §7 A-vs-A arm and the §3 sizing line | template update |
 
 Order: index builder → reference schema fill → results converter → dashboard reads the store → dataset exporter reads the store → checks. Each is one PR; none reruns a model.

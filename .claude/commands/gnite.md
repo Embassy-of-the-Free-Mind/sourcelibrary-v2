@@ -84,7 +84,9 @@ agents` and `git status` instead.
   `gh pr view --json labels -q '[.labels[].name]'`; if the label is there, `git fetch origin &&
   git rebase origin/main`, resolve (`main` wins every line you did not set out to change, then
   re-read the whole hunk for facts that now disagree with their neighbours), push with
-  `--force-with-lease`, and check `npx tsc --noEmit`. A PR that conflicts on the day it is opened is
+  `--force-with-lease`, and check `npx tsc --noEmit`. If the conflict is in `scripts/eval/EXPERIMENTS.md`
+  or `INDEX.md`, take main's version whole and move your entry into a new file under
+  `scripts/eval/experiments/` — those two are generated on main now (#5436). A PR that conflicts on the day it is opened is
   the opener's job; left overnight it waits for a sweep, and 32 PRs since August were closed that
   way instead of finished (#5415).
 
