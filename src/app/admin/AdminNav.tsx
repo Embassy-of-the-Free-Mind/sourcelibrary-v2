@@ -17,6 +17,7 @@ const adminLinks: NavItem[] = [
   { href: '/curation/identity-review', label: 'Identity review' },
   { href: '/admin/pipeline', label: 'Pipeline' },
   { href: '/admin/processing', label: 'Processing' },
+  { href: '/admin/quality', label: 'Quality' },
   { href: '/admin/realtime', label: 'Realtime' },
   { href: '/admin/collections', label: 'Collections' },
   { href: '/admin/collection-proposals', label: 'Proposals' },
