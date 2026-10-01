@@ -31,6 +31,7 @@ const VALIDATED = {
   renaissanceCI: '91.3–95.2',
   matcherPrecisionPct: 78.7,
   sampleSize: 1000,
+  // Shown beside every VALIDATED figure on the page so a reader can see its age (#5501).
   evalDate: 'June 2026',
   crossModelKappa: 0.82,
 };
@@ -178,12 +179,12 @@ export default async function CensusPage() {
           <Stat
             n={`~${Math.round(100 - VALIDATED.allPrintGapPct)}`}
             unit="%"
-            label="of all early-modern print translated (validated estimate)"
+            label={`of all early-modern print translated (validated estimate, ${VALIDATED.evalDate})`}
           />
           <Stat
             n={`~${Math.round(100 - VALIDATED.renaissanceGapPct)}`}
             unit="%"
-            label="of Renaissance-composed Latin works translated"
+            label={`of Renaissance-composed Latin works translated (validated ${VALIDATED.evalDate})`}
           />
           <Stat
             n={fmt(data.catalog_records)}
@@ -200,7 +201,7 @@ export default async function CensusPage() {
             intellectual output of the Renaissance, the Reformation, and the Scientific Revolution.
           </p>
           <p className="mb-4">
-            How much of it can an English reader actually read? Our validated estimate: across{' '}
+            How much of it can an English reader actually read? Our validated estimate ({VALIDATED.evalDate}): across{' '}
             <strong>all</strong> early-modern print, <strong>{VALIDATED.allPrintGapPct}%</strong>{' '}
             <span className="text-stone-500">[{VALIDATED.allPrintCI}]</span> has no known English
             translation. Restricted to works actually <em>composed</em> in the Renaissance — not
@@ -337,8 +338,8 @@ export default async function CensusPage() {
             <li>
               <strong>Two kinds of figures.</strong> The headline gap estimates (
               {VALIDATED.allPrintGapPct}% all-print, {VALIDATED.renaissanceGapPct}%
-              Renaissance-composed Latin) are debiased, validated measurements with confidence
-              intervals. The per-language bars and the raw {data.raw_pct_translated}% join rate
+              Renaissance-composed Latin) are debiased measurements with confidence intervals,
+              validated in {VALIDATED.evalDate} and unchanged until the study is re-run. The per-language bars and the raw {data.raw_pct_translated}% join rate
               are catalog floors — lower bounds from record matching, useful for shape, not for
               headlines.
             </li>
@@ -356,8 +357,8 @@ export default async function CensusPage() {
             </li>
             <li>
               <strong>Match precision is era-dependent.</strong> Of pipeline-matched
-              &ldquo;translated&rdquo; works, {VALIDATED.matcherPrecisionPct}% have a confirmed
-              real translation — higher for classics, lower for Renaissance titles, which is one
+              &ldquo;translated&rdquo; works, {VALIDATED.matcherPrecisionPct}% had a confirmed
+              real translation in the {VALIDATED.evalDate} validation — higher for classics, lower for Renaissance titles, which is one
               of the biases the debiased estimates correct.
             </li>
             <li>

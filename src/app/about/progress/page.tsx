@@ -71,7 +71,9 @@ async function getCoverageData(): Promise<CoverageData | null> {
     }), { editions: 0, scanned: 0, translated: 0, in_sl: 0 });
 
     return {
-      built_at: new Date().toISOString(),
+      // The RPC aggregates ustc_editions at request time, but the rows are only
+      // as fresh as the last catalog-coverage build — "now" would lie (#5501).
+      built_at: await getCoverageBuiltAt(),
       total_editions: totals.editions,
       total_works: 0,
       total_scanned: totals.scanned,
@@ -84,6 +86,24 @@ async function getCoverageData(): Promise<CoverageData | null> {
     };
   } catch {
     return getCoverageDataFallback();
+  }
+}
+
+/**
+ * When scripts/catalog-coverage/build.mjs last loaded ustc_editions (it stamps
+ * catalog_coverage_meta in the same run). '' renders as "Unknown".
+ */
+async function getCoverageBuiltAt(): Promise<string> {
+  try {
+    const db = await getReadDb();
+    const meta = await db.collection('catalog_coverage_meta').findOne(
+      { _id: 'latest_build' as any },
+      { projection: { built_at: 1, updatedAt: 1 }, maxTimeMS: 5000 },
+    );
+    const at = meta?.built_at || meta?.updatedAt;
+    return at ? new Date(at).toISOString() : '';
+  } catch {
+    return '';
   }
 }
 
