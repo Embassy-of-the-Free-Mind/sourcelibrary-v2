@@ -200,8 +200,14 @@ export function scoreRead(readText, pages, claimed, { span = 6, far = null, floo
  *
  * The volume passes only if it has ≥ minScored informative samples and every one is aligned. Any
  * informative sample whose best side is elsewhere refuses the volume.
+ *
+ * v3 (2026-10-01): a NEAR-VERBATIM read (≥ verbatimIdentity at the claimed side) is also aligned when
+ * it beats every wrong side by ≥ verbatimMargin. Formulaic commentary repeats whole runs from folio
+ * to folio, so a wrong side two leaves away can legitimately share most of the page: v84 f. 18b read
+ * 0.998 at its side against 0.812 two sides off (a ~75-syllable gap), and the flat 0.25 margin
+ * refused a volume whose every informative read picked shift 0.
  */
-export const ALIGN_RULES = Object.freeze({ version: 2, informativeFloor: 0.4, minMargin: 0.25, minScored: 4, minReadSyllables: 40 });
+export const ALIGN_RULES = Object.freeze({ version: 3, informativeFloor: 0.4, minMargin: 0.25, verbatimIdentity: 0.9, verbatimMargin: 0.1, minScored: 4, minReadSyllables: 40 });
 
 export function sampleClass(score, rules = ALIGN_RULES) {
   if (!score || score.read_syllables < rules.minReadSyllables) return 'uninformative';
@@ -209,7 +215,9 @@ export function sampleClass(score, rules = ALIGN_RULES) {
   if (score.best_identity < rules.informativeFloor && !(g && g.identity >= rules.informativeFloor)) return 'uninformative';
   if (score.best_identity < rules.informativeFloor && g) return g.shift === 0 ? 'weak' : 'misaligned';
   if (score.measured_shift !== 0) return 'misaligned';
-  return score.identity - score.control >= rules.minMargin ? 'aligned' : 'weak';
+  const margin = score.identity - score.control;
+  if (margin >= rules.minMargin) return 'aligned';
+  return score.identity >= rules.verbatimIdentity && margin >= rules.verbatimMargin ? 'aligned' : 'weak';
 }
 
 export function volumeVerdict(samples, rules = ALIGN_RULES) {

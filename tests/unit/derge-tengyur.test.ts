@@ -49,6 +49,11 @@ describe('derge-tengyur scoring', () => {
   it('a noisy read at shift 0 that clears the control is aligned (v4 f. 208b)', () => {
     expect(sampleClass(sc({ identity: 0.594, best_identity: 0.594, control: 0.149 }))).toBe('aligned');
   });
+  it('a near-verbatim read in repetitive text is aligned if it still beats every wrong side by 0.1 (v84 f. 18b)', () => {
+    expect(sampleClass(sc({ identity: 0.998, best_identity: 0.998, control: 0.812 }))).toBe('aligned');
+    expect(sampleClass(sc({ identity: 0.85, best_identity: 0.85, control: 0.7 }))).toBe('weak');
+    expect(sampleClass(sc({ identity: 0.95, best_identity: 0.95, control: 0.9 }))).toBe('weak');
+  });
   it('one misaligned informative sample refuses the volume; too few informative reads refuses it', () => {
     const ok = { canvas: 1, label: '2a', score: sc({}) };
     const bad = { canvas: 2, label: '3a', score: sc({ measured_shift: 2, best_identity: 0.9, identity: 0.2 }) };
