@@ -68,6 +68,10 @@ const HOLD = {
   release: 'a draft English translation of the Derge Tengyur is approved as a separate, priced decision (#5497: translation NOT approved at import)',
 };
 const FIRST_IG = 1317; // tbrc volume numbers 1317-1531 (BDRC note on MW23703)
+// 215 numbers for 213 volumes: I1519 and I1520 are not volumes of W23703 (the manifest service
+// answers 500; measured 2026-10-01), so volumes 203–213 are I1521–I1531. The manifest's own
+// "volume N" label is still checked for every volume below.
+const igFor = (vol) => FIRST_IG + vol - 1 + (vol > 202 ? 2 : 0);
 const N_VOLUMES = 213;
 const TEXT_SOURCE = 'esukhia-derge-tengyur';
 const PIPELINE = 'derge-tengyur-import-5497';
@@ -225,7 +229,7 @@ function volumeTitle(vol, file) {
 }
 
 async function importVolume(db, vol) {
-  const ig = FIRST_IG + vol - 1;
+  const ig = igFor(vol);
   const file = ETEXT_FILES[vol - 1];
   if (Number(file.slice(0, 3)) !== vol) throw new Error(`e-text file ${file} is not volume ${vol}`);
   const v = ckpt.volumes[vol] ||= {};
