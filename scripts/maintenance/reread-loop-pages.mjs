@@ -61,6 +61,7 @@ import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { logUsage, calculateUsageCost } from '../workers/lib/supabase-usage-logger.mjs';
+import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
 const ISSUE = 3878;
 const REASON = 'reread-loop-3878';
@@ -190,12 +191,16 @@ async function submit() {
     if (!chunk.length) return;
     const displayName = `${REASON}-${RUN}-p${pass}-${s.jobs.length}`;
     const fileName = await uploadJsonl(chunk.map(c => JSON.stringify(c.req)).join('\n'), displayName);
-    const r = await fetch(`${API}/models/${model}:batchGenerateContent?key=${apiKey()}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ batch: { display_name: displayName, input_config: { file_name: fileName } } }),
-    });
-    const j = await r.json();
-    if (!r.ok) throw new Error(`batch create ${r.status}: ${JSON.stringify(j).slice(0, 300)}`);
+    // The input is deleted once create returns (#5544) — it no longer holds File API quota.
+    const j = await createThenDeleteInput({ fileName, apiKey: apiKey(), create: async () => {
+      const r = await fetch(`${API}/models/${model}:batchGenerateContent?key=${apiKey()}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batch: { display_name: displayName, input_config: { file_name: fileName } } }),
+      });
+      const body = await r.json();
+      if (!r.ok) throw new Error(`batch create ${r.status}: ${JSON.stringify(body).slice(0, 300)}`);
+      return body;
+    } });
     s.jobs.push({ pass, model, temperature, provenance, job: j.name, page_ids: chunk.map(c => c.page_id), submitted_at: new Date().toISOString(), collected: false });
     save(s);
     console.log(`pass ${pass}: ${j.name} (${chunk.length} pages)`);
