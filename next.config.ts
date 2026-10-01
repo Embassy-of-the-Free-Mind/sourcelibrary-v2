@@ -222,6 +222,15 @@ const nextConfig: NextConfig = {
         source: '/admin/spend',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Admin-only quality report (#5474): same belt and braces as the spend page.
+      {
+        source: '/admin/quality/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/quality',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
