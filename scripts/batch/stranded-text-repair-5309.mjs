@@ -214,9 +214,14 @@ async function ocr(db) {
   log(`ocr: ${picks.length} books / ${pages} pages; envelope spent $${sp.usd.toFixed(2)} + open translation est $${inflightTr.toFixed(2)} + this wave at $${OCR_RATE}/pg = $${(sp.usd + inflightTr + add).toFixed(2)} vs cap $${CAP}`);
   if (sp.usd + inflightTr + add > CAP) { log('ocr: CAP — not submitting'); s.cap_hit = new Date().toISOString(); saveState(s); return 0; }
 
+  // The project's File API storage (20 GB) fills when many batch inputs (≈40 MB each) are pending
+  // at once — ours and other lanes'. Past ~200 open jobs of ours, wait for the collector.
+  const inflightJobs = await db.collection('batch_jobs').countDocuments({ submitted_by: OCR_CALL_SITE, type: 'ocr', status: { $in: ACTIVE_JOB }, created_at: { $gte: new Date(s.created_at) } });
+  if (inflightJobs > Number(val('max-jobs', '200'))) { log(`ocr: ${inflightJobs} OCR jobs still open — waiting for the collector before another wave`); return 0; }
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const logFile = path.join(LOG_DIR, `ocr-${stamp}.log`);
   const t0 = new Date();
+  let quota = false;
   // One child process per book and per SLICE pages: bulk-reocr-local holds a book's images in
   // memory while it builds the JSONL, and the box OOM-killed three 2 GB submits of 50-book waves
   // (2026-10-01 00:21, 01:14). A slice bounds that at ~SLICE × image size.
@@ -244,8 +249,15 @@ async function ocr(db) {
       if (res.status !== 0) log(`  ${b.id} slice ${i}: bulk-reocr-local exited ${res.status} — see ${logFile}`);
       else log(`  ${b.id} slice ${i}: ${tail.join('; ')}`);
       fs.unlinkSync(file);
+      if (/exceeded your current quota|FileStorageBytesPerProject/.test((res.stdout || '') + (res.stderr || ''))) {
+        quota = true;
+        s.quota_hits = (s.quota_hits || 0) + 1; s.quota_backoff_until = new Date(Date.now() + 30 * 60e3).toISOString();
+        log(`ocr: File API storage quota hit — stopping this wave, backing off until ${s.quota_backoff_until}`);
+        break;
+      }
     }
     n++;
+    if (quota) break;
   }
   if (has('dry-run')) return 0;
 
@@ -259,6 +271,8 @@ async function ocr(db) {
     b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...children.map((j) => j.id)])];
     b.ocr_submitted_at = b.ocr_submitted_at || t0.toISOString();
     b.ocr_submitted = (b.ocr_submitted || 0) + submitted; b.ocr_submit_failed = failed;
+    // A quota refusal is not the book's failure: it stays pending and keeps its attempts.
+    if (submitted === 0 && quota) { b.quota_skipped = (b.quota_skipped || 0) + 1; continue; }
     b.submit_attempts = (b.submit_attempts || 0) + 1;
     b.phase = submitted > 0 ? 'ocr_submitted' : (b.submit_attempts < 3 ? 'pending' : 'ocr_submit_failed');
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: 'lite', retry: b.retries, attempt: b.submit_attempts } });
@@ -506,7 +520,9 @@ async function run(db) {
     await check(db); await withhold(db); await enrol(db); await runs(db); await clear(db);
     const s = loadState();
     const inflightOcr = s.books.filter((b) => b.phase === 'ocr_submitted').reduce((n, b) => n + b.n, 0);
-    if (s.books.some((b) => b.phase === 'pending') && inflightOcr < wave * 300 && !s.cap_hit) {
+    const backoff = s.quota_backoff_until && new Date(s.quota_backoff_until) > new Date();
+    if (backoff) log(`run: File API quota backoff until ${s.quota_backoff_until}`);
+    if (s.books.some((b) => b.phase === 'pending') && inflightOcr < wave * 200 && !s.cap_hit && !backoff) {
       args.push('--books', String(wave));
       await ocr(db);
       args.splice(args.length - 2, 2);
