@@ -191,17 +191,17 @@ await withMongo(async (db) => {
         updateOne: {
           filter: { _id: doc._id },
           update: {
+            // Dotted paths, not the whole sub-document: `classification.date_check`
+            // (#5458, write-ia-date-check.mjs) lives alongside and must survive a re-run.
             $set: {
-              classification: {
-                record_type: rt,
-                record_type_reason: rtReason,
-                record_type_source: 'ia-collection-rule',
-                script,
-                language_iso: iso,
-                language_iso_source: 'ia-tag', // low confidence — later tiers override
-                method: METHOD,
-                classified_at: new Date(),
-              },
+              'classification.record_type': rt,
+              'classification.record_type_reason': rtReason,
+              'classification.record_type_source': 'ia-collection-rule',
+              'classification.script': script,
+              'classification.language_iso': iso,
+              'classification.language_iso_source': 'ia-tag', // low confidence — later tiers override
+              'classification.method': METHOD,
+              'classification.classified_at': new Date(),
             },
           },
         },
