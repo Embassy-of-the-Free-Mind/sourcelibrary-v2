@@ -1053,15 +1053,6 @@ function shouldRun(phase) {
   return ONLY_PHASE === null || ONLY_PHASE === phase;
 }
 
-// The pre-#5492 reading only: the exact phase number, never its step key. For a FREE step that
-// shares a phase number with a paid one (Phase 8 advance), where a key pause must not freeze
-// already-paid work (#5496 review: images_submitted would sit until 8.5 rolled it back into a
-// second paid dispatch, #4839).
-function shouldRunExactPhase(phase) {
-  if (PAUSED_PHASES.has(phase)) return false;
-  return ONLY_PHASE === null || ONLY_PHASE === phase;
-}
-
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
 // Multiple GCP projects, deduplicated to avoid wasting retry attempts on the same project.
@@ -5438,8 +5429,7 @@ Rules:
     // writes a status and spends nothing, while dispatch above is paid work. Keeping the two
     // together meant a closed dial froze finished books at images_submitted until the 48h
     // staleness sweep rolled them back — straight into another re-dispatch (#4839).
-    // Same reason it ignores the 'images' pause key: only the exact legacy number 8 stops it.
-    if (shouldRunExactPhase(8)) {
+    if (shouldRun(8)) {
       // Check completed image extraction — both batch API and Lambda/SQS paths
       let imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })

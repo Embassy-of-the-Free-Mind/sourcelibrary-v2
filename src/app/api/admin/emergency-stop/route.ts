@@ -9,15 +9,10 @@ export const maxDuration = 60;
 /** Chained/seam batch translation runs (scripts/lib/translate-batch-seam.mjs RUNS_COLLECTION). */
 const RUNS_COLLECTION = 'translate_batch_runs';
 /**
- * The only run phases an emergency stop parks: chained runs whose next step is a SUBMIT
- * (paid). A run whose Batch job is already at Gemini — chained `round_submitted`, seam
- * `translate_submitted` / `repair_submitted` — is never parked: collecting it is free, and a
- * parked run is collected only if someone resumes through this route (a resume by editing
- * Mongo would orphan the paid output). The next paid submit those runs would make is stopped
- * by the lanes' own brake (`translateSubmitBrake` in submitRounds / the seam advanceRun),
- * which reads the `translate` key this route sets.
+ * Terminal phases of both batch lanes: chained (complete, parked, failed) and seam
+ * (written, shadow_complete, failed). Everything else is a run a tick would move.
  */
-const PARKABLE_RUN_PHASES = ['round_ready', 'round_submitting'];
+const RUN_TERMINAL_PHASES = ['complete', 'parked', 'failed', 'written', 'shadow_complete'];
 /**
  * Where an emergency stop puts an open run. `parked` is terminal for the chained lane, so
  * `tickChained` never selects it; a park WITHOUT `parked_for_hold` keeps the book out of
@@ -44,8 +39,7 @@ const validKeysError = (unknown: unknown[]) =>
  * Kill switch for runaway processing.
  *
  * FULL STOP (no body): cancels every pending/processing job and batch job, clears
- * book.job refs, parks the translate_batch_runs runs about to SUBMIT (round_ready,
- * round_submitting — never one already at Gemini, see PARKABLE_RUN_PHASES), purges the SQS AI queues,
+ * book.job refs, parks every open translate_batch_runs run, purges the SQS AI queues,
  * and sets BOTH `paused: true` and `paused_phases` to every pause key. Both, because a
  * selective-unpause scope bypasses the global flag (29 scopes were set on 2026-10-01, so
  * the flag alone stopped none of their books) and a step pause is absolute (#5492).
@@ -60,8 +54,7 @@ const validKeysError = (unknown: unknown[]) =>
  *   ?dry_run=true          — show what would be cancelled without doing it
  *   ?skip_purge=true       — do not purge the SQS AI queues
  *   ?resume=true           — clear every pause and un-park the runs this route parked
- *   ?resume=true&key=K     — resume ONE step: every other KEY stays stopped, but the global
- *                            flag is cleared, so steps that read only the flag restart
+ *   ?resume=true&key=K     — resume ONE step: everything else that was stopped stays stopped
  */
 export const POST = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
@@ -84,11 +77,9 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     if (key === null) {
       update = { paused: false, paused_phases: [] };
     } else {
-      // "Every keyed step that was stopped stays stopped, except K." A global pause becomes
-      // every key but K, so for the six keyed steps this stops more, never less: scoped books,
-      // which the global flag let through, now stop too. But `paused` goes false, so whatever
-      // reads ONLY the global flag restarts: orchestrator phases no key governs (1.97, 3, 5,
-      // 9, …) and any reader with no key. To keep those stopped, pause their phase numbers too.
+      // "Everything that was stopped stays stopped, except K." A global pause stops every
+      // step, so it becomes every key but K — scoped books, which the global flag let
+      // through, now stop too: the conversion only ever stops more, never less.
       const stopped = new Set<PauseKey>(current?.paused ? PAUSE_KEYS : pausedKeys(current));
       stopped.delete(key);
       const phaseOnly = (Array.isArray(current?.paused_phases) ? current.paused_phases : [])
@@ -207,13 +198,13 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     );
   }
 
-  // 3. Park batch translation runs about to submit. They live in their own collection, so
-  //    steps 1–2 never reached them, and the chained lane is the main translation lane
-  //    (#5492). Only PARKABLE_RUN_PHASES: a run already at Gemini keeps being collected
-  //    (free); the brake in the lane stops its next submit. The prior phase is kept so
-  //    ?resume can put each run back.
+  // 3. Park open batch translation runs. They live in their own collection, so steps 1–2
+  //    never reached them, and the chained lane is the main translation lane (#5492). The
+  //    prior phase is kept so ?resume can put each run back where it was; a run whose Batch
+  //    job is already at Gemini keeps the job's name on the run, so its results can still be
+  //    collected after the resume.
   if (stopsTranslate) {
-    const openRunsFilter = { phase: { $in: PARKABLE_RUN_PHASES } };
+    const openRunsFilter = { phase: { $nin: RUN_TERMINAL_PHASES } };
     result.translate_batch_runs_parked = await db.collection(RUNS_COLLECTION).countDocuments(openRunsFilter);
     if (!dryRun && result.translate_batch_runs_parked > 0) {
       await db.collection(RUNS_COLLECTION).updateMany(openRunsFilter, [
