@@ -34,7 +34,7 @@ const SOURCES = [
   { path: 'scripts/eval/results/translation-corpus-audit-2026-09-30/eye-notes.md', what: 'Model read of 20 audited pages against their scans: flag precision, leaf identity.' },
   { path: 'scripts/eval/results/translation-corpus-audit-2026-09-30/items.jsonl', what: 'The transcription and translation of each audited page as served on the audit date (specimens in Figure 2).' },
   { path: '.claude/docs/eval-design.md', what: 'Measurement vocabulary (§2) and the reader’s chain table (§2.1) behind Figure 1.' },
-  { path: 'scripts/eval/translation-corpus-audit/HUMAN-CALIBRATION.md', what: 'Protocol for the reader panel (§5 of this draft).' },
+  { path: 'scripts/eval/translation-corpus-audit/HUMAN-CALIBRATION.md', what: 'Protocol for the reader panel (§6 of this draft).' },
   { path: '.claude/docs/ocr-memorization-paper.md', what: 'Working paper on the memorisation subsidy: matched canonical and non-canonical passages on pages of the same books.' },
   { path: 'scripts/eval/experiments/2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md', what: 'Syriac OCR against published Syriac and published English: wrong passages and text not in the Bible (#4883).' },
 ] as const;
@@ -115,9 +115,9 @@ const CHAIN_ROWS: { instrument: string; cells: [Cover, string][] }[] = [
   {
     instrument: 'A human who reads the original',
     cells: [
-      ['yes', 'not yet run (§5)'],
-      ['yes', 'not yet run (§5)'],
-      ['yes', 'not yet run (§5)'],
+      ['yes', 'not yet run (§6)'],
+      ['yes', 'not yet run (§6)'],
+      ['yes', 'not yet run (§6)'],
     ],
   },
 ];
@@ -605,18 +605,18 @@ export default function ResearchQualityPage() {
 
           <Figure
             n={1}
-            caption={<>The chain from scan to English, and which instrument covers which link. A filled mark means the instrument measures that link; a half mark, that it measures part of it; an empty mark, that it cannot see it. Only a person who reads the original spans all three, and that check has not yet been run (§5). After the table in the evaluation design.<N n={9} /></>}
+            caption={<>The chain from scan to English, and which instrument covers which link. A filled mark means the instrument measures that link; a half mark, that it measures part of it; an empty mark, that it cannot see it. Only a person who reads the original spans all three, and that check has not yet been run (§6). After the table in the evaluation design.<N n={9} /></>}
           >
             <ChainFigure />
           </Figure>
 
           <P>
-            Figure 2 shows what a broken link looks like on a real page. Each specimen comes from the translation audit described in §3, and each breaks a different link.
+            Figure 2 shows what a broken link looks like on a real page. Each specimen comes from the translation audit described in §4, and each breaks a different link.
           </P>
 
           <Figure
             n={2}
-            caption={<>Three pages from the translation audit (§3), each shown as a crop of the scan the reader sees, an excerpt of the transcription, and an excerpt of the English, as served on 30 September 2026. Ellipses mark omitted text. Each scan was opened and read for this figure. Panel (a) is garble that a text-only judge can catch because it is visible in the transcription. Panel (b) is a failure no text-only instrument can see. Panel (c) is a translation error proper.<N n={7} /><N n={8} /></>}
+            caption={<>Three pages from the translation audit (§4), each shown as a crop of the scan the reader sees, an excerpt of the transcription, and an excerpt of the English, as served on 30 September 2026. Ellipses mark omitted text. Each scan was opened and read for this figure. Panel (a) is garble that a text-only judge can catch because it is visible in the transcription. Panel (b) is a failure no text-only instrument can see. Panel (c) is a translation error proper.<N n={7} /><N n={8} /></>}
           >
             <div>
               {SPECIMENS.map(s => <SpecimenRow key={s.key} s={s} />)}
@@ -652,8 +652,8 @@ export default function ResearchQualityPage() {
           </P>
         </Section>
 
-        {/* ── 2 ── */}
-        <Section n={2} title="Transcription">
+        {/* ── 3 ── */}
+        <Section n={3} title="Transcription">
           <P>
             <strong>Accuracy where a reference exists.</strong> We draw one page per book, seal the draw before any engine reads it, and score each engine&rsquo;s reading against a window of a published e-text that prints the same passage. The unit is the book, and a cell is graded by how many referenced books it holds: under 30 is exploratory, 30 to 49 directional, 50 or more decision-grade. The design is described in a <Link href="/blog/how-we-measure-ocr-quality" className="text-accent-rust hover:underline">separate note</Link>.
           </P>
@@ -664,7 +664,7 @@ export default function ResearchQualityPage() {
             One narrower accuracy check reads the numbers. On English books printed 1800–1930, every printed number on which two engines disagreed was cropped from the page image and read blind by a model, with no engine&rsquo;s reading on the sheet. Of 5,212 printed numbers across 82 books, the Internet Archive&rsquo;s own OCR had 5.1% wrong (CI 3.8–7.4) and Flash-Lite 1.8% (CI 1.1–3.1). This is directional, and the reader of the crops was a model, not a person.<N n={3} />
           </P>
           <P>
-            <strong>A screen where no reference exists.</strong> Reading a page a second time and comparing the two reads costs a tenth to a fifth of a cent per page. We tested it on 327 pages the translation judge (§3) had rated, one per book, using the judge&rsquo;s garble flag as the label: 32 pages were flagged. A fresh Flash-Lite read that agreed with the served text on less than 70% of its tokens flagged 70 pages, 20 of them garbled: precision 29%, recall 74%. A fresh Flash read gave 30% and 70%.<N n={4} /><N n={5} /> The screen finds most garbled pages and mostly flags pages that are not. On Latin-script pages it does not separate at all (precision about 10%); 24 of the 30 garbled pages it could judge were in non-Latin scripts.<N n={4} />
+            <strong>A screen where no reference exists.</strong> Reading a page a second time and comparing the two reads costs a tenth to a fifth of a cent per page. We tested it on 327 pages the translation judge (§4) had rated, one per book, using the judge&rsquo;s garble flag as the label: 32 pages were flagged. A fresh Flash-Lite read that agreed with the served text on less than 70% of its tokens flagged 70 pages, 20 of them garbled: precision 29%, recall 74%. A fresh Flash read gave 30% and 70%.<N n={4} /><N n={5} /> The screen finds most garbled pages and mostly flags pages that are not. On Latin-script pages it does not separate at all (precision about 10%); 24 of the 30 garbled pages it could judge were in non-Latin scripts.<N n={4} />
           </P>
           <P>
             Two cautions keep these numbers in proportion. The label is itself a model&rsquo;s: re-run on the same pages, the judge reproduced its own garble flag with a precision of 51–58% (Figure 3). So the screen cannot reach a high precision against this label even if it were perfect. And when model readers looked at 18 of the &ldquo;hard&rdquo; pages against the scan, the served text was unreliable on 8 (44%, CI 25–66).<N n={4} />
@@ -681,8 +681,8 @@ export default function ResearchQualityPage() {
           </Figure>
         </Section>
 
-        {/* ── 3 ── */}
-        <Section n={3} title="Translation">
+        {/* ── 4 ── */}
+        <Section n={4} title="Translation">
           <P>
             We drew one interior page from each of 311 books across 15 catalogue languages (seed 20260930) and asked Claude Opus to rate each served translation against the transcription it was made from, on a 1–5 fidelity scale, and to list each defect by type and severity.<N n={6} /> The judge sees the transcription and the English. It does not see the scan, and it has no reference translation. Its defect categories (omission, invention, inversion, mistranslation and others, each minor or major) are close to the MQM error typology {cite('freitag2021')}. Asking a large model for a direct judgement of translation quality follows GEMBA {cite('kocmi2023')}, with the difference that our judge is given the source text.
           </P>
@@ -711,8 +711,8 @@ export default function ResearchQualityPage() {
 
         </Section>
 
-        {/* ── 4 ── */}
-        <Section n={4} title="What none of this measures">
+        {/* ── 5 ── */}
+        <Section n={5} title="What none of this measures">
           <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
             <li><strong>A human reading.</strong> Every instrument above is a model, or a model reading an image. None has been checked against a person who reads the source language. The judge&rsquo;s own error rate is therefore unknown.<N n={9} /></li>
             <li><strong>Leaf identity at scale.</strong> We have a signature that catches wrong leaves and a count of two in twenty on one hand-read sample. We do not have a rate.<N n={2} /></li>
@@ -722,8 +722,8 @@ export default function ResearchQualityPage() {
           </ul>
         </Section>
 
-        {/* ── 5 ── */}
-        <Section n={5} title="The reader panel (preregistered, not yet run)">
+        {/* ── 6 ── */}
+        <Section n={6} title="The reader panel (preregistered, not yet run)">
           <P>
             The panel asks volunteers who read a source language the reader&rsquo;s question directly. Each receives one page at a time by email: the scan, the transcription and the English. They answer one question: <em>Does the English say what this page says?</em> The answers are Yes; No, with a line on where; or Can&rsquo;t tell. The question covers the whole chain, and the &ldquo;where&rdquo; line tells us which link failed.<N n={10} />
           </P>
@@ -738,8 +738,8 @@ export default function ResearchQualityPage() {
           </P>
         </Section>
 
-        {/* ── 6 ── */}
-        <Section n={6} title="Limitations">
+        {/* ── 7 ── */}
+        <Section n={7} title="Limitations">
           <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
             <li><strong>One sample, one judge.</strong> The audit is one draw of 311 pages, rated by one judge with one prompt. The by-language cells are mostly under 20 books, and the per-language rankings in Figure 5 are within each other&rsquo;s intervals for most pairs.</li>
             <li><strong>The translation models are not compared.</strong> Pages were translated by whichever model the book went through, so model and book are confounded. The audit does not say which model translates better.<N n={2} /></li>
@@ -774,8 +774,8 @@ export default function ResearchQualityPage() {
           </P>
         </Section>
 
-        {/* ── 7 ── */}
-        <Section n={7} title="Data and code">
+        {/* ── 8 ── */}
+        <Section n={8} title="Data and code">
           <P>
             The draws, judge prompts, verdicts, scores and scripts are in the public repository under{' '}
             <a href={`${GH.replace('/blob/', '/tree/')}scripts/eval`} className="text-accent-rust hover:underline">scripts/eval</a>, under the AGPL. Each number on this page cites the file it came from:
@@ -847,8 +847,8 @@ export default function ResearchQualityPage() {
           </P>
         </Section>
 
-        {/* ── 8 ── */}
-        <Section n={8} title="References">
+        {/* ── 9 ── */}
+        <Section n={9} title="References">
           <ol className="list-none pl-0 text-sm text-secondary leading-relaxed space-y-2 mb-8">
             {REFERENCES.map((r, i) => (
               <li key={r.key} id={`ref-${r.key}`} className="flex gap-3 scroll-mt-24">
