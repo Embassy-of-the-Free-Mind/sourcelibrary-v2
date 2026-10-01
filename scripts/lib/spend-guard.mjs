@@ -79,7 +79,7 @@ async function getSupabaseSpend(dayStart) {
   try {
     for (let pageNo = 0; ; pageNo++) {
       if (pageNo >= SUPABASE_MAX_PAGES) {
-        return { usd, rows, costlessRows, error: `>${SUPABASE_MAX_PAGES * 1000} rows today — sum truncated` };
+        return { usd, rows, costlessRows, truncated: true, error: `>${SUPABASE_MAX_PAGES * 1000} rows today — sum truncated` };
       }
       const from = pageNo * 1000;
       const resp = await fetch(
@@ -129,6 +129,8 @@ export async function getTodaySpendUsd(db, now = new Date()) {
     rows: mongo.rows + supa.rows,
     costlessRows: mongo.costlessRows + supa.costlessRows,
     meterError: supa.error,
+    // The pagination cap was hit: `usd` is then a LOWER BOUND on today's spend, not a failed read.
+    meterTruncated: !!supa.truncated,
   };
 }
 
@@ -315,12 +317,19 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
 
   if (budget !== null) {
     const spend = await getTodaySpendUsd(db);
-    if (spend.meterError) {
+    // A truncated sum is a LOWER bound. Once it reaches the dial, the dial is known to be closed,
+    // and the envelope lane below decides: each envelope reads its own per-book meter and fails
+    // closed on its own. Without this, a busy day (>40K usage rows, 2026-10-01: 41,416 by 16:20 UTC,
+    // most of them per-round chained-lane meter rows) closed every envelope until UTC midnight.
+    const knownClosed = spend.meterTruncated && spend.usd >= budget;
+    if (spend.meterError && !knownClosed) {
       // An unreadable meter closes EVERY lane — envelopes read the same stores.
       console.log(`  [spend-guard] ${label}: METER UNREADABLE (${spend.meterError}) — refusing dispatch (all lanes). Partial sum was $${spend.usd.toFixed(2)}.`);
       return { allowed: false, envelopeIds: null };
     }
-    if (spend.usd < budget) {
+    if (knownClosed) {
+      console.log(`  [spend-guard] ${label}: daily meter truncated (${spend.meterError}) at $${spend.usd.toFixed(2)} ≥ $${budget.toFixed(2)} — the dial is reached; envelopes decide.`);
+    } else if (spend.usd < budget) {
       const blind = spend.costlessRows > 0 ? ` (${spend.costlessRows} rows without cost_usd — spend is undercounted)` : '';
       console.log(`  [spend-guard] ${label}: spend $${spend.usd.toFixed(2)} / $${budget.toFixed(2)} today (UTC, both stores), ${spend.rows} calls${blind} → DISPATCH`);
       return { allowed: true, envelopeIds: null };
