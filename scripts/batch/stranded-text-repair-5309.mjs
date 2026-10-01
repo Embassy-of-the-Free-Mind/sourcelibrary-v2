@@ -43,6 +43,7 @@
  *   ... runs            read chained run phases
  *   ... clear           clear needs_reocr on rewritten pages
  *   ... echofix         withhold block siblings shifted by an echo refusal (#5435) and re-enrol
+ *   ... residual --from <audit.jsonl> [--model flash]   re-queue the pages the audit still calls stranded
  *   ... release         release every book this lane held (after the audit passes)
  *   ... status
  *   ... run --wave 25 --max-open 40 --interval 600 [--slice 120]   loop check→withhold→enrol→runs→clear→ocr
@@ -54,6 +55,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
 import { holdBook, releaseBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -241,7 +243,7 @@ async function ocr(db) {
     for (let i = 0; i < ids.length; i += SLICE) {
       const file = path.join(LOG_DIR, `pages-${stamp}-${b.id}-${i}.json`);
       fs.writeFileSync(file, JSON.stringify(ids.slice(i, i + SLICE)));
-      const argv = ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, '--model=lite',
+      const argv = ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, `--model=${b.ocr_model || val('model', 'lite')}`,
         `--reason=${SWEEP}: re-OCR against the repaired image; the text beside it was a neighbouring leaf (#5309)`];
       if (has('dry-run')) argv.push('--dry-run');
       const res = spawnSync(process.execPath, argv, { cwd: ROOT, env: process.env, encoding: 'utf8', maxBuffer: 64 << 20 });
@@ -276,7 +278,7 @@ async function ocr(db) {
     if (submitted === 0 && quota) { b.quota_skipped = (b.quota_skipped || 0) + 1; continue; }
     b.submit_attempts = (b.submit_attempts || 0) + 1;
     b.phase = submitted > 0 ? 'ocr_submitted' : (b.submit_attempts < 3 ? 'pending' : 'ocr_submit_failed');
-    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: 'lite', retry: b.retries, attempt: b.submit_attempts } });
+    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: submitted, submit_failed: failed, jobs: children.length, model: b.ocr_model || val('model', 'lite'), retry: b.retries, attempt: b.submit_attempts } });
   }
   saveState(s);
   log(`ocr: submitted ${picks.filter((b) => b.phase === 'ocr_submitted').length} books`);
@@ -545,6 +547,37 @@ async function echofix(db) {
   log(`echofix: ${books} books, ${pages} pages withheld for re-translation`);
 }
 
+// ── residual pass (pages the first model refused twice) ────────────────────
+/**
+ * Re-queue the pages the audit still calls stranded (`--from <audit jsonl>`, one row per book with
+ * `stranded_page_ids`) for one more OCR pass on `--model` (flash: the pipeline's own recitation
+ * ladder escalates lite → flash). The audit emits page `_id` strings; they are mapped to `pages.id`
+ * here because re-minted books carry a different `id` (Musaeum, 2026-10-01). Books go back to
+ * `pending` with a retry list and `retries` already spent, so `check` does not add another pass.
+ * Approval: DECISIONS-PENDING row 2026-10-01 (≈ $21 inside the $265 cap).
+ */
+async function residual(db) {
+  const s = loadState();
+  const from = val('from'); const model = val('model', 'flash');
+  if (!from) throw new Error('residual needs --from <audit.jsonl>');
+  const rows = rowsFromList(from);
+  const byId = new Map(s.books.map((b) => [b.id, b]));
+  let books = 0, pages = 0;
+  for (const r of rows) {
+    const b = byId.get(r.book_id);
+    if (!b || !r.stranded_page_ids?.length) continue;
+    if (!['cleared', 'no_translate', 'tr_done', 'tr_parked', 'tr_failed', 'ocr_submit_failed'].includes(b.phase)) { log(`  ${b.id}: phase ${b.phase} — not touched`); continue; }
+    const docs = await db.collection('pages').find({ book_id: b.id, $or: [{ id: { $in: r.stranded_page_ids } }, { _id: { $in: r.stranded_page_ids.filter((x) => /^[0-9a-f]{24}$/.test(x)).map((x) => new ObjectId(x)) } }] }, { projection: { id: 1 } }).toArray();
+    const ids = [...new Set(docs.map((d) => d.id))];
+    if (!ids.length) continue;
+    b.residual_prev_phase = b.phase; b.retry_page_ids = ids; b.ocr_model = model; b.phase = 'pending'; b.submit_attempts = 0; b.retries = 1; b.residual_pages = ids.length;
+    books++; pages += ids.length;
+    await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'residual-queued', detail: { pages: ids.length, model } });
+  }
+  saveState(s);
+  log(`residual: ${books} books / ${pages} pages queued on ${model}; the run loop submits them in waves`);
+}
+
 // ── status / run ───────────────────────────────────────────────────────────
 async function status(db) {
   const s = loadState();
@@ -584,7 +617,7 @@ async function run(db) {
   }
 }
 
-const COMMANDS = { init, hold, envelope, ocr, reconcile, check, echofix, withhold, enrol, runs, clear, release, status, run };
+const COMMANDS = { init, hold, envelope, ocr, reconcile, check, echofix, residual, withhold, enrol, runs, clear, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   // noTimeout: a 50-book OCR submit runs for an hour; the 300 s script timeout force-exited the
