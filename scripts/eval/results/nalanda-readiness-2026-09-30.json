@@ -1,0 +1,859 @@
+{
+ "generated": "2026-10-01",
+ "handoff": "ops handoffs/2026-09-30-nalanda-readiness-quality-check.md",
+ "holdings_by_language_source": {
+  "Pali|internet_archive": {
+   "books": 39,
+   "pages": 13991,
+   "visible_books": 24,
+   "held_books": 0,
+   "ocr_pages": 2697,
+   "english_pages": 1119,
+   "withheld_pages": 0,
+   "visible_pages": 8110,
+   "visible_ocr_pages": 2437,
+   "visible_english_pages": 989
+  },
+  "Pali|manchester": {
+   "books": 16,
+   "pages": 5574,
+   "visible_books": 1,
+   "held_books": 0,
+   "ocr_pages": 864,
+   "english_pages": 284,
+   "withheld_pages": 180,
+   "visible_pages": 622,
+   "visible_ocr_pages": 489,
+   "visible_english_pages": 284
+  },
+  "Sanskrit|bdrc": {
+   "books": 4,
+   "pages": 1967,
+   "visible_books": 4,
+   "held_books": 0,
+   "ocr_pages": 1963,
+   "english_pages": 1343,
+   "withheld_pages": 584,
+   "visible_pages": 1967,
+   "visible_ocr_pages": 1963,
+   "visible_english_pages": 1343
+  },
+  "Sanskrit|cambridge": {
+   "books": 3,
+   "pages": 292,
+   "visible_books": 3,
+   "held_books": 0,
+   "ocr_pages": 292,
+   "english_pages": 290,
+   "withheld_pages": 2,
+   "visible_pages": 292,
+   "visible_ocr_pages": 292,
+   "visible_english_pages": 290
+  },
+  "Sanskrit|gallica": {
+   "books": 1,
+   "pages": 84,
+   "visible_books": 0,
+   "held_books": 0,
+   "ocr_pages": 0,
+   "english_pages": 0,
+   "withheld_pages": 0
+  },
+  "Sanskrit|harvard": {
+   "books": 1,
+   "pages": 76,
+   "visible_books": 1,
+   "held_books": 0,
+   "ocr_pages": 76,
+   "english_pages": 76,
+   "withheld_pages": 0,
+   "visible_pages": 76,
+   "visible_ocr_pages": 76,
+   "visible_english_pages": 76
+  },
+  "Sanskrit|internet_archive": {
+   "books": 2007,
+   "pages": 340398,
+   "visible_books": 366,
+   "held_books": 0,
+   "ocr_pages": 118837,
+   "english_pages": 110385,
+   "withheld_pages": 54,
+   "visible_pages": 119453,
+   "visible_ocr_pages": 107372,
+   "visible_english_pages": 104072
+  },
+  "Sanskrit|mdz": {
+   "books": 1,
+   "pages": 536,
+   "visible_books": 0,
+   "held_books": 0,
+   "ocr_pages": 25,
+   "english_pages": 0,
+   "withheld_pages": 0
+  },
+  "Sanskrit|museumsofindia": {
+   "books": 1,
+   "pages": 6,
+   "visible_books": 1,
+   "held_books": 0,
+   "ocr_pages": 6,
+   "english_pages": 6,
+   "withheld_pages": 0,
+   "visible_pages": 6,
+   "visible_ocr_pages": 6,
+   "visible_english_pages": 6
+  },
+  "Sanskrit|ndl_japan": {
+   "books": 1,
+   "pages": 24,
+   "visible_books": 1,
+   "held_books": 0,
+   "ocr_pages": 24,
+   "english_pages": 24,
+   "withheld_pages": 0,
+   "visible_pages": 24,
+   "visible_ocr_pages": 24,
+   "visible_english_pages": 24
+  },
+  "Sanskrit|wellcome": {
+   "books": 89,
+   "pages": 28953,
+   "visible_books": 6,
+   "held_books": 0,
+   "ocr_pages": 3041,
+   "english_pages": 1090,
+   "withheld_pages": 0,
+   "visible_pages": 1095,
+   "visible_ocr_pages": 1094,
+   "visible_english_pages": 1090
+  },
+  "Tibetan|bdrc": {
+   "books": 410,
+   "pages": 425954,
+   "visible_books": 10,
+   "held_books": 0,
+   "ocr_pages": 13181,
+   "english_pages": 3449,
+   "withheld_pages": 581,
+   "visible_pages": 4114,
+   "visible_ocr_pages": 4113,
+   "visible_english_pages": 3449
+  },
+  "Tibetan|bl": {
+   "books": 1573,
+   "pages": 287831,
+   "visible_books": 1439,
+   "held_books": 1439,
+   "ocr_pages": 276647,
+   "english_pages": 1861,
+   "withheld_pages": 262050,
+   "visible_pages": 276455,
+   "visible_ocr_pages": 272201,
+   "visible_english_pages": 820
+  },
+  "Tibetan|internet_archive": {
+   "books": 34,
+   "pages": 18338,
+   "visible_books": 19,
+   "held_books": 0,
+   "ocr_pages": 11968,
+   "english_pages": 9093,
+   "withheld_pages": 1517,
+   "visible_pages": 9421,
+   "visible_ocr_pages": 9082,
+   "visible_english_pages": 7251
+  }
+ },
+ "tibetan_ocr_vs_derge": {
+  "instrument": "ops eval-tibetan/kanjur_align.py score --index etext-index-full.pkl (Derge Kangyur, OpenPecha P000001), served ocr.data as-is, one page per book",
+  "positive_control_noise5pct": {
+   "n": 40,
+   "median": 0.968,
+   "p25": 0.964,
+   "p75": 0.976
+  },
+  "positive_control_hits": 40,
+  "chance_floor_wrong_page": {
+   "n": 105,
+   "median": 0.252,
+   "p25": 0.213,
+   "p75": 0.29
+  },
+  "kanjur_served": {
+   "n": 65,
+   "median": 0.95,
+   "p25": 0.917,
+   "p75": 0.971
+  },
+  "kanjur_served_not_derge_selected": {
+   "n": 48,
+   "median": 0.949,
+   "p25": 0.917,
+   "p75": 0.971
+  },
+  "kanjur_served_derge_selected": {
+   "n": 17,
+   "median": 0.958,
+   "p25": 0.921,
+   "p75": 0.982
+  },
+  "kanjur_ge_0_9": 53,
+  "kanjur_lt_0_5": 2,
+  "non_kanjur_bl": {
+   "n": 25,
+   "median": 0.208,
+   "p25": 0.14,
+   "p75": 0.282
+  },
+  "print_ia_bdrc": {
+   "n": 15,
+   "median": 0.258,
+   "p25": 0.0,
+   "p75": 0.345
+  },
+  "note": "non-Kanjur strata score at the chance floor because they are not Kangyur texts: NO external reference exists for them (n=0 accuracy).",
+  "page_verdicts_corpus": {
+   "bdrc:hidden|gemini-unjudged": 9068,
+   "bdrc|bdrc-woodblock-easter2": 407,
+   "bdrc|gemini-unjudged": 3706,
+   "bl:hidden:kanjur|gemini-unjudged": 1836,
+   "bl:hidden|gemini-unjudged": 2610,
+   "bl:kanjur|MARK_UNRELIABLE": 332,
+   "bl:kanjur|SERVE": 89364,
+   "bl:kanjur|bdrc-woodblock-easter2": 1382,
+   "bl:kanjur|gemini-unjudged": 419,
+   "bl|MARK_UNRELIABLE": 78069,
+   "bl|SERVE": 100056,
+   "bl|bdrc-woodblock-easter2": 295,
+   "bl|gemini-unjudged": 2284,
+   "internet_archive:hidden|gemini-unjudged": 2886,
+   "internet_archive|bdrc-woodblock-easter2": 34,
+   "internet_archive|gemini-unjudged": 9048
+  }
+ },
+ "indic_ocr_vs_gretil": {
+  "Sanskrit": {
+   "controls": {
+    "control-noise-0.0": {
+     "n": 10,
+     "median": 1.0,
+     "p25": 1.0,
+     "p75": 1.0,
+     "ge_0.95": 9,
+     "ge_0.90": 9,
+     "lt_0.70": 0
+    },
+    "control-noise-0.05": {
+     "n": 20,
+     "median": 0.95,
+     "p25": 0.948,
+     "p75": 0.953,
+     "ge_0.95": 11,
+     "ge_0.90": 20,
+     "lt_0.70": 0
+    },
+    "control-noise-0.15": {
+     "n": 19,
+     "median": 0.859,
+     "p25": 0.849,
+     "p75": 0.863,
+     "ge_0.95": 0,
+     "ge_0.90": 0,
+     "lt_0.70": 1
+    }
+   },
+   "chance": {
+    "n": 340,
+    "median": 0.279,
+    "p25": 0.269,
+    "p75": 0.293,
+    "ge_0.95": 0,
+    "ge_0.90": 0,
+    "lt_0.70": 340
+   },
+   "chance_p99": 0.3294,
+   "scripts": {
+    "devanagari": 456,
+    "latin": 118,
+    "telugu": 7,
+    "tamil": 3,
+    "none": 1,
+    "bengali": 3,
+    "kannada": 1
+   },
+   "visible": {
+    "books_sampled": 379,
+    "status": {
+     "scored": 216,
+     "no_reference": 129,
+     "too_short_or_unsupported": 34
+    },
+    "above_chance": 147,
+    "full_page_same_work": {
+     "n": 38,
+     "median": 0.891,
+     "p25": 0.748,
+     "p75": 0.939,
+     "ge_0.95": 5,
+     "ge_0.90": 17,
+     "lt_0.70": 6
+    },
+    "full_page_different_work_excluded": 8,
+    "partial_coverage": {
+     "n": 101,
+     "median": 0.543,
+     "p25": 0.39,
+     "p75": 0.689,
+     "ge_0.95": 0,
+     "ge_0.90": 2,
+     "lt_0.70": 77
+    },
+    "by_engine": {
+     "gemini-3-flash-preview": {
+      "n": 14,
+      "median": 0.873,
+      "p25": 0.791,
+      "p75": 0.941,
+      "ge_0.95": 2,
+      "ge_0.90": 6,
+      "lt_0.70": 1
+     },
+     "gemini-3.1-flash-lite-preview": {
+      "n": 24,
+      "median": 0.891,
+      "p25": 0.748,
+      "p75": 0.936,
+      "ge_0.95": 3,
+      "ge_0.90": 11,
+      "lt_0.70": 5
+     }
+    },
+    "precision_full": {
+     "n": 38,
+     "median": 0.723,
+     "p25": 0.652,
+     "p75": 0.886,
+     "ge_0.95": 4,
+     "ge_0.90": 8,
+     "lt_0.70": 14
+    }
+   },
+   "hidden": {
+    "books_sampled": 210,
+    "status": {
+     "scored": 124,
+     "no_reference": 80,
+     "too_short_or_unsupported": 6
+    },
+    "above_chance": 91,
+    "full_page_same_work": {
+     "n": 36,
+     "median": 0.901,
+     "p25": 0.823,
+     "p75": 0.938,
+     "ge_0.95": 6,
+     "ge_0.90": 18,
+     "lt_0.70": 3
+    },
+    "full_page_different_work_excluded": 6,
+    "partial_coverage": {
+     "n": 49,
+     "median": 0.479,
+     "p25": 0.394,
+     "p75": 0.694,
+     "ge_0.95": 0,
+     "ge_0.90": 2,
+     "lt_0.70": 37
+    },
+    "by_engine": {
+     "gemini-3-flash-preview": {
+      "n": 16,
+      "median": 0.832,
+      "p25": 0.746,
+      "p75": 0.938,
+      "ge_0.95": 3,
+      "ge_0.90": 4,
+      "lt_0.70": 3
+     },
+     "gemini-3.1-flash-lite": {
+      "n": 19,
+      "median": 0.919,
+      "p25": 0.886,
+      "p75": 0.938,
+      "ge_0.95": 3,
+      "ge_0.90": 14,
+      "lt_0.70": 0
+     },
+     "gemini-3.1-flash-lite-preview": {
+      "n": 1,
+      "median": 0.851,
+      "p25": 0.851,
+      "p75": 0.851,
+      "ge_0.95": 0,
+      "ge_0.90": 0,
+      "lt_0.70": 0
+     }
+    },
+    "precision_full": {
+     "n": 36,
+     "median": 0.852,
+     "p25": 0.765,
+     "p75": 0.924,
+     "ge_0.95": 5,
+     "ge_0.90": 12,
+     "lt_0.70": 4
+    }
+   }
+  },
+  "Pali": {
+   "controls": {
+    "control-noise-0.0": {
+     "n": 9,
+     "median": 1.0,
+     "p25": 1.0,
+     "p75": 1.0,
+     "ge_0.95": 9,
+     "ge_0.90": 9,
+     "lt_0.70": 0
+    },
+    "control-noise-0.05": {
+     "n": 10,
+     "median": 0.951,
+     "p25": 0.948,
+     "p75": 0.953,
+     "ge_0.95": 6,
+     "ge_0.90": 10,
+     "lt_0.70": 0
+    },
+    "control-noise-0.15": {
+     "n": 10,
+     "median": 0.86,
+     "p25": 0.855,
+     "p75": 0.862,
+     "ge_0.95": 0,
+     "ge_0.90": 0,
+     "lt_0.70": 0
+    }
+   },
+   "chance": {
+    "n": 26,
+    "median": 0.266,
+    "p25": 0.254,
+    "p75": 0.273,
+    "ge_0.95": 0,
+    "ge_0.90": 0,
+    "lt_0.70": 26
+   },
+   "chance_p99": 0.3,
+   "scripts": {
+    "latin": 40,
+    "unsupported-0e00": 1,
+    "unsupported-1000": 3,
+    "unsupported-0d80": 5,
+    "malayalam": 1
+   },
+   "visible": {
+    "books_sampled": 24,
+    "status": {
+     "scored": 19,
+     "too_short_or_unsupported": 2,
+     "no_reference": 3
+    },
+    "above_chance": 16,
+    "full_page_same_work": {
+     "n": 12,
+     "median": 0.95,
+     "p25": 0.836,
+     "p75": 0.974,
+     "ge_0.95": 6,
+     "ge_0.90": 8,
+     "lt_0.70": 3
+    },
+    "full_page_different_work_excluded": 0,
+    "partial_coverage": {
+     "n": 4,
+     "median": 0.429,
+     "p25": 0.392,
+     "p75": 0.55,
+     "ge_0.95": 0,
+     "ge_0.90": 0,
+     "lt_0.70": 4
+    },
+    "by_engine": {
+     "gemini-3-flash-preview": {
+      "n": 8,
+      "median": 0.96,
+      "p25": 0.943,
+      "p75": 0.994,
+      "ge_0.95": 5,
+      "ge_0.90": 6,
+      "lt_0.70": 2
+     },
+     "gemini-3.1-flash-lite": {
+      "n": 2,
+      "median": 0.877,
+      "p25": 0.836,
+      "p75": 0.917,
+      "ge_0.95": 0,
+      "ge_0.90": 1,
+      "lt_0.70": 0
+     },
+     "gemini-3.1-flash-lite-preview": {
+      "n": 2,
+      "median": 0.814,
+      "p25": 0.654,
+      "p75": 0.974,
+      "ge_0.95": 1,
+      "ge_0.90": 1,
+      "lt_0.70": 1
+     }
+    },
+    "precision_full": {
+     "n": 12,
+     "median": 0.92,
+     "p25": 0.771,
+     "p75": 0.974,
+     "ge_0.95": 5,
+     "ge_0.90": 7,
+     "lt_0.70": 3
+    }
+   },
+   "hidden": {
+    "books_sampled": 26,
+    "status": {
+     "scored": 7,
+     "too_short_or_unsupported": 9,
+     "no_reference": 10
+    },
+    "above_chance": 5,
+    "full_page_same_work": {
+     "n": 3,
+     "median": 0.943,
+     "p25": 0.661,
+     "p75": 0.943,
+     "ge_0.95": 0,
+     "ge_0.90": 2,
+     "lt_0.70": 1
+    },
+    "full_page_different_work_excluded": 0,
+    "partial_coverage": {
+     "n": 2,
+     "median": 0.373,
+     "p25": 0.349,
+     "p75": 0.396,
+     "ge_0.95": 0,
+     "ge_0.90": 0,
+     "lt_0.70": 2
+    },
+    "by_engine": {
+     "gemini-3-flash-preview": {
+      "n": 2,
+      "median": 0.943,
+      "p25": 0.943,
+      "p75": 0.943,
+      "ge_0.95": 0,
+      "ge_0.90": 2,
+      "lt_0.70": 0
+     },
+     "gemini-3.1-flash-lite": {
+      "n": 1,
+      "median": 0.661,
+      "p25": 0.661,
+      "p75": 0.661,
+      "ge_0.95": 0,
+      "ge_0.90": 0,
+      "lt_0.70": 1
+     }
+    },
+    "precision_full": {
+     "n": 3,
+     "median": 0.944,
+     "p25": 0.649,
+     "p75": 0.946,
+     "ge_0.95": 0,
+     "ge_0.90": 2,
+     "lt_0.70": 1
+    }
+   }
+  },
+  "engine_positive_control_rendered_gretil": {
+   "sa_aSTasAhasrikA-prajJApAramitA:gemini-3-flash-preview": 0.998,
+   "sa_nAgArjuna-mUlamadhyamakakArikA:gemini-3-flash-preview": 0.9967,
+   "sa_vasubandhu-abhidharmakozabhASya:gemini-3-flash-preview": 0.9979,
+   "sa_zAntideva-bodhicaryAvatAra:gemini-3-flash-preview": 0.9939,
+   "sa_aSTasAhasrikA-prajJApAramitA:gemini-3.1-flash-lite-preview": 0.9973,
+   "sa_nAgArjuna-mUlamadhyamakakArikA:gemini-3.1-flash-lite-preview": 0.9946,
+   "sa_vasubandhu-abhidharmakozabhASya:gemini-3.1-flash-lite-preview": 0.9969,
+   "sa_zAntideva-bodhicaryAvatAra:gemini-3.1-flash-lite-preview": 0.9898,
+   "sa_nAgArjuna-mUlamadhyamakakArikA:source": 1.0,
+   "sa_vasubandhu-abhidharmakozabhASya:source": 1.0,
+   "sa_zAntideva-bodhicaryAvatAra:source": 1.0,
+   "sa_aSTasAhasrikA-prajJApAramitA:source": 1.0
+  }
+ },
+ "sanskrit_translation_fidelity": {
+  "judges": {
+   "A": 9,
+   "B": 9
+  },
+  "controls": {
+   "ctrl_reference": {
+    "n": 4,
+    "fidelity_median": 1.5,
+    "fidelity_mean": 1.5,
+    "ge4": 0,
+    "omission": 4,
+    "invention": 4,
+    "inversion": 0
+   },
+   "ctrl_wrong_page": {
+    "n": 4,
+    "fidelity_median": 1.0,
+    "fidelity_mean": 1,
+    "ge4": 0,
+    "omission": 4,
+    "invention": 4,
+    "inversion": 0
+   }
+  },
+  "served": {
+   "served": {
+    "n": 18,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.06,
+    "ge4": 17,
+    "omission": 6,
+    "invention": 2,
+    "inversion": 0
+   }
+  },
+  "per_page": [
+   {
+    "id": "brahmasutra_108",
+    "A:served": "4",
+    "A:ctrl_reference": "2OI",
+    "A:reason": "T1 covers the whole page (end of 2.2.26, 2.2.27, Vijnanavadin purvapaksa at 2.2.28) with one slip (clay/threads-modification clause rendered as permeated by non-existence); T2 is the Thibaut text itself, starting before the page (sutra 26 opening) and truncated mid-2.2.26, omitting 2.2.27 and 2.2.28",
+    "B:served": "4",
+    "B:ctrl_reference": "2OI",
+    "B:reason": "T1 covers 2.2.26 end through 2.2.28 opening (sahopalambha-niyama) with a minor slip on śarāvādayo … tantvādivikārāḥ; T2 is the Thibaut reference verbatim, opening with the preceding page and stopping mid-2.2.26, omitting 2.2.27 and 2.2.28 entirely"
+   },
+   {
+    "id": "brahmasutra_194",
+    "A:served": "4OI",
+    "A:ctrl_reference": "1OI",
+    "A:reason": "T1 follows the page through 3.3.42 siddhanta and the 3.3.43 purvapaksa but drops the bailva/yupa example and imports head-will-fall-off from the Upanishad (source quotes only tam ced avidvan prastosyasi); T2 is Thibaut text mostly preceding the page plus footnotes, ending at the parnamayi analogy",
+    "B:served": "3OI",
+    "B:ctrl_reference": "1OI",
+    "B:reason": "T1 covers 3.3.42 siddhānta and 3.3.43 opening but conflates the prayāja/parṇamayī distinction, drops the vākyabheda and bailva/yūpa steps, and adds \"your head will fall off\" absent from the page; T2 is Thibaut verbatim with footnotes, mostly preceding pūrvapakṣa, ending at the page start"
+   },
+   {
+    "id": "brahmasutra_35",
+    "A:served": "4O",
+    "A:reason": "T1 = Thibaut through the 1.2.23 alternative view and renders the 1.2.24 purvapaksa correctly, but replaces the two quoted Rgveda verses (visvasma agnim..., vaisvanarasya sumatau...) with a bare mention and drops kasmai devaya havisa vidhema",
+    "B:served": "4O",
+    "B:reason": "T1 matches Thibaut on 1.2.23 (form of bhūtayoni, teacher analogy, Hiraṇyagarbha view) and the 1.2.24 pūrvapakṣa, but drops the two Ṛgveda quotations (viśvasmā agniṃ…, vaiśvānarasya sumatau…) and renders adṛśyatvādiguṇaka as without qualities"
+   },
+   {
+    "id": "manu_352",
+    "A:ctrl_wrong_page": "1OI",
+    "A:served": "4",
+    "A:reason": "T1 translates commentary on Manu 4.214-216 (smiths, vintners, dyers), not this page (3.77-79); T2 matches source and Buhler 3.77-78 throughout, one slip in Medhatithi on 3.79 (atyanta glossed as nitya conflated)",
+    "B:ctrl_wrong_page": "1OI",
+    "B:served": "5",
+    "B:reason": "T1 translates commentary on verses 214–216 (food of smiths, actors, dyers), not this page; T2 covers the 3.77 commentaries, verse 78 (= Bühler: supported by the householder with knowledge and food) with all six commentaries, and verse 79 opening"
+   },
+   {
+    "id": "manu_586",
+    "A:served": "4O",
+    "A:reason": "T1 matches source and Buhler 4.214-216 in the commentaries it renders, but drops the page-opening continuation of the preceding commentary on 4.214 (seller of sacrifice, actor=nata, tailor=saucika, ungrateful) before Raghavananda",
+    "B:served": "4O",
+    "B:reason": "T1 renders verses 215–216 (= Bühler: blacksmith, Nishada, stage-player, goldsmith, basket-maker, dealer in weapons) and all their commentaries accurately, but drops the opening carry-over commentary on 214 (yāga-seller, śailūṣa, tunnavāya, kṛtaghna) before Rāghavānanda"
+   },
+   {
+    "id": "manu_850",
+    "A:served": "4",
+    "A:reason": "T1 covers all commentaries on 142-145 and verse 143 matches Bühler; minor slip: Medhātithi on 145 caturmuhūrtaśeṣā rendered four watches instead of four muhūrtas",
+    "B:served": "4",
+    "B:reason": "T1 matches Bühler 142-143 and covers all commentaries; minor slip in Medhātithi on 145 rendering catur-muhūrta-śeṣā as \"four watches\" instead of four muhūrtas"
+   },
+   {
+    "id": "yogasutra_166",
+    "A:served": "5",
+    "A:reason": "T1 matches Woods on sūtras 36-38, bhāṣya and Vācaspati (pauper/wealth simile, threefold anguish); vyutthāna as waking state is a term choice, not an error",
+    "B:served": "4",
+    "B:reason": "T1 = Woods for sūtras 36-38, bhāṣya and Vācaspati; minor slip in 37 gloss dropping abhisaṃhita (one who aims at) so the supreme goal loses its subject, and uktāḥ rendered as arise"
+   },
+   {
+    "id": "yogasutra_217",
+    "A:served": "4",
+    "A:ctrl_wrong_page": "1OI",
+    "A:reason": "T1 follows Woods on IV.34, bhāṣya, Vācaspati and closing verses, but garbles verse 1 line (paraloka/meya/jña as afterlife meditation) and colophon; T2 is page 166 (sūtras III.36-38), not this page",
+    "B:served": "4",
+    "B:ctrl_wrong_page": "1OI",
+    "B:reason": "T1 = Woods on IV.34, bhāṣya, Vācaspati and colophons, with the first summary verse slightly garbled (paraloka/meya/jña siddhis read as afterlife); T2 translates a different page (III.36-38), none of IV.34"
+   },
+   {
+    "id": "yogasutra_97",
+    "A:served": "4",
+    "A:reason": "T1 matches Woods on end of II.19 and II.20 bhāṣya/Vācaspati (mirror-reflection, not homogeneous nor utterly heterogeneous); minor slip: bhūtendriyāṇi saṃsṛṣṭāni viviccante rendered as manifested after being separated rather than formed therein and distinguished",
+    "B:served": "4",
+    "B:reason": "T1 = Woods for end of II.19 bhāṣya/gloss and II.20 sūtra, bhāṣya, Vācaspati; minor slips: saṃsṛṣṭāni viviccyante as manifested after being separated, and the gloss viśeṣaṇāni dharmāḥ compressed"
+   }
+  ],
+  "served_by_judge": {
+   "A": {
+    "n": 9,
+    "fidelity_median": 4,
+    "fidelity_mean": 4.11,
+    "ge4": 9,
+    "omission": 3,
+    "invention": 1,
+    "inversion": 0
+   },
+   "B": {
+    "n": 9,
+    "fidelity_median": 4,
+    "fidelity_mean": 4,
+    "ge4": 8,
+    "omission": 3,
+    "invention": 1,
+    "inversion": 0
+   }
+  },
+  "served_by_work": {
+   "yogasutra": {
+    "n": 6,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.17,
+    "ge4": 6,
+    "omission": 0,
+    "invention": 0,
+    "inversion": 0
+   },
+   "brahmasutra": {
+    "n": 6,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 3.83,
+    "ge4": 5,
+    "omission": 4,
+    "invention": 2,
+    "inversion": 0
+   },
+   "manu": {
+    "n": 6,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.17,
+    "ge4": 6,
+    "omission": 2,
+    "invention": 0,
+    "inversion": 0
+   }
+  },
+  "ctrl_reference_by_judge": {
+   "A": {
+    "n": 2,
+    "fidelity_median": 1.5,
+    "fidelity_mean": 1.5,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   },
+   "B": {
+    "n": 2,
+    "fidelity_median": 1.5,
+    "fidelity_mean": 1.5,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   }
+  },
+  "ctrl_reference_by_work": {
+   "yogasutra": {
+    "n": 0,
+    "fidelity_median": null,
+    "fidelity_mean": null,
+    "ge4": 0,
+    "omission": 0,
+    "invention": 0,
+    "inversion": 0
+   },
+   "brahmasutra": {
+    "n": 4,
+    "fidelity_median": 1.5,
+    "fidelity_mean": 1.5,
+    "ge4": 0,
+    "omission": 4,
+    "invention": 4,
+    "inversion": 0
+   },
+   "manu": {
+    "n": 0,
+    "fidelity_median": null,
+    "fidelity_mean": null,
+    "ge4": 0,
+    "omission": 0,
+    "invention": 0,
+    "inversion": 0
+   }
+  },
+  "ctrl_wrong_page_by_judge": {
+   "A": {
+    "n": 2,
+    "fidelity_median": 1.0,
+    "fidelity_mean": 1,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   },
+   "B": {
+    "n": 2,
+    "fidelity_median": 1.0,
+    "fidelity_mean": 1,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   }
+  },
+  "ctrl_wrong_page_by_work": {
+   "yogasutra": {
+    "n": 2,
+    "fidelity_median": 1.0,
+    "fidelity_mean": 1,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   },
+   "brahmasutra": {
+    "n": 0,
+    "fidelity_median": null,
+    "fidelity_mean": null,
+    "ge4": 0,
+    "omission": 0,
+    "invention": 0,
+    "inversion": 0
+   },
+   "manu": {
+    "n": 2,
+    "fidelity_median": 1.0,
+    "fidelity_mean": 1,
+    "ge4": 0,
+    "omission": 2,
+    "invention": 2,
+    "inversion": 0
+   }
+  },
+  "agreement": {
+   "cells": 13,
+   "exact": 10,
+   "within1": 13
+  }
+ },
+ "tibetan_translation_fidelity": "not re-run: cite tibetan-mt-ab-2026-09-25.json (flash from Yigdzin vs 84000, n=21) and #5320 (served pilot English bridges leaf seams)",
+ "spend_usd": 0.02
+}

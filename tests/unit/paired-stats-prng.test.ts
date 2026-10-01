@@ -130,6 +130,10 @@ describe('the lossy LCG is not pasted into another script', () => {
     'scripts/eval/neighbour-leaf-test.mjs',
     'scripts/eval/repeat-instability-draw.mjs',
     'scripts/eval/suda-sol/make-pilot.mjs',
+    // Nalanda readiness (#5418): page draws made and judged 2026-09-30, before #5373 landed; results committed.
+    'scripts/eval/nalanda-readiness/pull_tr.mjs',
+    'scripts/eval/nalanda-readiness/sample_skt.mjs',
+    'scripts/eval/nalanda-readiness/sample_tib.mjs',
   ]);
   const LOSSY = /[\w)\]]\s*\*\s*1103515245|1103515245\s*\*\s*[\w(]/;
   const root = path.resolve(__dirname, '../..');

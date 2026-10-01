@@ -42,6 +42,54 @@ The replication column exists because of 2026-09-02, below.
 - **Artifact.** `scripts/eval/results/ndl-koten-pilot/` (compare.json, eye-read.md, books.json, box.json);
   `scripts/workers/ndl-koten-lane.mjs`, `scripts/gpu/ndl-koten-box.sh`.
 
+## 2026-10-01 · Nālandā readiness: how accurate is the SERVED Tibetan / Sanskrit / Pali text, and the Sanskrit English?
+
+- **Question.** For the Eternity Nālandā conversation (Indo-Tibetan canon), what can we honestly say about our
+  Tibetan, Sanskrit and Pali holdings: OCR accuracy against an EXTERNAL e-text (not agreement), and translation
+  fidelity against published English. Handoff: ops `handoffs/2026-09-30-nalanda-readiness-quality-check.md`.
+- **Design.** One page per book, served `ocr.data` as-is, mid-document (20–80 %), ≥ 500–600 chars, seed 20260930.
+  *Tibetan*: 65 Kanjur-titled BL volumes + 25 other BL + 15 IA/BDRC prints, scored with the existing
+  `kanjur_align.py` against the full Derge Kangyur e-text (Hetzner `/root/tibetan-eval/nalanda-2026-09-30/`).
+  *Sanskrit/Pali*: NEW instrument `nalanda-readiness/indic_align.py` — Devanagari (and other Brahmi scripts) →
+  IAST, retrieval of the page inside the whole GRETIL corpus (2,934 Sanskrit files / 448M chars; Pali 215 files),
+  edlib infix alignment of the matched e-text span into the page (the `metrics.mjs` windowed lower bound). Every
+  Sanskrit/Pali book with OCR, visible and hidden (589 + 50 pages). *Translation*: 9 served-English pages from 3
+  Sanskrit śāstra books vs public-domain English (Woods 1914 Yogasūtra, Thibaut SBE 34/38, Bühler SBE 25), two
+  blinded Opus judges, TIE allowed, reference-as-candidate and wrong-page controls.
+- **Controls FIRST.** Tibetan: Derge + 5 % noise 0.968 (40/40 retrieved); wrong-page chance 0.25. Sanskrit scorer:
+  exact e-text 1.000, 5 % noise 0.950, 15 % 0.859, chance 0.28. **Engine**: 4 GRETIL Buddhist passages
+  (MMK, Abhidharmakośabhāṣya, Bodhicaryāvatāra, Aṣṭasāhasrikā) rendered clean and read by gemini-3-flash-preview
+  and 3.1-flash-lite: **0.990–0.998**. The controls caught three instrument bugs before any number was read
+  (a hit-cluster span swallowing repeated formulae — exact copy 0.74; GRETIL line ids leaking letters into the
+  reference; best-FILE by total hits picking the Prasannapadā / Śatasāhasrikā over the true source — even the
+  source text scored 0.46 / 0.33). Fixed and re-run; every number below is post-fix.
+- **Result — Tibetan OCR.** Kanjur volumes (served Yigdzin read): **median 0.950 Derge syllable identity
+  (IQR 0.917–0.971, n = 65 books; 53 ≥ 0.9, 2 < 0.5)** — at the 5 %-noise control, and Derge is a different
+  recension from these Bhutanese manuscripts, so this is a floor. The 48 pages whose SERVE verdict did NOT come from
+  the Derge gate score the same (0.949), so the number is not circular. Non-Kanjur BL (Nyingma rgyud 'bum, thor bu,
+  termas; 1,358 books) and IA/BDRC prints sit at chance against Derge because they are not Kangyur texts: **no external
+  reference, accuracy n = 0**; corpus-wide 78,069 visible non-Kanjur BL pages are verdict MARK_UNRELIABLE (old Gemini
+  text).
+- **Result — Sanskrit / Pali OCR.** 216 of 379 visible Sanskrit pages found their text in GRETIL; on pages where the
+  e-text is the same work and covers ≥ 60 % of the page: **visible median 0.891 (IQR 0.748–0.939, n = 38 books)**,
+  hidden 0.901 (n = 36); lite-served pages 0.891, flash 0.873. 8 visible full-coverage matches were a DIFFERENT work
+  (Pañcatantra→Hitopadeśa, Aṣṭa MS→Śatasāhasrikā) and are excluded (title-vs-file judgement, `sa_final.py`). A lower
+  bound: recension variants, Calcutta-print orthography and commentary interleaved with the root text all count as
+  error. One median page checked BY EYE on the IIIF leaf (Liṅgapurāṇa p.337, 0.848): the root text differs from GRETIL
+  in 3 places and the image agrees with GRETIL in all 3 (≈ 99 % on the mūla); the rest is the ṭīkā GRETIL lacks.
+  **Pali visible 0.950 (n = 12)**; Sinhala/Burmese/Thai-script Pali unsupported by the transliterator (11 pages).
+- **Result — Sanskrit English.** Served English, 9 pages × 2 judges: **median fidelity 4, 17/18 cells ≥ 4, 0 inversions,
+  invention on 1 page (both judges: an Upaniṣad clause imported, Brahmasūtra 3.3.42), omission 6/18 (commentary steps
+  condensed — Brahmasūtra 4/6)**. Judges agree within 1 on 13/13 cells (exact 10). Wrong-page control: 1/5 with
+  invention, 4/4. **Positive control FAILED as a calibration**: the reference-as-candidate scored 1–2 because the
+  located Thibaut passages start before and stop inside the page (both judges said so) — so the fidelity scores are
+  source-grounded Opus reads with the reference as a partial check, not a reference-anchored measurement.
+- **Replicated?** Tibetan: consistent with the #4722 re-read; first external measurement of the SERVED Kanjur text at
+  n > 1 book. Sanskrit: first run of a new instrument; controls replicated on Pali. Translation: n = 9, exploratory.
+- **Artifact.** `scripts/eval/results/nalanda-readiness-2026-09-30.json` + `nalanda-readiness-2026-09-30/`
+  (per-page scores, judge verdicts + key); scripts `scripts/eval/nalanda-readiness/`. Spend: Gemini 8 control calls,
+  ≈ $0.02. Report for Derek: ops `fundraising/eternity/nalanda-readiness-2026-09.md`.
+
 ## 2026-09-30 · Cursive census of pre-1868 Japanese + the router checked by eye (#5100, #4925)
 
 - **Question.** How many pre-1868 Japanese books are kuzushiji (the class NDL reads and Gemini does not, #4745), and is
