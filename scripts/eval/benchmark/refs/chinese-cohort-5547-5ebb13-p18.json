@@ -2,7 +2,7 @@
   "slug": "chinese-cohort-5547-5ebb13-p18",
   "substratum": "census",
   "title": "欽定協紀辨方書·卷二十九~卷三十 (vol 21)",
-  "probe_chars": 94,
+  "probe_chars": 118,
   "witness": "WYG",
   "wide": true,
   "source": "Kanripo",
@@ -11,11 +11,11 @@
   "juan": 11,
   "url": "https://github.com/kanripo/KR3g0051/blob/WYG/KR3g0051_011.txt",
   "etext_chars": 4250,
-  "window_chars": 116,
-  "overlap": 0.286,
+  "window_chars": 137,
+  "overlap": 0.296,
   "licence": "CC-BY-SA",
   "licence_url": "https://www.kanripo.org/about",
   "licence_note": "version not stated by the source",
   "licence_checked": "2026-10-01",
-  "reason": "overlap 0.29 < 0.35: page is not (cleanly) in this e-text"
+  "reason": "overlap 0.30 < 0.35: page is not (cleanly) in this e-text"
 }

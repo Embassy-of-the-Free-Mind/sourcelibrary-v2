@@ -2,7 +2,7 @@
   "slug": "chinese-cohort-5547-49446d-p18",
   "substratum": "census",
   "title": "輶軒使者絕代語釋別國方言·十三 (vol 4)",
-  "probe_chars": 109,
+  "probe_chars": 137,
   "witness": "WYG",
   "wide": true,
   "source": "Kanripo",
@@ -11,11 +11,10 @@
   "juan": 13,
   "url": "https://github.com/kanripo/KR1j0006/blob/WYG/KR1j0006_013.txt",
   "etext_chars": 13410,
-  "window_chars": 87,
-  "overlap": 0.231,
+  "window_chars": 166,
+  "overlap": 0.674,
   "licence": "CC-BY-SA",
   "licence_url": "https://www.kanripo.org/about",
   "licence_note": "version not stated by the source",
-  "licence_checked": "2026-10-01",
-  "reason": "overlap 0.23 < 0.35: page is not (cleanly) in this e-text"
+  "licence_checked": "2026-10-01"
 }

@@ -2,7 +2,7 @@
   "slug": "chinese-cohort-5547-e29319-p34",
   "substratum": "census",
   "title": "御定佩文韻府·卷八十三之四 (vol 610)",
-  "probe_chars": 347,
+  "probe_chars": 359,
   "witness": "master",
   "wide": true,
   "source": "Kanripo",
@@ -11,11 +11,10 @@
   "juan": 688,
   "url": "https://github.com/kanripo/KR3k0059/blob/master/KR3k0059_688.txt",
   "etext_chars": 45169,
-  "window_chars": 372,
-  "overlap": 0.339,
+  "window_chars": 376,
+  "overlap": 0.36,
   "licence": "CC-BY-SA",
   "licence_url": "https://www.kanripo.org/about",
   "licence_note": "version not stated by the source",
-  "licence_checked": "2026-10-01",
-  "reason": "overlap 0.34 < 0.35: page is not (cleanly) in this e-text"
+  "licence_checked": "2026-10-01"
 }

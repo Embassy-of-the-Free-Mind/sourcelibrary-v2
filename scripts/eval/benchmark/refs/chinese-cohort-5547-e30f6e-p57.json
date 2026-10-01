@@ -2,18 +2,17 @@
   "slug": "chinese-cohort-5547-e30f6e-p57",
   "substratum": "census",
   "title": "御定子史精華·卷一百四十七~卷一百四十九 (vol 99)",
-  "probe_chars": 300,
+  "probe_chars": 321,
   "source": "Kanripo",
   "work": "KR3k0058",
   "work_title": "御定子史精華-清-吳士玉",
   "juan": "147,148,149",
   "url": "https://github.com/kanripo/KR3k0058",
   "etext_chars": 50103,
-  "window_chars": 40,
-  "overlap": 0.01,
+  "window_chars": 322,
+  "overlap": 0.616,
   "licence": "CC-BY-SA",
   "licence_url": "https://www.kanripo.org/about",
   "licence_note": "version not stated by the source",
-  "licence_checked": "2026-10-01",
-  "reason": "overlap 0.01 < 0.35: page is not (cleanly) in this e-text"
+  "licence_checked": "2026-10-01"
 }

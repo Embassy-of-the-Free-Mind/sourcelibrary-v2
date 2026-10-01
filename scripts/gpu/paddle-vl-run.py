@@ -12,9 +12,12 @@ collector, not a runner. This is the runner, committed.
 manifest.tsv: <bid>\t<pn>\t<relative image path>. Writes <root>/out/<bid>/<pn>.txt (the reading: the
 pipeline's parsing blocks in its reading order, one block per line) and appends one JSON line per page
 to <root>/timings-<worker>.jsonl. A page whose .txt exists is skipped (the output IS the checkpoint).
-Stops starting pages after --deadline. A hung page raises at --page-timeout and is logged as an error.
+Stops starting pages after --deadline. A page still running after --page-timeout is logged as an error with
+an empty .txt and the process EXITS 3 (measured 2026-10-01: after a SIGALRM inside generation the pipeline
+stayed wedged at 110 % CPU and never read another page, so the only safe recovery is a fresh process);
+paddle-vl-box.sh restarts the worker, which skips every page that has a .txt.
 """
-import argparse, json, os, signal, socket, sys, time
+import argparse, json, os, socket, sys, threading, time
 
 ap = argparse.ArgumentParser()
 ap.add_argument('--manifest', required=True); ap.add_argument('--root', required=True)
@@ -22,9 +25,6 @@ ap.add_argument('--worker', type=int, default=0); ap.add_argument('--workers', t
 ap.add_argument('--deadline', type=float, default=0); ap.add_argument('--page-timeout', type=int, default=180)
 a = ap.parse_args()
 
-class PageTimeout(Exception): pass
-def on_alarm(signum, frame): raise PageTimeout()
-signal.signal(signal.SIGALRM, on_alarm)
 
 rows = [l.rstrip('\n').split('\t') for l in open(a.manifest) if l.strip()]
 mine = [r for i, r in enumerate(rows) if i % a.workers == a.worker]
@@ -34,6 +34,18 @@ t0 = time.time()
 from paddleocr import PaddleOCRVL  # noqa: E402  (import is slow; time it)
 pipe = PaddleOCRVL()
 tlog.write(json.dumps({'event': 'loaded', 'worker': a.worker, 'secs': round(time.time() - t0, 1), 'host': socket.gethostname()}) + '\n'); tlog.flush()
+
+current = {}   # the page in progress: dst, rec, start
+def watchdog():
+    while True:
+        time.sleep(5)
+        c = dict(current)
+        if c and time.time() - c['start'] > a.page_timeout:
+            rec = dict(c['rec'], secs=round(time.time() - c['start'], 2), error=f'timeout {a.page_timeout}s (process restarted)')
+            open(c['dst'], 'w').write('')
+            tlog.write(json.dumps(rec) + '\n'); tlog.flush()
+            os._exit(3)
+threading.Thread(target=watchdog, daemon=True).start()
 
 def blocks_of(res):
     j = res.json if hasattr(res, 'json') else res
@@ -54,15 +66,13 @@ for bid, pn, rel in mine:
     if os.path.exists(dst): continue
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     s = time.time(); rec = {'bid': bid, 'pn': pn, 'worker': a.worker}
+    current.update(dst=dst, rec=dict(rec), start=s)
     try:
-        signal.alarm(a.page_timeout)
         text = '\n'.join(blk for r in pipe.predict(os.path.join(a.root, rel)) for blk in blocks_of(r))
-        signal.alarm(0)
+        current.clear()
         open(dst, 'w').write(text)
         rec.update(secs=round(time.time() - s, 2), chars=len(text))
-    except PageTimeout:
-        rec.update(secs=round(time.time() - s, 2), error=f'timeout {a.page_timeout}s'); open(dst, 'w').write('')
     except Exception as e:  # noqa: BLE001 — a failed page is a result, logged, never fatal
-        signal.alarm(0); rec.update(secs=round(time.time() - s, 2), error=str(e)[:200]); open(dst, 'w').write('')
+        current.clear(); rec.update(secs=round(time.time() - s, 2), error=str(e)[:200]); open(dst, 'w').write('')
     tlog.write(json.dumps(rec) + '\n'); tlog.flush()
 tlog.write(json.dumps({'event': 'worker-done', 'worker': a.worker, 'at': time.time()}) + '\n'); tlog.close()

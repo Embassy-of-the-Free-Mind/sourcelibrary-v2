@@ -15,7 +15,7 @@
 #   idle-poweroff.sh run -- bash -c 'paddle-vl-box.sh all; sleep 1500'   (25 min to pull the outputs)
 set -euo pipefail
 W=${PV_WORK:-/root/pv}
-WORKERS=${WORKERS:-3}
+WORKERS=${WORKERS:-2}
 INFER_HOURS=${INFER_HOURS:-3}
 HERE=$(cd "$(dirname "$0")" && pwd)
 log() { echo "$(date -u +%FT%TZ) $*" | tee -a "$W/box.log"; }
@@ -39,8 +39,13 @@ infer() {
   local t0; t0=$(date +%s)
   local deadline=$(( t0 + INFER_HOURS * 3600 ))
   log "infer start: $WORKERS workers, deadline $(date -u -d @$deadline +%FT%TZ), $(wc -l < "$W/manifest.tsv") manifest rows"
+  # A runner exits 3 when a page wedges the pipeline (see paddle-vl-run.py); restart it until the deadline.
+  # WORKERS: 2 is the L4's limit (each runner holds ~10.5 GB; a third OOMs at load, measured 2026-10-01).
   for i in $(seq 0 $((WORKERS - 1))); do
-    "$W/venv/bin/python" "$HERE/paddle-vl-run.py" --manifest "$W/manifest.tsv" --root "$W" --worker "$i" --workers "$WORKERS" --deadline "$deadline" >> "$W/worker-$i.log" 2>&1 &
+    ( while [ "$(date +%s)" -lt "$deadline" ]; do
+        "$W/venv/bin/python" "$HERE/paddle-vl-run.py" --manifest "$W/manifest.tsv" --root "$W" --worker "$i" --workers "$WORKERS" --deadline "$deadline" --page-timeout "${PAGE_TIMEOUT:-90}" >> "$W/worker-$i.log" 2>&1 && break
+        echo "$(date -u +%FT%TZ) worker $i exited $? — restarting" >> "$W/box.log"
+      done ) &
   done
   wait || true
   echo $(( $(date +%s) - t0 )) > "$W/infer-secs"
