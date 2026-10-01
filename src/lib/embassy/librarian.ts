@@ -7,7 +7,8 @@ import {
   priorTurnImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
-import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
+import { semanticSiteSearch } from '@/lib/semantic-search';
 import {
   localizedTitle,
   localizedEditionFilter,
@@ -38,6 +39,7 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - search: Hybrid keyword + semantic via RRF (replaces the prior
  *             search_collection and search_semantic; both old names accepted
  *             as aliases for one release)
+ *   - search_site: the site's own writing — essays, collection intros, tools (site_pages)
  *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
  *   - read_nearby_pages: Read a range of pages around a finding
@@ -209,6 +211,17 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         sort: { type: Type.STRING, description: 'oldest (default) | newest | title | most_translated' },
         limit: { type: Type.NUMBER, description: 'How many books to list back, 1-30 (default 15). The total count is exact no matter how few are listed.' },
       },
+    },
+  },
+  {
+    name: 'search_site',
+    description: 'Search Source Library\'s OWN pages — the essays on its blog, the introductions to its collections, its tools (identify an artwork from a photo, the ngram viewer, the map, the translation census, the dataset and API), and pages about the project (how to support it, how OCR and translation quality are measured, how first translations are counted). Use when the reader asks about Source Library itself, how something here works, where to find a feature, or what the project has written on a topic. `search` does NOT cover these pages — it only searches books. Returns page titles, the passage that matched, and the exact URL to link.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: { type: Type.STRING, description: 'What the reader wants, in plain English (e.g. "identify an engraving from a photo", "how do you measure OCR quality", "how can I donate").' },
+      },
+      required: ['query'],
     },
   },
   {
@@ -1008,6 +1021,33 @@ async function executeTool(
       };
     }
 
+    case 'search_site': {
+      // The site's own writing (#1180), from `site_pages` (main site only, like
+      // the Librarian). Every URL is final: absolute, and locale-prefixed only
+      // where the page has a twin (localePath) — LINK_PATTERNS in
+      // citation-fixes.ts verifies /book links only, so nothing repairs a bad
+      // /blog or /collections link after the fact (agent-tool-results.md).
+      const query = args.query as string;
+      const hits = await semanticSiteSearch(query, 5).catch(() => null);
+      const kind = (t: string) => (t === 'blog' ? 'Essay' : t === 'collection' ? 'Collection' : t === 'feature' ? 'Tool' : 'Page');
+      let context: string;
+      if (hits === null) {
+        context = 'The site-page search is unavailable right now. Do not link any Source Library page from memory — say you could not check.\n';
+      } else if (hits.length === 0) {
+        context = `No page on Source Library's own site matches "${query}". Do not write a link to a page for it — any URL you compose will not exist.\n`;
+      } else {
+        const site = 'https://sourcelibrary.org';
+        context = `Source Library's own pages matching "${query}" (best first). Link a page with EXACTLY the URL given; these pages are in English.\n\n`
+          + hits.map((h, i) => `${i + 1}. [${kind(h.page_type)}] ${h.title}\n   URL: ${site}${localePath(h.url, lang)}\n   Passage: ${h.snippet}`).join('\n\n')
+          + '\n';
+      }
+      return {
+        result: { found: hits?.length ?? 0, context },
+        step: { type: 'tool_result', name: 'search_site', query, found: hits?.length ?? 0,
+          summary: hits === null ? 'Site search unavailable' : hits.length === 0 ? 'No site pages' : `${hits.length} site page${hits.length === 1 ? '' : 's'}: ${hits[0].title}` },
+      };
+    }
+
     case 'search_wikipedia': {
       const query = args.query as string;
       const result = await executeSearchWikipedia(query);
@@ -1284,6 +1324,8 @@ Once you have a direction (from a choice or a specific question), search strateg
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
+
+**Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
