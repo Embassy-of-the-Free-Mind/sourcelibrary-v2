@@ -7,7 +7,7 @@
 
 **Production baseline, before any call** (494 pages, 72 books, production text as stored). Median windowed char accuracy is 95.9% once OCR-side artefacts are removed. Those artefacts are image-description attributes, `&nbsp;`, and `<lang>` text leaking into `normalizeForScript`, which is a scorer bug that needs its own fix. ſ read as f is the largest single class of misreading: 486 word substitutions, 12%. Live prompt v16 has no rule on long s.
 
-**Design** (preregistered in `long-s-tcp-ab.mjs`). 142 pages, 2 per book, seed 5488. The TCP window is fixed per page. Temperature 0, thinking budget 0. Arms: A = live v16 on flash, A2 = A repeated (noise floor), B = v16 + `LONG_S_LINE` at the abbreviation anchor, LA/LB = A/B on flash-lite. Cost $1.95 actual, realtime.
+**Design** (preregistered in `long-s-tcp-ab.mjs`). 142 pages, 2 per book, seed 5488. The TCP window is fixed per page. Temperature 0, thinking budget 0. Arms: A = live v16 on flash, A2 = A repeated (noise floor), B = v16 + `LONG_S_LINE` at the abbreviation anchor, LA/LB = A/B on flash-lite. Cost $1.78 actual, realtime.
 
 | pair | refusals (first only / second only / both) | p | accuracy, text pages (better / worse / tied) | p | long-s misreads |
 |---|---|---|---|---|---|
