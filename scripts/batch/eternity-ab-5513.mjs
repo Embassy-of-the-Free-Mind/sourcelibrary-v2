@@ -57,10 +57,12 @@ const STATE = val('state', '/root/claude-jobs/eternity-ab-work/state.json');
 const LOG_DIR = path.dirname(STATE);
 const MAX_RUNS_PER_BOOK = 12;
 
+const TOP_KEYS = ['cap_hit', 'quota_backoff_until', 'quota_hits'];
 // ── state (merge-on-save, as in the #5309 driver: commands may run concurrently) ──
 function loadState() {
   const s = JSON.parse(fs.readFileSync(STATE, 'utf8'));
   Object.defineProperty(s, '__loaded', { value: new Map(s.books.map((b) => [b.id, JSON.stringify(b)])), enumerable: false });
+  Object.defineProperty(s, '__top', { value: JSON.stringify(TOP_KEYS.map((k) => s[k])), enumerable: false });
   return s;
 }
 function writeState(s) {
@@ -79,7 +81,9 @@ function saveState(s) {
     if (i == null) fresh.books.push(b); else fresh.books[i] = b;
     s.__loaded.set(b.id, now);
   }
-  for (const k of ['cap_hit', 'quota_backoff_until', 'quota_hits', 'envelope_created_at']) if (s[k] !== undefined) fresh[k] = s[k];
+  // Top-level keys: write only the ones THIS process changed, or a stale snapshot undoes another's reset.
+  const top0 = JSON.parse(s.__top);
+  TOP_KEYS.forEach((k, i) => { if (JSON.stringify(s[k]) !== JSON.stringify(top0[i])) fresh[k] = s[k]; });
   writeState(fresh);
 }
 const log = (m) => console.log(`${new Date().toISOString().slice(11, 19)} ${m}`);
@@ -199,7 +203,8 @@ async function ocr(db) {
       fs.unlinkSync(file);
       const tail = (res.stdout || '').trim().split('\n').filter((l) => /^(Pages|Estimated|NOT SUBMITTED)/.test(l));
       log(`  ${b.id} slice ${i}: ${res.status !== 0 ? `exit ${res.status} ` : ''}${tail.join('; ')}`);
-      if (/exceeded your current quota|FileStorageBytesPerProject|RESOURCE_EXHAUSTED|429/.test(out)) {
+      // Match the error line only: a bare /429/ also matches book ids (6a09ff0429ab…), which paused every shard once.
+      if (/exceeded your current quota|FileStorageBytesPerProject|ERROR submitting batch:.*(\b429\b|RESOURCE_EXHAUSTED)|Batch API quota exhausted/.test(out)) {
         quota = true; s.quota_hits = (s.quota_hits || 0) + 1;
         s.quota_backoff_until = new Date(Date.now() + 30 * 60e3).toISOString();
         log(`ocr: quota hit — backing off until ${s.quota_backoff_until}`);
@@ -255,6 +260,41 @@ async function check(db) {
   log(`check: ${done} books OCR done, ${retried} retrying, ${waiting} still collecting`);
 }
 
+
+// ── File-API storage (20 GB per project, shared) ───────────────────────────
+/**
+ * Delete the uploaded JSONL inputs of THIS lane's OCR jobs once they are collected (`saved`/`failed`).
+ * A finished Batch job no longer reads its input; the cron collector (collect-batch-results.mjs)
+ * does not delete inputs, so they sat until the 48 h TTL and this lane alone filled the quota
+ * (849 jobs × ~25 MB, 2026-10-01 16:15). Only files whose display name maps to a batch_jobs row of
+ * this sweep, in a terminal status, are touched: other lanes' files and pending inputs are left alone.
+ */
+async function files(db) {
+  const keys = [...new Set([process.env.GEMINI_API_KEY_TIER3, process.env.GEMINI_API_KEY_2, process.env.GEMINI_API_KEY].filter(Boolean))];
+  let deleted = 0, bytes = 0, seen = 0;
+  for (const key of keys) {
+    let token = null;
+    const cands = [];
+    do {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/files?key=${key}&pageSize=100${token ? `&pageToken=${token}` : ''}`);
+      if (!res.ok) { log(`files: list ${res.status}`); break; }
+      const data = await res.json();
+      for (const f of data.files || []) { seen++; const m = /^reocr-[0-9a-f]{24}-(.+)$/.exec(f.displayName || ''); if (m) cands.push({ name: f.name, job: m[1], size: Number(f.sizeBytes || 0) }); }
+      token = data.nextPageToken || null;
+    } while (token);
+    for (let i = 0; i < cands.length; i += 500) {
+      const slice = cands.slice(i, i + 500);
+      const done = new Set((await db.collection('batch_jobs').find({ id: { $in: slice.map((c) => c.job) }, initiated_reason: { $regex: `^${SWEEP}` }, status: { $in: ['saved', 'failed'] } }, { projection: { id: 1 } }).toArray()).map((j) => j.id));
+      for (const c of slice.filter((x) => done.has(x.job))) {
+        const del = await fetch(`https://generativelanguage.googleapis.com/v1beta/${c.name}?key=${key}`, { method: 'DELETE' });
+        if (del.ok) { deleted++; bytes += c.size; }
+      }
+    }
+  }
+  log(`files: ${seen} files listed, deleted ${deleted} inputs of collected ${SWEEP} jobs (${(bytes / 1e9).toFixed(2)} GB)`);
+  return deleted;
+}
+
 // ── translation: release → chained enrol with a page list ──────────────────
 /** Pages the brief allows: text, no translation, not withheld, not blank/illustration (the lane re-checks). */
 async function translateTargets(db, bookId) {
@@ -305,7 +345,8 @@ async function enrol(db) {
         { cwd: ROOT, env: process.env, encoding: 'utf8', timeout: 600000 });
     } catch (e) { out = `${e.stdout || ''}\n${e.stderr || ''}\nEXIT ${e.status}`; }
     fs.appendFileSync(path.join(LOG_DIR, 'enrol.log'), `=== ${new Date().toISOString()} ${b.id}\n${out}\n`);
-    const m = out.match(/run (\S+) est \$([\d.]+)/);
+    // An open run on the book (an enrol whose bookkeeping a restart lost) is adopted, not refused.
+    const m = out.match(/run (\S+) est \$([\d.]+)/) || ((x) => x && ['', x[1], String(n * 0.0006)])(out.match(/open-run (\S+)/));
     if (m) {
       b.run_id = m[1]; b.runs = [...(b.runs || []), m[1]]; b.tr_est = Number(m[2]); b.phase = 'tr_enrolled'; open++; enrolled++;
       await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'chained-enrolled', detail: { run: b.run_id, estimate: b.tr_est, approved, pages: n, queue: ids.length } });
@@ -384,6 +425,9 @@ async function run(db) {
     if (!has('ocr-only')) { await check(db); await runs(db); await enrol(db); }
     const s = loadState();
     if (has('ocr-only') && !s.books.some((b) => b.phase === 'pending')) { log('run: --ocr-only and nothing pending — done'); return; }
+    if (s.quota_backoff_until && new Date(s.quota_backoff_until) > new Date() && !has('ocr-only')) {
+      if (await files(db)) { s.quota_backoff_until = new Date().toISOString(); saveState(s); }
+    }
     if (s.books.some((b) => b.phase === 'pending') && !s.cap_hit) {
       const inflightBooks = s.books.filter((b) => b.phase === 'ocr_submitted').length;
       if (inflightBooks < Number(val('max-inflight-books', '80'))) {
@@ -400,7 +444,7 @@ async function run(db) {
   }
 }
 
-const COMMANDS = { init, hold, envelope, dryrun, ocr, reconcile, check, enrol, runs, release, status, run };
+const COMMANDS = { init, hold, envelope, dryrun, files, ocr, reconcile, check, enrol, runs, release, status, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   await withMongo(async (db) => { await COMMANDS[cmd](db); }, { noTimeout: true });
