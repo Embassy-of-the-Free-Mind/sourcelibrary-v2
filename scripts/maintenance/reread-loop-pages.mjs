@@ -80,6 +80,13 @@ const MAX_OUTPUT_TOKENS = 8192;
 // ONE page per job — the first production run submitted 138 single-page jobs before it was stopped.
 const FILE_MAX_BYTES = 40 * 1024 * 1024;
 const FILE_MAX_PAGES = 500;
+// Long-edge cap for the page image sent. Some of these books' scans run to ~8 MB a page, which
+// held 4–14 pages per 40 MB job and would have put ~16 GB on the shared 20 GB File API quota.
+// The pilot's images averaged ~2 MB at their native size, so 3,000 px keeps the measured
+// condition for ordinary pages (they are sent untouched) and shrinks only the giants. The
+// pipeline itself sends 1,500 px (pipeline-orchestrator.mjs OCR_IMAGE_MAX_PX); this lane was
+// measured larger, so it stays larger. Recorded on every page as engine.image_resized_to_px.
+const IMAGE_MAX_PX = 3000;
 /** Batch-rate cost per page measured on the pilot (#3878), × 1.5 headroom for the estimate. */
 const EST_USD_PER_PAGE = { 1: 0.0046 * 1.5, 2: 0.0049 * 1.5 }; // pass 1 re-measured on the file-based mini test (runaways included)
 const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
@@ -176,7 +183,7 @@ async function submit() {
   const provenance = batchJobProvenance({
     call_site: CALL_SITE, model,
     prompt: { id: s.prompt.id, name: s.prompt.name, version: s.prompt.version, hash: s.prompt.hash, text: promptText },
-    generationConfig, run: { code_version: await codeVersion(), host: os.hostname() },
+    generationConfig, run: { code_version: await codeVersion(), host: os.hostname() }, image_resized_to_px: IMAGE_MAX_PX,
   });
   let chunk = [], bytes = 0, failed = 0;
   const flush = async () => {
@@ -197,11 +204,12 @@ async function submit() {
   for (const p of todo) {
     const r = await fetch(p.url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'Mozilla/5.0 (SourceLibrary reread-loop)' } }).catch(() => null);
     if (!r?.ok) { failed++; s.results[p.page_id] = { ...(s.results[p.page_id] || {}), [pass]: { accept: false, reasons: ['image-fetch-failed'] } }; continue; }
-    const data = Buffer.from(await r.arrayBuffer()).toString('base64');
+    const img = await capImage(Buffer.from(await r.arrayBuffer()), (r.headers.get('content-type') || 'image/jpeg').split(';')[0]);
+    const data = img.buf.toString('base64');
     if (chunk.length && (chunk.length >= FILE_MAX_PAGES || bytes + data.length > FILE_MAX_BYTES)) await flush();
     chunk.push({ page_id: p.page_id, req: {
       request: {
-        contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: (r.headers.get('content-type') || 'image/jpeg').split(';')[0], data } }] }],
+        contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: img.mimeType, data } }] }],
         safetySettings: SAFETY,
         generationConfig,
       },
@@ -213,6 +221,19 @@ async function submit() {
   await flush();
   save(s);
   console.log(`pass ${pass}: submitted ${todo.length - failed} pages; ${failed} image fetches failed (recorded)`);
+}
+
+/** Shrink an image whose long edge exceeds IMAGE_MAX_PX; anything smaller is sent byte-for-byte. */
+async function capImage(buf, mimeType) {
+  try {
+    const sharp = (await import('sharp')).default;
+    const meta = await sharp(buf).metadata();
+    if (Math.max(meta.width || 0, meta.height || 0) <= IMAGE_MAX_PX) return { buf, mimeType };
+    const out = await sharp(buf).resize({ width: IMAGE_MAX_PX, height: IMAGE_MAX_PX, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer();
+    return { buf: out, mimeType: 'image/jpeg' };
+  } catch {
+    return { buf, mimeType }; // unreadable by sharp: send as fetched, as the pipeline does
+  }
 }
 
 /** Upload a JSONL body to the File API (resumable protocol); returns the file name. */
