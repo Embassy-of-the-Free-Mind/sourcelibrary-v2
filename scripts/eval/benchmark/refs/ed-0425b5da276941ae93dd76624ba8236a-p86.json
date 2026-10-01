@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A26733",
+  "edition": "EEBO-TCP A26733 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
+  "page_number": 86,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 58459,
+    "to_char": 59238,
+    "overlap": 0.921,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts influence, whereby the then Imagination; ends various minds of",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:26.883Z",
+  "text_location": "repo",
+  "text_sha256": "41aa85f3f38d46a2b35881f56fb62d44f065fa409c46922a8a29db8684279d03",
+  "unit": {
+    "chars": 779
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A53049",
+  "edition": "EEBO-TCP A53049 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69905cfcaaa7f10ed4cfd289",
+  "page_number": 588,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 801938,
+    "to_char": 803540,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts about a line early (The Emperess replied); ends little acquaintance.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:45.561Z",
+  "text_location": "repo",
+  "text_sha256": "5fb2d50f0e88e42a3e5bd35f44bc1e0b50bd671f1bfc13327dddabd4fca77c1e",
+  "unit": {
+    "chars": 1602
+  }
+}

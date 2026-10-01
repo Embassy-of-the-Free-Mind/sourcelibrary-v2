@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A37157",
+  "edition": "EEBO-TCP A37157 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6991e7dec91ce7d733e50228",
+  "page_number": 17,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 22526,
+    "to_char": 24363,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts few words early at Death of Marcellus, ends at Democritus",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:31.238Z",
+  "text_location": "repo",
+  "text_sha256": "dd3bbe4043efd435520c88c18fe5772ffa9f666b8661707a37c5f68eadee6732",
+  "unit": {
+    "chars": 1837
+  }
+}

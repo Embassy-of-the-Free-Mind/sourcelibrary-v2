@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A65140",
+  "edition": "EEBO-TCP A65140 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a48d985df05f7ea342b77fb",
+  "page_number": 16,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 13503,
+    "to_char": 14579,
+    "overlap": 0.962,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "verse starts 'Secum peractum', ends '20 Viamque inibam denique' + catchword",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:49.045Z",
+  "text_location": "repo",
+  "text_sha256": "f71afa862af3ad45a7f0d664b4bbf31550690e0c3a9c4d5c77cbc6e1b35941b3",
+  "unit": {
+    "chars": 1076
+  }
+}

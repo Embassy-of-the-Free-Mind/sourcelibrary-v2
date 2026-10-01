@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A54621",
+  "edition": "EEBO-TCP A54621 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6991e194339ebc850994a230",
+  "page_number": 98,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 89860,
+    "to_char": 90925,
+    "overlap": 0.889,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts co-habitation than otherwise; ends the mat-ter. Matches.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:46.526Z",
+  "text_location": "repo",
+  "text_sha256": "5a1b74f9b575a4abce8c75965b405ffb69b0384e2a80ceb4f5ff5ccd3569fb2f",
+  "unit": {
+    "chars": 1065
+  }
+}
