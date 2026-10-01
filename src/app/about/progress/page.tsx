@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { getSiteStats } from '@/lib/site-stats';
+import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 import Link from 'next/link';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
@@ -171,11 +172,14 @@ interface CenturyProgress {
   first_trans: number;
 }
 
+// The RPC's book counts are the page-ratio rule (`pages_translated > 0`,
+// `translation_pct >= 90`), not the ladder. Its totals for "translated" and
+// "over 90%" are no longer shown; the headline reads the ladder instead
+// (getLadderCounts). The per-language/per-century tables still come from here —
+// their "with translated pages" column is what the RPC actually counts.
 interface LiveStats {
   total_books: number;
-  translated_by_sl: number;
   english_digitized: number;
-  books_over_90: number;
   first_translations: number;
   by_language: LanguageProgress[];
   by_century: CenturyProgress[];
@@ -189,9 +193,7 @@ async function getLiveStats(): Promise<LiveStats | null> {
     const d = data as any;
     return {
       total_books: Number(d.totals?.total_books || 0),
-      translated_by_sl: Number(d.totals?.translated_by_sl || 0),
       english_digitized: Number(d.totals?.english_digitized || 0),
-      books_over_90: Number(d.totals?.over_90_translated || 0),
       first_translations: Number(d.totals?.first_translations || 0),
       by_language: (d.by_language || []).map((l: any) => ({
         language: l.language,
@@ -208,6 +210,26 @@ async function getLiveStats(): Promise<LiveStats | null> {
         first_trans: Number(c.first_trans),
       })),
     };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Headline book counts from the translation ladder's named views
+ * (.claude/docs/translation-state.md): `readable_in_english` — the same view
+ * as the homepage, /census and /admin — and `complete`. Live books only.
+ * Both counts are backed by the translation_state_rung_english index.
+ */
+async function getLadderCounts(): Promise<{ readable: number; complete: number } | null> {
+  try {
+    const books = (await getReadDb()).collection('books');
+    const live = { visible: true, pages_count: { $gt: 0 } };
+    const [readable, complete] = await Promise.all([
+      books.countDocuments({ ...live, ...READABLE_IN_ENGLISH_FILTER }, { maxTimeMS: 10000 }),
+      books.countDocuments({ ...live, 'translation_state.rung': 'complete' }, { maxTimeMS: 10000 }),
+    ]);
+    return { readable, complete };
   } catch {
     return null;
   }
@@ -252,7 +274,7 @@ function fmt(n: number): string {
 // ── Page ──────────────────────────────────────────────────────────────
 
 export default async function ProgressPage() {
-  const [data, live, siteStats] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats()]);
+  const [data, live, siteStats, ladder] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats(), getLadderCounts()]);
   // One FT number site-wide (#3015): the get_sl_progress RPC re-derives the raw
   // is_first_translation flag, which drifts above the verified public count.
   // Always show the canonical homepage_stats figure instead.
@@ -352,12 +374,12 @@ export default async function ProgressPage() {
               <div className="text-xs text-stone-500 mt-1">First English translations</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.translated_by_sl)}</div>
-              <div className="text-xs text-stone-500 mt-1">Books translated</div>
+              <div className="text-2xl font-semibold text-primary">{ladder ? fmt(ladder.readable) : '—'}</div>
+              <div className="text-xs text-stone-500 mt-1">Books readable in English</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.books_over_90)}</div>
-              <div className="text-xs text-stone-500 mt-1">Over 90% complete</div>
+              <div className="text-2xl font-semibold text-primary">{ladder ? fmt(ladder.complete) : '—'}</div>
+              <div className="text-xs text-stone-500 mt-1">Fully translated</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-semibold text-stone-400">{fmt(live.english_digitized)}</div>
@@ -378,7 +400,7 @@ export default async function ProgressPage() {
                     <tr className="border-b border-stone-200 text-left">
                       <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Language</th>
                       <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">With translated pages</th>
                       <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
                     </tr>
                   </thead>
@@ -410,7 +432,7 @@ export default async function ProgressPage() {
                     <tr className="border-b border-stone-200 text-left">
                       <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Period</th>
                       <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">With translated pages</th>
                       <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
                     </tr>
                   </thead>
