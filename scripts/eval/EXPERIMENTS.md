@@ -100,6 +100,19 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 *Replicated?* Yes — this IS the replication of 09-30 (n 65 → 100, no shared pages). *Artifacts:* `results/tibetan-ocr-redraw-2026-10-01/` (summary.json, scores, both controls, sample metadata without text); Hetzner `/root/tibetan-eval/redraw-2026-10-01/`. Spend €0 (CPU). Comment on #4523.
 
+## 2026-10-01 · IA candidate dates: which Internet Archive items are actually old? (#5458)
+
+- **Question.** Can metadata rules alone, with no AI calls, tell whether an `ia_language` import candidate dated <1900 or undated was really produced before 1900?
+- **Design.** IA scrape-API metadata was pulled for 1,003,754 candidates. Rules in `scripts/lib/ia-date-check.mjs` cover provenance (library catalogue / DLI / Universal Library / patron upload), calendar conversion (AH, Solar Hijri, Bengali San, Vikram, ROC, Anno Mundi) and modern markers. Each round validated a blind, stratified sample of 100 by reading the title page or colophon from IA page images. The bar was modern-vs-old accuracy of at least 90% where both sides were decided. `measure: accuracy` (label read from image).
+- **Result.**
+  - Round 1, v1: 60/69 = 87%, which fails the bar. The misses traced to four rules (ordinal editions, an ISBN on a microfiche, Shaka/VS-coded DLI years, DLI pre-1800) and those were fixed.
+  - Round 2, 99 fresh items: v2 scored 61/68 = 89.7%.
+  - v3 adds one rule for the `ds-legacy-data` screenshot family. That rule was confirmed on 10 further items by page hash (16/16 overall). v3 scores 65/68 = 95.6%, with old precision 30/31 and modern precision 35/37.
+  - Undated patron uploads read modern 25/25. The `unknown` class is mixed: 8 old, 7 modern, 5 undecidable.
+  - Written to the candidates as `classification.date_check`: old 222,492, modern 635,098, unknown 146,164. Of these, 3,022 rare-language items are old and pre-1800.
+- **Replicated?** Partly. Round 2 is an out-of-sample replication of the v2 rules. The v3 rule has its own out-of-sample check, but the full v3 rule set was not re-drawn a third time.
+- **Artifact.** `scripts/audit/results/ia-date-check-2026-10-01/` (`validation-labels.jsonl`, tables, library report).
+
 ## 2026-10-01 · Does the Yigdzin per-leaf crop drop the lower leaf's first line, and should the "lines < book median" pages be re-read? (#4523)
 <!-- PRIOR ART: 2026-09-29 #5250 round-2 entry (band crops) — it found the vowel-less overlap line in BAND crops; this entry asks whether the production LEAF crop has it. -->
 
