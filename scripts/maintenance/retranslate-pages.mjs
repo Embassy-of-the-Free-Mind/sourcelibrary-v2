@@ -184,9 +184,11 @@ await withMongo(async (db) => {
     let best = null;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const { text, promptRef } = await translateOnce(page, book, NO_CONTEXT ? null : prevTr);
-        if (!best || badnessScore(page.ocr.data, text) < badnessScore(page.ocr.data, best.text)) best = { text, promptRef };
-        if (!isBad(page.ocr.data, text)) { best = { text, promptRef }; break; }
+        // Keep the whole result: `call` is the provenance the writer requires (#4613) — dropping it
+        // here made every --execute run throw at the first write (found 2026-10-01, #4681 repair).
+        const r = await translateOnce(page, book, NO_CONTEXT ? null : prevTr);
+        if (!best || badnessScore(page.ocr.data, r.text) < badnessScore(page.ocr.data, best.text)) best = r;
+        if (!isBad(page.ocr.data, r.text)) { best = r; break; }
       } catch (e) {
         console.log(`    ${book.id} p${t.page_number} attempt ${attempt} error: ${e.message?.slice(0, 70)}`);
         await new Promise(r => setTimeout(r, 2000));

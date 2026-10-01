@@ -42,6 +42,11 @@
  *   node --env-file=.env.production.local scripts/maintenance/backfill-leaf-break-markers.mjs \
  *     --ledger=/root/tibetan-reocr/leaf-run-logs/pages.jsonl \
  *     --leafdir=/root/tibetan-reocr/txt-yigdzin-leaf [--book=<id>] [--limit=N] [--apply]
+ *
+ * --page-mode (#5320) walks the pages that still serve the PAGE-mode read but have a multi-leaf ledger row
+ * (their leaf read was rejected by the acceptance rule, so it sits in txt-yigdzin-leaf unserved). The seam is
+ * placed by aligning the page read to that leaf read (insertLeafBreaksByAlignment), and a page it cannot place
+ * unambiguously is left unmarked with its reason. Revision reason `leaf-break-5320-page-mode`.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,7 +54,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { insertLeafBreaks, foreignTags, countLeafBreaks, LEAF_BREAK } from '../lib/leaf-break.mjs';
+import { insertLeafBreaks, insertLeafBreaksByAlignment, foreignTags, countLeafBreaks, LEAF_BREAK } from '../lib/leaf-break.mjs';
 
 const ARG = (n, d) => { const a = process.argv.find((x) => x.startsWith(`${n}=`)); return a ? a.slice(n.length + 1) : d; };
 const APPLY = process.argv.includes('--apply');
@@ -57,12 +62,16 @@ const LEDGER = ARG('--ledger', null);
 const LEAFDIR = ARG('--leafdir', null);
 const ONLY_BOOK = ARG('--book', null);
 const LIMIT = Number(ARG('--limit', 0)) || 0;
-const REPORT = ARG('--report', `scripts/output/leaf-break-backfill-${new Date().toISOString().slice(0, 10)}${APPLY ? '' : '.dry'}.jsonl`);
+// --page-mode (#5320): the pages that still serve the PAGE-mode read (the leaf read was rejected or never
+// applied) but have a multi-leaf ledger row and a leaf read on disk. The seam is placed by aligning the page
+// read to the leaf read line by line (insertLeafBreaksByAlignment), never by cutting at the ledger's counts.
+const PAGE_MODE = process.argv.includes('--page-mode');
+const REPORT = ARG('--report', `scripts/output/leaf-break-backfill${process.argv.includes('--page-mode') ? '-page-mode' : ''}-${new Date().toISOString().slice(0, 10)}${APPLY ? '' : '.dry'}.jsonl`);
 if (!LEDGER || !LEAFDIR) { console.error('--ledger=<pages.jsonl> and --leafdir=<txt-yigdzin-leaf> are required'); process.exit(1); }
 
-const ISSUE = 5260;
-const REASON = 'leaf-break-5260';           // page_revisions reason + sweep name
-const RUN = `leaf-break-backfill-${new Date().toISOString().slice(0, 10)}`;
+const ISSUE = PAGE_MODE ? 5320 : 5260;
+const REASON = PAGE_MODE ? 'leaf-break-5320-page-mode' : 'leaf-break-5260';   // page_revisions reason + sweep name
+const RUN = `leaf-break-backfill${PAGE_MODE ? '-page-mode' : ''}-${new Date().toISOString().slice(0, 10)}`;
 const MODEL = 'bdrc-yigdzin-v1';
 const LEAF_RUN = 'yigdzin-leaf-2026-09-25';
 const HUMAN_GUARD = { 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' } };
@@ -100,7 +109,9 @@ for (const bookId of books) {
   // The served leaf reads of this book: this model, this run, read per leaf, not withheld, not a
   // human's, not yet marked. `ocr.data` is the whole text — it is what the seam goes into.
   const pages = await db.collection('pages').find(
-    { book_id: bookId, 'ocr.model': MODEL, 'ocr.engine.read_mode': 'leaf', 'ocr.engine.run': LEAF_RUN, 'ocr.unreadable': { $ne: true }, ...HUMAN_GUARD },
+    PAGE_MODE
+      ? { book_id: bookId, 'ocr.model': MODEL, 'ocr.engine.read_mode': 'page', 'ocr.unreadable': { $ne: true }, ...HUMAN_GUARD }
+      : { book_id: bookId, 'ocr.model': MODEL, 'ocr.engine.read_mode': 'leaf', 'ocr.engine.run': LEAF_RUN, 'ocr.unreadable': { $ne: true }, ...HUMAN_GUARD },
     { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'ocr.content_hash': 1 } },
   ).sort({ page_number: 1 }).toArray();
 
@@ -116,13 +127,19 @@ for (const bookId of books) {
     const rawFile = path.join(LEAFDIR, `${stem}.txt`);
     if (!fs.existsSync(rawFile)) { reason('no-raw-leaf-file'); rec({ book: bookId, page: p.page_number, status: 'no-raw-leaf-file' }); continue; }
     const raw = fs.readFileSync(rawFile, 'utf8').trim();
-    const r = insertLeafBreaks({ served, raw, leafLines });
+    const r = PAGE_MODE ? insertLeafBreaksByAlignment({ served, leafRead: raw, leafLines }) : insertLeafBreaks({ served, raw, leafLines });
     if (!r.text) { reason(r.reason); rec({ book: bookId, page: p.page_number, status: r.reason, detail: r }); continue; }
     const foreign = foreignTags(r.text);
     if (foreign.length) { reason('foreign-tags'); rec({ book: bookId, page: p.page_number, status: 'foreign-tags', tags: foreign.slice(0, 5) }); continue; }
     // The hash on the page should be the hash of the text on the page; report a drift, do not act on it.
     const hashOk = !p.ocr?.content_hash || p.ocr.content_hash === contentHash(served);
     plan.push({ page: p, served, text: r.text, seams: r.seams, leafLines, hashOk });
+    if (PAGE_MODE) {
+      // Where a cut at the ledger's counts would have put the seams, for the report: the page-mode path exists
+      // because the two differ on some pages.
+      const countCut = leafLines.slice(0, -1).map((_, k) => leafLines.slice(0, k + 1).reduce((a, b) => a + b, 0));
+      rec({ book: bookId, page: p.page_number, status: 'marked', seams: r.seams, count_cut: countCut, differs: JSON.stringify(countCut) !== JSON.stringify(r.seams), matched: r.matched, lines: r.lines });
+    }
     totals.marked++;
     reason(`marked:${leafLines.length}-leaves`);
     if (examples.length < 3) {
@@ -156,7 +173,7 @@ for (const bookId of books) {
           'ocr.content_hash': contentHash(x.text),
           'ocr.updated_at': now,
           // Provenance of the seam, inside the engine block that describes this text.
-          'ocr.engine.leaf_seams': { marker: LEAF_BREAK, count: x.seams.length, at_lines: x.seams, leaf_lines: x.leafLines, source: 'leaf-run-logs/pages.jsonl per-leaf line counts, mapped through txt-yigdzin-leaf', issue: ISSUE, run: RUN, at: now },
+          'ocr.engine.leaf_seams': { marker: LEAF_BREAK, count: x.seams.length, at_lines: x.seams, leaf_lines: x.leafLines, source: PAGE_MODE ? 'page-mode read aligned line by line to the per-leaf read (txt-yigdzin-leaf, leaf-run-logs/pages.jsonl)' : 'leaf-run-logs/pages.jsonl per-leaf line counts, mapped through txt-yigdzin-leaf', issue: ISSUE, run: RUN, at: now },
           updated_at: now,
         },
       },

@@ -424,6 +424,26 @@ const getCollectionDoc = cache(async (id: string, tenantId: string | null) => {
   );
 });
 
+/**
+ * Drop images whose BOOK is not public. Frozen image lists (`image_ids`,
+ * `curated_gallery_images`) outlive a hide or a takedown, and
+ * `gallery_images.book_visible` drifts in both directions (#4058), so the
+ * book itself is the only reliable gate (#5303).
+ */
+async function keepImagesOfPublicBooks(
+  db: Awaited<ReturnType<typeof getReadDb>>,
+  images: any[],
+): Promise<any[]> {
+  const bookIds = [...new Set(images.map((i) => i.book_id).filter(Boolean))];
+  if (bookIds.length === 0) return [];
+  const publicIds = new Set(
+    (await db.collection('books')
+      .find({ id: { $in: bookIds }, visible: true }, { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 })
+      .toArray()).map((b) => b.id),
+  );
+  return images.filter((i) => publicIds.has(i.book_id));
+}
+
 async function fetchCollectionData(id: string, tenantId: string | null, provider?: string) {
   // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
@@ -466,6 +486,9 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     // guard that reads a projected-away field passes everything silently.
     collections: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
+    // The stamped rung (#5287): the FT badge gate, further-reading status and
+    // card status line all read it; absent = unstamped, counters stand in.
+    'translation_state.rung': 1, 'translation_state.english_original': 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
     is_first_translation: 1,
@@ -663,15 +686,16 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
             // (2026-07-08) were still being served on /collections/freemasonry six weeks later.
             // Every other gallery surface already filters on this field; this path was the
             // outlier. See .claude/docs/invariants/visibility-and-stats.md.
-            return db.collection('gallery_images')
+            return keepImagesOfPublicBooks(db, await db.collection('gallery_images')
               .find(
                 { id: { $in: thematicIds.slice(0, 60) }, book_visible: true },
                 { projection: { _id: 0 } },
               )
-              .toArray();
+              .toArray());
           }
           if (collection.curated_gallery_images?.length > 0) {
-            return (collection.curated_gallery_images as any[]).map(({ _id, ...rest }: any) => rest);
+            // Embedded copies of image docs: frozen like image_ids, so gate on the book too.
+            return keepImagesOfPublicBooks(db, (collection.curated_gallery_images as any[]).map(({ _id, ...rest }: any) => rest));
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')

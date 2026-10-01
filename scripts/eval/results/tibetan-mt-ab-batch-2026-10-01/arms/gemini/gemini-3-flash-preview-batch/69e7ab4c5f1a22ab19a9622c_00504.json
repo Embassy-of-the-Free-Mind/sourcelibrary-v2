@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab4c5f1a22ab19a9622c_00504",
+ "arm": "gemini-3-flash-preview",
+ "text": "Because the emptiness of the essence of non-existence is itself non-existent, the <term>Bodhisattva</term> <gloss>one who seeks awakening for the sake of all beings</gloss> is not perceived at the final limit. Because the emptiness of the essence of non-existence is empty, the Bodhisattva is not perceived at the final limit. Because the emptiness of the essence of non-existence is secluded <note>original: \"dben pa\", meaning isolated or void of inherent nature</note>, the Bodhisattva is not perceived at the final limit. Because the emptiness of the essence of non-existence is non-existent, and because the emptiness of the essence of existence is without essence, the Bodhisattva is not perceived at the final limit.\n\nBecause the emptiness of the essence of non-existence is non-existent, the Bodhisattva is not perceived in the middle. Because the emptiness of the essence of non-existence is empty, the Bodhisattva is not perceived in the middle. Because the emptiness of the essence of non-existence is secluded, the Bodhisattva is not perceived in the middle. The Bodhisattva is not perceived in the middle. The Bodhisattva is perceived as the three <note>likely referring to the three times: past, present, and future</note>. The Bodhisattva is not perceived in the middle. Because the emptiness of the essence of non-existence is empty, the Bodhisattva is not perceived in the middle.\n\nWhy is that so? O venerable <term>Sharadvatiputra</term> <gloss>Shariputra, one of the primary disciples of the Buddha</gloss>, in the non-existence of the emptiness of the essence of non-existence, in the emptiness of the emptiness of the essence of non-existence, in the seclusion of the emptiness of the essence of non-existence, and in the lack of essence of the emptiness of the essence of non-existence, the prior limit is not perceived.\n\n<summary>This page discusses the philosophical concept of emptiness regarding the nature of a Bodhisattva. It argues that because the essence of non-existence is itself empty and non-existent, a Bodhisattva cannot be found or perceived at the beginning, middle, or end of time.</summary>\n<keywords>Bodhisattva, emptiness, non-existence, Shariputra, essence, three times, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2593,
+ "outputTokens": 501,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.00139975,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1152,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

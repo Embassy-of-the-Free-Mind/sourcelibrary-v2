@@ -26,11 +26,11 @@ const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[
 const DATA = opt('data'); const ARMS = opt('arms'); const OUT = opt('out'); const SEED = Number(opt('seed', 4742));
 if (!DATA || !ARMS || !OUT) { console.error('--data, --arms, --out required'); process.exit(1); }
 
-const ENGINES = {
-  flash: (id) => path.join(ARMS, 'gemini', 'gemini-3-flash-preview', `${id}.json`),
-  lite: (id) => path.join(ARMS, 'gemini', 'gemini-3.1-flash-lite', `${id}.json`),
-  mitra: (id) => path.join(ARMS, 'mitra', `${id}.json`),
-};
+// --engines name=dir,name=dir (dirs relative to --arms) overrides the 09-25 trio; --src <dir> reads the
+// source from <dir>/<id>.txt instead of yig/mtab-yig-<id>.txt (2026-10-01: current pages.ocr.data).
+const ENGINE_SPEC = opt('engines', 'flash=gemini/gemini-3-flash-preview,lite=gemini/gemini-3.1-flash-lite,mitra=mitra');
+const ENGINES = Object.fromEntries(ENGINE_SPEC.split(',').map((kv) => kv.split('=')).map(([name, dir]) => [name, (id) => path.join(ARMS, dir, `${id}.json`)]));
+const SRC = opt('src', null);
 const POSITIVE_CONTROL_PAGE = '69e7abdd5f1a22ab19a9fade_00002'; // Toh 552, two-side reference window (tight)
 const SAME_ARM_PAGES = ['69e7ab535f1a22ab19a96a78_00266', '69e7ab365f1a22ab19a94b87_00537', '69e7abe75f1a22ab19aa00d4_00566', '69e7aaeb5f1a22ab19a8f91f_00432'];
 
@@ -53,14 +53,14 @@ for (const id of ids) {
   }
   if (id === POSITIVE_CONTROL_PAGE) cands.push({ arm: 'reference', text: refs[id].text.replace(/⟦F\.[^⟧]*⟧/g, '').replace(/[ \t]+/g, ' ').trim() });
   if (SAME_ARM_PAGES.includes(id)) {
-    const dup = ['flash', 'lite', 'mitra'][Math.floor(rnd() * 3)];
+    const names = Object.keys(ENGINES); const dup = names[Math.floor(rnd() * names.length)];
     cands.push({ arm: `${dup}#dup`, text: cands.find((c) => c.arm === dup).text });
     key.same_arm_pages[id] = dup;
   }
   shuffle(cands);
   const labels = cands.map((_, i) => `T${i + 1}`);
   key.pages[id] = Object.fromEntries(labels.map((l, i) => [l, cands[i].arm]));
-  const source = fs.readFileSync(path.join(DATA, 'yig', `mtab-yig-${id}.txt`), 'utf8').trim();
+  const source = fs.readFileSync(SRC ? path.join(SRC, `${id}.txt`) : path.join(DATA, 'yig', `mtab-yig-${id}.txt`), 'utf8').trim();
   // Yigdzin drops one manuscript line on some two-leaf pages (peer finding, 2026-09-25): count the
   // lines so the judge can attribute a one-line omission to the source, not to an engine
   const sourceLines = source.split('\n').filter((l) => l.trim()).length;

@@ -717,6 +717,12 @@ function phaseJudgePacket() {
   const sides = (pair) => (pair.includes('/') ? pair.split('/') : ['A', pair.slice(1)]);
   const fileTag = (pair) => pair.replace('/', '-');
   const { usable } = loadBoundaries();
+  // The flips come from the seeded stream, and the generator changed on 2026-09-30 (#5373): the `--pairs` replay
+  // described above no longer reproduces a packet built before that date. A pair that already has key entries
+  // was (or may have been) judged against the old packet, so it is never re-emitted over them.
+  const keyed = fs.existsSync(KEY_FILE) ? new Set(JSON.parse(fs.readFileSync(KEY_FILE, 'utf8')).map((k) => k.pair)) : new Set();
+  const clash = ONLY.map(fileTag).filter((t) => keyed.has(t));
+  if (clash.length) throw new Error(`${KEY_FILE} already holds ${clash.join(', ')} — a rebuilt packet invalidates judged verdicts; move the key aside deliberately`);
   resetSeed();
   const packet = Object.fromEntries(PAIRS.map((p) => [p, []])), key = [];
   for (const { s, rows } of usable) {

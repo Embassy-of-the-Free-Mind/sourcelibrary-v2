@@ -50,12 +50,14 @@ export async function GET(
       },
       {
         $addFields: {
-          // Mongo-side twin of translationPercent() in src/lib/translation-percent.ts
-          // — pages_translated / pages_count, clamped to 0–100. The formula that
-          // stood here divided by (pages_ocr − pages_blank), which exceeds 100%
-          // on 5,835 live books because "blank" leaves do get translated. Keep
-          // the two definitions in step; tests/unit/translation-percent.test.ts
-          // pins the JS side.
+          // pages_translated / pages_count over the counts recomputed just
+          // above from `pages`, clamped to 0–100. Both sides come from the same
+          // lookup (blanks count as done in the numerator AND sit in the
+          // denominator), so this must NOT be swapped for the stored-counter
+          // formula in src/lib/translation-completeness.ts, whose denominator
+          // excludes blanks. (Was the twin of src/lib/translation-percent.ts,
+          // retired in #5287.) The formula that stood here before divided by
+          // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books.
           translation_percent: {
             $cond: {
               if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },

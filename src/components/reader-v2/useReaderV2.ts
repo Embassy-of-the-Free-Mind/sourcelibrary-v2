@@ -318,16 +318,41 @@ export function useReaderV2(
     // reader. Fall back to whatever this page actually has — on a phone that
     // is the translation alone; a desktop grid has room for both text panes.
     const hasScan = !!getPageDisplayUrl(initialPage as unknown as Record<string, unknown>);
+    // A link can ask for specific panes (?views=scan,ocr,en) — /identify
+    // sends the visitor to the page they photographed, and the scan is what
+    // they recognise, whatever panes they last left on. Applied once, not
+    // persisted, and stripped from the URL so page turns and shares don't
+    // keep overriding the reader's own choice.
+    const sp = new URLSearchParams(window.location.search);
+    const requested = sp.get('views');
+    if (requested) {
+      const keys = new Set(requested.split(','));
+      const next: ViewState = {
+        scan: keys.has('scan') && hasScan,
+        ocr: keys.has('ocr'),
+        en: keys.has('en'),
+        translit: keys.has('translit'),
+      };
+      sp.delete('views');
+      const qs = sp.toString();
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`);
+      if (next.scan || next.ocr || next.en) {
+        setViews(next);
+        return;
+      }
+    }
     if (!hasScan && !stored.ocr && !stored.en) {
       setViews({ ...stored, scan: false, ocr: !isPhone, en: true });
       return;
     }
-    // On a phone the panes stack, and a full OCR pane pushes the translation
-    // a long scroll away — so a reader who has never chosen on a phone gets
-    // the translation as the text pane (scan on top when the page has one).
-    // Not persisted: their first explicit toggle is what writes localStorage.
+    // On a phone the panes stack in one scroller, so a reader who has never
+    // chosen gets the whole page in reading order: the scan, then the
+    // original text, then the English below it. (#4385 had hidden the
+    // original here; Derek reversed that 2026-09-30 — scrolling down from
+    // the image should reveal the original first.) Not persisted: their
+    // first explicit toggle is what writes localStorage.
     if (!hasChosen && isPhone) {
-      setViews({ ...stored, ocr: false });
+      setViews({ ...stored, scan: hasScan, ocr: true, en: true });
       return;
     }
     setViews(stored);

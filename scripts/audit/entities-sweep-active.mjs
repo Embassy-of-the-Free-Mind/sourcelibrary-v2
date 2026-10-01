@@ -60,7 +60,22 @@ try {
 
   // Signal 1 — the precise one: sweeps that announce themselves. One tiny doc
   // per sweep, so this is instant and tells you WHICH sweep, on which host.
-  const live = await activeSweeps(db);
+  //
+  // A read-scoped user (the GitHub Actions secret, 2026-09-30) may not be
+  // granted `sweep_heartbeats`. That is a permissions gap, not evidence of a
+  // sweep: say so, and fall through to Signal 2, which asks the database the
+  // question the build actually cares about. Any OTHER error still exits 2 —
+  // and if Signal 2 cannot run either, the catch below makes it UNKNOWN.
+  let live = [];
+  try {
+    live = await activeSweeps(db);
+  } catch (err) {
+    if (err?.code === 13 || /not authorized/i.test(err?.message || '')) {
+      console.warn(`heartbeat check skipped: this user cannot read sweep_heartbeats (${err.message}). Falling back to the entities write-rate signal only — grant read on sweep_heartbeats to restore the named-sweep signal.`);
+    } else {
+      throw err;
+    }
+  }
   for (const s of live) {
     console.log(`heartbeat: ${s.sweep} alive on ${s.host} (pid ${s.pid}, last beat ${Math.round(s.ageMs / 1000)}s ago)` +
       (s.progress?.books_done !== undefined ? ` — ${s.progress.books_done} books done` : ''));

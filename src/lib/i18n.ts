@@ -105,6 +105,7 @@ export interface FooterStrings {
   support: string;
   donate: string;
   sponsorship: string;
+  connect: string;
   developers: string;
   giveFeedback: string;
   checkPages: string;
@@ -228,6 +229,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     support: 'Support',
     donate: 'Donate',
     sponsorship: 'Corporate Sponsorship',
+    connect: 'Connect to Claude & ChatGPT',
     developers: 'Developers',
     giveFeedback: 'Give Feedback',
     checkPages: 'Check a few pages',
@@ -259,6 +261,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     support: 'Apoyar',
     donate: 'Donar',
     sponsorship: 'Patrocinio corporativo',
+    connect: 'Conectar con Claude y ChatGPT',
     developers: 'Desarrolladores',
     giveFeedback: 'Enviar comentarios',
     checkPages: 'Revisar algunas páginas',

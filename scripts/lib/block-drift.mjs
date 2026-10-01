@@ -41,7 +41,9 @@
  * re-translation of two pages, never a wrong text, which is why ~50% precision is enough for
  * the parser to act on.
  *
- * The second shape, duplicatedAcrossBoundary(): N+1's opening on BOTH pages.
+ * The second shape, duplicatedAcrossBoundary(): N+1's opening on BOTH pages — unless the SOURCE
+ * repeats itself across the same boundary (sourceRepeatsAcrossBoundary, #5275): a sūtra's
+ * refrain rendered on both leaves is the text, not a copy.
  *
  * Deliberately NOT caught: a German/Dutch fragment opening on a capitalised noun (reads as a
  * sentence start), a fragment with no full stop within FRAGMENT_WINDOW chars, caseless scripts.
@@ -254,10 +256,81 @@ export function duplicatedAcrossBoundary(trPrev, trNext) {
   return run.len >= DUPLICATE_MIN_CHARS ? run : null;
 }
 
+export const SOURCE_REPEAT_MIN_TOKENS = 6;
+// A token is a run of letters, combining marks (the vowel signs and subjoined letters of
+// Tibetan and Devanagari are marks, not letters) or digits. Everything else splits —
+// whitespace, punctuation, the table pipes of a catalogue page, and for Tibetan the tsheg
+// (U+0F0B) between syllables and the shad (U+0F0D) between clauses — so a Tibetan token is a
+// syllable, and a repeated table scaffold ("| | subject | …") does not count as the source
+// repeating.
+const TOKEN_SPLIT = /[^\p{L}\p{M}\p{N}]+/u;
+/** The source as lowercase tokens (words; syllables in Tibetan), furniture tags stripped. */
+export function sourceTokens(ocr) {
+  return flat(sourceProse(ocr)).toLowerCase().split(TOKEN_SPLIT).filter(Boolean);
+}
+
+/** Longest run of consecutive tokens `a` and `b` share, seeded on `minN`-grams of `b`. */
+function longestTokenRun(a, b, minN) {
+  const idx = new Map();
+  for (let i = 0; i + minN <= b.length; i++) {
+    const k = b.slice(i, i + minN).join(' ');
+    if (!idx.has(k)) idx.set(k, []);
+    idx.get(k).push(i);
+  }
+  let best = 0, bestText = '';
+  for (let i = 0; i + minN <= a.length; i++) {
+    const js = idx.get(a.slice(i, i + minN).join(' '));
+    if (!js) continue;
+    for (const j of js) {
+      let L = minN;
+      while (i + L < a.length && j + L < b.length && a[i + L] === b[j + L]) L++;
+      if (L > best) { best = L; bestText = a.slice(i, i + L).join(' '); }
+    }
+  }
+  return { len: best, text: bestText };
+}
+
+/**
+ * Does the SOURCE repeat itself across the boundary? The same windows as
+ * duplicatedAcrossBoundary — the last 40% of page N's source against the first 10% (at least
+ * 60 tokens) of N+1's — share a run of SOURCE_REPEAT_MIN_TOKENS tokens. When they do, a run
+ * the two TRANSLATIONS share is the text's own refrain rendered twice, not N+1's opening
+ * copied onto N: a duplication is only a duplication when the source does not repeat.
+ *
+ * Tokens, not characters (#5275): the Kanjur's refrain ("…are non-dual; they cannot be divided,
+ * are not separate, and are not distinct. Through the purity of…") recurs on both leaves of
+ * 57 of 168 seam pages of the canonical pilot book, and the per-leaf guard refused every one
+ * as `duplicated`. The Yigdzin OCR spells each recurrence a little differently (མྱི་དད vs མྱི་དང),
+ * so the 40-char shingles of sharedRun() found the source repeating on only 20 of the 57;
+ * syllable runs found it on all 57 (shortest 7). The audit script
+ * (scripts/audit/translation-page-boundaries.mjs) makes the same distinction for its LEAK
+ * count with character runs, which is fine for the cased-script prose it was sized on.
+ *
+ * Sized 2026-09-30 on the two pilot books (EXPERIMENTS.md): the 57 refused refrain pages
+ * share 7–38 syllables across the seam; the 148 seam pages of the narrative rnam thar share
+ * 0–5 on 138 and 6–12 on 10 (a stock formula on both leaves), so a real duplication on a
+ * narrative page that also happens to repeat a formula across the seam is the trade — the
+ * narrative book had 0 duplicate flags in 146 served translations to lose. The #5021 page-level
+ * fixtures (German and Italian prose) all measure 0. Returns { len, text } or null; null too
+ * when either source is missing, so the duplicate verdict stands as before.
+ */
+export function sourceRepeatsAcrossBoundary(ocrPrev, ocrNext) {
+  const a = sourceTokens(ocrPrev), b = sourceTokens(ocrNext);
+  if (!a.length || !b.length) return null;
+  const tail = a.slice(Math.floor(a.length * 0.6)), head = b.slice(0, Math.max(60, Math.floor(b.length * 0.1)));
+  const run = longestTokenRun(tail, head, SOURCE_REPEAT_MIN_TOKENS);
+  return run.len >= SOURCE_REPEAT_MIN_TOKENS ? run : null;
+}
+
 /**
  * Every drifted boundary inside one parsed block. `pages` in block order (page_number,
  * ocr.data); `translations` is the parser's Map<page_number, text>. Returns an array of
  * { prev, next, kind: 'moved'|'duplicated', fragment } — empty when the block is clean.
+ *
+ * A shared translation run whose SOURCE also repeats across the boundary
+ * (sourceRepeatsAcrossBoundary) is not a duplication — the boundary goes on to the `moved`
+ * test like any other. The leaves of a `<leaf-break/>` page take this path too
+ * (leaf-break.mjs leafUnitsHealth).
  */
 export function blockDriftBoundaries(pages, translations) {
   const found = [];
@@ -266,7 +339,10 @@ export function blockDriftBoundaries(pages, translations) {
     const trPrev = translations.get(a.page_number), trNext = translations.get(b.page_number);
     if (!trPrev || !trNext) continue;
     const dup = duplicatedAcrossBoundary(trPrev, trNext);
-    if (dup) { found.push({ prev: a.page_number, next: b.page_number, kind: 'duplicated', fragment: dup.text }); continue; }
+    if (dup && !sourceRepeatsAcrossBoundary(a.ocr?.data, b.ocr?.data)) {
+      found.push({ prev: a.page_number, next: b.page_number, kind: 'duplicated', fragment: dup.text });
+      continue;
+    }
     const r = detectBlockDrift({ ocrPrev: a.ocr?.data, ocrNext: b.ocr?.data, trPrev, trNext });
     if (r.drift) found.push({ prev: a.page_number, next: b.page_number, kind: 'moved', fragment: r.fragment, anchorVerdict: r.anchorVerdict });
   }

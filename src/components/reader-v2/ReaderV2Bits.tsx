@@ -9,7 +9,7 @@ import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
-import type { CorpusInfo } from '@/lib/text-provenance';
+import { transcriptProvenance, transcriptProvenanceLabel, type CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState, GatedPane } from './PaneEmptyState';
 
@@ -90,6 +90,31 @@ export function CorpusChip({ corpus }: { corpus: CorpusInfo }) {
       title={t.corpusChipTitle(corpus.name)}
     >
       {t.corpusChip(corpus.shortName)}
+    </span>
+  );
+}
+
+/**
+ * Who read this page, in the transcription pane header (#5186). The drawer's
+ * "How this page was made" row says the same thing at sentence length; both
+ * come from `transcriptProvenance()` so they cannot disagree. Archive OCR
+ * (`ocr.source === 'ia_djvu'`) is toned amber with a tooltip naming its known
+ * failure mode — the Archive's engines misread numbers, which is how a
+ * re-read of *The Book of Clevelanders* came to be needed.
+ */
+export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) {
+  const t = getReaderStrings(useLocale()).info;
+  const prov = transcriptProvenance(page);
+  if (!prov) return null;
+  const isArchive = prov.kind === 'ia';
+  return (
+    <span
+      data-transcript-provenance={prov.kind}
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate max-w-[14rem]"
+      style={{ color: isArchive ? 'var(--accent-gold-dark)' : 'var(--text-faint)' }}
+      title={isArchive ? t.transcriptChipIaTitle(prov.agreement) : transcriptProvenanceLabel(prov, t, 'full')}
+    >
+      {transcriptProvenanceLabel(prov, t, 'short')}
     </span>
   );
 }
@@ -395,6 +420,32 @@ export function ScanViewer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page.id]);
+
+  // On a landing, report the page's shape as soon as the browser has read the
+  // image header, not when the last byte arrives: the desktop reader arranges
+  // its panes by that shape (#5352), and waiting for the whole scan left the
+  // wrong arrangement on screen for the length of the download. First image
+  // only. On a page turn the element still answers with the PREVIOUS page's
+  // dimensions until the new header is in, so there onLoad stays the signal.
+  useEffect(() => {
+    const el = imgRef.current;
+    if (!el || el.complete) return;
+    let frame = 0;
+    const deadline = Date.now() + 10_000;
+    const poll = () => {
+      if (natural.current) return;
+      if (el.naturalWidth && el.naturalHeight) {
+        natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+        onNaturalSize?.(natural.current);
+        measure();
+        return;
+      }
+      if (Date.now() < deadline) frame = requestAnimationFrame(poll);
+    };
+    frame = requestAnimationFrame(poll);
+    return () => cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const zoomed = zoom > 1;
 

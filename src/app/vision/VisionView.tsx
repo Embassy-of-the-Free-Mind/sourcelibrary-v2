@@ -349,8 +349,79 @@ export default function VisionView({
 
           {content.bodyBuild.map((p, i) => F({ as: 'p', path: `bodyBuild.${i}`, value: p, className: 'mb-6' }))}
 
-          {/* Photo collage */}
-          <figure className="my-12 -mx-2 md:-mx-8">
+          {/* ── Where we will be in 2031 ── */}
+          <section aria-labelledby="vision-2031" className="mt-12">
+            {F({
+              as: 'h2',
+              path: 'vision.heading',
+              value: content.vision.heading,
+              className: 'font-serif text-2xl md:text-3xl text-primary leading-snug mb-3',
+            })}
+            {F({ as: 'p', path: 'vision.intro', value: content.vision.intro, className: 'mb-5' })}
+            <ul className="space-y-3 mb-2 pl-0 list-none">
+              {content.vision.items.map((item, i) => (
+                <li key={i} className="flex gap-3">
+                  <span aria-hidden="true" className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-rust" />
+                  {F({ as: 'span', path: `vision.items.${i}`, value: item, className: 'block' })}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* ── The plan, year by year ── */}
+          <section aria-labelledby="plan-phases" className="mt-12">
+            {F({
+              as: 'h2',
+              path: 'phases.heading',
+              value: content.phases.heading,
+              className: 'font-serif text-2xl md:text-3xl text-primary leading-snug mb-3',
+            })}
+            {F({ as: 'p', path: 'phases.intro', value: content.phases.intro, className: 'mb-6' })}
+            <ol className="list-none pl-0 space-y-8">
+              {content.phases.items.map((ph, i) => (
+                <li key={i} className="border-t border-primary/10 pt-6">
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                    {F({
+                      as: 'span',
+                      path: `phases.items.${i}.years`,
+                      value: ph.years,
+                      className: 'text-xs uppercase tracking-widest text-accent-rust',
+                    })}
+                    {F({
+                      as: 'h3',
+                      path: `phases.items.${i}.title`,
+                      value: ph.title,
+                      className: 'font-serif text-xl md:text-2xl text-primary leading-snug',
+                    })}
+                    {F({
+                      as: 'span',
+                      path: `phases.items.${i}.cost`,
+                      value: ph.cost,
+                      className: 'ml-auto font-serif text-muted whitespace-nowrap',
+                    })}
+                  </div>
+                  {ph.body.map((para, j) =>
+                    F({ as: 'p', path: `phases.items.${i}.body.${j}`, value: para, className: 'mb-4' })
+                  )}
+                  {F({
+                    as: 'p',
+                    path: `phases.items.${i}.promise`,
+                    value: ph.promise,
+                    className: 'font-serif italic text-primary border-l-2 border-accent-rust pl-4',
+                  })}
+                </li>
+              ))}
+            </ol>
+            {F({
+              as: 'p',
+              path: 'phases.footnote',
+              value: content.phases.footnote,
+              className: 'mt-8 text-muted text-sm leading-relaxed',
+            })}
+          </section>
+
+          {/* Photo collage — flush with the text column, so its edges line up with the paragraphs */}
+          <figure className="my-12">
             <div
               className={`grid gap-2 md:gap-3 ${
                 content.montage.images.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'
@@ -421,7 +492,7 @@ export default function VisionView({
         </article>
 
         {/* ── The plan ── */}
-        <section className="mt-24 max-w-[68ch]">
+        <section className="mt-24 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
           {F({
             as: 'h2',
             path: 'plan.heading',
@@ -462,7 +533,7 @@ export default function VisionView({
 
         {/* ── Ways to take part ── */}
         {content.ways && (
-          <section className="mt-20 max-w-[68ch]">
+          <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
             {F({
               as: 'h2',
               path: 'ways.heading',
@@ -508,7 +579,7 @@ export default function VisionView({
         )}
 
         {/* ── CTA ── */}
-        <section className="mt-20 max-w-[68ch] border-t border-primary/10 pt-12">
+        <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch] border-t border-primary/10 pt-12">
           {F({
             as: 'h2',
             path: 'cta.heading',

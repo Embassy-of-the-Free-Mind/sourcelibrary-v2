@@ -1,0 +1,1839 @@
+{
+  "dir": "scripts/eval/results/translation-corpus-audit-chained-2026-10-01",
+  "primary_judge": "opus",
+  "second_judge": null,
+  "seed": 20261001,
+  "drawn_at": "2026-09-30T22:22:02.087Z",
+  "n_main_drawn": 75,
+  "n_main_judged": 75,
+  "n_books": 75,
+  "controls": {
+    "swap": {
+      "n": 15,
+      "caught_fidelity_le2": 15,
+      "flagged_wrong_page": 15,
+      "missed": []
+    },
+    "drop": {
+      "n": 15,
+      "flagged_omission": 15,
+      "fidelity_le3": 15,
+      "missed": [],
+      "original_fidelity": [
+        {
+          "id": "de784732a6",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "ff60215c2b",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "01341a4daa",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "371babe19a",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "33ff69c36b",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "be4f1732dc",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "2074ab2ec9",
+          "language": "Latin",
+          "drop_fidelity": 3
+        },
+        {
+          "id": "0bbfd7227d",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "fdc9035263",
+          "language": "Pali",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "e9f9e0cd0b",
+          "language": "Latin",
+          "drop_fidelity": 3
+        },
+        {
+          "id": "13a303f6a3",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "92bb1a2092",
+          "language": "Unknown",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "dd827a822a",
+          "language": "Italian",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "bb47fd2fb9",
+          "language": "Latin",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "213077af5c",
+          "language": "Latin",
+          "drop_fidelity": 2
+        }
+      ]
+    },
+    "repeat": {
+      "n": 15,
+      "exact": 13,
+      "within1": 15,
+      "flags_identical": 13,
+      "pairs": [
+        {
+          "id": "8a994acc30",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "5bdd42abbc",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "c9ef4519c9",
+          "language": "Latin",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "3f14bdea17",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "aab2316a6d",
+          "language": "Latin",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "6a05ef4ef9",
+          "language": "Latin",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "b0611f6379",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "6bf8248249",
+          "language": "Latin",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "1a93a4b4d7",
+          "language": "Latin",
+          "a": 4,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "0893b32ab0",
+          "language": "Latin",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "fbccd64f27",
+          "language": "Latin",
+          "a": 5,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "eca64e4fea",
+          "language": "French",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "8401baad64",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "ce006a6959",
+          "language": "Hebrew",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "d8820b0dbc",
+          "language": "Latin",
+          "a": 4,
+          "b": 4,
+          "flags_same": false
+        }
+      ]
+    }
+  },
+  "controls_gate": {
+    "pass": true,
+    "checks": {
+      "swap": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      },
+      "drop": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.8666666666666667,
+        "pass": true
+      },
+      "repeat": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      }
+    }
+  },
+  "overall_unweighted": {
+    "n": 75,
+    "n_drawn": 75,
+    "fidelity_mean": 4.35,
+    "fidelity_median": 4,
+    "dist": [
+      1,
+      0,
+      7,
+      31,
+      36
+    ],
+    "pct_ge4": 89.3,
+    "pct_le2": 1.3,
+    "pct_5": 48,
+    "flags": {
+      "omission": 6.7,
+      "invention": 12,
+      "inversion": 5.3,
+      "untranslated": 1.3,
+      "wrong_language": 0,
+      "wrong_page": 1.3,
+      "garble_passthrough": 4,
+      "truncated": 0,
+      "repetition": 0
+    },
+    "any_major": 12,
+    "confidence_mean": 0.8
+  },
+  "by_language": {
+    "Latin": {
+      "n": 56,
+      "n_drawn": 56,
+      "fidelity_mean": 4.29,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        0,
+        6,
+        24,
+        25
+      ],
+      "pct_ge4": 87.5,
+      "pct_le2": 1.8,
+      "pct_5": 44.6,
+      "flags": {
+        "omission": 8.9,
+        "invention": 14.3,
+        "inversion": 5.4,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 1.8,
+        "garble_passthrough": 3.6,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 14.3,
+      "confidence_mean": 0.81
+    },
+    "German": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4.25,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        3,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 25,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.76
+    },
+    "French": {
+      "n": 4,
+      "n_drawn": 4,
+      "fidelity_mean": 4.75,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 75,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.88
+    },
+    "Hebrew": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.7
+    },
+    "English": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.88
+    },
+    "Greek, English": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 100,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.8
+    },
+    "Malay": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 3,
+      "fidelity_median": 3,
+      "dist": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "pct_ge4": 0,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 100,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 100,
+      "confidence_mean": 0.45
+    },
+    "Pali": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 100,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.6
+    },
+    "Italian": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.85
+    },
+    "Unknown": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.9
+    },
+    "Greek": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.9
+    },
+    "Arabic": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 100,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.5
+    }
+  },
+  "by_arm": {
+    "lite": {
+      "n": 75,
+      "n_drawn": 75,
+      "fidelity_mean": 4.35,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        0,
+        7,
+        31,
+        36
+      ],
+      "pct_ge4": 89.3,
+      "pct_le2": 1.3,
+      "pct_5": 48,
+      "flags": {
+        "omission": 6.7,
+        "invention": 12,
+        "inversion": 5.3,
+        "untranslated": 1.3,
+        "wrong_language": 0,
+        "wrong_page": 1.3,
+        "garble_passthrough": 4,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 12,
+      "confidence_mean": 0.8
+    }
+  },
+  "by_language_arm": {
+    "Latin": {
+      "lite": {
+        "n": 56,
+        "n_drawn": 56,
+        "fidelity_mean": 4.29,
+        "fidelity_median": 4,
+        "dist": [
+          1,
+          0,
+          6,
+          24,
+          25
+        ],
+        "pct_ge4": 87.5,
+        "pct_le2": 1.8,
+        "pct_5": 44.6,
+        "flags": {
+          "omission": 8.9,
+          "invention": 14.3,
+          "inversion": 5.4,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 1.8,
+          "garble_passthrough": 3.6,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 14.3,
+        "confidence_mean": 0.81
+      }
+    },
+    "Greek, English": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 100,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.8
+      }
+    },
+    "Hebrew": {
+      "lite": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.7
+      }
+    },
+    "Malay": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 3,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "pct_ge4": 0,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 100,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 100,
+        "confidence_mean": 0.45
+      }
+    },
+    "Pali": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 100,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.6
+      }
+    },
+    "English": {
+      "lite": {
+        "n": 2,
+        "n_drawn": 2,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.88
+      }
+    },
+    "German": {
+      "lite": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.25,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          3,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 25,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.76
+      }
+    },
+    "Italian": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.85
+      }
+    },
+    "French": {
+      "lite": {
+        "n": 4,
+        "n_drawn": 4,
+        "fidelity_mean": 4.75,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          3
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 75,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.88
+      }
+    },
+    "Unknown": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.9
+      }
+    },
+    "Greek": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.9
+      }
+    },
+    "Arabic": {
+      "lite": {
+        "n": 1,
+        "n_drawn": 1,
+        "fidelity_mean": 4,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 100,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.5
+      }
+    }
+  },
+  "by_period": {
+    "1500s": {
+      "n": 19,
+      "n_drawn": 19,
+      "fidelity_mean": 4.47,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        1,
+        8,
+        10
+      ],
+      "pct_ge4": 94.7,
+      "pct_le2": 0,
+      "pct_5": 52.6,
+      "flags": {
+        "omission": 10.5,
+        "invention": 15.8,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 5.3,
+      "confidence_mean": 0.83
+    },
+    "unknown": {
+      "n": 37,
+      "n_drawn": 37,
+      "fidelity_mean": 4.27,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        0,
+        4,
+        15,
+        17
+      ],
+      "pct_ge4": 86.5,
+      "pct_le2": 2.7,
+      "pct_5": 45.9,
+      "flags": {
+        "omission": 8.1,
+        "invention": 13.5,
+        "inversion": 8.1,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 2.7,
+        "garble_passthrough": 2.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 16.2,
+      "confidence_mean": 0.8
+    },
+    "1900+": {
+      "n": 6,
+      "n_drawn": 6,
+      "fidelity_mean": 4.5,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        0,
+        3,
+        3
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 16.7,
+        "inversion": 0,
+        "untranslated": 16.7,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.82
+    },
+    "1800s": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "pct_ge4": 50,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 50,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 50,
+      "confidence_mean": 0.69
+    },
+    "1600s": {
+      "n": 7,
+      "n_drawn": 7,
+      "fidelity_mean": 4.43,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        1,
+        2,
+        4
+      ],
+      "pct_ge4": 85.7,
+      "pct_le2": 0,
+      "pct_5": 57.1,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 14.3,
+      "confidence_mean": 0.81
+    },
+    "pre-1500": {
+      "n": 3,
+      "n_drawn": 3,
+      "fidelity_mean": 4,
+      "fidelity_median": 4,
+      "dist": [
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 0,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 66.7,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.63
+    },
+    "1700s": {
+      "n": 1,
+      "n_drawn": 1,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.85
+    }
+  },
+  "by_prompt": {
+    "lite/13": {
+      "n": 73,
+      "n_drawn": 73,
+      "fidelity_mean": 4.33,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        0,
+        7,
+        31,
+        34
+      ],
+      "pct_ge4": 89,
+      "pct_le2": 1.4,
+      "pct_5": 46.6,
+      "flags": {
+        "omission": 6.8,
+        "invention": 12.3,
+        "inversion": 5.5,
+        "untranslated": 1.4,
+        "wrong_language": 0,
+        "wrong_page": 1.4,
+        "garble_passthrough": 4.1,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 12.3,
+      "confidence_mean": 0.8
+    },
+    "lite/2": {
+      "n": 2,
+      "n_drawn": 2,
+      "fidelity_mean": 5,
+      "fidelity_median": 5,
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "pct_ge4": 100,
+      "pct_le2": 0,
+      "pct_5": 100,
+      "flags": {
+        "omission": 0,
+        "invention": 0,
+        "inversion": 0,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 0,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 0,
+      "confidence_mean": 0.88
+    }
+  },
+  "by_script_class": {
+    "latin-script": {
+      "n": 67,
+      "n_drawn": 67,
+      "fidelity_mean": 4.34,
+      "fidelity_median": 4,
+      "dist": [
+        1,
+        0,
+        6,
+        28,
+        32
+      ],
+      "pct_ge4": 89.6,
+      "pct_le2": 1.5,
+      "pct_5": 47.8,
+      "flags": {
+        "omission": 7.5,
+        "invention": 11.9,
+        "inversion": 4.5,
+        "untranslated": 0,
+        "wrong_language": 0,
+        "wrong_page": 1.5,
+        "garble_passthrough": 3,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 11.9,
+      "confidence_mean": 0.82
+    },
+    "non-latin-script": {
+      "n": 8,
+      "n_drawn": 8,
+      "fidelity_mean": 4.38,
+      "fidelity_median": 4.5,
+      "dist": [
+        0,
+        0,
+        1,
+        3,
+        4
+      ],
+      "pct_ge4": 87.5,
+      "pct_le2": 0,
+      "pct_5": 50,
+      "flags": {
+        "omission": 0,
+        "invention": 12.5,
+        "inversion": 12.5,
+        "untranslated": 12.5,
+        "wrong_language": 0,
+        "wrong_page": 0,
+        "garble_passthrough": 12.5,
+        "truncated": 0,
+        "repetition": 0
+      },
+      "any_major": 12.5,
+      "confidence_mean": 0.69
+    }
+  },
+  "modernization": {
+    "n": 0,
+    "n_drawn": 0,
+    "fidelity_mean": null,
+    "fidelity_median": null,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "pct_ge4": null,
+    "pct_le2": null,
+    "pct_5": null,
+    "flags": {
+      "omission": null,
+      "invention": null,
+      "inversion": null,
+      "untranslated": null,
+      "wrong_language": null,
+      "wrong_page": null,
+      "garble_passthrough": null,
+      "truncated": null,
+      "repetition": null
+    },
+    "any_major": null,
+    "confidence_mean": null
+  },
+  "stale_translation": {
+    "n": 0,
+    "n_drawn": 0,
+    "fidelity_mean": null,
+    "fidelity_median": null,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "pct_ge4": null,
+    "pct_le2": null,
+    "pct_5": null,
+    "flags": {
+      "omission": null,
+      "invention": null,
+      "inversion": null,
+      "untranslated": null,
+      "wrong_language": null,
+      "wrong_page": null,
+      "garble_passthrough": null,
+      "truncated": null,
+      "repetition": null
+    },
+    "any_major": null,
+    "confidence_mean": null
+  },
+  "corpus_estimate": {
+    "note": "post-stratified by language (weights = live translated pages per language at draw time); languages outside the 15 sampled are not represented; CI = 95% bootstrap over pages-as-books within language",
+    "weights": {
+      "Greek": 6.4,
+      "French": 13.1,
+      "Sanskrit": 3.3,
+      "Tibetan": 0.2,
+      "Greek, English": 0.1,
+      "Latin": 44,
+      "German": 16.2,
+      "Italian": 0.2,
+      "Unknown": 0.3,
+      "Pali": 0.4,
+      "Hebrew": 1.4,
+      "Ge'ez": 0,
+      "Spanish": 3.8,
+      "Dutch": 0.2,
+      "Javanese": 0.2,
+      "Malay": 0.7,
+      "Arabic": 5.8,
+      "Bugis": 0.2,
+      "Yucatec Maya": 0.6,
+      "English": 3.1
+    },
+    "pct_fidelity_ge4": {
+      "est": 85.4,
+      "ci": [
+        81.5,
+        88.6
+      ]
+    },
+    "pct_fidelity_5": {
+      "est": 44.8,
+      "ci": [
+        34.4,
+        56
+      ]
+    },
+    "pct_fidelity_le2": {
+      "est": 0.8,
+      "ci": [
+        0,
+        2.4
+      ]
+    },
+    "flags": {
+      "omission": {
+        "est": 3.9,
+        "ci": [
+          0.8,
+          7.9
+        ]
+      },
+      "invention": {
+        "est": 6.6,
+        "ci": [
+          2.7,
+          10.6
+        ]
+      },
+      "inversion": {
+        "est": 3,
+        "ci": [
+          0.7,
+          6.2
+        ]
+      },
+      "untranslated": {
+        "est": 0.1,
+        "ci": [
+          0.1,
+          0.1
+        ]
+      },
+      "wrong_language": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "wrong_page": {
+        "est": 0.8,
+        "ci": [
+          0,
+          2.4
+        ]
+      },
+      "garble_passthrough": {
+        "est": 7.4,
+        "ci": [
+          5.8,
+          9.7
+        ]
+      },
+      "truncated": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "repetition": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      }
+    },
+    "any_major_defect": {
+      "est": 6.9,
+      "ci": [
+        3,
+        11.7
+      ]
+    }
+  },
+  "sensitivity": {
+    "note": "corrected estimates; see comment in score.mjs. \"language\" = the headline weighting; \"language_x_arm\" re-weights the quota-sampled arm to its true share; \"page_weighted\" weights each book by its translated pages (random page rather than random book)",
+    "pct_fidelity_ge4": {
+      "language": 85.4,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "pct_fidelity_5": {
+      "language": 44.8,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "pct_fidelity_le2": {
+      "language": 0.8,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "any_major_defect": {
+      "language": 6.9,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "omission": {
+      "language": 3.9,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "invention": {
+      "language": 6.6,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "garble_passthrough": {
+      "language": 7.4,
+      "language_x_arm": null,
+      "page_weighted": null
+    },
+    "by_language_arm_weighted": null
+  },
+  "defect_types": {
+    "mistranslation/minor": 43,
+    "omission/minor": 8,
+    "terminology/minor": 8,
+    "invention/minor": 5,
+    "invention/major": 4,
+    "name/minor": 3,
+    "number/minor": 3,
+    "inversion/minor": 2,
+    "inversion/major": 2,
+    "mistranslation/major": 2,
+    "garble_passthrough/minor": 2,
+    "untranslated/minor": 1,
+    "wrong_page/major": 1,
+    "omission/major": 1,
+    "garble_passthrough/major": 1
+  },
+  "worst": [
+    {
+      "id": "b28db07e10",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 1,
+      "url": "https://sourcelibrary.org/book/69b6307b1c1c21a3738028f6?page=17",
+      "flags": [
+        "omission",
+        "invention",
+        "wrong_page"
+      ],
+      "reason": "Translation renders the preceding page (Q.11 and opening of Q.12); the source's censure-absolution argument and Q.13 on whom to deny absolution are absent."
+    },
+    {
+      "id": "951b249f03",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a4bdeb3913003fb726ad383?page=4",
+      "flags": [
+        "invention"
+      ],
+      "reason": "The few legible words (Chapter, 5, VI. 4) are rendered, but the translation asserts a chapter title, shelfmark and topic that the near-illegible source does not carry."
+    },
+    {
+      "id": "ba7ac2202f",
+      "language": "Malay",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a20326818654bf8e1902c67?page=19",
+      "flags": [
+        "inversion"
+      ],
+      "reason": "Narrative outline (summons, preparations, departure by litter to Mughal) is right, but the princess's farewell scene is garbled with wrong subject and speaker; I read Jawi only moderately."
+    },
+    {
+      "id": "69fe75474a",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a08578915c643eb1af5bc77?page=35",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Body of Valla's diminutives discussion is accurate, but an opening passage is imported from elsewhere and the Curtius example of curricula as chariots is mistranslated."
+    },
+    {
+      "id": "ec20605c1e",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a4b7f18998fdd30218fbf6a?page=20",
+      "flags": [
+        "inversion"
+      ],
+      "reason": "Ulfilas discussion, Mareschall quote, Sixtus Senensis and the epiousion note are faithful, but the key concessive sentence is turned into its opposite."
+    },
+    {
+      "id": "18d9cfb158",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a4a82c0449c2c48ca6ed201?page=18",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Body on unicorn-horn fraud and sweating in presence of poison is faithful, but the translation appends a whole paragraph (coin, bread, Kergerus) that the source does not contain."
+    },
+    {
+      "id": "39e91f2e35",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a44d0f0823724ce1613ef5f?page=20",
+      "flags": [],
+      "reason": "Strabo, Servius, Lucretius, the Praesus coin and the Cabiri epithets are rendered well, but the Arnobius sentence is misparsed and the Rhea/Curetes narrative has two garbled clauses."
+    },
+    {
+      "id": "20f3f75fe1",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 3,
+      "url": "https://sourcelibrary.org/book/6a4a7e7320c510eceebc581a?page=16",
+      "flags": [
+        "garble_passthrough"
+      ],
+      "reason": "OCR of a mirrored offset page is largely incoherent; translation papers over it with fluent theological prose and misses the gratia gratum faciens term."
+    },
+    {
+      "id": "12b5bdc6a7",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b6305c1c1c21a37380106a?page=41",
+      "flags": [],
+      "reason": "paradigm of audio and chapter VIII rendered faithfully; one clause construed as 'there are participles' instead of 'participles are'"
+    },
+    {
+      "id": "48c97cd660",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4b05c30d1fa55f9988be08?page=18",
+      "flags": [
+        "inversion"
+      ],
+      "reason": "Apostrophe to the Catholics and the ox-and-ass proverb rendered well; one clause switches the subject of 'deuorent' to the Lutherans."
+    },
+    {
+      "id": "5fc29775bb",
+      "language": "Greek, English",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b21ecc4522d8c1db3bd618?page=22",
+      "flags": [
+        "untranslated"
+      ],
+      "reason": "bilingual Loeb page: Greek prose translated accurately and the English column reproduced; Greek verse left untranslated and one minor slip on οὐ πονηρός"
+    },
+    {
+      "id": "5174d8c733",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b51d2cf23ccdcced306a10?page=226",
+      "flags": [],
+      "reason": "nine modes of fire and the four-fire classification rendered faithfully; minor slips on 'solis in ariete', 'a leni' and 'quouis igni'"
+    },
+    {
+      "id": "3f789276b1",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a49ef8160a0c3556c216a8e?page=23",
+      "flags": [],
+      "reason": "Types of induciae, Literae Securitatis and Literae Status et Justitii with all citations rendered accurately; only the closing formula is garbled."
+    },
+    {
+      "id": "5c72e41217",
+      "language": "Pali",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b99d316ed9e04909908baa?page=22",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Etymology of vimāna/Vimānavatthu and attribution to Mahāmoggallāna rendered accurately; invented continuation meta and one loose clause; my Pali reading is moderate."
+    },
+    {
+      "id": "d5b04ae3aa",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b62fcc1c1c21a3737fabf9?page=24",
+      "flags": [
+        "omission"
+      ],
+      "reason": "Luke's occasion and scope rendered faithfully; drops the opening fragment and slightly blurs 'humanitatis historiam' and 'ad gratificandum pronis'"
+    },
+    {
+      "id": "52e6dd5fc9",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4b9537a25898ec8788aaa9?page=11",
+      "flags": [],
+      "reason": "Pererius quote, Augustine, Schaff on Onkelos, Rivet on Jonathan, and the Hackspan Sabbath saying all follow the source; one garbled clause in §V about which signification the Targums favoured. Hebrew/Aramaic read moderately."
+    },
+    {
+      "id": "4d1f205e24",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4dea11a7fbe1b1dcb8cbe4?page=21",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Areas in iugera and the sphere-volume rule rendered with correct numbers (18/1600, 24/88000, 21/6400, 343, 163⅓); the final number is supplied beyond the page break."
+    },
+    {
+      "id": "e6fcaab7db",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b6318d1c1c21a37380862a?page=27",
+      "flags": [
+        "garble_passthrough"
+      ],
+      "reason": "Three kinds of prophecy (natural foreknowledge, improper prophecy in vision/speech/operation, true prophecy by degrees) rendered faithfully with Daniel, Caiaphas, Jephthah, Jeremiah, Samuel examples; minor slips on garbled citation 'generali' and the casus/deficiens clause; source OCR heavily abbreviated so confidence moderate."
+    },
+    {
+      "id": "c708f88327",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4a5e9b4107674feb04d718?page=24",
+      "flags": [],
+      "reason": "School-exam invitation rendered faithfully overall; Livy clause and P.P. formula slightly misread."
+    },
+    {
+      "id": "b61a79d33c",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b62fe81c1c21a3737fc0b3?page=21",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Commentary on 2 Cor 1:8 (prodiegema, Asian affliction, ebarethemen metaphor) rendered accurately; only the page-final broken word is filled in by guess."
+    },
+    {
+      "id": "f3c9c879bb",
+      "language": "French",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6aaaa175e77fda33e8d3fcd8?page=372",
+      "flags": [],
+      "reason": "Temperature extremes, well-water table (all numbers match) and section headings are faithful; hivernage is calqued as 'wintering season'."
+    },
+    {
+      "id": "59521b9acb",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4c97979c6f8cb186b87f0b?page=14",
+      "flags": [],
+      "reason": "Catharine/Laurel panegyric rendered closely throughout; small slips in a garbled Tiberius clause and a literalism ('explains its top')."
+    },
+    {
+      "id": "76327c87fd",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a50738b80b7658fae26244a?page=18",
+      "flags": [
+        "invention"
+      ],
+      "reason": "Prayer couplets rendered faithfully overall; the 'ne' purpose clause softened and an invented previous-page meta prepended."
+    },
+    {
+      "id": "0f6fc62d67",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/6a4c083f55f94b596d9b1bc6?page=9",
+      "flags": [
+        "omission"
+      ],
+      "reason": "Dense citation apparatus on advocates, Auscultantes and pedaneous judges rendered accurately; two small slips in §11."
+    },
+    {
+      "id": "56f87e5038",
+      "language": "Latin",
+      "arm": "lite",
+      "fidelity": 4,
+      "url": "https://sourcelibrary.org/book/69b630221c1c21a3737fdf24?page=30",
+      "flags": [],
+      "reason": "Body text on the body politic, respublica/populus/plebs and the etymology of publicus is faithful; minor slips in the Publicola sentence and one expanded margin citation."
+    }
+  ]
+}

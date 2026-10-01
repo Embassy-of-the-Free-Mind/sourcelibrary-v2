@@ -524,10 +524,13 @@ export async function POST(request: NextRequest) {
         const pageImageUrl = pageDoc ? getPageImageUrl(pageDoc as PageImageFields, 'display') : null;
         const readSlug = sourceLink ? (sourceLink.book_slug || sourceLink.book_id) : slugOrId;
         const readPageNumber = sourceLink ? sourceLink.page_number : h?.page_number;
+        // Open on the scan with the original and English stacked beneath it:
+        // the visitor photographed a picture, so the picture is what they
+        // should recognise first (the reader strips ?views= after applying it).
         const readUrl = pageId
-          ? `/book/${readSlug}/page/${pageId}`
+          ? `/book/${readSlug}/page/${pageId}?views=scan,ocr,en`
           : readPageNumber != null
-            ? `/book/${readSlug}/page-number/${readPageNumber}`
+            ? `/book/${readSlug}/page-number/${readPageNumber}?views=scan,ocr,en`
             : `/book/${readSlug}`;
         const confirmed: ConfirmedMatch = {
           book_id: picked.bookId,

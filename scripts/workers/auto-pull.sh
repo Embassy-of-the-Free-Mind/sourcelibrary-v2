@@ -15,6 +15,18 @@ set -uo pipefail
 
 cd /root/sourcelibrary || { echo "[auto-pull] /root/sourcelibrary missing"; exit 1; }
 
+# Pulling moves the CHECKOUT; it does not move a process that loaded the old one. On every exit
+# path, ask which running workers are now older than main (#5442) — a `--loop` worker kept code
+# eight hours stale on 2026-10-01 while this script reported "Already up to date". The audit
+# alerts via ntfy (deduplicated) and never restarts anything. Its exit code is reported, not
+# propagated: auto-pull's own exit status means "did the pull work".
+worker_drift() {
+  [ -f scripts/audit/worker-code-drift.mjs ] || return 0
+  node --env-file=/root/sourcelibrary/.env.production.local scripts/audit/worker-code-drift.mjs \
+    --repo /root/sourcelibrary --alert 2>&1 | sed 's/^/[auto-pull] drift: /'
+}
+trap worker_drift EXIT
+
 # Bail if there are unstaged changes — sync-crontab.sh stages and pushes
 # crontab.production on its own schedule, so a working tree dirty for any
 # other reason is a real signal worth investigating, not silently dropped.

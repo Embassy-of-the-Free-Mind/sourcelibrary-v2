@@ -82,3 +82,66 @@ export function transcriptionReliability(
       'specialist Tibetan model scores 0.88 and chance is 0.10.',
   };
 }
+
+/**
+ * PAGE-level caution: the transcription of THIS page was hard to read, so the
+ * English beside it rests partly on uncertain readings (#5274 follow-up).
+ *
+ * Derek's decision of 2026-09-30: FLAG, not withhold — the translation stays up
+ * and the reader is told, in one quiet line, where the source read is weak.
+ * (Pages we judged unreadable outright are a different state: `ocr.unreadable`
+ * already withholds both panes, and none of those 72,022 pages serves a
+ * translation, measured 2026-09-30.)
+ *
+ * The signals are the ones the OCR already writes into the page, so this costs
+ * nothing and needs no new field:
+ *
+ *   - `<unclear>` — the OCR's own mark on a span it could not read with
+ *     confidence. When a large share of the page sits inside it, the translation
+ *     of that page is largely a translation of guesses (taxonomy T7).
+ *   - `<warning>` naming damage, fading or illegibility — the OCR's note that
+ *     part of the leaf is physically hard to read.
+ *
+ * What this is NOT: a garble detector. The corpus audit's 6.6% "garbled source"
+ * rate is a JUDGE's rate over pages whose OCR reads as confident text; most of
+ * those carry neither signal, and catching them needs a detector (a separate
+ * issue), not this function. This covers the pages where the OCR already told
+ * us it struggled — and passes that on to the person reading.
+ */
+export type PageReadCaution =
+  | { reason: 'unclear'; share: number }
+  | { reason: 'damage' };
+
+/** Share of the page's body text inside `<unclear>` at which the note shows. */
+export const UNCLEAR_SHARE_THRESHOLD = 0.1;
+/** Below this many body characters a share is noise (a caption, a catchword). */
+const MIN_BODY_CHARS = 60;
+
+// Tags whose content is about the page, not on it — excluded from the body.
+const NON_BODY = /<(language|script|page-type|columns|meta|vocab|header|page-num|sig|image-desc|warning|summary|keywords)[^>]*>[\s\S]*?<\/\1>/gi;
+// A warning counts only when it says the READING was impaired, not merely that
+// the leaf is stained or shows bleed-through: sampled 2026-09-30, most warnings
+// that name bleed-through or a stain go on to say the text remains legible, and
+// a note on those pages would teach readers to ignore it.
+const READ_HARM = /illegib|unreadab|barely legib|partially legib|difficult to (read|decipher|make out)|hard to (read|decipher|make out)|impossible to (read|decipher)|cannot be (read|deciphered)|loss of (the |[a-z]+ and )?(text|characters|letters|words|lines)|partially lost|text (is|has been|was) lost|lost text|obscur\w* (some |the |portions of |parts of |much of |most of |several )?(the )?(main |primary )?(text|characters|letters|words|lines|passages)|imped\w* legib|severely faded|heavily faded|significantly faded/i;
+const STILL_LEGIBLE = /(remains?|still|is|are|fully|clearly|otherwise) (clear and |largely |mostly |generally )?legible/i;
+
+export function pageReadCaution(
+  page: { ocr?: { data?: string | null; unreadable?: boolean } | null } | null | undefined,
+): PageReadCaution | null {
+  const ocr = page?.ocr;
+  if (!ocr?.data || ocr.unreadable) return null;
+  const body = ocr.data.replace(NON_BODY, '');
+  const plainLen = body.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+  if (plainLen >= MIN_BODY_CHARS) {
+    let unclear = 0;
+    for (const m of body.matchAll(/<unclear[^>]*>([\s\S]*?)<\/unclear>/gi)) {
+      unclear += m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
+    }
+    const share = unclear / plainLen;
+    if (share >= UNCLEAR_SHARE_THRESHOLD) return { reason: 'unclear', share };
+  }
+  const warning = ocr.data.match(/<warning>([\s\S]*?)<\/warning>/i)?.[1];
+  if (warning && READ_HARM.test(warning) && !STILL_LEGIBLE.test(warning)) return { reason: 'damage' };
+  return null;
+}

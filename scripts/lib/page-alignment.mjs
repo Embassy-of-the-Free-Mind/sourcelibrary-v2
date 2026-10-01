@@ -141,3 +141,38 @@ export function readerVisibleShift(pages) {
   }
   return { visible, consistent, unknown };
 }
+
+/**
+ * Was this page's text stranded by an IMAGE repair (#5309)?
+ *
+ * repair-bulk-jp2-offset.mjs (#3368) re-archived shifted bulk-JP2 images from
+ * IIIF. Pages OCR'd AFTER the shifted archive was written had transcribed the
+ * shifted image; once the image was corrected, their text showed the
+ * neighbouring leaf beside the right scan. The repair flagged them
+ * `needs_reocr`, but no worker reads that flag, so the re-OCR never happened
+ * and the 2026-07-29 image repair turned self-consistent pages into
+ * reader-visible ones.
+ *
+ * Decided from timestamps, not the flag: the flag is only a hint (it was
+ * written only when both timestamps existed and the post-check passed).
+ *
+ * @param {object} page        page doc with ocr.{data,updated_at,created_at}
+ *                             and archive_metadata.{source,archived_at}
+ * @param {Date|string} repairedAt  books.archive_metadata.jp2_offset_repaired_at
+ * @returns {'stranded'|'resolved'|'pre_archival'|'no_text'|'not_bulk'|'unknown'}
+ *   stranded     — text read the shifted image and predates the image repair
+ *   resolved     — OCR rewritten after the image repair
+ *   pre_archival — OCR read the IIIF source before archival; always correct
+ */
+export function strandedByImageRepair(page, repairedAt) {
+  if (page?.archive_metadata?.source !== 'bulk_jp2') return 'not_bulk';
+  if (!String(page?.ocr?.data || '').trim()) return 'no_text';
+  const ocrAt = page.ocr.updated_at || page.ocr.created_at;
+  const archAt = page.archive_metadata.archived_at;
+  if (!ocrAt || !archAt || !repairedAt) return 'unknown';
+  const o = new Date(ocrAt).getTime(), a = new Date(archAt).getTime(), r = new Date(repairedAt).getTime();
+  if ([o, a, r].some(Number.isNaN)) return 'unknown';
+  if (o >= r) return 'resolved';
+  if (o < a) return 'pre_archival';
+  return 'stranded';
+}

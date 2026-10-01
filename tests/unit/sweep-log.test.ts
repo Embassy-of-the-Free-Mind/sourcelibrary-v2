@@ -11,7 +11,7 @@
  */
 import { describe, it, expect, vi } from 'vitest';
 
-import { recordSweepAction } from '../../scripts/lib/sweep-log.mjs';
+import { recordSweepAction, recordSweepActions } from '../../scripts/lib/sweep-log.mjs';
 
 function fakeDb() {
   const insertOne = vi.fn(async (doc: Record<string, unknown>) => ({ insertedId: doc._id ?? 'fake-id' }));
@@ -94,5 +94,43 @@ describe('recordSweepAction', () => {
     await expect(
       recordSweepAction(undefined as never, { sweep: 'a-sweep', book_id: 'b1', action: 'noted' })
     ).rejects.toThrow(/db handle/);
+  });
+});
+
+describe('recordSweepActions (batch)', () => {
+  function fakeBatchDb() {
+    const insertMany = vi.fn(async (docs: unknown[]) => ({ insertedCount: docs.length }));
+    const collection = vi.fn(() => ({ insertMany }));
+    return { db: { collection }, collection, insertMany };
+  }
+
+  it('writes the same row shape as recordSweepAction, in chunks', async () => {
+    const { db, collection, insertMany } = fakeBatchDb();
+    const entries = Array.from({ length: 5 }, (_, i) => ({ sweep: 'a-sweep', book_id: `b${i}`, action: 'stamped', detail: { i } }));
+    const n = await recordSweepActions(db, entries, { chunkSize: 2 });
+    expect(n).toBe(5);
+    expect(collection).toHaveBeenCalledWith('sweep_log');
+    expect(insertMany.mock.calls.map((c) => (c[0] as unknown[]).length)).toEqual([2, 2, 1]);
+    const first = (insertMany.mock.calls[0][0] as Record<string, unknown>[])[0];
+    expect(first).toMatchObject({ sweep: 'a-sweep', book_id: 'b0', action: 'stamped', detail: { i: 0 } });
+    expect(first.timestamp).toBeInstanceOf(Date);
+    expect(typeof first.script).toBe('string');
+  });
+
+  it('validates EVERY entry before writing anything', async () => {
+    const { db, insertMany } = fakeBatchDb();
+    await expect(
+      recordSweepActions(db, [
+        { sweep: 'a-sweep', book_id: 'b1', action: 'stamped' },
+        { sweep: 'a-sweep', book_id: '', action: 'stamped' },
+      ])
+    ).rejects.toThrow(/recordSweepActions: 'book_id'/);
+    expect(insertMany).not.toHaveBeenCalled();
+  });
+
+  it('an empty batch writes nothing', async () => {
+    const { db, insertMany } = fakeBatchDb();
+    expect(await recordSweepActions(db, [])).toBe(0);
+    expect(insertMany).not.toHaveBeenCalled();
   });
 });

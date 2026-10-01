@@ -335,8 +335,8 @@ export function hasRealTranslation(tr) {
 }
 
 /** The staleness marker #4927 consumes: a fact on the page, never a hidden translation. */
-export function staleMarker(now = new Date()) {
-  return { reason: 'ocr_rewritten', since: now, lane: LANE };
+export function staleMarker(now = new Date(), lane = LANE) {
+  return { reason: 'ocr_rewritten', since: now, lane };
 }
 
 /**
@@ -345,9 +345,10 @@ export function staleMarker(now = new Date()) {
  * RE-TRANSLATION. Idempotent: the filter refuses a page already flagged by any lane or
  * whose translation was made from this very text (`translation.source_hash`). Does not
  * touch `translation.*` and does not bump `updated_at` (the OCR write already did).
- * `pages` = [{ id, text }] where `text` is the stored (enveloped) transcription.
+ * `pages` = [{ id, text }] where `text` is the stored (enveloped) transcription. `lane` is
+ * recorded on the marker; other OCR lanes (the NDL kuzushiji lane, #4925) pass their own id.
  */
-export async function markTranslationsStale(db, pages, now = new Date()) {
+export async function markTranslationsStale(db, pages, now = new Date(), lane = LANE) {
   const { createHash } = await import('node:crypto');
   const ops = [];
   for (const { id, text } of pages) {
@@ -360,7 +361,7 @@ export async function markTranslationsStale(db, pages, now = new Date()) {
         translation_stale: { $exists: false },
         $or: [{ 'translation.source_hash': { $exists: false } }, { 'translation.source_hash': { $ne: hash } }],
       },
-      update: { $set: { translation_stale: staleMarker(now) } },
+      update: { $set: { translation_stale: staleMarker(now, lane) } },
     } });
   }
   if (!ops.length) return 0;

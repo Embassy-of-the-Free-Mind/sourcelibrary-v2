@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab5b5f1a22ab19a974bf_00508",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Are the phenomena that categorize individuals—such as the Stream-Enterer, the Once-Returner, the Non-Returner, the Arhat, the Solitary Buddha, and the Tathagata, the Arhat, the Perfectly Awakened Buddha—also emanations? The Blessed One replied, \"Subhuti, all phenomena are emanations. Some are emanations of the Hearers, some are emanations of the Solitary Buddhas, some are emanations of the Bodhisattvas, some are emanations of the Tathagatas, some are emanations of the defilements, and some are emanations of karma. Subhuti, in this way, all phenomena are emanations.\"\n\nHe asked, \"Blessed One, are all those phenomena that are called 'abandoned'—such as the fruit of stream-entry, the fruit of once-returning, the fruit of non-returning, the state of the Solitary Buddha, the state of a Buddha, or the abandonment of all connections to habitual tendencies—also emanations?\"\n\nThe Blessed One replied, \"Subhuti, whatever phenomena are produced or obstructed, all of them are emanations.\"\n\nHe asked, \"Blessed One, what is the phenomenon that is not an emanation?\"\n\nThe Blessed One replied, \"That which has no arising and no ceasing is not an emanation.\"\n\nHe asked, \"What is that?\"\n\nThe Blessed One replied, \"It is the unequaled Nirvana. That phenomenon is not an emanation.\"\n\n<summary>This passage from the Thadrak Kanjur discusses the nature of reality, asserting that all categorized spiritual states and phenomena are emanations, with the exception of Nirvana, which is defined by the absence of arising and ceasing.</summary>\n<keywords>emanations, Nirvana, Arhat, Tathagata, Subhuti, phenomena, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2637,
+ "outputTokens": 389,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.000621375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1206,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

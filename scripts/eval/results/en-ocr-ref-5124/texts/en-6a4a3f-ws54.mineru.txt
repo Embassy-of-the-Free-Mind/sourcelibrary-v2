@@ -1,0 +1,5 @@
+all cafes of hoftile oppofition to government, the people muft have been in the right; and that nothing but very great oppreffion could drive them to fuch defperate meafures. The bulk of a people feldom fo much as complain without reafon, becaufe they never think of complaining till they feel; fo that, in all cafes of diffatisfaction with government, it is moft probable, that the people are injured.
+
+The cafe, I own, may be otherwife in ftates of fmall extent, where the power of the governors is comparatively fmall, and the power of the people great, and foon united. Thefe fears, therefore, may be prudent in Venice, in Genoa, or in the fmall cantons of Switzerland; but it were to the laft degree, abfurd to extend them to Great-Britain.
+
+The Englifh hiftory will inform us, that the people of this country have always borne extreme oppreffion, for a long time before there has appeared any danger of a general infurrection againft the

@@ -43,11 +43,30 @@ Every score row (§5) carries `measure`, one of:
 | `agreement` | **another engine's** output on the same leaf | "agreement with X" only | errors both engines share; **recitation** (engines agree on memorised text, #5093) |
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
+| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
 
 Rules:
 - A surface (dashboard cell, EXPERIMENTS entry, issue comment, paper table) prints the `measure` word next to the number. Today the page (`src/app/platform/(protected)/admin/ocr-evidence/page.tsx`) says "Median error" and "Proxy" in a footnote and never "accuracy" or "agreement"; `benchmark-dashboard-data.mjs` will emit `measure` per cell, the page renders it, and a cell without it fails the JSON build (#5119).
 - `agreement` and `stability` are **screening** signals: they can send pages to a human or to a reference queue; they cannot close a decision. The `.claude/docs/ocr-quality-measurement-loop.md` stability loop stays exactly that.
 - The word *quality* appears in prose only with a citation to an `accuracy` cell.
+- `judged` may gate a decision where a preregistration fixes the rule in advance and the judge's controls pass (quality round 1, #5438), but the number is still reported as a judge rating, and the decision carries the judge's unmeasured error.
+
+### 2.1 The reader's chain: which study covers which link
+
+Added 2026-10-01. A reader asks one thing of a served page: *does this English say what is printed on this leaf?* That answer has three links, and each study covers only some of them. Before quoting any study as "quality", name the link it measured.
+
+| Link | Typical failure | Accuracy (reference) | Screen (agreement, stability) | Judged | Human reader of the original |
+|---|---|---|---|---|---|
+| 1. Leaf: the image shown is the leaf transcribed | wrong leaf (#4790, #5311) | none | three-read signature, 7 of 7 (#5313) | **blind**: the judge sees no image | yes |
+| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/DECISIONS.md`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
+| 3. Translation: the English says what the text says | omission, invention, inversion | Tibetan vs 84000 only (§8) | none | corpus audit + monthly rerun (#5274); quality round 1 (#5438) | yes |
+
+What follows from the table:
+
+- **Only a human reader spans all three links.** The judge spans link 3 and a little of link 2. So the volunteer lane (`translation-corpus-audit/HUMAN-CALIBRATION.md`) asks readers the whole-chain question, and comparing their answers with the judge's ratings on the same pages is how the judge gets checked.
+- **The judge now gates publication.** Quality round 1 ships a stratum when the judge rates ≤ 10% of n ≥ 20 pages with a major defect. At that n, an observed 2 of 20 has a 95% interval of about 3–30%, before any judge error. Calibrating the judge is therefore on the critical path of what readers see, not an extra for the paper.
+- **"By eye" in these studies is a model reading the image** (labelled `read-from-image`). It is a stronger check than text alone, and it is still not a human reference.
+- Metadata (title, author, date against the title page) is a fourth link for the book rather than the page; round 1 checks it by eye on 5 books per stratum, and nothing else measures it.
 
 ## 3. One page registry across every study
 
@@ -207,14 +226,14 @@ Translation shares the registry (same books, same interior-page rule, same reser
 A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 
 1. Outputs and scores are on `main` in the store (§5), with `run_id` and cost.
-2. `scripts/eval/EXPERIMENTS.md` has an entry in its existing format (date · question · design · result · replicated? · artifact), plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
+2. `scripts/eval/experiments/<date>-<slug>.md` exists — one new file per entry, in the existing format (date · question · design · result · replicated? · artifact); `EXPERIMENTS.md` is generated from these on `main` and is never edited in a PR (#5436) — plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
 5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
-- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `EXPERIMENTS.md` and in `scripts/eval/store/**`.
+- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `scripts/eval/experiments/**`, `EXPERIMENTS.md` and `scripts/eval/store/**` (`tests/unit/no-conflict-markers.test.ts` sweeps every tracked text file). **Generated-ledger check**: a PR that hand-edits `EXPERIMENTS.md` or `INDEX.md` fails CI (`scripts/audit/append-only-ledgers.mjs --pr`); the weekly `append-only-ledgers.yml` flags the next file that acquires the append-to-one-tail shape (#5436).
 - **Store schema check**: every appended line validates against §5 (required fields, `measure` enum, `outcome` enum, `book_id` uniqueness per stratum).
 - **Zero-output check**: a `run_id` with no `outcome: text` rows is marked `failed` in the run index.
 - **Checkpoint rule**: any corpus walk feeding the store writes a checkpoint every 100K items and materialises its id list before slow work.
@@ -348,7 +367,7 @@ Reading the table:
 | `scripts/eval/dataset/v0.*`, `observations/` (#3235) | a **view** over the store, exported by `export-eval-dataset.mjs` honouring `reserve` and `licence` (its licence policy — include / pointer-only with `reference_sha256` — is kept) | no data moves; `build-observations.mjs` re-scores at build time today and keeps doing so from store outputs; `v0.4-difficulty` stays reference-free by design |
 | `ground-truth/` (55 pinned library pages), `ground-truth-ws/` (121 external), `reference-works/*.json` | reference records (`origin: library` / `external`), `leaf_check: unchecked` until read | index builder; the `_note` and `page_class` fields carry over |
 | Translation A/B packets (`translation-*-ab.mjs`, judge outputs) | store `outputs` (arm texts, `context_given`) + `scores` with `measure: preference`, `against.judge_packet_id`, same-arm tie rate per packet | converter per script; packets without pinned text hashes are imported with `text_hash: null` and marked `unpinned` |
-| `EXPERIMENTS.md` (2,034 lines) | unchanged, plus a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
+| `EXPERIMENTS.md` (3,064 lines on 2026-10-01) | split into one file per entry under `scripts/eval/experiments/` and GENERATED on main (#5436); a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
 | `PREREGISTRATION-*.md` (8) | unchanged; new ones add the §7 A-vs-A arm and the §3 sizing line | template update |
 
 Order: index builder → reference schema fill → results converter → dashboard reads the store → dataset exporter reads the store → checks. Each is one PR; none reruns a model.

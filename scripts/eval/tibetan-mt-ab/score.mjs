@@ -18,7 +18,9 @@ const VERDICTS = Object.fromEntries(opt('verdicts', '').split(',').filter(Boolea
 if (!PACKET || !ARMS || !OUT || !Object.keys(VERDICTS).length) { console.error('--packet, --arms, --verdicts, --out required'); process.exit(1); }
 
 const key = JSON.parse(fs.readFileSync(path.join(PACKET, 'key.json'), 'utf8'));
-const ENGINES = ['flash', 'lite', 'mitra'];
+// --engines name=dir,... (dirs relative to --arms) overrides the 09-25 trio (2026-10-01).
+const ENGINE_DIRS = Object.fromEntries(opt('engines', 'flash=gemini/gemini-3-flash-preview,lite=gemini/gemini-3.1-flash-lite,mitra=mitra').split(',').map((kv) => kv.split('=')));
+const ENGINES = Object.keys(ENGINE_DIRS);
 const MODEL = { flash: 'gemini-3-flash-preview', lite: 'gemini-3.1-flash-lite' };
 const pageIds = Object.keys(key.pages);
 const testPages = pageIds.filter((id) => id !== key.positive_control_page);
@@ -107,7 +109,7 @@ for (const arm of ENGINES) {
   const fid = rows.map((r) => r.fidelity);
   out.engines[arm].pooled = { n: rows.length, fidelity_median: median(fid), fidelity_mean: r3(mean(fid)), invention_rate: r3(mean(rows.map((r) => (r.invention ? 1 : 0)))), omission_rate: r3(mean(rows.map((r) => (r.omission ? 1 : 0)))), inversion_rate: r3(mean(rows.map((r) => (r.inversion ? 1 : 0)))) };
   // cost + latency from the arm outputs
-  const files = testPages.map((id) => (arm === 'mitra' ? path.join(ARMS, 'mitra', `${id}.json`) : path.join(ARMS, 'gemini', MODEL[arm], `${id}.json`))).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
+  const files = testPages.map((id) => path.join(ARMS, ENGINE_DIRS[arm], `${id}.json`)).filter((f) => fs.existsSync(f)).map((f) => JSON.parse(fs.readFileSync(f, 'utf8')));
   if (arm === 'mitra') {
     out.engines[arm].run = { pages: files.length, ms_mean: r3(mean(files.map((f) => f.ms_total))), out_tokens_mean: r3(mean(files.map((f) => f.completion_tokens))), cost_note: 'self-hosted; see engines.mitra.projection' };
   } else {
@@ -115,28 +117,33 @@ for (const arm of ENGINES) {
   }
 }
 
-// ── pairwise per page: MITRA vs flash on fidelity (issue rule), per judge ────
-out.rules.issue = { rule: 'MITRA wins fidelity on >= 15/20 pages → hold the $430 batch', by_judge: {} };
-for (const judge of Object.keys(decoded)) {
-  let win = 0, loss = 0, tie = 0;
-  for (const id of testPages) {
-    const m = decoded[judge][id]?.mitra, f = decoded[judge][id]?.flash;
-    if (!m || !f) continue;
-    if (m.fidelity > f.fidelity) win++; else if (m.fidelity < f.fidelity) loss++; else tie++;
+// ── pairwise per page: MITRA vs flash on fidelity (issue rule), per judge — only when both arms ran ──
+if (ENGINES.includes('mitra') && ENGINES.includes('flash')) {
+  out.rules.issue = { rule: 'MITRA wins fidelity on >= 15/20 pages → hold the $430 batch', by_judge: {} };
+  for (const judge of Object.keys(decoded)) {
+    let win = 0, loss = 0, tie = 0;
+    for (const id of testPages) {
+      const m = decoded[judge][id]?.mitra, f = decoded[judge][id]?.flash;
+      if (!m || !f) continue;
+      if (m.fidelity > f.fidelity) win++; else if (m.fidelity < f.fidelity) loss++; else tie++;
+    }
+    out.rules.issue.by_judge[judge] = { mitra_wins: win, flash_wins: loss, ties: tie, n: win + loss + tie, threshold: Math.ceil(0.75 * (win + loss + tie)), met: win >= Math.ceil(0.75 * (win + loss + tie)) };
   }
-  out.rules.issue.by_judge[judge] = { mitra_wins: win, flash_wins: loss, ties: tie, n: win + loss + tie, threshold: Math.ceil(0.75 * (win + loss + tie)), met: win >= Math.ceil(0.75 * (win + loss + tie)) };
+  out.rules.issue.met_by_any_judge = Object.values(out.rules.issue.by_judge).some((j) => j.met);
 }
-out.rules.issue.met_by_any_judge = Object.values(out.rules.issue.by_judge).some((j) => j.met);
 
 // ── handoff rule: cheapest engine within 0.5 median fidelity of the best AND invention <= best + 5pp ──
-const COST_ORDER = ['lite', 'flash', 'mitra']; // by projected $/page, cheapest first (mitra self-hosted ≈ flash-batch order; see report)
+// --cost-order a,b,c: cheapest first (default = the 09-25 trio; pass it for new arms)
+const COST_ORDER = opt('cost-order', 'lite,flash,mitra').split(',');
 out.rules.handoff = { rule: 'cheapest engine whose median fidelity is within 0.5 of the best AND invention rate <= best + 5pp (pooled over judges)', cost_order: COST_ORDER };
 const best = ENGINES.reduce((b, a) => (out.engines[a].pooled.fidelity_median > (out.engines[b]?.pooled.fidelity_median ?? -1) ? a : b), null);
 const bestInv = Math.min(...ENGINES.map((a) => out.engines[a].pooled.invention_rate));
 out.rules.handoff.best_fidelity_engine = best;
 out.rules.handoff.eligible = ENGINES.filter((a) => out.engines[a].pooled.fidelity_median >= out.engines[best].pooled.fidelity_median - 0.5 && out.engines[a].pooled.invention_rate <= bestInv + 0.05);
 out.rules.handoff.pick = COST_ORDER.find((a) => out.rules.handoff.eligible.includes(a)) || null;
-out.rules.handoff.specialist_wins_by_1 = out.engines.mitra.pooled.fidelity_median - Math.max(out.engines.flash.pooled.fidelity_median, out.engines.lite.pooled.fidelity_median) >= 1;
+if (ENGINES.includes('mitra') && ENGINES.includes('flash') && ENGINES.includes('lite')) {
+  out.rules.handoff.specialist_wins_by_1 = out.engines.mitra.pooled.fidelity_median - Math.max(out.engines.flash.pooled.fidelity_median, out.engines.lite.pooled.fidelity_median) >= 1;
+}
 
 // ── judge agreement ──────────────────────────────────────────────────────────
 const judges = Object.keys(decoded);
@@ -160,4 +167,4 @@ if (judges.length === 2) {
 out.per_page = testPages.map((id) => ({ id, ...Object.fromEntries(judges.map((j) => [j, Object.fromEntries(ENGINES.map((a) => [a, decoded[j][id]?.[a] ? `${decoded[j][id][a].fidelity}${decoded[j][id][a].invention ? 'I' : ''}${decoded[j][id][a].omission ? 'O' : ''}${decoded[j][id][a].inversion ? 'X' : ''}` : null]))])), reasons: Object.fromEntries(judges.map((j) => [j, decoded[j][id]?._reason])) }));
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
-console.log(JSON.stringify({ controls: out.controls, engines: Object.fromEntries(ENGINES.map((a) => [a, out.engines[a].pooled])), rules: { issue: out.rules.issue.by_judge, handoff: { pick: out.rules.handoff.pick, eligible: out.rules.handoff.eligible, best: best } }, agreement: out.agreement }, null, 1));
+console.log(JSON.stringify({ controls: out.controls, engines: Object.fromEntries(ENGINES.map((a) => [a, out.engines[a].pooled])), rules: { issue: out.rules.issue?.by_judge ?? null, handoff: { pick: out.rules.handoff.pick, eligible: out.rules.handoff.eligible, best: best } }, agreement: out.agreement }, null, 1));

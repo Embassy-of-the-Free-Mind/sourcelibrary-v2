@@ -48,8 +48,11 @@ import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
-import { startHeartbeat } from './lib/worker-heartbeat.mjs';
+import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import pg from 'pg';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // Selective-unpause scope confinement, set in main() after the pause check.
 // Empty {} in normal operation so the full enrich queue is unaffected.
@@ -197,13 +200,17 @@ async function logUsage(db, params) {
 }
 
 // ── Pipeline status helpers ──
+// Both write pipeline_auto.last_updated: the field this worker's orphan sweep and orchestrator
+// Phase 8.5 select on. Writing only updated_at let a book enrich had just moved to 'summarizing'
+// look stale and get rolled back mid-work (#5472). updated_at stays because
+// daily-health-snapshot and pipeline-health-alert read it.
 async function setPipelineStatus(db, bookId, status, extra = {}) {
   // NOT_HELD: a held book (scripts/lib/pipeline-hold.mjs, #4790) keeps its hold whatever this
   // worker decided — it is never selected by status, so this only matters for --book overrides,
   // and there the refusal is the point.
   const r = await db.collection('books').updateOne(
     { id: bookId, ...NOT_HELD },
-    { $set: { 'pipeline_auto.status': status, 'pipeline_auto.updated_at': new Date(), updated_at: new Date(), ...extra } },
+    { $set: { 'pipeline_auto.status': status, 'pipeline_auto.last_updated': new Date(), 'pipeline_auto.updated_at': new Date(), updated_at: new Date(), ...extra } },
   );
   if (r.matchedCount === 0) console.log(`  [pipeline-hold] ${bookId}: refusing status '${status}' — book is held or missing`);
 }
@@ -216,6 +223,7 @@ async function markFailed(db, bookId, reason, retries) {
         'pipeline_auto.status': 'failed',
         'pipeline_auto.failure_reason': reason,
         'pipeline_auto.retry_count': retries,
+        'pipeline_auto.last_updated': new Date(),
         'pipeline_auto.updated_at': new Date(),
         updated_at: new Date(),
       },

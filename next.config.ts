@@ -222,6 +222,15 @@ const nextConfig: NextConfig = {
         source: '/admin/spend',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Admin-only quality report (#5474): same belt and braces as the spend page.
+      {
+        source: '/admin/quality/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/quality',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
@@ -512,6 +521,13 @@ const nextConfig: NextConfig = {
         destination: '/gallery/:path*',
         permanent: true,
       },
+      // Short, sayable aliases for the MCP setup guide ("sourcelibrary.org/mcp").
+      // The guide's canonical URL is /connect; these exist to be typed and read aloud.
+      ...['/mcp', '/claude', '/chatgpt'].map((source) => ({
+        source,
+        destination: '/connect',
+        permanent: true,
+      })),
       // Short share links for explore pages
       {
         source: '/map',

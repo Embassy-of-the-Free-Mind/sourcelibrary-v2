@@ -1,0 +1,201 @@
+{
+ "measure": "by eye: each read compared with the page image by a reader blind to which read is served, to the judge label and to the class",
+ "readers": "Opus subagents, one packet each; label on every row",
+ "pages_in_packet": 30,
+ "verdicts": 30,
+ "missing": [],
+ "malformed": [],
+ "materially_wrong_means": [
+  "unreliable",
+  "partial",
+  "different-page"
+ ],
+ "by_role": {
+  "hard": {
+   "pages": 20,
+   "served_judged": 18,
+   "served_cannot_tell": 2,
+   "served": {
+    "unreliable": 8,
+    "minor": 10,
+    "cannot-tell": 2
+   },
+   "lite": {
+    "unreliable": 14,
+    "cannot-tell": 2,
+    "minor": 3,
+    "different-page": 1
+   },
+   "flash": {
+    "minor": 11,
+    "unreliable": 6,
+    "cannot-tell": 3
+   },
+   "served_materially_wrong": 8,
+   "share": 0.44,
+   "ci": [
+    0.25,
+    0.66
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 4
+  },
+  "outlier": {
+   "pages": 6,
+   "served_judged": 6,
+   "served_cannot_tell": 0,
+   "served": {
+    "faithful": 3,
+    "minor": 2,
+    "different-page": 1
+   },
+   "lite": {
+    "minor": 4,
+    "faithful": 2
+   },
+   "flash": {
+    "minor": 3,
+    "faithful": 3
+   },
+   "served_materially_wrong": 1,
+   "share": 0.17,
+   "ci": [
+    0.03,
+    0.56
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 1
+  },
+  "control": {
+   "pages": 4,
+   "served_judged": 4,
+   "served_cannot_tell": 0,
+   "served": {
+    "faithful": 3,
+    "minor": 1
+   },
+   "lite": {
+    "minor": 3,
+    "faithful": 1
+   },
+   "flash": {
+    "minor": 2,
+    "faithful": 2
+   },
+   "served_materially_wrong": 0,
+   "share": 0,
+   "ci": [
+    0,
+    0.49
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 0
+  }
+ },
+ "hard_by_judge_label": {
+  "judge_garbled": {
+   "pages": 9,
+   "served_judged": 9,
+   "served_cannot_tell": 0,
+   "served": {
+    "unreliable": 5,
+    "minor": 4
+   },
+   "lite": {
+    "unreliable": 7,
+    "cannot-tell": 1,
+    "minor": 1
+   },
+   "flash": {
+    "minor": 6,
+    "unreliable": 3
+   },
+   "served_materially_wrong": 5,
+   "share": 0.56,
+   "ci": [
+    0.27,
+    0.81
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 3
+  },
+  "judge_clean": {
+   "pages": 11,
+   "served_judged": 9,
+   "served_cannot_tell": 2,
+   "served": {
+    "minor": 6,
+    "cannot-tell": 2,
+    "unreliable": 3
+   },
+   "lite": {
+    "unreliable": 7,
+    "minor": 2,
+    "cannot-tell": 1,
+    "different-page": 1
+   },
+   "flash": {
+    "minor": 5,
+    "unreliable": 3,
+    "cannot-tell": 3
+   },
+   "served_materially_wrong": 3,
+   "share": 0.33,
+   "ci": [
+    0.12,
+    0.65
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 1
+  }
+ },
+ "hard_by_script": {
+  "latin-script": {
+   "pages": 4,
+   "served_judged": 4,
+   "served_cannot_tell": 0,
+   "served": {
+    "unreliable": 1,
+    "minor": 3
+   },
+   "lite": {
+    "unreliable": 3,
+    "minor": 1
+   },
+   "flash": {
+    "unreliable": 1,
+    "minor": 3
+   },
+   "served_materially_wrong": 1,
+   "share": 0.25,
+   "ci": [
+    0.05,
+    0.7
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 0
+  },
+  "non-latin-script": {
+   "pages": 16,
+   "served_judged": 14,
+   "served_cannot_tell": 2,
+   "served": {
+    "unreliable": 7,
+    "minor": 7,
+    "cannot-tell": 2
+   },
+   "lite": {
+    "unreliable": 11,
+    "cannot-tell": 2,
+    "minor": 2,
+    "different-page": 1
+   },
+   "flash": {
+    "minor": 8,
+    "unreliable": 5,
+    "cannot-tell": 3
+   },
+   "served_materially_wrong": 7,
+   "share": 0.5,
+   "ci": [
+    0.27,
+    0.73
+   ],
+   "of_those_a_fresh_read_is_faithful_or_minor": 4
+  }
+ }
+}

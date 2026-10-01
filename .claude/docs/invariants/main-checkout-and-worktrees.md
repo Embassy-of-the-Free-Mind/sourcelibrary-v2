@@ -93,6 +93,11 @@ indistinguishable from ordinary uncommitted work.
   commit: `mkdir -p src/lib/vendor && cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
   The `mkdir` is load-bearing — that directory contains nothing but the gitignored bundle, so it does
   not exist in a fresh worktree and the bare `cp` fails.
+- **Resolving a rebase conflict: `main` wins every line you did not set out to change — then re-read
+  the whole hunk for facts that now disagree with their neighbours.** Taking "ours" on a line the PR
+  never meant to touch is a silent revert of someone else's merged work: #5269, rebuilt on #5272,
+  brought back a "$60 a book" footnote one line under #5272's "$550K for 3,000 books" (#5415).
+  `pr-tier.yml` now comments when a PR re-adds a line `main` removed in the last 14 days; warn only.
 
 ## Reaping
 

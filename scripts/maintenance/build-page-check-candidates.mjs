@@ -10,7 +10,10 @@
  *   node scripts/maintenance/build-page-check-candidates.mjs blog --apply
  *   node scripts/maintenance/build-page-check-candidates.mjs --file tasks.json --apply
  *
- * A JSON file is an array of { url, prompt?, label?, campaign?, item_id? }.
+ * A JSON file is an array of { url, prompt?, label?, campaign?, item_id?, queue?, language? }.
+ * `queue: 'translation-check'` (with `language`) sends a row to the reader-of-the-original
+ * queue instead of page-check — e.g. the corpus-audit calibration pages
+ * (scripts/eval/translation-corpus-audit/calibration-tasks.mjs).
  *
  * DESIGN NOTE. The volunteer's real answer is the free-text note; the two
  * verdict buttons exist so the queue can drain visibly. Without a "looks right"
@@ -259,14 +262,16 @@ const CAMPAIGNS = {
               },
             },
             { $sample: { size: 1 } },
-            { $project: { page_number: 1 } },
+            { $project: { page_number: 1, id: 1 } },
           ])
           .toArray();
         if (!page) continue;
         rows.push({
           queue: 'translation-check',
-          item_id: `trans:${language}:${page._id}`,
-          url: `${SITE}/book/${b.slug ?? bookId}/page/${page._id}`,
+          // The reader route resolves pages.id, which differs from pages._id on re-minted
+          // pages — an _id URL 404s there (measured 2026-09-30). Prefer id.
+          item_id: `trans:${language}:${page.id ?? page._id}`,
+          url: `${SITE}/book/${b.slug ?? bookId}/page/${page.id ?? page._id}`,
           label: 'the page',
           language,
           campaign: `Translation check — ${language}`,
@@ -297,7 +302,18 @@ if (FILE) {
   if (!Array.isArray(raw)) { console.error('The file must contain an array.'); process.exit(1); }
   rows = raw.map((r, i) => {
     if (!r.url) { console.error(`Row ${i} has no url.`); process.exit(1); }
+    // A file row may target the translation-check queue (with its language, which
+    // the per-language rollup and the invite builder group by). Anything else
+    // stays on page-check, exactly as before.
+    if (r.queue && !['page-check', 'translation-check'].includes(r.queue)) {
+      console.error(`Row ${i}: queue "${r.queue}" is not page-check or translation-check.`); process.exit(1);
+    }
+    if (r.queue === 'translation-check' && !r.language) {
+      console.error(`Row ${i}: a translation-check row needs a language.`); process.exit(1);
+    }
     return {
+      ...(r.queue ? { queue: r.queue } : {}),
+      ...(r.language ? { language: r.language } : {}),
       item_id: r.item_id || `file:${r.url}`,
       url: r.url,
       label: r.label || 'the page',

@@ -1,0 +1,19 @@
+{
+  "_prior_art": "PRIOR ART: none — post-stratification weights for this run only; draw-log.json carries the language weights, this file carries the arm-within-language weights",
+  "_source": "share of live translated pages on the lite arm (gemini-3.1-flash-lite + -preview) vs flash (gemini-3-flash-preview), per catalogue language, from a 140,000-page $sample of `pages` joined to `books` on 2026-09-30 (survey-provenance, 56,337 live translated pages); other/none models ignored",
+  "Latin": { "lite": 0.857, "flash": 0.143 },
+  "German": { "lite": 0.362, "flash": 0.638 },
+  "English": { "lite": 0.751, "flash": 0.249 },
+  "Greek": { "lite": 0.630, "flash": 0.370 },
+  "French": { "lite": 0.460, "flash": 0.540 },
+  "Italian": { "lite": 0.964, "flash": 0.036 },
+  "Sanskrit": { "lite": 0.596, "flash": 0.404 },
+  "Arabic": { "lite": 0.596, "flash": 0.404 },
+  "Dutch": { "lite": 0.267, "flash": 0.733 },
+  "Chinese": { "lite": 0.513, "flash": 0.487 },
+  "Korean": { "lite": 0.040, "flash": 0.960 },
+  "Hebrew": { "lite": 0.675, "flash": 0.325 },
+  "Tibetan": { "lite": 0.854, "flash": 0.146 },
+  "Japanese": { "lite": 0.889, "flash": 0.111 },
+  "Spanish": { "lite": 0.959, "flash": 0.041 }
+}

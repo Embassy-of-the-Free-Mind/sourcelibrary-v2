@@ -1,0 +1,112 @@
+{
+  "seed": 20261001,
+  "at": "2026-09-30T22:22:02.087Z",
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained"
+  },
+  "n_books": 60,
+  "n_seams": 15,
+  "weights": {
+    "Greek": {
+      "books": 9,
+      "translated_pages": 1008
+    },
+    "French": {
+      "books": 15,
+      "translated_pages": 2085
+    },
+    "Sanskrit": {
+      "books": 5,
+      "translated_pages": 525
+    },
+    "Tibetan": {
+      "books": 1,
+      "translated_pages": 37
+    },
+    "Greek, English": {
+      "books": 1,
+      "translated_pages": 23
+    },
+    "Latin": {
+      "books": 193,
+      "translated_pages": 6982
+    },
+    "German": {
+      "books": 17,
+      "translated_pages": 2573
+    },
+    "Italian": {
+      "books": 2,
+      "translated_pages": 37
+    },
+    "Unknown": {
+      "books": 1,
+      "translated_pages": 40
+    },
+    "Pali": {
+      "books": 2,
+      "translated_pages": 56
+    },
+    "Hebrew": {
+      "books": 4,
+      "translated_pages": 216
+    },
+    "Ge'ez": {
+      "books": 1,
+      "translated_pages": 0
+    },
+    "Spanish": {
+      "books": 2,
+      "translated_pages": 596
+    },
+    "Dutch": {
+      "books": 1,
+      "translated_pages": 27
+    },
+    "Javanese": {
+      "books": 1,
+      "translated_pages": 25
+    },
+    "Malay": {
+      "books": 4,
+      "translated_pages": 104
+    },
+    "Arabic": {
+      "books": 14,
+      "translated_pages": 920
+    },
+    "Bugis": {
+      "books": 1,
+      "translated_pages": 35
+    },
+    "Yucatec Maya": {
+      "books": 2,
+      "translated_pages": 90
+    },
+    "English": {
+      "books": 6,
+      "translated_pages": 494
+    }
+  },
+  "visits": {
+    "books_visited": 62,
+    "seeded_main": 60,
+    "seam_main": 15,
+    "extras": 59
+  },
+  "exclusions": {
+    "page_type": 1097,
+    "short_translation": 11,
+    "short_ocr": 15,
+    "no_seeded_page": 2
+  },
+  "arms": {
+    "lite": 60
+  },
+  "controls": {
+    "swap": 15,
+    "drop": 15,
+    "repeat": 15
+  }
+}

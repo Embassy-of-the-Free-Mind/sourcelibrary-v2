@@ -13,6 +13,7 @@
  *   4. Books stuck in ocr_submitted >48h
  *   5. Translation throughput stall (books waiting but 0 pages translated in 2h)
  *   5b. Orphan submitted books (in *_submitted state with no job reference)
+ *   11. Worker code drift — a live worker running code older than main (#5442)
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs
@@ -23,6 +24,7 @@
 
 import { MongoClient } from 'mongodb';
 import { computeIndexDrift } from '../maintenance/ensure-indexes.mjs';
+import { checkWorkerDrift } from '../audit/worker-code-drift.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -362,6 +364,24 @@ async function run() {
     }
   } catch (e) {
     console.error(`[health] rollup staleness check failed: ${e.message}`);
+  }
+
+  // 11. Worker code drift (#5442): merged is not in effect for a long-lived loop. A
+  // `--loop` worker kept code 8h older than main on 2026-10-01 while the checkout read
+  // current. auto-pull.sh pushes this hourly via ntfy; this puts it in the daily email.
+  try {
+    const drift = await checkWorkerDrift(db, { repo: process.cwd() });
+    if (drift.exit === 3) {
+      alerts.push({
+        level: 'critical',
+        check: 'worker_code_drift',
+        message: `${drift.lines.filter(l => !l.startsWith('UNVERIFIED')).join(' | ')}. Restart is a human decision: check open batch runs and the lock it holds first. Re-check: node scripts/audit/worker-code-drift.mjs`,
+      });
+    } else {
+      console.log(`[health] Worker code: ${drift.workers.length} live, none older than main`);
+    }
+  } catch (e) {
+    alerts.push({ level: 'warning', check: 'worker_code_drift', message: `could not check (${e.message.split('\n')[0]}) — UNKNOWN is not clear` });
   }
 
   // 7. Quick stats

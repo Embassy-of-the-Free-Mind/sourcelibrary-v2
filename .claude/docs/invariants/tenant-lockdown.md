@@ -64,6 +64,11 @@ differences to keep straight:
    the rest of the site. `RESERVED_ROOM_SEGMENTS` must list every
    non-slug folder under `src/app/rooms/`.
 
+The host side is `public/rooms/embed.js` (the manage page's snippet loads it): it sizes the frame,
+lifts it on the reader's `modal-open`/`modal-close`, and mirrors `?room=` into the host's history —
+one host entry per step, steer on popstate with `location.replace`; rules and tests in
+`tests/unit/rooms-embed.test.ts`. Keep the room's in-frame links client-side or it breaks.
+
 Rooms are `noindex` until the spam surface of user-made public pages is
 understood; their books are already indexed at the canonical `/book` URLs.
 

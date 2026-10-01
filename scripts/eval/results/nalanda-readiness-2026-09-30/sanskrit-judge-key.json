@@ -1,0 +1,44 @@
+{
+ "seed": 20260930,
+ "labels": {
+  "brahmasutra_108": {
+   "T1": "served",
+   "T2": "ctrl_reference"
+  },
+  "brahmasutra_194": {
+   "T1": "served",
+   "T2": "ctrl_reference"
+  },
+  "brahmasutra_35": {
+   "T1": "served"
+  },
+  "manu_352": {
+   "T1": "ctrl_wrong_page",
+   "T2": "served"
+  },
+  "manu_586": {
+   "T1": "served"
+  },
+  "manu_850": {
+   "T1": "served"
+  },
+  "yogasutra_166": {
+   "T1": "served"
+  },
+  "yogasutra_217": {
+   "T1": "served",
+   "T2": "ctrl_wrong_page"
+  },
+  "yogasutra_97": {
+   "T1": "served"
+  }
+ },
+ "positive_control": [
+  "brahmasutra_108",
+  "brahmasutra_194"
+ ],
+ "negative_control": [
+  "manu_352",
+  "yogasutra_217"
+ ]
+}

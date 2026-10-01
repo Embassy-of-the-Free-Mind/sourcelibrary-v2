@@ -43,14 +43,22 @@ import {
   dropLeafSeamBreaches,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
+import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
+import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
+import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -465,6 +473,7 @@ function engineFor(page, book, promptRef, call) {
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef, call) {
+  text = unwrapForWrite(page, text);
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -505,7 +514,17 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
 
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
+// T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page
+// and reads to the health gate as collapsed. Open the wrapper BEFORE judging or storing.
+function unwrapForWrite(page, text) {
+  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: text, type: page.page_type });
+  if (!u.unwrapped) return text;
+  console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${u.wrapper}> (${u.wrapperLen} chars, body ${u.body}) — unwrapped`);
+  return u.text;
+}
+
 async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
+  entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text) }));
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -611,7 +630,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       ],
     })
     .sort({ page_number: 1 })
-    .project({ id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 })
+    .project({ id: 1, page_number: 1, 'ocr.data': 1, 'ocr.updated_at': 1, page_type: 1 })
     .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
 
@@ -651,6 +670,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Same-language pages (#5154) ──────────────────────────────────────────
+  // A page already written in English is COPIED, not sent to the model. Asked to "translate"
+  // English into English, the model abridges, modernises and drifts (the page-error taxonomy's
+  // T12: dropped footnotes, condensed commentary, "Brake Wind" → "Broke Wind"), and the reader
+  // of the translation panel never reads the author. The copy is the transcription verbatim,
+  // costs nothing, and carries its own provenance (source 'same-language').
+  const sameLanguage = pages.filter(p => englishSource(p.ocr?.data).english);
+  if (sameLanguage.length > 0) {
+    for (const p of sameLanguage) {
+      await saveRevisionBeforeOverwrite(db, p.id, 'translation', job?.id);
+      const translation = await sameLanguageTranslation(p, { jobId: job?.id });
+      const setPayload = { translation, updated_at: new Date() };
+      await db.collection('pages').updateOne({ id: p.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
+      syncPageUpdate(p.id, setPayload);
+    }
+    console.log(`  [${label}] SAME LANGUAGE: copied ${sameLanguage.length} English page(s) through — no model call (#5154)`);
+    const copied = new Set(sameLanguage.map(p => p.id));
+    pages.splice(0, pages.length, ...pages.filter(p => !copied.has(p.id)));
   }
 
   if (pages.length === 0) {
@@ -1149,6 +1188,17 @@ async function selfDispatch(db, limit) {
     return [];
   }
 
+  // TWO LANES (#4681): orchestrator Phase 4 enrols every book below REALTIME_PRIORITY_FLOOR in
+  // the chained Batch lane. Self-dispatch takes reader requests only, or it claims the same
+  // backlog for realtime at 4× the price (2 books at 22:36Z on 2026-09-30, the night Phase 4
+  // flipped). PHASE4_TRANSLATE_LANE=realtime reverts both dispatchers together.
+  const LANE_FILTER = phase4Lane({ processing_priority: 0 }) === 'chained'
+    ? { processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }
+    : {};
+  // A book with an open translate_batch_runs run (either lane) is never taken:
+  // its pages are already on their way (#5429).
+  const OPEN_RUN_FILTER = notInOpenRun(await openRunBookIds(db));
+
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
@@ -1158,6 +1208,8 @@ async function selfDispatch(db, limit) {
       'pipeline_auto.status': { $in: ['ocr_complete'] },
       $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
       ...SCOPE_FILTER,
+      ...LANE_FILTER,
+      ...OPEN_RUN_FILTER,
     } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
@@ -1187,6 +1239,8 @@ async function selfDispatch(db, limit) {
         // Spread guard (#2449)
         $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
         ...SCOPE_FILTER,
+        ...LANE_FILTER,
+        ...OPEN_RUN_FILTER,
       } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },

@@ -68,9 +68,13 @@ export function leafSeamsPreserved(ocrText, translationText) {
  * The #5176 guards, per leaf (#5260 item 4). `echo` — the leaf's translation is its source
  * verbatim (page-integrity echoedSource, whole-unit share) — needs the book's `lang` like the
  * page-level tier and is skipped without it. `leaf-drift` — the translation of leaf k absorbed
- * the opening clause of leaf k+1 (block-drift detectBlockDrift, with the leaves standing in for
- * consecutive pages). Returns { healthy, reason, unit } with `unit` the 0-based leaf that failed.
- * A text with no seam returns healthy: the page-level gate already judged it.
+ * the opening clause of leaf k+1, or rendered it on both leaves (block-drift detectBlockDrift and
+ * duplicatedAcrossBoundary, with the leaves standing in for consecutive pages). A run the two
+ * leaves' translations share is a duplication only when the SOURCE leaves do not share it too
+ * (block-drift sourceRepeatsAcrossBoundary, #5275): the Kanjur's refrain recurs across 57 of 168
+ * seams of the canonical pilot book, and each was refused here as `duplicated` until the test
+ * was grounded in the source. Returns { healthy, reason, unit } with `unit` the 0-based leaf
+ * that failed. A text with no seam returns healthy: the page-level gate already judged it.
  */
 export function leafUnitsHealth(ocrText, translationText, { lang } = {}) {
   const src = splitLeafUnits(ocrText);
@@ -164,6 +168,99 @@ export function insertLeafBreaks({ served, raw, leafLines }) {
   const out = [];
   servedLines.forEach((line, i) => { if (seams.includes(i)) out.push(LEAF_BREAK); out.push(line); });
   return { text: out.join('\n'), seams };
+}
+
+/**
+ * Place the seams in a PAGE-mode read by aligning it, line by line, to the same page's per-leaf read (#5320).
+ *
+ * `insertLeafBreaks` needs the served text to BE the leaf read (a subsequence of it). Where the leaf read was
+ * rejected by the acceptance rule, the page still serves the page-mode read, which the ledger's line counts do
+ * not describe: a page read with the right total can have dropped a leaf's first line and split another
+ * (measured 2026-09-30, 115/835 pages whose totals matched), so a count cut would shift the seam onto the wrong
+ * line. Instead each served line is matched to a line of the leaf read (monotone alignment, similarity >= 0.45 —
+ * the two reads are the same model on the same leaves, so a line matches its counterpart at 0.8–1.0 and an
+ * unrelated line at 0.1–0.35), and the seam falls between the last served line matched to leaf k and the first
+ * matched to leaf k+1.
+ *
+ * Returns { text, seams } or { text: null, reason }:
+ *   single-leaf / already-marked / ledger-mismatch   as insertLeafBreaks
+ *   weak-alignment      fewer than 80% of the served lines found a counterpart
+ *   leaf-order          the matched leaves go backwards (the read does not keep leaf order)
+ *   leaf-missing        a leaf has no matched served line
+ *   seam-ambiguous      an unmatched served line sits exactly between two leaves: it could belong to either
+ */
+export function insertLeafBreaksByAlignment({ served, leafRead, leafLines }) {
+  if (!Array.isArray(leafLines) || leafLines.length < 2) return { text: null, reason: 'single-leaf' };
+  if (countLeafBreaks(served)) return { text: null, reason: 'already-marked' };
+  const leafRaw = splitLines(leafRead);
+  const total = leafLines.reduce((n, k) => n + k, 0);
+  if (leafRaw.length !== total) return { text: null, reason: 'ledger-mismatch', rawLines: leafRaw.length, ledgerLines: total };
+  const leafOfRaw = [];
+  leafLines.forEach((k, leaf) => { for (let i = 0; i < k; i++) leafOfRaw.push(leaf); });
+  const servedLines = splitLines(served);
+  const nonEmpty = servedLines.map((l) => l.trim() !== '');
+  const P = servedLines.map((l) => l.trim());
+  const L = leafRaw.map((l) => l.trim());
+  const n = P.length; const m = L.length;
+  // Both reads keep reading order, so a line's counterpart sits near the same relative position: compare
+  // within a band of ±4 lines of the diagonal (outside it a pair scores 0 and can only be a gap).
+  const BAND = 4;
+  const S = P.map((p, i) => L.map((q, j) => (p && q && Math.abs((i * m) / Math.max(n, 1) - j) <= BAND ? lineSimilarity(p, q) : 0)));
+  const GAP = -0.2; const MIN = 0.45; const SEAM_MIN = 0.6; const SEAM_MARGIN = 0.15;
+  const dp = Array.from({ length: n + 1 }, () => new Float64Array(m + 1));
+  const bt = Array.from({ length: n + 1 }, () => new Uint8Array(m + 1));
+  for (let i = 1; i <= n; i++) { dp[i][0] = dp[i - 1][0] + GAP; bt[i][0] = 1; }
+  for (let j = 1; j <= m; j++) { dp[0][j] = dp[0][j - 1] + GAP; bt[0][j] = 2; }
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      const s = S[i - 1][j - 1];
+      const diag = dp[i - 1][j - 1] + (s >= MIN ? s : -1);
+      const up = dp[i - 1][j] + GAP; const left = dp[i][j - 1] + GAP;
+      if (diag >= up && diag >= left) { dp[i][j] = diag; bt[i][j] = 0; } else if (up >= left) { dp[i][j] = up; bt[i][j] = 1; } else { dp[i][j] = left; bt[i][j] = 2; }
+    }
+  }
+  const leafOfServed = new Array(n).fill(null);
+  for (let i = n, j = m; i > 0 && j > 0;) {
+    const k = bt[i][j];
+    if (k === 0) { if (S[i - 1][j - 1] >= MIN) leafOfServed[i - 1] = leafOfRaw[j - 1]; i--; j--; } else if (k === 1) i--; else j--;
+  }
+  const lineCount = nonEmpty.filter(Boolean).length;
+  const matched = leafOfServed.filter((x) => x !== null).length;
+  if (!lineCount || matched / lineCount < 0.8) return { text: null, reason: 'weak-alignment', matched, lines: lineCount };
+  const seq = leafOfServed.map((leaf, i) => ({ leaf, i })).filter((x) => x.leaf !== null);
+  for (let k = 1; k < seq.length; k++) if (seq[k].leaf < seq[k - 1].leaf) return { text: null, reason: 'leaf-order', line: seq[k].i };
+  if (new Set(seq.map((x) => x.leaf)).size !== leafLines.length) return { text: null, reason: 'leaf-missing' };
+  const seams = [];
+  for (let k = 1; k < seq.length; k++) {
+    if (seq[k].leaf === seq[k - 1].leaf) continue;
+    // any unmatched NON-EMPTY served line between the two could belong to either leaf
+    for (let i = seq[k - 1].i + 1; i < seq[k].i; i++) if (nonEmpty[i]) return { text: null, reason: 'seam-ambiguous', line: i };
+    // The two lines that flank the seam must each belong to their own leaf beyond doubt: formulaic text
+    // (a litany of homage, a sūtra refrain) scores 0.5–0.75 against lines it is not, so a line that matches
+    // the other leaf nearly as well as its own could sit on either side.
+    for (const { i, leaf } of [seq[k - 1], seq[k]]) {
+      let own = 0; let other = 0;
+      S[i].forEach((s, j) => { if (leafOfRaw[j] === leaf) own = Math.max(own, s); else other = Math.max(other, s); });
+      if (own < SEAM_MIN || own - other < SEAM_MARGIN) return { text: null, reason: 'seam-ambiguous', line: i, own: +own.toFixed(2), other: +other.toFixed(2) };
+    }
+    seams.push(seq[k].i);
+  }
+  const out = [];
+  servedLines.forEach((line, i) => { if (seams.includes(i)) out.push(LEAF_BREAK); out.push(line); });
+  return { text: out.join('\n'), seams, matched, lines: lineCount };
+}
+
+/** Similarity of two lines, 0..1: 1 - edit distance / longer length, over code points. */
+export function lineSimilarity(a, b) {
+  const x = [...a]; const y = [...b];
+  if (!x.length && !y.length) return 1;
+  let prev = new Uint16Array(y.length + 1).map((_, j) => j);
+  for (let i = 1; i <= x.length; i++) {
+    const cur = new Uint16Array(y.length + 1); cur[0] = i;
+    for (let j = 1; j <= y.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return 1 - prev[y.length] / Math.max(x.length, y.length);
 }
 
 /** Lines of a text, a trailing newline not counted as an empty line. */

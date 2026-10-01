@@ -50,6 +50,7 @@ import { fileURLToPath } from 'url';
 
 import { cleanPageText, pageQuality } from './lib/wikisource-text.mjs';
 import { levenshtein, normalizeForScript } from './lib/metrics.mjs';
+import { makeRng } from './lib/paired-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -282,8 +283,7 @@ const quantile = (xs, q) => { if (!xs.length) return null; const s = [...xs].sor
 /** Percentile bootstrap on the MEAN, seeded so the interval is reproducible. */
 function bootstrapCI(xs, iters = 4000, seed = 20260904) {
   if (xs.length < 3) return null;
-  let s = seed;
-  const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+  const rnd = makeRng(seed);   // the shared generator; the LCG that stood here cycled (#5373)
   const means = [];
   for (let b = 0; b < iters; b++) {
     let acc = 0;

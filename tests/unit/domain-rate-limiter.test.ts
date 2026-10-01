@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { claimSlot, getDomainLimit, noteRateLimited, effectiveLimit, _agePenaltyClockForTest, DOMAIN_LIMITS } from '../../scripts/lib/iiif-utils.mjs';
+import { claimSlot, getDomainLimit, capDomainLimit, noteRateLimited, effectiveLimit, _agePenaltyClockForTest, DOMAIN_LIMITS } from '../../scripts/lib/iiif-utils.mjs';
 
 /**
  * Guards the per-host rate limiter in scripts/lib/iiif-utils.mjs against the
@@ -196,5 +196,30 @@ describe('DOMAIN_LIMITS', () => {
     // 73-100% of the outstanding fetch gap, so it is the most consequential
     // number in the archiver.
     expect(DOMAIN_LIMITS['api.digitale-sammlungen.de']).toBeLessThanOrEqual(5);
+  });
+});
+
+describe('capDomainLimit (#4397 host lanes)', () => {
+  // A lane caps a host for its own process: to take a share of a budget the
+  // hourly cron also spends, or to honour a robots.txt crawl-delay. It must
+  // never be a way to RAISE a host past DOMAIN_LIMITS — that is a reviewed
+  // change to the table, made on evidence.
+  it('lowers a configured host', () => {
+    capDomainLimit('www.e-rara.ch', 1);
+    expect(getDomainLimit('https://www.e-rara.ch/i3f/v20/1/full/full/0/default.jpg')).toBe(1);
+  });
+  it('cannot raise a configured host above its table rate', () => {
+    capDomainLimit('api.digitale-sammlungen.de', 50);
+    expect(getDomainLimit('https://api.digitale-sammlungen.de/iiif/x/full/full/0/default.jpg')).toBe(DOMAIN_LIMITS['api.digitale-sammlungen.de']);
+  });
+  it('cannot raise an unlisted host above the default', () => {
+    const before = getDomainLimit('https://unlisted.example.org/a.jpg');
+    capDomainLimit('unlisted.example.org', before * 10);
+    expect(getDomainLimit('https://unlisted.example.org/a.jpg')).toBe(before);
+  });
+  it('rejects a zero, negative or non-numeric rate', () => {
+    expect(() => capDomainLimit('x.example', 0)).toThrow();
+    expect(() => capDomainLimit('x.example', -1)).toThrow();
+    expect(() => capDomainLimit('x.example', Number('abc'))).toThrow();
   });
 });

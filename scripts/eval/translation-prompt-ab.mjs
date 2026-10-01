@@ -555,6 +555,10 @@ function phaseJudgePacket() {
     for (const list of byStratum.values()) { if (list[round] && picked.length < PAIRS) picked.push(list[round]); }
     round++;
   }
+  // The flips come from the seeded stream, and the generator changed on 2026-09-30 (#5373): a rebuild no longer
+  // reproduces a packet built before that date, so it must not overwrite a key a judge has already read against.
+  const kf = path.join(RESULTS, 'translation-prompt-v15-judge-key.json');
+  if (fs.existsSync(kf)) throw new Error(`${kf} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
   resetSeed();
   const packet = [], key = [];
   for (const [k, v] of picked) {
@@ -568,7 +572,6 @@ function phaseJudgePacket() {
     key.push({ id: k, left: flip ? B_VER : A_VER, right: flip ? A_VER : B_VER });
   }
   const pf = path.join(RESULTS, 'translation-prompt-v15-judge-packet.jsonl');
-  const kf = path.join(RESULTS, 'translation-prompt-v15-judge-key.json');
   fs.writeFileSync(pf, packet.map((p) => JSON.stringify(p)).join('\n') + '\n');
   fs.writeFileSync(kf, JSON.stringify(key, null, 1));
   console.log(`wrote ${packet.length} blinded pairs to ${pf}`);

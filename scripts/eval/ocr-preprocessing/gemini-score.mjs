@@ -10,6 +10,7 @@
 // Writes <dir>/gemini-<stratum>.json per stratum (tables + rows + store rows) for build-results.py.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { scoreAgainstReference } from '../lib/metrics.mjs';
+import { makeRng } from '../lib/paired-stats.mjs';
 
 const dir = process.argv[2];
 const ARMS = ['none', 'none-repeat', 'otsu', 'sauvola', 'clahe', 'deskew', 'upscale2x'];
@@ -21,7 +22,8 @@ for (const l of readFileSync(`${dir}/calls.jsonl`, 'utf8').split('\n').filter(Bo
 
 const median = (a) => { const s = [...a].sort((x, y) => x - y); const n = s.length; return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : null; };
 function signP(k, n) { if (!n) return null; k = Math.min(k, n - k); let p = 0, c = 1; for (let i = 0; i <= n; i++) { if (i <= k) p += c; c = c * (n - i) / (i + 1); } return Math.min(1, 2 * p / 2 ** n); }
-function boot(d, iters = 4000) { let s = 5250; const r = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; const m = []; for (let i = 0; i < iters; i++) m.push(median(d.map(() => d[Math.floor(r() * d.length)]))); m.sort((x, y) => x - y); return [m[Math.floor(0.025 * iters)], m[Math.floor(0.975 * iters)]].map((x) => +x.toFixed(4)); }
+// makeRng is the shared generator; the LCG that stood here cycled (#5373)
+function boot(d, iters = 4000) { const r = makeRng(5250); const m = []; for (let i = 0; i < iters; i++) m.push(median(d.map(() => d[Math.floor(r() * d.length)]))); m.sort((x, y) => x - y); return [m[Math.floor(0.025 * iters)], m[Math.floor(0.975 * iters)]].map((x) => +x.toFixed(4)); }
 function paired(base, arm) { // lower is better; delta reported as GAIN (base - arm)
   const keys = Object.keys(base).filter((k) => arm[k] != null && base[k] != null);
   const d = keys.map((k) => base[k] - arm[k]);

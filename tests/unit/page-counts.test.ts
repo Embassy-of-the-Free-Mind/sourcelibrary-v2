@@ -31,8 +31,20 @@ import {
   isBlockedForModel,
   computeTranslationMetrics,
   FULL_TRANSLATION_MIN_OCR_COVERAGE,
+  computeTranslationState as computeTranslationStateMjs,
+  isEnglishOriginal as isEnglishOriginalMjs,
+  TRANSLATION_RUNGS as TRANSLATION_RUNGS_MJS,
+  TRANSLATION_STATE_VERSION as TRANSLATION_STATE_VERSION_MJS,
+  READABLE_MIN_TRANSLATED as READABLE_MIN_TRANSLATED_MJS,
 } from '../../scripts/lib/page-counts.mjs';
-import { NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS } from '../../src/lib/page-counts';
+import {
+  NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS,
+  computeTranslationState as computeTranslationStateTs,
+  TRANSLATION_RUNGS as TRANSLATION_RUNGS_TS,
+  TRANSLATION_STATE_VERSION as TRANSLATION_STATE_VERSION_TS,
+  FULL_TRANSLATION_MIN_OCR_COVERAGE as FULL_TRANSLATION_MIN_OCR_COVERAGE_TS,
+  READABLE_MIN_TRANSLATED as READABLE_MIN_TRANSLATED_TS,
+} from '../../src/lib/page-counts';
 
 describe('page-counts convention (#3293)', () => {
   it('VISIBLE_PAGE_MATCH selects only page_number > 0', () => {
@@ -87,6 +99,7 @@ describe('page-counts convention (#3293)', () => {
       translatable: 3,
       translated_translatable: 2,
       blank: 0,
+      archived: 0,
     });
   });
 
@@ -115,8 +128,10 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.translated_translatable).toBeLessThanOrEqual(stats.translatable);
     // And the blank leaf's placeholder is still excluded from pages_translated.
     expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
-    // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
-    expect(stats.blank).toBe(2);
+    // pages_blank is `page_type: 'blank'` with OCR — the blank leaf only, not the
+    // bookplate (design decision 3, #5325). It must name the same set that
+    // with_translation excludes, or numerator and denominator drift apart (#3747).
+    expect(stats.blank).toBe(1);
   });
 
   it('.ts and .mjs NEVER_TRANSLATED_PAGE_TYPES stay in lock-step (#4685)', () => {
@@ -424,5 +439,119 @@ describe('is_fully_translated requires OCR coverage, not just completion (#5063)
       .toEqual({ translation_pct: 0, is_fully_translated: false, over_90_translated: false });
     expect(computeTranslationMetrics({}))
       .toEqual({ translation_pct: 0, is_fully_translated: false, over_90_translated: false });
+  });
+});
+
+describe('computeTranslationState: one ladder, one denominator (#5284)', () => {
+  const rungIndex = (r: string) => TRANSLATION_RUNGS_MJS.indexOf(r);
+
+  it('the #5063 preview-only book lands on transcribing even at 25/25 translated', () => {
+    const s = computeTranslationStateMjs({ pages_count: 694, pages_ocr: 25, pages_translated: 25, pages_blank: 0, pages_translatable: 25 });
+    expect(s.rung).toBe('transcribing');
+  });
+
+  it('Theatrum Chemicum vol. 6 (#4516: 4,198 pages, 2,003 OCR\'d, all of it translated) is transcribing', () => {
+    const s = computeTranslationStateMjs({ pages_count: 4198, pages_ocr: 2003, pages_translated: 2003, pages_blank: 0, pages_translatable: 2003 });
+    expect(s.rung).toBe('transcribing');
+  });
+
+  it('a book of plates (translatable 0, coverage met, nothing translated) is transcribed, not complete', () => {
+    const s = computeTranslationStateMjs({ pages_count: 40, pages_ocr: 40, pages_translated: 0, pages_blank: 2, pages_translatable: 0 });
+    expect(s.rung).toBe('transcribed');
+    expect(s).toMatchObject({ translatable: 0, whole: 38, exact: true });
+  });
+
+  it('walks every rung at the 90% and 100% bars', () => {
+    const base = { pages_count: 100, pages_blank: 0, pages_translatable: 100 };
+    expect(computeTranslationStateMjs({ pages_count: 0 }).rung).toBe('no_pages');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 100, pages_translated: 100 }, { content_type: 'artwork' }).rung).toBe('no_pages');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 0, pages_translated: 0 }).rung).toBe('no_text');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 89, pages_translated: 0 }).rung).toBe('transcribing');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 90, pages_translated: 0 }).rung).toBe('transcribed');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 100, pages_translated: 89 }).rung).toBe('translating');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 100, pages_translated: 90 }).rung).toBe('readable');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 100, pages_translated: 99 }).rung).toBe('readable');
+    expect(computeTranslationStateMjs({ ...base, pages_ocr: 100, pages_translated: 100 }).rung).toBe('complete');
+  });
+
+  it('uses pages_translatable when stamped, whole (pages_count − pages_blank) when not', () => {
+    const exact = computeTranslationStateMjs({ pages_count: 120, pages_ocr: 120, pages_translated: 100, pages_blank: 10, pages_translatable: 100 });
+    expect(exact).toMatchObject({ rung: 'complete', translatable: 100, whole: 110, exact: true });
+    const fallback = computeTranslationStateMjs({ pages_count: 120, pages_ocr: 120, pages_translated: 100, pages_blank: 10 });
+    expect(fallback).toMatchObject({ rung: 'readable', translatable: 110, whole: 110, exact: false });
+    // null is "not recounted", not zero
+    expect(computeTranslationStateMjs({ pages_count: 120, pages_ocr: 120, pages_translated: 100, pages_blank: 10, pages_translatable: null }).exact).toBe(false);
+  });
+
+  it('a fallback book never reads higher than the same book once recounted', () => {
+    // pages_translatable <= pages_count - pages_blank by construction, so sweep that region.
+    for (const pages_count of [1, 10, 37, 100]) {
+      for (const pages_blank of [0, Math.floor(pages_count / 5)]) {
+        const whole = pages_count - pages_blank;
+        for (let pages_ocr = 0; pages_ocr <= pages_count; pages_ocr += Math.max(1, Math.floor(pages_count / 10))) {
+          for (let pages_translatable = 0; pages_translatable <= whole; pages_translatable++) {
+            for (let pages_translated = 0; pages_translated <= pages_ocr; pages_translated += Math.max(1, Math.floor(pages_ocr / 7))) {
+              const c = { pages_count, pages_ocr, pages_translated, pages_blank };
+              const withExact = computeTranslationStateMjs({ ...c, pages_translatable });
+              const withFallback = computeTranslationStateMjs(c);
+              expect(rungIndex(withFallback.rung), JSON.stringify({ ...c, pages_translatable })).toBeLessThanOrEqual(rungIndex(withExact.rung));
+            }
+          }
+        }
+      }
+    }
+  });
+
+  it('english_original reads the FIRST language of the edition', () => {
+    for (const lang of ['English', 'english', 'en', 'ENG', 'English and Hebrew', 'English; Latin', 'English (Middle)']) {
+      expect(isEnglishOriginalMjs(lang), lang).toBe(true);
+    }
+    for (const lang of ['Latin', 'Latin; English', 'Latin and English', 'German', 'Englisch', '', null, undefined]) {
+      expect(isEnglishOriginalMjs(lang), String(lang)).toBe(false);
+    }
+    expect(computeTranslationStateMjs({ pages_count: 10, pages_ocr: 10 }, { language: 'English' }).english_original).toBe(true);
+  });
+
+  it('carries its inputs and the rule version so a wrong rung is traceable', () => {
+    expect(computeTranslationStateMjs({ pages_count: 50, pages_ocr: 48, pages_translated: 30, pages_blank: 2, pages_translatable: 44 }, { language: 'Latin' }))
+      .toEqual({ rung: 'translating', english_original: false, translated: 30, translatable: 44, whole: 48, ocr: 48, exact: true, version: TRANSLATION_STATE_VERSION_MJS });
+  });
+
+  // Parity: every copy of the rule, imported (translate-core-parity lesson in
+  // .claude/docs/invariants/tests-that-are-not-guards.md). A copy nobody imports
+  // is a copy nobody tests.
+  it('the .mjs and .ts copies agree on every fixture', () => {
+    const fixtures: Array<[Record<string, number | null | undefined>, { language?: unknown; content_type?: unknown }]> = [];
+    const langs = ['English', 'Latin; English', 'English and Hebrew', 'eng', null];
+    const types = [null, 'artwork', 'book'];
+    let i = 0;
+    for (const pages_count of [0, 1, 25, 100, 694, 4198]) {
+      for (const ocrShare of [0, 0.036, 0.5, 0.89, 0.9, 1]) {
+        for (const trShare of [0, 0.5, 0.89, 0.9, 0.95, 1]) {
+          for (const pages_translatable of [undefined, null, 0, Math.floor(pages_count * 0.8), pages_count]) {
+            const pages_ocr = Math.round(pages_count * ocrShare);
+            fixtures.push([
+              { pages_count, pages_ocr, pages_translated: Math.round(pages_ocr * trShare), pages_blank: i % 3 === 0 ? Math.floor(pages_count / 10) : 0, pages_translatable },
+              { language: langs[i % langs.length], content_type: types[i % types.length] },
+            ]);
+            i++;
+          }
+        }
+      }
+    }
+    fixtures.push([{}, {}], [{ pages_count: -5, pages_ocr: -1 }, {}]);
+    const rungsSeen = new Set<string>();
+    for (const [counts, meta] of fixtures) {
+      const a = computeTranslationStateMjs(counts, meta);
+      const b = computeTranslationStateTs(counts, meta);
+      expect(b, JSON.stringify([counts, meta])).toEqual(a);
+      rungsSeen.add(a.rung);
+    }
+    // The table must exercise the whole ladder, or parity over it proves little.
+    expect([...rungsSeen].sort()).toEqual([...TRANSLATION_RUNGS_MJS].sort());
+    expect([...TRANSLATION_RUNGS_TS]).toEqual(TRANSLATION_RUNGS_MJS);
+    expect(TRANSLATION_STATE_VERSION_TS).toBe(TRANSLATION_STATE_VERSION_MJS);
+    expect(FULL_TRANSLATION_MIN_OCR_COVERAGE_TS).toBe(FULL_TRANSLATION_MIN_OCR_COVERAGE);
+    expect(READABLE_MIN_TRANSLATED_TS).toBe(READABLE_MIN_TRANSLATED_MJS);
   });
 });

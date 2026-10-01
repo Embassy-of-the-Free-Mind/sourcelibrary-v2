@@ -16,24 +16,48 @@
  * Embed batch:  POST /embed-images { urls: ["https://...", ...] }
  *
  * Port: 3457 (or CLIP_PORT env var)
+ *
+ * Runtime: CLIP_RUNTIME=v2 (default, @xenova/transformers 2.17) or v4
+ * (@huggingface/transformers 4.3.0). The two produce DIFFERENT vectors from the
+ * same model file and the same image bytes — median cosine 0.993 on the Hetzner
+ * box, and half of text→image queries change their top hit when a v4 query meets
+ * a v2 corpus (#5099). So a runtime is never switched on its own: the stored
+ * clip_embeddings must be re-embedded with the same runtime first. The switch is
+ * an env var, not a code change, so an hourly auto-pull of main can never flip
+ * the production server by itself. /health reports the runtime; writers stamp it
+ * into clip_embeddings.embedding_model so every row says which space it lives in.
  */
 
 import http from 'http';
-import { AutoProcessor, CLIPVisionModelWithProjection, CLIPTextModelWithProjection, AutoTokenizer, RawImage } from '@xenova/transformers';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const PORT = parseInt(process.env.CLIP_PORT || '3457');
+const RUNTIME = process.env.CLIP_RUNTIME || 'v2';
+if (!['v2', 'v4'].includes(RUNTIME)) throw new Error(`CLIP_RUNTIME must be v2 or v4, got ${RUNTIME}`);
 const MODEL_ID = 'Xenova/clip-vit-base-patch32';
 const DIMS = 512;
+// The value writers store in clip_embeddings.embedding_model. v2 keeps the bare
+// model id every existing row already carries.
+const EMBEDDING_MODEL = RUNTIME === 'v2' ? MODEL_ID : `${MODEL_ID}@transformers-4.3.0-q8`;
+
+const { AutoProcessor, CLIPVisionModelWithProjection, CLIPTextModelWithProjection, AutoTokenizer, RawImage } =
+  await import(RUNTIME === 'v2' ? '@xenova/transformers' : '@huggingface/transformers');
+// A fresh options object per call: v2's from_pretrained MUTATES it
+// (model_file_name), so a shared object makes the text model load the vision session.
+const quant = () => (RUNTIME === 'v2' ? { quantized: true } : { dtype: 'q8' });
 
 // Request size limit: 10MB (for base64 images)
 const MAX_BODY = 10 * 1024 * 1024;
 
-console.log('Loading CLIP model...');
+console.log(`Loading CLIP model (runtime ${RUNTIME})...`);
 const t = Date.now();
 
 const [visionModel, textModel, processor, tokenizer] = await Promise.all([
-  CLIPVisionModelWithProjection.from_pretrained(MODEL_ID, { quantized: true }),
-  CLIPTextModelWithProjection.from_pretrained(MODEL_ID, { quantized: true }),
+  CLIPVisionModelWithProjection.from_pretrained(MODEL_ID, quant()),
+  CLIPTextModelWithProjection.from_pretrained(MODEL_ID, quant()),
   AutoProcessor.from_pretrained(MODEL_ID),
   AutoTokenizer.from_pretrained(MODEL_ID),
 ]);
@@ -93,7 +117,7 @@ const server = http.createServer(async (req, res) => {
 
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, model: MODEL_ID, dims: DIMS }));
+    res.end(JSON.stringify({ ok: true, model: MODEL_ID, dims: DIMS, runtime: RUNTIME, embedding_model: EMBEDDING_MODEL }));
     return;
   }
 
@@ -184,7 +208,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`CLIP server listening on port ${PORT}`);
+  console.log(`CLIP server (${RUNTIME}) listening on port ${PORT}`);
 });
 
 function readBody(req) {

@@ -1,0 +1,43 @@
+{
+ "key_env": "GEMINI_API_KEY_TIER3",
+ "estimate_usd": 1.7093,
+ "jobs": [
+  {
+   "model": "gemini-3.1-flash-lite",
+   "job_name": "batches/7g10mc4ksp9n7kaisi3dfnkptj6pdchricga",
+   "file_name": "files/w6nn4gvmjia0",
+   "requests": 654,
+   "submitted_at": "2026-09-30T11:46:44.279Z",
+   "collected_at": "2026-09-30T12:23:51.258Z",
+   "responses": 654,
+   "outcomes": {
+    "text": 607,
+    "refusal": 23,
+    "truncated": 24
+   },
+   "in_tokens": 2335354,
+   "out_tokens": 854063,
+   "cost_usd": 0.9324665000000001,
+   "usage_logged": true
+  },
+  {
+   "model": "gemini-3-flash-preview",
+   "job_name": "batches/hlsibdeb7l08760k3h8auupjo0r29p4b4nqd",
+   "file_name": "files/dtmifv3afxyw",
+   "requests": 327,
+   "submitted_at": "2026-09-30T11:47:06.308Z",
+   "collected_at": "2026-09-30T12:23:52.260Z",
+   "responses": 327,
+   "outcomes": {
+    "text": 313,
+    "refusal": 11,
+    "truncated": 2,
+    "error": 1
+   },
+   "in_tokens": 1164096,
+   "out_tokens": 276579,
+   "cost_usd": 0.7058925,
+   "usage_logged": true
+  }
+ ]
+}

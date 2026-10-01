@@ -37,9 +37,15 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
+import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -108,24 +114,6 @@ function calculateCost(model, inputTokens, outputTokens) {
 // The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
 // asked for, so it returned [] on every page and the `length > 0` guard at the
 // write site turned that into silence.
-
-/**
- * Parse image extraction response — expects a JSON array of detected images.
- * Handles markdown code fences and extra whitespace.
- */
-function parseImageExtractionResponse(text) {
-  if (!text || typeof text !== 'string') return [];
-  // Strip markdown code fences if present
-  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-  const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) return [];
-  try {
-    const parsed = JSON.parse(jsonMatch[0]);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
 
 
 // ── Gemini API ──
@@ -482,6 +470,7 @@ async function processOneJob(db, job) {
 
     const bulkOps = [];
     let galleryDocs = null; // Populated by image_extraction jobs
+    const inheritedScanQualityByPage = new Map(); // pageId → gallery-row scan_quality (image_extraction)
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
     // fetched + sent, recorded on the batch job at submit. Lets us stamp
@@ -679,8 +668,26 @@ async function processOneJob(db, job) {
           },
         });
       } else if (job.type === 'image_extraction') {
-        // Parse JSON array of detected images from Gemini response
-        const parsed = parseImageExtractionResponse(text);
+        // The request carries the worker's responseSchema (scripts/lib/image-extraction-request.mjs),
+        // so the answer is { scan_quality, extracted_images }. The old bare-array parser matched
+        // from the first `[` — inside scan_quality.concerns — and dropped scan_quality (#4747).
+        const { extracted_images: parsed, scan_quality: scanQualityRaw } = parseImageExtractionResponse(text);
+        const pageScanQuality = scanQualityRaw
+          ? { ...scanQualityRaw, model: job.model, version: SCAN_QUALITY_VERSION, assessed_at: now }
+          : null;
+        if (pageScanQuality) {
+          const inherited = {
+            score: pageScanQuality.scan_score,
+            scan_class: pageScanQuality.scan_class,
+            illustration_fidelity: pageScanQuality.illustration_fidelity,
+            page_completeness: pageScanQuality.page_completeness,
+            concerns: pageScanQuality.concerns,
+            source: 'page_inherited',
+            version: SCAN_QUALITY_VERSION,
+            assessed_at: now,
+          };
+          inheritedScanQualityByPage.set(pageId, inherited);
+        }
         if (parsed.length > 0) {
           const detectedImages = parsed.map(img => ({
             description: img.description || '',
@@ -704,6 +711,7 @@ async function processOneJob(db, job) {
               update: {
                 $set: {
                   detected_images: detectedImages,
+                  ...(pageScanQuality ? { scan_quality: pageScanQuality } : {}),
                   image_extraction_updated_at: now,
                   updated_at: now,
                 },
@@ -738,7 +746,11 @@ async function processOneJob(db, job) {
           bulkOps.push({
             updateOne: {
               filter: { id: pageId },
-              update: { $set: { image_extraction_updated_at: now, updated_at: now } },
+              update: { $set: {
+                ...(pageScanQuality ? { scan_quality: pageScanQuality } : {}),
+                image_extraction_updated_at: now,
+                updated_at: now,
+              } },
             },
           });
         }
@@ -815,16 +827,29 @@ async function processOneJob(db, job) {
 
         // Fetch book metadata for gallery docs (incl. visible/hidden/provider so
         // batch-collected images are gallery-visible without a separate sync — #2531).
-        const bookDoc = await db.collection('books').findOne(
-          { id: job.book_id },
-          { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
-        );
+        // Per PAGE's book: a cross-book job's job.book_id is only its first book, and
+        // using it labelled every pooled crop with that book's title (#4747).
+        const galleryBookIds = [...new Set([job.book_id, ...pageInfos.map(p => p.book_id)].filter(Boolean))];
+        const bookDocs = await db.collection('books')
+          .find(
+            { id: { $in: galleryBookIds } },
+            { projection: { id: 1, display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1, 'image_source.provider': 1 } }
+          )
+          .toArray();
+        const bookById = new Map(bookDocs.map(b => [b.id, b]));
 
         // Build the full denormalized docs via the shared helper; override the
         // provenance fields the batch path owns (model / detected_at / batch id).
         const builtDocs = galleryDocs.map(({ pageId: pid, detectedImage, index }) => {
           const pageInfo = pageInfoMap.get(pid) || { id: pid, book_id: job.book_id };
-          const doc = buildGalleryDoc({ page: pageInfo, book: bookDoc, detectedImage, index, now });
+          const doc = buildGalleryDoc({
+            page: pageInfo,
+            book: bookById.get(pageInfo.book_id) || null,
+            detectedImage,
+            index,
+            now,
+            scanQuality: inheritedScanQualityByPage.get(pid) || null,
+          });
           doc.model = job.model;
           doc.detected_at = now;
           doc.detection_source = 'vision_model';
@@ -1114,6 +1139,30 @@ async function updateParentJobProgress(db, parentJobId) {
 }
 
 /**
+ * The status a batch write-back may actually set (#4719). A post-OCR status on a book whose
+ * OCR is still the 25-page preview is turned into a requeue to `archive_complete`, or into
+ * `needs_attention` when OCR has stalled. It is the same guard `setPipelineStatus` applies
+ * in the orchestrator. This writer bypasses that helper, and on 2026-10-01 it wrote 69 of
+ * the 167 preview stubs that reached `images_complete`.
+ *
+ * Returns the `$set` fields for the status write: the target unchanged, or the redirect.
+ */
+async function guardedStatusSet(db, bookId, target, prevStatus) {
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { ...GUARD_PROJECTION, title: 1 } });
+  const stub = book ? await resolvePreviewStub(db, bookId, book, target) : null;
+  const plain = { 'pipeline_auto.status': target };
+  if (!stub) return plain;
+  const enforced = previewStubGuardEnforced();
+  await recordPreviewStubRefusal(db, bookId, { stub, attempted: target, prevStatus, title: book.title, source: 'batch-collector', enforced });
+  console.log(`  [preview-stub-guard] ${bookId}: ${stub.reason}${enforced ? ` → ${stub.status}` : ' (observe)'}`);
+  if (!enforced) return plain;
+  return {
+    'pipeline_auto.status': stub.status,
+    ...Object.fromEntries(Object.entries(stub.extra).map(([k, v]) => [`pipeline_auto.${k}`, v])),
+  };
+}
+
+/**
  * Update pipeline_auto status when batch jobs complete.
  * Transitions: ocr_submitted -> ocr_complete, translate_submitted -> translate_complete
  */
@@ -1134,18 +1183,19 @@ async function advancePipelineStatus(db, bookId, jobType) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
     if (pendingOcr === 0) {
+      const statusSet = await guardedStatusSet(db, bookId, 'ocr_complete', status);
       // NOT_HELD: a batch write-back must never lift a pipeline hold (scripts/lib/pipeline-hold.mjs, #4790).
       await db.collection('books').updateOne(
         { id: bookId, ...NOT_HELD },
         {
           $set: {
-            'pipeline_auto.status': 'ocr_complete',
+            ...statusSet,
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} ocr_submitted -> ocr_complete`);
+      console.log(`  Pipeline: ${bookId} ocr_submitted -> ${statusSet['pipeline_auto.status']}`);
     }
   }
 
@@ -1156,17 +1206,18 @@ async function advancePipelineStatus(db, bookId, jobType) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
     if (pendingTranslate === 0) {
+      const statusSet = await guardedStatusSet(db, bookId, 'translate_complete', status);
       await db.collection('books').updateOne(
         { id: bookId },
         {
           $set: {
-            'pipeline_auto.status': 'translate_complete',
+            ...statusSet,
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} translate_submitted -> translate_complete`);
+      console.log(`  Pipeline: ${bookId} translate_submitted -> ${statusSet['pipeline_auto.status']}`);
     }
   }
 
@@ -1186,18 +1237,29 @@ async function advancePipelineStatus(db, bookId, jobType) {
         book_id: bookId,
         'detected_images.0': { $exists: true },
       });
+      // Book-level scan_quality rollup, as the realtime worker writes it. Best-effort.
+      let scanQualityRollup = null;
+      try { scanQualityRollup = await computeBookScanQualityRollup(db, bookId); }
+      catch (err) { console.error(`  scan_quality rollup failed for ${bookId}: ${err.message}`); }
+      // The extraction already ran and was paid for, so its counts are written even when
+      // the status is redirected.
+      const statusSet = await guardedStatusSet(db, bookId, 'images_complete', status);
       await db.collection('books').updateOne(
         { id: bookId },
         {
           $set: {
             detected_images_count: imgCount,
-            'pipeline_auto.status': 'images_complete',
+            ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}),
+            ...statusSet,
+            // The `images` input of pipeline_next (#5477): extraction ran for this book, whatever the
+            // status guard decided above.
+            'pipeline_auto.images_done_at': new Date(),
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} ${status} -> images_complete (${imgCount} images)`);
+      console.log(`  Pipeline: ${bookId} ${status} -> ${statusSet['pipeline_auto.status']} (${imgCount} images)`);
     }
   }
 }

@@ -1,0 +1,447 @@
+{
+ "verdict_version": "garble-verdict@2",
+ "at": "2026-09-30T10:02:46.805Z",
+ "mirror_baselines_built_at": "2026-09-30T10:01:42.571Z",
+ "pages": 6033013,
+ "judged": 5546043,
+ "unjudged": {
+  "too_few_units": 475798,
+  "no_lexicon_for_script": 11172
+ },
+ "flagged": 75279,
+ "translated": 4922376,
+ "translated_judged": 4581603,
+ "translated_flagged": 25851,
+ "translated_flagged_already_cautioned": 664,
+ "translated_cautioned": 53018,
+ "pct_flagged_of_judged": 1.36,
+ "pct_translated_flagged_of_translated_judged": 0.56,
+ "pct_translated_unjudged": 6.92,
+ "books_with_a_flagged_translated_page": 2301,
+ "by_reason": {
+  "oov": 34122,
+  "loop": 43543
+ },
+ "by_language": [
+  {
+   "language": "Latin",
+   "pages": 2124102,
+   "judged": 1966996,
+   "flagged": 9276,
+   "translated": 1807361,
+   "translated_judged": 1708771,
+   "translated_flagged": 5063,
+   "pct_translated_flagged": 0.3
+  },
+  {
+   "language": "English",
+   "pages": 850297,
+   "judged": 775107,
+   "flagged": 5836,
+   "translated": 719416,
+   "translated_judged": 663257,
+   "translated_flagged": 5151,
+   "pct_translated_flagged": 0.78
+  },
+  {
+   "language": "German",
+   "pages": 636239,
+   "judged": 600659,
+   "flagged": 856,
+   "translated": 596435,
+   "translated_judged": 569237,
+   "translated_flagged": 680,
+   "pct_translated_flagged": 0.12
+  },
+  {
+   "language": "Greek",
+   "pages": 460106,
+   "judged": 435539,
+   "flagged": 6755,
+   "translated": 443047,
+   "translated_judged": 422833,
+   "translated_flagged": 3473,
+   "pct_translated_flagged": 0.82
+  },
+  {
+   "language": "French",
+   "pages": 309559,
+   "judged": 281604,
+   "flagged": 518,
+   "translated": 298094,
+   "translated_judged": 275202,
+   "translated_flagged": 383,
+   "pct_translated_flagged": 0.14
+  },
+  {
+   "language": "Italian",
+   "pages": 153895,
+   "judged": 140003,
+   "flagged": 173,
+   "translated": 149018,
+   "translated_judged": 137857,
+   "translated_flagged": 139,
+   "pct_translated_flagged": 0.1
+  },
+  {
+   "language": "Dutch",
+   "pages": 142476,
+   "judged": 128109,
+   "flagged": 432,
+   "translated": 139674,
+   "translated_judged": 127207,
+   "translated_flagged": 367,
+   "pct_translated_flagged": 0.29
+  },
+  {
+   "language": "Russian",
+   "pages": 100071,
+   "judged": 94937,
+   "flagged": 228,
+   "translated": 99598,
+   "translated_judged": 94901,
+   "translated_flagged": 220,
+   "pct_translated_flagged": 0.23
+  },
+  {
+   "language": "Chinese",
+   "pages": 352652,
+   "judged": 305575,
+   "flagged": 2383,
+   "translated": 109369,
+   "translated_judged": 89234,
+   "translated_flagged": 872,
+   "pct_translated_flagged": 0.98
+  },
+  {
+   "language": "Sanskrit",
+   "pages": 110627,
+   "judged": 86677,
+   "flagged": 3542,
+   "translated": 106269,
+   "translated_judged": 83085,
+   "translated_flagged": 2502,
+   "pct_translated_flagged": 3.01
+  },
+  {
+   "language": "Hebrew",
+   "pages": 63337,
+   "judged": 58658,
+   "flagged": 4835,
+   "translated": 58015,
+   "translated_judged": 53872,
+   "translated_flagged": 472,
+   "pct_translated_flagged": 0.88
+  },
+  {
+   "language": "Arabic",
+   "pages": 56559,
+   "judged": 52303,
+   "flagged": 391,
+   "translated": 53919,
+   "translated_judged": 50839,
+   "translated_flagged": 290,
+   "pct_translated_flagged": 0.57
+  },
+  {
+   "language": "Korean",
+   "pages": 53913,
+   "judged": 47989,
+   "flagged": 1497,
+   "translated": 50723,
+   "translated_judged": 47510,
+   "translated_flagged": 1024,
+   "pct_translated_flagged": 2.16
+  },
+  {
+   "language": "Armenian",
+   "pages": 29728,
+   "judged": 28092,
+   "flagged": 1526,
+   "translated": 28938,
+   "translated_judged": 27586,
+   "translated_flagged": 1107,
+   "pct_translated_flagged": 4.01
+  },
+  {
+   "language": "Spanish",
+   "pages": 22454,
+   "judged": 21114,
+   "flagged": 56,
+   "translated": 20763,
+   "translated_judged": 19846,
+   "translated_flagged": 41,
+   "pct_translated_flagged": 0.21
+  },
+  {
+   "language": "Japanese",
+   "pages": 19207,
+   "judged": 16844,
+   "flagged": 611,
+   "translated": 18129,
+   "translated_judged": 16223,
+   "translated_flagged": 39,
+   "pct_translated_flagged": 0.24
+  },
+  {
+   "language": "Persian",
+   "pages": 15249,
+   "judged": 12841,
+   "flagged": 245,
+   "translated": 14499,
+   "translated_judged": 12688,
+   "translated_flagged": 191,
+   "pct_translated_flagged": 1.51
+  },
+  {
+   "language": "Tibetan",
+   "pages": 285398,
+   "judged": 281850,
+   "flagged": 28962,
+   "translated": 11829,
+   "translated_judged": 11431,
+   "translated_flagged": 602,
+   "pct_translated_flagged": 5.27
+  },
+  {
+   "language": "Latin-German",
+   "pages": 10526,
+   "judged": 9393,
+   "flagged": 3,
+   "translated": 10525,
+   "translated_judged": 9393,
+   "translated_flagged": 3,
+   "pct_translated_flagged": 0.03
+  },
+  {
+   "language": "Ge'ez",
+   "pages": 12352,
+   "judged": 10038,
+   "flagged": 1532,
+   "translated": 9205,
+   "translated_judged": 8551,
+   "translated_flagged": 51,
+   "pct_translated_flagged": 0.6
+  },
+  {
+   "language": "Syriac",
+   "pages": 43242,
+   "judged": 41565,
+   "flagged": 1669,
+   "translated": 8036,
+   "translated_judged": 6688,
+   "translated_flagged": 98,
+   "pct_translated_flagged": 1.47
+  },
+  {
+   "language": "Middle English",
+   "pages": 6444,
+   "judged": 6163,
+   "flagged": 6,
+   "translated": 6248,
+   "translated_judged": 6133,
+   "translated_flagged": 0,
+   "pct_translated_flagged": 0
+  },
+  {
+   "language": "Tamil",
+   "pages": 5618,
+   "judged": 5317,
+   "flagged": 0,
+   "translated": 5606,
+   "translated_judged": 5317,
+   "translated_flagged": 0,
+   "pct_translated_flagged": 0
+  },
+  {
+   "language": "Greek-Latin",
+   "pages": 5536,
+   "judged": 5131,
+   "flagged": 28,
+   "translated": 5512,
+   "translated_judged": 5114,
+   "translated_flagged": 11,
+   "pct_translated_flagged": 0.22
+  },
+  {
+   "language": "Greek/Latin",
+   "pages": 5267,
+   "judged": 5078,
+   "flagged": 17,
+   "translated": 5246,
+   "translated_judged": 5078,
+   "translated_flagged": 17,
+   "pct_translated_flagged": 0.33
+  },
+  {
+   "language": "Danish",
+   "pages": 5131,
+   "judged": 4686,
+   "flagged": 7,
+   "translated": 4985,
+   "translated_judged": 4686,
+   "translated_flagged": 7,
+   "pct_translated_flagged": 0.15
+  },
+  {
+   "language": "Old French",
+   "pages": 4568,
+   "judged": 4287,
+   "flagged": 10,
+   "translated": 4407,
+   "translated_judged": 4284,
+   "translated_flagged": 8,
+   "pct_translated_flagged": 0.19
+  },
+  {
+   "language": "Hebrew-Greek",
+   "pages": 3494,
+   "judged": 3438,
+   "flagged": 343,
+   "translated": 3490,
+   "translated_judged": 3438,
+   "translated_flagged": 343,
+   "pct_translated_flagged": 9.98
+  },
+  {
+   "language": "Portuguese",
+   "pages": 3566,
+   "judged": 3226,
+   "flagged": 3,
+   "translated": 3434,
+   "translated_judged": 3223,
+   "translated_flagged": 2,
+   "pct_translated_flagged": 0.06
+  },
+  {
+   "language": "Classical Chinese",
+   "pages": 3940,
+   "judged": 3218,
+   "flagged": 103,
+   "translated": 3767,
+   "translated_judged": 3161,
+   "translated_flagged": 58,
+   "pct_translated_flagged": 1.83
+  },
+  {
+   "language": "Hawaiian",
+   "pages": 3093,
+   "judged": 2914,
+   "flagged": 12,
+   "translated": 3033,
+   "translated_judged": 2914,
+   "translated_flagged": 12,
+   "pct_translated_flagged": 0.41
+  },
+  {
+   "language": "auto-detect",
+   "pages": 3022,
+   "judged": 2781,
+   "flagged": 1,
+   "translated": 2685,
+   "translated_judged": 2626,
+   "translated_flagged": 0,
+   "pct_translated_flagged": 0
+  },
+  {
+   "language": "Irish/English",
+   "pages": 2676,
+   "judged": 2541,
+   "flagged": 254,
+   "translated": 2661,
+   "translated_judged": 2541,
+   "translated_flagged": 254,
+   "pct_translated_flagged": 10
+  },
+  {
+   "language": "Maori",
+   "pages": 2642,
+   "judged": 2514,
+   "flagged": 8,
+   "translated": 2590,
+   "translated_judged": 2513,
+   "translated_flagged": 8,
+   "pct_translated_flagged": 0.32
+  },
+  {
+   "language": "Nahuatl-Spanish",
+   "pages": 2506,
+   "judged": 2394,
+   "flagged": 92,
+   "translated": 2448,
+   "translated_judged": 2394,
+   "translated_flagged": 92,
+   "pct_translated_flagged": 3.84
+  },
+  {
+   "language": "Hindi",
+   "pages": 3050,
+   "judged": 2892,
+   "flagged": 287,
+   "translated": 2498,
+   "translated_judged": 2392,
+   "translated_flagged": 283,
+   "pct_translated_flagged": 11.83
+  },
+  {
+   "language": "Old Norse",
+   "pages": 2422,
+   "judged": 2310,
+   "flagged": 60,
+   "translated": 2366,
+   "translated_judged": 2303,
+   "translated_flagged": 53,
+   "pct_translated_flagged": 2.3
+  },
+  {
+   "language": "Zulu",
+   "pages": 2392,
+   "judged": 2265,
+   "flagged": 16,
+   "translated": 2355,
+   "translated_judged": 2265,
+   "translated_flagged": 16,
+   "pct_translated_flagged": 0.71
+  },
+  {
+   "language": "Ancient Greek",
+   "pages": 2288,
+   "judged": 2236,
+   "flagged": 14,
+   "translated": 2282,
+   "translated_judged": 2236,
+   "translated_flagged": 14,
+   "pct_translated_flagged": 0.63
+  },
+  {
+   "language": "Chinese-English",
+   "pages": 2273,
+   "judged": 2206,
+   "flagged": 2,
+   "translated": 2271,
+   "translated_judged": 2204,
+   "translated_flagged": 0,
+   "pct_translated_flagged": 0
+  },
+  {
+   "language": "Middle Dutch",
+   "pages": 2411,
+   "judged": 2019,
+   "flagged": 0,
+   "translated": 2382,
+   "translated_judged": 2019,
+   "translated_flagged": 0,
+   "pct_translated_flagged": 0
+  },
+  {
+   "language": "Hebrew and Judeo-Arabic",
+   "pages": 2482,
+   "judged": 2085,
+   "flagged": 115,
+   "translated": 2387,
+   "translated_judged": 2017,
+   "translated_flagged": 47,
+   "pct_translated_flagged": 2.33
+  }
+ ]
+}
