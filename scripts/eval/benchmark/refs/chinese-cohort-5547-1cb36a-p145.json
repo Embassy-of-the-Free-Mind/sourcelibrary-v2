@@ -1,0 +1,21 @@
+{
+  "slug": "chinese-cohort-5547-1cb36a-p145",
+  "substratum": "census",
+  "title": "經稗·卷十~卷十一 (vol 6)",
+  "probe_chars": 171,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1g0025",
+  "work_title": "經稗-清-鄭方坤",
+  "juan": 1,
+  "url": "https://github.com/kanripo/KR1g0025/blob/WYG/KR1g0025_001.txt",
+  "etext_chars": 10224,
+  "window_chars": 14,
+  "overlap": 0.018,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.02 < 0.35: page is not (cleanly) in this e-text"
+}

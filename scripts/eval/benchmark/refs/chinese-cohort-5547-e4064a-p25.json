@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-e4064a-p25",
+  "substratum": "inflight",
+  "title": "此木軒四書說·卷一 (vol 1)",
+  "probe_chars": 130,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1h0065",
+  "work_title": "此木軒四書說-清-焦袁熹",
+  "juan": 3,
+  "url": "https://github.com/kanripo/KR1h0065/blob/WYG/KR1h0065_003.txt",
+  "etext_chars": 6865,
+  "window_chars": 138,
+  "overlap": 0.78,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

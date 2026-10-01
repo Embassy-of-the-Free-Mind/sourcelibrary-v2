@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-48361c-p30",
+  "substratum": "inflight",
+  "title": "易箋·卷七~卷八 (vol 6)",
+  "probe_chars": 145,
+  "source": "Kanripo",
+  "work": "KR1a0146",
+  "work_title": "易箋-清-陳法",
+  "juan": "7,8",
+  "url": "https://github.com/kanripo/KR1a0146",
+  "etext_chars": 10515,
+  "window_chars": 192,
+  "overlap": 0.8,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

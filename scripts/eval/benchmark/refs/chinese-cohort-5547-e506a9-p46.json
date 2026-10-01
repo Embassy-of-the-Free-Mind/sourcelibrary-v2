@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e506a9-p46",
+  "substratum": "census",
+  "title": "禮記集說·卷一百五十八~卷一百六十 (vol 162)",
+  "probe_chars": 164,
+  "source": "Kanripo",
+  "work": "KR1d0057",
+  "work_title": "禮記集說-宋-衞湜",
+  "juan": "158,159,160",
+  "url": "https://github.com/kanripo/KR1d0057",
+  "etext_chars": 32226,
+  "window_chars": 255,
+  "overlap": 0.792,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

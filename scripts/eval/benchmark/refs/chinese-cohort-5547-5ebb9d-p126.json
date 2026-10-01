@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5ebb9d-p126",
+  "substratum": "census",
+  "title": "欽定協紀辨方書·卷三十一~卷三十二 (vol 22)",
+  "probe_chars": 124,
+  "source": "Kanripo",
+  "work": "KR3g0051",
+  "work_title": "欽定協紀辨方書-清-允祿",
+  "juan": "31,32",
+  "url": "https://github.com/kanripo/KR3g0051",
+  "etext_chars": 22690,
+  "window_chars": 205,
+  "overlap": 0.453,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

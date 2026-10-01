@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-20d0ad-p34",
+  "substratum": "inflight",
+  "title": "西山讀書記·卷三十九 (vol 35)",
+  "probe_chars": 153,
+  "source": "Kanripo",
+  "work": "KR3a0059",
+  "work_title": "西山讀書記-宋-眞德秀",
+  "juan": "39",
+  "url": "https://github.com/kanripo/KR3a0059",
+  "etext_chars": 11117,
+  "window_chars": 189,
+  "overlap": 0.847,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

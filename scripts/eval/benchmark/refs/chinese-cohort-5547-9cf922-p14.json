@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-9cf922-p14",
+  "substratum": "census",
+  "title": "周禮注疏·卷二十八~卷二十九 (vol 35)",
+  "probe_chars": 198,
+  "source": "Kanripo",
+  "work": "KR1d0003",
+  "work_title": "周禮注疏-漢-鄭玄",
+  "juan": "28,29",
+  "url": "https://github.com/kanripo/KR1d0003",
+  "etext_chars": 28502,
+  "window_chars": 280,
+  "overlap": 0.58,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

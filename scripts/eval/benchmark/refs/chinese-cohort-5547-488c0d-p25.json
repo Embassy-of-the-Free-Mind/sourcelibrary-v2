@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-488c0d-p25",
+  "substratum": "inflight",
+  "title": "欽定禮記義疏·卷七十四 (vol 88)",
+  "probe_chars": 142,
+  "source": "Kanripo",
+  "work": "KR1d0068",
+  "work_title": "欽定禮記義疏-清-高宗弘曆",
+  "juan": "74",
+  "url": "https://github.com/kanripo/KR1d0068",
+  "etext_chars": 12846,
+  "window_chars": 157,
+  "overlap": 0.873,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

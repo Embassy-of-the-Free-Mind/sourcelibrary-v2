@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e5f469-p44",
+  "substratum": "inflight",
+  "title": "周易口訣義·卷六 (vol 3)",
+  "probe_chars": 168,
+  "source": "Kanripo",
+  "work": "KR1a0009",
+  "work_title": "周易口訣義-唐-史徵",
+  "juan": "6",
+  "url": "https://github.com/kanripo/KR1a0009",
+  "etext_chars": 11004,
+  "window_chars": 188,
+  "overlap": 0.736,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

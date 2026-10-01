@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-153083-p20",
+  "substratum": "inflight",
+  "title": "景岳全書·卷三十七 (vol 20)",
+  "probe_chars": 157,
+  "source": "Kanripo",
+  "work": "KR3e0086",
+  "work_title": "景岳全書-明-張介賓",
+  "juan": "37",
+  "url": "https://github.com/kanripo/KR3e0086",
+  "etext_chars": 8863,
+  "window_chars": 164,
+  "overlap": 0.532,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

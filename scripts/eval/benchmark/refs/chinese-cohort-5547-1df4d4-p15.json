@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1df4d4-p15",
+  "substratum": "census",
+  "title": "胡氏春秋傳·卷二十八~卷三十 (vol 8)",
+  "probe_chars": 254,
+  "source": "Kanripo",
+  "work": "KR1e0036",
+  "work_title": "胡氏春秋傳-宋-胡安國",
+  "juan": "28,29,30",
+  "url": "https://github.com/kanripo/KR1e0036",
+  "etext_chars": 13829,
+  "window_chars": 292,
+  "overlap": 0.566,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

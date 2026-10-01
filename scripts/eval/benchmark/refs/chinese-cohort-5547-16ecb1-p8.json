@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-16ecb1-p8",
+  "substratum": "inflight",
+  "title": "法苑珠林·卷五十九 — Fayuan Zhulin (vol 22)",
+  "probe_chars": 176,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR6s0002",
+  "work_title": "法苑珠林-唐-道世",
+  "juan": 59,
+  "url": "https://github.com/kanripo/KR6s0002/blob/WYG/KR6s0002_059.txt",
+  "etext_chars": 10390,
+  "window_chars": 248,
+  "overlap": 0.786,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

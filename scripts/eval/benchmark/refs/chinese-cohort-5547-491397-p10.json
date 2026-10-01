@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-491397-p10",
+  "substratum": "inflight",
+  "title": "春秋左傳注疏·卷二十九 (vol 16)",
+  "probe_chars": 233,
+  "source": "Kanripo",
+  "work": "KR1e0004",
+  "work_title": "春秋左傳注疏-周-左丘明",
+  "juan": "29",
+  "url": "https://github.com/kanripo/KR1e0004",
+  "etext_chars": 18860,
+  "window_chars": 307,
+  "overlap": 0.673,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

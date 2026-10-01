@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-dfa73d-p80",
+  "substratum": "census",
+  "title": "證治準繩·卷四十三 (vol 40)",
+  "probe_chars": 159,
+  "source": "Kanripo",
+  "work": "KR3e0078",
+  "work_title": "證治準繩-明-王肯堂",
+  "juan": "43",
+  "url": "https://github.com/kanripo/KR3e0078",
+  "etext_chars": 21499,
+  "window_chars": 239,
+  "overlap": 0.805,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

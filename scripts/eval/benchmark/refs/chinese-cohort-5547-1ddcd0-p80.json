@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1ddcd0-p80",
+  "substratum": "census",
+  "title": "周官集注·卷六 (vol 6)",
+  "probe_chars": 159,
+  "source": "Kanripo",
+  "work": "KR1d0021",
+  "work_title": "周官集注-清-方苞",
+  "juan": "6",
+  "url": "https://github.com/kanripo/KR1d0021",
+  "etext_chars": 19297,
+  "window_chars": 167,
+  "overlap": 0.744,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5d287f-p17",
+  "substratum": "inflight",
+  "title": "性理大全書·卷六十九 (vol 40)",
+  "probe_chars": 150,
+  "source": "Kanripo",
+  "work": "KR3a0078",
+  "work_title": "性理大全書-明-胡廣",
+  "juan": "69",
+  "url": "https://github.com/kanripo/KR3a0078",
+  "etext_chars": 11978,
+  "window_chars": 153,
+  "overlap": 0.678,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

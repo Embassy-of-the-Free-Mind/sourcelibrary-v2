@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1b298d-p48",
+  "substratum": "census",
+  "title": "春明夢餘錄·卷三十四 (vol 42)",
+  "probe_chars": 150,
+  "source": "Kanripo",
+  "work": "KR3j0161",
+  "work_title": "春明夢餘錄-清-孫承澤",
+  "juan": "34",
+  "url": "https://github.com/kanripo/KR3j0161",
+  "etext_chars": 20053,
+  "window_chars": 162,
+  "overlap": 0.869,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

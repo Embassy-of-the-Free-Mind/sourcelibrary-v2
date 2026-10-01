@@ -1,0 +1,19 @@
+{
+  "slug": "chinese-cohort-5547-5dbb39-p31",
+  "substratum": "census",
+  "title": "薛氏醫案·卷七十三~卷七十四 (vol 38)",
+  "probe_chars": 96,
+  "source": "Kanripo",
+  "work": "KR3e0070",
+  "work_title": "薛氏醫案-明-薛己",
+  "juan": "73,74",
+  "url": "https://github.com/kanripo/KR3e0070",
+  "etext_chars": 18182,
+  "window_chars": 117,
+  "overlap": 0.341,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.34 < 0.35: page is not (cleanly) in this e-text"
+}

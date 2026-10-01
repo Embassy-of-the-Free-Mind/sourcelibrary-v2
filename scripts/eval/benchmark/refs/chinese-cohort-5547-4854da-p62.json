@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-4854da-p62",
+  "substratum": "inflight",
+  "title": "尚書說·卷七 (vol 8)",
+  "probe_chars": 195,
+  "source": "Kanripo",
+  "work": "KR1b0014",
+  "work_title": "尚書說-宋-黃度",
+  "juan": "7",
+  "url": "https://github.com/kanripo/KR1b0014",
+  "etext_chars": 18233,
+  "window_chars": 237,
+  "overlap": 0.571,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

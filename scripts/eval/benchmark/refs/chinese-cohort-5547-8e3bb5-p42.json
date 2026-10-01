@@ -1,0 +1,19 @@
+{
+  "slug": "chinese-cohort-5547-8e3bb5-p42",
+  "substratum": "census",
+  "title": "御定康熙字典·卷七 (vol 42)",
+  "probe_chars": 289,
+  "source": "Kanripo",
+  "work": "KR1j0048",
+  "work_title": "御定康熙字典-清-張玉書",
+  "juan": "7",
+  "url": "https://github.com/kanripo/KR1j0048",
+  "etext_chars": 44421,
+  "window_chars": 432,
+  "overlap": 0,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

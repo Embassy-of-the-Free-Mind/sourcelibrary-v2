@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-48fe8e-p90",
+  "substratum": "census",
+  "title": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+  "probe_chars": 130,
+  "source": "Kanripo",
+  "work": "KR3j0076",
+  "work_title": "義門讀書記-清-何焯",
+  "juan": "41,42",
+  "url": "https://github.com/kanripo/KR3j0076",
+  "etext_chars": 14568,
+  "window_chars": 143,
+  "overlap": 0.89,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

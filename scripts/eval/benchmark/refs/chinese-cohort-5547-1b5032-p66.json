@@ -1,0 +1,21 @@
+{
+  "slug": "chinese-cohort-5547-1b5032-p66",
+  "substratum": "inflight",
+  "title": "農書 (vol 1)",
+  "probe_chars": 229,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3d0002",
+  "work_title": "農書-宋-陳旉",
+  "juan": 3,
+  "url": "https://github.com/kanripo/KR3d0002/blob/WYG/KR3d0002_003.txt",
+  "etext_chars": 2912,
+  "window_chars": 20,
+  "overlap": 0.004,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

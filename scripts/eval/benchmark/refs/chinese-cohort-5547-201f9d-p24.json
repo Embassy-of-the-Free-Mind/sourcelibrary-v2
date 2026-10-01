@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-201f9d-p24",
+  "substratum": "inflight",
+  "title": "讀易述·卷十六~卷十七 (vol 14)",
+  "probe_chars": 143,
+  "source": "Kanripo",
+  "work": "KR1a0103",
+  "work_title": "讀易述-明-潘士藻",
+  "juan": "16,17",
+  "url": "https://github.com/kanripo/KR1a0103",
+  "etext_chars": 8491,
+  "window_chars": 190,
+  "overlap": 0.847,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

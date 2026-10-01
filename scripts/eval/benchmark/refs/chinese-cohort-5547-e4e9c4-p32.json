@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e4e9c4-p32",
+  "substratum": "census",
+  "title": "禮記集說·卷六十九~卷七十 (vol 116)",
+  "probe_chars": 147,
+  "source": "Kanripo",
+  "work": "KR1d0057",
+  "work_title": "禮記集說-宋-衞湜",
+  "juan": "69,70",
+  "url": "https://github.com/kanripo/KR1d0057",
+  "etext_chars": 22787,
+  "window_chars": 235,
+  "overlap": 0.783,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

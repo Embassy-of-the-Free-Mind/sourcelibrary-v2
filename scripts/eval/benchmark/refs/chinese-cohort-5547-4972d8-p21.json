@@ -1,0 +1,21 @@
+{
+  "slug": "chinese-cohort-5547-4972d8-p21",
+  "substratum": "inflight",
+  "title": "說文繫傳考異·卷四 (vol 2)",
+  "probe_chars": 166,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1j0019",
+  "work_title": "說文繫傳-南唐-徐鍇",
+  "juan": 30,
+  "url": "https://github.com/kanripo/KR1j0019/blob/master/KR1j0019_030.txt",
+  "etext_chars": 910,
+  "window_chars": 20,
+  "overlap": 0.006,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.01 < 0.35: page is not (cleanly) in this e-text"
+}

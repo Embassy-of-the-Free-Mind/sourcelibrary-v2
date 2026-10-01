@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1c037f-p153",
+  "substratum": "census",
+  "title": "讀詩質疑·卷十四~卷十六 (vol 9)",
+  "probe_chars": 167,
+  "source": "Kanripo",
+  "work": "KR1c0059",
+  "work_title": "讀詩質疑-清-嚴虞惇",
+  "juan": "14,15,16",
+  "url": "https://github.com/kanripo/KR1c0059",
+  "etext_chars": 24284,
+  "window_chars": 231,
+  "overlap": 0.756,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-df55ff-p14",
+  "substratum": "inflight",
+  "title": "石鼓論語答問·卷上 (vol 1)",
+  "probe_chars": 143,
+  "source": "Kanripo",
+  "work": "KR1h0019",
+  "work_title": "石鼓論語答問-宋-戴溪",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1h0019",
+  "etext_chars": 8444,
+  "window_chars": 151,
+  "overlap": 0.799,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

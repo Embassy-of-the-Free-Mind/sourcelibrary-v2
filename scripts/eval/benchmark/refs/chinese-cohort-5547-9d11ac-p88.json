@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-9d11ac-p88",
+  "substratum": "census",
+  "title": "禮記注疏·卷二十一~卷二十二 (vol 12)",
+  "probe_chars": 15063,
+  "source": "Kanripo",
+  "work": "KR1d0053",
+  "work_title": "禮記注疏-漢-鄭玄",
+  "juan": "21,22",
+  "url": "https://github.com/kanripo/KR1d0053",
+  "etext_chars": 40151,
+  "window_chars": 15226,
+  "overlap": 0.574,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

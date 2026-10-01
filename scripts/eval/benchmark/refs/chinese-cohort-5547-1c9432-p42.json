@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1c9432-p42",
+  "substratum": "inflight",
+  "title": "五經蠡測·卷一 (vol 4)",
+  "probe_chars": 202,
+  "source": "Kanripo",
+  "work": "KR1g0015",
+  "work_title": "五經蠡測-明-蔣悌生",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1g0015",
+  "etext_chars": 17378,
+  "window_chars": 227,
+  "overlap": 0.638,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

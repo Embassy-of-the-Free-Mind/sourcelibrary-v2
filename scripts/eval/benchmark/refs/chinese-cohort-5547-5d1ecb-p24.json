@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5d1ecb-p24",
+  "substratum": "inflight",
+  "title": "性理大全書·卷三十四 (vol 22)",
+  "probe_chars": 163,
+  "source": "Kanripo",
+  "work": "KR3a0078",
+  "work_title": "性理大全書-明-胡廣",
+  "juan": "34",
+  "url": "https://github.com/kanripo/KR3a0078",
+  "etext_chars": 12418,
+  "window_chars": 216,
+  "overlap": 0.656,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

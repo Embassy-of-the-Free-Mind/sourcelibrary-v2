@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-49f2e3-p55",
+  "substratum": "inflight",
+  "title": "五禮通考·卷四十六 (vol 32)",
+  "probe_chars": 229,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1d0087",
+  "work_title": "五禮通考-清-泰蕙田",
+  "juan": 56,
+  "url": "https://github.com/kanripo/KR1d0087/blob/WYG/KR1d0087_056.txt",
+  "etext_chars": 16426,
+  "window_chars": 346,
+  "overlap": 0.554,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

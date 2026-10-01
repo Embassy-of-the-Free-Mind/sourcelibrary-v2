@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-1e3517-p42",
+  "substratum": "census",
+  "title": "春秋辯義·卷首一~卷首二 (vol 1)",
+  "probe_chars": 171,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1e0089",
+  "work_title": "春秋辯義-明-卓爾康",
+  "juan": 0,
+  "url": "https://github.com/kanripo/KR1e0089/blob/WYG/KR1e0089_000.txt",
+  "etext_chars": 113443,
+  "window_chars": 254,
+  "overlap": 0.804,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

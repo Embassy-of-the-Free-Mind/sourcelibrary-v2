@@ -1,0 +1,21 @@
+{
+  "slug": "chinese-cohort-5547-c4f7e3-p46",
+  "substratum": "inflight",
+  "title": "詩集傳·卷十四~卷十五 (vol 5)",
+  "probe_chars": 146,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1c0009",
+  "work_title": "詩集傳-宋-朱熹",
+  "juan": 16,
+  "url": "https://github.com/kanripo/KR1c0009/blob/master/KR1c0009_016.txt",
+  "etext_chars": 10241,
+  "window_chars": 71,
+  "overlap": 0.07,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.07 < 0.35: page is not (cleanly) in this e-text"
+}

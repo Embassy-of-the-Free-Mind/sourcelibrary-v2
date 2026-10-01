@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-dfe0e4-p22",
+  "substratum": "inflight",
+  "title": "廣博物志·卷四十八 (vol 29)",
+  "probe_chars": 172,
+  "source": "Kanripo",
+  "work": "KR3k0054",
+  "work_title": "廣博物志-明-董斯張",
+  "juan": "48",
+  "url": "https://github.com/kanripo/KR3k0054",
+  "etext_chars": 10357,
+  "window_chars": 181,
+  "overlap": 0.789,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

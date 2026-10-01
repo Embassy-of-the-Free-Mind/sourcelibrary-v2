@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-c0ca6f-p25",
+  "substratum": "census",
+  "title": "六家詩名物疏·卷五十二~卷五十五 (vol 16)",
+  "probe_chars": 131,
+  "source": "Kanripo",
+  "work": "KR1c0039",
+  "work_title": "六家詩名物疏-明-馮復京",
+  "juan": "52,53,54,55",
+  "url": "https://github.com/kanripo/KR1c0039",
+  "etext_chars": 19483,
+  "window_chars": 137,
+  "overlap": 0.781,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e44fd9-p209",
+  "substratum": "census",
+  "title": "天原發微·卷三上~卷三下 (vol 13)",
+  "probe_chars": 140,
+  "source": "Kanripo",
+  "work": "KR3g0013",
+  "work_title": "天原發微-宋-鮑雲龍",
+  "juan": "3",
+  "url": "https://github.com/kanripo/KR3g0013",
+  "etext_chars": 34728,
+  "window_chars": 153,
+  "overlap": 0.8,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

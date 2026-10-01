@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5dd4a8-p127",
+  "substratum": "census",
+  "title": "普濟方·卷三十二~卷三十三 (vol 23)",
+  "probe_chars": 145,
+  "source": "Kanripo",
+  "work": "KR3e0067",
+  "work_title": "普濟方-明-朱橚",
+  "juan": "32,33",
+  "url": "https://github.com/kanripo/KR3e0067",
+  "etext_chars": 30425,
+  "window_chars": 196,
+  "overlap": 0.752,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

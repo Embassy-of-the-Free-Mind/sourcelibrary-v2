@@ -1,0 +1,19 @@
+{
+  "slug": "chinese-cohort-5547-e32226-p107",
+  "substratum": "census",
+  "title": "御定子史精華·卷八十四~卷八十六 (vol 129)",
+  "probe_chars": 185,
+  "source": "Kanripo",
+  "work": "KR3k0058",
+  "work_title": "御定子史精華-清-吳士玉",
+  "juan": "84,85,86",
+  "url": "https://github.com/kanripo/KR3k0058",
+  "etext_chars": 37349,
+  "window_chars": 241,
+  "overlap": 0.275,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.27 < 0.35: page is not (cleanly) in this e-text"
+}

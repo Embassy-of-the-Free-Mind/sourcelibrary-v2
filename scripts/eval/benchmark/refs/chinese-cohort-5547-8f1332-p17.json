@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-8f1332-p17",
+  "substratum": "inflight",
+  "title": "尚書正義(三) (vol 3)",
+  "probe_chars": 320,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1b0003",
+  "work_title": "尚書正義-唐-孔穎達",
+  "juan": 4,
+  "url": "https://github.com/kanripo/KR1b0003/blob/master/KR1b0003_004.txt",
+  "etext_chars": 14476,
+  "window_chars": 483,
+  "overlap": 0.642,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

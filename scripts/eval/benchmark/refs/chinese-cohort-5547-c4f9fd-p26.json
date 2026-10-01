@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-c4f9fd-p26",
+  "substratum": "inflight",
+  "title": "毛詩名物解·卷十六~卷二十 (vol 3)",
+  "probe_chars": 145,
+  "source": "Kanripo",
+  "work": "KR1c0011",
+  "work_title": "毛詩名物解-宋-蔡卞",
+  "juan": "16,17,18,19,20",
+  "url": "https://github.com/kanripo/KR1c0011",
+  "etext_chars": 11646,
+  "window_chars": 154,
+  "overlap": 0.841,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

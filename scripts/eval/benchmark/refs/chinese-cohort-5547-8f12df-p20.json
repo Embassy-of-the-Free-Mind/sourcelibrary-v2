@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-8f12df-p20",
+  "substratum": "inflight",
+  "title": "尚書正義(二) (vol 2)",
+  "probe_chars": 262,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1b0003",
+  "work_title": "尚書正義-唐-孔穎達",
+  "juan": 3,
+  "url": "https://github.com/kanripo/KR1b0003/blob/master/KR1b0003_003.txt",
+  "etext_chars": 20894,
+  "window_chars": 325,
+  "overlap": 0.447,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

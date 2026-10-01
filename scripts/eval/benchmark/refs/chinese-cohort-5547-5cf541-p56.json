@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5cf541-p56",
+  "substratum": "inflight",
+  "title": "明本釋·卷上 (vol 1)",
+  "probe_chars": 251,
+  "source": "Kanripo",
+  "work": "KR3a0050",
+  "work_title": "明本釋-宋-劉荀",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR3a0050",
+  "etext_chars": 15424,
+  "window_chars": 259,
+  "overlap": 0.778,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

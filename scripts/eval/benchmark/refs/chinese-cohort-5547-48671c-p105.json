@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-48671c-p105",
+  "substratum": "census",
+  "title": "書纂言·卷一 (vol 10)",
+  "probe_chars": 161,
+  "source": "Kanripo",
+  "work": "KR1b0026",
+  "work_title": "書纂言-元-吳澄",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1b0026",
+  "etext_chars": 22155,
+  "window_chars": 215,
+  "overlap": 0.776,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

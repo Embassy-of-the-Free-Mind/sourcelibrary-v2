@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-e5e3e8-p122",
+  "substratum": "census",
+  "title": "傳信適用方·卷下 (vol 2)",
+  "probe_chars": 110,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3e0034",
+  "work_title": "傳信適用方-宋-吳彥夔",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR3e0034/blob/WYG/KR3e0034_002.txt",
+  "etext_chars": 17060,
+  "window_chars": 131,
+  "overlap": 0.664,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

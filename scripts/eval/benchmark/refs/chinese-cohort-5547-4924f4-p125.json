@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-4924f4-p125",
+  "substratum": "census",
+  "title": "春秋集傳纂例·卷三~卷四 (vol 2)",
+  "probe_chars": 113,
+  "source": "Kanripo",
+  "work": "KR1e0013",
+  "work_title": "春秋集傳纂例-唐-陸淳",
+  "juan": "3,4",
+  "url": "https://github.com/kanripo/KR1e0013",
+  "etext_chars": 19916,
+  "window_chars": 179,
+  "overlap": 0.682,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

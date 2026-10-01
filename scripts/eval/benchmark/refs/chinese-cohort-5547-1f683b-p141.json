@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-1f683b-p141",
+  "substratum": "census",
+  "title": "御覽經史講義·卷十四 (vol 46)",
+  "probe_chars": 160,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3a0110",
+  "work_title": "御覽經史講義-清-蔣溥",
+  "juan": 51,
+  "url": "https://github.com/kanripo/KR3a0110/blob/WYG/KR3a0110_051.txt",
+  "etext_chars": 20958,
+  "window_chars": 166,
+  "overlap": 0.858,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

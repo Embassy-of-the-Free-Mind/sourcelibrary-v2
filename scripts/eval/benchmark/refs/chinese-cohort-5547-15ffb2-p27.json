@@ -1,0 +1,21 @@
+{
+  "slug": "chinese-cohort-5547-15ffb2-p27",
+  "substratum": "inflight",
+  "title": "皇極經世書解·卷一 (vol 3)",
+  "probe_chars": 166,
+  "witness": "master",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR5d0063",
+  "work_title": "皇極經世--邵雍",
+  "juan": 2,
+  "url": "https://github.com/kanripo/KR5d0063/blob/master/KR5d0063_002.txt",
+  "etext_chars": 5855,
+  "window_chars": 95,
+  "overlap": 0.033,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.03 < 0.35: page is not (cleanly) in this e-text"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1b113f-p25",
+  "substratum": "inflight",
+  "title": "春明夢餘錄·卷二~卷五 (vol 2)",
+  "probe_chars": 152,
+  "source": "Kanripo",
+  "work": "KR3j0161",
+  "work_title": "春明夢餘錄-清-孫承澤",
+  "juan": "2,3,4,5",
+  "url": "https://github.com/kanripo/KR3j0161",
+  "etext_chars": 11206,
+  "window_chars": 213,
+  "overlap": 0.812,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

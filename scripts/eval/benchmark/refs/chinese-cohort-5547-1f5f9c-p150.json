@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-1f5f9c-p150",
+  "substratum": "census",
+  "title": "御覽經史講義·卷十 (vol 11)",
+  "probe_chars": 142,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR3a0110",
+  "work_title": "御覽經史講義-清-蔣溥",
+  "juan": 47,
+  "url": "https://github.com/kanripo/KR3a0110/blob/WYG/KR3a0110_047.txt",
+  "etext_chars": 30266,
+  "window_chars": 150,
+  "overlap": 0.719,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

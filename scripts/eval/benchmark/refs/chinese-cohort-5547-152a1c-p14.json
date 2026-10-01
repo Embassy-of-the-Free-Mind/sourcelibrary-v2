@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-152a1c-p14",
+  "substratum": "census",
+  "title": "景岳全書·卷十六 (vol 9)",
+  "probe_chars": 153,
+  "source": "Kanripo",
+  "work": "KR3e0086",
+  "work_title": "景岳全書-明-張介賓",
+  "juan": "16",
+  "url": "https://github.com/kanripo/KR3e0086",
+  "etext_chars": 15792,
+  "window_chars": 174,
+  "overlap": 0.767,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

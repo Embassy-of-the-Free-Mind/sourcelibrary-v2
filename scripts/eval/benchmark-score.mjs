@@ -51,7 +51,7 @@ const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
 if (!ROOT) { console.error('--root required'); process.exit(1); }
 
 // ── normalisation ──────────────────────────────────────────────────
-const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'japanese', 'japanese-ext']);
+const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'chinese-cohort-5547', 'japanese', 'japanese-ext']);
 function normAlpha(s) {
   return String(s || '')
     .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')

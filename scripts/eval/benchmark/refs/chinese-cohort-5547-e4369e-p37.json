@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e4369e-p37",
+  "substratum": "inflight",
+  "title": "野客叢書·卷二十九~卷三十 (vol 8)",
+  "probe_chars": 110,
+  "source": "Kanripo",
+  "work": "KR3j0045",
+  "work_title": "野客叢書-宋-王楙",
+  "juan": "29,30",
+  "url": "https://github.com/kanripo/KR3j0045",
+  "etext_chars": 8572,
+  "window_chars": 130,
+  "overlap": 0.724,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

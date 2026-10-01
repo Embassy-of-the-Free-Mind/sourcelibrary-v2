@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1f060d-p42",
+  "substratum": "census",
+  "title": "讀左日鈔·卷三~卷四 (vol 2)",
+  "probe_chars": 145,
+  "source": "Kanripo",
+  "work": "KR1e0100",
+  "work_title": "讀左日鈔-清-朱鶴齡",
+  "juan": "3,4",
+  "url": "https://github.com/kanripo/KR1e0100",
+  "etext_chars": 18991,
+  "window_chars": 151,
+  "overlap": 0.725,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

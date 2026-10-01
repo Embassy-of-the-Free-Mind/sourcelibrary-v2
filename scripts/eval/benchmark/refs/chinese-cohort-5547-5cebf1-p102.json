@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-5cebf1-p102",
+  "substratum": "census",
+  "title": "鹽鐵論·卷十~卷十二 (vol 9)",
+  "probe_chars": 235,
+  "source": "Kanripo",
+  "work": "KR3a0006",
+  "work_title": "鹽鐵論-漢-桓寬",
+  "juan": "10,11,12",
+  "url": "https://github.com/kanripo/KR3a0006",
+  "etext_chars": 45383,
+  "window_chars": 301,
+  "overlap": 0.718,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

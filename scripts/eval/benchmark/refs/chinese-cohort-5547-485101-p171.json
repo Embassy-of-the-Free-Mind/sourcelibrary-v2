@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-485101-p171",
+  "substratum": "census",
+  "title": "尚書注疏·卷十五~卷十六 (vol 9)",
+  "probe_chars": 290,
+  "source": "Kanripo",
+  "work": "KR1b0004",
+  "work_title": "尚書注疏-漢-孔安國",
+  "juan": "15,16",
+  "url": "https://github.com/kanripo/KR1b0004",
+  "etext_chars": 43811,
+  "window_chars": 445,
+  "overlap": 0.557,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}
